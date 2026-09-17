@@ -354,3 +354,56 @@ test fails the build if they ever do.
  roles/Harmonia/contracts/sfe_contract.json (landed, provenance block `landed`)
  main: 1b9286292 (release) .. bef42b7df (deployed receipts); comms #343 (deploy receipt)
 =======================================================================
+
+-----------------------------------------------------------------------
+9. CORRECTION 12:2xZ -- the control run falsified section 5's mechanism
+-----------------------------------------------------------------------
+
+ The no-reader control did not finish: two 500s ("database is locked" at
+ connection open) with NO reader at all. The reader was never the cause.
+ The real one: the API opens a NEW SQLite connection PER REQUEST and
+ closes it after (get_foundry); the Store's own docstring says one per
+ worker. ~115,000 open/close pairs in the main run. When the last
+ connection closes, SQLite checkpoints and truncates the whole WAL of an
+ 80 MB ledger -- the multi-second window every new request's open waits
+ in (the stalls, on every route), and the open can fail outright on a
+ lock path the busy handler does not retry (the 500s). Campaigns 1-3
+ never hit it: one sequential producer. Campaign 4 with a concurrent
+ reader is exactly the regime that does.
+
+ Fix: one Store per worker thread, never closed per request -- ~25 lines
+ in api.py, no schema, no route. Being implemented and measured on the
+ branch now with the same load tool (acceptance: 0 calls over 5 s AND
+ 0 5xx at 20 x 1,000, with and without the reader). Deploy only on an
+ operator-opened window. Section 5's SQLite/retention decisions stand;
+ its mechanism paragraph is retracted. Consumer guidance (>= 30 s
+ timeouts + idempotent retries) stands until the fix is measured.
+
+-----------------------------------------------------------------------
+10. 12:0xZ -- two fix attempts measured and rejected; the real item named
+-----------------------------------------------------------------------
+
+ Attempt 1 (one connection per worker THREAD) shared a connection between
+ two requests -- FastAPI runs the dependency and the endpoint on different
+ threads -- and 500'd at request 1,751. Attempt 2 (an exclusive checkout
+ pool) passed 507 tests and the restart fixture, then hung a real-process
+ run at request 8,570: py-spy showed a worker blocked inside COMMIT while
+ the WAL file had grown to 344 MB against a 10 MB database -- under
+ continuous readers a persistent-connection WAL never restarts, and the
+ autocheckpoint inside each COMMIT becomes O(WAL). Neither design is a
+ SQLite limit; both are how the engine drives it (per-request: full
+ checkpoint + file delete/recreate on nearly every request; persistent:
+ unbounded WAL + checkpoint in the request path).
+
+ The real 9.0.1 item, bounded: pool + a background checkpointer thread
+ (autocheckpoint off on pooled handles; PASSIVE every ~2 s, TRUNCATE when
+ clean; journal_size_limit) + the A6 journal/access log off the event
+ loop; ~150 lines, no schema/route/contract change; acceptance = 0 5xx and
+ 0 calls over 5 s at 20 x 1,000 with and without the reader, WAL bounded,
+ checkpointer state on /v2/health. NOT built today; nothing from this
+ section is on main or on production. SFE_LONG_RUN_REPORT.md s8.
+
+ What this does to the release verdict: schema 9 shipped and qualified
+ stands. "Ready for unattended multi-hour runs" was already NO in s5 and
+ stays NO with a sharper reason. Campaign 4 with one sequential runner and
+ a paced reader is the regime Campaigns 1-3 ran in (0 engine errors).

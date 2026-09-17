@@ -159,3 +159,122 @@
     - behaviour with the M1-era ledger size (129K events) as a starting
       point rather than an empty one
     - concurrent clients from another host (this run was loopback)
+
+=======================================================================
+7. CORRECTION 2026-09-17 12:2xZ -- the control run overturned section 4's mechanism
+=======================================================================
+
+    control    the identical 20 x 1,000 run with NO reader thread (2 producers
+               only) did not finish: at ~13,100 successful calls the engine
+               answered 500 "unhandled server error" twice within 100 ms on
+               two different worlds (POST .../events and POST .../commit).
+               Receipt: deploy/LONG_RUN_2026-09-17/w20g1000_noreader/engine.log
+               lines 13138-13307.
+    traceback  sfe/api.py get_foundry -> Foundry(app.state.db_path, ...) ->
+               Store.__init__ -> `PRAGMA journal_mode=WAL` ->
+               sqlite3.OperationalError: database is locked
+    what that  The API constructs a NEW Foundry -- a new Store, a new sqlite3
+    shows      connection, PRAGMA journal_mode=WAL -- ON EVERY REQUEST, and
+               closes it after (api.py: `def get_foundry(): f = Foundry(...);
+               yield f; f.close()`). Store's docstring says "a per-thread
+               connection; open one per worker"; the API opens one per
+               request. Section 4's "one shared connection with no lock" was
+               WRONG: I read Store.read() and did not read who constructs the
+               Store. Retracted.
+    mechanism  Per-request connection churn (~115,000 open/close pairs in the
+    (revised)  main run). When the LAST open connection closes, SQLite
+               checkpoints the whole WAL into the main file and truncates it;
+               on an 80 MB ledger under two writers that is the multi-second
+               window in which every new request's open blocks -- the stall on
+               EVERY route, reads included, exactly the observed shape. The
+               next open can also fail outright: `database is locked` on
+               journal-mode/WAL-index recovery is one of the SQLite lock paths
+               the busy handler does not retry -> the 500. The main run never
+               hit that path (reader thread kept a connection open almost
+               always, so the "last close" was rare); the control, with only
+               two producers pausing between requests, did.
+    evidence   - stalls in the main run began at ~868 s and never before: the
+      that fits  WAL/ledger had to be large enough for checkpoint-on-close
+                 to take seconds (DB ~25 MB at that point)
+               - stalls hit reads and writes in proportion to volume
+               - write-lock waits (BEGIN IMMEDIATE) stayed tiny: the wait is
+                 at CONNECT, before any transaction, where B3 does not measure
+               - "WAL 0.0 MB" at every inspection: it was being truncated on
+                 every last-close, not autocheckpointed at 1000 pages
+               - 0 errors in Campaigns 1-3: single sequential producers, so a
+                 close-then-open of the same request stream never raced
+                 another connection's open
+    why it     Campaign 4 with a concurrent reader (PEW ingestion walking
+    matters    cursors) or two runners is exactly the two-connection regime.
+    the fix    one Store per worker THREAD (thread-local; uvicorn's sync
+    (bounded)  handlers run in a pool of ~40), never closed per request; the
+               boot-time Store already runs the migration. ~25 lines in
+               api.py; store.py untouched; the write path and B3 untouched.
+               CODE ONLY, no schema, no route: a 9.0.1 with the load tool as
+               acceptance (0 calls over 5 s AND 0 5xx at 20 x 1,000 with 2
+               producers + reader, and with 2 producers alone).
+    status     being implemented on the branch now; measured before it is
+               offered; deployed only on an operator-opened window (freeze
+               rule s11; the fix is a candidate "critical defect" exception
+               and is stated as such, but production has 0 consumers today).
+
+    Sections 4 and 5 above stand as the record of what I believed at 11:4xZ
+    and are not rewritten; this section supersedes their mechanism and
+    recommendation. Consumer guidance (>= 30 s timeouts, idempotent retries)
+    stands until 9.0.1 is measured.
+
+=======================================================================
+8. 2026-09-17 12:0xZ -- the fix attempts, what each one measured, and the actual item
+=======================================================================
+
+    attempt 1  thread-local Foundry per worker thread (f494f533). Real-process
+               run died at request 1,751: 500 "cannot start a transaction
+               within a transaction". FastAPI runs a sync dependency and a sync
+               endpoint on DIFFERENT threadpool threads, so a thread-local
+               keyed on the dependency's thread handed one connection to two
+               concurrent requests. Wrong shape; retracted.
+    attempt 2  checkout/checkin pool, exclusive per request (18d78869, branch
+               de09dc421, NOT on main). 505+2 tests, D11 16/16. Real-process
+               run: 8,570 requests OK, 0 5xx, then a 60 s client timeout on
+               reads and writes alike. The server was alive and its CPU flat.
+               py-spy on the hung process: a worker thread BLOCKED INSIDE
+               `COMMIT` (store.py:929) across 4+ consecutive 1 s samples;
+               the main (event-loop) thread in the A6 journal's synchronous
+               file append and in the access-log flush. load.db was 10 MB;
+               load.db-wal was 344 MB. With the engine idle a PASSIVE
+               checkpoint found only 505 un-backfilled frames and TRUNCATE
+               emptied the file in 0.14 s -- so nothing leaks a snapshot; the
+               WAL had simply never been RESTARTED under continuous readers
+               and grew to its high-water mark, and each commit's automatic
+               checkpoint walked a wal-index of ~84K frames.
+    the actual Both designs pay for WAL maintenance in the request path:
+    mechanism    per-request connections: the LAST close runs a full
+                 checkpoint + WAL/SHM delete, and the next open recreates
+                 them (the 5-13 s stalls; the locked-open 500s);
+                 persistent connections: the WAL never restarts while any
+                 reader holds a snapshot, grows without bound, and the
+                 autocheckpoint INSIDE each COMMIT becomes O(WAL) -> the
+                 60 s hang. Neither is a SQLite limit; both are how the
+                 engine drives it. Also seen: the event loop does
+                 synchronous file I/O for the A6 intent journal and the
+                 access log (small today; it stalls EVERY route when the
+                 disk hiccups).
+    the item   9.0.1, PROPERLY: (a) the pool from attempt 2 (exclusive per
+    (bounded)  request, never per request); (b) a background checkpointer
+               thread owning ONE connection: PRAGMA wal_checkpoint(PASSIVE)
+               every ~2 s, TRUNCATE when log == checkpointed, with
+               `PRAGMA wal_autocheckpoint=0` on the pooled connections so no
+               request's COMMIT ever runs a checkpoint; (c) `PRAGMA
+               journal_size_limit` so a reset WAL is truncated; (d) the A6
+               journal append and the access log off the event loop (a
+               queue + writer thread). ~150 lines; no schema, no route, no
+               contract. Acceptance unchanged: 20 x 1,000 with 2 producers +
+               reader AND with 2 producers alone: 0 5xx, 0 calls over 5 s,
+               WAL file bounded; plus the D11 fixture; plus /v2/health
+               reporting checkpointer last_run and WAL bytes so the next
+               stall of this class is visible without py-spy.
+    status     NOT built in this release. The branch carries attempt 2 as a
+               non-deployable candidate for the record. Consumer guidance
+               stands: engine-call timeouts >= 30 s, idempotent retries.
+               Campaign 4 with one sequential runner and a paced PEW reader
+               is inside the envelope Campaigns 1-3 ran in (0 errors).
