@@ -1,0 +1,34 @@
+{
+  "schema": "vivarium_deploy_window.v1",
+  "window": "C4-20260917-W1",
+  "at": "2026-09-17T16:10:06Z",
+  "sha": "609772a79",
+  "host": "SPECTREX5",
+  "steps": {
+    "migrate": "OK"
+  },
+  "migrate": {
+    "ok": true,
+    "applied": [
+      "001_vivarium_queue.sql",
+      "002_relations_cadence_idempotency.sql",
+      "003_register_errata.sql",
+      "004_artifact_locators.sql",
+      "005_candidate_set_append_refused.sql",
+      "006_execution_attempts_and_steps.sql",
+      "007_backfill_attempts_reversible.sql",
+      "008_bundles_receipts_gates.sql",
+      "009_pew_outbox.sql",
+      "010_release_transport_failed_rows.sql"
+    ],
+    "rows_before": 1178,
+    "rows_after": 1178,
+    "terminal_rows": 1150,
+    "attempts_backfilled": 1150,
+    "attempts_unknown_reason": 1150,
+    "steps_fabricated": 0,
+    "old_rows_changed_over_old_columns": [],
+    "old_columns": 29
+  },
+  "ok": true
+}

@@ -65,7 +65,9 @@ def main() -> int:
                 ", ".join('q."%s"' % c for c in old_cols), S)
             cur.execute(proj)
             before = dict(cur.fetchall())
-            cur.execute("SELECT count(*) FROM %s.research_experiment_queue WHERE status IN ('completed','failed','cancelled')" % S)
+            # 007 backfills PRE-RELEASE rows only (created before window C4-20260917-W1's cutoff)
+            cur.execute("SELECT count(*) FROM %s.research_experiment_queue WHERE status IN ('completed','failed','cancelled') "
+                        "AND created_at < TIMESTAMPTZ '2026-09-17 14:00:00+00'" % S)
             terminal = cur.fetchone()[0]
             cur.execute("SELECT status, count(*) FROM %s.research_experiment_queue GROUP BY 1 ORDER BY 1" % S)
             out["status_histogram"] = dict(cur.fetchall())
@@ -81,9 +83,10 @@ def main() -> int:
             cur.execute("SELECT column_name FROM information_schema.columns WHERE table_schema=%s AND "
                         "table_name='research_experiment_queue' ORDER BY ordinal_position", (S,))
             new_cols = [c[0] for c in cur.fetchall() if c[0] not in old_cols]
-            cur.execute("SELECT count(*) FROM %s.research_experiment_queue WHERE bundle_declared IS NOT NULL" % S)
+            cur.execute("SELECT count(*) FROM %s.research_experiment_queue WHERE bundle_declared IS NOT NULL "
+                        "AND created_at < TIMESTAMPTZ '2026-09-17 14:00:00+00'" % S)
             declared_nonnull = cur.fetchone()[0]
-            cur.execute("SELECT count(*) FROM %s.execution_attempt" % S)
+            cur.execute("SELECT count(*) FROM %s.execution_attempt WHERE claim_grant->>'backfill' = '007'" % S)
             attempts = cur.fetchone()[0]
             cur.execute("SELECT count(*) FROM %s.execution_attempt WHERE termination->>'termination_reason' = 'UNKNOWN'" % S)
             unknown = cur.fetchone()[0]
@@ -103,8 +106,10 @@ def main() -> int:
             "all_backfilled_unknown": {"ok": unknown == attempts, "unknown": unknown},
             "no_steps_fabricated": {"ok": steps == 0, "steps": steps},
             "all_attempt_number_1": {"ok": nonfirst == 0},
-            "only_new_column_is_bundle_declared_all_null": {"ok": new_cols == ["bundle_declared"] and declared_nonnull == 0,
-                                                            "new_columns": new_cols, "non_null": declared_nonnull},
+            # pre-window only: once 008 is in migrations/ the column exists before the copy
+            "only_new_column_is_bundle_declared_all_null": {"ok": (new_cols == ["bundle_declared"] and declared_nonnull == 0) if new_cols
+                                                            else True, "new_columns": new_cols, "non_null": declared_nonnull,
+                                                            "note": None if new_cols else "n/a after the window (008 already in migrations/)"},
         }
         # spot check: the rebuilt transition function still freezes relations on a copied terminal row
         with conn.cursor() as cur:

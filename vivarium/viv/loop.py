@@ -404,13 +404,18 @@ class Vivarium:
         record.prior = prior
 
         def key(kind, parts=()):
-            """The step's idempotency key (None when attempts are off). The
-            runner hands it to the engine as Idempotency-Key on the posts
-            that mint ids, so a transport retry or a NEW ATTEMPT re-post
-            answers with the SAME id (Daedalus #354; the D16 routes)."""
+            """The ENGINE-facing idempotency key for a step (None when attempts
+            are off): the step key SCOPED TO THIS ROW. The step key alone is
+            per design, on purpose (two rows of one design share it; VIV22
+            keeps replay inside a row) -- but the engine's idempotency store
+            is per client, and canary run 8 reused a design across rows and
+            got 409 "idempotency key reused for a materially different
+            request". Scoping by experiment_id makes the key unique per row
+            and stable across that row's attempts, which is what a retry or a
+            NEW ATTEMPT's re-post needs (Daedalus #354; the D16 routes)."""
             if ctx is None or not ctx.enabled:
                 return None
-            return _sk.step_key(ctx.design_digest, kind, list(parts))
+            return _sk.engine_key(_sk.step_key(ctx.design_digest, kind, list(parts)), ctx.experiment_id)
         record.key = key
         return record
 

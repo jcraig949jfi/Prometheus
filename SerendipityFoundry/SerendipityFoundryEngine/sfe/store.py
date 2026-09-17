@@ -646,6 +646,14 @@ WAL_SIZE_LIMIT_BYTES = 64 * 1024 * 1024
 #: ~10 s write-lock wait for both writers (R2/R3 of the 9.0.1 acceptance).
 WAL_SOFT_LIMIT_BYTES = 8 * 1024 * 1024
 WAL_FAST_INTERVAL_S = 0.05
+#: TRUNCATE (writer-blocking) only after this many seconds without a write
+WAL_IDLE_S = 3.0
+#: the HARD VALVE: a reader that never pauses starves SQLite's own WAL restart
+#: (measured 3.4 GB in 289 s under a tight reader); above this size the
+#: checkpointer forces a RESTART even though it blocks writers for the db
+#: fsync (seconds). Rare by construction: once per 512 MB of WAL, i.e. never
+#: at campaign rates, ~every 5 min at 240 generations/s.
+WAL_HARD_LIMIT_BYTES = 512 * 1024 * 1024
 
 
 class Checkpointer:
@@ -667,9 +675,33 @@ class Checkpointer:
     debugger. A tick that raises is counted and the thread keeps going; the
     thread dying is itself visible (alive=false, last_run_at ageing)."""
 
-    def __init__(self, db_path: str, *, interval_s: float = 2.0):
+    def __init__(self, db_path: str, *, interval_s: float = 2.0,
+                 reset_mode: str = "truncate_when_idle"):
+        """reset_mode -- how the WAL FILE gets reset (all modes checkpoint
+        PASSIVE continuously; the difference is the writer-blocking step):
+          "truncate_when_idle" (SHIPPED) TRUNCATE only after WAL_IDLE_S
+                              without a write; never blocks a writer. Under a
+                              SATURATING writer that never pauses (100-240
+                              generations/s, 300-800x any campaign's rate)
+                              SQLite's own WAL restart is starved and the
+                              file grows for the duration (3.4 GB in 289 s at
+                              R2); at campaign rates the passive backfill
+                              completes between writes and the WAL restarts
+                              by itself. Growth is visible on /v2/health.
+          "restart_when_big"  REJECTED: a forced RESTART above a hard limit
+                              held writers off > 30 s at 538 MB (a writer hit
+                              busy_timeout -> 500 "database is locked"); and
+                              at 8 MB it fired 1,556 times, 34 stalls,
+                              throughput halved (modes_ab/M1,
+                              accept901_v6_valve_rejected).
+          "truncate_when_clean" TRUNCATE whenever clean (v2/v3): backfill +
+                              fsync with writers blocked, 5-13 s lock-step
+                              stalls (measured, defender_ab/A1 and B1)."""
         self.db_path = str(db_path)
         self.interval_s = float(interval_s)
+        self.reset_mode = reset_mode
+        self.resets = 0
+        self.last_reset = None
         self._stop = threading.Event()
         self._lock = threading.Lock()
         self._thread: Optional[threading.Thread] = None
@@ -711,12 +743,44 @@ class Checkpointer:
         try:
             out["passive"] = tuple(cx.execute("PRAGMA wal_checkpoint(PASSIVE)").fetchone())
             busy, log_frames, backfilled = out["passive"]
-            if busy == 0 and log_frames == backfilled:
-                # clean: try to reset + truncate; refused (busy=1) if a reader
-                # holds the WAL, never blocked
-                out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
+            # TRUNCATE (like FULL/RESTART) BLOCKS NEW WRITERS for the whole
+            # backfill + database fsync (SQLite docs), even with the busy
+            # handler off. Measured (defender_ab/A1): both writers waited
+            # 5-13 s in lock-step, 9 times, whenever the checkpointer got in
+            # under load. So: TRUNCATE only when the engine has been IDLE
+            # (no write-lock acquisition for WAL_IDLE_S). Under load, PASSIVE
+            # only: the next writer restarts the WAL from its beginning once
+            # it is fully backfilled, and journal_size_limit truncates the
+            # file at that restart -- bounded without ever blocking a writer.
             wal = self.db_path + "-wal"
             import os
+            wal_bytes = os.path.getsize(wal) if os.path.exists(wal) else 0
+            clean = (busy == 0 and log_frames == backfilled)
+            idle = (WRITE_LOCK_STATS.last_at is None
+                    or time.time() - WRITE_LOCK_STATS.last_at > WAL_IDLE_S)
+            if self.reset_mode == "truncate_when_clean" and clean:
+                out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
+            elif self.reset_mode == "truncate_when_idle" and clean and idle:
+                out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
+            elif self.reset_mode == "restart_when_big" and clean and (idle or wal_bytes > WAL_HARD_LIMIT_BYTES):
+                # idle: TRUNCATE is free (nobody to block) and shrinks the file.
+                # loaded: PASSIVE only, and SQLite restarts the WAL by itself
+                # the moment a writer finds it backfilled with no reader on
+                # it -- which happens whenever the reader pauses (the
+                # campaign shape). Only a reader that NEVER pauses starves
+                # that; above WAL_HARD_LIMIT_BYTES the valve forces a RESTART
+                # (writer-blocking for the db fsync -- measured 5-15 s --
+                # hence rare by construction). Tried and rejected: RESTART at
+                # 8 MB (modes_ab/M1: 1,556 resets, 34 stalls, throughput
+                # halved) and synchronous=FULL on this connection (every
+                # checkpoint then fsyncs the db).
+                mode = "TRUNCATE" if idle else "RESTART"
+                out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(%s)" % mode).fetchone())
+                if out["truncate"][0] == 0:
+                    out["reset_mode_used"] = mode
+            if out["truncate"] is not None and out["truncate"][0] == 0:
+                self.resets += 1
+                self.last_reset = time.time()
             wal_bytes = os.path.getsize(wal) if os.path.exists(wal) else 0
             db_bytes = os.path.getsize(self.db_path) if os.path.exists(self.db_path) else 0
             with self._lock:
@@ -742,7 +806,7 @@ class Checkpointer:
         return out
 
     def _connect(self):
-        # busy handler OFF (timeout=0): PASSIVE never invokes it, and TRUNCATE
+        # busy handler OFF (timeout=0): PASSIVE never invokes it, and a reset
         # must be REFUSED (busy=1) when a reader holds the WAL, not waited for
         # -- measured 5.6 s of blocking with the default handler in the test
         # that pins this.
@@ -781,7 +845,11 @@ class Checkpointer:
                     "max_wal_bytes_seen": self.max_wal_bytes_seen,
                     "wal_size_limit_bytes": WAL_SIZE_LIMIT_BYTES,
                     "wal_soft_limit_bytes": WAL_SOFT_LIMIT_BYTES,
+                    "wal_hard_limit_bytes": WAL_HARD_LIMIT_BYTES,
                     "fast_interval_s": WAL_FAST_INTERVAL_S,
+                    "reset_mode": self.reset_mode, "resets": self.resets,
+                    "last_reset_at": self.last_reset,
+                    "idle_s_for_truncate": WAL_IDLE_S,
                     "request_path_autocheckpoint": 0}
 
 

@@ -1,0 +1,155 @@
+{
+ "phase": "qualify",
+ "at": "2026-09-17T17:01:55Z",
+ "shapes": [
+  {
+   "shape": "engine is schema 9 on the production ledger",
+   "held": true
+  },
+  {
+   "shape": "v9 columns present",
+   "held": true
+  },
+  {
+   "shape": "every pre-migration world reads NULL facts (no backfill)",
+   "held": false,
+   "worlds": 413
+  },
+  {
+   "shape": "every pre-migration observation reads logical_time NULL",
+   "held": false,
+   "old": 1933,
+   "null_now": 1770
+  },
+  {
+   "shape": "head hashes of the 25 oldest worlds unchanged",
+   "held": true,
+   "n": 25
+  },
+  {
+   "shape": "event count up to the backup's last seq identical",
+   "held": true,
+   "events": 12611
+  },
+  {
+   "shape": "pre-migration observation anchors verify",
+   "held": true,
+   "verified": 20,
+   "total": 20
+  },
+  {
+   "shape": "capabilities route: schema 9, features, read semantics, no forbidden words",
+   "held": true
+  },
+  {
+   "shape": "manifest hash round-trip",
+   "held": true
+  },
+  {
+   "shape": "logical_time write/read",
+   "held": true
+  },
+  {
+   "shape": "generic events: ordered, idempotent duplicate, undeclared kind refused",
+   "held": true
+  },
+  {
+   "shape": "pagination traversal == single page; resume from a cursor exact",
+   "held": true,
+   "pages": 6,
+   "events": 52
+  },
+  {
+   "shape": "artifact list",
+   "held": true
+  },
+  {
+   "shape": "checkpoint digest + fork ancestry + changed-field diff",
+   "held": true
+  },
+  {
+   "shape": "advisory read semantics + strict extra-field rejection",
+   "held": true,
+   "nokey": 200,
+   "wrongkey": 403,
+   "extra": 422
+  },
+  {
+   "shape": "typed termination write/read; writes refused after",
+   "held": true
+  },
+  {
+   "shape": "harness 12/12",
+   "held": true,
+   "tail": "capabilities PASS\n=============================================================="
+  },
+  {
+   "shape": "isolation 7/7",
+   "held": true,
+   "tail": "properties hold\n================================================================"
+  },
+  {
+   "shape": "contract gate CONFORMANT (0)",
+   "held": true,
+   "tail": "==================================================\nCONFORMANT -- safe to proceed"
+  },
+  {
+   "shape": "D11 fixture (running-engine mode) all shapes held",
+   "held": true,
+   "tail": " 0.87, \"checkpoint\": 0.0}\n  receipt: deploy/RELEASE_9_0_1_2026-09-17\\longrun_restart_production.json"
+  }
+ ],
+ "engine": {
+  "api": "v2",
+  "schema_version": 9,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "session_enforcement": "advisory",
+  "science_profile": "warn",
+  "max_artifact_bytes": 33554432,
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "subprocess": {
+  "harness": {
+   "rc": 0,
+   "s": 0.9,
+   "tail": [
+    "  PASS  auth wall (unauthenticated rejected)",
+    "  12/12 capabilities PASS",
+    "=============================================================="
+   ]
+  },
+  "isolation": {
+   "rc": 0,
+   "s": 1.7,
+   "tail": [
+    "  PASS  artifact confidentiality (no cross-experimenter import / id oracle)",
+    "  7/7 isolation properties hold",
+    "================================================================"
+   ]
+  },
+  "gate": {
+   "rc": 0,
+   "s": 0.5,
+   "tail": [
+    "",
+    "==========================================================================",
+    "CONFORMANT -- safe to proceed"
+   ]
+  },
+  "longrun_restart": {
+   "rc": 0,
+   "s": 1.3,
+   "tail": [
+    "",
+    "  15 shapes held, 0 broke; timings {\"write_150\": 0.87, \"checkpoint\": 0.0}",
+    "  receipt: deploy/RELEASE_9_0_1_2026-09-17\\longrun_restart_production.json"
+   ]
+  }
+ },
+ "ok": false,
+ "held": 18,
+ "broke": 2
+}

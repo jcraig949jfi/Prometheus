@@ -153,6 +153,37 @@ def test_cold_scan_reads_another_process_journal(tmp_path):
     assert v["state"] == "CONFIRMED_EFFECT" and v["ref"] == "wld_1"
 
 
+def test_persistent_handle_rolls_over_at_the_day_boundary(tmp_path, monkeypatch):
+    """9.0.1 keeps the day file OPEN across lines. The open handle must not pin
+    yesterday's file once the UTC date changes: a line written after midnight
+    lands in the new day's file, the old handle is closed, and a cold scan
+    reads both days (open_intents/attest span the directory, not one file)."""
+    import time as _time
+    j = attestation.Journal(str(tmp_path / "inc"))
+    day = ["2026-09-17"]
+    real_strftime = _time.strftime
+
+    def fake_strftime(fmt, *args):
+        return day[0] if fmt == "%Y-%m-%d" else real_strftime(fmt, *args)
+    monkeypatch.setattr(attestation.time, "strftime", fake_strftime)
+    rid1 = j.intent(route="POST /v2/x", idem_key="d1")      # sync: on disk now
+    fh_day1 = j._fh
+    assert fh_day1 is not None and j._fh_path.endswith("2026-09-17.jsonl")
+    day[0] = "2026-09-18"
+    rid2 = j.intent(route="POST /v2/x", idem_key="d2")
+    j.effected(rid1, kind="POST /v2/x", ref="wld_1")        # async: goes through the writer thread
+    j.flush()
+    assert j._fh_path.endswith("2026-09-18.jsonl") and fh_day1.closed
+    d1 = (tmp_path / "inc" / "2026-09-17.jsonl").read_text(encoding="ascii").splitlines()
+    d2 = (tmp_path / "inc" / "2026-09-18.jsonl").read_text(encoding="ascii").splitlines()
+    assert [json.loads(x)["rid"] for x in d1] == [rid1]
+    assert [(json.loads(x)["rid"], json.loads(x)["kind"]) for x in d2] == [(rid2, "intent"), (rid1, "effected")]
+    assert j.degraded is False and j.counts["write_failures"] == 0
+    cold = attestation.Journal(str(tmp_path / "inc"))       # fresh memory, both day files
+    assert cold.attest(rid1)["state"] == "CONFIRMED_EFFECT"
+    assert cold.attest(rid2)["state"] != "CONFIRMED_EFFECT"
+
+
 def test_fail_open_journal_still_serves(tmp_path):
     a = create_app(str(tmp_path / "w.db"), incidents_dir="/nonexistent/x/y/z")
     with TestClient(a) as c:

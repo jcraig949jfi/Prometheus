@@ -302,9 +302,12 @@ class Canary:
         self.check(L + ".attempt2_replayed_world_experiment_claim_%s_one_world" % claim_expect.lower(),
                    by.get("world") == ["REPLAYED"] and by.get("experiment") == ["REPLAYED"]
                    and by.get("claim") == [claim_expect]
-                   and by.get("observe", []).count("REPLAYED") == killed["observations_before_kill"]
+                   # the engine may hold MORE observations than the recorder saw at the kill (a POST
+                   # that landed before its step result did -- recovered by content): replayed >= recorded
+                   and by.get("observe", []).count("REPLAYED") >= killed["observations_before_kill"]
                    and len(by.get("observe", [])) == n_rep and len(world_ids) == 1,
-                   statuses=by, world_ids=sorted(x for x in world_ids if x))
+                   statuses=by, world_ids=sorted(x for x in world_ids if x),
+                   recorded_at_kill=killed["observations_before_kill"])
         try:
             wid = next(iter(x for x in world_ids if x))
             e = self.engine_read(wid)

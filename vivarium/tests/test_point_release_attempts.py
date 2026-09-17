@@ -773,11 +773,17 @@ def test_the_step_key_travels_as_the_idempotency_key_when_the_client_accepts_it(
     client = KeyedClient()
     assert _viv(schema, client, spec).tick(conn).outcome == EXECUTED
     design = _spec.spec_hash(spec)
-    assert client.keys[("observe", 0)] == _sk.step_key(design, "observe", [0])
-    assert client.keys[("observe", 1)] == _sk.step_key(design, "observe", [1])
+    assert client.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid)
+    assert client.keys[("observe", 1)] == _sk.engine_key(_sk.step_key(design, "observe", [1]), eid)
     wid = next(k for k in client.keys if k[0] == "experiment")[1]
-    assert client.keys[("experiment", wid)] == _sk.step_key(design, "experiment", [wid])
-    # NEGATIVE: a client without the parameter is called without it (the recording doubles above)
+    assert client.keys[("experiment", wid)] == _sk.engine_key(_sk.step_key(design, "experiment", [wid]), eid)
+    # NEGATIVE (canary run 8): the SAME design enqueued as a second row must not reuse the engine key
+    eid2 = _enqueue(conn, schema, spec)
+    client2 = KeyedClient()
+    assert _viv(schema, client2, spec).tick(conn).outcome == EXECUTED
+    assert client2.keys[("observe", 0)] != client.keys[("observe", 0)]
+    assert client2.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid2)
+    # a client without the parameter is called without it (the recording doubles above)
 
 
 def test_the_verifiers_read_schema_9_page_objects_and_refuse_a_truncated_page():
@@ -794,3 +800,70 @@ def test_the_verifiers_read_schema_9_page_objects_and_refuse_a_truncated_page():
     assert SfeRunner._observation_present(C(), "w", None, exp_id="e", repeat_index=0) == "obs_1"
     assert SfeRunner._items({"observations": [1], "truncated": True}, "observations") is None
     assert SfeRunner._items([1, 2], "observations") == [1, 2]
+
+
+# ------------------------------------------------------------- 010 (s14 canary run 7 row D): a transport-failed row is re-attemptable
+
+def test_a_row_failed_on_engine_transport_is_released_to_a_new_attempt_and_nothing_else_is(conn, drafted, tmp_path):
+    """POSITIVE: attempt 1 closes FAILED/ENGINE_TRANSPORT (a socket error
+    after the commit; the engine has the observation); `release --new-attempt`
+    takes the terminal `failed` row back to queued; attempt 2 replays the
+    world, the experiment, the recovered observation and finishes with ONE
+    world. NEGATIVE: a row failed on EXECUTOR_ERROR / PREREQUISITE_FAILED /
+    ENGINE_REJECTED is refused by the queue AND by the trigger. CHEAT: the
+    bare UPDATE failed -> queued without the release setting is refused."""
+    import psycopg2
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-010", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = OriginalOnceClient()
+    store = tmp_path / "sessions"
+    v = _viv(schema, client, spec, worker="tr-w1")
+    v._runner.session_store = store
+    real = client.observation
+
+    def commit_then_socket_error(wid, exp_id, content, outcome, **kw):
+        real(wid, exp_id, content, outcome, **kw)
+        raise OSError("connection reset by peer")
+    client.observation = commit_then_socket_error
+    eid = _enqueue(conn, schema, spec)
+    r1 = v.tick(conn)
+    assert r1.outcome == FAILED and r1.failure_class == "ENGINE_TRANSPORT"
+    assert _q.get(conn, eid, schema=schema)["status"] == "failed"
+    client.observation = real
+    # CHEAT: no release setting -> frozen
+    with pytest.raises(psycopg2.Error, match="frozen"):
+        with conn.cursor() as cur:
+            cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='queued' WHERE experiment_id=%s", (eid,))
+    conn.rollback()
+    row = _q.release_stranded(conn, eid, actor="op", reason="engine stall", schema=schema, new_attempt=True)
+    conn.commit()
+    assert row["status"] == "queued"
+    assert [e["event_type"] for e in _q.events(conn, eid, schema=schema)][-1] == "transport_failure_released"
+    v2 = _fresh_process(schema, client, spec, "tr-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    assert [a["terminal_state"] for a in atts] == ["FAILED", "COMPLETED"] and atts[1]["parent_attempt_id"] == atts[0]["attempt_id"]
+    st2 = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[1]["attempt_id"])}
+    assert st2[("world", ("plain",))] == "REPLAYED" and st2[("observe", (0,))] == "REPLAYED" and st2[("observe", (1,))] == "NEW"
+    assert sum(1 for name, _ in client.calls if name == "create_world") == 1
+    # NEGATIVE: a design/executor failure stays terminal
+    spec_b = make_spec(hypothesis="probe rejected")
+    eid_b = _enqueue(conn, schema, spec_b)
+    client_b = VerifyingClient()
+    from sfclient import EngineError
+
+    def refuse(*a, **k):
+        raise EngineError(409, {"error": "x"})
+    client_b.observation = refuse
+    assert _viv(schema, client_b, spec_b).tick(conn).failure_class == "ENGINE_REJECTED"
+    with pytest.raises(RuntimeError, match="not ENGINE_TRANSPORT"):
+        _q.release_stranded(conn, eid_b, actor="op", reason="x", schema=schema, new_attempt=True)
+    conn.rollback()
+    with pytest.raises(psycopg2.Error, match="frozen"):                     # the trigger says the same
+        with conn.cursor() as cur:
+            cur.execute("SET LOCAL viv.release = 'new_attempt'")
+            cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='queued' WHERE experiment_id=%s", (eid_b,))
+    conn.rollback()
