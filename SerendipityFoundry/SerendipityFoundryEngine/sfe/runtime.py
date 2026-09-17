@@ -3344,7 +3344,9 @@ class Foundry:
 
     def import_artifact(self, dst_world: str, src_world: str,
                         src_artifact_id: str, *,
-                        client_id: Optional[str] = None) -> dict:
+                        client_id: Optional[str] = None,
+                        idem_key: Optional[str] = None,
+                        request_hash: Optional[str] = None) -> dict:
         """Explicit cross-world import. The imported artifact is recorded with
         permanent provenance (origin=IMPORTED, source world/artifact/hash) so it
         can NEVER be mistaken for something independently discovered in the
@@ -3352,6 +3354,12 @@ class Foundry:
         policy (T14)."""
         with self.store.write() as cx:
             dst = self._authorize_write(cx, dst_world, client_id)   # must own dest
+            # 9.0.1 (Vivarium D16): the import id is content-derived, so a
+            # replay already returns the SAME artifact_id; the key stops the
+            # replay from appending a SECOND ARTIFACT_IMPORTED event.
+            replay = self._idem_check(cx, dst["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             src = self._world_row(cx, src_world)
             same_client = (client_id is None
                            or src["client_id"] == client_id)
@@ -3428,9 +3436,12 @@ class Foundry:
                 (new_aid, dst_world, srow["kind"], srow["blob_hash"],
                  srow["meta"], src_world, src_artifact_id, ev["event_seq"],
                  now(), ev["event_seq"]))
-            return {"artifact_id": new_aid, "origin": "IMPORTED",
+            out = {"artifact_id": new_aid, "origin": "IMPORTED",
                     "source_world": src_world, "source_artifact": src_artifact_id,
                     "source_hash": srow["blob_hash"]}
+            self._idem_record(cx, dst["client_id"], idem_key, dst_world, "import",
+                              request_hash, out)
+            return out
 
     # ================= checkpoint + fork ================================
     def checkpoint(self, world_id: str, *, client_id: Optional[str] = None,

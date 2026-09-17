@@ -1328,9 +1328,12 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.post("/v2/worlds/{wid}/import")
     def import_artifact(wid: str, body: ImportArtifact, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
-                        f: Foundry = Depends(get_foundry)):
+                        f: Foundry = Depends(get_foundry),
+                        idem: Optional[str] = Header(default=None,
+                                                     alias="Idempotency-Key")):
         return f.import_artifact(wid, body.source_world, body.source_artifact,
-                                 client_id=cid)
+                                 client_id=cid, idem_key=idem,
+                                 request_hash=_req_hash("import", wid, body))
 
     @app.post("/v2/worlds/{wid}/budget/consume")
     def consume(wid: str, body: ConsumeBudget, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
