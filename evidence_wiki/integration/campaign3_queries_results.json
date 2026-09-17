@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-17T06:58:37",
+ "ran_at": "2026-09-17T07:09:11",
  "service": "http://127.0.0.1:8377/api/v1",
  "answers": {
   "Q1_delay_invariance_measurements": {
@@ -488,6 +488,9 @@
    ],
    "intended_equals_realized_in_every_run": true,
    "import_share_final_by_quality": {
+    "mature": [
+     1.0
+    ],
     "control": [
      0,
      0.86,
@@ -495,9 +498,6 @@
      0.88,
      0.9,
      0.92
-    ],
-    "mature": [
-     1.0
     ],
     "none": [
      0
@@ -562,7 +562,19 @@
    "cmp3_reachability_rows": 486,
    "censored": 321,
    "by_harness": {
-    "C3-SFE-03": {
+    "C3-SFE-04": {
+     "censored": 65,
+     "not_censored": 1
+    },
+    "C3-SFE-05": {
+     "censored": 60,
+     "not_censored": 0
+    },
+    "C3-SFE-01": {
+     "censored": 24,
+     "not_censored": 0
+    },
+    "C3-SFE-08": {
      "censored": 24,
      "not_censored": 0
     },
@@ -570,23 +582,11 @@
      "censored": 104,
      "not_censored": 124
     },
-    "C3-SFE-08": {
-     "censored": 24,
-     "not_censored": 0
-    },
-    "C3-SFE-05": {
-     "censored": 60,
-     "not_censored": 0
-    },
     "C3-SFE-07": {
      "censored": 20,
      "not_censored": 40
     },
-    "C3-SFE-04": {
-     "censored": 65,
-     "not_censored": 1
-    },
-    "C3-SFE-01": {
+    "C3-SFE-03": {
      "censored": 24,
      "not_censored": 0
     }

@@ -129,20 +129,506 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:genann/upstream/tree/genann.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:genann/upstream/tree/genann.h"
+   }
+  ],
+  "inspected_files": [
+   "genann.c (all)",
+   "genann.h, test.c, example*.c (skimmed)"
+  ],
+  "date": "2026-09-17T15:40Z",
+  "note": "backpropagation with nothing else: one weight array laid out layer by layer with a bias weight first, a forward pass that walks it once, and a training step that computes deltas backward and applies plain SGD per example -- no momentum, no batching, no regularisation",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:40Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/codeplea/genann@8dcd1db031c53176cffcbe4a7530ce040bb59b1d",
+   "payload_manifest_id": "techne tree_sha256 e35c6295244d4553a6043efd57f4ec261c9d86cb29398da01543d0730b25577f (19 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/genann.c",
+     "payload_hash_read": "82b7da1dbc0bebd8bb22a08f1e794904aa5de9d9df355a679cd24c60a1266027",
+     "techne_recorded_hash": "82b7da1dbc0bebd8bb22a08f1e794904aa5de9d9df355a679cd24c60a1266027",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/genann.h",
+     "payload_hash_read": "3da623e2d1c77db0e201acd3633b2bab3c0d8d012fba7e6d290b0b947f20fe23",
+     "techne_recorded_hash": "3da623e2d1c77db0e201acd3633b2bab3c0d8d012fba7e6d290b0b947f20fe23",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "fossil_ancestry": "genann",
+   "human_name": "genann_init / the weight, output, delta arrays; the -1.0 bias term in genann_run",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one malloc holds the struct, all weights (inputs+1 per hidden neuron in layer 1, hidden+1 per neuron after), all neuron outputs and all deltas; the bias is implemented as an extra weight multiplied by a constant -1.0 at the head of every neuron's dot product; every routine locates a layer by arithmetic on (inputs, hidden, hidden_layers, outputs)",
+   "input": "the four size parameters",
+   "output": "an allocated network with random weights in [-0.5, 0.5)",
+   "state": "weights, outputs, deltas",
+   "update": "weights per training step",
+   "assumptions": [
+    "all hidden layers have the same width; a fully connected topology; doubles"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+    "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output"
+   ],
+   "fitness_value_in_ancestor": "cache-friendly, copyable with memcpy (genann_copy), serialisable as a list of numbers",
+   "failure_landscape": "by reading: the size checks refuse absurd dimensions; no other guard",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:genann/upstream/tree/genann.c:genann_init, genann_copy, genann_run (the *w++ * -1.0 lines)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "genann_init and the array pointers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "fossil_ancestry": "genann",
+   "human_name": "genann_run; genann_act_sigmoid / _cached (4096-entry lookup) / linear / threshold / tanh / relu",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "copy the inputs into the output array; for each neuron of each layer compute bias plus the dot product with the previous layer's outputs, apply the layer's activation function pointer, store; the default sigmoid is a 4096-entry table over [-15, 15] built once (with clamping outside), so the forward pass avoids exp()",
+   "input": "an input vector",
+   "output": "the output layer's values (a pointer into the network's own buffer)",
+   "state": "the output array (overwritten per call)",
+   "update": "per call",
+   "assumptions": [
+    "the lookup's quantisation (30/4096 per step) is below the training noise; assert(!isnan) is the only numerical check"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+    "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output"
+   ],
+   "fitness_value_in_ancestor": "a forward pass with no allocation and no transcendental calls",
+   "failure_landscape": "by reading: the cached sigmoid is not smooth, so its derivative used in training is the analytic y(1-y) of the QUANTISED output, a small mismatch",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:genann/upstream/tree/genann.c:genann_run, genann_act_*, genann_init_sigmoid_lookup"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "genann_run and the activation functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "fossil_ancestry": "genann",
+   "human_name": "genann_train; genann_act_derivative",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "run forward; output deltas = (target - output) x f'(output) (or just the difference for a linear output); hidden deltas layer by layer backward = f'(output) x sum over the next layer of (its delta x the weight from this neuron), with the weight index computed from the layout; then every weight += learning_rate x delta x input-to-that-weight, bias weight with input -1; the derivative is computed from the stored activation value (y(1-y), 1-y^2, step for relu), so the forward outputs must still be in the buffer",
+   "input": "one (input, target) pair; a learning rate",
+   "output": "updated weights in place",
+   "state": "the delta array",
+   "update": "per example",
+   "assumptions": [
+    "squared error (the delta form assumes it); one example at a time; the caller loops over epochs and shuffles if it wants"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+    "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly"
+   ],
+   "fitness_value_in_ancestor": "the whole learning rule in ~90 lines; every index is derived from the layout, no matrices",
+   "failure_landscape": "by reading: no gradient clipping; a large learning rate diverges; relu with the threshold derivative can die (zero gradient) and nothing revives it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rumelhart, Hinton & Williams 1986 backpropagation in its most literal form; the author's stated goal is minimalism",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:genann/upstream/tree/genann.c:genann_train, genann_act_derivative"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "genann_train",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DIVERGES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "genann_read / genann_write (text serialisation), genann_free, the examples and the minctest harness",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:genann/upstream/tree/genann.c:genann_read, genann_write; test.c",
+   "note": "test.c is a ready oracle (XOR etc.) for a Stage C run on a host with a C compiler",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "genann"
+  },
+  {
+   "candidate": "'neural network' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "layout, forward pass and learning rule are separately replaceable; the vault's hopfield and minisom bodies share the first two and not the third",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "genann"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "genann::P.a_fixed_parametric_map_must_reduce_error_on_examples_presented_one_at_a_time_using_only_a_local_error_signal_per_parameter",
+   "source_fossil": "genann",
+   "source_evidence": "genann.c genann_train; record tags backpropagation / learning",
+   "condition": "an organism holds parameters; the world shows one (input, target) at a time and scores the output; the organism may change each parameter only by a quantity computed from signals available at that parameter",
+   "resource_or_constraint": "one pass per example; parameters fixed in number",
+   "failure_condition": "error does not fall, or falls then diverges",
+   "world_punishes": "global updates (not local) and updates that need the whole dataset",
+   "world_rewards": "a chain rule that delivers a local error to every parameter",
+   "observable_consequence": "training error vs examples seen on XOR and on a noisy regression, across learning rates",
+   "vacuity_condition": "a linearly separable target (a perceptron suffices) or a lookup-table-sized world",
+   "trivial_shortcuts": "memorising examples; a world that reveals the target function",
+   "cheat_control": "an organism given the target function's parameters must show zero error immediately; the ancestor at a learning rate 100x too high must diverge: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: minimal feed-forward neural network training (Van Winkle, genann)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "to": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "to": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "stored outputs are the derivative's input",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "to": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "genann",
+   "relation": "algorithm_from",
+   "to": "Rumelhart, Hinton & Williams 1986 (backpropagation); the multilayer perceptron",
+   "note": "from the code and the record; the record's pre1980 era is the algorithm's ancestry, not the body's date",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing ran; test.c holds XOR/AND/OR training checks that would be the Stage C oracle",
+   "the cached-sigmoid derivative mismatch is a reading-level claim"
+  ],
+  "note": "every function in genann.c is an organ or rejected",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

@@ -26,8 +26,14 @@ Per event the answer is one of
                         row untouched
     rejected_malformed  missing/invalid fields: nothing stored
 and `gap` (true when seq skipped ahead of the checkpoint; the gap is
-recorded on the checkpoint, never healed). A producer never has to infer
-PEW's state: the checkpoint is readable, and every answer is typed.
+recorded on the checkpoint, never healed by inference). Every answer also
+carries `duplicate` (bool) and `contiguous_seq` (the highest sequence with
+every lower one delivered, counting content-duplicates delivered under a
+new sequence -- Vivarium #335: a replayed step re-enqueues the same fact
+under a new dense sequence; its id is content-derived, so it is ONE row,
+and its sequence is recorded in ingestion_checkpoints.duplicate_seqs,
+migration 015). A producer never has to infer PEW's state: the checkpoint
+is readable, and every answer is typed. Inbox contract: pew.events.v1.
 """
 from __future__ import annotations
 
@@ -206,6 +212,23 @@ def mount(app, get_conn, identity, log_read):
         return {"n": len(rows), "conflicts": rows}
 
     # ------------------------------------------------------------ events
+    def _contiguous(cur, producer, stream):
+        """Highest sequence n such that every sequence up to n has been
+        delivered (as a stored event or as a content-duplicate). Vivarium
+        #335: 'sequence stays for gaps, id for duplicates'."""
+        cur.execute("SELECT seq FROM ew.producer_events WHERE producer=%s AND stream=%s", (producer, stream))
+        seen = {r[0] for r in cur.fetchall()}
+        cur.execute("SELECT duplicate_seqs FROM ew.ingestion_checkpoints WHERE producer=%s AND stream=%s", (producer, stream))
+        row = cur.fetchone()
+        if row and row[0]:
+            seen |= set(row[0])
+        if not seen:
+            return None
+        n = 0
+        while (n + 1) in seen:
+            n += 1
+        return n if n else None
+
     def _ingest_event(cur, ev: ProducerEventIn, ident):
         pd = "sha256:" + hashlib.sha256(canon(ev.payload).encode()).hexdigest()
         cur.execute("SELECT event_id, payload_digest, seq FROM ew.producer_events WHERE event_id=%s OR (producer=%s AND stream=%s AND seq=%s)",
@@ -216,12 +239,27 @@ def mount(app, get_conn, identity, log_read):
         last_seq = cp[0] if cp else None
         if existing:
             if any(e[1] == pd for e in existing):
-                return {"event_id": ev.event_id, "status": "duplicate", "gap": False, "checkpoint_seq": last_seq}
+                # A content-duplicate under a NEW sequence (a replayed step,
+                # Vivarium #335) is one fact and one row, but the sequence was
+                # delivered: record it so the checkpoint shows no phantom gap.
+                seq_seen = any(e[2] == ev.seq for e in existing)
+                if not seq_seen:
+                    new_last = ev.seq if (last_seq is None or ev.seq > last_seq) else last_seq
+                    cur.execute("INSERT INTO ew.ingestion_checkpoints(producer, stream, last_seq, rows_seen, rows_new, duplicate_seqs, updated_at) "
+                                "VALUES (%s,%s,%s,1,0,%s::jsonb,now()) ON CONFLICT (producer, stream) DO UPDATE SET "
+                                "last_seq=%s, rows_seen=ew.ingestion_checkpoints.rows_seen+1, "
+                                "duplicate_seqs=ew.ingestion_checkpoints.duplicate_seqs || %s::jsonb, updated_at=now()",
+                                (ev.producer, ev.stream, ev.seq, json.dumps([ev.seq]), new_last, json.dumps([ev.seq])))
+                    last_seq = new_last
+                return {"event_id": ev.event_id, "status": "duplicate", "duplicate": True, "gap": False,
+                        "checkpoint_seq": last_seq, "contiguous_seq": _contiguous(cur, ev.producer, ev.stream),
+                        "seq_recorded": not seq_seen}
             cur.execute("INSERT INTO ew.ingestion_conflicts(producer, stream, seq, stored_digest, offered_digest, "
                         "stored_observation_id, note) VALUES (%s,%s,%s,%s,%s,%s,%s)",
                         (ev.producer, ev.stream, ev.seq, existing[0][1], pd, existing[0][0],
                          "same (producer, stream, seq) or event_id with a different payload digest; refused, stored row untouched"))
-            return {"event_id": ev.event_id, "status": "checkpoint_mismatch", "gap": False, "checkpoint_seq": last_seq,
+            return {"event_id": ev.event_id, "status": "checkpoint_mismatch", "duplicate": False, "gap": False,
+                    "checkpoint_seq": last_seq, "contiguous_seq": _contiguous(cur, ev.producer, ev.stream),
                     "stored_digest": existing[0][1], "offered_digest": pd}
         gap = last_seq is not None and ev.seq > last_seq + 1
         cur.execute("SELECT nextval('ew.canonical_revision_seq')")
@@ -241,7 +279,8 @@ def mount(app, get_conn, identity, log_read):
                     (ev.producer, ev.stream, ev.seq, ev.event_id, pd, gaps_add, new_last, ev.seq, gaps_add))
         cur.execute("INSERT INTO ew.write_log(endpoint, machine, agent, payload_sha256, accepted, result_object_id) "
                     "VALUES ('events', %s, %s, %s, true, %s)", (ident["machine"], ident["agent"], pd[7:], ev.event_id))
-        return {"event_id": ev.event_id, "status": "accepted", "gap": gap, "checkpoint_seq": new_last,
+        return {"event_id": ev.event_id, "status": "accepted", "duplicate": False, "gap": gap, "checkpoint_seq": new_last,
+                "contiguous_seq": _contiguous(cur, ev.producer, ev.stream),
                 "late": bool(last_seq is not None and ev.seq < last_seq)}
 
     @app.post("/api/v1/events")

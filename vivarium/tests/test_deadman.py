@@ -202,3 +202,24 @@ def test_pid_alive_here_only_trusts_this_host(monkeypatch):
     monkeypatch.setenv("COMPUTERNAME", "THISHOST")
     assert _dm.pid_alive_here(1, "OTHERHOST") is False
     assert _dm.pid_alive_here(0, "THISHOST") is False
+
+
+# ------------------------------------------------------------- s14 canary finding (2026-09-17)
+
+def test_young_heartbeat_with_gone_pid_on_this_host_is_dead_now(tmp_path, monkeypatch):
+    """The canary killed the consumer mid-row; the dead-man read LIVE for 15
+    minutes because it never looked at the pid while the heartbeat was young.
+    POSITIVE: 80 s old (grace 60, fresh 100), same host, pid gone -> DEAD and relaunched.
+    NEGATIVE: 80 s old, pid ALIVE -> LIVE (no relaunch); 10 s old, pid gone
+    -> LIVE (inside the launch grace). CHEAT: a heartbeat from ANOTHER host
+    with an unknown pid stays LIVE -- this host cannot judge it."""
+    monkeypatch.setenv("COMPUTERNAME", "THISHOST")
+    h = Harness(tmp_path, heartbeats=[_hb(80.0), _hb(1.0, pid=5151)], pid_alive=False)   # fresh_s is 100 in the harness
+    r = h.dm.tick()
+    assert r["relaunched"] is True and h.launches == 1
+    h = Harness(tmp_path, heartbeats=[_hb(80.0)], pid_alive=True)
+    assert h.dm.tick()["verdict"] == "LIVE" and h.launches == 0
+    h = Harness(tmp_path, heartbeats=[_hb(10.0)], pid_alive=False)
+    assert h.dm.tick()["verdict"] == "LIVE" and h.launches == 0
+    h = Harness(tmp_path, heartbeats=[_hb(80.0, host="OTHERHOST")], pid_alive=False)
+    assert h.dm.tick()["verdict"] == "LIVE" and h.launches == 0

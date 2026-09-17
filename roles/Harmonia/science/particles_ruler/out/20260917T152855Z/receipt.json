@@ -1,0 +1,62 @@
+{
+ "finished_utc": "20260917T152914Z",
+ "packet_freeze": "5b8d6ae4908abb3b4473a106a741563663006a7236e52cd248293bbbb4bc4c47",
+ "packet_id": "MECH-PARTICLES-ESSTRIGGER-001",
+ "quick": false,
+ "rows_sha256": "0de319da3ddffff17db7b4617a74be9209d6262711a45114dcaf50c6560d1622",
+ "ruler_sha256": "9f171c0964d0cdd86d33c6bb3c3d2d7506efa5b15c1cc1f3dbcfbc7393497a93",
+ "runtime_witness": {
+  "dont_write_bytecode": true,
+  "executable": "C:\\Program Files\\Python311\\python.exe",
+  "host": "GANDALF",
+  "imported_payload_hashes": {
+   "collectors.py": "569b47fd808523bb5d177e34f261d22a6c5796611dbc25f187558b8c180bb3a1",
+   "core.py": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "kalman.py": "592b13e6533a79920cf624d46120dd850866e3db9fe94fbbc93d84807e0eb987",
+   "resampling.py": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+   "state_space_models.py": "ad4d554ce73f52b19aa355f6888c23b3159d5d1f38dc6244b5ce843d5329d7bc"
+  },
+  "inverse_cdf_type": "CPUDispatcher",
+  "joblib": "1.5.3",
+  "numba": "0.65.1",
+  "numba_jit_active": true,
+  "numpy": "1.26.4",
+  "particles_file": "C:\\Users\\Gandalf\\AppData\\Local\\Temp\\harmonia_particles_zq8pv04w\\particles-0.4\\particles\\__init__.py",
+  "payload_hash_mismatch": {},
+  "pip_freeze_n": 232,
+  "pip_freeze_sha256": "52eb6284fa90db244dd8dc3e9acaf98ea28ed935634b6812f00291f616318edc",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.9",
+  "scipy": "1.16.3",
+  "staged_copy": "C:\\Users\\Gandalf\\AppData\\Local\\Temp\\harmonia_particles_zq8pv04w\\particles-0.4",
+  "vault_tree": "C:\\Prometheus-vault\\fossils\\particles-chopin-0.4\\upstream\\tree\\particles-0.4",
+  "vault_tree_sha256_core_resampling": {
+   "core.py": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "resampling.py": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18"
+  }
+ },
+ "seconds": 19.2,
+ "seeds": 50,
+ "started_utc": "20260917T152855Z",
+ "world": {
+  "T": 100,
+  "data_seed": 20260917,
+  "data_sha256": "c21869098f8a514fc35396b10c7943c7c2552ec2ae4860ad899fab32b4403eeb",
+  "logL_exact": -146.722749362282,
+  "m_exact_first5": [
+   0.10450047587018074,
+   0.06535884338662909,
+   -0.7708206218017938,
+   -1.579524811815586,
+   0.0328373604644463
+  ],
+  "model": {
+   "rho": 0.9,
+   "sigma0": 2.294157338705618,
+   "sigmaX": 1.0,
+   "sigmaY": 0.2
+  },
+  "oracle": "particles.kalman.Kalman filter on the same model/data; logL_exact = sum(logpyt)"
+ },
+ "x_seeds": 400
+}

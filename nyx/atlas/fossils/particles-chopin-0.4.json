@@ -161,11 +161,11 @@
    "core.py 1-200 (docstring, FeynmanKac interface), 296-415 (SMC step)",
    "resampling.py 166-190, 464-540, 600-710"
   ],
-  "date": "2026-09-17T11:03Z",
+  "date": "2026-09-17T15:20Z",
   "note": "a particle filter reduced to its loop: propose, weight, decide whether to resample, resample by one of several schemes that differ only in how the ordered uniforms are drawn, and accumulate a likelihood from the mean weight; the model is an interface of three functions (M0, M, logG) and the loop never looks inside it",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T11:03Z",
+   "migrated_at": "2026-09-17T15:20Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
    "provenance_grade_read": "ORIGINAL_ARTIFACT",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
@@ -1367,6 +1367,13 @@
    "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
    "note": "from the docstrings; the record's lineage not re-read",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
@@ -1374,6 +1381,7 @@
   "unexplained": [
    "the model library and the QMC/Hilbert machinery were not read (sqmc is CANDIDATE)",
    "the default resampling trigger (ESS < N/2 by convention) lives in the model classes, not read; the cut names the measure, not the threshold",
+   "ANNOTATION 2026-09-17 (packet MECH-PARTICLES-ESSTRIGGER-001, not a rewrite of the line above): the previous item is WRONG on location -- the predicate is FeynmanKac.time_to_resample at core.py:181-183 and the default ESSrmin=0.5 is SMC.__init__ at core.py:264; both are in core.py, which the cut had read; a second copy of the predicate exists at smc_samplers.py:761 for the waste-free sampler path",
    "nothing ran; kalman.py in the body is the exact oracle for a Stage C world"
   ],
   "note": "the loop and the resampling schemes are accounted for; the vault's filterpy-labbe and simple-kalman fossils are recurrence candidates against kalman.py",

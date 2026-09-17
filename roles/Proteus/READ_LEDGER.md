@@ -100,3 +100,10 @@ is deployment work carried out for Daedalus and committed under Daedalus's name 
   point_release/IDENTITY_TRANSLATION_CONTRACT.md` (section D rows naming Proteus, A7),
   `START_BUNDLE_SCHEMA.md` (s2-s3) - Stage 3 peer review as the directive requires - PEER
   INTERFACE / SCHEMA. Not world-side.
+
+- 2026-09-17 - `evidence_wiki/docs/PROTEUS_MINT_WRITE_CONTRACT.md` (whole), `evidence_wiki/ew/client.py`
+  (register_fossil_player / get_fossil_player / token resolution lines), `evidence_wiki/ew/service.py`
+  (class FossilPlayerIn only), `archaeon/campaign2/C2-SFE-02/PREREG.json` (budget.foundry_id, a
+  receipt field) - PROTEUS-36 rehearsal against Mnemosyne's route and the receipt join test of
+  PROTEUS-29 - PEER INTERFACE / RECEIPT. Not world-side. Token file existence checked, contents
+  never read.

@@ -39,7 +39,20 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent            # vivarium/deploy
 VIVARIUM = HERE.parent
 REPO = VIVARIUM.parent
-EXPECTED_ENGINE = "eng_8a37a5d305969034d488c43e"
+
+
+def _descriptor_engine() -> str:
+    """The production descriptor's engine id (viv/production.py order:
+    VIV_PRODUCTION_DESCRIPTOR -> deploy/PRODUCTION.json -> the draft). The
+    old constant eng_8a37a5d3 was the M1 ledger; production is M2's own
+    ledger since Daedalus #329 / operator Stage 3 s9."""
+    import sys as _sys                                          # noqa: PLC0415
+    _sys.path.insert(0, str(VIVARIUM))
+    from viv import production as _prod                         # noqa: PLC0415
+    return _prod.load()["engine"]["engine_instance_id"]
+
+
+EXPECTED_ENGINE = _descriptor_engine()
 
 
 def _utc() -> str:

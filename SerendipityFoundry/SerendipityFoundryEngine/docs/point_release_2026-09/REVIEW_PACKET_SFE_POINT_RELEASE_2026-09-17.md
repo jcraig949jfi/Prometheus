@@ -3,8 +3,9 @@ REVIEW PACKET -- SFE POINT RELEASE (schema 8 -> 9), 2026-09-17
 =======================================================================
 seat        Daedalus (maintainer of the Serendipity Foundry Engine)
 instance    m2-d6ecd70b, on M2 / SPECTREX5 (192.168.1.191)
-status      DEPLOYED and QUALIFIED on production at 10:51:30Z; one
-            measurement (long-run load) still running at packet time
+status      DEPLOYED and QUALIFIED on production at 10:51:30Z; long-run
+            measurement DONE with one finding (section 5); its control
+            run pending
 audience    an external reviewer with no repository access; every claim
             below names the file that carries its numbers
 attack this the way you would attack a result: every "verified" line
@@ -246,34 +247,55 @@ test fails the build if they ever do.
  caller's words travel through it unchanged as opaque bytes. PASSES.
 
 -----------------------------------------------------------------------
-5. LONG-RUN MEASUREMENT (D10) -- PENDING AT PACKET TIME
+5. LONG-RUN MEASUREMENT (D10) -- DONE 11:26:50Z; ONE FINDING
 -----------------------------------------------------------------------
 
- Shape: 20 worlds x 1,000 generations (1 experiment + commit +
- observation per generation, a WORLD_EVENT every 10, a checkpoint every
- 50, an 8 KiB artifact every 100, a fork and a typed termination per
- world), 2 producer threads + 1 cursor-reader thread on one scratch
- engine of the shipped build, disposable ledger on the production volume
- class (D:). Then a full paginated event walk, kill -9 at full history,
- relaunch, anchor sample. Target ~20,000 observations / ~85,000 events:
- the size the previous production ledger reached in two weeks, and ~10x
- Campaign 3's per-run rows.
+ Shape: 20 worlds x 1,000 generations (experiment + commit + observation
+ per generation, a WORLD_EVENT every 10, a checkpoint every 50, an 8 KiB
+ artifact every 100, a fork + typed termination per world), 2 producer
+ threads + 1 cursor-reader thread, scratch engine of the shipped build,
+ disposable ledger on the production volume class. 82,660 events, 20,000
+ observations, 380 checkpoints, 40 worlds; ~115,000 calls in 50.7 min.
 
- Interim, at 11:06Z (30 min in): 12,327 observations, 50,955 events, DB
- ~50 MB, 0 HTTP 5xx, 0 stalls > 5 s in the producer thread logs.
- Throughput under 2 producers + a reader: ~300-400 observations/min
- (~130 ms per generation, i.e. three sequential POSTs at ~15-40 ms each
- through one SQLite writer). Small-scale run (2 x 60) for the route
- latency shape: POST observations p50 17 ms, p95 34 ms; checkpoint 5 ms;
- relaunch to /v2/version 0.5 s; identity same after restart; anchors
- 50/50.
+ what held (numbers)
+   medians flat across quarters: POST experiment 22/17/16/16 ms, POST
+   observation 67/60/58/56 ms, cursor page of 200 observations 20/19/17/
+   18 ms (q1..q4) -- no degradation with accumulated history
+   p95 ~200 ms writes, ~130 ms reads, also flat
+   0 HTTP 5xx; SQLite write lock: 62,664 acquisitions, 0 failures, max
+   wait 1.77 s
+   storage 84.4 MB at 82,660 events = 102 MB per 100K events; WAL small
+   checkpoint p50 17 ms; full paginated walk of all events 4.65 s (180
+   pages); kill -9 at full history -> relaunch -> /v2/version 1.05 s;
+   identity unchanged; 50/50 anchors verify
 
- The final table (per-route p50/p95/max by quarter of the run, DB bytes
- per 100K events, checkpoint latency, restart cost at full history,
- write_lock waits) is appended to SFE_LONG_RUN_REPORT.md when the run
- ends (~25 min) and the packet file is amended. Retention decision stated
- there from the numbers; today's prior: "forever" is fine at this scale
- and the ledger is tamper-evident, so retention would be a policy act.
+ THE FINDING
+   150 calls (0.13%) took 5-13 s (p50 7.1 s, max 12.8 s), on reads AND
+   writes in proportion to volume, none in the first 14.5 min, then ~0.6
+   per minute. The write lock is NOT the cause (above). Candidate
+   mechanism, read from the code: sfe/store.py uses ONE sqlite3
+   connection (check_same_thread=False) for every read and every write
+   with no Python-level lock, so the reader thread's SELECTs and the
+   producers' transactions interleave on one handle under uvicorn's
+   thread pool; a stall on the handle is a stall on everything -- the
+   observed shape. Why 7-12 s rather than 100 ms is not yet measured.
+   A CONTROL (same run, no reader thread) is running; its receipt is
+   appended to SFE_LONG_RUN_REPORT.md when done.
+   Consumer impact: Archaeon's gate/runner use 10 s timeouts; a 12.8 s
+   stall reads as ENGINE_TRANSPORT. Idempotency keys make the retry
+   safe (the retried POST replays), so the failure is a spurious
+   transport error, not lost or duplicated science -- but a consumer
+   that halts on the first transport error would park.
+
+ decisions from data
+   SQLite: KEEP (nothing in the data argues otherwise; the stall is a
+   connection-handling defect in the engine, ~40 lines to fix by giving
+   reads their own connections in WAL mode -- FIRST ITEM of the next
+   point release, acceptance = 0 calls over 5 s at this shape).
+   Retention: NONE; would change past ~1M events / ~1 GB.
+   Readiness: attended hour-scale runs yes, with consumer timeouts
+   >= 30 s; unattended multi-hour with a 10 s-timeout consumer NO until
+   the fix lands and is measured.
 
 -----------------------------------------------------------------------
 6. WHAT WOULD FALSIFY THIS PACKET
@@ -286,8 +308,10 @@ test fails the build if they ever do.
    observations checked; a backfill would be manufacturing facts).
  - A head hash of any pre-migration world differing from the backup's
    (25 checked; all 351 could be checked in seconds -- ask).
- - The long-run run showing a latency knee, a stall > 5 s, or a 5xx --
-   then the retention/storage decision changes and section 5 says so.
+ - The long-run control (no reader thread) STILL showing 5 s stalls --
+   then the candidate mechanism in section 5 is wrong and the cause is
+   in the write path alone (WAL checkpoint / fsync / file scanning); the
+   report says which when it lands.
  - The five-word grep failing on a future commit (it already caught my
    own docstring once; that is the point of it).
  - The one thing NOT independently verified: I wrote the tools that
@@ -330,3 +354,56 @@ test fails the build if they ever do.
  roles/Harmonia/contracts/sfe_contract.json (landed, provenance block `landed`)
  main: 1b9286292 (release) .. bef42b7df (deployed receipts); comms #343 (deploy receipt)
 =======================================================================
+
+-----------------------------------------------------------------------
+9. CORRECTION 12:2xZ -- the control run falsified section 5's mechanism
+-----------------------------------------------------------------------
+
+ The no-reader control did not finish: two 500s ("database is locked" at
+ connection open) with NO reader at all. The reader was never the cause.
+ The real one: the API opens a NEW SQLite connection PER REQUEST and
+ closes it after (get_foundry); the Store's own docstring says one per
+ worker. ~115,000 open/close pairs in the main run. When the last
+ connection closes, SQLite checkpoints and truncates the whole WAL of an
+ 80 MB ledger -- the multi-second window every new request's open waits
+ in (the stalls, on every route), and the open can fail outright on a
+ lock path the busy handler does not retry (the 500s). Campaigns 1-3
+ never hit it: one sequential producer. Campaign 4 with a concurrent
+ reader is exactly the regime that does.
+
+ Fix: one Store per worker thread, never closed per request -- ~25 lines
+ in api.py, no schema, no route. Being implemented and measured on the
+ branch now with the same load tool (acceptance: 0 calls over 5 s AND
+ 0 5xx at 20 x 1,000, with and without the reader). Deploy only on an
+ operator-opened window. Section 5's SQLite/retention decisions stand;
+ its mechanism paragraph is retracted. Consumer guidance (>= 30 s
+ timeouts + idempotent retries) stands until the fix is measured.
+
+-----------------------------------------------------------------------
+10. 12:0xZ -- two fix attempts measured and rejected; the real item named
+-----------------------------------------------------------------------
+
+ Attempt 1 (one connection per worker THREAD) shared a connection between
+ two requests -- FastAPI runs the dependency and the endpoint on different
+ threads -- and 500'd at request 1,751. Attempt 2 (an exclusive checkout
+ pool) passed 507 tests and the restart fixture, then hung a real-process
+ run at request 8,570: py-spy showed a worker blocked inside COMMIT while
+ the WAL file had grown to 344 MB against a 10 MB database -- under
+ continuous readers a persistent-connection WAL never restarts, and the
+ autocheckpoint inside each COMMIT becomes O(WAL). Neither design is a
+ SQLite limit; both are how the engine drives it (per-request: full
+ checkpoint + file delete/recreate on nearly every request; persistent:
+ unbounded WAL + checkpoint in the request path).
+
+ The real 9.0.1 item, bounded: pool + a background checkpointer thread
+ (autocheckpoint off on pooled handles; PASSIVE every ~2 s, TRUNCATE when
+ clean; journal_size_limit) + the A6 journal/access log off the event
+ loop; ~150 lines, no schema/route/contract change; acceptance = 0 5xx and
+ 0 calls over 5 s at 20 x 1,000 with and without the reader, WAL bounded,
+ checkpointer state on /v2/health. NOT built today; nothing from this
+ section is on main or on production. SFE_LONG_RUN_REPORT.md s8.
+
+ What this does to the release verdict: schema 9 shipped and qualified
+ stands. "Ready for unattended multi-hour runs" was already NO in s5 and
+ stays NO with a sharper reason. Campaign 4 with one sequential runner and
+ a paced reader is the regime Campaigns 1-3 ran in (0 engine errors).

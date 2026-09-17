@@ -76,6 +76,7 @@ def split_ref(ref: str, fid: str):
     rel = re.sub(r"\s*\(.*$", "", rel)                  # strip a trailing parenthetical note
     rel = rel.split(",")[0].split(";")[0]
     rel = re.sub(r":[0-9][0-9,\-]*.*$", "", rel)         # strip :lines and anything after
+    rel = re.sub(r":[A-Za-z_].*$", "", rel)              # 2026-09-17: also strip :symbol lists ("file.c:foo, bar"), used by the M3 cuts
     return rel.rstrip("/").strip()
 
 

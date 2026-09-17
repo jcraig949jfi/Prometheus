@@ -76,6 +76,10 @@ class Lat:
         return out
 
 
+INFLIGHT = {}            # thread ident -> (route, start_time); read by the stall watchdog
+INFLIGHT_LOCK = threading.Lock()
+
+
 class TimedApi(Api):
     def __init__(self, base, lat, t_origin):
         super().__init__(base)
@@ -88,12 +92,59 @@ class TimedApi(Api):
             if seg.startswith(("wld_", "exp_", "obs_", "sha256:", "ckp_", "wrk_")):
                 route = route.replace(seg, "{id}")
         t = time.time()
-        st, out = super().req(method, path, body, headers, timeout)
+        me = threading.get_ident()
+        with INFLIGHT_LOCK:
+            INFLIGHT[me] = (route, t)
+        try:
+            st, out = super().req(method, path, body, headers, timeout)
+        finally:
+            with INFLIGHT_LOCK:
+                INFLIGHT.pop(me, None)
         self.lat.add(route, t - self.t_origin, time.time() - t, st)
         return st, out
 
 
-def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_every=100):
+def serving_pid(port):
+    """the pid that OWNS the listening socket (the venv python.exe is a launcher
+    stub whose child serves; py-spy on the stub says 'Failed to find python
+    version from target process')"""
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command",
+                              "(Get-NetTCPConnection -State Listen -LocalPort %d -ErrorAction SilentlyContinue | Select -First 1).OwningProcess" % port],
+                             capture_output=True, text=True, timeout=15).stdout.strip()
+        return int(out) if out else None
+    except Exception:                                            # noqa: BLE001
+        return None
+
+
+def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6, port=None):
+    """When any client request has been in flight longer than threshold_s,
+    capture the ENGINE's thread stacks with py-spy (if installed) so a stall
+    is diagnosed from the server side, not guessed from the client side."""
+    import shutil as _sh
+    spy = _sh.which("py-spy") or os.path.join(os.path.dirname(sys.executable), "py-spy.exe")
+    dumps = []
+    last = 0.0
+    while not stop.is_set():
+        now = time.time()
+        with INFLIGHT_LOCK:
+            slow = [(r, now - t0) for (r, t0) in INFLIGHT.values() if now - t0 > threshold_s]
+        if slow and now - last > threshold_s and len(dumps) < max_dumps and os.path.exists(spy):
+            last = now
+            target = (serving_pid(port) if port else None) or pid
+            try:
+                pr = subprocess.run([spy, "dump", "--pid", str(target)], capture_output=True, text=True, timeout=20)
+                out = pr.stdout + (("\nSTDERR: " + pr.stderr) if pr.stderr else "")
+            except Exception as e:                                   # noqa: BLE001
+                out = "py-spy failed: %r" % e
+            # keep only the engine frames + thread headers
+            keep = [ln for ln in out.splitlines() if ln.startswith("Thread") or "sfe" in ln or "sqlite" in ln.lower() or "store.py" in ln]
+            dumps.append({"t": round(now, 1), "inflight": slow, "stack": keep[:60], "raw": out.splitlines()[:120]})
+        stop.wait(0.5)
+    rec["stall_dumps"] = dumps
+
+
+def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_every=100, gen_pause=0.0):
     """one world, `gens` generations"""
     w = api.ok("POST", "/v2/worlds", {"session_id": sess_id, "name": "load-" + tag,
                                       "manifest": {"logical_time_unit": "generation", "load": tag},
@@ -120,6 +171,8 @@ def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_ev
             api.ok("POST", "/v2/worlds/%s/artifacts" % wid,
                    {"kind": "trace", "data_b64": base64.b64encode(os.urandom(8192)).decode()},
                    headers={"Idempotency-Key": "idem:%s:art:%d" % (tag, g)})
+        if gen_pause:
+            time.sleep(gen_pause)
     if cks:
         api.ok("POST", "/v2/worlds/%s/fork" % wid, {"checkpoint_id": cks[-1]["checkpoint_id"],
                                                     "children": [{"name": "cf", "interventions": {"p": "Q"}}]})
@@ -128,7 +181,7 @@ def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_ev
     return wid
 
 
-def reader(api, wids, stop, rec):
+def reader(api, wids, stop, rec, pause=0.0):
     """walk cursors over whatever exists, continuously, until told to stop"""
     pages = 0
     while not stop.is_set():
@@ -140,8 +193,37 @@ def reader(api, wids, stop, rec):
                     break
                 pages += 1
                 after = p["next_after_seq"]
+                if pause:
+                    time.sleep(pause)
         time.sleep(0.05)
     rec["reader_pages"] = pages
+
+
+def wal_sampler(db, api, stop, rec):
+    """every 5 s: WAL/DB bytes on disk and the engine's own checkpointer view"""
+    samples = []
+    while not stop.is_set():
+        try:
+            wal = os.path.getsize(db + "-wal") if os.path.exists(db + "-wal") else 0
+            st, h = api.req("GET", "/v2/health")
+            ck = h.get("checkpointer") if st == 200 else None
+            try:
+                av = subprocess.run(["powershell", "-NoProfile", "-Command",
+                                     "(Get-Process MsMpEng -ErrorAction SilentlyContinue | Select -First 1).TotalProcessorTime.TotalSeconds"],
+                                    capture_output=True, text=True, timeout=10).stdout.strip()
+                av = float(av) if av else None
+            except Exception:                                    # noqa: BLE001
+                av = None
+            samples.append({"t": round(time.time(), 1), "wal_bytes": wal, "db_bytes": os.path.getsize(db),
+                            "msmpeng_cpu_s": av,
+                            "ck_runs": ck and ck.get("runs"), "ck_alive": ck and ck.get("alive"),
+                            "ck_truncates": ck and ck.get("truncates"), "ck_errors": ck and ck.get("errors")})
+        except Exception as e:                                   # noqa: BLE001
+            samples.append({"t": round(time.time(), 1), "error": repr(e)[:120]})
+        stop.wait(5.0)
+    rec["wal_samples"] = samples
+    if samples:
+        rec["wal_max_bytes"] = max(x.get("wal_bytes", 0) for x in samples)
 
 
 def main():
@@ -152,6 +234,13 @@ def main():
     ap.add_argument("--port", type=int, default=8941)
     ap.add_argument("--out", default=os.path.join(HERE, "LONG_RUN_2026-09-17"))
     ap.add_argument("--db-dir", default=None, help="where the scratch ledger lives (default: a temp dir on this volume)")
+    ap.add_argument("--no-reader", action="store_true", help="control: no concurrent cursor-reader thread")
+    ap.add_argument("--reader-pause", type=float, default=0.0,
+                    help="seconds between reader pages (a PACED reader, the PEW-ingestion shape); 0 = tight loop")
+    ap.add_argument("--label", default=None, help="free text recorded in the receipt")
+    ap.add_argument("--gen-pause", type=float, default=0.0,
+                    help="seconds between generations per producer (a CAMPAIGN-RATE writer; Campaign 3 ran ~0.02 "
+                         "observations/s per slot, i.e. pauses of tens of seconds -- 0.5 s here is still 25x faster)")
     a = ap.parse_args()
     if not port_free(a.port):
         print("REFUSING: port %d is held" % a.port); return 2
@@ -178,17 +267,47 @@ def main():
     def prod_worker(k):
         api = TimedApi(api0.base, lat, t_origin); api.token = api0.token; api.session_key = api0.session_key
         for j in range(k, a.worlds, a.producers):
-            wid = producer(api, sess["session_id"], a.gens, "w%02d" % j, rec, lat)
+            wid = producer(api, sess["session_id"], a.gens, "w%02d" % j, rec, lat, gen_pause=a.gen_pause)
             with lock:
                 wids.append(wid)
     rapi = TimedApi(api0.base, lat, t_origin); rapi.token = api0.token; rapi.session_key = api0.session_key
-    rth = threading.Thread(target=reader, args=(rapi, wids, stop, rec), daemon=True)
+    rth = threading.Thread(target=reader, args=(rapi, wids, stop, rec, a.reader_pause), daemon=True)
+    sapi = Api(api0.base)
+    sstop = threading.Event()
+    sth = threading.Thread(target=wal_sampler, args=(db, sapi, sstop, rec), daemon=True)
+    sth.start()
+    wth = threading.Thread(target=stall_watchdog, args=(proc.pid, sstop, rec), kwargs={"port": a.port}, daemon=True)
+    wth.start()
+    failures = []
+    def _guard(fn):
+        def run(*args):
+            try:
+                fn(*args)
+            except Exception as e:                               # noqa: BLE001
+                failures.append(repr(e)[:400]); stop.set()
+        return run
+    prod_worker = _guard(prod_worker)
     t0 = time.time()
     threads = [threading.Thread(target=prod_worker, args=(k,)) for k in range(a.producers)]
-    rth.start(); [t.start() for t in threads]; [t.join() for t in threads]
-    stop.set(); rth.join(timeout=30)
+    if not a.no_reader:
+        rth.start()
+    [t.start() for t in threads]; [t.join() for t in threads]
+    stop.set()
+    if not a.no_reader:
+        rth.join(timeout=30)
     rec["phases"]["write_s"] = round(time.time() - t0, 1)
+    sstop.set(); sth.join(timeout=10)
+    rec["producer_failures"] = failures
     rec["health_after_write"] = api0.ok("GET", "/v2/health")
+    if failures:
+        rec["ABORTED"] = True
+        rec["latency_by_quarter"] = lat.summary([(0, 1e12, "all")])
+        rec["http_5xx"] = lat.errors; rec["stalls_over_5s"] = lat.stalls
+        json.dump(rec, open(os.path.join(a.out, "receipt.json"), "w", encoding="utf-8"), indent=1)
+        open(os.path.join(a.out, "RECEIPT.md"), "w", encoding="utf-8").write(
+            "# ABORTED: producer failure\n\n%s\n" % "\n".join(failures))
+        proc.kill(); proc.wait(timeout=10); log.close()
+        print("ABORTED:", failures[0][:200]); return 1
 
     # ---- totals + storage
     import sqlite3
@@ -245,6 +364,7 @@ def main():
         cs = sorted(rec["checkpoint_s"])
         rec["checkpoint_latency"] = {"n": len(cs), "p50_s": cs[len(cs) // 2], "max_s": cs[-1]}
     rec["finished_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    rec["checkpointer_final"] = rec["health_final"].get("checkpointer")
     json.dump(rec, open(os.path.join(a.out, "receipt.json"), "w", encoding="utf-8"), indent=1)
     # markdown table
     lines = ["# Long-run load receipt (%s)" % rec["finished_at"], "",
@@ -259,6 +379,9 @@ def main():
              "    restart  identity_same=%s anchors %s" % (rec["identity_after_restart_same"], rec["anchor_sample_verified"]),
              "    5xx %d  stalls>5s %d  write_lock %s" % (len(lat.errors), len(lat.stalls),
                                                           json.dumps(rec["health_final"].get("write_lock"))),
+             "    wal_max_bytes %s  checkpointer %s" % (rec.get("wal_max_bytes"),
+                                                       json.dumps({k: (rec.get("checkpointer_final") or {}).get(k) for k in
+                                                                   ("alive", "runs", "truncates", "errors", "max_wal_bytes_seen")})),
              "", "    route                                     q1 p50/p95/max ms        q4 p50/p95/max ms      n"]
     for route, d in sorted(rec["latency_by_quarter"].items()):
         q1, q4 = d.get("q1", {}), d.get("q4", {})

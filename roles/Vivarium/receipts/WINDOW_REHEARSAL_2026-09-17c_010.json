@@ -1,0 +1,73 @@
+{
+  "schema": "vivarium_window_rehearsal.v1",
+  "throwaway": "viv_rehearse_2e394663",
+  "at": "2026-09-17T16:07:34Z",
+  "checks": {
+    "old_rows_byte_identical": {
+      "ok": true,
+      "changed": [],
+      "rows": 1178
+    },
+    "one_attempt_per_terminal_row": {
+      "ok": true,
+      "attempts": 1155,
+      "terminal_rows": 1155,
+      "distinct_experiments": 1155
+    },
+    "all_backfilled_unknown": {
+      "ok": true,
+      "unknown": 1155
+    },
+    "no_steps_fabricated": {
+      "ok": true,
+      "steps": 0
+    },
+    "all_attempt_number_1": {
+      "ok": true
+    },
+    "only_new_column_is_bundle_declared_all_null": {
+      "ok": true,
+      "new_columns": [],
+      "non_null": 5,
+      "note": "n/a after the window (008 already in migrations/)"
+    },
+    "terminal_row_frozen": {
+      "ok": true,
+      "error": "vivarium: experiment 24c8a3a8-2b36-4d01-9bd1-ca9a7ee4d2f2 is terminal (completed) and is frozen; refusing UPDATE"
+    }
+  },
+  "applied_base": [
+    "001_vivarium_queue.sql",
+    "002_relations_cadence_idempotency.sql",
+    "003_register_errata.sql",
+    "004_artifact_locators.sql",
+    "005_candidate_set_append_refused.sql",
+    "006_execution_attempts_and_steps.sql",
+    "007_backfill_attempts_reversible.sql",
+    "008_bundles_receipts_gates.sql",
+    "009_pew_outbox.sql",
+    "010_release_transport_failed_rows.sql"
+  ],
+  "copied": {
+    "research_experiment_queue": 1178,
+    "research_experiment_events": 3422,
+    "worker_heartbeat": 3,
+    "register_errata": 1,
+    "register_errata_rows": 246
+  },
+  "status_histogram": {
+    "cancelled": 492,
+    "completed": 591,
+    "failed": 90,
+    "queued": 5
+  },
+  "applied_drafts": [
+    "006_execution_attempts_and_steps.sql",
+    "007_backfill_attempts_reversible.sql",
+    "008_bundles_receipts_gates.sql",
+    "009_pew_outbox.sql"
+  ],
+  "dropped": true,
+  "ok": true,
+  "fingerprint": "sha256:aa80c0a9cfb0e615"
+}

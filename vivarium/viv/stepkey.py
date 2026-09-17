@@ -59,3 +59,11 @@ def is_step_key(value: Any) -> bool:
     return (isinstance(value, str) and value.startswith(PREFIX)
             and len(value) == len(PREFIX) + HEX_LEN
             and all(c in "0123456789abcdef" for c in value[len(PREFIX):]))
+
+
+def engine_key(step_key: str, experiment_id: str) -> str:
+    """The Idempotency-Key handed to the engine for a step of ONE row:
+    "idem:" + sha256(step_key | experiment_id)[:32]. Unique per row (the
+    engine's idempotency store is per client, and one design may be enqueued
+    many times), stable across the row's attempts."""
+    return "idem:" + hashlib.sha256(("%s|%s" % (step_key, experiment_id)).encode("utf-8")).hexdigest()[:32]

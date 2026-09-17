@@ -587,6 +587,28 @@ def cancel(conn, experiment_id, *, actor: str, reason: str,
     return row
 
 
+def hold(conn, experiment_id, *, until, actor: str, reason: str,
+         schema: Optional[str] = None):
+    """Hold a QUEUED experiment until `until` (a tz-aware datetime; None
+    lifts the hold). The row stays queued and its relations untouched; only
+    not_before moves, and the event log says who and why. This is how a
+    producer keeps its rows out of a consumer restart it has not cleared
+    (Archaeon #284) without cancelling them."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute(
+            "UPDATE " + _q(s) + " SET not_before=%s WHERE experiment_id = %s "
+            "AND status = 'queued' RETURNING " + COLUMNS,
+            (until, str(experiment_id)))
+        row = cur.fetchone()
+    if row is None:
+        raise RuntimeError("cannot hold %s: it is not queued" % experiment_id)
+    record_event(conn, experiment_id, actor=actor,
+                 event_type="held" if until is not None else "hold_lifted",
+                 payload={"reason": reason, "not_before": until.isoformat() if until else None}, schema=s)
+    return row
+
+
 def release_stranded(conn, experiment_id, *, actor: str, reason: str,
                      schema: Optional[str] = None, new_attempt: bool = False):
     """The explicit operator recovery for a stranded claimed/running row.
@@ -607,6 +629,16 @@ def release_stranded(conn, experiment_id, *, actor: str, reason: str,
     row = get(conn, experiment_id, schema=s)
     if row is None:
         raise RuntimeError("no such experiment %s" % experiment_id)
+    if new_attempt and row["status"] == "failed":
+        # 010: a row whose NEWEST attempt failed on ENGINE_TRANSPORT (the wire,
+        # not the design) may be re-attempted; the trigger enforces the same
+        # rule, so this check is a readable refusal, not the guard.
+        if _last_attempt_reason(conn, row, schema=s) != "ENGINE_TRANSPORT":
+            raise RuntimeError("cannot release %s to a new attempt: status is failed and its newest attempt's "
+                               "termination_reason is %s, not ENGINE_TRANSPORT (a design or executor failure "
+                               "stays terminal; a rerun is a NEW ROW)"
+                               % (experiment_id, _last_attempt_reason(conn, row, schema=s)))
+        return _release_to_new_attempt(conn, row, actor=actor, reason=reason, schema=s)
     if row["status"] not in ACTIVE:
         raise RuntimeError("cannot release %s: status is %s"
                            % (experiment_id, row["status"]))
@@ -637,6 +669,18 @@ def release_stranded(conn, experiment_id, *, actor: str, reason: str,
     return out
 
 
+def _last_attempt_reason(conn, row, *, schema: str):
+    with conn.cursor() as cur:
+        cur.execute("SELECT to_regclass(%s)", (schema + ".execution_attempt",))
+        if cur.fetchone()[0] is None:
+            return None
+        cur.execute("SELECT termination->>'termination_reason' FROM " + schema + ".execution_attempt "
+                    "WHERE experiment_id = %s ORDER BY attempt_number DESC LIMIT 1", (str(row["experiment_id"]),))
+        r = cur.fetchone()
+    conn.rollback()
+    return r[0] if r else None
+
+
 def _release_to_new_attempt(conn, row, *, actor: str, reason: str, schema: str):
     from . import attempts as _att                                  # noqa: PLC0415
     import json as _json                                            # noqa: PLC0415
@@ -645,6 +689,9 @@ def _release_to_new_attempt(conn, row, *, actor: str, reason: str, schema: str):
         plain.execute("SELECT to_regclass(%s)", (schema + ".execution_attempt",))
         if plain.fetchone()[0] is None:
             raise RuntimeError("release --new-attempt needs the attempt tables (migration 006); not present")
+    from . import outbox as _outbox                                     # noqa: PLC0415
+    ob = _outbox.Outbox(schema=schema, producer=row.get("claimed_by") or actor, log=lambda *_a: None)
+    ob.enabled(conn)                    # probes (and rolls back) BEFORE the transaction below
     with _db.dict_cur(conn) as cur:
         cur.execute("SELECT attempt_id, attempt_number FROM " + schema + ".execution_attempt "
                     "WHERE experiment_id = %s AND terminal_state IS NULL", (eid,))
@@ -653,12 +700,22 @@ def _release_to_new_attempt(conn, row, *, actor: str, reason: str, schema: str):
             env = _att.envelope("STRANDED", receipt_ref={"attempt_id": str(open_att["attempt_id"]), "released_by": actor})
             cur.execute("UPDATE " + schema + ".execution_attempt SET terminal_state = 'STRANDED', termination = %s, "
                         "closed_at = now() WHERE attempt_id = %s", (_json.dumps(env), str(open_att["attempt_id"])))
+            # the stranded attempt's termination is a fossil like any other
+            # (s14 canary: the outbox held OPENED for attempt 1 and no TERMINATED)
+            ob.enqueue(conn, kind="ATTEMPT_TERMINATED", source_attempt=str(open_att["attempt_id"]),
+                       source_experiment=eid,
+                       payload={"attempt_number": open_att["attempt_number"], "terminal_state": "STRANDED",
+                                "termination": env, "released_by": actor, "reason": reason},
+                       commit=False)                                # one transaction with the release below
         cur.execute("SET LOCAL viv.release = 'new_attempt'")
         cur.execute("UPDATE " + _q(schema) + " SET status='queued', claimed_by=NULL, claimed_at=NULL, "
-                    "started_at=NULL WHERE experiment_id=%s AND status IN ('claimed','running') RETURNING " + COLUMNS,
-                    (eid,))
+                    "started_at=NULL, finished_at=NULL WHERE experiment_id=%s AND status IN ('claimed','running','failed') "
+                    "RETURNING " + COLUMNS, (eid,))
         out = cur.fetchone()
-    record_event(conn, eid, actor=actor, event_type="stranded_released",
+    if out is None:
+        raise RuntimeError("release of %s was refused by the queue's transition rule" % eid)
+    record_event(conn, eid, actor=actor,
+                 event_type="transport_failure_released" if row["status"] == "failed" else "stranded_released",
                  payload={"reason": reason, "from_status": row["status"], "claimed_by": row["claimed_by"],
                           "sfe_experiment_id": row["sfe_experiment_id"], "new_attempt": True,
                           "stranded_attempt": str(open_att["attempt_id"]) if open_att else None},
