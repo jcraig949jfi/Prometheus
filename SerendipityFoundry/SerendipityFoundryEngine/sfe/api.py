@@ -15,8 +15,8 @@ import base64
 import binascii
 import hashlib
 import logging
+import queue
 import secrets
-import threading
 from typing import Any, Literal, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
@@ -573,27 +573,44 @@ def create_app(db_path: str, *, registration_open: bool = True,
     # every request arriving in that window stalled 5-13 s (0.13% of calls,
     # reads and writes alike); the next open could also fail outright with
     # "database is locked" on a lock path the busy handler does not retry
-    # (two 500s in the no-reader control). One Store PER WORKER THREAD, kept
-    # open, is what the Store was written for. The boot-time Foundry above
-    # still runs the migration once, before any worker exists.
-    tls = threading.local()
-    # bump app.state.foundry_generation to make every worker thread reopen its
-    # handle on its next request (a ledger swap, or a test that needs a fresh
-    # Store with a patched timeout); nothing is closed under a caller's feet.
+    # (two 500s in the no-reader control).
+    #
+    # Shape of the fix: a CHECKOUT/CHECKIN POOL, not a thread-local. FastAPI
+    # runs a sync dependency and a sync endpoint on DIFFERENT threadpool
+    # threads, so a thread-local keyed on the dependency's thread handed one
+    # connection to two concurrent requests ("cannot start a transaction
+    # within a transaction" at request 1,751 of the first measurement of the
+    # thread-local version). A request holds a Foundry exclusively from
+    # dependency entry to response, then returns it; nothing is closed per
+    # request; the pool grows to the concurrency actually seen (bounded by
+    # the threadpool, ~40) and no further. The boot-time Foundry above still
+    # runs the migration once, before any request.
+    pool: "queue.LifoQueue[Foundry]" = queue.LifoQueue()
+    # bump app.state.foundry_generation to retire every pooled handle on its
+    # next checkout (a ledger swap, or a test that needs a fresh Store with a
+    # patched timeout); nothing is closed under a request's feet.
     app.state.foundry_generation = 0
 
     def get_foundry():
-        f = getattr(tls, "foundry", None)
         gen = app.state.foundry_generation
-        if f is None or f.store.db_path != str(app.state.db_path)                 or getattr(f, "_generation", None) != gen:
-            if f is not None:
+        f = None
+        while f is None:
+            try:
+                f = pool.get_nowait()
+            except queue.Empty:
+                break
+            if getattr(f, "_generation", None) != gen                     or f.store.db_path != str(app.state.db_path):
                 f.close()
+                f = None
+        if f is None:
             f = Foundry(app.state.db_path,
                         science_profile=app.state.science_profile,
                         max_artifact_bytes=app.state.max_artifact_bytes)
             f._generation = gen
-            tls.foundry = f
-        yield f
+        try:
+            yield f
+        finally:
+            pool.put(f)
 
     def auth(authorization: Optional[str] = Header(default=None),
              f: Foundry = Depends(get_foundry)) -> str:
