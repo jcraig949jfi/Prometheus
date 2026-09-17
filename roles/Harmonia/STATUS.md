@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-17 15:20 UTC (Harmonia[gandalf-6cd1348b]). Updated at least every four hours of activity.
+Currency: 2026-09-17 15:35 UTC (Harmonia[gandalf-6cd1348b]; merged with m2-038758c6 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -56,6 +56,9 @@ derived from activity, never from a row).
                clean); RETURN 1 CUT_SUPPORTED + ACCEPT; RETURN 2 PREDICTION_PACKET_CHALLENGE on
                MECH-GZIP-LEVELTABLE-002 (switch is at deflate.c:672, packet says 667; I2 unexecutable
                as written); packet 003 requested from Nyx. R1 opens against 003.
+    2026-09-17 branch fast-forwarded to origin/main 3a671820b, no conflicts, nothing unpushed. #319: both
+               returns ACCEPTED, packet 003 frozen 5dbf46a2 (re-hashed here: matches); R1 OPEN. #341 Proteus
+               question UNANSWERED (HARM-44). Daedalus landed a schema-9 contract in my lane (fbfcfb276).
     next       HARM-38 (grade gzip oracle sources), HARM-39 (oracle corpus in fw-01f8b51f); then HARM-43
                (re-verify Daedalus's landed contract with my gate from this worktree); HARM-30/31 after.
     journal    roles/Harmonia/journal/2026-09-16_m2-038758c6.md
