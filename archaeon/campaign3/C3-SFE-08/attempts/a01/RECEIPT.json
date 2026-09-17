@@ -1,0 +1,141 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C3-SFE-08/a01",
+ "battery": [
+  {
+   "name": "episode_arm_shelf_rate_below_per_ask",
+   "passed": false,
+   "value": {
+    "episode": 0,
+    "per_ask": 0
+   }
+  },
+  {
+   "name": "episode_arm_reaches_higher_episode_credit",
+   "passed": true,
+   "value": {
+    "episode": 0.0625,
+    "per_ask": 0.0
+   }
+  },
+  {
+   "name": "per_ask_arm_reproduces_parent_shelf_rate",
+   "passed": false,
+   "value": {
+    "parent": 11,
+    "shelf": 0
+   }
+  }
+ ],
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-019: both arms are read out on the SAME held-out battery with both readouts; levels (FLOOR/SHELF/SUMMIT) are always computed on per-ask credit so the arms are comparable"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-08",
+ "finished_at": "2026-09-17T06:14:18Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:cfb1da2bb2eea587908d775cccf51765b9de561e63c3b7d4adcce40bdb2d998c",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T06:14:15Z",
+ "steps": {},
+ "summary": {
+  "episode": {
+   "best_episode": [
+    0.0625,
+    0.0625
+   ],
+   "best_per_ask": [
+    0.1562,
+    0.1562
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    null,
+    null
+   ],
+   "gens_at_floor_med": 12,
+   "gens_on_shelf_med": 0,
+   "heldout_episode_med": 0.0208,
+   "heldout_med": 0.0833,
+   "ladder": {},
+   "n": 2,
+   "shelf": 0,
+   "summit": 0
+  },
+  "per_ask": {
+   "best_episode": [
+    0.0,
+    0.0
+   ],
+   "best_per_ask": [
+    0.125,
+    0.1875
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    null,
+    null
+   ],
+   "gens_at_floor_med": 12,
+   "gens_on_shelf_med": 0,
+   "heldout_episode_med": 0.0,
+   "heldout_med": 0.0417,
+   "ladder": {},
+   "n": 2,
+   "shelf": 0,
+   "summit": 0
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "records_s": 0.0,
+  "scan_s": 2.51,
+  "total_s": 3.0
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "per_ask",
+    "metric": "shelf_reached",
+    "min": 1,
+    "rows": 2,
+    "rows_meeting": 0,
+    "values": [
+     0,
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "fe3c1647c1e4d09950a67bfa2377e30592553770",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

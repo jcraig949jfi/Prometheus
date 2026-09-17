@@ -155,3 +155,22 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   exhaustive table under one climber, and predicts nothing when used to
   steer a real evolutionary run. The line dies as the directive allows.
 - Next: C3-SFE-08 (replacement: partial-credit removal on W2_K2) running.
+
+## 12:20-12:40 -- C3-SFE-08 replacement (dry a01; a02 of record; CAPABLE_NEGATIVE: partial credit builds the shelf but does not cap the cell)
+
+- 906 s; 24 runs of 300 generations, 24 records, 24 reach rows, 0 errors.
+  The per_ask arm reproduces C3-SFE-01's fresh arm exactly under CRN (shelf
+  11/12, same seeds, same first-shelf generations, same ladder).
+- Primary 0/12 vs 0/12 summits. But the arms differ everywhere else: shelf
+  arrivals 8/12 (episode) vs 11/12; median generations below the shelf 250
+  vs 131; total failures 4 vs 1; training bests >= 0.81 in 5/12 vs 2/12.
+- The organism CLASS changes (L3-036): under per-ask credit held-out episode
+  credit is 0.00-0.17 against per-ask 0.50-0.60 (the one-value memory);
+  under episode credit the five successful runs have held-out episode credit
+  EQUAL to per-ask credit (0.438-0.646) -- they answer both asks or neither.
+- So the payoff is not the binding constraint: it selects which plateau and
+  which creature, and leaves the summit as far away. Campaign 4 must change
+  the organism or the search on this cell.
+- L3-037: a battery attack declared on a median is the wrong summary for a
+  bimodal outcome (medians equal at 0.3125 while 5/12 vs 2/12 separate).
+- Next: C3-SFE-09 (CA mechanism, 8 seeds) running -- the last slot.
