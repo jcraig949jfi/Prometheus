@@ -740,3 +740,35 @@ def test_an_engine_4xx_after_the_commit_is_engine_rejected_not_transport(conn, d
     client.observation = drop
     r = _viv(schema, client, spec).tick(conn)
     assert r.outcome == FAILED and r.failure_class == "ENGINE_TRANSPORT"
+
+
+# ------------------------------------------------------------- Daedalus #354: Idempotency-Key = the step key on the id-minting posts
+
+def test_the_step_key_travels_as_the_idempotency_key_when_the_client_accepts_it(conn, drafted):
+    from viv import stepkey as _sk
+    schema = drafted
+
+    class KeyedClient(VerifyingClient):
+        def __init__(self):
+            super().__init__(); self.keys = {}
+
+        def observation(self, wid, exp_id, content, outcome, pred_id=None, work_id=None, replication=False, idem_key=None):
+            self.keys[("observe", content["repeat_index"])] = idem_key
+            return super().observation(wid, exp_id, content, outcome, pred_id=pred_id, work_id=work_id, replication=replication)
+
+        def experiment(self, wid, spec, idem_key=None, **kw):
+            self.keys[("experiment", wid)] = idem_key
+            return super().experiment(wid, spec, **kw)
+
+    spec = make_spec(hypothesis="probe keys")
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    eid = _enqueue(conn, schema, spec)
+    client = KeyedClient()
+    assert _viv(schema, client, spec).tick(conn).outcome == EXECUTED
+    design = _spec.spec_hash(spec)
+    assert client.keys[("observe", 0)] == _sk.step_key(design, "observe", [0])
+    assert client.keys[("observe", 1)] == _sk.step_key(design, "observe", [1])
+    wid = next(k for k in client.keys if k[0] == "experiment")[1]
+    assert client.keys[("experiment", wid)] == _sk.step_key(design, "experiment", [wid])
+    # NEGATIVE: a client without the parameter is called without it (the recording doubles above)

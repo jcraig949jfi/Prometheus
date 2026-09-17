@@ -164,6 +164,17 @@ class _LeaseKeeper:
                 "error": self.error}
 
 
+def _kw_if(fn, **kw) -> dict:
+    """Only the keyword arguments `fn` declares (and that are not None): the
+    production client takes idem_key; the recording doubles do not."""
+    import inspect
+    try:
+        params = inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return {}
+    return {k: v for k, v in kw.items() if v is not None and k in params}
+
+
 class _NotClaimable(Exception):
     """Raised inside the claim step; typed by the caller."""
 
@@ -640,13 +651,21 @@ class SfeRunner:
                     str(exc), partial=out,
                     failure_class="BUDGET_EXCEEDED") from exc
 
+        key_of = getattr(record, "key", None)
+        idem_exp = key_of("experiment", [wid]) if key_of else None
+
         def _commit_experiment():
-            hyp = c.hypothesis(wid, spec["hypothesis"])
+            # Idempotency-Key = the step key (Daedalus #354): the engine
+            # replays the same ids to a retry or a NEW ATTEMPT's re-post
+            hyp = c.hypothesis(wid, spec["hypothesis"],
+                               **_kw_if(c.hypothesis, idem_key=idem_exp and idem_exp + ":hyp"))
             pred = None
             if spec.get("prediction") is not None:
-                pred = c.prediction(wid, hyp, spec["prediction"])
+                pred = c.prediction(wid, hyp, spec["prediction"],
+                                    **_kw_if(c.prediction, idem_key=idem_exp and idem_exp + ":pred"))
             e = c.experiment(wid, spec, hyp_id=hyp, pred_id=pred,
-                             commit=True, enqueue=True, kind=spec["work"]["kind"])
+                             commit=True, enqueue=True, kind=spec["work"]["kind"],
+                             **_kw_if(c.experiment, idem_key=idem_exp))
             return {"hyp_id": hyp, "pred_id": pred, "exp_id": e["exp_id"]}
 
         committed = record("experiment", _commit_experiment, parts=[wid],
@@ -1117,7 +1136,10 @@ class SfeRunner:
         for rep in repeats:
             outcome_i, prov_i = _spec.apply_outcome_rule(spec, rep["result"])
 
-            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i):
+            key_of = getattr(record, "key", None)
+            idem_obs = key_of("observe", [rep["repeat_index"]]) if key_of else None
+
+            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i, idem_obs=idem_obs):
                 return c.observation(
                     wid, exp_id,
                     {"result": rep["result"], "outcome_rule_provenance": prov_i,
@@ -1128,7 +1150,8 @@ class SfeRunner:
                      "repeat_seed_derivation": plan["seed_derivation"],
                      "executed_by": "vivarium", "worker_id": self.worker_id},
                     outcome_i, pred_id=pred_id, work_id=work_id,
-                    replication=rep["repeat_index"] > 0)
+                    replication=rep["repeat_index"] > 0,
+                    **_kw_if(c.observation, idem_key=idem_obs))
 
             oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
                          verify=lambda r, w=wid, i=rep["repeat_index"]: self._observation_present(
