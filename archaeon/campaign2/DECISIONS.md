@@ -51,3 +51,44 @@ Idempotency-Key only (the client can key observations/failures/artifacts but
 not experiments or worlds, and the campaign needs local replay for the search
 steps too). | Revisit if the engine gains keyed experiment/world creation.
 DETERMINISTIC (runner.py).
+
+D2-006 | 2026-09-17 02:57 | C2-SFE-01: pack maturity is recorded, not gating. | The
+transported material is EPISODES; a source's failures are informative whether or
+not it solved its own cell. | Alternative: fire IMMATURE_ARTIFACT on packs from
+unsolved sources (would have voided 8 of 12 packs and the experiment). | Revisit
+if a transport of ORGANISMS is designed. SCIENTIFIC.
+
+D2-007 | 2026-09-17 03:10 | C2-SFE-02: representations differ ONLY in the opcode-field
+neighbourhood under operand_perturbation; the twelve operator masses are the
+grammar's own. | L-029: SFE-09's field grammar bundled geometry with operator
+mix. | Alternative: a full field grammar with hand-matched masses (matching by
+hand is what went wrong). | Revisit if a representation needs a different
+STRUCTURAL operator set. SCIENTIFIC design, DETERMINISTIC implementation.
+
+D2-008 | 2026-09-17 03:25 | C2-SFE-02 attempt a03 (campaign foundry, 1-16
+instructions) failed its positive-control gate 1/6 against a 2/3 prior that
+came from the v01 survey's 1-32 foundry; attempt a04 re-runs the SAME sealed
+question under the v01 foundry (the regime the prior came from). The table now
+keys on foundry (L2-017). | Table pooled two regimes; the gate did its job. |
+Alternative: raise G until A reaches under the campaign foundry (a budget hunt
+the directive forbids). | Revisit if a04's gate also fails: then W1_d1 8-bit at
+G100 is RARE under both foundries and the representation question needs a
+different control cell. DETERMINISTIC (the keying), SCIENTIFIC (the rerun).
+
+D2-009 | 2026-09-17 03:35 | C2-SFE-02 a04 (v01 foundry) failed the gate too (1/6, first
+solved 46): W1_d1 8-bit N200 G100 E24 is RARE in campaign 2's stream under both
+foundries. The control cell moves to W2_K2 4-bit N200 G60 E16 (REACHABLE, 7/17
+after dedupe, the most-evidenced budget in the table) and the stuck cell to
+W1_d4 4-bit at the same budget (RARE 1/14); eight seeds; gate >= 2/8 (P(fail)
+~0.11 at 0.41). | Table lookups under the campaign foundry. | Alternative: raise
+G on the 8-bit cell until A reaches (a budget hunt). | Revisit never for this
+campaign. SCIENTIFIC (the cell), DETERMINISTIC (the lookup).
+
+D2-010 | 2026-09-17 03:45 | C2-SFE-02 a05 passed its gate (3/8) and produced the
+rows of record, but its engine records for six rows were REPLAYED from a04 (a
+different design) by the resume machinery; the keys now carry the design
+digest and a06 re-runs the identical design so the engine record is clean.
+a05 is preserved; its rows are identical to a06's by construction (common
+random numbers). | L2-020. | Alternative: keep a05 as the row of record with a
+note (the engine would then hold six observations attributed to the wrong
+cell). | Revisit never. DETERMINISTIC (runner.py keys).

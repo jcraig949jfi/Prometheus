@@ -92,7 +92,10 @@ class Attempt:
 
     # -- steps ---------------------------------------------------------------
     def key(self, name: str, *parts: Any) -> str:
-        return step_key(self.experiment, name, *parts)
+        """Keys carry the sealed DESIGN (prereg digest) once the harness has sealed one: a
+        resumed attempt with a changed design never replays the previous design's engine
+        steps (C2-SFE-02 a05 replayed a04's records for six rows of a different cell)."""
+        return step_key(self.experiment, self.receipt.get("prereg_digest"), name, *parts)
 
     def step(self, name: str, fn: Callable[[], Any], *, parts: tuple = (), kind: str = "local",
              verify: Optional[Callable[[Any], bool]] = None) -> Any:

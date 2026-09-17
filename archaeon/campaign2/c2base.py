@@ -58,21 +58,28 @@ class Experiment:
         self.T = time.time()
 
     # -- preregistration ----------------------------------------------------
-    def reachability_for(self, targets: Sequence[tuple]) -> dict:
-        """targets = [(spec, N, G, E, regime), ...] -> {cell: lookup} straight from the table."""
+    def reachability_for(self, targets: Sequence[tuple], foundry: Optional[dict] = None) -> dict:
+        """targets = [(spec, N, G, E, regime), ...] -> {cell: lookup} straight from the table,
+        under the generation-0 foundry the experiment will use (default FOUNDRY_C2)."""
         out = {}
         rows = R.load()
+        fid = R.foundry_id(foundry or FOUNDRY_C2)
         for spec, N, G, E, regime in targets:
-            L = R.lookup(spec.name, value_bits=spec.value_bits, N=N, G=G, E=E, regime=regime, rows=rows)
-            pooled = R.lookup(spec.name, value_bits=spec.value_bits, regime=regime, rows=rows)
-            out[spec.name] = {"at_budget": {k: L[k] for k in ("n", "k", "freq", "band95", "class", "first_solved_gens")},
-                              "pooled_any_budget": {k: pooled[k] for k in ("n", "k", "freq", "band95", "class", "budgets")}}
+            L = R.lookup(spec.name, value_bits=spec.value_bits, N=N, G=G, E=E, regime=regime, foundry=fid, rows=rows)
+            pooled = R.lookup(spec.name, value_bits=spec.value_bits, regime=regime, foundry=fid, rows=rows)
+            anyf = R.lookup(spec.name, value_bits=spec.value_bits, N=N, G=G, E=E, regime=regime, foundry=None, rows=rows)
+            out[spec.name] = {"foundry": fid,
+                              "at_budget": {k: L[k] for k in ("n", "k", "freq", "band95", "class", "first_solved_gens")},
+                              "pooled_any_budget": {k: pooled[k] for k in ("n", "k", "freq", "band95", "class", "budgets")},
+                              "at_budget_any_foundry": {k: anyf[k] for k in ("n", "k", "freq", "band95", "class")} | {"foundries": anyf.get("foundries_pooled", [])}}
         return out
 
     def seal(self, prereg: dict) -> dict:
-        prereg = dict(prereg, experiment=self.ID, title=self.TITLE, parents=self.PARENTS)
-        path = P.save(prereg, self.att.dir)
+        prereg = dict(prereg, experiment=self.ID, title=self.TITLE, parents=self.PARENTS, attempt=self.att.number)
+        path = P.save(prereg, self.att.path)                    # every attempt keeps its own sealed prereg
         self.prereg = json.loads(path.read_text(encoding="utf-8"))
+        if not self.dry_run:
+            (self.att.dir / "PREREG.json").write_text(path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
         self.receipt["prereg_digest"] = self.prereg["prereg_digest"]
         self.att.save()
         return self.prereg
@@ -161,8 +168,11 @@ class Experiment:
         return out
 
     def reach_row(self, spec: WorldSpec, res: dict, *, N: int, G: int, E: int, regime: str, seed: int, arm: str,
-                  heldout: Optional[float] = None) -> None:
-        self.reach_rows.append(R.row_from_result(spec, res, N=N, G=G, E=E, regime=regime, seed=seed, heldout=heldout,
+                  heldout: Optional[float] = None, kind: Optional[str] = None) -> None:
+        """kind=None: baseline iff the loop's own generation 0 with nothing substituted; pass
+        kind='treated' explicitly for a non-standard operator set or schedule."""
+        self.reach_rows.append(R.row_from_result(spec, res, N=N, G=G, E=E, regime=regime, seed=seed, heldout=heldout, kind=kind,
+                                                 foundry=getattr(self, "foundry", None) or FOUNDRY_C2, campaign_seed=CAMPAIGN_SEED,
                                                  source={"campaign": "cmp2", "experiment": self.ID, "arm": arm, "attempt": self.att.number}))
 
     def decision(self, text: str) -> None:
@@ -182,7 +192,7 @@ class Experiment:
         states = S.assay_states(self.prereg["decl"], meas)
         disp = S.disposition_candidate(self.prereg["decl"], meas, states)
         self.receipt["typed_states"] = states
-        self.receipt["reachability_rows_appended"] = R.record(self.reach_rows)
+        self.receipt["reachability_rows_appended"] = 0 if self.dry_run else R.record(self.reach_rows)   # dry runs never enter the table
         self.receipt["decisions"] = list(self.decisions)
         self.teardown()
         idx = self.att.finalize(rows=rows, of_record=of_record, disposition=disp)

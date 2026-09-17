@@ -33,3 +33,12 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   footholds); random transport -0.026 (1/6). Machine disposition
   CAPABLE_NEGATIVE accepted. 30 reachability rows appended (W2_K2 8-bit
   G60 2/6; W7_K2 4-bit 0/6). Ledger L2-012 (auto), L2-013, L2-014. Next: C2-SFE-02.
+
+## 03:04-03:55 -- C2-SFE-02 (dry a01/a02; engine a03 8-bit gate FAILED 1/6; a04 v01 foundry gate FAILED 1/6; a05 4-bit gate PASSED 3/8 but resume replayed a04 records; a06 of record; CAPABLE_NEGATIVE)
+
+- Three shared-machine fixes from one experiment: reachability keyed on the
+  generation-0 foundry (L2-017); run identity (campaign_seed + rng_label) with
+  dedupe in pooled() (L2-022); design-keyed resume steps (L2-021). Stuck cell
+  W1_d4 4-bit: B - A = +0.01, 0/8 vs 0/8 -> CAPABLE_NEGATIVE; C 1/8 exploratory.
+  Operator masses within 0.01 across arms. 48 records, 0 errors, 1 world
+  TERMINATED per attempt. Next: C2-SFE-03.

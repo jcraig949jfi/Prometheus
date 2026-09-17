@@ -1,0 +1,860 @@
+[
+ {
+  "ancestry_ops": {},
+  "arm": "A_words/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 73,
+  "op_mass_realized": {
+   "config_perturbation": 0.1233,
+   "deletion": 0.1233,
+   "duplication": 0.0548,
+   "insertion": 0.0685,
+   "operand_perturbation": 0.1781,
+   "randomization": 0.0685,
+   "reference_redirection": 0.137,
+   "region_swap": 0.0548,
+   "replacement": 0.1781,
+   "splice": 0.0137
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "A_words",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "A_words/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.5,
+    "logical": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 7,
+   "opcode_hist": {
+    "MUL": 1,
+    "SHL": 1
+   },
+   "persist": "tape",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 71,
+  "op_mass_realized": {
+   "config_perturbation": 0.0986,
+   "deletion": 0.0563,
+   "duplication": 0.0704,
+   "insertion": 0.0845,
+   "movement": 0.0704,
+   "operand_perturbation": 0.1831,
+   "randomization": 0.0423,
+   "reference_redirection": 0.1127,
+   "region_swap": 0.0563,
+   "replacement": 0.169,
+   "splice": 0.0282,
+   "unreachable_removal": 0.0282
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "A_words",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "B_fields/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 73,
+  "op_mass_realized": {
+   "config_perturbation": 0.1233,
+   "deletion": 0.1233,
+   "duplication": 0.0548,
+   "insertion": 0.0685,
+   "operand_perturbation": 0.1781,
+   "randomization": 0.0685,
+   "reference_redirection": 0.137,
+   "region_swap": 0.0548,
+   "replacement": 0.1781,
+   "splice": 0.0137
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "B_fields",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "B_fields/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.5,
+    "logical": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 7,
+   "opcode_hist": {
+    "MUL": 1,
+    "SHL": 1
+   },
+   "persist": "tape",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 71,
+  "op_mass_realized": {
+   "config_perturbation": 0.0986,
+   "deletion": 0.0563,
+   "duplication": 0.0704,
+   "insertion": 0.0845,
+   "movement": 0.0704,
+   "operand_perturbation": 0.1831,
+   "randomization": 0.0423,
+   "reference_redirection": 0.1127,
+   "region_swap": 0.0563,
+   "replacement": 0.169,
+   "splice": 0.0282,
+   "unreachable_removal": 0.0282
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "B_fields",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "C_fields_class/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 73,
+  "op_mass_realized": {
+   "config_perturbation": 0.1233,
+   "deletion": 0.1233,
+   "duplication": 0.0548,
+   "insertion": 0.0685,
+   "operand_perturbation": 0.1781,
+   "randomization": 0.0685,
+   "reference_redirection": 0.137,
+   "region_swap": 0.0548,
+   "replacement": 0.1781,
+   "splice": 0.0137
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "C_fields_class",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "C_fields_class/control",
+  "cell": "control",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.5,
+    "logical": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 7,
+   "opcode_hist": {
+    "MUL": 1,
+    "SHL": 1
+   },
+   "persist": "tape",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 71,
+  "op_mass_realized": {
+   "config_perturbation": 0.0986,
+   "deletion": 0.0563,
+   "duplication": 0.0704,
+   "insertion": 0.0845,
+   "movement": 0.0704,
+   "operand_perturbation": 0.1831,
+   "randomization": 0.0423,
+   "reference_redirection": 0.1127,
+   "region_swap": 0.0563,
+   "replacement": 0.169,
+   "splice": 0.0282,
+   "unreachable_removal": 0.0282
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "C_fields_class",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "A_words/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0541,
+   "deletion": 0.0946,
+   "duplication": 0.0405,
+   "insertion": 0.0676,
+   "movement": 0.0541,
+   "operand_perturbation": 0.1622,
+   "randomization": 0.0541,
+   "reference_redirection": 0.0676,
+   "region_swap": 0.0946,
+   "replacement": 0.2162,
+   "splice": 0.0676,
+   "unreachable_removal": 0.027
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "A_words",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "A_words/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0811,
+   "deletion": 0.1351,
+   "duplication": 0.0135,
+   "insertion": 0.0676,
+   "movement": 0.0135,
+   "operand_perturbation": 0.2162,
+   "randomization": 0.0405,
+   "reference_redirection": 0.1081,
+   "region_swap": 0.0541,
+   "replacement": 0.2027,
+   "splice": 0.0676
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "A_words",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "B_fields/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0541,
+   "deletion": 0.0946,
+   "duplication": 0.0405,
+   "insertion": 0.0676,
+   "movement": 0.0541,
+   "operand_perturbation": 0.1622,
+   "randomization": 0.0541,
+   "reference_redirection": 0.0676,
+   "region_swap": 0.0946,
+   "replacement": 0.2162,
+   "splice": 0.0676,
+   "unreachable_removal": 0.027
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "B_fields",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "B_fields/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0811,
+   "deletion": 0.1351,
+   "duplication": 0.0135,
+   "insertion": 0.0676,
+   "movement": 0.0135,
+   "operand_perturbation": 0.2162,
+   "randomization": 0.0405,
+   "reference_redirection": 0.1081,
+   "region_swap": 0.0541,
+   "replacement": 0.2027,
+   "splice": 0.0676
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "B_fields",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "C_fields_class/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0541,
+   "deletion": 0.0946,
+   "duplication": 0.0405,
+   "insertion": 0.0676,
+   "movement": 0.0541,
+   "operand_perturbation": 0.1622,
+   "randomization": 0.0541,
+   "reference_redirection": 0.0676,
+   "region_swap": 0.0946,
+   "replacement": 0.2162,
+   "splice": 0.0676,
+   "unreachable_removal": 0.027
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "C_fields_class",
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "ancestry_ops": {},
+  "arm": "C_fields_class/stuck",
+  "cell": "stuck",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_children_recorded": 74,
+  "op_mass_realized": {
+   "config_perturbation": 0.0811,
+   "deletion": 0.1351,
+   "duplication": 0.0135,
+   "insertion": 0.0676,
+   "movement": 0.0135,
+   "operand_perturbation": 0.2162,
+   "randomization": 0.0405,
+   "reference_redirection": 0.1081,
+   "region_swap": 0.0541,
+   "replacement": 0.2027,
+   "splice": 0.0676
+  },
+  "opfield_rewrites": 0,
+  "persist": "tape",
+  "reached": 0,
+  "rep": "C_fields_class",
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ }
+]

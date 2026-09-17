@@ -179,7 +179,8 @@ def main(argv=None) -> int:
     rows = X.pool_map(run_arm, jobs, "targets_s")
     for r in rows:
         res = r.pop("_res")
-        X.reach_row(TARGET, res, N=a.N, G=a.G, E=a.E, regime="E0", seed=r["seed"], arm=r["arm"], heldout=r["competence_heldout"])
+        X.reach_row(TARGET, res, N=a.N, G=a.G, E=a.E, regime="E0", seed=r["seed"], arm=r["arm"], heldout=r["competence_heldout"],
+                    kind=None if r["arm"] == "fresh" else "treated")     # episode injection is a treatment even with the common generation 0
     t0 = time.time()
     for r in rows:
         X.record(tgt_w, r, {"experiment": X.ID, "arm": r["arm"], "seed": r["seed"], "k": r["k"], "N": a.N, "G": a.G, "E": a.E, "target": TARGET.knobs(),
