@@ -103,3 +103,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   the margin; LOCALIZED 4/4 with k50 = 1: one site carries the margin.
   SFE-04's 'distributed' was the window-vs-random-window null containing the
   effect (L2-043). Ledger L2-043..L2-045. Next: C2-SFE-10.
+
+## 05:45-06:00 -- C2-SFE-10 (dry a01; engine a02 of record; CAPABLE_NEGATIVE)
+
+- 240 s; 2 worlds; 135 failed genotypes fetched (3/3 ok); load maps: 11-12%
+  load-bearing, 31 organs (mean 2.3), fallback 0; 10 artifacts, 10/10 imports
+  ok, 50 records, 0 errors. functional - length = +0.097 (< 0.10; 5/10 paired;
+  4/10 vs 4/10); shuffled functional 7/10 (0.44) above intact: order carries
+  nothing. Ledger L2-047, L2-048. Ten of ten attempted. Next: CAMPAIGN_REPORT.
