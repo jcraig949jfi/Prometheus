@@ -171,9 +171,11 @@
           NEXT point release once every consumer paginates
 
     What is the smallest next engine change that would materially expand scientific reach?
-        Idempotency keys on the remaining 25 mutating routes (D16) once Vivarium names which
-        its steps need -- it is what makes an unattended, restarting campaign runner safe to
-        retry on EVERY call, not only on observations/artifacts/failures. ~60 lines.
+        Superseded by measurement (SFE_LONG_RUN_REPORT.md s7-s8): WAL maintenance out of the
+        request path -- connection pool + background checkpointer + journal_size_limit + the
+        A6 journal/access log off the event loop (~150 lines, no schema/route). It is what
+        makes an unattended multi-hour campaign with a concurrent reader run without
+        spurious transport errors. Idempotency keys on the remaining 25 routes (D16) second.
 
     Major version? NOT proposed. Every change was additive and nullable; the evidence does
     not require one.

@@ -222,3 +222,59 @@
     and are not rewritten; this section supersedes their mechanism and
     recommendation. Consumer guidance (>= 30 s timeouts, idempotent retries)
     stands until 9.0.1 is measured.
+
+=======================================================================
+8. 2026-09-17 12:0xZ -- the fix attempts, what each one measured, and the actual item
+=======================================================================
+
+    attempt 1  thread-local Foundry per worker thread (f494f533). Real-process
+               run died at request 1,751: 500 "cannot start a transaction
+               within a transaction". FastAPI runs a sync dependency and a sync
+               endpoint on DIFFERENT threadpool threads, so a thread-local
+               keyed on the dependency's thread handed one connection to two
+               concurrent requests. Wrong shape; retracted.
+    attempt 2  checkout/checkin pool, exclusive per request (18d78869, branch
+               de09dc421, NOT on main). 505+2 tests, D11 16/16. Real-process
+               run: 8,570 requests OK, 0 5xx, then a 60 s client timeout on
+               reads and writes alike. The server was alive and its CPU flat.
+               py-spy on the hung process: a worker thread BLOCKED INSIDE
+               `COMMIT` (store.py:929) across 4+ consecutive 1 s samples;
+               the main (event-loop) thread in the A6 journal's synchronous
+               file append and in the access-log flush. load.db was 10 MB;
+               load.db-wal was 344 MB. With the engine idle a PASSIVE
+               checkpoint found only 505 un-backfilled frames and TRUNCATE
+               emptied the file in 0.14 s -- so nothing leaks a snapshot; the
+               WAL had simply never been RESTARTED under continuous readers
+               and grew to its high-water mark, and each commit's automatic
+               checkpoint walked a wal-index of ~84K frames.
+    the actual Both designs pay for WAL maintenance in the request path:
+    mechanism    per-request connections: the LAST close runs a full
+                 checkpoint + WAL/SHM delete, and the next open recreates
+                 them (the 5-13 s stalls; the locked-open 500s);
+                 persistent connections: the WAL never restarts while any
+                 reader holds a snapshot, grows without bound, and the
+                 autocheckpoint INSIDE each COMMIT becomes O(WAL) -> the
+                 60 s hang. Neither is a SQLite limit; both are how the
+                 engine drives it. Also seen: the event loop does
+                 synchronous file I/O for the A6 intent journal and the
+                 access log (small today; it stalls EVERY route when the
+                 disk hiccups).
+    the item   9.0.1, PROPERLY: (a) the pool from attempt 2 (exclusive per
+    (bounded)  request, never per request); (b) a background checkpointer
+               thread owning ONE connection: PRAGMA wal_checkpoint(PASSIVE)
+               every ~2 s, TRUNCATE when log == checkpointed, with
+               `PRAGMA wal_autocheckpoint=0` on the pooled connections so no
+               request's COMMIT ever runs a checkpoint; (c) `PRAGMA
+               journal_size_limit` so a reset WAL is truncated; (d) the A6
+               journal append and the access log off the event loop (a
+               queue + writer thread). ~150 lines; no schema, no route, no
+               contract. Acceptance unchanged: 20 x 1,000 with 2 producers +
+               reader AND with 2 producers alone: 0 5xx, 0 calls over 5 s,
+               WAL file bounded; plus the D11 fixture; plus /v2/health
+               reporting checkpointer last_run and WAL bytes so the next
+               stall of this class is visible without py-spy.
+    status     NOT built in this release. The branch carries attempt 2 as a
+               non-deployable candidate for the record. Consumer guidance
+               stands: engine-call timeouts >= 30 s, idempotent retries.
+               Campaign 4 with one sequential runner and a paced PEW reader
+               is inside the envelope Campaigns 1-3 ran in (0 errors).
