@@ -144,17 +144,505 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:768-826"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:720-760"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:835-852"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_timer.c:163-225"
+   }
+  ],
+  "inspected_files": [
+   "tcp_input.c 720-852",
+   "tcp_timer.c 163-225",
+   "tcp_var.h 132-140"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "the REDESIGN in the congestion lineage, read against both neighbours: everything 4.2BSD had is still here, and three things are new -- (1) the retransmit timer is srtt plus twice a smoothed mean deviation, both kept in fixed point, with Karn's rule (a measured sample cancels the backoff; the timer is not restarted on retransmitted data); (2) a congestion window opened exponentially below ssthresh and linearly above it, reset to one segment on timeout; (3) three duplicate ACKs retransmit the missing segment and set cwnd to one segment (fast retransmit WITHOUT fast recovery). Reno two years later added the mss/8 term to the linear increase and the inflate/deflate that keeps the pipe full after a fast retransmit; both are absent here by reading",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp.h sha256:70de38020628f3b90ff09badb7f8d8ca55698d54aaf706daf1babeb347e843d3; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_debug.c sha256:b640c24979b0d551cadb11bb145a1d04a359f91c49d3086421e17a54291c9508; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_debug.h sha256:d597bf3535d0a8ba6cb172bb962e58f1f3542866eb418b11055ba96bdd172398; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_fsm.h sha256:e4bcc6642d55a2f97c814a33361e8f2097d3fc1d0c457bf2aa4e55462d00e494; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_input.c sha256:300160c938e1d6988e1c9696e5a696c7df64331748b800b7a6ef3d90312c6612; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_output.c sha256:7ca10faeca908efa90324305d146987602e0a2c5dad4cb6c07989409c5f9ad81; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_seq.h sha256:9758d0aaeb07e34beaafd55e06d7312ff43f456059b48045a3924e801b7669f5; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_subr.c sha256:1055b17b23c0ad54f4eab19a07ce2b752b957fa9466b3fc0150afb891921abbd; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_timer.c sha256:1d550b1d1983338b90ff15a69738ee1f4a917be317bf0c86be14a5c95fd42131; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_timer.h sha256:d1e7a3c7d3dc9b9dc6a4d33ce51bc00c42f9175efca70162b91e3a13bc8670ff; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_usrreq.c sha256:d29fcd7f01c14601fd88ef907d8385d0d83bf03ce1648c74b0b5b724b60b319a; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_var.h sha256:9e745d34016d45958eeeff6d62c6098821f7d58fca1946d8686e1d28b77359bd; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcpip.h sha256:9ab2570d38a1d18ac6ebd5239f9b87c7eea2e7082e86bdb98a7fdc7e6af5aaa0",
+   "payload_manifest_id": "techne tree_sha256 fd02c4ae618544b857d1dc8a12bac1409b8af4f8618d6a439807bbed38d52ffe (13 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tcp_input.c",
+     "payload_hash_read": "300160c938e1d6988e1c9696e5a696c7df64331748b800b7a6ef3d90312c6612",
+     "techne_recorded_hash": "300160c938e1d6988e1c9696e5a696c7df64331748b800b7a6ef3d90312c6612",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tcp_timer.c",
+     "payload_hash_read": "1d550b1d1983338b90ff15a69738ee1f4a917be317bf0c86be14a5c95fd42131",
+     "techne_recorded_hash": "1d550b1d1983338b90ff15a69738ee1f4a917be317bf0c86be14a5c95fd42131",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::retransmit_timer_from_a_smoothed_rtt_plus_twice_a_smoothed_mean_deviation_in_fixed_point_with_karn_s_rule",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 768-826: delta = t_rtt - 1 - (t_srtt >> 3); t_srtt += delta; delta = |delta| - (t_rttvar >> 2); t_rttvar += delta; first sample: srtt = rtt << 3, rttvar = rtt << 1; t_rxtshift = 0 on a measured sample; RTO = ((srtt >> 2) + rttvar) >> 1 bounded by TCPTV_MIN / REXMTMAX; the comment 'This replaces rfc793's wired-in beta'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each measured round trip updates the smoothed RTT by one eighth of the error (srtt kept scaled by 8 so the update is an integer shift) and a smoothed mean deviation by one quarter of the absolute error (scaled by 4); the retransmit timeout is srtt + 2 rttvar; a sample is taken only for a segment that was not retransmitted (the timer is not restarted on retransmission) and a measured sample resets the exponential backoff shift, which is Karn's algorithm; the first sample seeds the deviation at half the RTT so the first timeout is 2 RTT",
+   "input": "one timed segment at a time",
+   "output": "t_rxtcur",
+   "state": "t_srtt, t_rttvar, t_rxtshift",
+   "update": "per measured round trip",
+   "assumptions": [
+    "a fixed multiplier (4.2's beta = 2) under-estimates the timeout on variable paths and over-estimates it on stable ones; a variance term tracks the path's variability; integer shifts are cheap on 1988 hardware"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout"
+   ],
+   "fitness_value_in_ancestor": "the spurious retransmissions that fed the 1986 collapse stop; the estimator every TCP still uses (RFC 6298)",
+   "failure_landscape": "by reading: the mean deviation under-estimates the standard deviation (Jacobson chose it for cost); the sample granularity is the 500 ms tick, so RTTs below it are all 'one tick'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson 1988 appendix A; Karn & Partridge 1987",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:768-826; vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_var.h:132-140"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the RTT block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 835-852: incr = mss; if cwnd > ssthresh then incr = max(mss^2 / cwnd, 1); cwnd = min(cwnd + incr, IP_MAXPACKET); tcp_timer.c 216-223: on REXMT, ssthresh = max(2, min(wnd, cwnd) / 2 / mss) * mss, cwnd = mss",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sender's window is capped by snd_cwnd; each new ACK adds one segment while cwnd is at or below ssthresh (doubling per round trip) and mss^2 / cwnd above it (one segment per round trip); on a retransmit timeout the threshold is set to half the outstanding window (at least two segments) and cwnd to one segment; no mss/8 term (Reno's addition) and the increase is applied at the ACK site only",
+   "input": "ACKs; timeouts",
+   "output": "the send window",
+   "state": "snd_cwnd, snd_ssthresh",
+   "update": "per ACK / per timeout",
+   "assumptions": [
+    "packet loss means congestion; the network's capacity is found by exponential probing and held by linear probing (the AIMD argument of Jacobson 1988 and Chiu & Jain 1989)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::retransmit_timer_from_a_smoothed_rtt_plus_twice_a_smoothed_mean_deviation_in_fixed_point_with_karn_s_rule",
+    "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery"
+   ],
+   "fitness_value_in_ancestor": "the end of congestion collapse on the 1986-88 ARPANET; this file is the origin of the mechanism",
+   "failure_landscape": "by reading: after any loss the window restarts from one segment (slow start), so a single loss on a long path costs the whole pipe (Reno's motivation)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson 1988",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:835-852; vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_timer.c:216-223"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the cwnd arithmetic",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 720-760: t_dupacks; tcprexmtthresh 3; on the third: ssthresh = half the window, snd_nxt = ack, cwnd = mss, tcp_output, snd_nxt restored; the comment 'Leave here with the congestion window set to allow 2 packets on the next real ack'; NO cwnd inflation branch, NO deflate on the next new ACK",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a pure duplicate ACK increments a counter; at three, the sender infers a loss without waiting for the timer, sets the threshold to half the window, pulls snd_nxt back to retransmit exactly the missing segment, and sets cwnd to one segment so that the following ACKs open the window by slow start from scratch; the counter resets on any non-duplicate ACK; nothing inflates the window during the duplicates and nothing deflates it after",
+   "input": "duplicate ACKs",
+   "output": "one early retransmission and a slow-start restart",
+   "state": "t_dupacks",
+   "update": "per ACK",
+   "assumptions": [
+    "three duplicates mean a loss, not reordering; the pipe is allowed to drain (the cost Reno removed)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout"
+   ],
+   "fitness_value_in_ancestor": "a loss costs one round trip of detection rather than a timer expiry",
+   "failure_landscape": "by reading: the pipe empties after every fast retransmit; throughput on lossy long paths is bounded by slow-start restarts (Fall & Floyd 1996 measured the gap to Reno)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson's fast retransmit (1988 revision); fast recovery is the 1990 Reno addition",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:720-760"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the duplicate-ACK block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the 1983 organs still present (windows, persist, keepalive, delayed ACK, the 500 ms tick, the backoff table with the srtt clobber)",
+   "reason": "OTHER",
+   "evidence": "cut as organs of bsd-tcp-4.2-1983 in this atlas; unchanged here by grep",
+   "note": "the backoff table and the ten-strike drop survive verbatim",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-tahoe-1988"
+  },
+  {
+   "candidate": "tcp_output.c, tcp_reass, the state machine, tcp_mss, header prediction (present at 4.3-Reno; NOT checked here)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-tahoe-1988"
+  },
+  {
+   "candidate": "'TCP' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the three additions are separately motivated in Jacobson 1988 and were separately extended by Reno",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-tahoe-1988"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "bsd-tcp-4.3-tahoe-1988::P.a_sender_must_avoid_both_spurious_retransmissions_on_a_variable_path_and_congestion_collapse_on_a_shared_one_using_only_ack_timing_and_absence_and_must_recover_from_a_single_loss_faster_than_a_timer",
+   "source_fossil": "bsd-tcp-4.3-tahoe-1988",
+   "source_evidence": "tcp_input.c 720-852; tcp_timer.c 163-225; Jacobson 1988; Fall & Floyd 1996 as cited by the record",
+   "condition": "many senders share bottlenecks whose delay varies by a factor of several within a connection; the only feedback is ACKs and their absence; the score is goodput under load and the count of unnecessary retransmissions",
+   "resource_or_constraint": "one timed segment; integer arithmetic",
+   "failure_condition": "collapse (goodput falls as load rises) or a high spurious-retransmission rate on variable paths",
+   "world_punishes": "a fixed timer multiplier; sending the advertised window; timing retransmitted segments",
+   "world_rewards": "a variance-aware timer, Karn's rule, AIMD with slow start, early retransmit on duplicates",
+   "observable_consequence": "goodput of N flows vs offered load, and spurious retransmissions vs RTT variance, for the 1983, Tahoe and Reno bodies on the same emulated network",
+   "vacuity_condition": "one flow on a constant-delay link",
+   "trivial_shortcuts": "explicit congestion signals from the routers (withheld)",
+   "cheat_control": "an organism told the bottleneck rate and the RTT distribution must show zero spurious retransmissions and full goodput; the 1983 body must collapse under N flows; Tahoe must show the slow-start dip after each fast retransmit that Reno's recovery removes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: end-to-end congestion control, the original (Jacobson & Karels 1988)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988::retransmit_timer_from_a_smoothed_rtt_plus_twice_a_smoothed_mean_deviation_in_fixed_point_with_karn_s_rule",
+   "to": "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "timeouts trigger the reset",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery",
+   "to": "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "ssthresh and cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout",
+   "to": "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "the window state the dupack block halves",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "bsd-tcp-4.3-tahoe-1988",
@@ -169,10 +657,22 @@
    "to": "bsd-tcp-4.3-reno-1990",
    "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) with Jacobson & Karels' 1988 additions; bsd-tcp-4.3-reno-1990 (in this atlas) is its successor: the lineage's three source bodies are now all cut",
+   "note": "by reading all three",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "tcp_output and the state machine unread",
+   "nothing ran; the three bodies would make a three-arm world on an emulated network (an M2 world)"
+  ],
+  "note": "the middle of the lineage; the three organs are exactly the 1988 paper's three contributions, located line by line, with Reno's two later additions confirmed absent",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

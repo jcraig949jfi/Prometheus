@@ -1,0 +1,163 @@
+{
+ "at": "2026-09-17T23:09:55Z",
+ "consumers_of_the_path": [
+  "the scheduled task SFEngineM2Watchdog (Arguments: -File <data>\\sfengine_m2_watchdog.ps1)",
+  "<data>\\sfengine_m2_watchdog.ps1 (derives log/state/park/cert/launcher from its own directory)",
+  "<data>\\sfengine_m2.cmd (--db, --tls-cert, --tls-key, log redirect)",
+  "deploy/DEPLOYED_BUILD_M2.json data_dir + supervisor (pin; updated by hand after apply)",
+  "docs/RUNNING_M1_VS_M2.md and roles/base-role/MONITORS.md row 21 (docs; updated by hand)",
+  "deploy/qualify_v9.py DB, deploy/release_v9.py DATA (maintainer tools; --db/--data override)",
+  "deploy/longrun_load.py --db-dir (scratch runs must ALSO move to C: -- same drive, same pathology)"
+ ],
+ "dst": "C:\\Prometheus-data\\sfe",
+ "fsync_probe": {
+  "dst": {
+   "max_s": 0.0005,
+   "median_s": 0.0002,
+   "n": 5,
+   "total_s": 0.0
+  },
+  "src": {
+   "max_s": 3.8683,
+   "median_s": 2.1381,
+   "n": 5,
+   "total_s": 11.19
+  }
+ },
+ "inflight": {
+  "engine_claimed_running": 0
+ },
+ "ledger_before": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "events": 13665,
+  "last_world_created_ts": 1789664519.5528543,
+  "max_event_seq": 13665,
+  "schema_version": 9,
+  "work_items": {
+   "COMPLETED": 348,
+   "QUEUED": 3
+  },
+  "worlds": 432
+ },
+ "live_before": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "mode": "rehearse",
+ "result": "REHEARSAL_OK",
+ "rollback_snapshots": [
+  "engine.db.pre-release-20260917T142605Z.bak",
+  "engine.db.pre-release-20260917T142605Z.bak-shm",
+  "engine.db.pre-release-20260917T142605Z.bak-wal",
+  "engine.db.pre-release-20260917T170038Z.bak",
+  "engine.db.pre-release-20260917T170038Z.bak-shm",
+  "engine.db.pre-release-20260917T170038Z.bak-wal",
+  "engine.db.pre-schema4-20260904T180254.bak",
+  "engine.db.pre-schema8-20260916T074830.bak",
+  "engine.db.pre-schema9-20260917T104051Z.bak",
+  "engine.db.pre-schema9-20260917T104051Z.bak-shm",
+  "engine.db.pre-schema9-20260917T104051Z.bak-wal",
+  "engine.db.pre-schema9-20260917T105054Z.bak",
+  "engine.db.pre-schema9-20260917T105054Z.bak-shm",
+  "engine.db.pre-schema9-20260917T105054Z.bak-wal",
+  "engine.db.predeploy-20260904T194451.bak"
+ ],
+ "schema": "sfe_ledger_move_m2.v1",
+ "source_assets": {
+  "backup": true,
+  "blobs": true,
+  "engine.db": true,
+  "incidents": true,
+  "m2.crt": true,
+  "m2.key": true,
+  "sfengine_m2.cmd": true,
+  "sfengine_m2.log": true,
+  "sfengine_m2_watchdog.log": true,
+  "sfengine_m2_watchdog.ps1": true,
+  "sfengine_m2_watchdog.state.json": true
+ },
+ "src": "D:\\Prometheus-data\\sfe",
+ "steps": [
+  {
+   "check": "live engine identifies itself",
+   "detail": "{\"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"engine_source_hash\": \"sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc\", \"schema_version\": 9, \"source_commit\": \"b0d75218382dd0d30021640b5be3ff108c3e16f5\"}",
+   "pass": true
+  },
+  {
+   "check": "source ledger readable; identity matches the live service",
+   "detail": "{\"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"schema_version\": 9, \"events\": 13665, \"max_event_seq\": 13665, \"work_items\": {\"COMPLETED\": 348, \"QUEUED\": 3}, \"worlds\": 432, \"last_world_created_ts\": 1789664519.5528543}",
+   "pass": true
+  },
+  {
+   "check": "no work in flight on the engine (CLAIMED/RUNNING = 0)",
+   "detail": "engine 0",
+   "pass": true
+  },
+  {
+   "check": "every source asset present",
+   "detail": "{\"m2.key\": true, \"m2.crt\": true, \"sfengine_m2_watchdog.ps1\": true, \"sfengine_m2_watchdog.state.json\": true, \"sfengine_m2_watchdog.log\": true, \"sfengine_m2.log\": true, \"engine.db\": true, \"sfengine_m2.cmd\": true, \"blobs\": true, \"backup\": true, \"incidents\": true}",
+   "pass": true
+  },
+  {
+   "check": "a rollback snapshot exists at the source",
+   "detail": "engine.db.pre-schema9-20260917T105054Z.bak-shm\nengine.db.pre-schema9-20260917T105054Z.bak-wal\nengine.db.predeploy-20260904T194451.bak",
+   "pass": true
+  },
+  {
+   "check": "destination volume is NVMe",
+   "detail": "{\"disk\": \"AGI1T0G43AI818\", \"bus\": \"NVMe\", \"media\": \"SSD\", \"free\": 792693706752, \"size\": 1023456309248}",
+   "pass": true
+  },
+  {
+   "check": "destination has 3x the space",
+   "detail": "need 82.3 MB x3; free 738.3 GB",
+   "pass": true
+  },
+  {
+   "check": "source volume is the SATA HDD the long run measured",
+   "detail": "{\"disk\": \"ST8000DM004-2U9188\", \"bus\": \"SATA\", \"media\": \"HDD\", \"free\": 7371622301696, \"size\": 8001546088448}",
+   "pass": true
+  },
+  {
+   "check": "fsync probe recorded (the licensing measurement of the moment)",
+   "detail": "{\"src\": {\"n\": 5, \"median_s\": 2.1381, \"max_s\": 3.8683, \"total_s\": 11.19}, \"dst\": {\"n\": 5, \"median_s\": 0.0002, \"max_s\": 0.0005, \"total_s\": 0.0}}",
+   "pass": true
+  },
+  {
+   "check": "scheduled task runs the source watchdog",
+   "detail": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+   "pass": true
+  },
+  {
+   "check": "destination does not already hold a ledger",
+   "detail": "C:\\Prometheus-data\\sfe",
+   "pass": true
+  }
+ ],
+ "task_args_before": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+ "volumes": {
+  "bytes_to_copy": 86280381,
+  "dst": {
+   "bus": "NVMe",
+   "disk": "AGI1T0G43AI818",
+   "free": 792693706752,
+   "media": "SSD",
+   "size": 1023456309248
+  },
+  "src": {
+   "bus": "SATA",
+   "disk": "ST8000DM004-2U9188",
+   "free": 7371622301696,
+   "media": "HDD",
+   "size": 8001546088448
+  }
+ }
+}

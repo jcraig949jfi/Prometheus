@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:02Z",
- "n": 460,
+ "built": "2026-09-17T23:15Z",
+ "n": 486,
  "organs": [
   {
    "organ_id": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
@@ -4947,6 +4947,376 @@
     },
     "recovery": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::retransmit_timer_from_a_smoothed_rtt_plus_twice_a_smoothed_mean_deviation_in_fixed_point_with_karn_s_rule",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 768-826: delta = t_rtt - 1 - (t_srtt >> 3); t_srtt += delta; delta = |delta| - (t_rttvar >> 2); t_rttvar += delta; first sample: srtt = rtt << 3, rttvar = rtt << 1; t_rxtshift = 0 on a measured sample; RTO = ((srtt >> 2) + rttvar) >> 1 bounded by TCPTV_MIN / REXMTMAX; the comment 'This replaces rfc793's wired-in beta'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each measured round trip updates the smoothed RTT by one eighth of the error (srtt kept scaled by 8 so the update is an integer shift) and a smoothed mean deviation by one quarter of the absolute error (scaled by 4); the retransmit timeout is srtt + 2 rttvar; a sample is taken only for a segment that was not retransmitted (the timer is not restarted on retransmission) and a measured sample resets the exponential backoff shift, which is Karn's algorithm; the first sample seeds the deviation at half the RTT so the first timeout is 2 RTT",
+   "input": "one timed segment at a time",
+   "output": "t_rxtcur",
+   "state": "t_srtt, t_rttvar, t_rxtshift",
+   "update": "per measured round trip",
+   "assumptions": [
+    "a fixed multiplier (4.2's beta = 2) under-estimates the timeout on variable paths and over-estimates it on stable ones; a variance term tracks the path's variability; integer shifts are cheap on 1988 hardware"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout"
+   ],
+   "fitness_value_in_ancestor": "the spurious retransmissions that fed the 1986 collapse stop; the estimator every TCP still uses (RFC 6298)",
+   "failure_landscape": "by reading: the mean deviation under-estimates the standard deviation (Jacobson chose it for cost); the sample granularity is the 500 ms tick, so RTTs below it are all 'one tick'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson 1988 appendix A; Karn & Partridge 1987",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:768-826; vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_var.h:132-140"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the RTT block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 835-852: incr = mss; if cwnd > ssthresh then incr = max(mss^2 / cwnd, 1); cwnd = min(cwnd + incr, IP_MAXPACKET); tcp_timer.c 216-223: on REXMT, ssthresh = max(2, min(wnd, cwnd) / 2 / mss) * mss, cwnd = mss",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sender's window is capped by snd_cwnd; each new ACK adds one segment while cwnd is at or below ssthresh (doubling per round trip) and mss^2 / cwnd above it (one segment per round trip); on a retransmit timeout the threshold is set to half the outstanding window (at least two segments) and cwnd to one segment; no mss/8 term (Reno's addition) and the increase is applied at the ACK site only",
+   "input": "ACKs; timeouts",
+   "output": "the send window",
+   "state": "snd_cwnd, snd_ssthresh",
+   "update": "per ACK / per timeout",
+   "assumptions": [
+    "packet loss means congestion; the network's capacity is found by exponential probing and held by linear probing (the AIMD argument of Jacobson 1988 and Chiu & Jain 1989)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::retransmit_timer_from_a_smoothed_rtt_plus_twice_a_smoothed_mean_deviation_in_fixed_point_with_karn_s_rule",
+    "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery"
+   ],
+   "fitness_value_in_ancestor": "the end of congestion collapse on the 1986-88 ARPANET; this file is the origin of the mechanism",
+   "failure_landscape": "by reading: after any loss the window restarts from one segment (slow start), so a single loss on a long path costs the whole pipe (Reno's motivation)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson 1988",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:835-852; vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_timer.c:216-223"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the cwnd arithmetic",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bsd-tcp-4.3-tahoe-1988::three_duplicate_acks_retransmit_the_missing_segment_and_restart_slow_start_from_one_segment_without_fast_recovery",
+   "fossil_ancestry": "bsd-tcp-4.3-tahoe-1988",
+   "human_name": "tcp_input.c 720-760: t_dupacks; tcprexmtthresh 3; on the third: ssthresh = half the window, snd_nxt = ack, cwnd = mss, tcp_output, snd_nxt restored; the comment 'Leave here with the congestion window set to allow 2 packets on the next real ack'; NO cwnd inflation branch, NO deflate on the next new ACK",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a pure duplicate ACK increments a counter; at three, the sender infers a loss without waiting for the timer, sets the threshold to half the window, pulls snd_nxt back to retransmit exactly the missing segment, and sets cwnd to one segment so that the following ACKs open the window by slow start from scratch; the counter resets on any non-duplicate ACK; nothing inflates the window during the duplicates and nothing deflates it after",
+   "input": "duplicate ACKs",
+   "output": "one early retransmission and a slow-start restart",
+   "state": "t_dupacks",
+   "update": "per ACK",
+   "assumptions": [
+    "three duplicates mean a loss, not reordering; the pipe is allowed to drain (the cost Reno removed)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bsd-tcp-4.3-tahoe-1988::congestion_window_opened_by_one_segment_per_ack_below_ssthresh_and_by_mss_squared_over_cwnd_above_it_reset_to_one_segment_on_timeout"
+   ],
+   "fitness_value_in_ancestor": "a loss costs one round trip of detection rather than a timer expiry",
+   "failure_landscape": "by reading: the pipe empties after every fast retransmit; throughput on lossy long paths is bounded by slow-start restarts (Fall & Floyd 1996 measured the gap to Reno)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Jacobson's fast retransmit (1988 revision); fast recovery is the 1990 Reno addition",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-tcp-4.3-tahoe-1988/upstream/tcp_input.c:720-760"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the duplicate-ACK block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
      "basis": "READ"
     },
     "adaptation": {
@@ -15787,6 +16157,252 @@
    }
   },
   {
+   "organ_id": "eispack-netlib::eigenproblem_as_a_pipeline_of_separately_callable_stages_balance_reduce_iterate_back_transform_each_a_literal_translation_of_a_published_algol_procedure",
+   "fossil_ancestry": "eispack-netlib",
+   "human_name": "balanc (Parlett & Reinsch 1969) / balbak; tred1 / tred2 (Martin, Reinsch, Wilkinson 1968) / trbak1; elmhes / orthes / ortran; tql1 / tql2 (Bowdler et al. 1968); hqr / hqr2 (Martin, Peters, Wilkinson 1970); imtql*, tqlrat, bisect, tinvit, tsturm; drivers rs, rg, rsg, ch, cg, svd",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a general real matrix is balanced (diagonal scaling by powers of two and permutation to isolate eigenvalues), reduced to upper Hessenberg form by elimination or orthogonal transformations, its eigenvalues found by the shifted QR iteration, and eigenvectors recovered by back-substitution and back-transformation; a symmetric matrix is reduced to tridiagonal by Householder transformations and iterated by implicit QL; each stage is a routine whose header names its Algol source and page, and the drivers call them in the canonical order",
+   "input": "a matrix",
+   "output": "eigenvalues (and vectors)",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "the Handbook's procedures are correct and numerically analysed (Wilkinson 1965); translation preserves the analysis; users compose stages for special structure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eispack-netlib::balancing_by_powers_of_two_scaling_and_permutation_to_isolate_eigenvalues_before_reduction"
+   ],
+   "fitness_value_in_ancestor": "the first portable, tested, reference eigen-library (Argonne 1972-76); every stage's provenance is in its header",
+   "failure_landscape": "by reading: no blocking, no BLAS, column-by-column loops (the reason LAPACK replaced it; the record's lineage)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wilkinson & Reinsch 1971 Handbook vol. II",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "the four headers read; the file list"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the library's organisation; MEDIUM because no body was read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eispack-netlib::balancing_by_powers_of_two_scaling_and_permutation_to_isolate_eigenvalues_before_reduction",
+   "fossil_ancestry": "eispack-netlib",
+   "human_name": "balanc.f ('balances a real matrix and isolates eigenvalues whenever possible'); balbak restores the vectors",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "rows and columns whose off-diagonal parts are zero are permuted to the ends (their diagonal entries are eigenvalues with no iteration); the remaining block is scaled by a diagonal similarity with powers of the machine radix so row and column norms are comparable, which does not change eigenvalues and improves the conditioning of the later stages; the permutation and scaling are recorded for the back-transformation",
+   "input": "a real matrix",
+   "output": "a balanced matrix and low/igh indices",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "scaling by exact powers of two introduces no rounding error"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eispack-netlib::eigenproblem_as_a_pipeline_of_separately_callable_stages_balance_reduce_iterate_back_transform_each_a_literal_translation_of_a_published_algol_procedure"
+   ],
+   "fitness_value_in_ancestor": "eigenvalue accuracy on badly scaled matrices at negligible cost",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Parlett & Reinsch 1969",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/balanc.f:1-30 (header only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "balanc / balbak; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
    "fossil_ancestry": "eliza-anthay-1966",
    "human_name": "eliza::response first loop [CACM page 39]",
@@ -17282,6 +17898,500 @@
    }
   },
   {
+   "organ_id": "emcee-3.1.6::stretch_move_proposing_along_the_line_through_a_random_complementary_walker_with_a_scale_drawn_from_g_z_proportional_to_one_over_sqrt_z_and_an_acceptance_factor_of_z_to_the_ndim_minus_one",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "StretchMove.get_proposal (stretch.py): zz = ((a - 1) rand + 1)^2 / a; factors = (ndim - 1) log zz; rint random complementary index; q = c[rint] - (c[rint] - s) zz",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each walker in the active half, pick a walker from the other half at random, draw z by squaring a uniform on [1, sqrt(a)] scaled by 1/a (which yields the density proportional to 1/sqrt(z) on [1/a, a], symmetric under z -> 1/z), and propose x' = y + z (x - y): the point on the line through y and x at stretch z; the Metropolis ratio includes z^(ndim - 1) so the move satisfies detailed balance; a = 2 by default",
+   "input": "the active half, the complementary half, a random state",
+   "output": "proposals and log correction factors",
+   "state": "none",
+   "update": "per half-step",
+   "assumptions": [
+    "the ensemble's spread approximates the target's covariance, so proposals along inter-walker lines are automatically scaled and oriented (affine invariance, Goodman & Weare 2010)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "no proposal tuning; the same code works on a badly scaled, correlated posterior as on a spherical one",
+   "failure_landscape": "by reading: in high dimension the acceptance falls (the z^(ndim-1) factor) and the ensemble needs at least 2 ndim walkers; multimodal targets trap walkers in modes (the ensemble does not mix between modes)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Goodman & Weare 2010; Christen & Fox 2010 for the earlier 'walk' idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/stretch.py:14-30"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "StretchMove",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "RedBlueMove.propose (red_blue.py 52-106): inds = all_inds % nsplits (shuffled if randomize_split); for each split: s = active, c = the others; get_proposal; compute_log_prob_fn(q) on the whole half at once; lnpdiff = factor + new - old; accept if lnpdiff > log(rand); state.update",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "walkers are assigned to nsplits groups (two by default, reshuffled each step); each group in turn proposes new positions using only walkers from the other groups, evaluates all its proposals' log-probabilities in one vectorised (or pooled) call, and accepts each independently by the Metropolis rule with the move's correction factor; because the complementary walkers do not move during a group's update, the update is a valid Markov transition and the group's evaluations are embarrassingly parallel",
+   "input": "the ensemble state",
+   "output": "a new state and an accepted mask",
+   "state": "none",
+   "update": "per step",
+   "assumptions": [
+    "updating all walkers simultaneously from each other would break detailed balance (Foreman-Mackey et al. 2013 section 3); two halves are enough"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::stretch_move_proposing_along_the_line_through_a_random_complementary_walker_with_a_scale_drawn_from_g_z_proportional_to_one_over_sqrt_z_and_an_acceptance_factor_of_z_to_the_ndim_minus_one",
+    "emcee-3.1.6::integrated_autocorrelation_time_from_the_fft_autocorrelation_with_sokal_automatic_windowing_and_a_reliability_flag_when_the_chain_is_shorter_than_tol_times_tau",
+    "emcee-3.1.6::moves_as_a_weighted_list_sampled_per_step"
+   ],
+   "fitness_value_in_ancestor": "one likelihood call per half-ensemble per step: the reason the sampler scales to clusters",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Foreman-Mackey, Hogg, Lang & Goodman 2013 (the parallel red-blue scheme)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/red_blue.py:37-106"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "RedBlueMove.propose",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::integrated_autocorrelation_time_from_the_fft_autocorrelation_with_sokal_automatic_windowing_and_a_reliability_flag_when_the_chain_is_shorter_than_tol_times_tau",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "autocorr.integrated_time (49-130): function_1d by FFT; taus = 2 cumsum(f) - 1; auto_window(taus, c = 5): the first M with M >= c tau(M); flag if tol * tau > n",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the normalised autocorrelation function of each chain (averaged over walkers) is computed by FFT; the integrated time is 2 times the running sum minus one; the window M is the first lag at which M exceeds c times the estimate at M (Sokal's rule, c = 5 by default), which balances bias against variance; if the chain is shorter than tol (50) autocorrelation times the estimate is flagged as unreliable (a warning or an exception)",
+   "input": "chains of shape (n_steps, n_walkers, n_dim)",
+   "output": "tau per dimension",
+   "state": "none",
+   "update": "on request",
+   "assumptions": [
+    "the autocorrelation function decays; the automatic window is the standard estimator (Sokal 1997); 50 tau is the recommended minimum chain length"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "a convergence diagnostic that says when it cannot be trusted",
+   "failure_landscape": "by reading: the estimate itself is biased low for short chains, which is why tol exists",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Sokal 1997 (Monte Carlo methods in statistical mechanics, the windowing lecture); Goodman & Weare 2010 acor",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/autocorr.py:42-130"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "autocorr.py",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "INTERVAL",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::moves_as_a_weighted_list_sampled_per_step",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "EnsembleSampler.__init__ (ensemble.py 85-130): moves as a move, a list, or [(move, weight), ...]; the default [StretchMove()]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each step one move is drawn from the list with the given weights and applied to the whole ensemble; the other shipped moves (walk, differential evolution, DE snooker, KDE, Gaussian) share the red-blue interface, so mixtures of proposals are a configuration",
+   "input": "a list of moves and weights",
+   "output": "one move per step",
+   "state": "none",
+   "update": "per step",
+   "assumptions": [
+    "mixing proposals helps on multimodal targets (DE snooker is the paper's remedy)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "the sampler is a framework for ensemble moves, not one move",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/ensemble.py:85-130 (the per-step draw not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the moves argument; CANDIDATE because sample's draw was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set",
    "fossil_ancestry": "eprover-2.6",
    "human_name": "ProcessClause (1560-1700): select from state->unprocessed; ForwardContractClause; ClauseIsSemFalse / empty clause; eliminate_backward_rewritten / subsumed / unit_simplified; insert into processed_pos_rules / pos_eqns / neg_units / non_units by shape; generate_new_clauses; Saturate (1738-1800): the while over TimeIsUp, set sizes, step / proc / unproc / total / generated / term-bank limits, then cleanup_unprocessed_clauses and the periodic SATCheck",
@@ -18349,6 +19459,376 @@
     },
     "update_topology": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "espresso-logic::expand_irredundant_reduce_iterated_until_the_cube_count_stops_falling_with_essential_primes_removed_first_and_gasp_escapes_on_a_stall",
+   "fossil_ancestry": "espresso-logic",
+   "human_name": "espresso() (espresso.c 1-70): EXPAND, IRREDUNDANT, essential(&F, &D) removed; do { do { copy_cost; REDUCE; EXPAND; IRREDUNDANT } while (cost.cubes < best_cost.cubes); super_gasp / last_gasp } while (cubes fall or, at equal cubes, total falls); append E; make_sparse",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after an initial expand and irredundant pass, cubes that no other prime can replace (essential) are set aside so the loop works on the rest; the inner loop reduces, expands and makes irredundant while the cube count decreases; when it stalls, a gasp step (reduce each cube, expand it in a different direction, and keep any that let another cube be dropped) is tried and the outer loop repeats if it helped; the cost compares cube count first and literal count second; the essentials are appended and a sparse-variable clean-up runs",
+   "input": "a cover F (and don't-cares D, off-set R)",
+   "output": "a smaller cover of the same function",
+   "state": "F, best_cost",
+   "update": "per pass",
+   "assumptions": [
+    "a local minimum of the expand/reduce/irredundant cycle is close to the global one on real PLAs; reduce moves the cover off a plateau by shrinking cubes in a new order each time (the toggle in reduce.c)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "espresso-logic::expansion_of_each_cube_to_a_prime_against_a_representation_of_the_off_set_choosing_the_parts_to_raise_so_as_to_cover_the_most_other_cubes_in_an_order_that_chews_from_the_edges",
+    "espresso-logic::reduction_of_each_cube_to_the_supercube_of_its_essential_points_in_an_alternating_order_and_irredundant_cover_by_a_covering_table"
+   ],
+   "fitness_value_in_ancestor": "near-minimal two-level logic for PLAs in seconds, when exact minimisation (Quine-McCluskey) was infeasible; the algorithm every logic synthesis tool inherited",
+   "failure_landscape": "by reading: a heuristic with no optimality bound; order-dependent (use_random_order exists); the literal count is a tie-breaker only",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Brayton, Hachtel, McMullen, Sangiovanni-Vincentelli 1984 (Logic Minimization Algorithms for VLSI Synthesis); MINI (Hong, Cain, Ostapko 1974) as the ancestor of the expand/reduce idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:espresso-logic/upstream/tree/espresso-src/espresso.c:1-70"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "espresso()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "espresso-logic::expansion_of_each_cube_to_a_prime_against_a_representation_of_the_off_set_choosing_the_parts_to_raise_so_as_to_cover_the_most_other_cubes_in_an_order_that_chews_from_the_edges",
+   "fossil_ancestry": "espresso-logic",
+   "human_name": "expand (expand.c 30-70 and expand1, not read): mini_sort(F, ascend) or random_order; RAISE / FREESET / INIT_LOWER / SUPER_CUBE / OVEREXPANDED_CUBE; the header: 'we do NOT require an unwrapped version of the OFF-set'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "cubes are processed in an order that starts from the cover's edges; for each non-prime cube the free parts (those that can be raised without hitting the off-set) are determined against the off-set cover directly; parts are raised preferentially so that the expanded cube covers other cubes of the on-set (which then become redundant); when no cube can be covered, a covering heuristic picks a large prime; the overexpanded cube (all individually raisable parts) and the supercube of coverable cubes bound the choices",
+   "input": "F, R",
+   "output": "a cover of primes",
+   "state": "the covered marks",
+   "update": "per pass",
+   "assumptions": [
+    "testing containment against the off-set cover is cheaper than complementing (the Espresso-II improvement over the manuscript); covering other cubes is the right greedy objective"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "espresso-logic::expand_irredundant_reduce_iterated_until_the_cube_count_stops_falling_with_essential_primes_removed_first_and_gasp_escapes_on_a_stall"
+   ],
+   "fitness_value_in_ancestor": "primes without enumeration; the step that does the minimisation",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:espresso-logic/upstream/tree/espresso-src/expand.c:1-70"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "expand / expand1; CANDIDATE because expand1 was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "espresso-logic::reduction_of_each_cube_to_the_supercube_of_its_essential_points_in_an_alternating_order_and_irredundant_cover_by_a_covering_table",
+   "fossil_ancestry": "espresso-logic",
+   "human_name": "reduce (reduce.c header: 'the smallest cube contained in the cube which can replace the cube ... the super cube of all of the essential points'; two orderings alternated by a toggle); irredundant / mark_irredundant (irred.c: relatively essential Rt / partially redundant Rp; an sm_matrix covering table solved by minimum_cover)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "reduce replaces each cube by the smallest cube that still covers the points no other cube covers (computed directly as a supercube), processing cubes in one of two orders alternately so successive passes explore different directions; irredundant partitions the cover into relatively essential cubes (kept), totally redundant (dropped) and partially redundant cubes, and solves a set-covering problem over the last group with a heuristic minimum-cover routine to keep a minimal subset",
+   "input": "F, D",
+   "output": "a reduced or minimal cover",
+   "state": "the toggle",
+   "update": "per pass",
+   "assumptions": [
+    "shrinking cubes toward their essential points frees room for a different expansion (the escape from local minima); minimum cover is NP-hard, so a heuristic is used"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "espresso-logic::expand_irredundant_reduce_iterated_until_the_cube_count_stops_falling_with_essential_primes_removed_first_and_gasp_escapes_on_a_stall"
+   ],
+   "fitness_value_in_ancestor": "the two steps that turn a greedy expand into an iterative improvement",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:espresso-logic/upstream/tree/espresso-src/reduce.c:1-30; vault:espresso-logic/upstream/tree/espresso-src/irred.c:1-25"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "reduce.c, irred.c; CANDIDATE because bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -21440,6 +22920,252 @@
     },
     "state_persistence": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "gnu-prolog-1.5.0::prolog_compiled_in_four_stages_prolog_to_wam_in_prolog_wam_to_a_machine_independent_mini_assembly_in_c_mini_assembly_to_native_assembly_per_architecture_linked_against_a_c_runtime",
+   "fossil_ancestry": "gnu-prolog-1.5.0",
+   "human_name": "Pl2Wam (pl2wam.pl, code_gen.pl, first_arg.pl, indexing.pl, reg_alloc.pl, inst_codif.pl: ~2,500 lines of Prolog, shipped also as .wam for bootstrap); Wam2Ma (wam2ma.c 2,416 lines); Ma2Asm (ma2asm.c + x86_64_any.c, arm64_any.c, ...); EnginePl (engine.c, wam_inst.c, unify.c, the stacks)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler is a Prolog program that reads clauses, generates WAM code with first-argument indexing (switch on term type, constant, structure) and allocates registers, and emits the instructions as text; the .wam files beside each .pl are the compiler's own compiled form, so a C-compiled runtime plus the .wam bootstraps the system; wam2ma expands each WAM instruction into MA instructions (calls into the runtime, jumps, register moves) and ma2asm emits native assembly through one mapper file per target; the result links with the runtime's unification, trail, choice-point and switch-table code",
+   "input": "Prolog source",
+   "output": "a native executable",
+   "state": "none at compile time",
+   "update": "per compilation",
+   "assumptions": [
+    "a small MA instruction set is enough to express the WAM's control flow, so porting is one mapper file; native code beats a VM for Prolog's call-heavy execution"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-prolog-1.5.0::first_argument_indexing_as_runtime_switch_tables_over_atoms_and_functor_arity_pairs_built_by_the_runtime_and_selected_by_compiled_switch_instructions"
+   ],
+   "fitness_value_in_ancestor": "native-code Prolog with a portable back end; the finite-domain solver reuses the same pipeline",
+   "failure_landscape": "by reading: every port is a mapper file that must track the platform's calling convention (the src/Ma2Asm list shows eleven); compilation is slower than loading into a VM",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the WAM (Warren 1983); wamcc (Codognet & Diaz 1995) as the predecessor that compiled to C; GNU Prolog compiles to assembly instead",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Pl2Wam/pl2wam.pl:1-60; vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Wam2Ma/wam2ma.c:1-40; vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Ma2Asm/ma2asm.c:1-40"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four directories; MEDIUM because bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "gnu-prolog-1.5.0::first_argument_indexing_as_runtime_switch_tables_over_atoms_and_functor_arity_pairs_built_by_the_runtime_and_selected_by_compiled_switch_instructions",
+   "fossil_ancestry": "gnu-prolog-1.5.0",
+   "human_name": "wam_inst.c: Pl_Create_Swt_Table, Pl_Create_Swt_Atm_Element, Pl_Create_Swt_Stc_Element (101-180), Pl_Create_Functor_Arity_Tagged (84); Pl2Wam/indexing.pl and first_arg.pl",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler groups a predicate's clauses by the type and value of their first argument and emits switch instructions; at load time the runtime builds hash tables mapping atoms and (functor, arity) keys to code addresses; a call dereferences the first argument and jumps through the table to the clauses that can match, so clauses that cannot unify are never tried and no choice point is created when only one group matches",
+   "input": "a predicate's clauses; a call's first argument",
+   "output": "a jump to a clause group",
+   "state": "the switch tables (per predicate, built once)",
+   "update": "per call",
+   "assumptions": [
+    "the first argument is the discriminating one for most predicates (the WAM's classic assumption); a hash on it is cheap"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-prolog-1.5.0::prolog_compiled_in_four_stages_prolog_to_wam_in_prolog_wam_to_a_machine_independent_mini_assembly_in_c_mini_assembly_to_native_assembly_per_architecture_linked_against_a_c_runtime"
+   ],
+   "fitness_value_in_ancestor": "determinism detection without a cut; the largest single speed-up in WAM compilation",
+   "failure_landscape": "by reading: predicates discriminated by a later argument get no benefit (JIT indexing in SWI is the rival answer)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren 1983 (switch_on_term / switch_on_constant / switch_on_structure)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/EnginePl/wam_inst.c:80-180 (constructors); indexing.pl (name only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the Swt_* functions and the indexing pass; CANDIDATE because indexing.pl was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
      "basis": "READ"
     },
     "feedback": {
@@ -35068,6 +36794,376 @@
    }
   },
   {
+   "organ_id": "microkanren-scheme::triangular_substitution_as_an_association_list_walked_on_demand_with_a_structural_unifier_and_no_occurs_check",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "var / var? / var=? (vectors holding a counter); walk (5-7); ext-s (9); unify (18-27)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a logic variable is a one-element vector holding its creation index; a substitution maps variables to terms; walk follows bindings until a non-variable or an unbound variable is reached (bindings are never composed, hence 'triangular'); unify walks both sides, binds a variable to the other side (ext-s conses a new pair), recurses on pairs, and otherwise requires eqv?; there is no occurs check, so a cyclic binding is possible",
+   "input": "two terms and a substitution",
+   "output": "an extended substitution or #f",
+   "state": "none (persistent lists)",
+   "update": "per ==",
+   "assumptions": [
+    "walking on demand is cheaper than composing substitutions; the user accepts the occurs-check omission (as Prolog does)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment"
+   ],
+   "fitness_value_in_ancestor": "unification and substitution in nine lines; every extension is a cons",
+   "failure_landscape": "by reading: walk is linear in the substitution length; a self-referential binding loops forever in walk",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Robinson 1965; the triangular form is from the miniKanren lineage (Byrd 2009)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:5-27"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lines 5-27",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "== (12-16: unit / mzero); call/fresh (29-32: the counter in the state); disj (34) = mplus; conj (35) = bind",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a state is a pair of substitution and a fresh-variable counter; == returns a one-element stream on success or the empty stream; call/fresh applies its body to a new variable made from the counter and increments it; disj runs both goals on the same state and merges their streams; conj runs the first goal and binds the second over every resulting state; goals therefore compose without any global search state",
+   "input": "goals and a state",
+   "output": "a stream of states",
+   "state": "the counter inside each state",
+   "update": "per goal application",
+   "assumptions": [
+    "monadic structure (unit, mzero, mplus, bind) is the whole of search; the counter makes fresh variables without side effects"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::triangular_substitution_as_an_association_list_walked_on_demand_with_a_structural_unifier_and_no_occurs_check",
+    "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk"
+   ],
+   "fitness_value_in_ancestor": "a complete logic language whose interpreter is the host's function application",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the list monad reading of logic programming (Wadler 1985; Spivey & Seres 2000)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:12-35"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lines 12-35",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "mplus (37-41): (procedure? $1) -> (lambda () (mplus $2 ($1))); bind (43-47): (procedure? $) -> (lambda () (bind ($) g))",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a stream is either empty, a pair (a mature answer and the rest), or a thunk (an immature stream: work not yet done); mplus of an immature first stream returns a thunk that, when forced, merges the SECOND stream with the forced first, so the two branches take turns; bind of an immature stream defers likewise; a recursive relation wrapped in a thunk (the paper's Zzz / snooze) therefore yields answers from every branch even when one branch is infinite",
+   "input": "two streams",
+   "output": "a merged stream",
+   "state": "none",
+   "update": "per force",
+   "assumptions": [
+    "swapping the arguments at every immature step is enough for fairness (breadth-like interleaving of depth-first branches)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment"
+   ],
+   "fitness_value_in_ancestor": "completeness (every answer is eventually produced) that Prolog's depth-first search lacks, in five lines",
+   "failure_landscape": "by reading: interleaving is fair between two branches at a time; deeply nested disjunctions are fair only asymptotically; the cost is a thunk per step",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kiselyov, Shan, Friedman & Sabry 2005 (backtracking, interleaving, and terminating monad transformers)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:37-47"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "mplus and bind",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
    "fossil_ancestry": "minisat-1.14-2006",
    "human_name": "Solver::search (the CDCL loop)",
@@ -43034,6 +45130,376 @@
     },
     "representation_sensitivity": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access",
+   "fossil_ancestry": "picorv32",
+   "human_name": "localparam cpu_state_* (1172-1180); the case over cpu_state (1487-); mem_do_rinst / mem_do_rdata / mem_do_wdata and mem_state (356-640); latched_branch / latched_store / latched_stalu resolved in the fetch state (1491-1535)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each instruction passes through fetch (which also commits the previous instruction's register write and branch, then requests the next instruction word), operand load states (one or two, reading the register file one port at a time), exec (ALU, or the shift state that shifts one or two bits per cycle unless a barrel shifter is enabled), and a memory state for loads or stores; the memory interface is a single valid/ready port whose request kind is set by three flags, and a prefetch of the next word can overlap the tail of the current instruction",
+   "input": "instruction words and data from one memory port",
+   "output": "register-file writes, memory requests, a program counter",
+   "state": "cpu_state, the latched decode, the register file",
+   "update": "per clock",
+   "assumptions": [
+    "cycles are cheap and gates are not (the design goal is minimal area and high clock rate); a single port suffices because fetch and data never overlap in this pipeline"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+    "picorv32::area_speed_trade_offs_as_verilog_parameters_including_a_co_processor_interface_for_multiply_and_divide_and_a_custom_interrupt_scheme"
+   ],
+   "fitness_value_in_ancestor": "a few hundred LUTs on an FPGA at hundreds of MHz; the reference small RISC-V",
+   "failure_landscape": "by reading: 3-4 cycles per simple instruction and up to 32 for a shift without the barrel shifter; a slow memory stalls everything",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "microcoded / multi-cycle CPU organisation (Patterson & Hennessy's multicycle datapath)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:1172-1200, 1487-1578, 356-640"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the state machine and the memory-interface flags",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+   "fossil_ancestry": "picorv32",
+   "human_name": "instr_* and is_* registers (646-700); the decode block on mem_do_rinst && mem_done (866-1140); COMPRESSED_ISA expansion (930-1000); instr_trap for unrecognised words (679)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the instruction word lands, one register per instruction (lui, jal, beq, ...) and per useful class (is_lui_auipc_jal, ...) is set from the opcode and function fields; 16-bit compressed forms are recognised and expanded into the same flags; the immediate is decoded into one register by class; a word matching nothing raises a trap flag; the flags, not the word, drive later states, so decoding costs no cycle of its own",
+   "input": "mem_rdata",
+   "output": "instruction flags and the immediate",
+   "state": "the flag registers",
+   "update": "on fetch completion",
+   "assumptions": [
+    "one register per instruction is cheap and makes the later states' case statements one-hot"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access"
+   ],
+   "fitness_value_in_ancestor": "the execution states read flags, never bit fields; compressed support is confined to the decoder",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:646-1140"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the decoder always-block; MEDIUM because the compressed expansion was skimmed",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picorv32::area_speed_trade_offs_as_verilog_parameters_including_a_co_processor_interface_for_multiply_and_divide_and_a_custom_interrupt_scheme",
+   "fossil_ancestry": "picorv32",
+   "human_name": "parameters ENABLE_COUNTERS, TWO_STAGE_SHIFT, BARREL_SHIFTER, ENABLE_MUL / FAST_MUL / DIV, ENABLE_IRQ / IRQ_QREGS / IRQ_TIMER, COMPRESSED_ISA, ENABLE_PCPI (60-120); pcpi_* port and the picorv32_pcpi_mul / fast_mul / div instances (257-300); irq_pending / irq_mask / timer and the irq_state sequence in fetch (1400-1450, 1538-1560)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "multiply and divide are not in the core: an optional co-processor port (valid, insn, rs1, rs2 out; wr, rd, wait, ready in) lets an external unit claim an instruction, and the shipped mul/div units attach to it; the barrel-shifter and two-stage-shift parameters trade a cycle-per-bit shifter for area; the interrupt scheme is non-standard: a mask, a pending vector, an optional timer instruction, and four extra 'q' registers reached by custom instructions (getq/setq/retirq/maskirq/waitirq) so that an interrupt handler saves state without touching the ISA's registers",
+   "input": "parameters at elaboration; the PCPI port at run time",
+   "output": "a core variant",
+   "state": "irq_mask, irq_pending, timer",
+   "update": "at elaboration / per clock",
+   "assumptions": [
+    "users know their area budget; a co-processor port is more reusable than a fixed multiplier; RISC-V's standard interrupt model is too large for this core's goal"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access"
+   ],
+   "fitness_value_in_ancestor": "one source file yields cores from ~750 to ~2000 LUTs",
+   "failure_landscape": "by reading: the custom interrupt instructions make binaries non-portable to other RISC-V cores (documented in the README)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:60-120, 257-300, 1400-1450, 1538-1560"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the parameter list, the PCPI port and the irq blocks; CANDIDATE because the PCPI units were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
      "basis": "READ"
     },
     "temporal_horizon": {
@@ -52974,6 +55440,376 @@
    }
   },
   {
+   "organ_id": "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "reg [aw:0] wp, rp (68-70); wp_pl1 / rp_pl1; empty <= (wp_s == rp) | (re & (wp_s == rp_pl1)) (109); full <= (wp[aw-1:0] == rp_s[aw-1:0]) & (wp[aw] != rp_s[aw]) | ... (111)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the write and read pointers count modulo twice the depth; the low bits address the memory and the top bit records the wrap parity; the FIFO is empty when the pointers are equal in full and full when the address bits are equal but the wrap bits differ; each flag also looks one operation ahead (the pointer plus one under a read or write enable) so that it asserts on the cycle the last entry is consumed or the last slot filled, avoiding a cycle of illegal access",
+   "input": "we, re",
+   "output": "full, empty",
+   "state": "wp, rp",
+   "update": "per clock in each domain",
+   "assumptions": [
+    "one extra bit is cheaper than a separate count register or a 'last operation' flag; the look-ahead term costs one adder per flag"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+    "verilog-generic-fifo::threshold_and_level_flags_from_a_registered_pointer_difference_with_look_ahead_on_the_enable"
+   ],
+   "fitness_value_in_ancestor": "the standard flag discipline of every hardware FIFO",
+   "failure_landscape": "by reading: the header warns that writing when full or reading when empty puts the FIFO in an undefined state; the design detects it after the fact (the overrun/underrun bits at 128-133) rather than preventing it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cummings & Alfke 2002 (simulation and synthesis techniques for asynchronous FIFO design)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:68-113"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the pointer and flag lines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "always @(posedge rd_clk) wp_s <= wp; always @(posedge wr_clk) rp_s <= rp (106-107); empty in rd_clk from wp_s and rp; full in wr_clk from wp and rp_s; the header: 'there is a 2 cycle' latency; DC_FIFO_ASYNC_RESET",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the write pointer is registered on the read clock and the read pointer on the write clock; each domain computes its own flag from its own pointer (exact) and the sampled other pointer (stale by up to two cycles); staleness is safe in one direction only: a stale foreign pointer can make empty or full assert late-to-clear but never assert false-negative in the dangerous direction, so the FIFO is conservative rather than wrong; the header notes a binary multi-bit pointer can be sampled inconsistently and points to the gray-coded file for that case",
+   "input": "the foreign pointer",
+   "output": "a domain-local copy",
+   "state": "wp_s, rp_s",
+   "update": "per clock",
+   "assumptions": [
+    "metastability on a multi-bit binary bus is the user's risk here (the gray variant exists for it); the conservative direction of staleness is what makes a stale flag acceptable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide"
+   ],
+   "fitness_value_in_ancestor": "two clock domains decoupled with two registers and no handshake",
+   "failure_landscape": "by reading: a single register stage is not a two-flop synchroniser; a binary pointer sampled mid-transition can read an intermediate value (the reason the gray file exists)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cummings' async FIFO papers; the gray-code pointer is the standard remedy",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:92-111, 27-30"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two sampling registers and the flag domains",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-generic-fifo::threshold_and_level_flags_from_a_registered_pointer_difference_with_look_ahead_on_the_enable",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "assign diff = wp - rp (113); diff_r1 / diff_r2 registered per domain; empty_n <= (diff_r1 < n) | ((diff_r1 == n) & (re | re_r)) (119); full_n <= (diff_r2 > max_size - n) | ((diff_r2 == max_size - n) & (we | we_r)) (125); level (two bits of occupancy quarter)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the occupancy is the pointer difference (correct modulo the wrap thanks to the wide pointers); it is registered in each domain and compared with a threshold n to produce 'at least n entries' and 'room for n more', with the same one-operation look-ahead on the enable (and its registered copy) so the flag tracks the boundary exactly; a two-bit level output reports the occupancy quarter",
+   "input": "the pointers, n",
+   "output": "empty_n, full_n, level",
+   "state": "diff_r1, diff_r2, re_r, we_r",
+   "update": "per clock",
+   "assumptions": [
+    "consumers want to batch transfers (start when n are available) rather than react to every entry"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide"
+   ],
+   "fitness_value_in_ancestor": "burst-friendly flow control from the same pointers",
+   "failure_landscape": "by reading: the difference uses a foreign pointer that is itself stale, so thresholds inherit the latency",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:113-127"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the diff and threshold lines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
    "fossil_ancestry": "verilog-rr-arbiter",
    "human_name": "simple priority arbiter",
@@ -55835,6 +58671,376 @@
     },
     "temporal_horizon": {
      "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "scheduler (proc.c 428-478): the for(;;) over proc[]; acquire(&p->lock); p->state = RUNNING; swtch(&c->context, &p->context); release; wfi when nothing is runnable; sched() / yield() / forkret as the return paths",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each CPU loops over the fixed process table; for each RUNNABLE process it acquires that process's lock, marks it RUNNING, and switches registers to it; the process runs until it calls sched() (from yield on a timer interrupt, from sleep, or from exit) with its own lock held and its state changed, which switches back into the scheduler loop where the lock is released; interrupts are briefly enabled at the top of each loop so a pending interrupt can make something runnable; with nothing runnable the CPU executes wfi",
+   "input": "the process table; timer interrupts",
+   "output": "CPU time assigned",
+   "state": "c->proc, per-process state and context",
+   "update": "per switch",
+   "assumptions": [
+    "the invariant 'p->lock is held across swtch by whoever changes p->state' is what makes the scheduler correct on many CPUs without a global lock (the xv6 book's chapter 7)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it"
+   ],
+   "fitness_value_in_ancestor": "a multiprocessor scheduler in fifty lines whose correctness argument fits in a paragraph",
+   "failure_landscape": "by reading: O(NPROC) per scheduling decision; no priorities; a CPU may scan the whole table between useful switches",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Sixth Edition Unix's scheduler; the lock-handoff idiom is xv6's own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:428-478"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "scheduler, sched, yield, forkret",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "sleep_prepare(chan) (sets p->chan under p->lock), sleep() (if p->chan != 0 then SLEEPING and sched()), wakeup(chan) (clears p->chan for every matching process and makes SLEEPING ones RUNNABLE), kkill (547-640)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a waiter first records the channel it will wait on under its own lock, then re-checks the condition it is waiting for, then calls sleep, which goes to sleep only if the channel is still set; a waker clears the channel of every process registered on it and wakes those already asleep; so a wakeup that lands between the registration and the sleep is not lost (it clears the channel and sleep returns immediately); kill wakes a sleeping victim so it can notice the flag",
+   "input": "a channel address",
+   "output": "a blocked or resumed process",
+   "state": "p->chan, p->state",
+   "update": "per wait/wake",
+   "assumptions": [
+    "the lost-wakeup race is the central hazard of sleep/wakeup; registering the channel under the process lock is enough to close it without holding the condition's lock across the switch"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+    "xv6-riscv::write_ahead_log_with_group_commit_where_each_call_reserves_its_worst_case_blocks_before_starting_the_last_caller_commits_with_one_header_write_and_recovery_replays_the_header"
+   ],
+   "fitness_value_in_ancestor": "condition synchronisation with no condition-variable object; the classic Unix primitive made race-free",
+   "failure_landscape": "by reading: wakeup scans the whole table (O(NPROC)); spurious wakeups are possible and callers loop",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Unix V6 sleep/wakeup; the two-step form differs from the classic xv6 sleep(chan, lock) (this is a later revision of the body)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:547-640"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xv6-riscv::write_ahead_log_with_group_commit_where_each_call_reserves_its_worst_case_blocks_before_starting_the_last_caller_commits_with_one_header_write_and_recovery_replays_the_header",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "log.c: begin_op (waits while committing or while log.lh.n + (outstanding + 1) * MAXOPBLOCKS > LOGBLOCKS), log_write (absorbs a block already in the log), end_op (outstanding -= 1; commit when zero), commit (write_log; write_head = the atomic point; install_trans; clear the header), recover_from_log; param.h MAXOPBLOCKS 10, LOGBLOCKS 30",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a file-system call declares itself by begin_op, which blocks until the log has room for its worst case (10 blocks) beyond every other outstanding call's; modified blocks are recorded in the in-memory header (a block already listed is absorbed, not duplicated); when the last outstanding call ends, the batch is committed: data blocks are copied to the log area, the header (block list and count) is written in one block write (the commit point), the blocks are installed to their home locations, and the header count is zeroed; at boot the header is read and any listed blocks are re-installed, so a crash before the header write loses the batch cleanly and a crash after it is replayed",
+   "input": "block writes from file-system calls",
+   "output": "an atomic batch on disk",
+   "state": "the in-memory header, outstanding, committing",
+   "update": "per call and per commit",
+   "assumptions": [
+    "a single block write is atomic (the header); worst-case reservation avoids deadlock on log space; batching many calls per commit amortises the double write"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it"
+   ],
+   "fitness_value_in_ancestor": "crash consistency in 200 lines; every later journaling file system has this shape",
+   "failure_landscape": "by reading: the log is 30 blocks, so at most three concurrent calls; every data block is written twice; no ordering guarantees across batches beyond the commit point",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "write-ahead logging (Gray 1978); the xv6 book chapter 8",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/log.c:1-200; vault:xv6-riscv/upstream/tree/kernel/param.h:9-11"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "log.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
      "basis": "READ"
     }
    }

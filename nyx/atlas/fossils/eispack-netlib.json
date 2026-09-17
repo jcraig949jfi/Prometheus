@@ -126,20 +126,388 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/balanc.f:1-30"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/tred2.f:1-30"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/tql2.f:1-30"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/hqr.f:1-40"
+   }
+  ],
+  "inspected_files": [
+   "file list (71 routines)",
+   "balanc.f, tred2.f, tql2.f, hqr.f header comments"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "eigenvalue computation as a pipeline of separately published, separately callable stages, each a Fortran translation of a Wilkinson-Reinsch Handbook Algol procedure with its Numerische Mathematik citation in the header: balance (scale and permute), reduce (to tridiagonal for symmetric matrices, to Hessenberg for general ones), iterate (implicit QL with shifts on the tridiagonal, Francis QR on the Hessenberg), back-transform; the drivers (rs, rg, ...) are a few calls each; the organisation, not any single routine, is what the library contributed",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://www.netlib.org/eispack/bakvec.f sha256:ca49e3cd679df6444aef2ada41c2151463b714a3a55b1d6fbfd88a676068707f; https://www.netlib.org/eispack/balanc.f sha256:7393ccc227f8806bc36e13805d2d9e35e27e8589ce1d3db80c702066fab46d8e; https://www.netlib.org/eispack/balbak.f sha256:5e0d8e7a497da82334e1ee75e87fb029405deb62840f57c9cb7bb1f4930e8522; https://www.netlib.org/eispack/bandr.f sha256:5661ba5b2c9ac05ab48422473360c5ebca0eee020f9799545c58065127577578; https://www.netlib.org/eispack/bandv.f sha256:25c34d4a82752ec6a9d456cfe812619d67d17d389421e7b885ae5db9b3110182; https://www.netlib.org/eispack/bisect.f sha256:a2d93bfa9938bcdeb8102f173b513b8f92cfa7cd34ddba9dc7a67ba071c6ef50; https://www.netlib.org/eispack/bqr.f sha256:35ef22bc4743be6ec8c31034d09005862829dca8328f7874b7da7170b8b32e2d; https://www.netlib.org/eispack/cbabk2.f sha256:778c285ee34f925f62bd379335e4e5b27794a3b36ae6eaba806dc605db4d9232; https://www.netlib.org/eispack/cbal.f sha256:7a3d1bcf867813a9feec019b8ed133c0d26a020f729a383149759c3434875b4a; https://www.netlib.org/eispack/cg.f sha256:d05d0f7569dfa60ef5c469fe0e3d59a55f3409aced151c98a35b851939998f1b; https://www.netlib.org/eispack/ch.f sha256:8692bb04e107f54a5ff3127e68146b24733ba459f1cc8a6c9be21faf3aeab612; https://www.netlib.org/eispack/cinvit.f sha256:42e391d17bfc9ff13b0749e62a191f3b7172ed6551aed2404714c9741606da43; https://www.netlib.org/eispack/combak.f sha256:f9b41c0fe53e33d83242c39bd2594234fad15e4de0c9496efe29792c883b7b15; https://www.netlib.org/eispack/comhes.f sha256:b3efe792c95c02faaf694e42362fc1092e27215a5863861de5bd633cf385bcae; https://www.netlib.org/eispack/comlr.f sha256:620ab05ca2c3c8a84c9b66b798d66851f0c475fbba13f0c932cd57eded1ee0b7; https://www.netlib.org/eispack/comlr2.f sha256:cc97e7737b4373a19470a57641d110a9882879a63e2d80c7593a68e0ea95640e; https://www.netlib.org/eispack/comqr.f sha256:de00688b0a171f3c74b3601e07d5a07d57ee7ee4f5ca93c3bbd3651d08d6703c; https://www.netlib.org/eispack/comqr2.f sha256:80fbd254e98b75083f6a7ed1ae7adafea980ac85ed04c8fdc122e7561ba947f0; https://www.netlib.org/eispack/cortb.f sha256:52304ff000c0da9aadcd6d85dfd4d6eee4c303777633e630f1c70ec3fa34c6fa; https://www.netlib.org/eispack/corth.f sha256:a87373cebb320a56e3a597daae8d92ee36d1f2d25e57359b41b87e62b64b2693; https://www.netlib.org/eispack/elmbak.f sha256:e83bb0e6ad6514a6a6e65e6b662f254e4faeb7fc5333a25eba56e99b22e42822; https://www.netlib.org/eispack/elmhes.f sha256:699c7740e93097b28af396fea60a4563f30ae9a9c812e466ef79214f13f8a972; https://www.netlib.org/eispack/eltran.f sha256:e999eabada3c5b979c65dddfee42c98c83a8e4803b0e861063b9294e946e4576; https://www.netlib.org/eispack/figi.f sha256:64f9a4edc14515262efa5d442c46cc520caa9b4898d07ddd69062d270c2c8bdb; https://www.netlib.org/eispack/figi2.f sha256:d109f309bb575dea67abfa805b2b73596b6d8d45bd451fd0e75bbdbd09224f6d; https://www.netlib.org/eispack/hqr.f sha256:4d801ac96bb5a75c744348d64ceb3cab918d3502062b03a97222d415be4a8631; https://www.netlib.org/eispack/hqr2.f sha256:4c56daecd3e92202a424961de53f799c31259032526b4c2086540ef58bc9dd97; https://www.netlib.org/eispack/htrib3.f sha256:5aeeb63d5d2d1e8f285514ce160f9cbaa17ec07103ecffb0e78e2a94d025df87; https://www.netlib.org/eispack/htribk.f sha256:85b15ee0915df2eea7a8cafd9d6ffdd9eae6538960ef66561c592fa867b40644; https://www.netlib.org/eispack/htrid3.f sha256:e9b1463964bfd91d6a5fa1693b1f158c90ca84952e0acac5c078896633c2b7a4; https://www.netlib.org/eispack/htridi.f sha256:fd05f749c4290d25e6eac45440a40f3e3062aa1d2ec440ed3f49a7202fcfe265; https://www.netlib.org/eispack/imtql1.f sha256:4ba73e132e6d4f5c7bdf7c40f143cd956d9935380301285b5ee70d1c3c22bae9; https://www.netlib.org/eispack/imtql2.f sha256:29e8ea6217492ef54ede474a378ab6c514beca6090d6a71eed4e311d6eb431f8; https://www.netlib.org/eispack/imtqlv.f sha256:3461e4057f55e9fe62ddc54b4539257f82b0aee78b156a3de3750b2d9d223df9; https://www.netlib.org/eispack/invit.f sha256:fcba2488c82462d9ab7814527e13728482f93e85d5a386fc47e5627750516cc4; https://www.netlib.org/eispack/minfit.f sha256:4dd4cb34153b93738faf82703361ef35e05c30f0460b328140f5003189d2cbd9; https://www.netlib.org/eispack/ortbak.f sha256:a2042e97d80614fca0fb1e4a90cb54afe69d746266e9cc5164be9ed5de4260a7; https://www.netlib.org/eispack/orthes.f sha256:e20742ed70a384c2f62f671e2682126b553d418ec9c16cbaa6cfd607150902f7; https://www.netlib.org/eispack/ortran.f sha256:1c3533e543403fb7a343e7ca4ca27ceee4f01f1f0b87e5f33bea206259be3be5; https://www.netlib.org/eispack/qzhes.f sha256:82517b2f04e914b533b43faa5c546c50cc7efebf851a1db35ccdd703bc39d8eb; https://www.netlib.org/eispack/qzit.f sha256:d590a106aac5b76acb3f0d757a30eefb5a8a85fde5c4d9d4d3304b328c287c99; https://www.netlib.org/eispack/qzval.f sha256:ced76c61a1ab15e649d75098b9d2b365447d08c9685a18ac10637335d663a391; https://www.netlib.org/eispack/qzvec.f sha256:4755e4dcdb6daf6675bf31f391f8c8b02e4fe46a92d65ce40085a2f97e4af266; https://www.netlib.org/eispack/ratqr.f sha256:1427b3af0503d0536270d9ac459f08be5a14916b47a72fe4757f2c58247419fb; https://www.netlib.org/eispack/rebak.f sha256:f2560349f2b4c0182a83bacb0c09b901d9593d1c4cec5ca1caa424324e22d96e; https://www.netlib.org/eispack/rebakb.f sha256:2dce460bd68bc9e78aaff916cf23cae582354333a4e5f258b01bacfbe485f766; https://www.netlib.org/eispack/reduc.f sha256:35e61a7988b14484700af3db430743204b774f125a9a8aeb6e419985ebce49be; https://www.netlib.org/eispack/reduc2.f sha256:b7c13d37d950b08ddc7d47e63a568239b993c66356eb90c6cf18bd72f6e70d60; https://www.netlib.org/eispack/rg.f sha256:9d82fb4ce0627b7feff30b3e0549eeca5cda9a76f9100bc38e24fd914f7dbe99; https://www.netlib.org/eispack/rgg.f sha256:f020cfb95c9259aeaa78a0513f62ca73547dd92a2b49e3fd1a75e6991b119d65; https://www.netlib.org/eispack/rs.f sha256:398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e; https://www.netlib.org/eispack/rsb.f sha256:d9ce416652150138851b3672c8eefa7e76049ca1556bac951bab9029b0ba85cb; https://www.netlib.org/eispack/rsg.f sha256:20e4fd1aebaebd2d9cf2ad94ba9c956cc0ff92761523d59baf8fd79a3f412f4d; https://www.netlib.org/eispack/rsgab.f sha256:094694763d48be33d65a23d6ebd6b30874d8c5c52b63fdffd654c598b6cb674f; https://www.netlib.org/eispack/rsgba.f sha256:1cb3cc6cf1fc6793135bc2c73f56b22c03006d764873cacdaa6addefdc64039c; https://www.netlib.org/eispack/rsm.f sha256:893f6743b4e41a5653c590e123ca025bad50868779dbe616abe459983ecfb73a; https://www.netlib.org/eispack/rsp.f sha256:de41aa8f487f10ee6cb54c28cc1bd47e70ae4a733cd28ae3f0f0e9526661ab93; https://www.netlib.org/eispack/rst.f sha256:afd5743be0222bfa61d6c6d37155268c4bfe899afd8d5c981b11041e4356398d; https://www.netlib.org/eispack/rt.f sha256:addaed68ee3ff0750cd381a02cf21b94aa396377156fd425169c40d4a8b01343; https://www.netlib.org/eispack/svd.f sha256:67eee684571c53bd07b992940c7a92c7cdfb59f8676b16bd2637f6792120c4ed; https://www.netlib.org/eispack/tinvit.f sha256:39073594fb83cad19864dfe1179616c8b367160c9c34facda5e72ec0348a93a7; https://www.netlib.org/eispack/tql1.f sha256:39b91aced74d9e3f853e25d8536c49c723f2751faa7d1d3946779514d08dee7d; https://www.netlib.org/eispack/tql2.f sha256:b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c; https://www.netlib.org/eispack/tqlrat.f sha256:c80ae07ed3ad940785da74c59a4cc2d77126e5fb405ab216a4ffe679d8b3df85; https://www.netlib.org/eispack/trbak1.f sha256:53750ec3d742a2470b1a322aab959c44ba3017968ddc12b23f2d03dd6490e94d; https://www.netlib.org/eispack/trbak3.f sha256:b6882c3f1e9665e96ac9eff6b9847c5843800e2ae159806d2c542c02516b76ec; https://www.netlib.org/eispack/tred1.f sha256:ad3896adf002bcb62fefb58a5dc7bb934918fe0d8f1e6e67764df0ffb34aff79; https://www.netlib.org/eispack/tred2.f sha256:38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c; https://www.netlib.org/eispack/tred3.f sha256:3e6e53655a6fc83a71cb26cf46bc6354f74b30f8069b199d82f1b5af0e01ee52; https://www.netlib.org/eispack/tridib.f sha256:0d3ca944c8a34e70ac1cbc648fdee59d710a1e32a2e89db49191581ce0d1a579; https://www.netlib.org/eispack/tsturm.f sha256:9a4f9da8596a3ecb1dbc2b67396b188718d0c264302e88d07bd0091e6946cf98; https://www.netlib.org/eispack/readme sha256:49869ff38757ae81e799efc7f207114d345c370a0bad1044d726de7527d39159; https://www.netlib.org/eispack/epslon.f sha256:17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894; https://www.netlib.org/eispack/pythag.f sha256:4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50; https://www.netlib.org/eispack/cdiv.f sha256:3c2ec3c8f8bfa239175bf673d3085f869b25242cb4b7e9ed8f53e860abb973bd; https://www.netlib.org/eispack/csroot.f sha256:1443f2aa42ccd983b2a0ee5d4ac4e94229f502cf1c96a0c8cf3d23fba05e156e",
+   "payload_manifest_id": "techne tree_sha256 b42d2185d65bbe0d7975a95246a29ff38b56ce48fb24e0fe568dc923e5e9f7f0 (76 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/balanc.f",
+     "payload_hash_read": "7393ccc227f8806bc36e13805d2d9e35e27e8589ce1d3db80c702066fab46d8e",
+     "techne_recorded_hash": "7393ccc227f8806bc36e13805d2d9e35e27e8589ce1d3db80c702066fab46d8e",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tred2.f",
+     "payload_hash_read": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+     "techne_recorded_hash": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tql2.f",
+     "payload_hash_read": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+     "techne_recorded_hash": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/hqr.f",
+     "payload_hash_read": "4d801ac96bb5a75c744348d64ceb3cab918d3502062b03a97222d415be4a8631",
+     "techne_recorded_hash": "4d801ac96bb5a75c744348d64ceb3cab918d3502062b03a97222d415be4a8631",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": [
+    "the four headers read; the file list"
+   ]
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "eispack-netlib::eigenproblem_as_a_pipeline_of_separately_callable_stages_balance_reduce_iterate_back_transform_each_a_literal_translation_of_a_published_algol_procedure",
+   "fossil_ancestry": "eispack-netlib",
+   "human_name": "balanc (Parlett & Reinsch 1969) / balbak; tred1 / tred2 (Martin, Reinsch, Wilkinson 1968) / trbak1; elmhes / orthes / ortran; tql1 / tql2 (Bowdler et al. 1968); hqr / hqr2 (Martin, Peters, Wilkinson 1970); imtql*, tqlrat, bisect, tinvit, tsturm; drivers rs, rg, rsg, ch, cg, svd",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a general real matrix is balanced (diagonal scaling by powers of two and permutation to isolate eigenvalues), reduced to upper Hessenberg form by elimination or orthogonal transformations, its eigenvalues found by the shifted QR iteration, and eigenvectors recovered by back-substitution and back-transformation; a symmetric matrix is reduced to tridiagonal by Householder transformations and iterated by implicit QL; each stage is a routine whose header names its Algol source and page, and the drivers call them in the canonical order",
+   "input": "a matrix",
+   "output": "eigenvalues (and vectors)",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "the Handbook's procedures are correct and numerically analysed (Wilkinson 1965); translation preserves the analysis; users compose stages for special structure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eispack-netlib::balancing_by_powers_of_two_scaling_and_permutation_to_isolate_eigenvalues_before_reduction"
+   ],
+   "fitness_value_in_ancestor": "the first portable, tested, reference eigen-library (Argonne 1972-76); every stage's provenance is in its header",
+   "failure_landscape": "by reading: no blocking, no BLAS, column-by-column loops (the reason LAPACK replaced it; the record's lineage)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wilkinson & Reinsch 1971 Handbook vol. II",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "the four headers read; the file list"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the library's organisation; MEDIUM because no body was read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eispack-netlib::balancing_by_powers_of_two_scaling_and_permutation_to_isolate_eigenvalues_before_reduction",
+   "fossil_ancestry": "eispack-netlib",
+   "human_name": "balanc.f ('balances a real matrix and isolates eigenvalues whenever possible'); balbak restores the vectors",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "rows and columns whose off-diagonal parts are zero are permuted to the ends (their diagonal entries are eigenvalues with no iteration); the remaining block is scaled by a diagonal similarity with powers of the machine radix so row and column norms are comparable, which does not change eigenvalues and improves the conditioning of the later stages; the permutation and scaling are recorded for the back-transformation",
+   "input": "a real matrix",
+   "output": "a balanced matrix and low/igh indices",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "scaling by exact powers of two introduces no rounding error"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eispack-netlib::eigenproblem_as_a_pipeline_of_separately_callable_stages_balance_reduce_iterate_back_transform_each_a_literal_translation_of_a_published_algol_procedure"
+   ],
+   "fitness_value_in_ancestor": "eigenvalue accuracy on badly scaled matrices at negligible cost",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Parlett & Reinsch 1969",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eispack-netlib/upstream/balanc.f:1-30 (header only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "balanc / balbak; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "every routine body; the generalised eigenproblem (qzhes, qzit, qzval, qzvec), the banded and packed variants, the complex routines (comqr, cinvit, ...), svd / minfit, the bisection and inverse-iteration paths",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "hqr's Francis double-shift and tql2's implicit shift are each a mechanism worth a DEEP read (both are still the algorithms in LAPACK's kernels)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eispack-netlib"
+  },
+  {
+   "candidate": "'eigensolver' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the library IS a decomposition of the solver into stages; the atlas records that decomposition",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eispack-netlib"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "eispack-netlib::P.eigenvalues_of_general_and_symmetric_matrices_must_be_computed_reliably_across_machines_and_matrix_structures_from_a_set_of_stages_that_can_be_composed_and_replaced_one_at_a_time",
+   "source_fossil": "eispack-netlib",
+   "source_evidence": "the routine headers; the drivers' call order",
+   "condition": "an organism computes eigen-decompositions of matrices with varied structure (symmetric, general, banded, generalised) on machines with different arithmetic; the score is accuracy against a reference and portability; users need to substitute or skip stages",
+   "resource_or_constraint": "Fortran 66/77; no vendor code",
+   "failure_condition": "wrong eigenvalues on badly scaled or ill-conditioned inputs, or a monolith that cannot be adapted to structure",
+   "world_punishes": "a single black-box routine; unbalanced iteration",
+   "world_rewards": "published, analysed stages with recorded provenance and drivers that compose them",
+   "observable_consequence": "eigenvalue error vs a reference on the Handbook's test matrices with balancing on and off, and with each stage replaced by its alternative (elmhes vs orthes; tql vs imtql)",
+   "vacuity_condition": "small well-conditioned matrices",
+   "trivial_shortcuts": "a modern LAPACK call (which the world withholds)",
+   "cheat_control": "an organism given the reference eigenvalues must reproduce them to working precision; the pipeline with balancing removed must lose accuracy on the scaled test matrix; the two Hessenberg reductions must agree to round-off on well-conditioned inputs: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference eigenvalue software (Argonne 1972-76; Wilkinson & Reinsch 1971)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "eispack-netlib::balancing_by_powers_of_two_scaling_and_permutation_to_isolate_eigenvalues_before_reduction",
+   "to": "eispack-netlib::eigenproblem_as_a_pipeline_of_separately_callable_stages_balance_reduce_iterate_back_transform_each_a_literal_translation_of_a_published_algol_procedure",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "eispack-netlib",
+   "relation": "port_of",
+   "to": "the Algol procedures of the Wilkinson-Reinsch Handbook (1971), translated at Argonne (Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler)",
+   "note": "from the headers",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "no routine body read",
+   "nothing ran"
+  ],
+  "note": "an inventory cut; the library's organisation is recorded as the mechanism, with balancing as one CANDIDATE stage",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

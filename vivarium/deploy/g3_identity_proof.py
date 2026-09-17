@@ -120,6 +120,10 @@ def main() -> int:
         "ok": bool(granted), "direction": "OWNER = Vivarium grants; GRANTEE = Archaeon's engine client (config.json read_scopes[0].grantee)",
         "grantee_configured": sc.get("grantee_client_id"), "engine_answer": sc.get("error") or "granted",
         "receipt": str(scopes[-1]) if scopes else None, "at": latest.get("at"),
+        "scope_id": sc.get("scope_id"), "grant_id": sc.get("grant_id"), "grant_revoked_ts": sc.get("grant_revoked_ts"),
+        "worlds_in_scope": sc.get("worlds_in_scope_after"), "name_prefix": sc.get("name_prefix"),
+        "grantee_side_read_to_verify": ("GET /v2/read/worlds?scope=%s as the grantee (sfclient.read_worlds(scope=...)); "
+                                        "expect %s viv-* worlds; a 403/404 means the grant is not live" % (sc.get("scope_id"), sc.get("worlds_in_scope_after"))),
         "what_closes_it": "Archaeon registers its Campaign-4 client on THIS ledger (P1) and tells Vivarium the client_id; "
                           "Vivarium sets read_scopes[0].grantee to it (a committed, non-secret config change + pin advance); "
                           "the next batch boundary grants every viv-* world. Not an engine-side action; not Daedalus's."}

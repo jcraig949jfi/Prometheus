@@ -1087,7 +1087,7 @@ class Vivarium:
                          dry_run: bool = False) -> dict:
         """Extend the declared read scopes with this owner's newly eligible
         worlds (viv/scope.py). Between ticks only; never on a row's path."""
-        scopes = _scope.declared(self.cfg)
+        scopes = _scope.declared(self.cfg, _vardir.resolve(self.cfg))
         runner = self._runner if self._runner is not None else (
             self.runner() if scopes else None)
         client = getattr(runner, "c", None)
