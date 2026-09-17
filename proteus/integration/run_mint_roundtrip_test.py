@@ -52,6 +52,8 @@ def row_for(rec: dict) -> dict:
 
 
 def main() -> int:
+    from proteus.workspace import assert_not_canonical
+    assert_not_canonical("run run_mint_roundtrip_test.py")
     from herakles.evca import derive as HD
     from ew.client import EvidenceWiki
 
