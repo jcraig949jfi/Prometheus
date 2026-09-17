@@ -64,3 +64,61 @@ that distinguishes partial from complete behaviour without naming the
 mechanism, or a valley-crossing measurement, whichever the anatomy makes
 sharper. | C3-SFE-01 rows. | Alternative: run C3-SFE-08 on time-to-shelf (a
 campaign-2 measurement repeated). | Revisit never. SCIENTIFIC.
+
+D3-014 | 2026-09-17 08:30 | The matched control for every import experiment is the
+SAME instruction blocks PERMUTED (identical length, opcode multiset, operand words
+and VM knobs; competence removed and verified < 0.25 held-out on the target). It is
+the only control that separates "the material carries capability" from "injection
+mechanics amplify any foreign lineage". | c3_sfe10.permute_blocks/make_control;
+measured control competence 0.0-0.125 against mature 1.0. | Alternative: random
+gen-0 organisms as the control (not matched on length or opcode mass). | Revisit if
+a permutation ever scores above 0.25 on a target. DETERMINISTIC.
+
+D3-015 | 2026-09-17 08:30 | Injection happens at generation 0 AFTER the first
+evaluation (inject() replaces the worst-scored residents), so the imports compete
+from the generation they enter; the cap arms apply offspring_cap on the "import"
+origin. | evolve.inject/reproduce. | Alternative: substitute into generation 0
+before the first evaluation (common_fill; used where the dose is a starting
+condition rather than an arrival, e.g. C3-SFE-01/04). | Revisit never. DETERMINISTIC.
+
+D3-016 | 2026-09-17 09:20 | The corridor map uses MATURE sources ONLY: W0 solvers
+harvested inside C3-SFE-04 (held-out >= 0.9) and the C3-SFE-03 delay-general elites.
+The W2_K2 shelf material is EXCLUDED as a source because it never solved its own
+cell (IMMATURE_ARTIFACT by maturity_state). | directive section 4 ("use mature source
+organisms only"); C3-SFE-01 shelf held-out 0.5625. | Alternative: include the shelf
+material with a maturity note (campaign-2 practice). | Revisit never: the retired
+transfer lane is exactly what including it would reopen. SCIENTIFIC.
+
+D3-017 | 2026-09-17 09:20 | Edge selection in the corridor map is cheap-first and
+preregistered: every source x target pair is probed by DIRECT REUSE (48 held-out
+episodes, no search); a target is INFORMATIVE only if no mature family already solves
+it directly (< 0.90). Evolutionary budget goes to informative edges; targets already
+solved directly get a baseline-only run to fill their direct-search class in the
+reachability table. | directive ("use cheap direct-reuse probes first"). |
+Alternative: run all pairs (5x the budget). | Revisit never. DETERMINISTIC.
+
+D3-018 | 2026-09-17 09:40 | C3-SFE-07's two encodings are chosen by a rule fixed
+BEFORE its run: among the encodings C3-SFE-06 measured, the pair with the largest
+basin-share gap whose accessible variation matches within 15%; plus the two
+basin-closest random orderings as the scale pair. No ordering is chosen on a known
+search time (the directive: "do not select interventions because you already know
+one is faster"). | c3_sfe07.select_pair; C3-SFE-06 geometry rows. | Alternative:
+hand-pick the extremes of basin share (would confound accessible variation). |
+Revisit never. SCIENTIFIC.
+
+D3-019 | 2026-09-17 09:50 | C3-SFE-08 (replacement) arms differ ONLY in the fitness
+readout (per-ask partial credit vs all-or-nothing episode credit, evaluate(
+reward_mode)); both arms are scored at the end on the same held-out battery with
+BOTH readouts, and FLOOR/SHELF/SUMMIT levels are always computed on per-ask credit
+so the arms and the reachability table stay comparable. | evolve.evaluate returns
+reward_per_ask and reward_episode in every call. | Alternative: read each arm on its
+own metric (not comparable). | Revisit never. DETERMINISTIC.
+
+D3-020 | 2026-09-17 09:55 | EXECUTION ORDER: the ten slots are run in dependency
+order, not numeric order. C3-SFE-10 ran directly after C3-SFE-03 because it consumes
+C3-SFE-03's mature sources and nothing else, while C3-SFE-04/07 also depend on
+outputs (04 on the same sources, 07 on C3-SFE-06's geometry). Every slot still gets
+its own sealed preregistration before its own run, and no slot's prereg cites a
+result produced after it was sealed. | attempts/ANN/PREREG.json timestamps. |
+Alternative: strict numeric order (would idle the box or force 04 to re-harvest what
+03 already produced). | Revisit never. DETERMINISTIC.

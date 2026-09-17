@@ -80,3 +80,49 @@ beside PREREG.json.
 
 Incomplete: E(ii) as above. Threat: none of the ten slots needs to list a
 world's artifacts. Mitigation: receipts carry every id.
+
+=======================================================================
+PHASE B ADDENDUM -- what the science slots did to the machine
+=======================================================================
+
+Recorded as the campaign ran; every item is in the ledger with its
+evidence.
+
+B1  ladder.rung0_max (L3-008, L3-011).  A FIXED first rung released the
+    delay ladder before rung 0 was climbed in 7 of 12 seeds, and the
+    experiment measured nothing (C3-SFE-03 a02 POSITIVE_CONTROL_FAILED).
+    The ladder now HOLDS rung 0 until the elite's best training reward
+    reaches 0.5 (or a cap), then runs the fixed schedule; rows carry
+    hold_gens, hold_released_by, ladder_start, transitions and gens_run,
+    so every timing is relative to the release and comparable across
+    seeds.  READING: a table class ("W0 REACHABLE, about half by G30")
+    is not a per-run guarantee; a curriculum must gate on the measured
+    state of ITS population, never on a pooled frequency.
+
+B2  evaluate(reward_mode) + Evolution(reward_mode) (C3-SFE-08
+    replacement).  evaluate() now returns reward_per_ask AND
+    reward_episode in every call and selects on either; the episode
+    readout gives credit only for episodes in which EVERY ask is
+    correct.  This exists because C3-SFE-02 showed the W2_K2 shelf is a
+    one-value memory paid ~0.5 by per-ask credit while solving nothing:
+    the half credit is a property of the readout, and a readout that
+    pays for partial behaviour is a machine choice, not a fact about
+    the cell.  Levels stay on the per-ask yardstick so arms and the
+    reachability table remain comparable (D3-019).
+
+B3  Matched permuted controls (D3-014).  Import experiments now have a
+    control that holds length, opcode multiset, operands and VM knobs
+    fixed and removes only competence.  Without it "the import took
+    over" cannot be separated from "injection mechanics amplify any
+    foreign lineage".
+
+B4  Engine: an ISOLATED world cannot import from itself (HTTP 403
+    isolation_violation, C3-SFE-10 a03).  Publishing and then FETCHING
+    the artifact back gives the same guarantee (the run uses the bytes
+    the engine returned) without the cross-world import path; import_
+    fetch stays for genuine producer/consumer pairs.
+
+B5  Still open (carried into campaign 4): group E(ii), the artifact
+    ROUTE (GET /v2/worlds/{wid}/artifacts is 405; requested from
+    Daedalus, comms #325).  Nothing in campaign 3 needed it; receipts
+    carry every artifact id.

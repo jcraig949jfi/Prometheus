@@ -66,11 +66,16 @@ def _state_at(player: Player, ep: Episode, tick: int, rng_seed: int) -> dict:
 
 
 def evaluate(manifest: dict, episodes: List[Episode], intervention: Optional[str] = None,
-             rng_seed: int = 0) -> dict:
+             rng_seed: int = 0, reward_mode: str = "per_ask") -> dict:
+    """reward_mode (campaign 3, C3-SFE-08 replacement): 'per_ask' (every campaign so far) gives
+    partial credit per correct ask; 'episode' gives credit only for episodes in which EVERY ask
+    is correct (all-or-nothing). Both are always reported: 'reward' follows reward_mode and
+    'reward_per_ask' / 'reward_episode' carry the two readouts, so arms are comparable."""
     player = Player(manifest)
     meter = Meter()
     glen = player.genome_len
     correct = asks = 0
+    ep_all = 0
     statuses = {"halt": 0, "yield": 0, "budget": 0}
     occupancy_max = 0
     tape_writes = 0
@@ -80,6 +85,7 @@ def evaluate(manifest: dict, episodes: List[Episode], intervention: Optional[str
     per_ask_n: List[int] = []
     irng = SplitMix64(seed_from("wse.intervention", rng_seed, intervention or ""))
     for ei, ep in enumerate(episodes):
+        ep_correct = ep_asks = 0
         st = player.fresh_state()
         rng = SplitMix64(seed_from("wse.vmrng", rng_seed, ei))
         halved = False
@@ -109,15 +115,25 @@ def evaluate(manifest: dict, episodes: List[Episode], intervention: Optional[str
                     per_ask_n.append(0); per_ask_correct.append(0)
                 per_ask_n[ask_i] += 1
                 asks += 1
+                ep_asks += 1
                 if outs[0]:
                     answered += 1
                     if outs[0][0] == ep.expected[ti]:
                         correct += 1
+                        ep_correct += 1
                         per_ask_correct[ask_i] += 1
+        if ep_asks and ep_correct == ep_asks:
+            ep_all += 1
     n = max(1, len(episodes))
     m = meter.as_dict(manifest)
+    r_ask = correct / max(1, asks)
+    r_ep = ep_all / n
     return {
-        "reward": correct / max(1, asks),
+        "reward": r_ep if reward_mode == "episode" else r_ask,
+        "reward_per_ask": r_ask,
+        "reward_episode": r_ep,
+        "reward_mode": reward_mode,
+        "episodes_all_correct": ep_all,
         "asks": asks,
         "correct": correct,
         "per_ask_reward": [round(c / max(1, k), 4) for c, k in zip(per_ask_correct, per_ask_n)],
@@ -191,13 +207,14 @@ class Evolution:
                  tabu: Optional[set] = None, tabu_retries: int = 1, tabu_key=None,
                  descend_fn: Optional[Callable] = None, foundry: Optional[dict] = None,
                  curve_every: int = 0, curve_episodes: Optional[List[Episode]] = None,
-                 solve_threshold: float = 0.5, train_family: str = "train",
+                 solve_threshold: float = 0.5, train_family: str = "train", reward_mode: str = "per_ask",
                  offspring_cap: Optional[float] = None, import_tags: Sequence[str] = ("import",)):
         """offspring_cap (campaign 3, group F): at most this SHARE of each generation's children
         may have a primary parent carrying an import origin (tags in import_tags); beyond it the
         parent is redrawn among resident organisms. None = no cap (campaign-2 behaviour)."""
         self.spec, self.regime = spec, regime
         self.offspring_cap, self.import_tags = offspring_cap, tuple(import_tags)
+        self.reward_mode = reward_mode
         self.campaign_seed, self.cell_seed = campaign_seed, cell_seed
         self.N, self.E, self.elitism, self.tournament = N, E, elitism, tournament
         self.branch = branch
@@ -255,7 +272,7 @@ class Evolution:
         m_g = self.multiplier()
         scored = []
         for org in self.pop:
-            ev = evaluate(org["manifest"], eps, rng_seed=seed_from("wse.eval", self.campaign_seed, g, self.cell_seed))
+            ev = evaluate(org["manifest"], eps, rng_seed=seed_from("wse.eval", self.campaign_seed, g, self.cell_seed), reward_mode=self.reward_mode)
             f = self.regime.fitness(ev["reward"], ev["meter"], self.E, multiplier=m_g)
             scored.append((f, org, ev))
         self.exp_episodes += self.N * self.E
@@ -347,7 +364,7 @@ class Evolution:
         new = []
         for m in manifests:
             org = G.organism_record(dict(m), None, self.g); org["origins"] = [tag]
-            e = evaluate(m, eps, rng_seed=rs)
+            e = evaluate(m, eps, rng_seed=rs, reward_mode=self.reward_mode)
             new.append((self.regime.fitness(e["reward"], e["meter"], self.E, multiplier=self.multiplier()), org, e))
         scored = sorted(self.scored, key=lambda z: -z[0])
         scored = scored[: max(0, len(scored) - len(new))] + new

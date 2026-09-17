@@ -225,9 +225,11 @@ def main(argv=None) -> int:
                          lineage={"seeds": [m["seed"] for m in mature_rows], "general_gen": [m["general_gen"] for m in mature_rows]})
         art = X.publish(wid, "mature_sources", "cmp3.pop.mature_w0.v1", {"manifests": mature, "direct_w1d4": mature_direct, "heldout_by_rung": [m["heldout_by_rung"] for m in mature_rows]},
                         {"info_kind": "artifact"}, maturity=mat)
-        fetched = X.import_fetch("mature_sources", wid, wid, art)
+        # the run uses the bytes fetched back from the engine (an ISOLATED world cannot import into itself: a03 403 isolation_violation)
+        fetched, finfo = X.att.step("fetch_sources", lambda: X.eng.fetch(wid, art["artifact_id"], expected=art.get("declared")), parts=("mature_sources",), kind="engine")
+        X.receipt["imports"]["mature_sources"] = finfo
         if fetched and isinstance(fetched, dict) and fetched.get("manifests"):
-            mature = fetched["manifests"]                        # the run uses the bytes the consumer fetched back
+            mature = fetched["manifests"]
         X.publish(wid, "control_sources", "cmp3.pop.control_permuted.v1", {"manifests": control, "direct_w1d4": control_direct}, {"info_kind": "artifact"}, maturity=mat | {"solved": False, "note": "permuted control"})
     jobs = []
     for d in doses:

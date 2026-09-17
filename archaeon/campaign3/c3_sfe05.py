@@ -40,12 +40,14 @@ def main(argv=None) -> int:
     ap.add_argument("--N", type=int, default=200)
     ap.add_argument("--E", type=int, default=16)
     ap.add_argument("--rung-gens", type=int, default=25)
+    ap.add_argument("--rung0-max", type=int, default=100, help="hold rung 0 until best >= 0.5 or this many generations (0: fixed schedule)")
     ap.add_argument("--procs", type=int, default=12)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
     X = Retention(dry_run=a.dry_run, procs=a.procs)
     G_ = a.rung_gens * len(RUNGS)
-    reach = X.reachability_for([(RUNGS[0], a.N, a.rung_gens, a.E, "E0")])
+    hold_max = a.rung0_max if a.rung0_max > 0 else None
+    reach = X.reachability_for([(RUNGS[0], a.N, hold_max or a.rung_gens, a.E, "E0")])
     arms = ["p%s" % p for p in SHARES] + ["p0.1_then_0"]
     X.seal({
         "question": "Between p=0 and p=0.10 revisit share, where is the break-even at which rung-0 competence is retained to the end of the ladder without cost to "
@@ -54,13 +56,13 @@ def main(argv=None) -> int:
                            "competence (0.36 -> 0.61-0.69); the first delay-1 solutions were delay-invariant on arrival.",
         "why_this_slot": "The campaign-2 result located the effect but not the price: the economic boundary (and whether revisits are needed after generality) is the "
                          "critical uncertainty of the retention line; n=6 with three informative seeds could not place it.",
-        "assay_capability_requirement": "the p0 arm reaches rung-0 competence >= 0.5 within the first rung in >= 6 of %d seeds (else POSITIVE_CONTROL_FAILED)" % len(a.seeds),
-        "positive_control": "rung-0 arrival under p0 (W0 4-bit, table 11/21 by G30)",
+        "assay_capability_requirement": "the p0 arm reaches rung-0 competence >= 0.5 within the rung-0 HOLD (<= %s generations; C3-SFE-03 a02 showed a fixed first rung releases the ladder before W0 is climbed in 7/12) in >= 6 of %d seeds (else POSITIVE_CONTROL_FAILED)" % (hold_max, len(a.seeds)),
+        "positive_control": "rung-0 arrival under p0 within the hold of %s generations (C3-SFE-03 a05: 12/12 seeds climbed rung 0 within the hold, 12-97 generations)" % hold_max,
         "reachability_estimate": reach,
         "arms": arms,
         "crn_policy": "default; identical generation 0 and selection stream per seed across arms; batteries keyed on (generation, seed); p0.1_then_0 differs from "
                       "p0.1 only after the generality probe fires",
-        "budget": {"N": a.N, "E": a.E, "rung_gens": a.rung_gens, "G": G_, "shares": SHARES, "seeds": a.seeds, "probe_dense": 5, "probe_sparse": 5, "general_min": GENERAL_MIN},
+        "budget": {"N": a.N, "E": a.E, "rung_gens": a.rung_gens, "G_ladder": G_, "rung0_max": hold_max, "shares": SHARES, "seeds": a.seeds, "probe_dense": 5, "probe_sparse": 5, "general_min": GENERAL_MIN},
         "primary_observable": "final_r0 per arm x seed (retained rung-0 competence at the end); cost: final_r3 and adaptation speed; revisit_cost_episodes; general_gen",
         "claim_ceiling": "weak at n=%d: a break-even REGION (the smallest p with final_r0 not below p0.1's by 0.15) and a yes/no on post-generality removal" % len(a.seeds),
         "falsification_condition": "final_r0(p0.05) - final_r0(p0) < 0.15 => 5%% revisits do not retain (break-even is above 0.05); "
@@ -79,16 +81,16 @@ def main(argv=None) -> int:
     X.open("cmp3-sfe05")
     wid = X.world("retention", "ISOLATED", use_group=False)
     X.publish_prereg(wid)
-    jobs = [{"arm": "p%s" % p, "p": p, "seed": s, "N": a.N, "E": a.E, "rung_gens": a.rung_gens} for p in SHARES for s in a.seeds] + \
-           [{"arm": "p0.1_then_0", "p": 0.10, "p_after_general": 0.0, "seed": s, "N": a.N, "E": a.E, "rung_gens": a.rung_gens} for s in a.seeds]
+    jobs = [{"arm": "p%s" % p, "p": p, "seed": s, "N": a.N, "E": a.E, "rung_gens": a.rung_gens, "rung0_max": hold_max} for p in SHARES for s in a.seeds] + \
+           [{"arm": "p0.1_then_0", "p": 0.10, "p_after_general": 0.0, "seed": s, "N": a.N, "E": a.E, "rung_gens": a.rung_gens, "rung0_max": hold_max} for s in a.seeds]
     rows = X.pool_map(run_ladder, jobs, "ladder_s")
     for r in rows:
         res = r.pop("_res")
-        X.reach_row(RUNGS[0], res, N=a.N, G=G_, E=a.E, regime="E0", seed=r["seed"], arm=r["arm"], kind="treated")
+        X.reach_row(RUNGS[0], res, N=a.N, G=r["gens_run"], E=a.E, regime="E0", seed=r["seed"], arm=r["arm"], kind="treated")
     X.publish(wid, "matrices", "cmp3.rung_matrices.v1", {"%s_s%d" % (r["arm"], r["seed"]): {"matrix": r["matrix"], "events": r["events"]} for r in rows}, {"info_kind": "observation"})
     t0 = time.time()
     for r in rows:
-        X.record(wid, r, {"experiment": X.ID, "arm": r["arm"], "p": r["p"], "seed": r["seed"], "N": a.N, "E": a.E, "rung_gens": a.rung_gens, "prereg_digest": X.prereg["prereg_digest"]},
+        X.record(wid, r, {"experiment": X.ID, "arm": r["arm"], "p": r["p"], "seed": r["seed"], "N": a.N, "E": a.E, "rung_gens": a.rung_gens, "rung0_max": hold_max, "prereg_digest": X.prereg["prereg_digest"]},
                  {k: v for k, v in r.items() if k not in ("matrix", "schedule", "elite_summary", "elite_manifest", "gen0_provenance")},
                  "SURVIVED" if r["final_r0"] >= GENERAL_MIN else "FALSIFIED", (r["arm"], r["seed"]))
     X.att.timing("records_s", t0)
