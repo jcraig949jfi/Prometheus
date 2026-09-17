@@ -967,8 +967,16 @@ class SfeRunner:
         out.outcome = outcome
         out.order_check = self._verify_order(wid, obs_ids) if obs_ids else {"checked": False}
 
-        out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
-                                  exp_id=exp_id)
+        if obs_ids:
+            out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
+                                      exp_id=exp_id)
+        else:
+            # COMPLETED + CENSORED with zero observations (the budget stopped
+            # the loop before the first repeat): the fossil anchors on the
+            # committed EXPERIMENT, the same anchor a boundary-crossing failure
+            # uses -- an attested attempt, and nothing invented about a
+            # measurement that never happened.
+            out.anchor = self._failure_anchor(wid, exp_id)
         try:
             final_env = self.audit_envelope(wid, exp_id)
             envelope = {"envelope_hash": final_env.get("envelope_hash"),

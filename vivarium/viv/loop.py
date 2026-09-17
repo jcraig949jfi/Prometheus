@@ -452,8 +452,13 @@ class Vivarium:
         if ctx is None or not ctx.enabled:
             return
         for item in getattr(result, "interventions", None) or []:
+            # one application per repeat is one receipt: the producer's id is
+            # suffixed with the repeat it was applied in (#r<n>), so two repeats
+            # of one declared intervention are two rows, never a collision
+            base = str(item.get("intervention_id") or item.get("kind") or _bundle.UNKNOWN)
+            rid = "%s#r%s" % (base, item.get("repeat_index")) if item.get("repeat_index") is not None else base
             self.attempts.intervention_receipt(
-                conn, ctx, intervention_id=str(item.get("intervention_id") or "repeat%s:%s" % (item.get("repeat_index"), item.get("kind"))),
+                conn, ctx, intervention_id=rid,
                 kind=str(item.get("kind") or _bundle.UNKNOWN), writer="executor",
                 intended=item.get("intended") or {}, realised=item.get("realised") or {},
                 target={"world_id": result.world_id, "repeat_index": item.get("repeat_index")},
@@ -937,7 +942,9 @@ class Vivarium:
 
         # --- validate (still CLAIMED: a refusal never became `running`) ---
         try:
-            spec = record("validate", lambda: self.validate(row))
+            # validate is PURE in the row (spec + hash): a prior attempt's
+            # result is REUSED without a verifier; nothing engine-side depends on it
+            spec = record("validate", lambda: self.validate(row), replayable=True)
         except Exception as exc:                    # noqa: BLE001
             self._close_attempt(conn, "INSTRUMENT_INVALID", extra={"reason": str(exc)[:400]})
             self.finalize_failure(conn, eid, kind="spec_rejected",
