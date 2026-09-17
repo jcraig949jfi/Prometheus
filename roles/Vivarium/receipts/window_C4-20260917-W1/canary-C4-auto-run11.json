@@ -1,0 +1,579 @@
+{
+  "schema": "vivarium_canary.v1",
+  "harness": "C4-CANARY-W1",
+  "started_at": "2026-09-17T23:30:04Z",
+  "checks": {
+    "A.terminal": {
+      "ok": true,
+      "status": "failed",
+      "error": "prerequisite gate pc:w0_climbed FAIL"
+    },
+    "A.one_attempt_prerequisite_failed": {
+      "ok": true,
+      "attempts": [
+        [
+          1,
+          "FAILED",
+          "PREREQUISITE_FAILED"
+        ]
+      ]
+    },
+    "A.gate_receipt_fail_aborted": {
+      "ok": true,
+      "receipts": [
+        {
+          "gate_id": "pc:w0_climbed",
+          "result": "FAIL",
+          "action_taken": "aborted_attempt",
+          "measured": 0.3,
+          "reference": 0.45
+        }
+      ]
+    },
+    "A.no_world_created": {
+      "ok": true,
+      "steps": []
+    },
+    "B.terminal_completed": {
+      "ok": true,
+      "status": "completed",
+      "error": ""
+    },
+    "B.one_attempt_completed_uncensored": {
+      "ok": true,
+      "envelope": {
+        "horizon": {
+          "kind": "observations",
+          "declared": 3,
+          "max_seconds": 600,
+          "max_observations": 3
+        },
+        "partial": false,
+        "censored": false,
+        "terminal_state": "COMPLETED",
+        "budget_consumed": {
+          "detail": {},
+          "seconds": 0.8905620000000001,
+          "observations": 3
+        },
+        "censoring_reason": null,
+        "envelope_version": "viv.termination.v1",
+        "censored_endpoints": [],
+        "termination_reason": "COMPLETED_ALL_REPEATS",
+        "logical_time_reached": "UNKNOWN",
+        "stopped_on_condition": null,
+        "terminal_receipt_ref": {
+          "steps": 11,
+          "attempt_id": "50963d28-ae2e-438c-9baa-57bd0fc96877"
+        },
+        "observations_recorded": 3,
+        "engine_termination_ref": {
+          "exp_id": "exp_d6cc07c0eb7cafced2a45b24",
+          "world_id": "wld_e302a46e7b28c09e8cc635a9"
+        }
+      }
+    },
+    "B.steps_all_new": {
+      "ok": true,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ]
+      ]
+    },
+    "B.labels_recorded": {
+      "ok": true,
+      "labels": {
+        "vivarium.attempt": "1",
+        "vivarium.execution_id": "4a8fea4f-3c14-4cdf-ad54-03cef5531f95"
+      },
+      "applied": false
+    },
+    "B.gate_receipt_pass": {
+      "ok": true,
+      "receipts": [
+        {
+          "result": "PASS",
+          "action_taken": "proceeded"
+        }
+      ]
+    },
+    "B.bundle_filled_over_declared": {
+      "ok": true,
+      "declared": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289",
+      "recorded": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289"
+    },
+    "B.outbox_rows_pending_no_pew_token": {
+      "ok": true,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "ATTEMPT_TERMINATED",
+        "GATE_EVALUATED"
+      ],
+      "n": 3
+    },
+    "B.engine_has_world_experiment_3_observations": {
+      "ok": true,
+      "world_id": "wld_e302a46e7b28c09e8cc635a9",
+      "exp_id": "exp_d6cc07c0eb7cafced2a45b24",
+      "n_obs": 3,
+      "experiment_found": true,
+      "world_found": true,
+      "labels": null
+    },
+    "C.consumer_killed_mid_run": {
+      "ok": true,
+      "pid": 5136,
+      "host": "SPECTREX5",
+      "rc": 0,
+      "out": "SUCCESS: The process with PID 5136 has been terminated.\n",
+      "at": "2026-09-17T23:30:30Z",
+      "observations_before_kill": 0,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ]
+      ]
+    },
+    "C.row_stranded_running": {
+      "ok": true,
+      "status": "running"
+    },
+    "C.released_new_attempt": {
+      "ok": true,
+      "by": "dead-man (automatic)",
+      "event": {
+        "actor": "VivariumDeadmanM2",
+        "event_type": "stranded_released"
+      },
+      "waited_s": 270
+    },
+    "C.attempt1_stranded": {
+      "ok": true,
+      "a1": [
+        "STRANDED",
+        "STRANDED"
+      ]
+    },
+    "C.consumer_relaunched_by_deadman": {
+      "ok": true,
+      "new_pid": 15804,
+      "old_pid": 5136,
+      "waited_s": 0
+    },
+    "C.terminal_completed": {
+      "ok": true,
+      "status": "completed",
+      "error": ""
+    },
+    "C.attempt2_completed_all_observations": {
+      "ok": true,
+      "envelope": {
+        "horizon": {
+          "kind": "observations",
+          "declared": 5,
+          "max_seconds": 900,
+          "max_observations": 5
+        },
+        "partial": false,
+        "censored": false,
+        "terminal_state": "COMPLETED",
+        "budget_consumed": {
+          "detail": {},
+          "seconds": 57.029694,
+          "observations": 5
+        },
+        "censoring_reason": null,
+        "envelope_version": "viv.termination.v1",
+        "censored_endpoints": [],
+        "termination_reason": "COMPLETED_ALL_REPEATS",
+        "logical_time_reached": "UNKNOWN",
+        "stopped_on_condition": null,
+        "terminal_receipt_ref": {
+          "steps": 15,
+          "attempt_id": "a65223a2-9c9c-4080-8a8c-9eef45b2f15d"
+        },
+        "observations_recorded": 5,
+        "engine_termination_ref": {
+          "exp_id": "exp_b1e593fa10d0c0bec10dbaf0",
+          "world_id": "wld_b96f010c1c17a42ecf46a86d"
+        }
+      }
+    },
+    "C.attempt2_replayed_world_experiment_claim_recomputed_one_world": {
+      "ok": true,
+      "statuses": {
+        "validate": [
+          "REUSED"
+        ],
+        "build": [
+          "RECOMPUTED"
+        ],
+        "world": [
+          "REPLAYED"
+        ],
+        "experiment": [
+          "REPLAYED"
+        ],
+        "claim": [
+          "RECOMPUTED"
+        ],
+        "run": [
+          "RECOMPUTED",
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW"
+        ],
+        "observe": [
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW"
+        ]
+      },
+      "world_ids": [
+        "wld_b96f010c1c17a42ecf46a86d"
+      ],
+      "recorded_at_kill": 0
+    },
+    "C.engine_exactly_n_observations_one_world": {
+      "ok": true,
+      "world_id": "wld_b96f010c1c17a42ecf46a86d",
+      "n_obs": 5,
+      "experiment_found": false,
+      "world_found": true,
+      "labels": null
+    },
+    "C.outbox_has_both_attempts": {
+      "ok": true,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED",
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED"
+      ]
+    },
+    "D.consumer_killed_mid_run": {
+      "ok": true,
+      "pid": 15804,
+      "host": "SPECTREX5",
+      "rc": 0,
+      "out": "SUCCESS: The process with PID 15804 has been terminated.\n",
+      "at": "2026-09-17T23:36:05Z",
+      "observations_before_kill": 2,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ]
+      ]
+    },
+    "D.row_stranded_running": {
+      "ok": true,
+      "status": "running"
+    },
+    "D.released_new_attempt": {
+      "ok": true,
+      "by": "dead-man (automatic)",
+      "event": {
+        "actor": "VivariumDeadmanM2",
+        "event_type": "stranded_released"
+      },
+      "waited_s": 235
+    },
+    "D.attempt1_stranded": {
+      "ok": true,
+      "a1": [
+        "STRANDED",
+        "STRANDED"
+      ]
+    },
+    "D.consumer_relaunched_by_deadman": {
+      "ok": true,
+      "new_pid": 10408,
+      "old_pid": 15804,
+      "waited_s": 0
+    },
+    "D.terminal_completed": {
+      "ok": true,
+      "status": "completed",
+      "error": ""
+    },
+    "D.attempt2_completed_all_observations": {
+      "ok": true,
+      "envelope": {
+        "horizon": {
+          "kind": "observations",
+          "declared": 12,
+          "max_seconds": 900,
+          "max_observations": 12
+        },
+        "partial": false,
+        "censored": false,
+        "terminal_state": "COMPLETED",
+        "budget_consumed": {
+          "detail": {},
+          "seconds": 0.14155,
+          "observations": 12
+        },
+        "censoring_reason": null,
+        "envelope_version": "viv.termination.v1",
+        "censored_endpoints": [],
+        "termination_reason": "COMPLETED_ALL_REPEATS",
+        "logical_time_reached": "UNKNOWN",
+        "stopped_on_condition": null,
+        "terminal_receipt_ref": {
+          "steps": 29,
+          "attempt_id": "11067ee1-8961-42cf-bae8-2528dc6b19e8"
+        },
+        "observations_recorded": 12,
+        "engine_termination_ref": {
+          "exp_id": "exp_36474a6206649f8ac9ab27a7",
+          "world_id": "wld_5150dc8ce3ba309666da4936"
+        }
+      }
+    },
+    "D.attempt2_replayed_world_experiment_claim_replayed_one_world": {
+      "ok": true,
+      "statuses": {
+        "validate": [
+          "REUSED"
+        ],
+        "build": [
+          "RECOMPUTED"
+        ],
+        "world": [
+          "REPLAYED"
+        ],
+        "experiment": [
+          "REPLAYED"
+        ],
+        "claim": [
+          "REPLAYED"
+        ],
+        "run": [
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED",
+          "RECOMPUTED"
+        ],
+        "observe": [
+          "REPLAYED",
+          "REPLAYED",
+          "REPLAYED",
+          "REPLAYED",
+          "REPLAYED",
+          "REPLAYED",
+          "REPLAYED",
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW"
+        ]
+      },
+      "world_ids": [
+        "wld_5150dc8ce3ba309666da4936"
+      ],
+      "recorded_at_kill": 2
+    },
+    "D.engine_exactly_n_observations_one_world": {
+      "ok": true,
+      "world_id": "wld_5150dc8ce3ba309666da4936",
+      "n_obs": 12,
+      "experiment_found": false,
+      "world_found": true,
+      "labels": null
+    },
+    "D.outbox_has_both_attempts": {
+      "ok": true,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED",
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED"
+      ]
+    },
+    "close.no_canary_work_left_in_queue": {
+      "ok": true,
+      "open_rows": 0
+    }
+  },
+  "rows": {
+    "A-gate-fail": {
+      "experiment_id": "a38c2b53-2f26-499d-b8ec-60bdcc281f29",
+      "spec_hash": "sha256:969ee066be15bce7033f68e0303baa4188c543d3af5490376fe73003df4adc1c",
+      "bundle_hash_declared": "sha256:0874dc1161cc19eadc13fefcb90c4a97327c1549e5550e7aa8f7c22dc45538e6"
+    },
+    "B-three-repeats": {
+      "experiment_id": "4a8fea4f-3c14-4cdf-ad54-03cef5531f95",
+      "spec_hash": "sha256:7bca1b75d121ff0709dbfe21b1fa56b3b06a400fb6d0d2384881d597ccc88c68",
+      "bundle_hash_declared": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289"
+    },
+    "C-resume-in_loop": {
+      "experiment_id": "eecebf02-cfbc-42c6-bbdc-db8afbaeda81",
+      "spec_hash": "sha256:3ac3643e075675863153be4ed25637f755d9e9e8a83d6155ab0e5ddb6eafee50",
+      "bundle_hash_declared": "sha256:f28c0ce9ed9a6d6d1822dd37568ee4019d1ea82549b9cad0021f694b33543420"
+    },
+    "D-resume-posting": {
+      "experiment_id": "39d1c47e-fb04-4f22-ab06-10c67543cfbe",
+      "spec_hash": "sha256:b5e8514129337fea6804c41ed83af79aeee008e2208a779c3d806a877a0040cd",
+      "bundle_hash_declared": "sha256:14af3883fac5d93a2937607333753beca76b06c2a5eccae54f05c85796eb2488"
+    }
+  },
+  "updated_at": "2026-09-17T23:40:04Z",
+  "ok": true,
+  "finished_at": "2026-09-17T23:40:04Z"
+}
