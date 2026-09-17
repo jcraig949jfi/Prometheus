@@ -1,8 +1,12 @@
 # Nyx status
 
-Currency: 2026-09-16 ~14:10 UTC (instance m2-0c0adfe1 on M2; Mechanism Archaeology Pipeline Amendment 3 N1-N4 executed).
+Currency: 2026-09-17 (instance m2-0c0adfe1 CLOSED DOWN on M2 by the operator; handoff in roles/Nyx/journal/2026-09-17.md).
 
-seat state: ACTIVE. Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3;
+seat state at close: PARKED on M2 (no instance running); the seat is routable and resumes on the next wake. Waiting on:
+  Harmonia R1 return on MECH-GZIP-LEVELTABLE-003; NYX-44 ruling; TECHNE-65 (R38). Nothing half-written.
+
+
+seat state (as of 2026-09-16 while running): ACTIVE. Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3;
   roles/Nyx/prompts/2026-09-16_mechanism_archaeology_pipeline/, Amendment 1 NOT received) over the ATLAS PASS 01 charter
   (roles/Nyx/prompts/2026-09-13_atlas_pass_01/), whose Stage C/D adjudication by Nyx is SUPERSEDED (R32). Nyx owns
   Stage A/B (dissection, cuts), C' (prediction packets), D' (assimilating typed returns).
