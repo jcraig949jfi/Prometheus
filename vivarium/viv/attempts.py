@@ -143,10 +143,16 @@ class Attempts:
             aid = str(cur.fetchone()["attempt_id"])
             prior: Dict[str, dict] = {}
             if parent is not None:
-                cur.execute("SELECT step_id, step_key, step_kind, parts, status, result, result_digest FROM "
-                            + self.schema + ".execution_step WHERE attempt_id = %s AND status <> 'FAILED'", (parent,))
+                # Every earlier attempt of THIS row, newest first: a stranded
+                # attempt 2 may hold no steps while attempt 1 holds the world.
+                # The trigger (VIV22) only admits a replay of the same key in
+                # the same row, which is exactly this set.
+                cur.execute("SELECT s.step_id, s.step_key, s.step_kind, s.parts, s.status, s.result, s.result_digest "
+                            "FROM " + self.schema + ".execution_step s JOIN " + self.schema + ".execution_attempt a "
+                            "ON a.attempt_id = s.attempt_id WHERE a.experiment_id = %s AND a.terminal_state IS NOT NULL "
+                            "AND s.status <> 'FAILED' AND s.result IS NOT NULL ORDER BY a.attempt_number DESC, s.started_at DESC", (eid,))
                 for r in cur.fetchall():
-                    prior[r["step_key"]] = dict(r)
+                    prior.setdefault(r["step_key"], dict(r))
         conn.commit()
         self.log("[viv] attempt %d opened for %s (parent %s, %d prior step(s) available)"
                  % (number, eid[:8], parent[:8] if parent else "-", len(prior)))

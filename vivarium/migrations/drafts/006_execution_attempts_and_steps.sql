@@ -180,11 +180,13 @@ CREATE TABLE IF NOT EXISTS {schema}.provenance_envelope (
 -- is legal ONLY inside a transaction that declared itself the release path
 -- (SET LOCAL viv.release = 'new_attempt') AND whose row has no OPEN attempt
 -- left. Every other writer still meets the original rule.
+-- The body below is migration 004's CURRENT function (002's relation freeze
+-- and 004's locator freeze included) plus the one clause; keep it in step
+-- with the newest migration that redefines the function.
 CREATE OR REPLACE FUNCTION {schema}.enforce_queue_transition()
-RETURNS trigger AS $$
+RETURNS trigger AS $fn$
 DECLARE
     legal boolean;
-    open_attempts integer;
 BEGIN
     IF OLD.status IN ('completed', 'failed', 'cancelled') THEN
         RAISE EXCEPTION
@@ -205,6 +207,30 @@ BEGIN
             USING ERRCODE = 'raise_exception';
     END IF;
 
+    -- added 2026-09-06 (archaeon/003): the experimental-relation declaration
+    IF NEW.family_id IS DISTINCT FROM OLD.family_id
+       OR NEW.arm_id IS DISTINCT FROM OLD.arm_id
+       OR NEW.replication_of IS DISTINCT FROM OLD.replication_of
+       OR NEW.candidate_set_id IS DISTINCT FROM OLD.candidate_set_id
+       OR NEW.request_key IS DISTINCT FROM OLD.request_key
+       OR NEW.cadence_lane IS DISTINCT FROM OLD.cadence_lane
+       OR NEW.cadence_day_ordinal IS DISTINCT FROM OLD.cadence_day_ordinal THEN
+        RAISE EXCEPTION
+            'vivarium: the experimental-relation declaration (family, arm, '
+            'replication_of, candidate set, cadence) of % is immutable; a '
+            'comparison may not be re-drawn after execution', OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    -- added 2026-09-09 (vivarium/004): the address book
+    IF NEW.artifact_locators IS DISTINCT FROM OLD.artifact_locators THEN
+        RAISE EXCEPTION
+            'vivarium: the artifact address book of % is immutable; an '
+            'experiment may not be re-addressed after admission',
+            OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
     IF NEW.status = OLD.status THEN
         RETURN NEW;                       -- annotation, not a transition
     END IF;
@@ -213,12 +239,14 @@ BEGIN
           OR (OLD.status = 'claimed' AND NEW.status IN ('running', 'failed'))
           OR (OLD.status = 'running' AND NEW.status IN ('completed', 'failed'));
 
+    -- point release (006): claimed|running -> queued is legal ONLY inside the
+    -- release path (SET LOCAL viv.release = 'new_attempt') once the row has
+    -- no OPEN attempt left; every other writer meets the rule above.
     IF NOT legal AND OLD.status IN ('claimed', 'running') AND NEW.status = 'queued'
        AND current_setting('viv.release', true) = 'new_attempt' THEN
-        SELECT count(*) INTO open_attempts FROM {schema}.execution_attempt
-         WHERE experiment_id = OLD.experiment_id AND terminal_state IS NULL;
-        IF open_attempts = 0 THEN
-            legal := true;                -- the release path closed the attempt first
+        IF (SELECT count(*) FROM {schema}.execution_attempt
+             WHERE experiment_id = OLD.experiment_id AND terminal_state IS NULL) = 0 THEN
+            legal := true;
         END IF;
     END IF;
 
@@ -230,4 +258,4 @@ BEGIN
 
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$fn$ LANGUAGE plpgsql;

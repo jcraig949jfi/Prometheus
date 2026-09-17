@@ -209,6 +209,9 @@ class RunResult:
     #: viv/attempts.py). COMPLETED_ALL_REPEATS unless a budget stopped it.
     termination_reason: Optional[str] = None
     termination_detail: dict = field(default_factory=dict)
+    #: INTERVENTION_RECEIPT_SCHEMA.md: what the executor said it applied,
+    #: per repeat ([{repeat_index, ...channel item}]); the loop writes receipts.
+    interventions: list = field(default_factory=list)
 
 
 class ExecutionFailure(RuntimeError):
@@ -819,9 +822,13 @@ class SfeRunner:
                     state = (carried if plan["state"] == "persist"
                              else _ex.new_state(spec["work"]["kind"]))
                     r0 = time.perf_counter()
+                    sink: list = []
                     value = record("run", lambda: _ex.run(spec, seed=seed, state=state,
-                                                          inputs=inputs or None),
+                                                          inputs=inputs or None,
+                                                          interventions=sink),
                                    parts=[index])
+                    for item in sink:
+                        out.interventions.append({"repeat_index": index, **item})
                     repeats.append({"repeat_index": index, "seed": seed,
                                     "state_mode": plan["state"],
                                     "seconds": round(time.perf_counter() - r0, 6),
