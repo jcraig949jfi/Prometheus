@@ -1,21 +1,116 @@
 {
- "dump": "F:\\PrometheusBackups\\pew\\prometheus_fire_20260913T033018.dump",
- "scratch_db": "pew_restore_check_20260913043001",
- "started": "2026-09-13T04:30:01",
+ "dump": "D:\\PrometheusBackups\\pew\\prometheus_fire_20260917T055050.dump",
+ "backup_id": "pewbk-20260917T055050-fea46038fa3c",
+ "dump_sha256_recorded": "fea46038fa3c7cef0c2f966234ed893ccdf9d112af79940e9fcb6229495a9d7f",
+ "dump_sha256_now": "fea46038fa3c7cef0c2f966234ed893ccdf9d112af79940e9fcb6229495a9d7f",
+ "source_host": "192.168.1.202",
+ "target_host": "127.0.0.1",
+ "scratch_db": "pew_restore_check_20260917055336",
+ "started": "2026-09-17T05:53:36",
+ "pg_restore_version": "pg_restore (PostgreSQL) 17.11",
+ "workspace": {
+  "base_sha": "298d6ea03e58241718a3caa81d2d59ea84077103",
+  "branch": "mnemosyne/m2-boot-2026-09-16",
+  "worktree_path": "D:\\Prometheus-worktrees\\mnemosyne-boot-2026-09-16\\evidence_wiki",
+  "dirty": true,
+  "main_worktree": false,
+  "workspace_known": true,
+  "allow_canonical_override": false
+ },
+ "dump_intact": true,
  "pg_restore_rc": 0,
  "pg_restore_stderr_tail": "",
- "restore_seconds": 150.0,
- "tables_live": 37,
- "tables_restored": 37,
+ "restore_seconds": 199.0,
+ "source_identity": {
+  "db_system_id": "7628127204585430828",
+  "server_version": "PostgreSQL 17.9 on x86_64-windows, compiled by msvc-19.44.35223, 64-bit",
+  "db_name": "prometheus_fire"
+ },
+ "target_identity": {
+  "db_system_id": "7681719240261676752",
+  "server_version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "db_name": "pew_restore_check_20260917055336"
+ },
+ "restored_copy_is_canonical_by_identity": false,
+ "tables_live": 164,
+ "tables_restored": 164,
  "tables_missing_in_restore": [],
  "tables_with_differing_counts": {
-  "read_log": {
-   "live": 1825,
-   "restored": 1812
+  "agora.machine_probes": {
+   "live": 131635,
+   "restored": 131629
+  },
+  "comms.messages": {
+   "live": 330,
+   "restored": 327
+  },
+  "comms.receipt_instances": {
+   "live": 589,
+   "restored": 587
+  },
+  "comms.receipts": {
+   "live": 595,
+   "restored": 593
+  },
+  "ew.read_log": {
+   "live": 3014,
+   "restored": 3013
   }
  },
- "total_rows_live": 36015,
- "total_rows_restored": 36002,
+ "total_rows_live": 5765473,
+ "total_rows_restored": 5765459,
+ "schemas_live": [
+  "agora",
+  "analysis",
+  "archaeon",
+  "bus",
+  "charon_duckdb",
+  "comms",
+  "ew",
+  "kill",
+  "ludus_atlas",
+  "meta",
+  "noesis",
+  "results",
+  "sigma",
+  "signals",
+  "tensor",
+  "viv",
+  "viv_archaeon_test_797363d7",
+  "viv_dev_h0h5",
+  "viv_dev_h1h0",
+  "viv_dev_h1h0b",
+  "viv_dev_h1h0c",
+  "viv_dev_h1h0m",
+  "xref",
+  "zeros"
+ ],
+ "schemas_restored": [
+  "agora",
+  "analysis",
+  "archaeon",
+  "bus",
+  "charon_duckdb",
+  "comms",
+  "ew",
+  "kill",
+  "ludus_atlas",
+  "meta",
+  "noesis",
+  "results",
+  "sigma",
+  "signals",
+  "tensor",
+  "viv",
+  "viv_archaeon_test_797363d7",
+  "viv_dev_h0h5",
+  "viv_dev_h1h0",
+  "viv_dev_h1h0b",
+  "viv_dev_h1h0c",
+  "viv_dev_h1h0m",
+  "xref",
+  "zeros"
+ ],
  "chain_evidence_id": "E-dbe8c504b8cc",
  "chain_live": {
   "found": true,
@@ -148,7 +243,7 @@
   "fossil_by_namespace": [
    {
     "namespace": "prod",
-    "n": 6036
+    "n": 6046
    },
    {
     "namespace": "synthetic",
@@ -156,7 +251,11 @@
    },
    {
     "namespace": "test",
-    "n": 286
+    "n": 329
+   },
+   {
+    "namespace": "theophrastus",
+    "n": 67
    }
   ],
   "prod_row": [
@@ -175,7 +274,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 20928
+    "last_value": 21239
    }
   ],
   "ontology_registry": [
@@ -198,7 +297,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 15
+    "n": 19
    },
    {
     "object_type": "evidence",
@@ -208,7 +307,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 9
+    "n": 10
    },
    {
     "object_type": "relation",
@@ -223,7 +322,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 5
+    "n": 6
    }
   ],
   "fossil_pk": [
@@ -234,6 +333,11 @@
   "evidence_fk": [
    {
     "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
+   }
+  ],
+  "comms_last_message": [
+   {
+    "id": 330
    }
   ]
  },
@@ -241,7 +345,7 @@
   "fossil_by_namespace": [
    {
     "namespace": "prod",
-    "n": 6036
+    "n": 6046
    },
    {
     "namespace": "synthetic",
@@ -249,7 +353,11 @@
    },
    {
     "namespace": "test",
-    "n": 286
+    "n": 329
+   },
+   {
+    "namespace": "theophrastus",
+    "n": 67
    }
   ],
   "prod_row": [
@@ -268,7 +376,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 20928
+    "last_value": 21239
    }
   ],
   "ontology_registry": [
@@ -291,7 +399,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 15
+    "n": 19
    },
    {
     "object_type": "evidence",
@@ -301,7 +409,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 9
+    "n": 10
    },
    {
     "object_type": "relation",
@@ -316,7 +424,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 5
+    "n": 6
    }
   ],
   "fossil_pk": [
@@ -328,9 +436,39 @@
    {
     "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
    }
+  ],
+  "comms_last_message": [
+   {
+    "id": 327
+   }
   ]
  },
- "samples_identical": true,
- "VERDICT": "RESTORE_NOT_VERIFIED",
- "scratch_disposition": "dropped"
+ "samples_identical": false,
+ "count_drift_append_only": {
+  "agora.machine_probes": {
+   "live": 131635,
+   "restored": 131629
+  },
+  "comms.messages": {
+   "live": 330,
+   "restored": 327
+  },
+  "comms.receipt_instances": {
+   "live": 589,
+   "restored": 587
+  },
+  "comms.receipts": {
+   "live": 595,
+   "restored": 593
+  },
+  "ew.read_log": {
+   "live": 3014,
+   "restored": 3013
+  }
+ },
+ "count_loss": {},
+ "VERDICT": "RESTORE_VERIFIED",
+ "verdict_note": "samples differ (see samples_live/samples_restored; live-source drift on append-only counters is expected)",
+ "scratch_disposition": "dropped",
+ "finished": "2026-09-17T05:57:00"
 }
