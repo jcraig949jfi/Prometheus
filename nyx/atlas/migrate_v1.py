@@ -60,7 +60,24 @@ def grade_from_record(rec: dict, fid: str = "") -> str:
     for k, v in GRADES.items():
         if k in s:
             return v
+    # Techne #387 (2026-09-18) ASK 2 RULING: HISTORICAL_ARCHIVE_MIRROR is a record SOURCE_TYPE (how the bytes were
+    # obtained), not an R19 grade; the files a cut reads are CONTEMPORARY_COPY (netlib serves the release files unmodified;
+    # unix-history-repo imports the distribution tapes' bytes verbatim), with a tree-level RECONSTRUCTION caveat where the
+    # mirror is a git history assembled later. Ruled for odepack-netlib, bsd-tcp-4.2-1983, compact-4.2bsd-1983; applied to
+    # every HISTORICAL_ARCHIVE_MIRROR record by the same reasoning; Techne's per-record PROVENANCE_GRADE (TECHNE-89) wins.
+    if rec.get("source_type") == "HISTORICAL_ARCHIVE_MIRROR":
+        return "CONTEMPORARY_COPY"
     return "UNKNOWN"
+
+
+def grade_basis_from_record(rec: dict) -> str:
+    base = "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)"
+    if rec.get("source_type") == "HISTORICAL_ARCHIVE_MIRROR":
+        return (base + "; HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, "
+                "not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact "
+                "(unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other "
+                "archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks")
+    return base
 
 
 def split_ref(ref: str, fid: str):
@@ -134,7 +151,7 @@ def populate(f: dict, fid: str, host_matches=None, migrated_from: str = "nyx.atl
     src = "; ".join((a.get("url", "") + ("@" + a["commit"] if a.get("commit") else "") + (" sha256:" + a["sha256"] if a.get("sha256") else "")) for a in arts) or "UNKNOWN"
     f["cut"]["provenance"] = {
         "schema": "nyx.atlas/1-provenance", "migrated_at": stamp, "migrated_from": migrated_from,
-        "provenance_grade_read": grade_from_record(rec, fid), "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+        "provenance_grade_read": grade_from_record(rec, fid), "grade_basis": grade_basis_from_record(rec),
         "source_object_id": src,
         "payload_manifest_id": f"techne tree_sha256 {rec.get('hashes', {}).get('tree_sha256', 'UNKNOWN')} ({rec.get('hashes', {}).get('n_files', '?')} files)",
         "host_tree_matches_record": host_matches, "host": _host_string(),

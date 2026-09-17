@@ -126,20 +126,801 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:225-360"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:449-545"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:614-707"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:734-808"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.h:233-290"
+   }
+  ],
+  "inspected_files": [
+   "core/Solver.cc 225-360, 449-545, 614-707, 734-808",
+   "core/Solver.h 233-290"
+  ],
+  "date": "2026-09-17T22:47Z",
+  "note": "conflict-driven clause learning in 900 lines: unit propagation over two watched literals per clause (with a cached 'blocker' literal to skip clause reads), first-UIP conflict analysis producing one learnt clause with a backjump level, activity-ordered decisions (VSIDS) with decay implemented by growing the increment, learnt-clause deletion by activity with binary and reason clauses protected, and Luby-sequence restarts; each of the five is a separately replaceable policy and each was later replaced by descendants",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "http://minisat.se/downloads/minisat-2.2.0.tar.gz sha256:92957d851cdc3baddfe07b5fc80ed5a0237c489d0c52ae72f62844b3b46d7808",
+   "payload_manifest_id": "techne tree_sha256 0a7fe1e69d3f84d222785eabf7e5cb0161463cc9b122b57008b5b9bf3f6adaa5 (31 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/minisat/core/Solver.cc",
+     "payload_hash_read": "d142b553024d70065b30a5dc2ec9b92062653d539f344634bc0e9b43cfe1c0b3",
+     "techne_recorded_hash": "d142b553024d70065b30a5dc2ec9b92062653d539f344634bc0e9b43cfe1c0b3",
+     "match": true,
+     "refs": 9
+    },
+    {
+     "path": "upstream/tree/minisat/core/Solver.h",
+     "payload_hash_read": "e3c2140f95c5f6bfa9817a771e5cd190152d4d1d7af47b721fb5c5d698d3d1d8",
+     "techne_recorded_hash": "e3c2140f95c5f6bfa9817a771e5cd190152d4d1d7af47b721fb5c5d698d3d1d8",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "propagate (449-524): watches[p], Watcher{cref, blocker}, the false literal forced into c[1], the search for a new watch from k = 2, unit -> uncheckedEnqueue, conflict -> stop and copy remaining watches",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each newly false literal p, scan the clauses watching ~p: if the watcher's cached blocker literal is true skip without reading the clause; otherwise ensure the false literal is in position 1, if position 0 is true keep the watch, else look for another non-false literal from position 2 on and move the watch there; if none exists the clause is unit (enqueue position 0 with this clause as reason) or conflicting (return it, having copied the remaining watchers); watches are never touched on backtracking",
+   "input": "the trail from qhead",
+   "output": "new assignments or a conflict clause",
+   "state": "watch lists per literal; the trail; qhead",
+   "update": "per assignment",
+   "assumptions": [
+    "two watches suffice to detect unit and conflict, and need no undo (Moskewicz et al. 2001); a cheap cached literal makes most watcher visits cost one lookup"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+    "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses"
+   ],
+   "fitness_value_in_ancestor": "propagation cost independent of clause length and of backtracking",
+   "failure_landscape": "by reading: the watcher lists are shrunk in place (a stable partition), so a long list with many satisfied clauses is still scanned; that is what the blocker mitigates",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's two-literal watching (2001); the blocker literal is MiniSat 2.2's own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:449-524"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "propagate and the Watcher struct",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "analyze (264-360): seen[], pathC, the reason chain via reason(var(p)), out_learnt[0] = ~p; ccmin_mode 2 with abstractLevel and litRedundant; out_btlevel from the max level among the rest",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting from the conflict clause, mark its literals; literals from the current decision level are counted (pathC), older ones go into the learnt clause; walk the trail backwards to the most recent marked literal, resolve with its reason clause, repeat until exactly one current-level literal remains (the first unique implication point), which negated becomes the asserting literal; then remove literals implied by others in the clause (recursive redundancy check with a level bitmask as a fast filter); the backjump level is the highest level among the remaining literals, so the learnt clause is unit there",
+   "input": "a conflict clause; the trail; reasons",
+   "output": "a learnt clause and a backtrack level",
+   "state": "seen[] (cleared after)",
+   "update": "per conflict",
+   "assumptions": [
+    "the first UIP gives short, quickly asserting clauses (empirically better than later cuts); minimisation pays for itself"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+    "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses"
+   ],
+   "fitness_value_in_ancestor": "every conflict yields a clause that forces a new assignment immediately after backjumping (non-chronological); the search never repeats the same failure",
+   "failure_landscape": "by reading: the learnt clause length is unbounded; the DB reduction exists because of it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "GRASP (Marques-Silva & Sakallah 1996) for learning; Chaff for first UIP; Sorensson & Biere 2009 for minimisation",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:264-360"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "analyze (litRedundant's body not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "pickBranchLit (225-240): random_var_freq, order_heap.removeMin, polarity[]; Solver.h varBumpActivity / varDecayActivity (var_inc *= 1/var_decay; rescale at 1e100); analyze bumps every variable it sees",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each variable carries an activity; every variable touched during conflict analysis is bumped by the current increment; instead of decaying all activities after each conflict the increment itself grows by 1/var_decay (rescaling everything when it overflows), which is the same ordering at O(1) cost; decisions pop the maximum-activity unassigned variable from a heap, with a small probability of a random variable instead; the literal's sign comes from the polarity vector",
+   "input": "the conflict history",
+   "output": "the next decision literal",
+   "state": "activity[], the heap, polarity[]",
+   "update": "per conflict and per decision",
+   "assumptions": [
+    "variables recently involved in conflicts are the ones worth deciding on (locality of conflicts); recency should dominate frequency, hence exponential decay"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+    "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities"
+   ],
+   "fitness_value_in_ancestor": "a decision heuristic that costs O(log n) per decision and adapts to the search",
+   "failure_landscape": "by reading: with var_decay near 1 the heuristic becomes frequency-based and stale; the random picks exist to escape",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's VSIDS (2001); the increment-growth trick is MiniSat's (Een & Sorensson 2003)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:225-240; vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.h:233-290"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pickBranchLit and the activity helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "reduceDB (525-545) with reduceDB_lt; search: learnts.size() - nAssigns() >= max_learnts; max_learnts *= learntsize_inc on the learntsize_adjust schedule; claBumpActivity / claDecayActivity",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "learnt clauses carry an activity bumped when they take part in a conflict; when the number of learnt clauses beyond the current assignment exceeds max_learnts, sort by activity (binary clauses last), delete the lower-activity half plus any below a threshold, never deleting binary clauses or clauses that are the reason for a current assignment; the limit starts at a fraction of the original clause count and grows geometrically on a schedule keyed to conflict counts",
+   "input": "the learnt list",
+   "output": "a shorter learnt list",
+   "state": "learnts, max_learnts, the adjust counters",
+   "update": "when the limit is hit",
+   "assumptions": [
+    "most learnt clauses stop being useful; recent usefulness (activity) predicts future usefulness; the database may grow slowly forever"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause"
+   ],
+   "fitness_value_in_ancestor": "propagation stays fast as learning continues",
+   "failure_landscape": "by reading: activity is a poor proxy on some families (LBD replaced it in Glucose, 2009)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's deletion; the activity-based halving is MiniSat's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:525-545, 650-656"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "reduceDB and its trigger",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "solve_ (751-790): rest_base = luby(restart_inc, curr_restarts) or restart_inc^k; search(rest_base * restart_first); luby (734-743)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the search runs until a conflict budget is spent, then backtracks to level 0 (keeping every learnt clause and all activities) and starts again with a budget that follows the Luby sequence (1,1,2,1,1,2,4,...) times a base of 100 conflicts, or a geometric sequence if configured; because the state that matters (clauses, activities, polarities) survives, a restart is a re-ordering of decisions, not a fresh start",
+   "input": "conflict counts",
+   "output": "a new search episode",
+   "state": "curr_restarts",
+   "update": "per budget exhaustion",
+   "assumptions": [
+    "run-time distributions of CDCL are heavy-tailed, so restarting with a universal (Luby) schedule bounds the expected time within a log factor of the optimal fixed cutoff (Luby, Sinclair, Zuckerman 1993)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks"
+   ],
+   "fitness_value_in_ancestor": "escapes from unlucky early decisions at no loss of learnt information",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Gomes et al. 1998 (restarts for heavy tails); Huang 2007 (Luby in SAT)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:734-790"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "solve_ and luby",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "litRedundant's body, cancelUntil, simplify / removeSatisfied, the ClauseAllocator and relocAll garbage collection, the assumptions interface, toDimacs, Options, the mtl containers",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-2.2.0"
+  },
+  {
+   "candidate": "simp/SimpSolver.cc (variable elimination by resolution, subsumption, asymmetric branching)",
+   "reason": "OTHER",
+   "evidence": "NOT READ (717 lines)",
+   "note": "preprocessing is a distinct mechanism family (SatELite, Een & Biere 2005); a DEEP pass should take it separately",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-2.2.0"
+  },
+  {
+   "candidate": "'SAT solver' / 'CDCL' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the five policies are separately configurable and were separately replaced by descendants (Glucose changed deletion and restarts; others changed the heuristic)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-2.2.0"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "minisat-2.2.0::P.a_satisfying_assignment_or_a_refutation_must_be_found_for_a_large_clause_set_whose_search_tree_is_exponential_and_whose_run_times_are_heavy_tailed",
+   "source_fossil": "minisat-2.2.0",
+   "source_evidence": "Solver.cc propagate, analyze, pickBranchLit, reduceDB, solve_",
+   "condition": "an organism searches assignments for a CNF with millions of clauses; a wrong early decision can cost the whole budget; the same sub-failures recur across branches; propagation must be cheap per assignment",
+   "resource_or_constraint": "time; memory for learnt clauses",
+   "failure_condition": "timeouts on instances solvable by learning and restarts; propagation cost growing with clause length or with backtracking; a learnt database that starves propagation",
+   "world_punishes": "chronological backtracking without learning; counting-based propagation; fixed decision orders; no restarts; unbounded learning",
+   "world_rewards": "watched literals, first-UIP learning with backjumping, activity-based decisions, bounded learnt sets, restart schedules",
+   "observable_consequence": "instances solved within a time budget on a standard set (SAT competition families) with each policy replaced by its naive predecessor one at a time",
+   "vacuity_condition": "2-SAT or Horn instances (linear time without any of this)",
+   "trivial_shortcuts": "instances with a planted solution and a known assignment (the world withholds it)",
+   "cheat_control": "an organism given the satisfying assignment must verify it in one propagation pass; DPLL without learning must fail the pigeonhole and industrial families where CDCL succeeds; CDCL without restarts must show the heavy tail across seeds: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: propositional satisfiability (Een & Sorensson 2003-2010)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "to": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the conflict clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bumps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "learnt clauses",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "decisions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "watch lists shrink",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "re-decide from level 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "minisat-2.2.0",
+   "relation": "algorithm_from",
+   "to": "GRASP 1996 (learning); Chaff 2001 (watched literals, VSIDS); Een & Sorensson 2003 (MiniSat); Luby 1993 / Huang 2007 (restarts); Sorensson & Biere 2009 (minimisation)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the simplifier (SimpSolver) unread: a mechanism family of its own",
+   "allocator, gc and the minimisation body unread",
+   "nothing ran"
+  ],
+  "note": "the five policies of the core solver are located and bounded; the atlas holds no other SAT solver to compare against",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

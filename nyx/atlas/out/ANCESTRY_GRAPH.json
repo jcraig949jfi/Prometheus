@@ -1,24 +1,31 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "n": 176,
+ "built": "2026-09-17T23:02Z",
+ "n": 207,
  "by_relation": {
-  "algorithm_from": 74,
-  "derived_from": 10,
-  "shares_ancestor_with": 43,
-  "historical_version_of": 12,
+  "reimplementation_of": 12,
+  "algorithm_from": 88,
+  "derived_from": 11,
+  "historical_version_of": 18,
+  "shares_ancestor_with": 46,
   "superseded_by": 14,
-  "reimplementation_of": 7,
-  "port_of": 1,
+  "port_of": 2,
   "forked_from": 1,
   "supersedes": 6,
   "rewrote": 2,
   "rival_of": 1,
   "successor_of": 2,
-  "predecessor_of": 1,
+  "predecessor_of": 2,
   "inspired_by": 2
  },
  "edges": [
+  {
+   "from": "arduino-pid",
+   "relation": "reimplementation_of",
+   "to": "discrete PID with anti-windup and bumpless transfer (Astrom & Hagglund 1995); the accumulator-in-output-space form is the author's",
+   "note": "from the record and the author's blog as cited there",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "avida",
    "relation": "algorithm_from",
@@ -34,11 +41,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "backoff-2.2.1",
+   "relation": "reimplementation_of",
+   "to": "binary exponential backoff (Ethernet 1976; TCP RTO) with full jitter (Brooker 2015)",
+   "note": "from the record and the docstrings",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "basic-computer-games-1978",
    "relation": "derived_from",
    "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "basic-computer-games-1978",
+   "relation": "historical_version_of",
+   "to": "Dyment 1968 'The Sumer Game' (DEC FOCAL) -> Ahl 1973 HAMURABI; Mayfield 1971 Star Trek -> Leedom / Ahl 1974-78 Super Star Trek",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bdwgc-8.2.6",
@@ -104,6 +125,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.2-1983",
    "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -116,6 +144,13 @@
    "to": "linux-tcp-congestion",
    "note": "the same lineage four decades later (CUBIC, BBR)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-tcp-4.2-1983",
@@ -146,6 +181,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) via 4.3BSD-Tahoe (1988, Jacobson's slow start / congestion avoidance / fast retransmit; body not in the vault); Reno adds fast recovery",
+   "note": "by reading both bodies; the Tahoe step is inferred from the record and Jacobson 1988",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-tahoe-1988",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.2-1983",
@@ -167,6 +209,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "buddy-bdd",
+   "relation": "algorithm_from",
+   "to": "Bryant 1986 (ROBDD, apply); Brace, Rudell, Bryant 1990 (unique table, cache); Rudell 1993 (sifting)",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "c-cmaes-hansen",
    "relation": "algorithm_from",
    "to": "Hansen & Ostermeier 1996/2001; Hansen, Muller, Koumoutsakos 2003; this C code is the author's and the ancestor of pycma",
@@ -179,6 +228,13 @@
    "to": "radamsa-0.6",
    "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cjson-1.7.18",
+   "relation": "historical_version_of",
+   "to": "cJSON (Gamble 2009) as rewritten for 1.7 (2017) around parse_buffer after fuzzing findings",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "clips-6.4.2-nasa",
@@ -230,11 +286,25 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "compress-4.2.4-lzw",
    "relation": "historical_version_of",
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compress-4.2.4-lzw",
@@ -265,6 +335,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "cosell-eliza-bbn-lisp-1969",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum 1966 (from the paper, not the code); the atlas's eliza-weizenbaum-mad-slip-1965 is the original",
+   "note": "from the record and the file header",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "des-reference",
    "relation": "superseded_by",
    "to": "tiny-aes-c",
@@ -276,6 +353,13 @@
    "relation": "algorithm_from",
    "to": "Knuth boundary tags; Lea's malloc lineage 1987-2012 (the file's own history); the glibc ptmalloc family derives from earlier versions (the comment at 27-30)",
    "note": "from the source comments; not verified against the record this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "do-mpc",
+   "relation": "algorithm_from",
+   "to": "Richalet 1978 / Rawlings & Mayne 2009 (MPC); Biegler 2010 (collocation); Lucia, Finkler & Engell 2013 (multi-stage); Rao, Rawlings & Mayne 2003 (MHE)",
+   "note": "from the docstrings and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -335,6 +419,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "emcee-3.1.6",
    "relation": "algorithm_from",
    "to": "Goodman & Weare 2010; Metropolis et al. 1953",
@@ -354,6 +445,13 @@
    "to": "cocagne-plain-paxos",
    "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "algorithm_from",
+   "to": "Robinson 1965 (resolution); McCune 1988 (Otter, given clause); Bachmair & Ganzinger 1994 (superposition); Denzinger et al. 1997 (DISCOUNT loop); Schulz 2002 (E)",
+   "note": "from the record and the source's DOC",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "erfa-2.0.1",
@@ -433,11 +531,32 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "go-explore-uber-2022",
+   "relation": "algorithm_from",
+   "to": "Ecoffet, Huizinga, Lehman, Stanley, Clune 2019 (arXiv) / 2021 (Nature); the archive idea descends from novelty search and MAP-Elites (Lehman & Stanley 2011; Mouret & Clune 2015)",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "go-runtime-deadlock-fixtures-1.22",
    "relation": "shares_ancestor_with",
    "to": "spin-pathfinder-priority-inversion-1997",
    "note": "a deadlock found by execution + runtime detector vs one found by model checking",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "go-runtime-deadlock-fixtures-1.22",
+   "relation": "shares_ancestor_with",
+   "to": "the Go runtime (golang/go, runtime/proc.go checkdead) of which these files are a test directory",
+   "note": "from the record; the runtime body itself is not in the vault",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "graphplan-blum-furst-1995",
+   "relation": "algorithm_from",
+   "to": "Blum & Furst 1995 (AI Journal 1997); the atlas's ff-planner-2.3 cut records FF as the successor that kept the graph as a heuristic and replaced extraction with forward search",
+   "note": "from the source and the FF cut in this atlas",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "gzip-1.2.4-1993",
@@ -510,11 +629,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "reimplementation_of",
+   "to": "Astrom & Wittenmark 1973 (self-tuning regulator); Adaptive Control 1989/1995 Example 3.5",
+   "note": "from the record and the plot titles",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "kissfft-131.1.0",
    "relation": "algorithm_from",
    "to": "Cooley & Tukey 1965",
    "note": "mixed-radix FFT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "kissfft-131.1.0",
+   "relation": "algorithm_from",
+   "to": "Cooley & Tukey 1965 (mixed radix); the strided recursive form",
+   "note": "from the README and the source",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "l1-adaptive-control-basics-xkhainguyen",
@@ -636,6 +769,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "libfec-karn",
    "relation": "algorithm_from",
    "to": "Viterbi 1967; Fano 1963; Berlekamp 1968 / Massey 1969; Reed-Solomon 1960",
@@ -655,6 +795,20 @@
    "to": "fftpack-netlib",
    "note": "both netlib Fortran numerical libraries of the same era",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "linpackd-netlib-1979 (in this atlas): the same driver file; the six kernels are the BLAS-1 of Lawson et al. 1979",
+   "note": "by md5 comparison of linpackd.f and the file headers",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "linpackd-netlib-1979",
@@ -697,6 +851,13 @@
    "to": "femtolisp",
    "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "lisp-1-5-ibm7090-1962",
@@ -776,10 +937,24 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "minisat-2.2.0",
+   "relation": "algorithm_from",
+   "to": "GRASP 1996 (learning); Chaff 2001 (watched literals, VSIDS); Een & Sorensson 2003 (MiniSat); Luby 1993 / Huang 2007 (restarts); Sorensson & Biere 2009 (minimisation)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "minisom",
    "relation": "algorithm_from",
    "to": "Kohonen 1982 / Kohonen 2013 (batch)",
    "note": "named in the code's own docstring 724-727; Techne's record ancestry not re-read here",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -809,6 +984,13 @@
    "to": "scipy.integrate.odeint / LSODA",
    "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "odepack-netlib",
@@ -858,6 +1040,13 @@
    "to": "tinyscheme-1.42",
    "note": "Lisp family: programs vs language machine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "reimplementation_of",
+   "to": "Newell & Simon's GPS; Weizenbaum's ELIZA; Robinson's unification; Prolog (Colmerauer / Warren); the classical searches",
+   "note": "the book's stated sources",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "pari-gp-2.17",
@@ -979,6 +1168,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "python-sgp4-2.23",
+   "relation": "port_of",
+   "to": "Vallado, Crawford, Hujsak & Kelso 2006 C++ (embedded in extension/SGP4.cpp); Hoots & Roehrich 1980 Spacetrack Report 3",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "radamsa-0.6",
    "relation": "algorithm_from",
    "to": "Miller et al. 1990 (fuzz)",
@@ -1007,6 +1203,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "simple-kalman-denyssene",
    "relation": "inspired_by",
    "to": "the scalar Kalman filter (Kalman 1960) with the process-noise term replaced by an innovation-magnitude heuristic",
@@ -1026,6 +1229,13 @@
    "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spacewar-pdp1-1962",
+   "relation": "shares_ancestor_with",
+   "to": "no software ancestor; the earliest entity-table game loop in the atlas",
+   "note": "from the record; version 2B of 25 March 1962",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "spdylay",
@@ -1159,6 +1369,13 @@
    "to": "viterbi-hmm-xukmin",
    "note": "HMM decode-only vs decode+train",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "algorithm_from",
+   "to": "Baum et al. 1970; Viterbi 1967; Rabiner 1989 (the tutorial this code implements section by section)",
+   "note": "from the source headers and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "valgrind-helgrind-fixtures-3.19",

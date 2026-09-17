@@ -6,7 +6,7 @@
   "985f44e5b1f3948c6f1ebb545cbc6e107d984a0667264aeb7cd54fff7f8c3c5d": 5
  },
  "collapsed_duplicates_note": "organism_id -> how many campaign-3 provenances yielded that SAME organism; the shelf arm's takeover by identical imported material is why",
- "generated_at": "2026-09-17T19:10:49Z",
+ "generated_at": "2026-09-17T22:52:01Z",
  "generated_by": "Archaeon[m2-411504ab]",
  "identity": {
   "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
@@ -7473,11 +7473,19 @@
    }
   }
  ],
+ "population_digest": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+ "population_digest_rule": "population_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, separators=(',',':'), ensure_ascii=False).encode('utf-8') ).hexdigest() where D is this object WITHOUT the keys ['generated_at', 'wall_s', 'population_digest', 'population_digest_rule', 'superseded_raw_byte_digests']. Invariant to line endings, indentation, key order and regeneration time. A raw-byte digest of this file is NOT an identity of the population.",
  "strata": {
   "delay_general": 11,
   "gen0_random": 12,
   "shelf": 19,
   "w0_solver": 15
+ },
+ "superseded_raw_byte_digests": {
+  "crlf_worktree": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+  "lf_worktree": "sha256:3c2ebfd9de7bd14409bda6a1417ca9ebc8fdc1521eea6301450863f0df9199b1",
+  "note": "same 57-organism content, two checkouts. Preserved as evidence of the identity-definition defect that this canonical rule repairs.",
+  "proteus_minted_over": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4"
  },
  "wall_s": 0.0
 }

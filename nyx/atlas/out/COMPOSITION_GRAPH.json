@@ -1,25 +1,57 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "n": 525,
+ "built": "2026-09-17T23:02Z",
+ "n": 582,
  "by_label": {
-  "feeds": 265,
-  "triggers": 42,
-  "updates": 58,
-  "competes": 22,
-  "gates": 57,
+  "feeds": 302,
+  "updates": 65,
+  "triggers": 44,
+  "competes": 26,
+  "gates": 61,
   "restores": 15,
   "predicts": 1,
   "schedules": 11,
   "suppresses": 8,
+  "forgets": 2,
   "verifies": 2,
-  "transforms": 9,
+  "transforms": 10,
   "stores": 14,
-  "selects": 18,
-  "forgets": 1,
+  "selects": 19,
   "retries": 2
  },
  "edges": [
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::bumpless_manual_to_automatic_transfer_by_initialising_the_accumulator_from_the_current_output_and_the_last_input_from_the_current_input",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "shared accumulator under P_ON_M",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "from": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
    "to": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
@@ -130,6 +162,30 @@
    "label": "updates",
    "evidence": "SOURCE_READ",
    "note": "every mutant is a legal program",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+   "to": "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+   "to": "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition",
+   "to": "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "send(value)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -389,6 +445,38 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "every result node",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "to": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "longjmp on the node-count threshold",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "rewrites the table in place",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "cache cleared",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
    "to": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
    "label": "feeds",
@@ -434,6 +522,30 @@
    "label": "gates",
    "evidence": "SOURCE_READ",
    "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "to": "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "to": "cjson-1.7.18::number_copied_into_a_bounded_local_buffer_with_locale_decimal_point_substitution_then_strtod_with_integer_saturation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+   "to": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "object keys",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -797,6 +909,22 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "to": "cosell-eliza-bbn-lisp-1969::decomposition_rules_tried_per_keyword_with_a_cyclic_choice_among_reassembly_rules_and_a_memory_stack_consulted_when_no_keyword_matches",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969::host_language_semantics_re_created_by_a_compatibility_package_so_a_1969_listing_runs_unaltered",
+   "to": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the runtime",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "des-reference::subkey_schedule_by_rotating_two_halves",
    "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
    "label": "feeds",
@@ -1053,6 +1181,38 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "do-mpc::continuous_model_discretised_by_orthogonal_collocation_on_finite_elements_with_legendre_or_radau_points_as_equality_constraints_of_the_nlp",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the dynamics as constraints",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::robust_multi_stage_mpc_by_a_scenario_tree_over_uncertain_parameter_combinations_branching_for_n_robust_stages_with_equal_weights_per_stage_and_optional_shared_inputs",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the scenario structure",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x0 estimates",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "to": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "shared Optimizer base",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "eispack-netlib-1976::householder_reduction_to_tridiagonal_with_accumulated_transforms",
    "to": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
    "label": "feeds",
@@ -1232,6 +1392,14 @@
    "from": "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign",
    "to": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
    "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eprover-2.6::clause_selection_by_round_robin_over_several_weighted_priority_queues_with_a_switch_schedule_per_queue",
+   "to": "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set",
+   "label": "selects",
    "evidence": "SOURCE_READ",
    "note": "",
    "cut_mode": "ANCESTRY_AWARE"
@@ -1541,6 +1709,86 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+   "to": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the batch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "to": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "to": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "counters",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target",
+   "to": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "re-keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "to": "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "recent frames",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "to": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "failed sets",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "gzip-1.2.4-1993::sliding_window_by_halving_copy_with_hash_chain_rebasing",
    "to": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
    "label": "feeds",
@@ -1746,6 +1994,46 @@
    "label": "competes",
    "evidence": "SOURCE_READ",
    "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve::recursive_least_squares_with_exponential_forgetting_over_a_regressor_of_the_last_two_outputs_and_inputs",
+   "to": "indirect-self-tuning-regulator-liaosteve::controller_polynomials_re_derived_every_sample_by_pole_placement_against_a_fixed_reference_model_in_two_variants_cancelling_or_keeping_the_plant_zero",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve::controller_polynomials_re_derived_every_sample_by_pole_placement_against_a_fixed_reference_model_in_two_variants_cancelling_or_keeping_the_plant_zero",
+   "to": "indirect-self-tuning-regulator-liaosteve::recursive_least_squares_with_exponential_forgetting_over_a_regressor_of_the_last_two_outputs_and_inputs",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "u(t) enters the next regressor",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::length_factorised_greedily_into_radix_4_then_2_then_odd_primes_with_the_remaining_cofactor_used_whole_past_the_square_root",
+   "to": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "to": "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback",
+   "to": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "in place",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2613,6 +2901,54 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "to": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the conflict clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bumps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "learnt clauses",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "decisions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "watch lists shrink",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "re-decide from level 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "minisom::sample_sequencing_with_optional_winner_override",
    "to": "minisom::winner_by_argmin_distance_over_the_lattice",
    "label": "feeds",
@@ -2965,6 +3301,30 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "to": "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator",
+   "to": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "matching with vs without two-way variables",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search",
+   "to": "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the book contrasts them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
    "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
    "label": "feeds",
@@ -3170,6 +3530,46 @@
    "label": "competes",
    "evidence": "SOURCE_READ",
    "note": "two gain designs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -3400,6 +3800,38 @@
    "from": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
    "to": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
    "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "to": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "calls each calc routine",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
    "evidence": "SOURCE_READ",
    "note": "",
    "cut_mode": "ANCESTRY_AWARE"
@@ -3818,6 +4250,30 @@
    "label": "feeds",
    "evidence": "SOURCE_READ",
    "note": "at the ply caps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "to": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the re-estimated model",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::viterbi_decoding_in_product_and_log_forms_with_backpointers_and_a_huge_negative_sentinel",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "posterior vs best path",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
