@@ -132,17 +132,512 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/baum.c:1-176"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/viterbi.c:1-144"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/forward.c:50-90"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/esthmm.c:25-160"
+   }
+  ],
+  "inspected_files": [
+   "baum.c 1-176",
+   "viterbi.c 1-144",
+   "forward.c 50-90",
+   "esthmm.c 25-160"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "the three HMM algorithms of Rabiner's tutorial in their plainest form: forward/backward with per-step scaling (so the log-likelihood is a sum of log scale factors), Baum-Welch re-estimation from gamma and xi with a floor of 0.001 on every re-estimated probability, iterated until the log-likelihood gain is below 0.001, and Viterbi in both product and log forms",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://github.com/palanceli/UMDHMM@08d73bc7f64a0e81074115f3ae211d1e28de3eeb",
+   "payload_manifest_id": "techne tree_sha256 56f67cde1a1e01748d49a39265d574ea7adb7eadb5963c35f53f32d2ef8d1753 (32 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/baum.c",
+     "payload_hash_read": "d560c0dd3c81aaa4d496a65990bf67a098522900a63d62360cd0c15df1b108bc",
+     "techne_recorded_hash": "d560c0dd3c81aaa4d496a65990bf67a098522900a63d62360cd0c15df1b108bc",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/viterbi.c",
+     "payload_hash_read": "479f5e6b5d4b8e157faad9e82ddb669f43e162aef88d6750825ea07c3513cd2a",
+     "techne_recorded_hash": "479f5e6b5d4b8e157faad9e82ddb669f43e162aef88d6750825ea07c3513cd2a",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/forward.c",
+     "payload_hash_read": "71f8bf6534d15642c98382565fa2e08c3ed73d41f846f8147c822f663334c165",
+     "techne_recorded_hash": "71f8bf6534d15642c98382565fa2e08c3ed73d41f846f8147c822f663334c165",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/esthmm.c",
+     "payload_hash_read": "368ffc9c7abbe3a1345601c99b5bfd0a407f4df89c2a9125a5b6792c8468c2b1",
+     "techne_recorded_hash": "368ffc9c7abbe3a1345601c99b5bfd0a407f4df89c2a9125a5b6792c8468c2b1",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "fossil_ancestry": "umdhmm-kanungo-1.02",
+   "human_name": "ForwardWithScale (forward.c 50-90): scale[t] = sum_i alpha[t][i]; alpha /= scale[t]; logprob = sum log scale[t]; BackwardWithScale uses the same scale",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each time step the forward variables are normalised to sum to one and the normaliser is stored; the backward pass divides by the same normalisers so gamma and xi come out correctly without underflow; the log-likelihood of the sequence is the sum of the logs of the normalisers",
+   "input": "an HMM (pi, A, B) and an observation sequence",
+   "output": "scaled alpha, beta, scale[], log P(O | model)",
+   "state": "none",
+   "update": "per sequence",
+   "assumptions": [
+    "unscaled alphas underflow after a few hundred steps in double precision; scaling by the column sum keeps every quantity O(1) (Rabiner 1989 section V.A)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+    "umdhmm-kanungo-1.02::viterbi_decoding_in_product_and_log_forms_with_backpointers_and_a_huge_negative_sentinel"
+   ],
+   "fitness_value_in_ancestor": "sequences of any length; the likelihood in log space for free",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rabiner 1989; Levinson, Rabiner & Sondhi 1983 for the scaling",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/forward.c:50-90"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two *WithScale functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "fossil_ancestry": "umdhmm-kanungo-1.02",
+   "human_name": "BaumWelch (baum.c 24-88): pi = .001 + .999 gamma[1]; A[i][j] = .001 + .999 sum xi / sum gamma; B[i][k] = .001 + .999 (sum gamma where O = k) / sum gamma; do ... while (delta > DELTA), DELTA 0.001; ComputeGamma / ComputeXi (89-140)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "from the scaled forward/backward pass compute gamma (state posterior per step) and xi (transition posterior per step); re-estimate the initial distribution, transitions and emissions as expected counts over expected occupancies; every re-estimated probability is a convex mix of the estimate (0.999) and a floor (0.001) so nothing becomes exactly zero; repeat while the log-likelihood improves by more than 0.001 nats; the initial model is random (InitHMM with a seed) or read from a file",
+   "input": "O, an initial model",
+   "output": "a model and the initial and final log-likelihoods",
+   "state": "the model; logprobprev",
+   "update": "per EM iteration",
+   "assumptions": [
+    "EM increases the likelihood monotonically (Baum et al. 1970); the floor prevents the well-known collapse where a zero probability can never recover"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors"
+   ],
+   "fitness_value_in_ancestor": "the reference re-estimator that toolkits cite; the floor is the implementation's practical addition",
+   "failure_landscape": "by reading: a single observation sequence only (no multiple-sequence training); the stopping rule is an absolute gain, not relative; local optima depend on the seed (the driver exposes the seed for that reason)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Baum et al. 1970; Rabiner 1989 equations 40a-c",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/baum.c:24-140"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "baum.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "umdhmm-kanungo-1.02::viterbi_decoding_in_product_and_log_forms_with_backpointers_and_a_huge_negative_sentinel",
+   "fossil_ancestry": "umdhmm-kanungo-1.02",
+   "human_name": "Viterbi (viterbi.c 20-72): delta[t][j] = max_i delta[t-1][i] A[i][j] times B[j][O[t]]; psi; backtrack q[t] = psi[t+1][q[t+1]]; ViterbiLog (73-144): the same over log pi, log A, log B[i][O[t]] precomputed as biot, with -VITHUGE (1e11) as minus infinity",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "dynamic programme over states: the best-path score to each state at t is the max over predecessors of the previous score times the transition, times the emission; the argmax is stored; the best final state is found and the path read back through the pointers; the log form replaces products by sums and precomputes the emission logs per step to avoid repeated log calls; a large negative constant stands in for log 0",
+   "input": "a model and O",
+   "output": "the most likely state sequence and its (log) probability",
+   "state": "delta, psi (T x N)",
+   "update": "per sequence",
+   "assumptions": [
+    "the log form is needed for the same underflow reason as scaling; the product form is kept for short sequences"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors"
+   ],
+   "fitness_value_in_ancestor": "decoding in O(T N^2)",
+   "failure_landscape": "by reading: the log form takes log of zero-probability entries without a guard (log(0) = -inf in C, which happens to work), and the sentinel 1e11 is finite",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Viterbi 1967; Forney 1973; Rabiner 1989",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:umdhmm-kanungo-1.02/upstream/tree/viterbi.c:20-144"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "viterbi.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "hmmutils.c (reading and printing models), sequence.c, genseq.c (sampling a sequence from a model), nrutil.c (Numerical Recipes allocation), backward.c (the mirror of forward.c), the test drivers",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "NOT READ in full; I/O and allocation",
+   "note": "genseq is the natural cheat-control generator for a Stage C world (sample from a known model, re-estimate, compare)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "umdhmm-kanungo-1.02"
+  },
+  {
+   "candidate": "'HMM' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "scaling, re-estimation and decoding are three files with three separable algorithms; the atlas's viterbi-hmm-xukmin turned out to hold only a convolutional decoder, so this is the atlas's first true Viterbi-over-HMM",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "umdhmm-kanungo-1.02"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "umdhmm-kanungo-1.02::P.a_hidden_markov_model_must_be_learned_from_one_long_observation_sequence_and_decoded_without_underflow_when_zero_probabilities_are_absorbing_and_the_likelihood_surface_has_local_optima",
+   "source_fossil": "umdhmm-kanungo-1.02",
+   "source_evidence": "baum.c; forward.c scaling; esthmm.c seed handling; genseq.c as generator",
+   "condition": "an organism sees a discrete observation sequence generated by an unknown HMM with N states and M symbols; it must estimate the model and decode states; sequences are long (thousands of steps); the score is held-out log-likelihood and decoding accuracy against the generating model",
+   "resource_or_constraint": "O(T N^2) per iteration; double precision",
+   "failure_condition": "underflow to zero likelihood, a parameter stuck at exactly zero, or convergence to a poor local optimum",
+   "world_punishes": "unscaled recursions; unfloored re-estimation; a single random start",
+   "world_rewards": "scaling, a probability floor, restarts over seeds",
+   "observable_consequence": "held-out log-likelihood and state accuracy vs T for scaled vs unscaled recursions, and the fraction of seeds reaching within 1 percent of the generating model's likelihood with and without the floor",
+   "vacuity_condition": "a one-state model",
+   "trivial_shortcuts": "the generating model as the initial model (which the cheat control uses)",
+   "cheat_control": "an organism initialised at the generating model must not move (one iteration, gain below DELTA); the unscaled recursion must return zero likelihood past a few hundred steps; the unfloored re-estimator must lock a zero on a sequence missing one symbol: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: HMM estimation and decoding (Kanungo 1998 after Rabiner 1989)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "to": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the re-estimated model",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::viterbi_decoding_in_product_and_log_forms_with_backpointers_and_a_huge_negative_sentinel",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "posterior vs best path",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "umdhmm-kanungo-1.02",
@@ -157,10 +652,22 @@
    "to": "viterbi-hmm-xukmin",
    "note": "HMM decode-only vs decode+train",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "algorithm_from",
+   "to": "Baum et al. 1970; Viterbi 1967; Rabiner 1989 (the tutorial this code implements section by section)",
+   "note": "from the source headers and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "backward.c and the I/O unread (mirrors and plumbing)",
+   "nothing ran; the body ships test models and sequences (test.hmm, t2.*.seq) as an oracle"
+  ],
+  "note": "a small body fully accounted for; the record's 'complements the vault's viterbi-hmm-xukmin' is corrected: that body is a convolutional decoder, this one is the HMM",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

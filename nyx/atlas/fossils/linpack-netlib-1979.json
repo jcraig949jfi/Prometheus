@@ -150,16 +150,215 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpack-netlib-1979/upstream/daxpy.f:1-60"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpack-netlib-1979/upstream/dgefa.f:1-40"
+   }
+  ],
+  "inspected_files": [
+   "file list (7 files)",
+   "daxpy.f 1-60",
+   "dgefa.f 1-40",
+   "linpackd.f identity check against linpackd-netlib-1979"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "the body duplicates the linpackd-netlib-1979 body (same linpackd.f, byte for byte) and adds the six kernels as separate files; it does NOT contain the LINPACK library (dgeco, dpofa, dqrdc, dsvdc, ...) that its record's lineage describes. The one thing this body shows that the benchmark cut rejected as below grain is the kernel INTERFACE as a separately compiled, stride-parameterised unit: that is recorded here as the single organ; everything else is the other cut's",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.netlib.org/benchmark/linpackd sha256:4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5; https://www.netlib.org/linpack/dgefa.f sha256:764bd0a87dba77464eeac5c232a264b9de0aee192c8db152799b939579d95317; https://www.netlib.org/linpack/dgesl.f sha256:2ef2289c6cb929825fff0fc9a9fd57c556c3cde97b21351cfdff140be645fbda; https://www.netlib.org/blas/daxpy.f sha256:1e29c2ea939058958773c23a1c8e034d47621c316806d4b8bb052b5a0b69069a; https://www.netlib.org/blas/dscal.f sha256:3983f576bcd20eec2a70c07b3411a5d91afafae012c23768b8edd77be10ea67a; https://www.netlib.org/blas/ddot.f sha256:92f3260e061ae7e5ecc59bdb16ca3eaea29e777c8c7d2635530cde561d4daeb1; https://www.netlib.org/blas/idamax.f sha256:533abe15ac6ee2b463b241dc55b03b81324bd112844d1cf3d852840aa7d72c4c",
+   "payload_manifest_id": "techne tree_sha256 cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf (7 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/daxpy.f",
+     "payload_hash_read": "1e29c2ea939058958773c23a1c8e034d47621c316806d4b8bb052b5a0b69069a",
+     "techne_recorded_hash": "1e29c2ea939058958773c23a1c8e034d47621c316806d4b8bb052b5a0b69069a",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/dgefa.f",
+     "payload_hash_read": "764bd0a87dba77464eeac5c232a264b9de0aee192c8db152799b939579d95317",
+     "techne_recorded_hash": "764bd0a87dba77464eeac5c232a264b9de0aee192c8db152799b939579d95317",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
+ "organs": [
+  {
+   "organ_id": "linpack-netlib-1979::vector_kernels_as_separately_compiled_routines_with_a_count_and_two_strides_so_the_factorisation_never_touches_a_matrix_element_directly",
+   "fossil_ancestry": "linpack-netlib-1979",
+   "human_name": "daxpy(n, da, dx, incx, dy, incy), ddot, dscal(n, da, dx, incx), idamax(n, dx, incx) as their own files; dgefa's inner loop written entirely as calls to them",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each kernel takes a length, pointers to the first elements and a stride per vector; the unit-stride case is unrolled by four (daxpy) or five (ddot) with a clean-up loop, the general case loops with the strides; the factorisation (dgefa) expresses the pivot search, the scaling of the multipliers and the rank-one update per column as one call each, so a vendor can replace the six files with hand-tuned versions and the factorisation is unchanged",
+   "input": "n, scalars, arrays, strides",
+   "output": "updated vectors",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "the performance-critical work is in a handful of vector operations; an interface with explicit strides is enough for column and row access in Fortran storage"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "the BLAS-1 idea: a hardware/software contract that let LINPACK run near peak on the vector machines of 1979 without changing the numerical code",
+   "failure_landscape": "by reading: level-1 kernels are memory-bound on cache machines (the reason LAPACK moved to level-3 BLAS; the record says so)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Lawson, Hanson, Kincaid & Krogh 1979 (BLAS); Dongarra et al. 1979",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpack-netlib-1979/upstream/daxpy.f:1-60; vault:linpack-netlib-1979/upstream/dgefa.f:1-40"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the six kernel files and their call sites in dgefa/dgesl",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "linpackd.f (the benchmark driver, dgefa, dgesl, matgen, epslon, dmxpy)",
+   "reason": "OTHER",
+   "evidence": "byte-identical to linpackd-netlib-1979's body (md5 e43e84f43cb4997c0c3996c7d673cb3c); cut there (DEEP, two organs)",
+   "note": "DUPLICATE BODY: record defect for Techne -- two specimens carry the same file; the record's lineage describes the library (dgeco, dpofa, dqrdc, dsvdc) which is absent from the body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpack-netlib-1979"
+  },
+  {
+   "candidate": "'LINPACK the library' as described by the record",
+   "reason": "OTHER",
+   "evidence": "not in the body: only dgefa/dgesl of the ~40 LINPACK routines are present",
+   "note": "the cut records the body, not the record",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpack-netlib-1979"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "linpack-netlib-1979::P.dense_linear_algebra_must_run_near_peak_on_machines_whose_fast_paths_differ_while_the_numerical_code_stays_portable_and_verifiable",
+   "source_fossil": "linpack-netlib-1979",
+   "source_evidence": "the six kernel files; dgefa's call structure",
+   "condition": "an organism factorises matrices on several machine families with different vector hardware; the numerical algorithm must be identical across them (verifiable by residual); each machine's peak is reachable only through its own idioms",
+   "resource_or_constraint": "a fixed, small interface between the algorithm and the machine",
+   "failure_condition": "portable code that runs far below peak, or fast code that differs numerically per machine",
+   "world_punishes": "inlining the loops into the factorisation; interfaces without strides",
+   "world_rewards": "a small set of stride-parameterised kernels with reference implementations",
+   "observable_consequence": "fraction of peak achieved with reference kernels vs tuned kernels, with the residual identical",
+   "vacuity_condition": "one machine",
+   "trivial_shortcuts": "a machine-specific rewrite of the whole factorisation (which the verifiability score punishes)",
+   "cheat_control": "an organism with tuned kernels must show the same residual as the reference within round-off and a higher fraction of peak; the inlined factorisation must be no faster than the reference kernels and unverifiable across machines: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: portable performance for dense linear algebra (Dongarra et al. 1979)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "composition_edges": [],
  "ancestry_edges": [
   {
@@ -175,10 +374,23 @@
    "to": "fftpack-netlib",
    "note": "both netlib Fortran numerical libraries of the same era",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "linpackd-netlib-1979 (in this atlas): the same driver file; the six kernels are the BLAS-1 of Lawson et al. 1979",
+   "note": "by md5 comparison of linpackd.f and the file headers",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing further to read: the body is the other cut's file plus six kernel files",
+   "record defect: duplicate body and a lineage describing an absent library",
+   "nothing ran"
+  ],
+  "note": "one organ (the interface) that the benchmark cut had folded into its rejects; recorded here so the census counts the specimen without double-counting the factorisation",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
