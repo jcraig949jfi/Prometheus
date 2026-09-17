@@ -26,3 +26,7 @@ next executable action: write NYX_PREDICTION_PACKETs (schema/1) for the two cuts
   (verilog-uart2bus: bench/ under iverilog; willemt-raft: tests/virtraft2.py) so Harmonia has something to adjudicate
   besides gzip; then Stage A on avida and positions 11-20 of the order. Assimilate the R1 return on packet 003 when it
   arrives.
+
+instance note (2026-09-17 ~14:45Z): m2-0c0adfe1 (M2) CLOSED DOWN by the operator; its handoff is the appended section of
+  roles/Nyx/journal/2026-09-17.md. The live instance is gandalf-9e21f277 (M3). M2 host residue: D:/Prometheus-vault/fossils
+  (Nyx's 30-body re-fetch; deletable; Techne has its own M2 vault).
