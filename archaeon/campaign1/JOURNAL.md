@@ -108,3 +108,12 @@ plus rows/receipts). Every timestamp UTC.
   floor (0/3 each) while ancestors L2/L3 seed footholds (1/3 each, gens
   39/11): the whole failed genotype is the search material, not its
   2-4-instruction organs. Ledger L-027. Next: SFE-09.
+
+## 05:25-05:55 -- SFE-09 (one engine attempt; INCONCLUSIVE)
+
+- 73 s; engine 0 errors (1 world, representation descriptor artifact, 18
+  experiments + 18 observations). No representation reached the reachable
+  control cell (0/3 x 3); the baseline solved the 'stuck' cell once
+  (seed 1, gen 52); B/C 0/6. Positive control failed -> INCONCLUSIVE;
+  'stuck' is 1/12 pooled. Ledger L-028, L-029; L-017 recurrence 1.
+  Next: SFE-10.
