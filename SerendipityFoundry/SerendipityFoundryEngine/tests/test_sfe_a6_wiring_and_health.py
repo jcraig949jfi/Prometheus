@@ -106,7 +106,6 @@ def test_lock_timeout_is_refused_in_the_journal_and_leaves_the_ledger_alone(app,
         orig(self, db_path, timeout=timeout)
 
     Store.__init__ = fast
-    a.state.foundry_generation += 1      # 9.0.1: worker threads keep their Store; make the next request reopen
     try:
         cx = sqlite3.connect(str(tmp_path / "w.db"))
         before = cx.execute("SELECT COUNT(*) FROM events").fetchone()[0]

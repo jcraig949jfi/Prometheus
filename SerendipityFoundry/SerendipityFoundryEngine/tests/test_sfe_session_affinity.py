@@ -263,14 +263,7 @@ def test_K_restore_keeps_identity_and_keys(m1):
     s, hs = _session(c, h)
     wid = _world(c, hs, s["session_id"])
     restored = os.path.join(tempfile.mkdtemp(), "restored.db")
-    # 9.0.1: worker threads keep their SQLite handle open, so recent writes
-    # live in engine.db-wal until the autocheckpoint. A plain file copy of
-    # engine.db is NOT a complete backup any more (it was only ever complete
-    # by accident of the per-request close). The SQLite backup API is the
-    # documented method (deploy/release_v9.py preflight uses it).
-    import sqlite3 as _sq
-    src, dst = _sq.connect(db), _sq.connect(restored)
-    src.backup(dst); dst.close(); src.close()
+    shutil.copy(db, restored)
     c3 = TestClient(create_app(restored))
     assert c3.get("/v2/worlds/%s/status" % wid, headers=hs).status_code == 200
     # ...and the restored copy reports the SAME instance id (the clone hazard,
