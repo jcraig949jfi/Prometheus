@@ -55,3 +55,23 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   at G60 only (L3-013 -> C3-SFE-04 runs it at matched budget). L3-011..013.
 - C3-SFE-09 dry run fixed (ClampedCA clamp-set bug). C3-SFE-10 harness
   written (dose x quality x cap on W1_d4; permuted-block matched control).
+
+## 09:05-10:35 -- C3-SFE-10 (dry a01/a02; a03 engine 403; a04 of record; CAPABLE_NEGATIVE: takeover is mechanics, not capability)
+
+- Reconnaissance first (6 runs x 20 generations): mature dose 1 of 200 takes
+  over by generation 4-5, so the DOSE ladder could not be the ecological
+  control parameter. Design changed before sealing: cap ladder added
+  (none / 0.25 / 0.05), doses 0/1/4/32, qualities mature / permuted control.
+- a03 died on an engine 403: an ISOLATED world cannot import from itself.
+  Publish-then-fetch gives the same read-back guarantee (L3-015, B4).
+- a04: 1512 s; 228 runs, 228 records, 228 reach rows, 0 errors. Primary
+  (mature vs permuted control on takeover, dose 4, no cap) 12/12 vs 12/12,
+  effect 0.0: the preregistered falsification fired. Cap 0.05 delays
+  takeover to generations 15-57 and is the only setting leaving resident
+  lineages alive; nothing prevents takeover. Origin takeover is NOT clonal
+  collapse (distinct genomes 0.78-0.99). L3-015..017.
+- Machine: evaluate(reward_mode) all-or-nothing episode credit added for the
+  C3-SFE-08 replacement; ladder hold wired into C3-SFE-05; harnesses for
+  slots 4, 7, 8 written and dry-run. D3-014..D3-020 recorded (D3-020: the
+  slots run in DEPENDENCY order, each sealed before its own run).
+- Next: C3-SFE-04 (corridor map) running.

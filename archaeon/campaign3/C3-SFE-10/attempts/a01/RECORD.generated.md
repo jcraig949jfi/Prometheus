@@ -1,0 +1,128 @@
+# C3-SFE-10 -- import takeover / dose ecology
+
+## A. STARTUP (preregistration; sealed sha256:8b15b3c9e0f2ac7d0120bbb189d8c8b92a028b8f2e5d2ff5025a1734bf7a25eb)
+
+- experiment ID: C3-SFE-10
+- parents: C2-SFE-01, C3-SFE-01, C3-SFE-03
+- QUESTION: When mature W0-general solvers or matched permuted controls are injected at generation 0 into a fresh W1_d4 population (N=60) at doses [0, 4], with and without the offspring cap (0.25), when does the import take over (share >= 0.9), do resident lineages survive, and is the takeover explained by capability (mature only) or by injection mechanics (control too)?
+- PARENT EVIDENCE: C2-SFE-01: transported material took the population over while the treatment hurt (-0.16). C3-SFE-01 shelf arm: dose 4 of shelf organisms reached import share 1.0 in 12/12 seeds by G300 with the cap off. C3-SFE-03: 7 W0-general elites with held-out 1.0 on every rung (the mature material). Mature direct competence on W1_d4 (held-out 48 episodes): [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; permuted controls: [0.125, 0.0, 0.0208, 0.0, 0.0208, 0.0, 0.125]. Reconnaissance: none recorded
+- WHY THIS SLOT IS STILL WORTH SPENDING: every later experiment that injects organisms needs the dose at which 'transfer' becomes population replacement, and whether the replacement is driven by the material's competence or by the injection mechanics; neither number exists.
+- ASSAY CAPABILITY REQUIREMENT: the mature material must be mature (source solved, held-out >= 0.9 on W0) and directly competent on the target (>= 0.5 held-out) else IMMATURE_ARTIFACT / INTERVENTION_NOT_APPLIED; controls must score < 0.25
+- POSITIVE CONTROL: the takeover-prone dose (4, mature, no cap) reaches import share >= 0.9 within 12 generations in >= 8 of 2 seeds
+- REACHABILITY ESTIMATE:
+    {"W0": {"at_budget": {"band95": [0.0, 1.0], "class": "UNESTABLISHED", "class_summit": "UNESTABLISHED", "first_shelf_gens": [], "first_solved_gens": [], "first_summit_gens": [], "freq": null, "freq_shelf": null, "freq_summit": null, "k": 0, "k_shelf": 0, "k_summit": 0, "k_summit_any": null, "k_summit_candidate": null, "levels": {"FLOOR": 0, "SHELF": 0, "SUMMIT": 0}, "n": 0, "n_censored_runs": null, "shelf_hist": {}}, "foundry": "instr1-16:6528b9dc", "pooled_any_budget": {"budgets": [[200, 4, 16], [200, 16, 16], [200, 18, 16], [200, 19, 16], [200, 20, 16], [200, 21, 16], [200, 22, 16], [200, 23, 16], [200, 24, 16], [200, 30, 16], [200, 31, 16], [200, 35, 16], [200, 60, 16], [200, 100, 16]], "class": "REACHABLE", "class_summit": "REACHABLE", "freq": 0.619, "k": 13, "k_summit": 0, "k_summit_any": 13, "n": 21}}, "W1_d4": {"at_budget": {"band95": [0.0, 1.0], "class": "UNESTABLISHED", "class_summit": "UNESTABLISHED", "first_shelf_gens": [], "first_solved_gens": [], "first_summit_gens": [], "freq": null, "freq_shelf": null, "freq_summit": null, "k": 0, "k_shelf": 0, "k_summit": 0, "k_summit_any": null, "k_summit_candidate": null, "levels": {"FLOOR": 0, "SHELF": 0, "SUMMIT": 0}, "n": 0, "n_censored_runs": null, "shelf_hist": {}}, "foundry": "instr1-16:6528b9dc", "pooled_any_budget": {"budgets": [[200, 60, 16]], "class": "RARE", "class_summit": "RARE", "freq": 0.0714, "k": 1, "k_summit": 1, "k_summit_any": 1, "n": 14}}}
+- ARMS:
+    - none_d0_nocap
+    - mature_d4_nocap
+    - mature_d4_cap
+    - control_d4_nocap
+    - control_d4_cap
+- COMMON-RANDOM-NUMBERS POLICY: default; every arm of a seed shares generation 0 (common fill; the import REPLACES the worst-scored members after the first evaluation) and the per-generation episode batteries; the cap redraws the primary parent among residents beyond 0.25 of the children
+- BUDGET:
+    {"E": 16, "G": 12, "N": 60, "caps": [0.0, 0.25], "doses": [0, 4], "mature_sources": 7, "qualities": ["mature", "control"], "runs": 10, "seeds": [1, 2], "target": {"D": 1, "K": 1, "Kd": 0, "ask_kind": "ASK", "ask_mode": "all", "ask_timing": "end", "delay": 4, "delays": [], "expensive": 0, "fanout": 1, "interfere": false, "interleave": "sequential", "n_defs": 0, "name": "W1_d4", "noise_rate": 0.0, "op_mode": "fixed", "recycle": false, "retire_rate": 0.0, "topology": "streams", "value_bits": 4, "vocab": "train"}}
+- PRIMARY OBSERVABLE: takeover (import share >= 0.9 by G) and takeover_gen per run, as a function of dose x quality x cap; the declared machine contrast is mature vs control at dose 4 without the cap
+- CLAIM CEILING: an ecological reading of THIS loop (tournament 4, elitism 4, N=60): the dose above which foreign lineage replaces the population, and whether the replacement needs competence; no claim about transfer value
+- FALSIFICATION CONDITION: if the permuted control takes over at the same doses as the mature material, capability does not drive takeover: injection mechanics do (the C2 'transport hurts yet takes over' reading is mechanics); if neither takes over below dose 4, injection is ecologically safe at small doses and campaign-2 takeovers were dose effects
+- KILL CONDITION: the mature material is not directly competent on W1_d4 (held-out < 0.5): the source is not 'mature relevant' and the slot must use another source
+- TYPED FAILURE CONDITIONS:
+    - IMMATURE_ARTIFACT
+    - INTERVENTION_NOT_APPLIED
+    - POSITIVE_CONTROL_FAILED
+    - UNDERPOWERED
+    - ENGINE_FAILURE / INSTRUMENT_FAILURE
+- EXPECTED MACHINE TELEMETRY:
+    - import / pure-resident / hybrid share per generation
+    - distinct-genome share per generation
+    - takeover and half-takeover generations
+    - resident best reward at the end
+    - elite origin
+    - target held-out competence and levels
+    - reachability rows (treated)
+- MACHINE CHANGES EXERCISED:
+    - F inject + offspring_cap
+    - origin shares per generation
+    - levels + held-out
+    - reachability rows
+- REPLACEMENT CONDITION: none: the slot is a replacement itself (failed-fragment transfer retired); it is moot only if no mature source exists
+- ANCESTRY (original | replacement): replacement (queue slot 10; the retired failed-material-transfer programme)
+- decl (machine-read by archaeon.wse.states): {"battery": [{"name": "control_takeover_at_mid_dose_below_half", "passed": null}, {"name": "mature_takeover_monotone_in_dose", "passed": null}, {"name": "cap_slows_takeover", "passed": null}], "n_min": 2, "positive_control": {"arm": "mature_d4_nocap", "metric": "takeover", "min": 1, "min_rows": 8}, "primary": {"control": "control_d4_nocap", "metric": "takeover", "min_effect": 0.5, "treatment": "mature_d4_nocap"}}
+
+## B. EXECUTION (generated from receipts)
+
+- attempts: 1 (of record: a00); resumed_from: None; replayed steps on the attempt of record: 0
+    a01  errors=0 replayed=0 engine=False purpose=dry run disposition_candidate=POSITIVE_CONTROL_FAILED
+- engine: dry-run; worlds 0; artifacts 0; imports 0; records 0; errors 0
+- timings (s): ecology_s=3.84, records_s=0.0, total_s=4.0
+- decisions: D3-014: the matched control is the SAME instruction blocks permuted (length, opcode multiset, operands and VM knobs preserved; competence removed, verified < 0.25 held-out), D3-015: injection at generation 0 after the first evaluation (inject replaces the worst-scored residents); the cap arm uses offspring_cap=0.25 on the 'import' origin
+- warnings from the loop: []
+
+## C. SCIENCE (numbers generated from rows; interpretation in the addendum)
+
+- primary table:
+    arm / takeover              s1      s2    mean    n
+    control_d4_cap               1       1   1.000    2
+    control_d4_nocap             1       1   1.000    2
+    mature_d4_cap                1       1   1.000    2
+    mature_d4_nocap              1       1   1.000    2
+    none_d0_nocap                0       0   0.000    2
+
+    arm / takeover_gen          s1      s2    mean    n
+    control_d4_cap               7      11   9.000    2
+    control_d4_nocap             3       6   4.500    2
+    mature_d4_cap                3       3   3.000    2
+    mature_d4_nocap              2       2   2.000    2
+    none_d0_nocap                -       -       -    0
+
+    arm / pure_resident_final      s1      s2    mean    n
+    control_d4_cap           0.017   0.100   0.058    2
+    control_d4_nocap         0.000   0.000   0.000    2
+    mature_d4_cap            0.000   0.000   0.000    2
+    mature_d4_nocap          0.000   0.000   0.000    2
+    none_d0_nocap            1.000   1.000   1.000    2
+
+    arm / competence_heldout      s1      s2    mean    n
+    control_d4_cap           0.042   0.125   0.083    2
+    control_d4_nocap         0.146   0.125   0.135    2
+    mature_d4_cap            1.000   1.000   1.000    2
+    mature_d4_nocap          1.000   1.000   1.000    2
+    none_d0_nocap            0.042   0.021   0.031    2
+
+    arm / distinct_min          s1      s2    mean    n
+    control_d4_cap           0.867   0.717   0.792    2
+    control_d4_nocap         0.883   0.833   0.858    2
+    mature_d4_cap            0.783   0.650   0.717    2
+    mature_d4_nocap          0.917   0.967   0.942    2
+    none_d0_nocap            0.933   0.917   0.925    2
+
+    arm / elite_import_final      s1      s2    mean    n
+    control_d4_cap               1       1   1.000    2
+    control_d4_nocap             1       1   1.000    2
+    mature_d4_cap                1       1   1.000    2
+    mature_d4_nocap              1       1   1.000    2
+    none_d0_nocap                0       0   0.000    2
+
+- typed states fired: ['POSITIVE_CONTROL_FAILED']
+    POSITIVE_CONTROL_FAILED  {"arm": "mature_d4_nocap", "metric": "takeover", "min": 1, "rows": 2, "rows_meeting": 2, "values": [1, 1]}
+- disposition candidate (machine): POSITIVE_CONTROL_FAILED -- assay precondition failed; the scientific question was not posed
+- claim ceiling (machine): none; preregistered ceiling: an ecological reading of THIS loop (tournament 4, elitism 4, N=60): the dose above which foreign lineage replaces the population, and whether the replacement needs competence; no claim about transfer value
+
+### C-addendum (agent interpretation; quotes the candidate, may argue with it)
+
+(none)
+
+## D. TEARDOWN (generated)
+
+- worlds: none (dry run)
+- all TERMINATED: n/a
+
+## E. BENCH IMPROVEMENT
+
+- ledger candidates (generated): see LEDGER.jsonl entries tagged C3-SFE-10
+
+(none)
+
+## F. LANDSCAPE / GRADIENT NOTES
+
+(none)
+
+DISPOSITION: POSITIVE_CONTROL_FAILED (machine candidate POSITIVE_CONTROL_FAILED). 
