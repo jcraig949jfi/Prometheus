@@ -76,6 +76,10 @@ class Lat:
         return out
 
 
+INFLIGHT = {}            # thread ident -> (route, start_time); read by the stall watchdog
+INFLIGHT_LOCK = threading.Lock()
+
+
 class TimedApi(Api):
     def __init__(self, base, lat, t_origin):
         super().__init__(base)
@@ -88,9 +92,41 @@ class TimedApi(Api):
             if seg.startswith(("wld_", "exp_", "obs_", "sha256:", "ckp_", "wrk_")):
                 route = route.replace(seg, "{id}")
         t = time.time()
-        st, out = super().req(method, path, body, headers, timeout)
+        me = threading.get_ident()
+        with INFLIGHT_LOCK:
+            INFLIGHT[me] = (route, t)
+        try:
+            st, out = super().req(method, path, body, headers, timeout)
+        finally:
+            with INFLIGHT_LOCK:
+                INFLIGHT.pop(me, None)
         self.lat.add(route, t - self.t_origin, time.time() - t, st)
         return st, out
+
+
+def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
+    """When any client request has been in flight longer than threshold_s,
+    capture the ENGINE's thread stacks with py-spy (if installed) so a stall
+    is diagnosed from the server side, not guessed from the client side."""
+    import shutil as _sh
+    spy = _sh.which("py-spy") or os.path.join(os.path.dirname(sys.executable), "py-spy.exe")
+    dumps = []
+    last = 0.0
+    while not stop.is_set():
+        now = time.time()
+        with INFLIGHT_LOCK:
+            slow = [(r, now - t0) for (r, t0) in INFLIGHT.values() if now - t0 > threshold_s]
+        if slow and now - last > threshold_s and len(dumps) < max_dumps and os.path.exists(spy):
+            last = now
+            try:
+                out = subprocess.run([spy, "dump", "--pid", str(pid)], capture_output=True, text=True, timeout=20).stdout
+            except Exception as e:                                   # noqa: BLE001
+                out = "py-spy failed: %r" % e
+            # keep only the engine frames + thread headers
+            keep = [ln for ln in out.splitlines() if ln.startswith("Thread") or "sfe\\" in ln or "sfe/" in ln or "sqlite" in ln.lower()]
+            dumps.append({"t": round(now, 1), "inflight": slow, "stack": keep[:60]})
+        stop.wait(0.5)
+    rec["stall_dumps"] = dumps
 
 
 def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_every=100):
@@ -212,6 +248,8 @@ def main():
     sstop = threading.Event()
     sth = threading.Thread(target=wal_sampler, args=(db, sapi, sstop, rec), daemon=True)
     sth.start()
+    wth = threading.Thread(target=stall_watchdog, args=(proc.pid, sstop, rec), daemon=True)
+    wth.start()
     failures = []
     def _guard(fn):
         def run(*args):

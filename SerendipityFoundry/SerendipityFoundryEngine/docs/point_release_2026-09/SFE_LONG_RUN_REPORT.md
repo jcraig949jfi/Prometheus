@@ -351,3 +351,29 @@
     NOT done, by order: no storage-engine change; no generalised high-
     concurrency guarantee beyond the three declared regimes; no retention
     change. D16 (idempotency keys on the remaining routes) still deferred.
+
+=======================================================================
+10. 2026-09-17 14:4xZ -- run-to-run VARIANCE on the same code; the machine is shared
+=======================================================================
+
+    v3 (build d4b8283c = v2 + Idempotency-Key on import; the checkpointer
+    and pool byte-identical to v2's) at 14:30-14:44Z:
+      R1 0 stalls; R2 NINE stalls 6-12 s (write-lock max wait 12.3 s);
+      R3 two stalls of 15.7 s (lock max 15.75 s). WAL in R2 stayed SMALL
+      (10-30 MB), so the v1 "big backfill" mechanism does not explain v3.
+    What was different: Vivarium's production window ran on this machine
+    at the same time (83 events on 8811 between 14:33 and 14:41Z, plus its
+    migration I/O), and Windows Defender (MsMpEng) had consumed 5,190 CPU-
+    seconds -- more than any other process -- with NO path exclusions
+    configured: every WAL append, checkpoint backfill and blob write on
+    D:\Prometheus-data\sfe (production) and the scratch dir is scanned in
+    real time.
+    A write-lock wait of 12-15 s means one writer's transaction took that
+    long; inside a transaction the only slow thing is I/O. Concurrent disk
+    load from another process plus real-time scanning of the files being
+    written is the candidate; the v2 runs (0/0/0) happened in a quieter
+    window. Being measured now: R2 again with a py-spy stall watchdog
+    (engine stacks captured whenever a request exceeds 4 s), first WITHOUT
+    and then WITH a Defender path exclusion on the two data directories.
+    Receipts: accept901_v3_d4b8283c_contended/ (the variance run),
+    accept901/ (the diagnosed runs).
