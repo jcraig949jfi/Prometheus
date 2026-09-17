@@ -1,0 +1,256 @@
+================================================================================
+REVIEW PACKET -- Topology ruling, first M3-runnable prediction packet, and
+Stage A positions 7 + 11-20 -- Nyx (Chop Shop), 2026-09-17 (second packet)
+Commits of record: 5f07df17a (packet 001 + posts), a1eca3d35 (merge of the
+M2 instance's close-down), f6663cda8 (batch 2), cdba4a7cd (on origin/main),
+and the 002 commit named in the closing recap
+Author: Nyx, instance gandalf-9e21f277, model claude-fable-5-1
+Invoked by: operator, "Can you reach the Redis comms channel?" and "All 3
+will run here as Nyx M3, Harmonia F, Techne M3"
+================================================================================
+
+0. WHAT THIS PACKET IS
+   The second block of the day: a measured answer to the comms question,
+   the operator's topology ruling and its consequence (what M3 can run),
+   the first prediction packet whose world executes on M3, two deliveries
+   (Harmonia, Techne), and nine more source-reading dissections. Nothing
+   adjudicative ran. Conflict of interest, declared: the author wrote the
+   packet, chose the fossil because it was the only one that would run
+   here, and wrote this report. Harmonia RAN the packet on M3 within two
+   ticks (#360 ACK, #363 DISPOSITION) and returned PREDICTION_INDETERMINATE
+   plus a challenge on my positive-control band; packet 002 answers it.
+
+1. CONTEXT
+   The pipeline is Techne (preserves code) -> Nyx (decomposes it into
+   organs and pressures) -> Harmonia (adjudicates prediction packets by
+   running the body) -> experiments downstream. Until today its seats ran
+   on M1/M2 where docker fossil worlds exist. The operator moved all
+   three to M3 (this host). M3 has virtualization off in firmware: no
+   WSL2, Docker Desktop cannot start, no C compiler, no iverilog. The
+   comms question was whether a Redis channel is reachable; the answer
+   changes nothing about the pipeline but records what exists.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+   (a) "Can you reach the Redis comms channel?" (operator, verbatim).
+   (b) Given the topology ruling, what can Harmonia adjudicate on M3, and
+       what packet should Nyx hand it first? (derived by Nyx)
+   (c) Amendment 3 N1: continue Stage A on the NOT_CUT population.
+
+3. WHAT WAS DONE, STEP BY STEP
+   a. Redis census from M3 [E3]: 192.168.1.202:6379 (M1) answers PING
+      with the stored password; Redis 7.0.15 under WSL2, up 2 days;
+      268,047 keys, prefixes landscape/graph/bridges/bridge (Arachne's
+      data). Agora streams exist and are dead: agora:main 492 entries,
+      last 2026-05-20 03:44Z; agora:harmonia_sync last 2026-05-05; 17
+      agent:* hashes with May heartbeats. 192.168.1.176 (the AGORA_* env
+      vars on this box) times out. The live channel is the Postgres
+      comms queue on 192.168.1.202:5432 (base role, 2026-09-11).
+   b. Topology ruling transcribed verbatim with a MANIFEST
+      (roles/Nyx/prompts/2026-09-17_topology_m3/). [E3]
+   c. M3 execution census [E3]: which iverilog/vvp/verilator/gcc/make ->
+      none; the raft simulator needs cffi + a compiler; uart2bus needs
+      iverilog; particles-chopin-0.4 imports from the vault body in
+      3.9 s and a 50-step bootstrap filter runs (SCOUT, labelled
+      NON-ADJUDICATIVE; no number reused).
+   d. Packet MECH-PARTICLES-ESSTRIGGER-001 written, validated against
+      schema nyx.prediction_packet/1, frozen: sha256
+      5b8d6ae4908abb3b4473a106a741563663006a7236e52cd248293bbbb4bc4c47.
+      Six boundary regions on two payload hashes; claim: the ESS < N *
+      ESSrmin predicate at core.py:181-183 is the only resampling gate;
+      I0-I3 with bands; cheat / positive / negative controls; CUT_KILL;
+      INDETERMINATE (I3 declared underpowered at 50 seeds). [E3]
+   e. Found while writing it: the cut's residue said the trigger default
+      "lives in the model classes, not read"; it is core.py:264
+      (ESSrmin = 0.5) and :181-183. Annotated, not rewritten; fossil
+      re-saved. A second copy of the predicate at smc_samplers.py:761 is
+      recorded as outside the boundary. [E3]
+   f. Posted: #357 delegation to Harmonia (the packet; R31 return
+      required); #358 report to Techne (M3 census; ASK 1: an R36
+      identity for an M3-native python world; ASK 2: grades for
+      HISTORICAL_ARCHIVE_MIRROR; bodies receipt). [E3]
+   g. Merge conflict with the M2 instance's close-down (it had appended
+      to the same journal and STATUS): its section split out verbatim as
+      journal/2026-09-17_m2-0c0adfe1.md; first resolution was wrong
+      (copied the whole merged file), corrected in a follow-up commit.
+   h. Harmonia[gandalf-6cd1348b] booted on M3 (boot notice #359): R1 open
+      on gzip 003, "execution NOT here", nothing asked of Nyx. [E3]
+   i. Bodies for positions 11-20 rematerialised, 10/10 MATCH (receipt
+      now n=20, 20 MATCH). Nine cuts: avida (position 7) and positions
+      11, 12, 14, 15, 16, 17, 19, 20. Positions 13 (valgrind fixtures)
+      and 18 (souffle) deferred: large bodies. [E3]
+   j. Resolver fix: evidence refs of the form "file.c:symbol, symbol"
+      were reported unresolved; migrate_v1.split_ref now strips them;
+      affected cuts re-saved; 0 unresolved. [E3]
+   k. Validator 121/0; nyx/tests 21 passed on every merged tree; pushed
+      three times against a moving main; cdba4a7cd verified as an
+      ancestor of origin/main. [E3]
+   l. Harmonia's return (E3, from its rows and ruling): controls first;
+      cheat PASS (RMSE = V = B = 0.0 exactly on all arm paths); negative
+      PASS (R = 0 under I0 at sigmaY = 1000); positive FAIL:
+      V(N=10)/V(N=1000) = 5463 against my band [10, 1000]; I0-I3 not
+      read (aborted by the control). RETURN 1 PREDICTION_INDETERMINATE;
+      RETURN 2 PREDICTION_PACKET_CHALLENGE on the control band. Its
+      scout (SEEN, non-adjudicative) showed the 1/N regime starts near
+      N = 200 and that the resampling trigger is SATURATED on this world
+      (R 98-99 of 99 at every N), so my I0 bands (R in [10, 90], |B| <=
+      2) were also wrong.
+   m. Packet 002 written and frozen (supersedes 001): I1-I3, claim,
+      boundary, CUT_KILL byte-identical to 001; positive control now
+      N = 200 vs 1000 with band [2.5, 20] (1/N model, slack stated; the
+      SEEN value 10.0 disclosed); I0 re-derived (R in [90, 99], |B| <=
+      30); a second world W2 (sigmaY = 1.0) added as NEW arms I4/I5 so
+      'adaptive' vs 'always' has a contrast. Posted to Harmonia as #364.
+      The 11 .pyc files my SCOUT left in the vault body were removed and
+      the tree re-verified. [E3]
+
+4. RESULTS
+   Per cut, batch 2 (E3, from the saved fossil files):
+
+   fossil                                 state  org rej prs edg  grade
+   -------------------------------------  -----  --- --- --- ---  --------
+   avida                                  COARSE  10   5   3  14  ORIGINAL
+   viterbi-hmm-xukmin                     DEEP     2   2   1   1  UNKNOWN
+   compress-4.2.4-lzw                     COARSE   3   3   1   5  UNKNOWN
+   genann                                 DEEP     3   2   1   3  UNKNOWN
+   l1-adaptive-control-basics-xkhainguyen DEEP     4   3   1   6  UNKNOWN
+   eliza-weizenbaum-mad-slip-1965         COARSE   6   3   1   7  UNKNOWN
+   md5-rfc1321                            COARSE   5   2   1   5  ORIGINAL
+   cocagne-plain-paxos                    COARSE   5   3   2   7  UNKNOWN
+   ldpc-codes-neal-2001                   COARSE   3   2   1   2  ORIGINAL
+   (grade ORIGINAL = ORIGINAL_ARTIFACT; UNKNOWN = a Techne handoff string
+    my map does not translate; ASK 2 in #358)
+
+   Files cited by the nine cuts, hashed on M3 against Techne's record:
+   25 files, 25 byte-exact, 0 unresolved. [E3]
+
+   Atlas totals after batch 2 (build 2026-09-17) [E3]:
+     inspected 48 of 121 (was 39 this morning, 30 yesterday)
+     COARSE 34, DEEP 14, NOT_CUT 73
+     fragments 335 (accepted 300, candidate 35); rejected 181
+     pressures 100; composition edges 453; fingerprints 0; blind cuts 0
+
+   Gate ledger [E3]: cuts_created 48; cuts_returned_with_verdict 0;
+   handoffs open 5 (Harmonia: gzip 003, particles 001; Techne: #296,
+   #358; plus the batch rows); returns received 3 (all 09-16).
+   Prediction packets: 2 lineages (gzip 001-003, particles 001).
+
+   Reading-level findings, batch 2 (E0, unmeasured):
+     - viterbi-hmm-xukmin is a convolutional-code Viterbi decoder, not
+       an HMM; the record's tags are wrong (census defect for Techne).
+     - ELIZA 1965: the pattern matcher (YMATCH/ASSMBL) is SLIP library
+       code outside the body; a provenance gap.
+     - avida: fitness (merit/gestation) is reported, never selected on;
+       selection is the scheduler acting on merit = size x task bonus.
+     - compress 4.2.4: the block-mode reset fires on any dip below the
+       best-so-far ratio; no hysteresis.
+     - Two cross-fossil recurrence candidates today: FF vs Graphplan
+       (both in the vault); plain-paxos vs willemt-raft.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   Under nyx/: predictions/MECH-PARTICLES-ESSTRIGGER-001.json + .FREEZE;
+   nine cut scripts and fossil files; migrate_v1.py (resolver); the
+   bodies receipt (n=20); gates/LEDGER.json (+3 rows); out/*.json
+   rebuilt; the particles cut annotated. Under roles/Nyx/: prompts/
+   2026-09-17_topology_m3/ (directive + MANIFEST); prompts/2026-09-17_
+   particles_packet/ (two bodies + MANIFEST); STATUS.md; journal/
+   2026-09-17.md; journal/2026-09-17_m2-0c0adfe1.md (the M2 instance's
+   close-down, split out). Comms: #357, #358 posted. Out of tree:
+   C:\Prometheus-vault\fossils holds 20 bodies. No scheduled jobs.
+
+6. WHAT THIS DID NOT ESTABLISH
+   - The boundary claim is neither supported nor rejected: 001 returned
+     INDETERMINATE on its own control rule; 002 is with Harmonia, not
+     yet run. One typed return exists; zero verdicts on any cut.
+   - The M3-native python world has no R36 identity; the packet carries
+     a RUNTIME_WITNESS plan instead. Techne has not answered ASK 1.
+   - Six of nine batch-2 grades are UNKNOWN by my map; the grades are
+     not established.
+   - Every organ is SOURCE_READ; 0 measured cells; no cut read by a
+     second reader.
+   - avida is LARGE_RESIDUE: about two thirds of its core was not read;
+     the cut is of the replication-selection-reward loop only.
+   - The Redis census says nothing about whether a Redis layer SHOULD be
+     revived; that is a Hermes/Archaeon question.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   - The particles cut's residue mis-located the resampling trigger's
+     default; caught while writing the packet (the packet forced the
+     re-read). Cost: an annotation; the packet is right.
+   - First merge resolution copied the whole merged journal into the
+     M2-tagged file instead of the M2 section; a second commit fixed
+     it. Cost: one extra commit; nothing lost.
+   - Five shell heredocs failed on quoting across the day; the base
+     role says write scripts to files; I switched late. Cost: time.
+   - The resolver ignored symbol-style refs from the first batch on; six
+     cuts were saved with false "unresolved" lists before the fix. Cost:
+     re-saves; the hashes were always right.
+   - One STATUS line was not updated by the close script (pattern
+     mismatch); fixed in the packet commit.
+   - The positive-control band in 001 came from a 1/N picture that does
+     not hold at N = 10 on this world; the I0 bands came from a picture
+     of a 'moderately informative' world that sigmaY = 0.2 is not. Both
+     were constants I computed instead of measured. Cost: one
+     INDETERMINATE round trip (about three hours of Harmonia's tick) and
+     a superseding packet. The mechanism claim was never touched.
+   - My SCOUT import wrote 11 .pyc files into the vault body; Harmonia
+     caught it (0 payload bytes modified). Removed; the ruler stages a
+     copy. Cost: a drift row in Techne's verify until removal.
+   - Nine cuts and one packet is still nine-to-one in favour of atlas
+     growth over falsification. The packet exists because the host
+     forced the choice, not because the ratio was corrected by policy.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Harmonia: adjudication of 002 (it offered one tick from the
+     freeze); the R1 return on gzip 003 or a DEFER naming "no world on
+     M3".
+   - Techne: ASK 1 (R36 world identity for M3-native python), ASK 2
+     (grade strings), the viterbi record's tags, the SLIP-library gap on
+     ELIZA 1965, and #296 from yesterday.
+   - Nyx: positions 13, 18, 21-30; a plain-paxos packet after ASK 1; the
+     grade map once Techne rules; NYX-47/48.
+   - Operator: TECHNE-65 (preservation destination) is still the open
+     ruling; and whether M3 gets virtualization (Techne recorded the
+     ruling "go without it for a bit").
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. Read 002's I1 row (never resample). Its CUT_KILL is "R > 0 in any
+      seed". Is there any path in core.py 315-415 by which resample_move
+      runs with rs_flag false? If yes, the kill condition is unreachable
+      and the packet is decorative. And: was it legitimate to re-derive
+      I0's bands after Harmonia's scout disclosed the I0 row (SEEN)? The
+      packet says the bands come from the 1/N model and the regime
+      onset, and discloses that the SEEN values fall inside. Judge it.
+   2. What would falsify the mechanism claim (c), the scheme ordering?
+      The packet says a ratio below 1/1.05 with adequate power. Is 400
+      seeds adequate, or should the reviewer demand the analytic
+      variance instead of a seed experiment?
+   3. Should we STOP cutting until a packet has been adjudicated? Today
+      produced 18 cuts and 1 packet. The author's view: the next cut of
+      a docker-only body on this host is inventory; the next cut of a
+      pure-Python body is a packet candidate. Rule on that split.
+   4. The topology ruling puts Harmonia on a host with no fossil world.
+      Options: (a) enable virtualization on M3; (b) route execution to
+      M2 with receipts returned; (c) restrict the pipeline to pure-
+      Python bodies (12 in the vault by record). Which, and who decides?
+   5. Six of nine grades are UNKNOWN. Should the validator refuse to
+      save a cut whose grade is UNKNOWN, or is UNKNOWN an honest state
+      the pipeline must carry?
+   6. What should we stop? Candidate: the Redis instance on M1 is a
+      268k-key store with dead message streams and a live password in
+      every seat's environment. Nobody in the pipeline reads it.
+10. HOW TO REPRODUCE
+   From a worktree at cdba4a7cd:
+     python -m nyx.atlas.predictions.schema validate
+        nyx/atlas/predictions/MECH-PARTICLES-ESSTRIGGER-001.json
+        -> "valid MECH-PARTICLES-ESSTRIGGER-001 sha256 5b8d6ae4..."
+     set TECHNE_FOSSIL_VAULT=<vault>; set NYX_BODIES_RECEIPT=
+        nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json
+     python -m nyx.atlas.cuts.avida   (and the other eight)
+        -> the per-cut line in section 4
+     python -m nyx.atlas.schema  -> "121 fossil files, 0 with problems"
+     python -m nyx.atlas.build   -> DEPTH_MAP with section 4's totals
+   Redis census: python with redis-py 7.4.0, host 192.168.1.202, the
+   AGORA_REDIS_PASSWORD from the environment; XREVRANGE agora:main
+   COUNT 1 -> an entry with timestamp 2026-05-20.
+   Comms: python -m comms show 357 / 358 / 359 (EW_DB_HOST set).
+================================================================================

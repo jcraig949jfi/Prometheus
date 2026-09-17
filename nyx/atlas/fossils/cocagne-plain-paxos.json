@@ -131,17 +131,808 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/functional.py"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/practical.py"
+   }
+  ],
+  "inspected_files": [
+   "paxos/essential.py, paxos/functional.py (all)",
+   "paxos/practical.py (class/def structure, recv_prepare)"
+  ],
+  "date": "2026-09-17T15:40Z",
+  "note": "single-decree Paxos in three classes of a few lines each, with the messaging externalised; the 'practical' and 'functional' layers add NACKs, durability hooks and a heartbeat-based leader without touching the three safety rules",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:40Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/cocagne/paxos@3bceac02f6693a2c6ea1bfc3a5e70c4ae45fccb3",
+   "payload_manifest_id": "techne tree_sha256 4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905 (38 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/paxos/essential.py",
+     "payload_hash_read": "ba22a95eef4f7725ac2e510200e312b4a898b11e5d3f79a73ba612211df5ce53",
+     "techne_recorded_hash": "ba22a95eef4f7725ac2e510200e312b4a898b11e5d3f79a73ba612211df5ce53",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/paxos/functional.py",
+     "payload_hash_read": "56d5a539e5cc092592eabc32fbd8e819b10a94b9ca3bdfa00dbd6a129a6245b6",
+     "techne_recorded_hash": "56d5a539e5cc092592eabc32fbd8e819b10a94b9ca3bdfa00dbd6a129a6245b6",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/paxos/practical.py",
+     "payload_hash_read": "876f7061dddeb7b23a2b3757d9a3491767a62d9a14e86bc758e8e710da76630b",
+     "techne_recorded_hash": "876f7061dddeb7b23a2b3757d9a3491767a62d9a14e86bc758e8e710da76630b",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "fossil_ancestry": "cocagne-plain-paxos",
+   "human_name": "ProposalID = (number, uid); next_proposal_number (essential.py)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a proposal id is a (number, uid) tuple compared lexicographically, so two proposers never tie and every proposer can generate an id larger than any it has seen by taking the next number; the heartbeat layer's observe_proposal bumps the counter past ids seen in NACKs and heartbeats",
+   "input": "the node's counter and uid; observed ids",
+   "output": "a fresh, globally larger id",
+   "state": "next_proposal_number",
+   "update": "per prepare",
+   "assumptions": [
+    "uids are unique and comparable; counters are persisted (the durable layer's job) so a restarted node does not reuse an id"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+    "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules"
+   ],
+   "fitness_value_in_ancestor": "the total order is what lets acceptors promise 'nothing lower'",
+   "failure_landscape": "by reading: without persistence a restart reissues ids and can break the promise",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py:ProposalID, prepare; vault:cocagne-plain-paxos/upstream/tree/paxos/practical.py:observe_proposal"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ProposalID and its two producers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "fossil_ancestry": "cocagne-plain-paxos",
+   "human_name": "Acceptor.recv_prepare / recv_accept_request (essential.py)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "on Prepare(id): if id >= the highest id promised, promise it (record it) and reply with the highest id and value ALREADY ACCEPTED, if any; on Accept(id, v): if id >= the promised id, accept (record id and v) and broadcast Accepted; anything lower is ignored (the practical layer replies NACK instead)",
+   "input": "Prepare and Accept messages",
+   "output": "Promise (with prior acceptance) or Accepted; or silence/NACK",
+   "state": "promised_id, accepted_id, accepted_value (all must be durable)",
+   "update": "per message",
+   "assumptions": [
+    "the three fields survive crashes (practical.py's persistance_required / persisted hooks)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+    "cocagne-plain-paxos::learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id",
+    "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules"
+   ],
+   "fitness_value_in_ancestor": "safety lives here: an acceptor never goes back on a promise, and tells proposers what it has already accepted",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Lamport's Synod rules (1998), the two conditions",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py:class Acceptor"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two recv_ methods",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "fossil_ancestry": "cocagne-plain-paxos",
+   "human_name": "Proposer.prepare / recv_promise / set_proposal (essential.py)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "prepare sends a fresh id to all acceptors; each promise is counted once per acceptor; if a promise carries a previously accepted (id, value) higher than any seen, the proposer REPLACES its own value with it; when the count reaches the quorum size it sends Accept with whatever value it now holds (its own only if no acceptor had accepted anything)",
+   "input": "promises",
+   "output": "an Accept broadcast",
+   "state": "promises_rcvd, last_accepted_id, proposed_value",
+   "update": "per promise",
+   "assumptions": [
+    "a quorum is a majority (any two quorums intersect), so any value already chosen is seen by at least one promise"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+    "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+    "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules"
+   ],
+   "fitness_value_in_ancestor": "the rule that makes Paxos safe under leader change: a new proposer cannot overwrite a possibly-chosen value",
+   "failure_landscape": "by reading: two proposers alternating prepares can livelock (no progress); the functional layer's heartbeat/leader exists for that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the P2c invariant of Paxos Made Simple",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py:class Proposer"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the Proposer class",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cocagne-plain-paxos::learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id",
+   "fossil_ancestry": "cocagne-plain-paxos",
+   "human_name": "Learner.recv_accepted (essential.py)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "per acceptor keep its latest accepted id; an older message is ignored; when an acceptor moves to a higher id its count on the old id is retracted; a value is resolved when one id reaches quorum_size acceptances (values under one id are asserted equal); resolution is final and the tables are dropped",
+   "input": "Accepted messages",
+   "output": "on_resolution(id, value) once",
+   "state": "proposals (id -> counts, value), acceptors (uid -> latest id)",
+   "update": "per message",
+   "assumptions": [
+    "messages may be reordered and duplicated (handled) but not forged"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise"
+   ],
+   "fitness_value_in_ancestor": "learning is derived from the same messages as accepting, with no extra round",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py:class Learner"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "recv_accepted",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "fossil_ancestry": "cocagne-plain-paxos",
+   "human_name": "HeartbeatNode (functional.py): liveness_window, hb_period, poll_liveness, recv_heartbeat, acquire_leadership, recv_accept_nack",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a leader pulses a heartbeat carrying its proposal id every hb_period; a node that sees no heartbeat within liveness_window (and no recent prepare from someone else, 1.5 windows) runs prepare to acquire leadership; a heartbeat with a higher id demotes the current leader; a quorum of Accept NACKs also drops leadership; prepares are retried on prepare NACKs; the docstring states the layer 'does not modify the basic Paxos algorithm'",
+   "input": "heartbeats, the clock, NACKs",
+   "output": "prepare attempts; leader flag changes; on_leadership_* callbacks",
+   "state": "leader_uid, leader_proposal_id, _tlast_hb, _tlast_prep, _acquiring, _nacks",
+   "update": "per pulse / per window",
+   "assumptions": [
+    "a timing assumption (liveness_window) is used for PROGRESS only; safety never depends on it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+    "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+    "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid"
+   ],
+   "fitness_value_in_ancestor": "breaks the duelling-proposers livelock in practice while keeping the essential layer's proofs",
+   "failure_landscape": "by reading: 'observed_recent_prepare' at 1.5 windows is a heuristic to avoid two acquirers; a partition can still produce dueling leaders, safely",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the distinguished-proposer / leader election of Paxos Made Simple section 2.4, implemented as heartbeats",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cocagne-plain-paxos/upstream/tree/paxos/functional.py:class HeartbeatNode"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "HeartbeatNode",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the Messenger interfaces (send_*, on_*), durable.py, external.py, the tests",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "I/O and persistence boundaries supplied by the host; not read beyond signatures",
+   "note": "the tests are a ready M3-native oracle (pure Python)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  },
+  {
+   "candidate": "the practical layer's NACK plumbing and resend_accept as separate organs",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:cocagne-plain-paxos/upstream/tree/paxos/practical.py:recv_prepare_nack, recv_accept_nack, resend_accept",
+   "note": "they feed the heartbeat organ's decisions; recorded there",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  },
+  {
+   "candidate": "'Paxos' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "ids, acceptor rules, proposer adoption rule, learner counting and leadership are five classes; the vault's willemt-raft (cut 09-17) holds a different arrangement of the same five concerns (terms, log matching, election restriction, commit counting, randomised election)",
+   "note": "recurrence candidate R1: raft term/vote vs paxos id/promise",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "cocagne-plain-paxos::P.a_single_value_must_be_chosen_by_a_majority_of_unreliable_parties_such_that_once_chosen_it_can_never_be_unchosen_even_as_parties_crash_and_recover",
+   "source_fossil": "cocagne-plain-paxos",
+   "source_evidence": "essential.py (three classes); tests/test_essential.py as the oracle",
+   "condition": "N parties, messages delayed or lost, any minority may crash and restart with its durable state; multiple parties may propose; the world scores agreement (all learners learn the same value) and the absence of a second chosen value",
+   "resource_or_constraint": "two round trips per attempt; durable writes per promise/accept; no clock for safety",
+   "failure_condition": "two different values chosen, or a chosen value overwritten after a crash",
+   "world_punishes": "proposers that ignore prior acceptances; acceptors that forget promises",
+   "world_rewards": "the adoption rule and durable promises",
+   "observable_consequence": "count of distinct chosen values over many runs with injected reorderings, losses and restarts (must be exactly one); rounds to resolution",
+   "vacuity_condition": "one proposer and no failures",
+   "trivial_shortcuts": "a fixed leader that never crashes",
+   "cheat_control": "an organism handed the chosen value by the world must resolve in one round with zero conflicts; the essential layer with the adoption rule DELETED (a proposer always sends its own value) must show two chosen values under a leader change: the world must show that violation or it is not exerting the safety pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: single-decree consensus (Lamport, Paxos Made Simple)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "cocagne-plain-paxos::P.progress_under_asynchrony_must_come_from_a_timing_layer_that_can_be_wrong_without_making_the_safety_layer_wrong",
+   "source_fossil": "cocagne-plain-paxos",
+   "source_evidence": "functional.py HeartbeatNode docstring and poll_liveness",
+   "condition": "the safety mechanism above can livelock; the organism may add timers and a leader to make progress, but any timer may fire falsely",
+   "resource_or_constraint": "a heartbeat period and a liveness window",
+   "failure_condition": "a false timer produces a second chosen value (safety broken) or permanent dueling (no progress)",
+   "world_punishes": "timers that change safety-layer state; windows shorter than message delay",
+   "world_rewards": "a layer that only decides WHEN to run the safe protocol",
+   "observable_consequence": "resolutions per unit time and chosen-value count as the liveness window is set below and above the message delay",
+   "vacuity_condition": "synchronous lossless delivery",
+   "trivial_shortcuts": "a world with a global clock",
+   "cheat_control": "with a perfect failure detector supplied by the world the organism must resolve in the minimum rounds; with the window set far below the delay the ancestor must show dueling and still exactly one chosen value: both must be visible",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: leader-based progress for Paxos (heartbeats)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "to": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "prepare / accept",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "promise with prior value",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "accepted broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "acquire leadership -> prepare",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "NACKs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "observe_proposal",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "cocagne-plain-paxos",
@@ -149,10 +940,23 @@
    "to": "willemt-raft",
    "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "algorithm_from",
+   "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "durable.py and external.py not read; practical.py read by structure only",
+   "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle",
+   "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"
+  ],
+  "note": "the three essential classes are accounted for line by line",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
