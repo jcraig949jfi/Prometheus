@@ -34,3 +34,16 @@ plus rows/receipts). Every timestamp UTC.
   random-segment control, 1/3 baseline), failures NULL/NEGATIVE,
   interaction not estimable (n=3). Full record: SFE-01/RECORD.md.
 - Ledger L-001..L-013. Next: SFE-02.
+
+## 01:50-02:45 -- SFE-02 (two attempts; INCONCLUSIVE)
+
+- Attempt 1 (stream 1024, 21 s) and attempt 2 (stream 4096, 35 s, D-009):
+  engine path 0 errors both times (16 artifacts, 12 experiments + 12
+  observations per attempt, world TERMINATED in 0.2 s; identical sealed
+  manifest deduplicated by content hash across attempts).
+- Science: solve fraction 0 for every policy; whole-stream ceiling < 0.5
+  on every query (max 0.21) -> assay incapable -> INCONCLUSIVE by the
+  prereg rule. Diversity landscape real: behavioral 32 cells, hybrid
+  25-28, uniform 17-20, top_k 10-17 under one cap; count cap bound every
+  policy, byte cap never. Record: SFE-02/RECORD.md. Ledger L-014..L-016,
+  L-012 recurrence 1. Next: SFE-03.

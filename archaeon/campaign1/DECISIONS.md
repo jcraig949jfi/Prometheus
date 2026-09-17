@@ -92,3 +92,14 @@ operand-only variants, the commonest mutation class (operand_perturbation
 evaluation per child; deferred. | Revisit if tabu_hits stays 0: then the
 mutation grammar never revisits opcode sequences and the failure channel
 needs a different carrier.
+
+D-009 | 2026-09-17 02:35 | SFE-02 attempt 2 lengthens the candidate stream
+from 1024 to 4096 (N=128 -> 32 generations of the source search); caps,
+policies, descriptors, queries and threshold unchanged. | Attempt 1's
+whole-stream ceiling was < 0.5 on every query (max 0.21): the stream held
+no competent organism, so no retention policy could be told from another
+(INCONCLUSIVE by the RECORD's own assay-capability rule). Stream length is
+a budget parameter, not a semantic one. | Alternative: lower the solve
+threshold (changes the claim); or accept INCONCLUSIVE. | Revisit if the
+4096 stream's ceiling is still < 0.5: then the H3 question cannot be posed
+on this substrate at this budget and stays INCONCLUSIVE.
