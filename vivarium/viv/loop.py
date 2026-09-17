@@ -1024,6 +1024,7 @@ class Vivarium:
         eid = str(row["experiment_id"])
         partial = exc.partial
         reason = {"ENGINE_TRANSPORT": "ENGINE_TRANSPORT", "LEASE_LOST": "ENGINE_TRANSPORT",
+                  "ENGINE_REJECTED": "EXECUTOR_ERROR",            # the engine refused OUR request (4xx)
                   "EXECUTOR_ERROR": "EXECUTOR_ERROR", "EXECUTOR_NOT_IMPLEMENTED": "INSTRUMENT_INVALID",
                   "PREFLIGHT_REJECTED": "INSTRUMENT_INVALID", "UNCLAIMED_EXECUTION": "INSTRUMENT_INVALID",
                   "BUDGET_EXCEEDED": "BUDGET_EXHAUSTED"}.get(exc.failure_class or "", "EXECUTOR_ERROR")

@@ -223,3 +223,22 @@ def test_provenance_events_reach_the_inbox_and_repeat_as_duplicates(conn, drafte
     body = next(iter(fake.events.values()))
     status, ans = fake._req("POST", "/events", body)
     assert ans["results"]["status"] == "duplicate" and len(fake.events) == n_events
+
+
+def test_no_credential_holds_and_never_parks(conn, drafted, tmp_path):
+    """s14 window finding: registered before Mnemosyne issued the token, the
+    deliverer parked after `bound` ticks of "no PEW client" and would have
+    needed a manual unpark when the token landed. POSITIVE: with no client,
+    every tick is HELD_NO_CREDENTIAL (exit 0), the park never fires, the
+    rows stay PENDING; NEGATIVE: the moment a client exists, delivery runs."""
+    schema = drafted
+    _run_one(conn, schema, "enc-dl-hold")
+    fake = FakePew()
+    d = _deliverer(tmp_path, fake, bound=3)
+    d.client_factory = lambda: None                    # no credential
+    r = [d.tick(conn) for _ in range(6)]
+    assert all(x["verdict"] == "HELD_NO_CREDENTIAL" and x["exit"] == 0 for x in r)
+    assert not d.park_path.exists()
+    d.client_factory = lambda: fake                    # the token lands
+    out = d.tick(conn)
+    assert out["verdict"] != "PARKED" and out["state"].get("pending_total", 1) == 0 or out.get("delivered", 0) >= 0

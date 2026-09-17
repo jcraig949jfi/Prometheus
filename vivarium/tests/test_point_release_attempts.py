@@ -706,3 +706,37 @@ def test_a_death_between_the_engines_commit_and_the_step_result_is_recovered_by_
     # CHEAT: a NULL-result step with nothing on the engine is recomputed, not invented
     from viv.runner import SfeRunner
     assert SfeRunner._observation_present(client, wid, None, exp_id="exp_nothing", repeat_index=7) is False
+
+
+# ------------------------------------------------------------- s14 canary D (2026-09-17): a 4xx is the engine's answer, not transport
+
+def test_an_engine_4xx_after_the_commit_is_engine_rejected_not_transport(conn, drafted):
+    """POSITIVE: an EngineError with a 4xx status after the commit fails the
+    row ENGINE_REJECTED (termination reason EXECUTOR_ERROR), which is NOT the
+    consumer's halt class -- on production the 409 was classed
+    ENGINE_TRANSPORT, the consumer parked and paged Daedalus. NEGATIVE: a
+    5xx stays ENGINE_TRANSPORT (the engine is unhealthy; that IS the halt
+    class); a socket error stays ENGINE_TRANSPORT."""
+    from sfclient import EngineError
+    schema = drafted
+    for status, expect in ((409, "ENGINE_REJECTED"), (503, "ENGINE_TRANSPORT")):
+        spec = make_spec(hypothesis="probe %d" % status)
+        eid = _enqueue(conn, schema, spec)
+        client = VerifyingClient()
+
+        def refuse(*a, _st=status, **k):
+            raise EngineError(_st, {"error": "x"})
+        client.observation = refuse
+        r = _viv(schema, client, spec).tick(conn)
+        assert r.outcome == FAILED and r.failure_class == expect, (status, r)
+        atts = _attempts(conn, schema, eid)
+        assert atts[0]["termination"]["termination_reason"] == ("EXECUTOR_ERROR" if expect == "ENGINE_REJECTED" else "ENGINE_TRANSPORT")
+    spec = make_spec(hypothesis="probe socket")
+    eid = _enqueue(conn, schema, spec)
+    client = VerifyingClient()
+
+    def drop(*a, **k):
+        raise OSError("connection reset")
+    client.observation = drop
+    r = _viv(schema, client, spec).tick(conn)
+    assert r.outcome == FAILED and r.failure_class == "ENGINE_TRANSPORT"
