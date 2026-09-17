@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-16 17:40Z -- instance m2-d6ecd70b ACTIVE on M2; PRODUCTION LAUNCHED on M2 17:22Z on the operator's clearance (M2's own ledger; M1's does not move) (base role
+Currency: 2026-09-17 07:0xZ -- instance m2-d6ecd70b ACTIVE on M2. CAMPAIGN 3 IS RUNNING on the production engine: MIGRATION FREEZE (amendment s11) -- no engine route/schema/deploy change until it closes. Point-release Stage 0-2 written (docs/point_release_2026-09/SFE_POINT_RELEASE_REVIEW.md); #315 hold stays until C3 closes (base role
 s3 requires this file; refreshed at least every four hours of activity).
 
 ## Where I am working
@@ -32,18 +32,22 @@ tokens and 5 queued rows are NOT here (retracted #270's refusal of (b)).
 
 ## Open, in order
 
-1. Consumers onto M2 (theirs; my step-4 post is out): Vivarium registers
-   as owner, re-issues the viv- scope, relaunches its consumer from an M2
-   pinned worktree; Archaeon registers, gets the grant (Vivarium), reruns
-   the gate, redeploys its tick (ARCH-51). I verify the grant engine-side
-   (`deploy/verify_read_grant.py`) when asked.
-2. Harmonia: regenerate/diff the contract at will; the 726275da staging is
-   history. `verify_gate_states.sh` not run by me (needs her scratch fixture).
-3. Canonical-copy deletion on M2 (`var\engine.db`, `deploy\m2.key`) --
-   separate, explicitly confirmed step.
-4. Watchdog script is a pinned copy; redeploy by copy + receipt on change.
-5. `deploy/adopt_m1_ledger.py` stays as a tool, unused (the M1 ledger does
-   not move); `sfe-twin-rollback` never created.
+1. **Point release (amendment 1, s5)**: Stage 0-2 written, read-only:
+   `SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/SFE_POINT_RELEASE_REVIEW.md`
+   -- 11 MUST/SHOULD items (D1-D11), 2 REJECT, 3 DEFER; schema 8->9 nullable
+   only; +4 routes; ONE deploy window after Campaign 3 closes. Next: Stage 3
+   peer review (questions to Vivarium/Mnemosyne/Proteus/Archaeon/Harmonia in
+   the review's Stage 3 section); then SFE_INTERFACE_DELTA.md; then code in
+   this worktree, NOT deployed.
+2. **Migration freeze** while Campaign 3 runs (amendment s11): exceptions
+   only for critical defect / data loss / integrity / campaign-blocking,
+   each recorded.
+3. **#315 hold** on consumer relaunch stays until Campaign 3 closes; the
+   #301/#314 conflict was resolved by fact (C1-C3 ran on eng_906356f7):
+   production is M2's ledger. One superseding post when C3 closes.
+4. Canonical-copy deletion on M2 (`var\engine.db`, `deploy\m2.key`) --
+   after the freeze, explicitly confirmed.
+5. `deploy/adopt_m1_ledger.py`: unused (M1 ledger stays an archive); keep.
 
 ## Blocked on someone else
 
