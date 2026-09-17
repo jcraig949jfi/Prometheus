@@ -131,17 +131,652 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py:186-294"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/base_optimizer.py:280-318"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:438-470"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/expected_returns.py:29-200"
+   }
+  ],
+  "inspected_files": [
+   "efficient_frontier.py 186-294",
+   "base_optimizer.py 280-318 + function list",
+   "risk_models.py 438-470 + function list",
+   "expected_returns.py function list"
+  ],
+  "date": "2026-09-17T22:03Z",
+  "note": "mean-variance portfolio construction as a thin layer over a convex solver: the mechanisms are the problem transformations (the Sharpe-ratio substitution), the covariance shrinkage estimators, and a guard that refuses to reuse a solved problem with changed objectives",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://files.pythonhosted.org/packages/5f/e3/922d2279adc6e965c5aacce89ff317d6c9f8cabbbb70fa604a84443c6b1e/pyportfolioopt-1.5.5.tar.gz sha256:371ade1fed1deeea7042ba3178b3cf9aac9cd0b1700e949cab8a8c2e72e5566a",
+   "payload_manifest_id": "techne tree_sha256 cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726 (22 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py",
+     "payload_hash_read": "87fdd337e258f9960577641c804b23ffc89c6f85b6c1735a18c792f1cb7a90f4",
+     "techne_recorded_hash": "87fdd337e258f9960577641c804b23ffc89c6f85b6c1735a18c792f1cb7a90f4",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/pyportfolioopt-1.5.5/pypfopt/base_optimizer.py",
+     "payload_hash_read": "55c1b5455dda5949b480830a66050b3380e68de5140802164042af070c39c4ad",
+     "techne_recorded_hash": "55c1b5455dda5949b480830a66050b3380e68de5140802164042af070c39c4ad",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py",
+     "payload_hash_read": "bebb27d2ad7919935674875dcdb9cb0573053fa82a566eb87da48eaa13001724",
+     "techne_recorded_hash": "bebb27d2ad7919935674875dcdb9cb0573053fa82a566eb87da48eaa13001724",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/pyportfolioopt-1.5.5/pypfopt/expected_returns.py",
+     "payload_hash_read": "924bab984ff81cc5481b2dda49601dd89662aab4a8005097b7fe9fd843befdb7",
+     "techne_recorded_hash": "924bab984ff81cc5481b2dda49601dd89662aab4a8005097b7fe9fd843befdb7",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "BaseConvexOptimizer._solve_cvxpy_opt_problem; min_volatility; efficient_risk/return; add_objective/add_constraint",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "weights are a cvxpy Variable; an objective (portfolio variance, negative return, quadratic utility) plus user constraints (sum to one, bounds, sector limits) form a Problem solved by whatever solver cvxpy picks; the result is accepted only if the status is optimal or optimal_inaccurate, else an OptimizationError; weights are rounded to 16 places and signed zeros removed",
+   "input": "expected returns, covariance, bounds, constraints",
+   "output": "a weight vector",
+   "state": "the cvxpy Problem object (kept for warm reuse)",
+   "update": "per solve",
+   "assumptions": [
+    "the objective is convex in the weights (variance is, return is linear); the solver's own status word is trusted (a Techne lesson: 'optimal_inaccurate' is accepted here)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+    "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution"
+   ],
+   "fitness_value_in_ancestor": "any convex objective/constraint in a few lines; the solver does the numerics",
+   "failure_landscape": "by reading: optimal_inaccurate is accepted as success -- the base role's own SCS finding (status anti-correlated with accuracy) applies here directly",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/base_optimizer.py:280-318; vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py:186-224"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the solve helper and the objective methods that call it",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "EfficientFrontier.max_sharpe (186-294)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the Sharpe ratio (return minus risk-free over volatility) is not convex; substitute w = y/k with k > 0: minimise y' Sigma y subject to (mu - rf)' y = 1 and sum(y) = k, and every existing linear constraint rewritten with its constant side multiplied by k; solve; recover w = y/k; the code warns that added non-linear objectives do not transform",
+   "input": "expected returns, covariance, risk-free rate",
+   "output": "the tangency portfolio",
+   "state": "none",
+   "update": "per solve",
+   "assumptions": [
+    "at least one asset beats the risk-free rate (checked); constraints are linear (inequalities and equalities are rewritten; anything else raises)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate"
+   ],
+   "fitness_value_in_ancestor": "a quadratic program instead of a non-convex ratio maximisation",
+   "failure_landscape": "by reading: the constraint rewriting inspects cvxpy's internal argument order (which side is the Constant) -- brittle across cvxpy versions",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cornuejols & Tutuncu 2006, cited in the docstring",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py:225-294"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "max_sharpe",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "CovarianceShrinkage.ledoit_wolf (constant_variance / single_factor / constant_correlation), shrunk_covariance, oracle_approximating (risk_models.py 356-600)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sample covariance is blended with a target (a scaled identity, a one-factor market model, or a constant-correlation matrix) as (1-delta) S + delta F; delta is either fixed (shrunk_covariance) or estimated from the data by the Ledoit-Wolf formula (sklearn's for constant variance; the library's own for the other two targets) or the oracle-approximating estimator; the result is annualised by the frequency",
+   "input": "a returns matrix",
+   "output": "a positive-definite covariance estimate",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "the sample covariance's extreme eigenvalues are estimation noise; pulling toward a low-dimensional target trades bias for variance"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix"
+   ],
+   "fitness_value_in_ancestor": "the optimiser is notoriously an error maximiser on the raw sample covariance; shrinkage is the standard cure",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ledoit & Wolf 2003/2004; the three targets are the paper's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:356-600"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "class CovarianceShrinkage",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "risk_models._is_positive_semidefinite / fix_nonpositive_semidefinite (32-100)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "check PSD by attempting a Cholesky factorisation (plus a tiny ridge); if it fails, either clip negative eigenvalues to zero and reconstruct (spectral) or add the most negative eigenvalue times identity (diagonal); warn the user; every risk model passes through this before the optimiser",
+   "input": "a symmetric matrix",
+   "output": "a PSD matrix",
+   "state": "none",
+   "update": "per risk-model call",
+   "assumptions": [
+    "a non-PSD sample matrix is numerical, not structural, so a small repair is honest"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+    "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate"
+   ],
+   "fitness_value_in_ancestor": "the convex solver requires PSD; without this the solver refuses with an obscure error",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:32-100"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "expected_returns.py (mean/EMA/CAPM return models), risk_models sample/semi/exp covariances, cov<->corr helpers",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/expected_returns.py; vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:101-355",
+   "note": "estimators that are one formula each; the shrinkage organ is where a mechanism lives",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  },
+  {
+   "candidate": "black_litterman.py, cla.py, hierarchical_portfolio.py (HRP), discrete_allocation.py, the semivariance/CVaR/CDaR frontiers, plotting",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "cla.py (Markowitz's critical line algorithm) and HRP (Lopez de Prado) are the two mechanism-bearing modules left unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  },
+  {
+   "candidate": "'portfolio optimisation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the estimator (shrinkage), the transformation (Sharpe substitution), the repair (PSD) and the solver call are separable",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "pyportfolioopt-1.5.5::P.an_allocation_over_correlated_assets_must_be_chosen_from_a_noisy_covariance_estimate_without_the_optimiser_amplifying_the_estimation_error",
+   "source_fossil": "pyportfolioopt-1.5.5",
+   "source_evidence": "risk_models.py shrinkage; efficient_frontier.py min_volatility; DeMiguel et al. 2009 (the 1/N result) as the control's rationale",
+   "condition": "N assets, T observations with T not much larger than N; the organism chooses weights to trade expected return against variance; the covariance it sees is a noisy estimate; the score is out-of-sample variance",
+   "resource_or_constraint": "T samples; a convex solve",
+   "failure_condition": "weights concentrated on the assets whose covariance is most under-estimated (the error-maximisation property)",
+   "world_punishes": "using the raw sample covariance",
+   "world_rewards": "shrinkage toward structure; constraints that bound concentration",
+   "observable_consequence": "out-of-sample variance of the minimum-variance portfolio with sample vs shrunk covariance as N/T grows toward 1",
+   "vacuity_condition": "T >> N (the sample covariance is fine) or uncorrelated assets",
+   "trivial_shortcuts": "equal weights (the 1/N benchmark, which the literature shows is hard to beat -- a world must include it as a control)",
+   "cheat_control": "an organism given the true covariance must achieve the minimum out-of-sample variance; the raw-sample organism at N/T near 1 must show the blow-up; equal weights must sit between: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: mean-variance portfolio construction (Markowitz 1952 as a library)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+   "to": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a rewritten problem",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "to": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "y and k back",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "pyportfolioopt-1.5.5",
@@ -156,10 +791,23 @@
    "to": "glpk-5.0",
    "note": "mathematical programming lineage (LP -> convex)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "algorithm_from",
+   "to": "Markowitz 1952 (mean-variance); Ledoit & Wolf 2003/2004 (shrinkage); Cornuejols & Tutuncu 2006 (the Sharpe transform)",
+   "note": "from the docstrings",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "cla.py and HRP unread",
+   "the body needs cvxpy, absent on M3: NOT an M3-native world candidate as it stands (contradicts my #358 list, which named it from the record; corrected here)",
+   "nothing ran"
+  ],
+  "note": "the optimiser layer's four mechanisms are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

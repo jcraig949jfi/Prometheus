@@ -1,14 +1,14 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 154,
+ "built": "2026-09-17T22:05Z",
+ "n": 165,
  "by_relation": {
-  "algorithm_from": 62,
-  "derived_from": 7,
+  "algorithm_from": 69,
+  "derived_from": 8,
   "shares_ancestor_with": 42,
   "historical_version_of": 11,
   "superseded_by": 14,
-  "reimplementation_of": 3,
+  "reimplementation_of": 5,
   "port_of": 1,
   "forked_from": 1,
   "supersedes": 6,
@@ -16,7 +16,7 @@
   "rival_of": 1,
   "successor_of": 2,
   "predecessor_of": 1,
-  "inspired_by": 1
+  "inspired_by": 2
  },
  "edges": [
   {
@@ -53,6 +53,13 @@
    "to": "picorv32",
    "note": "RISC-V cores: one predicts, one does not",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "algorithm_from",
+   "to": "Smith 1981 (2-bit counters); Lee & Smith 1984 (BTB); Kaeli & Emma 1991 (RAS); McFarling 1993 (gshare)",
+   "note": "from the mechanisms; not verified against the record this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-4.2-distribution-tape-1983",
@@ -139,11 +146,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "clips-6.4.2-nasa",
+   "relation": "algorithm_from",
+   "to": "Forgy 1982 (Rete); OPS5 conflict resolution; CLIPS at NASA JSC from 1985",
+   "note": "from the code and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "cocagne-plain-paxos",
    "relation": "shares_ancestor_with",
    "to": "willemt-raft",
    "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "algorithm_from",
+   "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "cocagne-plain-paxos",
@@ -356,6 +377,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "gnu-apl-2.0",
+   "relation": "reimplementation_of",
+   "to": "ISO/IEC 13751 APL2; the evaluation scheme is the implementer's",
+   "note": "from the source and the record's lineage",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "gnu-prolog-1.5.0",
    "relation": "shares_ancestor_with",
    "to": "swipl-9.2.9",
@@ -545,6 +573,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "libcorrect-quiet",
+   "relation": "reimplementation_of",
+   "to": "the Viterbi decoder lineage (Viterbi 1967; Forney 1973 sliding traceback); libfec-karn (in the vault, cut 09-16) is the direct ancestor by API and design (the record's lineage)",
+   "note": "from the record and the vault; RECURRENCE R1 by reading: libfec-karn's viterbi27 and this decoder share the butterfly ACS + renormalisation shape",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "libdai-mooij",
    "relation": "algorithm_from",
    "to": "Pearl 1982/1988",
@@ -557,6 +592,13 @@
    "to": "ldpc-codes-neal-2001",
    "note": "BP as a decoder vs BP as a general inference engine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "libfec-karn",
@@ -804,6 +846,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "pforth",
+   "relation": "algorithm_from",
+   "to": "Moore's Forth (1970); token threading as the portable variant",
+   "note": "from the code; not verified",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "picosat-965",
    "relation": "shares_ancestor_with",
    "to": "minisat-2.2.0",
@@ -853,6 +902,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "algorithm_from",
+   "to": "Markowitz 1952 (mean-variance); Ledoit & Wolf 2003/2004 (shrinkage); Cornuejols & Tutuncu 2006 (the Sharpe transform)",
+   "note": "from the docstrings",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "python-sgp4-2.23",
    "relation": "algorithm_from",
    "to": "Hoots & Roehrich 1980; Vallado et al. 2006",
@@ -886,6 +942,13 @@
    "to": "ldpc-codes-neal-2001",
    "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "simple-kalman-denyssene",
+   "relation": "inspired_by",
+   "to": "the scalar Kalman filter (Kalman 1960) with the process-noise term replaced by an innovation-magnitude heuristic",
+   "note": "the cut's reading; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "souffle-2.4.1",
@@ -935,6 +998,13 @@
    "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
    "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "swipl-9.2.9",
+   "relation": "derived_from",
+   "to": "Warren 1983 (WAM); SWI-Prolog's own VM lineage from 1987; tabling from XSB (SLG resolution)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "tiny-aes-c",
@@ -998,6 +1068,13 @@
    "to": "concurrencykit-0.7.2",
    "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997",
+   "relation": "algorithm_from",
+   "to": "Knuth & Moore 1975 (alpha-beta); Slate & Atkin 1977 (iterative deepening); Schaeffer 1983 (history heuristic); the quiescence search of the Shannon/Turing era",
+   "note": "from the code's structure; not verified against sources",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "umdhmm-kanungo-1.02",

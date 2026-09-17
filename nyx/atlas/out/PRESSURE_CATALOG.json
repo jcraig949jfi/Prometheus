@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 100,
+ "built": "2026-09-17T22:05Z",
+ "n": 110,
  "pressures": [
   {
    "pressure_id": "avida::P.a_program_must_copy_its_own_description_under_a_per_symbol_error_rate_while_cpu_time_is_rationed_by_a_score_it_can_raise_by_computing",
@@ -55,6 +55,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "biriscv-branch-predictor::P.the_next_action_must_be_guessed_before_its_condition_is_known_from_a_small_memory_of_past_outcomes_with_the_guess_itself_feeding_later_guesses",
+   "source_fossil": "biriscv-branch-predictor",
+   "source_evidence": "biriscv_npc.v; record tags speculation / hidden-state",
+   "condition": "a stream of conditional decisions arrives faster than their conditions resolve; the organism must guess each one now from bounded memory of past outcomes, and its guesses change what it sees next before the truth arrives; a wrong guess costs a fixed penalty (the flush)",
+   "resource_or_constraint": "a few kilobits of state; one cycle per guess",
+   "failure_condition": "misprediction rate above the static baseline on real code",
+   "world_punishes": "guessing from stale or aliased state; waiting for resolution",
+   "world_rewards": "hysteresis, correlation with recent history, a stack for nested returns, and speculative shadow state resynchronised on truth",
+   "observable_consequence": "misprediction rate per predictor component on instruction traces with each component disabled (the module's own parameters do this)",
+   "vacuity_condition": "branches that are always taken or never taken (static prediction suffices)",
+   "trivial_shortcuts": "an oracle trace",
+   "cheat_control": "a predictor fed the resolved outcome one cycle early must mispredict nothing; SUPPORT_BRANCH_PREDICTION = 0 (the body's own control) must show the static rate: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: instruction fetch redirection in a pipelined CPU (biRISC-V, Ultra-Embedded)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "bsd-tcp-4.2-1983::P.many_senders_share_one_bottleneck_whose_only_signal_is_loss_and_delay",
    "source_fossil": "bsd-tcp-4.2-1983",
    "source_evidence": "record human_failure_condition; tcp_output.c 48-58; tcp_timer.c 121-148",
@@ -86,6 +103,23 @@
    "cheat_control": "an organism given the true delay per request must show zero spurious timeouts and zero stall; the ancestor's mean-only estimator with beta=2 must show spurious timeouts once the variance exceeds the mean: if the world cannot show that difference the pressure is absent",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: retransmission timeout estimation (the 4.2BSD form, before Jacobson 1988)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "clips-6.4.2-nasa::P.many_condition_action_rules_must_be_matched_against_a_slowly_changing_set_of_facts_at_a_cost_proportional_to_the_change",
+   "source_fossil": "clips-6.4.2-nasa",
+   "source_evidence": "drive.c; agenda.c; record tags production-rules / pattern-matching",
+   "condition": "R rules with multi-pattern conditions over F facts; each cycle changes a few facts; the organism must find every newly satisfied rule instance and choose one to fire",
+   "resource_or_constraint": "memory for retained partial matches; time per fact change",
+   "failure_condition": "re-matching every rule against every fact per cycle (cost R x F^k), or memory blow-up on cross-product joins",
+   "world_punishes": "stateless matching; unhashed joins",
+   "world_rewards": "retained, hashed partial matches shared across rules",
+   "observable_consequence": "time per cycle vs R and F with the beta memories enabled vs disabled; memory vs join selectivity",
+   "vacuity_condition": "one rule or one fact change per run",
+   "trivial_shortcuts": "a world where facts never change",
+   "cheat_control": "an organism told which rules changed status must fire the same sequence at zero match cost; naive re-matching must show the R x F^k scaling: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: production-rule inference (CLIPS, NASA 1985-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -684,6 +718,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "gnu-apl-2.0::P.an_expression_language_with_late_bound_symbol_classes_must_be_evaluated_right_to_left_by_a_fixed_lookahead_machine_with_no_precedence_table",
+   "source_fossil": "gnu-apl-2.0",
+   "source_evidence": "Prefix.cc reduce_statements; Prefix.def",
+   "condition": "tokens whose grammatical class (value, function, operator) is known only at run time; evaluation is strictly right to left with operators binding tighter than functions; the organism has bounded lookahead",
+   "resource_or_constraint": "six tokens of lookahead; one phrase table",
+   "failure_condition": "a wrong reduction on an ambiguous prefix, or a construct that needs more lookahead",
+   "world_punishes": "a precedence table (wrong for APL) and a full parse tree (impossible before classes are known)",
+   "world_rewards": "shift/reduce on classes with retry",
+   "observable_consequence": "statements evaluated correctly vs a reference interpreter over the ISO APL test corpus, with the lookahead cap varied",
+   "vacuity_condition": "a language with static classes",
+   "trivial_shortcuts": "a reference interpreter as oracle (which is what a Stage C run would use)",
+   "cheat_control": "an organism given each token's class in advance must parse with lookahead 3; the ancestor with the class hint removed must need the retry protocol: the world must show the difference",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: APL evaluation (GNU APL, Sauermann 2008-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "gzip-1.2.4-1993::P.repeated_substrings_in_a_stream_must_be_found_in_bounded_memory_and_time_per_byte",
    "source_fossil": "gzip-1.2.4-1993",
    "source_evidence": "the configuration table; record pressure",
@@ -868,6 +919,40 @@
    "cheat_control": "a store with an infinitely fast compactor must never stall; if the world's write rate never triggers the slowdown, the mechanism is untested",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "libcorrect-quiet::P.a_maximum_likelihood_sequence_decoder_must_run_on_an_unbounded_stream_with_bounded_memory_and_bounded_latency",
+   "source_fossil": "libcorrect-quiet",
+   "source_evidence": "history_buffer.c; the toy viterbi-hmm-xukmin body as the full-traceback reference",
+   "condition": "symbols arrive forever; the organism must emit decisions with a fixed delay and fixed memory, though the optimal decision depends on the whole future",
+   "resource_or_constraint": "a window of W symbols of history; fixed-width metrics",
+   "failure_condition": "wrong bits from deciding too early, or overflow/unbounded memory from deciding too late",
+   "world_punishes": "both",
+   "world_rewards": "a window longer than the survivor merge depth and metrics kept bounded",
+   "observable_consequence": "bit error rate vs window length W on a noisy channel: a knee at the merge depth; overflow events vs renormalisation interval",
+   "vacuity_condition": "finite short messages (full traceback is affordable)",
+   "trivial_shortcuts": "unbounded memory",
+   "cheat_control": "a decoder with a full-length trellis (the toy body) is the ceiling; a window of 1 symbol must show the error floor of per-symbol decisions: the world must show the knee between them",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: streaming Viterbi decoding (libcorrect)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "libdai-mooij::P.beliefs_on_a_cyclic_constraint_graph_must_be_refined_by_local_messages_whose_order_of_application_decides_whether_they_settle_at_all",
+   "source_fossil": "libdai-mooij",
+   "source_evidence": "bp.cpp run(); record tags approximate-inference / factor-graphs",
+   "condition": "the same local message rule as on a tree, but the graph has cycles; the organism chooses the order in which edges are updated; some orders oscillate",
+   "resource_or_constraint": "updates per iteration; a residual heap or a random permutation",
+   "failure_condition": "no convergence within the budget, or convergence to beliefs far from the exact marginals",
+   "world_punishes": "parallel updates on bipartite-like structure; wasted updates on edges that are already settled",
+   "world_rewards": "updating where the residual is largest",
+   "observable_consequence": "iterations to tol and final belief error vs the junction-tree oracle, per schedule, on graphs with increasing cycle count",
+   "vacuity_condition": "a tree (any order converges in one sweep)",
+   "trivial_shortcuts": "exact inference on small graphs",
+   "cheat_control": "the exact junction tree (in the body) is the ceiling; the parallel schedule on a 4-cycle with strong couplings must oscillate: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: approximate inference on factor graphs (libDAI, Mooij 2010)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1296,6 +1381,40 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "pforth::P.a_language_must_be_extended_by_its_own_programs_at_run_time_with_no_parser_and_a_few_kilobytes_of_interpreter",
+   "source_fossil": "pforth",
+   "source_evidence": "pf_inner.c pfCatch; pfcompil.c ffInterpret",
+   "condition": "an organism must accept new named behaviours at run time, composed from existing ones, and run them at near-primitive speed, on a machine with tiny memory; no grammar beyond tokens and blanks",
+   "resource_or_constraint": "interpreter size; dictionary memory; one dispatch per token",
+   "failure_condition": "a definition that cannot be built from earlier ones, or a run-time cost per token that grows with program size",
+   "world_punishes": "parsers (size), tree-walking (speed), fixed vocabularies (no extension)",
+   "world_rewards": "threaded code with a self-extending dictionary and immediate words",
+   "observable_consequence": "interpreter size vs tokens per second vs number of user definitions",
+   "vacuity_condition": "a fixed program (compile once)",
+   "trivial_shortcuts": "a bigger machine",
+   "cheat_control": "a native-compiled version of the same program is the speed ceiling; a tree-walking interpreter of the same words is the floor: the world must place threaded code between them",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a portable, self-extending Forth (Burk 1994-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "pyportfolioopt-1.5.5::P.an_allocation_over_correlated_assets_must_be_chosen_from_a_noisy_covariance_estimate_without_the_optimiser_amplifying_the_estimation_error",
+   "source_fossil": "pyportfolioopt-1.5.5",
+   "source_evidence": "risk_models.py shrinkage; efficient_frontier.py min_volatility; DeMiguel et al. 2009 (the 1/N result) as the control's rationale",
+   "condition": "N assets, T observations with T not much larger than N; the organism chooses weights to trade expected return against variance; the covariance it sees is a noisy estimate; the score is out-of-sample variance",
+   "resource_or_constraint": "T samples; a convex solve",
+   "failure_condition": "weights concentrated on the assets whose covariance is most under-estimated (the error-maximisation property)",
+   "world_punishes": "using the raw sample covariance",
+   "world_rewards": "shrinkage toward structure; constraints that bound concentration",
+   "observable_consequence": "out-of-sample variance of the minimum-variance portfolio with sample vs shrunk covariance as N/T grows toward 1",
+   "vacuity_condition": "T >> N (the sample covariance is fine) or uncorrelated assets",
+   "trivial_shortcuts": "equal weights (the 1/N benchmark, which the literature shows is hard to beat -- a world must include it as a control)",
+   "cheat_control": "an organism given the true covariance must achieve the minimum out-of-sample variance; the raw-sample organism at N/T near 1 must show the blow-up; equal weights must sit between: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: mean-variance portfolio construction (Markowitz 1952 as a library)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "python-control::P.coupled_multivariable_dynamics_must_be_driven_to_rest_with_bounded_effort",
    "source_fossil": "python-control",
    "source_evidence": "record pressure / failure; lqr",
@@ -1398,6 +1517,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "simple-kalman-denyssene::P.a_noisy_scalar_must_be_smoothed_by_a_microcontroller_with_no_model_of_how_fast_the_true_value_moves",
+   "source_fossil": "simple-kalman-denyssene",
+   "source_evidence": "SimpleKalmanFilter.cpp updateEstimate; record tags sensor-fusion / signal-reconstruction",
+   "condition": "a sensor value with noise and occasional real steps; a few bytes of state and a few operations per sample; the organism is not told the process dynamics",
+   "resource_or_constraint": "constant state; one division per sample",
+   "failure_condition": "lag on steps or noise pass-through",
+   "world_punishes": "both",
+   "world_rewards": "a gain that rises when the signal moves and falls when it is quiet",
+   "observable_consequence": "RMS error and step-response lag on a step-plus-noise signal, against a fixed-alpha smoother and against a true Kalman filter with known Q",
+   "vacuity_condition": "a stationary signal (fixed alpha wins) or known dynamics",
+   "trivial_shortcuts": "a world that reveals the true value",
+   "cheat_control": "an organism given the true value must score zero error; the fixed-alpha smoother must show the lag/noise trade-off this filter claims to escape: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: cheap scalar smoothing on Arduino (Sene 2017)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "spin-pathfinder-priority-inversion-1997::P.hard_deadline_with_shared_resource_across_priorities",
    "source_fossil": "spin-pathfinder-priority-inversion-1997",
    "source_evidence": "model comment lines 1-16 + record.human_failure_condition",
@@ -1483,6 +1619,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "swipl-9.2.9::P.a_search_over_alternatives_must_retain_exactly_the_state_needed_to_resume_older_alternatives_and_discard_the_rest_as_soon_as_determinism_is_known",
+   "source_fossil": "swipl-9.2.9",
+   "source_evidence": "pl-vmi.c I_DEPART, C_OR, I_CUT",
+   "condition": "an organism explores alternatives depth-first with unification; each alternative may need the state at its creation; most calls turn out deterministic; memory is the cost",
+   "resource_or_constraint": "a frame stack and a choice chain",
+   "failure_condition": "stack growth on deterministic recursion, or a lost alternative",
+   "world_punishes": "keeping frames pinned by choice points that will never be taken; discarding a frame an alternative needed",
+   "world_rewards": "last-call reuse gated on the choice chain and cuts that trim it",
+   "observable_consequence": "stack size vs recursion depth on a deterministic loop with and without a spurious earlier choice point",
+   "vacuity_condition": "no alternatives (a functional language)",
+   "trivial_shortcuts": "unbounded memory",
+   "cheat_control": "a determinism oracle supplied by the world must give constant stack always; the ancestor with LCO disabled (the PLFLAG_LASTCALL flag in the code) must grow linearly: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: logic programming execution (SWI-Prolog, Wielemaker 1987-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "tiny-aes-c::P.a_block_cipher_must_be_invertible_fast_and_diffuse_fully_in_few_rounds_on_8_bit_and_32_bit_machines",
    "source_fossil": "tiny-aes-c",
    "source_evidence": "the round structure; record entry point",
@@ -1548,6 +1701,23 @@
    "cheat_control": "N/A",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "tscp-1.81-kerrigan-1997::P.a_two_player_game_tree_far_larger_than_the_budget_must_be_searched_to_a_decision_within_a_time_limit_using_a_cheap_leaf_estimate",
+   "source_fossil": "tscp-1.81-kerrigan-1997",
+   "source_evidence": "search.c; record domain game-tree-search",
+   "condition": "an adversarial game with branching ~35; the organism has a clock, a static estimate of positions, and no tree it can exhaust; it must return the best move it can by the deadline",
+   "resource_or_constraint": "nodes per second; the deadline",
+   "failure_condition": "a move chosen from an unfinished search, or a leaf estimate taken mid-exchange (horizon)",
+   "world_punishes": "depth-first commitment without pruning; estimates in unstable positions",
+   "world_rewards": "pruning by bounds, ordering, deepening with a completed-iteration fallback, and quiescence",
+   "observable_consequence": "nodes to reach a given depth with ordering on/off; blunder rate with quiescence on/off; move quality vs time",
+   "vacuity_condition": "a game small enough to solve",
+   "trivial_shortcuts": "a tablebase or an oracle",
+   "cheat_control": "an organism given the game-theoretic value of every position must play perfectly at depth 1; the ancestor with alpha-beta disabled (plain negamax) must search ~35x more nodes per ply: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: chess play under a clock (Kerrigan 1997, a teaching program)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
