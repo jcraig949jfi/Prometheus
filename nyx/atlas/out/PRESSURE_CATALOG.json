@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:15Z",
- "n": 147,
+ "built": "2026-09-17T23:27Z",
+ "n": 157,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -239,6 +239,23 @@
    "cheat_control": "an organism given the optimal order must show the minimum node count; a fixed-order organism on a permuted input must show the blow-up; sifting must recover within 20 percent of the given-order size: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: symbolic Boolean manipulation (Bryant 1986; Rudell 1993)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "bzip2-1.0.8::P.a_block_must_be_compressed_close_to_its_context_entropy_in_bounded_time_on_every_input_including_the_repetitive_ones_that_defeat_the_fast_sort",
+   "source_fossil": "bzip2-1.0.8",
+   "source_evidence": "blocksort.c BZ2_blockSort; compress.c sendMTFValues",
+   "condition": "an organism compresses blocks of text-like data; the score is compressed size against gzip and compression time on ordinary and on adversarial (highly repetitive) inputs; the format may not vary with the input's difficulty",
+   "resource_or_constraint": "one pass of sorting per block; a work budget",
+   "failure_condition": "quadratic time on repetitive input, or a size worse than gzip on text",
+   "world_punishes": "an unguarded quicksort on rotations; a single Huffman table over a context-sorted block",
+   "world_rewards": "a budgeted sort with a bounded fallback; per-group table selection",
+   "observable_consequence": "compression time on a 900 kB block of one repeated byte with the budget disabled vs enabled; compressed size on a text corpus with nGroups forced to 1 vs the adaptive choice",
+   "vacuity_condition": "incompressible data",
+   "trivial_shortcuts": "a linear-time suffix array (which the world may allow as the modern control)",
+   "cheat_control": "an organism with a linear-time suffix array must show bounded time and identical output; the unguarded sort must show the blow-up on the repetitive block; the single-table coder must show the size penalty on text: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: block-sorting compression (Seward 1996-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -851,6 +868,23 @@
    "cheat_control": "an organism given the exact minimum cover must reproduce it; expand-only must show a larger cover on the benchmarks; the full loop must close most of the gap: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: two-level logic minimisation (Brayton et al. 1984)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "femtolisp::P.a_language_runtime_must_be_small_enough_to_embed_in_another_system_yet_fast_enough_to_run_its_own_compiler_at_startup_and_support_deep_recursion_by_tail_calls",
+   "source_fossil": "femtolisp",
+   "source_evidence": "flisp.c apply_cl; compiler.lsp; the boot files",
+   "condition": "an organism implements a Lisp for use inside a larger program; the score is core size (lines of C), startup time, and correct tail-call behaviour on deep recursion; the compiler must be part of the system",
+   "resource_or_constraint": "a few thousand lines of C; one boot image",
+   "failure_condition": "a core too large to embed, a startup that interprets the compiler from source, or stack growth on tail recursion",
+   "world_punishes": "a tree-walking interpreter with the compiler in C; no boot image",
+   "world_rewards": "a bytecode VM with frame reuse and a self-hosted compiler shipped as an image",
+   "observable_consequence": "lines of C in the core, startup time with and without the boot image, and stack depth on a million-iteration tail loop",
+   "vacuity_condition": "a language without recursion",
+   "trivial_shortcuts": "linking an existing large Lisp (which the size score punishes)",
+   "cheat_control": "an organism given a precompiled image must start in milliseconds; the same system bootstrapped from source must take seconds; a VM without tail-call frame reuse must overflow on the loop: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: an embeddable Scheme-like Lisp (Bezanson 2008-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1908,6 +1942,57 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "picosat-965::P.a_cdcl_solver_used_incrementally_under_assumptions_must_restart_often_without_losing_its_partial_assignments_and_must_emit_a_checkable_proof_of_unsatisfiability",
+   "source_fossil": "picosat-965",
+   "source_evidence": "picosat.c assign_phase, the restart functions, decide; the trace functions by name",
+   "condition": "an organism answers a sequence of related SAT queries (bounded model checking) each under a set of assumed literals; frequent restarts are needed for heavy tails; an unsatisfiable answer must come with a proof a third party can check; the score is total time over the sequence and proof validity",
+   "resource_or_constraint": "time; proof size",
+   "failure_condition": "restarts that discard progress (time), or an UNSAT answer without a checkable proof",
+   "world_punishes": "restarting with fresh polarities; proofs reconstructed after the fact",
+   "world_rewards": "phase saving, Luby restarts, a trace recorded during search",
+   "observable_consequence": "time over a BMC unrolling sequence with phase saving on and off; proof check success rate on the UNSAT instances",
+   "vacuity_condition": "one query, satisfiable",
+   "trivial_shortcuts": "re-solving from scratch per query (correct, slow)",
+   "cheat_control": "an organism given the previous query's model as the initial phase must match phase saving's time; phase saving off must show the time penalty on the sequence; an UNSAT answer with tracing off must fail the proof check: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: incremental CDCL with proofs (Biere 2007-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "pid-autotune-hirschmann::P.a_controller_must_be_tuned_for_an_unknown_process_by_a_bounded_closed_loop_experiment_that_never_lets_the_process_run_away_and_that_recognises_when_no_usable_cycle_appears",
+   "source_fossil": "pid-autotune-hirschmann",
+   "source_evidence": "autotune.py; kettle.py as the world",
+   "condition": "an organism must find PID gains for a process it does not know, by manipulating the output and watching the input; the process must stay within bounds throughout; noise is present; some processes do not oscillate under relay; the score is the closed-loop performance of the resulting gains and the experiment's duration",
+   "resource_or_constraint": "a relay step; a peak cap",
+   "failure_condition": "an unbounded excursion during identification, gains from an unsteady cycle, or an experiment that never ends",
+   "world_punishes": "open-loop step tests on integrating processes; accepting the first two peaks; no cap",
+   "world_rewards": "relay feedback with hysteresis, steadiness acceptance, a peak cap, a rule table",
+   "observable_consequence": "on the kettle simulation with noise: the identified Ku and Pu vs the analytic values, the experiment length, and the step response of the tuned loop for each rule; a non-oscillating process must reach FAILED",
+   "vacuity_condition": "a known process",
+   "trivial_shortcuts": "the process model (the cheat control)",
+   "cheat_control": "an organism given the kettle's parameters must compute Ku and Pu exactly; the tuner with the steadiness check removed must return biased gains on the noisy kettle; the tuner on a first-order process without delay must FAIL within 20 peaks: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: relay auto-tuning (Astrom & Hagglund 1984) as a hobby brewing controller (Hirschmann 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "pybreaker-1.2.0::P.a_caller_of_a_failing_dependency_must_stop_calling_it_quickly_keep_its_own_latency_bounded_and_notice_recovery_without_flooding_the_dependency_while_many_callers_decide_independently",
+   "source_fossil": "pybreaker-1.2.0",
+   "source_evidence": "the three state classes; the Redis storage's set-if-greater",
+   "condition": "N organisms call a dependency that goes down for a while and then recovers slowly; each call to a down dependency costs a timeout; the score is the callers' latency during the outage, the load on the dependency during recovery, and the delay in noticing recovery",
+   "resource_or_constraint": "a counter and a clock per breaker; optionally a shared store",
+   "failure_condition": "callers blocked on timeouts throughout the outage, or a recovery stalled by a flood of retries, or a breaker that never closes",
+   "world_punishes": "retry-forever; per-process breakers that each probe at once; no half-open state",
+   "world_rewards": "a failure-count trip, a timeout-gated single probe, shared state",
+   "observable_consequence": "caller latency and dependency load over a simulated outage-and-recovery for no breaker, per-process breakers and a shared breaker; time from recovery to the first closed breaker",
+   "vacuity_condition": "a dependency that never fails",
+   "trivial_shortcuts": "an oracle that says when the dependency is up (the cheat control)",
+   "cheat_control": "an organism told the outage interval must show zero timeouts and zero probes; retry-forever must show latency equal to the timeout for the whole outage; N per-process breakers must show N probes per reset period where the shared breaker shows one: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: stability pattern for distributed callers (Nygard 2007; pybreaker 2010-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "pyportfolioopt-1.5.5::P.an_allocation_over_correlated_assets_must_be_chosen_from_a_noisy_covariance_estimate_without_the_optimiser_amplifying_the_estimation_error",
    "source_fossil": "pyportfolioopt-1.5.5",
    "source_evidence": "risk_models.py shrinkage; efficient_frontier.py min_volatility; DeMiguel et al. 2009 (the 1/N result) as the control's rationale",
@@ -2075,6 +2160,23 @@
    "cheat_control": "an organism with unlimited instructions must show constant frame time at any n; the loop without the burn must show frame time falling as objects explode; a switch-based dispatch must show cost growing with kinds: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: real-time two-player simulation (Russell, Graetz, Wiitanen, Samson, Edwards 1961-62)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "spdylay::P.many_request_response_streams_must_share_one_ordered_connection_such_that_a_slow_or_blocked_stream_does_not_delay_the_others_and_headers_repeated_on_every_request_cost_almost_nothing",
+   "source_fossil": "spdylay",
+   "source_evidence": "spdylay_session.c add_frame and the queues; spdylay_zlib.c dictionaries; the window functions",
+   "condition": "an organism carries N concurrent request/response exchanges over one reliable ordered byte stream; consumers drain at different rates; each exchange carries hundreds of bytes of mostly repeated headers; the score is page-load latency and bytes on the wire",
+   "resource_or_constraint": "one connection; a compression context per direction",
+   "failure_condition": "head-of-line blocking (one slow stream delays the rest) or header bytes dominating small requests",
+   "world_punishes": "one exchange at a time; per-request compression from a cold context",
+   "world_rewards": "multiplexed frames with priorities, per-stream credit windows, a persistent compressor with a seeded dictionary",
+   "observable_consequence": "page-load time and header bytes for a page of 50 resources over HTTP/1.1 (6 connections) vs SPDY over one connection, with one resource's consumer stalled",
+   "vacuity_condition": "one resource per page",
+   "trivial_shortcuts": "many parallel connections (which the world may cap, as browsers did)",
+   "cheat_control": "an organism with unlimited connections must match SPDY's latency at higher connection count; serial HTTP/1.1 must show the head-of-line delay; SPDY with the dictionary removed must show the cold-start header cost: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: multiplexed HTTP transport (Google SPDY 2009; spdylay 2012-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2265,6 +2367,40 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "tinyekf-levy::P.a_nonlinear_state_must_be_tracked_from_noisy_sensors_on_a_processor_with_no_heap_and_little_arithmetic_where_a_single_bad_measurement_must_not_corrupt_the_estimate",
+   "source_fossil": "tinyekf-levy",
+   "source_evidence": "tinyekf.h ekf_update and _cholsl; the examples' data",
+   "condition": "an organism fuses sensors into a state estimate on a microcontroller; the dynamics and measurements are nonlinear; memory is static; occasional measurements are inconsistent (a corrupt GPS fix); the score is estimate error and the absence of divergence",
+   "resource_or_constraint": "stack arrays sized at compile time; no heap",
+   "failure_condition": "divergence after a bad measurement, or memory that grows with the problem",
+   "world_punishes": "an update that inverts S without checking; dynamic allocation",
+   "world_rewards": "fixed-size arrays and an abort on a failed factorisation",
+   "observable_consequence": "position error on the GPS example's data with a corrupted fix injected, for the update with and without the Cholesky abort; peak stack use",
+   "vacuity_condition": "a linear model with consistent measurements",
+   "trivial_shortcuts": "a desktop EKF with the Joseph form and gating (which costs what the target lacks)",
+   "cheat_control": "an organism given the true trajectory must show zero error; the update without the abort must diverge on the injected fix; with the abort it must skip the fix and continue: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: embedded state estimation (Levy 2015-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "tinystm-marlier::P.arbitrary_code_must_run_atomically_and_in_isolation_on_many_cores_without_programmer_locks_such_that_conflicting_transactions_detect_each_other_cheaply_and_long_read_mostly_transactions_are_not_starved_by_frequent_small_commits",
+   "source_fossil": "tinystm-marlier",
+   "source_evidence": "stm_internal.h lock words; stm_wbetl.h validate / extend / commit",
+   "condition": "an organism executes blocks of memory operations from many threads with atomicity and isolation; conflicts are rare but real; some transactions are long and read-mostly; the score is throughput and the abort rate vs a fine-grained lock baseline",
+   "resource_or_constraint": "a lock table; one global counter",
+   "failure_condition": "lost updates or torn reads (safety), or an abort rate that makes long transactions starve",
+   "world_punishes": "value-based validation (re-reading everything); a fixed snapshot for long readers; a global lock",
+   "world_rewards": "versioned stripes with a global clock, snapshot extension, encounter-time write locks",
+   "observable_consequence": "throughput and aborts on a red-black tree and a linked list benchmark vs threads, for TL2-style (no extension) vs LSA-style (extension), and vs fine-grained locks",
+   "vacuity_condition": "one thread",
+   "trivial_shortcuts": "a global lock (safe, no scaling)",
+   "cheat_control": "an organism with a global lock must show zero aborts and no scaling; the no-extension variant must show more aborts on long read-mostly transactions; the extension variant must reduce them at the cost of validation time: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: software transactional memory (Felber, Fetzer, Riegel 2008; TinySTM 1.0)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "tscp-1.81-kerrigan-1997::P.a_two_player_game_tree_far_larger_than_the_budget_must_be_searched_to_a_decision_within_a_time_limit_using_a_cheap_leaf_estimate",
    "source_fossil": "tscp-1.81-kerrigan-1997",
    "source_evidence": "search.c; record domain game-tree-search",
@@ -2296,6 +2432,23 @@
    "cheat_control": "an organism initialised at the generating model must not move (one iteration, gain below DELTA); the unscaled recursion must return zero likelihood past a few hundred steps; the unfloored re-estimator must lock a zero on a sequence missing one symbol: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: HMM estimation and decoding (Kanungo 1998 after Rabiner 1989)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "verilog-arbiter-forencich::P.n_requesters_must_share_one_resource_with_a_fair_and_fast_decision_every_cycle_when_the_decision_must_fit_in_one_clock_and_transactions_must_not_be_interrupted",
+   "source_fossil": "verilog-arbiter-forencich",
+   "source_evidence": "arbiter.v; priority_encoder.v",
+   "condition": "N ports request a shared resource; the organism grants one per cycle; the score is the worst-case wait of any continuously requesting port (fairness), the logic depth of the decision, and the absence of interrupted transactions",
+   "resource_or_constraint": "one clock cycle; a few registers",
+   "failure_condition": "starvation of a low-priority port, a decision deeper than the clock allows, or a grant withdrawn mid-transaction",
+   "world_punishes": "fixed priority under load (starvation); a rotate-and-encode chain (depth); re-deciding every cycle (interruption)",
+   "world_rewards": "a tree encoder, a masked second encoder, a hold policy",
+   "observable_consequence": "worst-case wait per port under all-ports-requesting for fixed vs round-robin; logic depth from synthesis at WIDTH 4, 16, 64; interrupted transfers with blocking off vs on",
+   "vacuity_condition": "one requester",
+   "trivial_shortcuts": "a time-slot scheduler (fair but wastes idle slots)",
+   "cheat_control": "an organism with a global schedule must show zero idle grants and perfect fairness; fixed priority must starve the last port under saturation; round-robin must bound the wait by N: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: bus and crossbar arbitration in open FPGA IP (Forencich 2014-2021)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2381,6 +2534,23 @@
    "cheat_control": "a decoder handed the true input must show zero errors; the per-symbol (memoryless) baseline must show errors at any positive flip rate: the world must separate them or the redundancy pressure is absent",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: convolutional code decoding (Viterbi 1967)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "walksat-v56::P.a_satisfying_assignment_must_be_found_for_large_satisfiable_formulas_where_complete_search_is_too_slow_and_the_landscape_has_local_minima_that_a_greedy_walk_revisits",
+   "source_fossil": "walksat-v56",
+   "source_evidence": "walksat.c flipatom, pickbest, picknovelty, the adaptive option",
+   "condition": "an organism searches assignments of a satisfiable CNF by flipping variables; the score is time to a model over a suite of random and structured instances; unsatisfiable instances may be present (the organism cannot prove them, only time out)",
+   "resource_or_constraint": "flips per second; a noise setting",
+   "failure_condition": "cycling between the same assignments, or flips that cost O(clauses) each",
+   "world_punishes": "pure greedy (GSAT without noise); recomputing scores from scratch; flipping back the last move",
+   "world_rewards": "incremental counts, clause-focused random walk with noise, age-aware refusal, adaptive noise",
+   "observable_consequence": "median flips to a model on uf250 random 3-SAT and on a structured family, for GSAT, SKC at fixed p, Novelty+ and adaptive noise; the fraction of runs that cycle without the periodic random walk",
+   "vacuity_condition": "2-SAT or instances solved by unit propagation",
+   "trivial_shortcuts": "a complete solver on small instances (the world uses instances where CDCL is slower)",
+   "cheat_control": "an organism given a model must verify it in one pass; GSAT with zero noise must get stuck on the structured family where SKC succeeds; Novelty without the periodic walk must show cycling that Novelty+ removes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: incomplete SAT solving by local search (Selman, Kautz, Cohen 1994; Kautz's distribution 2004-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

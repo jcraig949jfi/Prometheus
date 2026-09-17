@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:15Z",
- "n": 486,
+ "built": "2026-09-17T23:27Z",
+ "n": 513,
  "organs": [
   {
    "organ_id": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
@@ -6047,6 +6047,252 @@
     },
     "order_sensitivity": {
      "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output",
+   "fossil_ancestry": "bzip2-1.0.8",
+   "human_name": "BZ2_blockSort (1031-1094): nblock < 10000 -> fallbackSort; else budget = nblock * ((workFactor - 1) / 3), mainSort(..., &budget); if budget < 0 'too repetitive; using fallback sorting algorithm'; mainSort / mainQSort3 / mainSimpleSort / mainGtU (345-1030) with the budget decremented per comparison; origPtr search",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the rotations of the block are sorted by a two-byte radix pass followed by a three-way quicksort and shell sort on the buckets, with a comparison routine that uses precomputed 'quadrant' descriptors to shortcut long equal runs; every comparison spends from a budget proportional to the block size times a user work factor; if the budget runs out (highly repetitive input, the quadratic case of this sort) the whole block is re-sorted by a fallback method based on bucket sorting of the original bytes that is slower on average but bounded; the output (the sorted order and the origin pointer) is the same from both, so the format is unaffected",
+   "input": "a block of up to 900 kB",
+   "output": "the sorted rotation order and origPtr",
+   "state": "none across blocks",
+   "update": "per block",
+   "assumptions": [
+    "the fast sort's worst case is rare but real (runs of one byte); a budget is a cheaper guard than a worst-case-optimal suffix sort (this predates practical linear-time suffix arrays in the author's judgment, per the comments)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups"
+   ],
+   "fitness_value_in_ancestor": "bounded compression time on pathological inputs without a format change; the 1.0 series' main robustness fix",
+   "failure_landscape": "by reading: the fallback path is much slower; the budget constant is a heuristic ('Not that it particularly matters any more')",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Burrows & Wheeler 1994; Bentley & McIlroy's three-way quicksort; Seward's own budget idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/blocksort.c:1031-1094; 345-352, 620-628, 743-757"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "BZ2_blockSort and the budget threading",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups",
+   "fossil_ancestry": "bzip2-1.0.8",
+   "human_name": "sendMTFValues (239-400): nGroups from nMTF (2 to 6); the initial split of the symbol frequency range into nGroups parts; for iter < BZ_N_ITERS (4): per group of BZ_G_SIZE (50) symbols compute the cost under each table, pick the cheapest (selector), accumulate that table's frequencies, then rebuild all tables (BZ2_hbMakeCodeLengths); the 6-table unrolled cost loop",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the MTF/RLE symbol stream is cut into groups of 50; the number of tables is chosen from the stream length; initial tables are made by splitting the alphabet by cumulative frequency into that many contiguous ranges; then, four times, each group is assigned the table that would code it in the fewest bits, the assignments are recorded as selectors, and each table's code lengths are recomputed from the symbols of the groups assigned to it; selectors are themselves MTF-coded and sent with the tables",
+   "input": "the MTF symbol stream",
+   "output": "tables, selectors, the coded block",
+   "state": "none across blocks",
+   "update": "per block",
+   "assumptions": [
+    "symbol statistics vary along a BWT-sorted block (different contexts dominate different regions), so several tables beat one; four rounds of reassignment converge well enough (a k-means on code costs)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output"
+   ],
+   "fitness_value_in_ancestor": "a few percent better than a single table at negligible decoder cost; the reason bzip2 beats gzip on text",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the multiple-table trick is Seward's (the CHANGES note 0.9.0c 'changed setting of nGroups'); Lloyd's algorithm as the abstract form",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/compress.c:239-400"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sendMTFValues' table-selection loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "resource_dependence": {
@@ -19829,6 +20075,252 @@
     },
     "update_topology": {
      "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto",
+   "fossil_ancestry": "femtolisp",
+   "human_name": "apply_cl (934-1000): func from the stack, ip from fn_bcode, stack growth check from the code's declared depth, the frame push (fn_env, curr_frame, nargs, ip slot, captured), OP(OP_ARGC) and the 59 opcode cases; USE_COMPUTED_GOTO",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "calling a closure pushes its environment, the caller's frame pointer, the argument count and a flag saying whether the frame's variables have been captured by an inner closure (in which case they live in a heap vector, not the stack); the code object declares its maximum stack depth so the check happens once per call; opcodes are dispatched by a jump table of label addresses when the compiler supports it; tail calls reuse the frame (the record's 'tail calls')",
+   "input": "a closure and arguments on the stack",
+   "output": "a value",
+   "state": "the value stack, curr_frame",
+   "update": "per instruction",
+   "assumptions": [
+    "a stack machine with a per-function depth declaration is simple and fast enough; capturing decides at compile time which frames must be heap-allocated"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image"
+   ],
+   "fitness_value_in_ancestor": "a Lisp small enough to embed (it bootstraps Julia's parser) with proper tail calls",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the classic bytecode Lisp/Scheme VM; computed-goto dispatch from the gcc idiom",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/flisp.c:934-1000"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "apply_cl; MEDIUM because the opcode bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image",
+   "fossil_ancestry": "femtolisp",
+   "human_name": "compiler.lsp: bcode:code / ctable / nconst / cdepth (52-57), emit (65), compile-sym, compile-if, compile-begin, compile-while, compile-for (245-320); flisp.boot; mkboot0.lsp / mkboot1.lsp; bootstrap.sh",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler walks source forms with an environment of lexical variables, emitting opcodes and constant-table indices into a growing code vector while tracking the maximum stack depth; special forms each have a compile function; the result is a closure over a code object; because the compiler is itself Lisp, the build compiles it once into flisp.boot (a serialised heap image) that the C runtime loads at start, and rebuilding the image from source is a two-stage bootstrap",
+   "input": "source forms",
+   "output": "code objects",
+   "state": "the code vector under construction",
+   "update": "per form",
+   "assumptions": [
+    "writing the compiler in the language keeps the C core small; a boot image avoids interpreting the compiler at every start"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto"
+   ],
+   "fitness_value_in_ancestor": "the C core is under 3,000 lines with the compiler outside it",
+   "failure_landscape": "by reading: a change to the VM's opcodes requires regenerating the boot image with the old image (the bootstrap chicken-and-egg the two mkboot files handle)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the metacircular compiler with a boot image (every self-hosting Lisp since MacLisp)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/compiler.lsp:52-320 (names)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "compiler.lsp and the boot files; CANDIDATE because bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -45509,6 +46001,992 @@
    }
   },
   {
+   "organ_id": "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "assign_phase (1579-1600): new_phase from the literal's sign; if the variable was assigned before, sdflips -= sdflips / FFLIPPED and, when the phase differs, the flip statistic is bumped; v->phase saved; decide uses the saved phase (sdecide, not read)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "whenever a variable is assigned, its polarity is remembered; a later decision on that variable reuses the remembered polarity, so after a restart or a backjump the solver re-enters the region of the search space it was in (progress saving); a decayed counter of how often the saved phase is contradicted is kept as a health statistic",
+   "input": "assignments",
+   "output": "a saved polarity per variable",
+   "state": "v->phase, sdflips",
+   "update": "per assignment",
+   "assumptions": [
+    "partial assignments found before a restart are worth keeping (Pipatsrisawat & Darwiche 2007); the flip statistic is cheap diagnostics"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random"
+   ],
+   "fitness_value_in_ancestor": "restarts stop throwing away work; one of the two changes (with Luby restarts) that made frequent restarting pay",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Pipatsrisawat & Darwiche 2007 (phase saving); MiniSat 2.2's polarity vector is the simpler form",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:1579-1600"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "assign_phase",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "luby (4830-4843), inc_lrestart (4856-4875): delta = 100 * luby(++lubycnt); lrestart = conflicts + delta; NLUBY: inc_drestart / inc_ddrestart geometric by FRESTART percent up to MAXRESTART; need_to_reduce (4810): nlclauses >= reduce_limit_on_lclauses; inc_lreduce (4550)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the next restart is scheduled at the current conflict count plus 100 times the next Luby number (1, 1, 2, 1, 1, 2, 4, ...); a compile-time alternative multiplies an interval by a percentage up to a cap (the older geometric scheme); independently, the learnt-clause database is reduced when its size crosses a limit that grows on its own schedule; reports mark the largest Luby deltas",
+   "input": "conflict counts",
+   "output": "restart and reduce events",
+   "state": "lubycnt, lrestart, the reduce limit",
+   "update": "per conflict",
+   "assumptions": [
+    "Luby's universal schedule bounds the loss from any fixed cutoff; decoupling the reduce schedule from restarts lets each be tuned"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random"
+   ],
+   "fitness_value_in_ancestor": "robust performance without per-instance tuning",
+   "failure_landscape": "by reading: the 100-conflict unit is a constant; Glucose-style dynamic restarts (on LBD) came later",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Luby, Sinclair & Zuckerman 1993; Huang 2007",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:4810-4880"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the restart and reduce schedule functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "inc_score (3449-3475): r->score = addflt(score, vinc); hup; vrescore (3436), crescore (4436) for clauses; decide (5874-5895): adecide (assumptions), rdecide (random), sdecide (scored)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each variable has a rank record with a float score; a bump adds the current increment and sifts the record up the heap; the increment grows per conflict and everything is rescaled when it would overflow (the MiniSat trick in float form); clause activities likewise; a decision first satisfies pending assumptions, else with some probability picks a random variable, else the heap maximum; the saved phase gives the sign",
+   "input": "conflict participation",
+   "output": "the next decision",
+   "state": "scores, the heap, vinc",
+   "update": "per conflict / per decision",
+   "assumptions": [
+    "VSIDS; assumptions as a decision prefix make incremental solving (solve under assumptions) natural"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+    "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule"
+   ],
+   "fitness_value_in_ancestor": "incremental SAT for bounded model checking (the author's use)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's VSIDS; MiniSat's assumptions interface",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:3449-3475, 5874-5895 (sdecide / rdecide not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the scoring and decide functions; CANDIDATE because sdecide was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pid-autotune-hirschmann::relay_feedback_switching_the_output_by_a_fixed_step_around_an_initial_value_when_the_input_crosses_the_setpoint_outside_a_noise_band",
+   "fossil_ancestry": "pid-autotune-hirschmann",
+   "human_name": "run() (100-125): STATE_RELAY_STEP_UP / DOWN; switch on input > setpoint + noiseband or < setpoint - noiseband; output = initial +/- outputstep clamped to [out_min, out_max]; sampletime gate",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each sample (no more often than the sample time) the state flips from stepping up to stepping down when the input exceeds the setpoint by the noise band, and back when it falls below by the noise band; the output is the initial output plus or minus the step accordingly, clamped to the limits; the hysteresis band prevents chattering on noise",
+   "input": "input_val, the clock",
+   "output": "the relay output",
+   "state": "the state, last run time",
+   "update": "per sample",
+   "assumptions": [
+    "a process under relay feedback oscillates at the frequency where its phase lag is 180 degrees (the describing-function argument); the oscillation amplitude and period identify the ultimate gain and period without an open-loop step test"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks"
+   ],
+   "fitness_value_in_ancestor": "the tuning experiment stays closed-loop and bounded (the process never runs away); the mechanism inside industrial 'autotune' buttons",
+   "failure_landscape": "by reading: a process with no 180-degree crossing (first order without delay) never cycles; the noise band trades false switching against amplitude bias",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Astrom & Hagglund 1984",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pid-autotune-hirschmann/upstream/tree/autotune.py:100-125"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the relay branch of run()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks",
+   "fossil_ancestry": "pid-autotune-hirschmann",
+   "human_name": "run() (126-165): is_max / is_min over the deque of lookback/sampletime inputs; inflection when the extremum type flips; peaks and peak_timestamps deques of 5; induced_amplitude = mean of the last four peak-to-peak differences; amplitude_dev against half the max-min range; PEAK_AMPLITUDE_TOLERANCE 0.05; STATE_FAILED at 20 peaks",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the last look-back seconds of input are kept; a sample that is the maximum (or minimum) of the window marks a peak type; a change of type is an inflection and the sample is recorded as a peak with its time; once more than four peaks exist, the induced amplitude is the average of the four most recent peak-to-peak swings and is compared with half the total range; if they agree within 5 percent the limit cycle is declared steady (SUCCEEDED); if twenty peaks pass without agreement the tuning FAILS and the output is zeroed",
+   "input": "the input history",
+   "output": "a, the peak times, a verdict",
+   "state": "the deques, peak_type, peak_count",
+   "update": "per sample",
+   "assumptions": [
+    "a steady limit cycle has equal successive amplitudes; five peaks (two full periods) are enough to judge; a bounded number of peaks bounds the experiment"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pid-autotune-hirschmann::relay_feedback_switching_the_output_by_a_fixed_step_around_an_initial_value_when_the_input_crosses_the_setpoint_outside_a_noise_band",
+    "pid-autotune-hirschmann::ultimate_gain_and_period_from_the_relay_step_the_cycle_amplitude_and_the_peak_timestamps_then_pid_gains_from_a_table_of_divisor_triples_per_named_rule"
+   ],
+   "fitness_value_in_ancestor": "the cycle is measured only once it is steady, and the experiment cannot run forever",
+   "failure_landscape": "by reading: the look-back window must exceed half a period or every sample is an extremum; the 5 percent tolerance and the 20-peak cap are constants",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pid-autotune-hirschmann/upstream/tree/autotune.py:126-165"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the peak block of run()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pid-autotune-hirschmann::ultimate_gain_and_period_from_the_relay_step_the_cycle_amplitude_and_the_peak_timestamps_then_pid_gains_from_a_table_of_divisor_triples_per_named_rule",
+   "fossil_ancestry": "pid-autotune-hirschmann",
+   "human_name": "Ku = 4 outputstep / (induced_amplitude pi); Pu = mean of two peak-to-peak periods from timestamps[1..4]; get_pid_parameters: kp = Ku / d0, ki = kp / (Pu / d1), kd = kp * (Pu / d2); _tuning_rules: ziegler-nichols [34, 40, 160], tyreus-luyben, ciancone-marlin, pessen-integral, some-overshoot, no-overshoot, brewing [2.5, 6, 380]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the describing function of a relay of amplitude d driving a cycle of amplitude a gives the ultimate gain 4 d / (pi a); the ultimate period is the average of two full periods measured between alternate peaks; a tuning rule is three divisors applied to Ku and Pu (Ziegler-Nichols' 0.6 Ku, Pu/2, Pu/8 appear here scaled by 100 as 34, 40, 160 for the author's percent-scaled controller), and six other rules are the same shape with other constants",
+   "input": "outputstep, a, the timestamps, a rule name",
+   "output": "Kp, Ki, Kd",
+   "state": "none",
+   "update": "at success",
+   "assumptions": [
+    "the process is well enough described by its ultimate point for a rule of thumb; different rules trade overshoot against speed"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks"
+   ],
+   "fitness_value_in_ancestor": "one experiment, seven tunings; the divisor table is the whole of the tuning knowledge",
+   "failure_landscape": "by reading: the constants are scaled to the author's percent-output kettle controller and are not the textbook values as written",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ziegler & Nichols 1942; Tyreus & Luyben 1992; the relay identification of Astrom & Hagglund 1984",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pid-autotune-hirschmann/upstream/tree/autotune.py:27-38, 78-90, 166-175"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "get_pid_parameters and the success branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "fossil_ancestry": "pybreaker-1.2.0",
+   "human_name": "CircuitClosedState.on_failure (727-736): counter >= fail_max -> open(); CircuitOpenState.before_call (759-770): if now < opened_at + reset_timeout raise CircuitBreakerError else half_open(); CircuitHalfOpenState (779-812): on_failure -> open(), on_success -> close(); _handle_success resets the counter (622-625); excluded exceptions do not count (204-215)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "in the closed state each call runs; a failure (an exception not in the excluded list) increments a counter and at fail_max the breaker opens and re-raises wrapped; in the open state every call raises immediately without touching the dependency until the reset timeout has passed since the recorded opening time, at which point the breaker goes half-open and the current call is the probe; a probe success closes the breaker and resets the counter, a probe failure re-opens it and restarts the timeout",
+   "input": "calls and their outcomes",
+   "output": "pass-through results or fast failures",
+   "state": "state, counter, opened_at",
+   "update": "per call",
+   "assumptions": [
+    "a dependency that has failed fail_max times in a row is down and calling it wastes time and worsens its recovery; one probe per timeout is enough to detect recovery"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater"
+   ],
+   "fitness_value_in_ancestor": "the calling system stays responsive while a dependency is down and does not hammer it during recovery (Nygard's Release It!)",
+   "failure_landscape": "by reading: consecutive failures only (a 1 percent error rate never trips; rate-based trips are a later variant); the probe is the first real call, so it may fail for the caller",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Nygard 2007; the pattern is older in electrical protection",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:588-812"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three state classes",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "fossil_ancestry": "pybreaker-1.2.0",
+   "human_name": "CircuitBreakerStorage (332-375: state, counter, opened_at as properties), CircuitMemoryStorage (377-420), the Redis storage (428-560): namespaced keys, increment_counter by INCR, opened_at via a pipeline 'set_if_greater' (547-557)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the breaker never holds its state in the object; every read and write goes through a storage interface with an in-memory default; the Redis storage keeps the state string, the counter (atomic increment) and the opening timestamp under namespaced keys, and writes the timestamp only if it is greater than the stored one inside a transaction, so that two processes opening the breaker at nearly the same time agree on the later time and neither shortens the other's timeout",
+   "input": "state reads and writes",
+   "output": "a shared view of the breaker",
+   "state": "the store",
+   "update": "per transition",
+   "assumptions": [
+    "a breaker per process would let each process discover the outage separately; sharing through a store gives the fleet one decision"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call"
+   ],
+   "fitness_value_in_ancestor": "fleet-wide fail-fast from a single-process pattern",
+   "failure_landscape": "by reading: the Redis round trip is on every call's path; a Redis outage becomes a breaker outage (the code falls back to closed on read errors per the names, not verified)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the pattern's distributed variants (Hystrix's per-process design vs shared state)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:332-560"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the storage classes",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
    "fossil_ancestry": "pyportfolioopt-1.5.5",
    "human_name": "BaseConvexOptimizer._solve_cvxpy_opt_problem; min_volatility; efficient_risk/return; add_objective/add_constraint",
@@ -49925,6 +51403,376 @@
     },
     "update_topology": {
      "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_session_add_frame (357-420): item->seq, item->pri per frame type (PING SPDYLAY_OB_PRI_PING, SETTINGS -1, SYN_REPLY / RST_STREAM / HEADERS the stream's pri, SYN_STREAM lowest); ob_pq and ob_ss_pq (202-206); spdylay_outbound_item_compar (99); the pop logic 1025-1097",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every frame to send becomes an outbound item with a sequence number and a priority; the priority is the stream's for frames belonging to an open stream, a fixed high value for PING, a fixed value for SETTINGS, and the lowest for new SYN_STREAMs, which also go to a separate queue so that stream openings are sent in the order requested and never starve data; the sender pops the higher-priority head of the two queues (ties broken by sequence), so a client's priority hints translate directly into transmission order on the single TLS connection",
+   "input": "frames from the application and the protocol",
+   "output": "an ordered byte stream",
+   "state": "two priority queues; next_seq",
+   "update": "per frame",
+   "assumptions": [
+    "the application's priorities are meaningful; control frames must not wait behind data (a stalled PING would look like a dead connection)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+    "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version"
+   ],
+   "fitness_value_in_ancestor": "head-of-line blocking of HTTP/1.1 removed without multiple connections; the priority model HTTP/2 refined into a dependency tree",
+   "failure_landscape": "by reading: priorities are absolute integers, so a low-priority stream can starve indefinitely behind a busy high one (HTTP/2's weighted tree was the answer); the two-queue split is a workaround for SYN_STREAM ordering",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "SPDY draft 2/3 (Google 2009-2012); RFC 7540 section 5.3 for the successor",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:99-110, 202-206, 357-420, 1025-1097"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "add_frame, the compare function and the pop path",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_zlib.c: spdy2_hd_dict (33), spdy3_hd_dict (48), spdylay_select_hd_dict (229-240); deflate / inflate with SetDictionary",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each direction of a session keeps a zlib stream for header blocks; the stream is primed with a fixed dictionary containing the header names and values that appear in nearly every request (methods, status codes, common header names, dates), so even the first request's headers compress well; SPDY/2 and SPDY/3 have different dictionaries; the compressor state persists across frames, so repeated headers cost almost nothing",
+   "input": "name/value header blocks",
+   "output": "compressed bytes",
+   "state": "the zlib streams (per direction)",
+   "update": "per header block",
+   "assumptions": [
+    "headers are highly redundant across requests; a shared prefix dictionary fixes the cold-start cost"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings"
+   ],
+   "fitness_value_in_ancestor": "request headers shrink by most of their size; the mechanism HTTP/2 REPLACED (with HPACK) because compressing secrets alongside attacker-controlled bytes leaks them (CRIME, 2012)",
+   "failure_landscape": "by reading: the compression context is shared across streams of one connection, which is exactly the CRIME side channel; the body predates the fix",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "deflate with a preset dictionary (zlib's deflateSetDictionary)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_zlib.c:33-60, 229-240"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "spdylay_zlib.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_session_on_window_update_received (1877), update_initial_window_size (1745), update_recv_window_size / recv_connection_window_size (2359-2382), predicate_window_update_send (708), add_window_update (2776)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each stream carries a send window decremented by the data it sends and a receive window decremented by what it receives; the receiver sends WINDOW_UPDATE when its consumed bytes cross a threshold, and the sender may not send data beyond its window; SPDY/3 added a connection-level window over all streams; a SETTINGS change of the initial window size adjusts every open stream's window by the difference",
+   "input": "DATA frames; WINDOW_UPDATE and SETTINGS frames",
+   "output": "permission to send",
+   "state": "window sizes per stream and per session",
+   "update": "per frame",
+   "assumptions": [
+    "receiver-driven credit is the right control when many streams share one TCP connection (TCP's own window is per connection, so one slow consumer would stall all)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings"
+   ],
+   "fitness_value_in_ancestor": "one stalled stream no longer blocks the others; the same design in HTTP/2 section 6.9",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:708, 1745-1877, 2359-2382, 2776 (names and signatures; bodies not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the window functions; CANDIDATE because read by name",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -54448,6 +56296,624 @@
    }
   },
   {
+   "organ_id": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "fossil_ancestry": "tinyekf-levy",
+   "human_name": "ekf_predict (184-200): memcpy(x, fx); FP = F P; Ft = F^T; P = FP Ft + Q; the _mulmat / _transpose / _addmat helpers (10-70)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the caller evaluates the nonlinear transition f at the current state and its Jacobian F outside the filter and passes both in; the filter copies the predicted state and propagates the covariance with two matrix products and an addition of the process noise, all in fixed-size arrays sized by the compile-time constants",
+   "input": "fx, F, Q",
+   "output": "x, P",
+   "state": "x, P",
+   "update": "per time step",
+   "assumptions": [
+    "the linearisation around the current estimate is the caller's responsibility; keeping the filter ignorant of the model makes it a library of one struct and two functions"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails"
+   ],
+   "fitness_value_in_ancestor": "an EKF that fits an Arduino: no heap, no dynamic sizes, no model code inside",
+   "failure_landscape": "by reading: no symmetrisation of P after the update; round-off can make P asymmetric over many steps in single precision (the _float_t switch exists to choose double)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kalman 1960; the EKF of the Apollo era (Schmidt), the record's lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:184-200"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ekf_predict",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "fossil_ancestry": "tinyekf-levy",
+   "human_name": "ekf_update (215-300): G = P H^T (H P H^T + R)^{-1} via invert() -> _cholsl (116-160, returns nonzero on a non-positive pivot); x += G (z - hx); ekf_update_step3 (199-206): P = (I - G H) P",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the innovation covariance S = H P H^T + R is inverted by Cholesky decomposition (choldc1) followed by forward and backward substitution; a non-positive diagonal during the decomposition returns an error and the update returns false, leaving x and P as predicted; otherwise the gain is P H^T S^-1, the state is corrected by the gain times the innovation z - hx (with hx supplied by the caller from its measurement model), and the covariance is reduced by the Joseph-less form (I - G H) P",
+   "input": "z, hx, H, R",
+   "output": "x, P, a success flag",
+   "state": "x, P",
+   "update": "per measurement",
+   "assumptions": [
+    "S is symmetric positive definite whenever the model and noises are sane; a Cholesky failure is a better signal of a bad measurement or model than a NaN in the state"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays"
+   ],
+   "fitness_value_in_ancestor": "the standard EKF update with a cheap, explicit sanity gate",
+   "failure_landscape": "by reading: (I - G H) P is numerically less stable than the Joseph form; no innovation gating beyond the factorisation check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the standard EKF equations; Cholesky inversion from Numerical Recipes (the attic's origin per the comments)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:116-160, 199-300"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ekf_update, invert, _cholsl",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_internal.h 165-250: OWNED_MASK, WRITE_MASK, INCARNATION_MASK, LOCK_GET_TIMESTAMP(l) = l >> LOCK_BITS, LOCK_GET_ADDR, LOCK_GET_INCARNATION; the lock array indexed by address hash; GET_CLOCK on a global counter",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a fixed array of lock words covers memory by hashing addresses to stripes; a word's low bit says whether it is owned by an in-flight writer, in which case the rest is a pointer to that writer's write-set entry (so a reader can find the owning transaction and, in write-through mode, the old value), otherwise the high bits are the version (the global clock value at the last commit that wrote the stripe) and a small incarnation count guards against a released-and-reacquired lock looking unchanged",
+   "input": "an address",
+   "output": "a lock word to read or CAS",
+   "state": "the lock array; the global clock",
+   "update": "per access and per commit",
+   "assumptions": [
+    "a global clock is cheap enough (one atomic increment per commit) and gives a total order of commits; striping trades false conflicts for table size"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+    "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version"
+   ],
+   "fitness_value_in_ancestor": "validation is a comparison of integers, not a re-read of values (the time-based STM idea)",
+   "failure_landscape": "by reading: the clock is a contention point on many cores; hash collisions between unrelated addresses cause false aborts",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Riegel, Felber & Fetzer 2006 (LSA) and Dice, Shalev & Shavit 2006 (TL2): the two time-based designs this body generalises",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_internal.h:165-250"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the lock-word macros and the clock",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_wbetl_validate (38-80): for each read entry, if the lock is owned by another transaction fail, else if its timestamp differs from the recorded version fail; stm_wbetl_extend (90-110): now = GET_CLOCK; if validate then tx->end = now",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a transaction records for every read the stripe's version; validation walks the read set and fails if any stripe is now owned by someone else or carries a different version; a transaction whose read would need a version newer than its current upper bound does not abort immediately but tries to extend: it reads the clock, validates, and if nothing it read has changed it adopts the new bound (its snapshot is still consistent as of now); commit validates once more unless the transaction's start equals the new timestamp minus one (nobody committed in between)",
+   "input": "the read set",
+   "output": "valid / invalid; a new end time",
+   "state": "tx->start, tx->end, the read set",
+   "update": "on a version miss and at commit",
+   "assumptions": [
+    "most reads of a long transaction stay valid, so extension avoids the aborts a fixed snapshot (TL2) would suffer; validation cost is linear in the read set, paid rarely"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+    "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version"
+   ],
+   "fitness_value_in_ancestor": "longer transactions survive concurrent commits (LSA's advantage over TL2)",
+   "failure_landscape": "by reading: validation is O(read set) per extension, so a transaction that keeps missing pays quadratically; a conflict callback exists for tracking",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Riegel et al. 2006 (lazy snapshot algorithm)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:38-110, 895-905"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "validate, extend and the commit-time check",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_wbetl_commit (852-930): t = FETCH_INC_CLOCK + 1; if start != t - 1 and !validate then rollback; write back the write set; release locks with LOCK_SET_TIMESTAMP(t); the read-only fast path under CM_MODULAR; the irrevocable-transaction gate",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "writes were buffered in the write set with their stripes locked at encounter time (write-back, encounter-time locking); at commit the transaction increments the global clock to obtain its commit timestamp; if any other commit happened since it started it re-validates its reads (else the snapshot cannot have been invalidated); on success it copies each buffered value to memory and stores the new timestamp into each stripe's lock word, which releases the lock and publishes the version in one store; on failure it rolls back (releasing locks with the old versions) and retries per the contention manager",
+   "input": "the write set; the clock",
+   "output": "a committed or aborted transaction",
+   "state": "the write set; the locks",
+   "update": "per commit",
+   "assumptions": [
+    "holding write locks from encounter to commit makes commit cheap and detects write-write conflicts early; the clock increment is the linearisation point"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+    "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter"
+   ],
+   "fitness_value_in_ancestor": "atomicity and isolation for arbitrary code with no lock discipline from the programmer",
+   "failure_landscape": "by reading: irrevocable (non-abortable) transactions need a global gate; long write sets hold locks long",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "TL2's commit with the LSA clock",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:852-930"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "stm_wbetl_commit",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
    "fossil_ancestry": "tscp-1.81-kerrigan-1997",
    "human_name": "search() (search.c)",
@@ -55391,6 +57857,376 @@
     },
     "update_topology": {
      "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-arbiter-forencich::priority_encoder_as_a_binary_tree_of_stages_each_reporting_validity_of_its_pair_and_the_index_bit_of_the_winning_half",
+   "fossil_ancestry": "verilog-arbiter-forencich",
+   "human_name": "priority_encoder.v: LEVELS = clog2(WIDTH); stage_valid[l][n] = |stage_valid[l-1][2n+1:2n]; stage_enc[l] = (upper half valid ? {1, upper index} : {0, lower index}) or the LSB-first mirror; output_unencoded = 1 << output_encoded",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the input is padded to a power of two; level 0 pairs adjacent bits and records whether either is set and which one wins (MSB or LSB by parameter); each higher level pairs two lower results, ORs their validity and prepends one index bit choosing the winning half; the top level yields the index of the highest-priority set bit in log2(WIDTH) gate delays, and a one-hot decode of it",
+   "input": "a request vector",
+   "output": "valid, an index, a one-hot mask",
+   "state": "none (combinational)",
+   "update": "every cycle",
+   "assumptions": [
+    "log-depth is worth the generate-loop complexity for wide vectors; the LSB/MSB priority choice is a parameter, not a rewrite"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-arbiter-forencich::round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant"
+   ],
+   "fitness_value_in_ancestor": "a wide-port arbiter that meets timing",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the tree priority encoder (any digital design text)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-arbiter-forencich/upstream/priority_encoder.v:25-75"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "priority_encoder.v",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-arbiter-forencich::round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant",
+   "fossil_ancestry": "verilog-arbiter-forencich",
+   "human_name": "arbiter.v: priority_encoder_inst on request; priority_encoder_masked on request & mask_reg; if ARB_TYPE_ROUND_ROBIN: masked winner if masked_request_valid else raw winner; mask_next = all-ones shifted past the winner's index (direction by ARB_LSB_HIGH_PRIORITY)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the mask register holds ones for every port strictly after the last granted port in priority order; each cycle two encoders run in parallel, one on the raw requests and one on the masked requests; if any masked request exists its winner is granted (the next port after the last grant that is requesting), otherwise the raw winner is granted (wrap-around); the mask is then set to the ports after the new winner; with round-robin off, the raw encoder's winner is granted (fixed priority)",
+   "input": "request vector; the last grant",
+   "output": "grant (one-hot), grant_valid, grant_encoded",
+   "state": "mask_reg, grant_reg",
+   "update": "per cycle",
+   "assumptions": [
+    "fairness is 'the next requester after the last served'; two encoders in parallel cost less latency than one encoder plus a rotate"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-arbiter-forencich::priority_encoder_as_a_binary_tree_of_stages_each_reporting_validity_of_its_pair_and_the_index_bit_of_the_winning_half",
+    "verilog-arbiter-forencich::grant_held_until_the_request_drops_or_until_acknowledged_selected_by_two_parameters"
+   ],
+   "fitness_value_in_ancestor": "fair arbitration at the same depth as fixed priority",
+   "failure_landscape": "by reading: a port that requests only when it is not next can still starve under adversarial timing (the classic limit of masked round-robin); no weighting",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the mask-based round-robin arbiter (a standard bus-arbiter idiom)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-arbiter-forencich/upstream/arbiter.v:50-125"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the always @* block's round-robin branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-arbiter-forencich::grant_held_until_the_request_drops_or_until_acknowledged_selected_by_two_parameters",
+   "fossil_ancestry": "verilog-arbiter-forencich",
+   "human_name": "arbiter.v: ARB_BLOCK && !ARB_BLOCK_ACK && (grant_reg & request) -> hold; ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge) -> hold",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "with blocking on and acknowledge off, the current grant is held as long as the granted port keeps requesting (a transaction-length hold); with acknowledge on, the grant is held until the granted port raises acknowledge (a handshake); without blocking the arbiter re-decides every cycle",
+   "input": "request, acknowledge",
+   "output": "grant held or released",
+   "state": "grant_reg",
+   "update": "per cycle",
+   "assumptions": [
+    "consumers of a grant need either a level (request stays high) or a pulse (ack) to finish a transfer; both are common in the author's AXI and Ethernet IP"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-arbiter-forencich::round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant"
+   ],
+   "fitness_value_in_ancestor": "one arbiter serves both handshake styles",
+   "failure_landscape": "by reading: a granted port that never acknowledges holds the bus forever (no timeout)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-arbiter-forencich/upstream/arbiter.v:78-88"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two hold branches",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -57416,6 +60252,502 @@
     },
     "uncertainty": {
      "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "flipatom (463-610): breakcount[] and makecount[] (166-167); for each clause of the flipped literal: a clause going true or false, or changing its number of true literals, adjusts the counts of the variables involved; the freebie list of variables with breakcount 0 and makecount > 0",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each clause knows how many of its literals are true and which one is the sole true literal when that number is one; flipping a variable walks its occurrence lists: a clause that becomes false increments the makecount of all its variables and removes the flipped one from breakcounts; a clause that goes from one true literal to two releases the break responsibility of the previously critical variable; a clause that goes from two to one makes the remaining true variable critical (its breakcount rises); variables with zero break and positive make are kept on a 'freebie' list because flipping them is always an improvement",
+   "input": "the variable to flip",
+   "output": "updated counts and the unsatisfied-clause list",
+   "state": "numtruelit per clause, breakcount, makecount, the false-clause list, the freebie list",
+   "update": "per flip",
+   "assumptions": [
+    "a variable's effect on the clause count is a local function of the clauses it occurs in; maintaining it incrementally makes a flip O(occurrences) rather than O(clauses)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+    "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips"
+   ],
+   "fitness_value_in_ancestor": "millions of flips per second; the reason local search became competitive on random and structured instances",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "GSAT's score maintenance (Selman, Levesque, Mitchell 1992); the break/make split is WalkSAT's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:463-610"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "flipatom and the count arrays",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "pickbest (1666-1691): tofix = false[random]; bestvalue = min breakcount over the clause; if (nofreebie || bestvalue > 0) and random < p then a random variable of the clause, else a random best",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an unsatisfied clause is chosen uniformly; among its variables the ones with the smallest breakcount are collected; if some variable breaks nothing it is taken (a free move), otherwise with probability p (the noise) a uniformly random variable of the clause is flipped and with 1 - p one of the best; the clause is thereby satisfied at every step and the damage elsewhere is minimised or randomised",
+   "input": "the false-clause list and the counts",
+   "output": "a variable to flip",
+   "state": "none",
+   "update": "per flip",
+   "assumptions": [
+    "always satisfying the chosen clause focuses the walk; break count alone (not net gain) is the right score; noise is needed to escape local minima and the free-move exception costs nothing"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+    "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates"
+   ],
+   "fitness_value_in_ancestor": "the SKC rule (Selman, Kautz, Cohen 1994) that made WalkSAT beat GSAT and complete solvers on hard random 3-SAT",
+   "failure_landscape": "by reading: the optimal noise p depends on the instance (the reason the adaptive option exists); it cannot prove unsatisfiability",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Selman, Kautz & Cohen 1994",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1666-1691"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pickbest",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "picknovelty (1918-1965): diff = makecount - breakcount; best and second best with age (changed[var]) as tie-break; youngest; 'if best != youngest return best; else with probability p second_best'; plus_flag (Novelty+: a 1 percent random walk) vs numflip % 100",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "in the chosen unsatisfied clause, variables are scored by net gain (make minus break), ties broken toward the older variable; if the best variable is not the one flipped most recently in the clause it is taken; if it is, the second best is taken with probability p; independently a random variable is taken every hundredth flip (or with probability 1 percent in the Novelty+ variant), which is what makes the walk provably able to leave any region",
+   "input": "the counts and the flip ages",
+   "output": "a variable",
+   "state": "changed[] (the last flip time per variable)",
+   "update": "per flip",
+   "assumptions": [
+    "flipping the variable just flipped back is the dominant failure of greedy walks; an age tie-break plus a probabilistic refusal is cheaper than a tabu list"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+    "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates"
+   ],
+   "fitness_value_in_ancestor": "Novelty (McAllester, Selman, Kautz 1997) and Novelty+ (Hoos 1999) outperform SKC on structured instances",
+   "failure_landscape": "by reading: without the periodic random walk Novelty can loop (Hoos's finding, which the plus variant fixes)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "McAllester, Selman & Kautz 1997; Hoos 1999",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1918-1965"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "picknovelty",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "-adaptive PHI THETA (214-218, 723-734): last_adaptive_objective, adaptive_phi 0.2, adaptive_theta 0.2; the update sites not read",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting at zero noise, the search watches the number of unsatisfied clauses; if it has not improved for a while (theta times the clause count) the noise is raised by phi of the remaining range, and on an improvement it is lowered faster; so the walk is greedy while progress is made and random when stuck",
+   "input": "the objective over time",
+   "output": "the noise p",
+   "state": "last_adaptive_objective, p",
+   "update": "per flip",
+   "assumptions": [
+    "the best static noise is instance-dependent and unknowable in advance; the objective's stagnation is a usable signal"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+    "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips"
+   ],
+   "fitness_value_in_ancestor": "removes the noise parameter from the user's hands (Hoos 2002)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hoos 2002 (adaptive noise)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:214-218, 723-734 (the option; the update code not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the adaptive option; CANDIDATE because the update site was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "representation_sensitivity": {

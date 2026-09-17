@@ -1,12 +1,12 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:15Z",
- "n": 300,
+ "built": "2026-09-17T23:27Z",
+ "n": 321,
  "by_reason": {
-  "GENERIC_LANGUAGE_MECHANICS": 43,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 90,
-  "OTHER": 118,
-  "BELOW_MEANINGFUL_GRAIN": 14,
+  "GENERIC_LANGUAGE_MECHANICS": 45,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 100,
+  "OTHER": 126,
+  "BELOW_MEANINGFUL_GRAIN": 15,
   "DUPLICATES_A_CONTROL": 2,
   "EFFECT_FROM_ENVIRONMENT": 18,
   "INHERITED_FROM_RUNTIME_OR_LIBRARY": 11,
@@ -325,6 +325,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "buddy-bdd"
+  },
+  {
+   "candidate": "generateMTFValues (move-to-front with zero-run coding RUNA/RUNB), huffman.c (code-length construction with the 17-bit cap), the bit writer, decompress.c (the inverse BWT via the T vector), bzlib.c streaming API, the CRC, the command-line tool and recover utility",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the zero-run coding (two symbols RUNA/RUNB encoding run lengths in bijective base 2) is a small mechanism worth a DEEP item",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bzip2-1.0.8"
+  },
+  {
+   "candidate": "'bzip2' / 'BWT compression' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the transform's sort, the MTF stage and the entropy coder are separable and the two engineering mechanisms read sit inside two of them",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bzip2-1.0.8"
   },
   {
    "candidate": "the eigen solver (Householder2 + QLalgo2, the tred2/tql2 lineage), Check_Eigen, the random generator, timings",
@@ -869,6 +885,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "espresso-logic"
+  },
+  {
+   "candidate": "gc (mark-and-sweep with a handle stack: 335-410, 525-620), the reader, printer, equal/hash, cvalues (a C-type and foreign-value layer), builtins, operators, iostream, the numeric tower, the examples and the ASCII Mona Lisa",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "cvalues (typed C values as first-class Lisp objects) is the part Julia inherited and deserves its own DEEP item",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "femtolisp"
+  },
+  {
+   "candidate": "'Lisp interpreter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the VM, the compiler and the collector are separable; the atlas's lisp-1-5-ibm7090-1962 cut holds the ancestor's interpreter",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "femtolisp"
   },
   {
    "candidate": "the instantiation pipeline (inst_pre/easy/hard/final: grounding PDDL/ADL into the connectivity graph), parse.c, output.c, memory.c, main.c",
@@ -1823,6 +1855,54 @@
    "fossil": "picorv32"
   },
   {
+   "candidate": "propagation (bcp, propl, the head/tail watch scheme and binary implication lists: setimpl / connect_head_tail), conflict analysis (analyze, fanalyze), clause minimisation, the clause allocator and garbage collection, the proof trace (RUP / extended resolution output), the ADO extension, simplification, failed-literal probing, the API and the app",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~7,500 lines); residue",
+   "note": "the head/tail watch scheme with binary lists is the propagation variant that distinguishes this lineage from MiniSat's two-watched-literal + blocker; it is the DEEP item to read next",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picosat-965"
+  },
+  {
+   "candidate": "'SAT solver' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the atlas's minisat cut names the five separable policies; this cut records where PicoSAT's differ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picosat-965"
+  },
+  {
+   "candidate": "pid.py (a PID; the atlas's arduino-pid cut holds a fuller one), kettle.py and sim.py (a first-order kettle with a heater: the WORLD of the script), the logging",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "kettle.py is the natural M3 world for a packet: the kettle's true ultimate point is computable from its parameters (the cheat control)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pid-autotune-hirschmann"
+  },
+  {
+   "candidate": "'autotuner' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the relay, the cycle detector and the rule table are separable (industrial tuners vary each)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pid-autotune-hirschmann"
+  },
+  {
+   "candidate": "the decorator and context-manager sugar (__call__, calling), the async and generator call variants, listeners (before_call / success / failure / state_change hooks), the type annotations, the tests",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:219-330, 565-590",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pybreaker-1.2.0"
+  },
+  {
+   "candidate": "'circuit breaker' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the state machine and the shared store are separable; the atlas's backoff cut holds the complementary retry mechanism the pattern is meant to bound",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pybreaker-1.2.0"
+  },
+  {
    "candidate": "expected_returns.py (mean/EMA/CAPM return models), risk_models sample/semi/exp covariances, cov<->corr helpers",
    "reason": "BELOW_MEANINGFUL_GRAIN",
    "evidence": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/expected_returns.py; vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:101-355",
@@ -1989,6 +2069,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "spacewar-pdp1-1962"
+  },
+  {
+   "candidate": "the frame encoder/decoder (spdylay_frame.c), the stream state machine (spdylay_stream.c), the receive path and its callbacks (mem_recv 2474-2738), NPN negotiation, the map / pq / buffer containers, the shrpx proxy and examples, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spdylay"
+  },
+  {
+   "candidate": "'SPDY' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "multiplexing with priorities, header compression and flow control are separable and HTTP/2 kept two, replaced one and refined the third",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spdylay"
   },
   {
    "candidate": "the Promela front end (spin.y, spinlex.c, sym.c, structs.c, vars.c), the simulator (run.c, sched.c, dstep.c), guided/replay, the MSC/Tcl GUI",
@@ -2191,6 +2287,46 @@
    "fossil": "tinycc"
   },
   {
+   "candidate": "the matrix helpers (_mulmat, _mulvec, _transpose, _addmat, _negate, _addeye, _addvec, _sub: naive triple loops)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:10-160",
+   "note": "substrate; the Cholesky routines are counted in the update organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  },
+  {
+   "candidate": "the GPS and sensor-fusion examples, the Python package (python/tinyekf, altitude_fuser.py, mousetracker.py), the attic",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the GPS example ships data and a reference output: a Stage C oracle",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  },
+  {
+   "candidate": "'Kalman filter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "prediction and update are separable and the model is outside the body; the atlas's simple-kalman (not a Kalman filter) and particles/kalman.py are the recurrence set",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  },
+  {
+   "candidate": "the read paths (invisible and visible reads 162-555), the write path (556-780), rollback, the write-through (stm_wt.h) and commit-time-locking (stm_wbctl.h) designs, the contention managers (suicide, delay, backoff, modular), the modules (logging, statistics, ordering, callbacks), epoch garbage collection (gc.c), the ABI wrappers, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the contention-manager switch (CM_*) is a mechanism family of its own (who backs off, who wins)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinystm-marlier"
+  },
+  {
+   "candidate": "'transactional memory' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the lock encoding, validation/extension and commit are separable and the body ships three designs over the same pieces",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinystm-marlier"
+  },
+  {
    "candidate": "move generation, make/unmake with the history stack, Zobrist hashing (board.c), the xboard protocol and book (main.c, book.c)",
    "reason": "OTHER",
    "evidence": "read by function list only; generic chess mechanics and I/O",
@@ -2221,6 +2357,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "umdhmm-kanungo-1.02"
+  },
+  {
+   "candidate": "the registered outputs and reset (125-140)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:verilog-arbiter-forencich/upstream/arbiter.v:125-140",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-arbiter-forencich"
+  },
+  {
+   "candidate": "'arbiter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the encoder, the round-robin mask and the hold policy are separately parameterised",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-arbiter-forencich"
   },
   {
    "candidate": "generic_fifo_dc_gray.v (the gray-coded pointer crossing), the single-clock variants (sc_a, sc_b), generic_fifo_lfsr.v and lfsr.v (an LFSR as the address counter to save an incrementer), the memory macro instance, the testbench",
@@ -2301,6 +2453,22 @@
    "note": "recurrence candidate: umdhmm-kanungo-1.02 (NOT_CUT) will hold the HMM form",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "viterbi-hmm-xukmin"
+  },
+  {
+   "candidate": "pickrnovelty, picktabu, pickgsat, pickalternate, pickbigflip, the freebie list details, the hamming-distance instrumentation, the solution / statistics printing, the other programs in the v56 tree",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "walksat-v56"
+  },
+  {
+   "candidate": "'local search' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the count maintenance, the flip rules and the noise control are separable and separately published",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "walksat-v56"
   },
   {
    "candidate": "Order_Stems (610-687): a bubble sort of 1-5 records by MNPC, ending size, quality, dictionary kind",

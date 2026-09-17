@@ -1,0 +1,41 @@
+"""Cut: verilog-arbiter-forencich (Forencich's arbiter and priority encoder; ancestry-aware, Stage A DEEP; SOURCE_READ on M3; position 74
+of the 2026-09-17 NOT_CUT order). Read: arbiter.v and priority_encoder.v in full (two files). Nothing ran (no Verilog simulator on M3).
+"""
+from nyx.atlas.author import Cut
+
+A = "vault:verilog-arbiter-forencich/upstream/arbiter.v"; P = "vault:verilog-arbiter-forencich/upstream/priority_encoder.v"
+c = Cut("verilog-arbiter-forencich", mode="ANCESTRY_AWARE", inspected=["arbiter.v 1-140", "priority_encoder.v 1-80"], evidence=[("SOURCE_READ", A + ":1-140"), ("SOURCE_READ", P + ":1-80")],
+        note="a grant decision in two modules: a logarithmic-depth priority encoder built as a tree of two-input stages (each stage says 'is either half valid' and 'which half wins'), and an arbiter that instantiates the encoder twice, once on the raw requests and once on the requests masked to those ABOVE the last grant, so that round-robin is 'take the masked winner if any, else the unmasked one' and the mask is rebuilt from the winner; two hold policies keep a grant until the request drops or until an acknowledge arrives")
+
+enc = c.organ("priority_encoder_as_a_binary_tree_of_stages_each_reporting_validity_of_its_pair_and_the_index_bit_of_the_winning_half", human_name="priority_encoder.v: LEVELS = clog2(WIDTH); stage_valid[l][n] = |stage_valid[l-1][2n+1:2n]; stage_enc[l] = (upper half valid ? {1, upper index} : {0, lower index}) or the LSB-first mirror; output_unencoded = 1 << output_encoded", status="ACCEPTED",
+    mechanism="the input is padded to a power of two; level 0 pairs adjacent bits and records whether either is set and which one wins (MSB or LSB by parameter); each higher level pairs two lower results, ORs their validity and prepends one index bit choosing the winning half; the top level yields the index of the highest-priority set bit in log2(WIDTH) gate delays, and a one-hot decode of it",
+    input="a request vector", output="valid, an index, a one-hot mask", state="none (combinational)", update="every cycle", assumptions=["log-depth is worth the generate-loop complexity for wide vectors; the LSB/MSB priority choice is a parameter, not a rewrite"],
+    fitness_value_in_ancestor="a wide-port arbiter that meets timing", failure_landscape="UNKNOWN by run", human_prior="the tree priority encoder (any digital design text)", evidence_ref=P + ":25-75", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="priority_encoder.v",
+    coverage={"input_topology": "VECTOR", "output_topology": "SCALAR", "state_amount": "NONE", "stochasticity": "DETERMINISTIC", "update_topology": "PARALLEL_ROUNDS"})
+
+rr = c.organ("round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant", human_name="arbiter.v: priority_encoder_inst on request; priority_encoder_masked on request & mask_reg; if ARB_TYPE_ROUND_ROBIN: masked winner if masked_request_valid else raw winner; mask_next = all-ones shifted past the winner's index (direction by ARB_LSB_HIGH_PRIORITY)", status="ACCEPTED",
+    mechanism="the mask register holds ones for every port strictly after the last granted port in priority order; each cycle two encoders run in parallel, one on the raw requests and one on the masked requests; if any masked request exists its winner is granted (the next port after the last grant that is requesting), otherwise the raw winner is granted (wrap-around); the mask is then set to the ports after the new winner; with round-robin off, the raw encoder's winner is granted (fixed priority)",
+    input="request vector; the last grant", output="grant (one-hot), grant_valid, grant_encoded", state="mask_reg, grant_reg", update="per cycle", assumptions=["fairness is 'the next requester after the last served'; two encoders in parallel cost less latency than one encoder plus a rotate"],
+    fitness_value_in_ancestor="fair arbitration at the same depth as fixed priority", failure_landscape="by reading: a port that requests only when it is not next can still starve under adversarial timing (the classic limit of masked round-robin); no weighting", human_prior="the mask-based round-robin arbiter (a standard bus-arbiter idiom)", evidence_ref=A + ":50-125", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="the always @* block's round-robin branch",
+    coverage={"input_topology": "VECTOR", "output_topology": "VECTOR", "state_amount": "CONSTANT", "state_persistence": "PERSISTENT", "stochasticity": "DETERMINISTIC", "update_topology": "SINGLE_STEP", "competition": "ARBITRATES"})
+
+hold = c.organ("grant_held_until_the_request_drops_or_until_acknowledged_selected_by_two_parameters", human_name="arbiter.v: ARB_BLOCK && !ARB_BLOCK_ACK && (grant_reg & request) -> hold; ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge) -> hold", status="ACCEPTED",
+    mechanism="with blocking on and acknowledge off, the current grant is held as long as the granted port keeps requesting (a transaction-length hold); with acknowledge on, the grant is held until the granted port raises acknowledge (a handshake); without blocking the arbiter re-decides every cycle", input="request, acknowledge", output="grant held or released", state="grant_reg", update="per cycle",
+    assumptions=["consumers of a grant need either a level (request stays high) or a pulse (ack) to finish a transfer; both are common in the author's AXI and Ethernet IP"], fitness_value_in_ancestor="one arbiter serves both handshake styles", failure_landscape="by reading: a granted port that never acknowledges holds the bus forever (no timeout)", evidence_ref=A + ":78-88", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="the two hold branches",
+    coverage={"input_topology": "EVENT", "output_topology": "DECISION", "state_amount": "CONSTANT", "stochasticity": "DETERMINISTIC", "update_topology": "EVENT_DRIVEN"})
+
+c.reject("the registered outputs and reset (125-140)", reason="GENERIC_LANGUAGE_MECHANICS", evidence=A + ":125-140")
+c.reject("'arbiter' as one organ", reason="NAME_HAS_NO_EXECUTABLE_BOUNDARY", evidence="the encoder, the round-robin mask and the hold policy are separately parameterised")
+
+c.edge(enc, rr, "feeds", note="two instances"); c.edge(hold, rr, "gates")
+
+c.pressure("n_requesters_must_share_one_resource_with_a_fair_and_fast_decision_every_cycle_when_the_decision_must_fit_in_one_clock_and_transactions_must_not_be_interrupted",
+    condition="N ports request a shared resource; the organism grants one per cycle; the score is the worst-case wait of any continuously requesting port (fairness), the logic depth of the decision, and the absence of interrupted transactions", resource_or_constraint="one clock cycle; a few registers",
+    failure_condition="starvation of a low-priority port, a decision deeper than the clock allows, or a grant withdrawn mid-transaction", world_punishes="fixed priority under load (starvation); a rotate-and-encode chain (depth); re-deciding every cycle (interruption)", world_rewards="a tree encoder, a masked second encoder, a hold policy",
+    observable_consequence="worst-case wait per port under all-ports-requesting for fixed vs round-robin; logic depth from synthesis at WIDTH 4, 16, 64; interrupted transfers with blocking off vs on", vacuity_condition="one requester", trivial_shortcuts="a time-slot scheduler (fair but wastes idle slots)",
+    cheat_control="an organism with a global schedule must show zero idle grants and perfect fairness; fixed priority must starve the last port under saturation; round-robin must bound the wait by N: the world must show all three",
+    cost_class="CPU-scale", source_evidence="arbiter.v; priority_encoder.v", purpose="PURPOSE: bus and crossbar arbitration in open FPGA IP (Forencich 2014-2021)")
+
+c.ancestry("reimplementation_of", "the masked round-robin arbiter and the tree priority encoder (digital-design folklore)", note="from the record")
+c.residue("EXPLAINED_BY_CURRENT_CUT", ["nothing unread", "nothing ran"], note="two files, three mechanisms, all located")
+c.save(state="DEEP")

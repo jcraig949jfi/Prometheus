@@ -1,13 +1,13 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:15Z",
- "n": 606,
+ "built": "2026-09-17T23:27Z",
+ "n": 630,
  "by_label": {
-  "feeds": 318,
-  "updates": 66,
-  "triggers": 47,
+  "feeds": 331,
+  "updates": 69,
+  "triggers": 50,
   "competes": 26,
-  "gates": 64,
+  "gates": 68,
   "restores": 15,
   "predicts": 1,
   "schedules": 11,
@@ -15,7 +15,7 @@
   "forgets": 2,
   "verifies": 2,
   "transforms": 10,
-  "stores": 14,
+  "stores": 15,
   "selects": 20,
   "retries": 2
  },
@@ -498,6 +498,14 @@
    "label": "forgets",
    "evidence": "SOURCE_READ",
    "note": "cache cleared",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output",
+   "to": "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "through MTF/RLE (unread)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1554,6 +1562,14 @@
    "label": "triggers",
    "evidence": "SOURCE_READ",
    "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image",
+   "to": "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "code objects",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -3589,6 +3605,62 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+   "to": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the sign of a decision",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule",
+   "to": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "re-decide after restart",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pid-autotune-hirschmann::relay_feedback_switching_the_output_by_a_fixed_step_around_an_initial_value_when_the_input_crosses_the_setpoint_outside_a_noise_band",
+   "to": "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks",
+   "to": "pid-autotune-hirschmann::ultimate_gain_and_period_from_the_relay_step_the_cycle_amplitude_and_the_peak_timestamps_then_pid_gains_from_a_table_of_divisor_triples_per_named_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pid-autotune-hirschmann::peak_detection_as_local_extrema_over_a_look_back_window_with_acceptance_when_four_consecutive_peak_amplitudes_agree_within_five_percent_and_failure_after_twenty_peaks",
+   "to": "pid-autotune-hirschmann::relay_feedback_switching_the_output_by_a_fixed_step_around_an_initial_value_when_the_input_crosses_the_setpoint_outside_a_noise_band",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "SUCCEEDED / FAILED stop the relay",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "to": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "to": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
    "to": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
    "label": "feeds",
@@ -3981,6 +4053,22 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "to": "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "data frames wait for window",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version",
+   "to": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "compressed control frames enter the queue",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "spin-6.5.2-holzmann::verifier_generated_as_c_source_per_model_with_the_algorithm_chosen_by_preprocessor_flags",
    "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
    "label": "feeds",
@@ -4341,6 +4429,46 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "to": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "to": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the corrected state",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "to": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "to": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "to": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new versions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
    "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
    "label": "feeds",
@@ -4418,6 +4546,22 @@
    "label": "competes",
    "evidence": "SOURCE_READ",
    "note": "posterior vs best path",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-arbiter-forencich::priority_encoder_as_a_binary_tree_of_stages_each_reporting_validity_of_its_pair_and_the_index_bit_of_the_winning_half",
+   "to": "verilog-arbiter-forencich::round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "two instances",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-arbiter-forencich::grant_held_until_the_request_drops_or_until_acknowledged_selected_by_two_parameters",
+   "to": "verilog-arbiter-forencich::round_robin_by_a_second_encoder_over_requests_masked_above_the_last_grant_falling_back_to_the_unmasked_winner_and_rebuilding_the_mask_from_the_grant",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -4602,6 +4746,54 @@
    "label": "feeds",
    "evidence": "SOURCE_READ",
    "note": "the output table is the branch metric's reference",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "to": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "to": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "to": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "flipatom",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "to": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "to": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "p",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "to": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
