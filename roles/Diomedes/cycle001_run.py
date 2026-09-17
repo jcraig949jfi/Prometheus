@@ -17,6 +17,7 @@ import glob
 import gzip
 import json
 import math
+import os
 import pathlib
 import random
 
@@ -24,7 +25,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-CORPUS = ROOT / "theseus/corpus"
+CORPUS = pathlib.Path(os.environ["PROMETHEUS_CORPUS"]) if os.environ.get("PROMETHEUS_CORPUS") else ROOT / "theseus/corpus"  # override for worktrees without the untracked corpus (2026-09-13); default unchanged
 OUT = pathlib.Path(__file__).resolve().parent / "cycle001_result.json"
 
 MAX_FILES = 12

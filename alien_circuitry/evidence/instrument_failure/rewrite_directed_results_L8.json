@@ -1,0 +1,130 @@
+[
+ {
+  "universe": "ABELIAN_directed",
+  "L": 8,
+  "rule_types": 12,
+  "states": 87381,
+  "targets": 21,
+  "mean_nominal_branching": 5.000034332406359,
+  "mean_effective_branching_distinct_successors": 4.6458612284135,
+  "fixpoint_states_no_action": 33,
+  "states_from_which_empty_word_reachable": 5341,
+  "trap_transitions_fraction_of_live_(s,a,t)": 0.009680693262549769,
+  "trap_count": 3472,
+  "trap_successors_that_still_have_legal_actions_fraction": 0.9988479262672811,
+  "reachable_region_size_after_live_looking_trap_median_max": [
+   25,
+   32
+  ],
+  "candidate_problems": 71640,
+  "D_distribution": {
+   "1": 188,
+   "2": 1948,
+   "3": 19580,
+   "4": 27300,
+   "5": 16184,
+   "6": 4928,
+   "7": 1208,
+   "8": 240,
+   "9": 64
+  },
+  "eligible_EASY_3_4": 46880,
+  "eligible_MEDIUM_5_6": 21112,
+  "eligible_HARD_ge_7": 1512,
+  "max_D": 9,
+  "sampled_problems": 1500,
+  "mean_BFS_expansions": 40.86333333333334,
+  "mean_bidirectional_BFS_expansions": 11.538666666666666,
+  "mean_D": 4.085333333333334,
+  "search_avoided_ceiling_vs_BFS": 0.9000244718166245,
+  "search_avoided_ceiling_vs_bidirectional_BFS": 0.6459440721053848,
+  "EASY_n_meanBFS_meanBiBFS_meanD": [
+   992,
+   30.539314516129032,
+   6.751008064516129,
+   3.597782258064516
+  ],
+  "MEDIUM_n_meanBFS_meanBiBFS_meanD": [
+   433,
+   65.51732101616628,
+   21.12933025404157,
+   5.249422632794457
+  ],
+  "HARD_n_meanBFS_meanBiBFS_meanD": [
+   27,
+   88.33333333333333,
+   50.81481481481482,
+   7.2592592592592595
+  ],
+  "off_shortest_path_action_fraction_at_s_init": 0.3414440624173499,
+  "trap_action_fraction_at_s_init": 0.007537688442211055,
+  "distinct_D_rows": 442,
+  "distinct_exponent_vectors": 145,
+  "mean_distinct_D_rows_per_exponent_class": 3.9517241379310346,
+  "rule_families": {
+   "cancel": 4,
+   "relator": 8
+  },
+  "seconds": 0.6
+ },
+ {
+  "universe": "BRAID_B3_directed",
+  "L": 8,
+  "rule_types": 8,
+  "states": 87381,
+  "targets": 21,
+  "mean_nominal_branching": 2.020851214794978,
+  "mean_effective_branching_distinct_successors": 1.6666781108021194,
+  "fixpoint_states_no_action": 7721,
+  "states_from_which_empty_word_reachable": 2689,
+  "trap_transitions_fraction_of_live_(s,a,t)": 0.03114703139571029,
+  "trap_count": 2004,
+  "trap_successors_that_still_have_legal_actions_fraction": 0.9940119760479041,
+  "reachable_region_size_after_live_looking_trap_median_max": [
+   5,
+   9
+  ],
+  "candidate_problems": 27264,
+  "D_distribution": {
+   "1": 188,
+   "2": 1820,
+   "3": 17872,
+   "4": 6092,
+   "5": 1180,
+   "6": 108,
+   "7": 4
+  },
+  "eligible_EASY_3_4": 23964,
+  "eligible_MEDIUM_5_6": 1288,
+  "eligible_HARD_ge_7": 4,
+  "max_D": 7,
+  "sampled_problems": 1500,
+  "mean_BFS_expansions": 7.697333333333333,
+  "mean_bidirectional_BFS_expansions": 3.739333333333333,
+  "mean_D": 3.2426666666666666,
+  "search_avoided_ceiling_vs_BFS": 0.5787285640048502,
+  "search_avoided_ceiling_vs_bidirectional_BFS": 0.1328222499554288,
+  "EASY_n_meanBFS_meanBiBFS_meanD": [
+   1333,
+   7.788447111777945,
+   3.6534133533383346,
+   3.2535633908477117
+  ],
+  "MEDIUM_n_meanBFS_meanBiBFS_meanD": [
+   68,
+   11.882352941176471,
+   8.176470588235293,
+   5.0588235294117645
+  ],
+  "off_shortest_path_action_fraction_at_s_init": 0.10881696428571429,
+  "trap_action_fraction_at_s_init": 0.03208705357142857,
+  "distinct_D_rows": 205,
+  "distinct_exponent_vectors": 145,
+  "mean_distinct_D_rows_per_exponent_class": 3.317241379310345,
+  "rule_families": {
+   "cancel": 4,
+   "relator": 4
+  },
+  "seconds": 0.4
+ }
+]

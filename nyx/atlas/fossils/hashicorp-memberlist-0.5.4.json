@@ -132,18 +132,986 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/state.go"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/suspicion.go"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/awareness.go"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/util.go"
+   }
+  ],
+  "inspected_files": [
+   "state.go (probeNode, gossip, aliveNode, pushPull index)",
+   "suspicion.go",
+   "awareness.go",
+   "queue.go + util.go retransmitLimit",
+   "file list"
+  ],
+  "date": "2026-09-16T12:31Z",
+  "note": "SWIM's three mechanisms (random probe, indirect probe, gossip piggyback) plus Lifeguard's three refinements (self-awareness scaling, log-scaled suspicion timeout with confirmations, buddy suspicion) -- each a separately ablatable organ; the record's entry point ablates two of them",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/hashicorp/memberlist/archive/refs/tags/v0.5.4.tar.gz sha256:002d8bce3d66ec2035954905b0f197683c76eb1839bfbd47d0d0106d9a6ce2f5",
+   "payload_manifest_id": "techne tree_sha256 8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6 (57 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/memberlist-0.5.4/state.go",
+     "payload_hash_read": "35b1af581df3ba73d5e3ec1e7290fda02240133ba2feaeb8bab564d6decec526",
+     "techne_recorded_hash": "35b1af581df3ba73d5e3ec1e7290fda02240133ba2feaeb8bab564d6decec526",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/memberlist-0.5.4/suspicion.go",
+     "payload_hash_read": "f4919f5a0058bc48999efbe644f71c1dcb367232b283910e150e820790e61565",
+     "techne_recorded_hash": "f4919f5a0058bc48999efbe644f71c1dcb367232b283910e150e820790e61565",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/memberlist-0.5.4/awareness.go",
+     "payload_hash_read": "08b13b6f27cdf710b74d10e755bffb421068c9d67121c06f1667a7135ae917b9",
+     "techne_recorded_hash": "08b13b6f27cdf710b74d10e755bffb421068c9d67121c06f1667a7135ae917b9",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/memberlist-0.5.4/util.go",
+     "payload_hash_read": "7e054aac7cb993e0e68d3a7f33e38f64f9121aa661d6cc7277392877495cc648",
+     "techne_recorded_hash": "7e054aac7cb993e0e68d3a7f33e38f64f9121aa661d6cc7277392877495cc648",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "probe / probeNode (SWIM failure detector)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every ProbeInterval (scaled by awareness) pick the next node of a shuffled ring; send a UDP ping with a sequence number and wait ProbeTimeout for the ack; on timeout ask IndirectChecks (3) random other members to ping it on our behalf (they reply ack or nack), and also try a TCP ping; if nothing comes back within the interval, broadcast a suspect message for the node's current incarnation",
+   "input": "the member list; acks/nacks",
+   "output": "suspect messages; awareness deltas",
+   "state": "the probe index / shuffled order, pending ack channels keyed by seqno",
+   "update": "per interval",
+   "assumptions": [
+    "UDP loss is common and independent; an indirect path distinguishes 'it is dead' from 'my link is bad'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+    "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations"
+   ],
+   "fitness_value_in_ancestor": "constant per-node load regardless of cluster size (SWIM's claim); the record's oracle asserts the suspect -> dead transitions",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/state.go:232-420"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "probe / probeNode / probeNodeByAddr + setProbeChannels",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "DELAYED_CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "awareness.go ApplyDelta / ScaleTimeout (Lifeguard 'local health')",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an integer score in [0, max): a probe that got a direct ack subtracts 1, a nack from an indirect helper adds 1, a full miss adds more; ScaleTimeout multiplies ProbeInterval / ProbeTimeout by (score + 1), so a node whose own probes keep failing slows itself down instead of declaring others dead",
+   "input": "probe outcomes",
+   "output": "a timeout multiplier",
+   "state": "score",
+   "update": "per probe",
+   "assumptions": [
+    "my failures are more likely my fault than everyone else's"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout"
+   ],
+   "fitness_value_in_ancestor": "Lifeguard's fix for false positives from a slow/overloaded prober",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/awareness.go:20-70; state.go:305-330 (ScaleTimeout, ApplyDelta)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "awareness.go",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "suspicion.go remainingSuspicionTime / Confirm",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a suspected node gets a timer between min and max: timeout = max - (log(n + 1) / log(k + 1)) * (max - min), where n is the number of DISTINCT members that have also reported it suspect and k the expected number; each new confirmer (Confirm dedups by name) re-evaluates the remaining time; at expiry the node is declared dead; min = SuspicionMult * log10(cluster size) * ProbeInterval",
+   "input": "suspect messages from peers",
+   "output": "a dead declaration at the timer's end",
+   "state": "n, the confirmations set, start time",
+   "update": "per confirmation",
+   "assumptions": [
+    "independent confirmations are evidence; one suspicious reporter is not"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+    "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+    "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion"
+   ],
+   "fitness_value_in_ancestor": "Lifeguard's second fix: fewer false positives at the cost of slower detection when only one node notices",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/suspicion.go:1-80"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "suspicion.go",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "SAMPLE",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "aliveNode / suspectNode: Incarnation",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every membership message carries the subject's incarnation; a node that hears itself suspected (or dead) increments its own incarnation and broadcasts alive with the new number, which supersedes the suspicion; older-incarnation messages are ignored; conflicting alive messages for the same name from different addresses are refused (conflict delegate)",
+   "input": "alive/suspect/dead messages",
+   "output": "state transitions; refutations",
+   "state": "per-node incarnation, state, StateChange time",
+   "update": "per message",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+    "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+    "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/state.go:943-1000,1160-1252"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "aliveNode / suspectNode / deadNode",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "gossip / TransmitLimitedQueue / retransmitLimit",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every GossipInterval send the pending broadcasts (as a compound UDP packet within a byte budget) to GossipNodes (3) random live or recently-dead members; a broadcast leaves the queue after RetransmitMult * ceil(log10(n + 1)) transmissions; the queue is a b-tree ordered by transmits-so-far then size, so fresh messages go first; newer messages about the same node invalidate older ones",
+   "input": "membership events",
+   "output": "UDP packets",
+   "state": "the transmit-limited queue",
+   "update": "per interval",
+   "assumptions": [
+    "O(log n) rounds of random fan-out reach everyone with high probability (epidemic dissemination)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+    "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+    "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/state.go:590-647; queue.go; util.go:76-81"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "gossip + queue.go + broadcast.go",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "BANDWIDTH",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "SHARES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer",
+   "fossil_ancestry": "hashicorp-memberlist-0.5.4",
+   "human_name": "pushPull / pushPullNode / mergeState",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every PushPullInterval (scaled by cluster size) open a TCP stream to one random member, exchange complete member lists, and merge (aliveNode/suspectNode/deadNode per entry); also used at Join -- an anti-entropy repair for what gossip missed (index and signatures)",
+   "input": "the full state",
+   "output": "a merged state",
+   "state": "none",
+   "update": "per interval",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+    "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hashicorp-memberlist-0.5.4/upstream/tree/memberlist-0.5.4/state.go:186-231,648-700 (index)"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pushPull*",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "SHARES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "transport / net_transport / mock_transport / peeked_conn / label / security / keyring (encryption)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "by file name: I/O, framing, AES-GCM wrapping of packets",
+   "note": "security.go would be an instance of tiny-aes-c's mode organ (GCM) -- not read",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hashicorp-memberlist-0.5.4"
+  },
+  {
+   "candidate": "delegates (alive, conflict, event, merge, ping) and logging",
+   "reason": "OTHER",
+   "evidence": "hook interfaces for the embedding application; the record's tests use them as observers",
+   "note": "interfaces, not machinery",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hashicorp-memberlist-0.5.4"
+  },
+  {
+   "candidate": "'SWIM' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "probe, gossip and push-pull run on separate timers with separate state; Lifeguard added three more mechanisms without touching the others",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hashicorp-memberlist-0.5.4"
+  },
+  {
+   "candidate": "the test suite",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "Techne's oracle is go test's assertions",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hashicorp-memberlist-0.5.4"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "hashicorp-memberlist-0.5.4::P.membership_must_be_agreed_by_thousands_of_nodes_with_no_central_authority_over_a_lossy_network",
+   "source_fossil": "hashicorp-memberlist-0.5.4",
+   "source_evidence": "record pressure / entry point; state.go",
+   "condition": "nodes join, leave and crash; messages are lost; no node may pay more than a constant per round; a false 'dead' evicts a healthy node and a slow 'dead' leaves a ghost",
+   "resource_or_constraint": "O(1) messages per node per period; UDP loss; clock-free",
+   "failure_condition": "false positives from a slow prober or a lossy link; unbounded detection time",
+   "world_punishes": "heartbeats to everyone (O(n^2)); trusting one missed ack",
+   "world_rewards": "random probing with indirect confirmation, epidemic spread with a log(n) retransmit budget, and evidence-weighted suspicion timers",
+   "observable_consequence": "the record's entry point: shrink ProbeTimeout / SuspicionMult and count false positives; detection time vs cluster size",
+   "vacuity_condition": "a reliable network with few nodes",
+   "trivial_shortcuts": "a central registry (forbidden by the design); the world must remove the coordinator",
+   "cheat_control": "a detector told which nodes are truly dead must have zero false positives and minimal delay; if the world cannot separate it from SWIM under injected loss, loss is not being injected",
+   "cost_class": "CPU-scale (in-process cluster over loopback, as the tests do)",
+   "purpose_separated_from_pressure": "PURPOSE: cluster membership for Consul / Nomad / Serf",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "hashicorp-memberlist-0.5.4::P.a_node_cannot_tell_whether_a_missed_ack_is_the_peer_s_fault_or_its_own",
+   "source_fossil": "hashicorp-memberlist-0.5.4",
+   "source_evidence": "awareness.go; suspicion.go",
+   "condition": "an overloaded or partitioned prober sees everyone fail; declaring them all dead is exactly wrong",
+   "resource_or_constraint": "only local observations",
+   "failure_condition": "a sick node evicting the healthy cluster",
+   "world_punishes": "symmetric interpretation of misses",
+   "world_rewards": "a local health score that slows the prober's own clocks and a suspicion timer that wants independent confirmation",
+   "observable_consequence": "false positive rate with one degraded node (Lifeguard's experiment)",
+   "vacuity_condition": "uniformly healthy nodes",
+   "trivial_shortcuts": "a very long timeout (slow detection; the world must charge delay)",
+   "cheat_control": "a prober told its own health must outperform awareness scoring; if it does not, the world's degradation is not local",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+   "to": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "scales interval and timeout",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "to": "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "deltas",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "suspect broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "confirmations arrive by gossip",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "dead broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "a refutation cancels the timer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "to": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "alive with a higher incarnation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer",
+   "to": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "merge applies the same transitions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "anti-entropy vs epidemic",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "algorithm_from",
+   "to": "SWIM (Das, Gupta, Motivala 2002) + Lifeguard (Dadgar, Phillips, Currey 2018) -- named in the package's README, not re-read",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "hashicorp-memberlist-0.5.4",
    "relation": "algorithm_from",
@@ -160,7 +1128,13 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "push-pull merge and the conflict rules read by index",
+   "the transport, encryption and compression layers unread",
+   "nothing ran here; Techne's go test oracle is on M1"
+  ],
+  "note": "the failure detector, suspicion, awareness and gossip queue are read",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

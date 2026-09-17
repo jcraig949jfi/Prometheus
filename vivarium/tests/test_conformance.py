@@ -320,7 +320,7 @@ class _NoEngine:
     def __init__(self):
         self.dispatched = 0
 
-    def run(self, request, on_running=None):
+    def run(self, request, on_running=None, **_kw):
         self.dispatched += 1
         raise RuntimeError("no engine in this test")
 

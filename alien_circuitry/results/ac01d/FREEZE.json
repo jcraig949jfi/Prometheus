@@ -1,0 +1,66 @@
+{
+ "frozen": "2026-09-12",
+ "version": "AC-01D-v1",
+ "ruling": "operator ruling after a6e3e80: bands 0.20/0.40/0.60, HELD_TARGETS+HELD_BOTH primary, Pareto storage with landmarks, path quality co-primary, scope T_7 rank-2",
+ "files": {
+  "alien_circuitry/PREREGISTRATION_AC01.md": "6f45cf83ca47ed5471ea02af6eb6f9a0220c10eff4a9729ae618a6af0ae3586f",
+  "alien_circuitry/ac01d/corpus.py": "72ad600d0e1d8a03499795ec6e8ee4f9730d4f57d0b7fa8eb4ed2a1f6f9f4cf6",
+  "alien_circuitry/ac01d/baselines.py": "7df8a6d1e42a89372ff90f2f7da7679a6eae51446247f20bf406ae99445e30c4",
+  "alien_circuitry/ac01d/evaluate.py": "d916b761c7e482473769cc4301fba58124ab4d802522ab7d5b44a28be4275454",
+  "alien_circuitry/gate2/observation_monoid.py": "79f71dac2490c9c8cfdc0a60bdd5af44e5b0c302f97d09fb241b5e3327e8edd6",
+  "alien_circuitry/universe/monoid.py": "fbae8115b957d8b67e448201b33b725dd97f20c0d6ad11884d9478a9b7f903ee",
+  "alien_circuitry/universe/uc1_seed.py": "33817a4c8235ddc9ab694b41accf10b0d64ec6ae0babe7b6c074225cc1b00333",
+  "alien_circuitry/gate2/navigation2.py": "cb258d7c1c1de1f94b3f185c604da0a4a973ea593ff1641b41f2a51894614791"
+ },
+ "corpus_hashes": {
+  "F": "871e6164fd8eda7db809c1cd19dba6d52d85a39bb6d180dcf1ca8bf2476f2d0b",
+  "D": "b8ad6f596cf933d2a81810fbb7167c17e5d140e0ab1d80e54dac68b89f7736f2",
+  "succ": "1e0063dc7808491207ca899851d58a87657f004235799683491780c9a30cedc0",
+  "targets": "d59fc2cefeb5e599f9592ec1d903b97a97d2e2682fec25a87cc01b1aa2096970",
+  "state_role": "0fead7246228e5572835777d62cfc880b1f12b00ccb0cca7e4d3f9bf52a85fee",
+  "target_role": "f458c313de5c2392f39b887221dc3affc1c13d60d568dd476b75673fb19602b3",
+  "pair_role": "c3d1cf0313b8773b41ab951eac6fdef9d1c0d7d387ed265a6e5e63f8c19b1a0a",
+  "kernel_audit": "b513f5ddad29c0e92561c7edcc8b0807f0190615f8b89df827f8cd79779ae2b4",
+  "coo_D": "c9c30211b06695010e1b903890904263e5538f74ce82ce3bca58ae6607523993",
+  "coo_actions": "efa9afef48e61d5e1f3f7693684cd2c25548808522024bd60b153d26becc0250"
+ },
+ "storage_denominators": {
+  "AC01D_distance_chart_COO": {
+   "raw_bytes": 66829140,
+   "zlib9_bytes": 3307576,
+   "lzma_bytes": 1060696
+  },
+  "AC01D_action_table": {
+   "raw_bytes": 44552760,
+   "zlib9_bytes": 2018624,
+   "lzma_bytes": 485612
+  },
+  "note": "M1 denominator = lzma_bytes of the distance chart COO (primary) and of the action table (secondary); raw bytes reported beside"
+ },
+ "evaluation_sets": {
+  "FIT": {
+   "D": 4289843,
+   "R": 19703569
+  },
+  "HELD_PAIRS": {
+   "D": 1072543,
+   "R": 4928831
+  },
+  "VAL": {
+   "D": 1780521,
+   "R": 8184700
+  },
+  "HELD_STATES": {
+   "D": 1793853,
+   "R": 8227400
+  },
+  "HELD_TARGETS": {
+   "D": 1321710,
+   "R": 6404424
+  },
+  "HELD_BOTH": {
+   "D": 441595,
+   "R": 2139124
+  }
+ }
+}

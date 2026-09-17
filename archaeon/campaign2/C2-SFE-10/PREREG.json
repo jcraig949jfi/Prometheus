@@ -1,0 +1,187 @@
+{
+ "arms": [
+  "random",
+  "chimera_functional",
+  "chimera_length",
+  "shuffled_functional",
+  "whole_ancestors"
+ ],
+ "assay_capability_requirement": "ANY arm reaches a foothold in >= 1 of 10 seeds; >= 1 functional organ found per lineage (else the functional arm falls back to length organs and the row says so)",
+ "attempt": 2,
+ "budget": {
+  "E": 16,
+  "G": 60,
+  "N": 200,
+  "heldout_episodes": 48,
+  "margin": 0.1,
+  "probe_episodes": 8,
+  "recipe_seed": 0,
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "set_n": 100
+ },
+ "claim_ceiling": "SUPPORTED_POSITIVE only if the primary margin holds AND shuffled_functional falls below chimera_functional by the margin; else WEAK / CAPABLE_NEGATIVE",
+ "crn_policy": "default; every set substitutes 100 organisms into the SAME generation 0 of 200 (common_fill, tagged) so the import share is informative; composition streams keyed on (seed, mode)",
+ "decl": {
+  "battery": [
+   {
+    "name": "shuffled_functional",
+    "rule": "chimera_functional - shuffled_functional >= 0.10 mean held-out",
+    "type": "kill"
+   }
+  ],
+  "interventions": [
+   {
+    "arm": "chimera_functional",
+    "counter": "functional_organs_used"
+   }
+  ],
+  "n_min": 10,
+  "primary": {
+   "control": "chimera_length",
+   "metric": "competence_heldout",
+   "min_effect": 0.1,
+   "treatment": "chimera_functional"
+  },
+  "probes": [
+   "whole_ancestors",
+   "random"
+  ],
+  "target": {
+   "baseline_arm": "*",
+   "reach_metric": "reached",
+   "reach_min": 1,
+   "reachability_class": "REACHABLE"
+  }
+ },
+ "expected_machine_telemetry": [
+  "load maps per genome (share load-bearing, organ count/length)",
+  "direct_best per set",
+  "import_share_final",
+  "set summaries",
+  "reachability rows"
+ ],
+ "experiment": "C2-SFE-10",
+ "falsification_condition": "chimera_functional - chimera_length < 0.10 => function-defined organs transfer no better than length-defined ones",
+ "machine_changes_exercised": [
+  "B (battery, target '*')",
+  "C (partial substitution + origin share)",
+  "D (cross-campaign fetch)",
+  "E",
+  "H (load maps)",
+  "I"
+ ],
+ "parent_evidence": "SFE-08: chimera = shuffled = random at floor; whole ancestors 1/3 each. C2-SFE-04: failed genotypes carry nothing that survives shuffling; the campaign-1 manifest rebuild was a per-seed treatment (fixed here). Table: W2_K2 4-bit N200 G60 E16 7/17 REACHABLE.",
+ "parents": [
+  "SFE-08",
+  "SFE-07",
+  "SFE-01"
+ ],
+ "positive_control": "the random arm (own generation 0) on W2_K2 4-bit: expected 0.41 per seed; the whole_ancestors probe as the parent's reference",
+ "prereg_digest": "sha256:def11d20cc90ebec6dd4a6a3795a0de7f70f906780a1f7b75ab3046073bb0286",
+ "primary_observable": "competence_heldout per arm x seed; chimera_functional vs chimera_length; direct_best and import_share_final as telemetry",
+ "question": "Do organs defined by KNOCKOUT LOAD (instructions whose removal changes the organism's outputs on its own cell) transfer where SFE-08's length-defined organs did not: does a chimera of two functional organs from different failed lineages raise held-out competence on W2_K2 4-bit over a chimera of two length-defined organs?",
+ "reachability_estimate": {
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.2834,
+     0.6763
+    ],
+    "class": "REACHABLE",
+    "first_solved_gens": [
+     13,
+     19,
+     32,
+     35,
+     39,
+     48,
+     49,
+     50,
+     54,
+     59
+    ],
+    "freq": 0.4762,
+    "k": 10,
+    "n": 21
+   },
+   "at_budget_any_foundry": {
+    "band95": [
+     0.2834,
+     0.6763
+    ],
+    "class": "REACHABLE",
+    "foundries": [
+     "instr1-16:6528b9dc"
+    ],
+    "freq": 0.4762,
+    "k": 10,
+    "n": 21
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "band95": [
+     0.1975,
+     0.5039
+    ],
+    "budgets": [
+     [
+      200,
+      30,
+      16
+     ],
+     [
+      200,
+      36,
+      16
+     ],
+     [
+      200,
+      40,
+      16
+     ],
+     [
+      200,
+      41,
+      16
+     ],
+     [
+      200,
+      42,
+      16
+     ],
+     [
+      200,
+      48,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "freq": 0.3333,
+    "k": 11,
+    "n": 33
+   }
+  }
+ },
+ "title": "function-bearing organs",
+ "typed_failure_conditions": [
+  "TARGET_UNREACHABLE (no arm reaches)",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ]
+}

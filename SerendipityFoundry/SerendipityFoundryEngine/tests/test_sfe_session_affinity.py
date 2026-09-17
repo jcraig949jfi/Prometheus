@@ -263,7 +263,14 @@ def test_K_restore_keeps_identity_and_keys(m1):
     s, hs = _session(c, h)
     wid = _world(c, hs, s["session_id"])
     restored = os.path.join(tempfile.mkdtemp(), "restored.db")
-    shutil.copy(db, restored)
+    # 9.0.1: worker threads keep their SQLite handle open, so recent writes
+    # live in engine.db-wal until the autocheckpoint. A plain file copy of
+    # engine.db is NOT a complete backup any more (it was only ever complete
+    # by accident of the per-request close). The SQLite backup API is the
+    # documented method (deploy/release_v9.py preflight uses it).
+    import sqlite3 as _sq
+    src, dst = _sq.connect(db), _sq.connect(restored)
+    src.backup(dst); dst.close(); src.close()
     c3 = TestClient(create_app(restored))
     assert c3.get("/v2/worlds/%s/status" % wid, headers=hs).status_code == 200
     # ...and the restored copy reports the SAME instance id (the clone hazard,
@@ -418,6 +425,9 @@ EXEMPT = {
     ("GET", "/v2/health"):         "B3 2026-09-12: measured health; no auth, no per-client resource "
                                    "(counts and timings only; no ids, no tokens); a foreign key is "
                                    "irrelevant because nothing here is owned",
+    ("GET", "/v2/capabilities"):   "v9 D9 2026-09-17: discovery of the engine's OWN vocabularies, "
+                                   "limits and read semantics; no auth, no per-client resource; "
+                                   "the point is to discover the session rule WITHOUT a session",
     ("GET", "/v2/openapi.json"):   "the contract itself; must be readable to "
                                    "discover how to send a session at all",
     ("GET", "/v2/docs"):           "human documentation UI",

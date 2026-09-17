@@ -131,17 +131,1537 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/patterns.scm"
+   }
+  ],
+  "inspected_files": [
+   "mutations.scm (scheduler, menu, function index)",
+   "patterns.scm (index, mutate-once)",
+   "file list"
+  ],
+  "date": "2026-09-16T12:11Z",
+  "note": "a menu of 32 mutators at five representation levels (byte, byte-sequence, line, delimiter-tree, lexed string) under a scheduler whose only feedback is whether the mutation changed the bytes -- there is no signal from the target",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://gitlab.com/akihe/radamsa/-/archive/v0.6/radamsa-v0.6.tar.gz sha256:a68f11da7a559fceb695a7af7035384ecd2982d666c7c95ce74c849405450b5e; https://gitlab.com/owl-lisp/owl/uploads/0d0730b500976348d1e66b4a1756cdc3/ol-0.1.19.c.gz sha256:86917b9145cf3745ee8294c81fb822d17106698aa1d021916dfb2e0b8cfbb54d",
+   "payload_manifest_id": "techne tree_sha256 d324e3686c126799cfe20a9fb29bdcc7ce806d7268700d7b8c4b9e61122c77fc (56 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/radamsa-v0.6/rad/mutations.scm",
+     "payload_hash_read": "6b397c9c4e870a72505fc838df36f52bee98318b4b1c2309823f15c104c2bd00",
+     "techne_recorded_hash": "6b397c9c4e870a72505fc838df36f52bee98318b4b1c2309823f15c104c2bd00",
+     "match": true,
+     "refs": 10
+    },
+    {
+     "path": "upstream/tree/radamsa-v0.6/rad/patterns.scm",
+     "payload_hash_read": "37b861a14a6028f551d7c4fa41830bb7f43ed6a5cff4cca3eb0824c082e32262",
+     "techne_recorded_hash": "37b861a14a6028f551d7c4fa41830bb7f43ed6a5cff4cca3eb0824c082e32262",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "mux-fuzzers / weighted-permutation / adjust-priority",
+   "human_interpretation": "mutators compete for use; ones that keep producing changes get used more",
+   "mechanism": "each mutator carries (score in [2, 10], randomised from the seed at start; a user priority from the -m string); to pick one, draw rand(score * priority) per mutator and sort descending; try them in that order until one CHANGES the current chunk; every tried mutator returns a delta (+1 / -1 drawn with a 11/20 upward bias on success, -1 when it could not apply) which is added to its score and clamped; the new closure carries the updated scores ('always remember whatever was learned')",
+   "input": "the mutator list, a random state, the data stream",
+   "output": "a mutated stream and a re-scored mutator list",
+   "state": "per-mutator score (2..10)",
+   "update": "per mutation attempt",
+   "assumptions": [
+    "'the bytes changed' is the only success signal available; the delta is a biased random walk, not a reward from the target"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::byte_level_edits_at_a_random_position",
+    "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+    "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+    "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+    "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+    "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+    "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+    "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+    "radamsa-0.6::mutation_count_and_placement_pattern_once_many_burst_with_inverse_probability_walk"
+   ],
+   "fitness_value_in_ancestor": "prevents a stuck mutator (one that never applies to this input) from being drawn forever; the record's 'mutations too shallow' failure is what the menu, not the scheduler, addresses",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:25-50,1095-1181"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "mux-fuzzers + weighted-permutation + adjust-priority + mutators->mutator",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::mutation_count_and_placement_pattern_once_many_burst_with_inverse_probability_walk",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "patterns.scm (od / nd / bu)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a pattern decides how many mutations one output gets and where: mutate-once walks the lazy byte stream decrementing an 'inverse probability' counter drawn at start so the position is geometric-like and the last chunk is always eligible; pat-many applies once then possibly again; pat-burst applies several in a row at one place; patterns are themselves chosen by priority (mux-patterns)",
+   "input": "stream, mutator, random state",
+   "output": "a stream with mutations applied",
+   "state": "none beyond the random state",
+   "update": "per output",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/patterns.scm:23-111"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "patterns.scm",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::byte_level_edits_at_a_random_position",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "bd bf bi br bp bei bed ber (sed-byte-*)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "edit-byte-vector at a random index: drop, flip one bit, insert random, repeat (with a heavy-tailed repeat count, repeat-len), permute a few, +1, -1, replace random; each returns the delta for the scheduler",
+   "input": "a byte chunk",
+   "output": "a byte chunk",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:64-85,162-260"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sed-byte-* functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "sr sd",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "pick a range and repeat it (repeat-len times) or delete it",
+   "input": "a byte chunk",
+   "output": "a byte chunk",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:324-362"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sed-seq-repeat / sed-seq-del",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "ld lds lr2 li lr ls lp lis lrs (line-op / stateful-line-op)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "line-op wraps a generic list operation (delete, delete-sequence, duplicate, clone nearby, repeat, swap, permute) as: split the chunk on newlines -> apply -> join; stateful-line-op carries state across calls for insert/replace 'from elsewhere' (a line seen earlier)",
+   "input": "a byte chunk",
+   "output": "a byte chunk",
+   "state": "none (stateful ops: a remembered line)",
+   "update": "none",
+   "assumptions": [
+    "the input is line-structured"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+    "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters"
+   ],
+   "fitness_value_in_ancestor": "the same list ops serve lines and (below) tree nodes: representation lifting is the design",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:364-425"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lines / unlines / line-op / stateful-line-op and the nine definitions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "td tr2 ts1 ts2 tr (sed-tree-*)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "partial-parse builds a tree from balanced delimiter pairs (usual-delims: brackets, braces, quotes...; grow / count-nodes / sublists); a random subtree is deleted, duplicated, swapped with another, or a parent->child path is repeated ('stutter'); flatten writes the tree back",
+   "input": "a byte chunk",
+   "output": "a byte chunk",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "the input has nested delimiters (JSON, XML, source code)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+    "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split"
+   ],
+   "fitness_value_in_ancestor": "the answer to 'mutations too shallow': structure-preserving edits pass the first byte checks",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:507-720"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "usual-delims through sed-tree-stutter",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "ab (ascii-bad): string-lex / silly-strings / random-badness",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "string-lex splits a chunk into text / byte / delimited(quote) regions when it is 'texty enough' (6+ printable bytes); a region is mutated by inserting or overwriting known-bad strings (format specifiers, huge lengths, 'A' runs -- silly-strings) or a random lex string; string-unlex rebuilds",
+   "input": "a byte chunk",
+   "output": "a byte chunk",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:720-960"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "texty? through ascii-bad",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "num (sed-num / mutate-a-num)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "find digit runs, parse, replace with a boundary-ish value (the delta generators rand-delta / rand-delta-up and xp.scm's number tables -- xp.scm NOT read)",
+   "input": "a chunk",
+   "output": "a chunk",
+   "state": "none",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:86-160"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sed-num + xp.scm",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "ft fo fn (sed-fuse-this / fuse-old / fuse-next), fuse.scm",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "jump from one position to another that shares a suffix (a suffix-array style join) inside the block, with an earlier sample, or with the next -- a crossover operator between inputs (fuse.scm not read)",
+   "input": "chunks",
+   "output": "a chunk",
+   "state": "earlier samples (fuse-old)",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:262-322; fuse.scm (unread)"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sed-fuse-* + fuse.scm",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+   "fossil_ancestry": "radamsa-0.6",
+   "human_name": "uw ui",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "re-encode a code point with too many continuation bytes; insert from a table of troublesome code points (funny-unicode)",
+   "input": "a chunk",
+   "output": "a chunk",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:427-505"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "funny-unicode / sed-utf8-*",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'radamsa' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "a scheduler over a menu of independent mutators, each separately selectable from the command line (-m)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "radamsa-0.6"
+  },
+  {
+   "candidate": "generators.scm / output.scm (stdin, file, random, pcapng sources; stdout, file, tcp sinks)",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "by name and the record; the I/O ends",
+   "note": "unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "radamsa-0.6"
+  },
+  {
+   "candidate": "the lazy list (ll) streaming representation and the threaded random state (rs)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "every function takes and returns rs; ll forces chunks on demand -- Owl Lisp purity discipline, not fuzzing machinery",
+   "note": "it IS what makes the seed reproducible (record failure condition 'non-reproducible'); recorded as the mechanism of pressure 2, rejected as an organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "radamsa-0.6"
+  },
+  {
+   "candidate": "binarish? probe",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:radamsa-0.6/upstream/tree/radamsa-v0.6/rad/mutations.scm:52-62 -- checks for a zero byte in the first few; gates ascii-bad",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "radamsa-0.6"
+  },
+  {
+   "candidate": "digest.scm (output de-duplication by hash), xp.scm",
+   "reason": "OTHER",
+   "evidence": "NOT READ",
+   "note": "UNKNOWN",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "radamsa-0.6"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "radamsa-0.6::P.one_parser_faces_unbounded_malformed_input_with_no_signal_back_from_it",
+   "source_fossil": "radamsa-0.6",
+   "source_evidence": "record pressure / failure; the mutation menu",
+   "condition": "a target rejects most random bytes at the first check; the fuzzer sees nothing from the target (no crash feedback, no coverage) and must still produce inputs that reach deep code",
+   "resource_or_constraint": "no target feedback; a fixed menu of edits",
+   "failure_condition": "all cases rejected at the first byte (record)",
+   "world_punishes": "byte-only mutation of structured input",
+   "world_rewards": "edits at the representation level the target parses (lines, trees, strings, numbers) and a menu wide enough that some edit applies",
+   "observable_consequence": "how far into cjson's parser the cases get (record entry point: pipe into cjson under ASan)",
+   "vacuity_condition": "a target that accepts anything",
+   "trivial_shortcuts": "replay a corpus of known crashes (the world must present a new target)",
+   "cheat_control": "a mutator given the target's grammar must reach deeper than every menu item; if the world scores it equal to byte flips, depth is not being measured",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: find parser bugs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "radamsa-0.6::P.a_stochastic_process_must_be_exactly_replayable_from_a_seed",
+   "source_fossil": "radamsa-0.6",
+   "source_evidence": "the rs threading in every function",
+   "condition": "a found bug is worthless unless the input can be regenerated; every random choice must derive from one seed and nothing else (no time, no I/O order)",
+   "resource_or_constraint": "purity discipline",
+   "failure_condition": "non-reproducible cases (record)",
+   "world_punishes": "hidden entropy",
+   "world_rewards": "threading one random state through every decision",
+   "observable_consequence": "byte-identical output for the same seed and input",
+   "vacuity_condition": "single-shot use",
+   "trivial_shortcuts": "log every output (space; the world must charge for it)",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "radamsa-0.6::P.a_menu_of_operators_of_unknown_usefulness_must_be_scheduled_without_a_reward",
+   "source_fossil": "radamsa-0.6",
+   "source_evidence": "mux-fuzzers",
+   "condition": "some operators never apply to this input and some always change it; the only observable is whether the output differs; the choice must not starve rare operators nor waste draws on inapplicable ones",
+   "resource_or_constraint": "no external reward",
+   "failure_condition": "repeatedly drawing an operator that cannot apply",
+   "world_punishes": "uniform draws",
+   "world_rewards": "a self-scoring scheduler with a floor (min-score 2) so nothing starves",
+   "observable_consequence": "the 'used <name>' trace distribution on stderr",
+   "vacuity_condition": "all operators always apply",
+   "trivial_shortcuts": "round robin",
+   "cheat_control": "a scheduler told which operators apply must waste zero draws; if the world scores it equal to uniform, applicability is not being charged",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::byte_level_edits_at_a_random_position",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::byte_level_edits_at_a_random_position",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutation_count_and_placement_pattern_once_many_burst_with_inverse_probability_walk",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "how many / where",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "to": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "same list ops lifted to a different representation",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "radamsa-0.6",
@@ -152,7 +1672,13 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "generators / output / fuse / xp / digest unread",
+   "the lazy-stream position walk in mutate-once is read once, not understood to the constant (initial-ip 'magic value')",
+   "the scheduler's delta is a biased random walk: whether scores ever separate mutators in practice is UNKNOWN by run"
+  ],
+  "note": "the menu and the scheduler are fully read; the per-mutator implementations are read by index and signature",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

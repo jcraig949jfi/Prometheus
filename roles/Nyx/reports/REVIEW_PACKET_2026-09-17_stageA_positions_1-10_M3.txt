@@ -1,0 +1,224 @@
+================================================================================
+REVIEW PACKET -- Stage A on the first ten of a preregistered order (M3) --
+Nyx (Chop Shop), 2026-09-17
+Commits of record: 4ee3fc20c (prereg), 4d1e22391 (batch), c281ef02b (journal),
+16572fb81 (merge, on origin/main)   Author: Nyx, instance gandalf-9e21f277,
+model claude-fable-5-1   Invoked by: operator, "You're Nyx running on M3.
+You'll need to grab the latest from github for your role info."
+================================================================================
+
+0. WHAT THIS PACKET IS
+   Nine ancestry-aware source-reading dissections ("cuts") of preserved
+   human programs, produced on a third machine (M3) in a preregistered
+   order, with every file read hashed against the preserving seat's record.
+   Nothing was executed. Conflict of interest, declared: the author wrote
+   the order, the cuts, the validator that passed them, and this packet.
+   Nobody else has read any of the nine cuts.
+
+1. CONTEXT
+   Techne (a sibling seat) preserves 121 "fossils": historical programs
+   with a record, a tree hash and, where possible, a runnable world. Nyx's
+   job under the Mechanism Archaeology Pipeline (operator directives of
+   2026-09-16) is Stage A/B: cut each fossil below its famous name into
+   ORGANs (replaceable mechanisms), REJECTED cuts, PRESSUREs (the
+   environmental condition stated without the organ), composition edges
+   and residue, with provenance bound to the bytes read. Formal ablation
+   and equivalence are NOT Nyx's (Amendment 3 R32); they belong to
+   Harmonia and Theophrastus, driven by NYX_PREDICTION_PACKETs Nyx writes.
+   Before today 30 of 121 fossils were cut (all on M1/M2); 91 were not.
+
+2. THE QUESTION THE WORK WAS ANSWERING
+   Amendment 3 N1, verbatim: "Continue Stage A/B on the remaining NOT_CUT
+   population under the revised CUT schema." Constraint from the charter:
+   "Avoid processing order bias. Do not simply take fossil IDs
+   alphabetically. Stratify ..." Constraint from R32: "atlas growth must
+   not be used to conceal stalled falsification."
+
+3. WHAT WAS DONE, STEP BY STEP
+   a. Boot on M3. INCIDENT: before reading the working contract I ran
+      `git pull` in the canonical checkout; it moved efddd98f7 -> 4a6457fbb
+      (55 commits, fast-forward) and a `git stash` took another seat's
+      uncommitted work (Hephaestus, hephaestus/src/closure_q045.py) into
+      stash@{0}. Nothing lost; recorded in the calibration ledger. [E3]
+   b. Worktree from 4a6457fbb; comms boot; inbox: 0 messages to Nyx, no
+      return on the one prediction packet in Harmonia's hands. [E3]
+   c. Preregistered the order: the census sampler gained a NOT_CUT pool
+      and a seed argument; seed 20260917, round-robin over seven strata
+      (disposition, decade, domain, language, run class, size,
+      stochasticity), 91 rows. Committed (4ee3fc20c) before any body was
+      fetched. The 2026-09-13 draw could not be extended: its universe was
+      117 records, now 121. [E3]
+   d. Materialised bodies for positions 1-10 with Techne's `rematerialize`
+      (tracked files untouched by design): 10/10 tree hashes MATCH the
+      committed record. avida 61.5 s; the others 0.3-3.5 s. [E3]
+   e. Fixed two defects in my own provenance code before saving anything:
+      the host string was the literal "M2 (SPECTREX5) ..." for every cut
+      (a cut saved on M3 would have claimed M2), and the
+      host-matches-record field was null when saved through the authoring
+      helper. Now: hostname + the named receipt; the field is read from
+      the receipt. [E3]
+   f. Cut nine fossils by reading (line ranges named in each script; the
+      unread ranges named too). avida (position 7) deferred: largest body,
+      three submodules. [E3]
+   g. Validator 121/0 after every save; nyx/tests 21 passed; base-role
+      self-test 10 passed 1 skipped on the merged tree; two explicit
+      merges of main (main moved once between fetch and push); pushed;
+      16572fb81 verified as an ancestor of origin/main. [E3]
+
+4. RESULTS
+   Per cut (all E3, from the saved fossil files):
+
+   fossil                 state  org acc cnd rej prs edg  grade
+   ---------------------  -----  --- --- --- --- --- ---  --------------
+   odepack-netlib         COARSE   12  11   1   5   3  19  UNKNOWN*
+   bsd-tcp-4.2-1983       COARSE    9   9   0   4   2  14  UNKNOWN*
+   lisp-1-5-ibm7090-1962  COARSE    9   9   0   4   2  14  LATER_TRANSCR.
+   compact-4.2bsd-1983    DEEP     6   6   0   3   2   8  UNKNOWN*
+   willemt-raft           COARSE    7   7   0   4   2  11  ORIGINAL
+   dlmalloc               COARSE    7   7   0   4   2  12  ORIGINAL
+   ff-planner-2.3         COARSE    6   5   1   4   2   9  ORIGINAL
+   particles-chopin-0.4   COARSE    8   7   1   4   2  10  ORIGINAL
+   verilog-uart2bus       DEEP     6   6   0   3   2   8  ORIGINAL
+   avida                  NOT_CUT  -   -   -   -   -   -   (body fetched only)
+   (grade: ORIGINAL = ORIGINAL_ARTIFACT; LATER_TRANSCR. = LATER_TRANSCRIPTION)
+   * UNKNOWN = Techne's handoff string is HISTORICAL_ARCHIVE_MIRROR, which
+     my grade map does not translate; the grade is Harmonia's to issue.
+
+   Files read, hashed on M3 against Techne's recorded hashes: 28 files,
+   28 byte-exact, 0 mismatch, 0 unresolved references. [E3]
+
+   Atlas totals after the batch (build 2026-09-17T11:04Z) [E3]:
+     fossils inspected 39 of 121 (was 30); COARSE 28, DEEP 11, NOT_CUT 82
+     candidate fragments 294 (accepted 259, candidate 35); rejected 156
+     pressures 88; composition edges 403; ancestry edges 141
+     fingerprints 0; blind cuts 0; measured coverage cells 0
+     evidence grades: SOURCE_READ 287, METADATA 4, EXECUTED 1, INTERVENED 2
+
+   Gate ledger (the two coordinates R32 requires side by side) [E3]:
+     cuts_created 39      cuts_returned_with_verdict 0
+     handoffs open 2 (max age 1 tick); returns received 3 (all 09-16)
+     NYX_PREDICTION_PACKETs in existence: 1 lineage (gzip, versions
+     001-003); packets for any of the 39 other cuts: 0.
+
+   Reading-level findings (E0: claims from reading, none measured):
+     - 4.2BSD TCP: the round-trip clock is not stopped by a
+       retransmission, so a sample can span one (the "Karn" ambiguity is
+       present in the 1983 code).
+     - FF's relaxed-plan fixpoint is Graphplan's layered graph without
+       mutexes; the vault holds graphplan-blum-furst-1995 uncut: first
+       cross-fossil recurrence candidate from this batch.
+     - dlmalloc disables its autotrim for the life of the process after
+       one failed trim.
+     - uart2bus: a binary command of length 0 counts down through 255;
+       the receiver never checks the stop bit.
+     - LISP 1.5: the garbage collector's mark stack is the interpreter's
+       push-down list, which is itself a root; roots in raw storage are
+       declared by hand (TEMLIS).
+
+5. WHAT CHANGED IN THE REPOSITORY
+   nyx/atlas/census.py (sampler: pool + seed); nyx/atlas/samples/
+   stageA_not_cut_seed20260917_n91.json (the order) and
+   stageA_bodies_m3_2026-09-17.json (bodies receipt); nine cut scripts under
+   nyx/atlas/cuts/ and nine fossil files under nyx/atlas/fossils/;
+   nyx/atlas/migrate_v1.py (host string, receipt lookup);
+   nyx/atlas/gates/LEDGER.json (+1 handoff row); nyx/atlas/out/*.json
+   (11 artifacts rebuilt); roles/Nyx/STATUS.md, journal/2026-09-17.md,
+   calibration/LEDGER.md (+1 row). No scheduled jobs. Cost: one session
+   of reading; ~70 s of network for bodies; no engine, no compute.
+   Out of tree: C:\Prometheus-vault\fossils on M3 now holds ten bodies.
+
+6. WHAT THIS DID NOT ESTABLISH
+   - No organ was run, ablated, or fingerprinted. Every "mechanism" claim
+     is a reading of source; every "failure landscape" is "by reading".
+   - No cut has been read by anyone but its author. The validator checks
+     shape and provenance, not truth.
+   - The stratified order is preregistered but its strata come from
+     Techne's record fields; "avoids order bias" is a claim about the
+     procedure, not a measurement of the outcome.
+   - Coverage fields (e.g. state_amount, failure_mode) are the author's
+     READ-basis labels; 0 cells are MEASURED.
+   - The pipeline's falsification side did not move: 0 packets written
+     for the 39 cuts; Harmonia has had nothing new to adjudicate since
+     09-16. The atlas grew; falsification did not.
+   - Provenance grade is UNKNOWN for three of nine (an untranslated
+     Techne string), and LATER_TRANSCRIPTION for LISP 1.5 by the record's
+     own README; none was re-graded by Harmonia.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   - The boot-time `git pull` in the canonical checkout (contract s1/s3):
+     moved the canonical tree and stashed another seat's WIP. Cost: an
+     incident row; Hephaestus must pop a stash. No data lost.
+   - The hardcoded "M2" host string in the provenance populator (my own
+     code from 09-16): every cut saved on any other host would have carried
+     a false host claim. Caught before the first M3 save. Cost: none
+     realised; the 30 existing cuts are correct because they were on M2.
+   - Two failed shell heredocs while writing cut scripts (quoting); no
+     cost beyond time.
+   - The Techne-grade map ignores HISTORICAL_ARCHIVE_MIRROR: three cuts
+     carry UNKNOWN where a grade probably exists. Not fixed this pass
+     (the grade is Harmonia's; the map is mine -- backlog item).
+   - I wrote nine cuts and zero prediction packets, which is exactly the
+     "atlas growth in place of falsification" pattern R32 warns about;
+     the gate ledger reports it, and the next action is packets first.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Nyx: NYX_PREDICTION_PACKETs (schema/1) for cuts whose bodies already
+     have a runnable world -- verilog-uart2bus (iverilog bench) and
+     willemt-raft (virtraft2 simulator) first; then avida and positions
+     11-20 of the order; NYX-47 (cost_class vocabulary), NYX-48 (drive
+     letters in five 09-13 scripts), the grade map.
+   - Harmonia: R1 return on MECH-GZIP-LEVELTABLE-003 (posted 09-16;
+     ACK <= 1 tick, DISPOSITION <= 2 ticks per R31; now 1 tick old).
+   - Techne: reply to the first-pass return #296 (9a-9h), 1 tick old.
+   - Hephaestus / operator: `git stash pop` of stash@{0} in the canonical
+     checkout on M3, in a worktree, not in the canonical tree.
+   - Operator: nothing new; TECHNE-65 (preservation destination) remains
+     the open ruling from 09-16.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. Pick any one of the nine cuts and the source lines it cites. Is
+      there a mechanism the cut names that the cited lines do not contain?
+      One such case falsifies the "bound to bytes" claim for that cut.
+   2. What would falsify "the order avoids processing bias"? Proposal: if
+      the nine cut fossils are all in the record's top quartile by file
+      count, or all RUNNABLE_CONTAINER, the round-robin failed its
+      purpose. (They are not, by the table, but the reviewer decides the
+      test.)
+   3. Should Nyx STOP cutting until Harmonia has returned at least one
+      verdict on a non-gzip cut? Argument for: 39 unadjudicated cuts is a
+      warehouse; the pipeline's first "learning cycle" (a CUT_CHALLENGE)
+      has not happened. Argument against: bodies and reading are cheap and
+      the order is fixed. The author's recommendation is packets before
+      any more cuts, and the reviewer should say if that is still too
+      much cutting.
+   4. Three cuts carry provenance grade UNKNOWN because of an untranslated
+      Techne string. Is a cut with grade UNKNOWN admissible to the atlas
+      at all, or should the validator refuse it?
+   5. The "reading-level findings" in section 4: are any of them worth a
+      prediction packet ahead of the two proposed (uart2bus, raft)? The
+      Karn-ambiguity claim on 1983 TCP is the most testable (a single
+      simulated retransmission and an RTT sample).
+   6. What should we stop? Candidate: the coverage fields (19 dimensions
+      per organ, all READ-basis, 0 measured) cost author time on every
+      organ and have never been consumed. The author cannot tell whether
+      they are inventory or instrument.
+
+10. HOW TO REPRODUCE
+   From a worktree at 16572fb81 with Techne's vault available:
+     set TECHNE_FOSSIL_VAULT=<out-of-tree path>
+     python -m techne.fossils.harvest rematerialize odepack-netlib   (etc.)
+     python -m nyx.atlas.census sample 91 20260917 not_cut
+        -> nyx/atlas/samples/stageA_not_cut_seed20260917_n91.json
+           (deterministic: seed 20260917; identical rows expected)
+     set NYX_BODIES_RECEIPT=nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json
+     python -m nyx.atlas.cuts.odepack_netlib   (and the other eight)
+        -> prints "<fossil>: <state>; organs N (accepted a, candidate c);
+           rejected r; pressures p; edges e; ..." as in section 4
+     python -m nyx.atlas.schema      -> "121 fossil files, 0 with problems"
+     python -m pytest nyx/tests -q   -> "21 passed"
+     python -m nyx.atlas.build       -> DEPTH_MAP with the totals in
+                                        section 4 (built timestamp differs)
+   The cut scripts are deterministic given the bodies; the provenance
+   block's payload hashes must equal Techne's UPSTREAM_HASHES.txt entries
+   (28/28 match on M3).
+================================================================================

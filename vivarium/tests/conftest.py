@@ -75,13 +75,31 @@ def schema():
         conn.close()
 
 
+def _regclass(cur, schema, table):
+    cur.execute("SELECT to_regclass(%s)", (schema + "." + table,))
+    return cur.fetchone()[0] is not None
+
+
 @pytest.fixture()
 def conn(schema):
     """A clean queue for every test: truncate rather than re-migrate, so the
     DDL under test is created exactly once and shared."""
     c = _db.connect()
     with c.cursor() as cur:
-        cur.execute("TRUNCATE %s.register_errata_rows, %s.register_errata, "
+        # Point release: the draft tables (006/008/009) may be present in a
+        # test schema; they reference the queue, so they truncate with it.
+        # Their delete-refusing triggers are per-row (DELETE), and TRUNCATE
+        # is a different statement -- the fixture may reset a throwaway
+        # schema; production never truncates anything.
+        cur.execute("SELECT to_regclass(%s)", (schema + ".execution_attempt",))
+        drafted = cur.fetchone()[0] is not None
+        extra = ""
+        if drafted:
+            extra = ", ".join("%s.%s" % (schema, t) for t in
+                              ("pew_outbox", "intervention_receipt", "gate_receipt",
+                               "execution_step", "execution_attempt", "provenance_envelope")
+                              if _regclass(cur, schema, t)) + ", "
+        cur.execute("TRUNCATE " + extra + "%s.register_errata_rows, %s.register_errata, "
                     "%s.research_experiment_events, "
                     "%s.research_experiment_queue, "
                     "%s.worker_heartbeat RESTART IDENTITY"

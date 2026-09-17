@@ -1,0 +1,679 @@
+{
+ "artifacts": {
+  "matrices": {
+   "artifact_id": "sha256:89785074e206987804b7c6db1d5d4df26720d89a3c12cc22ab8129e18863a9aa",
+   "blob_hash": "sha256:19e16229acad983887631fda6b01c7eb8c7306d8f4e6f3ca7c16ad722f1f5c03",
+   "bytes": 43164,
+   "declared": "sha256:19e16229acad983887631fda6b01c7eb8c7306d8f4e6f3ca7c16ad722f1f5c03",
+   "hash_ok": true,
+   "kind": "cmp3.rung_matrices.v1"
+  },
+  "prereg": {
+   "artifact_id": "sha256:986d3a1353f3de983dbc28125b25bb4239c6ee1346e3c926ddbfb6a3cdaa4680",
+   "blob_hash": "sha256:783f3e4b6ec60e8accb2b2e1ca2f0040dc9e926c070116409cf0901ec38f2baf",
+   "bytes": 5150,
+   "declared": "sha256:783f3e4b6ec60e8accb2b2e1ca2f0040dc9e926c070116409cf0901ec38f2baf",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 2,
+ "attempt_id": "C3-SFE-03/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "corridor_rows_appended": 12,
+ "decisions": [
+  "D3-008: generality = elite >= 0.75 on all four rungs at a probe (24 eval episodes each), confirmed at the end by 48 held-out episodes per rung; the primary is descriptive (rate and timing), not a comparison"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "pinned_at": "2026-09-16T17:25:41Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 8
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "errors": [],
+ "experiment": "C3-SFE-03",
+ "finished_at": "2026-09-17T05:54:13Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_afb28a45799382a38ce1c71e",
+ "imports": {},
+ "ledger_ids": [
+  "L3-008",
+  "L3-009"
+ ],
+ "prereg_digest": "sha256:3c2ada617855e9a73f3a78584a8ea7e603178911d5bad8fca76d7c431ebf6eec",
+ "purpose": "engine",
+ "reachability_rows_appended": 12,
+ "records": {
+  "p0.1/1": {
+   "exp_id": "exp_68129f2a53273894c6e79904",
+   "obs_id": "obs_be8d31564ff547b5e543969f"
+  },
+  "p0.1/10": {
+   "exp_id": "exp_99902dc200bf2b33c9d0a6c4",
+   "obs_id": "obs_cd7009ab999b1d69fe3b5dd2"
+  },
+  "p0.1/11": {
+   "exp_id": "exp_47f14eb35e7f13275dcc4fec",
+   "obs_id": "obs_4c25330e0c3e80dd8b55a61b"
+  },
+  "p0.1/12": {
+   "exp_id": "exp_dce165ee9c71dde4d9aa7710",
+   "obs_id": "obs_39de2a60d022e23415318b3f"
+  },
+  "p0.1/2": {
+   "exp_id": "exp_4aabef6f003a3c3055c6b534",
+   "obs_id": "obs_aafc676fa424b25712e1f204"
+  },
+  "p0.1/3": {
+   "exp_id": "exp_4011970ece38b25bdaf6e9d2",
+   "obs_id": "obs_e5dd395ef416054533064020"
+  },
+  "p0.1/4": {
+   "exp_id": "exp_6eff663466d2e5f66bef7c29",
+   "obs_id": "obs_3b2bde5c1f88de29b57dfb6a"
+  },
+  "p0.1/5": {
+   "exp_id": "exp_5958343d1281f3ab74a8938a",
+   "obs_id": "obs_27d72011d3b7b7f9dbf7ad7a"
+  },
+  "p0.1/6": {
+   "exp_id": "exp_47697f013b56459ffe6edcb7",
+   "obs_id": "obs_17aa737a1cb91fa5ef039a2d"
+  },
+  "p0.1/7": {
+   "exp_id": "exp_d5b28691d93e8bacef8bb286",
+   "obs_id": "obs_df7eda9bdf05df3995f9ca3b"
+  },
+  "p0.1/8": {
+   "exp_id": "exp_1533694ec3a84bb94c1c5d80",
+   "obs_id": "obs_6e8fb381a7e1f124b52af5e4"
+  },
+  "p0.1/9": {
+   "exp_id": "exp_33bc8b93b58fcd545f4ec18f",
+   "obs_id": "obs_2fce26231f3f77c18bbce602"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T05:52:18Z",
+ "steps": {
+  "idem:13ad2d0587238cb573d40eafc667ec32": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_4011970ece38b25bdaf6e9d2",
+    "obs_id": "obs_e5dd395ef416054533064020"
+   },
+   "wall_s": 0.256
+  },
+  "idem:1b100ba84bc1470fc7a914422d0543cc": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+   },
+   "wall_s": 0.006
+  },
+  "idem:3ba3e9a5d17759b2d22a28e443fd2434": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    11
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_47f14eb35e7f13275dcc4fec",
+    "obs_id": "obs_4c25330e0c3e80dd8b55a61b"
+   },
+   "wall_s": 0.355
+  },
+  "idem:3cf4befb7d24fe0cfd571c2172f35648": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_4aabef6f003a3c3055c6b534",
+    "obs_id": "obs_aafc676fa424b25712e1f204"
+   },
+   "wall_s": 0.281
+  },
+  "idem:472e442fdd7954681a864522273641d0": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "ladder"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c3-sfe-03-ladder",
+    "policy": "ISOLATED",
+    "world_id": "wld_f3eb173f60f4eb26ae09a134"
+   },
+   "wall_s": 0.236
+  },
+  "idem:53c95a872879e02c637e989bddda64be": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    7
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_d5b28691d93e8bacef8bb286",
+    "obs_id": "obs_df7eda9bdf05df3995f9ca3b"
+   },
+   "wall_s": 0.276
+  },
+  "idem:58241cd15e94ceaf111d13f1fd9b1435": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6eff663466d2e5f66bef7c29",
+    "obs_id": "obs_3b2bde5c1f88de29b57dfb6a"
+   },
+   "wall_s": 0.291
+  },
+  "idem:59d872b2e7cfdc5d9285541a589e3cfa": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    8
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_1533694ec3a84bb94c1c5d80",
+    "obs_id": "obs_6e8fb381a7e1f124b52af5e4"
+   },
+   "wall_s": 0.315
+  },
+  "idem:75f792bbf5ed1d50a46cc415e9e16150": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "matrices"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:89785074e206987804b7c6db1d5d4df26720d89a3c12cc22ab8129e18863a9aa",
+    "blob_hash": "sha256:19e16229acad983887631fda6b01c7eb8c7306d8f4e6f3ca7c16ad722f1f5c03",
+    "bytes": 43164,
+    "declared": "sha256:19e16229acad983887631fda6b01c7eb8c7306d8f4e6f3ca7c16ad722f1f5c03",
+    "hash_ok": true,
+    "kind": "cmp3.rung_matrices.v1"
+   },
+   "wall_s": 0.076
+  },
+  "idem:7c459f4fd83498b0bfb0f5a7b9793128": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_faf661f0e4cac4d5ba3d7546",
+   "wall_s": 0.856
+  },
+  "idem:a6c0b7e1af4a56af38561c125bd4ed66": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    12
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_dce165ee9c71dde4d9aa7710",
+    "obs_id": "obs_39de2a60d022e23415318b3f"
+   },
+   "wall_s": 0.278
+  },
+  "idem:b03e1c1a120c1e929e58ffda0bb9ef20": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_68129f2a53273894c6e79904",
+    "obs_id": "obs_be8d31564ff547b5e543969f"
+   },
+   "wall_s": 0.288
+  },
+  "idem:b364507ab485cc958f60c147d1b4c4f9": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    9
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_33bc8b93b58fcd545f4ec18f",
+    "obs_id": "obs_2fce26231f3f77c18bbce602"
+   },
+   "wall_s": 0.288
+  },
+  "idem:c0ccdff9c72c754a02519c3f5f2fa46c": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_afb28a45799382a38ce1c71e",
+   "wall_s": 0.118
+  },
+  "idem:ca47ab5d966565fc6c56cb90a20103d2": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_47697f013b56459ffe6edcb7",
+    "obs_id": "obs_17aa737a1cb91fa5ef039a2d"
+   },
+   "wall_s": 0.307
+  },
+  "idem:d9e8175747e06a8feb9a88a6c7d5fe6d": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:986d3a1353f3de983dbc28125b25bb4239c6ee1346e3c926ddbfb6a3cdaa4680",
+    "blob_hash": "sha256:783f3e4b6ec60e8accb2b2e1ca2f0040dc9e926c070116409cf0901ec38f2baf",
+    "bytes": 5150,
+    "declared": "sha256:783f3e4b6ec60e8accb2b2e1ca2f0040dc9e926c070116409cf0901ec38f2baf",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.128
+  },
+  "idem:fad2d47b992aa014343a16a4b09a28fa": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    10
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_99902dc200bf2b33c9d0a6c4",
+    "obs_id": "obs_cd7009ab999b1d69fe3b5dd2"
+   },
+   "wall_s": 0.266
+  },
+  "idem:fb1269d7aefc743d83a953845002aae4": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "p0.1",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_5958343d1281f3ab74a8938a",
+    "obs_id": "obs_27d72011d3b7b7f9dbf7ad7a"
+   },
+   "wall_s": 0.251
+  }
+ },
+ "summary": {
+  "adapt": [
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": 45,
+    "R2": 20,
+    "R3": 0
+   },
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": 15,
+    "R2": 0,
+    "R3": 0
+   },
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": 4,
+    "R2": 0,
+    "R3": 0
+   },
+   {
+    "R1": 0,
+    "R2": 0,
+    "R3": 0
+   },
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": 10,
+    "R2": 0,
+    "R3": 0
+   },
+   {
+    "R1": 0,
+    "R2": 0,
+    "R3": 0
+   },
+   {
+    "R1": 23,
+    "R2": 0,
+    "R3": 0
+   }
+  ],
+  "fell_r0_at": [
+   null,
+   null,
+   null,
+   null,
+   null,
+   26,
+   25,
+   null,
+   30,
+   null,
+   null,
+   35
+  ],
+  "final_r0": [
+   0.166667,
+   1.0,
+   0.083333,
+   1.0,
+   0.083333,
+   1.0,
+   1.0,
+   0.083333,
+   0.125,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "final_r3": [
+   0.041667,
+   1.0,
+   0.041667,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.208333,
+   0.083333,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "general_gen": [
+   null,
+   70,
+   null,
+   52,
+   null,
+   50,
+   27,
+   null,
+   null,
+   35,
+   25,
+   48
+  ],
+  "general_heldout": 7,
+  "general_survives": 7,
+  "heldout_by_rung": [
+   {
+    "R0": 0.1458,
+    "R1": 0.0208,
+    "R2": 0.0417,
+    "R3": 0.1458
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 0.0208,
+    "R1": 0.0625,
+    "R2": 0.0208,
+    "R3": 0.1042
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 0.0208,
+    "R1": 0.0833,
+    "R2": 0.0208,
+    "R3": 0.0208
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 0.0833,
+    "R1": 0.0625,
+    "R2": 0.0833,
+    "R3": 0.125
+   },
+   {
+    "R0": 0.1042,
+    "R1": 0.0208,
+    "R2": 0.0,
+    "R3": 0.0833
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   },
+   {
+    "R0": 1.0,
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0
+   }
+  ],
+  "instr": [
+   15,
+   14,
+   19,
+   14,
+   13,
+   29,
+   20,
+   25,
+   9,
+   16,
+   11,
+   20
+  ],
+  "persist": [
+   "tape",
+   "all",
+   "regs",
+   "all",
+   "regs",
+   "all",
+   "all",
+   "all",
+   "all",
+   "regs",
+   "all",
+   "regs"
+  ],
+  "r3_rise_gens": [
+   null,
+   25,
+   null,
+   0,
+   null,
+   24,
+   0,
+   null,
+   null,
+   0,
+   0,
+   0
+  ],
+  "rung_at_general": [
+   null,
+   2,
+   null,
+   2,
+   null,
+   2,
+   1,
+   null,
+   null,
+   1,
+   1,
+   1
+  ]
+ },
+ "teardown": {
+  "ladder": "TERMINATED"
+ },
+ "timings": {
+  "ladder_s": 109.0,
+  "records_s": 3.49,
+  "startup_s": 0.86,
+  "teardown_s": 0.25,
+  "total_s": 114.4
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "p0.1",
+    "metric": "reached_r0_by_rung_end",
+    "min": 1,
+    "rows": 12,
+    "rows_meeting": 5,
+    "values": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8c16a71b1e9d088b829e5247f217890492a5910a",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "ladder": "wld_f3eb173f60f4eb26ae09a134"
+ }
+}

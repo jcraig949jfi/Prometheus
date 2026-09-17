@@ -1,0 +1,8789 @@
+{
+ "prereg": "PREREG_C_B.md @ d3b9533 + PREREG_B_ADDENDUM.md",
+ "mined": [
+  [
+   1,
+   0
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   0
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   2,
+   0
+  ]
+ ],
+ "mined_counts": [
+  9044,
+  5869,
+  5310,
+  4996,
+  4453,
+  1822
+ ],
+ "n_subsets": 84,
+ "sets": [
+  "HELD_STATES",
+  "HELD_TARGETS",
+  "HELD_BOTH"
+ ],
+ "kinds": [
+  "DFS",
+  "GBFS"
+ ],
+ "verdict": {
+  "DFS": {
+   "verdict": "B-KILL",
+   "detail": {
+    "HELD_TARGETS": {
+     "mined_HC_D": -19.463028281921375,
+     "mined_CI95": [
+      -20.83275171722307,
+      -18.144591665645546
+     ],
+     "others_mean_HC_D": -16.104168614430787,
+     "others_n_valid": 83,
+     "others_with_failures": 0,
+     "ci_half_width": 1.3440800257887613,
+     "beats_others_mean_by_more_than_CI": false,
+     "rank_of_mined_among_84": 84
+    },
+    "HELD_BOTH": {
+     "mined_HC_D": -18.50246079139051,
+     "mined_CI95": [
+      -19.841262865841887,
+      -17.269340176921865
+     ],
+     "others_mean_HC_D": -15.365204370207387,
+     "others_n_valid": 83,
+     "others_with_failures": 0,
+     "ci_half_width": 1.285961344460011,
+     "beats_others_mean_by_more_than_CI": false,
+     "rank_of_mined_among_84": 84
+    }
+   }
+  },
+  "GBFS": {
+   "verdict": "B-KILL",
+   "detail": {
+    "HELD_TARGETS": {
+     "mined_HC_D": -12.252998140191112,
+     "mined_CI95": [
+      -13.40296751892517,
+      -11.19686814265557
+     ],
+     "others_mean_HC_D": -12.80831605779238,
+     "others_n_valid": 83,
+     "others_with_failures": 0,
+     "ci_half_width": 1.1030496881348002,
+     "beats_others_mean_by_more_than_CI": false,
+     "rank_of_mined_among_84": 39
+    },
+    "HELD_BOTH": {
+     "mined_HC_D": -11.669991469256512,
+     "mined_CI95": [
+      -12.753587361482204,
+      -10.664251651380265
+     ],
+     "others_mean_HC_D": -12.625207833104186,
+     "others_n_valid": 83,
+     "others_with_failures": 0,
+     "ci_half_width": 1.0446678550509692,
+     "beats_others_mean_by_more_than_CI": false,
+     "rank_of_mined_among_84": 39
+    }
+   }
+  }
+ },
+ "subsets": {
+  "00_01_02_10_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": true,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1000.38,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -18.048507216766623,
+      "HC_D_transitions_CI95": [
+       -19.31839367925533,
+       -16.802639005563492
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 663.8733333333333,
+      "mean_excess": 17.563333333333333,
+      "HC_D_transitions": -11.395109734396625,
+      "HC_D_transitions_CI95": [
+       -12.344820961575364,
+       -10.4888803287483
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1101.9833333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -19.463028281921375,
+      "HC_D_transitions_CI95": [
+       -20.83275171722307,
+       -18.144591665645546
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 727.23,
+      "mean_excess": 18.746666666666666,
+      "HC_D_transitions": -12.252998140191112,
+      "HC_D_transitions_CI95": [
+       -13.40296751892517,
+       -11.19686814265557
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1028.4366666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -18.50246079139051,
+      "HC_D_transitions_CI95": [
+       -19.841262865841887,
+       -17.269340176921865
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 681.37,
+      "mean_excess": 18.0,
+      "HC_D_transitions": -11.669991469256512,
+      "HC_D_transitions_CI95": [
+       -12.753587361482204,
+       -10.664251651380265
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_11_12": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 845.5266666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.986752784551506,
+      "HC_D_transitions_CI95": [
+       -16.06195366688581,
+       -13.9356459378952
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 578.17,
+      "mean_excess": 17.11,
+      "HC_D_transitions": -9.700586568246226,
+      "HC_D_transitions_CI95": [
+       -10.58921456509902,
+       -8.880810463506434
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 931.8233333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.189251587250688,
+      "HC_D_transitions_CI95": [
+       -17.34358594671331,
+       -15.084680270443366
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 622.6966666666667,
+      "mean_excess": 18.073333333333334,
+      "HC_D_transitions": -10.241839286859488,
+      "HC_D_transitions_CI95": [
+       -11.172375108502226,
+       -9.355458600099148
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 869.6833333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.377190104337554,
+      "HC_D_transitions_CI95": [
+       -16.50695515110776,
+       -14.33959151653791
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 588.24,
+      "mean_excess": 17.686666666666667,
+      "HC_D_transitions": -9.836603451670056,
+      "HC_D_transitions_CI95": [
+       -10.779090450282556,
+       -8.954417903704659
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_11_20": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 934.46,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.74513939234166,
+      "HC_D_transitions_CI95": [
+       -17.92203544979502,
+       -15.591023190933976
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 620.5233333333333,
+      "mean_excess": 17.21,
+      "HC_D_transitions": -10.537995122915705,
+      "HC_D_transitions_CI95": [
+       -11.481582338560596,
+       -9.700732129207159
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1028.79,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -18.05483229654332,
+      "HC_D_transitions_CI95": [
+       -19.332962098492757,
+       -16.835441639876073
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 685.9333333333333,
+      "mean_excess": 18.64,
+      "HC_D_transitions": -11.458474956711346,
+      "HC_D_transitions_CI95": [
+       -12.551145908828502,
+       -10.465893894360754
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 959.7033333333334,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -17.149353632128093,
+      "HC_D_transitions_CI95": [
+       -18.388283231500928,
+       -16.00849733397764
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 643.27,
+      "mean_excess": 17.763333333333332,
+      "HC_D_transitions": -10.919942253428703,
+      "HC_D_transitions_CI95": [
+       -11.9910985451992,
+       -10.00443156981014
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_11_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 846.6133333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.008238318064983,
+      "HC_D_transitions_CI95": [
+       -16.084762343826846,
+       -13.956255795447953
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 576.1233333333333,
+      "mean_excess": 17.343333333333334,
+      "HC_D_transitions": -9.660119949911026,
+      "HC_D_transitions_CI95": [
+       -10.518242948688348,
+       -8.865045025677574
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 932.8166666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.208362726864618,
+      "HC_D_transitions_CI95": [
+       -17.36137093834299,
+       -15.101002906709502
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 630.2666666666667,
+      "mean_excess": 18.52,
+      "HC_D_transitions": -10.387481562239467,
+      "HC_D_transitions_CI95": [
+       -11.317600101796199,
+       -9.473904420640952
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 870.6966666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.397138919876632,
+      "HC_D_transitions_CI95": [
+       -16.528512132941078,
+       -14.358692565785454
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 589.2733333333333,
+      "mean_excess": 17.916666666666668,
+      "HC_D_transitions": -9.856945993831616,
+      "HC_D_transitions_CI95": [
+       -10.760678900782375,
+       -8.98585296705431
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_11_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 845.5266666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.986752784551506,
+      "HC_D_transitions_CI95": [
+       -16.06195366688581,
+       -13.9356459378952
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 578.17,
+      "mean_excess": 17.11,
+      "HC_D_transitions": -9.700586568246226,
+      "HC_D_transitions_CI95": [
+       -10.58921456509902,
+       -8.880810463506434
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 931.8233333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.189251587250688,
+      "HC_D_transitions_CI95": [
+       -17.34358594671331,
+       -15.084680270443366
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 622.6966666666667,
+      "mean_excess": 18.073333333333334,
+      "HC_D_transitions": -10.241839286859488,
+      "HC_D_transitions_CI95": [
+       -11.172375108502226,
+       -9.355458600099148
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 869.6833333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.377190104337554,
+      "HC_D_transitions_CI95": [
+       -16.50695515110776,
+       -14.33959151653791
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 588.24,
+      "mean_excess": 17.686666666666667,
+      "HC_D_transitions": -9.836603451670056,
+      "HC_D_transitions_CI95": [
+       -10.779090450282556,
+       -8.954417903704659
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_12_20": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 999.2933333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -18.027021683253146,
+      "HC_D_transitions_CI95": [
+       -19.29567506400094,
+       -16.782165128496505
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 665.23,
+      "mean_excess": 17.21,
+      "HC_D_transitions": -11.421933698016213,
+      "HC_D_transitions_CI95": [
+       -12.42972882162014,
+       -10.521076047187423
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1100.99,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -19.443917142307445,
+      "HC_D_transitions_CI95": [
+       -20.815376339061967,
+       -18.1264634197749
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 736.5533333333333,
+      "mean_excess": 18.64,
+      "HC_D_transitions": -12.432373500929904,
+      "HC_D_transitions_CI95": [
+       -13.613479193875785,
+       -11.360624128891466
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1027.4233333333334,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -18.482511975851434,
+      "HC_D_transitions_CI95": [
+       -19.821545455898626,
+       -17.250386910450057
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 690.6233333333333,
+      "mean_excess": 17.763333333333332,
+      "HC_D_transitions": -11.852155653258087,
+      "HC_D_transitions_CI95": [
+       -13.008710562669464,
+       -10.866145763470717
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_12_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 911.4466666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.290120608976473,
+      "HC_D_transitions_CI95": [
+       -17.458329455203632,
+       -15.145197908884821
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 621.51,
+      "mean_excess": 17.343333333333334,
+      "HC_D_transitions": -10.557503460093587,
+      "HC_D_transitions_CI95": [
+       -11.496670488741188,
+       -9.689374594727704
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1005.0166666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.597447572628745,
+      "HC_D_transitions_CI95": [
+       -18.841703879959145,
+       -16.407108522381005
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 681.2933333333333,
+      "mean_excess": 18.52,
+      "HC_D_transitions": -11.36920413005836,
+      "HC_D_transitions_CI95": [
+       -12.380861014816723,
+       -10.378671425446603
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 938.4166666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.730297263599972,
+      "HC_D_transitions_CI95": [
+       -17.95391397857451,
+       -15.609348916009719
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 636.4466666666667,
+      "mean_excess": 17.916666666666668,
+      "HC_D_transitions": -10.785615854058666,
+      "HC_D_transitions_CI95": [
+       -11.769127194737457,
+       -9.833849217297892
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_12_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 910.36,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.268635075462992,
+      "HC_D_transitions_CI95": [
+       -17.435482965337343,
+       -15.124788192235316
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 624.1633333333333,
+      "mean_excess": 17.11,
+      "HC_D_transitions": -10.609965069531404,
+      "HC_D_transitions_CI95": [
+       -11.576322765759935,
+       -9.721785114120621
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1004.0233333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.578336433014815,
+      "HC_D_transitions_CI95": [
+       -18.82456363270739,
+       -16.39078588611487
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 673.4233333333333,
+      "mean_excess": 18.073333333333334,
+      "HC_D_transitions": -11.21779003398961,
+      "HC_D_transitions_CI95": [
+       -12.230356763818872,
+       -10.245235039125284
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 937.4033333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.710348448060895,
+      "HC_D_transitions_CI95": [
+       -17.931959608041247,
+       -15.590732915088902
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 635.7933333333333,
+      "mean_excess": 17.686666666666667,
+      "HC_D_transitions": -10.77275411772426,
+      "HC_D_transitions_CI95": [
+       -11.798970071193828,
+       -9.811887640210037
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 999.2933333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -18.027021683253146,
+      "HC_D_transitions_CI95": [
+       -19.29567506400094,
+       -16.782165128496505
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 665.23,
+      "mean_excess": 17.21,
+      "HC_D_transitions": -11.421933698016213,
+      "HC_D_transitions_CI95": [
+       -12.42972882162014,
+       -10.521076047187423
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1100.99,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -19.443917142307445,
+      "HC_D_transitions_CI95": [
+       -20.815376339061967,
+       -18.1264634197749
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 736.5533333333333,
+      "mean_excess": 18.64,
+      "HC_D_transitions": -12.432373500929904,
+      "HC_D_transitions_CI95": [
+       -13.613479193875785,
+       -11.360624128891466
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1027.4233333333334,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -18.482511975851434,
+      "HC_D_transitions_CI95": [
+       -19.821545455898626,
+       -17.250386910450057
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 690.6233333333333,
+      "mean_excess": 17.763333333333332,
+      "HC_D_transitions": -11.852155653258087,
+      "HC_D_transitions_CI95": [
+       -13.008710562669464,
+       -10.866145763470717
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_10_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 911.4466666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.290120608976473,
+      "HC_D_transitions_CI95": [
+       -17.458329455203632,
+       -15.145197908884821
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 621.51,
+      "mean_excess": 17.343333333333334,
+      "HC_D_transitions": -10.557503460093587,
+      "HC_D_transitions_CI95": [
+       -11.496670488741188,
+       -9.689374594727704
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1005.0166666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.597447572628745,
+      "HC_D_transitions_CI95": [
+       -18.841703879959145,
+       -16.407108522381005
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 681.2933333333333,
+      "mean_excess": 18.52,
+      "HC_D_transitions": -11.36920413005836,
+      "HC_D_transitions_CI95": [
+       -12.380861014816723,
+       -10.378671425446603
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 938.4166666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.730297263599972,
+      "HC_D_transitions_CI95": [
+       -17.95391397857451,
+       -15.609348916009719
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 636.4466666666667,
+      "mean_excess": 17.916666666666668,
+      "HC_D_transitions": -10.785615854058666,
+      "HC_D_transitions_CI95": [
+       -11.769127194737457,
+       -9.833849217297892
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_12_20": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 924.1866666666666,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.542015422131417,
+      "HC_D_transitions_CI95": [
+       -17.755119346750423,
+       -15.395485364997628
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 708.0266666666666,
+      "mean_excess": 20.276666666666667,
+      "HC_D_transitions": -12.268107823106835,
+      "HC_D_transitions_CI95": [
+       -13.28239482426662,
+       -11.241079822032942
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1008.8,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.670236644648238,
+      "HC_D_transitions_CI95": [
+       -18.884068426042983,
+       -16.482123661327893
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 773.2866666666666,
+      "mean_excess": 22.09,
+      "HC_D_transitions": -13.139100878599372,
+      "HC_D_transitions_CI95": [
+       -14.31652483891384,
+       -12.02344417282842
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 949.7866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.954130848480872,
+      "HC_D_transitions_CI95": [
+       -18.206407698552095,
+       -15.787220150365329
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 741.1233333333333,
+      "mean_excess": 20.91,
+      "HC_D_transitions": -12.846315375024608,
+      "HC_D_transitions_CI95": [
+       -14.022708507120145,
+       -11.742877819453582
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_12_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 824.0733333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.562578264021617,
+      "HC_D_transitions_CI95": [
+       -15.640608208700138,
+       -13.539372459082816
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 721.4233333333333,
+      "mean_excess": 21.96,
+      "HC_D_transitions": -12.532986225532195,
+      "HC_D_transitions_CI95": [
+       -13.667288560314663,
+       -11.39482973011718
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 900.7933333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.592252934008851,
+      "HC_D_transitions_CI95": [
+       -16.674059763777684,
+       -14.516481129871293
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 813.5733333333334,
+      "mean_excess": 23.763333333333332,
+      "HC_D_transitions": -13.914192265760278,
+      "HC_D_transitions_CI95": [
+       -15.214291825149358,
+       -12.683863896021323
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 848.3466666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -14.957149419253232,
+      "HC_D_transitions_CI95": [
+       -16.067394701986387,
+       -13.916987211543878
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 772.1966666666667,
+      "mean_excess": 22.89666666666667,
+      "HC_D_transitions": -13.458035304153816,
+      "HC_D_transitions_CI95": [
+       -14.782659874836694,
+       -12.277353353211685
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_12_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 823.26,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.54649706715877,
+      "HC_D_transitions_CI95": [
+       -15.622972011410448,
+       -13.525528415932628
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 719.6833333333333,
+      "mean_excess": 20.466666666666665,
+      "HC_D_transitions": -12.498583009292823,
+      "HC_D_transitions_CI95": [
+       -13.63011013462882,
+       -11.367507286777107
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 900.06,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.578144038991855,
+      "HC_D_transitions_CI95": [
+       -16.658510353748184,
+       -14.503744726996862
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 808.81,
+      "mean_excess": 22.653333333333332,
+      "HC_D_transitions": -13.822548579490798,
+      "HC_D_transitions_CI95": [
+       -15.094997842171328,
+       -12.634438734793507
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 847.6266666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -14.942975260843887,
+      "HC_D_transitions_CI95": [
+       -16.052463821904436,
+       -13.901695438644051
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 771.4066666666666,
+      "mean_excess": 21.643333333333334,
+      "HC_D_transitions": -13.442483102565784,
+      "HC_D_transitions_CI95": [
+       -14.797953988960277,
+       -12.265334045663568
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 925.0,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.558096618994266,
+      "HC_D_transitions_CI95": [
+       -17.771290331160706,
+       -15.41153424168219
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 680.6366666666667,
+      "mean_excess": 20.313333333333333,
+      "HC_D_transitions": -11.726553746787056,
+      "HC_D_transitions_CI95": [
+       -12.765266483608878,
+       -10.744403695513373
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1009.5333333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.684345539665234,
+      "HC_D_transitions_CI95": [
+       -18.89961783607248,
+       -16.494962998828864
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 751.09,
+      "mean_excess": 22.383333333333333,
+      "HC_D_transitions": -12.712050278971333,
+      "HC_D_transitions_CI95": [
+       -13.903355750505124,
+       -11.628155124702378
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 950.5066666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.968305006890215,
+      "HC_D_transitions_CI95": [
+       -18.222974303793887,
+       -15.80359094771763
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 716.19,
+      "mean_excess": 21.133333333333333,
+      "HC_D_transitions": -12.35546951899731,
+      "HC_D_transitions_CI95": [
+       -13.48167158435849,
+       -11.245958496130262
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 924.1866666666666,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.542015422131417,
+      "HC_D_transitions_CI95": [
+       -17.755119346750423,
+       -15.395485364997628
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 708.0266666666666,
+      "mean_excess": 20.276666666666667,
+      "HC_D_transitions": -12.268107823106835,
+      "HC_D_transitions_CI95": [
+       -13.28239482426662,
+       -11.241079822032942
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1008.8,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.670236644648238,
+      "HC_D_transitions_CI95": [
+       -18.884068426042983,
+       -16.482123661327893
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 773.2866666666666,
+      "mean_excess": 22.09,
+      "HC_D_transitions": -13.139100878599372,
+      "HC_D_transitions_CI95": [
+       -14.31652483891384,
+       -12.02344417282842
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 949.7866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.954130848480872,
+      "HC_D_transitions_CI95": [
+       -18.206407698552095,
+       -15.787220150365329
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 741.1233333333333,
+      "mean_excess": 20.91,
+      "HC_D_transitions": -12.846315375024608,
+      "HC_D_transitions_CI95": [
+       -14.022708507120145,
+       -11.742877819453582
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_11_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 824.0733333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.562578264021617,
+      "HC_D_transitions_CI95": [
+       -15.640608208700138,
+       -13.539372459082816
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 721.4233333333333,
+      "mean_excess": 21.96,
+      "HC_D_transitions": -12.532986225532195,
+      "HC_D_transitions_CI95": [
+       -13.667288560314663,
+       -11.39482973011718
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 900.7933333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.592252934008851,
+      "HC_D_transitions_CI95": [
+       -16.674059763777684,
+       -14.516481129871293
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 813.5733333333334,
+      "mean_excess": 23.763333333333332,
+      "HC_D_transitions": -13.914192265760278,
+      "HC_D_transitions_CI95": [
+       -15.214291825149358,
+       -12.683863896021323
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 848.3466666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -14.957149419253232,
+      "HC_D_transitions_CI95": [
+       -16.067394701986387,
+       -13.916987211543878
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 772.1966666666667,
+      "mean_excess": 22.89666666666667,
+      "HC_D_transitions": -13.458035304153816,
+      "HC_D_transitions_CI95": [
+       -14.782659874836694,
+       -12.277353353211685
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 993.38,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -17.910103473274898,
+      "HC_D_transitions_CI95": [
+       -19.225591561711987,
+       -16.67505744880314
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 735.4166666666666,
+      "mean_excess": 20.313333333333333,
+      "HC_D_transitions": -12.809661899426613,
+      "HC_D_transitions_CI95": [
+       -13.939078062672987,
+       -11.739970082327
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1085.18,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -19.139742192009233,
+      "HC_D_transitions_CI95": [
+       -20.45177775436625,
+       -17.84637124718696
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 812.41,
+      "mean_excess": 22.383333333333333,
+      "HC_D_transitions": -13.891810427756045,
+      "HC_D_transitions_CI95": [
+       -15.198134121483465,
+       -12.709816271086039
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1021.8866666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -18.373515322527727,
+      "HC_D_transitions_CI95": [
+       -19.731301805119372,
+       -17.114442425061497
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 774.4166666666666,
+      "mean_excess": 21.133333333333333,
+      "HC_D_transitions": -13.501738959249295,
+      "HC_D_transitions_CI95": [
+       -14.730322889157707,
+       -12.287897920430485
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 992.5666666666667,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -17.89402227641205,
+      "HC_D_transitions_CI95": [
+       -19.207955364422293,
+       -16.661934463062593
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 765.4133333333333,
+      "mean_excess": 20.276666666666667,
+      "HC_D_transitions": -13.40275489356093,
+      "HC_D_transitions_CI95": [
+       -14.505280740177923,
+       -12.282685144546123
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1084.4466666666667,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -19.12563329699224,
+      "HC_D_transitions_CI95": [
+       -20.43622834433675,
+       -17.83273521641441
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 836.7733333333333,
+      "mean_excess": 22.09,
+      "HC_D_transitions": -14.360546399025203,
+      "HC_D_transitions_CI95": [
+       -15.642187575319982,
+       -13.150787869723793
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1021.1666666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -18.35934116411838,
+      "HC_D_transitions_CI95": [
+       -19.716410157399913,
+       -17.10172879865943
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 801.9566666666667,
+      "mean_excess": 20.91,
+      "HC_D_transitions": -14.04390051840672,
+      "HC_D_transitions_CI95": [
+       -15.326291849525786,
+       -12.838135555658443
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 892.4533333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -15.914585118302249,
+      "HC_D_transitions_CI95": [
+       -17.08881576234802,
+       -14.792329425421705
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 785.1233333333333,
+      "mean_excess": 21.96,
+      "HC_D_transitions": -13.792460291306927,
+      "HC_D_transitions_CI95": [
+       -15.029780278903722,
+       -12.535036009045111
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 976.44,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.04764958635285,
+      "HC_D_transitions_CI95": [
+       -18.226062887758093,
+       -15.874301728224468
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 886.96,
+      "mean_excess": 23.763333333333332,
+      "HC_D_transitions": -15.326107868915539,
+      "HC_D_transitions_CI95": [
+       -16.75647273307552,
+       -13.97614025414474
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 919.7266666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.36235973489074,
+      "HC_D_transitions_CI95": [
+       -17.583093833732928,
+       -15.222271082027053
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 840.9433333333334,
+      "mean_excess": 22.89666666666667,
+      "HC_D_transitions": -14.811404947831223,
+      "HC_D_transitions_CI95": [
+       -16.254134163856644,
+       -13.513530251794656
+      ]
+     }
+    }
+   }
+  },
+  "00_01_02_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 993.38,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -17.910103473274898,
+      "HC_D_transitions_CI95": [
+       -19.225591561711987,
+       -16.67505744880314
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 735.4166666666666,
+      "mean_excess": 20.313333333333333,
+      "HC_D_transitions": -12.809661899426613,
+      "HC_D_transitions_CI95": [
+       -13.939078062672987,
+       -11.739970082327
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1085.18,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -19.139742192009233,
+      "HC_D_transitions_CI95": [
+       -20.45177775436625,
+       -17.84637124718696
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 812.41,
+      "mean_excess": 22.383333333333333,
+      "HC_D_transitions": -13.891810427756045,
+      "HC_D_transitions_CI95": [
+       -15.198134121483465,
+       -12.709816271086039
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1021.8866666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -18.373515322527727,
+      "HC_D_transitions_CI95": [
+       -19.731301805119372,
+       -17.114442425061497
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 774.4166666666666,
+      "mean_excess": 21.133333333333333,
+      "HC_D_transitions": -13.501738959249295,
+      "HC_D_transitions_CI95": [
+       -14.730322889157707,
+       -12.287897920430485
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_12_20": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 882.1,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.709879391023527,
+      "HC_D_transitions_CI95": [
+       -16.813903660254535,
+       -14.591449302739283
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1301.1533333333334,
+      "mean_excess": 34.97,
+      "HC_D_transitions": -23.995386541883608,
+      "HC_D_transitions_CI95": [
+       -26.12059730562184,
+       -22.095728410649095
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 970.65,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.936253447059578,
+      "HC_D_transitions_CI95": [
+       -18.129395435254096,
+       -15.788512047780968
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1420.78,
+      "mean_excess": 38.163333333333334,
+      "HC_D_transitions": -25.596485602513948,
+      "HC_D_transitions_CI95": [
+       -27.72515860118494,
+       -23.57321722685127
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 906.7766666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.107421746833783,
+      "HC_D_transitions_CI95": [
+       -17.26729463385229,
+       -15.027478622277602
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1377.33,
+      "mean_excess": 37.00666666666667,
+      "HC_D_transitions": -25.370890478377845,
+      "HC_D_transitions_CI95": [
+       -27.56605422890382,
+       -23.34929169946248
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_12_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 794.2533333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.972978316746852,
+      "HC_D_transitions_CI95": [
+       -14.970677540642006,
+       -12.97331303722974
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 921.08,
+      "mean_excess": 28.223333333333333,
+      "HC_D_transitions": -16.4805905226389,
+      "HC_D_transitions_CI95": [
+       -18.178932295361044,
+       -14.90342939601053
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 874.6766666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.089783877380874,
+      "HC_D_transitions_CI95": [
+       -16.156541671835612,
+       -14.060570931787234
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 976.03,
+      "mean_excess": 29.833333333333332,
+      "HC_D_transitions": -17.03976143141153,
+      "HC_D_transitions_CI95": [
+       -18.65983012712197,
+       -15.3926642104483
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 817.77,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.355207034582321,
+      "HC_D_transitions_CI95": [
+       -15.41341024920678,
+       -13.377110771712477
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 968.7733333333333,
+      "mean_excess": 29.75,
+      "HC_D_transitions": -17.327908655423585,
+      "HC_D_transitions_CI95": [
+       -18.999778936966944,
+       -15.807024263822395
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_12_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 793.1666666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.951492783233375,
+      "HC_D_transitions_CI95": [
+       -14.950043407227081,
+       -12.953269152456354
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1272.2866666666666,
+      "mean_excess": 35.053333333333335,
+      "HC_D_transitions": -23.42463586634153,
+      "HC_D_transitions_CI95": [
+       -25.359728283789508,
+       -21.605410471639924
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 873.6833333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.070672737766948,
+      "HC_D_transitions_CI95": [
+       -16.135260749733046,
+       -14.043099816286299
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1364.0233333333333,
+      "mean_excess": 36.196666666666665,
+      "HC_D_transitions": -24.504521259539537,
+      "HC_D_transitions_CI95": [
+       -26.609216912622212,
+       -22.379516775574928
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 816.7566666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.335258219043244,
+      "HC_D_transitions_CI95": [
+       -15.389617767133082,
+       -13.358770666189187
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1319.3266666666666,
+      "mean_excess": 35.72,
+      "HC_D_transitions": -24.22901765207691,
+      "HC_D_transitions_CI95": [
+       -26.25157073968685,
+       -22.262888019976838
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 883.1866666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.731364924537008,
+      "HC_D_transitions_CI95": [
+       -16.83441370431819,
+       -14.61181480053928
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 965.2433333333333,
+      "mean_excess": 24.623333333333335,
+      "HC_D_transitions": -17.35378633098267,
+      "HC_D_transitions_CI95": [
+       -19.151368934592213,
+       -15.728525071546311
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 971.6433333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.955364586673507,
+      "HC_D_transitions_CI95": [
+       -18.146601293762988,
+       -15.804836188679507
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1013.1566666666666,
+      "mean_excess": 26.373333333333335,
+      "HC_D_transitions": -17.754056307317384,
+      "HC_D_transitions_CI95": [
+       -19.403000180414477,
+       -16.172340000268964
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 907.79,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.12737056237286,
+      "HC_D_transitions_CI95": [
+       -17.289927138452498,
+       -15.046266218860431
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1017.5,
+      "mean_excess": 26.53,
+      "HC_D_transitions": -18.28715794999672,
+      "HC_D_transitions_CI95": [
+       -20.12960659230288,
+       -16.666502591307665
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 882.1,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.709879391023527,
+      "HC_D_transitions_CI95": [
+       -16.813903660254535,
+       -14.591449302739283
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1301.1533333333334,
+      "mean_excess": 34.97,
+      "HC_D_transitions": -23.995386541883608,
+      "HC_D_transitions_CI95": [
+       -26.12059730562184,
+       -22.095728410649095
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 970.65,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.936253447059578,
+      "HC_D_transitions_CI95": [
+       -18.129395435254096,
+       -15.788512047780968
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1420.78,
+      "mean_excess": 38.163333333333334,
+      "HC_D_transitions": -25.596485602513948,
+      "HC_D_transitions_CI95": [
+       -27.72515860118494,
+       -23.57321722685127
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 906.7766666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.107421746833783,
+      "HC_D_transitions_CI95": [
+       -17.26729463385229,
+       -15.027478622277602
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1377.33,
+      "mean_excess": 37.00666666666667,
+      "HC_D_transitions": -25.370890478377845,
+      "HC_D_transitions_CI95": [
+       -27.56605422890382,
+       -23.34929169946248
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_11_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 794.2533333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.972978316746852,
+      "HC_D_transitions_CI95": [
+       -14.970677540642006,
+       -12.97331303722974
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 921.08,
+      "mean_excess": 28.223333333333333,
+      "HC_D_transitions": -16.4805905226389,
+      "HC_D_transitions_CI95": [
+       -18.178932295361044,
+       -14.90342939601053
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 874.6766666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.089783877380874,
+      "HC_D_transitions_CI95": [
+       -16.156541671835612,
+       -14.060570931787234
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 976.03,
+      "mean_excess": 29.833333333333332,
+      "HC_D_transitions": -17.03976143141153,
+      "HC_D_transitions_CI95": [
+       -18.65983012712197,
+       -15.3926642104483
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 817.77,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.355207034582321,
+      "HC_D_transitions_CI95": [
+       -15.41341024920678,
+       -13.377110771712477
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 968.7733333333333,
+      "mean_excess": 29.75,
+      "HC_D_transitions": -17.327908655423585,
+      "HC_D_transitions_CI95": [
+       -18.999778936966944,
+       -15.807024263822395
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 953.6466666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -17.124497462598036,
+      "HC_D_transitions_CI95": [
+       -18.32370824089431,
+       -15.910226943816014
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1042.8366666666666,
+      "mean_excess": 24.623333333333335,
+      "HC_D_transitions": -18.88795887431622,
+      "HC_D_transitions_CI95": [
+       -20.84570240566552,
+       -17.121051960863344
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1049.8166666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -18.459372795485155,
+      "HC_D_transitions_CI95": [
+       -19.751126022411484,
+       -17.217873917668566
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1095.9433333333334,
+      "mean_excess": 26.373333333333335,
+      "HC_D_transitions": -19.346822292054128,
+      "HC_D_transitions_CI95": [
+       -21.1271640628979,
+       -17.627600712465405
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 981.2166666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -17.572872235711003,
+      "HC_D_transitions_CI95": [
+       -18.843227577135156,
+       -16.393737294103932
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1099.2733333333333,
+      "mean_excess": 26.53,
+      "HC_D_transitions": -19.896974867117265,
+      "HC_D_transitions_CI95": [
+       -21.85044650373812,
+       -18.15192042496656
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 952.56,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -17.10301192908456,
+      "HC_D_transitions_CI95": [
+       -18.30428073746658,
+       -15.893205366375694
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1403.9666666666667,
+      "mean_excess": 34.97,
+      "HC_D_transitions": -26.028208001054505,
+      "HC_D_transitions_CI95": [
+       -28.33502191205632,
+       -23.974435546037306
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1048.8233333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -18.440261655871225,
+      "HC_D_transitions_CI95": [
+       -19.732344487118638,
+       -17.20040280216763
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1534.44,
+      "mean_excess": 38.163333333333334,
+      "HC_D_transitions": -27.78323606746617,
+      "HC_D_transitions_CI95": [
+       -30.11380438988276,
+       -25.571770518972784
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 980.2033333333334,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -17.552923420171926,
+      "HC_D_transitions_CI95": [
+       -18.819435095061458,
+       -16.37532026477588
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1487.17,
+      "mean_excess": 37.00666666666667,
+      "HC_D_transitions": -27.533237089047837,
+      "HC_D_transitions_CI95": [
+       -29.912811555895143,
+       -25.350638179547513
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 864.7133333333334,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.366110854807882,
+      "HC_D_transitions_CI95": [
+       -16.459715430618694,
+       -14.271039058157347
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 999.92,
+      "mean_excess": 28.223333333333333,
+      "HC_D_transitions": -18.039412113622884,
+      "HC_D_transitions_CI95": [
+       -19.873428638464535,
+       -16.315374858252657
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 952.85,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.593792086192522,
+      "HC_D_transitions_CI95": [
+       -17.76376585124981,
+       -15.464306951842433
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1060.95,
+      "mean_excess": 29.833333333333332,
+      "HC_D_transitions": -18.67357147437953,
+      "HC_D_transitions_CI95": [
+       -20.430010482933252,
+       -16.88332830758338
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 891.1966666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.800708707920467,
+      "HC_D_transitions_CI95": [
+       -16.963183620534277,
+       -14.727150576955852
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1052.42,
+      "mean_excess": 29.75,
+      "HC_D_transitions": -18.974604632849925,
+      "HC_D_transitions_CI95": [
+       -20.814340470395155,
+       -17.302225842970806
+      ]
+     }
+    }
+   }
+  },
+  "00_01_10_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 953.6466666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -17.124497462598036,
+      "HC_D_transitions_CI95": [
+       -18.32370824089431,
+       -15.910226943816014
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1042.8366666666666,
+      "mean_excess": 24.623333333333335,
+      "HC_D_transitions": -18.88795887431622,
+      "HC_D_transitions_CI95": [
+       -20.84570240566552,
+       -17.121051960863344
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1049.8166666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -18.459372795485155,
+      "HC_D_transitions_CI95": [
+       -19.751126022411484,
+       -17.217873917668566
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1095.9433333333334,
+      "mean_excess": 26.373333333333335,
+      "HC_D_transitions": -19.346822292054128,
+      "HC_D_transitions_CI95": [
+       -21.1271640628979,
+       -17.627600712465405
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 981.2166666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -17.572872235711003,
+      "HC_D_transitions_CI95": [
+       -18.843227577135156,
+       -16.393737294103932
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1099.2733333333333,
+      "mean_excess": 26.53,
+      "HC_D_transitions": -19.896974867117265,
+      "HC_D_transitions_CI95": [
+       -21.85044650373812,
+       -18.15192042496656
+      ]
+     }
+    }
+   }
+  },
+  "00_01_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 860.6466666666666,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -15.285704870493639,
+      "HC_D_transitions_CI95": [
+       -16.426670845629996,
+       -14.227840525714312
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 485.6166666666667,
+      "mean_excess": 17.966666666666665,
+      "HC_D_transitions": -7.870625453107493,
+      "HC_D_transitions_CI95": [
+       -8.648132661183494,
+       -7.145863332060939
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 939.62,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -16.339254793817737,
+      "HC_D_transitions_CI95": [
+       -17.474771413124977,
+       -15.236539036458453
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 537.6,
+      "mean_excess": 19.05666666666667,
+      "HC_D_transitions": -8.604630282819214,
+      "HC_D_transitions_CI95": [
+       -9.510948035364816,
+       -7.766508372124058
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 885.44,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.68738106174946,
+      "HC_D_transitions_CI95": [
+       -16.834257226828377,
+       -14.599796348482075
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 519.5366666666666,
+      "mean_excess": 18.91,
+      "HC_D_transitions": -8.48408688234136,
+      "HC_D_transitions_CI95": [
+       -9.240175083442566,
+       -7.757714128430148
+      ]
+     }
+    }
+   }
+  },
+  "00_01_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 859.8333333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -15.269623673630793,
+      "HC_D_transitions_CI95": [
+       -16.408728543335908,
+       -14.2140578444636
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 535.8733333333333,
+      "mean_excess": 15.256666666666666,
+      "HC_D_transitions": -8.864298424833587,
+      "HC_D_transitions_CI95": [
+       -9.6789013744176,
+       -8.092038567580115
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 938.8866666666667,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -16.325145898800745,
+      "HC_D_transitions_CI95": [
+       -17.458130084686132,
+       -15.223539895482398
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 564.2033333333334,
+      "mean_excess": 16.39,
+      "HC_D_transitions": -9.116462515231193,
+      "HC_D_transitions_CI95": [
+       -9.986280840203532,
+       -8.317317128890608
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 884.72,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.673206903340112,
+      "HC_D_transitions_CI95": [
+       -16.82128395079363,
+       -14.584561139372164
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 556.4033333333333,
+      "mean_excess": 16.393333333333334,
+      "HC_D_transitions": -9.209856289782794,
+      "HC_D_transitions_CI95": [
+       -10.083570770119925,
+       -8.413884663072263
+      ]
+     }
+    }
+   }
+  },
+  "00_01_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 759.72,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -13.290186515520992,
+      "HC_D_transitions_CI95": [
+       -14.289718010196307,
+       -12.341741205558172
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 578.6366666666667,
+      "mean_excess": 22.06,
+      "HC_D_transitions": -9.709813484479008,
+      "HC_D_transitions_CI95": [
+       -10.661311725508599,
+       -8.827966071401024
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 830.88,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -14.247162188161354,
+      "HC_D_transitions_CI95": [
+       -15.241471187969577,
+       -13.263444503327044
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 628.88,
+      "mean_excess": 23.163333333333334,
+      "HC_D_transitions": -10.36080292438915,
+      "HC_D_transitions_CI95": [
+       -11.376622772568549,
+       -9.429524959369383
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 783.28,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -13.676225474112474,
+      "HC_D_transitions_CI95": [
+       -14.694962842205827,
+       -12.709201024770001
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 596.34,
+      "mean_excess": 22.116666666666667,
+      "HC_D_transitions": -9.996062733775181,
+      "HC_D_transitions_CI95": [
+       -11.092698729475881,
+       -9.011674356831767
+      ]
+     }
+    }
+   }
+  },
+  "00_01_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 860.6466666666666,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -15.285704870493639,
+      "HC_D_transitions_CI95": [
+       -16.426670845629996,
+       -14.227840525714312
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 485.6166666666667,
+      "mean_excess": 17.966666666666665,
+      "HC_D_transitions": -7.870625453107493,
+      "HC_D_transitions_CI95": [
+       -8.648132661183494,
+       -7.145863332060939
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 939.62,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -16.339254793817737,
+      "HC_D_transitions_CI95": [
+       -17.474771413124977,
+       -15.236539036458453
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 537.6,
+      "mean_excess": 19.05666666666667,
+      "HC_D_transitions": -8.604630282819214,
+      "HC_D_transitions_CI95": [
+       -9.510948035364816,
+       -7.766508372124058
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 885.44,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.68738106174946,
+      "HC_D_transitions_CI95": [
+       -16.834257226828377,
+       -14.599796348482075
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 519.5366666666666,
+      "mean_excess": 18.91,
+      "HC_D_transitions": -8.48408688234136,
+      "HC_D_transitions_CI95": [
+       -9.240175083442566,
+       -7.757714128430148
+      ]
+     }
+    }
+   }
+  },
+  "00_01_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 934.6533333333333,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.748961971923812,
+      "HC_D_transitions_CI95": [
+       -17.99570595160559,
+       -15.586856867990784
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 530.63,
+      "mean_excess": 17.966666666666665,
+      "HC_D_transitions": -8.76062743030383,
+      "HC_D_transitions_CI95": [
+       -9.619081278428874,
+       -7.963016998299058
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1021.24,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.90957480920926,
+      "HC_D_transitions_CI95": [
+       -19.145528809190328,
+       -16.700575672315612
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 588.28,
+      "mean_excess": 19.05666666666667,
+      "HC_D_transitions": -9.579683191175528,
+      "HC_D_transitions_CI95": [
+       -10.577799501919486,
+       -8.658330010657991
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 962.5266666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -17.204934707001772,
+      "HC_D_transitions_CI95": [
+       -18.455225698718326,
+       -16.013698902476772
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 568.1766666666666,
+      "mean_excess": 18.91,
+      "HC_D_transitions": -9.441630028217075,
+      "HC_D_transitions_CI95": [
+       -10.27383207590841,
+       -8.640308081552888
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_12_20": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 849.08,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.057009161009688,
+      "HC_D_transitions_CI95": [
+       -16.146752024169793,
+       -14.001867302183737
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 512.4666666666667,
+      "mean_excess": 14.896666666666667,
+      "HC_D_transitions": -8.401502669215054,
+      "HC_D_transitions_CI95": [
+       -9.150761622579362,
+       -7.7231395776101746
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 935.2033333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.254280767010837,
+      "HC_D_transitions_CI95": [
+       -17.42143525454296,
+       -15.152304845027368
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 527.2333333333333,
+      "mean_excess": 14.9,
+      "HC_D_transitions": -8.405181812351696,
+      "HC_D_transitions_CI95": [
+       -9.167668383821262,
+       -7.696624807571753
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 872.7166666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.436905308747292,
+      "HC_D_transitions_CI95": [
+       -16.565013076768825,
+       -14.398217717121772
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 528.7066666666667,
+      "mean_excess": 14.936666666666667,
+      "HC_D_transitions": -8.664610538749262,
+      "HC_D_transitions_CI95": [
+       -9.532495039629445,
+       -7.928774663515538
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_12_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 761.2333333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.320108086733013,
+      "HC_D_transitions_CI95": [
+       -14.295056286926613,
+       -12.365580065817808
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 459.70666666666665,
+      "mean_excess": 15.043333333333333,
+      "HC_D_transitions": -7.358333882554538,
+      "HC_D_transitions_CI95": [
+       -8.042288822676593,
+       -6.744514844933957
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.23,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.407811197332137,
+      "HC_D_transitions_CI95": [
+       -15.451144163568111,
+       -13.42733392375045
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 471.96666666666664,
+      "mean_excess": 15.103333333333333,
+      "HC_D_transitions": -7.341884178798178,
+      "HC_D_transitions_CI95": [
+       -8.035224929344036,
+       -6.715897714675019
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 783.71,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.684690596495834,
+      "HC_D_transitions_CI95": [
+       -14.702318112148857,
+       -12.748843550954495
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 472.3466666666667,
+      "mean_excess": 15.08,
+      "HC_D_transitions": -7.555088916595578,
+      "HC_D_transitions_CI95": [
+       -8.338212379210056,
+       -6.89715683933873
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_12_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 760.1466666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.298622553219534,
+      "HC_D_transitions_CI95": [
+       -14.269577097520854,
+       -12.344693385180499
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 466.37666666666667,
+      "mean_excess": 14.766666666666667,
+      "HC_D_transitions": -7.490212878138799,
+      "HC_D_transitions_CI95": [
+       -8.179100955751025,
+       -6.867407269575312
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 838.2366666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.388700057718207,
+      "HC_D_transitions_CI95": [
+       -15.43404447620924,
+       -13.409180313984525
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 477.9433333333333,
+      "mean_excess": 14.833333333333334,
+      "HC_D_transitions": -7.456871673186686,
+      "HC_D_transitions_CI95": [
+       -8.125275997160422,
+       -6.837701341188256
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 782.6966666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.664741780956756,
+      "HC_D_transitions_CI95": [
+       -14.683852556804778,
+       -12.73022755003368
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 479.26,
+      "mean_excess": 14.846666666666666,
+      "HC_D_transitions": -7.691187085766783,
+      "HC_D_transitions_CI95": [
+       -8.488937614732734,
+       -7.024906370708021
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 850.1666666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.078494694523165,
+      "HC_D_transitions_CI95": [
+       -16.165849563416682,
+       -14.022336047432693
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 506.0933333333333,
+      "mean_excess": 15.136666666666667,
+      "HC_D_transitions": -8.27548935609306,
+      "HC_D_transitions_CI95": [
+       -9.015945944382567,
+       -7.617777986754566
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 936.1966666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.273391906624767,
+      "HC_D_transitions_CI95": [
+       -17.43853494190183,
+       -15.168627481293502
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 523.54,
+      "mean_excess": 15.276666666666667,
+      "HC_D_transitions": -8.334124286538831,
+      "HC_D_transitions_CI95": [
+       -9.107031308630907,
+       -7.626020656888217
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 873.73,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.45685412428637,
+      "HC_D_transitions_CI95": [
+       -16.588954192709583,
+       -14.417043531990927
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 520.22,
+      "mean_excess": 15.126666666666667,
+      "HC_D_transitions": -8.497539208609489,
+      "HC_D_transitions_CI95": [
+       -9.344404114310548,
+       -7.780911265880114
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 849.08,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.057009161009688,
+      "HC_D_transitions_CI95": [
+       -16.146752024169793,
+       -14.001867302183737
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 512.4666666666667,
+      "mean_excess": 14.896666666666667,
+      "HC_D_transitions": -8.401502669215054,
+      "HC_D_transitions_CI95": [
+       -9.150761622579362,
+       -7.7231395776101746
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 935.2033333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.254280767010837,
+      "HC_D_transitions_CI95": [
+       -17.42143525454296,
+       -15.152304845027368
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 527.2333333333333,
+      "mean_excess": 14.9,
+      "HC_D_transitions": -8.405181812351696,
+      "HC_D_transitions_CI95": [
+       -9.167668383821262,
+       -7.696624807571753
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 872.7166666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.436905308747292,
+      "HC_D_transitions_CI95": [
+       -16.565013076768825,
+       -14.398217717121772
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 528.7066666666667,
+      "mean_excess": 14.936666666666667,
+      "HC_D_transitions": -8.664610538749262,
+      "HC_D_transitions_CI95": [
+       -9.532495039629445,
+       -7.928774663515538
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_11_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 761.2333333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.320108086733013,
+      "HC_D_transitions_CI95": [
+       -14.295056286926613,
+       -12.365580065817808
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 459.70666666666665,
+      "mean_excess": 15.043333333333333,
+      "HC_D_transitions": -7.358333882554538,
+      "HC_D_transitions_CI95": [
+       -8.042288822676593,
+       -6.744514844933957
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.23,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.407811197332137,
+      "HC_D_transitions_CI95": [
+       -15.451144163568111,
+       -13.42733392375045
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 471.96666666666664,
+      "mean_excess": 15.103333333333333,
+      "HC_D_transitions": -7.341884178798178,
+      "HC_D_transitions_CI95": [
+       -8.035224929344036,
+       -6.715897714675019
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 783.71,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.684690596495834,
+      "HC_D_transitions_CI95": [
+       -14.702318112148857,
+       -12.748843550954495
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 472.3466666666667,
+      "mean_excess": 15.08,
+      "HC_D_transitions": -7.555088916595578,
+      "HC_D_transitions_CI95": [
+       -8.338212379210056,
+       -6.89715683933873
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 915.5466666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.37118565873591,
+      "HC_D_transitions_CI95": [
+       -17.553681022886195,
+       -15.223991885519943
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 547.1733333333333,
+      "mean_excess": 15.136666666666667,
+      "HC_D_transitions": -9.087721610755947,
+      "HC_D_transitions_CI95": [
+       -9.895465039960513,
+       -8.375153505713698
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1008.9166666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.672481241582762,
+      "HC_D_transitions_CI95": [
+       -18.93427925825382,
+       -16.48513687767024
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 567.0533333333333,
+      "mean_excess": 15.276666666666667,
+      "HC_D_transitions": -9.171294811774514,
+      "HC_D_transitions_CI95": [
+       -10.016052383855262,
+       -8.398125811425693
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 941.9166666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.799199422534286,
+      "HC_D_transitions_CI95": [
+       -18.022599484792654,
+       -15.671031031726828
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 563.36,
+      "mean_excess": 15.126666666666667,
+      "HC_D_transitions": -9.34680753330271,
+      "HC_D_transitions_CI95": [
+       -10.269625001686098,
+       -8.556767398699678
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 914.46,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.349700125222434,
+      "HC_D_transitions_CI95": [
+       -17.533555305937053,
+       -15.203523140270985
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 553.92,
+      "mean_excess": 14.896666666666667,
+      "HC_D_transitions": -9.221116456864166,
+      "HC_D_transitions_CI95": [
+       -10.04111961330218,
+       -8.483760410337977
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1007.9233333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.653370101968832,
+      "HC_D_transitions_CI95": [
+       -18.917179570894948,
+       -16.468814241404104
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 570.8533333333334,
+      "mean_excess": 14.9,
+      "HC_D_transitions": -9.244404540498941,
+      "HC_D_transitions_CI95": [
+       -10.077404917062871,
+       -8.47052843861459
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 940.9033333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.77925060699521,
+      "HC_D_transitions_CI95": [
+       -18.000591538576685,
+       -15.652415030806011
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 572.38,
+      "mean_excess": 14.936666666666667,
+      "HC_D_transitions": -9.524378240041997,
+      "HC_D_transitions_CI95": [
+       -10.469336884531081,
+       -8.72230431700976
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 826.6133333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.612799050945759,
+      "HC_D_transitions_CI95": [
+       -15.678510173721087,
+       -13.57239597123423
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 501.16,
+      "mean_excess": 15.043333333333333,
+      "HC_D_transitions": -8.17794767020365,
+      "HC_D_transitions_CI95": [
+       -8.924619424585368,
+       -7.499641514174346
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 911.95,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.806900532290129,
+      "HC_D_transitions_CI95": [
+       -16.946888479920105,
+       -14.727319492267014
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 515.5666666666667,
+      "mean_excess": 15.103333333333333,
+      "HC_D_transitions": -8.180722118899507,
+      "HC_D_transitions_CI95": [
+       -8.942396879286887,
+       -7.486841386879251
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 851.8966666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.02703589474375,
+      "HC_D_transitions_CI95": [
+       -16.142921275632993,
+       -13.99812565353329
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 515.7733333333333,
+      "mean_excess": 15.08,
+      "HC_D_transitions": -8.410000656211038,
+      "HC_D_transitions_CI95": [
+       -9.267266202270381,
+       -7.6822880913089175
+      ]
+     }
+    }
+   }
+  },
+  "00_02_10_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 915.5466666666666,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.37118565873591,
+      "HC_D_transitions_CI95": [
+       -17.553681022886195,
+       -15.223991885519943
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 547.1733333333333,
+      "mean_excess": 15.136666666666667,
+      "HC_D_transitions": -9.087721610755947,
+      "HC_D_transitions_CI95": [
+       -9.895465039960513,
+       -8.375153505713698
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1008.9166666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.672481241582762,
+      "HC_D_transitions_CI95": [
+       -18.93427925825382,
+       -16.48513687767024
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 567.0533333333333,
+      "mean_excess": 15.276666666666667,
+      "HC_D_transitions": -9.171294811774514,
+      "HC_D_transitions_CI95": [
+       -10.016052383855262,
+       -8.398125811425693
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 941.9166666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.799199422534286,
+      "HC_D_transitions_CI95": [
+       -18.022599484792654,
+       -15.671031031726828
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 563.36,
+      "mean_excess": 15.126666666666667,
+      "HC_D_transitions": -9.34680753330271,
+      "HC_D_transitions_CI95": [
+       -10.269625001686098,
+       -8.556767398699678
+      ]
+     }
+    }
+   }
+  },
+  "00_02_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 829.4033333333333,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.667962828708891,
+      "HC_D_transitions_CI95": [
+       -15.756507385179486,
+       -13.643994019331885
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 255.69333333333333,
+      "mean_excess": 3.033333333333333,
+      "HC_D_transitions": -3.324589731760364,
+      "HC_D_transitions_CI95": [
+       -3.646028882357411,
+       -3.0184071700094455
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 905.8633333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.689796703649073,
+      "HC_D_transitions_CI95": [
+       -16.778435659718845,
+       -14.612350827312829
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 273.4633333333333,
+      "mean_excess": 3.1433333333333335,
+      "HC_D_transitions": -3.522798691720644,
+      "HC_D_transitions_CI95": [
+       -3.8355611694775327,
+       -3.227804474174662
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 853.2866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.054399895006235,
+      "HC_D_transitions_CI95": [
+       -16.175094528576434,
+       -13.997460196684134
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 266.00333333333333,
+      "mean_excess": 2.98,
+      "HC_D_transitions": -3.492945731347201,
+      "HC_D_transitions_CI95": [
+       -3.8148115901026514,
+       -3.191261972985135
+      ]
+     }
+    }
+   }
+  },
+  "00_02_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 828.59,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.651881631846042,
+      "HC_D_transitions_CI95": [
+       -15.73881228698539,
+       -13.63015234169589
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 260.13,
+      "mean_excess": 3.026666666666667,
+      "HC_D_transitions": -3.412311342516312,
+      "HC_D_transitions_CI95": [
+       -3.750472992286684,
+       -3.1126712924883466
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 905.13,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.675687808632077,
+      "HC_D_transitions_CI95": [
+       -16.761797640658262,
+       -14.598717800838415
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 272.66,
+      "mean_excess": 2.82,
+      "HC_D_transitions": -3.5073430385429356,
+      "HC_D_transitions_CI95": [
+       -3.803559373997208,
+       -3.2228444816959887
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 852.5666666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.040225736596888,
+      "HC_D_transitions_CI95": [
+       -16.1606906921487,
+       -13.982278594573632
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 270.71,
+      "mean_excess": 2.9566666666666666,
+      "HC_D_transitions": -3.585602729837916,
+      "HC_D_transitions_CI95": [
+       -3.907198293613012,
+       -3.2916308716074423
+      ]
+     }
+    }
+   }
+  },
+  "00_02_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 728.4766666666667,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -12.672444473736242,
+      "HC_D_transitions_CI95": [
+       -13.63017376121162,
+       -11.755807761845938
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 237.42,
+      "mean_excess": 3.033333333333333,
+      "HC_D_transitions": -2.963290054702432,
+      "HC_D_transitions_CI95": [
+       -3.2699001315802922,
+       -2.677436190043686
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 797.1233333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -13.59770409799269,
+      "HC_D_transitions_CI95": [
+       -14.552428405875464,
+       -12.645287784494391
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 253.13666666666666,
+      "mean_excess": 2.9033333333333333,
+      "HC_D_transitions": -3.1317257743859424,
+      "HC_D_transitions_CI95": [
+       -3.415087433666807,
+       -2.866612309673087
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 751.1266666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -13.04324430736925,
+      "HC_D_transitions_CI95": [
+       -14.036752689884603,
+       -12.102178925280372
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 247.37,
+      "mean_excess": 2.9266666666666667,
+      "HC_D_transitions": -3.126123761401667,
+      "HC_D_transitions_CI95": [
+       -3.4254983165818476,
+       -2.858868792515354
+      ]
+     }
+    }
+   }
+  },
+  "00_02_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 829.4033333333333,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.667962828708891,
+      "HC_D_transitions_CI95": [
+       -15.756507385179486,
+       -13.643994019331885
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 255.69333333333333,
+      "mean_excess": 3.033333333333333,
+      "HC_D_transitions": -3.324589731760364,
+      "HC_D_transitions_CI95": [
+       -3.646028882357411,
+       -3.0184071700094455
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 905.8633333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.689796703649073,
+      "HC_D_transitions_CI95": [
+       -16.778435659718845,
+       -14.612350827312829
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 273.4633333333333,
+      "mean_excess": 3.1433333333333335,
+      "HC_D_transitions": -3.522798691720644,
+      "HC_D_transitions_CI95": [
+       -3.8355611694775327,
+       -3.227804474174662
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 853.2866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.054399895006235,
+      "HC_D_transitions_CI95": [
+       -16.175094528576434,
+       -13.997460196684134
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 266.00333333333333,
+      "mean_excess": 2.98,
+      "HC_D_transitions": -3.492945731347201,
+      "HC_D_transitions_CI95": [
+       -3.8148115901026514,
+       -3.191261972985135
+      ]
+     }
+    }
+   }
+  },
+  "00_02_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 898.6033333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.03618269294141,
+      "HC_D_transitions_CI95": [
+       -17.22244042031654,
+       -14.91304933976393
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 283.6066666666667,
+      "mean_excess": 3.033333333333333,
+      "HC_D_transitions": -3.876491135569762,
+      "HC_D_transitions_CI95": [
+       -4.239259168759962,
+       -3.5343753619234644
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 982.29,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.160200089783878,
+      "HC_D_transitions_CI95": [
+       -18.347822604095892,
+       -15.977836166697426
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 303.7966666666667,
+      "mean_excess": 3.1433333333333335,
+      "HC_D_transitions": -4.106393894696338,
+      "HC_D_transitions_CI95": [
+       -4.459015592248833,
+       -3.773180377944307
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 925.4266666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.47457182229805,
+      "HC_D_transitions_CI95": [
+       -17.702905777159152,
+       -15.315050515333974
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 295.45,
+      "mean_excess": 2.98,
+      "HC_D_transitions": -4.07264256184789,
+      "HC_D_transitions_CI95": [
+       -4.437950338468466,
+       -3.729789257134925
+      ]
+     }
+    }
+   }
+  },
+  "00_10_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 802.03,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -14.126738285111712,
+      "HC_D_transitions_CI95": [
+       -15.158022393565757,
+       -13.133695621074846
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 711.0866666666667,
+      "mean_excess": 17.446666666666665,
+      "HC_D_transitions": -12.328610030976076,
+      "HC_D_transitions_CI95": [
+       -13.427961646849141,
+       -11.350883745301594
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 879.2933333333333,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -15.178605784646958,
+      "HC_D_transitions_CI95": [
+       -16.279984234171355,
+       -14.14976710999969
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 740.1133333333333,
+      "mean_excess": 17.203333333333333,
+      "HC_D_transitions": -12.500865773103316,
+      "HC_D_transitions_CI95": [
+       -13.580170309002266,
+       -11.456117506966491
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 823.04,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -14.458953999606273,
+      "HC_D_transitions_CI95": [
+       -15.517064567285896,
+       -13.47246654367699
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 721.7133333333334,
+      "mean_excess": 17.656666666666666,
+      "HC_D_transitions": -12.46420368790603,
+      "HC_D_transitions_CI95": [
+       -13.572993182506682,
+       -11.483374821560924
+      ]
+     }
+    }
+   }
+  },
+  "00_10_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 800.9433333333334,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -14.105252751598234,
+      "HC_D_transitions_CI95": [
+       -15.13420836922943,
+       -13.113173201414664
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 744.2833333333333,
+      "mean_excess": 17.67,
+      "HC_D_transitions": -12.984973307849469,
+      "HC_D_transitions_CI95": [
+       -14.14324440760525,
+       -11.979901772680092
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 878.3,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -15.159494645033028,
+      "HC_D_transitions_CI95": [
+       -16.262736748403977,
+       -14.132556401797103
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 776.3333333333334,
+      "mean_excess": 17.493333333333332,
+      "HC_D_transitions": -13.197716924260886,
+      "HC_D_transitions_CI95": [
+       -14.34315818752326,
+       -12.110440279754823
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 822.0266666666666,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -14.439005184067195,
+      "HC_D_transitions_CI95": [
+       -15.493077863033047,
+       -13.455368660552095
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 748.0133333333333,
+      "mean_excess": 18.21,
+      "HC_D_transitions": -12.981954196469585,
+      "HC_D_transitions_CI95": [
+       -14.130837783378718,
+       -11.984440847890848
+      ]
+     }
+    }
+   }
+  },
+  "00_10_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 712.7366666666667,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -12.361233770513412,
+      "HC_D_transitions_CI95": [
+       -13.274235992493127,
+       -11.482061543409964
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 735.6433333333333,
+      "mean_excess": 17.936666666666667,
+      "HC_D_transitions": -12.814143544453964,
+      "HC_D_transitions_CI95": [
+       -14.00800379440786,
+       -11.694365183669168
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 782.22,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -13.310972872442763,
+      "HC_D_transitions_CI95": [
+       -14.27939028735633,
+       -12.385144873284268
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 797.6366666666667,
+      "mean_excess": 18.89,
+      "HC_D_transitions": -13.607580324504585,
+      "HC_D_transitions_CI95": [
+       -14.878899261002436,
+       -12.371098540283636
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 732.8333333333334,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -12.683115690005906,
+      "HC_D_transitions_CI95": [
+       -13.634009257700464,
+       -11.811728214667156
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 782.1066666666667,
+      "mean_excess": 19.673333333333332,
+      "HC_D_transitions": -13.653126845593542,
+      "HC_D_transitions_CI95": [
+       -14.926616868902421,
+       -12.478014033699141
+      ]
+     }
+    }
+   }
+  },
+  "00_10_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 802.03,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -14.126738285111712,
+      "HC_D_transitions_CI95": [
+       -15.158022393565757,
+       -13.133695621074846
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 711.0866666666667,
+      "mean_excess": 17.446666666666665,
+      "HC_D_transitions": -12.328610030976076,
+      "HC_D_transitions_CI95": [
+       -13.427961646849141,
+       -11.350883745301594
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 879.2933333333333,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -15.178605784646958,
+      "HC_D_transitions_CI95": [
+       -16.279984234171355,
+       -14.14976710999969
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 740.1133333333333,
+      "mean_excess": 17.203333333333333,
+      "HC_D_transitions": -12.500865773103316,
+      "HC_D_transitions_CI95": [
+       -13.580170309002266,
+       -11.456117506966491
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 823.04,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -14.458953999606273,
+      "HC_D_transitions_CI95": [
+       -15.517064567285896,
+       -13.47246654367699
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 721.7133333333334,
+      "mean_excess": 17.656666666666666,
+      "HC_D_transitions": -12.46420368790603,
+      "HC_D_transitions_CI95": [
+       -13.572993182506682,
+       -11.483374821560924
+      ]
+     }
+    }
+   }
+  },
+  "00_10_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 873.47,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -15.539247347261583,
+      "HC_D_transitions_CI95": [
+       -16.669785038303612,
+       -14.4509611896668
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 782.6266666666667,
+      "mean_excess": 17.446666666666665,
+      "HC_D_transitions": -13.743096289461544,
+      "HC_D_transitions_CI95": [
+       -14.962874786541493,
+       -12.658531817174183
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 958.1133333333333,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -16.695055473609955,
+      "HC_D_transitions_CI95": [
+       -17.897774788169404,
+       -15.564727315505714
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 815.7533333333333,
+      "mean_excess": 17.203333333333333,
+      "HC_D_transitions": -13.956134162765343,
+      "HC_D_transitions_CI95": [
+       -15.158529622529727,
+       -12.791186133050577
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 897.1666666666666,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -15.918236104731282,
+      "HC_D_transitions_CI95": [
+       -17.0830394172718,
+       -14.838900826458204
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 794.88,
+      "mean_excess": 17.656666666666666,
+      "HC_D_transitions": -13.904586915151913,
+      "HC_D_transitions_CI95": [
+       -15.141186418077123,
+       -12.807615860609335
+      ]
+     }
+    }
+   }
+  },
+  "00_11_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 768.9133333333333,
+      "mean_excess": 69.79333333333334,
+      "HC_D_transitions": -13.471956765306794,
+      "HC_D_transitions_CI95": [
+       -14.509367769228929,
+       -12.526951668599395
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 290.2966666666667,
+      "mean_excess": 9.303333333333333,
+      "HC_D_transitions": -4.008765570421143,
+      "HC_D_transitions_CI95": [
+       -4.4567063226939245,
+       -3.620477673950696
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 837.08,
+      "mean_excess": 76.27666666666667,
+      "HC_D_transitions": -14.366446482395947,
+      "HC_D_transitions_CI95": [
+       -15.359550743243688,
+       -13.38289721645082
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 303.43333333333334,
+      "mean_excess": 10.283333333333333,
+      "HC_D_transitions": -4.099403578528827,
+      "HC_D_transitions_CI95": [
+       -4.472499540173769,
+       -3.7515206612277043
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 790.27,
+      "mean_excess": 71.18,
+      "HC_D_transitions": -13.81383292866986,
+      "HC_D_transitions_CI95": [
+       -14.838080153437822,
+       -12.83147597242555
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 301.78333333333336,
+      "mean_excess": 9.99,
+      "HC_D_transitions": -4.197322658967124,
+      "HC_D_transitions_CI95": [
+       -4.616714944661193,
+       -3.83157796814201
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_12_20": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 846.1333333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.998747775654122,
+      "HC_D_transitions_CI95": [
+       -16.070725709002183,
+       -13.94549791294493
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 671.38,
+      "mean_excess": 7.5,
+      "HC_D_transitions": -11.543531272655375,
+      "HC_D_transitions_CI95": [
+       -12.641924482391936,
+       -10.472045882355538
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 932.56,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.20342461360867,
+      "HC_D_transitions_CI95": [
+       -17.361063894195105,
+       -15.095487098732375
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 759.4433333333334,
+      "mean_excess": 8.62,
+      "HC_D_transitions": -12.872763419483102,
+      "HC_D_transitions_CI95": [
+       -14.036738114719986,
+       -11.700951409024126
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 871.1133333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.405341557845002,
+      "HC_D_transitions_CI95": [
+       -16.530544042848554,
+       -14.369569770150688
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 714.1133333333333,
+      "mean_excess": 8.366666666666667,
+      "HC_D_transitions": -12.314587571362951,
+      "HC_D_transitions_CI95": [
+       -13.530108832689379,
+       -11.144660224709687
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_12_21": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 758.1933333333334,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.26000131813089,
+      "HC_D_transitions_CI95": [
+       -14.2293091745546,
+       -12.309778615191629
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 606.9,
+      "mean_excess": 7.43,
+      "HC_D_transitions": -10.268635075462994,
+      "HC_D_transitions_CI95": [
+       -11.317867503431225,
+       -9.265578147276566
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 836.4733333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.354774578336434,
+      "HC_D_transitions_CI95": [
+       -15.38134973252713,
+       -13.370774285539646
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 694.9233333333333,
+      "mean_excess": 8.226666666666667,
+      "HC_D_transitions": -11.631437183351505,
+      "HC_D_transitions_CI95": [
+       -12.765374487584841,
+       -10.52685946561591
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 781.8866666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.648795852746243,
+      "HC_D_transitions_CI95": [
+       -14.659621292884419,
+       -12.711654241110374
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 648.46,
+      "mean_excess": 8.013333333333334,
+      "HC_D_transitions": -11.022114311962728,
+      "HC_D_transitions_CI95": [
+       -12.164594651174099,
+       -9.913460577112756
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_12_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 757.2,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.240361167863968,
+      "HC_D_transitions_CI95": [
+       -14.210109019328785,
+       -12.291053972733884
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 593.7333333333333,
+      "mean_excess": 7.17,
+      "HC_D_transitions": -10.008304224609503,
+      "HC_D_transitions_CI95": [
+       -11.024559589360456,
+       -9.047132066366316
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 835.5933333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.337843904316038,
+      "HC_D_transitions_CI95": [
+       -15.365987559864125,
+       -13.354480090892986
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 680.96,
+      "mean_excess": 7.9366666666666665,
+      "HC_D_transitions": -11.362790995959726,
+      "HC_D_transitions_CI95": [
+       -12.449771840031007,
+       -10.284460968201364
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 781.0933333333334,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.633178030054465,
+      "HC_D_transitions_CI95": [
+       -14.64206955959533,
+       -12.696019483643429
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 635.2733333333333,
+      "mean_excess": 7.776666666666666,
+      "HC_D_transitions": -10.762517225539733,
+      "HC_D_transitions_CI95": [
+       -11.867300442714729,
+       -9.686781834990137
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_20_21": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 847.1266666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.018387925921044,
+      "HC_D_transitions_CI95": [
+       -16.092108634959693,
+       -13.963916523154591
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 680.62,
+      "mean_excess": 7.9366666666666665,
+      "HC_D_transitions": -11.726224214064457,
+      "HC_D_transitions_CI95": [
+       -12.789365849016646,
+       -10.626861269584808
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 933.44,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.220355287629065,
+      "HC_D_transitions_CI95": [
+       -17.37624690844578,
+       -15.110147146030972
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 779.53,
+      "mean_excess": 9.213333333333333,
+      "HC_D_transitions": -13.259218880266786,
+      "HC_D_transitions_CI95": [
+       -14.494928617294368,
+       -12.002199743973907
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 871.9066666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.420959380536782,
+      "HC_D_transitions_CI95": [
+       -16.546882667783233,
+       -14.385227857657437
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 724.4333333333333,
+      "mean_excess": 8.466666666666667,
+      "HC_D_transitions": -12.517750508563553,
+      "HC_D_transitions_CI95": [
+       -13.737910849298414,
+       -11.333450850032378
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_20_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 846.1333333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.998747775654122,
+      "HC_D_transitions_CI95": [
+       -16.070725709002183,
+       -13.94549791294493
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 671.38,
+      "mean_excess": 7.5,
+      "HC_D_transitions": -11.543531272655375,
+      "HC_D_transitions_CI95": [
+       -12.641924482391936,
+       -10.472045882355538
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 932.56,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.20342461360867,
+      "HC_D_transitions_CI95": [
+       -17.361063894195105,
+       -15.095487098732375
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 759.4433333333334,
+      "mean_excess": 8.62,
+      "HC_D_transitions": -12.872763419483102,
+      "HC_D_transitions_CI95": [
+       -14.036738114719986,
+       -11.700951409024126
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 871.1133333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.405341557845002,
+      "HC_D_transitions_CI95": [
+       -16.530544042848554,
+       -14.369569770150688
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 714.1133333333333,
+      "mean_excess": 8.366666666666667,
+      "HC_D_transitions": -12.314587571362951,
+      "HC_D_transitions_CI95": [
+       -13.530108832689379,
+       -11.144660224709687
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_11_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 758.1933333333334,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.26000131813089,
+      "HC_D_transitions_CI95": [
+       -14.2293091745546,
+       -12.309778615191629
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 606.9,
+      "mean_excess": 7.43,
+      "HC_D_transitions": -10.268635075462994,
+      "HC_D_transitions_CI95": [
+       -11.317867503431225,
+       -9.265578147276566
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 836.4733333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.354774578336434,
+      "HC_D_transitions_CI95": [
+       -15.38134973252713,
+       -13.370774285539646
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 694.9233333333333,
+      "mean_excess": 8.226666666666667,
+      "HC_D_transitions": -11.631437183351505,
+      "HC_D_transitions_CI95": [
+       -12.765374487584841,
+       -10.52685946561591
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 781.8866666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.648795852746243,
+      "HC_D_transitions_CI95": [
+       -14.659621292884419,
+       -12.711654241110374
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 648.46,
+      "mean_excess": 8.013333333333334,
+      "HC_D_transitions": -11.022114311962728,
+      "HC_D_transitions_CI95": [
+       -12.164594651174099,
+       -9.913460577112756
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_12_20_21": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 912.0533333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.302115600079087,
+      "HC_D_transitions_CI95": [
+       -17.467083938462494,
+       -15.157008714233998
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 732.9866666666667,
+      "mean_excess": 7.9366666666666665,
+      "HC_D_transitions": -12.761616028471627,
+      "HC_D_transitions_CI95": [
+       -13.91235902304055,
+       -11.57452955249032
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1005.7533333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.611620598986725,
+      "HC_D_transitions_CI95": [
+       -18.857524711301284,
+       -16.41791535067001
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.2633333333333,
+      "mean_excess": 9.213333333333333,
+      "HC_D_transitions": -14.408452510742,
+      "HC_D_transitions_CI95": [
+       -15.741564716636239,
+       -13.042991089382674
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 939.8466666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.75844871710742,
+      "HC_D_transitions_CI95": [
+       -17.97638071861031,
+       -15.628575353201159
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 780.5066666666667,
+      "mean_excess": 8.466666666666667,
+      "HC_D_transitions": -13.621628715795,
+      "HC_D_transitions_CI95": [
+       -14.93643696253512,
+       -12.333875265288672
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_12_20_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 911.06,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.282475449812168,
+      "HC_D_transitions_CI95": [
+       -17.44577793503773,
+       -15.13860385867759
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 723.9933333333333,
+      "mean_excess": 7.5,
+      "HC_D_transitions": -12.583800171357016,
+      "HC_D_transitions_CI95": [
+       -13.771599996419981,
+       -11.425271253920444
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1004.8733333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.59468992496633,
+      "HC_D_transitions_CI95": [
+       -18.839405490483255,
+       -16.403255303371417
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 818.9366666666666,
+      "mean_excess": 8.62,
+      "HC_D_transitions": -14.017379593407298,
+      "HC_D_transitions_CI95": [
+       -15.27399620942849,
+       -12.750201801869721
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 939.0533333333333,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.742830894415643,
+      "HC_D_transitions_CI95": [
+       -17.960052805347956,
+       -15.612940494412127
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 770.2866666666666,
+      "mean_excess": 8.366666666666667,
+      "HC_D_transitions": -13.420434411706806,
+      "HC_D_transitions_CI95": [
+       -14.73724385516922,
+       -12.15016533680357
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_12_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 823.12,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.543728992288933,
+      "HC_D_transitions_CI95": [
+       -15.604866117105178,
+       -13.506151120341153
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 659.0533333333333,
+      "mean_excess": 7.43,
+      "HC_D_transitions": -11.299808871020891,
+      "HC_D_transitions_CI95": [
+       -12.444437881922628,
+       -10.211850681144478
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 908.7866666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.746039889694092,
+      "HC_D_transitions_CI95": [
+       -16.864552661636544,
+       -14.66234443511905
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 754.51,
+      "mean_excess": 8.226666666666667,
+      "HC_D_transitions": -12.777849034823317,
+      "HC_D_transitions_CI95": [
+       -14.014044210672534,
+       -11.576983575640659
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 849.8266666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.986285189316884,
+      "HC_D_transitions_CI95": [
+       -16.089861685060455,
+       -13.95524627695164
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 704.34,
+      "mean_excess": 8.013333333333334,
+      "HC_D_transitions": -12.122186495176848,
+      "HC_D_transitions_CI95": [
+       -13.3740977575169,
+       -10.91200765234585
+      ]
+     }
+    }
+   }
+  },
+  "01_02_10_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 912.0533333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -16.302115600079087,
+      "HC_D_transitions_CI95": [
+       -17.467083938462494,
+       -15.157008714233998
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 732.9866666666667,
+      "mean_excess": 7.9366666666666665,
+      "HC_D_transitions": -12.761616028471627,
+      "HC_D_transitions_CI95": [
+       -13.91235902304055,
+       -11.57452955249032
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1005.7533333333333,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -17.611620598986725,
+      "HC_D_transitions_CI95": [
+       -18.857524711301284,
+       -16.41791535067001
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.2633333333333,
+      "mean_excess": 9.213333333333333,
+      "HC_D_transitions": -14.408452510742,
+      "HC_D_transitions_CI95": [
+       -15.741564716636239,
+       -13.042991089382674
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 939.8466666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -16.75844871710742,
+      "HC_D_transitions_CI95": [
+       -17.97638071861031,
+       -15.628575353201159
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 780.5066666666667,
+      "mean_excess": 8.466666666666667,
+      "HC_D_transitions": -13.621628715795,
+      "HC_D_transitions_CI95": [
+       -14.93643696253512,
+       -12.333875265288672
+      ]
+     }
+    }
+   }
+  },
+  "01_02_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 830.5633333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.690898306201806,
+      "HC_D_transitions_CI95": [
+       -15.777404407251911,
+       -13.66290656334556
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 876.2133333333334,
+      "mean_excess": 8.793333333333333,
+      "HC_D_transitions": -15.593488433401436,
+      "HC_D_transitions_CI95": [
+       -16.989644746457092,
+       -14.267157424744067
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 907.5033333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.721349323414351,
+      "HC_D_transitions_CI95": [
+       -16.80608377815236,
+       -14.64742208931989
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 929.4,
+      "mean_excess": 10.213333333333333,
+      "HC_D_transitions": -16.14262810235362,
+      "HC_D_transitions_CI95": [
+       -17.56815976422681,
+       -14.656123698647347
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 855.1666666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.091410197519522,
+      "HC_D_transitions_CI95": [
+       -16.20582577494338,
+       -14.055139403086498
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 916.1033333333334,
+      "mean_excess": 9.31,
+      "HC_D_transitions": -16.29102959511779,
+      "HC_D_transitions_CI95": [
+       -17.814631664351637,
+       -14.852282656578298
+      ]
+     }
+    }
+   }
+  },
+  "01_02_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 830.93,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.698148026098991,
+      "HC_D_transitions_CI95": [
+       -15.784305581400796,
+       -13.670516415974136
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 863.85,
+      "mean_excess": 8.57,
+      "HC_D_transitions": -15.349041059777235,
+      "HC_D_transitions_CI95": [
+       -16.712652969996263,
+       -13.996393447813789
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 907.99,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.730712499198358,
+      "HC_D_transitions_CI95": [
+       -16.814538734372807,
+       -14.658918873134203
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 908.69,
+      "mean_excess": 9.646666666666667,
+      "HC_D_transitions": -15.744180080805489,
+      "HC_D_transitions_CI95": [
+       -17.167235733131008,
+       -14.356114547930057
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 855.6866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.101647089704048,
+      "HC_D_transitions_CI95": [
+       -16.216103413216103,
+       -14.065026771963884
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 897.7866666666666,
+      "mean_excess": 8.94,
+      "HC_D_transitions": -15.930441630028216,
+      "HC_D_transitions_CI95": [
+       -17.409405640068353,
+       -14.600936460352585
+      ]
+     }
+    }
+   }
+  },
+  "01_02_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 729.6366666666667,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -12.695379951229157,
+      "HC_D_transitions_CI95": [
+       -13.657035536945715,
+       -11.778255566307786
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 963.1266666666667,
+      "mean_excess": 13.846666666666666,
+      "HC_D_transitions": -17.31193567521255,
+      "HC_D_transitions_CI95": [
+       -18.8618852035752,
+       -15.815884781267062
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 798.7633333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -13.629256717757968,
+      "HC_D_transitions_CI95": [
+       -14.582851056034473,
+       -12.677658902427813
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1057.9766666666667,
+      "mean_excess": 14.106666666666667,
+      "HC_D_transitions": -18.616366318219715,
+      "HC_D_transitions_CI95": [
+       -20.250666951900048,
+       -16.943158895328864
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 753.0066666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -13.080254609882537,
+      "HC_D_transitions_CI95": [
+       -14.071073358364465,
+       -12.162150307056384
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1008.5833333333334,
+      "mean_excess": 14.47,
+      "HC_D_transitions": -18.11162149747359,
+      "HC_D_transitions_CI95": [
+       -19.80867871785712,
+       -16.515328328436798
+      ]
+     }
+    }
+   }
+  },
+  "01_02_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 830.5633333333334,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -14.690898306201806,
+      "HC_D_transitions_CI95": [
+       -15.777404407251911,
+       -13.66290656334556
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 876.2133333333334,
+      "mean_excess": 8.793333333333333,
+      "HC_D_transitions": -15.593488433401436,
+      "HC_D_transitions_CI95": [
+       -16.989644746457092,
+       -14.267157424744067
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 907.5033333333333,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -15.721349323414351,
+      "HC_D_transitions_CI95": [
+       -16.80608377815236,
+       -14.64742208931989
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 929.4,
+      "mean_excess": 10.213333333333333,
+      "HC_D_transitions": -16.14262810235362,
+      "HC_D_transitions_CI95": [
+       -17.56815976422681,
+       -14.656123698647347
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 855.1666666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -15.091410197519522,
+      "HC_D_transitions_CI95": [
+       -16.20582577494338,
+       -14.055139403086498
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 916.1033333333334,
+      "mean_excess": 9.31,
+      "HC_D_transitions": -16.29102959511779,
+      "HC_D_transitions_CI95": [
+       -17.814631664351637,
+       -14.852282656578298
+      ]
+     }
+    }
+   }
+  },
+  "01_02_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 900.1233333333333,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -16.066236077242472,
+      "HC_D_transitions_CI95": [
+       -17.25506604785942,
+       -14.939219719287637
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 944.56,
+      "mean_excess": 8.793333333333333,
+      "HC_D_transitions": -16.94483622223687,
+      "HC_D_transitions_CI95": [
+       -18.445948534600877,
+       -15.506055373332106
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 984.37,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -17.200218046559353,
+      "HC_D_transitions_CI95": [
+       -18.382198202996765,
+       -16.027356020765414
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1002.0933333333334,
+      "mean_excess": 10.213333333333333,
+      "HC_D_transitions": -17.541204386583722,
+      "HC_D_transitions_CI95": [
+       -19.083450202121785,
+       -15.933930645254858
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 927.7866666666666,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -16.521031563750903,
+      "HC_D_transitions_CI95": [
+       -17.739394484830225,
+       -15.385662708387017
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 987.8166666666667,
+      "mean_excess": 9.31,
+      "HC_D_transitions": -17.702802021129994,
+      "HC_D_transitions_CI95": [
+       -19.34923111690069,
+       -16.153520535008585
+      ]
+     }
+    }
+   }
+  },
+  "01_10_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 794.7666666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.983127924602913,
+      "HC_D_transitions_CI95": [
+       -14.979755775194498,
+       -12.979310576765275
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 999.0866666666667,
+      "mean_excess": 12.04,
+      "HC_D_transitions": -18.022935477492915,
+      "HC_D_transitions_CI95": [
+       -19.57880872856013,
+       -16.472703593396083
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 875.3,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.101776438145322,
+      "HC_D_transitions_CI95": [
+       -16.17381654356958,
+       -14.070642295893558
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1120.8133333333333,
+      "mean_excess": 13.13,
+      "HC_D_transitions": -19.82530622715321,
+      "HC_D_transitions_CI95": [
+       -21.67673096882187,
+       -18.106392867714213
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 818.98,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.37902749524247,
+      "HC_D_transitions_CI95": [
+       -15.435955065544183,
+       -13.400024051402681
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1063.11,
+      "mean_excess": 12.416666666666666,
+      "HC_D_transitions": -19.185051512566442,
+      "HC_D_transitions_CI95": [
+       -20.954020924146473,
+       -17.39802567892163
+      ]
+     }
+    }
+   }
+  },
+  "01_10_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 793.7733333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.963487774335992,
+      "HC_D_transitions_CI95": [
+       -14.962290859526032,
+       -12.962098971893028
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1024.7266666666667,
+      "mean_excess": 12.053333333333333,
+      "HC_D_transitions": -18.52988861793976,
+      "HC_D_transitions_CI95": [
+       -20.10290195610687,
+       -16.940658649383714
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 874.42,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.084845764124928,
+      "HC_D_transitions_CI95": [
+       -16.155811808082518,
+       -14.055002337502861
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1153.76,
+      "mean_excess": 13.146666666666667,
+      "HC_D_transitions": -20.459180401462195,
+      "HC_D_transitions_CI95": [
+       -22.33213522107176,
+       -18.62234495744995
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 818.1866666666666,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.363409672550691,
+      "HC_D_transitions_CI95": [
+       -15.41626164098638,
+       -13.387226788721982
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1095.8866666666668,
+      "mean_excess": 12.446666666666667,
+      "HC_D_transitions": -19.83030382571035,
+      "HC_D_transitions_CI95": [
+       -21.6742594519882,
+       -18.007027411734164
+      ]
+     }
+    }
+   }
+  },
+  "01_10_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 705.8333333333334,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -12.224741316812759,
+      "HC_D_transitions_CI95": [
+       -13.11654487973239,
+       -11.335817326890762
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 946.5233333333333,
+      "mean_excess": 9.506666666666666,
+      "HC_D_transitions": -16.983655176959072,
+      "HC_D_transitions_CI95": [
+       -18.59204460074117,
+       -15.394992642853039
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 778.3333333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -13.23619572885269,
+      "HC_D_transitions_CI95": [
+       -14.186611016400947,
+       -12.310220994475138
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1092.3133333333333,
+      "mean_excess": 9.273333333333333,
+      "HC_D_transitions": -19.27698326172,
+      "HC_D_transitions_CI95": [
+       -21.197215199623212,
+       -17.502375640799624
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 728.96,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -12.606863967451932,
+      "HC_D_transitions_CI95": [
+       -13.54855039057232,
+       -11.733331784562749
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1027.5833333333333,
+      "mean_excess": 9.343333333333334,
+      "HC_D_transitions": -18.485661788831287,
+      "HC_D_transitions_CI95": [
+       -20.478720148504916,
+       -16.62980075986149
+      ]
+     }
+    }
+   }
+  },
+  "01_10_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 794.7666666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.983127924602913,
+      "HC_D_transitions_CI95": [
+       -14.979755775194498,
+       -12.979310576765275
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 999.0866666666667,
+      "mean_excess": 12.04,
+      "HC_D_transitions": -18.022935477492915,
+      "HC_D_transitions_CI95": [
+       -19.57880872856013,
+       -16.472703593396083
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 875.3,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.101776438145322,
+      "HC_D_transitions_CI95": [
+       -16.17381654356958,
+       -14.070642295893558
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1120.8133333333333,
+      "mean_excess": 13.13,
+      "HC_D_transitions": -19.82530622715321,
+      "HC_D_transitions_CI95": [
+       -21.67673096882187,
+       -18.106392867714213
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 818.98,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -14.37902749524247,
+      "HC_D_transitions_CI95": [
+       -15.435955065544183,
+       -13.400024051402681
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1063.11,
+      "mean_excess": 12.416666666666666,
+      "HC_D_transitions": -19.185051512566442,
+      "HC_D_transitions_CI95": [
+       -20.954020924146473,
+       -17.39802567892163
+      ]
+     }
+    }
+   }
+  },
+  "01_10_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 865.32,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -15.3781058459105,
+      "HC_D_transitions_CI95": [
+       -16.47182536920954,
+       -14.27987554867564
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1090.3333333333333,
+      "mean_excess": 12.04,
+      "HC_D_transitions": -19.827061227179858,
+      "HC_D_transitions_CI95": [
+       -21.549148802394537,
+       -18.105042292911865
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 953.5866666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -16.607965112550502,
+      "HC_D_transitions_CI95": [
+       -17.7753544473192,
+       -15.476209473058995
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1225.0466666666666,
+      "mean_excess": 13.13,
+      "HC_D_transitions": -21.830693259796064,
+      "HC_D_transitions_CI95": [
+       -23.880441722389655,
+       -19.930555773634882
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 892.6266666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.828860161427915,
+      "HC_D_transitions_CI95": [
+       -16.991927256000036,
+       -14.755667149344225
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1161.7366666666667,
+      "mean_excess": 12.416666666666666,
+      "HC_D_transitions": -21.126648730231643,
+      "HC_D_transitions_CI95": [
+       -23.096464553306024,
+       -19.153546116952622
+      ]
+     }
+    }
+   }
+  },
+  "01_11_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 766.21,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -13.41850655770118,
+      "HC_D_transitions_CI95": [
+       -14.425730601828407,
+       -12.464750814166571
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 607.74,
+      "mean_excess": 15.99,
+      "HC_D_transitions": -10.285243524682,
+      "HC_D_transitions_CI95": [
+       -11.174002557219621,
+       -9.478697717924103
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 837.59,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -14.376258577566857,
+      "HC_D_transitions_CI95": [
+       -15.38897130802392,
+       -13.388285357052139
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 623.38,
+      "mean_excess": 17.666666666666668,
+      "HC_D_transitions": -10.254986211761688,
+      "HC_D_transitions_CI95": [
+       -11.220745306654289,
+       -9.363512739466657
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 790.1,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -13.810486252378764,
+      "HC_D_transitions_CI95": [
+       -14.825225081300346,
+       -12.83861117971539
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 629.01,
+      "mean_excess": 15.773333333333333,
+      "HC_D_transitions": -10.639215171599187,
+      "HC_D_transitions_CI95": [
+       -11.724673048126087,
+       -9.684064665212206
+      ]
+     }
+    }
+   }
+  },
+  "02_10_11_12_20_21": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 761.7466666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.330257694589072,
+      "HC_D_transitions_CI95": [
+       -14.309465494612928,
+       -12.374483953037267
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 487.5966666666667,
+      "mean_excess": 4.993333333333333,
+      "HC_D_transitions": -7.909773940552297,
+      "HC_D_transitions_CI95": [
+       -8.632307511190549,
+       -7.247948138844376
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.8533333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.419803758096581,
+      "HC_D_transitions_CI95": [
+       -15.465391355197237,
+       -13.43756070690643
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 474.9766666666667,
+      "mean_excess": 5.5633333333333335,
+      "HC_D_transitions": -7.399794779708843,
+      "HC_D_transitions_CI95": [
+       -8.094680676016816,
+       -6.778258993231496
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 784.92,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.708511057155981,
+      "HC_D_transitions_CI95": [
+       -14.721634665434474,
+       -12.768279085992491
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 474.04,
+      "mean_excess": 5.12,
+      "HC_D_transitions": -7.588424437299036,
+      "HC_D_transitions_CI95": [
+       -8.363399774971452,
+       -6.904483493368721
+      ]
+     }
+    }
+   }
+  },
+  "02_10_11_12_20_22": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 760.7533333333333,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.31061754432215,
+      "HC_D_transitions_CI95": [
+       -14.286606161150136,
+       -12.356061246750551
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 486.1566666666667,
+      "mean_excess": 4.693333333333333,
+      "HC_D_transitions": -7.881302313319713,
+      "HC_D_transitions_CI95": [
+       -8.577598259292323,
+       -7.24054665826234
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 838.9733333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.402873084076187,
+      "HC_D_transitions_CI95": [
+       -15.450029182534237,
+       -13.421266512259772
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 479.2033333333333,
+      "mean_excess": 5.24,
+      "HC_D_transitions": -7.481113320079523,
+      "HC_D_transitions_CI95": [
+       -8.139490799061535,
+       -6.83287117682542
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 784.1266666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.692893234464204,
+      "HC_D_transitions_CI95": [
+       -14.70853842384574,
+       -12.75414477518737
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 478.2,
+      "mean_excess": 4.943333333333333,
+      "HC_D_transitions": -7.670319574775247,
+      "HC_D_transitions_CI95": [
+       -8.452388647934454,
+       -6.997431736520257
+      ]
+     }
+    }
+   }
+  },
+  "02_10_11_12_21_22": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 672.8133333333334,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -11.57187108679892,
+      "HC_D_transitions_CI95": [
+       -12.441435439220298,
+       -10.722216447353102
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 433.1333333333333,
+      "mean_excess": 4.66,
+      "HC_D_transitions": -6.8329269096421275,
+      "HC_D_transitions_CI95": [
+       -7.479832880722639,
+       -6.256297957769584
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 742.8866666666667,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -12.55422304880395,
+      "HC_D_transitions_CI95": [
+       -13.47623548352116,
+       -11.668786900913352
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 434.60333333333335,
+      "mean_excess": 4.883333333333334,
+      "HC_D_transitions": -6.623035977682293,
+      "HC_D_transitions_CI95": [
+       -7.2301471663944215,
+       -6.031081045864523
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 694.9,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -11.936347529365444,
+      "HC_D_transitions_CI95": [
+       -12.838687962976,
+       -11.098957870921609
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 428.78,
+      "mean_excess": 4.716666666666667,
+      "HC_D_transitions": -6.697421090622744,
+      "HC_D_transitions_CI95": [
+       -7.403605284962053,
+       -6.079320539055107
+      ]
+     }
+    }
+   }
+  },
+  "02_10_11_20_21_22": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 761.7466666666667,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -13.330257694589072,
+      "HC_D_transitions_CI95": [
+       -14.309465494612928,
+       -12.374483953037267
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 487.5966666666667,
+      "mean_excess": 4.993333333333333,
+      "HC_D_transitions": -7.909773940552297,
+      "HC_D_transitions_CI95": [
+       -8.632307511190549,
+       -7.247948138844376
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 839.8533333333334,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -14.419803758096581,
+      "HC_D_transitions_CI95": [
+       -15.465391355197237,
+       -13.43756070690643
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 474.9766666666667,
+      "mean_excess": 5.5633333333333335,
+      "HC_D_transitions": -7.399794779708843,
+      "HC_D_transitions_CI95": [
+       -8.094680676016816,
+       -6.778258993231496
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 784.92,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -13.708511057155981,
+      "HC_D_transitions_CI95": [
+       -14.721634665434474,
+       -12.768279085992491
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 474.04,
+      "mean_excess": 5.12,
+      "HC_D_transitions": -7.588424437299036,
+      "HC_D_transitions_CI95": [
+       -8.363399774971452,
+       -6.904483493368721
+      ]
+     }
+    }
+   }
+  },
+  "02_10_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 827.22,
+      "mean_excess": 61.77,
+      "HC_D_transitions": -14.624794042048375,
+      "HC_D_transitions_CI95": [
+       -15.695539237350369,
+       -13.580427853134392
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 534.2433333333333,
+      "mean_excess": 4.993333333333333,
+      "HC_D_transitions": -8.83207012456337,
+      "HC_D_transitions_CI95": [
+       -9.630468670432569,
+       -8.101349818307538
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 912.6866666666666,
+      "mean_excess": 68.59333333333333,
+      "HC_D_transitions": -15.821073558648113,
+      "HC_D_transitions_CI95": [
+       -16.961076596190857,
+       -14.739405690542263
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 521.4633333333334,
+      "mean_excess": 5.5633333333333335,
+      "HC_D_transitions": -8.294170461104342,
+      "HC_D_transitions_CI95": [
+       -9.062146702858511,
+       -7.606198213227361
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 853.3266666666667,
+      "mean_excess": 63.16,
+      "HC_D_transitions": -15.055187348251199,
+      "HC_D_transitions_CI95": [
+       -16.16448348494471,
+       -14.025134669837897
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 520.0066666666667,
+      "mean_excess": 5.12,
+      "HC_D_transitions": -8.493339457969682,
+      "HC_D_transitions_CI95": [
+       -9.342172544945523,
+       -7.7398226921446565
+      ]
+     }
+    }
+   }
+  },
+  "02_11_12_20_21_22": {
+   "macros": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 734.9666666666667,
+      "mean_excess": 69.54,
+      "HC_D_transitions": -12.80076451591643,
+      "HC_D_transitions_CI95": [
+       -13.765879080990047,
+       -11.879847490221419
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 568.2066666666667,
+      "mean_excess": 4.013333333333334,
+      "HC_D_transitions": -9.503591906676332,
+      "HC_D_transitions_CI95": [
+       -10.377011545275963,
+       -8.657731235282883
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 803.8333333333334,
+      "mean_excess": 76.20333333333333,
+      "HC_D_transitions": -13.726800487398192,
+      "HC_D_transitions_CI95": [
+       -14.689704997382767,
+       -12.765604605024892
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 601.2966666666666,
+      "mean_excess": 4.223333333333334,
+      "HC_D_transitions": -9.830116077727185,
+      "HC_D_transitions_CI95": [
+       -10.713409696340433,
+       -8.965166538755742
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 757.9466666666667,
+      "mean_excess": 71.06,
+      "HC_D_transitions": -13.17750508563554,
+      "HC_D_transitions_CI95": [
+       -14.180985446111752,
+       -12.24174449340999
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 589.6033333333334,
+      "mean_excess": 3.9433333333333334,
+      "HC_D_transitions": -9.863442483102565,
+      "HC_D_transitions_CI95": [
+       -10.847283880308838,
+       -9.011981383020462
+      ]
+     }
+    }
+   }
+  },
+  "10_11_12_20_21_22": {
+   "macros": [
+    [
+     1,
+     0
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     2
+    ]
+   ],
+   "is_mined": false,
+   "sets": {
+    "HELD_STATES": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 713.25,
+      "mean_excess": 62.02333333333333,
+      "HC_D_transitions": -12.371383378369472,
+      "HC_D_transitions_CI95": [
+       -13.287084445941352,
+       -11.489536480659089
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1052.7066666666667,
+      "mean_excess": 5.246666666666667,
+      "HC_D_transitions": -19.083108152639557,
+      "HC_D_transitions_CI95": [
+       -21.195456107693605,
+       -16.906093465818333
+      ]
+     }
+    },
+    "HELD_TARGETS": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 782.8433333333334,
+      "mean_excess": 68.66666666666667,
+      "HC_D_transitions": -13.322965433207209,
+      "HC_D_transitions_CI95": [
+       -14.29574524654721,
+       -12.39536537106469
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1246.5266666666666,
+      "mean_excess": 5.886666666666667,
+      "HC_D_transitions": -22.243955621112036,
+      "HC_D_transitions_CI95": [
+       -24.609129347524057,
+       -19.889793709926863
+      ]
+     }
+    },
+    "HELD_BOTH": {
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 734.0433333333333,
+      "mean_excess": 63.28,
+      "HC_D_transitions": -12.706936150666055,
+      "HC_D_transitions_CI95": [
+       -13.658524901113735,
+       -11.828294090578606
+      ]
+     },
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 1164.73,
+      "mean_excess": 5.433333333333334,
+      "HC_D_transitions": -21.185576481396417,
+      "HC_D_transitions_CI95": [
+       -23.68226762095932,
+       -18.767929236187648
+      ]
+     }
+    }
+   }
+  }
+ },
+ "references": {
+  "HELD_STATES": {
+   "oracle_transitions": 36.97,
+   "KA-DFS_transitions": 87.54666666666667,
+   "KA-DFS_excess": 23.14666666666667,
+   "KA-GBFS_transitions": 121.99333333333334,
+   "KA-GBFS_excess": 3.27
+  },
+  "HELD_TARGETS": {
+   "oracle_transitions": 38.38333333333333,
+   "KA-DFS_transitions": 90.36,
+   "KA-DFS_excess": 23.78,
+   "KA-GBFS_transitions": 125.95333333333333,
+   "KA-GBFS_excess": 3.513333333333333
+  },
+  "HELD_BOTH": {
+   "oracle_transitions": 37.776666666666664,
+   "KA-DFS_transitions": 88.57333333333334,
+   "KA-DFS_excess": 23.233333333333334,
+   "KA-GBFS_transitions": 122.23333333333333,
+   "KA-GBFS_excess": 3.1333333333333333
+  }
+ },
+ "seconds": 97.6
+}

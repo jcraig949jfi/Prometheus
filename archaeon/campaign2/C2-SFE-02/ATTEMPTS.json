@@ -1,0 +1,72 @@
+{
+ "attempts": {
+  "1": {
+   "dir": "attempts/a01",
+   "disposition_candidate": "INTERVENTION_NOT_APPLIED",
+   "engine_path": false,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:04:30Z",
+   "purpose": "dry run",
+   "replayed_steps": 0,
+   "resumed_from": null,
+   "started_at": "2026-09-17T03:04:29Z"
+  },
+  "2": {
+   "dir": "attempts/a02",
+   "disposition_candidate": "CAPABLE_NEGATIVE",
+   "engine_path": false,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:04:55Z",
+   "purpose": "dry run",
+   "replayed_steps": 0,
+   "resumed_from": 1,
+   "started_at": "2026-09-17T03:04:54Z"
+  },
+  "3": {
+   "dir": "attempts/a03",
+   "disposition_candidate": "POSITIVE_CONTROL_FAILED",
+   "engine_path": true,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:06:17Z",
+   "purpose": "engine",
+   "replayed_steps": 0,
+   "resumed_from": null,
+   "started_at": "2026-09-17T03:05:05Z"
+  },
+  "4": {
+   "dir": "attempts/a04",
+   "disposition_candidate": "POSITIVE_CONTROL_FAILED",
+   "engine_path": true,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:10:57Z",
+   "purpose": "foundry=v01",
+   "replayed_steps": 11,
+   "resumed_from": 3,
+   "started_at": "2026-09-17T03:09:43Z"
+  },
+  "5": {
+   "dir": "attempts/a05",
+   "disposition_candidate": "CAPABLE_NEGATIVE",
+   "engine_path": true,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:15:42Z",
+   "purpose": "foundry=c2 control=W2_K2 stuck=W1_d4 bits=4 G=60",
+   "replayed_steps": 11,
+   "resumed_from": 4,
+   "started_at": "2026-09-17T03:12:05Z"
+  },
+  "6": {
+   "dir": "attempts/a06",
+   "disposition_candidate": "CAPABLE_NEGATIVE",
+   "engine_path": true,
+   "errors": 0,
+   "finished_at": "2026-09-17T03:22:20Z",
+   "purpose": "foundry=c2 control=W2_K2 stuck=W1_d4 bits=4 G=60",
+   "replayed_steps": 0,
+   "resumed_from": 5,
+   "started_at": "2026-09-17T03:18:33Z"
+  }
+ },
+ "experiment": "C2-SFE-02",
+ "of_record": 6
+}

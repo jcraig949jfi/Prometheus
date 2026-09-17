@@ -1,0 +1,107 @@
+{
+ "artifacts": {
+  "transfer_set": "sha256:d60301b4da060188ca63a7678f7f29b96c8cf33777807831287adf73050cf974"
+ },
+ "campaign_seed": 20260917,
+ "design": {
+  "down_at": 0.1,
+  "eval_delays": [
+   0,
+   4,
+   8
+  ],
+  "fixed_delay": 4,
+  "ladder": [
+   0,
+   1,
+   2,
+   4,
+   8
+  ],
+  "up_at": 0.4
+ },
+ "effects": {
+  "adaptive_main": 0.15509259259259262,
+  "interaction": 0.04166666666666662,
+  "max_delay_reached": {
+   "adaptive/off": [
+    0,
+    0,
+    1
+   ],
+   "adaptive/on": [
+    4,
+    4,
+    1
+   ],
+   "fixed/off": [
+    4,
+    4,
+    4
+   ],
+   "fixed/on": [
+    4,
+    4,
+    4
+   ]
+  },
+  "means": {
+   "adaptive/off": 0.1851851851851852,
+   "adaptive/on": 0.3194444444444444,
+   "fixed/off": 0.05092592592592592,
+   "fixed/on": 0.14351851851851852
+  },
+  "per_delay": {
+   "adaptive/off": {
+    "0": 0.3611111111111111,
+    "4": 0.13888888888888887,
+    "8": 0.05555555555555555
+   },
+   "adaptive/on": {
+    "0": 0.625,
+    "4": 0.25,
+    "8": 0.08333333333333333
+   },
+   "fixed/off": {
+    "0": 0.08333333333333333,
+    "4": 0.027777777777777776,
+    "8": 0.041666666666666664
+   },
+   "fixed/on": {
+    "0": 0.013888888888888888,
+    "4": 0.2222222222222222,
+    "8": 0.19444444444444445
+   }
+  },
+  "transfer_main": 0.11342592592592589
+ },
+ "engine_path": true,
+ "errors": [],
+ "experiment": "SFE-05",
+ "hypothesis": "hyp_09efb94ceac5381397d4deca",
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "session_id": "ses_1d3bde82728c2e6e11a401ac",
+ "teardown": {
+  "h4": "TERMINATED"
+ },
+ "timings": {
+  "cells_s": 79.9,
+  "records_s": 4.97,
+  "startup_s": 1.19,
+  "teardown_s": 0.23,
+  "total_s": 86.3
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "af666a09915813a193c4c98bbfb235206ee629e5",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "h4": "wld_9008fc0580e8218cbe226177"
+ }
+}

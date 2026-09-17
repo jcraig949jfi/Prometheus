@@ -1,0 +1,772 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:4edccbbe1647c13bcdaa578099b1df4bd1ef3395f33014e4d0eade1c881968d2",
+   "blob_hash": "sha256:45999da8d658ccbde5a0bc02164fdcad9fdf52911f5a3e2c402af848d6581c87",
+   "bytes": 4570,
+   "declared": "sha256:45999da8d658ccbde5a0bc02164fdcad9fdf52911f5a3e2c402af848d6581c87",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 2,
+ "attempt_id": "C3-SFE-08/a02",
+ "battery": [
+  {
+   "name": "episode_arm_shelf_rate_below_per_ask",
+   "passed": true,
+   "value": {
+    "episode": 8,
+    "per_ask": 11
+   }
+  },
+  {
+   "name": "episode_arm_reaches_higher_episode_credit",
+   "passed": false,
+   "value": {
+    "episode": 0.3125,
+    "per_ask": 0.3125
+   }
+  },
+  {
+   "name": "per_ask_arm_reproduces_parent_shelf_rate",
+   "passed": true,
+   "value": {
+    "parent": 11,
+    "shelf": 11
+   }
+  }
+ ],
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-019: both arms are read out on the SAME held-out battery with both readouts; levels (FLOOR/SHELF/SUMMIT) are always computed on per-ask credit so the arms are comparable"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative at this budget/envelope",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "control_mean": 0.0,
+   "effect": 0.0,
+   "min_effect": 0.25,
+   "n_control": 12,
+   "n_treatment": 12,
+   "paired": 12,
+   "paired_wins": 0,
+   "treatment_mean": 0.0
+  },
+  "reason": "assay capable and effect < min_effect",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "pinned_at": "2026-09-16T17:25:41Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 8
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "errors": [],
+ "experiment": "C3-SFE-08",
+ "finished_at": "2026-09-17T07:46:08Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_a8887a2a7a05df5f4974ad8c",
+ "imports": {},
+ "prereg_digest": "sha256:9fd47ab49ab1cf86a7f7365dfb8b8659bf0afcb9b01e9ceee996417cd10b0ce2",
+ "purpose": "engine",
+ "reachability_rows_appended": 24,
+ "records": {
+  "episode/1": {
+   "exp_id": "exp_890d6a98aeada6b8b0a8ea54",
+   "obs_id": "obs_3f28ca3627744a6338b6f6c3"
+  },
+  "episode/10": {
+   "exp_id": "exp_9584ca0a4120773e5d418169",
+   "obs_id": "obs_2d0f0a44e86f1aa7d4394a8a"
+  },
+  "episode/11": {
+   "exp_id": "exp_4be0a2bd263b15376ececd05",
+   "obs_id": "obs_36fc17d32a8bd263c17a41af"
+  },
+  "episode/12": {
+   "exp_id": "exp_e507b196da0ed14bb4bf0d85",
+   "obs_id": "obs_f4ea7c3ecf84e7d053a5bf87"
+  },
+  "episode/2": {
+   "exp_id": "exp_a8b52a8fddcad8ad27a593e0",
+   "obs_id": "obs_1d4597310f6164414560dcea"
+  },
+  "episode/3": {
+   "exp_id": "exp_881e6c42e0d1bc2781f5a0f2",
+   "obs_id": "obs_f5cb9c8fa51bc66835c112a3"
+  },
+  "episode/4": {
+   "exp_id": "exp_08812129432f037761211aac",
+   "obs_id": "obs_61965abbf0c955602104f34b"
+  },
+  "episode/5": {
+   "exp_id": "exp_596c3854f77ac5a7f269f907",
+   "obs_id": "obs_9ee07d76aecbe4f2c27be0b6"
+  },
+  "episode/6": {
+   "exp_id": "exp_605661ffb61ba017b63d84a8",
+   "obs_id": "obs_3ad4ea44b7a872c0e6ccbb03"
+  },
+  "episode/7": {
+   "exp_id": "exp_0a611505c32e22f14859e295",
+   "obs_id": "obs_c42761b0622a2b8047a158db"
+  },
+  "episode/8": {
+   "exp_id": "exp_e01a7ca138f163fe83b0bc34",
+   "obs_id": "obs_2dbef1309421fff8eaed7ce9"
+  },
+  "episode/9": {
+   "exp_id": "exp_0d9ca980babb472cc1320298",
+   "obs_id": "obs_6923d0a06b6327b39782e284"
+  },
+  "per_ask/1": {
+   "exp_id": "exp_20174855722fc56bf6b91dbd",
+   "obs_id": "obs_d5d8f7bbf0e6ef1d55b6dc78"
+  },
+  "per_ask/10": {
+   "exp_id": "exp_8912fc2c88d17db0bfd2cc7d",
+   "obs_id": "obs_79090647e314c8d2841ca026"
+  },
+  "per_ask/11": {
+   "exp_id": "exp_2734a4ca819229256db88539",
+   "obs_id": "obs_0b57a61e845e543fada88272"
+  },
+  "per_ask/12": {
+   "exp_id": "exp_b6b82c716a894fbd55a03bc8",
+   "obs_id": "obs_2fe7ef466df7ce8f1d1831c6"
+  },
+  "per_ask/2": {
+   "exp_id": "exp_6c25e3f52b7b8f95534a4f7e",
+   "obs_id": "obs_b14f780180b97a1c6fdb74b9"
+  },
+  "per_ask/3": {
+   "exp_id": "exp_cf8e9be5e79c23cab4e2a962",
+   "obs_id": "obs_011952815aa7325f627976a2"
+  },
+  "per_ask/4": {
+   "exp_id": "exp_49cbc2a4038b4f599f109a56",
+   "obs_id": "obs_409265df45c7f7ad1fab5444"
+  },
+  "per_ask/5": {
+   "exp_id": "exp_96a3d285c316b9813a50be03",
+   "obs_id": "obs_d32439eca8bd19cd5df00401"
+  },
+  "per_ask/6": {
+   "exp_id": "exp_485ece8246b289776774065c",
+   "obs_id": "obs_23f006bff18d0cfbefbab5e1"
+  },
+  "per_ask/7": {
+   "exp_id": "exp_2bf2d3cae0a46c17516642a6",
+   "obs_id": "obs_2909ddebaf0eddc8e6364a73"
+  },
+  "per_ask/8": {
+   "exp_id": "exp_95d6e80cc7ed9ad6abf9112a",
+   "obs_id": "obs_d115b4af22c06cfc7c4d97ca"
+  },
+  "per_ask/9": {
+   "exp_id": "exp_ee7928ef9d59bb8f6d55dbce",
+   "obs_id": "obs_e7d6471c508dff56d4531d64"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T07:31:02Z",
+ "steps": {
+  "idem:0245cb4f96cd548a6b3bc3a5b148bc7b": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    8
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_e01a7ca138f163fe83b0bc34",
+    "obs_id": "obs_2dbef1309421fff8eaed7ce9"
+   },
+   "wall_s": 0.254
+  },
+  "idem:088bdce460bcc443c51a5ca0f9c92f11": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_cf8e9be5e79c23cab4e2a962",
+    "obs_id": "obs_011952815aa7325f627976a2"
+   },
+   "wall_s": 0.281
+  },
+  "idem:10bdc0c6d9502e7a571c540e5c0e2182": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6c25e3f52b7b8f95534a4f7e",
+    "obs_id": "obs_b14f780180b97a1c6fdb74b9"
+   },
+   "wall_s": 0.257
+  },
+  "idem:122f7aca3036442848d8564e0d4bfc1a": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_cf5d342be5b7fab02402ca96",
+   "wall_s": 0.332
+  },
+  "idem:148ccf38be0832ab69c468371596793e": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "credit"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c3-sfe-08-credit",
+    "policy": "ISOLATED",
+    "world_id": "wld_5c9d1694c17c06e2b326ba4f"
+   },
+   "wall_s": 0.267
+  },
+  "idem:15a60a9ba904529b62c481fb5f50986a": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:4edccbbe1647c13bcdaa578099b1df4bd1ef3395f33014e4d0eade1c881968d2",
+    "blob_hash": "sha256:45999da8d658ccbde5a0bc02164fdcad9fdf52911f5a3e2c402af848d6581c87",
+    "bytes": 4570,
+    "declared": "sha256:45999da8d658ccbde5a0bc02164fdcad9fdf52911f5a3e2c402af848d6581c87",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.136
+  },
+  "idem:166c94ca3b3f72c885f315c242276a1b": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_49cbc2a4038b4f599f109a56",
+    "obs_id": "obs_409265df45c7f7ad1fab5444"
+   },
+   "wall_s": 0.276
+  },
+  "idem:17c2c19c07dd36ace348881651926303": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_485ece8246b289776774065c",
+    "obs_id": "obs_23f006bff18d0cfbefbab5e1"
+   },
+   "wall_s": 0.287
+  },
+  "idem:1d2b6f0d58b1c65f256a84b2d69ccb70": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_a8887a2a7a05df5f4974ad8c",
+   "wall_s": 0.13
+  },
+  "idem:1f098d010e3ff680b0dc9888d6dbf4ad": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_890d6a98aeada6b8b0a8ea54",
+    "obs_id": "obs_3f28ca3627744a6338b6f6c3"
+   },
+   "wall_s": 0.279
+  },
+  "idem:364ffcf2f440de2efb1d96fe9202dbb5": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    10
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_8912fc2c88d17db0bfd2cc7d",
+    "obs_id": "obs_79090647e314c8d2841ca026"
+   },
+   "wall_s": 0.257
+  },
+  "idem:3eb930f235ca6808a7d933c65425c530": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    11
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_4be0a2bd263b15376ececd05",
+    "obs_id": "obs_36fc17d32a8bd263c17a41af"
+   },
+   "wall_s": 0.266
+  },
+  "idem:50f1eb852e797661987f34a0bd8ca282": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_a8b52a8fddcad8ad27a593e0",
+    "obs_id": "obs_1d4597310f6164414560dcea"
+   },
+   "wall_s": 0.278
+  },
+  "idem:66022b646c7c45347cc09e2ba62ff84e": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    8
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_95d6e80cc7ed9ad6abf9112a",
+    "obs_id": "obs_d115b4af22c06cfc7c4d97ca"
+   },
+   "wall_s": 0.277
+  },
+  "idem:70a6b563f75a9d85835c3ccdfdf587e8": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    9
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_0d9ca980babb472cc1320298",
+    "obs_id": "obs_6923d0a06b6327b39782e284"
+   },
+   "wall_s": 4.357
+  },
+  "idem:7270f6c8da39a7427bd8441812a49115": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    10
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_9584ca0a4120773e5d418169",
+    "obs_id": "obs_2d0f0a44e86f1aa7d4394a8a"
+   },
+   "wall_s": 8.082
+  },
+  "idem:7eed4ebe214df179b1595dc4d6ecc566": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    7
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_0a611505c32e22f14859e295",
+    "obs_id": "obs_c42761b0622a2b8047a158db"
+   },
+   "wall_s": 0.257
+  },
+  "idem:8b88550e53c38b7b9bb7b994a42510b2": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    9
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ee7928ef9d59bb8f6d55dbce",
+    "obs_id": "obs_e7d6471c508dff56d4531d64"
+   },
+   "wall_s": 0.29
+  },
+  "idem:8e6ec61183289d4275bcef7a3eff5665": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_605661ffb61ba017b63d84a8",
+    "obs_id": "obs_3ad4ea44b7a872c0e6ccbb03"
+   },
+   "wall_s": 0.283
+  },
+  "idem:9362cc6adb2a337ca318d1f157b968bd": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    12
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_e507b196da0ed14bb4bf0d85",
+    "obs_id": "obs_f4ea7c3ecf84e7d053a5bf87"
+   },
+   "wall_s": 0.361
+  },
+  "idem:977f66ac12c9afd4ed660003cf429fd5": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+   },
+   "wall_s": 0.006
+  },
+  "idem:b3e1c3ad327ff692e93f36cf5f17df59": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    11
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_2734a4ca819229256db88539",
+    "obs_id": "obs_0b57a61e845e543fada88272"
+   },
+   "wall_s": 0.355
+  },
+  "idem:cb75a74bfc4ce9f3ebf54900338101ff": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_20174855722fc56bf6b91dbd",
+    "obs_id": "obs_d5d8f7bbf0e6ef1d55b6dc78"
+   },
+   "wall_s": 0.249
+  },
+  "idem:cec9250638db445de0740e41b094c65d": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_881e6c42e0d1bc2781f5a0f2",
+    "obs_id": "obs_f5cb9c8fa51bc66835c112a3"
+   },
+   "wall_s": 0.276
+  },
+  "idem:d65703b26be249919ef32464a7aff142": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    7
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_2bf2d3cae0a46c17516642a6",
+    "obs_id": "obs_2909ddebaf0eddc8e6364a73"
+   },
+   "wall_s": 0.27
+  },
+  "idem:d90b3818bf7eed7acf2135c9a0c93ac8": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_596c3854f77ac5a7f269f907",
+    "obs_id": "obs_9ee07d76aecbe4f2c27be0b6"
+   },
+   "wall_s": 0.276
+  },
+  "idem:db596997ec7fc477a62fa625c87a4003": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    12
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_b6b82c716a894fbd55a03bc8",
+    "obs_id": "obs_2fe7ef466df7ce8f1d1831c6"
+   },
+   "wall_s": 0.277
+  },
+  "idem:ee7797e366fbb0d7c68aea56bdc1073a": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "per_ask",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_96a3d285c316b9813a50be03",
+    "obs_id": "obs_d32439eca8bd19cd5df00401"
+   },
+   "wall_s": 0.292
+  },
+  "idem:ef5c61ff76dff2289c07510aa2a4239d": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "episode",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_08812129432f037761211aac",
+    "obs_id": "obs_61965abbf0c955602104f34b"
+   },
+   "wall_s": 0.26
+  }
+ },
+ "summary": {
+  "episode": {
+   "best_episode": [
+    0.3125,
+    0.0625,
+    0.1875,
+    0.875,
+    0.875,
+    0.875,
+    0.125,
+    0.875,
+    0.125,
+    0.8125,
+    0.1875,
+    0.1875
+   ],
+   "best_per_ask": [
+    0.625,
+    0.375,
+    0.5938,
+    0.875,
+    0.875,
+    0.875,
+    0.25,
+    0.875,
+    0.2812,
+    0.8125,
+    0.5938,
+    0.2188
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    72,
+    null,
+    243,
+    104,
+    145,
+    162,
+    null,
+    126,
+    null,
+    146,
+    104,
+    null
+   ],
+   "gens_at_floor_med": 250,
+   "gens_on_shelf_med": 67,
+   "heldout_episode_med": 0.0833,
+   "heldout_med": 0.4792,
+   "ladder": {
+    "100": {
+     "shelf": 1,
+     "summit": 0
+    },
+    "150": {
+     "shelf": 6,
+     "summit": 0
+    },
+    "200": {
+     "shelf": 7,
+     "summit": 0
+    },
+    "300": {
+     "shelf": 8,
+     "summit": 0
+    },
+    "60": {
+     "shelf": 0,
+     "summit": 0
+    }
+   },
+   "n": 12,
+   "shelf": 8,
+   "summit": 0
+  },
+  "per_ask": {
+   "best_episode": [
+    0.25,
+    0.3125,
+    0.8125,
+    0.3125,
+    0.3125,
+    0.1875,
+    0.25,
+    0.3125,
+    0.375,
+    0.375,
+    0.875,
+    0.1875
+   ],
+   "best_per_ask": [
+    0.625,
+    0.6562,
+    0.8125,
+    0.6562,
+    0.6562,
+    0.5938,
+    0.625,
+    0.6562,
+    0.6875,
+    0.6562,
+    0.875,
+    0.2188
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    165,
+    27,
+    99,
+    226,
+    84,
+    33,
+    128,
+    65,
+    107,
+    19,
+    13,
+    null
+   ],
+   "gens_at_floor_med": 131,
+   "gens_on_shelf_med": 187,
+   "heldout_episode_med": 0.0833,
+   "heldout_med": 0.5417,
+   "ladder": {
+    "100": {
+     "shelf": 7,
+     "summit": 0
+    },
+    "150": {
+     "shelf": 9,
+     "summit": 0
+    },
+    "200": {
+     "shelf": 10,
+     "summit": 0
+    },
+    "300": {
+     "shelf": 11,
+     "summit": 0
+    },
+    "60": {
+     "shelf": 4,
+     "summit": 0
+    }
+   },
+   "n": 12,
+   "shelf": 11,
+   "summit": 0
+  }
+ },
+ "teardown": {
+  "credit": "TERMINATED"
+ },
+ "timings": {
+  "records_s": 18.66,
+  "scan_s": 885.85,
+  "startup_s": 0.34,
+  "teardown_s": 0.25,
+  "total_s": 905.9
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "3f35eff986aa56c5a06441271da2f8d0bb916254",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "credit": "wld_5c9d1694c17c06e2b326ba4f"
+ }
+}

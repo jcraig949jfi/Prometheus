@@ -1,0 +1,375 @@
+{
+ "ancestry": "replacement (queue slot 10; the retired failed-material-transfer programme)",
+ "arms": [
+  "none_d0_nocap",
+  "mature_d1_nocap",
+  "mature_d1_cap0.25",
+  "mature_d1_cap0.05",
+  "control_d1_nocap",
+  "control_d1_cap0.25",
+  "control_d1_cap0.05",
+  "mature_d4_nocap",
+  "mature_d4_cap0.25",
+  "mature_d4_cap0.05",
+  "control_d4_nocap",
+  "control_d4_cap0.25",
+  "control_d4_cap0.05",
+  "mature_d32_nocap",
+  "mature_d32_cap0.25",
+  "mature_d32_cap0.05",
+  "control_d32_nocap",
+  "control_d32_cap0.25",
+  "control_d32_cap0.05"
+ ],
+ "assay_capability_requirement": "the mature material must be mature (source solved, held-out >= 0.9 on W0) and directly competent on the target (>= 0.5 held-out) else IMMATURE_ARTIFACT / INTERVENTION_NOT_APPLIED; controls must score < 0.25",
+ "attempt": 3,
+ "budget": {
+  "E": 16,
+  "G": 60,
+  "N": 200,
+  "caps": [
+   0.0,
+   0.25,
+   0.05
+  ],
+  "doses": [
+   0,
+   1,
+   4,
+   32
+  ],
+  "mature_sources": 11,
+  "qualities": [
+   "mature",
+   "control"
+  ],
+  "runs": 228,
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "target": {
+   "D": 1,
+   "K": 1,
+   "Kd": 0,
+   "ask_kind": "ASK",
+   "ask_mode": "all",
+   "ask_timing": "end",
+   "delay": 4,
+   "delays": [],
+   "expensive": 0,
+   "fanout": 1,
+   "interfere": false,
+   "interleave": "sequential",
+   "n_defs": 0,
+   "name": "W1_d4",
+   "noise_rate": 0.0,
+   "op_mode": "fixed",
+   "recycle": false,
+   "retire_rate": 0.0,
+   "topology": "streams",
+   "value_bits": 4,
+   "vocab": "train"
+  }
+ },
+ "claim_ceiling": "an ecological reading of THIS loop (tournament 4, elitism 4, N=200): the dose above which foreign lineage replaces the population, and whether the replacement needs competence; no claim about transfer value",
+ "crn_policy": "default; every arm of a seed shares generation 0 (common fill; the import REPLACES the worst-scored members after the first evaluation) and the per-generation episode batteries; the cap redraws the primary parent among residents beyond 0.25 of the children",
+ "decl": {
+  "battery": [
+   {
+    "name": "control_takeover_at_mid_dose_below_half",
+    "passed": null
+   },
+   {
+    "name": "mature_takeover_monotone_in_dose",
+    "passed": null
+   },
+   {
+    "name": "cap_slows_takeover",
+    "passed": null
+   }
+  ],
+  "n_min": 12,
+  "positive_control": {
+   "arm": "mature_d32_nocap",
+   "metric": "takeover",
+   "min": 1,
+   "min_rows": 8
+  },
+  "primary": {
+   "control": "control_d4_nocap",
+   "metric": "takeover",
+   "min_effect": 0.5,
+   "treatment": "mature_d4_nocap"
+  }
+ },
+ "expected_machine_telemetry": [
+  "import / pure-resident / hybrid share per generation",
+  "distinct-genome share per generation",
+  "takeover and half-takeover generations",
+  "resident best reward at the end",
+  "elite origin",
+  "target held-out competence and levels",
+  "reachability rows (treated)"
+ ],
+ "experiment": "C3-SFE-10",
+ "falsification_condition": "if the permuted control takes over at the same doses as the mature material, capability does not drive takeover: injection mechanics do (the C2 'transport hurts yet takes over' reading is mechanics); if neither takes over below dose 32, injection is ecologically safe at small doses and campaign-2 takeovers were dose effects",
+ "kill_condition": "the mature material is not directly competent on W1_d4 (held-out < 0.5): the source is not 'mature relevant' and the slot must use another source",
+ "machine_changes_exercised": [
+  "F inject + offspring_cap",
+  "origin shares per generation",
+  "levels + held-out",
+  "reachability rows"
+ ],
+ "parent_evidence": "C2-SFE-01: transported material took the population over while the treatment hurt (-0.16). C3-SFE-01 shelf arm: dose 4 of shelf organisms reached import share 1.0 in 12/12 seeds by G300 with the cap off. C3-SFE-03: 11 W0-general elites with held-out 1.0 on every rung (the mature material). Mature direct competence on W1_d4 (held-out 48 episodes): [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; permuted controls: [0.125, 0.0, 0.125, 0.125, 0.0, 0.1042, 0.0, 0.0, 0.0, 0.0, 0.0]. Reconnaissance: mature doses 1/4/32 of 200, no cap, 2 seeds, 20 generations: takeover (share >= 0.9) at generations 4-5 / 3 / 2, import share 1.0 and pure-resident 0.0 at the end in 6/6, held-out 1.0 in 6/6, distinct-genome share min 0.88-0.95; permuted controls' direct W1_d4 competence 0.0-0.125",
+ "parents": [
+  "C2-SFE-01",
+  "C3-SFE-01",
+  "C3-SFE-03"
+ ],
+ "positive_control": "the takeover-prone dose (32, mature, no cap) reaches import share >= 0.9 within 60 generations in >= 8 of 12 seeds",
+ "prereg_digest": "sha256:b0e6bf1656baae95787929c6e0ce041780038743258711322235ec59b418c096",
+ "primary_observable": "takeover (import share >= 0.9 by G) and takeover_gen per run, as a function of dose x quality x cap; the declared machine contrast is mature vs control at dose 4 without the cap",
+ "question": "When mature W0-general solvers or matched permuted controls are injected at generation 0 into a fresh W1_d4 population (N=200) at doses [0, 1, 4, 32], without the offspring cap and with caps [0.25, 0.05], when does the import take over (share >= 0.9), do resident lineages survive, and is the takeover explained by capability (mature only) or by injection mechanics (control too)? Reconnaissance made the CAP the control parameter: mature dose 1 takes over anyway.",
+ "reachability_estimate": {
+  "W0": {
+   "at_budget": {
+    "band95": [
+     0.4375,
+     0.8372
+    ],
+    "class": "REACHABLE",
+    "class_summit": "REACHABLE",
+    "first_shelf_gens": [
+     0,
+     12,
+     16,
+     17,
+     17,
+     18,
+     18,
+     19,
+     19,
+     20,
+     27,
+     31
+    ],
+    "first_solved_gens": [
+     0,
+     12,
+     16,
+     17,
+     17,
+     18,
+     18,
+     19,
+     19,
+     20,
+     27,
+     31
+    ],
+    "first_summit_gens": [],
+    "freq": 0.6667,
+    "freq_shelf": 0.6667,
+    "freq_summit": 0.0,
+    "k": 12,
+    "k_shelf": 12,
+    "k_summit": 0,
+    "k_summit_any": 12,
+    "k_summit_candidate": 12,
+    "levels": {
+     "FLOOR": 6,
+     "SHELF": 12,
+     "SUMMIT": 0
+    },
+    "n": 18,
+    "n_censored_runs": 18,
+    "shelf_hist": {
+     "0.2": 6,
+     "1.0": 12
+    }
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      200,
+      4,
+      16
+     ],
+     [
+      200,
+      16,
+      16
+     ],
+     [
+      200,
+      18,
+      16
+     ],
+     [
+      200,
+      19,
+      16
+     ],
+     [
+      200,
+      20,
+      16
+     ],
+     [
+      200,
+      21,
+      16
+     ],
+     [
+      200,
+      22,
+      16
+     ],
+     [
+      200,
+      23,
+      16
+     ],
+     [
+      200,
+      24,
+      16
+     ],
+     [
+      200,
+      30,
+      16
+     ],
+     [
+      200,
+      31,
+      16
+     ],
+     [
+      200,
+      35,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ],
+     [
+      200,
+      100,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "class_summit": "REACHABLE",
+    "freq": 0.619,
+    "k": 13,
+    "k_summit": 0,
+    "k_summit_any": 13,
+    "n": 21
+   }
+  },
+  "W1_d4": {
+   "at_budget": {
+    "band95": [
+     0.0127,
+     0.3147
+    ],
+    "class": "RARE",
+    "class_summit": "RARE",
+    "first_shelf_gens": [
+     52
+    ],
+    "first_solved_gens": [
+     52
+    ],
+    "first_summit_gens": [
+     53
+    ],
+    "freq": 0.0714,
+    "freq_shelf": 0.0714,
+    "freq_summit": 0.0714,
+    "k": 1,
+    "k_shelf": 1,
+    "k_summit": 1,
+    "k_summit_any": 1,
+    "k_summit_candidate": 1,
+    "levels": {
+     "FLOOR": 13,
+     "SHELF": 0,
+     "SUMMIT": 1
+    },
+    "n": 14,
+    "n_censored_runs": 0,
+    "shelf_hist": {
+     "0.2": 9,
+     "0.3": 4,
+     "1.0": 1
+    }
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "RARE",
+    "class_summit": "RARE",
+    "freq": 0.0714,
+    "k": 1,
+    "k_summit": 1,
+    "k_summit_any": 1,
+    "n": 14
+   }
+  }
+ },
+ "replacement_condition": "none: the slot is a replacement itself (failed-fragment transfer retired); it is moot only if no mature source exists",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "import takeover / dose ecology",
+ "typed_failure_conditions": [
+  "IMMATURE_ARTIFACT",
+  "INTERVENTION_NOT_APPLIED",
+  "POSITIVE_CONTROL_FAILED",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ],
+ "why_this_slot": "every later experiment that injects organisms needs the dose at which 'transfer' becomes population replacement, and whether the replacement is driven by the material's competence or by the injection mechanics; neither number exists."
+}

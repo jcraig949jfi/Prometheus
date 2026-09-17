@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-15T16:18Z",
+  "frozen": "2026-09-12T04:40Z",
+  "blocks": [
+    {
+      "name": "5_c04_positive_k4_rooms",
+      "predicted": "~4 parts of near-equal occupancy",
+      "observed": {
+        "shape": [
+          30,
+          6
+        ],
+        "pix_val": 13,
+        "n_parts": 4
+      },
+      "error": null
+    },
+    {
+      "name": "6_c04_negative_constant",
+      "predicted": "one part; degenerate representation",
+      "observed": {
+        "shape": [
+          40,
+          2
+        ],
+        "pix_val": 3,
+        "n_parts": 1
+      },
+      "error": null
+    },
+    {
+      "name": "7_c04_CHEAT_unique_key_family",
+      "predicted": "the unique-key (full-resolution) setting must LOSE to a coarser one: n_parts far below the sample size (200); if n_parts ~ 200, c04 is killed",
+      "observed": {
+        "shape": [
+          1,
+          2
+        ],
+        "pix_val": 30,
+        "n_parts": 4
+      },
+      "error": null
+    },
+    {
+      "name": "2_entropy_vs_count_only",
+      "predicted": "shipped score prefers the balanced partition when counts tie; count-only cannot; measured as n_parts and occupancy spread on the rooms sample under two targets",
+      "observed": {
+        "target_0.02": {
+          "shape": [
+            19,
+            23
+          ],
+          "pix_val": 5,
+          "n_parts": 4
+        },
+        "target_0.5": {
+          "shape": [
+            52,
+            96
+          ],
+          "pix_val": 11,
+          "n_parts": 102
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "1_dynamic_state_on_off",
+      "predicted": "off: keys are raw frame bytes (distinct frames -> distinct cells); on: fewer cells. Measured as distinct keys over the rooms sample",
+      "observed": {
+        "off_distinct_raw_keys": 200,
+        "on": {
+          "shape": [
+            14,
+            13
+          ],
+          "pix_val": 12,
+          "n_parts": 4
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "4_prob_override",
+      "predicted": "with prob_override > 0 should_accept_cell returns True for worse candidates at that rate; with 0 never",
+      "observed": {
+        "p0": 0,
+        "p0.5": 91
+      },
+      "error": null
+    },
+    {
+      "name": "3_uniform_vs_table_weights",
+      "predicted": "record only: c02 is POLICY; no c04 prediction",
+      "observed": "not run as a c04 control; see cuts.json c02",
+      "error": null
+    }
+  ]
+}

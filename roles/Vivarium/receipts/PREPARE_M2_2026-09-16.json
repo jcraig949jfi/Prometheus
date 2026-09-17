@@ -1,0 +1,90 @@
+{
+  "schema": "vivarium_prepare_m2.v1",
+  "at": "2026-09-16T12:21:22Z",
+  "host": "SPECTREX5",
+  "sha": "3aa05e08b",
+  "launched": false,
+  "worktree": {
+    "path": "D:\\Prometheus-worktrees\\vivarium-consumer",
+    "requested_sha": "3aa05e08b",
+    "created": true,
+    "stderr": "/43430)\nUpdating files:  93% (40499/43430)\nUpdating files:  94% (40825/43430)\nUpdating files:  95% (41259/43430)\nUpdating files:  95% (41610/43430)\nUpdating files:  96% (41693/43430)\nUpdating files:  97% (42128/43430)\nUpdating files:  98% (42562/43430)\nUpdating files:  99% (42996/43430)\nUpdating files:  99% (43185/43430)\nUpdating files: 100% (43430/43430)\nUpdating files: 100% (43430/43430), done.\n",
+    "head": "3aa05e08b368dc8b16684b886a77774061bdc5be",
+    "detached": true,
+    "dirty": false,
+    "not_canonical": true,
+    "ok": true
+  },
+  "launchers": {
+    "vivarium_consumer_m2.cmd": {
+      "from": "D:\\Prometheus-worktrees\\vivarium-boot-2026-09-16\\vivarium\\deploy\\vivarium_consumer_m2.cmd",
+      "to": "D:\\Prometheus-data\\vivarium\\vivarium_consumer_m2.cmd",
+      "template_sha256": "sha256:e6adfb4b1e9b2ca97655bb69b78e340d1b1396f8062e602249652f5e3c2f8b9a",
+      "written_sha256": "sha256:a3238332ca4382d22d7667b03742bf4bbb9cb23b630c6f90f8bda000ed1a7a0a"
+    },
+    "vivarium_deadman_m2.cmd": {
+      "from": "D:\\Prometheus-worktrees\\vivarium-boot-2026-09-16\\vivarium\\deploy\\vivarium_deadman_m2.cmd",
+      "to": "D:\\Prometheus-data\\vivarium\\vivarium_deadman_m2.cmd",
+      "template_sha256": "sha256:ee20cf5ac1f1ebc6853d8c2983f78aa5a0fcd3af0254b975d787dc1c67ca0116",
+      "written_sha256": "sha256:2134f5de9c6edd808272e249c87cd3fe58e4c50e4c62d4fbc7dbc2be418b3131"
+    }
+  },
+  "secrets": {
+    "path": "D:\\Prometheus-worktrees\\vivarium-consumer\\vivarium\\config.local.json",
+    "exists": false,
+    "sfe_token_present": false,
+    "pew_token_present": false,
+    "ok": false,
+    "note": "the operator carries this file from M1 with a receipt; no seat copies a token across hosts (Daedalus #270)"
+  },
+  "store": {
+    "ok": true,
+    "environment": "prometheus-canonical",
+    "queued": 5
+  },
+  "pew": {
+    "ok": true,
+    "url": "http://192.168.1.191:8377/api/v1",
+    "service": "mnemosyne-evidence-wiki",
+    "schema_version": 4,
+    "uptime_s": 330.3
+  },
+  "engine": {
+    "ok": false,
+    "reason": "WRONG_ENGINE",
+    "expected": "eng_8a37a5d305969034d488c43e",
+    "observed": "eng_906356f7fb1da180131f9290",
+    "url": "https://192.168.1.191:8811/v2/version"
+  },
+  "tasks": {
+    "ok": true,
+    "steps": [
+      {
+        "cmd": "schtasks /Create /F /TN",
+        "rc": 0,
+        "out": "SUCCESS: The scheduled task \"VivariumConsumerM2\" has successfully been created."
+      },
+      {
+        "cmd": "schtasks /Create /F /TN",
+        "rc": 0,
+        "out": "SUCCESS: The scheduled task \"VivariumDeadmanM2\" has successfully been created."
+      },
+      {
+        "cmd": "schtasks /Change /TN VivariumDeadmanM2",
+        "rc": 0,
+        "out": "SUCCESS: The parameters of scheduled task \"VivariumDeadmanM2\" have been changed."
+      }
+    ],
+    "note": "VivariumDeadmanM2 is registered DISABLED; enabling it is the launch decision and relaunches the consumer on its first tick if the engine precondition holds"
+  },
+  "preconditions": {
+    "worktree": true,
+    "secrets": false,
+    "store": true,
+    "pew": true,
+    "engine": false,
+    "tasks": true
+  },
+  "ready_to_launch": false,
+  "next": "fix the failed precondition(s): ['secrets', 'engine']"
+}

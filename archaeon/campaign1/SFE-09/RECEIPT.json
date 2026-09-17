@@ -1,0 +1,187 @@
+{
+ "artifacts": {
+  "representations": "sha256:992cb73477a053a74037cb70f0200981955fb62717298bb3f6e1c7b70f31d88f"
+ },
+ "campaign_seed": 20260917,
+ "engine_path": true,
+ "errors": [],
+ "experiment": "SFE-09",
+ "hypothesis": "hyp_50c78d47b0b25ef77a9e1a3d",
+ "representations": {
+  "A_words": "Proteus grammar over raw 32-bit words (opcode = word mod 25)",
+  "B_fields": "instruction fields (op, a, b, c) mutated field-wise; canonical re-encoding; same VM",
+  "C_fields_class": "B + opcode mutation stays in the affordance class with p=0.75"
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "session_id": "ses_9d2d70f57b6eba7885076f2d",
+ "stuck_evidence": {
+  "W1_d4 fresh footholds": {
+   "SFE-03": "0/3 (N200 G60 4-bit)",
+   "ssf-c3 ARM1": "0/3 (N512 G200 4-bit)",
+   "wse-survey-v01": "0/3 (N200 G100 8-bit)"
+  }
+ },
+ "summary": {
+  "A_words/control": {
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "genome_instr": [
+    15,
+    16,
+    16
+   ],
+   "heldout": [
+    0.0,
+    0.083,
+    0.042
+   ],
+   "ops": [
+    1536,
+    36,
+    38
+   ]
+  },
+  "A_words/stuck": {
+   "first_solved_gen": [
+    52,
+    null,
+    null
+   ],
+   "footholds": 1,
+   "genome_instr": [
+    10,
+    7,
+    17
+   ],
+   "heldout": [
+    1.0,
+    0.062,
+    0.125
+   ],
+   "ops": [
+    384,
+    46,
+    768
+   ]
+  },
+  "B_fields/control": {
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "genome_instr": [
+    17,
+    12,
+    26
+   ],
+   "heldout": [
+    0.083,
+    0.062,
+    0.042
+   ],
+   "ops": [
+    51,
+    17,
+    25
+   ]
+  },
+  "B_fields/stuck": {
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "genome_instr": [
+    16,
+    13,
+    18
+   ],
+   "heldout": [
+    0.083,
+    0.042,
+    0.062
+   ],
+   "ops": [
+    83,
+    1536,
+    532
+   ]
+  },
+  "C_fields_class/control": {
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "genome_instr": [
+    21,
+    15,
+    13
+   ],
+   "heldout": [
+    0.104,
+    0.062,
+    0.042
+   ],
+   "ops": [
+    139,
+    768,
+    48
+   ]
+  },
+  "C_fields_class/stuck": {
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "genome_instr": [
+    13,
+    14,
+    15
+   ],
+   "heldout": [
+    0.083,
+    0.062,
+    0.021
+   ],
+   "ops": [
+    96,
+    96,
+    96
+   ]
+  }
+ },
+ "teardown": {
+  "rep": "TERMINATED"
+ },
+ "timings": {
+  "records_s": 4.89,
+  "search_s": 67.5,
+  "startup_s": 0.59,
+  "teardown_s": 0.22,
+  "total_s": 73.2
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "fdb25a74989a950be8aeb0755584395e3cac9fe9",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "rep": "wld_3a384ef274832bd571ba4e30"
+ }
+}

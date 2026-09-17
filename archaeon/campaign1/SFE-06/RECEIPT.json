@@ -1,0 +1,129 @@
+{
+ "artifacts": {
+  "decoder_balanced": "sha256:312aecf70e32a20940eca57c6800c75e5387862195e5315afad9d7e1d16db602",
+  "decoder_direct": "sha256:aa69662fbad98bf7ad999fb24a285b8021e78bfe75813182398288c39d8f7ae5",
+  "decoder_scrambled": "sha256:d3420bebb258a495f6181644af41a444b8c7cbdac52ff4043d83929d5046c55b",
+  "score_table_s1": "sha256:e5e8124e9968cd19ba6700aace7dfb2687c6fad1172eca18802953ba7592721c",
+  "score_table_s2": "sha256:9887393b530ffb15909d3b4b86d4aa23c6973b490d9ca7023e9fd5bfd8bbe319",
+  "score_table_s3": "sha256:ce15d1dece77522b20c5477ad7985e34eb8483de7765746811b95976fd260871"
+ },
+ "campaign_seed": 20260917,
+ "config": {
+  "budget_per_decoder": 1288,
+  "climb_steps": 40,
+  "lambda": 4,
+  "n_cells": 21,
+  "n_ics": 64,
+  "parents": 8,
+  "steps": 11,
+  "threshold": 0.9
+ },
+ "decoders": {
+  "balanced": {
+   "check": {
+    "decoder_id": "h5.balanced.v0#20260917",
+    "multiplicity": 16,
+    "rules_reached": 256,
+    "table_sha256": "af3a95e58367a9a7814c8f4d7039937042d17ae44fc4cad6e664606c90c1dd1e",
+    "total": true
+   },
+   "table_sha256": "af3a95e58367a9a7814c8f4d7039937042d17ae44fc4cad6e664606c90c1dd1e"
+  },
+  "direct": {
+   "check": {
+    "decoder_id": "h5.direct.v0",
+    "multiplicity": 16,
+    "rules_reached": 256,
+    "table_sha256": "c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193",
+    "total": true
+   },
+   "table_sha256": "c8f5d0341d54d951a71b136e6e2afcb14d11ed8489a7ae126a8fee0df6ecf193"
+  },
+  "scrambled": {
+   "check": {
+    "decoder_id": "h5.scrambled.v0#20260917[h5.direct.v0]",
+    "multiplicity": 16,
+    "rules_reached": 256,
+    "table_sha256": "12933c9a21e31664d69179c449b814d90e5f4437c66c209b20fd895242d70df3",
+    "total": true
+   },
+   "table_sha256": "12933c9a21e31664d69179c449b814d90e5f4437c66c209b20fd895242d70df3"
+  }
+ },
+ "engine_path": true,
+ "errors": [],
+ "experiment": "SFE-06",
+ "hypothesis": "hyp_452f2b33db8bc6d7b356543d",
+ "session_id": "ses_588433e56d712a875962ee76",
+ "summary": {
+  "balanced": {
+   "accessible_classes": 11.553,
+   "accessible_rules": 11.698,
+   "best_mean": 1.0,
+   "distinct_rules_visited": [
+    131,
+    165,
+    200
+   ],
+   "first_hit_evals": [
+    653,
+    97,
+    89
+   ],
+   "hits": 3
+  },
+  "direct": {
+   "accessible_classes": 7.762,
+   "accessible_rules": 8.0,
+   "best_mean": 1.0,
+   "distinct_rules_visited": [
+    124,
+    136,
+    156
+   ],
+   "first_hit_evals": [
+    13,
+    53,
+    53
+   ],
+   "hits": 3
+  },
+  "scrambled": {
+   "accessible_classes": 7.895,
+   "accessible_rules": 8.0,
+   "best_mean": 0.8541666666666666,
+   "distinct_rules_visited": [
+    147,
+    96,
+    121
+   ],
+   "first_hit_evals": [
+    971,
+    null,
+    190
+   ],
+   "hits": 2
+  }
+ },
+ "teardown": {
+  "h5": "TERMINATED"
+ },
+ "timings": {
+  "startup_s": 1.34,
+  "teardown_s": 0.21,
+  "total_s": 4.9
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "d3fb47c5fa6bd02bdc0eab32dbe365f67c0f9aaa",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "h5": "wld_b5842d662108e79ccbd2cb2d"
+ }
+}

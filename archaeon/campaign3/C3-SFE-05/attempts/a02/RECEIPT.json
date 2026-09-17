@@ -1,0 +1,198 @@
+{
+ "artifacts": {},
+ "attempt": 2,
+ "attempt_id": "C3-SFE-05/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-009: the then_0 arm switches p to 0 at the first probe where the elite is general (all rungs >= 0.75); revisit cost is charged in episodes, not rewarded"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-05",
+ "finished_at": "2026-09-17T06:17:28Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:cbf96651dbb9d7ba0f9cba19dac2a6001bef0fc5d9ea4abfcf9e16f06200aea9",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T06:17:19Z",
+ "steps": {},
+ "summary": {
+  "p0.0": {
+   "adapt_R3": [
+    null
+   ],
+   "fell_r0": [
+    null
+   ],
+   "final_r0": [
+    0.0
+   ],
+   "final_r3": [
+    0.17
+   ],
+   "general_gen": [
+    null
+   ],
+   "general_heldout": 0,
+   "mean_final_r0": 0.0,
+   "mean_final_r3": 0.167,
+   "revisit_cost": [
+    0
+   ],
+   "switched_at": [
+    null
+   ]
+  },
+  "p0.05": {
+   "adapt_R3": [
+    null
+   ],
+   "fell_r0": [
+    null
+   ],
+   "final_r0": [
+    0.0
+   ],
+   "final_r3": [
+    0.17
+   ],
+   "general_gen": [
+    null
+   ],
+   "general_heldout": 0,
+   "mean_final_r0": 0.0,
+   "mean_final_r3": 0.167,
+   "revisit_cost": [
+    15
+   ],
+   "switched_at": [
+    null
+   ]
+  },
+  "p0.1": {
+   "adapt_R3": [
+    null
+   ],
+   "fell_r0": [
+    null
+   ],
+   "final_r0": [
+    0.0
+   ],
+   "final_r3": [
+    0.17
+   ],
+   "general_gen": [
+    null
+   ],
+   "general_heldout": 0,
+   "mean_final_r0": 0.0,
+   "mean_final_r3": 0.167,
+   "revisit_cost": [
+    30
+   ],
+   "switched_at": [
+    null
+   ]
+  },
+  "p0.1_then_0": {
+   "adapt_R3": [
+    null
+   ],
+   "fell_r0": [
+    null
+   ],
+   "final_r0": [
+    0.0
+   ],
+   "final_r3": [
+    0.17
+   ],
+   "general_gen": [
+    null
+   ],
+   "general_heldout": 0,
+   "mean_final_r0": 0.0,
+   "mean_final_r3": 0.167,
+   "revisit_cost": [
+    30
+   ],
+   "switched_at": [
+    null
+   ]
+  },
+  "p0.2": {
+   "adapt_R3": [
+    null
+   ],
+   "fell_r0": [
+    null
+   ],
+   "final_r0": [
+    0.0
+   ],
+   "final_r3": [
+    0.08
+   ],
+   "general_gen": [
+    null
+   ],
+   "general_heldout": 0,
+   "mean_final_r0": 0.0,
+   "mean_final_r3": 0.083,
+   "revisit_cost": [
+    45
+   ],
+   "switched_at": [
+    null
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "ladder_s": 8.72,
+  "records_s": 0.0,
+  "total_s": 9.1
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "p0.0",
+    "metric": "reached_r0_by_rung_end",
+    "min": 1,
+    "rows": 1,
+    "rows_meeting": 0,
+    "values": [
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "fe3c1647c1e4d09950a67bfa2377e30592553770",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

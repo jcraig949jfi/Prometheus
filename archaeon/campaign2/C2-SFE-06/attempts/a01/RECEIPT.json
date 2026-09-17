@@ -1,0 +1,202 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-06/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-014: revisit share p is the only difference between arms; it is an ecological pressure (old conditions recur), never a reward for retaining anything"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-06",
+ "finished_at": "2026-09-17T03:49:45Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:b097cb3fd7e1ddf5446ec636bef64c6ce65ee926ae1703846431d4978cbbebe1",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T03:49:45Z",
+ "steps": {},
+ "summary": {
+  "p0.0": {
+   "fell_r0_at": [
+    null,
+    null,
+    null
+   ],
+   "final_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "final_r3": [
+    0.042,
+    0.083,
+    0.0
+   ],
+   "mean_final": {
+    "R0": 0.056,
+    "R1": 0.042,
+    "R2": 0.069,
+    "R3": 0.042
+   },
+   "peak_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "retention_r0": [
+    1.0,
+    1.0,
+    null
+   ]
+  },
+  "p0.1": {
+   "fell_r0_at": [
+    null,
+    null,
+    null
+   ],
+   "final_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "final_r3": [
+    0.042,
+    0.083,
+    0.0
+   ],
+   "mean_final": {
+    "R0": 0.056,
+    "R1": 0.042,
+    "R2": 0.069,
+    "R3": 0.042
+   },
+   "peak_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "retention_r0": [
+    1.0,
+    1.0,
+    null
+   ]
+  },
+  "p0.25": {
+   "fell_r0_at": [
+    null,
+    null,
+    null
+   ],
+   "final_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "final_r3": [
+    0.042,
+    0.083,
+    0.0
+   ],
+   "mean_final": {
+    "R0": 0.056,
+    "R1": 0.042,
+    "R2": 0.069,
+    "R3": 0.042
+   },
+   "peak_r0": [
+    0.042,
+    0.125,
+    0.0
+   ],
+   "retention_r0": [
+    1.0,
+    1.0,
+    null
+   ]
+  },
+  "p0.5": {
+   "fell_r0_at": [
+    null,
+    null,
+    null
+   ],
+   "final_r0": [
+    0.042,
+    0.0,
+    0.0
+   ],
+   "final_r3": [
+    0.042,
+    0.042,
+    0.0
+   ],
+   "mean_final": {
+    "R0": 0.014,
+    "R1": 0.014,
+    "R2": 0.083,
+    "R3": 0.028
+   },
+   "peak_r0": [
+    0.042,
+    0.0,
+    0.0
+   ],
+   "retention_r0": [
+    1.0,
+    null,
+    null
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "ladder_s": 0.45,
+  "records_s": 0.0,
+  "total_s": 0.7
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "p0.0",
+    "metric": "peak_r0",
+    "min": 0.5,
+    "rows": 3,
+    "rows_meeting": 0,
+    "values": [
+     0.0417,
+     0.125,
+     0.0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "66d0f9441be357d50970d6f9924f49fa4d0fe1d2",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

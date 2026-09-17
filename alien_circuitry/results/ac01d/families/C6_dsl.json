@@ -1,0 +1,452 @@
+{
+ "family": "C6 evolved DSL (forward-stagewise genetic programming, ridge ensemble)",
+ "result": {
+  "name": "C6-DSL-24trees",
+  "serialized_bytes": 1428,
+  "CR": 742.7843137254902,
+  "sets": {
+   "HELD_PAIRS": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 57.75666666666667,
+     "mean_states": 26.186666666666667,
+     "mean_excess": 3.8466666666666667,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.551770538243626,
+     "HC_D_transitions_CI95": [
+      0.5128425625655274,
+      0.5902899501924559
+     ],
+     "HC_D_states": 0.565614862872309,
+     "HC_D_states_CI95": [
+      0.5263088030700459,
+      0.6044194739343427
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 61.8,
+     "mean_states": 30.013333333333332,
+     "mean_excess": 13.363333333333333,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.4658640226628895,
+     "HC_D_transitions_CI95": [
+      0.42316324039631936,
+      0.50822371284758
+     ],
+     "HC_D_states": 0.39634326157475674,
+     "HC_D_states_CI95": [
+      0.34683603154064735,
+      0.44818300433453684
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": 0.5891550262040874,
+     "exact": 0.21144666666666667,
+     "within_1": 0.58607,
+     "MAE": 1.4694437560017903,
+     "spearman": 0.7564039812136641
+    },
+    "references": {
+     "oracle_transitions": 36.66,
+     "KA-DFS_transitions": 83.72666666666667,
+     "KA-DFS_excess": 21.65,
+     "KA-GBFS_transitions": 117.35333333333334,
+     "KA-GBFS_excess": 3.0366666666666666
+    }
+   },
+   "HELD_STATES": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 57.85333333333333,
+     "mean_states": 26.213333333333335,
+     "mean_excess": 3.8566666666666665,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5870954985830092,
+     "HC_D_transitions_CI95": [
+      0.5533745076301378,
+      0.6231362702663223
+     ],
+     "HC_D_states": 0.6028583207365672,
+     "HC_D_states_CI95": [
+      0.5681850730792397,
+      0.6400744608812029
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 61.82333333333333,
+     "mean_states": 29.876666666666665,
+     "mean_excess": 13.05,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5086008040598431,
+     "HC_D_transitions_CI95": [
+      0.4641423630985435,
+      0.5509256696607469
+     ],
+     "HC_D_states": 0.4518345472035179,
+     "HC_D_states_CI95": [
+      0.3983464105259478,
+      0.5012388316584967
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": 0.5916595928880342,
+     "exact": 0.21178,
+     "within_1": 0.5871866666666666,
+     "MAE": 1.4673763965670268,
+     "spearman": 0.7578555231898144
+    },
+    "references": {
+     "oracle_transitions": 36.97,
+     "KA-DFS_transitions": 87.54666666666667,
+     "KA-DFS_excess": 23.14666666666667,
+     "KA-GBFS_transitions": 121.99333333333334,
+     "KA-GBFS_excess": 3.27
+    }
+   },
+   "HELD_TARGETS": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 62.343333333333334,
+     "mean_states": 27.85333333333333,
+     "mean_excess": 4.433333333333334,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5390239209901879,
+     "HC_D_transitions_CI95": [
+      0.4992730322485081,
+      0.5763109154480079
+     ],
+     "HC_D_states": 0.5670144462279294,
+     "HC_D_states_CI95": [
+      0.5277655305650242,
+      0.6035762987292937
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 64.17333333333333,
+     "mean_states": 30.276666666666667,
+     "mean_excess": 13.0,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5038158147886873,
+     "HC_D_transitions_CI95": [
+      0.4583476352912305,
+      0.5466376300079507
+     ],
+     "HC_D_states": 0.46976993044408777,
+     "HC_D_states_CI95": [
+      0.4207322707138368,
+      0.5163016193302955
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": 0.5841823891080018,
+     "exact": 0.20944,
+     "within_1": 0.5784633333333333,
+     "MAE": 1.481211601603826,
+     "spearman": 0.7497632706036781
+    },
+    "references": {
+     "oracle_transitions": 38.38333333333333,
+     "KA-DFS_transitions": 90.36,
+     "KA-DFS_excess": 23.78,
+     "KA-GBFS_transitions": 125.95333333333333,
+     "KA-GBFS_excess": 3.513333333333333
+    }
+   },
+   "HELD_BOTH": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 60.92,
+     "mean_states": 27.356666666666666,
+     "mean_excess": 4.21,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5443926766848218,
+     "HC_D_transitions_CI95": [
+      0.5028318519082915,
+      0.5834571314846626
+     ],
+     "HC_D_states": 0.5717022441160372,
+     "HC_D_states_CI95": [
+      0.528960334076596,
+      0.610708805271253
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 62.99,
+     "mean_states": 30.033333333333335,
+     "mean_excess": 12.956666666666667,
+     "traps_taken": 0.0,
+     "HC_D_transitions": 0.5036419712579565,
+     "HC_D_transitions_CI95": [
+      0.45713221924471653,
+      0.5468860606468063
+     ],
+     "HC_D_states": 0.46182266009852213,
+     "HC_D_states_CI95": [
+      0.4068417950760683,
+      0.5102470086783503
+     ],
+     "band": "meaningful structural compression",
+     "dominance": "DOMINATES KA-DFS"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": 0.5863221617074652,
+     "exact": 0.20977,
+     "within_1": 0.5811033333333333,
+     "MAE": 1.4745098271687826,
+     "spearman": 0.7520690508788772
+    },
+    "references": {
+     "oracle_transitions": 37.776666666666664,
+     "KA-DFS_transitions": 88.57333333333334,
+     "KA-DFS_excess": 23.233333333333334,
+     "KA-GBFS_transitions": 122.23333333333333,
+     "KA-GBFS_excess": 3.1333333333333333
+    }
+   }
+  },
+  "landmarks": {
+   "1.5": "eligible",
+   "2.0": "eligible",
+   "4.0": "eligible",
+   "8.0": "eligible"
+  },
+  "seconds": 40.6,
+  "fit": {
+   "trees": [
+    "(max (max (max t0 c1) (max (lt c3 (max s6 (sub ns4 c0))) (max rank (max (lt c3 (max rank (sub ns4 c0))) (min (max rank (sub (abs (sub s1 s4)) c3)) c2))))) (min (min t1 c5) (min s6 ns5)))",
+    "(add (min (ite s4 t6 t6) (max t0 ns4)) (add (add (max (max ns3 c0) (add (max (max ns3 c0) c4) ns2)) (add (max (max ns3 c0) c0) (lt t3 nt0))) (add (max (max ns3 c4) ns5) (lt c2 nt0))))",
+    "(abs (abs (abs (abs (abs (abs (abs (ite (sub (abs (ite (lt nt0 c6) (abs c2) (abs t2))) (abs (abs (add (min (sub nt1 c4) s3) (lt nt1 (max nt0 t2)))))) (abs t6) (abs rank)))))))))",
+    "(mul (mul (min (abs ns1) ns6) (mul (mul (lt (lt (max c1 ns2) (eq c1 c2)) (abs ns0)) c5) (add (max c1 ns2) (eq nt0 rank)))) (add (max c1 t5) (eq nt0 ns2)))",
+    "(min (min (min (min (add s1 c5) (eq ns2 nt0)) (eq (max c2 ns3) s0)) (eq ns2 nt0)) (eq (max c2 t3) s0))",
+    "(mul (mul (abs (max c1 ns3)) c2) (ite (min ns5 ns6) rank (ite (abs (abs (mul (mul (abs (max c1 ns3)) c2) (ite (min ns5 ns0) rank (ite s5 ns3 t2))))) ns3 c1)))",
+    "(ite ns0 (ite (abs ns5) t6 (eq s3 nt0)) (sub (lt rank c4) (ite ns0 (eq (ite c2 (abs s2) ns3) (min (abs t1) t4)) (abs (min nt0 nt1)))))",
+    "(eq (add (mul ns4 nt1) (mul t0 c7)) (eq (add (mul ns4 t4) (mul t0 nt1)) (ite (min (eq (lt s1 t0) (min ns5 c3)) c5) (min t5 (min ns2 (min s4 t6))) (min ns3 (max s4 (max c5 c7))))))",
+    "(eq (ite (min (mul c3 nt1) c6) (sub nt1 ns3) rank) (mul (max (sub ns6 c2) (mul ns2 c3)) (add ns4 nt1)))",
+    "(mul (max c6 t2) (sub (mul (max c6 t2) (sub (mul (max c6 t2) (sub c2 (eq ns2 nt1))) (eq ns2 nt1))) (eq rank nt1)))",
+    "(min (abs (sub (add ns4 (min nt0 (sub (add (mul rank s0) (max rank ns3)) (min t6 t6)))) (ite t0 s3 ns1))) (sub (add ns0 (max c4 ns3)) (min t6 s0)))",
+    "(add (min (lt t2 s0) (abs ns2)) (min (mul ns3 (add t0 c3)) (lt (eq (add (abs nt1) (sub (max rank ns5) (lt c4 c5))) nt0) (lt (sub (sub ns2 c3) (add t0 t5)) t0))))",
+    "(add (abs (min ns0 nt1)) (add (eq t4 s4) (add (abs (abs (sub s0 t2))) (add (abs (abs (sub s0 c2))) (add (abs ns2) (eq (lt (eq s0 t1) (eq c0 t1)) (min (eq t0 ns6) (max c6 rank))))))))",
+    "(abs (abs (abs (abs (abs (eq ns3 (ite (abs (abs (abs (abs (abs (abs (abs (eq ns3 (ite ns1 nt0 c5))))))))) nt0 c6)))))))",
+    "(min (ite s0 nt1 (max nt0 s0)) (max (min c3 s0) (min (ite s0 t5 (max nt0 c3)) (max (min s1 t6) (ite (ite (eq nt1 c4) ns6 (ite t6 s0 s0)) (add (lt ns6 s1) t3) (mul c7 ns2))))))",
+    "(min (min (lt c3 (max (min t3 s1) rank)) (max (max (ite c5 nt0 c3) (add ns6 c7)) (mul (mul c7 s3) s5))) (max (lt t6 ns4) (mul (mul c7 c6) (abs t6))))",
+    "(mul (mul s0 (mul (mul nt0 (mul nt0 (ite (add t2 t2) (mul s2 ns3) (min c1 ns5)))) (ite (add t2 t2) (mul s2 ns1) (min c1 ns5)))) (mul nt0 (max nt1 s6)))",
+    "(abs (abs (max (sub (ite s3 c2 (lt ns5 t4)) (abs (abs (ite (sub s0 t2) (lt t1 t2) t5)))) (add (min (eq (min t0 t0) (lt ns6 s2)) t5) (min (lt (sub t2 t6) c3) ns2)))))",
+    "(lt (mul s2 (max (sub t1 c3) (sub t2 t1))) (abs (add (max (max ns1 t3) (lt (abs c0) (add c2 t1))) c2)))",
+    "(mul (sub (mul (sub (max (eq (eq ns3 ns3) (lt c6 c4)) (ite (ite (add ns6 t5) (ite t1 ns2 c0) t1) s1 (min ns3 (lt s2 c6)))) t2) c2) s3) (max (lt ns1 nt0) s0))",
+    "(mul (add (abs (lt s0 ns2)) (lt s0 ns4)) (mul (add (abs (lt s0 ns2)) (lt s0 ns3)) (mul (mul (add (abs (lt s0 ns2)) (lt s0 ns3)) (max (eq (sub ns0 nt0) s0) (lt (add t1 c7) ns4))) nt0)))",
+    "(mul (abs (add (mul (abs (add ns4 (abs ns2))) (mul (abs (add ns3 (abs ns2))) (eq (add ns1 c0) nt1))) (abs t2))) (mul (abs (add ns3 (abs ns2))) (eq (add ns1 c0) nt1)))",
+    "(ite (lt (min nt1 ns3) (eq ns2 nt1)) (sub (abs nt1) (add c7 s5)) (ite (lt (min nt1 ns3) (eq c6 nt1)) c0 (sub c7 (ite (lt (min nt1 ns3) s2) ns1 (sub c7 (abs (eq c5 s1)))))))",
+    "(mul (sub (max ns0 s0) ns5) (mul (sub (max ns5 s0) (max c3 c0)) (mul c5 (eq (add (min c0 ns5) (add ns5 ns6)) nt0))))"
+   ],
+   "history": [
+    {
+     "stage": 0,
+     "tree": "(max (max (max t0 c1) (max (lt c3 (max s6 (sub ns4 c0))) (max rank (max (lt c3 (max rank (sub ns4 c0))) (min (max rank (sub (abs (sub s1 s4)) c3)) c2))))) (min (min t1 c5) (min s6 ns5)))",
+     "rmse_fit": 2.1839467105206807,
+     "rmse_val": 2.169779049552936,
+     "t": 27
+    },
+    {
+     "stage": 1,
+     "tree": "(add (min (ite s4 t6 t6) (max t0 ns4)) (add (add (max (max ns3 c0) (add (max (max ns3 c0) c4) ns2)) (add (max (max ns3 c0) c0) (lt t3 nt0))) (add (max (max ns3 c4) ns5) (lt c2 nt0))))",
+     "rmse_fit": 2.0903212019532234,
+     "rmse_val": 2.0790700565404507,
+     "t": 28
+    },
+    {
+     "stage": 2,
+     "tree": "(abs (abs (abs (abs (abs (abs (abs (ite (sub (abs (ite (lt nt0 c6) (abs c2) (abs t2))) (abs (abs (add (min (sub nt1 c4) s3) (lt nt1 (max nt0 t2)))))) (abs t6) (abs rank)))))))))",
+     "rmse_fit": 2.018322676060611,
+     "rmse_val": 2.0094909902272646,
+     "t": 30
+    },
+    {
+     "stage": 3,
+     "tree": "(mul (mul (min (abs ns1) ns6) (mul (mul (lt (lt (max c1 ns2) (eq c1 c2)) (abs ns0)) c5) (add (max c1 ns2) (eq nt0 rank)))) (add (max c1 t5) (eq nt0 ns2)))",
+     "rmse_fit": 1.9850208534724916,
+     "rmse_val": 1.9775131631415528,
+     "t": 33
+    },
+    {
+     "stage": 4,
+     "tree": "(min (min (min (min (add s1 c5) (eq ns2 nt0)) (eq (max c2 ns3) s0)) (eq ns2 nt0)) (eq (max c2 t3) s0))",
+     "rmse_fit": 1.955251322639501,
+     "rmse_val": 1.9487331760880204,
+     "t": 36
+    },
+    {
+     "stage": 5,
+     "tree": "(mul (mul (abs (max c1 ns3)) c2) (ite (min ns5 ns6) rank (ite (abs (abs (mul (mul (abs (max c1 ns3)) c2) (ite (min ns5 ns0) rank (ite s5 ns3 t2))))) ns3 c1)))",
+     "rmse_fit": 1.9391568462478663,
+     "rmse_val": 1.9330104827725256,
+     "t": 38
+    },
+    {
+     "stage": 6,
+     "tree": "(ite ns0 (ite (abs ns5) t6 (eq s3 nt0)) (sub (lt rank c4) (ite ns0 (eq (ite c2 (abs s2) ns3) (min (abs t1) t4)) (abs (min nt0 nt1)))))",
+     "rmse_fit": 1.9305771861394059,
+     "rmse_val": 1.9241567898181273,
+     "t": 41
+    },
+    {
+     "stage": 7,
+     "tree": "(eq (add (mul ns4 nt1) (mul t0 c7)) (eq (add (mul ns4 t4) (mul t0 nt1)) (ite (min (eq (lt s1 t0) (min ns5 c3)) c5) (min t5 (min ns2 (min s4 t6))) (min ns3 (max s4 (max c5 c7))))))",
+     "rmse_fit": 1.9238013238868208,
+     "rmse_val": 1.9195481943828638,
+     "t": 44
+    },
+    {
+     "stage": 8,
+     "tree": "(eq (ite (min (mul c3 nt1) c6) (sub nt1 ns3) rank) (mul (max (sub ns6 c2) (mul ns2 c3)) (add ns4 nt1)))",
+     "rmse_fit": 1.9184132488587142,
+     "rmse_val": 1.9148499326042276,
+     "t": 46
+    },
+    {
+     "stage": 9,
+     "tree": "(mul (max c6 t2) (sub (mul (max c6 t2) (sub (mul (max c6 t2) (sub c2 (eq ns2 nt1))) (eq ns2 nt1))) (eq rank nt1)))",
+     "rmse_fit": 1.9009110682918693,
+     "rmse_val": 1.89799522946179,
+     "t": 48
+    },
+    {
+     "stage": 10,
+     "tree": "(min (abs (sub (add ns4 (min nt0 (sub (add (mul rank s0) (max rank ns3)) (min t6 t6)))) (ite t0 s3 ns1))) (sub (add ns0 (max c4 ns3)) (min t6 s0)))",
+     "rmse_fit": 1.892977023493341,
+     "rmse_val": 1.8908772004582446,
+     "t": 51
+    },
+    {
+     "stage": 11,
+     "tree": "(add (min (lt t2 s0) (abs ns2)) (min (mul ns3 (add t0 c3)) (lt (eq (add (abs nt1) (sub (max rank ns5) (lt c4 c5))) nt0) (lt (sub (sub ns2 c3) (add t0 t5)) t0))))",
+     "rmse_fit": 1.8842557957200936,
+     "rmse_val": 1.8818258123851417,
+     "t": 53
+    },
+    {
+     "stage": 12,
+     "tree": "(add (abs (min ns0 nt1)) (add (eq t4 s4) (add (abs (abs (sub s0 t2))) (add (abs (abs (sub s0 c2))) (add (abs ns2) (eq (lt (eq s0 t1) (eq c0 t1)) (min (eq t0 ns6) (max c6 rank))))))))",
+     "rmse_fit": 1.8792702573289994,
+     "rmse_val": 1.8768257156014265,
+     "t": 57
+    },
+    {
+     "stage": 13,
+     "tree": "(abs (abs (abs (abs (abs (eq ns3 (ite (abs (abs (abs (abs (abs (abs (abs (eq ns3 (ite ns1 nt0 c5))))))))) nt0 c6)))))))",
+     "rmse_fit": 1.8765281314843583,
+     "rmse_val": 1.8749373769854147,
+     "t": 60
+    },
+    {
+     "stage": 14,
+     "tree": "(min (ite s0 nt1 (max nt0 s0)) (max (min c3 s0) (min (ite s0 t5 (max nt0 c3)) (max (min s1 t6) (ite (ite (eq nt1 c4) ns6 (ite t6 s0 s0)) (add (lt ns6 s1) t3) (mul c7 ns2))))))",
+     "rmse_fit": 1.871879092265904,
+     "rmse_val": 1.8698789993362062,
+     "t": 63
+    },
+    {
+     "stage": 15,
+     "tree": "(min (min (lt c3 (max (min t3 s1) rank)) (max (max (ite c5 nt0 c3) (add ns6 c7)) (mul (mul c7 s3) s5))) (max (lt t6 ns4) (mul (mul c7 c6) (abs t6))))",
+     "rmse_fit": 1.8692135285509943,
+     "rmse_val": 1.8662225685554323,
+     "t": 65
+    },
+    {
+     "stage": 16,
+     "tree": "(mul (mul s0 (mul (mul nt0 (mul nt0 (ite (add t2 t2) (mul s2 ns3) (min c1 ns5)))) (ite (add t2 t2) (mul s2 ns1) (min c1 ns5)))) (mul nt0 (max nt1 s6)))",
+     "rmse_fit": 1.8668768337621202,
+     "rmse_val": 1.8642656353086455,
+     "t": 67
+    },
+    {
+     "stage": 17,
+     "tree": "(abs (abs (max (sub (ite s3 c2 (lt ns5 t4)) (abs (abs (ite (sub s0 t2) (lt t1 t2) t5)))) (add (min (eq (min t0 t0) (lt ns6 s2)) t5) (min (lt (sub t2 t6) c3) ns2)))))",
+     "rmse_fit": 1.8651760203301575,
+     "rmse_val": 1.8635191433586429,
+     "t": 70
+    },
+    {
+     "stage": 18,
+     "tree": "(lt (mul s2 (max (sub t1 c3) (sub t2 t1))) (abs (add (max (max ns1 t3) (lt (abs c0) (add c2 t1))) c2)))",
+     "rmse_fit": 1.8630423044143214,
+     "rmse_val": 1.8622580592675284,
+     "t": 72
+    },
+    {
+     "stage": 19,
+     "tree": "(mul (sub (mul (sub (max (eq (eq ns3 ns3) (lt c6 c4)) (ite (ite (add ns6 t5) (ite t1 ns2 c0) t1) s1 (min ns3 (lt s2 c6)))) t2) c2) s3) (max (lt ns1 nt0) s0))",
+     "rmse_fit": 1.8606631812049317,
+     "rmse_val": 1.8598761716273877,
+     "t": 75
+    },
+    {
+     "stage": 20,
+     "tree": "(mul (add (abs (lt s0 ns2)) (lt s0 ns4)) (mul (add (abs (lt s0 ns2)) (lt s0 ns3)) (mul (mul (add (abs (lt s0 ns2)) (lt s0 ns3)) (max (eq (sub ns0 nt0) s0) (lt (add t1 c7) ns4))) nt0)))",
+     "rmse_fit": 1.8546919765769876,
+     "rmse_val": 1.8553820532872973,
+     "t": 78
+    },
+    {
+     "stage": 21,
+     "tree": "(mul (abs (add (mul (abs (add ns4 (abs ns2))) (mul (abs (add ns3 (abs ns2))) (eq (add ns1 c0) nt1))) (abs t2))) (mul (abs (add ns3 (abs ns2))) (eq (add ns1 c0) nt1)))",
+     "rmse_fit": 1.848890325692075,
+     "rmse_val": 1.8500239566228114,
+     "t": 80
+    },
+    {
+     "stage": 22,
+     "tree": "(ite (lt (min nt1 ns3) (eq ns2 nt1)) (sub (abs nt1) (add c7 s5)) (ite (lt (min nt1 ns3) (eq c6 nt1)) c0 (sub c7 (ite (lt (min nt1 ns3) s2) ns1 (sub c7 (abs (eq c5 s1)))))))",
+     "rmse_fit": 1.8456760564356154,
+     "rmse_val": 1.847083561182046,
+     "t": 83
+    },
+    {
+     "stage": 23,
+     "tree": "(mul (sub (max ns0 s0) ns5) (mul (sub (max ns5 s0) (max c3 c0)) (mul c5 (eq (add (min c0 ns5) (add ns5 ns6)) nt0))))",
+     "rmse_fit": 1.8400269949365653,
+     "rmse_val": 1.841910263635658,
+     "t": 85
+    }
+   ],
+   "bytes_lzma": 1428,
+   "fit_rows": 100000,
+   "pop": 120,
+   "generations": 30
+  }
+ },
+ "seconds": 125.2
+}

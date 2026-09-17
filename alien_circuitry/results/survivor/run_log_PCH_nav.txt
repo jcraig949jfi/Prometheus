@@ -1,0 +1,91 @@
+[stage] built  rss=275 MB
+[stage] nav B0 done  rss=660 MB
+[stage] nav B1 done  rss=660 MB
+[stage] nav B2 done  rss=660 MB
+[stage] nav LA1 done  rss=660 MB
+[stage] nav LA2 done  rss=660 MB
+[stage] nav LA3 done  rss=660 MB
+[stage] nav LA4 done  rss=660 MB
+[stage] nav LA5 done  rss=660 MB
+[stage] nav KA done  rss=660 MB
+{
+ "universe": "PCH",
+ "NS": 823543,
+ "edges": 2470629,
+ "traps": 3069066,
+ "H_obs": {
+  "0": 0,
+  "1": 0,
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 126,
+  "6-12": 14448,
+  "13-20": 608412,
+  "21-30": 2446080,
+  ">30": 0,
+  "n": 3069066
+ },
+ "LA5_recall": 4.105483557538352e-05,
+ "layers": {
+  "R0": 40577880,
+  "R1": 0,
+  "reachable": 11138190,
+  "R1_fraction_of_kernel_compatible": 0.0,
+  "R1_traps": 0,
+  "R1_trap_fraction_of_traps": 0.0
+ },
+ "leak_A_prauc": 0.6854366583759318,
+ "leak_B_prauc": 0.6845976020518549,
+ "leak_B_nmi": 0.3141094768213291,
+ "dist_table": {
+  "R2": 0.5802344620868646,
+  "exact_match": 0.237800170451697,
+  "within_1": 0.6113701308467439,
+  "MAE": 1.4297271323461698,
+  "spearman": 0.7497297061129002
+ },
+ "dist_linear": {
+  "R2": 0.45692509412765503,
+  "exact_match": 0.17423171404221185,
+  "within_1": 0.5013485737203589,
+  "MAE": 1.7111709117889404,
+  "spearman": 0.6392520781847101
+ },
+ "H0": {
+  "mean_D": 12.441666666666666,
+  "forward_bfs_mean": [
+   8272.9,
+   18328.433333333334
+  ],
+  "bidirectional_bfs_mean": [
+   459.6666666666667,
+   1110.6
+  ],
+  "per_problem_min_mean": [
+   459.6666666666667,
+   1110.6
+  ],
+  "oracle_mean": [
+   12.441666666666666,
+   27.45
+  ],
+  "H0_states": 0.9729332849891226,
+  "H0_transitions": 0.9752836304700162
+ },
+ "H1": {
+  "best_cheap_policy": "B2",
+  "transitions": 0.9942526529572491,
+  "states": 0.9947659580435271,
+  "best_cheap_solve_rate": 1.0
+ },
+ "H2": {
+  "kernel_aware_residual_blind": "KA",
+  "transitions": 0.57747562852745,
+  "states": 0.5988715744223536,
+  "KA_solve_rate": 1.0
+ },
+ "seconds": 661.8,
+ "nav_seconds": 11.2
+}
+EXIT 0

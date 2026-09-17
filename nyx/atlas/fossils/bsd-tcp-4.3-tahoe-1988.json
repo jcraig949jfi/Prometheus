@@ -73,7 +73,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: bsd-tcp-4.3-reno-1990"
+    "superseded_by: bsd-tcp-4.3-reno-1990"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -165,9 +165,9 @@
   },
   {
    "from": "bsd-tcp-4.3-tahoe-1988",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "bsd-tcp-4.3-reno-1990",
-   "note": "fast recovery added",
+   "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

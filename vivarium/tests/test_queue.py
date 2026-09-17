@@ -262,3 +262,31 @@ def test_enqueue_refuses_a_malformed_specification(conn, schema):
                    experiment_spec={"nope": 1}, schema=schema)
     conn.rollback()
     assert _q.counts(conn, schema=schema) == {}
+
+
+def test_hold_moves_not_before_only_and_lifts(conn, schema):
+    """POSITIVE a held queued row is skipped by claim and lifted back;
+    NEGATIVE a claimed row cannot be held; CHEAT the hold touches no relation
+    and no status -- the row's other columns are byte-identical."""
+    eid = _add(conn, schema, priority=1, experiment_spec=make_spec(hypothesis="probe held"))
+    other = _add(conn, schema, priority=100, experiment_spec=make_spec(hypothesis="probe free"))
+    before = {k: v for k, v in _q.get(conn, eid, schema=schema).items() if k != "not_before"}
+    until = dt.datetime.now(dt.timezone.utc) + dt.timedelta(days=30)
+    _q.hold(conn, eid, until=until, actor="archaeon", reason="engine moved (#284)", schema=schema)
+    conn.commit()
+    held = _q.get(conn, eid, schema=schema)
+    assert held["not_before"] == until and held["status"] == "queued"
+    assert {k: v for k, v in held.items() if k != "not_before"} == before      # CHEAT: nothing else moved
+    assert str(_q.next_eligible(conn, schema=schema)["experiment_id"]) == other
+    assert [e["event_type"] for e in _q.events(conn, eid, schema=schema)][-1] == "held"
+    _q.hold(conn, eid, until=None, actor="archaeon", reason="cleared", schema=schema)
+    conn.commit()
+    assert _q.get(conn, eid, schema=schema)["not_before"] is None
+    assert str(_q.next_eligible(conn, schema=schema)["experiment_id"]) == eid
+    assert [e["event_type"] for e in _q.events(conn, eid, schema=schema)][-1] == "hold_lifted"
+    got = _q.claim_next(conn, "w1", schema=schema)
+    conn.commit()
+    assert str(got["experiment_id"]) == eid
+    with pytest.raises(RuntimeError, match="not queued"):                     # NEGATIVE
+        _q.hold(conn, eid, until=until, actor="archaeon", reason="too late", schema=schema)
+    conn.rollback()

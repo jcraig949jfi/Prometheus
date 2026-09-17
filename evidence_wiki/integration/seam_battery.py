@@ -120,9 +120,9 @@ def main():
                "evidence_cols": sorted(r["column_name"] for r in cols)}
         ok = (mig["fossil_pk"] == "PRIMARY KEY (encounter_id, run_key)" and
               mig["evidence_fk"] is not None and
-              h["schema_version"] == 4)
+              h["schema_version"] == 5)
     else:
-        ok = h["schema_version"] == 4
+        ok = h["schema_version"] == 5
     gate("I_live_migration_state", ok,
          f"health.schema_version={h['schema_version']} "
          f"contract={h['fossil_contract']} | {mig}")

@@ -249,34 +249,53 @@ class _Oracle:
 
 
 # --------------------------------------------------------------------- run
+def payload_problems(payload: dict) -> list:
+    """D2b (2026-09-16): every VALUE refusal run() makes at its entry, as
+    reasons, with nothing executed. Named in the kind registry as the
+    value_checker and called by run() itself, so admission and execution
+    refuse the same things. The artifact slots (source_pack,
+    component_library) are checked by viv.kinds / preflight, not here."""
+    try:
+        _b, _l = _proteus()
+    except Exception as exc:                                  # noqa: BLE001
+        return ["Proteus library unavailable: %s" % (str(exc)[:200],)]
+    r = []
+    table = payload.get("target_truth_table")
+    if (not isinstance(table, str) or len(table) != N_ASSIGNMENTS
+            or any(c not in "01" for c in table)):
+        r.append("target_truth_table must be %d characters of '0'/'1' in "
+                 "Proteus's declared assignment order (input 0 most "
+                 "significant), got %r" % (N_ASSIGNMENTS, table))
+    if payload.get("grammar_version") != _b.GRAMMAR_VERSION:
+        r.append("the spec seals grammar_version %r; this build has Proteus's "
+                 "%r. A grammar change is a new experiment, not a new run of "
+                 "this one." % (payload.get("grammar_version"), _b.GRAMMAR_VERSION))
+    for name, allowed in (("candidate_policy", CANDIDATE_POLICIES),
+                          ("case_ordering", CASE_ORDERINGS),
+                          ("termination", TERMINATIONS),
+                          ("shortfall_rule", SHORTFALL_RULES)):
+        if payload.get(name) not in allowed:
+            r.append("%s must be one of %s, got %r"
+                     % (name, list(allowed), payload.get(name)))
+    for name in ("max_candidates", "max_expr_size", "oracle_call_cap",
+                 "vm_op_cap", "trace_bound", "vm_ticks"):
+        v = payload.get(name)
+        if not isinstance(v, int) or isinstance(v, bool) or v < 1:
+            r.append("%s must be a positive integer, got %r" % (name, v))
+    sp = payload.get("seed_probe_count")
+    if not isinstance(sp, int) or isinstance(sp, bool) or sp < 0:
+        r.append("seed_probe_count must be a non-negative integer, got %r" % (sp,))
+    return r
+
+
 def run(payload: dict, *, seed: int, inputs: dict) -> dict:      # noqa: C901
     """One bounded CEGIS attempt on one target. Deterministic given the seal."""
     _b, _l = _proteus()
 
+    problems = payload_problems(payload)             # D2b: same refusals
+    if problems:
+        raise CegisError("; ".join(problems))
     table = payload["target_truth_table"]
-    if (not isinstance(table, str) or len(table) != N_ASSIGNMENTS
-            or any(c not in "01" for c in table)):
-        raise CegisError(
-            "target_truth_table must be %d characters of '0'/'1' in Proteus's "
-            "declared assignment order (input 0 most significant), got %r"
-            % (N_ASSIGNMENTS, table))
-    if payload["grammar_version"] != _b.GRAMMAR_VERSION:
-        raise CegisError(
-            "the spec seals grammar_version %r; this build has Proteus's %r. "
-            "A grammar change is a new experiment, not a new run of this one."
-            % (payload["grammar_version"], _b.GRAMMAR_VERSION))
-    if payload["candidate_policy"] not in CANDIDATE_POLICIES:
-        raise CegisError("candidate_policy must be one of %s"
-                         % (list(CANDIDATE_POLICIES),))
-    if payload["case_ordering"] not in CASE_ORDERINGS:
-        raise CegisError("case_ordering must be one of %s"
-                         % (list(CASE_ORDERINGS),))
-    if payload["termination"] not in TERMINATIONS:
-        raise CegisError("termination must be one of %s" % (list(TERMINATIONS),))
-    if payload["shortfall_rule"] not in SHORTFALL_RULES:
-        raise CegisError("shortfall_rule must be one of %s"
-                         % (list(SHORTFALL_RULES),))
-
     max_candidates = _positive(payload, "max_candidates")
     max_expr_size = _positive(payload, "max_expr_size")
     oracle_cap = _positive(payload, "oracle_call_cap")
@@ -284,9 +303,6 @@ def run(payload: dict, *, seed: int, inputs: dict) -> dict:      # noqa: C901
     trace_bound = _positive(payload, "trace_bound")
     vm_ticks = _positive(payload, "vm_ticks")
     seed_probes = payload["seed_probe_count"]
-    if not isinstance(seed_probes, int) or isinstance(seed_probes, bool) \
-            or seed_probes < 0:
-        raise CegisError("seed_probe_count must be a non-negative integer")
 
     assignments = _b.assignments(N_INPUTS)
     oracle = _Oracle(table, oracle_cap)
@@ -472,8 +488,9 @@ def run(payload: dict, *, seed: int, inputs: dict) -> dict:      # noqa: C901
         out["source_pack_digest"] = pack.digest
     if library is not None:
         out["component_library_digest"] = library.digest
-    if witness_truncated:
-        out["_truncated"] = {"witnesses": True}
+    # Declared both ways; see ca_density.py (THEO-REQ-004): a complete vector
+    # at exactly its ceiling must carry the executor's word that it is whole.
+    out["_truncated"] = {"witnesses": witness_truncated}
     return out
 
 

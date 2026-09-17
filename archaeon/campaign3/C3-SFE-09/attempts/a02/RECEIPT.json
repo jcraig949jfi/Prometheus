@@ -1,0 +1,206 @@
+{
+ "artifacts": {},
+ "attempt": 2,
+ "attempt_id": "C3-SFE-09/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-012: storage vs routing decided by clamps ONE STEP BEFORE the critical phase (self at t*-1 vs radius-3 neighbours at t*-1), each against the full single-site drop; coincidence by the site-alone readout under a permuted reset lattice"
+ ],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 0,
+   "declared": 0,
+   "survived": 0
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 0.4483,
+   "effect": 1.2291,
+   "min_effect": 0.1,
+   "n_control": 1,
+   "n_treatment": 1,
+   "paired": 1,
+   "paired_wins": 1,
+   "treatment_mean": 1.6774
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-09",
+ "finished_at": "2026-09-17T05:52:59Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:c7813b4dbb24e7f3c7f16640b4e99db8ab272047cc6203fd6c2dc0af5a08847a",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T05:52:35Z",
+ "steps": {},
+ "summary": {
+  "GKL": {
+   "alone": [
+    0.5482
+   ],
+   "alone_perm": [
+    0.5534
+   ],
+   "flags": {
+    "flag_coincidence": 1,
+    "flag_local_storage": 0,
+    "flag_redundant": 1,
+    "flag_routed": 0
+   },
+   "informative": 1,
+   "min_lesion": [
+    [
+     [
+      28,
+      0
+     ]
+    ]
+   ],
+   "nb_tm1": [
+    0.0
+   ],
+   "recovery": [
+    0.7931
+   ],
+   "self_tm1": [
+    0.0
+   ],
+   "site_drop_share": [
+    0.4483
+   ],
+   "sites": [
+    28
+   ],
+   "t_star": [
+    0
+   ]
+  },
+  "particle1": {
+   "alone": [
+    0.4896
+   ],
+   "alone_perm": [
+    0.4896
+   ],
+   "flags": {
+    "flag_coincidence": 0,
+    "flag_local_storage": 0,
+    "flag_redundant": 0,
+    "flag_routed": 0
+   },
+   "informative": 1,
+   "min_lesion": [
+    [
+     [
+      6,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      2
+     ]
+    ]
+   ],
+   "nb_tm1": [
+    0.0312
+   ],
+   "recovery": [
+    0.3103
+   ],
+   "self_tm1": [
+    0.013
+   ],
+   "site_drop_share": [
+    1.069
+   ],
+   "sites": [
+    6
+   ],
+   "t_star": [
+    1
+   ]
+  },
+  "particle2": {
+   "alone": [
+    0.5299
+   ],
+   "alone_perm": [
+    0.5299
+   ],
+   "flags": {
+    "flag_coincidence": 1,
+    "flag_local_storage": 0,
+    "flag_redundant": 0,
+    "flag_routed": 0
+   },
+   "informative": 1,
+   "min_lesion": [
+    [
+     [
+      3,
+      3
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      1,
+      3
+     ]
+    ]
+   ],
+   "nb_tm1": [
+    0.0443
+   ],
+   "recovery": [
+    0.1935
+   ],
+   "self_tm1": [
+    0.0221
+   ],
+   "site_drop_share": [
+    1.6774
+   ],
+   "sites": [
+    3
+   ],
+   "t_star": [
+    3
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "mechanism_s": 24.09,
+  "records_s": 0.0,
+  "total_s": 24.5
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8c16a71b1e9d088b829e5247f217890492a5910a",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

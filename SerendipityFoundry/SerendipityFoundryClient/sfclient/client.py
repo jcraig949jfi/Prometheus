@@ -184,6 +184,29 @@ class EngineClient:
     def get_world(self, wid: str) -> dict:
         return self._req("GET", f"/v2/worlds/{wid}")
 
+    # -- read wrappers (Archaeon campaign 2 L-001 / campaign 3 Phase A group E).
+    # These three GET routes exist on the engine (verified live 2026-09-17,
+    # PHASE-A smoke); the client had no wrapper, so experiment harnesses
+    # reconstructed them. GET /v2/worlds/{wid}/artifacts does NOT exist
+    # (HTTP 405) -- an artifact listing route is requested from the engine
+    # owner; until then ids are carried in receipts.
+    def list_experiments(self, wid: str) -> list:
+        return self._req("GET", f"/v2/worlds/{wid}/experiments")
+
+    def get_experiment(self, wid: str, exp_id: str) -> dict:
+        return self._req("GET", f"/v2/worlds/{wid}/experiments/{exp_id}")
+
+    def list_observations(self, wid: str) -> list:
+        return self._req("GET", f"/v2/worlds/{wid}/observations")
+
+    def work_attestation(self, work_id: str) -> dict:
+        """GET /v2/work/{work_id}/attestation: the item's status, result_hash
+        and the executed-vs-sealed config hashes. Vivarium's NEW ATTEMPT reads
+        it to learn whether a prior attempt already COMPLETED the work item
+        (s14 canary, 2026-09-17): a completed item is not claimable again, and
+        its trajectory is the one the remaining observations cite."""
+        return self._req("GET", f"/v2/work/{work_id}/attestation")
+
     def start(self, wid): return self._req("POST", f"/v2/worlds/{wid}/start")
     def pause(self, wid): return self._req("POST", f"/v2/worlds/{wid}/pause")
     def resume(self, wid): return self._req("POST", f"/v2/worlds/{wid}/resume")

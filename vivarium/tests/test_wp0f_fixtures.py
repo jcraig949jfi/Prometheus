@@ -71,12 +71,20 @@ FIXTURES = [
     # than absorbed: the arithmetic is untouched -- accuracy 0.875 and witness
     # [6, 8] are the same numbers as before -- and the exact-symmetry tests
     # prove transform="none" is the run this fixture always pinned.
+    # REGENERATED A THIRD TIME on 2026-09-16 (THEO-REQ-004, comms #246):
+    # the result gained `success_mask_hex`, the per-IC success mask under the
+    # declared criterion (here "fd7f": ICs 6 and 8 clear, the same two the
+    # witness has always named). 4f211943... -> 3655c564.... The arithmetic
+    # did not move -- accuracy 0.875, witness [6, 8], every digest the row
+    # carried before is byte-identical -- and tests/
+    # test_theo_req_004_witness_bound.py asserts the new field unpacks to
+    # the witness and re-hashes to `mask_digest`.
     ("ca_density_v0",
      {"rule_hex": "0504058705000f77037755837bffb77f",   # `par`
       "radius": 3, "n_cells": 21, "steps": 42, "n_ic": 16,
       "ic_density_set": [None], "success_criterion": "at_T",
       "transform": "none"},
-     20260908, "4f211943d5328257fbf8a0d99acd8c74"),
+     20260908, "3655c564e65f208205c9e0b7875ed6cd"),
     # The loader's own kind. Its parity anchor is the executor's arithmetic
     # over a FIXED input artifact: the digest below is the digest of those
     # exact bytes, so a change to the canonical encoding, the interface shape

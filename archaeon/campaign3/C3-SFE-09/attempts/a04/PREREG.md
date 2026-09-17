@@ -1,0 +1,38 @@
+## A. STARTUP (preregistration; sealed sha256:ff205e03facd9d6a8569a2b59e217104a1a63cbed5c53a10fa94e4be6bd8b7e5)
+
+- experiment ID: C3-SFE-09
+- parents: C2-SFE-09, SFE-04
+- QUESTION: Which site and time step of particle2 carry its delayed-recall (d=2) margin, and does that site STORE the delayed bit (clamping it one step earlier removes the margin) or EXPOSE information computed by its radius-3 predecessors (clamping them one step earlier removes it)? Same probes on particle1 and GKL.
+- PARENT EVIDENCE: C2-SFE-09 (n=4): particle2 0.54-0.61 vs random 0.50; not a reset artifact (reset-only < chance), not a dynamical bias (time shuffle removes it), input-dependent; LOCALIZED with k50 = 1 in 11/12 rows.
+- WHY THIS SLOT IS STILL WORTH SPENDING: Usefulness has been measured twice; the campaign asks for one evolved computational effect reduced to a falsifiable local mechanism, and the single-site localization makes this the cheapest such reduction available.
+- ASSAY CAPABILITY REQUIREMENT: the frozen readout's margin on the confirmation set >= 0.02 for particle2 in >= 3 of 8 seeds (rows below are marked uninformative)
+- POSITIVE CONTROL: the full single-site lesion drop reproduces campaign 2's localization (site_drop >= 0.5 x margin)
+- REACHABILITY ESTIMATE:
+    {"note": "not a WSE cell; the reachability table does not apply"}
+- ARMS:
+    - particle2
+    - particle1
+    - GKL
+- COMMON-RANDOM-NUMBERS POLICY: per seed one partition and reset root shared by every genome; permutation for the coincidence probe drawn once per seed
+- BUDGET:
+    {"delay": 2, "horizon": 8, "min_lesion_max": 6, "n_cells": 31, "reset_density": 0.5, "seeds": [1, 2, 3, 4, 5, 6, 7, 8]}
+- PRIMARY OBSERVABLE: per genome x seed: site s*, phase t*, self_tm1_drop vs neighbour_set_tm1_drop (storage vs routing), site-alone readout with and without reset permutation (coincidence), minimum causal lesion, recovery after refit; primary: particle2 - GKL on site_drop_share_of_margin (are the two mechanisms equally localized?)
+- CLAIM CEILING: an executable hypothesis for particle2 at d=2 on this catalogue; n=8 seeds
+- FALSIFICATION CONDITION: if neither flag_local_storage nor flag_routed holds in >= 3/4 seeds for particle2, the mechanism is not one of the two named classes (reported as such); flag_coincidence in >= 3/4 seeds kills the 'computation' reading
+- KILL CONDITION: margin < 0.02 in > 1 seed for particle2 (assay uninformative)
+- TYPED FAILURE CONDITIONS:
+    - UNDERPOWERED
+    - INSTRUMENT_FAILURE
+- EXPECTED MACHINE TELEMETRY:
+    - single-site drops
+    - phase drops
+    - neighbour drops
+    - minimum lesion sets
+    - site-alone readouts
+    - recovery after refit
+- MACHINE CHANGES EXERCISED:
+    - H (probes)
+    - I
+- REPLACEMENT CONDITION: none
+- ANCESTRY (original | replacement): original (queue slot 9)
+- decl (machine-read by archaeon.wse.states): {"n_min": 8, "primary": {"control": "GKL", "metric": "site_drop_share_of_margin", "min_effect": 0.1, "treatment": "particle2"}}

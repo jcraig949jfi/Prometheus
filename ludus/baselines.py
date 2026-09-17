@@ -48,6 +48,12 @@ def greedy_action(world, s) -> str:
     has to beat before "strategic competence" means anything.
     """
     def own_score(st, who):
+        # A world the three branches below were not written against declares
+        # its own score (LUDUS-03 controls, 2026-09-16). A world with neither
+        # a known name nor own_score falls through to the TITHE branch and
+        # raises AttributeError: loud, never a silent fallback.
+        if hasattr(world, "own_score"):
+            return world.own_score(st, who)
         if world.name.startswith("LOOM"):
             p = st.a if who == "A" else st.b
             return 5 * p[0] + p[2]

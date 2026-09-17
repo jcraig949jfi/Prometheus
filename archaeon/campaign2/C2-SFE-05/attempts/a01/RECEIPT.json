@@ -1,0 +1,493 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-05/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "capable_seeds": [],
+ "decisions": [
+  "D2-013: capability is checked per seed on the sealed queries BEFORE freezing; the comparison uses capable seeds only; the threshold is sealed"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "STREAM_BELOW_THRESHOLD",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "STREAM_BELOW_THRESHOLD"
+  ]
+ },
+ "effects": {
+  "capable_seeds": [],
+  "means_all": {
+   "behavioral": 0.0,
+   "hybrid": 0.0,
+   "top_k": 0.0,
+   "uniform": 0.0
+  },
+  "means_capable": {
+   "behavioral": 0.0,
+   "hybrid": 0.0,
+   "top_k": 0.0,
+   "uniform": 0.0
+  }
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-05",
+ "finished_at": "2026-09-17T03:45:24Z",
+ "future_queries": {
+  "manifest_digest": "sha256:d4e08aa87383fb78c230178e2cf3c9b41367b126bf95f661571a39fe79075a27",
+  "n": 5,
+  "queries": [
+   {
+    "cell": "W0",
+    "family": "future",
+    "index": 100,
+    "knobs": {
+     "D": 1,
+     "K": 1,
+     "Kd": 0,
+     "ask_kind": "ASK",
+     "ask_mode": "all",
+     "ask_timing": "end",
+     "delay": 0,
+     "delays": [],
+     "expensive": 0,
+     "fanout": 1,
+     "interfere": false,
+     "interleave": "sequential",
+     "n_defs": 0,
+     "name": "W0",
+     "noise_rate": 0.0,
+     "op_mode": "fixed",
+     "recycle": false,
+     "retire_rate": 0.0,
+     "topology": "streams",
+     "value_bits": 4,
+     "vocab": "train"
+    },
+    "n_episodes": 24,
+    "query_id": "q00",
+    "solves": "held-out reward >= 0.50"
+   },
+   {
+    "cell": "W1_d1",
+    "family": "future",
+    "index": 101,
+    "knobs": {
+     "D": 1,
+     "K": 1,
+     "Kd": 0,
+     "ask_kind": "ASK",
+     "ask_mode": "all",
+     "ask_timing": "end",
+     "delay": 1,
+     "delays": [],
+     "expensive": 0,
+     "fanout": 1,
+     "interfere": false,
+     "interleave": "sequential",
+     "n_defs": 0,
+     "name": "W1_d1",
+     "noise_rate": 0.0,
+     "op_mode": "fixed",
+     "recycle": false,
+     "retire_rate": 0.0,
+     "topology": "streams",
+     "value_bits": 4,
+     "vocab": "train"
+    },
+    "n_episodes": 24,
+    "query_id": "q01",
+    "solves": "held-out reward >= 0.50"
+   },
+   {
+    "cell": "W1_d4",
+    "family": "future",
+    "index": 102,
+    "knobs": {
+     "D": 1,
+     "K": 1,
+     "Kd": 0,
+     "ask_kind": "ASK",
+     "ask_mode": "all",
+     "ask_timing": "end",
+     "delay": 4,
+     "delays": [],
+     "expensive": 0,
+     "fanout": 1,
+     "interfere": false,
+     "interleave": "sequential",
+     "n_defs": 0,
+     "name": "W1_d4",
+     "noise_rate": 0.0,
+     "op_mode": "fixed",
+     "recycle": false,
+     "retire_rate": 0.0,
+     "topology": "streams",
+     "value_bits": 4,
+     "vocab": "train"
+    },
+    "n_episodes": 24,
+    "query_id": "q02",
+    "solves": "held-out reward >= 0.50"
+   },
+   {
+    "cell": "W1_d16",
+    "family": "future",
+    "index": 103,
+    "knobs": {
+     "D": 1,
+     "K": 1,
+     "Kd": 0,
+     "ask_kind": "ASK",
+     "ask_mode": "all",
+     "ask_timing": "end",
+     "delay": 16,
+     "delays": [],
+     "expensive": 0,
+     "fanout": 1,
+     "interfere": false,
+     "interleave": "sequential",
+     "n_defs": 0,
+     "name": "W1_d16",
+     "noise_rate": 0.0,
+     "op_mode": "fixed",
+     "recycle": false,
+     "retire_rate": 0.0,
+     "topology": "streams",
+     "value_bits": 4,
+     "vocab": "train"
+    },
+    "n_episodes": 24,
+    "query_id": "q03",
+    "solves": "held-out reward >= 0.50"
+   },
+   {
+    "cell": "W3_K2",
+    "family": "future",
+    "index": 104,
+    "knobs": {
+     "D": 1,
+     "K": 2,
+     "Kd": 0,
+     "ask_kind": "ASK",
+     "ask_mode": "one",
+     "ask_timing": "end",
+     "delay": 0,
+     "delays": [],
+     "expensive": 0,
+     "fanout": 1,
+     "interfere": false,
+     "interleave": "sequential",
+     "n_defs": 0,
+     "name": "W3_K2",
+     "noise_rate": 0.0,
+     "op_mode": "fixed",
+     "recycle": false,
+     "retire_rate": 0.0,
+     "topology": "streams",
+     "value_bits": 4,
+     "vocab": "train"
+    },
+    "n_episodes": 24,
+    "query_id": "q04",
+    "solves": "held-out reward >= 0.50"
+   }
+  ],
+  "schema": "archaeon.h3.future_queries.v0"
+ },
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "per_seed": {
+  "1": {
+   "capable": false,
+   "ceiling": {
+    "q00": 0.0833,
+    "q01": 0.0,
+    "q02": 0.0,
+    "q03": 0.0833,
+    "q04": 0.0
+   },
+   "first_solved_gen": null,
+   "frozen": {
+    "behavioral": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 47,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1008,
+     "digest": "sha256:c82ddc7099294e3edfbc2f569cafba25c5568c4a478884089b297f12d189033d",
+     "n": 8
+    },
+    "hybrid": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 72,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1088,
+     "digest": "sha256:80a417f324628521340d8660b635d7d4b13c8b630fff721598f2fbf1bd9fb950",
+     "n": 8
+    },
+    "top_k": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 112,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 992,
+     "digest": "sha256:c43adca5f1dc577c1981d50f2d8e1899b70f2698ae1f647d00b21f343d673b22",
+     "n": 8
+    },
+    "uniform": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 21,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 1232,
+     "digest": "sha256:6e17c57ada9960fdb4f15c847ce56d70ae618d3d4051a8fe4fbd2c6c9ff4d82c",
+     "n": 8
+    }
+   },
+   "generations": 6,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {},
+    "share_above_chance": 0.0,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 6,
+     "N": 24
+    },
+    "source_cell": "W2_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.0,
+    "source_generation": 5
+   },
+   "source_score_max": 0.125,
+   "stream_n": 144
+  },
+  "2": {
+   "capable": false,
+   "ceiling": {
+    "q00": 0.0833,
+    "q01": 0.0833,
+    "q02": 0.0833,
+    "q03": 0.0417,
+    "q04": 0.125
+   },
+   "first_solved_gen": null,
+   "frozen": {
+    "behavioral": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 57,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1504,
+     "digest": "sha256:e0d4d75dfafe78fd9c871f2d7f58235dc1d9a58bb5399ed920d418913ed38d59",
+     "n": 8
+    },
+    "hybrid": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 74,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1584,
+     "digest": "sha256:01c930e179dab3c8065eef9c4ec0ca7a1fc08b410fcd9a16c3854b8effaa0312",
+     "n": 8
+    },
+    "top_k": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 119,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 1296,
+     "digest": "sha256:3a5c1194e3d036794093654075a4a2c4bbc083c9760edabad1d5a9b28ff63a57",
+     "n": 8
+    },
+    "uniform": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 15,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 1248,
+     "digest": "sha256:5ed30a9d621ed5df8d6f1f0d8119fc61d3fc7f46a1452a9c0de66b8538671a7d",
+     "n": 8
+    }
+   },
+   "generations": 6,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {},
+    "share_above_chance": 0.0,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 6,
+     "N": 24
+    },
+    "source_cell": "W2_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.0,
+    "source_generation": 5
+   },
+   "source_score_max": 0.25,
+   "stream_n": 144
+  },
+  "3": {
+   "capable": false,
+   "ceiling": {
+    "q00": 0.0833,
+    "q01": 0.0833,
+    "q02": 0.0417,
+    "q03": 0.125,
+    "q04": 0.125
+   },
+   "first_solved_gen": null,
+   "frozen": {
+    "behavioral": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 56,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1568,
+     "digest": "sha256:0e6ea293a56972ab10efa290839638ff00180de96404f0abf5168f1a65986f2b",
+     "n": 8
+    },
+    "hybrid": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 68,
+      "count_cap": 8,
+      "grid_cells": 80,
+      "none_bound": false
+     },
+     "bytes": 1872,
+     "digest": "sha256:e1871b9538a9daad16117e48a442a47e46f26774c2a28d4581cf299f40626919",
+     "n": 8
+    },
+    "top_k": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 109,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 2000,
+     "digest": "sha256:d26711926f56d8556e1359742b7b8e0ac7e36b7b0721bd91a9f6e44a61333a0e",
+     "n": 8
+    },
+    "uniform": {
+     "bounds": {
+      "byte_bound": 0,
+      "byte_cap": 2400,
+      "count_bound": 22,
+      "count_cap": 8,
+      "grid_cells": null,
+      "none_bound": false
+     },
+     "bytes": 1488,
+     "digest": "sha256:58fad698378623e41d1d18fde19d9f81a8189f67d8d47531e73178666d5ddd44",
+     "n": 8
+    }
+   },
+   "generations": 6,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {},
+    "share_above_chance": 0.0417,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 6,
+     "N": 24
+    },
+    "source_cell": "W2_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.125,
+    "source_generation": 5
+   },
+   "source_score_max": 0.125,
+   "stream_n": 144
+  }
+ },
+ "prereg_digest": "sha256:fef4d022f6e2797ec95f397450a748636f1311cc4a09c73b58c4f67d24737211",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T03:45:20Z",
+ "steps": {},
+ "teardown": {},
+ "timings": {
+  "records_s": 0.0,
+  "replay_s": 3.7,
+  "streams_s": 0.15,
+  "total_s": 4.0
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "stream_max_score": 0.125,
+    "threshold": 0.5
+   },
+   "state": "STREAM_BELOW_THRESHOLD"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "2a09f051a31afa824c14843fd6c780fbdbe32bb1",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

@@ -1,0 +1,1863 @@
+{
+ "artifacts": {
+  "elites_s1": {
+   "artifact_id": "sha256:8964add5681170e02cdaaee588019b535d092a84ffaa2df9ba463485e9605bfd",
+   "blob_hash": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+   "bytes": 3399,
+   "declared": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+   "hash_ok": true,
+   "kind": "cmp2.pop.producer_elites.v1"
+  },
+  "elites_s3": {
+   "artifact_id": "sha256:b376dbeaf96e4202160b9c852f14d9af8188faebbb6dcfc07b93c3390d63835a",
+   "blob_hash": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+   "bytes": 2675,
+   "declared": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+   "hash_ok": true,
+   "kind": "cmp2.pop.producer_elites.v1"
+  },
+  "elites_s4": {
+   "artifact_id": "sha256:c31f111ac47ab6b5fba8e6046c8d2a70c2a7bf0406fe810c1696188bce3b53fb",
+   "blob_hash": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+   "bytes": 2893,
+   "declared": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+   "hash_ok": true,
+   "kind": "cmp2.pop.producer_elites.v1"
+  },
+  "prereg": {
+   "artifact_id": "sha256:9f995089a39da91952e4db7c1965e3b7277a59943862a8c5b85743cadb5f5b3c",
+   "blob_hash": "sha256:c6398f867dd5f156ead4b9b348c62b81df06e832918a24aea52ed39e0d6d2729",
+   "bytes": 3798,
+   "declared": "sha256:c6398f867dd5f156ead4b9b348c62b81df06e832918a24aea52ed39e0d6d2729",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 2,
+ "attempt_id": "C2-SFE-07/a02",
+ "break_even": {
+  "1": {
+   "mono_exit": null,
+   "producer_gens": 19,
+   "producer_solve": 18
+  },
+  "2": {
+   "mono_exit": null,
+   "producer_gens": 30,
+   "producer_solve": null
+  },
+  "3": {
+   "mono_exit": 35,
+   "producer_gens": 18,
+   "producer_solve": 17
+  },
+  "4": {
+   "mono_exit": null,
+   "producer_gens": 20,
+   "producer_solve": 19
+  },
+  "5": {
+   "mono_exit": null,
+   "producer_gens": 30,
+   "producer_solve": null
+  },
+  "6": {
+   "mono_exit": 49,
+   "producer_gens": 30,
+   "producer_solve": null
+  }
+ },
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-015: the maturity gate is the artifact's `solved` flag; an unsolved producer publishes nothing and the consumer still pays its cap (the cost of a closed gate is a measurement, not a failure)"
+ ],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 0,
+   "declared": 0,
+   "survived": 0
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 0.3229,
+   "effect": 0.1094,
+   "min_effect": 0.1,
+   "n_control": 6,
+   "n_treatment": 6,
+   "paired": 6,
+   "paired_wins": 3,
+   "treatment_mean": 0.4323
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "pinned_at": "2026-09-16T17:25:41Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 8
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "errors": [],
+ "experiment": "C2-SFE-07",
+ "finished_at": "2026-09-17T04:00:19Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_c8c457d871a831b5a9fcbeed",
+ "imports": {
+  "elites_s1": {
+   "bytes": 3399,
+   "digest": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+   "expected": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+   "hash_ok": true,
+   "import_artifact_id": "sha256:437858ea5799c78c6ede9ef8a6f2e28bcbde6026d374a8a20cb2e123067c5928",
+   "origin": "IMPORTED"
+  },
+  "elites_s3": {
+   "bytes": 2675,
+   "digest": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+   "expected": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+   "hash_ok": true,
+   "import_artifact_id": "sha256:e8154ebe5b1c1aae5534656ef063df90be743b6cdffca1d5e543f311234053ce",
+   "origin": "IMPORTED"
+  },
+  "elites_s4": {
+   "bytes": 2893,
+   "digest": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+   "expected": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+   "hash_ok": true,
+   "import_artifact_id": "sha256:88dc98d29139ba2e3d64b5aea500eccc7fc8aae5193caeede951733ca9441131",
+   "origin": "IMPORTED"
+  }
+ },
+ "prereg_digest": "sha256:23e8616ee2a00746d439d32bb08245bb0f278b6efd296cdb3ae01ff37aaf8f3e",
+ "producers": {
+  "1": {
+   "elite": 1.0,
+   "first_solved_gen": 18,
+   "generations": 19,
+   "solved": true
+  },
+  "2": {
+   "elite": 0.0625,
+   "first_solved_gen": null,
+   "generations": 30,
+   "solved": false
+  },
+  "3": {
+   "elite": 1.0,
+   "first_solved_gen": 17,
+   "generations": 18,
+   "solved": true
+  },
+  "4": {
+   "elite": 1.0,
+   "first_solved_gen": 19,
+   "generations": 20,
+   "solved": true
+  },
+  "5": {
+   "elite": 0.125,
+   "first_solved_gen": null,
+   "generations": 30,
+   "solved": false
+  },
+  "6": {
+   "elite": 0.1875,
+   "first_solved_gen": null,
+   "generations": 30,
+   "solved": false
+  }
+ },
+ "purpose": "engine",
+ "reachability_rows_appended": 30,
+ "records": {
+  "gated_serial/1": {
+   "exp_id": "exp_6bd49e27e0b9dea09c1f0fe8",
+   "obs_id": "obs_5298b72afc74e4d3a8a2d443"
+  },
+  "gated_serial/2": {
+   "exp_id": "exp_6960db4fd087da09b0a75a58",
+   "obs_id": "obs_26d9a93381cb9b687f21ccae"
+  },
+  "gated_serial/3": {
+   "exp_id": "exp_037ea4bf95c69da088b4a445",
+   "obs_id": "obs_a5a23e11f5ea258c25a60131"
+  },
+  "gated_serial/4": {
+   "exp_id": "exp_d437de63f682354659cf6e57",
+   "obs_id": "obs_d51dbc74bcd1e259eb76869f"
+  },
+  "gated_serial/5": {
+   "exp_id": "exp_a6feb14ae304e78262f61a05",
+   "obs_id": "obs_bab91c8f5a29bbbe257a1b6b"
+  },
+  "gated_serial/6": {
+   "exp_id": "exp_7b392b0d53f616bb031b3861",
+   "obs_id": "obs_3bf41af0f8c615b6d57de838"
+  },
+  "gated_serial_noex/1": {
+   "exp_id": "exp_3fa56de3322356aa6d369507",
+   "obs_id": "obs_a0206605526b2860c2886933"
+  },
+  "gated_serial_noex/2": {
+   "exp_id": "exp_3e5f9c0a84b9d201ef6ee79e",
+   "obs_id": "obs_602729466d0e9d065612e5cb"
+  },
+  "gated_serial_noex/3": {
+   "exp_id": "exp_506aaac431b13ef449a01c36",
+   "obs_id": "obs_0ea4dd651eaa46a5754ae454"
+  },
+  "gated_serial_noex/4": {
+   "exp_id": "exp_1670ff67ad08a04b709ced26",
+   "obs_id": "obs_00c70e72785e3bf7510399c6"
+  },
+  "gated_serial_noex/5": {
+   "exp_id": "exp_c308e85994ceba9d214dbd47",
+   "obs_id": "obs_04fea3abb72b2a18e017658b"
+  },
+  "gated_serial_noex/6": {
+   "exp_id": "exp_892f8ae60c44ee1d58de17b2",
+   "obs_id": "obs_48b48684cb71f0ef97c15e59"
+  },
+  "mono/1": {
+   "exp_id": "exp_33e8c94a1a96f6a449bca6bc",
+   "obs_id": "obs_810fbfd569e26c0e59b028f4"
+  },
+  "mono/2": {
+   "exp_id": "exp_6cb7c985eb8915d9723f3c6e",
+   "obs_id": "obs_4140f07648a169f2ec56421f"
+  },
+  "mono/3": {
+   "exp_id": "exp_fc5409133f1cf8bcd08d3c5e",
+   "obs_id": "obs_d621819e98c2f99115cb1020"
+  },
+  "mono/4": {
+   "exp_id": "exp_e29031534e8f67ccb7dceb9a",
+   "obs_id": "obs_52025c82da80f9d96a22e39c"
+  },
+  "mono/5": {
+   "exp_id": "exp_a9f43e6bd9d8e86b3081490f",
+   "obs_id": "obs_86827c0a179ae1371c2720d0"
+  },
+  "mono/6": {
+   "exp_id": "exp_72542893d85ee236a2993ca2",
+   "obs_id": "obs_f9d441ee29000c4bbd098cf1"
+  },
+  "parallel/1": {
+   "exp_id": "exp_55313bb7ce821894f2df2aaf",
+   "obs_id": "obs_f600fe60cc1e8bb62eb5bcfe"
+  },
+  "parallel/2": {
+   "exp_id": "exp_ee3fae36f2eac43f1ac45de5",
+   "obs_id": "obs_3832ae0850f563f2009e3c66"
+  },
+  "parallel/3": {
+   "exp_id": "exp_9926d5388c4da40041ff3715",
+   "obs_id": "obs_aaac532abafef456b7a4a3f4"
+  },
+  "parallel/4": {
+   "exp_id": "exp_5a4f0caa7e24d16a68c54861",
+   "obs_id": "obs_6d38aa131cfddc027f6fe0b9"
+  },
+  "parallel/5": {
+   "exp_id": "exp_fef900ddeb544c05d0d73465",
+   "obs_id": "obs_76d0b97d82c0e09277f5a16c"
+  },
+  "parallel/6": {
+   "exp_id": "exp_024c0aa11f5212bfa5410df6",
+   "obs_id": "obs_197432254c41d24dcbdc9168"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T03:58:39Z",
+ "steps": {
+  "idem:026ed49ab3ecee2061dd05fe034da472": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_e29031534e8f67ccb7dceb9a",
+    "obs_id": "obs_52025c82da80f9d96a22e39c"
+   },
+   "wall_s": 0.265
+  },
+  "idem:18c2fe040e92a8523914d582c740b351": {
+   "kind": "engine",
+   "name": "group",
+   "parts": [],
+   "replayed": false,
+   "result": "grp_9ee473c5bb1ca46f2b737a7d",
+   "wall_s": 0.111
+  },
+  "idem:1fb45b83ef5b8583e2f34bf671d28d89": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_fef900ddeb544c05d0d73465",
+    "obs_id": "obs_76d0b97d82c0e09277f5a16c"
+   },
+   "wall_s": 0.283
+  },
+  "idem:228fe671c403160e6cecbc5bb35d8155": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "elites_s4"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:c31f111ac47ab6b5fba8e6046c8d2a70c2a7bf0406fe810c1696188bce3b53fb",
+    "blob_hash": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+    "bytes": 2893,
+    "declared": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+    "hash_ok": true,
+    "kind": "cmp2.pop.producer_elites.v1"
+   },
+   "wall_s": 0.063
+  },
+  "idem:22aa0c26a8ce785968432ba603e0adea": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:9f995089a39da91952e4db7c1965e3b7277a59943862a8c5b85743cadb5f5b3c",
+    "blob_hash": "sha256:c6398f867dd5f156ead4b9b348c62b81df06e832918a24aea52ed39e0d6d2729",
+    "bytes": 3798,
+    "declared": "sha256:c6398f867dd5f156ead4b9b348c62b81df06e832918a24aea52ed39e0d6d2729",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.137
+  },
+  "idem:23c050e9b4de1c04a5555fddc310bebe": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_892f8ae60c44ee1d58de17b2",
+    "obs_id": "obs_48b48684cb71f0ef97c15e59"
+   },
+   "wall_s": 0.277
+  },
+  "idem:30d114c06fb95a2da277753a25ea5e81": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_1670ff67ad08a04b709ced26",
+    "obs_id": "obs_00c70e72785e3bf7510399c6"
+   },
+   "wall_s": 0.258
+  },
+  "idem:36e125318d532cffd82d4ec324dc6b08": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_3fa56de3322356aa6d369507",
+    "obs_id": "obs_a0206605526b2860c2886933"
+   },
+   "wall_s": 0.281
+  },
+  "idem:374fac41521cb3c726ea595bfb53d455": {
+   "kind": "engine",
+   "name": "import_fetch",
+   "parts": [
+    "elites_s1"
+   ],
+   "replayed": false,
+   "result": [
+    {
+     "manifests": [
+      {
+       "code_writable": false,
+       "genome": [
+        261871578,
+        4153105201,
+        4123601795,
+        190938297,
+        1038988564,
+        1042303315,
+        368465124,
+        3670797134,
+        1156525360,
+        4055621221,
+        2190825016,
+        2442367860,
+        2299201673,
+        2985773702,
+        1806010233,
+        3921759332,
+        2195019488,
+        4139897581,
+        3781487495,
+        4123685805,
+        1679935154,
+        1422406977,
+        1763729883,
+        4257631578,
+        3752570996,
+        1763060022,
+        3995856605,
+        660215393,
+        211049528,
+        4191486237,
+        3608444799,
+        3758684450,
+        2942994972,
+        1702028251,
+        1384277875,
+        2622826210,
+        460726571,
+        3540879789,
+        237556531,
+        3006057784
+       ],
+       "n_regs": 2,
+       "out_cap": 1,
+       "persist": "regs",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 64
+      },
+      {
+       "code_writable": false,
+       "genome": [
+        2945748464,
+        233574176,
+        1790147184,
+        2329508616,
+        684161046,
+        655960117,
+        3620171450,
+        3621973048,
+        2485798116,
+        2993702211,
+        2730939482,
+        927441480,
+        2485798116,
+        2993702211,
+        2730939482,
+        927441480,
+        1295361136,
+        3469114510,
+        2815275533,
+        3579333124,
+        731234448,
+        4171212814,
+        333357150,
+        3038326028,
+        658865472,
+        1612329358,
+        398915949,
+        2539181977,
+        234007636,
+        2024764905,
+        728578170,
+        4141917837,
+        95894242,
+        3039557946,
+        4102366234,
+        2427330599,
+        4131623908,
+        1401939204,
+        2139434153,
+        2025814331,
+        1028199234,
+        928477731,
+        2794358335,
+        1120397177,
+        576422466,
+        2181186156,
+        249093481,
+        1095638358,
+        2021506288,
+        1378621842,
+        713968243,
+        4207258767
+       ],
+       "n_regs": 3,
+       "out_cap": 2,
+       "persist": "tape",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 16
+      },
+      {
+       "code_writable": false,
+       "genome": [
+        1297959556,
+        1725260612,
+        4294828563,
+        2501861887,
+        3984892890,
+        2926115063,
+        2025469629,
+        894266528,
+        935105695,
+        3235600878,
+        1993523616,
+        285711423,
+        2340280081,
+        2522660056,
+        4171802712,
+        2506339556,
+        3091193437,
+        1999090449,
+        1383863814,
+        2054276709,
+        292429379,
+        3737382204,
+        281647885,
+        2026970383,
+        3354355521,
+        4155602289,
+        3596850618,
+        4027114298,
+        249682723,
+        2559298776,
+        4152653615,
+        1938435402,
+        249682723,
+        2559298776,
+        4152653615,
+        2166937542,
+        3733423403,
+        1784589579,
+        3471595362,
+        548115437,
+        2600100033,
+        982131972,
+        3050282927,
+        2684255767,
+        2076437348,
+        4085001619,
+        14103192,
+        2406679619,
+        2481765820,
+        2047889396,
+        2552512432,
+        1003941132,
+        2255046660,
+        3328120923,
+        1694879025,
+        3899346405,
+        2529773240,
+        544680051,
+        3204042922,
+        1218745930,
+        2688302611,
+        247740254,
+        4285862652,
+        3864632555,
+        3832650121,
+        2345681441,
+        249064633,
+        3461462505,
+        546907048,
+        1973256777,
+        1695994853,
+        635762660,
+        4066537886,
+        849413735,
+        1654637308,
+        1209324428,
+        3091180061,
+        3361606104,
+        2568288538,
+        4281423691,
+        36568316,
+        2179791958,
+        3810878692,
+        1406776405
+       ],
+       "n_regs": 3,
+       "out_cap": 2,
+       "persist": "tape",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 16
+      },
+      {
+       "code_writable": false,
+       "genome": [
+        1297959556,
+        1725260612,
+        4294828563,
+        2501861887,
+        3984892890,
+        2926115063,
+        2025469629,
+        894266528,
+        935105695,
+        3235600878,
+        1993523616,
+        285711423,
+        2340280081,
+        2522660056,
+        4171802712,
+        2506339556,
+        3091193437,
+        1999090449,
+        1383863814,
+        2054276709,
+        3121770113,
+        1830389126,
+        1117047496,
+        106177703,
+        2508108841,
+        216331861,
+        2673033320,
+        1350996177,
+        3212962133,
+        3098477758,
+        403781228,
+        200653720,
+        3354355521,
+        4155602289,
+        3596850618,
+        4027114298,
+        417580053,
+        3681847288,
+        1095758579,
+        2898278719,
+        2451197129,
+        1740594253,
+        871470816,
+        2668293727,
+        628105692,
+        3230721494,
+        4249701864,
+        1864874899,
+        2076437348,
+        4085001619,
+        14103192,
+        2406679619,
+        2481765820,
+        2047889396,
+        2552512432,
+        1003941132,
+        2255046660,
+        3328120923,
+        1694879025,
+        3899346405,
+        3832650121,
+        2345681441,
+        249064633,
+        3461462505,
+        546907048,
+        1973256777,
+        1695994853,
+        635762660,
+        4066537886,
+        849413735,
+        1654637308,
+        1209324428,
+        3091180061,
+        3361606104,
+        2568288538,
+        4281423691,
+        36568316,
+        2179791958,
+        3810878692,
+        1406776405
+       ],
+       "n_regs": 3,
+       "out_cap": 2,
+       "persist": "tape",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 16
+      }
+     ],
+     "seed": 1
+    },
+    {
+     "bytes": 3399,
+     "digest": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+     "expected": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+     "hash_ok": true,
+     "import_artifact_id": "sha256:437858ea5799c78c6ede9ef8a6f2e28bcbde6026d374a8a20cb2e123067c5928",
+     "origin": "IMPORTED"
+    }
+   ],
+   "wall_s": 0.216
+  },
+  "idem:387d0f1740d17cdb077da572724bb6fd": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "producer"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c2-sfe-07-producer",
+    "policy": "FULLY_SHARED",
+    "world_id": "wld_4ad87960eecea5593bff65a8"
+   },
+   "wall_s": 0.271
+  },
+  "idem:3930435dce2fc0d1f325122b4dff9645": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_7b392b0d53f616bb031b3861",
+    "obs_id": "obs_3bf41af0f8c615b6d57de838"
+   },
+   "wall_s": 0.289
+  },
+  "idem:3fd7b9fbde59770b0cc36d0883c18721": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_d437de63f682354659cf6e57",
+    "obs_id": "obs_d51dbc74bcd1e259eb76869f"
+   },
+   "wall_s": 0.258
+  },
+  "idem:43269bee22d6c485d37455619cb202e8": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6cb7c985eb8915d9723f3c6e",
+    "obs_id": "obs_4140f07648a169f2ec56421f"
+   },
+   "wall_s": 0.266
+  },
+  "idem:4d435ff5375ae964578e04a4c53a62c4": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_9926d5388c4da40041ff3715",
+    "obs_id": "obs_aaac532abafef456b7a4a3f4"
+   },
+   "wall_s": 0.279
+  },
+  "idem:5365d9ca189c6bc6c656444ac7b40e4c": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "consumer"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c2-sfe-07-consumer",
+    "policy": "EXPLICIT_IMPORT_ONLY",
+    "world_id": "wld_497580e101851fbf15609615"
+   },
+   "wall_s": 0.27
+  },
+  "idem:6a811d4e6a647d22d540dcdb5bd7f4e3": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6bd49e27e0b9dea09c1f0fe8",
+    "obs_id": "obs_5298b72afc74e4d3a8a2d443"
+   },
+   "wall_s": 0.276
+  },
+  "idem:78b27a2bd27a54dc08a52287e02f8a23": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_a9f43e6bd9d8e86b3081490f",
+    "obs_id": "obs_86827c0a179ae1371c2720d0"
+   },
+   "wall_s": 0.267
+  },
+  "idem:8224d87be3990083c6e6fa80509b39c6": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_33e8c94a1a96f6a449bca6bc",
+    "obs_id": "obs_810fbfd569e26c0e59b028f4"
+   },
+   "wall_s": 0.224
+  },
+  "idem:8926011a864f687477980f36e611111c": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_5a4f0caa7e24d16a68c54861",
+    "obs_id": "obs_6d38aa131cfddc027f6fe0b9"
+   },
+   "wall_s": 0.282
+  },
+  "idem:9263ee0bd98ba2f68c2a63d480e7700f": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ee3fae36f2eac43f1ac45de5",
+    "obs_id": "obs_3832ae0850f563f2009e3c66"
+   },
+   "wall_s": 0.278
+  },
+  "idem:944bdde2c30f1cf7b4448622f94e50de": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_fc5409133f1cf8bcd08d3c5e",
+    "obs_id": "obs_d621819e98c2f99115cb1020"
+   },
+   "wall_s": 0.277
+  },
+  "idem:94e8eff5e96776adc8ec40f233fb9a05": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_55313bb7ce821894f2df2aaf",
+    "obs_id": "obs_f600fe60cc1e8bb62eb5bcfe"
+   },
+   "wall_s": 0.27
+  },
+  "idem:a4e58c14fbdf44f1a591491b6cacd340": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_a6feb14ae304e78262f61a05",
+    "obs_id": "obs_bab91c8f5a29bbbe257a1b6b"
+   },
+   "wall_s": 0.267
+  },
+  "idem:ab3db3454544a5b694fcbaec7f708113": {
+   "kind": "engine",
+   "name": "import_fetch",
+   "parts": [
+    "elites_s3"
+   ],
+   "replayed": false,
+   "result": [
+    {
+     "manifests": [
+      {
+       "code_writable": true,
+       "genome": [
+        90391560,
+        679119074,
+        1229420479,
+        630144728,
+        3018234098,
+        4292974365,
+        2537711899,
+        3367317223,
+        1991681525,
+        1095379592,
+        3289520310,
+        2546062618,
+        183074561,
+        3985085710,
+        436588212,
+        2627318798,
+        649201246,
+        2048001494,
+        4139108419,
+        2213583682,
+        3734817653,
+        3541811431,
+        3125287474,
+        1566667212,
+        3890379024,
+        3257267005,
+        1286746264,
+        575649542,
+        2011973938,
+        4156545335,
+        4185427352,
+        2190025923,
+        1792197671,
+        4023115090,
+        744763301,
+        4282489148,
+        2471377072,
+        3158242936,
+        3464089713,
+        1878954147,
+        3395177321,
+        2180471889,
+        2975038629,
+        3985272303
+       ],
+       "n_regs": 12,
+       "out_cap": 4,
+       "persist": "all",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 512,
+       "tick_budget": 128
+      },
+      {
+       "code_writable": true,
+       "genome": [
+        2189388414,
+        4211292034,
+        3748886566,
+        205872771,
+        3734817653,
+        3541811431,
+        3125287474,
+        1566669260,
+        325752404,
+        95838838,
+        339580835,
+        3704012186,
+        3080492773,
+        760066561,
+        47846572,
+        2890928640,
+        3171995829,
+        2250920726,
+        749646512,
+        2679405228,
+        1953551878,
+        3497691136,
+        1726418391,
+        3133673838,
+        2770817732,
+        3095390329,
+        2807878187,
+        3069447230,
+        2471377072,
+        3158242936,
+        3464089713,
+        1878954153,
+        4055806919,
+        1423518458,
+        3762671902,
+        3700915351,
+        1713929563,
+        2515174216,
+        85135624,
+        2420974806,
+        3890379024,
+        3257267005,
+        1286746264,
+        575649542,
+        2011973938,
+        4156545335,
+        3111685528,
+        2190025923,
+        1792197671,
+        4023115090,
+        744763301,
+        4282489148,
+        1326269258,
+        3538122200,
+        2014212695,
+        3302509961
+       ],
+       "n_regs": 12,
+       "out_cap": 4,
+       "persist": "all",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 256,
+       "tick_budget": 256
+      },
+      {
+       "code_writable": true,
+       "genome": [
+        3900689824,
+        3567404786,
+        1372678315,
+        4280458457,
+        2514958255,
+        1699584447,
+        804455469,
+        557711075,
+        3114095523,
+        616603176,
+        1176712023,
+        1922151679,
+        610983125,
+        4174953870,
+        4183357647,
+        1020664861,
+        3199307299,
+        943004702,
+        754137785,
+        3955615781,
+        362948929,
+        2969331454,
+        4008154004,
+        2603719207,
+        3199307299,
+        943004702,
+        754137785,
+        3955615781,
+        4121662769,
+        693174642,
+        1480718427,
+        3993099501,
+        2663759199,
+        3403507911,
+        821526541,
+        2243219315,
+        2421445310,
+        937488512,
+        2690749661,
+        174812698,
+        2493996413,
+        2389871578,
+        3522070644,
+        2567186954,
+        1018273475,
+        347485236,
+        2927678933,
+        2449334480,
+        3162605363,
+        203358927,
+        641978164,
+        1087060011,
+        3526662677,
+        2108120264,
+        3357369334,
+        1178238843,
+        3081499531,
+        1811955785,
+        983165605,
+        2836574271
+       ],
+       "n_regs": 16,
+       "out_cap": 4,
+       "persist": "tape",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 256
+      },
+      {
+       "code_writable": false,
+       "genome": [
+        2116258753,
+        2269707377,
+        2442292235,
+        3357452140,
+        1235774273,
+        1566091526,
+        1298089803,
+        1060772846,
+        3973638901,
+        2013520327,
+        1018212665,
+        3667123585,
+        1842702592,
+        1732643308,
+        2208294809,
+        2488176823,
+        2546541308,
+        3197868783,
+        4287533393,
+        2398993443,
+        3309555766,
+        3456605106,
+        3923352443,
+        2389796226,
+        3584250229,
+        2293729480,
+        1727049845,
+        433008080
+       ],
+       "n_regs": 12,
+       "out_cap": 1,
+       "persist": "none",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 256
+      }
+     ],
+     "seed": 3
+    },
+    {
+     "bytes": 2675,
+     "digest": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+     "expected": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+     "hash_ok": true,
+     "import_artifact_id": "sha256:e8154ebe5b1c1aae5534656ef063df90be743b6cdffca1d5e543f311234053ce",
+     "origin": "IMPORTED"
+    }
+   ],
+   "wall_s": 0.191
+  },
+  "idem:ad59d81bf5a842518672f1a6be2ff6df": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_3e5f9c0a84b9d201ef6ee79e",
+    "obs_id": "obs_602729466d0e9d065612e5cb"
+   },
+   "wall_s": 0.29
+  },
+  "idem:b9169fe93cf12ec0d691df9fa6277e65": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_c8c457d871a831b5a9fcbeed",
+   "wall_s": 0.153
+  },
+  "idem:c072d53efea0e68bafffe250aa32f598": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_506aaac431b13ef449a01c36",
+    "obs_id": "obs_0ea4dd651eaa46a5754ae454"
+   },
+   "wall_s": 0.256
+  },
+  "idem:c73ee38d6164781440154b0f99bd30d3": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+   },
+   "wall_s": 0.006
+  },
+  "idem:cd9626c9b24359a5604e29e566931329": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "parallel",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_024c0aa11f5212bfa5410df6",
+    "obs_id": "obs_197432254c41d24dcbdc9168"
+   },
+   "wall_s": 0.26
+  },
+  "idem:cdfa4d26678fa4cb5497d8177910a284": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6960db4fd087da09b0a75a58",
+    "obs_id": "obs_26d9a93381cb9b687f21ccae"
+   },
+   "wall_s": 0.271
+  },
+  "idem:d846bde571c698deaddc52a6ea5c58de": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_037ea4bf95c69da088b4a445",
+    "obs_id": "obs_a5a23e11f5ea258c25a60131"
+   },
+   "wall_s": 0.26
+  },
+  "idem:e5a8348082000dff6b419d197cad369d": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "elites_s1"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:8964add5681170e02cdaaee588019b535d092a84ffaa2df9ba463485e9605bfd",
+    "blob_hash": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+    "bytes": 3399,
+    "declared": "sha256:2e39fc4f9472adc8baad6c34a18f82b1d5604b56ebdfcfd1fabc91d7392f8fb9",
+    "hash_ok": true,
+    "kind": "cmp2.pop.producer_elites.v1"
+   },
+   "wall_s": 0.081
+  },
+  "idem:e613436726802047c0ccb8bef506a641": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mono",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_72542893d85ee236a2993ca2",
+    "obs_id": "obs_f9d441ee29000c4bbd098cf1"
+   },
+   "wall_s": 0.287
+  },
+  "idem:f51ea666ee8368f3a0cbc7ccc6fec798": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_3711b912c0ffe5d64b685189",
+   "wall_s": 0.085
+  },
+  "idem:f9a610a3335297af54f380312306fd19": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "gated_serial_noex",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_c308e85994ceba9d214dbd47",
+    "obs_id": "obs_04fea3abb72b2a18e017658b"
+   },
+   "wall_s": 0.266
+  },
+  "idem:fa62252cf6ce54e2099cbaa790ab8ed1": {
+   "kind": "engine",
+   "name": "import_fetch",
+   "parts": [
+    "elites_s4"
+   ],
+   "replayed": false,
+   "result": [
+    {
+     "manifests": [
+      {
+       "code_writable": false,
+       "genome": [
+        791657882,
+        3540985529,
+        2906797424,
+        2253415525,
+        2877963971,
+        1591320778,
+        4158218678,
+        160556558,
+        4109305005,
+        3773886437,
+        3233367867,
+        500158160,
+        3682830461,
+        3251985304,
+        558681774,
+        863967345,
+        105601288,
+        4012053800,
+        2410424442,
+        1904576498,
+        1334178531,
+        3242640671,
+        3198772922,
+        997089625,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782374,
+        4092039998,
+        666816831,
+        1431465145,
+        2192501741,
+        3099484046,
+        3148914128,
+        825156400,
+        4113744329,
+        3173608467,
+        2421097371,
+        183810740,
+        4002637334,
+        3832315869,
+        3268592643,
+        1533484386,
+        1078017038,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782369,
+        3480346096,
+        4020447655,
+        2992954515,
+        2403640780,
+        105601288,
+        4012053800,
+        2410424442,
+        1904576498,
+        1334178531,
+        3242640671,
+        3198772922,
+        997089625
+       ],
+       "n_regs": 10,
+       "out_cap": 4,
+       "persist": "regs",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 64,
+       "tick_budget": 256
+      },
+      {
+       "code_writable": false,
+       "genome": [
+        2892000071,
+        1571456894,
+        244202437,
+        2038696709,
+        791649690,
+        3540985529,
+        2906797424,
+        2253415525,
+        3682830461,
+        1924393056,
+        558681774,
+        863967345,
+        105601288,
+        4012053800,
+        2410424442,
+        1904576498,
+        1220183952,
+        1686519205,
+        471326408,
+        2357525522,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782369,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782374,
+        4092039998,
+        666816831,
+        1431465145,
+        2192501741,
+        3173608467,
+        2421097371,
+        183810804,
+        4002637334
+       ],
+       "n_regs": 10,
+       "out_cap": 4,
+       "persist": "none",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 64,
+       "tick_budget": 256
+      },
+      {
+       "code_writable": true,
+       "genome": [
+        791657882,
+        3540985529,
+        2906797424,
+        2253415525,
+        3682830461,
+        3251985304,
+        558681774,
+        863967345,
+        105601288,
+        4012053800,
+        2410424442,
+        1904576498,
+        1433034522,
+        1186790801,
+        1144833441,
+        3322035093,
+        4025622339,
+        1788307404,
+        102146373,
+        212176755,
+        3939329273,
+        3044514397,
+        23232567,
+        3858906140,
+        4092039998,
+        666816831,
+        1431465145,
+        2192501741,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782374,
+        1739076591,
+        1086355430,
+        4103364204,
+        2961701177,
+        4038868151,
+        3470777253,
+        809465752,
+        2813594947,
+        2604411026,
+        2072816406,
+        1201234912,
+        3616917347,
+        1162302636,
+        1497009822,
+        775959853,
+        1947098973,
+        4092039998,
+        666816831,
+        1431465145,
+        2192501741,
+        2291702060,
+        2575490791,
+        2161236259,
+        2669782374,
+        1654765309,
+        107214048,
+        3634196050,
+        2227869612,
+        3518273720,
+        3622162369,
+        1220351354,
+        2328796286
+       ],
+       "n_regs": 11,
+       "out_cap": 4,
+       "persist": "tape",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 64,
+       "tick_budget": 256
+      },
+      {
+       "code_writable": true,
+       "genome": [
+        3291127773,
+        1106596123,
+        303279295,
+        1077299169,
+        3518927032,
+        4119709321,
+        3102626054,
+        3952487145,
+        3393493704,
+        2267240360,
+        692366301,
+        1404473185,
+        1615162914,
+        1819348820,
+        4236805126,
+        2204608133,
+        1660858541,
+        2913077006,
+        505747217,
+        159806927,
+        3173608467,
+        2421097371,
+        183810740,
+        4002637334,
+        1220183952,
+        1686519205,
+        471326408,
+        2357525522,
+        1162302636,
+        1497009822,
+        775959853,
+        1947098973,
+        4092039998,
+        666816831,
+        1431465145,
+        2192501741,
+        2083360937,
+        1362728623,
+        3902268002,
+        1439341280,
+        1433034522,
+        1186790801,
+        1144833441,
+        3322035093,
+        105601288,
+        4012053800,
+        2410424442,
+        1904576498
+       ],
+       "n_regs": 10,
+       "out_cap": 4,
+       "persist": "regs",
+       "schema_version": "proteus.player_manifest.v0",
+       "tape_words": 128,
+       "tick_budget": 128
+      }
+     ],
+     "seed": 4
+    },
+    {
+     "bytes": 2893,
+     "digest": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+     "expected": "sha256:b1de7d7725303232dad4292a8b714ef559de8f72eef082a701e17ee4742d39af",
+     "hash_ok": true,
+     "import_artifact_id": "sha256:88dc98d29139ba2e3d64b5aea500eccc7fc8aae5193caeede951733ca9441131",
+     "origin": "IMPORTED"
+    }
+   ],
+   "wall_s": 0.217
+  },
+  "idem:fa953ace0d966bb9c19b011f7f68f380": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "elites_s3"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:b376dbeaf96e4202160b9c852f14d9af8188faebbb6dcfc07b93c3390d63835a",
+    "blob_hash": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+    "bytes": 2675,
+    "declared": "sha256:b7e05f77a30df14a07be40ea65559f1de15513dc8c70095d83cc0edf5cd9ebcd",
+    "hash_ok": true,
+    "kind": "cmp2.pop.producer_elites.v1"
+   },
+   "wall_s": 0.075
+  }
+ },
+ "summary": {
+  "gated_serial": {
+   "charged_at_foothold": [
+    null,
+    null,
+    24.5,
+    25.5,
+    null,
+    null
+   ],
+   "consumer_G": [
+    39,
+    30,
+    40,
+    38,
+    30,
+    30
+   ],
+   "first": [
+    null,
+    null,
+    5,
+    4,
+    null,
+    null
+   ],
+   "footholds": 2,
+   "full": 0,
+   "heldout": [
+    0.333,
+    0.24,
+    0.51,
+    0.542,
+    0.052,
+    0.062
+   ],
+   "import_share_final": [
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    true,
+    false,
+    true,
+    true,
+    false,
+    false
+   ]
+  },
+  "gated_serial_noex": {
+   "charged_at_foothold": [
+    null,
+    null,
+    53.0,
+    null,
+    null,
+    null
+   ],
+   "consumer_G": [
+    41,
+    30,
+    42,
+    40,
+    30,
+    30
+   ],
+   "first": [
+    null,
+    null,
+    35,
+    null,
+    null,
+    null
+   ],
+   "footholds": 1,
+   "full": 0,
+   "heldout": [
+    0.031,
+    0.24,
+    0.26,
+    0.073,
+    0.052,
+    0.062
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  "mono": {
+   "charged_at_foothold": [
+    null,
+    null,
+    35.0,
+    null,
+    null,
+    49.0
+   ],
+   "consumer_G": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60
+   ],
+   "first": [
+    null,
+    null,
+    35,
+    null,
+    null,
+    49
+   ],
+   "footholds": 2,
+   "full": 0,
+   "heldout": [
+    0.323,
+    0.292,
+    0.344,
+    0.104,
+    0.333,
+    0.542
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  "parallel": {
+   "charged_at_foothold": [
+    null,
+    null,
+    25.5,
+    25.5,
+    null,
+    49.0
+   ],
+   "consumer_G": [
+    59,
+    60,
+    59,
+    59,
+    60,
+    60
+   ],
+   "first": [
+    null,
+    null,
+    25,
+    25,
+    null,
+    49
+   ],
+   "footholds": 3,
+   "full": 0,
+   "heldout": [
+    0.375,
+    0.292,
+    0.51,
+    0.542,
+    0.333,
+    0.542
+   ],
+   "import_share_final": [
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    true,
+    false,
+    true,
+    true,
+    false,
+    false
+   ]
+  }
+ },
+ "teardown": {
+  "consumer": "TERMINATED",
+  "producer": "TERMINATED"
+ },
+ "timings": {
+  "consumers_s": 85.47,
+  "exchange_s": 0.85,
+  "producers_s": 5.84,
+  "records_s": 6.57,
+  "startup_s": 0.2,
+  "teardown_s": 0.37,
+  "total_s": 100.4
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "e7a2330391c7bdb59e91a54916a7fbbdb4ff5161",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "consumer": "wld_497580e101851fbf15609615",
+  "producer": "wld_4ad87960eecea5593bff65a8"
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-02/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-007: representations differ ONLY in the opcode-field neighbourhood under operand_perturbation; all twelve operator masses are the grammar's own (mass matched by construction, L-029)"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "INTERVENTION_NOT_APPLIED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "INTERVENTION_NOT_APPLIED",
+   "INTERVENTION_NOT_APPLIED",
+   "INTERVENTION_NOT_APPLIED",
+   "INTERVENTION_NOT_APPLIED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-02",
+ "finished_at": "2026-09-17T03:04:30Z",
+ "gate": {
+  "hits": 0,
+  "min": 0,
+  "passed": true
+ },
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:d98d7c18de956349c6382ee1ad05ca2ad082919c631d17832dd9cf41c6b3d5e1",
+ "purpose": "dry run",
+ "reachability_rows_appended": 12,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T03:04:29Z",
+ "steps": {},
+ "summary": {
+  "A_words/control": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  },
+  "A_words/stuck": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  },
+  "B_fields/control": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  },
+  "B_fields/stuck": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  },
+  "C_fields_class/control": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  },
+  "C_fields_class/stuck": {
+   "first": [
+    null,
+    null
+   ],
+   "footholds": 0,
+   "heldout": [
+    0.0,
+    0.0
+   ],
+   "rewrites": [
+    0,
+    0
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "records_s": 0.0,
+  "stage1_s": 0.12,
+  "stage2_s": 0.27,
+  "total_s": 0.6
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "B_fields/stuck",
+    "counter": "opfield_rewrites",
+    "rows": 2
+   },
+   "state": "INTERVENTION_NOT_APPLIED"
+  },
+  {
+   "evidence": {
+    "arm": "C_fields_class/stuck",
+    "counter": "opfield_rewrites",
+    "rows": 2
+   },
+   "state": "INTERVENTION_NOT_APPLIED"
+  },
+  {
+   "evidence": {
+    "arm": "B_fields/control",
+    "counter": "opfield_rewrites",
+    "rows": 2
+   },
+   "state": "INTERVENTION_NOT_APPLIED"
+  },
+  {
+   "evidence": {
+    "arm": "C_fields_class/control",
+    "counter": "opfield_rewrites",
+    "rows": 2
+   },
+   "state": "INTERVENTION_NOT_APPLIED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "08def2be36517510af84e63a6cb84822d96fefcd",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

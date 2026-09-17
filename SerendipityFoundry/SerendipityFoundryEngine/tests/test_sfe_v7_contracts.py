@@ -705,3 +705,75 @@ def test_a_grantee_resolves_the_outcome_through_the_read_surface(f):
                                  domain="d")
     with pytest.raises(ValidationError):
         f.read_observations(arch, measurement_id=nop["measurement_id"])
+
+
+# ===========================================================================
+# H. observations carry their experiment anchors  (Archaeon #223, 2026-09-16)
+# ===========================================================================
+
+def test_scoped_observations_carry_spec_hash_and_committed_seq(f):
+    """F-25 residue: without spec_hash / committed_seq beside each row, a
+    grantee cannot anchor a fossil on the spec axis, and the provenance
+    anchors travel as None. Ids only, from the experiment the row answers."""
+    owner, gid, w, o, arch = _two_seats_one_group(f)
+    e2 = f.create_experiment(w, {"x": 2}, client_id=owner)["exp_id"]
+    f.commit_experiment(w, e2, client_id=owner)
+    f.record_observation(w, e2, {"score": 2}, "SURVIVED", client_id=owner)
+    f.grant_read(gid, grantee_client_id=arch, granted_by=owner)
+
+    out = f.read_observations(arch)
+    by_exp = {r["exp_id"]: r for r in out["observations"]}
+    assert len(by_exp) == 2 and e2 in by_exp
+    for exp_id, r in by_exp.items():
+        truth = f.get_experiment(w, exp_id, client_id=owner)   # the owner's view
+        assert r["spec_hash"] == truth["spec_hash"]
+        assert r["committed_seq"] == truth["committed_seq"]
+        assert r["committed_seq"] is not None     # an observed experiment is committed
+        assert "spec" not in r                    # opt-in, not default
+
+    withspec = f.read_observations(arch, include_spec=True)
+    specs = {r["exp_id"]: r["spec"] for r in withspec["observations"]}
+    assert specs[e2] == {"x": 2}
+    assert content_hash(specs[e2]) == by_exp[e2]["spec_hash"]   # re-derivable
+
+    # cheat control: the anchors confer no owner-shaped access -- the grantee
+    # still cannot read the experiment through the owner route
+    with pytest.raises(AccessDenied):
+        f.get_experiment(w, e2, client_id=arch)
+
+
+def test_scoped_observations_anchors_over_http(tmp_path):
+    """The route surface: the fields are on the wire, include_spec is a
+    query flag, and it is optional (the contract's required_query stays [])."""
+    c = TestClient(create_app(str(tmp_path / "w.db")))
+    tok = c.post("/v2/clients", json={"name": "owner"}).json()["token"]
+    h = {"Authorization": "Bearer " + tok}
+    sess = c.post("/v2/sessions", json={"name": "s"}, headers=h).json()
+    h[HDR] = sess["session_key"]
+    w = c.post("/v2/worlds", json={"session_id": sess["session_id"], "name": "run-1"},
+               headers=h).json()["world_id"]
+    assert c.post("/v2/worlds/%s/start" % w, headers=h).status_code == 200
+    e = c.post("/v2/worlds/%s/experiments" % w, json={"spec": {"x": 1}},
+               headers=h).json()["exp_id"]
+    c.post("/v2/worlds/%s/experiments/%s/commit" % (w, e), headers=h)
+    r = c.post("/v2/worlds/%s/observations" % w,
+               json={"exp_id": e, "content": {"score": 1}, "outcome": "SURVIVED"},
+               headers=h)
+    assert r.status_code == 200, r.text
+    gid = c.post("/v2/read/scopes", json={"name": "corpus"}, headers=h).json()["scope_id"]
+    c.post("/v2/read/scopes/%s/worlds" % gid, json={"world_ids": [w]}, headers=h)
+    other = c.post("/v2/clients", json={"name": "arch"}).json()
+    g = c.post("/v2/read/scopes/%s/grants" % gid,
+               json={"grantee_client_id": other["client_id"]}, headers=h)
+    assert g.status_code == 200, g.text
+    h2 = {"Authorization": "Bearer " + other["token"]}
+    h2[HDR] = c.post("/v2/sessions", json={"name": "s2"}, headers=h2).json()["session_key"]
+
+    ro = c.get("/v2/read/observations", headers=h2)
+    assert ro.status_code == 200, ro.text
+    rows = ro.json()["observations"]
+    assert rows, "the granted world's observation must be readable"
+    assert {"spec_hash", "committed_seq"} <= set(rows[0]) and "spec" not in rows[0]
+    assert rows[0]["committed_seq"] is not None
+    r2 = c.get("/v2/read/observations", params={"include_spec": "true"}, headers=h2)
+    assert r2.json()["observations"][0]["spec"] == {"x": 1}
