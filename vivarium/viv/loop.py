@@ -595,8 +595,13 @@ class Vivarium:
         # keyed step row (NEW / REUSED / REPLAYED / RECOMPUTED / FAILED).
         grant = self._grant or ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
                                           claimed_at=_utcnow())
+        labels = None
+        if self._ctx is not None and self._ctx.enabled:
+            # Stage 3 D7: the engine carries an OPAQUE coordinate for this
+            # seat's execution/attempt ids (schema 9 `labels`); no meaning
+            labels = {"vivarium.execution_id": eid, "vivarium.attempt": str(self._ctx.attempt_number)}
         return self.runner().run(request, on_running=on_running, grant=grant,
-                                 steps=self._recorder(conn))
+                                 steps=self._recorder(conn), labels=labels)
 
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.

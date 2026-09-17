@@ -27,8 +27,11 @@ BUNDLE_VERSION = "viv.start_bundle.v1"
 UNKNOWN = "UNKNOWN"
 
 #: The closed key set. Extension = a new BUNDLE_VERSION, never a free key.
+#: Proteus #338: no top-level foundry_profile -- it lives INSIDE population
+#: (one owner, one place); population carries population_schema so a
+#: pre-manifest bundle says "UNKNOWN" rather than looking like a manifest.
 KEYS = ("bundle_version", "spec_hash", "engine", "executor", "world_manifest",
-        "evaluator", "schedule", "population", "foundry_profile",
+        "evaluator", "schedule", "population",
         "initial_artifacts", "interventions_declared", "gates", "rng", "budget",
         "external", "factors")
 
@@ -105,8 +108,13 @@ def declared_skeleton(spec: dict) -> dict:
         "bundle_version": BUNDLE_VERSION,
         "spec_hash": _spec.spec_hash(spec),
         "engine": UNKNOWN, "executor": UNKNOWN, "world_manifest": UNKNOWN,
-        "evaluator": UNKNOWN, "schedule": UNKNOWN, "population": UNKNOWN,
-        "foundry_profile": UNKNOWN,
+        "evaluator": UNKNOWN, "schedule": UNKNOWN,
+        # Proteus #338: {manifest_hash, manifest_ref, population_schema} until
+        # proteus.population_manifest.v1 exists; foundry profile inside it,
+        # string form "pfp1:<16 hex>" once minted, else Archaeon's
+        # "instr<lo>-<hi>:<8 hex>" VERBATIM (scheme archaeon.wse.reachability.foundry_id.v1)
+        "population": {"population_schema": UNKNOWN, "manifest_hash": UNKNOWN, "manifest_ref": UNKNOWN,
+                       "foundry_profile": UNKNOWN},
         "initial_artifacts": [], "interventions_declared": [], "gates": [],
         "rng": {"seed_root": spec["world"]["seed_root"],
                 "seed_derivation": (spec.get("repeat") or {}).get("seed_derivation", UNKNOWN),
