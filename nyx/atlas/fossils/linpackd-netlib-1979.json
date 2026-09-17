@@ -125,20 +125,375 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpackd-netlib-1979/upstream/linpackd.f:1-205"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpackd-netlib-1979/upstream/linpackd.f:232-334"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpackd-netlib-1979/upstream/linpackd.f:452-627"
+   }
+  ],
+  "inspected_files": [
+   "linpackd.f 1-802"
+  ],
+  "date": "2026-09-17T22:50Z",
+  "note": "LU factorisation with partial pivoting written as a loop over columns calling three BLAS-1 kernels (idamax, dscal, daxpy) so that the machine-specific work is in the kernels; wrapped in a benchmark driver that times the factor/solve, checks a normalised residual, and reports MFLOPS against a fixed operation count 2n^3/3 + 2n^2. The mechanism of interest is the second: a benchmark whose score is defined by a formula, not by the work actually done",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://www.netlib.org/benchmark/linpackd sha256:4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+   "payload_manifest_id": "techne tree_sha256 568392d920a61e0ef0b715d670f9e78bfcaad1ed1228f71c1731454af25b27c7 (1 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/linpackd.f",
+     "payload_hash_read": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+     "techne_recorded_hash": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "linpackd-netlib-1979::gaussian_elimination_with_partial_pivoting_by_columns_delegating_to_three_vector_kernels",
+   "fossil_ancestry": "linpackd-netlib-1979",
+   "human_name": "dgefa (232-334): idamax for the pivot, dscal for the multipliers, daxpy for the rank-one update per column; ipvt; info = k on a zero pivot",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each column k: find the largest magnitude below the diagonal (idamax), record it, swap if needed, scale the column below the diagonal by -1/pivot (dscal), then for each later column swap the pivot row element and add the multiplier column times that element (daxpy); a zero pivot sets info = k and skips the column ('not an error condition for this subroutine')",
+   "input": "an n x n matrix",
+   "output": "L and U in place, pivots",
+   "state": "none",
+   "update": "per column",
+   "assumptions": [
+    "partial pivoting suffices for stability in practice; the column orientation matches Fortran storage so the daxpy runs on contiguous memory"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "linpackd-netlib-1979::benchmark_that_scores_a_machine_by_a_fixed_nominal_operation_count_over_measured_wall_time_and_validates_by_a_normalised_residual"
+   ],
+   "fitness_value_in_ancestor": "the inner loops are three tiny routines that vendors could hand-tune: the BLAS idea",
+   "failure_landscape": "by reading: no growth-factor check (Wilkinson's worst case is not detected); the benchmark's residual check is the only guard",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Gaussian elimination as in Forsythe & Moler 1967; the BLAS-1 factoring is Lawson, Hanson, Kincaid, Krogh 1979",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpackd-netlib-1979/upstream/linpackd.f:232-334"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dgefa + the three kernels",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "linpackd-netlib-1979::benchmark_that_scores_a_machine_by_a_fixed_nominal_operation_count_over_measured_wall_time_and_validates_by_a_normalised_residual",
+   "fossil_ancestry": "linpackd-netlib-1979",
+   "human_name": "the driver (20-205): ops = 2n^3/3 + 2n^2; time(i,4) = ops/(1e6 total); residn = resid/(n norma normx eps); the 'Please send the results of this run to Jack Dongarra' header; matgen with the 1992 RNG fix",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "generate a random matrix (matgen; the 1992 note says the earlier generator's short period 'produced singular matrices occasionally'); time dgefa and dgesl separately with a wall-clock function; compute the residual b - A x with a fresh copy of A and normalise it by n, the matrix norm, the solution norm and machine epsilon; report MFLOPS as the NOMINAL operation count divided by time, the 'unit' as 2/MFLOPS, and the ratio to a Cray reference; repeat the timing three ways (single, ten averaged, with matgen time subtracted) and for two leading dimensions; the 2003 HP note says the loop was changed 'to prevent compilers from optimizing away dgesl code'",
+   "input": "n (100 by convention), lda",
+   "output": "a table of times and MFLOPS, and residn",
+   "state": "none",
+   "update": "per run",
+   "assumptions": [
+    "the operation count of the algorithm is a property of n, not of the compiled code; a machine that finishes faster did more useful arithmetic per second (which vendor tuning of the kernels, and later compiler elision, both attacked)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "linpackd-netlib-1979::gaussian_elimination_with_partial_pivoting_by_columns_delegating_to_three_vector_kernels"
+   ],
+   "fitness_value_in_ancestor": "one number per machine, comparable across two decades; the TOP500's ancestor",
+   "failure_landscape": "by reading: the two revision notes in the header ARE the failure landscape: a generator that produced singular matrices (1992) and compilers that removed the timed work (2003); the residual check exists because a fast wrong answer must not score",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Dongarra's 1979 LINPACK timing table; the score formula is the benchmark's definition",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:linpackd-netlib-1979/upstream/linpackd.f:1-205"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the driver",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "daxpy / ddot / dscal / idamax with their 'clean-up loop' unrolling by 4 and 5, epslon, dmxpy (a 16-way unrolled matrix-vector product)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:linpackd-netlib-1979/upstream/linpackd.f:452-802",
+   "note": "the unrolling is the 1979 vector-machine idiom; a tuning, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  },
+  {
+   "candidate": "dgesl (the triangular solves) past its head",
+   "reason": "OTHER",
+   "evidence": "NOT READ in full; the mirror of dgefa's structure",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  },
+  {
+   "candidate": "'LINPACK' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the factorisation and the benchmark protocol are separable; the second is what survived (HPL)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "linpackd-netlib-1979::P.a_single_number_must_rank_machines_on_a_fixed_computation_while_the_machines_and_their_compilers_adapt_to_the_number",
+   "source_fossil": "linpackd-netlib-1979",
+   "source_evidence": "linpackd.f header notes (1992, 2003); the driver's residual and ops lines",
+   "condition": "a benchmark defines its score by a nominal operation count over measured time; the parties being scored control the kernels and the compiler; a wrong answer must not score",
+   "resource_or_constraint": "one fixed problem size and formula; a residual check",
+   "failure_condition": "the score rising without the useful work rising (elided loops, tuned kernels that change the algorithm), or a singular test matrix scoring",
+   "world_punishes": "timing code the compiler can prove dead; a generator with a short period",
+   "world_rewards": "a residual check normalised to machine epsilon; work the optimiser cannot remove",
+   "observable_consequence": "reported MFLOPS vs independently counted floating-point operations across compilers and optimisation levels, and the residn distribution over seeds",
+   "vacuity_condition": "a single fixed machine and compiler",
+   "trivial_shortcuts": "reporting the nominal count as the measured one (which is what the formula does: the pressure is that this is only honest while the work is really done)",
+   "cheat_control": "an organism with a compiler that elides dgesl must show MFLOPS above the hardware's peak (a detectable lie); the 1992-fixed generator must show zero singular matrices over many seeds where the old one showed some: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: machine performance measurement (Dongarra 1979-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "linpackd-netlib-1979::gaussian_elimination_with_partial_pivoting_by_columns_delegating_to_three_vector_kernels",
+   "to": "linpackd-netlib-1979::benchmark_that_scores_a_machine_by_a_fixed_nominal_operation_count_over_measured_wall_time_and_validates_by_a_normalised_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the timed work",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "dgesl and dmxpy bodies past their heads",
+   "nothing ran"
+  ],
+  "note": "one 802-line file; both mechanisms read; the benchmark's two revision notes are the most informative lines in it",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

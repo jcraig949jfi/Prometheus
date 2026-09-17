@@ -128,20 +128,513 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:771-808"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:907-935"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1756-1861"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1203-1253"
+   }
+  ],
+  "inspected_files": [
+   "buddy_alloc.h 771-808, 907-935, 1112-1128, 1381-1400, 1756-1861, 1203-1253"
+  ],
+  "date": "2026-09-17T22:25Z",
+  "note": "a buddy allocator whose free/used state is a complete binary tree of small integers packed in a bitset: each node stores the largest free order beneath it (0 = fully used, depth-relative), so allocation is a root-to-leaf descent comparing two children and release is an upward recomputation that stops as soon as a parent's value is unchanged",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:25Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/spaskalev/buddy_alloc@53adbbbf7844655cac26c6050115098bd7fe8327",
+   "payload_manifest_id": "techne tree_sha256 38db38112475eef217db6cbec5cdfa1214805241ad6b8fd243e3c92e0dbbbe21 (21 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/buddy_alloc.h",
+     "payload_hash_read": "78d5d0f3cffc40e9b21a879ba2ccba1ba4c264bf94757b5aa6fea013b17b73c8",
+     "techne_recorded_hash": "78d5d0f3cffc40e9b21a879ba2ccba1ba4c264bf94757b5aa6fea013b17b73c8",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "fossil_ancestry": "buddy-alloc-spaskalev",
+   "human_name": "buddy_tree_mark / buddy_tree_release / update_parent_chain (1761-1813); the node encoding (internal_position: local_offset = bits per node at that depth)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each tree node holds a number: 0 for fully free at its own size, its depth-relative maximum for fully used, otherwise the largest free block order below it; marking a node writes its max value, releasing writes 0; either then walks to the root: parent = (either child nonzero) * (min(children) + 1); the walk returns early the first time a parent already holds that value, so most updates touch O(1) nodes",
+   "input": "a tree position",
+   "output": "an updated tree",
+   "state": "the bitset (ceil(log2 size) levels of nodes, node width growing by one bit per level toward the root)",
+   "update": "per alloc/free",
+   "assumptions": [
+    "a node's summary (largest free order below) is enough to route an allocation without visiting the leaves; the early stop is sound because a parent's value depends only on its two children"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+    "buddy-alloc-spaskalev::non_power_of_two_arena_by_pre_marking_the_missing_tail_as_virtual_used_slots"
+   ],
+   "fitness_value_in_ancestor": "alloc and free are O(depth) with a memory overhead of a few bits per block rather than a free list per order",
+   "failure_landscape": "by reading: an allocation of a size much smaller than the alignment still costs the full descent; coalescing is implicit (a parent reads 0 when both children read 0), so there is no explicit buddy-merge step to get wrong",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Knowlton 1965 / Knuth's buddy system, usually implemented with per-order free lists; the packed-tree encoding is this author's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1756-1813"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the buddy_tree_* functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "fossil_ancestry": "buddy-alloc-spaskalev",
+   "human_name": "buddy_tree_find_free (1814-1861)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting at the root with target_status = depth-1, refuse if the root's summary exceeds the target; at each level compare the left child's value against the target: if the left cannot fit go right, if the right cannot fit go left, else read the right child's value and go left when left is equal or more busy than right (prefer the busier side), or left when right is completely empty; the descent ends at the target depth without a search",
+   "input": "a target depth",
+   "output": "a position or INVALID_POS",
+   "state": "none beyond the tree",
+   "update": "per alloc",
+   "assumptions": [
+    "packing new allocations into already-fragmented subtrees preserves fully-free subtrees for large requests (a best-fit heuristic by summary value)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged"
+   ],
+   "fitness_value_in_ancestor": "O(depth) allocation with a fragmentation-avoiding choice at every level for free",
+   "failure_landscape": "UNKNOWN by run; the README claims low fragmentation, not measured here",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1814-1861"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "buddy_tree_find_free",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-alloc-spaskalev::non_power_of_two_arena_by_pre_marking_the_missing_tail_as_virtual_used_slots",
+   "fossil_ancestry": "buddy-alloc-spaskalev",
+   "human_name": "buddy_toggle_virtual_slots (1203-1253); buddy_virtual_slots (1138-1146)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the tree is sized for the next power of two above the arena; the difference (delta) is masked by walking down the right spine, marking whole right children whenever delta exceeds half the node, until delta is exactly one node; resizing unmarks them the same way; allocation then never sees the phantom space",
+   "input": "memory_size, alignment",
+   "output": "a tree with the tail marked",
+   "state": "the marked nodes",
+   "update": "at init/resize",
+   "assumptions": [
+    "a power-of-two tree plus a used-marked tail is simpler than a tree of arbitrary shape"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged"
+   ],
+   "fitness_value_in_ancestor": "arbitrary arena sizes with the unchanged power-of-two machinery",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1203-1253"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the toggle function",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "depth_for_size (1112-1128): ceiling power of two of the request and a trailing-zero count",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1112-1128",
+   "note": "the rounding is the buddy system's definition, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  },
+  {
+   "candidate": "buddy_realloc / reallocarray, buddy_walk, reserve_range, resize/embed/grow/shrink, change tracking, the bitset helpers, tests.c and bench.c",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  },
+  {
+   "candidate": "'buddy allocator' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the summary-tree encoding, the descent policy and the virtual-tail trick are separable (dlmalloc in this atlas holds a different allocator with none of them)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "buddy-alloc-spaskalev::P.a_fixed_arena_must_serve_power_of_two_requests_with_bounded_time_per_operation_and_bounded_bookkeeping_while_keeping_large_blocks_available",
+   "source_fossil": "buddy-alloc-spaskalev",
+   "source_evidence": "buddy_tree_find_free; update_parent_chain; README's fragmentation claim",
+   "condition": "an organism allocates and frees blocks of varying sizes from a fixed arena; requests are rounded to powers of two; time per operation and metadata size are both scored; large requests must keep succeeding late in the trace",
+   "resource_or_constraint": "the arena; a few bits per block of metadata",
+   "failure_condition": "a large request fails while total free space would have sufficed (external fragmentation), or an operation costs more than O(log size)",
+   "world_punishes": "free lists that scatter small allocations across free subtrees; metadata that grows with the number of live blocks",
+   "world_rewards": "a summary per node and a descent that packs into busy subtrees",
+   "observable_consequence": "largest satisfiable request after a fixed alloc/free trace, and metadata bytes, vs a naive first-fit buddy (Knuth's) on the same trace",
+   "vacuity_condition": "all requests the same size",
+   "trivial_shortcuts": "an arena much larger than the live set",
+   "cheat_control": "an organism told the future trace can pack optimally (an upper bound); the naive buddy with the busier-child rule removed (go left always) must show more failures on an adversarial trace: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: memory allocation (Spaskalev 2021-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the chosen position is marked",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "to": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "node summaries route the descent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::non_power_of_two_arena_by_pre_marking_the_missing_tail_as_virtual_used_slots",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "buddy-alloc-spaskalev",
+   "relation": "reimplementation_of",
+   "to": "Knowlton 1965 / Knuth TAOCP 1 (buddy system); the packed summary tree is the author's own encoding",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "realloc, walk and resize paths unread",
+   "tests.c unread (an oracle for a Stage C run once a C compiler exists)",
+   "nothing ran"
+  ],
+  "note": "the three mechanisms that distinguish this buddy allocator from the textbook one are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

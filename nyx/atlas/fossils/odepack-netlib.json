@@ -170,14 +170,14 @@
    "opkda1.f: DSTODE, DCFODE, DPREPJ, DSOLSY, DEWSET, DVNORM, DINTDY (all); DSTODA (switch section only)",
    "opkdmain.f: DLSODE blocks B-G (all); the DLSODE prologue skimmed for MXSTEP/ISTATE semantics"
   ],
-  "date": "2026-09-17T10:48Z",
+  "date": "2026-09-17T22:50Z",
   "note": "the famous names (LSODE, Gear's method, BDF) sit above a small set of mechanisms that are each replaceable: a scaled-derivative history array, a predictor that is pure addition, a corrector with a self-measured convergence rate, a weighted-RMS error test, a three-candidate step/order chooser with hysteresis and hold-off, a Jacobian refresh policy keyed to how far the iteration matrix has drifted, and a failure ladder with escalating retreats",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T10:48Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://www.netlib.org/odepack/opkdmain.f sha256:da31255ff43e3a13c2c0ccaed51c3cd260b8ac9d9082f34b8587c9007d9a2376; https://www.netlib.org/odepack/opkda1.f sha256:861c7bc2c74172b9e26127fd1100e5900e87f47f876d97cdef1b87e580510e6b; https://www.netlib.org/odepack/opkda2.f sha256:2dd229cb112b463d6c3151a259aae28bf480c75eda6861507ab678ea0d204046",
    "payload_manifest_id": "techne tree_sha256 a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc (3 files)",
    "host_tree_matches_record": true,
@@ -1975,6 +1975,13 @@
    "to": "scipy.integrate.odeint / LSODA",
    "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "odepack-netlib",

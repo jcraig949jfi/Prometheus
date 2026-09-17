@@ -1,22 +1,22 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 154,
+ "built": "2026-09-17T22:51Z",
+ "n": 197,
  "by_relation": {
-  "algorithm_from": 62,
-  "derived_from": 7,
-  "shares_ancestor_with": 42,
-  "historical_version_of": 11,
+  "algorithm_from": 85,
+  "reimplementation_of": 9,
+  "derived_from": 11,
+  "shares_ancestor_with": 44,
+  "historical_version_of": 16,
   "superseded_by": 14,
-  "reimplementation_of": 3,
-  "port_of": 1,
+  "port_of": 2,
   "forked_from": 1,
   "supersedes": 6,
   "rewrote": 2,
   "rival_of": 1,
   "successor_of": 2,
-  "predecessor_of": 1,
-  "inspired_by": 1
+  "predecessor_of": 2,
+  "inspired_by": 2
  },
  "edges": [
   {
@@ -34,11 +34,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "backoff-2.2.1",
+   "relation": "reimplementation_of",
+   "to": "binary exponential backoff (Ethernet 1976; TCP RTO) with full jitter (Brooker 2015)",
+   "note": "from the record and the docstrings",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "basic-computer-games-1978",
    "relation": "derived_from",
    "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bdwgc-8.2.6",
+   "relation": "algorithm_from",
+   "to": "Boehm & Weiser 1988; black lists Boehm 1993; parallel and incremental extensions later (Boehm, Demers, Shenker 1991 for the incremental scheme)",
+   "note": "from the source headers and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "biriscv-branch-predictor",
@@ -53,6 +67,13 @@
    "to": "picorv32",
    "note": "RISC-V cores: one predicts, one does not",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "algorithm_from",
+   "to": "Smith 1981 (2-bit counters); Lee & Smith 1984 (BTB); Kaeli & Emma 1991 (RAS); McFarling 1993 (gshare)",
+   "note": "from the mechanisms; not verified against the record this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-4.2-distribution-tape-1983",
@@ -83,6 +104,20 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.2-1983",
    "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -95,6 +130,13 @@
    "to": "linux-tcp-congestion",
    "note": "the same lineage four decades later (CUBIC, BBR)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-tcp-4.2-1983",
@@ -118,6 +160,20 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) via 4.3BSD-Tahoe (1988, Jacobson's slow start / congestion avoidance / fast retransmit; body not in the vault); Reno adds fast recovery",
+   "note": "by reading both bodies; the Tahoe step is inferred from the record and Jacobson 1988",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) via 4.3BSD-Tahoe (1988, Jacobson's slow start / congestion avoidance / fast retransmit; body not in the vault); Reno adds fast recovery",
+   "note": "by reading both bodies; the Tahoe step is inferred from the record and Jacobson 1988",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-tahoe-1988",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.2-1983",
@@ -132,6 +188,27 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "buddy-alloc-spaskalev",
+   "relation": "reimplementation_of",
+   "to": "Knowlton 1965 / Knuth TAOCP 1 (buddy system); the packed summary tree is the author's own encoding",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "buddy-bdd",
+   "relation": "algorithm_from",
+   "to": "Bryant 1986 (ROBDD, apply); Brace, Rudell, Bryant 1990 (unique table, cache); Rudell 1993 (sifting)",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "c-cmaes-hansen",
+   "relation": "algorithm_from",
+   "to": "Hansen & Ostermeier 1996/2001; Hansen, Muller, Koumoutsakos 2003; this C code is the author's and the ancestor of pycma",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "cjson-1.7.18",
    "relation": "shares_ancestor_with",
    "to": "radamsa-0.6",
@@ -139,11 +216,32 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "cjson-1.7.18",
+   "relation": "historical_version_of",
+   "to": "cJSON (Gamble 2009) as rewritten for 1.7 (2017) around parse_buffer after fuzzing findings",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "clips-6.4.2-nasa",
+   "relation": "algorithm_from",
+   "to": "Forgy 1982 (Rete); OPS5 conflict resolution; CLIPS at NASA JSC from 1985",
+   "note": "from the code and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "cocagne-plain-paxos",
    "relation": "shares_ancestor_with",
    "to": "willemt-raft",
    "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "algorithm_from",
+   "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "cocagne-plain-paxos",
@@ -174,11 +272,25 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "compress-4.2.4-lzw",
    "relation": "historical_version_of",
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compress-4.2.4-lzw",
@@ -279,6 +391,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "emcee-3.1.6",
    "relation": "algorithm_from",
    "to": "Goodman & Weare 2010; Metropolis et al. 1953",
@@ -356,6 +475,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "gnu-apl-2.0",
+   "relation": "reimplementation_of",
+   "to": "ISO/IEC 13751 APL2; the evaluation scheme is the implementer's",
+   "note": "from the source and the record's lineage",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "gnu-prolog-1.5.0",
    "relation": "shares_ancestor_with",
    "to": "swipl-9.2.9",
@@ -370,11 +496,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "go-explore-uber-2022",
+   "relation": "algorithm_from",
+   "to": "Ecoffet, Huizinga, Lehman, Stanley, Clune 2019 (arXiv) / 2021 (Nature); the archive idea descends from novelty search and MAP-Elites (Lehman & Stanley 2011; Mouret & Clune 2015)",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "go-runtime-deadlock-fixtures-1.22",
    "relation": "shares_ancestor_with",
    "to": "spin-pathfinder-priority-inversion-1997",
    "note": "a deadlock found by execution + runtime detector vs one found by model checking",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "graphplan-blum-furst-1995",
+   "relation": "algorithm_from",
+   "to": "Blum & Furst 1995 (AI Journal 1997); the atlas's ff-planner-2.3 cut records FF as the successor that kept the graph as a heuristic and replaced extraction with forward search",
+   "note": "from the source and the FF cut in this atlas",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "gzip-1.2.4-1993",
@@ -452,6 +592,13 @@
    "to": "Cooley & Tukey 1965",
    "note": "mixed-radix FFT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "kissfft-131.1.0",
+   "relation": "algorithm_from",
+   "to": "Cooley & Tukey 1965 (mixed radix); the strided recursive form",
+   "note": "from the README and the source",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "l1-adaptive-control-basics-xkhainguyen",
@@ -545,6 +692,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "libcorrect-quiet",
+   "relation": "reimplementation_of",
+   "to": "the Viterbi decoder lineage (Viterbi 1967; Forney 1973 sliding traceback); libfec-karn (in the vault, cut 09-16) is the direct ancestor by API and design (the record's lineage)",
+   "note": "from the record and the vault; RECURRENCE R1 by reading: libfec-karn's viterbi27 and this decoder share the butterfly ACS + renormalisation shape",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "libdai-mooij",
    "relation": "algorithm_from",
    "to": "Pearl 1982/1988",
@@ -557,6 +711,20 @@
    "to": "ldpc-codes-neal-2001",
    "note": "BP as a decoder vs BP as a general inference engine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "libfec-karn",
@@ -578,6 +746,20 @@
    "to": "fftpack-netlib",
    "note": "both netlib Fortran numerical libraries of the same era",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "linux-tcp-congestion",
@@ -622,6 +804,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "lmdb-0.9.31",
    "relation": "algorithm_from",
    "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
@@ -634,6 +823,13 @@
    "to": "leveldb-1.23",
    "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lru-cache-goldsborough",
+   "relation": "reimplementation_of",
+   "to": "the LRU policy (Belady 1966 for the framing; the map+list structure is folklore)",
+   "note": "from the README",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "md5-rfc1321",
@@ -685,10 +881,31 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "minisat-2.2.0",
+   "relation": "algorithm_from",
+   "to": "GRASP 1996 (learning); Chaff 2001 (watched literals, VSIDS); Een & Sorensson 2003 (MiniSat); Luby 1993 / Huang 2007 (restarts); Sorensson & Biere 2009 (minimisation)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "minisom",
    "relation": "algorithm_from",
    "to": "Kohonen 1982 / Kohonen 2013 (batch)",
    "note": "named in the code's own docstring 724-727; Techne's record ancestry not re-read here",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -711,6 +928,13 @@
    "to": "scipy.integrate.odeint / LSODA",
    "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "odepack-netlib",
@@ -762,6 +986,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "reimplementation_of",
+   "to": "Newell & Simon's GPS; Weizenbaum's ELIZA; Robinson's unification; Prolog (Colmerauer / Warren); the classical searches",
+   "note": "the book's stated sources",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "pari-gp-2.17",
    "relation": "shares_ancestor_with",
    "to": "reed-solomon-rockliff-1991",
@@ -801,6 +1032,20 @@
    "relation": "algorithm_from",
    "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
    "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "pforth",
+   "relation": "algorithm_from",
+   "to": "Moore's Forth (1970); token threading as the portable variant",
+   "note": "from the code; not verified",
    "basis": "SOURCE_READ"
   },
   {
@@ -853,11 +1098,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "algorithm_from",
+   "to": "Markowitz 1952 (mean-variance); Ledoit & Wolf 2003/2004 (shrinkage); Cornuejols & Tutuncu 2006 (the Sharpe transform)",
+   "note": "from the docstrings",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "python-sgp4-2.23",
    "relation": "algorithm_from",
    "to": "Hoots & Roehrich 1980; Vallado et al. 2006",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "python-sgp4-2.23",
+   "relation": "port_of",
+   "to": "Vallado, Crawford, Hujsak & Kelso 2006 C++ (embedded in extension/SGP4.cpp); Hoots & Roehrich 1980 Spacetrack Report 3",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "radamsa-0.6",
@@ -888,6 +1147,20 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "simple-kalman-denyssene",
+   "relation": "inspired_by",
+   "to": "the scalar Kalman filter (Kalman 1960) with the process-noise term replaced by an innovation-magnitude heuristic",
+   "note": "the cut's reading; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "souffle-2.4.1",
    "relation": "shares_ancestor_with",
    "to": "swipl-9.2.9",
@@ -907,6 +1180,13 @@
    "to": "HTTP/2 (RFC 7540)",
    "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spin-6.5.2-holzmann",
+   "relation": "derived_from",
+   "to": "Holzmann's earlier Pan / supertrace (1980s); nested DFS from Courcoubetis et al. 1992; static POR Holzmann-Peled 1994; bitstate hashing revised by Dillinger 2004",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "spin-pathfinder-priority-inversion-1997",
@@ -935,6 +1215,13 @@
    "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
    "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "swipl-9.2.9",
+   "relation": "derived_from",
+   "to": "Warren 1983 (WAM); SWI-Prolog's own VM lineage from 1987; tabling from XSB (SLG resolution)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "tiny-aes-c",
@@ -998,6 +1285,13 @@
    "to": "concurrencykit-0.7.2",
    "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997",
+   "relation": "algorithm_from",
+   "to": "Knuth & Moore 1975 (alpha-beta); Slate & Atkin 1977 (iterative deepening); Schaeffer 1983 (history heuristic); the quiescence search of the Shannon/Turing era",
+   "note": "from the code's structure; not verified against sources",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "umdhmm-kanungo-1.02",
@@ -1068,6 +1362,13 @@
    "to": "GSAT (Selman/Levesque/Mitchell 1992)",
    "note": "WalkSAT is the random-walk successor to GSAT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "whitakers-words-ada",
+   "relation": "algorithm_from",
+   "to": "Whitaker's own design (1993-); the Ada 2012 port and test corpus by the mk270 maintainers",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "willemt-raft",

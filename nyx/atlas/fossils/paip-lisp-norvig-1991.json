@@ -133,17 +133,778 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/gps.lisp:42-100"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/gps.lisp:202-243"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/unify.lisp:11-60"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/patmatch.lisp:11-170"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/prologc.lisp:14-345"
+   }
+  ],
+  "inspected_files": [
+   "gps.lisp 42-100, 202-243",
+   "unify.lisp 11-60",
+   "patmatch.lisp (inventory)",
+   "prologc.lisp (inventory)",
+   "search.lisp (inventory)"
+  ],
+  "date": "2026-09-17T22:47Z",
+  "note": "a library of classical AI mechanisms, each written twice (a first version and the version that fixes its documented failure): means-ends analysis with a goal stack; a pattern matcher whose operators are dispatched through symbol properties; unification with an occurs check and substitution; a Prolog compiler that turns clauses into Lisp functions in continuation-passing style with a trail; and a generic tree search parameterised by how new states are combined with the frontier. The cut takes the five as organs at inventory depth; each file is a specimen-sized body",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/norvig/paip-lisp@9cea73837e439d331fe78d7b585e994c7113aac2",
+   "payload_manifest_id": "techne tree_sha256 9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998 (358 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/lisp/gps.lisp",
+     "payload_hash_read": "139d91574105e33f09ba6ac5acb9f3dc8e961bfb2efae1134c6fc499b79203a2",
+     "techne_recorded_hash": "139d91574105e33f09ba6ac5acb9f3dc8e961bfb2efae1134c6fc499b79203a2",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/lisp/unify.lisp",
+     "payload_hash_read": "7c2e273f5818c79bd6f8afe20cdd8e42770731d009faca13741648cbb28d694d",
+     "techne_recorded_hash": "7c2e273f5818c79bd6f8afe20cdd8e42770731d009faca13741648cbb28d694d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/lisp/patmatch.lisp",
+     "payload_hash_read": "a4f270e16a3cfeed002ce188cff4bebed2d0e0bb4e062df32a783b6510658cde",
+     "techne_recorded_hash": "a4f270e16a3cfeed002ce188cff4bebed2d0e0bb4e062df32a783b6510658cde",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/lisp/prologc.lisp",
+     "payload_hash_read": "01a326d9734f06eedd1556aaa6be1daf645696f99a7ee65e4d523ee4d8c4d395",
+     "techne_recorded_hash": "01a326d9734f06eedd1556aaa6be1daf645696f99a7ee65e4d523ee4d8c4d395",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/lisp/search.lisp",
+     "payload_hash_read": "3ff066186c44f474ce16c442d61b3e779b52ed08643bf9ca4667d36d99eaaf62",
+     "techne_recorded_hash": "3ff066186c44f474ce16c442d61b3e779b52ed08643bf9ca4667d36d99eaaf62",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "gps.lisp GPS / achieve-all / achieve / apply-op / appropriate-p (42-93); version 2: achieve-all with orderings, achieve-each, appropriate-ops sorted by unmet preconditions (202-243)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a goal holds if it is in the state; else, unless it is already on the goal stack (a loop), try each operator whose add list contains it: achieve the operator's preconditions recursively with the goal pushed on the stack, then apply it (delete its del list, append its add list); all goals must be achieved AND still hold at the end; version 2 tries the goals in the given and the reversed order and sorts candidate operators by how many preconditions are unmet (the Sussman-anomaly and 'leaping before you look' fixes the book documents)",
+   "input": "a state (a list of conditions), goals, operators",
+   "output": "a new state containing executed actions, or nil",
+   "state": "the goal stack",
+   "update": "per goal",
+   "assumptions": [
+    "the world is a set of literals changed by add/delete lists (STRIPS); differences between state and goal select operators (Newell & Simon's GPS)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search"
+   ],
+   "fitness_value_in_ancestor": "the first general problem solver, small enough to read; its failures (clobbered siblings, prerequisite loops, infinite regress) are named and reproduced in the same file",
+   "failure_landscape": "by reading: version 2's two orderings are not a complete search; the book says so",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Newell & Simon 1957-1972; STRIPS (Fikes & Nilsson 1971)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/gps.lisp:42-100, 202-243"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "gps.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "patmatch.lisp pat-match (15), single-match / segment-match dispatch via (get symbol 'single-match) (32-40): ?is ?or ?and ?not ?* ?+ ?? ?if; segment-match with first-match-pos (110-136); rule-based-translator (169)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a pattern is matched against input with a binding list; variables (?x) bind or must agree; operator patterns are looked up by their leading symbol's property (single-match for predicates and Boolean combinations, segment-match for ?* and friends, which try successive split points of the input, shortest first, and backtrack by returning fail); rule-based-translator applies the first rule whose pattern matches and substitutes the bindings into a response (ELIZA)",
+   "input": "a pattern, an input list, bindings",
+   "output": "bindings or fail",
+   "state": "none",
+   "update": "per match",
+   "assumptions": [
+    "extending the matcher by adding a property to a symbol is the right extension mechanism (data-driven dispatch)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution"
+   ],
+   "fitness_value_in_ancestor": "one matcher serves ELIZA, STUDENT and the rule systems in the book",
+   "failure_landscape": "by reading: segment matching is exponential in the number of segment variables",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Weizenbaum 1966 (ELIZA); the atlas's eliza-weizenbaum-mad-slip-1965 cut found the original matcher (YMATCH/ASSMBL) outside its body: this file is the readable descendant",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/patmatch.lisp:11-170"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "patmatch.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "unify.lisp unify / unify-variable / occurs-check / subst-bindings / unifier (11-60); *occurs-check* t",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "two terms unify if equal, or one is a variable (bind it after following existing bindings and, if enabled, checking the variable does not occur in the other term), or both are conses whose cars and cdrs unify in sequence with the bindings threaded through; substitution replaces bound variables recursively, reusing structure when nothing changes",
+   "input": "two terms, bindings",
+   "output": "extended bindings or fail",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "bindings as an association list are enough at this scale; the occurs check is a switch because Prolog omits it for speed"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+    "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator"
+   ],
+   "fitness_value_in_ancestor": "the core of the Prolog interpreter and compiler in the same book",
+   "failure_landscape": "by reading: without the occurs check, unifying ?x with (f ?x) builds a cyclic term",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Robinson 1965",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/unify.lisp:11-60"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unify.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "prologc.lisp: prolog-compile / compile-clause / compile-call (66-107, 289-302); compile-unify / compile-unify-variable specialising unification at compile time (190-237); deref, unify!, set-binding!, undo-bindings! and the trail (14-64); top-level-prove, run-prolog",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each predicate becomes a Lisp function taking its arguments and a continuation; each clause becomes a body that unifies the head arguments (with unification partly evaluated at compile time when a variable's status is known), calls the body goals with nested continuations, and undoes bindings on the trail before trying the next clause; variables are mutable structures set destructively (unify!) and dereferenced on read; the top level runs the goals with a continuation that prints solutions",
+   "input": "clauses",
+   "output": "compiled functions",
+   "state": "the trail; the variable bindings",
+   "update": "per compile / per proof",
+   "assumptions": [
+    "backtracking is cheapest as continuation calls plus a trail (the 'compile to the host language' route, not a WAM)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution"
+   ],
+   "fitness_value_in_ancestor": "a Prolog compiler in a few hundred lines; the book's benchmark is zebra",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren 1983 (WAM) as the rival design; the atlas's swipl-9.2.9 cut holds the WAM lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/prologc.lisp:14-345 (inventory; compile-unify read at the signature level)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "prologc.lisp; CANDIDATE because bodies were skimmed",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "search.lisp tree-search (7); depth-first-search (prepend as combiner), breadth-first-search (append), best-first-search (sorter cost-fn), beam-search (sorter then truncate to beam-width) (19-68)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "tree-search keeps a list of states; it pops the first, returns it if it satisfies the goal, else generates successors and combines them with the remaining states by a supplied function; the four searches differ only in that function: new states first (depth), last (breadth), merged and sorted by cost (best-first), or sorted and cut to a width (beam)",
+   "input": "a start state, goal predicate, successor function, combiner",
+   "output": "a goal state or nil",
+   "state": "the frontier list",
+   "update": "per expansion",
+   "assumptions": [
+    "the frontier policy is the whole difference between the classical searches"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings"
+   ],
+   "fitness_value_in_ancestor": "one function explains four algorithms",
+   "failure_landscape": "by reading: no visited set (graph-search is a later section)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Nilsson 1971 / Pearl 1984",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/search.lisp:7-68"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "search.lisp 7-68",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "eliza.lisp / eliza1.lisp / eliza-pm.lisp (rules over the pattern matcher), student.lisp, macsyma / cmacsyma (symbolic algebra), mycin (certainty factors), othello / edge-tab (game search with learned edge tables), krep (frames), syntax1-3 and unifgram (parsing), waltz (constraint propagation), interp1-3 and compile1-3 / compopt (a Scheme interpreter and compiler), clos, loop",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "at least six of these are mechanism families of their own (certainty factors, Waltz filtering, chart parsing, a Scheme compiler); this specimen should be split",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "paip-lisp-norvig-1991"
+  },
+  {
+   "candidate": "auxfns.lisp (find-all, dbg, the binding helpers)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "auxfns.lisp NOT READ in full",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "paip-lisp-norvig-1991"
+  },
+  {
+   "candidate": "'classical AI' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the book presents each program as a separable mechanism with its own failure modes",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "paip-lisp-norvig-1991"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "paip-lisp-norvig-1991::P.a_goal_must_be_reached_from_a_state_by_choosing_operators_from_their_effects_when_subgoals_interact_and_the_solver_must_not_loop_on_its_own_prerequisites",
+   "source_fossil": "paip-lisp-norvig-1991",
+   "source_evidence": "gps.lisp both versions and the examples in the file",
+   "condition": "an organism has operators with preconditions and add/delete lists and a conjunctive goal; achieving one goal can undo another (the Sussman anomaly); a precondition can require the goal being pursued (a loop)",
+   "resource_or_constraint": "recursion depth; operator applications",
+   "failure_condition": "a returned state that does not satisfy all goals, or non-termination",
+   "world_punishes": "achieving goals independently and not re-checking; no goal stack",
+   "world_rewards": "a final subset check, a goal stack, ordering by unmet preconditions",
+   "observable_consequence": "success on the blocks-world and monkey-and-bananas sets in the file (the book's test cases) for version 1 vs version 2",
+   "vacuity_condition": "independent goals",
+   "trivial_shortcuts": "a complete planner (Graphplan, in this atlas)",
+   "cheat_control": "an organism given the plan must reproduce the final state; version 1 must fail the Sussman anomaly where version 2 succeeds; both must fail the book's 'infinite regress' example (documented): the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: exposition of classical AI programs (Norvig 1991)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "to": "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator",
+   "to": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "matching with vs without two-way variables",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search",
+   "to": "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the book contrasts them",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "paip-lisp-norvig-1991",
@@ -158,10 +919,23 @@
    "to": "tinyscheme-1.42",
    "note": "Lisp family: programs vs language machine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "reimplementation_of",
+   "to": "Newell & Simon's GPS; Weizenbaum's ELIZA; Robinson's unification; Prolog (Colmerauer / Warren); the classical searches",
+   "note": "the book's stated sources",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "45 of 51 files unread; at least six mechanism families unlisted (MYCIN certainty factors, Waltz filtering, chart parsing, the Scheme compiler, symbolic algebra, Othello's learned evaluation)",
+   "the Prolog compiler skimmed",
+   "nothing ran"
+  ],
+  "note": "a library, not a program; recorded so the census counts it and so Techne can consider splitting it into specimens",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

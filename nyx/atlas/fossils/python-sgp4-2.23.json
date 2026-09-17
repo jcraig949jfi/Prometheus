@@ -131,17 +131,636 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1691-1985"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1396-1500"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/tests.py:557-582"
+   }
+  ],
+  "inspected_files": [
+   "propagation.py 1691-1985 (structure), 1289-1330, 1396-1500",
+   "tests.py 557-582"
+  ],
+  "date": "2026-09-17T22:47Z",
+  "note": "an analytic orbit propagator: a two-line element set is a MEAN element set defined by this model, so the propagator is the coordinate system's own definition; the code is a line-by-line port of Vallado's C++ (comments preserved as '// sgp4fix ...'), with two regime switches (simplified drag below 220 km perigee; deep-space corrections for periods over 225 minutes), a capped Newton iteration for Kepler's equation, and domain checks that return error codes instead of numbers",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://files.pythonhosted.org/packages/14/c2/ed46e67105a95acf4f06e2811f4381198a5acef57a960d98a74011a797cc/sgp4-2.23.tar.gz sha256:d8addc53a2fb9f88dee6bfd401d2865b014cc0b57bf2cee69bdee8d9685d5429",
+   "payload_manifest_id": "techne tree_sha256 f75b0c555b5bee6976b6eecfb06c8a5f661e1a35c11f28ba8afbaa25de1d89bf (33 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/sgp4-2.23/sgp4/propagation.py",
+     "payload_hash_read": "fa851ca7d8710eb54d684de61bc84cc8a3687241518e4ee4cfe8249e0fb33a92",
+     "techne_recorded_hash": "fa851ca7d8710eb54d684de61bc84cc8a3687241518e4ee4cfe8249e0fb33a92",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tree/sgp4-2.23/sgp4/tests.py",
+     "payload_hash_read": "354e8257a1d5d76751693161595514ad6c55f6ba433c8ed2bd49ea92f5a4d409",
+     "techne_recorded_hash": "354e8257a1d5d76751693161595514ad6c55f6ba433c8ed2bd49ea92f5a4d409",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4() 'update for secular gravity and atmospheric drag' block; satrec.isimp (sgp4init 1421-1423: perigee < 220 km -> isimp = 1 drops the d2..d4, t3cof..t5cof terms)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at time tsince the mean anomaly, argument of perigee and node are advanced by their secular rates (J2, J4 gravity) and drag terms in powers of tsince up to t^5 whose coefficients were precomputed at initialisation; for perigees below 220 km the higher-order drag polynomial is switched off (isimp) because the series is not trusted there; below 156 km the density-model parameters s and qoms2t are altered (1429-1432)",
+   "input": "the initialised satrec; tsince in minutes",
+   "output": "mean elements at tsince",
+   "state": "none between calls (all coefficients precomputed)",
+   "update": "per call",
+   "assumptions": [
+    "the perturbation series truncated at these orders is the definition of the element set (Spacetrack Report 3, 1980); accuracy is measured against the same model's reference implementation, not against truth"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+    "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions"
+   ],
+   "fitness_value_in_ancestor": "milliseconds per propagation for every catalogued object; the element sets are only meaningful under this exact arithmetic",
+   "failure_landscape": "by reading: the 'sgp4fix' comments (divide-by-zero on inclination, tolerance changes, decay detection) are the recorded failure landscape of thirty years of use; every fix is a line comment",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hoots & Roehrich 1980; Vallado et al. 2006 (the AIAA revision this port follows)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1709-1750, 1421-1432"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the secular block; MEDIUM because the coefficient derivations were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4init 1495-1499 (2 pi / no_unkozai >= 225 -> method 'd', isimp 1); _dscom, _dsinit, _dspace (secular resonance integration), _dpper (long-period periodics)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for orbital periods of 225 minutes or more the near-earth model is insufficient: initialisation computes lunar and solar perturbation coefficients (_dscom, _dsinit) and flags synchronous or half-day resonances (irez); propagation then integrates the resonance terms numerically in fixed steps (_dspace) and adds long-period lunar-solar periodics to the elements (_dpper); the same call path serves both regimes with method == 'd' as the switch",
+   "input": "mean elements; tsince",
+   "output": "corrected elements",
+   "state": "the resonance integrator's state (atime, xli, xni) carried in satrec",
+   "update": "per call, stepping from the last integrated time",
+   "assumptions": [
+    "225 minutes is the boundary where third-body and resonance effects exceed the near-earth truncation error (an SDP4 convention, not derived here)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance"
+   ],
+   "fitness_value_in_ancestor": "one propagator for LEO and GEO catalogues",
+   "failure_landscape": "UNKNOWN by run; the tcppver oracle covers both regimes",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1495-1499; 939-1131 (names only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the 'd' method path; CANDIDATE because the deep-space bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4() 'sgp4fix for kepler iteration': while fabs(tem5) >= 1.0e-12 and ktr <= 10",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the eccentric anomaly is found from the mean longitude by Newton's method on Kepler's equation in the (axnl, aynl) long-period form; the correction tem5 is clamped to +/-0.95 per step (the 'sgp4fix'); at most ten iterations, stopping when the correction is below 1e-12",
+   "input": "mean longitude, axnl, aynl",
+   "output": "eccentric anomaly (as sine and cosine)",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "Newton converges in a few steps for e < 1; the clamp prevents divergence for near-parabolic cases (test_hyperbolic_orbit exists)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+    "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions"
+   ],
+   "fitness_value_in_ancestor": "fixed cost per call",
+   "failure_landscape": "by reading: ten iterations without convergence is silently accepted (no error code)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1868-1885"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "satrec.error 1-6: mean motion < 0 (2), eccentricity outside [1e-6, 1) (1), perturbed eccentricity out of range (3), semilatus rectum < 0 (4), mrt < 1 decayed (6)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after each stage the elements are range-checked; a violation sets an integer code and a message on the record and returns (false, false) instead of a position; code 6 (radius below one earth radius) marks a decayed object and is set but the position is still returned",
+   "input": "intermediate elements",
+   "output": "a code or nothing",
+   "state": "satrec.error",
+   "update": "per call",
+   "assumptions": [
+    "callers check the code; the propagator never raises"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee"
+   ],
+   "fitness_value_in_ancestor": "a catalogue run does not stop on one bad element set",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1770-1775, 1782-1790, 1837-1845, 1886-1892, 1948-1957"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the checks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the TLE and OMM parsers (io.py, omm.py, alpha5), gstime, the gravity constant tables, the C++ extension and its wrapper (the same arithmetic, compiled), conveniences, exporter",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the extension is Vallado's C++ verbatim: the ancestor is IN the body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "python-sgp4-2.23"
+  },
+  {
+   "candidate": "'SGP4' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the secular series, the deep-space branch, the Kepler solver and the checks are separable and separately fixed over the years (the sgp4fix comments)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "python-sgp4-2.23"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "python-sgp4-2.23::P.positions_must_be_predicted_from_element_sets_that_are_only_defined_relative_to_the_predictor_so_the_predictor_must_reproduce_a_reference_implementation_bit_for_bit_rather_than_the_sky",
+   "source_fossil": "python-sgp4-2.23",
+   "source_evidence": "tests.py 557-582 (run_satellite_against_tcppver); the sgp4fix comments",
+   "condition": "an organism receives mean elements fitted by the reference model and must output positions; the score is agreement with the reference implementation's outputs (tcppver.out), not with observed positions; edge regimes (low perigee, deep space, near-parabolic) exist in the test set",
+   "resource_or_constraint": "milliseconds per call; no numerical integrator",
+   "failure_condition": "disagreement with the reference beyond the tolerance on any catalogue object, or an exception on a degenerate set",
+   "world_punishes": "a physically better propagator (it disagrees with the elements' definition)",
+   "world_rewards": "faithful reproduction of the truncated series and its fixes",
+   "observable_consequence": "max position error vs tcppver.out across SGP4-VER.TLE with each 'sgp4fix' reverted one at a time",
+   "vacuity_condition": "a single circular LEO object",
+   "trivial_shortcuts": "calling the C++ extension (the same arithmetic; the world must run the Python path)",
+   "cheat_control": "an organism handed tcppver.out must match exactly; a numerical two-body integrator must FAIL the comparison (it is more physical and less faithful): the world must show both, which is the point",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: TLE propagation (Vallado 2006 revision of SGP4/SDP4)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "python-sgp4-2.23",
@@ -149,10 +768,23 @@
    "to": "Hoots & Roehrich 1980; Vallado et al. 2006",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "python-sgp4-2.23",
+   "relation": "port_of",
+   "to": "Vallado, Crawford, Hujsak & Kelso 2006 C++ (embedded in extension/SGP4.cpp); Hoots & Roehrich 1980 Spacetrack Report 3",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the equations (coefficient blocks) unread; the deep-space functions read as names",
+   "nothing ran",
+   "M3-RUNNABLE PACKET CANDIDATE: pure Python, oracle in the body (tcppver.out, SGP4-VER.TLE), no native dependency; a packet on the isimp switch or the Kepler cap is preregistrable with the oracle as the cheat control"
+  ],
+  "note": "the four control mechanisms are located; the physics is deliberately unread (it is the ancestor's, verbatim)",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

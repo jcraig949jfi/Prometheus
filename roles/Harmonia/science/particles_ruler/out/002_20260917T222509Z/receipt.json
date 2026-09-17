@@ -1,0 +1,64 @@
+{
+ "W1_data_matches_001_run": true,
+ "finished_utc": "20260917T222637Z",
+ "packet_freeze": "186047db804af234566eb2a6ece10346823bc69ebeafe87eae0e837a5416d284",
+ "packet_id": "MECH-PARTICLES-ESSTRIGGER-002",
+ "quick": false,
+ "rows_sha256": "c10b46c8af4790280cff146290911a6f8eaed74ca1a73739c50910abbd85899a",
+ "ruler_002_sha256": "cc450f97b9b55743fd376004aba7bd7a883eb060f8da4345c7d3c4c35748db8e",
+ "ruler_sha256": "9f171c0964d0cdd86d33c6bb3c3d2d7506efa5b15c1cc1f3dbcfbc7393497a93",
+ "runtime_witness": {
+  "dont_write_bytecode": true,
+  "executable": "C:\\Program Files\\Python311\\python.exe",
+  "host": "GANDALF",
+  "imported_payload_hashes": {
+   "collectors.py": "569b47fd808523bb5d177e34f261d22a6c5796611dbc25f187558b8c180bb3a1",
+   "core.py": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "kalman.py": "592b13e6533a79920cf624d46120dd850866e3db9fe94fbbc93d84807e0eb987",
+   "resampling.py": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+   "state_space_models.py": "ad4d554ce73f52b19aa355f6888c23b3159d5d1f38dc6244b5ce843d5329d7bc"
+  },
+  "inverse_cdf_type": "CPUDispatcher",
+  "joblib": "1.5.3",
+  "numba": "0.65.1",
+  "numba_jit_active": true,
+  "numpy": "1.26.4",
+  "particles_file": "C:\\Users\\Gandalf\\AppData\\Local\\Temp\\harmonia_particles_002_r7ppizh6\\particles-0.4\\particles\\__init__.py",
+  "payload_hash_mismatch": {},
+  "pip_freeze_n": 232,
+  "pip_freeze_sha256": "52eb6284fa90db244dd8dc3e9acaf98ea28ed935634b6812f00291f616318edc",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.11.9",
+  "scipy": "1.16.3",
+  "staged_copy": "C:\\Users\\Gandalf\\AppData\\Local\\Temp\\harmonia_particles_002_r7ppizh6\\particles-0.4",
+  "vault_tree": "C:\\Prometheus-vault\\fossils\\particles-chopin-0.4\\upstream\\tree\\particles-0.4"
+ },
+ "seconds": 88.9,
+ "seeds": 50,
+ "started_utc": "20260917T222509Z",
+ "worlds": {
+  "W1": {
+   "data_sha256": "c21869098f8a514fc35396b10c7943c7c2552ec2ae4860ad899fab32b4403eeb",
+   "logL": -146.722749362282,
+   "params": {
+    "rho": 0.9,
+    "sigma0": 2.294157338705618,
+    "sigmaX": 1.0,
+    "sigmaY": 0.2
+   },
+   "seed": 20260917
+  },
+  "W2": {
+   "data_sha256": "8b0c652e00cc6d9dbd6e350520ece9f914275f9af28351ff69ad8ac4e579adf6",
+   "logL": -207.92313903599123,
+   "params": {
+    "rho": 0.9,
+    "sigma0": 2.294157338705618,
+    "sigmaX": 1.0,
+    "sigmaY": 1.0
+   },
+   "seed": 20260918
+  }
+ },
+ "x_seeds": 400
+}

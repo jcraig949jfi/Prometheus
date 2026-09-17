@@ -126,20 +126,519 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/drive.c:84-330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/agenda.c:100-330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/engine.c:1-80"
+   }
+  ],
+  "inspected_files": [
+   "core/drive.c 84-330",
+   "core/agenda.c 100-330",
+   "core/engine.c Run() head"
+  ],
+  "date": "2026-09-17T22:03Z",
+  "note": "a Rete engine: facts enter a join network from the right, are matched against the left memory of each join by hash then by test expression, and successful partial matches drive down to the next join; a complete match becomes an activation placed on an agenda ordered by salience group and a strategy; Run pops and fires; the three are separable and are the three files read",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceforge.net/projects/clipsrules/files/CLIPS/6.4.2/clips_core_source_642.zip/download sha256:55369287510f8826a66f9ce162ff0213bfdef42fc85736b82049ab7dca8315c3",
+   "payload_manifest_id": "techne tree_sha256 deedb3f3d49a0f766aec231f5d6cb11e8c866cd711e37645bdc69dbbadf75cf7 (345 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/clips_core_source_642/core/drive.c",
+     "payload_hash_read": "3219478d2b9756ca32b1e510120ced09a7bfb7a55c4d354d5779b4f9f43bfaea",
+     "techne_recorded_hash": "3219478d2b9756ca32b1e510120ced09a7bfb7a55c4d354d5779b4f9f43bfaea",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/clips_core_source_642/core/agenda.c",
+     "payload_hash_read": "7f290ce93c7559451878e4525d8bfe520e9b71f32bc4804820378432d4af5612",
+     "techne_recorded_hash": "7f290ce93c7559451878e4525d8bfe520e9b71f32bc4804820378432d4af5612",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/clips_core_source_642/core/engine.c",
+     "payload_hash_read": "58eccf14e470cfe1b359ec083e99f380eeb1336bd43b347709b0cc90a3683825",
+     "techne_recorded_hash": "58eccf14e470cfe1b359ec083e99f380eeb1336bd43b347709b0cc90a3683825",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "NetworkAssert / NetworkAssertRight / EvaluateJoinExpression / PPDrive (drive.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a new partial match entering a join from the right (a new fact) is compared against the join's left beta memory, fetched by hash value so only bucket-mates are scanned; matching hash and no blocking marker lead to the join's compiled test expression (variable bindings across patterns); success drives the combined partial match to the child joins (PPDrive); negated and exists patterns instead add blocked links and retract dependents; the first join of a rule short-circuits (EmptyDrive); incremental reset can skip joins not being rebuilt",
+   "input": "a partial match from the alpha side; the join's left memory",
+   "output": "new partial matches downstream, or blocked links",
+   "state": "beta memories (per join, hashed), markers, blocked links",
+   "update": "per fact assert/retract",
+   "assumptions": [
+    "most joins fail early, so hashing the beta memory on the join's equality tests pays; state (partial matches) is retained between cycles so matching is incremental (the Rete premise: many rules, slowly changing facts)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+    "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching"
+   ],
+   "fitness_value_in_ancestor": "matching cost per fact change is proportional to the change, not to the rule base",
+   "failure_landscape": "by reading: beta memories can grow combinatorially on cross-product joins (the classic Rete failure); the DEVELOPER counters in the source measure exactly that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Forgy 1982 Rete; the hashed beta memories are CLIPS 6.30's addition",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/drive.c:84-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "drive.c's assert path",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "AddActivation / PlaceActivation / salienceGroup / GetNextActivation (agenda.c); Strategy (depth, breadth, LEX, MEA, complexity, simplicity, random)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a complete match becomes an activation carrying the rule, the matched facts, a time tag and a salience (evaluated when defined, at activation, or every cycle per a setting); activations live in per-module agendas partitioned into salience groups (a linked list ordered by salience, reused per value); within a group a strategy orders them (default DEPTH: newest first; also breadth, LEX and MEA on fact recency, complexity/simplicity on rule size, random); Run takes the first",
+   "input": "complete matches",
+   "output": "the next rule to fire",
+   "state": "the agenda lists; salience groups",
+   "update": "per match and per fire",
+   "assumptions": [
+    "the programmer's salience says what matters; the strategy breaks ties; nothing about the facts' content beyond recency is used"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+    "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching"
+   ],
+   "fitness_value_in_ancestor": "the only place 'which rule when' is decided; every expert-system control idiom is a salience/strategy pattern",
+   "failure_landscape": "by reading: salience is a global scalar, so control logic leaks into rule priorities (the well-known expert-system maintenance problem)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "OPS5's conflict-resolution strategies (Forgy) with CLIPS's salience groups as an efficiency structure",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/agenda.c:100-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "agenda.c's placement and retrieval",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "Run() (engine.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "while activations remain and the run limit is not reached: take the first activation, mark the rule firing, evaluate its right-hand side (which asserts/retracts facts, re-entering the join network immediately), count the firing, handle garbage collection of transient values and the debugging watches; a re-entrant call is refused (AlreadyRunning)",
+   "input": "the agenda",
+   "output": "fired rules; changed facts",
+   "state": "the fact base; the agenda",
+   "update": "per cycle",
+   "assumptions": [
+    "a rule's actions change the world and the match is incremental, so the cycle is match-select-act with match amortised"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+    "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression"
+   ],
+   "fitness_value_in_ancestor": "the production-system loop; everything else exists to make its match step cheap",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/engine.c:Run() head (read to the statistics block only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Run(); CANDIDATE because only the head was read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "rulebld.c (compiling rules into the network), reteutil.c (beta memory structures, hashing), the alpha/pattern network, factmngr.c, deftemplates, the object system (COOL), the parser and I/O, the 340 other files",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~170,000 lines); residue",
+   "note": "rulebld.c is where node sharing between rules (Rete's other half) is decided; unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "clips-6.4.2-nasa"
+  },
+  {
+   "candidate": "'expert system shell' / 'Rete' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the join network, the agenda and the cycle are three files with three separable mechanisms; Rete names only the first",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "clips-6.4.2-nasa"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "clips-6.4.2-nasa::P.many_condition_action_rules_must_be_matched_against_a_slowly_changing_set_of_facts_at_a_cost_proportional_to_the_change",
+   "source_fossil": "clips-6.4.2-nasa",
+   "source_evidence": "drive.c; agenda.c; record tags production-rules / pattern-matching",
+   "condition": "R rules with multi-pattern conditions over F facts; each cycle changes a few facts; the organism must find every newly satisfied rule instance and choose one to fire",
+   "resource_or_constraint": "memory for retained partial matches; time per fact change",
+   "failure_condition": "re-matching every rule against every fact per cycle (cost R x F^k), or memory blow-up on cross-product joins",
+   "world_punishes": "stateless matching; unhashed joins",
+   "world_rewards": "retained, hashed partial matches shared across rules",
+   "observable_consequence": "time per cycle vs R and F with the beta memories enabled vs disabled; memory vs join selectivity",
+   "vacuity_condition": "one rule or one fact change per run",
+   "trivial_shortcuts": "a world where facts never change",
+   "cheat_control": "an organism told which rules changed status must fire the same sequence at zero match cost; naive re-matching must show the R x F^k scaling: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: production-rule inference (CLIPS, NASA 1985-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "to": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "complete matches",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "to": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "to": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "asserts and retracts re-enter the network",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "clips-6.4.2-nasa",
+   "relation": "algorithm_from",
+   "to": "Forgy 1982 (Rete); OPS5 conflict resolution; CLIPS at NASA JSC from 1985",
+   "note": "from the code and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "only three of 345 files read",
+   "network construction and node sharing unread",
+   "nothing ran"
+  ],
+  "note": "the three mechanisms that define a production system are located; the engine's size is why this is COARSE",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

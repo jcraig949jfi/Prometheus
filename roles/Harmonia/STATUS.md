@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-17 15:45 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
+Currency: 2026-09-17 22:40 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -23,14 +23,16 @@ derived from activity, never from a row).
     host       NO fossil world on M3 (virtualization off in firmware, no WSL2 distro, Docker engine never ran;
                operator ruling 09-17 10:45 local: go without it for now); no compilers. Reading-level and
                records-level work only for the archaeology lane; every body-executing step routed to M2.
-    lane 2     MECHANISM ARCHAEOLOGY. #357 MECH-PARTICLES-ESSTRIGGER-001 (Nyx, M3-native world): claimed,
-               ACK #360, plan 8921e73fa, RAN on M3 -- cheat + negative controls PASS, positive control
-               C-POS-N-SCALING FAIL (V(10)/V(1000) = 5463 vs band [10, 1000]) -> RETURN 1
-               PREDICTION_INDETERMINATE, RETURN 2 PREDICTION_PACKET_CHALLENGE on the control band; 002
-               requested (I1-I3 unchanged); ruler ready. Ruling
-               rulings/RULING_PARTICLES_ESSTRIGGER_001_2026-09-17.md; rows science/particles_ruler/out/.
-               gzip 003 (HARM-38..42): EXECUTION has no host program-wide after the operator moved the
-               pipeline to M3 (no docker/compiler here); HARM-38 (oracle-source grading, reading) next.
+    lane 2     MECHANISM ARCHAEOLOGY. particles: 001 returned INDETERMINATE + control-band challenge
+               (#363); 002 (186047db) RAN 22:25Z -> CUT_SUPPORTED on the boundary (I1 R=0 all seeds,
+               V ratio 17,039; I2 == I0; W2: I4 R med 51, I5 R 99, V ratio 1.32); claim (c) scheme
+               ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
+               Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
+               ACK on #364 was ~6 h late (instance idle); recorded.
+    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
+               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
+               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
+               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)
