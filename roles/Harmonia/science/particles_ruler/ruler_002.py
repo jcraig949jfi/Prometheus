@@ -69,6 +69,7 @@ def main():
             r["arm"] = label; r["world"] = w["name"]; rows.append(r); means.append(m); rows_f.write(json.dumps(r) + "\n")
         agg = R0.aggregate(np, rows, means, w["m"], w["logL"]); agg.update({"arm": label, "world": w["name"], "N": N, "scheme": scheme, "ESSrmin": e})
         agg["R_per_seed"] = [r["R"] for r in rows]
+        agg["logLt_per_seed"] = [r["logLt"] for r in rows]
         return agg
 
     res = {"controls": {}, "arms": {}, "checks": {}}
@@ -78,7 +79,12 @@ def main():
     for label, w, N, sch, e in [("I0", W1, 100, "systematic", 0.5), ("I1", W1, 100, "systematic", 0.0), ("I2", W1, 100, "systematic", 1.0),
                                 ("I3", W1, 100, "multinomial", 0.5), ("I4", W2, 100, "systematic", 0.5), ("I5", W2, 100, "systematic", 1.0)]:
         g = arm("CHEAT-" + label, w, N, sch, e, min(ns, 5), cheat=True); ctrl["CHEAT-" + label] = g
-        cheat_ok = cheat_ok and g["RMSE"] == 0.0 and g["V"] == 0.0 and g["B"] == 0.0
+        # POST-PLAN FIX 2026-09-17 22:25Z (run 002_20260917T222213Z): np.var of five IDENTICAL doubles
+        # returned 1.0e-27 on W2 because the mean of five copies of -207.92313903599123 rounds by 3e-14;
+        # "V == 0.0" was a floating-point test of the aggregator, not of the channel. The exact test is
+        # per-seed identity of the injected value; V is still reported.
+        g["cheat_max_abs_dev"] = max(abs(x - w["logL"]) for x in g["logLt_per_seed"])
+        cheat_ok = cheat_ok and g["RMSE"] == 0.0 and g["B"] == 0.0 and g["cheat_max_abs_dev"] == 0.0
     res["controls"]["C-CHEAT-ORACLE-IN-THE-LOOP"] = {"pass": cheat_ok, "rows": ctrl}
     if not cheat_ok: indet.append("C-CHEAT-ORACLE-IN-THE-LOOP failed")
     p200 = arm("POS-N200", W1, 200, "systematic", 0.5, ns); p1000 = arm("POS-N1000", W1, 1000, "systematic", 0.5, ns)
