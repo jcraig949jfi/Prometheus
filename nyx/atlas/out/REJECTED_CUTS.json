@@ -1,19 +1,59 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:22Z",
- "n": 156,
+ "built": "2026-09-17T15:42Z",
+ "n": 181,
  "by_reason": {
-  "GENERIC_LANGUAGE_MECHANICS": 33,
-  "OTHER": 51,
-  "BELOW_MEANINGFUL_GRAIN": 6,
+  "OTHER": 60,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 43,
+  "BELOW_MEANINGFUL_GRAIN": 8,
+  "GENERIC_LANGUAGE_MECHANICS": 36,
   "EFFECT_FROM_ENVIRONMENT": 18,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 34,
-  "INHERITED_FROM_RUNTIME_OR_LIBRARY": 9,
+  "INHERITED_FROM_RUNTIME_OR_LIBRARY": 11,
   "STATE_OBSERVATIONALLY_IRRELEVANT": 2,
   "CANNOT_BE_ISOLATED": 2,
   "DUPLICATES_A_CONTROL": 1
  },
  "rejected": [
+  {
+   "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",
+   "reason": "OTHER",
+   "evidence": "NOT READ (configuration-gated extensions, ~30,000 lines); residue, not rejected on the merits",
+   "note": "each is a separate experimental world built on the core loop; a second pass should treat them as separate specimens",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "cHardwareBCR / GP8 / TransSMT / Experimental hardware variants",
+   "reason": "OTHER",
+   "evidence": "NOT READ; alternative CPUs sharing cHardwareBase's divide gates and mutation code",
+   "note": "the shared base (read) is the anatomy; the variants are alternative instruction semantics",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "analyze mode (cAnalyze), AvidaScript, cStats, the viewers (macOS app, CorePlot), the speculative-execution cache (ProcessStepSpeculative: up to 32 instructions run ahead)",
+   "reason": "OTHER",
+   "evidence": "instruments, tooling and a performance optimisation; the speculative cache changes no semantics by design",
+   "note": "instruments",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "'digital evolution' / 'Avida' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop is ten separable mechanisms with independent config switches; the platform's own literature varies each independently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "the ~200-entry instruction table beyond the nop/copy/divide/search/if-label core",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:73-150 and onward; arithmetic, stack, I/O and sensing instructions are the organism's alphabet, not mechanisms of the world",
+   "note": "the alphabet is data for a world; the mechanisms above are what act on it",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
   {
    "candidate": "mbuf assembly, checksum, header template copy, option encoding (tcp_output.c 130-230)",
    "reason": "GENERIC_LANGUAGE_MECHANICS",
@@ -79,6 +119,30 @@
    "fossil": "cobol-programming-course-omp"
   },
   {
+   "candidate": "the Messenger interfaces (send_*, on_*), durable.py, external.py, the tests",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "I/O and persistence boundaries supplied by the host; not read beyond signatures",
+   "note": "the tests are a ready M3-native oracle (pure Python)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  },
+  {
+   "candidate": "the practical layer's NACK plumbing and resend_accept as separate organs",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:cocagne-plain-paxos/upstream/tree/paxos/practical.py:recv_prepare_nack, recv_accept_nack, resend_accept",
+   "note": "they feed the heartbeat organ's decisions; recorded there",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  },
+  {
+   "candidate": "'Paxos' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "ids, acceptor rules, proposer adoption rule, learner counting and leadership are five classes; the vault's willemt-raft (cut 09-17) holds a different arrangement of the same five concerns (terms, log matching, election restriction, commit counting, randomised election)",
+   "note": "recurrence candidate R1: raft term/vote vs paxos id/promise",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cocagne-plain-paxos"
+  },
+  {
    "candidate": "argv/fopen/fstat/chmod/unlink plumbing and the error-exit ladder (goto closein/closeboth/fail)",
    "reason": "GENERIC_LANGUAGE_MECHANICS",
    "evidence": "vault:compact-4.2bsd-1983/upstream/compact.c:25-60, 236-270",
@@ -101,6 +165,30 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "compact-4.2bsd-1983"
+  },
+  {
+   "candidate": "decompress() and the KwKwK special case",
+   "reason": "OTHER",
+   "evidence": "NOT READ (1594-1820); the decoder's table rebuild is the mirror of the encoder organ; residue",
+   "note": "a second pass reads it for the one asymmetric case",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
+  },
+  {
+   "candidate": "main(), comprexx(), compdir() (file handling, recursion into directories, the magic bytes, signal handling), the FAST hash variant",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:707-1340; the #ifdef FAST branch",
+   "note": "drivers and a performance variant of the same probe",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
+  },
+  {
+   "candidate": "'LZW' / 'compress' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the implicit dictionary, the code widening and the ratio reset are separately replaceable; gzip (in the vault) keeps none of them and beats it -- the record's superseded-design tag",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
   },
   {
    "candidate": "ck_pr (the atomic primitive layer: load/store/cas/faa/fas/fence per architecture)",
@@ -319,6 +407,30 @@
    "fossil": "eliza-anthay-1966"
   },
   {
+   "candidate": "TPRINT, TREAD, TXTPRT, LISTRD and the SLIP list primitives (SEQRDR, SEQLR, NEWTOP, POPTOP, ...)",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "SLIP is Weizenbaum's list-processing library, not in the body; YMATCH/ASSMBL are its pattern functions",
+   "note": "the two pattern functions ARE load-bearing and are outside the body: a provenance gap to report",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
+   "candidate": "the DOCTOR script (CACM_1966_eliza_script.txt)",
+   "reason": "OTHER",
+   "evidence": "data, not mechanism; the persona",
+   "note": "the script is the world's content; a different script is a different conversation with the same organs",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
+   "candidate": "'ELIZA' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the 1966 C++ re-implementation in the vault (eliza-anthay-1966, cut 09-16) has the same five mechanisms in a different language; recurrence R1 by reading",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
    "candidate": "t_erfa_c.c / vvd / viv (the validation program)",
    "reason": "OTHER",
    "evidence": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/t_erfa_c.c:25-98 and 247 t_* functions comparing to compiled-in reference values within absolute or fractional tolerances",
@@ -413,6 +525,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "fftpack-netlib"
+  },
+  {
+   "candidate": "genann_read / genann_write (text serialisation), genann_free, the examples and the minctest harness",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:genann/upstream/tree/genann.c:genann_read, genann_write; test.c",
+   "note": "test.c is a ready oracle (XOR etc.) for a Stage C run on a host with a C compiler",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "genann"
+  },
+  {
+   "candidate": "'neural network' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "layout, forward pass and learning rule are separately replaceable; the vault's hopfield and minisom bodies share the first two and not the third",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "genann"
   },
   {
    "candidate": "spin-then-block back-off before CAS retry",
@@ -525,6 +653,46 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "hopfield-takyamamoto"
+  },
+  {
+   "candidate": "plotting and script boilerplate (clc/close/clear; the figures)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:top and the plot block",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  },
+  {
+   "candidate": "'L1 adaptive control' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "predictor, estimator, filter and plant are four functions with one shared parameter struct; the architecture is their wiring",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  },
+  {
+   "candidate": "v1 as a separate specimen",
+   "reason": "OTHER",
+   "evidence": "v1 samples only the adaptive law at Ts and runs predictor and controller at dt; v2 samples all three at Ts (the diff); v2 is the body cut, v1 is preserved as the author's earlier wiring",
+   "note": "the wiring difference is itself a reading-level finding: where the sample-and-hold sits changes the loop",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  },
+  {
+   "candidate": "make-ldpc.c (parity-check matrix construction: the code design), the encoders (sparse/dense/mixed), mod2sparse/mod2dense, rand.c, channel/transmit",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the matrix constructor is where the 'low density' and cycle avoidance are decided -- the second most important mechanism in the body, unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ldpc-codes-neal-2001"
+  },
+  {
+   "candidate": "'LDPC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the code (H) and the decoder are separate; the decoder is the sum-product algorithm the vault's libdai-mooij (NOT_CUT) holds for general factor graphs",
+   "note": "recurrence candidate: libdai's belief propagation",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ldpc-codes-neal-2001"
   },
   {
    "candidate": "'LevelDB' as one organ",
@@ -725,6 +893,22 @@
    "note": "UNKNOWN rather than absent",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "lmdb-0.9.31"
+  },
+  {
+   "candidate": "the reference C implementation in the appendix (MD5Init/Update/Final, byte-order handling), the test suite (mddriver), the executive summary and terminology sections",
+   "reason": "OTHER",
+   "evidence": "skimmed only; the appendix code implements the five steps above and is the natural Stage C body (it compiles anywhere with a C compiler -- not on M3)",
+   "note": "not rejected on the merits; unread this pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "md5-rfc1321"
+  },
+  {
+   "candidate": "'MD5' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "padding, chaining, rounds, schedule and constants are separately replaceable; SHA-1 keeps the first two and changes the rest",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "md5-rfc1321"
   },
   {
    "candidate": "'CDCL' as one organ",
@@ -1197,6 +1381,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "verilog-uart2bus"
+  },
+  {
+   "candidate": "operator<< and the drivers (viterbi_main.cpp, viterbi_test.cpp)",
+   "reason": "OTHER",
+   "evidence": "instruments and I/O",
+   "note": "the test file is a ready oracle for a Stage C run (known codes with known decodings)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "viterbi-hmm-xukmin"
+  },
+  {
+   "candidate": "'Viterbi algorithm' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the same add-compare-select over any trellis (HMM, PoS tagging) is the recurrence the vault's umdhmm and other bodies hold; the branch metric (Hamming vs log-emission) is what differs",
+   "note": "recurrence candidate: umdhmm-kanungo-1.02 (NOT_CUT) will hold the HMM form",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "viterbi-hmm-xukmin"
   },
   {
    "candidate": "the callback vector raft_cbs_t (send, persist, log offer/pop, applylog) and the heap-function hooks",

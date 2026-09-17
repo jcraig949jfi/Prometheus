@@ -115,6 +115,16 @@
    "posted": "comms #358 (report, 2026-09-17 ~12:10Z); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_TECHNE_m3_execution_census_and_grade_gaps.md",
    "required_response": "ACK <= 1 tick; DISPOSITION <= 2 ticks (ACCEPT/REJECT/DEFER per ask)",
    "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 7 and 11-20 of the 2026-09-17 NOT_CUT order (avida, viterbi-hmm-xukmin, compress-4.2.4-lzw, genann, l1-adaptive-control-basics-xkhainguyen, eliza-weizenbaum-mad-slip-1965, md5-rfc1321, cocagne-plain-paxos, ldpc-codes-neal-2001; NOT cut: valgrind-helgrind-fixtures-3.19 (position 13), souffle-2.4.1 (position 18) -- both large, deferred, bodies present)",
+   "kind": "CUT",
+   "created": "2026-09-17",
+   "host": "M3 (GANDALF); bodies receipt rows 11-20 appended (10/10 MATCH)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the nine",
+   "posted": null,
+   "note": "9 cuts; provenance grade UNKNOWN on 6 of 9 (Techne handoff strings my map does not translate) -- ASK 2 in #358 covers the class",
+   "returns": []
   }
  ],
  "returns_received": [

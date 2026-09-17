@@ -1,13 +1,24 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:22Z",
+ "built": "2026-09-17T15:42Z",
  "by_state": {
-  "PARTIALLY_EXPLAINED": 23,
-  "EXPLAINED_BY_CURRENT_CUT": 11,
-  "LARGE_RESIDUE": 4,
+  "LARGE_RESIDUE": 5,
+  "PARTIALLY_EXPLAINED": 28,
+  "EXPLAINED_BY_CURRENT_CUT": 14,
   "CUT_INSTRUMENT_INSUFFICIENT": 1
  },
  "residue": [
+  {
+   "fossil_id": "avida",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "about two thirds of avida-core is unread: demes, predator/prey, mating, tolerance, energy, HGT, promoters, resource bins, alternative hardwares, analyze mode, script, stats, viewers",
+    "the default instruction set and default config (which of the ~200 instructions and which BIRTH/SLICING/BASE_MERIT settings are in force) live in config files not opened this pass; every 'default' claim above names the config key instead",
+    "nothing ran; the body is a docker world (Techne TECHNE_SMOKE_HARNESS_PASS) and cannot run on M3"
+   ],
+   "note": "the core replication-selection-reward loop is located function by function; the platform's scale is why this is COARSE despite ten organs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "fossil_id": "bsd-tcp-4.2-1983",
    "state": "PARTIALLY_EXPLAINED",
@@ -31,6 +42,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "cocagne-plain-paxos",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "durable.py and external.py not read; practical.py read by structure only",
+    "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle",
+    "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"
+   ],
+   "note": "the three essential classes are accounted for line by line",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "compact-4.2bsd-1983",
    "state": "EXPLAINED_BY_CURRENT_CUT",
    "unexplained": [
@@ -38,6 +60,17 @@
     "no claim about optimality or about the LZW comparison was run"
    ],
    "note": "every line of compact.c and tree.c is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "compress-4.2.4-lzw",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "decompress() not read",
+    "the FAST hash variant read only to its first probe",
+    "nothing ran"
+   ],
+   "note": "the encoder's three mechanisms are accounted for; the vault's ncompress-5.0 and gzip fossils are recurrence/supersession neighbours",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -118,6 +151,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "eliza-weizenbaum-mad-slip-1965",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "YMATCH and ASSMBL (the pattern matcher and rebuilder) are SLIP library functions outside the body; their semantics are inferred from the call sites and the annotation's pointer to the SLIP manual -- a provenance gap for Techne",
+    "the CACM script not read; the annotated transcription read only at its head",
+    "nothing ran (MAD on IBM 7094; the vault's lisp-1-5 record names simh i7094 as a reachable world for the same era)"
+   ],
+   "note": "the interpreter's control flow is accounted for line by line; the matcher is the residue",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "erfa-2.0.1",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -150,6 +194,16 @@
     "single-precision accuracy vs N is not measured (Techne's run had no oracle)"
    ],
    "note": "the small-radix path (factor, twiddle, driver, butterfly, real wrapper) is fully read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "genann",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing ran; test.c holds XOR/AND/OR training checks that would be the Stage C oracle",
+    "the cached-sigmoid derivative mismatch is a reading-level claim"
+   ],
+   "note": "every function in genann.c is an organ or rejected",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -194,6 +248,26 @@
     "sign(0) = 0 and the 2-cycle blind spot of the energy stop are reading-level claims, unmeasured"
    ],
    "note": "every line of network.py is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "l1-adaptive-control-basics-xkhainguyen",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing ran (MATLAB); the scripts are ~100 lines and would port to numpy for a Stage C run on M3 in an hour -- a candidate for the M3-native world class"
+   ],
+   "note": "every function is an organ or rejected",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "ldpc-codes-neal-2001",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the code construction (make-ldpc.c) and the matrix library not read",
+    "the tail of iterprp (the backward column pass) read to its first lines only",
+    "nothing ran; the body ships an exact oracle for a Stage C world on any host with a C compiler"
+   ],
+   "note": "the decoder is accounted for; the code design is the residue",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -252,6 +326,16 @@
     "nothing ran; the crash oracle is a Stage C candidate (kill between put and commit inside Techne's container)"
    ],
    "note": "the storage discipline (COW, double meta, freelist, reader table, commit order) is fully read; the tree on top of it is not",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "md5-rfc1321",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the appendix reference code and its byte-order/endianness handling not read line by line",
+    "the specific differential path that breaks MD5 is not in the body; the failure landscape cites the record's disposition"
+   ],
+   "note": "the specification's five steps are fully accounted for",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -416,6 +500,16 @@
     "the two reading-level defects (length-0 binary count wrap; no stop-bit check) are unmeasured"
    ],
    "note": "every always block in the five RTL files is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "viterbi-hmm-xukmin",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "record/body mismatch: the record calls it an HMM; the body is a convolutional decoder (reported to Techne as a census defect, not repaired)",
+    "nothing ran"
+   ],
+   "note": "every function in viterbi.cpp is in one of the two organs or rejected",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

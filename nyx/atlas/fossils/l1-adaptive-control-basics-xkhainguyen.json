@@ -130,17 +130,647 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v1.m"
+   }
+  ],
+  "inspected_files": [
+   "MainL1_ODE1_v2.m (all); v1 by diff"
+  ],
+  "date": "2026-09-17T15:40Z",
+  "note": "the L1 architecture for a first-order plant, in its piecewise-constant form: a predictor of the plant, an estimator that reads the prediction error and solves for the disturbance that would explain it, and a low-pass-filtered cancellation of that estimate; the four functions are the four organs",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:40Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/xkhainguyen/L1AC-Basics@3799a07d9320d6f9ec7bbcab784d10289ecb8719",
+   "payload_manifest_id": "techne tree_sha256 3029795a9e754436d70be8321e4481e8166ebe03b82fade737f9261fbb3c01c0 (4 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/MainL1_ODE1_v2.m",
+     "payload_hash_read": "0945bd11702c16cee124025bc602782e86a21bacafecf5585c7f7696fdd5b6d4",
+     "techne_recorded_hash": "0945bd11702c16cee124025bc602782e86a21bacafecf5585c7f7696fdd5b6d4",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/MainL1_ODE1_v1.m",
+     "payload_hash_read": "02c52ced9d3fa544ba5b53c5ec3a918243877c92668535b4e7ac92dfc19dc8c3",
+     "techne_recorded_hash": "02c52ced9d3fa544ba5b53c5ec3a918243877c92668535b4e7ac92dfc19dc8c3",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "fossil_ancestry": "l1-adaptive-control-basics-xkhainguyen",
+   "human_name": "predictor() (dx_hat = -am*x_hat + b*(u + sigma_hat))",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a copy of the reference model driven by the same control input plus the current estimate sigma_hat, integrated at the adaptation period Ts (not the plant's dt); its output is compared with the measured plant state",
+   "input": "u, sigma_hat, x_hat",
+   "output": "x_hat at the next adaptation sample",
+   "state": "x_hat",
+   "update": "per Ts",
+   "assumptions": [
+    "the plant is first-order with known am and b; the unknown enters as an additive matched disturbance"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+    "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate"
+   ],
+   "fitness_value_in_ancestor": "the estimator needs a prediction error, not a plant model inversion",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:predictor"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "predictor()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "OPEN_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "fossil_ancestry": "l1-adaptive-control-basics-xkhainguyen",
+   "human_name": "estimator() (sigma_hat = -Phi(Ts)^-1 * exp(-am Ts) * x_tilde / b)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each sample the prediction error x_tilde = x_hat - x is mapped to the constant disturbance that, held over one period, would produce it under the error dynamics: Phi(Ts) = (1 - exp(-am Ts))/am, mu = exp(-am Ts) x_tilde, sigma_hat = -Phi^-1 mu / b; no gain to tune, no projection: the sampling period IS the adaptation gain",
+   "input": "x_tilde, am, b, Ts",
+   "output": "sigma_hat (held constant for Ts)",
+   "state": "none",
+   "update": "per Ts",
+   "assumptions": [
+    "the disturbance is constant over one sample period; fast sampling makes the estimate track fast disturbances"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+    "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+    "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate"
+   ],
+   "fitness_value_in_ancestor": "adaptation rate decoupled from robustness: make Ts small for estimation, filter the control for robustness",
+   "failure_landscape": "by reading: the estimate is noisy at the sampling rate; it must be filtered before use",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the piecewise-constant law is the Hovakimyan/Cao L1 design (2010); the exact discretisation (Phi) is what distinguishes it from a gradient law",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:estimator; params.Phi_Ts"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "estimator() and the Phi_Ts line",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "fossil_ancestry": "l1-adaptive-control-basics-xkhainguyen",
+   "human_name": "controller() (u = kr r - sigma_hat, then a first-order filter with time constant tau)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the raw control cancels the estimated disturbance and tracks the reference; it is then passed through a discrete first-order low-pass (u_f = (Ts/tau) u + (1 - Ts/tau) u_prev) so that only the part of the estimate within the filter bandwidth reaches the plant",
+   "input": "sigma_hat, r",
+   "output": "u_f",
+   "state": "u_prev (a global)",
+   "update": "per Ts",
+   "assumptions": [
+    "the filter bandwidth is the robustness knob; the fast estimator's noise is above it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+    "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+    "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate"
+   ],
+   "fitness_value_in_ancestor": "the L1 separation: fast adaptation without high-gain feedback",
+   "failure_landscape": "by reading: with tau small the filter passes estimator noise; with tau large the cancellation lags the disturbance",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the filter is the defining element of L1 vs MRAC",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:controller"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "controller()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "fossil_ancestry": "l1-adaptive-control-basics-xkhainguyen",
+   "human_name": "plant() (dx = -a x + b (u + d); d = three timed bursts incl. 500 Hz and 1 kHz sinusoids)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "Euler integration at dt = 1e-4 of a first-order plant with the same a and b the controller assumes; the disturbance d is a step (100 on 10-20 ms), a 500 Hz sinusoid of amplitude 500 on a 300 offset (40-50 ms), and a 1 kHz sinusoid minus 500 (70-80 ms)",
+   "input": "u_f, t",
+   "output": "x, d",
+   "state": "x",
+   "update": "per dt",
+   "assumptions": [
+    "the plant is the world here: the disturbance profile is the experiment's pressure, chosen to include frequencies above and below the filter bandwidth"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+    "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate"
+   ],
+   "fitness_value_in_ancestor": "the demo's whole claim rests on this profile",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:plant, step"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "plant() and step()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "plotting and script boilerplate (clc/close/clear; the figures)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:l1-adaptive-control-basics-xkhainguyen/upstream/tree/MainL1_ODE1_v2.m:top and the plot block",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  },
+  {
+   "candidate": "'L1 adaptive control' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "predictor, estimator, filter and plant are four functions with one shared parameter struct; the architecture is their wiring",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  },
+  {
+   "candidate": "v1 as a separate specimen",
+   "reason": "OTHER",
+   "evidence": "v1 samples only the adaptive law at Ts and runs predictor and controller at dt; v2 samples all three at Ts (the diff); v2 is the body cut, v1 is preserved as the author's earlier wiring",
+   "note": "the wiring difference is itself a reading-level finding: where the sample-and-hold sits changes the loop",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "l1-adaptive-control-basics-xkhainguyen"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "l1-adaptive-control-basics-xkhainguyen::P.a_plant_hit_by_disturbances_faster_than_the_controller_may_respond_must_be_regulated_without_high_gain",
+   "source_fossil": "l1-adaptive-control-basics-xkhainguyen",
+   "source_evidence": "MainL1_ODE1_v2.m plant()/controller()/estimator()",
+   "condition": "an organism controls a first-order process with an additive unknown input containing components both below and above a bandwidth the organism is allowed to act at; it observes only the state",
+   "resource_or_constraint": "a sampling period; a control bandwidth (filter); no plant inversion",
+   "failure_condition": "tracking error under the fast components, or instability from feeding estimator noise into the plant",
+   "world_punishes": "high-gain feedback (instability) and slow adaptation (error)",
+   "world_rewards": "estimating fast and acting slow",
+   "observable_consequence": "tracking error and control effort spectrum on the three-burst profile as Ts and tau are varied",
+   "vacuity_condition": "a disturbance within the control bandwidth (a PI controller suffices)",
+   "trivial_shortcuts": "a world that reveals d",
+   "cheat_control": "a controller handed d must show zero error at any bandwidth; the same architecture with tau -> 0 (no filter) must show noise amplification: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: L1 adaptive control demonstration (Hovakimyan & Cao 2010 architecture)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sigma_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "l1-adaptive-control-basics-xkhainguyen",
@@ -148,10 +778,28 @@
    "to": "Cao & Hovakimyan 2006",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Hovakimyan & Cao, L1 Adaptive Control Theory (2010): piecewise-constant adaptation law with a state predictor and a low-pass filtered control",
+   "note": "from the record's domain and the code's structure; not verified against the book this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Hovakimyan & Cao, L1 Adaptive Control Theory (2010): piecewise-constant adaptation law with a state predictor and a low-pass filtered control",
+   "note": "from the record's domain and the code's structure; not verified against the book this pass",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing ran (MATLAB); the scripts are ~100 lines and would port to numpy for a Stage C run on M3 in an hour -- a candidate for the M3-native world class"
+  ],
+  "note": "every function is an organ or rejected",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

@@ -1,25 +1,137 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:22Z",
- "n": 403,
+ "built": "2026-09-17T15:42Z",
+ "n": 453,
  "by_label": {
-  "triggers": 35,
-  "updates": 46,
-  "feeds": 186,
-  "restores": 13,
-  "gates": 41,
+  "feeds": 215,
+  "triggers": 42,
+  "updates": 53,
+  "competes": 22,
+  "restores": 15,
+  "gates": 42,
   "predicts": 1,
   "schedules": 10,
   "suppresses": 8,
-  "verifies": 1,
+  "verifies": 2,
   "transforms": 9,
-  "competes": 20,
   "stores": 14,
-  "selects": 16,
+  "selects": 17,
   "forgets": 1,
   "retries": 2
  },
  "edges": [
+  {
+   "from": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "to": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "h-search places the flow head; the copy loop jumps to it",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "DivideReset locks merit in",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bonus",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "priority = merit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "CPU cycles",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "cycles to compute",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new cell priority; killed cell removed",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the two deaths",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "offspring inherits merit via the birth chamber",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "to": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "every mutant is a legal program",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
    "to": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
@@ -189,6 +301,62 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "to": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "prepare / accept",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "promise with prior value",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "accepted broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "acquire leadership -> prepare",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "NACKs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "observe_proposal",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
    "to": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
    "label": "feeds",
@@ -250,6 +418,46 @@
    "label": "verifies",
    "evidence": "SOURCE_READ",
    "note": "oc vs ic after the flush",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "free_ent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "freeze at maxbits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "clear_htab",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "back to 9 bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bytes_in/bytes_out",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -757,6 +965,62 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the MEMORY keyword",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "a stored line beats a NONE reply at LIMIT = 4",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "no decomposition matched",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign",
+   "to": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
    "to": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
    "label": "feeds",
@@ -936,6 +1200,30 @@
    "from": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
    "to": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
    "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "to": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "to": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "stored outputs are the derivative's input",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "to": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "label": "updates",
    "evidence": "SOURCE_READ",
    "note": "",
    "cut_mode": "ANCESTRY_AWARE"
@@ -1226,6 +1514,70 @@
    "label": "competes",
    "evidence": "SOURCE_READ",
    "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sigma_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "to": "ldpc-codes-neal-2001::per_iteration_diagnostics_changed_bits_parity_errors_loglikelihood_expected_errors_entropy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ldpc-codes-neal-2001::exhaustive_maximum_likelihood_decoding_as_the_oracle_for_small_codes",
+   "to": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "label": "verifies",
+   "evidence": "SOURCE_READ",
+   "note": "the oracle for small codes",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1802,6 +2154,46 @@
    "label": "stores",
    "evidence": "SOURCE_READ",
    "note": "freelist_save",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::message_word_schedule_and_rotation_constants_per_round",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::nothing_up_my_sleeve_constants_from_the_integer_part_of_2_32_abs_sin_i",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -3026,6 +3418,14 @@
    "label": "triggers",
    "evidence": "SOURCE_READ",
    "note": "binary read re-request per byte",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "viterbi-hmm-xukmin::shift_register_encoder_with_outputs_precomputed_per_state_and_input",
+   "to": "viterbi-hmm-xukmin::survivor_per_state_by_add_compare_select_with_hamming_branch_metric_and_traceback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the output table is the branch metric's reference",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
