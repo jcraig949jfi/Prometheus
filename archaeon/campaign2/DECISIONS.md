@@ -92,3 +92,19 @@ a05 is preserved; its rows are identical to a06's by construction (common
 random numbers). | L2-020. | Alternative: keep a05 as the row of record with a
 note (the engine would then hold six observations attributed to the wrong
 cell). | Revisit never. DETERMINISTIC (runner.py keys).
+
+D2-011 | 2026-09-17 03:56 | C2-SFE-03: IMMATURE_ARTIFACT is telemetry here, not a gate: the SFE-01 effect under test was produced by an immature source; the mature_source probe measures whether maturity changes it | Evidence: C2-SFE-03 record. | Alternative: fire IMMATURE_ARTIFACT on the immature component sets (would void the parent's own condition). | Revisit if a transport of ORGANISMS from an unsolved source is claimed as a positive. SCIENTIFIC.
+
+D2-012 | 2026-09-17 04:21 | C2-SFE-04: assay capability = ANY arm reaches (target baseline_arm '*'); the premise of a transport-unlocks-an-unreachable-cell design is that the baseline may not reach | Evidence: C2-SFE-04 record. | Alternative: require the baseline arm to reach (would type a correct 'unlock' design as TARGET_UNREACHABLE). | Revisit never. DETERMINISTIC (states.py target baseline_arm '*').
+
+D2-013 | 2026-09-17 04:36 | C2-SFE-05: capability is checked per seed on the sealed queries BEFORE freezing; the comparison uses capable seeds only; the threshold is sealed | Evidence: C2-SFE-05 record. | Alternative: gate on source maturity (four capable streams came from unsolved sources). | Revisit never. DETERMINISTIC (the check) + SCIENTIFIC (the threshold).
+
+D2-014 | 2026-09-17 04:51 | C2-SFE-06: revisit share p is the only difference between arms; it is an ecological pressure (old conditions recur), never a reward for retaining anything | Evidence: C2-SFE-06 record. | Alternative: a retention term in the fitness (rewards memory, forbidden by the directive). | Revisit never. SCIENTIFIC.
+
+D2-015 | 2026-09-17 05:06 | C2-SFE-07: the maturity gate is the artifact's `solved` flag; an unsolved producer publishes nothing and the consumer still pays its cap (the cost of a closed gate is a measurement, not a failure) | Evidence: C2-SFE-07 record. | Alternative: publish immature elites and let the consumer sort them (SFE-10's design; the immature artifacts were the cost). | Revisit if a producer's partial progress is shown to be worth shipping. DETERMINISTIC (publish() gate) + SCIENTIFIC (the cap).
+
+D2-016 | 2026-09-17 05:21 | C2-SFE-08: the primary is the PARENT'S proxy (accessible variation); the other six statistics are reported with their rho and none is promoted by the harness | Evidence: C2-SFE-08 record. | Alternative: preregister the statistic the harness author expects to win (invents the answer into the metric). | Revisit never. SCIENTIFIC.
+
+D2-017 | 2026-09-17 05:31 | C2-SFE-09: the four explanations are decided by preregistered rules on four measurements per CA genome; no explanation is assigned by reading rows | Evidence: C2-SFE-09 record. | Alternative: interpret the lesion map by eye (what SFE-04 did). | Revisit if a rule's threshold (0.02, LI 0.10) is shown to be miscalibrated. SCIENTIFIC thresholds, DETERMINISTIC application.
+
+D2-018 | 2026-09-17 05:46 | C2-SFE-10: an organ is FUNCTIONAL iff its instructions are load-bearing under single-instruction knockout on the SOURCE cell's probe episodes; the target is never consulted | Evidence: C2-SFE-10 record. | Alternative: define organs on the target (leaks the target). | Revisit if a behaviour signature richer than the output sequence is available. SCIENTIFIC.

@@ -111,3 +111,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   ok, 50 records, 0 errors. functional - length = +0.097 (< 0.10; 5/10 paired;
   4/10 vs 4/10); shuffled functional 7/10 (0.44) above intact: order carries
   nothing. Ledger L2-047, L2-048. Ten of ten attempted. Next: CAMPAIGN_REPORT.
+
+## 06:00-06:20 -- campaign close
+
+- CAMPAIGN_REPORT.md (copy: roles/Archaeon/REVIEW_PACKET_CMP2_2026-09-17.md);
+  MACHINE_READINESS.md Phase B addendum; DECISIONS.md D2-011..018 appended
+  from receipts. Funnel: 10/10 attempted, 13 live attempts 0 errors, 7
+  CAPABLE_NEGATIVE / 3 WEAK_POSITIVE / 0 SUPPORTED; 18 worlds TERMINATED.
+  Campaign CLOSED.

@@ -138,3 +138,36 @@ Read-time findings recorded for the ledger (not fixed; campaign-1 rows frozen):
 - SFE-05 transfer arms and SFE-07 seeded sets filled generation 0 from their own
   foundry seeds (555+seed, 909+seed), the L-030 family; their comparisons carry
   a fill confound. C2 successors use common_fill().
+
+-----------------------------------------------------------------------
+PHASE B ADDENDUM (2026-09-17 06:00 UTC): what the ten experiments found in
+the machine, and what was fixed in shared code during the campaign
+-----------------------------------------------------------------------
+1. Reachability keyed on the generation-0 FOUNDRY (L2-017, C2-SFE-02 a03):
+   the table had pooled the v01 survey's 1-32-instruction regime with the
+   campaign's 1-16; W1_d1 8-bit read 2/3 under one and 1/6 under the other.
+   FIXED (reachability.py foundry id in the key; table migrated).
+2. Run identity under common random numbers (L2-022, C2-SFE-02 a05): two
+   experiments searching the same cell/budget/seeds produce the SAME run;
+   the table counted it twice. FIXED (campaign_seed + rng_label per row;
+   pooled() counts a run once).
+3. Design-keyed resume (L2-021, C2-SFE-02 a05): a resumed attempt replayed a
+   previous DESIGN's engine steps (hypothesis, prereg artifact, six
+   observation records). FIXED (Attempt.key carries the sealed prereg
+   digest; a06 re-ran clean). Test added.
+4. Dry runs never enter the reachability table and never become the
+   attempt of record (c2base.close). FIXED after C2-SFE-01's dry run
+   appended 10 rows at N=20.
+5. Treated arms with the loop's own generation 0 (episode injection,
+   non-standard operators, schedules) are marked 'treated' explicitly
+   (reach_row kind). FIXED after C2-SFE-01 marked transport arms baseline.
+6. Battery outcomes flow rows -> meas.battery -> disposition (C2-SFE-03);
+   target baseline_arm '*' for unlock designs (C2-SFE-04); rank_correlation
+   primary + spearman (C2-SFE-08); artifacts maturity read from meas
+   (C2-SFE-01). ADDED to states.py.
+7. Per-attempt PREREG.json kept in the attempt directory; the root copy is
+   the attempt of record's (C2-SFE-02). FIXED.
+8. reset_leakage_probe wired (L-019, C2-SFE-09); localization index guarded
+   when the readout has no margin (C2-SFE-09 dry run).
+Status after Phase B: the nine groups stand as at the exit gate; F stays
+PARTIAL (client wrappers outside sfclient; no GET artifacts route).
