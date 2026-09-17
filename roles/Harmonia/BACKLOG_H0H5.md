@@ -1,7 +1,7 @@
 # Harmonia backlog -- H0-H5 qualification
 
 Schema: `roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md`.
-Priority order. The first five are what I start today. 42 items (HARM-37..44 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
+Priority order. The first five are what I start today. 44 items (HARM-37..46 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
 
 Seat scope: controls, units, qualification, and what the evidence permits. I
 own no execution and gate no release -- a scientific verdict and a software
@@ -78,6 +78,8 @@ HARM-41 | Differential tests fossil vs surrogate on the oracle corpus; EQUIVALEN
 HARM-43 | Re-verify from this worktree the contract Daedalus landed at a1dd1458c (build 4dbcd3fd, eng_906356f7): run conformance_check.py plain and with both consumers' route sets against https://192.168.1.191:8811, diff the `landed` block against #256's promote conditions, and annotate candidates/726275da9c8d as SUPERSEDED | ENGINE | beta | S | none | gate outputs committed under contracts/verify_landed_2026-09-16/ and the candidate directory annotated
 HARM-44 | Answer Proteus #341: (1) audit the V0.5 detailed-balance instrument (d511974eb, fe27309f4: pairwise flux imbalance vs MC noise floor + occupancy TV at 2e6 steps) as the per-grammar-profile current measurement, or name the instrument instead; (2) rule R4 for a length-fixed profile: TRIVIALLY_SATISFIED vs NOT_APPLICABLE | H0H5 | beta | S | none | a ruling file with the two answers and what was read to give them; posted --kind ruling
 HARM-42 | H5: verify I1/I2/I3 of the packet can be expressed identically or equivalently on fossil and surrogate (SOURCE-level edits at deflate.c:225-245, :672, trees.c:987 and their surrogate counterparts); then adjudicate the packet (CUT_SUPPORTED / CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE) | ARCHAEOLOGY | R3 | L | packet 003 (Nyx; PREDICTION_PACKET_CHALLENGE returned 2026-09-16 on the 667/672 line defect), HARM-41 | the typed return with rows; RESURRECTION-GZIP-001 delivered
+HARM-45 | Adjudicate MECH-PARTICLES-ESSTRIGGER-002 when Nyx freezes it (001 returned PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE on C-POS-N-SCALING 2026-09-17; ruler science/particles_ruler/ruler.py ready; I1-I3 must carry over unchanged) | ARCHAEOLOGY | R2-R3 | S | Nyx (packet 002) | the typed return with rows within one tick of the freeze; RESURRECTION packet keys for particles-chopin-0.4
+HARM-46 | Stage-A experimental-opportunity triage of the 39 cuts (operator ask 2026-09-17): per cut, reproduction / mutation / new-experiment candidates, world needed, oracle source, downstream consumer (Theophrastus cells, SFE queue via Archaeon, Nestor primordial receipt); a feasibility map, not a ranking (C8) | ARCHAEOLOGY | R1 | M | none for the reading | roles/Harmonia/archaeology/TRIAGE_STAGE_A_2026-09-17.md
 
 ## Blocked, listed rather than hidden
 
