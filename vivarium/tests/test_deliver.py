@@ -242,3 +242,24 @@ def test_no_credential_holds_and_never_parks(conn, drafted, tmp_path):
     d.client_factory = lambda: fake                    # the token lands
     out = d.tick(conn)
     assert out["verdict"] != "PARKED" and out["state"].get("pending_total", 1) == 0 or out.get("delivered", 0) >= 0
+
+
+def test_a_cleared_park_record_clears_the_parked_state_and_the_next_tick_delivers(conn, drafted, tmp_path):
+    """Mnemosyne #375: the deliverer kept refusing on state.parked after the
+    park RECORD had been cleared (renamed) -- the documented clearance. Now a
+    missing record with parked state = clearance observed; the tick proceeds.
+    NEGATIVE: with the record still present it keeps refusing."""
+    schema = drafted
+    eid = _run_one(conn, schema, "enc-dl-clear")
+    fake = FakePew(); fake.down = True
+    d = _deliverer(tmp_path, fake, bound=2)
+    for _ in range(2):
+        d.tick(conn)
+    assert d.park_path.exists() and d.tick(conn)["verdict"] == "PARKED"          # NEGATIVE: record present
+    d.park_path.rename(d.park_path.with_suffix(".cleared.json"))                 # the documented clearance
+    fake.down = False
+    out = d.tick(conn)
+    assert out["verdict"] != "PARKED" and out["exit"] != 3
+    st = json.loads(d.state_path.read_text(encoding="utf-8"))
+    assert st["parked"] is False and st.get("delivered", 0) >= 1          # the tick RAN and delivered
+    assert all(s == "DELIVERED" for _, s, _ in _states(conn, schema, eid))

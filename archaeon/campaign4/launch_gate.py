@@ -158,29 +158,68 @@ def g4_pew() -> dict:
             "blocks_launch": False}
 
 
+def canonical_population_digest(d: dict) -> str:
+    """The published rule, reimplemented here rather than imported, so the gate verifies the
+    declaration instead of trusting the tool that wrote it."""
+    volatile = ("generated_at", "wall_s", "population_digest", "population_digest_rule",
+                "superseded_raw_byte_digests")
+    D = {k: v for k, v in d.items() if k not in volatile}
+    return "sha256:" + hashlib.sha256(
+        json.dumps(D, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
 def g5_proteus(ref: str) -> dict:
-    """Manifests and structural descriptors for the EXACT starting organisms. Two halves:
-    Proteus's machinery must exist, and Archaeon must have DECLARED the starting population."""
-    registry = at_ref(ref, "proteus/eval/REGISTRY_POPULATION_MANIFEST.json")
+    """Manifests and structural descriptors for the EXACT starting organisms.
+
+    Identity rule (repaired 2026-09-17): the population is identified by a CANONICAL digest that
+    is invariant to checkout line endings. The first rule hashed raw worktree bytes, and this repo
+    sets core.autocrlf=true, so Proteus minted over a CRLF reading (a3f9816f) of the same content
+    this seat writes as LF (3c2ebfd9). Content was never in dispute; the identity rule was.
+
+    The gate no longer reads a self-set `minted_by_proteus` flag -- a declaration must not certify
+    itself. It reads Proteus's minted manifest and requires it to bind THIS canonical digest.
+    """
     catalog = at_ref(ref, "proteus/eval/FOUNDRY_PROFILE_CATALOG.json")
+    mint_b = at_ref(ref, "proteus/eval/C4_STARTING_POPULATION_MANIFEST.json")
     decl = C4 / "STARTING_POPULATION.json"
-    ev = {"proteus_registry_present": registry is not None,
-          "proteus_catalog_present": catalog is not None,
+    ev = {"proteus_catalog_present": catalog is not None,
+          "proteus_mint_present": mint_b is not None,
           "archaeon_declaration_present": decl.exists()}
-    unknown = None
+    checks = {k: bool(v) for k, v in ev.items()}
     if decl.exists():
         d = json.loads(decl.read_text(encoding="utf-8"))
         orgs = d.get("organisms", [])
-        unknown = [o.get("organism_id") for o in orgs if not o.get("ancestry")]
+        unknown = [o.get("organism_id") for o in orgs if not (o.get("ancestries") or o.get("ancestry"))]
+        declared = d.get("population_digest")
+        recomputed = canonical_population_digest(d)
         ev.update({"organisms_declared": len(orgs), "organisms_without_ancestry": len(unknown),
-                   "declaration_digest": "sha256:" + hashlib.sha256(decl.read_bytes()).hexdigest(),
-                   "minted_by_proteus": d.get("minted_by_proteus", False)})
-    ok = all(ev.values() if not decl.exists() else
-             [ev["proteus_registry_present"], ev["proteus_catalog_present"], ev["archaeon_declaration_present"],
-              unknown == [], bool(ev.get("minted_by_proteus"))])
+                   "population_digest_declared": declared,
+                   "population_digest_recomputed_here": recomputed,
+                   "population_digest_rule_published": bool(d.get("population_digest_rule")),
+                   "superseded_raw_byte_digests": d.get("superseded_raw_byte_digests")})
+        checks["declaration_has_canonical_rule"] = bool(d.get("population_digest_rule"))
+        checks["declaration_digest_reproducible"] = bool(declared) and declared == recomputed
+        checks["every_organism_has_ancestry"] = unknown == []
+        checks["organisms_present"] = len(orgs) > 0
+    if mint_b is not None:
+        m = json.loads(mint_b)
+        bound = (m.get("declaration_canonical_digest") or m.get("population_digest")
+                 or m.get("declaration_digest"))
+        ev.update({"mint_binds_digest": bound, "mint_count": (m.get("population_manifest") or {}).get("count"),
+                   "mint_schema": m.get("schema_version"), "minted_by": m.get("minted_by")})
+        checks["mint_binds_canonical_digest"] = bool(bound) and bound == ev.get("population_digest_recomputed_here")
+        checks["mint_count_matches"] = ev.get("mint_count") == ev.get("organisms_declared")
+    ev["checks"] = checks
+    missing = [k for k, v in checks.items() if not v]
+    ev["missing"] = missing
+    if missing == ["mint_binds_canonical_digest"]:
+        ev["next_action"] = ("Proteus remints over the canonical digest %s (the content is unchanged: same 57 "
+                             "organisms, same collapsed duplicate). The raw-byte digest it currently binds is a "
+                             "checkout artifact, not a population identity."
+                             % ev.get("population_digest_recomputed_here"))
     return {"id": "G5", "owner": "Proteus + Archaeon",
             "requirement": "manifests + structural descriptors for the exact C4 starting organisms; no organism of unknown ancestry",
-            "status": GREEN if ok else RED, "evidence": ev, "blocks_launch": True}
+            "status": GREEN if not missing else RED, "missing": missing, "evidence": ev, "blocks_launch": True}
 
 
 def main(argv=None) -> int:

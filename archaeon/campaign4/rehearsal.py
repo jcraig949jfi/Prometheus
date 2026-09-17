@@ -38,9 +38,18 @@ C4 = REPO / "archaeon" / "campaign4"
 OUT = C4 / "REHEARSAL_RECEIPT.json"
 BUNDLE = C4 / "rehearsal" / "bundle"
 
+REHEARSAL_ID = "C4-REH-1"
 ARMS = ("a", "b")
-SEEDS = (1, 2, 3, 4)
+SEEDS = tuple(range(1, 25))          # 2 x 24 = 48 units
+REPEATS = 24                         # 48 x 24 = 1,152 observations
 N, G, E = 60, 20, 16
+
+# The interruption must intersect LIVE work, so the workload is sized to run for minutes rather
+# than seconds, and it is enqueued in WAVES. Wave 1 establishes the observed execution rate from
+# the queue itself; the restart is then timed against that measured rate instead of a guess.
+# Expected accounting invariant: observations == len(ARMS) * len(SEEDS) * REPEATS, exactly once,
+# with no duplicate minted across the interruption.
+EXPECTED_OBSERVATIONS = len(ARMS) * len(SEEDS) * REPEATS
 
 
 def canon(obj) -> bytes:
@@ -79,8 +88,8 @@ def spec_for(arm: str, seed: int, campaign_seed: int) -> dict:
                          "if_indeterminate": "INCONCLUSIVE", "aggregate": "all"},
         "pew": None,
         # all five axes stated: none has a default, and noop_v0 is stateless so state is reset
-        "repeat": {"count": 2, "order": "sequential", "seed_derivation": "sha256_index",
-                   "state": "reset", "budget": {"max_seconds": 60, "max_observations": 2}},
+        "repeat": {"count": REPEATS, "order": "sequential", "seed_derivation": "sha256_index",
+                   "state": "reset", "budget": {"max_seconds": 600, "max_observations": REPEATS}},
     }
 
 
@@ -96,10 +105,20 @@ def s1_build(campaign_seed: int) -> dict:
             units.append({
                 "arm": arm, "seed": seed, "file": str(f.relative_to(REPO)).replace("\\", "/"),
                 "spec_sha256_canonical": sha(b),
-                "request_key": "cmp4-rehearsal-%s-s%d" % (arm, seed),
-                "family_id": "cmp4-rehearsal", "arm_id": "rehearsal_" + arm,
+                "request_key": "%s-%s-s%d" % (REHEARSAL_ID, arm, seed),
+                "family_id": REHEARSAL_ID, "arm_id": REHEARSAL_ID + "-" + arm,
             })
     manifest = {"campaign_seed": campaign_seed, "label": "REHEARSAL -- NOT EVIDENCE",
+                "rehearsal_id": REHEARSAL_ID, "repeats_per_unit": REPEATS,
+                "expected_observations": EXPECTED_OBSERVATIONS,
+                "accounting_invariants": {
+                    "observations_exactly": EXPECTED_OBSERVATIONS,
+                    "worlds_per_unit": 1,
+                    "duplicates_permitted": 0,
+                    "lost_permitted": 0,
+                    "manual_repair_permitted": 0,
+                    "note": "checked across the deliberate interruption: one world per unit, exact "
+                            "observation count, no duplicate minted, no row repaired by hand"},
                 "budget": {"N": N, "G": G, "E": E}, "arms": list(ARMS), "seeds": list(SEEDS), "units": units}
     mf = BUNDLE / "MANIFEST.json"
     mf.write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
