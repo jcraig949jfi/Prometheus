@@ -3,8 +3,9 @@ REVIEW PACKET -- SFE POINT RELEASE (schema 8 -> 9), 2026-09-17
 =======================================================================
 seat        Daedalus (maintainer of the Serendipity Foundry Engine)
 instance    m2-d6ecd70b, on M2 / SPECTREX5 (192.168.1.191)
-status      DEPLOYED and QUALIFIED on production at 10:51:30Z; one
-            measurement (long-run load) still running at packet time
+status      DEPLOYED and QUALIFIED on production at 10:51:30Z; long-run
+            measurement DONE with one finding (section 5); its control
+            run pending
 audience    an external reviewer with no repository access; every claim
             below names the file that carries its numbers
 attack this the way you would attack a result: every "verified" line
@@ -246,34 +247,55 @@ test fails the build if they ever do.
  caller's words travel through it unchanged as opaque bytes. PASSES.
 
 -----------------------------------------------------------------------
-5. LONG-RUN MEASUREMENT (D10) -- PENDING AT PACKET TIME
+5. LONG-RUN MEASUREMENT (D10) -- DONE 11:26:50Z; ONE FINDING
 -----------------------------------------------------------------------
 
- Shape: 20 worlds x 1,000 generations (1 experiment + commit +
- observation per generation, a WORLD_EVENT every 10, a checkpoint every
- 50, an 8 KiB artifact every 100, a fork and a typed termination per
- world), 2 producer threads + 1 cursor-reader thread on one scratch
- engine of the shipped build, disposable ledger on the production volume
- class (D:). Then a full paginated event walk, kill -9 at full history,
- relaunch, anchor sample. Target ~20,000 observations / ~85,000 events:
- the size the previous production ledger reached in two weeks, and ~10x
- Campaign 3's per-run rows.
+ Shape: 20 worlds x 1,000 generations (experiment + commit + observation
+ per generation, a WORLD_EVENT every 10, a checkpoint every 50, an 8 KiB
+ artifact every 100, a fork + typed termination per world), 2 producer
+ threads + 1 cursor-reader thread, scratch engine of the shipped build,
+ disposable ledger on the production volume class. 82,660 events, 20,000
+ observations, 380 checkpoints, 40 worlds; ~115,000 calls in 50.7 min.
 
- Interim, at 11:06Z (30 min in): 12,327 observations, 50,955 events, DB
- ~50 MB, 0 HTTP 5xx, 0 stalls > 5 s in the producer thread logs.
- Throughput under 2 producers + a reader: ~300-400 observations/min
- (~130 ms per generation, i.e. three sequential POSTs at ~15-40 ms each
- through one SQLite writer). Small-scale run (2 x 60) for the route
- latency shape: POST observations p50 17 ms, p95 34 ms; checkpoint 5 ms;
- relaunch to /v2/version 0.5 s; identity same after restart; anchors
- 50/50.
+ what held (numbers)
+   medians flat across quarters: POST experiment 22/17/16/16 ms, POST
+   observation 67/60/58/56 ms, cursor page of 200 observations 20/19/17/
+   18 ms (q1..q4) -- no degradation with accumulated history
+   p95 ~200 ms writes, ~130 ms reads, also flat
+   0 HTTP 5xx; SQLite write lock: 62,664 acquisitions, 0 failures, max
+   wait 1.77 s
+   storage 84.4 MB at 82,660 events = 102 MB per 100K events; WAL small
+   checkpoint p50 17 ms; full paginated walk of all events 4.65 s (180
+   pages); kill -9 at full history -> relaunch -> /v2/version 1.05 s;
+   identity unchanged; 50/50 anchors verify
 
- The final table (per-route p50/p95/max by quarter of the run, DB bytes
- per 100K events, checkpoint latency, restart cost at full history,
- write_lock waits) is appended to SFE_LONG_RUN_REPORT.md when the run
- ends (~25 min) and the packet file is amended. Retention decision stated
- there from the numbers; today's prior: "forever" is fine at this scale
- and the ledger is tamper-evident, so retention would be a policy act.
+ THE FINDING
+   150 calls (0.13%) took 5-13 s (p50 7.1 s, max 12.8 s), on reads AND
+   writes in proportion to volume, none in the first 14.5 min, then ~0.6
+   per minute. The write lock is NOT the cause (above). Candidate
+   mechanism, read from the code: sfe/store.py uses ONE sqlite3
+   connection (check_same_thread=False) for every read and every write
+   with no Python-level lock, so the reader thread's SELECTs and the
+   producers' transactions interleave on one handle under uvicorn's
+   thread pool; a stall on the handle is a stall on everything -- the
+   observed shape. Why 7-12 s rather than 100 ms is not yet measured.
+   A CONTROL (same run, no reader thread) is running; its receipt is
+   appended to SFE_LONG_RUN_REPORT.md when done.
+   Consumer impact: Archaeon's gate/runner use 10 s timeouts; a 12.8 s
+   stall reads as ENGINE_TRANSPORT. Idempotency keys make the retry
+   safe (the retried POST replays), so the failure is a spurious
+   transport error, not lost or duplicated science -- but a consumer
+   that halts on the first transport error would park.
+
+ decisions from data
+   SQLite: KEEP (nothing in the data argues otherwise; the stall is a
+   connection-handling defect in the engine, ~40 lines to fix by giving
+   reads their own connections in WAL mode -- FIRST ITEM of the next
+   point release, acceptance = 0 calls over 5 s at this shape).
+   Retention: NONE; would change past ~1M events / ~1 GB.
+   Readiness: attended hour-scale runs yes, with consumer timeouts
+   >= 30 s; unattended multi-hour with a 10 s-timeout consumer NO until
+   the fix lands and is measured.
 
 -----------------------------------------------------------------------
 6. WHAT WOULD FALSIFY THIS PACKET
@@ -286,8 +308,10 @@ test fails the build if they ever do.
    observations checked; a backfill would be manufacturing facts).
  - A head hash of any pre-migration world differing from the backup's
    (25 checked; all 351 could be checked in seconds -- ask).
- - The long-run run showing a latency knee, a stall > 5 s, or a 5xx --
-   then the retention/storage decision changes and section 5 says so.
+ - The long-run control (no reader thread) STILL showing 5 s stalls --
+   then the candidate mechanism in section 5 is wrong and the cause is
+   in the write path alone (WAL checkpoint / fsync / file scanning); the
+   report says which when it lands.
  - The five-word grep failing on a future commit (it already caught my
    own docstring once; that is the point of it).
  - The one thing NOT independently verified: I wrote the tools that
