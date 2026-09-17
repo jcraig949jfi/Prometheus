@@ -123,8 +123,10 @@ CREATE TABLE IF NOT EXISTS {schema}.execution_step (
 -- attempt's own design_digest and refused if it differs. The producer-side
 -- derivation (viv/stepkey.py, shared with Archaeon's runner) is:
 --     'idem:' || left(encode(sha256(convert_to(design_digest || '|' || step_kind || '|' || canonical(parts), 'UTF8')), 'hex'), 32)
--- canonical(parts) = the JSON text of `parts` with sorted keys and no whitespace
--- (jsonb::text is canonical for arrays of scalars, which is what parts are).
+-- canonical(parts) = jsonb::text of `parts`, which for a FLAT ARRAY OF SCALARS
+-- (the only shape viv/stepkey.py admits) equals Python json.dumps with default
+-- separators: [1, "a", true, null]. tests/test_stepkey_and_bundle.py asserts
+-- the parity on the server.
 CREATE OR REPLACE FUNCTION {schema}.execution_step_key_check() RETURNS trigger AS $$
 DECLARE
     dd text;
@@ -169,3 +171,63 @@ CREATE TABLE IF NOT EXISTS {schema}.provenance_envelope (
     factors          jsonb NOT NULL DEFAULT '{}'::jsonb,
     recorded_at      timestamptz NOT NULL DEFAULT now()
 );
+
+-- NEW ATTEMPT on the SAME row (EXPERIMENT_TRANSACTION_MODEL.md s3/s5). Today
+-- a released stranded row goes to `failed` and a rerun is a NEW ROW. With
+-- attempts, `viv.cli release --new-attempt` closes the open attempt as
+-- STRANDED and returns the row to `queued`; the next claim opens attempt n+1
+-- with parent = the stranded one. The transition claimed|running -> queued
+-- is legal ONLY inside a transaction that declared itself the release path
+-- (SET LOCAL viv.release = 'new_attempt') AND whose row has no OPEN attempt
+-- left. Every other writer still meets the original rule.
+CREATE OR REPLACE FUNCTION {schema}.enforce_queue_transition()
+RETURNS trigger AS $$
+DECLARE
+    legal boolean;
+    open_attempts integer;
+BEGIN
+    IF OLD.status IN ('completed', 'failed', 'cancelled') THEN
+        RAISE EXCEPTION
+            'vivarium: experiment % is terminal (%) and is frozen; refusing UPDATE',
+            OLD.experiment_id, OLD.status
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    IF NEW.experiment_spec IS DISTINCT FROM OLD.experiment_spec
+       OR NEW.spec_hash IS DISTINCT FROM OLD.spec_hash
+       OR NEW.created_at IS DISTINCT FROM OLD.created_at
+       OR NEW.created_by IS DISTINCT FROM OLD.created_by
+       OR NEW.source_reason IS DISTINCT FROM OLD.source_reason
+       OR NEW.source_evidence IS DISTINCT FROM OLD.source_evidence THEN
+        RAISE EXCEPTION
+            'vivarium: the sealed request (spec, spec_hash, provenance) of % is immutable',
+            OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    IF NEW.status = OLD.status THEN
+        RETURN NEW;                       -- annotation, not a transition
+    END IF;
+
+    legal := (OLD.status = 'queued'  AND NEW.status IN ('claimed', 'cancelled'))
+          OR (OLD.status = 'claimed' AND NEW.status IN ('running', 'failed'))
+          OR (OLD.status = 'running' AND NEW.status IN ('completed', 'failed'));
+
+    IF NOT legal AND OLD.status IN ('claimed', 'running') AND NEW.status = 'queued'
+       AND current_setting('viv.release', true) = 'new_attempt' THEN
+        SELECT count(*) INTO open_attempts FROM {schema}.execution_attempt
+         WHERE experiment_id = OLD.experiment_id AND terminal_state IS NULL;
+        IF open_attempts = 0 THEN
+            legal := true;                -- the release path closed the attempt first
+        END IF;
+    END IF;
+
+    IF NOT legal THEN
+        RAISE EXCEPTION 'vivarium: illegal transition % -> % on %',
+            OLD.status, NEW.status, OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
