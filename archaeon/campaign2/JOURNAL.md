@@ -24,3 +24,12 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   PHASE-A a01 (create+keep) / a02 (resume: 8 steps replayed, 0 new worlds,
   teardown TERMINATED x2). MACHINE_READINESS.md: 8 IMPLEMENTED_AND_TESTED, 1
   PARTIAL (F). Ledger L2-001..L2-011. PLAN.md fixes the ten experiments.
+
+## 02:56-03:05 -- C2-SFE-01 (dry run a01; engine a02 of record; CAPABLE_NEGATIVE)
+
+- 144 s; 3 worlds, 12 packs published with maturity, 12/12 imports hash ok,
+  18 records, 0 errors, teardown 3/3 TERMINATED. Fresh 2/6 footholds (35, 49);
+  relevant transport -0.160 held-out vs fresh (1/6 paired wins, 0/6
+  footholds); random transport -0.026 (1/6). Machine disposition
+  CAPABLE_NEGATIVE accepted. 30 reachability rows appended (W2_K2 8-bit
+  G60 2/6; W7_K2 4-bit 0/6). Ledger L2-012 (auto), L2-013, L2-014. Next: C2-SFE-02.

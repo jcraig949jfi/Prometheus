@@ -1,0 +1,160 @@
+{
+ "arms": [
+  "fresh",
+  "relevant",
+  "random"
+ ],
+ "assay_capability_requirement": "the fresh arm reaches a foothold (training best >= 0.5) in >= 1 of 6 seeds; otherwise TARGET_UNREACHABLE and the row of record is the reachability update, not a transport result",
+ "budget": {
+  "E": 16,
+  "G": 60,
+  "G_source": 60,
+  "N": 200,
+  "heldout_episodes": 48,
+  "k": 8,
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ "claim_ceiling": "weak positive at best (n=6, one target cell, one source per relevance class); a capable negative at this budget is evidence",
+ "crn_policy": "default (rng_label=crn); identical generation 0 for the three arms per seed (gen0 with no substitution); transported episodes replace the first k of E training episodes each generation",
+ "decl": {
+  "artifact_policy": "packs carry maturity as telemetry; the transported material is EPISODES, not organisms, so maturity does not gate the assay (D2-006)",
+  "interventions": [
+   {
+    "arm": "relevant",
+    "counter": "transport_applied_gens"
+   },
+   {
+    "arm": "random",
+    "counter": "transport_applied_gens"
+   }
+  ],
+  "n_min": 6,
+  "positive_control": {
+   "arm": "fresh",
+   "metric": "reached",
+   "min": 1,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "fresh",
+   "metric": "competence_heldout",
+   "min_effect": 0.1,
+   "treatment": "relevant"
+  },
+  "target": {
+   "baseline_arm": "fresh",
+   "reach_metric": "reached",
+   "reach_min": 1,
+   "reachability_class": "UNESTABLISHED"
+  }
+ },
+ "expected_machine_telemetry": [
+  "first_solved_gen per row",
+  "transport_applied_gens",
+  "gen0_provenance",
+  "source maturity per pack",
+  "elite genome summary",
+  "reachability rows appended (fresh arm baseline; others treated)"
+ ],
+ "experiment": "C2-SFE-01",
+ "falsification_condition": "relevant - fresh < 0.10 mean held-out with the fresh arm reaching >= 1 foothold => CAPABLE_NEGATIVE; relevant <= random => relevance is not the active ingredient",
+ "machine_changes_exercised": [
+  "A reachability lookup in the prereg",
+  "B typed states",
+  "C CRN default + gen0 provenance",
+  "D attempts/resume",
+  "E maturity on packs",
+  "F canonical digests + import hash checks",
+  "G step API episode injection",
+  "I generated record"
+ ],
+ "parent_evidence": "SFE-03 (campaign 1): 0/9 rows reached W1_d4 at N200 G60; the question was never posed (INCONCLUSIVE). Reachability table: W1_d4 4-bit RARE 1/6; W2_K2 4-bit N200 G60 E16 REACHABLE 4/9 (first solved 48-59).",
+ "parents": [
+  "SFE-03"
+ ],
+ "positive_control": "fresh arm on W2_K2 4-bit (own generation 0, no transport): expected 4/9 = 0.44 per seed; P(0 of 6) = 0.029",
+ "prereg_digest": "sha256:37fd00a04f1a50b60d1645e280ab02b15969f5c1f343eba3f9a6fd7c5a8df968",
+ "primary_observable": "competence_heldout (48 held-out episodes) of the elite, per arm x seed; footholds and first_solved_gen secondary",
+ "question": "Do k=8 transported FAILURE EPISODES from a structurally relevant source (W2_K2 8-bit) raise held-out competence on W2_K2 4-bit above fresh search and above random-compatible transport (W7_K2) at matched evaluation budget?",
+ "reachability_estimate": {
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "first_solved_gens": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "pooled_any_budget": {
+    "band95": [
+     0.0362,
+     0.6245
+    ],
+    "budgets": [
+     [
+      20,
+      4,
+      4
+     ],
+     [
+      200,
+      100,
+      24
+     ]
+    ],
+    "class": "RARE",
+    "freq": 0.2,
+    "k": 1,
+    "n": 5
+   }
+  },
+  "W7_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "first_solved_gens": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "pooled_any_budget": {
+    "band95": [
+     0.0,
+     0.6576
+    ],
+    "budgets": [
+     [
+      20,
+      4,
+      4
+     ]
+    ],
+    "class": "UNESTABLISHED",
+    "freq": 0.0,
+    "k": 0,
+    "n": 2
+   }
+  }
+ },
+ "title": "failure-episode transport on a reachable target",
+ "typed_failure_conditions": [
+  "TARGET_UNREACHABLE (fresh 0/6)",
+  "INTERVENTION_NOT_APPLIED (transport_applied_gens == 0)",
+  "UNDERPOWERED (< 6 rows per arm)",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ]
+}

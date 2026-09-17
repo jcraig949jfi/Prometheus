@@ -207,3 +207,35 @@ def funnel_row(experiment: str, prereg: dict, receipt: dict, states: List[dict],
         "machine_defect": machine_defect, "machine_repair": machine_repair, "telemetry_added": telemetry_added,
         "decisions": list(decisions), "typed_states": names,
     }
+
+
+# ------------------------------------------------------------------ re-render with an addendum
+def rerender(experiment: str, addendum: Dict[str, str], *, root: Path = C2, arm_field: str = "arm",
+             metrics: Sequence[str] = ("competence_heldout",)) -> Path:
+    """Regenerate C2-SFE-NN/RECORD.md from the saved PREREG / RECEIPT / rows / ATTEMPTS with the
+    agent's addendum (science, bench, landscape, disposition, disposition_note). The generated
+    sections are recomputed, never edited by hand."""
+    d = root / experiment
+    prereg = json.loads((d / "PREREG.json").read_text(encoding="utf-8"))
+    receipt = json.loads((d / "RECEIPT.json").read_text(encoding="utf-8"))
+    rows = json.loads((d / "rows.json").read_text(encoding="utf-8")) if (d / "rows.json").exists() else []
+    idx = json.loads((d / "ATTEMPTS.json").read_text(encoding="utf-8"))
+    text = render_record(prereg, receipt, rows, idx, arm_field=arm_field, metrics=metrics, states=receipt.get("typed_states", []),
+                         disposition=receipt.get("disposition_candidate") or {}, addendum=addendum, decisions=receipt.get("decisions", []))
+    (d / "RECORD.md").write_text(text, encoding="utf-8", newline="\n")
+    (d / "ADDENDUM.json").write_text(json.dumps(addendum, indent=1, sort_keys=True), encoding="utf-8", newline="\n")
+    return d / "RECORD.md"
+
+
+if __name__ == "__main__":
+    import argparse
+    import sys
+    ap = argparse.ArgumentParser()
+    ap.add_argument("experiment")
+    ap.add_argument("--addendum", required=True, help="JSON file with science/bench/landscape/disposition/disposition_note")
+    ap.add_argument("--arm-field", default="arm")
+    ap.add_argument("--metrics", nargs="*", default=["competence_heldout"])
+    a = ap.parse_args()
+    p = rerender(a.experiment, json.loads(Path(a.addendum).read_text(encoding="utf-8")), arm_field=a.arm_field, metrics=a.metrics)
+    print(p)
+    sys.exit(0)
