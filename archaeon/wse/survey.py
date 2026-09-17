@@ -129,7 +129,7 @@ def run_job(job: dict) -> dict:
     cs, seed = job["campaign_seed"], job["seed"]
     t0 = time.time()
     res = run_cell(spec, regime, cs, seed, N=job["N"], G_=job["G"], E=job["E"],
-                   init_pop=job.get("init_pop"), branch=job.get("branch", "B1_naive"))
+                   init_pop=job.get("init_pop"), branch=job.get("branch", "B1_naive"), rng_label=job.get("branch", "B1_naive"))
     elite = res["elite"]
     m = elite["manifest"]
     # held-out families

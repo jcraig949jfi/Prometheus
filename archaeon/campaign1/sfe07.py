@@ -116,7 +116,7 @@ def run_set(job: dict) -> dict:
     init = [G.organism_record(m, None, 0) for m in mans]
     fm = dict(FOUNDRY_C1); fm["seed"] = 909 + seed; fm["n"] = max(0, N - len(init))
     init = init + [o for o in G.generate(fm)] if fm["n"] else init
-    res = run_cell(WORLD_B, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, init_pop=init[:N], branch="cmp1-sfe07-common", foundry=FOUNDRY_C1)
+    res = run_cell(WORLD_B, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, init_pop=init[:N], branch="cmp1-sfe07-common", rng_label="cmp1-sfe07-common", foundry=FOUNDRY_C1)
     ho = evaluate(res["elite"]["manifest"], eps, rng_seed=7)
     return {"set": name, "seed": seed, "n_members": len(mans), "direct_best": best_direct, "direct_mean": sum(direct.values()) / max(1, len(direct)),
             "evolved_heldout": ho["reward"], "first_solved_gen": next((t["gen"] for t in res["trace"] if t["best_reward"] >= 0.5), None),

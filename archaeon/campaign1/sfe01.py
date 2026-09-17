@@ -138,7 +138,7 @@ def run_target(job: dict) -> dict:
     init = seeded_pop(job["N"], seed, comps)
     t0 = time.time()
     res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=job["N"], G_=job["G"], E=job["E"],
-                   init_pop=init, branch="cmp1-common", foundry=FOUNDRY_C1, tabu=tabu, tabu_key=opsig)   # attempt 2: common RNG (D-007), opcode-signature tabu (D-008)
+                   init_pop=init, branch="cmp1-common", rng_label="cmp1-common", foundry=FOUNDRY_C1, tabu=tabu, tabu_key=opsig)   # attempt 2: common RNG (D-007), opcode-signature tabu (D-008)
     elite = res["elite"]
     ho = evaluate(elite["manifest"], episodes_for(TARGET, CAMPAIGN_SEED, "heldout", seed, 48), rng_seed=7)
     return {"cell": cell, "seed": seed, "competence_heldout": ho["reward"], "train_last": res["elite_eval"]["reward"],
@@ -150,7 +150,7 @@ def run_target(job: dict) -> dict:
 
 
 def run_source(seed: int, N: int, G_: int, E: int) -> dict:
-    res = run_cell(SOURCE, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-source", foundry=FOUNDRY_C1)
+    res = run_cell(SOURCE, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-source", rng_label="cmp1-source", foundry=FOUNDRY_C1)
     rng = SplitMix64(seed_from("cmp1.sfe01.residue", CAMPAIGN_SEED, seed))
     return {"seed": seed, "elite_reward": res["elite_eval"]["reward"], "residue": harvest_residue(res, rng),
             "trace_best": [t["best_reward"] for t in res["trace"]]}

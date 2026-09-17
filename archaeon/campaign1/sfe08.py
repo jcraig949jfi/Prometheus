@@ -112,7 +112,7 @@ def run_set(job: dict) -> dict:
     fm = dict(FOUNDRY_C1); fm["seed"] = 808 + seed; fm["n"] = max(0, N - len(init))
     if fm["n"]:
         init = init + G.generate(fm)
-    res = run_cell(TASK, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, init_pop=init[:N], branch="cmp1-sfe08-common", foundry=FOUNDRY_C1)
+    res = run_cell(TASK, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, init_pop=init[:N], branch="cmp1-sfe08-common", rng_label="cmp1-sfe08-common", foundry=FOUNDRY_C1)
     ho = evaluate(res["elite"]["manifest"], eps, rng_seed=7)
     return {"set": name, "seed": seed, "n_members": len(mans), "direct_best": max(scores), "direct_mean": sum(scores) / max(1, len(scores)),
             "direct_share_above_chance": sum(1 for s in scores if s > 0.125) / max(1, len(scores)),

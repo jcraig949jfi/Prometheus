@@ -60,7 +60,7 @@ def relevance(src: WorldSpec, tgt: WorldSpec) -> dict:
 def source_failure_episodes(spec: WorldSpec, seed: int, N: int, G_: int, E: int, k: int) -> dict:
     """Run the source search; return k episodes of its LAST training family on which the
     final population's median organism failed (a failure INPUT set, source answers attached)."""
-    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-sfe03-src", foundry=FOUNDRY_C1)
+    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-sfe03-src", rng_label="cmp1-sfe03-src", foundry=FOUNDRY_C1)
     eps = episodes_for(spec, CAMPAIGN_SEED, "train", (G_ - 1) * 100003 + seed, E)
     pop = sorted(res["final_population"], key=lambda z: -z["reward"])
     probe = pop[len(pop) // 2]["manifest"]
@@ -88,7 +88,7 @@ def run_arm(job: dict) -> dict:
     EV.episodes_for = patched
     try:
         t0 = time.time()
-        res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=job["N"], G_=job["G"], E=job["E"], branch="cmp1-sfe03-common", foundry=FOUNDRY_C1)
+        res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=job["N"], G_=job["G"], E=job["E"], branch="cmp1-sfe03-common", rng_label="cmp1-sfe03-common", foundry=FOUNDRY_C1)
     finally:
         EV.episodes_for = orig
     ho = evaluate(res["elite"]["manifest"], orig(TARGET, CAMPAIGN_SEED, "heldout", seed, 48), rng_seed=7)

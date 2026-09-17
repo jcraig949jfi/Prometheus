@@ -74,7 +74,7 @@ def run_cell_job(job: dict) -> dict:
     for g in range(G_):
         spec = spec_for(delay)
         res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=1, E=E, init_pop=pop,
-                       branch="cmp1-sfe05-g%d" % g, foundry=FOUNDRY_C1)
+                       branch="cmp1-sfe05-g%d" % g, rng_label="cmp1-sfe05-g%d" % g, foundry=FOUNDRY_C1)
         mean_r = res["trace"][-1]["mean_reward"]; best_r = res["trace"][-1]["best_reward"]
         schedule.append({"gen": g, "delay": delay, "mean_reward": mean_r, "best_reward": best_r})
         # children for the next generation = the loop's would-be next population: run_cell with

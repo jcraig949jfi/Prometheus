@@ -151,7 +151,7 @@ def run_job(job: dict) -> dict:
         init_pop = _v01_solver_pop(job["N"])
         fm = dict(FOUNDRY_V02); fm["seed"] = 777 + seed; fm["n"] = job["N"] - len(init_pop)
         init_pop = init_pop + G.generate(fm)
-    res = run_cell(spec, regime, cs, seed, N=job["N"], G_=job["G"], E=job["E"], init_pop=init_pop, branch=branch,
+    res = run_cell(spec, regime, cs, seed, N=job["N"], G_=job["G"], E=job["E"], init_pop=init_pop, branch=branch, rng_label=branch,
                    ramp=regime.name != "S0", ramp_foothold=RAMP_FOOTHOLD_V03, curve_every=10, curve_episodes=curve_eps,
                    foundry=FOUNDRY_V02, ramp_mode="mean", chance=1.0 / (1 << spec.value_bits))
     elite = res["elite"]

@@ -53,7 +53,7 @@ STORAGE_GEN_PER_ARTIFACT = 0.5
 
 def run_producer(job: dict) -> dict:
     spec, seed, N, G_, E = job["spec"], job["seed"], job["N"], job["G"], job["E"]
-    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-sfe10-prod", foundry=FOUNDRY_C1)
+    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=G_, E=E, branch="cmp1-sfe10-prod", rng_label="cmp1-sfe10-prod", foundry=FOUNDRY_C1)
     return {"source": spec.name, "seed": seed, "G": G_, "elite_reward": res["elite_eval"]["reward"],
             "manifests": [e["manifest"] for e in res["final_elites"]]}
 
@@ -68,7 +68,7 @@ def run_consumer(job: dict) -> dict:
         fm = dict(FOUNDRY_C1); fm["seed"] = seed_from("wse.gen0", CAMPAIGN_SEED, seed) & MASK62; fm["n"] = N
         init = init + G.generate(fm)[: max(0, N - len(init))]
     t0 = time.time()
-    res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=max(1, G_), E=E, init_pop=init, branch="cmp1-sfe10-common", foundry=FOUNDRY_C1)
+    res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=max(1, G_), E=E, init_pop=init, branch="cmp1-sfe10-common", rng_label="cmp1-sfe10-common", foundry=FOUNDRY_C1)
     ho = evaluate(res["elite"]["manifest"], episodes_for(TARGET, CAMPAIGN_SEED, "heldout", seed, 48), rng_seed=7)
     return {"arm": arm, "seed": seed, "consumer_G": G_, "competence_heldout": ho["reward"], "train_last": res["elite_eval"]["reward"],
             "first_solved_gen": next((t["gen"] for t in res["trace"] if t["best_reward"] >= 0.5), None), "persist": ho["persist"],

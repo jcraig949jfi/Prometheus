@@ -161,7 +161,7 @@ def run_arm(job: dict) -> dict:
     fn = None if arm == "A_words" else make_field_descend(arm == "C_fields_class")
     init = canonical_pop(job["N"], seed)                                        # identical generation 0 for every arm
     t0 = time.time()
-    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=job["N"], G_=job["G"], E=job["E"], init_pop=init, branch="cmp1-sfe09-common",
+    res = run_cell(spec, REGIMES["E0"], CAMPAIGN_SEED, seed, N=job["N"], G_=job["G"], E=job["E"], init_pop=init, branch="cmp1-sfe09-common", rng_label="cmp1-sfe09-common",
                    foundry=FOUNDRY_C1, descend_fn=fn)
     ho = evaluate(res["elite"]["manifest"], episodes_for(spec, CAMPAIGN_SEED, "heldout", seed, 48), rng_seed=7)
     ops_hist: Dict[str, int] = {}
