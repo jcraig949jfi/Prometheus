@@ -127,20 +127,364 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/blocksort.c:1031-1094"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/compress.c:239-400"
+   }
+  ],
+  "inspected_files": [
+   "blocksort.c 1031-1094 + inventory",
+   "compress.c 239-400 (structure)"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "block compression by reordering: the Burrows-Wheeler transform sorts all rotations of a block so that bytes with similar contexts become adjacent, then move-to-front and run-length coding turn that locality into small integers, and several Huffman tables chosen per 50-symbol group code them. The two mechanisms read are engineering around the theory: a sort with a work budget that abandons the fast radix/quick sort for a slower guaranteed one when the block is too repetitive (the compressed output is identical either way), and an iterative clustering that assigns each group of symbols to whichever of up to six tables codes it cheapest and re-derives the tables from their assignments",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz sha256:ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+   "payload_manifest_id": "techne tree_sha256 70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4 (57 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/bzip2-1.0.8/blocksort.c",
+     "payload_hash_read": "4e48cd2ccff44699e67a7c949b0e9576c05b8dcbe20f863475c4fcc8db11a409",
+     "techne_recorded_hash": "4e48cd2ccff44699e67a7c949b0e9576c05b8dcbe20f863475c4fcc8db11a409",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/bzip2-1.0.8/compress.c",
+     "payload_hash_read": "75995bd6e8c5f1e1dad05178f3cf53137df99ce860a1984324f78591f28deed3",
+     "techne_recorded_hash": "75995bd6e8c5f1e1dad05178f3cf53137df99ce860a1984324f78591f28deed3",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output",
+   "fossil_ancestry": "bzip2-1.0.8",
+   "human_name": "BZ2_blockSort (1031-1094): nblock < 10000 -> fallbackSort; else budget = nblock * ((workFactor - 1) / 3), mainSort(..., &budget); if budget < 0 'too repetitive; using fallback sorting algorithm'; mainSort / mainQSort3 / mainSimpleSort / mainGtU (345-1030) with the budget decremented per comparison; origPtr search",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the rotations of the block are sorted by a two-byte radix pass followed by a three-way quicksort and shell sort on the buckets, with a comparison routine that uses precomputed 'quadrant' descriptors to shortcut long equal runs; every comparison spends from a budget proportional to the block size times a user work factor; if the budget runs out (highly repetitive input, the quadratic case of this sort) the whole block is re-sorted by a fallback method based on bucket sorting of the original bytes that is slower on average but bounded; the output (the sorted order and the origin pointer) is the same from both, so the format is unaffected",
+   "input": "a block of up to 900 kB",
+   "output": "the sorted rotation order and origPtr",
+   "state": "none across blocks",
+   "update": "per block",
+   "assumptions": [
+    "the fast sort's worst case is rare but real (runs of one byte); a budget is a cheaper guard than a worst-case-optimal suffix sort (this predates practical linear-time suffix arrays in the author's judgment, per the comments)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups"
+   ],
+   "fitness_value_in_ancestor": "bounded compression time on pathological inputs without a format change; the 1.0 series' main robustness fix",
+   "failure_landscape": "by reading: the fallback path is much slower; the budget constant is a heuristic ('Not that it particularly matters any more')",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Burrows & Wheeler 1994; Bentley & McIlroy's three-way quicksort; Seward's own budget idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/blocksort.c:1031-1094; 345-352, 620-628, 743-757"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "BZ2_blockSort and the budget threading",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups",
+   "fossil_ancestry": "bzip2-1.0.8",
+   "human_name": "sendMTFValues (239-400): nGroups from nMTF (2 to 6); the initial split of the symbol frequency range into nGroups parts; for iter < BZ_N_ITERS (4): per group of BZ_G_SIZE (50) symbols compute the cost under each table, pick the cheapest (selector), accumulate that table's frequencies, then rebuild all tables (BZ2_hbMakeCodeLengths); the 6-table unrolled cost loop",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the MTF/RLE symbol stream is cut into groups of 50; the number of tables is chosen from the stream length; initial tables are made by splitting the alphabet by cumulative frequency into that many contiguous ranges; then, four times, each group is assigned the table that would code it in the fewest bits, the assignments are recorded as selectors, and each table's code lengths are recomputed from the symbols of the groups assigned to it; selectors are themselves MTF-coded and sent with the tables",
+   "input": "the MTF symbol stream",
+   "output": "tables, selectors, the coded block",
+   "state": "none across blocks",
+   "update": "per block",
+   "assumptions": [
+    "symbol statistics vary along a BWT-sorted block (different contexts dominate different regions), so several tables beat one; four rounds of reassignment converge well enough (a k-means on code costs)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output"
+   ],
+   "fitness_value_in_ancestor": "a few percent better than a single table at negligible decoder cost; the reason bzip2 beats gzip on text",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the multiple-table trick is Seward's (the CHANGES note 0.9.0c 'changed setting of nGroups'); Lloyd's algorithm as the abstract form",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bzip2-1.0.8/upstream/tree/bzip2-1.0.8/compress.c:239-400"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sendMTFValues' table-selection loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "generateMTFValues (move-to-front with zero-run coding RUNA/RUNB), huffman.c (code-length construction with the 17-bit cap), the bit writer, decompress.c (the inverse BWT via the T vector), bzlib.c streaming API, the CRC, the command-line tool and recover utility",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the zero-run coding (two symbols RUNA/RUNB encoding run lengths in bijective base 2) is a small mechanism worth a DEEP item",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bzip2-1.0.8"
+  },
+  {
+   "candidate": "'bzip2' / 'BWT compression' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the transform's sort, the MTF stage and the entropy coder are separable and the two engineering mechanisms read sit inside two of them",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bzip2-1.0.8"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "bzip2-1.0.8::P.a_block_must_be_compressed_close_to_its_context_entropy_in_bounded_time_on_every_input_including_the_repetitive_ones_that_defeat_the_fast_sort",
+   "source_fossil": "bzip2-1.0.8",
+   "source_evidence": "blocksort.c BZ2_blockSort; compress.c sendMTFValues",
+   "condition": "an organism compresses blocks of text-like data; the score is compressed size against gzip and compression time on ordinary and on adversarial (highly repetitive) inputs; the format may not vary with the input's difficulty",
+   "resource_or_constraint": "one pass of sorting per block; a work budget",
+   "failure_condition": "quadratic time on repetitive input, or a size worse than gzip on text",
+   "world_punishes": "an unguarded quicksort on rotations; a single Huffman table over a context-sorted block",
+   "world_rewards": "a budgeted sort with a bounded fallback; per-group table selection",
+   "observable_consequence": "compression time on a 900 kB block of one repeated byte with the budget disabled vs enabled; compressed size on a text corpus with nGroups forced to 1 vs the adaptive choice",
+   "vacuity_condition": "incompressible data",
+   "trivial_shortcuts": "a linear-time suffix array (which the world may allow as the modern control)",
+   "cheat_control": "an organism with a linear-time suffix array must show bounded time and identical output; the unguarded sort must show the blow-up on the repetitive block; the single-table coder must show the size penalty on text: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: block-sorting compression (Seward 1996-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "bzip2-1.0.8::suffix_sort_for_the_burrows_wheeler_transform_with_a_work_budget_that_switches_to_a_slower_guaranteed_sort_on_repetitive_blocks_without_changing_the_output",
+   "to": "bzip2-1.0.8::up_to_six_huffman_tables_assigned_to_fifty_symbol_groups_by_iterated_cheapest_table_selection_and_re_derivation_of_tables_from_their_groups",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "through MTF/RLE (unread)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "bzip2-1.0.8",
+   "relation": "algorithm_from",
+   "to": "Burrows & Wheeler 1994; Fenwick's MTF/RLE refinements; Huffman 1952; the atlas's gzip and compress cuts hold the LZ rivals",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the sort bodies, MTF/RLE, the Huffman construction and the decoder unread",
+   "nothing ran"
+  ],
+  "note": "two engineering mechanisms located precisely; the theory stages are named in the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
