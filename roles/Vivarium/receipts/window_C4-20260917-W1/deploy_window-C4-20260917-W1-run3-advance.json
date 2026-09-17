@@ -1,0 +1,39 @@
+{
+  "schema": "vivarium_deploy_window.v1",
+  "window": "C4-20260917-W1",
+  "at": "2026-09-17T13:49:17Z",
+  "sha": "493043b21",
+  "host": "SPECTREX5",
+  "steps": {
+    "advance": "OK",
+    "tasks": "OK"
+  },
+  "advance": {
+    "ok": true,
+    "worktree": {
+      "path": "D:\\Prometheus-worktrees\\vivarium-consumer",
+      "requested_sha": "493043b21",
+      "created": false,
+      "head": "493043b21ac9be848891aeca4dd6140ee2ffa749",
+      "detached": true,
+      "dirty": false,
+      "not_canonical": true,
+      "ok": true
+    },
+    "preconditions": {
+      "worktree": true,
+      "secrets": false,
+      "store": true,
+      "pew": true,
+      "engine": true,
+      "tasks": true
+    }
+  },
+  "tasks": {
+    "ok": true,
+    "create": "SUCCESS: The scheduled task \"VivariumOutboxDelivererM2\" has successfully been created.\n",
+    "disable": "SUCCESS: The parameters of scheduled task \"VivariumOutboxDelivererM2\" have been changed.\n",
+    "launcher": "D:\\Prometheus-data\\vivarium\\vivarium_deliverer_m2.cmd"
+  },
+  "ok": true
+}

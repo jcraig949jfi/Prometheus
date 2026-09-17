@@ -64,4 +64,43 @@ if (-not $env:EW_PYTHON) {
 & (Join-Path $here "ew_watchdog.ps1") -Machine "M2" -HostAddr "127.0.0.1" -Port 8377 `
     -LogName "derived\watchdog_m2.log" -StateName "derived\watchdog_state_m2.json" `
     -ParkName "derived\watchdog_park_m2.json" -Seat "Mnemosyne" -AccountableSeat "Mnemosyne"
-exit $LASTEXITCODE
+$rc = $LASTEXITCODE
+
+# MISSED-BACKUP VISIBILITY (O2, MNE-D1 ruling 2026-09-17: "alert visibly on
+# missed backup or failed restore qualification"). A backup that FAILS
+# alarms itself; a backup that never RAN has no process to do so, so this
+# tick reads the state files' ages. Thresholds: backup 36 h (daily job),
+# restore qualification 8 d (weekly). One log line per tick while stale;
+# one comms report per stale day per job (recorded in the state file).
+$log = Join-Path $root "derived\watchdog_m2.log"
+function Check-Stale($name, $stateFile, $hours, $subject) {
+    if (-not (Test-Path $stateFile)) {
+        Add-Content $log ("{0}  {1} STATE ABSENT: {2} has never run on this host" -f (Get-Date -Format s), $name, $stateFile)
+        return
+    }
+    try { $s = Get-Content $stateFile -Raw | ConvertFrom-Json } catch { return }
+    if (-not $s.last_success) {
+        Add-Content $log ("{0}  {1} STALE: no last_success recorded" -f (Get-Date -Format s), $name)
+        return
+    }
+    $age = ((Get-Date) - [datetime]$s.last_success).TotalHours
+    if ($age -le $hours) { return }
+    Add-Content $log ("{0}  {1} STALE: last_success {2} is {3:N1} h old (threshold {4} h)" -f (Get-Date -Format s), $name, $s.last_success, $age, $hours)
+    $today = Get-Date -Format yyyy-MM-dd
+    if ($s.stale_alerted_on -eq $today) { return }
+    $body = Join-Path $root "derived\stale_alert_body.md"
+    ("{0} on M2: last_success {1}, {2:N1} h old, threshold {3} h. State file {4}." -f $name, $s.last_success, $age, $hours, $stateFile) | Set-Content $body
+    $pyc = $env:EW_PYTHON; if (-not $pyc) { $pyc = "python" }
+    $p = Start-Process -FilePath $pyc -ArgumentList @("-m","comms","post","--from","Mnemosyne","--to","Mnemosyne","--kind","report","--subject",('"{0}"' -f $subject),"--body-file",('"{0}"' -f $body)) `
+        -WorkingDirectory (Split-Path -Parent $root) -WindowStyle Hidden -PassThru -Wait
+    if ($p -and $p.ExitCode -eq 0) {
+        $s | Add-Member -NotePropertyName stale_alerted_on -NotePropertyValue $today -Force
+        ($s | ConvertTo-Json -Compress) | Set-Content $stateFile
+        Add-Content $log ("{0}  {1} STALE: comms report posted" -f (Get-Date -Format s), $name)
+    } else {
+        Add-Content $log ("{0}  {1} STALE: comms report NOT posted; this log line is the alarm" -f (Get-Date -Format s), $name)
+    }
+}
+Check-Stale "PEWBackupDailyM2" (Join-Path $root "derived\backup_state.json") 36 "PEW BACKUP MISSED on M2 (state older than 36 h)"
+Check-Stale "PEWRestoreVerifyWeeklyM2" (Join-Path $root "derived\restore_state.json") 192 "PEW RESTORE QUALIFICATION MISSED on M2 (state older than 8 d)"
+exit $rc

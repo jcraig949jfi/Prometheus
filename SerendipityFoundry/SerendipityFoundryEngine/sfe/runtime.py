@@ -20,8 +20,8 @@ from sfe import release
 from sfe.errors import (AccessDenied, BudgetExhausted, ConflictError,
                          InvalidTransition, IsolationViolation, NotFound,
                          PredictionOrderingError, ValidationError)
-from sfe.ids import (content_hash, engine_id_from_key, key_fingerprint,
-                     new_id, session_key_for, sha256_hex)
+from sfe.ids import (canonical_bytes, content_hash, engine_id_from_key,
+                     key_fingerprint, new_id, session_key_for, sha256_hex)
 from sfe.store import SCHEMA_VERSION, Store, now
 
 
@@ -45,6 +45,91 @@ INFO_KINDS = frozenset({"artifact", "failure", "hypothesis", "observation",
 
 # evidence provenance classes (H4): what stands behind an observation.
 EVIDENCE_CLASSES = ("ENGINE_WORK_RESULT", "CLIENT_ASSERTED")
+
+# v9 point release (2026-09-17): bounds on the caller-supplied FACT envelopes.
+# The engine validates SHAPE and SIZE only; it never reads these for meaning.
+MANIFEST_MAX_BYTES = 262144
+WORLD_EVENT_PAYLOAD_MAX_BYTES = 65536
+LABELS_MAX_KEYS = 16
+LABELS_MAX_CHARS = 64
+_EVENT_KIND_CHARS = set("abcdefghijklmnopqrstuvwxyz"
+                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.:-")
+
+
+def _validate_manifest(manifest, manifest_schema):
+    """Envelope check for a world manifest. Returns (canonical_json, hash)."""
+    if manifest is None:
+        if manifest_schema is not None:
+            raise ValidationError("manifest_schema given without a manifest")
+        return None, None
+    if not isinstance(manifest, dict):
+        raise ValidationError("manifest must be a JSON object")
+    if not manifest_schema or not isinstance(manifest_schema, str) \
+            or len(manifest_schema) > 128:
+        raise ValidationError("manifest requires manifest_schema (1..128 chars)")
+    raw = canonical_bytes(manifest)
+    if len(raw) > MANIFEST_MAX_BYTES:
+        raise ValidationError("manifest exceeds the size bound",
+                              bytes=len(raw), max_bytes=MANIFEST_MAX_BYTES)
+    kinds = manifest.get("declared_event_kinds")
+    if kinds is not None and (not isinstance(kinds, list)
+                              or not all(isinstance(k, str) and k for k in kinds)):
+        raise ValidationError("manifest.declared_event_kinds must be a list "
+                              "of non-empty strings")
+    unit = manifest.get("logical_time_unit")
+    if unit is not None and not isinstance(unit, str):
+        raise ValidationError("manifest.logical_time_unit must be a string")
+    return raw.decode(), content_hash(manifest)
+
+
+def _validate_labels(labels):
+    if labels is None:
+        return None
+    if not isinstance(labels, dict) or len(labels) > LABELS_MAX_KEYS:
+        raise ValidationError("labels must be an object with <= %d keys"
+                              % LABELS_MAX_KEYS)
+    for k, v in labels.items():
+        if not isinstance(k, str) or not isinstance(v, str) or not k \
+                or len(k) > LABELS_MAX_CHARS or len(v) > LABELS_MAX_CHARS:
+            raise ValidationError("labels are str->str, each <= %d chars"
+                                  % LABELS_MAX_CHARS, key=str(k)[:80])
+    return canonical_bytes(labels).decode()
+
+
+def _validate_logical_time(lt):
+    if lt is None:
+        return None
+    if isinstance(lt, bool) or not isinstance(lt, int) or lt < 0:
+        raise ValidationError("logical_time must be a non-negative integer")
+    return int(lt)
+
+
+def _validate_termination(t):
+    """Shape check for the termination FACTS (v9). `reason` is the stop rule
+    that fired, in the caller's vocabulary; the engine never interprets it."""
+    if t is None:
+        return None
+    if not isinstance(t, dict):
+        raise ValidationError("termination must be an object")
+    reason = t.get("reason")
+    if not isinstance(reason, str) or not reason or len(reason) > 128:
+        raise ValidationError("termination.reason is required (1..128 chars)")
+    out = {"reason": reason,
+           "logical_time": _validate_logical_time(t.get("logical_time")),
+           "horizon": _validate_logical_time(t.get("horizon"))}
+    bc = t.get("budget_consumed")
+    if bc is not None and not isinstance(bc, dict):
+        raise ValidationError("termination.budget_consumed must be an object")
+    out["budget_consumed"] = bc
+    ref = t.get("reference")
+    if ref is not None and (not isinstance(ref, str) or len(ref) > 256):
+        raise ValidationError("termination.reference must be a string <= 256")
+    out["reference"] = ref
+    note = t.get("note")
+    if note is not None and (not isinstance(note, str) or len(note) > 512):
+        raise ValidationError("termination.note must be a string <= 512")
+    out["note"] = note
+    return out
 
 # world lifecycle transitions that are allowed (fail-closed otherwise)
 _WORLD_TRANSITIONS = {
@@ -920,9 +1005,18 @@ class Foundry:
                      topology_group: Optional[str] = None,
                      budget: Optional[dict] = None,
                      require_attestation: bool = False,
+                     manifest: Optional[dict] = None,
+                     manifest_schema: Optional[str] = None,
+                     labels: Optional[dict] = None,
                      idem_key: Optional[str] = None,
                      request_hash: Optional[str] = None) -> dict:
         """Create a world.
+
+        v9: `manifest` (+ `manifest_schema`) is the world's definition
+        envelope -- validated for shape and size, hashed, sealed in
+        WORLD_CREATED and immutable; never read for meaning. `labels` is
+        opaque str->str provenance supplied by the producer (an attempt or
+        execution id minted ABOVE the engine); the engine defines no key.
 
         RETRY SAFETY (D-IDEM-1, 2026-09-04): pass idem_key to make creation
         retry-safe. Without one, world creation is UNSAFE TO RETRY BLINDLY --
@@ -939,6 +1033,8 @@ class Foundry:
             raise ValidationError("unknown sharing policy",
                                   sharing_policy=sharing_policy,
                                   allowed=sorted(SHARING_POLICIES))
+        man_json, man_hash = _validate_manifest(manifest, manifest_schema)
+        labels_json = _validate_labels(labels)
         wid = new_id("world")
         if seed_root is None:
             # NOTE: a caller relying on idempotency MUST pass an explicit
@@ -960,16 +1056,22 @@ class Foundry:
             cx.execute(
                 "INSERT INTO worlds(world_id,session_id,client_id,name,state,"
                 "sharing_policy,topology_group,seed_root,budget_root,"
-                "require_attestation,created_ts) "
-                "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?)",
+                "require_attestation,created_ts,manifest,manifest_schema,"
+                "manifest_hash,labels) "
+                "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?,?,?,?,?)",
                 (wid, session_id, cid, name, sharing_policy, topology_group,
-                 int(seed_root), wid, 1 if require_attestation else 0, now()))
+                 int(seed_root), wid, 1 if require_attestation else 0, now(),
+                 man_json, manifest_schema if man_json else None, man_hash,
+                 labels_json))
             self._init_budget(cx, wid, budget or {})
             events.append(cx, wid, "WORLD_CREATED", actor=cid, payload={
                 "name": name, "sharing_policy": sharing_policy,
                 "topology_group": topology_group, "seed_root": int(seed_root),
                 "require_attestation": bool(require_attestation),
-                "session_id": session_id})
+                "session_id": session_id,
+                "manifest_hash": man_hash,
+                "manifest_schema": manifest_schema if man_json else None,
+                "labels": labels if labels_json else None})
             out = _world_dict(self._world_row(cx, wid))
             self._idem_record(cx, cid, idem_key, wid, "worlds", request_hash,
                               out)
@@ -1039,7 +1141,8 @@ class Foundry:
         return out
 
     def _transition(self, world_id: str, client_id: Optional[str], target: str,
-                    event_type: str, payload: Optional[dict] = None) -> dict:
+                    event_type: str, payload: Optional[dict] = None,
+                    termination_json: Optional[str] = None) -> dict:
         with self.store.write() as cx:
             r = self._authorize(cx, world_id, client_id)
             cur = r["state"]
@@ -1052,6 +1155,9 @@ class Foundry:
             if target == "TERMINATED":
                 extra = ", terminated_ts=?"
                 args.append(now())
+                if termination_json is not None:
+                    extra += ", termination=?"
+                    args.append(termination_json)
             args.append(world_id)
             cx.execute(f"UPDATE worlds SET state=?{extra} WHERE world_id=?",
                        tuple(args))
@@ -1068,12 +1174,53 @@ class Foundry:
     def resume_world(self, world_id, client_id=None):
         return self._transition(world_id, client_id, "RUNNING", "WORLD_RESUMED")
 
-    def terminate_world(self, world_id, client_id=None):
-        return self._transition(world_id, client_id, "TERMINATED",
-                                "WORLD_TERMINATED")
+    def terminate_world(self, world_id, client_id=None, *,
+                        termination: Optional[dict] = None,
+                        idem_key: Optional[str] = None,
+                        request_hash: Optional[str] = None):
+        """Terminate, optionally recording WHY execution ended (v9).
+
+        `termination` is the caller's FACT about the stop rule: reason (the
+        rule that fired, never an outcome), logical_time, horizon,
+        budget_consumed, reference, note. It is stored on the world row and
+        sealed in the WORLD_TERMINATED payload. The engine decides nothing
+        from it: "the target was not observed" and "the run ended before the
+        relevant horizon" are distinguishable downstream only because these
+        facts exist; the distinction itself is made above the engine."""
+        term = _validate_termination(termination)
+        tj = canonical_bytes(term).decode() if term else None
+        if idem_key is None:
+            return self._transition(world_id, client_id, "TERMINATED",
+                                    "WORLD_TERMINATED", payload=term,
+                                    termination_json=tj)
+        with self.store.write() as cx:
+            r = self._authorize(cx, world_id, client_id)
+            cid = r["client_id"]
+            replay = self._idem_check(cx, cid, idem_key, request_hash)
+            if replay is not None:
+                return replay
+        out = self._transition(world_id, client_id, "TERMINATED",
+                               "WORLD_TERMINATED", payload=term,
+                               termination_json=tj)
+        with self.store.write() as cx:
+            self._idem_record(cx, cid, idem_key, world_id, "terminate",
+                              request_hash, out)
+        return out
+
+    def get_manifest(self, world_id: str, client_id: Optional[str] = None) -> dict:
+        """The world's manifest envelope as supplied at creation (or at fork).
+        The body is returned from its canonical form; the hash is the one
+        sealed in WORLD_CREATED / WORLD_FORKED."""
+        cx = self.store.read()
+        r = self._authorize(cx, world_id, client_id)
+        return {"world_id": world_id,
+                "manifest": json.loads(r["manifest"]) if r["manifest"] else None,
+                "manifest_schema": r["manifest_schema"],
+                "manifest_hash": r["manifest_hash"]}
 
     def list_worlds(self, *, session_id=None, client_id=None, state=None,
-                    created_after=None, created_before=None) -> list:
+                    created_after=None, created_before=None,
+                    labels: Optional[dict] = None) -> list:
         """Enumerate worlds, always scoped to the caller when client_id is given.
 
         The optional filters answer the four questions an orchestrator actually
@@ -1095,7 +1242,12 @@ class Foundry:
         if created_before is not None:
             q += " AND created_ts<?"; a.append(float(created_before))
         q += " ORDER BY created_ts"
-        return [_world_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
+        rows = [_world_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
+        if labels:
+            # opaque equality on the caller's own keys; no engine semantics
+            rows = [w for w in rows if w["labels"] and all(
+                w["labels"].get(k) == v for k, v in labels.items())]
+        return rows
 
     # ================= work queue =======================================
     def enqueue_work(self, world_id: str, kind: str, payload: dict, *,
@@ -1540,6 +1692,92 @@ class Foundry:
         return out
 
     # ================= audit / third-party attestation ===================
+    def capabilities(self, *, session_enforcement: str, science_profile: str,
+                     max_artifact_bytes: int) -> dict:
+        """Machine-readable discovery (v9, D9): what this engine OWNS -- its
+        vocabularies, limits, read semantics and feature flags -- so a
+        consumer negotiates instead of probing by failure. Nothing here is
+        scientific; every vocabulary is the engine's own."""
+        return {
+            "api": "v2", "schema_version": SCHEMA_VERSION,
+            "engine_source_hash": release.ENGINE_SOURCE_HASH,
+            "engine_instance_id": self.engine_instance_id(),
+            "session_enforcement": session_enforcement,
+            "science_profile": science_profile,
+            "max_artifact_bytes": max_artifact_bytes,
+            "strict_bodies": True,
+            "read_semantics": {
+                "_definition": "what happens to a request on a world route "
+                               "depending on the X-SFE-Session header it carries",
+                "advisory": {"no_key": "ADMITTED_AUDITED",
+                             "matching_key": "ADMITTED",
+                             "wrong_session_key": "REFUSED",
+                             "foreign_engine_key": "REFUSED",
+                             "malformed_key": "REFUSED",
+                             "unknown_key": "REFUSED",
+                             "closed_session_key": "REFUSED"},
+                "strict": {"no_key": "REFUSED_ON_STRICT_SESSIONS_ADMITTED_ON_LEGACY",
+                           "matching_key": "ADMITTED",
+                           "wrong_session_key": "REFUSED",
+                           "foreign_engine_key": "REFUSED",
+                           "malformed_key": "REFUSED",
+                           "unknown_key": "REFUSED",
+                           "closed_session_key": "REFUSED"},
+                "exempt_routes": ["GET /v2/version", "GET /v2/health",
+                                  "GET /v2/capabilities", "POST /v2/clients",
+                                  "GET /v2/openapi.json"]},
+            "vocabularies": {
+                "outcomes": ["FALSIFIED", "SURVIVED", "INCONCLUSIVE"],
+                "evidence_classes": list(EVIDENCE_CLASSES),
+                "evidence_roles": ["ORIGINAL", "REPLICATION"],
+                "sharing_policies": sorted(SHARING_POLICIES),
+                "world_states": sorted(_WORLD_TRANSITIONS),
+                "artifact_origins": ["NATIVE", "IMPORTED"],
+                "event_types_engine_owned": [
+                    "WORLD_CREATED", "WORLD_STARTED", "WORLD_PAUSED",
+                    "WORLD_RESUMED", "WORLD_TERMINATED", "WORLD_FORKED",
+                    "CHECKPOINT_CREATED", "EXPERIMENT_CREATED",
+                    "EXPERIMENT_COMMITTED", "OBSERVATION_RECORDED",
+                    "ARTIFACT_CREATED", "ARTIFACT_IMPORTED", "WORLD_EVENT"],
+                "world_event_kinds": "CALLER-DEFINED; optionally pinned per "
+                                     "world by manifest.declared_event_kinds; "
+                                     "the engine owns no kind vocabulary"},
+            "limits": {"page_limit_max": PAGE_LIMIT_MAX,
+                       "list_default_cap": LIST_DEFAULT_CAP,
+                       "manifest_bytes": MANIFEST_MAX_BYTES,
+                       "world_event_payload_bytes": WORLD_EVENT_PAYLOAD_MAX_BYTES,
+                       "labels": {"keys": LABELS_MAX_KEYS, "chars": LABELS_MAX_CHARS},
+                       "termination": {"reason_chars": 128, "note_chars": 512}},
+            "features": {"logical_time": True, "typed_termination": True,
+                         "world_events": True, "manifest_envelope": True,
+                         "labels": True, "artifact_list": True,
+                         "cursor_pagination": True,
+                         "fork_changed_fields": True},
+            "pagination": {"cursor_param": "after_seq", "limit_param": "limit",
+                           "order": "ascending by the row's global sequence "
+                                    "(events.event_seq; created_seq elsewhere)",
+                           "end_of_stream": "next_after_seq is null",
+                           "routes": ["GET /v2/worlds/{wid}/events",
+                                      "GET /v2/worlds/{wid}/observations",
+                                      "GET /v2/worlds/{wid}/experiments",
+                                      "GET /v2/worlds/{wid}/artifacts",
+                                      "GET /v2/read/observations"]},
+            "checkpoint": {"state_hash_definition":
+                           "content_hash over per-table row counts "
+                           "(hypotheses, predictions, experiments, "
+                           "observations, failures, artifacts) + head_hash; "
+                           "NOT organism state -- the engine holds none",
+                           "identity": ["checkpoint_id", "world_index",
+                                        "head_hash", "state_hash"]},
+            "logical_time": {"type": "non-negative integer",
+                             "unit": "declared by the world's manifest "
+                                     "(manifest.logical_time_unit); the "
+                                     "engine assigns no unit"},
+            "termination": {"reason": "the STOP RULE that fired, in the "
+                                      "caller's vocabulary; never an outcome; "
+                                      "the engine never sets it"},
+        }
+
     def engine_instance_id(self) -> str:
         """A stable id for THIS ENGINE INSTANCE, distinct from its build.
 
@@ -1800,18 +2038,22 @@ class Foundry:
 
     def list_experiments(self, world_id: str, *,
                          client_id: Optional[str] = None,
-                         state: Optional[str] = None) -> list:
+                         state: Optional[str] = None,
+                         after_seq: Optional[int] = None,
+                         limit: Optional[int] = None) -> list:
         cx = self.store.read()
         self._authorize(cx, world_id, client_id)
         q, a = "SELECT * FROM experiments WHERE world_id=?", [world_id]
         if state:
             q += " AND state=?"; a.append(state)
-        q += " ORDER BY created_seq"
+        q, a = _page(q, a, "created_seq", after_seq, limit)
         return [_experiment_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
 
     def list_observations(self, world_id: str, *,
                           client_id: Optional[str] = None,
-                          exp_id: Optional[str] = None) -> list:
+                          exp_id: Optional[str] = None,
+                          after_seq: Optional[int] = None,
+                          limit: Optional[int] = None) -> list:
         """The recorded outcomes, with their evidence class and role. Needed to
         COMPARE a replay against the run it replays."""
         cx = self.store.read()
@@ -1819,7 +2061,7 @@ class Foundry:
         q, a = "SELECT * FROM observations WHERE world_id=?", [world_id]
         if exp_id:
             q += " AND exp_id=?"; a.append(exp_id)
-        q += " ORDER BY created_seq"
+        q, a = _page(q, a, "created_seq", after_seq, limit)
         return [_observation_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
 
     def _budget_config(self, cx, world_id: str) -> dict:
@@ -2122,9 +2364,14 @@ class Foundry:
                            work_id: Optional[str] = None,
                            retrospective: bool = False,
                            replication: bool = False,
+                           logical_time: Optional[int] = None,
                            idem_key: Optional[str] = None,
                            request_hash: Optional[str] = None) -> str:
         """Record an observation on a COMMITTED experiment.
+
+        v9: `logical_time` is the caller's logical clock at the observation
+        (generation, tick, episode -- the unit is the manifest's), stored as
+        a unitless integer and sealed in the OBSERVATION_RECORDED payload.
 
         DUPLICATE BINDING (F3): the FIRST observation bound to a prediction is
         the ORIGINAL adjudication relation and fixes the prediction's epistemic
@@ -2149,6 +2396,7 @@ class Foundry:
         Otherwise the class is CLIENT_ASSERTED, and that class is recorded on
         the observation, the event, and any CLAIM_* adjudication -- a client
         assertion can never masquerade as an engine-attested result."""
+        lt = _validate_logical_time(logical_time)
         if outcome not in ("FALSIFIED", "SURVIVED", "INCONCLUSIVE"):
             raise ValidationError("bad outcome", outcome=outcome)
         oid = new_id("observation")
@@ -2251,14 +2499,16 @@ class Foundry:
                                payload={"outcome": outcome,
                                         "prospective": prospective,
                                         "evidence_class": evidence_class,
-                                        "evidence_role": evidence_role})
+                                        "evidence_role": evidence_role,
+                                        "logical_time": lt})
             cx.execute("INSERT INTO observations(obs_id,world_id,exp_id,pred_id,"
                        "content,outcome,pred_prospective,evidence_class,"
-                       "evidence_role,work_id,created_ts,created_seq) "
-                       "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+                       "evidence_role,work_id,created_ts,created_seq,"
+                       "logical_time) "
+                       "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                        (oid, world_id, exp_id, pred_id, json.dumps(content),
                         outcome, prospective, evidence_class, evidence_role,
-                        work_id, now(), ev["event_seq"]))
+                        work_id, now(), ev["event_seq"], lt))
             cx.execute("UPDATE experiments SET state='OBSERVED' WHERE exp_id=?",
                        (exp_id,))
             # ADJUDICATION happens only on the ORIGINAL observation, and
@@ -3094,7 +3344,9 @@ class Foundry:
 
     def import_artifact(self, dst_world: str, src_world: str,
                         src_artifact_id: str, *,
-                        client_id: Optional[str] = None) -> dict:
+                        client_id: Optional[str] = None,
+                        idem_key: Optional[str] = None,
+                        request_hash: Optional[str] = None) -> dict:
         """Explicit cross-world import. The imported artifact is recorded with
         permanent provenance (origin=IMPORTED, source world/artifact/hash) so it
         can NEVER be mistaken for something independently discovered in the
@@ -3102,6 +3354,12 @@ class Foundry:
         policy (T14)."""
         with self.store.write() as cx:
             dst = self._authorize_write(cx, dst_world, client_id)   # must own dest
+            # 9.0.1 (Vivarium D16): the import id is content-derived, so a
+            # replay already returns the SAME artifact_id; the key stops the
+            # replay from appending a SECOND ARTIFACT_IMPORTED event.
+            replay = self._idem_check(cx, dst["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
             src = self._world_row(cx, src_world)
             same_client = (client_id is None
                            or src["client_id"] == client_id)
@@ -3178,9 +3436,12 @@ class Foundry:
                 (new_aid, dst_world, srow["kind"], srow["blob_hash"],
                  srow["meta"], src_world, src_artifact_id, ev["event_seq"],
                  now(), ev["event_seq"]))
-            return {"artifact_id": new_aid, "origin": "IMPORTED",
+            out = {"artifact_id": new_aid, "origin": "IMPORTED",
                     "source_world": src_world, "source_artifact": src_artifact_id,
                     "source_hash": srow["blob_hash"]}
+            self._idem_record(cx, dst["client_id"], idem_key, dst_world, "import",
+                              request_hash, out)
+            return out
 
     # ================= checkpoint + fork ================================
     def checkpoint(self, world_id: str, *, client_id: Optional[str] = None,
@@ -3252,6 +3513,29 @@ class Foundry:
                     raise ValidationError("unknown sharing policy",
                                           sharing_policy=pol)
                 sroot = spec.get("seed_root", parent["seed_root"])
+                # v9: a child inherits the parent's manifest and labels unless
+                # it supplies its own; either way the child's identity is sealed
+                # in WORLD_FORKED and the DIFF against the parent is explicit.
+                if spec.get("manifest") is not None:
+                    c_man, c_hash = _validate_manifest(spec["manifest"],
+                                                       spec.get("manifest_schema"))
+                    c_schema = spec.get("manifest_schema")
+                else:
+                    c_man, c_hash = parent["manifest"], parent["manifest_hash"]
+                    c_schema = parent["manifest_schema"]
+                if spec.get("labels") is not None:
+                    c_labels = _validate_labels(spec["labels"])
+                else:
+                    c_labels = parent["labels"]
+                c_topo = spec.get("topology_group", parent["topology_group"])
+                changed = {}
+                for field, pv, cv in (("seed_root", parent["seed_root"], int(sroot)),
+                                      ("sharing_policy", parent["sharing_policy"], pol),
+                                      ("topology_group", parent["topology_group"], c_topo),
+                                      ("manifest_hash", parent["manifest_hash"], c_hash),
+                                      ("labels", parent["labels"], c_labels)):
+                    if pv != cv:
+                        changed[field] = {"parent": pv, "child": cv}
                 # H3: a fork INHERITS its parent's budget_root, so the whole
                 # lineage draws from ONE authoritative campaign budget --
                 # forking cannot mint fresh scientific budget. The child's own
@@ -3261,13 +3545,14 @@ class Foundry:
                     "INSERT INTO worlds(world_id,session_id,client_id,name,"
                     "state,parent_world_id,fork_point,sharing_policy,"
                     "topology_group,seed_root,budget_root,next_index,"
-                    "head_hash,created_ts) "
-                    "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?,?,?,?)",
+                    "head_hash,created_ts,manifest,manifest_schema,"
+                    "manifest_hash,labels) "
+                    "VALUES(?,?,?,?,'CREATED',?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     (cwid, parent["session_id"], parent["client_id"],
                      spec.get("name", "fork"), world_id, fork_point, pol,
-                     spec.get("topology_group", parent["topology_group"]),
-                     int(sroot), parent["budget_root"] or world_id,
-                     fork_point + 1, fork_head, now()))
+                     c_topo, int(sroot), parent["budget_root"] or world_id,
+                     fork_point + 1, fork_head, now(),
+                     c_man, c_schema, c_hash, c_labels))
                 cx.execute("INSERT INTO budgets(world_id,limits,consumed,"
                            "updated_ts) VALUES(?,?,?,?)",
                            (cwid, plimits["limits"], json.dumps({}), now()))
@@ -3299,7 +3584,12 @@ class Foundry:
                                                   if k != "message"})
                 fpayload = {"fork_point": fork_point,
                             "parent_head": fork_head,
-                            "interventions": spec.get("interventions", {})}
+                            "interventions": spec.get("interventions", {}),
+                            # v9 (D6): the canonical child-vs-parent diff, so
+                            # no reader reconstructs it from freeform text
+                            "changed": changed,
+                            "manifest_hash": c_hash,
+                            "manifest_schema": c_schema}
                 if findings:
                     # `findings` is canonical. `finding` is kept as the first
                     # entry because two WORLD_FORKED events were sealed with
@@ -4330,7 +4620,8 @@ class Foundry:
                           evidence_class: Optional[str] = None,
                           measurement_id: Optional[str] = None,
                           limit: int = 1000,
-                          include_spec: bool = False) -> dict:
+                          include_spec: bool = False,
+                          after_seq: Optional[int] = None) -> dict:
         """The cross-seat read surface for OBSERVATIONS.
 
         `corpus` is returned beside the rows on purpose. An archaeologist's
@@ -4372,6 +4663,13 @@ class Foundry:
         if evidence_class is not None:
             q += " AND o.evidence_class=?"
             args.append(evidence_class)
+        if after_seq is not None:
+            if isinstance(after_seq, bool) or not isinstance(after_seq, int) or after_seq < 0:
+                raise ValidationError("after_seq must be a non-negative integer")
+            q += " AND o.created_seq>?"
+            args.append(int(after_seq))
+        if int(limit) < 1 or int(limit) > PAGE_LIMIT_MAX:
+            raise ValidationError("limit must be 1..%d" % PAGE_LIMIT_MAX)
         q += " ORDER BY o.created_seq LIMIT ?"
         args.append(int(limit))
         rows = cx.execute(q, args).fetchall()
@@ -4414,6 +4712,8 @@ class Foundry:
             out_obs.append(d)
         return {
             "observations": out_obs,
+            "next_after_seq": (out_obs[-1]["created_seq"]
+                               if out_obs and len(out_obs) >= int(limit) else None),
             "corpus": {
                 "worlds": len(worlds),
                 "scopes": scopes,
@@ -4451,12 +4751,91 @@ class Foundry:
         return events.verify_world(cx, world_id)
 
     def world_events(self, world_id: str, *, client_id: Optional[str] = None,
-                     limit: int = 100) -> list:
+                     limit: int = 100, after_seq: Optional[int] = None) -> list:
+        """Newest-`limit` in chain order when after_seq is None (unchanged);
+        with after_seq: a CURSOR page ascending by the engine's global
+        event_seq -- stable, gap-free per world, resumable (v9, D8)."""
         cx = self.store.read()
         self._authorize(cx, world_id, client_id)
+        if after_seq is not None:
+            q, a = _page("SELECT * FROM events WHERE world_id=?", [world_id],
+                         "event_seq", after_seq, limit)
+            return [events._row_to_event(r) for r in cx.execute(q, tuple(a)).fetchall()]
         rows = cx.execute("SELECT * FROM events WHERE world_id=? ORDER BY "
                           "world_index DESC LIMIT ?", (world_id, limit)).fetchall()
         return [events._row_to_event(r) for r in rows][::-1]
+
+    def list_artifacts(self, world_id: str, *, client_id: Optional[str] = None,
+                       kind: Optional[str] = None, origin: Optional[str] = None,
+                       after_seq: Optional[int] = None,
+                       limit: Optional[int] = None) -> list:
+        """The world's artifacts, no bytes (v9, D5; Archaeon #325). Ordered
+        by created_seq; cursor-paged like the other lists."""
+        if origin is not None and origin not in ("NATIVE", "IMPORTED"):
+            raise ValidationError("origin must be NATIVE or IMPORTED", origin=origin)
+        cx = self.store.read()
+        self._authorize(cx, world_id, client_id)
+        q, a = "SELECT * FROM artifacts WHERE world_id=?", [world_id]
+        if kind:
+            q += " AND kind=?"; a.append(kind)
+        if origin:
+            q += " AND origin=?"; a.append(origin)
+        q, a = _page(q, a, "created_seq", after_seq, limit)
+        return [_artifact_dict(r) for r in cx.execute(q, tuple(a)).fetchall()]
+
+    def record_world_event(self, world_id: str, kind: str, payload: dict, *,
+                           client_id: Optional[str] = None,
+                           logical_time: Optional[int] = None,
+                           refs: Optional[dict] = None,
+                           idem_key: Optional[str] = None,
+                           request_hash: Optional[str] = None) -> dict:
+        """Seal a caller-described world change in the chain (v9, D3).
+
+        The engine appends ONE event type, WORLD_EVENT, whose payload carries
+        the caller's `kind`, `logical_time` and `payload` verbatim. It never
+        reads `kind` for meaning; there is no engine-side vocabulary of kinds.
+        The one check with teeth: when the world's manifest declares
+        `declared_event_kinds`, an undeclared kind is refused -- so a world
+        definition can pin what its own history may contain. Refused on a
+        TERMINATED world (the write lifetime ended)."""
+        if not isinstance(kind, str) or not (1 <= len(kind) <= 64) \
+                or any(c not in _EVENT_KIND_CHARS for c in kind):
+            raise ValidationError("kind must be 1..64 chars of [A-Za-z0-9_.:-]",
+                                  kind=str(kind)[:80])
+        if not isinstance(payload, dict):
+            raise ValidationError("payload must be a JSON object")
+        raw = canonical_bytes(payload)
+        if len(raw) > WORLD_EVENT_PAYLOAD_MAX_BYTES:
+            raise ValidationError("payload exceeds the size bound",
+                                  bytes=len(raw),
+                                  max_bytes=WORLD_EVENT_PAYLOAD_MAX_BYTES)
+        if refs is not None and (not isinstance(refs, dict) or not all(
+                isinstance(k, str) and isinstance(v, str) for k, v in refs.items())):
+            raise ValidationError("refs must be str->str")
+        lt = _validate_logical_time(logical_time)
+        with self.store.write() as cx:
+            r = self._authorize_write(cx, world_id, client_id)
+            replay = self._idem_check(cx, r["client_id"], idem_key, request_hash)
+            if replay is not None:
+                return replay
+            if r["manifest"]:
+                declared = json.loads(r["manifest"]).get("declared_event_kinds")
+                if declared is not None and kind not in declared:
+                    raise ValidationError(
+                        "undeclared_event_kind: this world's manifest declares "
+                        "its event kinds and this is not one of them",
+                        kind=kind, declared_event_kinds=declared)
+            ev = events.append(cx, world_id, "WORLD_EVENT", actor=r["client_id"],
+                               refs=refs or {},
+                               payload={"kind": kind, "logical_time": lt,
+                                        "payload": payload})
+            out = {"event_id": ev["event_id"], "event_seq": ev["event_seq"],
+                   "world_index": ev["world_index"],
+                   "entry_hash": ev["entry_hash"], "kind": kind,
+                   "logical_time": lt}
+            self._idem_record(cx, r["client_id"], idem_key, world_id,
+                              "world_events", request_hash, out)
+            return out
 
     def world_history(self, world_id: str, *,
                       client_id: Optional[str] = None) -> list:
@@ -4623,7 +5002,9 @@ def _artifact_dict(r) -> dict:
             "kind": r["kind"], "blob_hash": r["blob_hash"],
             "meta": json.loads(r["meta"]), "origin": r["origin"],
             "source_world": r["source_world"],
-            "source_artifact": r["source_artifact"]}
+            "source_artifact": r["source_artifact"],
+            "created_seq": _col(r, "created_seq"),
+            "created_ts": _col(r, "created_ts")}
 
 
 def _world_dict(r) -> dict:
@@ -4634,7 +5015,14 @@ def _world_dict(r) -> dict:
             "topology_group": r["topology_group"], "seed_root": r["seed_root"],
             "created_ts": r["created_ts"], "terminated_ts": r["terminated_ts"],
             "next_index": r["next_index"], "head_hash": r["head_hash"],
-            "require_attestation": bool(r["require_attestation"])}
+            "require_attestation": bool(r["require_attestation"]),
+            # v9 facts; NULL = NOT_SUPPLIED. The manifest BODY is not inlined
+            # here (GET /v2/worlds/{w}/manifest); its identity is.
+            "manifest_schema": _col(r, "manifest_schema"),
+            "manifest_hash": _col(r, "manifest_hash"),
+            "labels": json.loads(r["labels"]) if _col(r, "labels") else None,
+            "termination": (json.loads(r["termination"])
+                            if _col(r, "termination") else None)}
 
 
 def _experiment_dict(r) -> dict:
@@ -4644,11 +5032,49 @@ def _experiment_dict(r) -> dict:
             "work_id": r["work_id"], "state": r["state"],
             "committed_seq": r["committed_seq"],
             "committed_ts": r["committed_ts"],
+            "created_seq": r["created_seq"],
             "unit_of_analysis": r["unit_of_analysis"],
             "declared_n": r["declared_n"],
             "source_set_hash": r["source_set_hash"],
             "is_analysis": r["source_set_hash"] is not None,
             "created_ts": r["created_ts"], "created_seq": r["created_seq"]}
+
+
+PAGE_LIMIT_MAX = 1000
+LIST_DEFAULT_CAP = 10000
+
+
+def _page(q: str, a: list, seq_col: str, after_seq, limit):
+    """Cursor pagination (v9, D8). With after_seq: ascending by the row's
+    global sequence, strictly greater than the cursor, at most `limit`
+    (default 200, max 1000). Without: the historical "all rows" answer,
+    capped at LIST_DEFAULT_CAP + 1 so the caller can see it was truncated."""
+    if after_seq is not None:
+        if isinstance(after_seq, bool) or not isinstance(after_seq, int) or after_seq < 0:
+            raise ValidationError("after_seq must be a non-negative integer")
+        lim = 200 if limit is None else int(limit)
+        if lim < 1 or lim > PAGE_LIMIT_MAX:
+            raise ValidationError("limit must be 1..%d" % PAGE_LIMIT_MAX)
+        q += " AND %s>? ORDER BY %s LIMIT ?" % (seq_col, seq_col)
+        return q, [*a, int(after_seq), lim]
+    q += " ORDER BY %s LIMIT ?" % seq_col
+    return q, [*a, LIST_DEFAULT_CAP + 1]
+
+
+def page_envelope(rows: list, seq_key: str, after_seq, limit) -> dict:
+    """The keys every paged list response carries beside its rows (v9, D8):
+    next_after_seq (null = end of stream) and truncated (default mode hit
+    the cap). Mutates nothing; the caller places rows under its own key."""
+    if after_seq is not None:
+        lim = 200 if limit is None else int(limit)
+        full = len(rows) >= lim
+        return {"next_after_seq": (rows[-1][seq_key] if rows and full else None),
+                "truncated": False}
+    truncated = len(rows) > LIST_DEFAULT_CAP
+    if truncated:
+        del rows[LIST_DEFAULT_CAP:]
+    return {"next_after_seq": (rows[-1][seq_key] if truncated else None),
+            "truncated": truncated}
 
 
 def _observation_dict(r) -> dict:
@@ -4658,7 +5084,17 @@ def _observation_dict(r) -> dict:
             "pred_prospective": r["pred_prospective"],
             "evidence_class": r["evidence_class"],
             "evidence_role": r["evidence_role"], "work_id": r["work_id"],
-            "created_ts": r["created_ts"], "created_seq": r["created_seq"]}
+            "created_ts": r["created_ts"], "created_seq": r["created_seq"],
+            "logical_time": _col(r, "logical_time")}
+
+
+def _col(r, name):
+    """A v9 column that may be absent on a row object built from an older
+    SELECT (never on a v9 ledger, but the read path must not crash)."""
+    try:
+        return r[name]
+    except (IndexError, KeyError):
+        return None
 
 
 def _work_dict(r) -> dict:

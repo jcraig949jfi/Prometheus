@@ -4,7 +4,7 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-16 16:5x UTC (12:5x local).** Updated at least every four
+**Currency: 2026-09-17 12:0x UTC (08:0x local).** Updated at least every four
 hours of activity, per base role s3. Instance for this pass: `m2-fce3fe0b`,
 the first boot of this seat on M2 (SPECTREX5), worktree
 `D:\Prometheus-worktrees\vivarium-boot-2026-09-16` from `ccb26df01`.
@@ -49,33 +49,43 @@ over per ccb26df01 / Daedalus #270, or a fresh start on the twin) was
 asked in chat and not yet answered; I proceed on (a) carried over, which
 is what everything below is keyed to.
 
+## Point release: where it stands (2026-09-17, operator Stage 3 order)
+
+    Stage 1/2 docs            accepted by the operator (Stage 3 order s1)
+    Stage 3 interface         answered to Daedalus/Mnemosyne/Proteus (STAGE3_ANSWERS_FROM_VIVARIUM.md);
+                              Proteus #338 absorbed; open: Archaeon A1, Harmonia contract_hash name
+                              (proceeding by default), sfclient create_world(labels=)
+    implementation            DONE on throwaway schemas: attempts/steps, NEW ATTEMPT, start bundle,
+                              intervention + gate receipts, termination envelope, PEW outbox +
+                              deliverer (-> PEW /api/v1/events), production descriptor + restart
+                              gate, engine labels (conditional); suite 688 passed / 43 skipped
+    SCOPE FREEZE + WINDOW     point_release/SCOPE_FREEZE_AND_WINDOW_PLAN.md; rehearsal on a COPY of the
+    PLAN                      real 1,155 rows passed 7/7 (receipts/WINDOW_REHEARSAL_2026-09-17.json)
+    deploy window             NOT OPENED. Waiting on the operator's one line (window id). Nothing in
+                              production `viv` has been touched; no task registered; consumer down.
+    then                      clean restart from the descriptor (restart receipt) -> qualification
+                              (s13) -> canary (s14) -> READINESS_DISPOSITION.md -> five statements
+
 ## Queue, at this writing (canonical store, UTC)
 
-    queued 5   Archaeon tick rows, created 09-15 03:27:10Z .. 20:12:09Z
-               (oldest waiting 33 h); HELD, never cancelled by inference
-               (Daedalus #270: "hold the 5 rows"; Archaeon #267: "late,
-               not lost")
-    stranded 0   completed 579   failed 79   cancelled 492
+    queued 5   Archaeon rows (spec_version 2, 09-14/09-15), HELD by #284 in prose only:
+               not_before is NULL on all five. window.py's restart step REFUSES while
+               they are unheld; `viv.cli hold` (new) is the mechanism; Archaeon's call
+    stranded 0   completed 579   failed 79   cancelled 492   (rehearsal histogram)
     last row done   8bc6b162 completed 2026-09-14 23:27:07Z
 
-## What has to happen before the relaunch (not mine; in order)
+## What has to happen before the relaunch (in order)
 
-1. Operator lands M1's `D:\Prometheus-data\sfe` (engine.db ~640 MB, blobs,
-   backup) on M2; Daedalus verifies identity, swaps the twin's data dir,
-   starts build 726275da on the ledger -> `/v2/version` reports
-   eng_8a37a5d3 at 192.168.1.191:8811 (#270 steps 1-2).
-2. Harmonia promotes the staged contract against M2 (#256/#270 step 3);
-   `roles/Harmonia/contracts/sfe_contract.json` base_url becomes
-   192.168.1.191.
-3. **Operator gate (mine to ask):** carry `vivarium/config.local.json` (the
-   two tokens, nothing else needed -- every other key is set by the
-   launcher's environment) from M1's pinned worktree to
-   `D:\Prometheus-worktrees\vivarium-consumer\vivarium\` on M2, with a
-   receipt. No seat copies a token across hosts (#270).
-4. Then: `python vivarium/deploy/prepare_m2.py --sha <SHA> --register`
-   reads green -> `schtasks /Change /TN VivariumDeadmanM2 /ENABLE` is the
-   launch (its first tick relaunches the consumer once the engine identity
-   holds); Archaeon's grant on the migrated ledger is Daedalus's route.
+1. **Operator opens the Vivarium deploy window** (one line naming a window id;
+   confirms s10 credential bootstrap of client `vivarium` on eng_906356f7).
+2. Archaeon holds / cancels / releases its five queued rows (#346 ask).
+3. `python vivarium/deploy/window.py --confirm <id> --sha <main sha>` runs the
+   receipted steps (backup, drafts, promote, migrate, verify, advance, tasks,
+   bootstrap, restart); every step refuses on its own precondition.
+4. The dead-man's first tick starts the consumer from the pinned worktree; the
+   consumer writes `var/restart-vivarium@m2.json` and refuses if the descriptor
+   disagrees with what it finds.
+5. Mnemosyne's PEW writer credential lands whenever it lands; the outbox holds.
 
 ## Landed this pass (main, fast-forward; all tested on the merged tree)
 

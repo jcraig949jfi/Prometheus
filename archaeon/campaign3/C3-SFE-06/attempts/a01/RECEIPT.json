@@ -1,0 +1,107 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C3-SFE-06/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-011: basin share is the preregistered PRIMARY; the neighbourhood is +-1/+-2 in the encoding's opcode ordering (campaign 2's A_words geometry on the opcode word); two climbers unlike campaign 2's"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative for this predictor on this evaluator",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "expected_sign": -1,
+   "min_abs_rho": 0.5,
+   "n": 16,
+   "rho": 0.0491
+  },
+  "reason": "predictor does not rank-correlate at the declared strength/direction",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-06",
+ "finished_at": "2026-09-17T05:44:43Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:67e06826e6bb56c621db2eebecd197906c9ff0e4276f3673ab1ba092f3dc1dc3",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "rho": {
+  "accessible_variation": 0.194,
+  "basin_share": 0.0491,
+  "deceptive_share": -0.0491,
+  "greedy_path_len": 0.0245,
+  "local_improvement_prob": null,
+  "mean_dist_to_threshold": 0.3436,
+  "useful_variation": 0.4391
+ },
+ "rho_per_climber": {
+  "first_improvement": {
+   "accessible_variation": 0.8333,
+   "basin_share": 0.6325,
+   "deceptive_share": -0.6325,
+   "greedy_path_len": -0.1054,
+   "local_improvement_prob": null,
+   "mean_dist_to_threshold": 0.2108,
+   "useful_variation": 0.9428
+  },
+  "population": {
+   "accessible_variation": -0.3162,
+   "basin_share": -0.4,
+   "deceptive_share": 0.4,
+   "greedy_path_len": 0.0,
+   "local_improvement_prob": null,
+   "mean_dist_to_threshold": 0.4,
+   "useful_variation": 0.0
+  }
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T05:44:16Z",
+ "steps": {},
+ "tables": {
+  "skelA": {
+   "max": 0.9999994039535522,
+   "n_solvers": 48893,
+   "threshold_share": 0.12516608
+  },
+  "skelB": {
+   "max": 0.9999994039535522,
+   "n_solvers": 48893,
+   "threshold_share": 0.12516608
+  }
+ },
+ "teardown": {},
+ "threshold_share_by_table": {
+  "skelA": [
+   0.125166
+  ],
+  "skelB": [
+   0.125166
+  ]
+ },
+ "timings": {
+  "climbs_s": 26.81,
+  "geometry_s": 25.26,
+  "records_s": 0.0,
+  "tables_s": 0.0,
+  "total_s": 27.0
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "6592f9d668312c739a4d6b12c55650e87b092a81",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

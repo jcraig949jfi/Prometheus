@@ -133,17 +133,1212 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:296-415"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:108-200"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:464-540"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:600-710"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:166-190"
+   }
+  ],
+  "inspected_files": [
+   "core.py 1-200 (docstring, FeynmanKac interface), 296-415 (SMC step)",
+   "resampling.py 166-190, 464-540, 600-710"
+  ],
+  "date": "2026-09-17T11:03Z",
+  "note": "a particle filter reduced to its loop: propose, weight, decide whether to resample, resample by one of several schemes that differ only in how the ordered uniforms are drawn, and accumulate a likelihood from the mean weight; the model is an interface of three functions (M0, M, logG) and the loop never looks inside it",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T11:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/nchopin/particles/archive/refs/tags/v0.4.tar.gz sha256:67809fce81af51a99a04ba5d437565f330cae18e5dd123a3d50c92a74ec2bbf1",
+   "payload_manifest_id": "techne tree_sha256 e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c (101 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/particles-0.4/particles/core.py",
+     "payload_hash_read": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+     "techne_recorded_hash": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tree/particles-0.4/particles/resampling.py",
+     "payload_hash_read": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+     "techne_recorded_hash": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "class FeynmanKac (M0, M, logG; optional Gamma0/Gamma for QMC, logeta for APF, done, time_to_resample)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the algorithm calls only M0(N) to draw initial particles, M(t, xp) to move each particle from its ancestor, and logG(t, xp, x) to compute a log-weight increment; a model may also supply a stopping rule (done), its own resampling trigger (time_to_resample), an auxiliary weight (logeta) and inverse-CDF forms (Gamma0/Gamma) for quasi-Monte Carlo",
+   "input": "a subclass supplying those methods",
+   "output": "a runnable filter for any such model (state-space bootstrap/guided/auxiliary, tempering, IBIS are all instances per the docstring)",
+   "state": "none in the interface",
+   "update": "n/a",
+   "assumptions": [
+    "every sequential Monte Carlo problem is a Feynman-Kac model (the book's thesis); the model can vectorise M and logG over N particles"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels"
+   ],
+   "fitness_value_in_ancestor": "one loop for many algorithms; the model owns the stopping rule and the resampling trigger, so the loop is generic",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the Feynman-Kac abstraction (Del Moral 2004; Chopin & Papaspiliopoulos 2020)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:108-200"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "class FeynmanKac",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "SMC.__next__ / reweight_particles / resample_move / run (core.py 315-415)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "step t: if t=0 draw N particles from M0, else (compute APF auxiliary weights if the model is APF) ask the model whether to resample; if yes draw ancestor indices A from the aux weights by the chosen scheme, set Xp = X[A] and reset the weights (to uniform, or to the APF correction), else A = identity; move X = M(t, Xp); add logG to the log-weights; compute summaries; t += 1; the object is a Python iterator so a caller can step, inspect X/W/A, and continue",
+   "input": "a FeynmanKac model, N, a scheme name, flags (qmc, store_history, collectors)",
+   "output": "X, W, A per step; logLt; optional history",
+   "state": "X, Xp, A, wgts, t, logLt, rs_flag",
+   "update": "per step",
+   "assumptions": [
+    "N is fixed (resampling always draws N even for waste-free variants, per the comment)",
+    "the weights object handles log-space normalisation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
+    "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+    "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+    "particles-chopin-0.4::log_likelihood_accumulated_from_the_log_mean_weight_with_a_correction_when_not_resampling",
+    "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set"
+   ],
+   "fitness_value_in_ancestor": "the loop is inspectable at every step (iterator) and the same loop serves QMC by swapping one method",
+   "failure_landscape": "UNKNOWN by run; by reading: weight degeneracy between resampling steps is left to the model's trigger",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:315-415"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the SMC methods listed",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "essl (resampling.py 166-190); used by the model's time_to_resample",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "ESS = (sum w)^2 / sum w^2 with w = exp(lw - max lw) (max-subtracted for stability); in [1, N]; N for uniform weights, 1 when one weight dominates; the model's default trigger compares it with a fraction of N (not read here: the default lives in the model classes)",
+   "input": "log-weights",
+   "output": "a scalar in [1, N]",
+   "state": "none",
+   "update": "per step",
+   "assumptions": [
+    "ESS approximates the number of 'useful' particles; a threshold on it is the standard adaptive trigger (Kong, Liu & Wong 1994)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels"
+   ],
+   "fitness_value_in_ancestor": "resampling only when degeneracy warrants it: fewer resampling steps, lower variance",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:166-190"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "essl",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "SAMPLE",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "inverse_cdf, uniform_spacings, stratified, systematic, multinomial (resampling.py 485-612)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "all the classical schemes share one O(N+M) pass: walk the cumulative weights once with M SORTED uniforms and emit the index at which each uniform falls; multinomial draws the M sorted uniforms as normalised exponential spacings (O(M) instead of sort), stratified draws one uniform per stratum ((u_m + m)/M), systematic uses a single uniform for all strata ((u + m)/M)",
+   "input": "normalised weights W, M sorted uniforms",
+   "output": "ancestor indices A",
+   "state": "none",
+   "update": "per resampling step",
+   "assumptions": [
+    "the schemes differ in variance, not in expectation: systematic has the lowest variance and is the default in practice; all keep E[#offspring of n] = M W_n"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+    "particles-chopin-0.4::srinivasan_sampling_process_pairwise_transfer_of_fractional_offspring_mass",
+    "particles-chopin-0.4::killing_resampling_keeping_each_particle_with_probability_proportional_to_its_weight_over_the_max",
+    "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set"
+   ],
+   "fitness_value_in_ancestor": "one jit-compiled kernel; the scheme is a choice of a uniform vector",
+   "failure_landscape": "by reading: systematic resampling is not consistent in the sense of Gerber et al. 2019 (the SSP docstring's motivation); the shared inverse_cdf is O(N+M) but sequential (a numba loop)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the unification of schemes as 'ordered uniforms + inverse CDF' (Chopin's book)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:485-612"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "inverse_cdf and the three thin wrappers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::srinivasan_sampling_process_pairwise_transfer_of_fractional_offspring_mass",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "ssp (resampling.py 632-680)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each particle starts with floor(M W_n) children and a fractional remainder xi_n; walk the particles with two live indices i, j: transfer mass between xi_i and xi_j by the largest amount that keeps both in [0,1], choosing the direction at random with probability proportional to the transfer sizes; whichever hits an integer (0 or 1) is settled (1 -> one more child) and replaced by the next particle; a round-off guard adds the missing child at the end; every particle gets floor or ceil of M W_n children",
+   "input": "W, M",
+   "output": "offspring counts, expanded to indices",
+   "state": "xi (remainders), nr_children",
+   "update": "per resampling step",
+   "assumptions": [
+    "a resampling scheme should be both low-variance (offspring k or k+1) and consistent; the reference is Gerber, Chopin & Whiteley 2019"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn"
+   ],
+   "fitness_value_in_ancestor": "the properties of systematic resampling plus a consistency guarantee",
+   "failure_landscape": "by reading: floating round-off can lose a particle; the code checks the count and asks for a bug report if it is still wrong -- an explicit self-check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "a 2019 scheme; the only one here with a theorem attached in the docstring",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:632-680"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ssp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::killing_resampling_keeping_each_particle_with_probability_proportional_to_its_weight_over_the_max",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "killing (resampling.py 681-700)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each particle survives in place with probability W_n / max W; the killed ones are replaced by multinomial draws from W; requires M = N; keeps the surviving particles' positions fixed (useful when particle identity matters, e.g. for genealogies or parallel hardware)",
+   "input": "W",
+   "output": "A with fixed points for survivors",
+   "state": "none",
+   "update": "per resampling step",
+   "assumptions": [
+    "a particle at the max weight is never killed; the acceptance is a rejection sampler against the max"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn"
+   ],
+   "fitness_value_in_ancestor": "in-place resampling (the docstring notes it is 'not described in the book')",
+   "failure_landscape": "UNKNOWN by run; by reading: high variance when one weight dominates (nearly all killed)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:681-700"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "killing",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::log_likelihood_accumulated_from_the_log_mean_weight_with_a_correction_when_not_resampling",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "compute_summaries (core.py 351-368)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "loglt = log mean weight at t if resampling happened (or t = 0), else the DIFFERENCE of log mean weights between t and t-1 (because the weights were not reset); logLt accumulates; summaries and history are collected after, so collectors can read the history",
+   "input": "the weights object",
+   "output": "loglt, logLt",
+   "state": "log_mean_w, logLt",
+   "update": "per step",
+   "assumptions": [
+    "the standard unbiased likelihood estimator of SMC (Del Moral); the correction handles the no-resample steps"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels"
+   ],
+   "fitness_value_in_ancestor": "the marginal likelihood comes free from the filter; what makes SMC usable inside PMCMC and model comparison",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:351-368"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "compute_summaries",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set",
+   "fossil_ancestry": "particles-chopin-0.4",
+   "human_name": "resample_move_qmc (core.py 339-350)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "always resample; draw an (N, d+1) Sobol point set; sort particles along a Hilbert curve; use the first coordinate (sorted) with inverse_cdf over the Hilbert-ordered weights to pick ancestors; feed the remaining coordinates to the model's inverse-CDF move Gamma(t, xp, v)",
+   "input": "X, W, a Sobol generator, the model's Gamma",
+   "output": "X, A",
+   "state": "h_order",
+   "update": "per step",
+   "assumptions": [
+    "the model exposes its transition as an inverse CDF of a uniform (Gamma); the Hilbert sort makes the ancestor selection a one-dimensional quasi-random operation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+    "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn"
+   ],
+   "fitness_value_in_ancestor": "faster-than-Monte-Carlo convergence (Gerber & Chopin 2015) with the same loop",
+   "failure_landscape": "UNKNOWN; the hilbert and rqmc modules were not read",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:339-350"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "resample_move_qmc; CANDIDATE because its two dependencies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "multiSMC (parallel runs), _picklable_f, utils.timer, __str__ / verbose printing, collectors and history storage",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/core.py:351-368 (hist/summaries hooks), 415-518",
+   "note": "orchestration and instruments; the collectors are the natural Stage C readout",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "particles-chopin-0.4"
+  },
+  {
+   "candidate": "the model library (state_space_models, smc_samplers, mcmc, smoothing, distributions, kalman, nested)",
+   "reason": "OTHER",
+   "evidence": "NOT READ (about 6,000 lines); residue",
+   "note": "smc_samplers (tempering, IBIS, waste-free) is where the loop is stressed hardest",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "particles-chopin-0.4"
+  },
+  {
+   "candidate": "'particle filter' / 'SMC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop, the trigger, the schemes and the likelihood estimator are separately replaceable; the library itself exposes each as a parameter",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "particles-chopin-0.4"
+  },
+  {
+   "candidate": "'idiotic' resampling (all particles from one draw)",
+   "reason": "DUPLICATES_A_CONTROL",
+   "evidence": "vault:particles-chopin-0.4/upstream/tree/particles-0.4/particles/resampling.py:701-708 'For testing only. DO NOT USE.'",
+   "note": "the body ships its own negative control; noted for Stage C, not an organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "particles-chopin-0.4"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "particles-chopin-0.4::P.a_population_must_track_a_hidden_moving_state_from_noisy_observations_when_weights_degenerate_geometrically",
+   "source_fossil": "particles-chopin-0.4",
+   "source_evidence": "core.py 315-415; resampling.py 166-190; record domain hidden-state/filtering/resampling",
+   "condition": "the world has a hidden state evolving by a known stochastic rule and emits noisy observations; a population of N guesses is scored each step by observation likelihood; without intervention one guess's weight comes to dominate within a few steps",
+   "resource_or_constraint": "N; per-step evaluations of the rule and the likelihood; variance of the estimate",
+   "failure_condition": "collapse to one lineage (estimate variance explodes) or resampling every step (unnecessary noise)",
+   "world_punishes": "both",
+   "world_rewards": "a population that duplicates the plausible and discards the implausible only when degeneracy is measured",
+   "observable_consequence": "tracking error and likelihood-estimate variance vs N and vs the resampling trigger threshold",
+   "vacuity_condition": "a linear-Gaussian world (the Kalman filter is exact; kalman.py is in the body as the oracle) or observations so uninformative that weights stay uniform",
+   "trivial_shortcuts": "a world that reveals the hidden state; N so large that degeneracy never bites within the horizon",
+   "cheat_control": "an organism given the hidden state must track with zero error at N=1; the ancestor with the trigger set to never-resample must collapse within a known number of steps on a standard model: the world must show both or the degeneracy pressure is absent",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: sequential Monte Carlo / particle filtering (Chopin & Papaspiliopoulos 2020)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "particles-chopin-0.4::P.duplication_of_a_population_by_weight_must_be_low_variance_and_unbiased_at_the_same_time",
+   "source_fossil": "particles-chopin-0.4",
+   "source_evidence": "resampling.py 485-680",
+   "condition": "N items with weights must be replaced by N items drawn so each item's expected copy count is N times its weight; the variance of the copy counts is the cost",
+   "resource_or_constraint": "O(N) time; randomness",
+   "failure_condition": "bias (wrong expectation) or high variance (multinomial)",
+   "world_punishes": "both; and schemes that need O(N log N)",
+   "world_rewards": "ordered-uniform schemes where each count is floor or ceil of its expectation",
+   "observable_consequence": "copy-count variance across schemes on the same weight vector; downstream estimator variance",
+   "vacuity_condition": "uniform weights",
+   "trivial_shortcuts": "deterministic rounding (biased)",
+   "cheat_control": "a scheme that returns the exact expected counts (impossible unless integer) is the ceiling; the 'idiotic' scheme in the body (all copies of one draw) is the floor: the world must rank the real schemes strictly between them",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: resampling schemes (Kitagawa 1996; Gerber, Chopin & Whiteley 2019)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "via the model's trigger",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "rs_flag",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "scheme by name",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "A",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::srinivasan_sampling_process_pairwise_transfer_of_fractional_offspring_mass",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::killing_resampling_keeping_each_particle_with_probability_proportional_to_its_weight_over_the_max",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::log_likelihood_accumulated_from_the_log_mean_weight_with_a_correction_when_not_resampling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "qmc flag replaces resample_move",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "reuses inverse_cdf",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "particles-chopin-0.4",
@@ -165,10 +1360,23 @@
    "to": "libdai-mooij",
    "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the model library and the QMC/Hilbert machinery were not read (sqmc is CANDIDATE)",
+   "the default resampling trigger (ESS < N/2 by convention) lives in the model classes, not read; the cut names the measure, not the threshold",
+   "nothing ran; kalman.py in the body is the exact oracle for a Stage C world"
+  ],
+  "note": "the loop and the resampling schemes are accounted for; the vault's filterpy-labbe and simple-kalman fossils are recurrence candidates against kalman.py",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

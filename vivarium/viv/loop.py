@@ -31,6 +31,8 @@ experiments.
 """
 from __future__ import annotations
 
+import dataclasses
+import json
 import os
 import socket
 import threading
@@ -39,10 +41,14 @@ import traceback
 from dataclasses import asdict, dataclass, field
 from typing import Optional
 
+from . import attempts as _att
+from . import bundle as _bundle
 from . import conformance as _conf
 from . import db as _db
 from . import design as _design
 from . import identity as _identity
+from . import kinds as _kinds
+from . import outbox as _outbox
 from . import pew as _pew
 from . import queue as _q
 from . import scope as _scope
@@ -114,6 +120,27 @@ class Recovery:
                               "sfe_experiment_id": r["sfe_experiment_id"],
                               "claimed_by": r["claimed_by"]}
                              for r in self.stranded]}
+
+
+def _evaluate_predicate(measured, op, reference) -> str:
+    """PASS / FAIL / NOT_EVALUABLE over the closed operator set the
+    outcome_rule already uses. Nothing scientific: the operator and the
+    reference are the producer's."""
+    if measured == _bundle.UNKNOWN or reference is None or reference == _bundle.UNKNOWN or op is None:
+        return "NOT_EVALUABLE"
+    try:
+        if op == ">=": ok = measured >= reference
+        elif op == "<=": ok = measured <= reference
+        elif op == ">": ok = measured > reference
+        elif op == "<": ok = measured < reference
+        elif op == "==": ok = measured == reference
+        elif op == "!=": ok = measured != reference
+        elif op == "in": ok = measured in reference
+        elif op == "between": ok = reference[0] <= measured <= reference[1]
+        else: return "NOT_EVALUABLE"
+    except Exception:                                    # noqa: BLE001
+        return "NOT_EVALUABLE"
+    return "PASS" if ok else "FAIL"
 
 
 def _utcnow() -> str:
@@ -221,6 +248,10 @@ class Vivarium:
         self._runner = runner
         self._pew = pew_client
         self._pew_resolved = pew_client is not None
+        #: an explicitly injected PEW client (tests, one-off tools) is used
+        #: synchronously; the outbox serves the production path, where the
+        #: client is resolved from configuration.
+        self._pew_injected = pew_client is not None
         self.started_at = time.time()
         self.counters = {"ticks": 0, "idle": 0, "busy": 0, "executed": 0,
                          "failed": 0, "rejected": 0, "blocked": 0}
@@ -236,6 +267,13 @@ class Vivarium:
         # The heartbeat row is keyed on worker_id, so without this two
         # instances overwrite each other indistinguishably.
         self.instance = self._instance_tag()
+        #: Point release: attempts/steps/receipts and the PEW outbox. Both
+        #: are feature-detected on the draft tables; absent, the loop
+        #: behaves exactly as before the release.
+        self.attempts = _att.Attempts(schema=self.schema, worker_id=self.worker_id, log=self.log)
+        self.outbox = _outbox.Outbox(schema=self.schema, producer=self.worker_id, log=self.log)
+        self._ctx: Optional[_att.AttemptCtx] = None
+        self._grant: Optional[ClaimGrant] = None
 
     # -- lazily built collaborators ---------------------------------------
     def runner(self):
@@ -261,7 +299,9 @@ class Vivarium:
                 insecure=str(self.cfg.get("sfe_insecure", "")).strip().lower()
                          in ("1", "true", "yes", "on"),
                 worker_id=self.worker_id, log=self.log,
-                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)))
+                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)),
+                # session affinity keys, host-local, outside the repo (s14 canary)
+                session_store=os.path.join(self.var_dir, "sessions"))
         return self._runner
 
     def pew(self):
@@ -277,6 +317,208 @@ class Vivarium:
                     agent=self.cfg.get("agent", "vivarium"),
                     namespace=self.cfg["pew_namespace"])
         return self._pew
+
+    # =====================================================================
+    # POINT RELEASE -- attempts, steps, bundle, gates, receipts, envelope
+    # =====================================================================
+    def _open_attempt(self, conn, row) -> _att.AttemptCtx:
+        """Open attempt n+1 for the row, sealing the start bundle at claim."""
+        spec = row["experiment_spec"]
+        declared = None
+        if self.attempts.enabled(conn):
+            # the column arrives with draft 008; absent, the skeleton is the bundle
+            try:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT bundle_declared FROM " + self.schema +
+                                ".research_experiment_queue WHERE experiment_id = %s", (str(row["experiment_id"]),))
+                    got = cur.fetchone()
+                    declared = got[0] if got else None
+            except Exception:                       # noqa: BLE001
+                conn.rollback()
+                declared = None
+        if not declared:
+            declared = _bundle.declared_skeleton(spec)
+        try:
+            engine = dict(self.runner().engine_identity or {})
+        except Exception as exc:                    # noqa: BLE001
+            engine = {"error": str(exc)[:200]}
+        kind = _kinds.get(spec["work"]["kind"])
+        executor = {"kind": spec["work"]["kind"],
+                    "kind_contract_digest": _bundle.kind_contract_digest(kind) if kind else _bundle.UNKNOWN,
+                    "viv_version": __import__("viv").__version__,
+                    "viv_base_sha": (self.code or {}).get("base_sha") or _bundle.UNKNOWN}
+        slots = [{"slot": n, **{k: (spec["work"]["payload"].get(n) or {}).get(k, _bundle.UNKNOWN)
+                                for k in ("digest", "artifact_type", "schema_version")},
+                  **{"source_world": (row["artifact_locators"] or {}).get((spec["work"]["payload"].get(n) or {}).get("digest"), {}).get("source_world", _bundle.UNKNOWN),
+                     "source_artifact": (row["artifact_locators"] or {}).get((spec["work"]["payload"].get(n) or {}).get("digest"), {}).get("source_artifact", _bundle.UNKNOWN)}}
+                 for n in sorted(kind.artifact_slots)] if kind else []
+        if engine.get("contract_hash") is None and self.conformance_record:
+            engine["contract_hash"] = (self.conformance_record.get("contract") or {}).get("hash", _bundle.UNKNOWN)
+        filled = _bundle.fill(declared, spec=spec, engine=engine, executor=executor, initial_artifacts=slots)
+        bh_declared = _bundle.bundle_hash(declared)
+        bh = _bundle.bundle_hash(filled)
+        self._store_bundle(conn, bh_declared, declared, row["created_by"])
+        self._store_bundle(conn, bh, filled, self.worker_id)
+        ctx = self.attempts.open(conn, row, grant=dataclasses.asdict(self._grant) if self._grant else {},
+                                 bundle_hash=bh if self.attempts.enabled(conn) else None,
+                                 bundle_hash_declared=bh_declared if self.attempts.enabled(conn) else None)
+        ctx.bundle = filled
+        ctx.bundle_declared = declared
+        if ctx.enabled:
+            self.outbox.enqueue(conn, kind="ATTEMPT_OPENED", source_attempt=ctx.attempt_id,
+                                source_experiment=ctx.experiment_id,
+                                payload={"attempt_number": ctx.attempt_number, "parent_attempt_id": ctx.parent_attempt_id,
+                                         "design_digest": ctx.design_digest, "bundle_hash": bh,
+                                         "bundle_hash_declared": bh_declared, "worker_id": self.worker_id})
+        return ctx
+
+    def _store_bundle(self, conn, bhash: str, bundle: dict, declared_by: str) -> None:
+        if not self.attempts.enabled(conn):
+            return
+        with conn.cursor() as cur:
+            cur.execute("SELECT to_regclass(%s)", (self.schema + ".start_bundle",))
+            if cur.fetchone()[0] is None:
+                conn.rollback()
+                return
+            cur.execute("INSERT INTO " + self.schema + ".start_bundle (bundle_hash, bundle_version, bundle, declared_by) "
+                        "VALUES (%s, %s, %s, %s) ON CONFLICT (bundle_hash) DO NOTHING",
+                        (bhash, bundle.get("bundle_version", _bundle.BUNDLE_VERSION), json.dumps(bundle, default=str), declared_by))
+        conn.commit()
+
+    def _recorder(self, conn):
+        ctx = self._ctx
+
+        def record(kind, fn, parts=(), replayable=False, verify=None):
+            if ctx is None or not ctx.enabled:
+                return fn()
+            return self.attempts.step(conn, ctx, kind, fn, parts=list(parts),
+                                      replayable=replayable, verify=verify)
+
+        def prior(kind, parts=()):
+            """A prior attempt's result for this key, or None (a READ; the
+            runner uses it to adopt the session a prior world lives in)."""
+            if ctx is None or not ctx.enabled:
+                return None
+            return self.attempts.prior_result(ctx, kind, list(parts))
+        record.prior = prior
+        return record
+
+    def _evaluate_gates(self, conn, row, phase: str) -> Optional[dict]:
+        """PREREQUISITE_GATE_RECEIPT.md: evaluate the bundle's gates for
+        `phase`. Returns a FAIL/NOT_EVALUABLE record that aborts, else None.
+        The receipt is durably committed BEFORE the action (operator s5)."""
+        ctx = self._ctx
+        if ctx is None or not ctx.enabled:
+            return None
+        gates = [g for g in (getattr(ctx, "bundle", {}) or {}).get("gates", []) or []
+                 if isinstance(g, dict) and g.get("phase", "pre_execution") == phase]
+        abort = None
+        for g in gates:
+            measured, mref = self._gate_measurement(row, g)
+            rule = g.get("rule") or {}
+            reference = rule.get("reference")
+            if isinstance(reference, dict) and "ref" in reference:
+                reference, _ = self._gate_measurement(row, {"measurement": {"source": "producer_supplied", "ref": reference["ref"]}})
+            result = _evaluate_predicate(measured, rule.get("op"), reference)
+            if result == "NOT_EVALUABLE" and rule.get("if_indeterminate") == "FAIL":
+                result_for_action = "FAIL"
+            else:
+                result_for_action = result
+            rid = self.attempts.gate_receipt(conn, ctx, gate=g, measurement_ref=mref, measured=measured,
+                                             reference=reference, result=result)
+            self.outbox.enqueue(conn, kind="GATE_EVALUATED", source_attempt=ctx.attempt_id,
+                                source_experiment=ctx.experiment_id,
+                                payload={"gate_id": g.get("gate_id"), "phase": phase, "result": result,
+                                         "measured": measured, "reference": reference})
+            on_fail = g.get("on_fail", "abort_attempt")
+            if result_for_action == "PASS":
+                action = "proceeded"
+            elif on_fail == "mark_and_continue":
+                action = "marked_and_continued"
+            elif on_fail.startswith("skip_step:"):
+                action = "skipped_step:" + on_fail.split(":", 1)[1]
+            else:
+                action = "aborted_attempt"
+            self.attempts.gate_action(conn, rid, action)
+            self.log("[viv] gate %s %s -> %s (measured=%r reference=%r)"
+                     % (g.get("gate_id"), result, action, measured, reference))
+            if action == "aborted_attempt" and abort is None:
+                abort = {"gate_id": g.get("gate_id"), "result": result, "measured": measured,
+                         "reference": reference, "receipt_id": rid}
+        return abort
+
+    @staticmethod
+    def _gate_measurement(row, gate: dict):
+        m = gate.get("measurement") or {}
+        src = m.get("source")
+        ref = m.get("ref")
+        if src == "producer_supplied":
+            supplied = ((row["source_evidence"] or {}).get("gate_measurements") or {})
+            return supplied.get(ref, _bundle.UNKNOWN), {"source": src, "ref": ref}
+        return _bundle.UNKNOWN, {"source": src or _bundle.UNKNOWN, "ref": ref, "note": "unresolvable at this phase"}
+
+    def _write_intervention_receipts(self, conn, result: RunResult) -> None:
+        ctx = self._ctx
+        if ctx is None or not ctx.enabled:
+            return
+        for item in getattr(result, "interventions", None) or []:
+            # one application per repeat is one receipt: the producer's id is
+            # suffixed with the repeat it was applied in (#r<n>), so two repeats
+            # of one declared intervention are two rows, never a collision
+            base = str(item.get("intervention_id") or item.get("kind") or _bundle.UNKNOWN)
+            rid = "%s#r%s" % (base, item.get("repeat_index")) if item.get("repeat_index") is not None else base
+            self.attempts.intervention_receipt(
+                conn, ctx, intervention_id=rid,
+                kind=str(item.get("kind") or _bundle.UNKNOWN), writer="executor",
+                intended=item.get("intended") or {}, realised=item.get("realised") or {},
+                target={"world_id": result.world_id, "repeat_index": item.get("repeat_index")},
+                logical_time=item.get("logical_time"), supplied=item.get("supplied"),
+                source_ids=item.get("source_ids"), applier_result=item.get("result"),
+                reason=item.get("reason"), post_ref=item.get("post_ref"))
+        if result.load_receipt and result.load_receipt.get("loaded") is not None:
+            lr = result.load_receipt
+            slots = lr.get("slots") or lr.get("artifacts") or []
+            self.attempts.intervention_receipt(
+                conn, ctx, intervention_id="preflight:initial_artifacts", kind="import", writer="engine",
+                intended={"count": len(slots) if slots else lr.get("declared", 0)},
+                realised={"count": lr.get("engine_fetches", len(slots) if lr.get("loaded") else 0)},
+                target={"world_id": result.world_id}, applier_result="APPLIED" if lr.get("loaded") else "REJECTED",
+                reason=lr.get("message"), post_ref={"load_receipt": True})
+
+    def _close_attempt(self, conn, reason: str, *, result: Optional[RunResult] = None,
+                       spec: Optional[dict] = None, extra: Optional[dict] = None) -> Optional[dict]:
+        ctx = self._ctx
+        if ctx is None or not ctx.enabled:
+            return None
+        plan_count = None
+        horizon = None
+        if spec is not None:
+            rep = spec.get("repeat") or {}
+            plan_count = rep.get("count")
+            b = rep.get("budget") or {}
+            horizon = {"kind": "observations", "declared": rep.get("count"),
+                       "max_seconds": b.get("max_seconds"), "max_observations": b.get("max_observations")}
+        consumed = {}
+        if result is not None:
+            consumed = {"observations": len(result.obs_ids or []),
+                        "seconds": sum(r.get("seconds", 0) for r in (result.repeats or [])),
+                        "detail": result.termination_detail or {}}
+        env = _att.envelope(reason, horizon=horizon, consumed=consumed,
+                            observations_recorded=len(result.obs_ids) if result is not None and result.obs_ids else 0,
+                            expected_observations=plan_count,
+                            engine_termination_ref=({"world_id": result.world_id, "exp_id": result.sfe_experiment_id}
+                                                    if result is not None and result.world_id else None),
+                            receipt_ref={"attempt_id": ctx.attempt_id, "steps": len(ctx.steps)})
+        rdig = self.attempts.close(conn, ctx, termination=env, extra=extra)
+        env["terminal_receipt_ref"]["receipt_digest"] = rdig
+        ctx.termination = env
+        self.outbox.enqueue(conn, kind="ATTEMPT_TERMINATED", source_attempt=ctx.attempt_id,
+                            source_experiment=ctx.experiment_id,
+                            payload={"attempt_number": ctx.attempt_number, "termination": env,
+                                     "receipt_digest": rdig})
+        self.log("[viv] attempt %d closed %s / %s (censored=%s, observations=%d)"
+                 % (ctx.attempt_number, env["terminal_state"], reason, env["censored"], env["observations_recorded"]))
+        return env
 
     # =====================================================================
     # STAGE 0 -- RECOVERY.  Crash/restart semantics, and they are explicit.
@@ -362,11 +604,19 @@ class Vivarium:
             conn.commit()
             self.log("[viv] stage=dispatch experiment_id=%s -> running sfe=%s"
                      % (eid, sfe_exp_id))
-        # D7: the grant is issued HERE and only here -- for the row this tick
-        # claimed (eid), by this worker. The runner refuses without it.
-        grant = ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
-                           claimed_at=_utcnow())
-        return self.runner().run(request, on_running=on_running, grant=grant)
+        # D7: the grant was issued at CLAIM for the row this tick claimed
+        # (eid), by this worker. The runner refuses without it. `steps` is the
+        # attempt's recorder: every engine act inside the runner becomes a
+        # keyed step row (NEW / REUSED / REPLAYED / RECOMPUTED / FAILED).
+        grant = self._grant or ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
+                                          claimed_at=_utcnow())
+        labels = None
+        if self._ctx is not None and self._ctx.enabled:
+            # Stage 3 D7: the engine carries an OPAQUE coordinate for this
+            # seat's execution/attempt ids (schema 9 `labels`); no meaning
+            labels = {"vivarium.execution_id": eid, "vivarium.attempt": str(self._ctx.attempt_number)}
+        return self.runner().run(request, on_running=on_running, grant=grant,
+                                 steps=self._recorder(conn), labels=labels)
 
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.
@@ -437,6 +687,35 @@ class Vivarium:
                             schema=self.schema)
             conn.commit()
             return None, {"written": False, "reason": "not_declared"}
+
+        if (self.outbox.enabled(conn) and self._ctx is not None and self._ctx.enabled
+                and not self._pew_injected):
+            # PEW_OUTBOX_DESIGN.md: the bodies go to the outbox in the same
+            # transaction that closes the row; the deliverer posts them.
+            try:
+                bodies = _pew.build_bodies(
+                    spec=spec, run=result, engine=self.runner().engine_identity,
+                    producer_version=__import__("viv").__version__,
+                    namespace=self.cfg.get("pew_namespace", "prod"),
+                    relation=self._relation(row),
+                    producer=_design.producer_block(row, engine=self.runner().engine_identity,
+                                                    producer_version=__import__("viv").__version__,
+                                                    spec_hash=row["spec_hash"]),
+                    termination=getattr(self._ctx, "termination", None))
+            except Exception as exc:                # noqa: BLE001
+                detail = {"written": False, "reason": "bodies_failed", "error": str(exc)[:2000]}
+                _q.record_event(conn, eid, actor=self.worker_id, event_type="pew_write_failed",
+                                payload=detail, schema=self.schema)
+                conn.commit()
+                return None, detail
+            ev = self.outbox.enqueue(conn, kind="ENCOUNTER_RECORDED", source_attempt=self._ctx.attempt_id,
+                                     source_experiment=eid, payload=bodies, commit=False)
+            detail = {"written": False, "queued": True, "reason": "outbox", "event_id": ev,
+                      "failed_execution": failed}
+            _q.record_event(conn, eid, actor=self.worker_id, event_type="pew_queued", payload=detail,
+                            schema=self.schema)
+            conn.commit()
+            return None, detail
 
         client = self.pew()
         required = bool(declared.get("required"))
@@ -634,6 +913,20 @@ class Vivarium:
         self.heartbeat(conn, current=eid)
         self.log("[viv] stage=claim experiment_id=%s spec=%s"
                  % (eid, row["spec_hash"][7:19]))
+        # D7 + point release: the grant is issued at CLAIM, the attempt is
+        # opened on it, and the start bundle is sealed at the same moment.
+        self._grant = ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
+                                 claimed_at=_utcnow())
+        try:
+            self._ctx = self._open_attempt(conn, row)
+        except Exception as exc:                    # noqa: BLE001
+            self.finalize_failure(conn, eid, kind="attempt_open_failed",
+                                  error="could not open an attempt: %s" % exc)
+            return self._done(TickReport(outcome=FAILED, experiment_id=eid,
+                                         spec_hash=row["spec_hash"],
+                                         failure_class="ATTEMPT_OPEN_FAILED",
+                                         duration_s=time.time() - t0,
+                                         detail={"reason": str(exc)[:400]}), conn)
         pulse = _RowPulse(worker_id=self.worker_id, pid=os.getpid(),
                           schema=self.schema, log=self.log,
                           interval_s=float(self.cfg.get("heartbeat_interval_s")
@@ -646,10 +939,24 @@ class Vivarium:
             self.heartbeat(conn, current=None)
 
     def _run_claimed(self, conn, row, eid, t0) -> TickReport:
+        record = self._recorder(conn)
+        # --- prerequisite gates (pre_execution), receipt before action ------
+        abort = self._evaluate_gates(conn, row, "pre_execution")
+        if abort is not None:
+            self._close_attempt(conn, "PREREQUISITE_FAILED", extra={"gate": abort})
+            self.finalize_failure(conn, eid, kind="prerequisite_failed",
+                                  error="prerequisite gate %s %s" % (abort["gate_id"], abort["result"]))
+            return TickReport(outcome=FAILED, experiment_id=eid, spec_hash=row["spec_hash"],
+                              failure_class="PREREQUISITE_FAILED", duration_s=time.time() - t0,
+                              detail={"gate": abort})
+
         # --- validate (still CLAIMED: a refusal never became `running`) ---
         try:
-            spec = self.validate(row)
+            # validate is PURE in the row (spec + hash): a prior attempt's
+            # result is REUSED without a verifier; nothing engine-side depends on it
+            spec = record("validate", lambda: self.validate(row), replayable=True)
         except Exception as exc:                    # noqa: BLE001
+            self._close_attempt(conn, "INSTRUMENT_INVALID", extra={"reason": str(exc)[:400]})
             self.finalize_failure(conn, eid, kind="spec_rejected",
                                   error="specification rejected: %s" % exc)
             return TickReport(outcome=REJECTED, experiment_id=eid,
@@ -660,11 +967,12 @@ class Vivarium:
 
         # --- build + dispatch --------------------------------------------
         try:
-            request = self.build_request(row)
+            request = record("build", lambda: self.build_request(row))
             result = self.dispatch(conn, request, eid)
         except ExecutionFailure as exc:
             return self._failed_execution(conn, row, spec, exc, t0)
         except Exception as exc:                    # noqa: BLE001
+            self._close_attempt(conn, "EXECUTOR_ERROR", extra={"reason": str(exc)[:400]})
             self.finalize_failure(
                 conn, eid, kind="execution_failed",
                 error="execution failed: %s\n%s"
@@ -675,8 +983,13 @@ class Vivarium:
                               duration_s=time.time() - t0,
                               detail={"reason": str(exc)[:400]})
 
-        # --- collect, fossilize, finalize ---------------------------------
+        # --- receipts, collect, fossilize, finalize -------------------------
+        self._write_intervention_receipts(conn, result)
+        termination = self._close_attempt(conn, result.termination_reason or "COMPLETED_ALL_REPEATS",
+                                          result=result, spec=spec)
         summary = self.collect(result)
+        if termination is not None:
+            summary["termination"] = termination
         selection = self.bind_selection(conn, row, result)
         if selection is not None:
             summary["selection"] = selection
@@ -710,6 +1023,13 @@ class Vivarium:
         than a closed row pointing at nothing."""
         eid = str(row["experiment_id"])
         partial = exc.partial
+        reason = {"ENGINE_TRANSPORT": "ENGINE_TRANSPORT", "LEASE_LOST": "ENGINE_TRANSPORT",
+                  "EXECUTOR_ERROR": "EXECUTOR_ERROR", "EXECUTOR_NOT_IMPLEMENTED": "INSTRUMENT_INVALID",
+                  "PREFLIGHT_REJECTED": "INSTRUMENT_INVALID", "UNCLAIMED_EXECUTION": "INSTRUMENT_INVALID",
+                  "BUDGET_EXCEEDED": "BUDGET_EXHAUSTED"}.get(exc.failure_class or "", "EXECUTOR_ERROR")
+        self._write_intervention_receipts(conn, partial)
+        self._close_attempt(conn, reason, result=partial, spec=spec,
+                            extra={"failure_class": exc.failure_class, "error": str(exc)[:400]})
         summary = self.collect_failure(exc)
         pew_ref = None
         if partial.crossed_boundary:

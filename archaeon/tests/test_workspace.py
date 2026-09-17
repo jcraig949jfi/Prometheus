@@ -41,6 +41,34 @@ def test_refusal_from_the_canonical_checkout_and_the_read_only_override(tmp_path
         W.assert_not_canonical("write the queue", allow_override=False)     # queue writes never unlock
 
 
+def test_guard_fails_closed_when_git_cannot_answer(tmp_path, monkeypatch):
+    """ARCH-52 (Mnemosyne #290): before 2026-09-16 a path where git answered
+    nothing read as "not canonical" and was ADMITTED. Three cases: (1) a
+    directory that is not a repository -> workspace_known False -> refused
+    even with the read-only override (an override on an unknown workspace
+    would be invisible); (2) git absent from PATH, exercised by pointing
+    PATH at an empty directory -> the same refusal; (3) POSITIVE control: a
+    real linked worktree is still admitted and its receipt says known."""
+    plain = tmp_path / "not-a-repo"; plain.mkdir()
+    monkeypatch.setattr(W, "REPO", plain)
+    monkeypatch.setenv("ARCHAEON_ALLOW_CANONICAL", "1")
+    assert W.receipt(plain)["workspace_known"] is False
+    with pytest.raises(W.CanonicalCheckoutRefused, match="UNKNOWN"):
+        W.assert_not_canonical("tick")
+    main = tmp_path / "canonical"; main.mkdir(); _init_repo(main)
+    linked = tmp_path / "wt-seat"
+    subprocess.run(["git", "-C", str(main), "worktree", "add", "-q", str(linked), "-b", "seat/task"], check=True)
+    monkeypatch.setattr(W, "REPO", linked)
+    monkeypatch.delenv("ARCHAEON_ALLOW_CANONICAL", raising=False)
+    r = W.assert_not_canonical("tick")
+    assert r["workspace_known"] is True and r["main_worktree"] is False
+    empty = tmp_path / "empty-path"; empty.mkdir()
+    monkeypatch.setenv("PATH", str(empty))
+    assert W.receipt(linked)["workspace_known"] is False
+    with pytest.raises(W.CanonicalCheckoutRefused, match="UNKNOWN"):
+        W.assert_not_canonical("tick")
+
+
 def test_this_checkout_is_a_linked_worktree_not_the_canonical_one():
     """Archaeon itself must never be running from the canonical checkout."""
     assert W.is_main_worktree() is False, W.receipt()

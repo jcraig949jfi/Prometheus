@@ -1,0 +1,248 @@
+{
+ "artifacts": {
+  "smoke": {
+   "artifact_id": "sha256:3066f93ab966af9e0b9aff9225d890df1bc95cfa7c79ae39a7eb0bd9a06089d7",
+   "blob_hash": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+   "bytes": 59,
+   "declared": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+   "hash_ok": true,
+   "kind": "cmp2.pop.smoke"
+  }
+ },
+ "attempt": 2,
+ "attempt_id": "PHASE-A/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "cross_session_read": {
+  "bytes": 5859,
+  "hash_ok": true,
+  "n_failures": 7,
+  "ok": true
+ },
+ "disposition_candidate": null,
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "pinned_at": "2026-09-16T17:25:41Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 8
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "errors": [],
+ "experiment": "PHASE-A",
+ "finished_at": "2026-09-17T02:48:39Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "import_roundtrip_equal": true,
+ "imports": {
+  "smoke": {
+   "bytes": 59,
+   "digest": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+   "expected": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+   "hash_ok": true,
+   "import_artifact_id": "sha256:6d1c782995c636c538c5f24549e3aeb0d8571bb54d8925f42a604795e79810ed",
+   "origin": "IMPORTED"
+  }
+ },
+ "purpose": "engine smoke (resume+teardown)",
+ "read_wrappers": {
+  "get_experiment": {
+   "n": 1,
+   "ok": true
+  },
+  "list_artifacts": {
+   "error": "EngineError('HTTP 405: Method Not Allowed')",
+   "ok": false
+  },
+  "list_experiments": {
+   "n": 1,
+   "ok": true
+  },
+  "list_observations": {
+   "n": 1,
+   "ok": true
+  }
+ },
+ "records": {
+  "smoke": {
+   "exp_id": "exp_02076f796ae1b12d627211ee",
+   "idempotent": true,
+   "obs_id": "obs_4c1dd412858f1ddfc8deaadc",
+   "obs_id_replay": "obs_4c1dd412858f1ddfc8deaadc"
+  }
+ },
+ "replayed": [
+  "version",
+  "session",
+  "group",
+  "world:src",
+  "world:dst",
+  "publish",
+  "import_fetch",
+  "experiment"
+ ],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T02:48:37Z",
+ "steps": {
+  "idem:00064090d8b4075bf21130e5f61bcff3": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": true,
+   "result": "ses_cca34a78f4d320055d96d923",
+   "wall_s": 0.048
+  },
+  "idem:228251cd891164544634cfcc9cc2cfe8": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [],
+   "replayed": true,
+   "result": {
+    "artifact_id": "sha256:3066f93ab966af9e0b9aff9225d890df1bc95cfa7c79ae39a7eb0bd9a06089d7",
+    "blob_hash": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+    "bytes": 59,
+    "declared": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+    "hash_ok": true,
+    "kind": "cmp2.pop.smoke"
+   },
+   "wall_s": 0.154
+  },
+  "idem:4caffda9a0c9b1edbe432bd2efc3675e": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "dst"
+   ],
+   "replayed": true,
+   "result": {
+    "name": "cmp2-phase-a-dst",
+    "policy": "EXPLICIT_IMPORT_ONLY",
+    "world_id": "wld_b82db63f4bb23053a1a6ba4f"
+   },
+   "wall_s": 0.261
+  },
+  "idem:53a87edce29a184919f37d355600e906": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": true,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 8,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+   },
+   "wall_s": 0.093
+  },
+  "idem:5806718f6918888237f387aa5012321c": {
+   "kind": "engine",
+   "name": "group",
+   "parts": [],
+   "replayed": true,
+   "result": "grp_24659f6de429345db7490079",
+   "wall_s": 0.125
+  },
+  "idem:b19afc2e59b674f9015c3833315c44aa": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "src"
+   ],
+   "replayed": true,
+   "result": {
+    "name": "cmp2-phase-a-src",
+    "policy": "FULLY_SHARED",
+    "world_id": "wld_a213c4ab791efbcb0654ed2e"
+   },
+   "wall_s": 0.272
+  },
+  "idem:c70ec49f4e3855d9a1022a3522ec1173": {
+   "kind": "engine",
+   "name": "import_fetch",
+   "parts": [],
+   "replayed": true,
+   "result": [
+    {
+     "manifests": [
+      {
+       "genome": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     ],
+     "note": "phase A smoke"
+    },
+    {
+     "bytes": 59,
+     "digest": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+     "expected": "sha256:8f68994f320ec78f114b4d13c0006e8b2b95d41bba722d1a88ed13d7ca771bcf",
+     "hash_ok": true,
+     "import_artifact_id": "sha256:6d1c782995c636c538c5f24549e3aeb0d8571bb54d8925f42a604795e79810ed",
+     "origin": "IMPORTED"
+    }
+   ],
+   "wall_s": 0.212
+  },
+  "idem:f7f59be111a8e6920f0dcc6379e48f8b": {
+   "kind": "engine",
+   "name": "experiment",
+   "parts": [],
+   "replayed": true,
+   "result": {
+    "committed_seq": 4963,
+    "exp_id": "exp_02076f796ae1b12d627211ee",
+    "work_id": null
+   },
+   "wall_s": 0.078
+  }
+ },
+ "teardown": {
+  "dst": "TERMINATED",
+  "src": "TERMINATED"
+ },
+ "timings": {
+  "startup_s": 0.01,
+  "teardown_s": 1.14,
+  "total_s": 1.4
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "f74b5cc5bf002effbfe206b63ea7df24d0205a00",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "dst": "wld_b82db63f4bb23053a1a6ba4f",
+  "src": "wld_a213c4ab791efbcb0654ed2e"
+ }
+}
