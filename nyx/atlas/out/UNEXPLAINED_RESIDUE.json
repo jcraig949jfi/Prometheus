@@ -1,11 +1,11 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:05Z",
+ "built": "2026-09-17T22:26Z",
  "by_state": {
-  "LARGE_RESIDUE": 8,
-  "EXPLAINED_BY_CURRENT_CUT": 16,
-  "PARTIALLY_EXPLAINED": 33,
-  "CUT_INSTRUMENT_INSUFFICIENT": 1
+  "LARGE_RESIDUE": 11,
+  "EXPLAINED_BY_CURRENT_CUT": 17,
+  "CUT_INSTRUMENT_INSUFFICIENT": 2,
+  "PARTIALLY_EXPLAINED": 38
  },
  "residue": [
   {
@@ -20,6 +20,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "bdwgc-8.2.6",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "incremental, generational, parallel and threaded paths unread",
+    "finalisation and typed allocation unread",
+    "nothing ran"
+   ],
+   "note": "the four mechanisms of the base collector are located; the rest of the 47,000 lines is platform support and extensions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "biriscv-branch-predictor",
    "state": "EXPLAINED_BY_CURRENT_CUT",
    "unexplained": [
@@ -27,6 +38,17 @@
     "nothing ran; the record says RUNNABLE_EMULATED (iverilog on M2), and the parameter switches make each organ its own ablation"
    ],
    "note": "every always block and assign in biriscv_npc.v is in an organ",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "bsd-4.3-reno-distribution-tape-1990",
+   "state": "CUT_INSTRUMENT_INSUFFICIENT",
+   "unexplained": [
+    "filesystem images cannot be dissected by reading",
+    "tape files 5-7 (src.tar, srcsys.tar, contrib.tar) absent from the vault: the record's 'contains the Reno TCP' is not verifiable from the body",
+    "no emulator on M3; nothing ran"
+   ],
+   "note": "recorded as an inventory cut with zero organs so the census counts it as inspected; the defect is Techne's to rule on (complete the tape or narrow the record)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -38,6 +60,38 @@
     "the Karn ambiguity (RTT sample spanning a retransmission) is a reading-level claim: t_rtt is not cleared at TCPT_REXMT in tcp_timer.c and tcp_output.c only starts a timer on new data; not run"
    ],
    "note": "the sender's rate-governing machinery is fully accounted for: window, retransmit timer, persist, SWS thresholds; the finding is what is NOT there",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "bsd-tcp-4.3-reno-1990",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "tcp_output's send decision and tcp_mss unread",
+    "the RTT variance estimator not re-read against the 1983 organ",
+    "nothing ran"
+   ],
+   "note": "the three mechanisms that the successor adds are located and bounded; the shared organs are inherited from the 1983 cut",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "buddy-alloc-spaskalev",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "realloc, walk and resize paths unread",
+    "tests.c unread (an oracle for a Stage C run once a C compiler exists)",
+    "nothing ran"
+   ],
+   "note": "the three mechanisms that distinguish this buddy allocator from the textbook one are located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "c-cmaes-hansen",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "eigen solver, I/O, boundary handling and restarts unread",
+    "nothing ran"
+   ],
+   "note": "the five mechanisms of the algorithm are located with their default constants; the body is small enough that a Stage C run needs only a C compiler",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -348,6 +402,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "linpackd-netlib-1979",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "dgesl and dmxpy bodies past their heads",
+    "nothing ran"
+   ],
+   "note": "one 802-line file; both mechanisms read; the benchmark's two revision notes are the most informative lines in it",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "linux-tcp-congestion",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -383,6 +447,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "lru-cache-goldsborough",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "iterators, statistics and callbacks unread",
+    "TimedCache read at the check sites only",
+    "nothing ran"
+   ],
+   "note": "a small body; the author's one mechanism (last-accessed) is located and separated from the textbook",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "md5-rfc1321",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -411,6 +486,17 @@
     "hexagonal vs rectangular topology is a coordinate change inside the kernel organ; whether it changes measured behaviour is UNKNOWN"
    ],
    "note": "seven mechanisms account for every line of train / train_batch_offline / update",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "minpack-netlib-1980",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the QR/rotation substrate unread",
+    "lmdif/lmstr/chkder/fdjac unread",
+    "nothing ran; ex/ is the oracle"
+   ],
+   "note": "the four mechanisms that make the two methods robust are located and separated from the linear algebra",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -509,6 +595,17 @@
     "nothing ran; 82 lines port to Python in minutes -- a candidate for an M3-native recurrence test against particles/kalman.py"
    ],
    "note": "every line is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "spin-6.5.2-holzmann",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the front end, simulator and LTL translator unread",
+    "MA / multi-core / BFS / swarm variants unread",
+    "the generated text was read as a program with its variants collapsed; nothing ran"
+   ],
+   "note": "the four mechanisms that define the tool are located in the generated text; the tool itself (generation) is the fifth",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -616,6 +713,17 @@
     "nothing ran"
    ],
    "note": "every function in viterbi.cpp is in one of the two organs or rejected",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "whitakers-words-ada",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "dictionary indexing, affix application, tackons/packons, enclitics and the English side unread",
+    "the data files (the lexicon) are half the program and unread",
+    "nothing ran"
+   ],
+   "note": "the three control mechanisms of the analyser are located; the test corpus is an oracle a Stage C run could use once an Ada compiler exists",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
