@@ -87,7 +87,13 @@ class VerifyingClient(RecordingClient):
         return oid
 
     def list_observations(self, wid):
-        return list(self.observations.get(wid, []))
+        # schema 9's shape (D8 cursors): a page object, never a bare list --
+        # the s14 canary D found the verifiers iterating the dict's keys
+        return {"observations": list(self.observations.get(wid, [])), "next_after_seq": None, "truncated": False}
+
+    def list_experiments(self, wid):
+        return {"experiments": [{"exp_id": e, "spec_hash": None} for e in self.experiments.get(wid, [])],
+                "next_after_seq": None, "truncated": False}
 
     def events(self, wid, limit=100):
         # the base double has only OBSERVATION_RECORDED events; a completed
@@ -772,3 +778,19 @@ def test_the_step_key_travels_as_the_idempotency_key_when_the_client_accepts_it(
     wid = next(k for k in client.keys if k[0] == "experiment")[1]
     assert client.keys[("experiment", wid)] == _sk.step_key(design, "experiment", [wid])
     # NEGATIVE: a client without the parameter is called without it (the recording doubles above)
+
+
+def test_the_verifiers_read_schema_9_page_objects_and_refuse_a_truncated_page():
+    """POSITIVE: {observations: [...], truncated: False} is read as the list.
+    NEGATIVE: a truncated page never proves absence (None -> not present ->
+    the caller recomputes rather than trusting an incomplete answer)."""
+    from viv.runner import SfeRunner
+
+    class C:
+        def list_observations(self, wid):
+            return {"observations": [{"obs_id": "obs_1", "exp_id": "e", "content": {"repeat_index": 0}}],
+                    "next_after_seq": 9, "truncated": False}
+    assert SfeRunner._observation_present(C(), "w", "obs_1") is True
+    assert SfeRunner._observation_present(C(), "w", None, exp_id="e", repeat_index=0) == "obs_1"
+    assert SfeRunner._items({"observations": [1], "truncated": True}, "observations") is None
+    assert SfeRunner._items([1, 2], "observations") == [1, 2]
