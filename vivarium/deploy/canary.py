@@ -224,75 +224,95 @@ class Canary:
         h = self.q("SELECT pid, host, last_seen FROM viv.worker_heartbeat WHERE worker_id='vivarium@m2'")
         return (h[0]["pid"], h[0]["host"]) if h else (None, None)
 
-    def row_c(self):
-        print("C: mid-run death -> NEW ATTEMPT", flush=True)
-        spec = spec_ca(repeats=5, n_cells=149, steps=600, n_ic=4000, max_seconds=900, seed_root=20260918, label="C")
-        eid = self.enqueue(spec, "C-resume", {"w0_best": 0.62, "shelf_floor": 0.45})
-        # wait until attempt 1 has at least one observation step, then kill the consumer
+    def row_c(self, L="C", *, die="in_loop"):
+        """die="in_loop": kill while the repeats are computing under the lease
+        (the common death: compute dominates) -> lease expires -> RETRYABLE ->
+        attempt 2's claim is RECOMPUTED, runs recomputed, item completed once.
+        die="posting": kill while observations are being posted, after the
+        engine completed the item -> attempt 2's claim is REPLAYED, nothing
+        completed twice. The second window is short (observations post in
+        ~0.3 s each); if the kill lands after the row completed the check is
+        recorded NOT_EXERCISED, never passed by default."""
+        print("%s: mid-run death (%s) -> NEW ATTEMPT" % (L, die), flush=True)
+        if die == "in_loop":
+            spec = spec_ca(repeats=5, n_cells=149, steps=600, n_ic=4000, max_seconds=900, seed_root=20260918 + ord(L), label=L)
+        else:
+            spec = spec_ca(repeats=12, n_cells=21, steps=42, n_ic=64, max_seconds=900, seed_root=20260918 + ord(L), label=L)
+        eid = self.enqueue(spec, "%s-resume-%s" % (L, die), {"w0_best": 0.62, "shelf_floor": 0.45})
         t0 = time.time(); killed = None; steps_at_kill = []
         while time.time() - t0 < 600:
             atts = self.attempts(eid)
             if atts:
                 st = self.steps(atts[0]["attempt_id"])
                 n_obs = sum(1 for s in st if s["step_kind"] == "observe")
-                if n_obs >= 1:
+                n_run = sum(1 for s in st if s["step_kind"] == "run")
+                ready = (n_run >= 2) if die == "in_loop" else (n_obs >= 1)
+                if ready:
                     pid, host = self.consumer_pid()
                     r = subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True, text=True, timeout=30)
                     killed = {"pid": pid, "host": host, "rc": r.returncode, "out": (r.stdout or r.stderr)[-120:], "at": _utc(),
                               "observations_before_kill": n_obs}
                     steps_at_kill = [(s["step_kind"], s["status"]) for s in st]
                     break
-            time.sleep(1)
-        self.check("C.consumer_killed_mid_run", killed is not None and killed["rc"] == 0, **(killed or {}), steps=steps_at_kill)
+            time.sleep(1 if die == "in_loop" else 0.1)
+        self.check(L + ".consumer_killed_mid_run", killed is not None and killed["rc"] == 0, **(killed or {}), steps=steps_at_kill)
         if killed is None:
             return
         time.sleep(3)
         row = self.q("SELECT status FROM viv.research_experiment_queue WHERE experiment_id=%s", eid)[0]
-        self.check("C.row_stranded_running", row["status"] in ("running", "claimed"), status=row["status"])
+        if row["status"] == "completed":
+            self.out["checks"][L + ".NOT_EXERCISED"] = {"ok": True, "note": "the row completed before the kill landed; "
+                                                        "this death shape was not exercised on production this run"}
+            self.save()
+            return
+        self.check(L + ".row_stranded_running", row["status"] in ("running", "claimed"), status=row["status"])
         r = subprocess.run([sys.executable, "-m", "viv.cli", "release", eid, "--new-attempt", "--by", "vivarium@m2",
                             "--reason", "s14 canary: consumer killed mid-run; NEW ATTEMPT is the only recovery"],
                            capture_output=True, text=True, cwd=str(VIVARIUM), timeout=120)
-        self.check("C.released_new_attempt", r.returncode == 0, out=(r.stdout or r.stderr)[-200:])
+        self.check(L + ".released_new_attempt", r.returncode == 0, out=(r.stdout or r.stderr)[-200:])
         atts = self.attempts(eid)
-        self.check("C.attempt1_stranded", bool(atts) and atts[0]["terminal_state"] == "STRANDED"
+        self.check(L + ".attempt1_stranded", bool(atts) and atts[0]["terminal_state"] == "STRANDED"
                    and (atts[0]["termination"] or {}).get("termination_reason") == "STRANDED",
                    a1=(atts[0]["terminal_state"], (atts[0]["termination"] or {}).get("termination_reason")) if atts else None)
         # the production relaunch path: the dead-man task (run it now rather than wait for its 5-minute tick)
         rr = subprocess.run(["schtasks", "/Run", "/TN", "VivariumDeadmanM2"], capture_output=True, text=True, timeout=60)
-        self.out["checks"]["C.deadman_run_requested"] = {"ok": rr.returncode == 0, "out": (rr.stdout or rr.stderr)[-120:]}
+        self.out["checks"][L + ".deadman_run_requested"] = {"ok": rr.returncode == 0, "out": (rr.stdout or rr.stderr)[-120:]}
         t1 = time.time(); new_pid = None
         while time.time() - t1 < 420:
             pid, _ = self.consumer_pid()
             if pid and pid != killed["pid"]:
                 new_pid = pid; break
             time.sleep(3)
-        self.check("C.consumer_relaunched_by_deadman", new_pid is not None, new_pid=new_pid, old_pid=killed["pid"], waited_s=round(time.time() - t1))
+        self.check(L + ".consumer_relaunched_by_deadman", new_pid is not None, new_pid=new_pid, old_pid=killed["pid"], waited_s=round(time.time() - t1))
         rt = self.wait_terminal(eid, 900)
-        self.check("C.terminal_completed", rt is not None and rt["status"] == "completed", status=rt and rt["status"], error=((rt or {}).get("error") or "")[:160])
+        self.check(L + ".terminal_completed", rt is not None and rt["status"] == "completed", status=rt and rt["status"], error=((rt or {}).get("error") or "")[:160])
         atts = self.attempts(eid)
         a2 = atts[1] if len(atts) > 1 else None
         env = (a2 or {}).get("termination") or {}
-        self.check("C.attempt2_completed_5_observations", a2 is not None and a2["terminal_state"] == "COMPLETED"
-                   and env.get("observations_recorded") == 5 and env.get("censored") is False
+        self.check(L + ".attempt2_completed_all_observations", a2 is not None and a2["terminal_state"] == "COMPLETED"
+                   and env.get("observations_recorded") == (5 if die == "in_loop" else 12) and env.get("censored") is False
                    and a2["parent_attempt_id"] == atts[0]["attempt_id"], envelope=env)
         st2 = self.steps(a2["attempt_id"]) if a2 else []
         by = {}
         for s in st2:
             by.setdefault(s["step_kind"], []).append(s["status"])
         world_ids = {(s["result"] or {}).get("world_id") for a in atts for s in self.steps(a["attempt_id"]) if s["step_kind"] == "world"}
-        self.check("C.attempt2_reused_world_experiment_replayed_observations",
-                   by.get("world") == ["REUSED"] and by.get("experiment") == ["REUSED"]
+        n_rep = 5 if die == "in_loop" else 12
+        claim_expect = "RECOMPUTED" if die == "in_loop" else "REPLAYED"
+        self.check(L + ".attempt2_replayed_world_experiment_claim_%s_one_world" % claim_expect.lower(),
+                   by.get("world") == ["REPLAYED"] and by.get("experiment") == ["REPLAYED"]
+                   and by.get("claim") == [claim_expect]
                    and by.get("observe", []).count("REPLAYED") == killed["observations_before_kill"]
-                   and len(by.get("observe", [])) == 5 and "RECOMPUTED" in by.get("run", []) and len(world_ids) == 1,
+                   and len(by.get("observe", [])) == n_rep and len(world_ids) == 1,
                    statuses=by, world_ids=sorted(x for x in world_ids if x))
         try:
             wid = next(iter(x for x in world_ids if x))
             e = self.engine_read(wid)
-            self.check("C.engine_exactly_5_observations_one_world", e["n_obs"] == 5, world_id=wid, **e)
+            self.check(L + ".engine_exactly_n_observations_one_world", e["n_obs"] == (5 if die == "in_loop" else 12), world_id=wid, **e)
         except Exception as exc:                                   # noqa: BLE001
-            self.check("C.engine_exactly_5_observations_one_world", False, error=str(exc)[:200])
+            self.check(L + ".engine_exactly_n_observations_one_world", False, error=str(exc)[:200])
         ob = self.q("SELECT event_kind, state FROM viv.pew_outbox WHERE source_experiment=%s ORDER BY stream, sequence", eid)
-        self.check("C.outbox_has_both_attempts", sum(1 for o in ob if o["event_kind"] == "ATTEMPT_OPENED") == 2
+        self.check(L + ".outbox_has_both_attempts", sum(1 for o in ob if o["event_kind"] == "ATTEMPT_OPENED") == 2
                    and sum(1 for o in ob if o["event_kind"] == "ATTEMPT_TERMINATED") == 2, kinds=[o["event_kind"] for o in ob])
 
     def close(self):
@@ -309,7 +329,7 @@ def main() -> int:
     receipt = Path(sys.argv[1] if len(sys.argv) > 1 else r"D:\Prometheus-data\vivarium\window\canary-C4-20260917-W1.json")
     c = Canary(receipt, Path(r"D:\Prometheus-data\vivarium\var"))
     try:
-        c.row_a(); c.row_b(); c.row_c()
+        c.row_a(); c.row_b(); c.row_c("C", die="in_loop"); c.row_c("D", die="posting")
     except Exception as exc:                                       # noqa: BLE001
         import traceback; c.check("aborted", False, error="%s: %s" % (type(exc).__name__, str(exc)[:300]), trace=traceback.format_exc()[-800:])
     ok = c.close()

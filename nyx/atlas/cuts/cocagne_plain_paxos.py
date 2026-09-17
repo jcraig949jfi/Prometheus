@@ -1,0 +1,68 @@
+"""Cut: cocagne-plain-paxos (Tom Cocagne's plain-paxos, Python; ancestry-aware, Stage A COARSE; SOURCE_READ on M3; nineteenth of the
+2026-09-17 NOT_CUT order). Read in full: paxos/essential.py (Proposer, Acceptor, Learner), paxos/functional.py (heartbeat leadership).
+Read by structure: paxos/practical.py (NACKs, durability hooks, leader flag). NOT read: paxos/durable.py, paxos/external.py, the
+tests. Nothing ran; the body is pure Python and is an M3-native world candidate (the tests are the oracle).
+"""
+from nyx.atlas.author import Cut
+
+E = "vault:cocagne-plain-paxos/upstream/tree/paxos/essential.py"; F = "vault:cocagne-plain-paxos/upstream/tree/paxos/functional.py"; P = "vault:cocagne-plain-paxos/upstream/tree/paxos/practical.py"
+c = Cut("cocagne-plain-paxos", mode="ANCESTRY_AWARE", inspected=["paxos/essential.py, paxos/functional.py (all)", "paxos/practical.py (class/def structure, recv_prepare)"],
+        evidence=[("SOURCE_READ", E), ("SOURCE_READ", F), ("SOURCE_READ", P)],
+        note="single-decree Paxos in three classes of a few lines each, with the messaging externalised; the 'practical' and 'functional' layers add NACKs, durability hooks and a heartbeat-based leader without touching the three safety rules")
+
+pid = c.organ("totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid", human_name="ProposalID = (number, uid); next_proposal_number (essential.py)", status="ACCEPTED",
+    mechanism="a proposal id is a (number, uid) tuple compared lexicographically, so two proposers never tie and every proposer can generate an id larger than any it has seen by taking the next number; the heartbeat layer's observe_proposal bumps the counter past ids seen in NACKs and heartbeats",
+    input="the node's counter and uid; observed ids", output="a fresh, globally larger id", state="next_proposal_number", update="per prepare", assumptions=["uids are unique and comparable; counters are persisted (the durable layer's job) so a restarted node does not reuse an id"],
+    fitness_value_in_ancestor="the total order is what lets acceptors promise 'nothing lower'", failure_landscape="by reading: without persistence a restart reissues ids and can break the promise", evidence_ref=E + ":ProposalID, prepare; " + P + ":observe_proposal", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="ProposalID and its two producers",
+    coverage={"input_topology": "SCALAR", "output_topology": "SCALAR", "state_amount": "CONSTANT", "state_persistence": "DURABLE", "stochasticity": "DETERMINISTIC", "competition": "ARBITRATES"})
+
+acc = c.organ("acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise", human_name="Acceptor.recv_prepare / recv_accept_request (essential.py)", status="ACCEPTED",
+    mechanism="on Prepare(id): if id >= the highest id promised, promise it (record it) and reply with the highest id and value ALREADY ACCEPTED, if any; on Accept(id, v): if id >= the promised id, accept (record id and v) and broadcast Accepted; anything lower is ignored (the practical layer replies NACK instead)",
+    input="Prepare and Accept messages", output="Promise (with prior acceptance) or Accepted; or silence/NACK", state="promised_id, accepted_id, accepted_value (all must be durable)", update="per message",
+    assumptions=["the three fields survive crashes (practical.py's persistance_required / persisted hooks)"], fitness_value_in_ancestor="safety lives here: an acceptor never goes back on a promise, and tells proposers what it has already accepted",
+    failure_landscape="UNKNOWN by run", human_prior="Lamport's Synod rules (1998), the two conditions", evidence_ref=E + ":class Acceptor", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="the two recv_ methods",
+    coverage={"input_topology": "EVENT", "output_topology": "EVENT", "state_amount": "CONSTANT", "state_persistence": "DURABLE", "stochasticity": "DETERMINISTIC", "cooperation": "AGREES"})
+
+prop = c.organ("proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing", human_name="Proposer.prepare / recv_promise / set_proposal (essential.py)", status="ACCEPTED",
+    mechanism="prepare sends a fresh id to all acceptors; each promise is counted once per acceptor; if a promise carries a previously accepted (id, value) higher than any seen, the proposer REPLACES its own value with it; when the count reaches the quorum size it sends Accept with whatever value it now holds (its own only if no acceptor had accepted anything)",
+    input="promises", output="an Accept broadcast", state="promises_rcvd, last_accepted_id, proposed_value", update="per promise", assumptions=["a quorum is a majority (any two quorums intersect), so any value already chosen is seen by at least one promise"],
+    fitness_value_in_ancestor="the rule that makes Paxos safe under leader change: a new proposer cannot overwrite a possibly-chosen value", failure_landscape="by reading: two proposers alternating prepares can livelock (no progress); the functional layer's heartbeat/leader exists for that",
+    human_prior="the P2c invariant of Paxos Made Simple", evidence_ref=E + ":class Proposer", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="the Proposer class",
+    coverage={"input_topology": "EVENT", "output_topology": "EVENT", "state_amount": "CONSTANT", "state_persistence": "PER_EPISODE", "stochasticity": "DETERMINISTIC", "cooperation": "AGREES", "failure_mode": "STALLS"})
+
+learn = c.organ("learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id", human_name="Learner.recv_accepted (essential.py)", status="ACCEPTED",
+    mechanism="per acceptor keep its latest accepted id; an older message is ignored; when an acceptor moves to a higher id its count on the old id is retracted; a value is resolved when one id reaches quorum_size acceptances (values under one id are asserted equal); resolution is final and the tables are dropped",
+    input="Accepted messages", output="on_resolution(id, value) once", state="proposals (id -> counts, value), acceptors (uid -> latest id)", update="per message", assumptions=["messages may be reordered and duplicated (handled) but not forged"],
+    fitness_value_in_ancestor="learning is derived from the same messages as accepting, with no extra round", failure_landscape="UNKNOWN by run", evidence_ref=E + ":class Learner", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="recv_accepted",
+    coverage={"input_topology": "EVENT", "output_topology": "EVENT", "state_amount": "LINEAR_IN_INPUT", "state_persistence": "PER_EPISODE", "stochasticity": "DETERMINISTIC", "cooperation": "AGREES"})
+
+hb = c.organ("heartbeat_leadership_layered_on_top_without_changing_the_safety_rules", human_name="HeartbeatNode (functional.py): liveness_window, hb_period, poll_liveness, recv_heartbeat, acquire_leadership, recv_accept_nack", status="ACCEPTED",
+    mechanism="a leader pulses a heartbeat carrying its proposal id every hb_period; a node that sees no heartbeat within liveness_window (and no recent prepare from someone else, 1.5 windows) runs prepare to acquire leadership; a heartbeat with a higher id demotes the current leader; a quorum of Accept NACKs also drops leadership; prepares are retried on prepare NACKs; the docstring states the layer 'does not modify the basic Paxos algorithm'",
+    input="heartbeats, the clock, NACKs", output="prepare attempts; leader flag changes; on_leadership_* callbacks", state="leader_uid, leader_proposal_id, _tlast_hb, _tlast_prep, _acquiring, _nacks", update="per pulse / per window",
+    assumptions=["a timing assumption (liveness_window) is used for PROGRESS only; safety never depends on it"], fitness_value_in_ancestor="breaks the duelling-proposers livelock in practice while keeping the essential layer's proofs", failure_landscape="by reading: 'observed_recent_prepare' at 1.5 windows is a heuristic to avoid two acquirers; a partition can still produce dueling leaders, safely",
+    human_prior="the distinguished-proposer / leader election of Paxos Made Simple section 2.4, implemented as heartbeats", evidence_ref=F + ":class HeartbeatNode", confidence="HIGH", portability="YES", compatibility="YES", utility="UNKNOWN", source_boundary="HeartbeatNode",
+    coverage={"input_topology": "EVENT", "output_topology": "EVENT", "state_amount": "CONSTANT", "state_persistence": "PER_EPISODE", "feedback": "DELAYED_CLOSED_LOOP", "stochasticity": "ENVIRONMENT_RANDOM", "update_topology": "EVENT_DRIVEN", "competition": "CONTENDS", "temporal_horizon": "WINDOW"})
+
+c.reject("the Messenger interfaces (send_*, on_*), durable.py, external.py, the tests", reason="INHERITED_FROM_RUNTIME_OR_LIBRARY", evidence="I/O and persistence boundaries supplied by the host; not read beyond signatures", note="the tests are a ready M3-native oracle (pure Python)")
+c.reject("the practical layer's NACK plumbing and resend_accept as separate organs", reason="BELOW_MEANINGFUL_GRAIN", evidence=P + ":recv_prepare_nack, recv_accept_nack, resend_accept", note="they feed the heartbeat organ's decisions; recorded there")
+c.reject("'Paxos' as one organ", reason="NAME_HAS_NO_EXECUTABLE_BOUNDARY", evidence="ids, acceptor rules, proposer adoption rule, learner counting and leadership are five classes; the vault's willemt-raft (cut 09-17) holds a different arrangement of the same five concerns (terms, log matching, election restriction, commit counting, randomised election)", note="recurrence candidate R1: raft term/vote vs paxos id/promise")
+
+c.edge(pid, prop, "feeds"); c.edge(prop, acc, "feeds", note="prepare / accept"); c.edge(acc, prop, "feeds", note="promise with prior value"); c.edge(acc, learn, "feeds", note="accepted broadcast"); c.edge(hb, prop, "triggers", note="acquire leadership -> prepare"); c.edge(acc, hb, "feeds", note="NACKs"); c.edge(hb, pid, "updates", note="observe_proposal")
+
+c.pressure("a_single_value_must_be_chosen_by_a_majority_of_unreliable_parties_such_that_once_chosen_it_can_never_be_unchosen_even_as_parties_crash_and_recover",
+    condition="N parties, messages delayed or lost, any minority may crash and restart with its durable state; multiple parties may propose; the world scores agreement (all learners learn the same value) and the absence of a second chosen value",
+    resource_or_constraint="two round trips per attempt; durable writes per promise/accept; no clock for safety", failure_condition="two different values chosen, or a chosen value overwritten after a crash", world_punishes="proposers that ignore prior acceptances; acceptors that forget promises",
+    world_rewards="the adoption rule and durable promises", observable_consequence="count of distinct chosen values over many runs with injected reorderings, losses and restarts (must be exactly one); rounds to resolution", vacuity_condition="one proposer and no failures",
+    trivial_shortcuts="a fixed leader that never crashes", cheat_control="an organism handed the chosen value by the world must resolve in one round with zero conflicts; the essential layer with the adoption rule DELETED (a proposer always sends its own value) must show two chosen values under a leader change: the world must show that violation or it is not exerting the safety pressure",
+    cost_class="CPU-scale", source_evidence="essential.py (three classes); tests/test_essential.py as the oracle", purpose="PURPOSE: single-decree consensus (Lamport, Paxos Made Simple)")
+
+c.pressure("progress_under_asynchrony_must_come_from_a_timing_layer_that_can_be_wrong_without_making_the_safety_layer_wrong",
+    condition="the safety mechanism above can livelock; the organism may add timers and a leader to make progress, but any timer may fire falsely", resource_or_constraint="a heartbeat period and a liveness window", failure_condition="a false timer produces a second chosen value (safety broken) or permanent dueling (no progress)",
+    world_punishes="timers that change safety-layer state; windows shorter than message delay", world_rewards="a layer that only decides WHEN to run the safe protocol", observable_consequence="resolutions per unit time and chosen-value count as the liveness window is set below and above the message delay",
+    vacuity_condition="synchronous lossless delivery", trivial_shortcuts="a world with a global clock", cheat_control="with a perfect failure detector supplied by the world the organism must resolve in the minimum rounds; with the window set far below the delay the ancestor must show dueling and still exactly one chosen value: both must be visible",
+    cost_class="CPU-scale", source_evidence="functional.py HeartbeatNode docstring and poll_liveness", purpose="PURPOSE: leader-based progress for Paxos (heartbeats)")
+
+c.ancestry("algorithm_from", "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's", note="from the docstrings; the record's lineage not re-read")
+c.residue("PARTIALLY_EXPLAINED", ["durable.py and external.py not read; practical.py read by structure only", "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle", "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"],
+          note="the three essential classes are accounted for line by line")
+c.save(state="COARSE")

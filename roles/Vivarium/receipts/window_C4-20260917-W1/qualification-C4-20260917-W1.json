@@ -1,0 +1,42 @@
+{
+  "fixture": "viv.qualification.v1",
+  "schema": "viv_test_48605f98",
+  "checks": {
+    "gate_fail_no_dependent_action": true,
+    "gate_reference_resolved_from_measured_space": true,
+    "bundle_declared_and_filled_hashes": true,
+    "gate_pass_then_action": true,
+    "new_attempt_after_recoverable_failure": true,
+    "step_statuses": {
+      "REUSED": "validate",
+      "REPLAYED": "world/experiment/observe:0",
+      "RECOMPUTED": "run:*",
+      "NEW": "observe:1"
+    },
+    "no_world_recreated_on_replay": true,
+    "intended_vs_realised_intervention": true,
+    "budget_termination_completed_and_censored": true,
+    "design_key_mismatch_refused": true,
+    "outbox_growth_while_pew_down": 15,
+    "later_delivery_and_duplicate_no_double_count": true,
+    "backfill_unknown_stays_unknown": true,
+    "receipt_digest_recomputes_from_rows": true,
+    "harness_to_execution_translation_preserved": true,
+    "strata_recoverable_from_factors": true
+  },
+  "not_exercised": {
+    "artifact_emission": "Vivarium kinds emit observations, not artifacts; artifact CONSUMPTION (preflight import) is receipted; emission is a producer/engine act",
+    "checkpoint_fork": "deferred by order (s15); slot only",
+    "real_engine": "engine calls are a recording double; the canary (s14) runs against the production engine as vivarium-test"
+  },
+  "s16_answers": {
+    "exact_attempt_reconstructable": true,
+    "derived_design_alters_one_start_condition": true,
+    "system_proves_what_changed": true,
+    "duplicate_execution_distinguished": true,
+    "duplicate_delivery_distinguished": true,
+    "intervention_provable": true,
+    "strata_recoverable": true,
+    "pew_off_the_execution_path": true
+  }
+}

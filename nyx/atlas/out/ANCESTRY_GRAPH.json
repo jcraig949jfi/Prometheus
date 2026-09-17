@@ -1,12 +1,12 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T11:04Z",
- "n": 141,
+ "built": "2026-09-17T15:48Z",
+ "n": 154,
  "by_relation": {
-  "algorithm_from": 51,
+  "algorithm_from": 62,
   "derived_from": 7,
   "shares_ancestor_with": 42,
-  "historical_version_of": 9,
+  "historical_version_of": 11,
   "superseded_by": 14,
   "reimplementation_of": 3,
   "port_of": 1,
@@ -19,6 +19,13 @@
   "inspired_by": 1
  },
  "edges": [
+  {
+   "from": "avida",
+   "relation": "algorithm_from",
+   "to": "Tierra (Ray 1991): self-replicating programs with template addressing and a reaper; Avida (Adami & Brown 1994) adds per-organism CPUs, merit-proportional scheduling, and the task-reward environment",
+   "note": "from the code's structure and the record's lineage; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "backoff-2.2.1",
    "relation": "algorithm_from",
@@ -139,6 +146,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "cocagne-plain-paxos",
+   "relation": "algorithm_from",
+   "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "compact-4.2bsd-1983",
    "relation": "superseded_by",
    "to": "ncompress-5.0-lzw-1985",
@@ -165,6 +179,13 @@
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "concurrencykit-0.7.2",
@@ -251,6 +272,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "emcee-3.1.6",
    "relation": "algorithm_from",
    "to": "Goodman & Weare 2010; Metropolis et al. 1953",
@@ -304,6 +332,13 @@
    "relation": "algorithm_from",
    "to": "Graphplan (Blum & Furst 1995) planning graph without mutexes; HSP (Bonet & Geffner) heuristic search; Hoffmann & Nebel 2001 JAIR",
    "note": "from the file headers; the vault's graphplan-blum-furst-1995 is a sibling fossil for a recurrence test",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "genann",
+   "relation": "algorithm_from",
+   "to": "Rumelhart, Hinton & Williams 1986 (backpropagation); the multilayer perceptron",
+   "note": "from the code and the record; the record's pre1980 era is the algorithm's ancestry, not the body's date",
    "basis": "SOURCE_READ"
   },
   {
@@ -426,6 +461,20 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Hovakimyan & Cao, L1 Adaptive Control Theory (2010): piecewise-constant adaptation law with a state predictor and a low-pass filtered control",
+   "note": "from the record's domain and the code's structure; not verified against the book this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Hovakimyan & Cao, L1 Adaptive Control Theory (2010): piecewise-constant adaptation law with a state predictor and a low-pass filtered control",
+   "note": "from the record's domain and the code's structure; not verified against the book this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "lapack-reference",
    "relation": "rewrote",
    "to": "linpack-netlib-1979",
@@ -438,6 +487,20 @@
    "to": "eispack-netlib-1976",
    "note": "same functionality, blocked for cache",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ldpc-codes-neal-2001",
+   "relation": "algorithm_from",
+   "to": "Gallager 1962 (LDPC codes and probabilistic decoding); MacKay & Neal 1996-97 (rediscovery, near-Shannon performance)",
+   "note": "from the record and the code's author; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "ldpc-codes-neal-2001",
+   "relation": "algorithm_from",
+   "to": "Gallager 1962 (LDPC codes and probabilistic decoding); MacKay & Neal 1996-97 (rediscovery, near-Shannon performance)",
+   "note": "from the record and the code's author; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "leveldb-1.23",
@@ -580,6 +643,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "md5-rfc1321",
+   "relation": "historical_version_of",
+   "to": "MD4 (Rivest 1990) -> MD5 (1991-92); SHA-1 (1995) is the same construction with a different compression function",
+   "note": "from the RFC's own introduction and general knowledge; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "microkanren-scheme",
    "relation": "shares_ancestor_with",
    "to": "swipl-9.2.9",
@@ -718,6 +788,13 @@
    "to": "libdai-mooij",
    "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "particles-chopin-0.4",
@@ -962,6 +1039,20 @@
    "relation": "algorithm_from",
    "to": "the 16x-oversampling UART convention (8250-class devices); the 'uart2bus' OpenCores project (record lineage not re-read)",
    "note": "from the module headers",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "viterbi-hmm-xukmin",
+   "relation": "algorithm_from",
+   "to": "Viterbi 1967; the encoder is the standard rate-1/k feed-forward convolutional coder",
+   "note": "from the code; record lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "viterbi-hmm-xukmin",
+   "relation": "algorithm_from",
+   "to": "Viterbi 1967; the encoder is the standard rate-1/k feed-forward convolutional coder",
+   "note": "from the code; record lineage not re-read",
    "basis": "SOURCE_READ"
   },
   {
