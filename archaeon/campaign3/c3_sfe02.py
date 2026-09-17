@@ -137,9 +137,43 @@ def edit_distance(g1: List[int], g2: List[int]) -> int:
     return prev[-1]
 
 
+def strategy_signature(m: dict, eps) -> dict:
+    """Per ask: does the organism output the asked stream's value (correct), the LAST PUT value
+    (a last-value strategy), some OTHER put value, or nothing? (C3-SFE-01 L3-004.)"""
+    from proteus.foundry.prng import SplitMix64 as _SM
+    from proteus.foundry.vm import Player
+    from archaeon.wse.worlds import K_PUT
+    player = Player(m)
+    counts = {"correct": 0, "last_value": 0, "first_value": 0, "other_put": 0, "none": 0, "asks": 0}
+    for ei, ep in enumerate(eps):
+        st = player.fresh_state(); rng = _SM(seed_from("wse.vmrng", 5, ei))
+        puts = []
+        for ti, words in enumerate(ep.ticks):
+            if words and words[0] == K_PUT:
+                puts.append(words[2] if len(words) > 2 else None)
+            player.begin_tick(st)
+            outs, _ = player.run_tick(st, [words], 1, rng)
+            if ti in ep.expected:
+                counts["asks"] += 1
+                o = outs[0][0] if outs and outs[0] else None
+                if o is None:
+                    counts["none"] += 1
+                elif o == ep.expected[ti]:
+                    counts["correct"] += 1
+                elif puts and o == puts[-1]:
+                    counts["last_value"] += 1
+                elif puts and o == puts[0]:
+                    counts["first_value"] += 1
+                elif o in puts:
+                    counts["other_put"] += 1
+    n = max(1, counts["asks"])
+    return {k: round(v / n, 4) for k, v in counts.items() if k != "asks"} | {"asks": counts["asks"]}
+
+
 def run_org(job: dict) -> dict:
     eps = battery()
     t0 = time.time()
+    sig = strategy_signature(job["manifest"], eps)
     nb = neighbourhood(job["manifest"], eps, job["children"], job["seed"])
     bs = basin(job["manifest"], eps, job["basin_samples"], job["seed"])
     p = nb["parent"]
@@ -149,6 +183,10 @@ def run_org(job: dict) -> dict:
              "E2_valley": f["valley"], "E3_stream2_destroys_stream1": (f.get("second_up", 0) > 0 and f.get("tradeoff", 0) / max(f.get("second_up", 0), 1e-9) >= 0.8),
              "E5_no_gradient": f.get("second_up", 0) < 0.005 and bs["basin_share"] == 0.0}
     return {"arm": job["arm"], "seed": job["seed"], "source_seed": job.get("source_seed"), "source_arm": job.get("source_arm"), "profile": profile, "parent_r": round(p["r"], 4),
+            "sig_correct": sig["correct"], "sig_last_value": sig["last_value"], "sig_first_value": sig["first_value"], "sig_other_put": sig["other_put"], "sig_none": sig["none"],
+            "strategy": ("first_value" if sig["first_value"] >= 0.3 and sig["first_value"] + sig["correct"] >= 0.9 else
+                         "last_value" if sig["last_value"] >= 0.3 and sig["last_value"] + sig["correct"] >= 0.9 else
+                         "keyed" if sig["correct"] >= 0.9 else "mixed"),
             "parent_a0": round(p["a0"], 4), "parent_a1": round(p["a1"], 4), **{"f_" + k: v for k, v in f.items()}, "basin_share": bs["basin_share"], "basin_best_end": bs["best_end"],
             "best_child_r": round(nb["best_child"]["r"], 4), "best_child_op": nb["best_child"]["op"], "ops_by_class": nb["ops_by_class"], **flags,
             "instr": len(job["manifest"]["genome"]) // 4, "persist": job["manifest"]["persist"], "wall_s": round(time.time() - t0, 1)}

@@ -33,3 +33,10 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   at 300 everywhere. Held-out per ask ~0.5/0.5: the shelf looks like a
   last-value strategy. C3-SFE-08 replaced (D3-013). Ledger L3-001..L3-004.
   Next: C3-SFE-02 (with a last-value probe added).
+
+## 07:55-08:10 -- C3-SFE-02 (dry a01/a02; engine a03 of record; CAPABLE_NEGATIVE: the shelf is a one-value memory)
+
+- 22 s; 18 records, 0 errors. Shelf reproduced 10/12; strategy first-value
+  6/12, last-value 4/12, mixed 2; useful children 1/4800; second-stream gains
+  all trade the first (58/58); basin 0/480. E5 6/12, E2 7/12, E3 5/12, E1 0.
+  Ledger L3-005..L3-007. Next: C3-SFE-03 (running).
