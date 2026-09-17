@@ -1,13 +1,13 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:48Z",
- "n": 185,
+ "built": "2026-09-17T22:51Z",
+ "n": 197,
  "by_relation": {
-  "algorithm_from": 79,
+  "algorithm_from": 85,
   "reimplementation_of": 9,
-  "derived_from": 10,
-  "shares_ancestor_with": 43,
-  "historical_version_of": 13,
+  "derived_from": 11,
+  "shares_ancestor_with": 44,
+  "historical_version_of": 16,
   "superseded_by": 14,
   "port_of": 2,
   "forked_from": 1,
@@ -15,7 +15,7 @@
   "rewrote": 2,
   "rival_of": 1,
   "successor_of": 2,
-  "predecessor_of": 1,
+  "predecessor_of": 2,
   "inspired_by": 2
  },
  "edges": [
@@ -111,6 +111,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.2-1983",
    "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -132,6 +139,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-reno-1990",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -144,6 +158,13 @@
    "to": "linux-tcp-congestion",
    "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) via 4.3BSD-Tahoe (1988, Jacobson's slow start / congestion avoidance / fast retransmit; body not in the vault); Reno adds fast recovery",
+   "note": "by reading both bodies; the Tahoe step is inferred from the record and Jacobson 1988",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-tcp-4.3-reno-1990",
@@ -251,11 +272,25 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "compress-4.2.4-lzw",
    "relation": "historical_version_of",
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compress-4.2.4-lzw",
@@ -347,6 +382,13 @@
    "to": "cosell-eliza-bbn-lisp-1969",
    "note": "independent reimplementation in a different language and world",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "eliza-weizenbaum-mad-slip-1965",
@@ -678,6 +720,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "libfec-karn",
    "relation": "algorithm_from",
    "to": "Viterbi 1967; Fano 1963; Berlekamp 1968 / Massey 1969; Reed-Solomon 1960",
@@ -697,6 +746,13 @@
    "to": "fftpack-netlib",
    "note": "both netlib Fortran numerical libraries of the same era",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "linpackd-netlib-1979",
@@ -739,6 +795,13 @@
    "to": "femtolisp",
    "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "lisp-1-5-ibm7090-1962",
@@ -839,6 +902,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "odepack-netlib",
    "relation": "derived_from",
    "to": "GEAR (Hindmarsh 1974)",
@@ -858,6 +928,13 @@
    "to": "scipy.integrate.odeint / LSODA",
    "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "odepack-netlib",
@@ -1068,6 +1145,13 @@
    "to": "ldpc-codes-neal-2001",
    "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "simple-kalman-denyssene",

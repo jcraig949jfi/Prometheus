@@ -26,8 +26,8 @@ gates (nyx/atlas/gates/LEDGER.json): cuts_created 77; cuts_returned_with_verdict
   003 and particles 001; Techne x2 -- #296 first-pass return, #358 census/asks); returns received 7 (3 on 09-16; #360 ACK, #363 INDETERMINATE + CHALLENGE on 09-17; #377 Techne POET/ALife autopsy, ACCEPT, answered #379 with ASK 3-5).
 record defects for Techne (this block): the 4.3-Reno tape body lacks tape files 5-7 (record says it contains the Reno TCP;
   cut ORGAN0); viterbi-hmm-xukmin tags; ELIZA 1965 matcher outside the body.
-own defects: NYX-47 (cost_class free text in 12 pre-09-17 pressures), NYX-48 (F:/ paths in five 09-13 scripts), the
-  Techne-grade map does not translate HISTORICAL_ARCHIVE_MIRROR (asked of Techne in #358 before fixing).
+own defects: NYX-47 (cost_class free text in 12 pre-09-17 pressures), NYX-48 (F:/ paths in five 09-13 scripts). CLOSED
+  2026-09-18: the grade map now translates HISTORICAL_ARCHIVE_MIRROR (Techne #387 ASK 2 ruling; 13 cuts re-graded CONTEMPORARY_COPY).
 incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonical checkout on M3; Hephaestus WIP on
   hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
