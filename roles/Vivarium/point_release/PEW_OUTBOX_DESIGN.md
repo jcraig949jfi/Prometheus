@@ -35,7 +35,10 @@ loses its fossil (not required). Both are wrong; the second is invisible.
     event_id            text PK                         "sha256:" + sha256(producer || stream || source_attempt || source_step || event_kind || payload_digest)
                                                         -- content-derived, so the same fact re-enqueued by a replayed step has the SAME id
     producer            text NOT NULL                   "vivarium@<host>" (the worker id)
-    stream              text NOT NULL                   "viv.execution.v1"
+    stream              text NOT NULL                   "viv.fossil.v1" for WORLD_ANCHORED / ENCOUNTER_RECORDED (the routes PEW has
+                                                        today) and "viv.execution.v1" for the provenance events (the ingest route
+                                                        Mnemosyne adds); ordered independently, so a fossil never waits behind an
+                                                        event PEW cannot ingest yet (implementation finding, 2026-09-17)
     sequence            bigint NOT NULL                 per (producer, stream), dense, assigned at insert (UNIQUE (producer, stream, sequence))
     event_kind          text NOT NULL                   CLOSED set v1: WORLD_ANCHORED | ENCOUNTER_RECORDED | ATTEMPT_OPENED | STEP_COMPLETED |
                                                         INTERVENTION_RECEIPTED | GATE_EVALUATED | ATTEMPT_TERMINATED | ATTEMPT_REPLAYED
@@ -52,7 +55,10 @@ loses its fossil (not required). Both are wrong; the second is invisible.
     last_http           integer NULL
     last_error          text NULL
     delivered_at        timestamptz NULL
-    pew_reference       text NULL                       what PEW returned (encounter reference), verbatim
+    pew_reference       text NULL                       what PEW returned (encounter reference), verbatim. The QUEUE ROW's
+                                                        pew_reference stays NULL on this path: a terminal row is frozen by the
+                                                        transition trigger and that invariant outranks the convenience column;
+                                                        `viv.cli trace` reads the reference from here (implementation finding)
 
 State rules: PENDING -> DELIVERED (2xx, or 409 duplicate); PENDING ->
 REJECTED (4xx other than 409/429: the payload is wrong; never retried

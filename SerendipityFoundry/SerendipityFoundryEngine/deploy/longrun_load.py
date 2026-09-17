@@ -152,6 +152,7 @@ def main():
     ap.add_argument("--port", type=int, default=8941)
     ap.add_argument("--out", default=os.path.join(HERE, "LONG_RUN_2026-09-17"))
     ap.add_argument("--db-dir", default=None, help="where the scratch ledger lives (default: a temp dir on this volume)")
+    ap.add_argument("--no-reader", action="store_true", help="control: no concurrent cursor-reader thread")
     a = ap.parse_args()
     if not port_free(a.port):
         print("REFUSING: port %d is held" % a.port); return 2
@@ -185,8 +186,12 @@ def main():
     rth = threading.Thread(target=reader, args=(rapi, wids, stop, rec), daemon=True)
     t0 = time.time()
     threads = [threading.Thread(target=prod_worker, args=(k,)) for k in range(a.producers)]
-    rth.start(); [t.start() for t in threads]; [t.join() for t in threads]
-    stop.set(); rth.join(timeout=30)
+    if not a.no_reader:
+        rth.start()
+    [t.start() for t in threads]; [t.join() for t in threads]
+    stop.set()
+    if not a.no_reader:
+        rth.join(timeout=30)
     rec["phases"]["write_s"] = round(time.time() - t0, 1)
     rec["health_after_write"] = api0.ok("GET", "/v2/health")
 

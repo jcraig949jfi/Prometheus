@@ -587,13 +587,44 @@ def cancel(conn, experiment_id, *, actor: str, reason: str,
     return row
 
 
+def hold(conn, experiment_id, *, until, actor: str, reason: str,
+         schema: Optional[str] = None):
+    """Hold a QUEUED experiment until `until` (a tz-aware datetime; None
+    lifts the hold). The row stays queued and its relations untouched; only
+    not_before moves, and the event log says who and why. This is how a
+    producer keeps its rows out of a consumer restart it has not cleared
+    (Archaeon #284) without cancelling them."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute(
+            "UPDATE " + _q(s) + " SET not_before=%s WHERE experiment_id = %s "
+            "AND status = 'queued' RETURNING " + COLUMNS,
+            (until, str(experiment_id)))
+        row = cur.fetchone()
+    if row is None:
+        raise RuntimeError("cannot hold %s: it is not queued" % experiment_id)
+    record_event(conn, experiment_id, actor=actor,
+                 event_type="held" if until is not None else "hold_lifted",
+                 payload={"reason": reason, "not_before": until.isoformat() if until else None}, schema=s)
+    return row
+
+
 def release_stranded(conn, experiment_id, *, actor: str, reason: str,
-                     schema: Optional[str] = None):
+                     schema: Optional[str] = None, new_attempt: bool = False):
     """The explicit operator recovery for a stranded claimed/running row.
 
-    It resolves to `failed`, never back to `queued`. Requeueing would mean
-    asserting the experiment did not run, which nothing in the queue can know
-    -- SFE and PEW are where that is checked, by a person."""
+    Default: resolves to `failed`, never back to `queued`. Requeueing would
+    mean asserting the experiment did not run, which nothing in the queue can
+    know -- SFE and PEW are where that is checked, by a person.
+
+    new_attempt=True (point release, EXPERIMENT_TRANSACTION_MODEL.md s3): the
+    OPEN attempt is closed STRANDED with its envelope, and the row returns to
+    `queued` under the release-path setting the 006 trigger honours; the next
+    claim opens attempt n+1 with parent = the stranded one, and its steps may
+    be REPLAYED where their verifiers say the engine objects still exist.
+    Nothing is asserted about whether the run happened: the stranded attempt
+    stays on the record, and the new attempt's step statuses say what was
+    found. Requires the attempt tables (refused otherwise)."""
     s = schema or _db.schema()
     row = get(conn, experiment_id, schema=s)
     if row is None:
@@ -601,6 +632,8 @@ def release_stranded(conn, experiment_id, *, actor: str, reason: str,
     if row["status"] not in ACTIVE:
         raise RuntimeError("cannot release %s: status is %s"
                            % (experiment_id, row["status"]))
+    if new_attempt:
+        return _release_to_new_attempt(conn, row, actor=actor, reason=reason, schema=s)
     with _db.dict_cur(conn) as cur:
         if row["status"] == "claimed":
             cur.execute(
@@ -623,6 +656,35 @@ def release_stranded(conn, experiment_id, *, actor: str, reason: str,
                           "claimed_by": row["claimed_by"],
                           "sfe_experiment_id": row["sfe_experiment_id"]},
                  schema=s)
+    return out
+
+
+def _release_to_new_attempt(conn, row, *, actor: str, reason: str, schema: str):
+    from . import attempts as _att                                  # noqa: PLC0415
+    import json as _json                                            # noqa: PLC0415
+    eid = str(row["experiment_id"])
+    with conn.cursor() as plain:
+        plain.execute("SELECT to_regclass(%s)", (schema + ".execution_attempt",))
+        if plain.fetchone()[0] is None:
+            raise RuntimeError("release --new-attempt needs the attempt tables (migration 006); not present")
+    with _db.dict_cur(conn) as cur:
+        cur.execute("SELECT attempt_id, attempt_number FROM " + schema + ".execution_attempt "
+                    "WHERE experiment_id = %s AND terminal_state IS NULL", (eid,))
+        open_att = cur.fetchone()
+        if open_att is not None:
+            env = _att.envelope("STRANDED", receipt_ref={"attempt_id": str(open_att["attempt_id"]), "released_by": actor})
+            cur.execute("UPDATE " + schema + ".execution_attempt SET terminal_state = 'STRANDED', termination = %s, "
+                        "closed_at = now() WHERE attempt_id = %s", (_json.dumps(env), str(open_att["attempt_id"])))
+        cur.execute("SET LOCAL viv.release = 'new_attempt'")
+        cur.execute("UPDATE " + _q(schema) + " SET status='queued', claimed_by=NULL, claimed_at=NULL, "
+                    "started_at=NULL WHERE experiment_id=%s AND status IN ('claimed','running') RETURNING " + COLUMNS,
+                    (eid,))
+        out = cur.fetchone()
+    record_event(conn, eid, actor=actor, event_type="stranded_released",
+                 payload={"reason": reason, "from_status": row["status"], "claimed_by": row["claimed_by"],
+                          "sfe_experiment_id": row["sfe_experiment_id"], "new_attempt": True,
+                          "stranded_attempt": str(open_att["attempt_id"]) if open_att else None},
+                 schema=schema)
     return out
 
 

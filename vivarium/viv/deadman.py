@@ -435,7 +435,7 @@ def main(argv=None) -> int:
     ap.add_argument("--settle-s", type=float, default=25.0)
     ap.add_argument("--bound", type=int, default=3)
     ap.add_argument("--expected-engine", default=None,
-                    help="engine_instance_id the launch precondition requires")
+                    help="engine_instance_id the launch precondition requires (default: the production descriptor's)")
     ap.add_argument("--sfe-version-url", default=None)
     ap.add_argument("--sfe-cacert", default=None)
     ap.add_argument("--var-dir", default=None)
@@ -444,6 +444,14 @@ def main(argv=None) -> int:
     ap.add_argument("--no-launch", action="store_true",
                     help="observe and record only; never start anything")
     a = ap.parse_args(argv)
+    if a.expected_engine is None:
+        # PRODUCTION_DESCRIPTOR.md s3: the target comes from the descriptor,
+        # not a command line someone typed once
+        from . import production as _prod                    # noqa: PLC0415
+        try:
+            a.expected_engine = (_prod.load().get("engine") or {}).get("engine_instance_id")
+        except Exception:                                     # noqa: BLE001
+            a.expected_engine = None
     cfg = Config(worker_id=a.worker_id, task_name=a.task_name,
                  launcher=None if a.no_launch else a.launcher,
                  fresh_s=a.fresh_s, settle_s=a.settle_s, bound=a.bound,
