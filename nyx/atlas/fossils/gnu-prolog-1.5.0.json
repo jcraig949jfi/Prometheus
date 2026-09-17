@@ -136,17 +136,372 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Pl2Wam/pl2wam.pl:1-60"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/EnginePl/wam_inst.c:80-180"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Wam2Ma/wam2ma.c:1-40"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Ma2Asm/ma2asm.c:1-40"
+   }
+  ],
+  "inspected_files": [
+   "src tree",
+   "Pl2Wam/pl2wam.pl 1-60 + module names",
+   "Wam2Ma, Ma2Asm file lists",
+   "EnginePl/wam_inst.c inventory"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "a Prolog that compiles rather than interprets: clauses go through a compiler written in Prolog (Pl2Wam: clause translation, first-argument indexing, register allocation, instruction encoding) to WAM instructions as text, then through a C translator (Wam2Ma) to a small machine-independent assembly (MA: about a dozen instruction kinds), then through per-architecture mappers (Ma2Asm: x86, x86_64, arm32, arm64, ppc, sparc, mips, alpha) to native assembly that links against the C runtime (EnginePl), which supplies the WAM's stacks, unification and the first-argument switch tables; a finite-domain constraint solver (EngineFD) is compiled the same way. The SWI-Prolog cut in this atlas holds the rival design: a VM interpreted in C",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "http://www.gprolog.org/gprolog-1.5.0.tar.gz sha256:670642b43c0faa27ebd68961efb17ebe707688f91b6809566ddd606139512c01",
+   "payload_manifest_id": "techne tree_sha256 4fcc7ba2899110e8d4d1e8cf1ddee872b43283b53cf324d3d07549f2fdb72033 (595 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/gprolog-1.5.0/src/Pl2Wam/pl2wam.pl",
+     "payload_hash_read": "19a8d4b40da3be2f0026aafab4e68a8b837b9808352aa28d144acc4e9d007e20",
+     "techne_recorded_hash": "19a8d4b40da3be2f0026aafab4e68a8b837b9808352aa28d144acc4e9d007e20",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/gprolog-1.5.0/src/EnginePl/wam_inst.c",
+     "payload_hash_read": "43e5e0f1d75050ebef6aa5a6af6bc3c75c0812a05448001bb884ef3535fcc1e6",
+     "techne_recorded_hash": "43e5e0f1d75050ebef6aa5a6af6bc3c75c0812a05448001bb884ef3535fcc1e6",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/gprolog-1.5.0/src/Wam2Ma/wam2ma.c",
+     "payload_hash_read": "cbb960e24477c9046a4e8a7b346859af04aa7a7b726e53c1637828c624633b6b",
+     "techne_recorded_hash": "cbb960e24477c9046a4e8a7b346859af04aa7a7b726e53c1637828c624633b6b",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/gprolog-1.5.0/src/Ma2Asm/ma2asm.c",
+     "payload_hash_read": "b13e4729908566e0aa00c9c85635ad24025d1fff0189be0ee684ac22b32a8b79",
+     "techne_recorded_hash": "b13e4729908566e0aa00c9c85635ad24025d1fff0189be0ee684ac22b32a8b79",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "gnu-prolog-1.5.0::prolog_compiled_in_four_stages_prolog_to_wam_in_prolog_wam_to_a_machine_independent_mini_assembly_in_c_mini_assembly_to_native_assembly_per_architecture_linked_against_a_c_runtime",
+   "fossil_ancestry": "gnu-prolog-1.5.0",
+   "human_name": "Pl2Wam (pl2wam.pl, code_gen.pl, first_arg.pl, indexing.pl, reg_alloc.pl, inst_codif.pl: ~2,500 lines of Prolog, shipped also as .wam for bootstrap); Wam2Ma (wam2ma.c 2,416 lines); Ma2Asm (ma2asm.c + x86_64_any.c, arm64_any.c, ...); EnginePl (engine.c, wam_inst.c, unify.c, the stacks)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler is a Prolog program that reads clauses, generates WAM code with first-argument indexing (switch on term type, constant, structure) and allocates registers, and emits the instructions as text; the .wam files beside each .pl are the compiler's own compiled form, so a C-compiled runtime plus the .wam bootstraps the system; wam2ma expands each WAM instruction into MA instructions (calls into the runtime, jumps, register moves) and ma2asm emits native assembly through one mapper file per target; the result links with the runtime's unification, trail, choice-point and switch-table code",
+   "input": "Prolog source",
+   "output": "a native executable",
+   "state": "none at compile time",
+   "update": "per compilation",
+   "assumptions": [
+    "a small MA instruction set is enough to express the WAM's control flow, so porting is one mapper file; native code beats a VM for Prolog's call-heavy execution"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-prolog-1.5.0::first_argument_indexing_as_runtime_switch_tables_over_atoms_and_functor_arity_pairs_built_by_the_runtime_and_selected_by_compiled_switch_instructions"
+   ],
+   "fitness_value_in_ancestor": "native-code Prolog with a portable back end; the finite-domain solver reuses the same pipeline",
+   "failure_landscape": "by reading: every port is a mapper file that must track the platform's calling convention (the src/Ma2Asm list shows eleven); compilation is slower than loading into a VM",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the WAM (Warren 1983); wamcc (Codognet & Diaz 1995) as the predecessor that compiled to C; GNU Prolog compiles to assembly instead",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Pl2Wam/pl2wam.pl:1-60; vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Wam2Ma/wam2ma.c:1-40; vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/Ma2Asm/ma2asm.c:1-40"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four directories; MEDIUM because bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "gnu-prolog-1.5.0::first_argument_indexing_as_runtime_switch_tables_over_atoms_and_functor_arity_pairs_built_by_the_runtime_and_selected_by_compiled_switch_instructions",
+   "fossil_ancestry": "gnu-prolog-1.5.0",
+   "human_name": "wam_inst.c: Pl_Create_Swt_Table, Pl_Create_Swt_Atm_Element, Pl_Create_Swt_Stc_Element (101-180), Pl_Create_Functor_Arity_Tagged (84); Pl2Wam/indexing.pl and first_arg.pl",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler groups a predicate's clauses by the type and value of their first argument and emits switch instructions; at load time the runtime builds hash tables mapping atoms and (functor, arity) keys to code addresses; a call dereferences the first argument and jumps through the table to the clauses that can match, so clauses that cannot unify are never tried and no choice point is created when only one group matches",
+   "input": "a predicate's clauses; a call's first argument",
+   "output": "a jump to a clause group",
+   "state": "the switch tables (per predicate, built once)",
+   "update": "per call",
+   "assumptions": [
+    "the first argument is the discriminating one for most predicates (the WAM's classic assumption); a hash on it is cheap"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-prolog-1.5.0::prolog_compiled_in_four_stages_prolog_to_wam_in_prolog_wam_to_a_machine_independent_mini_assembly_in_c_mini_assembly_to_native_assembly_per_architecture_linked_against_a_c_runtime"
+   ],
+   "fitness_value_in_ancestor": "determinism detection without a cut; the largest single speed-up in WAM compilation",
+   "failure_landscape": "by reading: predicates discriminated by a later argument get no benefit (JIT indexing in SWI is the rival answer)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren 1983 (switch_on_term / switch_on_constant / switch_on_structure)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-prolog-1.5.0/upstream/tree/gprolog-1.5.0/src/EnginePl/wam_inst.c:80-180 (constructors); indexing.pl (name only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the Swt_* functions and the indexing pass; CANDIDATE because indexing.pl was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the WAM instruction semantics (wam_inst.c bodies, engine.c, unify.c, the stacks), garbage collection, the builtins (BipsPl), the finite-domain solver (EngineFD, Fd2C, BipsFD), the top level and line editor, the Windows GUI console",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "EngineFD (a finite-domain constraint solver compiled through the same pipeline, Diaz & Codognet 1993 'clp(FD)') is a mechanism family of its own",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "gnu-prolog-1.5.0"
+  },
+  {
+   "candidate": "'Prolog' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the compilation pipeline and the indexing are separable; the atlas's swipl-9.2.9 shows the same language with an interpreted VM and JIT indexing",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "gnu-prolog-1.5.0"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "gnu-prolog-1.5.0::P.a_logic_language_must_execute_at_native_speed_across_many_processor_architectures_while_the_compiler_itself_is_written_in_the_language_and_must_bootstrap_from_a_c_runtime",
+   "source_fossil": "gnu-prolog-1.5.0",
+   "source_evidence": "the src tree; pl2wam.pl; the Ma2Asm mapper list",
+   "condition": "an organism implements a language whose programs are call-heavy and nondeterministic; users run on many CPU architectures; the implementation's own compiler is a program of the language; the score is execution speed, the effort per port, and the ability to build from sources on a fresh machine",
+   "resource_or_constraint": "a C compiler and an assembler per target; one mapper file per architecture",
+   "failure_condition": "a VM's interpretation overhead on call-heavy code, a port that requires rewriting the code generator, or a bootstrap that needs a running instance",
+   "world_punishes": "direct native code generation per architecture; a compiler without a shipped compiled form",
+   "world_rewards": "a tiny intermediate assembly with per-target mappers; shipped .wam of the compiler",
+   "observable_consequence": "benchmark speed vs the VM rival (swipl) on the same programs; lines per port in Ma2Asm; a clean bootstrap from sources on a new architecture",
+   "vacuity_condition": "one architecture",
+   "trivial_shortcuts": "compiling to C (wamcc's route, slower to compile and dependent on the C compiler's optimiser)",
+   "cheat_control": "an organism given a native compiler per architecture must be fastest and cost the most per port; the VM rival must be slowest on nrev/zebra and cost zero per port; the MA route must sit between on both axes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: native-code ISO Prolog with constraints (Diaz 1996-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "gnu-prolog-1.5.0::prolog_compiled_in_four_stages_prolog_to_wam_in_prolog_wam_to_a_machine_independent_mini_assembly_in_c_mini_assembly_to_native_assembly_per_architecture_linked_against_a_c_runtime",
+   "to": "gnu-prolog-1.5.0::first_argument_indexing_as_runtime_switch_tables_over_atoms_and_functor_arity_pairs_built_by_the_runtime_and_selected_by_compiled_switch_instructions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the compiler emits switch instructions the runtime's tables serve",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "gnu-prolog-1.5.0",
@@ -161,10 +516,23 @@
    "to": "Warren, The WAM, 1983",
    "note": "Warren Abstract Machine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "derived_from",
+   "to": "Warren 1983 (WAM); wamcc (Codognet & Diaz 1995); clp(FD) (Diaz & Codognet 1993); rival of swipl-9.2.9 in this atlas",
+   "note": "from the record and the source headers",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "no function body read; both organs at inventory depth",
+   "the FD solver, GC and builtins unread",
+   "nothing ran"
+  ],
+  "note": "the four-stage pipeline is the mechanism this specimen was preserved for, and it is located at the directory level",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
