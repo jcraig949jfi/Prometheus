@@ -145,17 +145,39 @@ def g3_vivarium() -> dict:
             "blocks_launch": True}
 
 
-def g4_pew() -> dict:
-    """Non-blocking by the directive's own words, but it constrains what the FINAL disposition
-    may claim, so it is recorded with that consequence attached."""
-    return {"id": "G4", "owner": "Mnemosyne",
-            "requirement": "drain the Vivarium outbox if the PEW writer credential is available",
-            "status": CONDITIONAL,
-            "evidence": {"claim": "Vivarium #368: 100+ outbox rows PENDING, deliverer HELD pending the writer identity",
-                         "directive_consequence": "Campaign 4 MAY execute (the outbox is durable), but the final "
-                                                  "campaign disposition may not claim complete PEW closure until the "
-                                                  "backlog is delivered"},
-            "blocks_launch": False}
+def g4_pew(ref: str) -> dict:
+    """Non-blocking by the directive's own words, but it bounds what the FINAL disposition may
+    claim, so the bound is recorded as data rather than as a footnote.
+
+    Two separable facts, kept apart on purpose:
+      (a) is the observer leg READY to run when artifacts land?   -- verified from its own receipt
+      (b) has the historical backlog been delivered?              -- advisory, quantified
+    """
+    ev = {}
+    b = at_ref(ref, "evidence_wiki/integration/s7_rehearsal_results.json")
+    if b is None:
+        ev["s7_leg"] = "no receipt at origin/main"
+        ready = False
+    else:
+        r = json.loads(b)
+        gates = {g["gate"]: {"pass": g.get("pass"), "skipped": g.get("skipped")} for g in r.get("gates", [])}
+        ev.update({"s7_receipt": "evidence_wiki/integration/s7_rehearsal_results.json",
+                   "s7_all_pass": r.get("all_pass"), "s7_precheck": r.get("precheck"),
+                   "reader_version": r.get("reader_version"), "s7_seconds": r.get("seconds"),
+                   "s7_gates": gates, "rebuild_digests": r.get("rebuild_digests"),
+                   "campaign4_rows_seen": (r.get("campaign4_rows") or {}).get("n")})
+        ready = bool(r.get("all_pass"))
+    ev["observer_leg_ready"] = ready
+    ev["backlog_delivered"] = False
+    ev["backlog_pending_reported"] = 56
+    ev["backlog_source"] = "Mnemosyne tail-closure report; the queue's own health readout does not expose it"
+    ev["closure_condition"] = "last_seq 56, gaps []"
+    ev["directive_consequence"] = ("Campaign 4 MAY execute -- the queue is durable and nothing on the execution "
+                                  "path imports the observer -- but the FINAL campaign disposition may not claim "
+                                  "complete observational closure until the backlog reconciles.")
+    return {"id": "G4", "owner": "Mnemosyne + Vivarium",
+            "requirement": "observer leg ready; historical backlog delivered (advisory for launch)",
+            "status": CONDITIONAL, "evidence": ev, "blocks_launch": False}
 
 
 def canonical_population_digest(d: dict) -> str:
@@ -227,7 +249,7 @@ def main(argv=None) -> int:
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
-    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium(), g4_pew(), g5_proteus(a.ref)]
+    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium(), g4_pew(a.ref), g5_proteus(a.ref)]
     blocking = [c for c in checks if c["blocks_launch"]]
     green = all(c["status"] == GREEN for c in blocking)
     receipt = {
