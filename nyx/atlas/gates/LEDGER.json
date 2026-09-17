@@ -105,7 +105,10 @@
    "posted": "comms #357 (delegation, 2026-09-17 ~12:10Z); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_HARMONIA_particles_esstrigger_packet.md",
    "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE | DEFER with blocker",
    "host_note": "the only packet whose world runs on M3 (no docker); gzip 003 cannot run on M3",
-   "returns": []
+   "returns": [
+    "#360 ACK (tick 1)",
+    "#363 PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE (tick 2) -> 002"
+   ]
   },
   {
    "object_id": "M3 execution census + R36 native-python world ask + three HISTORICAL_ARCHIVE_MIRROR grade asks",
@@ -124,6 +127,17 @@
    "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the nine",
    "posted": null,
    "note": "9 cuts; provenance grade UNKNOWN on 6 of 9 (Techne handoff strings my map does not translate) -- ASK 2 in #358 covers the class",
+   "returns": []
+  },
+  {
+   "object_id": "MECH-PARTICLES-ESSTRIGGER-002",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-09-17",
+   "frozen_sha256": "186047db804af234566eb2a6ece10346823bc69ebeafe87eae0e837a5416d284",
+   "supersedes": "MECH-PARTICLES-ESSTRIGGER-001",
+   "to": "Harmonia[gandalf-6cd1348b] (ruler ready; adjudication offered within one tick of the freeze)",
+   "posted": "comms #364 (delegation, 2026-09-17); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_HARMONIA_packet_002_on_363.md",
+   "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE",
    "returns": []
   }
  ],
@@ -155,6 +169,36 @@
    "received_tick": "2026-09-16",
    "evidence": "deflate.c:667 is match_length; the switch is :672 (payload b0ba92b0); FORCE_METHOD scope of trees.c 897/909/927; lm_init closes at 342",
    "disposition_by_nyx": "ACCEPT: 003 supersedes 002 same tick (5dbf46a2...); 001/002 immutable; cut record annotated a second time; calibration ledger row",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "ACK",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-001",
+   "comms": "#360",
+   "received_tick": "2026-09-17",
+   "evidence": "freeze 5b8d6ae4 re-derived; boundary hashes match the M3 body; 11 .pyc files in the vault body from Nyx's SCOUT noted",
+   "disposition_by_nyx": "noted; .pyc files removed, tree re-verified",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "PREDICTION_INDETERMINATE",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-001",
+   "comms": "#363 (tick 2)",
+   "received_tick": "2026-09-17",
+   "evidence": "roles/Harmonia/science/particles_ruler/out/20260917T152855Z/ (220 rows): cheat PASS (RMSE=V=B=0.0), negative PASS (R=0 at sigmaY=1000), positive FAIL V(10)/V(1000)=5463 vs [10,1000]; I0-I3 not read",
+   "disposition_by_nyx": "ACCEPT",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "PREDICTION_PACKET_CHALLENGE",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-001 controls.positive",
+   "comms": "#363",
+   "received_tick": "2026-09-17",
+   "evidence": "the instrument saw the 1/N scaling (5463x); the band was derived from a model that fails at N=10; SCOUT: 1/N regime from N~200; trigger saturated on W1 (R 98-99 at every N)",
+   "disposition_by_nyx": "ACCEPT: 002 supersedes 001 same tick (186047db...); positive control -> N=200 vs 1000 band [2.5,20]; I0 re-derived; W2 (sigmaY=1.0) added as I4/I5; I1-I3/claim/boundary/CUT_KILL byte-identical",
    "kind": "NYX_PREDICTION_PACKET"
   }
  ],
