@@ -54,6 +54,11 @@ def test_credential_presence_reads_key_names_only(tmp_path):
     assert "not-a-real-token" not in json.dumps(c)                 # values never surface
     (tmp_path / "cred.json").write_text(json.dumps({"sfe_token": "x"}), encoding="utf-8")
     assert _prod.credential_presence(d)["present"]["pew_token"] is False
+    # an OPTIONAL key is recorded, never refused (the PEW writer token gates the deliverer, not the consumer)
+    d2 = _prod.load(_desc(tmp_path, consumers={"vivarium": {"credential_file": str(tmp_path / "cred.json"),
+                                                            "keys": ["sfe_token"], "optional_keys": ["pew_token"]}}))
+    c2 = _prod.credential_presence(d2)
+    assert c2["ok"] is True and c2["optional_present"] == {"pew_token": False}
 
 
 def test_probe_refuses_wrong_engine(monkeypatch, tmp_path):
