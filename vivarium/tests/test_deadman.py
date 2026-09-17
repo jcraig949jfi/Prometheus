@@ -48,7 +48,9 @@ class Harness:
             launch=self._launch,
             disable=lambda name: (self.disabled.append(name) or True),
             post=lambda rec, body: (self.posts.append((rec, body)) or {"posted": True}),
-            sleep=lambda s: self.sleeps.append(s))
+            sleep=lambda s: self.sleeps.append(s),
+            stranded_rows=lambda w: [],                  # no queue in the scripted world
+            release=lambda eid, reason: {"experiment_id": eid, "released": True})
         self.launch_ok = launch_ok
         cfg = _dm.Config(worker_id="vivarium@test", task_name="VivariumDeadmanTest",
                          launcher="C:/nowhere/launcher.cmd", fresh_s=100.0,
@@ -223,3 +225,68 @@ def test_young_heartbeat_with_gone_pid_on_this_host_is_dead_now(tmp_path, monkey
     assert h.dm.tick()["verdict"] == "LIVE" and h.launches == 0
     h = Harness(tmp_path, heartbeats=[_hb(80.0, host="OTHERHOST")], pid_alive=False)
     assert h.dm.tick()["verdict"] == "LIVE" and h.launches == 0
+
+
+# ------------------------------------------------------------- Campaign 4: bounded auto-recovery (operator PROMPT 3)
+
+def _park_consumer(tmp_path, *, failure_class="ENGINE_TRANSPORT", eid="e-1"):
+    from viv import daemon as _daemon
+    p = _daemon.park_file_for(tmp_path, "vivarium@test")
+    p.write_text(json.dumps({"kind": "FAILURE_CLASS_HALT", "worker_id": "vivarium@test",
+                             "last_tick": {"failure_class": failure_class, "experiment_id": eid},
+                             "parked_at": "2026-09-17T15:51:28Z"}), encoding="utf-8")
+    return p
+
+
+def _auto_harness(tmp_path, heartbeats, *, upstream_ok=True, released=None, stranded=None, bound=3, pid_alive=False):
+    h = Harness(tmp_path, heartbeats=heartbeats, upstream_ok=upstream_ok, pid_alive=pid_alive)
+    h.releases = []
+    h.dm.h.release = lambda eid, reason: (h.releases.append((eid, reason)) or (released or {"experiment_id": eid, "released": True}))
+    h.dm.h.stranded_rows = lambda w: list(stranded or [])
+    h.dm.cfg.auto_recover_bound = bound
+    return h
+
+
+def test_positive_a_transport_park_is_auto_cleared_released_and_relaunched_when_the_engine_answers(tmp_path, monkeypatch):
+    monkeypatch.setenv("COMPUTERNAME", "THISHOST")
+    park = _park_consumer(tmp_path)
+    # the parked consumer exited: its heartbeat is young but its pid is gone
+    h = _auto_harness(tmp_path, [_hb(80.0), _hb(1.0, pid=5151)])
+    r = h.dm.tick()
+    assert not park.exists(), "the park record must be cleared (renamed)"
+    cleared = list(tmp_path.glob("park-vivarium@test.cleared-*.json"))
+    assert len(cleared) == 1 and "auto-recovery 1 of 3" in json.loads(cleared[0].read_text())["cleared"]["reason"]
+    assert h.releases and h.releases[0][0] == "e-1"                 # the halted row -> NEW ATTEMPT
+    assert r.get("relaunched") is True and h.launches == 1
+    st = h.state()
+    assert len(st["auto_recoveries"]) == 1 and st["parked"] is False
+
+
+def test_negative_the_bound_the_engine_and_the_park_kind_all_keep_it_parked(tmp_path, monkeypatch):
+    monkeypatch.setenv("COMPUTERNAME", "THISHOST")
+    # (a) bound reached: three recoveries already in the window
+    park = _park_consumer(tmp_path)
+    h = _auto_harness(tmp_path, [_hb(80.0)])
+    h.dm._write_state(auto_recoveries=["2026-09-17T10:00:00Z", "2026-09-17T11:00:00Z", "2026-09-17T12:00:00Z"][0:0]
+                      + [__import__("viv.deadman", fromlist=["_utc"])._utc()] * 3)
+    r = h.dm.tick()
+    assert r["verdict"] == "PARKED" and park.exists() and h.launches == 0 and not h.releases
+    # (b) engine not answering
+    h = _auto_harness(tmp_path, [_hb(80.0)], upstream_ok=False)
+    assert h.dm.tick()["verdict"] == "PARKED" and park.exists() and not h.releases
+    # (c) a non-transport halt (EXECUTOR_ERROR would never park, but a rule-10 bound park has no failure_class)
+    park.unlink(); _park_consumer(tmp_path, failure_class="INSTRUMENT_INVALID")
+    h = _auto_harness(tmp_path, [_hb(80.0)])
+    assert h.dm.tick()["verdict"] == "PARKED" and not h.releases and h.launches == 0
+
+
+def test_a_dead_workers_stranded_rows_are_released_before_the_relaunch(tmp_path, monkeypatch):
+    """CHEAT control: a release the queue REFUSES is recorded, never retried
+    in a loop, and does not stop the relaunch."""
+    monkeypatch.setenv("COMPUTERNAME", "THISHOST")
+    h = _auto_harness(tmp_path, [_hb(5000.0), _hb(1.0, pid=5151)], stranded=["e-a", "e-b"],
+                      released={"released": False, "error": "cannot release: status is completed"})
+    r = h.dm.tick()
+    assert [e for e, _ in h.releases] == ["e-a", "e-b"]
+    assert r.get("relaunched") is True and h.launches == 1
+    assert all(x["released"] is False for x in r["released_before_relaunch"])
