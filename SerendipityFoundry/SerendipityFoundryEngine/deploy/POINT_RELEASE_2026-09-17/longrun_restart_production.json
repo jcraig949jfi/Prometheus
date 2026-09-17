@@ -1,0 +1,109 @@
+{
+ "fixture": "longrun_restart",
+ "started_at": "2026-09-17T10:53:28Z",
+ "mode": "running-engine",
+ "shapes": [
+  {
+   "shape": "capabilities agrees with version on identity",
+   "held": true,
+   "schema": 9
+  },
+  {
+   "shape": "manifest hash sealed on create",
+   "held": true
+  },
+  {
+   "shape": "undeclared event kind refused under a declaring manifest",
+   "held": true,
+   "status": 422
+  },
+  {
+   "shape": "checkpoint carries the chain head it captured and a state digest",
+   "held": true,
+   "world_index": 613
+  },
+  {
+   "shape": "duplicate concurrent posts under one key yield one row",
+   "held": true,
+   "codes": [
+    200,
+    200,
+    200
+   ],
+   "distinct_ids": 1,
+   "observations": 151
+  },
+  {
+   "shape": "kill/relaunch SKIPPED (running-engine mode)",
+   "held": true
+  },
+  {
+   "shape": "head hash unchanged across restart",
+   "held": true
+  },
+  {
+   "shape": "cursor resume after restart == full walk (no gap, no dup)",
+   "held": true,
+   "resumed_pages": 1,
+   "rows": 151
+  },
+  {
+   "shape": "event history byte-identical across restart",
+   "held": true,
+   "events": 616
+  },
+  {
+   "shape": "logical_time preserved on every row",
+   "held": true,
+   "sample": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "shape": "idempotent replay after restart returns the original id",
+   "held": true
+  },
+  {
+   "shape": "fork ancestry explicit: parent, fork_point, changed-field diff",
+   "held": true,
+   "changed": [
+    "manifest_hash"
+   ]
+  },
+  {
+   "shape": "artifact list matches what was posted",
+   "held": true,
+   "listed": 5
+  },
+  {
+   "shape": "termination facts recorded and writes refused afterwards",
+   "held": true,
+   "post_terminate_status": 409
+  },
+  {
+   "shape": "every observation anchor verifies",
+   "held": true,
+   "verified": 151,
+   "total": 151
+  }
+ ],
+ "timings_s": {
+  "write_150": 72.77,
+  "checkpoint": 0.093
+ },
+ "engine_before": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+  "schema_version": 9
+ },
+ "engine_after": {
+  "schema_version": 9,
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153"
+ },
+ "finished_at": "2026-09-17T10:54:46Z",
+ "held": 15,
+ "broke": 0
+}

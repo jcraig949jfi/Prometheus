@@ -1,0 +1,122 @@
+================================================================================
+REVIEW PACKET  Techne[gandalf-a04f7c25]  first boot on M3 (GANDALF)  2026-09-17
+================================================================================
+Question the operator asked: how can Techne work on M3 when its files are
+elsewhere?  Answer in one line: everything TRACKED is here and identical to
+origin/main; what is missing is bodies, worlds, tool caches and virtualization,
+and the work Amendment 3 puts on Techne needs none of those.
+
+1. BOOT RECEIPT (E3 = executed on M3 this pass)
+--------------------------------------------------------------------------------
+  host          GANDALF, Windows 10 Home 19045, 8 cores, 24 GB, 192.168.1.161
+  canonical     C:\prometheus (main worktree; refused for work)
+  fetch         origin/main 4a6457fbb at boot; 3f2920d6a at push time
+  worktree      C:\prometheus-worktrees\techne-m3-boot-2026-09-17
+                branch techne/m3-boot-2026-09-17; guard passes; 44,458 files
+  comms boot    RC 0 with EW_DB_HOST=192.168.1.202 (no local Postgres on M3)
+  comms sync    0 queued, 0 unseen; 5 messages since M2's last sync, none to me
+  who           Nyx is online on THIS host (gandalf-9e21f277); Proteus,
+                Mnemosyne, Daedalus on M2; Archaeon, Nestor offline
+  newest prompt Nyx AMENDMENT_3.md, sha 4f93cb12..db33 verified from the blob
+  monitors      none owned or fed by Techne
+  doctrine      unchanged since 7cb418d1d
+
+2. WHERE THINGS ARE (E3 unless marked)
+--------------------------------------------------------------------------------
+  class                         on M3?   where it lives
+  tracked tree (records,        YES      git; identical to origin/main
+    recipes, receipts, store)
+  121 fossil bodies ~1.05 GB    NO (1)   M1 vault (11 CRLF copies), M2 121/121
+  8 world images (docker)       NO       M1, M2 (M2 rebuilt 09-16, 0/8 bit-id)
+  vault/techne_tools locks      NO       M1, M2 (M2: 2 of 5 refused by SAC)
+  cartography/*/data            NO       M1 (gitignored, regenerable)
+  canonical Postgres (comms)    REACH    M1 192.168.1.202:5432 OPEN from M3
+  Evidence Wiki API 8377        NO       M1 port closed to M3
+  M2 share prometheus_share     NO       445 open; identity refused (as 09-16)
+  Google Drive for desktop      YES      G: (GoogleDriveFS), 219 GB free,
+                                         G:\My Drive\Prometheus exists
+  (1) gzip-1.2.4-1993 rematerialized here as a smoke: MATCH, verify matches.
+
+3. WHAT M3 CANNOT DO, AND WHY (E3)
+--------------------------------------------------------------------------------
+  virtualization DISABLED IN FIRMWARE (VirtualizationFirmwareEnabled False,
+  HypervisorPresent False). WSL2 features enabled, 0 distros. Docker Desktop
+  29.1.3 installed, engine pipe absent. No gcc/clang/cl/make/cmake/cargo.
+  => no worlds, no container specimens (92 of 121), no simh, no native builds.
+  Unblock is a BIOS setting (operator) -> TECHNE-102.
+
+4. TESTS ON THIS INTERPRETER (CPython 3.11.9; merged tree 3f2920d6a)
+--------------------------------------------------------------------------------
+  comms/tests (EW_DB_HOST set)                  23 passed, 8 skipped
+  test_fossils + packet + git_pin_eol + comms   404 passed, 8 skipped
+  test_fossil_isolation + env end-to-end        6 FAILED  <- section 5
+  techne/tests whole                            not completed (snappy absent
+                                                stops collection)
+
+5. FINDING: THE NATIVE RUNNER RUNS A DIFFERENT BASH THAN ITS GUARD CHECKS
+--------------------------------------------------------------------------------
+  guard   shutil.which("bash") -> C:\Program Files\Git\usr\bin\bash.EXE (runs)
+  runner  subprocess.run(["bash","-lc",...]) -> CreateProcess searches
+          System32 BEFORE PATH -> C:\Windows\System32\bash.exe = WSL launcher
+          -> "no installed distributions", exit 1, stdout lacks the oracle
+  Reproduced from Python: bare "bash" rc 1; explicit Git bash rc 0
+  (5.2.21, MINGW64). On M1/M2 the System32 bash IS a WSL distro, so the two
+  resolutions agree by accident and the defect was invisible for 5 days.
+  This is "capability over labels" one layer down (the gcc-shim class).
+  Fix (TECHNE-101, S): resolve the shell by probe to an absolute path; typed
+  NATIVE_SHELL_UNAVAILABLE refusal; cheat control feeds the probe the stub.
+  Not fixed in a boot pass; it changes receipts on every host.
+
+6. WHAT M3 IS GOOD FOR (the plan)
+--------------------------------------------------------------------------------
+  Amendment 3 puts five record-layer items on Techne and none needs a body:
+    R35 ancestry vocabulary (record.py has only superseded_by/supersedes)
+    R36 canonical FOSSIL_WORLD_MANIFEST + fixtures (ordering, CRLF, witness)
+    R37 intervention levels in the capability matrix (WORLDS.json: 13 verbs)
+    R38 preservation gate -> operator (TECHNE-65 / TECHNE-100)
+    R39 birth-complete pilot fields
+  Plus two preservation moves that M3 can do BECAUSE it is a third host:
+    TECHNE-99  rematerialize all 121 here + verify --all (M2: 1,049 MB, 230 s)
+    TECHNE-100 mirror + mirror-verify to G: IF the operator names it
+  Body-executing work stays on M1/M2, routed by comms, receipt says so.
+
+7. WORK ITEMS I WOULD START NOW, IN ORDER (artifact that proves it | blocker)
+--------------------------------------------------------------------------------
+  1 TECHNE-101 shell-by-capability fix | 6 tests pass-or-skip on M3 | none
+  2 TECHNE-99  121 rematerialize + verify | REMATERIALIZE_M3 json | none
+  3 TECHNE-100 mirror to G: | mirror + mirror-verify receipts | OPERATOR
+  4 R36 canonical world manifest | fixtures: 4 invariances | none
+  5 R35 ancestry vocabulary | 17 edges re-classified, validator | none
+
+8. OPERATOR DECISIONS (one line each)
+--------------------------------------------------------------------------------
+  D-A  TECHNE-100: is G:\My Drive\Prometheus\fossil_mirror the R38 copy?
+       My recommendation: YES. It is the only destination measured so far
+       that is a different failure domain from the LAN, it is already
+       mounted, and the dry run refused nothing. Risk: Google Drive is a
+       sync client, not object storage; mirror-verify must be re-run after
+       the upload settles, and the receipt must say "as read back from G:".
+  D-B  TECHNE-102: enable virtualization in M3's BIOS, or leave M3 as a
+       records-and-network host? Recommendation: leave it for now; M2 has
+       docker and all 121 bodies, and M3's value today is the third copy.
+
+9. WHAT WOULD FALSIFY THIS PACKET
+--------------------------------------------------------------------------------
+  - If TECHNE-99 reports ORIGIN_UNREACHABLE or DRIFT beyond the 0 M2 saw
+    after the re-pin, "reconstructible from origin" is host-dependent.
+  - If mirror-verify on G: differs from the source, Google Drive is not a
+    mirror class (FAT32 presentation, on-demand placeholders are suspects).
+  - If the TECHNE-101 fix changes any M1/M2 receipt, the runner was never
+    host-independent and every native receipt needs its shell recorded.
+  Conflict of interest: the bash finding is in my own code; the 6 failing
+  tests are mine; I have an interest in calling it "instrument" not "host".
+
+10. WHAT TO STOP
+--------------------------------------------------------------------------------
+  Nothing today. Not worth continuing on M3: anything under batch 12 P6 or
+  the world census; those belong to the host with docker.
+
+Commits: journal roles/Techne/journal/2026-09-17.md; 4 backlog rows
+TECHNE-99..102; techne/fossils/mirror/mirror-20260917T104508Z.dryrun.json;
+this file. Merge of 3f2920d6a was a fast-forward. Push SHA in the chat receipt.
+================================================================================
