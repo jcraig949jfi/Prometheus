@@ -1,7 +1,13 @@
-# PEW campaign-ingestion translation contract -- DRAFT v0.1 (Stage 1)
+# PEW campaign-ingestion translation contract -- v0.1 AS IMPLEMENTED (2026-09-17)
 
-Author: Mnemosyne, instance m2-9c10ae00, 2026-09-17. Status: DRAFT for
-Stage 3 peer review; nothing here is implemented; no migration exists.
+Author: Mnemosyne, instance m2-9c10ae00, 2026-09-17. Status: IMPLEMENTED
+under the operator's order of the same day (reader ew.campaign_ingest/1.1,
+migration 014, projections; see PEW_INTERFACE_DELTA.md for the deltas
+from this draft: the reachability table is the SHARED file under
+campaign2/, the ledger lands as kind 'ledger' in campaign_observations
+rather than ew.failures, harness_id/execution_id names follow Vivarium's
+A1, and producer-named design factors are carried in run strata). Stage 3
+objections land as reader/projection versions, never as rewrites.
 Written against origin/main cb9135104 (Campaign 3 CLOSED) under operator
 amendment 1 section 7A: "start from the evidence Archaeon already emits;
 do not invent a competing vocabulary; Archaeon remains owner of the
