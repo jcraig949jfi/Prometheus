@@ -26,6 +26,13 @@ WORKSPACE = workspace.assert_not_canonical("serve PEW")
 
 app = FastAPI(title="Mnemosyne Evidence Wiki", version="0.1")
 CFG = ewdb.load_config()
+
+# STORE ATTESTATION AT STARTUP (2026-09-17, order s16): the identity guard
+# used to run on the FIRST database connection, so a service pointed at a
+# restored copy bound its port and answered /health 200 before anything
+# refused it (measured on the rehearsal copy). Now the store is attested
+# before the port is bound: a WrongEnvironment here is a process exit.
+STORE = ewdb.attest_store()
 _INDEX = None
 STARTED_AT = time.time()
 
@@ -159,6 +166,7 @@ async def health():
             "fossil_contract": FOSSIL_CONTRACT_VERSION,
             "uptime_s": round(time.time() - STARTED_AT, 1),
             "search": dict(MODEL_STATE),
+            "store": STORE,
             "workspace": {k: WORKSPACE[k] for k in
                           ("base_sha", "branch", "worktree_path",
                            "dirty", "main_worktree", "workspace_known")}}
@@ -1569,6 +1577,13 @@ def native_fossil_anomalies(request: Request, top: int = 5,
 
 
 # ------------------------------------------- closure V0 (migration 008)
+# Campaign evidence, projections, ingestion state, producer-event inbox
+# (point release 2026-09-17): ew/campaign_routes.py, mounted here so the
+# routes share this module's connection, identity and read-log helpers.
+from . import campaign_routes as _campaign_routes   # noqa: E402
+_campaign_routes.mount(app, get_conn, identity, log_read)
+
+
 @app.get("/api/v1/identity")
 def identity_endpoint(conn=Depends(get_conn)):
     """Server-ATTESTED identity of this PEW instance and the store it is

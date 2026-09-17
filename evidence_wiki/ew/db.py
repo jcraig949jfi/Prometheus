@@ -25,6 +25,7 @@ def load_config() -> dict:
         except Exception:
             pass
     cfg["db_host"] = os.environ.get("EW_DB_HOST", cfg.get("db_host", "localhost"))
+    cfg["db_name"] = os.environ.get("EW_DB_NAME", cfg.get("db_name"))   # rehearsal copies (2026-09-17)
     cfg["db_password"] = os.environ.get("EW_DB_PASSWORD", cfg.get("db_password"))
     cfg["auth_token"] = os.environ.get("EW_AUTH_TOKEN", cfg.get("auth_token"))
     return cfg
@@ -94,6 +95,23 @@ class _PooledConn:
         except Exception:
             pass
         _get_pool().putconn(self._c, close=self._c.closed)
+
+
+def attest_store():
+    """Attest the store BEFORE a service binds its port: opens the pool
+    (which runs the identity guard and raises WrongEnvironment on a
+    mismatch) and returns the attested identity for the health receipt."""
+    c = connect()
+    try:
+        with c.cursor() as cur:
+            cur.execute("SELECT system_identifier::text, current_database(), inet_server_addr()::text, "
+                        "inet_server_port() FROM pg_control_system()")
+            sysid, dbname, addr, port = cur.fetchone()
+    finally:
+        c.close()
+    return {"environment": os.environ.get("PROMETHEUS_ENV", "prometheus-canonical"),
+            "db_system_id": sysid, "db_name": dbname, "db_host": load_config()["db_host"],
+            "server_addr": addr, "server_port": port, "attested_at": __import__("time").strftime("%Y-%m-%dT%H:%M:%S")}
 
 
 def connect():
