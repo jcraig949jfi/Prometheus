@@ -119,12 +119,14 @@ def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
         if slow and now - last > threshold_s and len(dumps) < max_dumps and os.path.exists(spy):
             last = now
             try:
-                out = subprocess.run([spy, "dump", "--pid", str(pid)], capture_output=True, text=True, timeout=20).stdout
+                pr = subprocess.run([spy, "dump", "--pid", str(pid)], capture_output=True, text=True, timeout=20)
+                out = pr.stdout + ("
+STDERR: " + pr.stderr if pr.stderr else "")
             except Exception as e:                                   # noqa: BLE001
                 out = "py-spy failed: %r" % e
             # keep only the engine frames + thread headers
-            keep = [ln for ln in out.splitlines() if ln.startswith("Thread") or "sfe\\" in ln or "sfe/" in ln or "sqlite" in ln.lower()]
-            dumps.append({"t": round(now, 1), "inflight": slow, "stack": keep[:60]})
+            keep = [ln for ln in out.splitlines() if ln.startswith("Thread") or "sfe" in ln or "sqlite" in ln.lower() or "store.py" in ln]
+            dumps.append({"t": round(now, 1), "inflight": slow, "stack": keep[:60], "raw": out.splitlines()[:120]})
         stop.wait(0.5)
     rec["stall_dumps"] = dumps
 
@@ -190,7 +192,15 @@ def wal_sampler(db, api, stop, rec):
             wal = os.path.getsize(db + "-wal") if os.path.exists(db + "-wal") else 0
             st, h = api.req("GET", "/v2/health")
             ck = h.get("checkpointer") if st == 200 else None
+            try:
+                av = subprocess.run(["powershell", "-NoProfile", "-Command",
+                                     "(Get-Process MsMpEng -ErrorAction SilentlyContinue | Select -First 1).TotalProcessorTime.TotalSeconds"],
+                                    capture_output=True, text=True, timeout=10).stdout.strip()
+                av = float(av) if av else None
+            except Exception:                                    # noqa: BLE001
+                av = None
             samples.append({"t": round(time.time(), 1), "wal_bytes": wal, "db_bytes": os.path.getsize(db),
+                            "msmpeng_cpu_s": av,
                             "ck_runs": ck and ck.get("runs"), "ck_alive": ck and ck.get("alive"),
                             "ck_truncates": ck and ck.get("truncates"), "ck_errors": ck and ck.get("errors")})
         except Exception as e:                                   # noqa: BLE001

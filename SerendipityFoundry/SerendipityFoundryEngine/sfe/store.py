@@ -646,6 +646,8 @@ WAL_SIZE_LIMIT_BYTES = 64 * 1024 * 1024
 #: ~10 s write-lock wait for both writers (R2/R3 of the 9.0.1 acceptance).
 WAL_SOFT_LIMIT_BYTES = 8 * 1024 * 1024
 WAL_FAST_INTERVAL_S = 0.05
+#: TRUNCATE (writer-blocking) only after this many seconds without a write
+WAL_IDLE_S = 3.0
 
 
 class Checkpointer:
@@ -711,9 +713,18 @@ class Checkpointer:
         try:
             out["passive"] = tuple(cx.execute("PRAGMA wal_checkpoint(PASSIVE)").fetchone())
             busy, log_frames, backfilled = out["passive"]
-            if busy == 0 and log_frames == backfilled:
-                # clean: try to reset + truncate; refused (busy=1) if a reader
-                # holds the WAL, never blocked
+            # TRUNCATE (like FULL/RESTART) BLOCKS NEW WRITERS for the whole
+            # backfill + database fsync (SQLite docs), even with the busy
+            # handler off. Measured (defender_ab/A1): both writers waited
+            # 5-13 s in lock-step, 9 times, whenever the checkpointer got in
+            # under load. So: TRUNCATE only when the engine has been IDLE
+            # (no write-lock acquisition for WAL_IDLE_S). Under load, PASSIVE
+            # only: the next writer restarts the WAL from its beginning once
+            # it is fully backfilled, and journal_size_limit truncates the
+            # file at that restart -- bounded without ever blocking a writer.
+            idle = (WRITE_LOCK_STATS.last_at is None
+                    or time.time() - WRITE_LOCK_STATS.last_at > WAL_IDLE_S)
+            if busy == 0 and log_frames == backfilled and idle:
                 out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
             wal = self.db_path + "-wal"
             import os
@@ -782,6 +793,7 @@ class Checkpointer:
                     "wal_size_limit_bytes": WAL_SIZE_LIMIT_BYTES,
                     "wal_soft_limit_bytes": WAL_SOFT_LIMIT_BYTES,
                     "fast_interval_s": WAL_FAST_INTERVAL_S,
+                    "truncate_only_when_idle_s": WAL_IDLE_S,
                     "request_path_autocheckpoint": 0}
 
 

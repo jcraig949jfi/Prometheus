@@ -50,13 +50,21 @@ def test_checkpointer_backfills_and_truncates_a_wal_the_request_path_left_alone(
     grown = os.path.getsize(wal)
     assert grown > 1_000_000, grown                          # the request path did NOT checkpoint
     ck = Checkpointer(db, interval_s=60)                     # drive it by hand
+    # UNDER LOAD (a write happened just now): PASSIVE only -- TRUNCATE would
+    # block writers for the whole backfill + fsync (defender_ab/A1: both
+    # writers stalled 5-13 s in lock-step nine times)
+    out_busy = ck.tick()
+    assert out_busy["passive"][0] == 0 and out_busy["truncate"] is None
+    # IDLE (no write for > WAL_IDLE_S): the file is truncated
+    from sfe import store as _st
+    _st.WRITE_LOCK_STATS.last_at = time.time() - 10
     out = ck.tick()
     busy, log_frames, backfilled = out["passive"]
-    assert busy == 0 and log_frames == backfilled and log_frames > 0
-    assert out["truncate"] is not None and out["truncate"][0] == 0   # clean -> truncated
+    assert busy == 0 and log_frames == backfilled
+    assert out["truncate"] is not None and out["truncate"][0] == 0   # clean + idle -> truncated
     assert os.path.getsize(wal) < grown and os.path.getsize(wal) <= WAL_SIZE_LIMIT_BYTES
     snap = ck.snapshot()
-    assert snap["runs"] == 1 and snap["truncates"] == 1 and snap["errors"] == 0
+    assert snap["runs"] == 2 and snap["truncates"] == 1 and snap["errors"] == 0
     assert snap["max_wal_bytes_seen"] >= 0 and snap["request_path_autocheckpoint"] == 0
     # with a reader holding the WAL, TRUNCATE is refused (busy), never blocked
     for i in range(300):
@@ -65,6 +73,7 @@ def test_checkpointer_backfills_and_truncates_a_wal_the_request_path_left_alone(
     reader = sqlite3.connect(db, isolation_level=None)
     cur = reader.execute("SELECT * FROM events")                # open read snapshot
     cur.fetchone()
+    _st.WRITE_LOCK_STATS.last_at = time.time() - 10             # idle, so TRUNCATE is attempted
     t0 = time.monotonic()
     out2 = ck.tick()
     assert time.monotonic() - t0 < 2.0                        # did not block behind the reader
