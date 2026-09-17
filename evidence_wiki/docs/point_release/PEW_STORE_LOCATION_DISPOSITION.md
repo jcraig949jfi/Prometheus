@@ -1,7 +1,7 @@
 # PEW store-location risk disposition (amendment 1 section 7G; release-blocking)
 
-Author: Mnemosyne, instance m2-9c10ae00, 2026-09-17. Status: DISPOSITION
-FOR THE OPERATOR (MNE-D1). Read-only pass: every number below was
+Author: Mnemosyne, instance m2-9c10ae00, 2026-09-17. Status: RULED the same
+day (section 8 below); O2 executed. Read-only pass: every number below was
 measured today; nothing was changed. Inherits roles/base-role/
 RESPONSIBILITIES.md and WORKING_CONTRACT.md.
 
@@ -155,3 +155,41 @@ procedure and migration/deploy authority are resolved.
       though it is M2-only (amendment section 3: "production mutation is
       not [allowed]"; a task that reads production is a grey area and I
       am reading it strictly).
+
+## 8. Ruling and execution (addendum, 2026-09-17)
+
+The operator ruled the same day (verbatim: roles/Mnemosyne/prompts/
+2026-09-17_point_release/02_OPERATOR_RULING_MNE-D1.md): O2 approved now;
+O3 deferred behind seven explicit conditions; O4 rejected; O1 alone
+insufficient; M1 remains SHARED infrastructure, not handed over, while
+the canonical cluster serves both ecosystems; backup ownership and
+database ownership are separate questions.
+
+O2 executed 2026-09-17 (commit 67b6f7323; pin c46a882e9):
+
+    backup 1   pewbk-20260917T055050-fea46038fa3c  1,095,684,908 B  153 s
+               (hand-run from the task worktree; source identity attested
+               7628127204585430828; cheat: the M2 fork named as source
+               was REFUSED with 0 files written)
+    restore 1  into 127.0.0.1 (M2, PG 17.11), rc 0, 199 s, 164/164 tables,
+               5,765,459 / 5,765,473 rows (14 = live drift), loss {},
+               chain identical -> RESTORE_VERIFIED
+    backup 2   pewbk-20260917T055922-1b1967c7670a  1,095,689,332 B  234 s
+               by the scheduled task PEWBackupDailyM2 itself (S4U, pinned
+               worktree)
+    restore 2  by PEWRestoreVerifyWeeklyM2 itself: rc 0, 206 s, 164/164,
+               5,765,480 / 5,765,491 (11 = drift), loss {}, chain identical
+               -> RESTORE_VERIFIED
+    alarms     failed job -> comms; missed job -> the M2 watchdog's stale
+               check (36 h / 8 d), exercised: one report per stale day
+    receipts   D:\PrometheusBackups\pew\*.manifest.json,
+               restore_verify_*.json; committed copy
+               evidence_wiki/ops/restore_verification.json
+
+Section 6's "resolved" test, re-read against this: canonical host --
+unchanged, M1, named in environments.json; backup ownership/location --
+NOW Mnemosyne on M2, MONITORS rows PEWBackupDailyM2 /
+PEWRestoreVerifyWeeklyM2 with readable freshness; restore procedure --
+docs/BACKUP_AND_RESTORE.md rewritten, two M2-side receipts exist;
+migration/deploy authority -- still the open item (a DECISIONS row,
+Archaeon). O3 readiness is tracked as MNE-46.
