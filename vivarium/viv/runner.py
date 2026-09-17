@@ -205,6 +205,13 @@ class RunResult:
     #: attempt id and not merely a row id. It is the key producer and executor
     #: receipts reconcile on.
     attempt_id: Optional[str] = None
+    #: TERMINATION_ENVELOPE.md: why the repeat loop ended (closed set in
+    #: viv/attempts.py). COMPLETED_ALL_REPEATS unless a budget stopped it.
+    termination_reason: Optional[str] = None
+    termination_detail: dict = field(default_factory=dict)
+    #: INTERVENTION_RECEIPT_SCHEMA.md: what the executor said it applied,
+    #: per repeat ([{repeat_index, ...channel item}]); the loop writes receipts.
+    interventions: list = field(default_factory=list)
 
 
 class ExecutionFailure(RuntimeError):
@@ -325,10 +332,40 @@ class SfeRunner:
 
     # -- execution --------------------------------------------------------
     # noqa: C901 -- the repeat loop is linear and reads top-to-bottom
+    # -- step bodies and verifiers (point release) ---------------------------
+    @staticmethod
+    def _create_world(c, sid, name, seed_root) -> dict:
+        w = c.create_world(sid, name, seed_root=seed_root)
+        c.start(w["world_id"])
+        return {"world_id": w["world_id"]}
+
+    @staticmethod
+    def _world_alive(c, prior) -> bool:
+        try:
+            return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+        except Exception:                                    # noqa: BLE001
+            return False
+
+    @staticmethod
+    def _experiment_readable(c, wid, prior) -> bool:
+        try:
+            return bool(c.get_experiment(wid, prior["exp_id"]))
+        except Exception:                                    # noqa: BLE001
+            return False
+
+    @staticmethod
+    def _observation_present(c, wid, prior_obs_id) -> bool:
+        try:
+            return any((o.get("obs_id") or o.get("id")) == prior_obs_id
+                       for o in c.list_observations(wid))
+        except Exception:                                    # noqa: BLE001
+            return False
+
     def run(self, request: ExecutionRequest, *,
             on_running: Optional[Callable[[str, dict], None]] = None,
             claim_attempts: int = 40, claim_pause_s: float = 0.25,
-            grant: Optional[ClaimGrant] = None) -> RunResult:
+            grant: Optional[ClaimGrant] = None,
+            steps: Optional[Callable] = None) -> RunResult:
         """Execute one request. Accepts ONLY an ExecutionRequest.
 
         The type check is the boundary. A queue row passed here would carry
@@ -356,6 +393,15 @@ class SfeRunner:
                 % (request.experiment_id,),
                 partial=RunResult(spec_hash_hint=request.spec_hash),
                 failure_class="UNCLAIMED_EXECUTION")
+
+        # Point release: every engine act below is a KEYED STEP. `steps` is
+        # the attempt's recorder (viv/attempts.py); absent, a passthrough that
+        # runs the function -- exactly today's behaviour. A step marked
+        # replayable may return a PRIOR attempt's result when its verifier
+        # says the engine object still exists (world alive, experiment
+        # readable, observation present), so a NEW ATTEMPT after a worker
+        # death re-creates nothing it can prove it already made.
+        record = steps or (lambda kind, fn, **_kw: fn())
 
         spec = request.spec              # verified against spec_hash already
         sealed = request.spec_hash
@@ -395,11 +441,11 @@ class SfeRunner:
                     "limit": self.limits.total_bytes,
                     "enforcement": "enforceable"}})
         else:
-            world = c.create_world(sid, _spec.world_name(sealed),
-                                   seed_root=spec["world"]["seed_root"])
+            world = record("world", lambda: self._create_world(
+                c, sid, _spec.world_name(sealed), spec["world"]["seed_root"]),
+                parts=["plain"], replayable=True, verify=lambda r: self._world_alive(c, r))
         wid = world["world_id"]
         out.world_id = wid
-        c.start(wid)
 
         # PREFLIGHT BEFORE THE COMMIT. A rejection here is an OPERATIONAL
         # receipt: no experiment was committed, no work was claimed, nothing
@@ -437,15 +483,19 @@ class SfeRunner:
                     str(exc), partial=out,
                     failure_class="BUDGET_EXCEEDED") from exc
 
-        hyp_id = c.hypothesis(wid, spec["hypothesis"])
-        pred_id = None
-        if spec.get("prediction") is not None:
-            pred_id = c.prediction(wid, hyp_id, spec["prediction"])
+        def _commit_experiment():
+            hyp = c.hypothesis(wid, spec["hypothesis"])
+            pred = None
+            if spec.get("prediction") is not None:
+                pred = c.prediction(wid, hyp, spec["prediction"])
+            e = c.experiment(wid, spec, hyp_id=hyp, pred_id=pred,
+                             commit=True, enqueue=True, kind=spec["work"]["kind"])
+            return {"hyp_id": hyp, "pred_id": pred, "exp_id": e["exp_id"]}
 
-        exp = c.experiment(wid, spec, hyp_id=hyp_id, pred_id=pred_id,
-                           commit=True, enqueue=True,
-                           kind=spec["work"]["kind"])
-        exp_id = exp["exp_id"]
+        committed = record("experiment", _commit_experiment, parts=[wid],
+                           replayable=True,
+                           verify=lambda r: self._experiment_readable(c, wid, r))
+        hyp_id, pred_id, exp_id = committed["hyp_id"], committed["pred_id"], committed["exp_id"]
         out.sfe_experiment_id = exp_id
 
         # THE BOUNDARY IS THE COMMIT ABOVE, AND THE FLAG MOVES WITH IT.
@@ -500,7 +550,7 @@ class SfeRunner:
         try:
             return self._execute_after_commit(
                 c, out, spec, sealed, wid, exp_id, hyp_id, pred_id,
-                claim_attempts, claim_pause_s, inputs=inputs, meter=meter)
+                claim_attempts, claim_pause_s, inputs=inputs, meter=meter, record=record)
         except ExecutionFailure:
             raise
         except Exception as exc:                    # noqa: BLE001
@@ -713,7 +763,8 @@ class SfeRunner:
 
     def _execute_after_commit(self, c, out, spec, sealed, wid, exp_id, hyp_id,
                               pred_id, claim_attempts, claim_pause_s, *,
-                              inputs=None, meter=None):
+                              inputs=None, meter=None, record=None):
+        record = record or (lambda kind, fn, **_kw: fn())
         """Everything past the irreversible commit. Split out so a single
         try/except can guarantee that no failure here escapes unclassified."""
         plan = _spec.repeat_plan(spec)
@@ -747,6 +798,10 @@ class SfeRunner:
         budget = plan.get("budget") or {}
         max_seconds = budget.get("max_seconds")
         repeats: list = []
+        # TERMINATION_ENVELOPE.md: a budget stop is a COMPLETED, CENSORED
+        # attempt, not a failure. The reason is recorded here and the loop
+        # writes the envelope; observations that exist are fossilized.
+        out.termination_reason = "COMPLETED_ALL_REPEATS"
         # perf_counter, not time(): the wall clock has ~15ms resolution on
         # Windows, so a fast repeat loop can finish inside a single tick and a
         # budget measured against it never advances at all.
@@ -756,29 +811,28 @@ class SfeRunner:
                 for index, seed in enumerate(plan["seeds"]):
                     elapsed = time.perf_counter() - started
                     if max_seconds is not None and elapsed > max_seconds:
-                        raise _BudgetExceeded(
-                            "execution budget exhausted after %d of %d "
-                            "repeat(s): %.1fs used of %.1fs declared"
-                            % (index, plan["count"], elapsed, max_seconds))
+                        out.termination_reason = "BUDGET_EXHAUSTED"
+                        out.termination_detail = {
+                            "after_repeats": index, "declared_repeats": plan["count"],
+                            "seconds_used": round(elapsed, 3), "max_seconds": max_seconds}
+                        self.log("[viv] budget exhausted after %d of %d repeat(s): "
+                                 "%.1fs of %.1fs; completing as CENSORED"
+                                 % (index, plan["count"], elapsed, max_seconds))
+                        break
                     state = (carried if plan["state"] == "persist"
                              else _ex.new_state(spec["work"]["kind"]))
                     r0 = time.perf_counter()
-                    value = _ex.run(spec, seed=seed, state=state,
-                                    inputs=inputs or None)
+                    sink: list = []
+                    value = record("run", lambda: _ex.run(spec, seed=seed, state=state,
+                                                          inputs=inputs or None,
+                                                          interventions=sink),
+                                   parts=[index])
+                    for item in sink:
+                        out.interventions.append({"repeat_index": index, **item})
                     repeats.append({"repeat_index": index, "seed": seed,
                                     "state_mode": plan["state"],
                                     "seconds": round(time.perf_counter() - r0, 6),
                                     "result": value})
-        except _BudgetExceeded as exc:
-            out.lease = keeper.status()
-            out.repeats = repeats
-            out.anchor = self._failure_anchor(wid, exp_id)
-            try:
-                c.fail(work_id, self.worker_id, claim_id, str(exc), retry=False)
-            except Exception:                       # noqa: BLE001, S110
-                pass
-            raise ExecutionFailure(str(exc), partial=out,
-                                   failure_class="BUDGET_EXCEEDED") from exc
         except Exception as exc:                    # noqa: BLE001
             # Tell the engine before telling the queue: the ledger must not
             # believe a work item is still in flight after Vivarium gave up.
@@ -831,9 +885,13 @@ class SfeRunner:
         result = {"repeats": repeats, "repeat_plan":
                   {k: plan[k] for k in ("count", "order", "seed_derivation",
                                         "state", "degenerate_by_construction")},
-                  "executor": repeats[0]["result"].get("executor"),
+                  "executor": (repeats[0]["result"].get("executor")
+                               if repeats else spec["work"]["kind"]),
                   "reproducibility":
-                      repeats[0]["result"].get("reproducibility", "UNKNOWN")}
+                      (repeats[0]["result"].get("reproducibility", "UNKNOWN")
+                       if repeats else "UNKNOWN"),
+                  "termination_reason": out.termination_reason,
+                  "termination_detail": out.termination_detail}
         # The receipt travels WITH the result into the engine's work record,
         # so the claim "these bytes were consumed" is anchored in the same
         # ledger entry as the numbers they produced -- not in a file beside it.
@@ -858,28 +916,41 @@ class SfeRunner:
         obs_ids = []
         for rep in repeats:
             outcome_i, prov_i = _spec.apply_outcome_rule(spec, rep["result"])
-            oid = c.observation(
-                wid, exp_id,
-                {"result": rep["result"], "outcome_rule_provenance": prov_i,
-                 "repeat_index": rep["repeat_index"],
-                 "repeat_count": plan["count"],
-                 "repeat_seed": rep["seed"],
-                 "repeat_state_mode": plan["state"],
-                 "repeat_seed_derivation": plan["seed_derivation"],
-                 "executed_by": "vivarium", "worker_id": self.worker_id},
-                outcome_i, pred_id=pred_id, work_id=work_id,
-                replication=rep["repeat_index"] > 0)
+
+            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i):
+                return c.observation(
+                    wid, exp_id,
+                    {"result": rep["result"], "outcome_rule_provenance": prov_i,
+                     "repeat_index": rep["repeat_index"],
+                     "repeat_count": plan["count"],
+                     "repeat_seed": rep["seed"],
+                     "repeat_state_mode": plan["state"],
+                     "repeat_seed_derivation": plan["seed_derivation"],
+                     "executed_by": "vivarium", "worker_id": self.worker_id},
+                    outcome_i, pred_id=pred_id, work_id=work_id,
+                    replication=rep["repeat_index"] > 0)
+
+            oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
+                         verify=lambda r, w=wid: self._observation_present(c, w, r))
             obs_ids.append(oid)
         out.obs_ids = obs_ids
-        obs_id = obs_ids[0]
+        obs_id = obs_ids[0] if obs_ids else None
         out.obs_id = obs_id
         # E16: ONE outcome for the run, by the reduction the spec declared.
         # Each observation above keeps its own per-repeat outcome; this is the
-        # experiment-level answer, and it is what the fossil records.
-        outcome, provenance = _spec.aggregate_outcome(
-            spec, [r["result"] for r in repeats])
+        # experiment-level answer, and it is what the fossil records. With
+        # ZERO repeats (budget exhausted before the first) the rule's
+        # if_indeterminate branch answers, and the envelope says why.
+        if repeats:
+            outcome, provenance = _spec.aggregate_outcome(
+                spec, [r["result"] for r in repeats])
+        else:
+            outcome = spec["outcome_rule"]["if_indeterminate"]
+            provenance = {"aggregate": spec["outcome_rule"].get("aggregate", "first"),
+                          "n": 0, "branch": "if_indeterminate",
+                          "reason": "no repeat executed: %s" % out.termination_reason}
         out.outcome = outcome
-        out.order_check = self._verify_order(wid, obs_ids)
+        out.order_check = self._verify_order(wid, obs_ids) if obs_ids else {"checked": False}
 
         out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
                                   exp_id=exp_id)

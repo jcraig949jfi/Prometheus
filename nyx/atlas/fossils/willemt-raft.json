@@ -131,17 +131,1094 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:60-96"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:146-575"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/include/raft.h"
+   }
+  ],
+  "inspected_files": [
+   "src/raft_server.c 60-96, 146-575",
+   "include/raft.h (message structs, defaults; grep)"
+  ],
+  "date": "2026-09-17T10:58Z",
+  "note": "a library implementation of the Raft paper (Ongaro & Ousterhout 2014) with the I/O externalised through callbacks; the mechanisms are the paper's rules as code, and the code carries a few choices the paper leaves open (randomisation range, single-node fast path, lazy apply, aggressive resend)",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T10:58Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/willemt/raft@e428eeb921a014192d1d703dd317f3f29f5916c5",
+   "payload_manifest_id": "techne tree_sha256 4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603 (28 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/raft_server.c",
+     "payload_hash_read": "45f51aaba44180ab14a1863c5f64ac36053af0fbd9334966a2e7b4461372a02c",
+     "techne_recorded_hash": "45f51aaba44180ab14a1863c5f64ac36053af0fbd9334966a2e7b4461372a02c",
+     "match": true,
+     "refs": 9
+    },
+    {
+     "path": "upstream/tree/include/raft.h",
+     "payload_hash_read": "ac025f8f65ca5abc299f9745d738d01811c7698d26d161811a9f94599b1201ab",
+     "techne_recorded_hash": "ac025f8f65ca5abc299f9745d738d01811c7698d26d161811a9f94599b1201ab",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "raft_randomize_election_timeout (60-67); called at become_candidate/follower",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "election_timeout_rand = T + rand() % T, i.e. uniform in [T, 2T) with T = 1000 ms default; redrawn each time the node becomes candidate or follower; raft_periodic accumulates elapsed ms and starts an election when it exceeds the draw (unless a snapshot is in progress); receipt of a valid append-entries resets the elapsed time",
+   "input": "wall-clock deltas; role changes; valid leader traffic",
+   "output": "an election start",
+   "state": "election_timeout_rand, timeout_elapsed",
+   "update": "per tick; per role change",
+   "assumptions": [
+    "rand() is good enough to break ties; the range [T,2T) is wide relative to message latency so split votes are rare"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+    "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix"
+   ],
+   "fitness_value_in_ancestor": "liveness: some node times out first and wins before the others notice",
+   "failure_landscape": "UNKNOWN by run; by reading: a heartbeat period (request_timeout 200 ms) five times shorter than T keeps followers quiet",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the paper's randomisation; the specific [T,2T) range and the use of libc rand()",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:60-67, 179-232"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two timeout fields and raft_periodic's else-branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "term checks at 275-300, 400-420; raft_become_candidate 179-212",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every message carries the sender's term; a receiver with a lower term adopts it (persisted via callback) and becomes follower before doing anything else; a message with a lower term is answered false / ignored; becoming candidate increments the term, votes for self, clears other votes, and redraws the timeout",
+   "input": "term fields of every message",
+   "output": "a role change or a rejection",
+   "state": "current_term, voted_for (both persisted)",
+   "update": "per message",
+   "assumptions": [
+    "the persist callback flushes term and vote before the node acts on them (raft.h 300-313: MUST flush)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+    "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+    "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+    "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term"
+   ],
+   "fitness_value_in_ancestor": "a stale leader can never be obeyed; the whole safety argument rests on this",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:179-212, 293-305, 404-420"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the term comparisons at the top of each receive routine",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "__should_grant_vote (535-573)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "refuse if this node is non-voting, if the candidate's term is older, or if already voted this term; then compare logs: grant if own log is empty, or the candidate's last term is newer, or same last term and candidate's last index >= own; the own last term may come from the snapshot metadata when the log is compacted",
+   "input": "a RequestVote (term, last_log_idx, last_log_term)",
+   "output": "grant / refuse",
+   "state": "voted_for (persisted)",
+   "update": "per request",
+   "assumptions": [
+    "'up-to-date' by (last term, last index) is sufficient for the leader-completeness property (the paper's election restriction)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+    "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries"
+   ],
+   "fitness_value_in_ancestor": "a leader always holds every committed entry, so no log is ever rewritten",
+   "failure_landscape": "by reading: a TODO notes that re-granting to the same candidate is not implemented, so a lost grant costs a full timeout",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:530-573"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "__should_grant_vote",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "raft_recv_appendentries (385-528)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a follower accepts a batch only if it holds an entry at prev_log_idx with term prev_log_term (or that index is its snapshot point with matching term); a mismatch deletes from prev_log_idx and answers false with its current index; on match, each incoming entry is compared with any existing entry at that index: a term conflict deletes the suffix (a conflict at or below the commit index is a fatal RAFT_ERR_SHUTDOWN), then the remainder is appended; finally commit_idx follows min(leader_commit, last index)",
+   "input": "AppendEntries (term, prev_log_idx, prev_log_term, entries[], leader_commit)",
+   "output": "success + current_idx, or failure + current_idx + first_idx",
+   "state": "the log; commit_idx; current_leader; timeout_elapsed",
+   "update": "per message",
+   "assumptions": [
+    "the log is index-dense from 1; entries are (term, data)",
+    "a conflict below the commit index cannot happen if the invariants hold, so it is treated as corruption"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+    "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+    "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+    "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+    "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term"
+   ],
+   "fitness_value_in_ancestor": "the log matching property is maintained by induction on prev entry; followers converge to the leader's log by deletion and append",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:385-528"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "raft_recv_appendentries",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "raft_recv_appendentries_response failure branch (309-327)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "on a failed append: ignore if stale (follower's current_idx < match_idx); if the follower reports an index below next_idx-1 jump next_idx to min(follower_idx+1, own current) (the follower's log is short), else decrement by one (a term conflict); resend immediately",
+   "input": "a failed AppendEntries response with current_idx",
+   "output": "a new next_idx and a resend",
+   "state": "per-node next_idx",
+   "update": "per failed response",
+   "assumptions": [
+    "the follower's reported length is honest, so jumping is safe"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix"
+   ],
+   "fitness_value_in_ancestor": "catch-up in O(gap) messages for a short follower instead of O(gap) decrements",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the paper's optional optimisation (report the conflicting index) done with the follower's log length only, not the conflicting term",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:309-327"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the if (0 == r->success) block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "raft_recv_appendentries_response success branch (343-375)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "on a successful append the follower's match_idx and next_idx are set to its reported index; then, if that index is above commit_idx and the entry there has the CURRENT term, count the voting nodes whose match_idx reaches it (self counts); if more than half, commit_idx = that index; older-term entries are committed only indirectly, when a current-term entry above them commits",
+   "input": "match_idx of every voting node; the term of the candidate entry",
+   "output": "commit_idx",
+   "state": "per-node match_idx; commit_idx",
+   "update": "per successful response",
+   "assumptions": [
+    "counting replicas is unsafe for prior-term entries (the paper's Figure 8 scenario); the code implements the restriction literally"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+    "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+    "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term"
+   ],
+   "fitness_value_in_ancestor": "safety: a committed entry is never lost by a later leader",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:343-375"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the 'Update commit idx' block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "AGREES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "fossil_ancestry": "willemt-raft",
+   "human_name": "raft_periodic (222-268); raft_apply_all",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a leader sends append-entries to all when request_timeout (200 ms) has elapsed since its last send, which doubles as the heartbeat; on any node, if last_applied < commit_idx and applying is allowed, all committed entries are applied through the callback in the periodic tick, not in the message handler; a single voting node becomes leader immediately",
+   "input": "ticks; commit_idx",
+   "output": "heartbeats; applied entries",
+   "state": "timeout_elapsed, last_applied_idx",
+   "update": "per tick",
+   "assumptions": [
+    "the caller ticks often enough; applying is idempotent from the state machine's point of view"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+    "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+    "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term"
+   ],
+   "fitness_value_in_ancestor": "one timer serves heartbeat and election; apply is decoupled from network handling",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:willemt-raft/upstream/tree/src/raft_server.c:222-268"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "raft_periodic",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the callback vector raft_cbs_t (send, persist, log offer/pop, applylog) and the heap-function hooks",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "vault:willemt-raft/upstream/tree/include/raft.h:286-420; the library's I/O boundary, supplied by the host",
+   "note": "the persistence contract (MUST flush) is an ASSUMPTION of the term organ, recorded there",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "willemt-raft"
+  },
+  {
+   "candidate": "snapshot begin/end/load, membership change (voting cfg entries, non-voting node promotion), raft_recv_entry, requestvote receive/response bodies, raft_log.c, raft_node.c",
+   "reason": "OTHER",
+   "evidence": "NOT READ this pass; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "willemt-raft"
+  },
+  {
+   "candidate": "'Raft' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "election timeout, term discipline, vote restriction, log matching, next_idx backoff, commit rule and heartbeat are each separately replaceable and separately testable",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "willemt-raft"
+  },
+  {
+   "candidate": "__log tracing and the tests/virtraft2.py simulator",
+   "reason": "OTHER",
+   "evidence": "instruments; the simulator is a ready world for Stage C (not run)",
+   "note": "an instrument, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "willemt-raft"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "willemt-raft::P.a_replicated_ordered_record_must_stay_consistent_when_any_minority_of_replicas_and_any_messages_can_be_lost_and_clocks_are_unsynchronised",
+   "source_fossil": "willemt-raft",
+   "source_evidence": "raft_server.c 60-67, 385-528, 343-375; record domain consensus/leader-election/recovery",
+   "condition": "N organisms each hold a copy of an append-only record; clients submit entries to any; the world crashes and restarts any minority, delays and drops messages, and gives each organism only a local clock",
+   "resource_or_constraint": "messages per entry; durable writes per role change; a bounded election gap",
+   "failure_condition": "two replicas apply different entries at the same index, or a committed entry vanishes, or no progress while a majority is alive",
+   "world_punishes": "split brain; lost commits; livelock of elections",
+   "world_rewards": "an organism set that agrees on a single leader per epoch and only counts replication toward commitment under that epoch",
+   "observable_consequence": "divergence count under injected partitions and crashes; time to first commit after a leader crash; messages per committed entry",
+   "vacuity_condition": "N = 1, or a synchronous lossless network, or a world that supplies a leader",
+   "trivial_shortcuts": "a fixed leader (dies on its crash); a world with a global clock and no loss",
+   "cheat_control": "an organism handed a perfect failure detector and a global clock must commit every entry with no divergence at minimum messages; the ancestor with randomisation disabled (all timeouts equal) must show repeated split votes: if the world cannot show the livelock, it is not exerting the asynchrony pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: replicated state machine consensus (Raft, Ongaro & Ousterhout 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "willemt-raft::P.competitors_must_break_symmetry_using_only_local_randomness_and_a_shared_timescale",
+   "source_fossil": "willemt-raft",
+   "source_evidence": "raft_server.c 60-67, 232-246",
+   "condition": "several equal organisms must elect one of themselves without a coordinator; they share only an approximate timescale; simultaneous attempts cancel",
+   "resource_or_constraint": "attempts per election; the spread of the random draw versus the message delay",
+   "failure_condition": "repeated simultaneous attempts (livelock) or an election gap much longer than the draw range",
+   "world_punishes": "both",
+   "world_rewards": "a draw whose spread exceeds the round-trip time and is redrawn per attempt",
+   "observable_consequence": "elections needed per leader change as message delay is varied relative to the draw range",
+   "vacuity_condition": "one competitor or a coordinator",
+   "trivial_shortcuts": "static priorities (fails when the top priority dies)",
+   "cheat_control": "organisms given distinct fixed offsets larger than the delay must elect in one round; organisms with zero spread must livelock for delay > 0: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: randomised leader election timeouts (Raft)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+   "to": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "candidate: term+1",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+   "to": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "majority -> leader -> heartbeats",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "valid leader traffic resets the timer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "failure + current_idx",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "retries",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "success + current_idx",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "to": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "commit_idx -> lazy apply",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "current-term entries only",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "willemt-raft",
@@ -149,10 +1226,22 @@
    "to": "Ongaro & Ousterhout 2014",
    "note": "Raft; itself a redesign of Paxos for understandability",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014, In Search of an Understandable Consensus Algorithm (the code cites the paper's section numbers in comments)",
+   "note": "from the source comments; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "snapshotting, membership change and the vote request/response bodies were not read (about 700 of 1435 lines of raft_server.c); raft_log.c and raft_node.c not opened",
+   "no claim was executed; tests/virtraft2.py is a ready world (a Python network simulator with partitions) for a SCOUT run"
+  ],
+  "note": "the paper's five rules are each located at a line range; the library-specific choices (range [T,2T), length-based backoff, lazy apply, aggressive resend) are named",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

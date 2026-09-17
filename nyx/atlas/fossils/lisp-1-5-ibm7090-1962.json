@@ -157,17 +157,1386 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1512-1830"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:2091-2143"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1329-1400"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:7180-7360"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:7700-7800"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:5240-5330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/README"
+   }
+  ],
+  "inspected_files": [
+   "lisp15.asm 1329-1400, 1512-1830, 2091-2143, 5240-5330, 7180-7360, 7700-7800",
+   "README, notes.txt (all)"
+  ],
+  "date": "2026-09-17T10:58Z",
+  "note": "the famous names (eval/apply, garbage collection, the a-list) are here as 7090 machine code with the mechanisms exposed: marking by sign bit and by a separate bit table, a free list threaded during the sweep, a recursion stack that is itself a root, a cons budget that traps, and an interpreter whose environment is a list searched linearly",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T10:58Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "LATER_TRANSCRIPTION",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/informatimago/lisp-1-5@fddd37ed99ed7808825455dfc9e74cb0d36eae6b",
+   "payload_manifest_id": "techne tree_sha256 36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076 (17 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/lisp15.asm",
+     "payload_hash_read": "b6b1dc43cda4d59c014fd7596b82b8f81acee64ea46bc43473cd6c134042ef4c",
+     "techne_recorded_hash": "b6b1dc43cda4d59c014fd7596b82b8f81acee64ea46bc43473cd6c134042ef4c",
+     "match": true,
+     "refs": 15
+    },
+    {
+     "path": "upstream/tree/README",
+     "payload_hash_read": "bcaf194a186be79d706ffcc84e5e8b26850bff176a20f4c2e2f943f5a50e0eee",
+     "techne_recorded_hash": "bcaf194a186be79d706ffcc84e5e8b26850bff176a20f4c2e2f943f5a50e0eee",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "$FREE / CONS / sweep SFSL-SFSC (1640-1656, 2091-2104)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a cons takes the word at $FREE and advances $FREE to that word's decrement (its cdr); the sweep walks free storage top to bottom, and every word whose sign is still plus (unmarked) is linked into a new free list by storing its address into the previously collected word; marked words get their sign restored",
+   "input": "cons requests; the marked heap",
+   "output": "a fresh cell, or the reconstructed free list",
+   "state": "$FREE (one word); the list itself lives in the free cells",
+   "update": "per cons; rebuilt per collection",
+   "assumptions": [
+    "a cell is one 36-bit word holding two 15-bit addresses (car in the address field, cdr in the decrement); the sign bit is free for marking"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+    "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+    "lisp-1-5-ibm7090-1962::collection_yield_test_against_a_critical_word_number_with_a_typed_bad_exit",
+    "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+    "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list"
+   ],
+   "fitness_value_in_ancestor": "allocation is three instructions; no size classes because every cell is the same size",
+   "failure_landscape": "by reading: $FREE = 0 -> FROUT -> RECLAM; if the collection recovers fewer than the critical number the run is aborted (*GC 2*)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "uniform cell size; the 7090 word layout dictates car/cdr as address/decrement",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1640-1656, 2091-2104"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "CONS, FREE, labels RCB-SFSC",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STARVES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "EXTERNAL_RESET",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "MRKLST (1758-1797)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "MRKLST takes a pointer in IR2: reject if outside LISP storage; if in free storage, complement the word (CLS/STO: the sign bit becomes the mark; TPL exits if already marked), push the cdr on the push-down list, recurse on the car (a loop with an explicit stack), pop the cdr and continue; if in full-word space, set a bit in a separate bit table instead (full words have no spare sign); the stack depth is bounded by the free part of the PDL (MLPDC) and overflow is a fatal *NO PDL* error",
+   "input": "a root pointer",
+   "output": "every reachable free-storage word marked (sign minus) and every reachable full word marked in the bit table",
+   "state": "the PDL between $CPPI and ENDPDL",
+   "update": "per root",
+   "assumptions": [
+    "marking may run out of stack (the PDL) -- accepted as fatal; no pointer reversal",
+    "a word already marked is a shared or circular structure and is not re-entered"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+    "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+    "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+    "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words"
+   ],
+   "fitness_value_in_ancestor": "reachability from roots without any per-cell header; the sign bit and a bit table are the entire mark storage",
+   "failure_landscape": "by reading: deep lists (long car chains) exhaust the PDL; cdr chains cost stack too (one push per cons)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the mark bit is the SIGN of the word, so 'marked' and 'negative' are the same test (TMI); an era-specific trick",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1758-1797"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "MRKLST",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "COLLAPSES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "MONE/MLTBT, SWPFWS-SFWC, MBTT (1660-1700, 1783-1789, 1602-1625)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "full-word space (numbers, print names, arrays) cannot carry a mark, so a bit table with one bit per word is zeroed at the start of a collection (A/B), set by MRKLST (bit = address mod 32 in word address/32), set 32 at a time for arrays (MBTT: CAL MONS / ORS), and swept: a table word of all ones skips 32 words at once (ONT MONES), otherwise each clear bit's word is threaded onto the full-word free list",
+   "input": "marks",
+   "output": "the full-word free list FWORDL and the count FWC",
+   "state": "the bit table",
+   "update": "per collection",
+   "assumptions": [
+    "full-word space is contiguous so address arithmetic gives the bit"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+    "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep"
+   ],
+   "fitness_value_in_ancestor": "a second heap with different marking cost (no sign bit) shares one collection",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1602-1625, 1660-1700, 1783-1789"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the bit-table code paths",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "RECLAM 1512-1600 (OBLIST, TEMLIS, PDL, ARYLIS)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the collector marks from: the object list (unless a debug/read-in flag says to skip it), TEMLIS -- a list of (begin,,end) full-word ranges that code (mainly the compiler) registers as 'places where list structure may be' -- , then the active part of the push-down list treated as such a range, then every declared array's list elements; a word in a range is marked only if it has no tag/prefix bits (OFT TMPTM), i.e. looks like a pointer",
+   "input": "the registration lists and the PDL bounds",
+   "output": "the marked heap",
+   "state": "TEMLIS, ARYLIS, $CPPI/$CSSI",
+   "update": "registrations by the mutator; read per collection",
+   "assumptions": [
+    "a full word with prefix/tag bits is not a pointer (conservative-by-tag scanning of the stack and registered ranges)",
+    "code that holds pointers elsewhere (index registers) must have registered them or they are lost"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+    "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table"
+   ],
+   "fitness_value_in_ancestor": "the compiler and machine code can hold pointers in raw storage and still survive a collection",
+   "failure_landscape": "by reading: an unregistered temporary is a use-after-collect; the design pushes root discipline onto every machine-code author",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "TEMLIS is a manual root registry -- the ancestor of 'GC roots' declarations",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1512-1600"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "RECLAM through MRKE",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ASSUMES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::collection_yield_test_against_a_critical_word_number_with_a_typed_bad_exit",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "CRITWN / RCBE / *GC 2* (1700-1735, 1809-1818)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after the sweep the number of full words and of free cells recovered are each compared with a critical number (CRITWN, the free-storage bound is 16x the full-word one via LGL 4); if either is below, a bad-exit flag is set and the collection ends in error *GC 2* 'NOT ENOUGH WORDS COLLECTED' after printing the counts; totals and cycle counts are accumulated; VERBOS prints per collection",
+   "input": "FWC, FSC",
+   "output": "continue or abort; statistics",
+   "state": "TFWC, TFSC, RCC, RLC counters",
+   "update": "per collection",
+   "assumptions": [
+    "a collection that recovers little will be followed immediately by another; aborting early is cheaper than thrashing"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep"
+   ],
+   "fitness_value_in_ancestor": "the machine refuses to thrash: near-full memory is reported as a failure, not endured",
+   "failure_landscape": "the record's own: 'the free list exhausts and the collector cannot recover enough cells'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the critical number is a constant, not derived from the allocation rate",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1700-1735, 1809-1818"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ZPDLA through RCEXIT and RCBEX",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "EXTERNAL_RESET",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "CNTR1 / ARREST / AWHOA / SPEAK (2104-2143); ERRORSET 5400",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "CONS decrements a 15-bit counter kept as the address field of an instruction (self-modifying: AXT **,4 / SXA CNTR1); when it runs out ARREST reloads it from the high part CNTS or, if the whole count is exhausted and the counter is on (TCOUNT), calls error *F 1* 'CONS COUNTER TRAP' with 8 spare conses reserved to build the error number; SPEAK reads the count as a fixnum; ERRORSET evaluates an expression under a cons limit N and returns F on overrun",
+   "input": "cons calls; a limit set by COUNT/ERRORSET",
+   "output": "a trap after N conses",
+   "state": "CNTR1 (low 15 bits, in the instruction), CNTS (rest), CNTST (initial)",
+   "update": "per cons",
+   "assumptions": [
+    "allocation count is a usable proxy for work done (the era's resource limit)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+    "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list"
+   ],
+   "fitness_value_in_ancestor": "a runaway evaluation is bounded by memory allocation, not wall time; ERRORSET makes the bound catchable",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "budget in conses rather than in time or in stack depth",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:2104-2143, 5400-5450"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the counter code inside CONS and the ARREST/AWHOA/SPEAK routines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "SAVE / UNSAVE / END1..END16 (1329-1400)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one stack ($CPPI counter) for every routine: SAVE is called with a parameter word naming how many contiguous cells to save (the first is 'PZE name,,IR4', the return address); it bumps the counter, checks for overflow (NOPDL), stores the parameter word, and jumps INTO a table of CLA/STO pairs at the entry for N so exactly N moves execute; UNSAVE reads the parameter word back off the stack to know how many to restore and where to return",
+   "input": "a block of cells to preserve",
+   "output": "the block restored on return",
+   "state": "the PDL",
+   "update": "per call/return of a recursive routine",
+   "assumptions": [
+    "routines keep their locals in fixed cells (no re-entrancy by design), so recursion is made possible by copying the cells to the stack"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+    "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+    "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+    "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps"
+   ],
+   "fitness_value_in_ancestor": "recursion on a machine with no stack instructions; the same stack is the GC's mark stack and a GC root",
+   "failure_landscape": "by reading: fixed-size PDL; overflow is a fatal error (NOPDL, *NO PDL* in MRKLST)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "self-modifying, table-driven block copy: the 7090 idiom for a variable-length move",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:1329-1400"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SAVE, UNSAVE and the END table",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "COLLAPSES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "APPLY / APP2 (7203-7360) and EVAL's variable lookup EVP1-EVP12 (7735-7775)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "APPLY(F,L,A): if car(F) is an atom-marker (-1) go to APP2; LAMBDA -> EVAL(caddr F, nconc(PAIR(cadr F, L), A)) i.e. bind parameters by consing onto the a-list; LABEL -> APPLY(caddr F, L, cons((cadr F . caddr F), A)) i.e. bind the name to the body; FUNARG -> apply with the carried a-list; otherwise APPLY(EVAL(F,A), L, A). APP2 searches the atom's property list for TRACE, SUBR (call machine code via the stored TXL instruction after distributing args) or EXPR (apply the S-expression). EVAL's variable lookup: APVAL on the property list first, then a linear search of the a-list (EVL1: compare caar(J) with E), else error *A 8* UNBOUND VARIABLE",
+   "input": "F, L, A",
+   "output": "a value",
+   "state": "$ARG3 (the current a-list) and $ALIST; the PDL for recursion",
+   "update": "per application",
+   "assumptions": [
+    "dynamic scope: the a-list at call time is searched; FUNARG is the escape hatch that carries a captured a-list",
+    "linear search cost is acceptable; property lists are searched before the a-list"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+    "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+    "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+    "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted"
+   ],
+   "fitness_value_in_ancestor": "the interpreter is the paper's metacircular definition transliterated (the REM comments are the M-expressions); machine-code SUBRs and interpreted EXPRs share one calling convention through the property list",
+   "failure_landscape": "by reading: the FUNARG problem is present in exactly the form later named (dynamic a-list vs captured); deep recursion exhausts the PDL",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "McCarthy's apply with the a-list environment; the SUBR/EXPR/FSUBR/FEXPR property-list typing",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:7203-7360, 7735-7775"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "APPLY, APP2, EVP1-EVP12",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+   "fossil_ancestry": "lisp-1-5-ibm7090-1962",
+   "human_name": "EVALQ / EVQERR (5240-5330)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "read (function, argument-list) doublets from cards into a buffer until STOP; then for each: reset $ALIST, print a heading, apply, print the answer; an error anywhere unwinds (TERPDL resets the PDL, buffers are cleaned) and continues with the NEXT doublet; the time is printed at start, after read-in, and at the end",
+   "input": "a card deck",
+   "output": "printed answers and error messages",
+   "state": "the doublet buffer, EVQRTS phase switch",
+   "update": "per doublet",
+   "assumptions": [
+    "batch operation: no interaction; an error must not lose the rest of the deck"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+    "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table"
+   ],
+   "fitness_value_in_ancestor": "a job survives its own errors; the first REPL-like loop, batch form",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lisp-1-5-ibm7090-1962/upstream/tree/lisp15.asm:5240-5330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "EVALQ, EVALQT, EVQERR",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "RELOC (compaction of full-word space for arrays), the arithmetic package, the reader/printer, LAP and the compiler, the overlord/direction-card loader",
+   "reason": "OTHER",
+   "evidence": "NOT READ this pass (lisp15.asm 1830-2090, 2221-5240, 5586-7180, 8163-11092); residue, not a rejection on the merits",
+   "note": "the compiler's LINK (8565: patches STR into TSX on first call) is the most promising unread mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lisp-1-5-ibm7090-1962"
+  },
+  {
+   "candidate": "the assembler-transcription apparatus (pjb-asm7090.el, asm7090.patch, generated GENER/GPLI/GPLA cards, lisp15.lisp)",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "README: 2014 tooling to reproduce the 1962 listing; not the machine",
+   "note": "but it IS the provenance object: the body is LATER_TRANSCRIPTION-class by its own README",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lisp-1-5-ibm7090-1962"
+  },
+  {
+   "candidate": "'LISP 1.5' / 'garbage collection' / 'eval' as single organs",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the collector alone is five separable mechanisms (free list, sign-bit mark, bit table, root registry, yield test)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lisp-1-5-ibm7090-1962"
+  },
+  {
+   "candidate": "self-modifying-code idioms (AXT **, SXA into instructions) as mechanisms",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "notes.txt; the 7090 way to pass a parameter; no behaviour of its own",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lisp-1-5-ibm7090-1962"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "lisp-1-5-ibm7090-1962::P.a_fixed_pool_of_uniform_cells_is_consumed_by_a_computation_that_cannot_track_the_lifetime_of_what_it_builds",
+   "source_fossil": "lisp-1-5-ibm7090-1962",
+   "source_evidence": "record human_failure_condition; lisp15.asm RECLAIMER; CONS/FROUT",
+   "condition": "the organism's work product is linked structure in a fixed pool of identical cells; structure is shared and cyclic; the organism cannot know when a cell dies; the pool must be recycled or the computation halts",
+   "resource_or_constraint": "pool size; a bounded scratch area for whatever reclamation needs (the ancestor's PDL)",
+   "failure_condition": "halt on exhaustion with live data still small (a leak), or reclaiming a live cell (corruption)",
+   "world_punishes": "both; and thrashing (collecting often for little yield)",
+   "world_rewards": "reclamation that is exact from a declared root set and cheap in scratch space",
+   "observable_consequence": "cells reclaimed per collection vs live cells; collections per 10^6 conses; corruption detected by a reachability oracle",
+   "vacuity_condition": "a pool larger than total allocation (never collect) or acyclic unshared data (reference counts suffice)",
+   "trivial_shortcuts": "reference counting when the world has no cycles; a world that exposes lifetimes",
+   "cheat_control": "an organism given a lifetime oracle must reclaim every dead cell at zero scratch cost; an organism that never reclaims must halt at pool size: the world must separate them and must contain cycles or the pressure is a different one",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automatic storage reclamation (McCarthy 1960, as coded 1961)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "lisp-1-5-ibm7090-1962::P.machine_code_that_holds_pointers_in_raw_storage_must_declare_them_or_lose_them",
+   "source_fossil": "lisp-1-5-ibm7090-1962",
+   "source_evidence": "TEMLIS marker 1537-1570",
+   "condition": "the reclaimer sees only registered ranges and a stack; any organism component that keeps a pointer elsewhere across an allocation must register the place",
+   "resource_or_constraint": "registration cost per temporary; scanning cost per registered word",
+   "failure_condition": "a dangling pointer after a collection",
+   "world_punishes": "unregistered temporaries (corruption) and over-registration (scan cost, retention)",
+   "world_rewards": "a discipline that registers exactly the live temporaries",
+   "observable_consequence": "corruptions per collection under a mutator that allocates during computation; scan words per collection",
+   "vacuity_condition": "no allocation between taking a pointer and using it",
+   "trivial_shortcuts": "register the whole address space (conservative scan)",
+   "cheat_control": "a mutator that registers nothing must corrupt on the first collection during a hold; one that registers everything must show the scan cost: if the world cannot see either, the root-declaration pressure is absent",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: root registration for a non-moving collector",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "to": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "FROUT on exhaustion",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+   "to": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "the mark stack IS the PDL",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "to": "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "and the PDL is a root",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "full-word free list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sweep rebuilds the list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::collection_yield_test_against_a_critical_word_number_with_a_typed_bad_exit",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "PAIR/CONS of the a-list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+   "to": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "TERPDL on error",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+   "to": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "ERRORSET",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "lisp-1-5-ibm7090-1962",
@@ -175,10 +1544,23 @@
    "to": "femtolisp",
    "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "~9,000 of 11,092 cards unread: compiler/LAP, reader/printer, arithmetic, arrays, RELOC, overlord",
+   "provenance: the body is a 2014 transcription of a 1962 listing (README); Techne's grade is what Harmonia should read, not the record's handoff string",
+   "no claim was executed; simh i7094 is the record's named world (REACHABLE, untried)"
+  ],
+  "note": "the storage control program and the interpreter core are accounted for at mechanism level; everything else is named as unread",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
