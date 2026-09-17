@@ -1,0 +1,190 @@
+{
+ "ancestry": "original (queue slot 1)",
+ "arms": [
+  "fresh",
+  "shelf"
+ ],
+ "assay_capability_requirement": "the fresh arm reaches the SHELF in >= 1 of 2 seeds (else TARGET_UNREACHABLE for the shelf, a table contradiction); a summit counts only when a 48-episode held-out probe of the candidate generation's elite reads >= 0.90",
+ "attempt": 3,
+ "budget": {
+  "E": 4,
+  "G": 12,
+  "N": 24,
+  "heldout_episodes": 48,
+  "ladder": [],
+  "seeds": [
+   1,
+   2
+  ],
+  "shelf_dose": 4,
+  "shelf_min": 0.45,
+  "stream_solved": 0.75,
+  "summit_min": 0.9
+ },
+ "claim_ceiling": "at n=2 per arm: 0 summits through G=12 is a CAPABLE NEGATIVE for summit reachability at this budget (upper band reported); k summits give a timescale, not a mechanism",
+ "crn_policy": "default; identical generation 0 for both arms except the 4 substituted shelf organisms; one run per seed to G=12, ladder points read off the trace",
+ "decl": {
+  "n_min": 2,
+  "primary": {
+   "control": "fresh",
+   "metric": "summit",
+   "min_effect": 0.1,
+   "treatment": "shelf"
+  },
+  "target": {
+   "baseline_arm": "fresh",
+   "reach_metric": "shelf_reached",
+   "reach_min": 1,
+   "reachability_class": "UNESTABLISHED"
+  }
+ },
+ "expected_machine_telemetry": [
+  "per-generation elite per-ask profile and population max per ask",
+  "summit candidates with held-out confirmations",
+  "shelf residence (censored)",
+  "regression from shelf",
+  "ancestry operator histograms (final elite; first summit elite)",
+  "ladder rows in the reachability table via the monotone lookup",
+  "corridor rows (shelf organisms -> W2_K2)"
+ ],
+ "experiment": "C3-SFE-01",
+ "falsification_condition": "summit frequency (shelf arm) - (fresh arm) < 0.10 => shelf start does not shorten the transition; 0 confirmed summits in 4 runs => the summit is OBSERVED_UNREACHABLE at G=12 (band reported)",
+ "kill_condition": "if the fresh arm reaches the shelf in < 1/2 seeds the table is wrong and the slot stops; if summits are confirmed in >= 6 of 12 fresh runs by G=100 the 'summit is hard' premise dies and C3-SFE-02 becomes an anatomy of the transition instead of the shelf",
+ "machine_changes_exercised": [
+  "A levels + candidates + confirmation",
+  "B monotone lookup at ladder points",
+  "C corridor rows",
+  "F common_fill dose",
+  "per_ask credit"
+ ],
+ "parent_evidence": "Campaign 2: 0/24 training-best >= 0.9 at G60 (L2-039); every foothold on the 0.50-0.56 shelf (L2-025); table at G60: 27 runs, 16 SHELF, 0 confirmed SUMMIT, 1 training-only candidate (0.9375 at 54, held-out 0.53).",
+ "parents": [
+  "C2-SFE-03",
+  "C2-SFE-07",
+  "SFE-10"
+ ],
+ "positive_control": "fresh arm shelf arrival (table: 16/27 at G60); the SHELF organisms' held-out in [0.45, 0.90) checked before use",
+ "prereg_digest": "sha256:8414131a8a2a673d37edb740d2fd23a97b60ce8e7d66d2b29d43f547a9dfe4b6",
+ "primary_observable": "confirmed summit frequency per arm at G=12 (summit = 1/0 per run) and first_summit_gen; shelf residence (censored); secondary: shelf arrival, stream identity per generation and switches, regression from the shelf, candidates vs confirmations",
+ "question": "Does W2_K2 4-bit (N=24, E=4) have a reachable FULL solution (held-out >= 0.90) under the current organism/evaluator/search system within 12 generations, and on what timescale; and does starting on the half-credit shelf (preserved campaign-2 shelf organisms, dose 4 of 24) shorten the shelf-to-summit time?",
+ "reachability_estimate": {
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      200,
+      30,
+      16
+     ],
+     [
+      200,
+      36,
+      16
+     ],
+     [
+      200,
+      40,
+      16
+     ],
+     [
+      200,
+      41,
+      16
+     ],
+     [
+      200,
+      42,
+      16
+     ],
+     [
+      200,
+      48,
+      16
+     ],
+     [
+      200,
+      55,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ],
+     [
+      200,
+      70,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "class_summit": "OBSERVED_UNREACHABLE_AT_BUDGET",
+    "freq": 0.3333,
+    "k": 13,
+    "k_summit": 0,
+    "k_summit_any": 0,
+    "n": 39
+   }
+  }
+ },
+ "replacement_condition": "none: this slot is the campaign's first priority; its outcome replaces C3-SFE-08 if no summit regime exists",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "shelf-to-summit budget scan on W2_K2",
+ "typed_failure_conditions": [
+  "TARGET_UNREACHABLE (fresh shelf 0/2)",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE",
+  "IMMATURE_ARTIFACT is not applicable: the shelf organisms are deliberately partial (recorded, not gating)"
+ ],
+ "why_this_slot": "Every economics and transfer question on K=2 cells measured time-to-shelf; whether a summit exists at all is the campaign's highest-value unresolved boundary and gates C3-SFE-02 and C3-SFE-08."
+}

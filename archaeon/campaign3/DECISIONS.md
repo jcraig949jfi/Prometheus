@@ -54,3 +54,13 @@ held-out confirms it. C3-SFE-01 confirms candidates with a held-out probe at the
 candidate generation. | reachability rows W2_K2 seed 9. | Alternative: k
 consecutive training generations >= 0.9 (still a training battery). | Revisit if a
 held-out probe at the candidate generation proves too costly. DETERMINISTIC.
+
+D3-013 | 2026-09-17 07:55 | C3-SFE-08 (wall-clock producer-consumer under a
+FULL-solve criterion) is REPLACED before execution: C3-SFE-01 found no
+full-solve regime on W2_K2 through G300 (0/24), so the experiment's outcome
+variable does not exist. The replacement is chosen after C3-SFE-02's anatomy
+from the directive's preferred direction A (shelf/summit): a selective pressure
+that distinguishes partial from complete behaviour without naming the
+mechanism, or a valley-crossing measurement, whichever the anatomy makes
+sharper. | C3-SFE-01 rows. | Alternative: run C3-SFE-08 on time-to-shelf (a
+campaign-2 measurement repeated). | Revisit never. SCIENTIFIC.

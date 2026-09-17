@@ -24,3 +24,12 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   offspring cap + per-ask credit, per-campaign parametrization of the shared
   machine, campaign-3 prereg fields in the sealed body. 47 tests pass.
   MACHINE_READINESS.md: 5 IMPLEMENTED_AND_TESTED, 1 PARTIAL (E).
+
+## 07:15-07:55 -- C3-SFE-01 (dry a01-a03; engine a04 of record; CAPABLE_NEGATIVE: no summit through G300)
+
+- 1235 s; 1 world, 24 records, 24 reachability rows, 12 corridor rows, 0
+  errors. Fresh 11/12 on the shelf (13-226), 0/12 summits, 0 candidates; shelf
+  arm 12/12 on the shelf from generation 0, 0/12 summits; residence censored
+  at 300 everywhere. Held-out per ask ~0.5/0.5: the shelf looks like a
+  last-value strategy. C3-SFE-08 replaced (D3-013). Ledger L3-001..L3-004.
+  Next: C3-SFE-02 (with a last-value probe added).
