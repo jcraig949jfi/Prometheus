@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:02Z",
- "n": 138,
+ "built": "2026-09-17T23:15Z",
+ "n": 147,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -188,6 +188,23 @@
    "cheat_control": "an organism told the bottleneck rate must hold it with zero loss; the 1983 rule must collapse under N flows; Tahoe must show the timeout gap on a single loss that Reno closes: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: end-to-end congestion control (Jacobson 1988-1990)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "bsd-tcp-4.3-tahoe-1988::P.a_sender_must_avoid_both_spurious_retransmissions_on_a_variable_path_and_congestion_collapse_on_a_shared_one_using_only_ack_timing_and_absence_and_must_recover_from_a_single_loss_faster_than_a_timer",
+   "source_fossil": "bsd-tcp-4.3-tahoe-1988",
+   "source_evidence": "tcp_input.c 720-852; tcp_timer.c 163-225; Jacobson 1988; Fall & Floyd 1996 as cited by the record",
+   "condition": "many senders share bottlenecks whose delay varies by a factor of several within a connection; the only feedback is ACKs and their absence; the score is goodput under load and the count of unnecessary retransmissions",
+   "resource_or_constraint": "one timed segment; integer arithmetic",
+   "failure_condition": "collapse (goodput falls as load rises) or a high spurious-retransmission rate on variable paths",
+   "world_punishes": "a fixed timer multiplier; sending the advertised window; timing retransmitted segments",
+   "world_rewards": "a variance-aware timer, Karn's rule, AIMD with slow start, early retransmit on duplicates",
+   "observable_consequence": "goodput of N flows vs offered load, and spurious retransmissions vs RTT variance, for the 1983, Tahoe and Reno bodies on the same emulated network",
+   "vacuity_condition": "one flow on a constant-delay link",
+   "trivial_shortcuts": "explicit congestion signals from the routers (withheld)",
+   "cheat_control": "an organism told the bottleneck rate and the RTT distribution must show zero spurious retransmissions and full goodput; the 1983 body must collapse under N flows; Tahoe must show the slow-start dip after each fast retransmit that Reno's recovery removes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: end-to-end congestion control, the original (Jacobson & Karels 1988)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -684,6 +701,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "eispack-netlib::P.eigenvalues_of_general_and_symmetric_matrices_must_be_computed_reliably_across_machines_and_matrix_structures_from_a_set_of_stages_that_can_be_composed_and_replaced_one_at_a_time",
+   "source_fossil": "eispack-netlib",
+   "source_evidence": "the routine headers; the drivers' call order",
+   "condition": "an organism computes eigen-decompositions of matrices with varied structure (symmetric, general, banded, generalised) on machines with different arithmetic; the score is accuracy against a reference and portability; users need to substitute or skip stages",
+   "resource_or_constraint": "Fortran 66/77; no vendor code",
+   "failure_condition": "wrong eigenvalues on badly scaled or ill-conditioned inputs, or a monolith that cannot be adapted to structure",
+   "world_punishes": "a single black-box routine; unbalanced iteration",
+   "world_rewards": "published, analysed stages with recorded provenance and drivers that compose them",
+   "observable_consequence": "eigenvalue error vs a reference on the Handbook's test matrices with balancing on and off, and with each stage replaced by its alternative (elmhes vs orthes; tql vs imtql)",
+   "vacuity_condition": "small well-conditioned matrices",
+   "trivial_shortcuts": "a modern LAPACK call (which the world withholds)",
+   "cheat_control": "an organism given the reference eigenvalues must reproduce them to working precision; the pipeline with balancing removed must lose accuracy on the scaled test matrix; the two Hessenberg reductions must agree to round-off on well-conditioned inputs: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference eigenvalue software (Argonne 1972-76; Wilkinson & Reinsch 1971)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "eliza-anthay-1966::P.a_believable_reply_must_come_from_surface_transformation_alone_with_no_model_of_meaning",
    "source_fossil": "eliza-anthay-1966",
    "source_evidence": "record pressure / failure; response()",
@@ -715,6 +749,23 @@
    "cheat_control": "an organism given the human's expected reply must score 100% responsive; the echo organism must score high on 'contains a fragment' and zero on judged responsiveness: the world must separate those two measures or it is measuring echo",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: natural-language conversation by script (Weizenbaum 1966)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "emcee-3.1.6::P.a_posterior_with_unknown_scale_and_strong_linear_correlations_must_be_sampled_without_any_hand_tuned_proposal_while_likelihood_evaluations_are_expensive_and_parallelisable_and_the_sampler_must_say_when_its_chain_is_too_short",
+   "source_fossil": "emcee-3.1.6",
+   "source_evidence": "stretch.py; red_blue.py; autocorr.py; the paper's tests",
+   "condition": "an organism draws samples from a log-density it can only evaluate; the density is a badly scaled, correlated Gaussian (the Rosenbrock or the 'ill-conditioned' tests) of moderate dimension; evaluations can run in parallel; the score is effective samples per evaluation and a correct statement of the autocorrelation time",
+   "resource_or_constraint": "evaluations; walkers",
+   "failure_condition": "acceptance near zero or one (untuned Metropolis), correlated chains reported as converged, or a serial evaluation pattern that wastes the parallel budget",
+   "world_punishes": "isotropic random-walk Metropolis; simultaneous ensemble updates (biased); reporting tau without a length check",
+   "world_rewards": "affine-invariant moves, red-blue halves, windowed autocorrelation with a reliability flag",
+   "observable_consequence": "effective samples per evaluation on a 10-d Gaussian with condition number 1e4, for isotropic Metropolis vs the stretch move; bias of the simultaneous-update variant on the mean; the tol flag's false-negative rate on short chains",
+   "vacuity_condition": "a spherical target",
+   "trivial_shortcuts": "the target's covariance handed to the proposal (which the world withholds)",
+   "cheat_control": "an organism given the covariance must match the stretch move's efficiency; isotropic Metropolis must fall by the condition number; the simultaneous update must bias the mean on a two-walker test: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: affine-invariant ensemble MCMC (Foreman-Mackey et al. 2013)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -783,6 +834,23 @@
    "cheat_control": "N/A",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "espresso-logic::P.a_boolean_function_given_as_a_cube_cover_must_be_re_expressed_with_the_fewest_cubes_when_exact_minimisation_is_exponential_and_the_local_optimum_of_greedy_prime_expansion_is_poor",
+   "source_fossil": "espresso-logic",
+   "source_evidence": "espresso.c; expand.c; reduce.c; irred.c; the examples directory as the benchmark set",
+   "condition": "an organism rewrites a cover of a multi-output Boolean function (with don't-cares) into another cover; the score is cube count, then literal count, against the exact minimum on the standard PLA benchmarks; time is bounded",
+   "resource_or_constraint": "polynomial passes over the cover; a covering-table heuristic",
+   "failure_condition": "covers far from the exact minimum, or time exponential in inputs",
+   "world_punishes": "Quine-McCluskey prime enumeration (exponential); a single greedy expansion (local optimum)",
+   "world_rewards": "expand/reduce alternation with order changes, irredundant covering, gasp escapes",
+   "observable_consequence": "cube count vs exact (where computable) on the Berkeley PLA set, for expand-only, expand+irredundant, and the full loop with and without gasps; run time vs inputs",
+   "vacuity_condition": "functions whose primes are all essential",
+   "trivial_shortcuts": "the exact minimiser on small cases (a bound, not a competitor)",
+   "cheat_control": "an organism given the exact minimum cover must reproduce it; expand-only must show a larger cover on the benchmarks; the full loop must close most of the gap: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: two-level logic minimisation (Brayton et al. 1984)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -936,6 +1004,23 @@
    "cheat_control": "an organism given each token's class in advance must parse with lookahead 3; the ancestor with the class hint removed must need the retry protocol: the world must show the difference",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: APL evaluation (GNU APL, Sauermann 2008-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "gnu-prolog-1.5.0::P.a_logic_language_must_execute_at_native_speed_across_many_processor_architectures_while_the_compiler_itself_is_written_in_the_language_and_must_bootstrap_from_a_c_runtime",
+   "source_fossil": "gnu-prolog-1.5.0",
+   "source_evidence": "the src tree; pl2wam.pl; the Ma2Asm mapper list",
+   "condition": "an organism implements a language whose programs are call-heavy and nondeterministic; users run on many CPU architectures; the implementation's own compiler is a program of the language; the score is execution speed, the effort per port, and the ability to build from sources on a fresh machine",
+   "resource_or_constraint": "a C compiler and an assembler per target; one mapper file per architecture",
+   "failure_condition": "a VM's interpretation overhead on call-heavy code, a port that requires rewriting the code generator, or a bootstrap that needs a running instance",
+   "world_punishes": "direct native code generation per architecture; a compiler without a shipped compiled form",
+   "world_rewards": "a tiny intermediate assembly with per-target mappers; shipped .wam of the compiler",
+   "observable_consequence": "benchmark speed vs the VM rival (swipl) on the same programs; lines per port in Ma2Asm; a clean bootstrap from sources on a new architecture",
+   "vacuity_condition": "one architecture",
+   "trivial_shortcuts": "compiling to C (wamcc's route, slower to compile and dependent on the C compiler's optimiser)",
+   "cheat_control": "an organism given a native compiler per architecture must be fastest and cost the most per port; the VM rival must be slowest on nrev/zebra and cost zero per port; the MA route must sit between on both axes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: native-code ISO Prolog with constraints (Diaz 1996-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1517,6 +1602,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "microkanren-scheme::P.a_search_over_relations_with_infinitely_many_solutions_in_some_branches_must_still_produce_the_solutions_of_every_branch_using_only_function_application_and_persistent_data",
+   "source_fossil": "microkanren-scheme",
+   "source_evidence": "microKanren.scm 37-47",
+   "condition": "an organism answers queries over relations defined recursively; some branches have infinitely many answers; the score is which answers appear in the first n and whether the organism terminates when asked for n; the organism may use only pure functions and persistent lists",
+   "resource_or_constraint": "thunks; no mutable search state",
+   "failure_condition": "starvation of a finite branch by an infinite one (Prolog's failure), or a diverging query for a finite n",
+   "world_punishes": "depth-first streams; eager conjunction",
+   "world_rewards": "immature streams with argument-swapping merge",
+   "observable_consequence": "the set of answers among the first n for a query with one infinite and one finite branch, for the interleaving mplus vs an append-based mplus",
+   "vacuity_condition": "finite relations",
+   "trivial_shortcuts": "breadth-first with a queue (which needs mutable state or a much larger kernel)",
+   "cheat_control": "an organism given the finite branch's answers must return them first; append-based mplus must never reach the finite branch when the infinite one is first; the interleaving mplus must reach it within 2 k steps: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a minimal complete relational language (Hemann & Friedman 2013)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "minisat-1.14-2006::P.an_exponential_search_space_where_most_branches_die_for_reasons_shared_with_other_branches",
    "source_fossil": "minisat-1.14-2006",
    "source_evidence": "record pressure; search()",
@@ -1786,6 +1888,23 @@
    "cheat_control": "a native-compiled version of the same program is the speed ceiling; a tree-walking interpreter of the same words is the floor: the world must place threaded code between them",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: a portable, self-extending Forth (Burk 1994-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "picorv32::P.an_instruction_set_must_be_executed_correctly_in_the_smallest_area_at_the_highest_clock_rate_when_cycles_per_instruction_are_negotiable_and_features_must_be_removable_per_instance",
+   "source_fossil": "picorv32",
+   "source_evidence": "picorv32.v parameters, state machine, PCPI port; the README's area figures",
+   "condition": "an organism implements a fixed ISA on an FPGA; the score is area (LUTs), maximum clock and correctness on the ISA tests; instructions per cycle is not scored; instances differ in which optional features they need",
+   "resource_or_constraint": "LUTs; one memory port",
+   "failure_condition": "an ISA-test failure, or area above the budget for a feature set",
+   "world_punishes": "pipelines with hazard logic; fixed multipliers; standard interrupt controllers",
+   "world_rewards": "a multi-cycle state machine, a co-processor port, parameters",
+   "observable_consequence": "LUT count and maximum clock vs feature set on one FPGA family; ISA test pass count per variant; cycles per Dhrystone",
+   "vacuity_condition": "unlimited area",
+   "trivial_shortcuts": "a soft core from the vendor (which fixes the feature set)",
+   "cheat_control": "an organism given a pipelined reference must show more area at higher IPC; the multi-cycle core with the barrel shifter must show more area and fewer cycles on shift-heavy code than the two-stage shifter; both must pass the same tests: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a small RISC-V soft core (Wolf 2015-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2180,6 +2299,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "verilog-generic-fifo::P.data_must_cross_between_two_unrelated_clocks_without_loss_or_duplication_with_flow_control_that_stalls_the_producer_and_starves_the_consumer_correctly_even_though_every_status_signal_is_stale_by_up_to_two_cycles",
+   "source_fossil": "verilog-generic-fifo",
+   "source_evidence": "generic_fifo_dc.v 68-133 and its header notes",
+   "condition": "a producer and a consumer run on independent clocks; a bounded buffer sits between them; the score is zero lost or duplicated words under every rate ratio, and throughput; status signals crossing domains are delayed and may be sampled mid-transition",
+   "resource_or_constraint": "one memory; a few registers per domain",
+   "failure_condition": "a write when full or a read when empty (corruption), or a false full/empty that halves throughput",
+   "world_punishes": "flags computed from a foreign pointer without the wrap bit; binary pointers sampled across domains at speed",
+   "world_rewards": "wide pointers, domain-local flags with conservative staleness, gray-coded crossing",
+   "observable_consequence": "lost/duplicated words and throughput over rate ratios and clock phases in simulation, for the binary-pointer file vs the gray-pointer file, with metastability injected at the crossing",
+   "vacuity_condition": "one clock",
+   "trivial_shortcuts": "a handshake per word (correct, slow)",
+   "cheat_control": "an organism with a global clock must show zero errors at full throughput; the binary-pointer FIFO with injected mid-transition samples must corrupt; the gray-pointer FIFO under the same injection must not: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: clock-domain-crossing buffer (Usselmann 2000-2002)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "verilog-rr-arbiter::P.several_requesters_contend_every_cycle_for_one_grant_and_none_may_starve",
    "source_fossil": "verilog-rr-arbiter",
    "source_evidence": "record pressure / failure condition; all three files",
@@ -2296,6 +2432,23 @@
    "cheat_control": "organisms given distinct fixed offsets larger than the delay must elect in one round; organisms with zero spread must livelock for delay > 0: the world must show both",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: randomised leader election timeouts (Raft)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "xv6-riscv::P.many_processes_on_several_cpus_must_share_the_machine_and_the_disk_such_that_no_wakeup_is_lost_no_lock_is_held_across_a_switch_by_the_wrong_thread_and_a_crash_at_any_instruction_leaves_the_file_system_consistent",
+   "source_fossil": "xv6-riscv",
+   "source_evidence": "proc.c scheduler / sleep / wakeup; log.c; param.h",
+   "condition": "an organism runs N processes on M CPUs; processes block on conditions and on disk; the power may fail at any instruction; the score is liveness (no lost wakeups, no deadlock) and crash consistency (the file system is a prefix of committed batches after any crash), with code size as a secondary score",
+   "resource_or_constraint": "a fixed process table; a 30-block log",
+   "failure_condition": "a process that sleeps forever after a wakeup it missed; a lock handed across CPUs incorrectly; a file system with a half-applied operation after a crash",
+   "world_punishes": "check-then-sleep without registration; releasing the process lock before the switch; in-place metadata writes",
+   "world_rewards": "the two-step sleep, the lock-handoff invariant, worst-case reservation with a single-block commit point",
+   "observable_consequence": "lost-wakeup count under a stress test with many CPUs; consistency check after crashes injected at every block write of a batch (the test-xv6.py suite and a crash-injecting disk)",
+   "vacuity_condition": "one CPU, one process, no crashes",
+   "trivial_shortcuts": "a global kernel lock and a synchronous file system (correct but scores poorly on the secondary metrics)",
+   "cheat_control": "an organism with crash injection disabled must pass every consistency check; the log with the header write moved before write_log must fail the injected-crash check; sleep without sleep_prepare must lose wakeups under the stress test: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a teaching kernel (MIT PDOS 2006-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

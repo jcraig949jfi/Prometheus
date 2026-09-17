@@ -129,20 +129,492 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:1-281"
+   }
+  ],
+  "inspected_files": [
+   "rtl/verilog/generic_fifo_dc.v 1-281"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "a first-in-first-out buffer between two clock domains: write and read pointers one bit wider than the address so that full and empty are distinguished by the extra bit when the address parts are equal; each pointer is sampled into the other clock domain through one register stage; the flags are computed in the domain that uses them from the local pointer and the sampled foreign pointer, with a one-entry look-ahead so a flag is correct on the very cycle it matters; threshold flags (full_n, empty_n) come from a registered pointer difference; the header states the two-cycle status latency and that a binary pointer crossing is only safe with the gray-coded variant, which is a separate file",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/freecores/generic_fifos@9d38c603aafd8f912ac3ae73a314d33987cd5c90",
+   "payload_manifest_id": "techne tree_sha256 71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4 (11 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/rtl/verilog/generic_fifo_dc.v",
+     "payload_hash_read": "99272fe43a0960bd62549d27d7c1ea7e4e73a22e8022859154d892e1b3483886",
+     "techne_recorded_hash": "99272fe43a0960bd62549d27d7c1ea7e4e73a22e8022859154d892e1b3483886",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "reg [aw:0] wp, rp (68-70); wp_pl1 / rp_pl1; empty <= (wp_s == rp) | (re & (wp_s == rp_pl1)) (109); full <= (wp[aw-1:0] == rp_s[aw-1:0]) & (wp[aw] != rp_s[aw]) | ... (111)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the write and read pointers count modulo twice the depth; the low bits address the memory and the top bit records the wrap parity; the FIFO is empty when the pointers are equal in full and full when the address bits are equal but the wrap bits differ; each flag also looks one operation ahead (the pointer plus one under a read or write enable) so that it asserts on the cycle the last entry is consumed or the last slot filled, avoiding a cycle of illegal access",
+   "input": "we, re",
+   "output": "full, empty",
+   "state": "wp, rp",
+   "update": "per clock in each domain",
+   "assumptions": [
+    "one extra bit is cheaper than a separate count register or a 'last operation' flag; the look-ahead term costs one adder per flag"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+    "verilog-generic-fifo::threshold_and_level_flags_from_a_registered_pointer_difference_with_look_ahead_on_the_enable"
+   ],
+   "fitness_value_in_ancestor": "the standard flag discipline of every hardware FIFO",
+   "failure_landscape": "by reading: the header warns that writing when full or reading when empty puts the FIFO in an undefined state; the design detects it after the fact (the overrun/underrun bits at 128-133) rather than preventing it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cummings & Alfke 2002 (simulation and synthesis techniques for asynchronous FIFO design)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:68-113"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the pointer and flag lines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "always @(posedge rd_clk) wp_s <= wp; always @(posedge wr_clk) rp_s <= rp (106-107); empty in rd_clk from wp_s and rp; full in wr_clk from wp and rp_s; the header: 'there is a 2 cycle' latency; DC_FIFO_ASYNC_RESET",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the write pointer is registered on the read clock and the read pointer on the write clock; each domain computes its own flag from its own pointer (exact) and the sampled other pointer (stale by up to two cycles); staleness is safe in one direction only: a stale foreign pointer can make empty or full assert late-to-clear but never assert false-negative in the dangerous direction, so the FIFO is conservative rather than wrong; the header notes a binary multi-bit pointer can be sampled inconsistently and points to the gray-coded file for that case",
+   "input": "the foreign pointer",
+   "output": "a domain-local copy",
+   "state": "wp_s, rp_s",
+   "update": "per clock",
+   "assumptions": [
+    "metastability on a multi-bit binary bus is the user's risk here (the gray variant exists for it); the conservative direction of staleness is what makes a stale flag acceptable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide"
+   ],
+   "fitness_value_in_ancestor": "two clock domains decoupled with two registers and no handshake",
+   "failure_landscape": "by reading: a single register stage is not a two-flop synchroniser; a binary pointer sampled mid-transition can read an intermediate value (the reason the gray file exists)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cummings' async FIFO papers; the gray-code pointer is the standard remedy",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:92-111, 27-30"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two sampling registers and the flag domains",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-generic-fifo::threshold_and_level_flags_from_a_registered_pointer_difference_with_look_ahead_on_the_enable",
+   "fossil_ancestry": "verilog-generic-fifo",
+   "human_name": "assign diff = wp - rp (113); diff_r1 / diff_r2 registered per domain; empty_n <= (diff_r1 < n) | ((diff_r1 == n) & (re | re_r)) (119); full_n <= (diff_r2 > max_size - n) | ((diff_r2 == max_size - n) & (we | we_r)) (125); level (two bits of occupancy quarter)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the occupancy is the pointer difference (correct modulo the wrap thanks to the wide pointers); it is registered in each domain and compared with a threshold n to produce 'at least n entries' and 'room for n more', with the same one-operation look-ahead on the enable (and its registered copy) so the flag tracks the boundary exactly; a two-bit level output reports the occupancy quarter",
+   "input": "the pointers, n",
+   "output": "empty_n, full_n, level",
+   "state": "diff_r1, diff_r2, re_r, we_r",
+   "update": "per clock",
+   "assumptions": [
+    "consumers want to batch transfers (start when n are available) rather than react to every entry"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide"
+   ],
+   "fitness_value_in_ancestor": "burst-friendly flow control from the same pointers",
+   "failure_landscape": "by reading: the difference uses a foreign pointer that is itself stale, so thresholds inherit the latency",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-generic-fifo/upstream/tree/rtl/verilog/generic_fifo_dc.v:113-127"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the diff and threshold lines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "generic_fifo_dc_gray.v (the gray-coded pointer crossing), the single-clock variants (sc_a, sc_b), generic_fifo_lfsr.v and lfsr.v (an LFSR as the address counter to save an incrementer), the memory macro instance, the testbench",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the gray variant is the safe form of organ 2 and should be read next; the LFSR addressing is a small mechanism of its own",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-generic-fifo"
+  },
+  {
+   "candidate": "'FIFO' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "pointer encoding, domain crossing and threshold logic are separable and the file set varies them independently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-generic-fifo"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "verilog-generic-fifo::P.data_must_cross_between_two_unrelated_clocks_without_loss_or_duplication_with_flow_control_that_stalls_the_producer_and_starves_the_consumer_correctly_even_though_every_status_signal_is_stale_by_up_to_two_cycles",
+   "source_fossil": "verilog-generic-fifo",
+   "source_evidence": "generic_fifo_dc.v 68-133 and its header notes",
+   "condition": "a producer and a consumer run on independent clocks; a bounded buffer sits between them; the score is zero lost or duplicated words under every rate ratio, and throughput; status signals crossing domains are delayed and may be sampled mid-transition",
+   "resource_or_constraint": "one memory; a few registers per domain",
+   "failure_condition": "a write when full or a read when empty (corruption), or a false full/empty that halves throughput",
+   "world_punishes": "flags computed from a foreign pointer without the wrap bit; binary pointers sampled across domains at speed",
+   "world_rewards": "wide pointers, domain-local flags with conservative staleness, gray-coded crossing",
+   "observable_consequence": "lost/duplicated words and throughput over rate ratios and clock phases in simulation, for the binary-pointer file vs the gray-pointer file, with metastability injected at the crossing",
+   "vacuity_condition": "one clock",
+   "trivial_shortcuts": "a handshake per word (correct, slow)",
+   "cheat_control": "an organism with a global clock must show zero errors at full throughput; the binary-pointer FIFO with injected mid-transition samples must corrupt; the gray-pointer FIFO under the same injection must not: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: clock-domain-crossing buffer (Usselmann 2000-2002)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide",
+   "to": "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-generic-fifo::each_pointer_sampled_into_the_other_clock_domain_through_a_register_with_the_flags_computed_in_the_consuming_domain_from_the_local_pointer_and_the_sampled_foreign_one",
+   "to": "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the sampled pointer enters the flag",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-generic-fifo::pointers_one_bit_wider_than_the_address_so_that_full_and_empty_are_told_apart_by_the_wrap_bit_when_the_addresses_coincide",
+   "to": "verilog-generic-fifo::threshold_and_level_flags_from_a_registered_pointer_difference_with_look_ahead_on_the_enable",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "verilog-generic-fifo",
+   "relation": "reimplementation_of",
+   "to": "the asynchronous FIFO design pattern (Cummings & Alfke 2002 as the canonical description); OpenCores generic FIFO collection",
+   "note": "from the record and the header",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the gray-coded, single-clock and LFSR variants unread",
+   "nothing ran (a simulator would run the testbench; an M2 world with iverilog)"
+  ],
+  "note": "the dual-clock core is fully read; its three mechanisms and its known hazard are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

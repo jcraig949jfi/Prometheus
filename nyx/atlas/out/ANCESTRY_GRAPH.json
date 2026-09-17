@@ -1,15 +1,15 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:02Z",
- "n": 207,
+ "built": "2026-09-17T23:15Z",
+ "n": 217,
  "by_relation": {
-  "reimplementation_of": 12,
-  "algorithm_from": 88,
-  "derived_from": 11,
+  "reimplementation_of": 14,
+  "algorithm_from": 91,
+  "derived_from": 14,
   "historical_version_of": 18,
-  "shares_ancestor_with": 46,
+  "shares_ancestor_with": 47,
   "superseded_by": 14,
-  "port_of": 2,
+  "port_of": 3,
   "forked_from": 1,
   "supersedes": 6,
   "rewrote": 2,
@@ -111,6 +111,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-4.3-distribution-tape-1986",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-4.3-reno-distribution-tape-1990 (the same archive series, the same missing tape files); bsd-tcp-4.2-1983 and bsd-tcp-4.3-tahoe-1988 hold the source on either side of this system",
+   "note": "by FORMAT and the listing",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-4.3-reno-distribution-tape-1990",
    "relation": "shares_ancestor_with",
    "to": "bsd-tcp-4.3-reno-1990",
@@ -200,6 +207,13 @@
    "to": "bsd-tcp-4.3-reno-1990",
    "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) with Jacobson & Karels' 1988 additions; bsd-tcp-4.3-reno-1990 (in this atlas) is its successor: the lineage's three source bodies are now all cut",
+   "note": "by reading all three",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "buddy-alloc-spaskalev",
@@ -377,6 +391,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "eispack-netlib",
+   "relation": "port_of",
+   "to": "the Algol procedures of the Wilkinson-Reinsch Handbook (1971), translated at Argonne (Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler)",
+   "note": "from the headers",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "eliza-anthay-1966",
    "relation": "reimplementation_of",
    "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
@@ -433,6 +454,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "emcee-3.1.6",
+   "relation": "algorithm_from",
+   "to": "Metropolis 1953 / Hastings 1970; Goodman & Weare 2010 (stretch move); Foreman-Mackey et al. 2013 (parallel red-blue); Sokal 1997 (windowing)",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "eprover-2.6",
    "relation": "algorithm_from",
    "to": "Robinson 1965 (resolution); Bachmair-Ganzinger (superposition)",
@@ -466,6 +494,13 @@
    "to": "IAU SOFA (Wallace et al.)",
    "note": "relicensed derivative",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "espresso-logic",
+   "relation": "algorithm_from",
+   "to": "MINI (Hong, Cain, Ostapko 1974); Espresso-II (Brayton, Hachtel, McMullen, Sangiovanni-Vincentelli 1984); this body is a later re-release of the Berkeley code",
+   "note": "from the record and the source headers",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "ff-planner-2.3",
@@ -529,6 +564,13 @@
    "to": "Warren, The WAM, 1983",
    "note": "Warren Abstract Machine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "derived_from",
+   "to": "Warren 1983 (WAM); wamcc (Codognet & Diaz 1995); clp(FD) (Diaz & Codognet 1993); rival of swipl-9.2.9 in this atlas",
+   "note": "from the record and the source headers",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "go-explore-uber-2022",
@@ -916,6 +958,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "microkanren-scheme",
+   "relation": "derived_from",
+   "to": "miniKanren (Friedman, Byrd, Kiselyov 2005) and the interleaving monad (Kiselyov et al. 2005); a functional cousin of Prolog (the atlas's gnu-prolog and swipl cuts hold the WAM route)",
+   "note": "from the record and the paper",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "minisat-1.14-2006",
    "relation": "successor_of",
    "to": "zchaff-2007",
@@ -1102,6 +1151,13 @@
    "relation": "algorithm_from",
    "to": "Moore's Forth (1970); token threading as the portable variant",
    "note": "from the code; not verified",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "picorv32",
+   "relation": "algorithm_from",
+   "to": "the RISC-V RV32I specification (Waterman et al.); multi-cycle datapath organisation",
+   "note": "from the README and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -1392,6 +1448,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "verilog-generic-fifo",
+   "relation": "reimplementation_of",
+   "to": "the asynchronous FIFO design pattern (Cummings & Alfke 2002 as the canonical description); OpenCores generic FIFO collection",
+   "note": "from the record and the header",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "verilog-rr-arbiter",
    "relation": "algorithm_from",
    "to": "Matt Weber, 'Arbiters: Design Ideas and Coding Styles' (readme reference [1])",
@@ -1452,6 +1515,13 @@
    "relation": "algorithm_from",
    "to": "Ongaro & Ousterhout 2014, In Search of an Understandable Consensus Algorithm (the code cites the paper's section numbers in comments)",
    "note": "from the source comments; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "xv6-riscv",
+   "relation": "reimplementation_of",
+   "to": "Sixth Edition Unix (1975) for RISC-V; the logging layer follows the xv6 book's design (Cox, Kaashoek, Morris)",
+   "note": "from the README and the record",
    "basis": "SOURCE_READ"
   },
   {

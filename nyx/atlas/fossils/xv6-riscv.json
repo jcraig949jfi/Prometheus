@@ -129,20 +129,520 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:428-478"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:547-640"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/log.c:1-200"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/param.h:9-11"
+   }
+  ],
+  "inspected_files": [
+   "kernel/proc.c 428-478, 547-640",
+   "kernel/log.c 1-200 (structure)",
+   "kernel/param.h"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "three mechanisms of a teaching kernel, each the simplest correct form: a per-CPU scheduler that scans the process table round-robin holding each candidate's lock across the context switch (the switched-to process releases it); sleep/wakeup on an address with a two-step protocol (register the channel under the process lock, then sleep only if no wakeup cleared it) that closes the lost-wakeup window; and a write-ahead log with group commit where each file-system call reserves its worst-case block count before starting and the last caller out commits the batch with one header write as the atomic point",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/mit-pdos/xv6-riscv@9e3161a9abf5f51ea402562d1874caf6c4926597",
+   "payload_manifest_id": "techne tree_sha256 e7e3acd85c65ecfc6cee755e184efae9b5561f9bdb1025a44aa9f08c0dbfc5ee (82 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/kernel/proc.c",
+     "payload_hash_read": "9c9a8109fc68ab385a9dddd6a7c23a64023481479c6a2831882f5668d010cb13",
+     "techne_recorded_hash": "9c9a8109fc68ab385a9dddd6a7c23a64023481479c6a2831882f5668d010cb13",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/kernel/log.c",
+     "payload_hash_read": "62c1a96498b2e345f24ddf13bc81b7bdee89f845d6d8d553f07dbb43ff498f71",
+     "techne_recorded_hash": "62c1a96498b2e345f24ddf13bc81b7bdee89f845d6d8d553f07dbb43ff498f71",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/kernel/param.h",
+     "payload_hash_read": "2e231d4c792da80c39668de92d56c28e9d24fd1bdc190435f7ce4025d24bbb59",
+     "techne_recorded_hash": "2e231d4c792da80c39668de92d56c28e9d24fd1bdc190435f7ce4025d24bbb59",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "scheduler (proc.c 428-478): the for(;;) over proc[]; acquire(&p->lock); p->state = RUNNING; swtch(&c->context, &p->context); release; wfi when nothing is runnable; sched() / yield() / forkret as the return paths",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each CPU loops over the fixed process table; for each RUNNABLE process it acquires that process's lock, marks it RUNNING, and switches registers to it; the process runs until it calls sched() (from yield on a timer interrupt, from sleep, or from exit) with its own lock held and its state changed, which switches back into the scheduler loop where the lock is released; interrupts are briefly enabled at the top of each loop so a pending interrupt can make something runnable; with nothing runnable the CPU executes wfi",
+   "input": "the process table; timer interrupts",
+   "output": "CPU time assigned",
+   "state": "c->proc, per-process state and context",
+   "update": "per switch",
+   "assumptions": [
+    "the invariant 'p->lock is held across swtch by whoever changes p->state' is what makes the scheduler correct on many CPUs without a global lock (the xv6 book's chapter 7)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it"
+   ],
+   "fitness_value_in_ancestor": "a multiprocessor scheduler in fifty lines whose correctness argument fits in a paragraph",
+   "failure_landscape": "by reading: O(NPROC) per scheduling decision; no priorities; a CPU may scan the whole table between useful switches",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Sixth Edition Unix's scheduler; the lock-handoff idiom is xv6's own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:428-478"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "scheduler, sched, yield, forkret",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "sleep_prepare(chan) (sets p->chan under p->lock), sleep() (if p->chan != 0 then SLEEPING and sched()), wakeup(chan) (clears p->chan for every matching process and makes SLEEPING ones RUNNABLE), kkill (547-640)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a waiter first records the channel it will wait on under its own lock, then re-checks the condition it is waiting for, then calls sleep, which goes to sleep only if the channel is still set; a waker clears the channel of every process registered on it and wakes those already asleep; so a wakeup that lands between the registration and the sleep is not lost (it clears the channel and sleep returns immediately); kill wakes a sleeping victim so it can notice the flag",
+   "input": "a channel address",
+   "output": "a blocked or resumed process",
+   "state": "p->chan, p->state",
+   "update": "per wait/wake",
+   "assumptions": [
+    "the lost-wakeup race is the central hazard of sleep/wakeup; registering the channel under the process lock is enough to close it without holding the condition's lock across the switch"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+    "xv6-riscv::write_ahead_log_with_group_commit_where_each_call_reserves_its_worst_case_blocks_before_starting_the_last_caller_commits_with_one_header_write_and_recovery_replays_the_header"
+   ],
+   "fitness_value_in_ancestor": "condition synchronisation with no condition-variable object; the classic Unix primitive made race-free",
+   "failure_landscape": "by reading: wakeup scans the whole table (O(NPROC)); spurious wakeups are possible and callers loop",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Unix V6 sleep/wakeup; the two-step form differs from the classic xv6 sleep(chan, lock) (this is a later revision of the body)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/proc.c:547-640"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "xv6-riscv::write_ahead_log_with_group_commit_where_each_call_reserves_its_worst_case_blocks_before_starting_the_last_caller_commits_with_one_header_write_and_recovery_replays_the_header",
+   "fossil_ancestry": "xv6-riscv",
+   "human_name": "log.c: begin_op (waits while committing or while log.lh.n + (outstanding + 1) * MAXOPBLOCKS > LOGBLOCKS), log_write (absorbs a block already in the log), end_op (outstanding -= 1; commit when zero), commit (write_log; write_head = the atomic point; install_trans; clear the header), recover_from_log; param.h MAXOPBLOCKS 10, LOGBLOCKS 30",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a file-system call declares itself by begin_op, which blocks until the log has room for its worst case (10 blocks) beyond every other outstanding call's; modified blocks are recorded in the in-memory header (a block already listed is absorbed, not duplicated); when the last outstanding call ends, the batch is committed: data blocks are copied to the log area, the header (block list and count) is written in one block write (the commit point), the blocks are installed to their home locations, and the header count is zeroed; at boot the header is read and any listed blocks are re-installed, so a crash before the header write loses the batch cleanly and a crash after it is replayed",
+   "input": "block writes from file-system calls",
+   "output": "an atomic batch on disk",
+   "state": "the in-memory header, outstanding, committing",
+   "update": "per call and per commit",
+   "assumptions": [
+    "a single block write is atomic (the header); worst-case reservation avoids deadlock on log space; batching many calls per commit amortises the double write"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it"
+   ],
+   "fitness_value_in_ancestor": "crash consistency in 200 lines; every later journaling file system has this shape",
+   "failure_landscape": "by reading: the log is 30 blocks, so at most three concurrent calls; every data block is written twice; no ordering guarantees across batches beyond the commit point",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "write-ahead logging (Gray 1978); the xv6 book chapter 8",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:xv6-riscv/upstream/tree/kernel/log.c:1-200; vault:xv6-riscv/upstream/tree/kernel/param.h:9-11"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "log.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "vm.c (page-table construction, kernel and user address spaces), trap.c and trampoline.S (the trap entry, system calls, timer interrupts), fs.c and bio.c (inodes, directories, the buffer cache), exec.c, pipe.c, kalloc.c, spinlock.c / sleeplock.c, the user programs and mkfs",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~5,000 lines); residue",
+   "note": "each is a mechanism the xv6 book devotes a chapter to; the buffer cache (LRU over bufs) and the trampoline page are the next two to cut",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "xv6-riscv"
+  },
+  {
+   "candidate": "'operating system' / 'Unix' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "scheduler, synchronisation and logging are three files with three separable invariants",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "xv6-riscv"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "xv6-riscv::P.many_processes_on_several_cpus_must_share_the_machine_and_the_disk_such_that_no_wakeup_is_lost_no_lock_is_held_across_a_switch_by_the_wrong_thread_and_a_crash_at_any_instruction_leaves_the_file_system_consistent",
+   "source_fossil": "xv6-riscv",
+   "source_evidence": "proc.c scheduler / sleep / wakeup; log.c; param.h",
+   "condition": "an organism runs N processes on M CPUs; processes block on conditions and on disk; the power may fail at any instruction; the score is liveness (no lost wakeups, no deadlock) and crash consistency (the file system is a prefix of committed batches after any crash), with code size as a secondary score",
+   "resource_or_constraint": "a fixed process table; a 30-block log",
+   "failure_condition": "a process that sleeps forever after a wakeup it missed; a lock handed across CPUs incorrectly; a file system with a half-applied operation after a crash",
+   "world_punishes": "check-then-sleep without registration; releasing the process lock before the switch; in-place metadata writes",
+   "world_rewards": "the two-step sleep, the lock-handoff invariant, worst-case reservation with a single-block commit point",
+   "observable_consequence": "lost-wakeup count under a stress test with many CPUs; consistency check after crashes injected at every block write of a batch (the test-xv6.py suite and a crash-injecting disk)",
+   "vacuity_condition": "one CPU, one process, no crashes",
+   "trivial_shortcuts": "a global kernel lock and a synchronous file system (correct but scores poorly on the secondary metrics)",
+   "cheat_control": "an organism with crash injection disabled must pass every consistency check; the log with the header write moved before write_log must fail the injected-crash check; sleep without sleep_prepare must lose wakeups under the stress test: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a teaching kernel (MIT PDOS 2006-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it",
+   "to": "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sleep calls sched",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "xv6-riscv::per_cpu_round_robin_scan_of_the_process_table_holding_the_chosen_process_lock_across_the_context_switch_so_the_lock_is_released_by_the_process_that_was_switched_to",
+   "to": "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "wakeup makes RUNNABLE",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "xv6-riscv::write_ahead_log_with_group_commit_where_each_call_reserves_its_worst_case_blocks_before_starting_the_last_caller_commits_with_one_header_write_and_recovery_replays_the_header",
+   "to": "xv6-riscv::sleep_and_wakeup_on_an_address_with_a_two_step_protocol_that_registers_the_channel_before_sleeping_and_sleeps_only_if_no_wakeup_has_cleared_it",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "begin_op waits on &log",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "xv6-riscv",
+   "relation": "reimplementation_of",
+   "to": "Sixth Edition Unix (1975) for RISC-V; the logging layer follows the xv6 book's design (Cox, Kaashoek, Morris)",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "virtual memory, traps, the file system proper, pipes and exec unread",
+   "nothing ran (needs riscv64 gcc and qemu: an M2 world)"
+  ],
+  "note": "three subsystems located DEEP; the kernel's other five chapters are in the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
