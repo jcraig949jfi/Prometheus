@@ -68,7 +68,10 @@ try:
     print("  ok  in-order delivery")
     expect_error("VIV40", "DELETE FROM {S}.pew_outbox WHERE event_id='e1'")
     expect_error("VIV15", "DELETE FROM {S}.execution_attempt WHERE attempt_id=%s", aid3)
-    eid3 = run("INSERT INTO {S}.research_experiment_queue (created_by, source_reason, experiment_spec, spec_hash, status, error) VALUES ('t','t',%s,%s,'failed','BUDGET_EXCEEDED: something') RETURNING experiment_id", json.dumps({"spec_version": 3}), HA)[0][0]; conn.commit()
+    eid3 = run("INSERT INTO {S}.research_experiment_queue (created_by, source_reason, experiment_spec, spec_hash, status, error) VALUES ('t','t',%s,%s,'failed','BUDGET_EXCEEDED: something') RETURNING experiment_id", json.dumps({"spec_version": 3}), HA)[0][0]
+    run("ALTER TABLE {S}.research_experiment_queue DISABLE TRIGGER trg_req_transition")
+    run("UPDATE {S}.research_experiment_queue SET created_at = TIMESTAMPTZ '2026-09-14 00:00:00+00' WHERE experiment_id=%s", eid3)   # a PRE-RELEASE row (007's cutoff is the window)
+    run("ALTER TABLE {S}.research_experiment_queue ENABLE TRIGGER trg_req_transition"); conn.commit()
     run((V / "migrations" / "drafts" / "007_backfill_attempts_reversible.sql").read_text(encoding="utf-8")); conn.commit()
     r = run("SELECT attempt_number, terminal_state, termination->>'termination_reason', claim_grant->>'backfill' FROM {S}.execution_attempt WHERE experiment_id=%s", eid3)
     print("  ok  backfill", r, "(reason UNKNOWN although error text says BUDGET_EXCEEDED)" if r and r[0][2] == "UNKNOWN" else "BAD")
