@@ -82,4 +82,16 @@
 3. RECEIPT (filled by release_v9.py apply; numbers, not adjectives)
 =======================================================================
 
-    [appended below after the deployment]
+    applied at         2026-09-17T10:50:59Z by the schema-9 build at first open (inside the store's BEGIN IMMEDIATE)
+    source             schema 8, 10995 events, build sha256:4dbcd3fd249f0
+    destination        schema 9, 10995 events, build sha256:bc8d3a0caea47
+    backup             D:\Prometheus-data\sfe\backup\engine.db.pre-schema9-20260917T105054Z.bak
+                       sha256 394202ba014c19a653ebc4d3e42cc35aae14bbb0d7bdfce474b959d362d88bbd (integrity ok; verified by re-open before apply)
+    idempotence        PRAGMA-guarded ALTERs; the unit test re-runs the migration on a rewound marker (no-op; marker advances)
+    no backfill        qualify.json: 351 pre-v9 worlds read NULL manifest/labels/termination;
+                       1622 pre-v9 observations read logical_time NULL
+    chain intact       head hashes of the 25 oldest worlds identical to the backup; event count up to the
+                       backup's last seq identical (10995); 20/20 pre-migration OBSERVATION_RECORDED
+                       anchors verify against the running engine
+    rollback           NOT exercised (nothing to roll back); the procedure above stands; the backup is kept.
+
