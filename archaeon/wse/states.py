@@ -37,6 +37,34 @@ def _mean(xs: Sequence[float]) -> Optional[float]:
     return None if not xs else sum(xs) / len(xs)
 
 
+def _ranks(xs: Sequence[float]) -> List[float]:
+    order = sorted(range(len(xs)), key=lambda i: xs[i])
+    ranks = [0.0] * len(xs)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and xs[order[j + 1]] == xs[order[i]]:
+            j += 1
+        r = (i + j) / 2 + 1
+        for k in range(i, j + 1):
+            ranks[order[k]] = r
+        i = j + 1
+    return ranks
+
+
+def spearman(xs: Sequence[float], ys: Sequence[float]) -> Optional[float]:
+    """Spearman rank correlation with average ranks for ties; None if fewer than 3 points or a
+    constant series."""
+    if len(xs) < 3 or len(xs) != len(ys):
+        return None
+    rx, ry = _ranks(list(xs)), _ranks(list(ys))
+    mx, my = sum(rx) / len(rx), sum(ry) / len(ry)
+    sxx = sum((a - mx) ** 2 for a in rx); syy = sum((b - my) ** 2 for b in ry)
+    if sxx == 0 or syy == 0:
+        return None
+    return sum((a - mx) * (b - my) for a, b in zip(rx, ry)) / (sxx * syy) ** 0.5
+
+
 def arm_values(rows: List[dict], arm_field: str, arm: str, metric: str) -> List[float]:
     return [r[metric] for r in rows if r.get(arm_field) == arm and r.get(metric) is not None]
 
@@ -140,6 +168,21 @@ def disposition_candidate(decl: dict, meas: dict, states: Optional[List[dict]] =
     af = meas.get("arm_field", "arm")
     if not pr or not rows:
         return {"disposition": "INCONCLUSIVE", "reason": "no primary comparison declared or no rows", "states": names, "claim_ceiling": "none"}
+    if pr.get("type") == "rank_correlation":
+        # a preregistered predictor: Spearman rho between x and y over the rows, in the declared direction
+        xs = [r.get(pr["x"]) for r in rows]; ys = [r.get(pr["y"]) for r in rows]
+        pts = [(x, y) for x, y in zip(xs, ys) if x is not None and y is not None]
+        rho = spearman([p[0] for p in pts], [p[1] for p in pts])
+        signed = (rho or 0.0) * pr.get("expected_sign", 1)
+        ev = {"rho": None if rho is None else round(rho, 4), "n": len(pts), "expected_sign": pr.get("expected_sign", 1), "min_abs_rho": pr["min_abs_rho"]}
+        capable = "POSITIVE_CONTROL_FAILED" not in names and "READOUT_CANNOT_EXPRESS" not in names
+        if rho is not None and signed >= pr["min_abs_rho"]:
+            return {"disposition": "WEAK_POSITIVE", "reason": "predictor rank-correlates in the declared direction at |rho| >= min", "states": names,
+                    "claim_ceiling": "weak; one evaluator family", "evidence": ev}
+        if capable:
+            return {"disposition": "CAPABLE_NEGATIVE", "reason": "predictor does not rank-correlate at the declared strength/direction", "states": names,
+                    "claim_ceiling": "negative for this predictor on this evaluator", "evidence": ev}
+        return {"disposition": "INCONCLUSIVE", "reason": "assay capability not shown", "states": names, "claim_ceiling": "none", "evidence": ev}
     t = arm_values(rows, af, pr["treatment"], pr["metric"])
     c = arm_values(rows, af, pr["control"], pr["metric"])
     if not t or not c:

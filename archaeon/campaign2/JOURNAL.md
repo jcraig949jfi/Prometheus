@@ -87,3 +87,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   gates without the closed-gate cost; serial gating 2/6 = mono (closed gates
   cost their cap). Injected elites take over (share 1.0); 0/24 full solves.
   Ledger L2-037, L2-038. Next: C2-SFE-08.
+
+## 05:20-05:30 -- C2-SFE-08 (dry a01; engine a02 of record; CAPABLE_NEGATIVE for the parent's proxy)
+
+- 17 s; 1 world, 52 records, 0 errors; exhaustive geometry 4096 x 12 per
+  encoding x table. rho(accessible variation, log first hit) = -0.23 (declared
+  -0.5): the parent's proxy does not predict. Basin share -0.59, deceptive
+  share +0.57 do. First use of the rank_correlation primary. Ledger L2-040,
+  L2-041. Next: C2-SFE-09.
