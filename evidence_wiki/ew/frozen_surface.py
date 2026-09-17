@@ -65,9 +65,16 @@ def digest(d):
     return "sha256:" + hashlib.sha256(canon(d).encode()).hexdigest()
 
 
+DIGEST_RULE = ("surface_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, separators=(',', ':'), "
+               "default=str) ) where D is this object WITHOUT the keys surface_digest and surface_digest_rule; "
+               "a third party recomputes it with `python -m ew.frozen_surface` or by that one line. The file's own "
+               "sha256 is ALSO a valid identity of this pin (Archaeon #370 Q1) and changes whenever the digest does.")
+
+
 def main():
     d = live()
-    d["surface_digest"] = digest({k: v for k, v in d.items() if k != "surface_digest"})
+    d["surface_digest_rule"] = DIGEST_RULE
+    d["surface_digest"] = digest({k: v for k, v in d.items() if k not in ("surface_digest", "surface_digest_rule")})
     if "--write" in sys.argv:
         PINNED.write_text(json.dumps(d, indent=1), encoding="utf-8")
         print("wrote", PINNED)
