@@ -639,6 +639,13 @@ WRITE_LOCK_STATS = _WriteLockStats()
 
 #: after a WAL reset the file is truncated to at most this (journal_size_limit)
 WAL_SIZE_LIMIT_BYTES = 64 * 1024 * 1024
+#: above this the checkpointer ticks continuously (every WAL_FAST_INTERVAL_S)
+#: instead of every interval_s, so a saturating writer never builds a WAL whose
+#: backfill takes seconds. Measured with the fixed 2 s cadence: WAL peaks of
+#: 90-137 MB under two saturating writers, and every peak's backfill produced a
+#: ~10 s write-lock wait for both writers (R2/R3 of the 9.0.1 acceptance).
+WAL_SOFT_LIMIT_BYTES = 8 * 1024 * 1024
+WAL_FAST_INTERVAL_S = 0.05
 
 
 class Checkpointer:
@@ -748,8 +755,13 @@ class Checkpointer:
     def _run(self) -> None:
         cx = self._connect()
         try:
-            while not self._stop.wait(self.interval_s):
+            wait = self.interval_s
+            while not self._stop.wait(wait):
                 self.tick(cx)
+                # adaptive cadence: while the WAL is above the soft limit,
+                # keep backfilling in small steps; otherwise the slow cadence
+                wal = self.last_wal_bytes or 0
+                wait = WAL_FAST_INTERVAL_S if wal > WAL_SOFT_LIMIT_BYTES else self.interval_s
         finally:
             cx.close()
 
@@ -768,6 +780,8 @@ class Checkpointer:
                     "wal_bytes": self.last_wal_bytes, "db_bytes": self.last_db_bytes,
                     "max_wal_bytes_seen": self.max_wal_bytes_seen,
                     "wal_size_limit_bytes": WAL_SIZE_LIMIT_BYTES,
+                    "wal_soft_limit_bytes": WAL_SOFT_LIMIT_BYTES,
+                    "fast_interval_s": WAL_FAST_INTERVAL_S,
                     "request_path_autocheckpoint": 0}
 
 
