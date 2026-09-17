@@ -12,6 +12,7 @@ comes from the Postgres cluster the service is actually connected to.
 import hashlib
 import json
 import os
+import socket
 import ssl
 import subprocess
 import time
@@ -148,17 +149,34 @@ def verify_sfe_anchor(e):
         return (False, {"reason": "missing_bound_fields"})   # cannot ask the BOUND form
     body = {"world_id": world_id, "event_id": event_id, "entry_hash": entry_hash,
             "exp_id": exp_id, "obs_id": obs_id}
-    try:
-        ctx = (ssl.create_default_context(cafile=c["ca"]) if c["ca"]
-               else ssl.create_default_context())
-        req = urllib.request.Request(
-            c["url"] + "/audit/verify-anchor", data=json.dumps(body).encode("utf-8"),
-            headers={"content-type": "application/json",
-                     "authorization": "Bearer " + c["token"]}, method="POST")
-        with urllib.request.urlopen(req, context=ctx, timeout=6) as z:
-            resp = json.loads(z.read().decode() or "{}")
-    except Exception as exc:                                 # noqa: BLE001
-        return (False, {"reason": "verify_call_failed", "error": type(exc).__name__})
+    # TIMEOUT (pre-Campaign-4 repair, 2026-09-17): the engine measurably stalls
+    # 5-13 s on 0.13% of calls under a concurrent reader (Daedalus #345); at
+    # the old 6 s such a stall became verify_call_failed and the fossil landed
+    # UNVERIFIED with no alarm -- an infrastructure fact recorded as a
+    # provenance fact. Now: EW_SFE_VERIFY_TIMEOUT (default 30 s, Daedalus's
+    # number) and ONE bounded retry after a timeout (the call is read-only).
+    timeout = float(os.environ.get("EW_SFE_VERIFY_TIMEOUT") or ewdb.load_config().get("sfe_verify_timeout") or 30)
+    resp, attempts, last_err = None, 0, None
+    for attempt in (1, 2):
+        attempts = attempt
+        try:
+            ctx = (ssl.create_default_context(cafile=c["ca"]) if c["ca"]
+                   else ssl.create_default_context())
+            req = urllib.request.Request(
+                c["url"] + "/audit/verify-anchor", data=json.dumps(body).encode("utf-8"),
+                headers={"content-type": "application/json",
+                         "authorization": "Bearer " + c["token"]}, method="POST")
+            with urllib.request.urlopen(req, context=ctx, timeout=timeout) as z:
+                resp = json.loads(z.read().decode() or "{}")
+            break
+        except Exception as exc:                                 # noqa: BLE001
+            last_err = type(exc).__name__
+            is_timeout = isinstance(exc, (TimeoutError, socket.timeout)) or "timed out" in str(exc).lower()                 or (isinstance(exc, urllib.error.URLError) and isinstance(getattr(exc, "reason", None), (TimeoutError, socket.timeout)))
+            if not is_timeout or attempt == 2:
+                return (False, {"reason": "verify_call_failed", "error": last_err, "attempts": attempts,
+                                "timeout_s": timeout, "timed_out": bool(is_timeout)})
+    if resp is None:
+        return (False, {"reason": "verify_call_failed", "error": last_err, "attempts": attempts, "timeout_s": timeout})
     ck = resp.get("checks") or {}
     eng = resp.get("engine") or {}
     # WHICH ENGINE ANSWERED (2026-09-05, session-affinity sprint). M1 and M2 are
