@@ -2,29 +2,28 @@
  "_what_this_is": "The exact source constituting the SFE build deployed on M2 -- THE PRODUCTION ENGINE from 2026-09-16 (operator: the SFE ecosystem runs on M2; M1's ledger stays on M1 as an archive). Recovery record independent of any worktree's git state.",
  "engine": "M2 / SPECTREX5 -- PRODUCTION",
  "endpoint": "https://192.168.1.191:8811",
- "pinned_at": "2026-09-16T17:25:41Z",
+ "pinned_at": "2026-09-17T10:51:44Z",
  "pinned_by": "Daedalus[m2-d6ecd70b]",
- "schema_version": 8,
- "source_commit_containing_build": "dd10c90748228fd99f994c068748379de0d474bc",
- "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+ "schema_version": 9,
+ "source_commit_containing_build": "1b9286292e3fb7755282a468f55bc97564ab9382",
+ "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
  "engine_instance_id": "eng_906356f7fb1da180131f9290",
  "code_from": "D:\\Prometheus-worktrees\\daedalus-sfengine (detached)",
  "data_dir": "D:\\Prometheus-data\\sfe",
  "supervisor": "scheduled task SFEngineM2Watchdog -> D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1 (pinned copy)",
- "contract": "roles/Harmonia/contracts/sfe_contract.json (generated against this engine 2026-09-16; gate 0)",
+ "contract": "roles/Harmonia/contracts/sfe_contract.json (REGENERATED after this restart; see POINT_RELEASE_2026-09-17/)",
  "history": [
   {
    "2026-09-16T11:48Z": "relocated under D-23 at ccb26df01 / 726275da (twin)"
   },
   {
    "2026-09-16T17:22Z": "advanced to dd10c9074 / 4dbcd3fd (#223 fields); declared PRODUCTION"
+  },
+  {
+   "2026-09-17T10:51:44Z": "point release schema 9: 1b9286292e3f / sha256:bc8d3a0caea47"
   }
  ],
- "live_verified_2026-09-16T17:2xZ": {
-  "harness": "12/12",
-  "isolation": "7/7",
-  "unit": "483 (tree at adb7952ff)",
-  "gate": "CONFORMANT, and 0 with both consumers' 25 declared routes"
- },
- "not_shown": "scoped reads (/v2/read/*) are not exercised by the harness; they are covered by unit tests and gate-probed for scoping only. POST scoping is the gate's stated limit."
+ "not_shown": "scoped reads (/v2/read/*) are not exercised by the harness; they are covered by unit tests and gate-probed for scoping only. POST scoping is the gate's stated limit.",
+ "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+ "routes": 72
 }
