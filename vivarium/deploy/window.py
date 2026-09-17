@@ -264,6 +264,19 @@ def main(argv=None) -> int:
             wt_ok = bool((rec.get("worktree") or {}).get("ok"))
             out["advance"] = {"ok": wt_ok, "worktree": rec.get("worktree"), "preconditions": rec.get("preconditions")}
             ok = wt_ok
+            if wt_ok:
+                # Archaeon Q2: the pinned build lives in the descriptor, not only in a comms message
+                dp = HERE / "PRODUCTION.draft.json"
+                try:
+                    d = json.loads(dp.read_text(encoding="utf-8"))
+                    d.setdefault("consumers", {}).setdefault("vivarium", {})["pinned_build"] = {
+                        "sha": rec["worktree"]["head"], "worktree": rec["worktree"]["path"].replace("\\", "/"),
+                        "advanced_at": _utc(), "advanced_by": "vivarium/deploy/window.py --steps advance (window %s)" % a.confirm,
+                        "attested_by": "the restart receipt var/restart-vivarium@m2.json (code.base_sha) written by the consumer at every start"}
+                    dp.write_text(json.dumps(d, indent=2) + "\n", encoding="utf-8")
+                    out["advance"]["descriptor_pinned_build"] = rec["worktree"]["head"]
+                except Exception as exc:                            # noqa: BLE001
+                    out["advance"]["descriptor_pinned_build_error"] = str(exc)[:200]
         elif step == "tasks":
             cmd = data_dir / "vivarium_deliverer_m2.cmd"
             wt = (out.get("advance") or {}).get("worktree", {}).get("path") or r"D:\Prometheus-worktrees\vivarium-consumer"
