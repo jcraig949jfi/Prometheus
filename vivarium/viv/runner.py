@@ -164,6 +164,27 @@ class _LeaseKeeper:
                 "error": self.error}
 
 
+class _NotClaimable(Exception):
+    """Raised inside the claim step; typed by the caller."""
+
+
+class _NoLease:
+    """Stands in for the lease keeper when a prior attempt already completed
+    the work item: there is no live claim to renew."""
+    renewals = 0
+    error = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def status(self) -> dict:
+        return {"renewals": 0, "interval_s": None, "lease_s": None, "lost": False,
+                "error": None, "note": "work item completed by a prior attempt; no lease held"}
+
+
 @dataclass
 class RunResult:
     world_id: Optional[str] = None
@@ -429,6 +450,19 @@ class SfeRunner:
     def _experiment_readable(c, wid, prior) -> bool:
         try:
             return bool(c.get_experiment(wid, prior["exp_id"]))
+        except Exception:                                    # noqa: BLE001
+            return False
+
+    @staticmethod
+    def _work_completed(c, prior) -> bool:
+        """The prior attempt's work item is COMPLETED on the engine: its claim
+        is replayed (no second claim exists for a completed item; the
+        trajectory it holds is what the remaining observations cite). Any
+        other status (RETRYABLE after a lease expiry, FAILED, EXPIRED,
+        unknown) -> not replayable -> a fresh claim is attempted."""
+        try:
+            a = c.work_attestation(prior["work_id"])
+            return str(a.get("status")) == "COMPLETED"
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -854,19 +888,48 @@ class SfeRunner:
         """Everything past the irreversible commit. Split out so a single
         try/except can guarantee that no failure here escapes unclassified."""
         plan = _spec.repeat_plan(spec)
-        claim = None
-        for _ in range(claim_attempts):
-            claim = c.claim(self.worker_id, world_id=wid,
-                            lease_s=self.lease_s)
-            if claim is not None:
-                break
-            time.sleep(claim_pause_s)
-        if claim is None:
+        # THE CLAIM IS A KEYED STEP (s14 canary, 2026-09-17). ONE work item
+        # carries the whole trajectory and the engine completes it ONCE; a
+        # prior attempt that already completed it leaves nothing claimable, so
+        # a NEW ATTEMPT that re-claimed blindly failed WORK_NOT_CLAIMABLE on
+        # production. Replayed when the prior item is COMPLETED (then the
+        # lease keeper and complete() are skipped and the observations cite
+        # that item); recomputed (a fresh claim) when the prior lease expired
+        # into RETRYABLE; refused, typed, when nothing is claimable.
+        peek = getattr(record, "prior", None)
+        prior_claim = peek("claim", ["plain"]) if peek is not None else None
+        # a dead attempt's lease may still be live for up to lease_s: wait it out
+        attempts_n = claim_attempts
+        pause = claim_pause_s
+        if prior_claim and not prior_claim.get("completed"):
+            attempts_n = max(claim_attempts, int((self.lease_s + 30.0) / 2.0))
+            pause = max(claim_pause_s, 2.0)
+
+        def _claim():
+            claim = None
+            for _ in range(attempts_n):
+                claim = c.claim(self.worker_id, world_id=wid, lease_s=self.lease_s)
+                if claim is not None:
+                    break
+                time.sleep(pause)
+            if claim is None:
+                raise _NotClaimable()
+            return {"work_id": claim["work_id"], "claim_id": claim["claim_id"], "completed": False}
+
+        try:
+            claim = record("claim", _claim, parts=["plain"], replayable=True,
+                           verify=lambda r: self._work_completed(c, r))
+        except _NotClaimable:
             out.anchor = self._failure_anchor(wid, exp_id)
             raise ExecutionFailure(
                 "no work item became claimable for exp %s in world %s"
                 % (exp_id, wid), partial=out, failure_class="WORK_NOT_CLAIMABLE")
         work_id, claim_id = claim["work_id"], claim["claim_id"]
+        # replayed from a prior attempt => the engine already holds the
+        # completed trajectory; runs below are RECOMPUTED locally (same seeds)
+        # for the observations not yet posted, and nothing is completed twice
+        work_done_before = (bool(prior_claim) and claim.get("work_id") == prior_claim.get("work_id")
+                            and self._work_completed(c, claim))
         out.work_id = work_id
         out.run_id = "%s:%s" % (exp_id, work_id)
 
@@ -875,7 +938,7 @@ class SfeRunner:
         # refused by the engine -- a correct computation with no fossil.
         keeper = _LeaseKeeper(c, work_id=work_id, worker_id=self.worker_id,
                               claim_id=claim_id, lease_s=self.lease_s,
-                              log=self.log)
+                              log=self.log) if not work_done_before else _NoLease()
         # ONE state object for the whole run under `persist`; a fresh one per
         # repeat under `reset`. Which of those happens is declared, never
         # inferred from whether the kind happens to have state.
@@ -923,8 +986,9 @@ class SfeRunner:
             # Tell the engine before telling the queue: the ledger must not
             # believe a work item is still in flight after Vivarium gave up.
             try:
-                c.fail(work_id, self.worker_id, claim_id,
-                       "vivarium executor error: %s" % exc, retry=False)
+                if not work_done_before:
+                    c.fail(work_id, self.worker_id, claim_id,
+                           "vivarium executor error: %s" % exc, retry=False)
             except Exception:                       # noqa: BLE001, S110
                 pass
             out.anchor = self._failure_anchor(wid, exp_id)
@@ -986,8 +1050,13 @@ class SfeRunner:
         if out.resources:
             result["resources"] = out.resources
         out.work_result = result
-        completed = c.complete(work_id, self.worker_id, claim_id, result,
-                               attestation={"executed_config": spec})
+        if work_done_before:
+            completed = {"science": {"replayed_work": True, "profile_findings": []}}
+            self.log("[viv] work item %s was COMPLETED by a prior attempt; not completed "
+                     "again (runs recomputed locally for the observations still to post)" % work_id)
+        else:
+            completed = c.complete(work_id, self.worker_id, claim_id, result,
+                                   attestation={"executed_config": spec})
         out.science = (completed or {}).get("science") or {}
         for f in (out.science.get("profile_findings") or []):
             self.log("[viv] SFE SCIENCE FINDING %s work=%s exp=%s: %s"

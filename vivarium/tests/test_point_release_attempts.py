@@ -528,3 +528,113 @@ def test_negative_without_the_key_the_prior_world_is_recomputed_and_says_so(conn
     steps = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[2]["attempt_id"])}
     assert steps[("world", ("plain",))] == "RECOMPUTED"
     assert sum(1 for name, _ in client.calls if name == "create_world") == 2
+
+
+# ------------------------------------------------------------- s14 canary finding (2026-09-17): a COMPLETED work item is not claimable
+
+class WorkItemClient(SessionBoundClient):
+    """Models the engine's ONE work item per experiment: QUEUED -> CLAIMED
+    (leased) -> COMPLETED; a claim on a COMPLETED item returns None (that is
+    what production answered a NEW ATTEMPT: WORK_NOT_CLAIMABLE); an expired
+    lease makes it RETRYABLE (claimable again)."""
+
+    def __init__(self, *a, **k):
+        super().__init__(*a, **k)
+        self.items = {}            # work_id -> dict(status, exp_id, world_id)
+
+    def experiment(self, wid, spec, **kw):
+        out = super().experiment(wid, spec, **kw)
+        self.items["wrk_" + out["exp_id"]] = {"status": "QUEUED", "world_id": wid, "exp_id": out["exp_id"]}
+        return out
+
+    def claim(self, worker_id, world_id=None, lease_s=None):
+        self._rec("claim", worker_id=worker_id, world_id=world_id, lease_s=lease_s)
+        for work_id, it in self.items.items():
+            if it["world_id"] == world_id and it["status"] in ("QUEUED", "RETRYABLE"):
+                it["status"] = "CLAIMED"
+                return {"work_id": work_id, "claim_id": "clm_" + work_id, "kind": "noop", "payload": {}}
+        return None
+
+    def complete(self, work_id, worker_id, claim_id, result, attestation=None):
+        assert self.items[work_id]["status"] == "CLAIMED", "complete on a %s item" % self.items[work_id]["status"]
+        self.items[work_id]["status"] = "COMPLETED"
+        return super().complete(work_id, worker_id, claim_id, result, attestation=attestation)
+
+    def expire_leases(self):
+        for it in self.items.values():
+            if it["status"] == "CLAIMED":
+                it["status"] = "RETRYABLE"
+
+    def work_attestation(self, work_id):
+        it = self.items[work_id]
+        self._owning(it["world_id"])
+        return {"work_id": work_id, "status": it["status"], "result_hash": "sha256:x" if it["status"] == "COMPLETED" else None}
+
+
+def test_a_new_attempt_after_a_completed_work_item_replays_the_claim_and_completes_nothing_twice(conn, drafted, tmp_path):
+    """The production shape: the runner computes every repeat under ONE
+    lease, completes the item, then posts observations; the death lands
+    between observation 0 and 1. Attempt 2 must not claim (nothing is
+    claimable), must not complete again, and must post the missing
+    observations against the completed item."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-wrk-1", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = WorkItemClient()
+    store = tmp_path / "sessions"
+    eid = _strand_after_first_observation(conn, schema, spec, client, "wrk-w1", store)
+    assert [it["status"] for it in client.items.values()] == ["COMPLETED"]
+    v2 = _fresh_process(schema, client, spec, "wrk-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    steps = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert steps[("claim", ("plain",))] == "REPLAYED"
+    assert steps[("world", ("plain",))] == "REPLAYED" and steps[("observe", (0,))] == "REPLAYED" and steps[("observe", (1,))] == "NEW"
+    assert sum(1 for name, _ in client.calls if name == "complete") == 1, "the work item was completed twice"
+    assert sum(1 for name, _ in client.calls if name == "claim") == 1, "a completed item was claimed again"
+
+
+def test_negative_a_lease_that_expired_mid_run_is_claimed_afresh_and_completed_once(conn, drafted, tmp_path):
+    """The other death: the worker dies INSIDE the repeat loop (before
+    complete). The lease expires -> RETRYABLE -> attempt 2's claim is
+    RECOMPUTED (a fresh claim on the same item), the runs recompute and the
+    item is completed exactly once, by attempt 2."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-wrk-2", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = WorkItemClient()
+    store = tmp_path / "sessions"
+    v = _viv(schema, client, spec, worker="wrk-w1")
+    v._runner.session_store = store
+    real_complete = client.complete
+
+    def die_before_complete(*a, **k):
+        raise RuntimeError("simulated worker death inside the repeat loop")
+    client.complete = die_before_complete
+    eid = _enqueue(conn, schema, spec)
+    assert v.tick(conn).outcome == FAILED
+    client.complete = real_complete
+    atts = _attempts(conn, schema, eid)
+    with conn.cursor() as cur:
+        cur.execute("INSERT INTO " + schema + ".execution_attempt (experiment_id, attempt_number, parent_attempt_id, design_digest, worker_id) "
+                    "VALUES (%s, 2, %s, %s, 'wrk-w1')", (eid, atts[0]["attempt_id"], _spec.spec_hash(spec)))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='running', claimed_by='wrk-w1', finished_at=NULL WHERE experiment_id=%s", (eid,))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
+    conn.commit()
+    _q.release_stranded(conn, eid, actor="op", reason="worker died", schema=schema, new_attempt=True)
+    conn.commit()
+    client.expire_leases()                                # the dead attempt's lease runs out
+    v2 = _fresh_process(schema, client, spec, "wrk-w2", store)
+    v2._runner.lease_s = 2.0                              # keep the lease wait short in the test
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    steps = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert steps[("claim", ("plain",))] == "RECOMPUTED" and steps[("world", ("plain",))] == "REPLAYED"
+    assert [it["status"] for it in client.items.values()] == ["COMPLETED"]
+    assert sum(1 for name, _ in client.calls if name == "complete") == 1      # attempt 1 died before its complete was recorded; attempt 2 completed once
+    assert sum(1 for name, _ in client.calls if name == "claim") == 2
