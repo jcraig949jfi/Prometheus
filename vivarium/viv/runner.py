@@ -334,10 +334,24 @@ class SfeRunner:
     # noqa: C901 -- the repeat loop is linear and reads top-to-bottom
     # -- step bodies and verifiers (point release) ---------------------------
     @staticmethod
-    def _create_world(c, sid, name, seed_root) -> dict:
-        w = c.create_world(sid, name, seed_root=seed_root)
+    def _create_world(c, sid, name, seed_root, labels=None) -> dict:
+        """Create + start. `labels` is the OPAQUE coordinate the engine carries
+        for this seat since schema 9 ({"vivarium.execution_id", "vivarium.attempt"};
+        Stage 3 D7). Passed only when the client's create_world accepts it;
+        otherwise recorded as not applied, never silently dropped."""
+        import inspect
+        applied = False
+        try:
+            accepts = labels and "labels" in inspect.signature(c.create_world).parameters
+        except (TypeError, ValueError):
+            accepts = False
+        if accepts:
+            w = c.create_world(sid, name, seed_root=seed_root, labels=labels)
+            applied = True
+        else:
+            w = c.create_world(sid, name, seed_root=seed_root)
         c.start(w["world_id"])
-        return {"world_id": w["world_id"]}
+        return {"world_id": w["world_id"], "labels": labels or {}, "labels_applied": applied}
 
     @staticmethod
     def _world_alive(c, prior) -> bool:
@@ -365,7 +379,8 @@ class SfeRunner:
             on_running: Optional[Callable[[str, dict], None]] = None,
             claim_attempts: int = 40, claim_pause_s: float = 0.25,
             grant: Optional[ClaimGrant] = None,
-            steps: Optional[Callable] = None) -> RunResult:
+            steps: Optional[Callable] = None,
+            labels: Optional[dict] = None) -> RunResult:
         """Execute one request. Accepts ONLY an ExecutionRequest.
 
         The type check is the boundary. A queue row passed here would carry
@@ -442,7 +457,7 @@ class SfeRunner:
                     "enforcement": "enforceable"}})
         else:
             world = record("world", lambda: self._create_world(
-                c, sid, _spec.world_name(sealed), spec["world"]["seed_root"]),
+                c, sid, _spec.world_name(sealed), spec["world"]["seed_root"], labels=labels),
                 parts=["plain"], replayable=True, verify=lambda r: self._world_alive(c, r))
         wid = world["world_id"]
         out.world_id = wid
@@ -952,8 +967,16 @@ class SfeRunner:
         out.outcome = outcome
         out.order_check = self._verify_order(wid, obs_ids) if obs_ids else {"checked": False}
 
-        out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
-                                  exp_id=exp_id)
+        if obs_ids:
+            out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
+                                      exp_id=exp_id)
+        else:
+            # COMPLETED + CENSORED with zero observations (the budget stopped
+            # the loop before the first repeat): the fossil anchors on the
+            # committed EXPERIMENT, the same anchor a boundary-crossing failure
+            # uses -- an attested attempt, and nothing invented about a
+            # measurement that never happened.
+            out.anchor = self._failure_anchor(wid, exp_id)
         try:
             final_env = self.audit_envelope(wid, exp_id)
             envelope = {"envelope_hash": final_env.get("envelope_hash"),

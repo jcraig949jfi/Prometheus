@@ -366,6 +366,16 @@ def cmd_stranded(args, conn) -> int:
     return 1
 
 
+def cmd_production(args, _conn) -> int:
+    """The production descriptor, verified: hold, engine identity, store
+    identity, credential presence by key name. Exit 0 iff a consumer may
+    launch against it."""
+    from . import production as _prod
+    v = _prod.verify(role=args.role, probe=not args.no_probe)
+    print(json.dumps(v, indent=2, default=str))
+    return 0 if v["ok"] else 1
+
+
 def cmd_release(args, conn) -> int:
     """Resolve a stranded row to `failed`. It never returns to `queued`:
     requeueing asserts the experiment did not run, and the queue cannot know
@@ -820,6 +830,11 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("stranded")
     s.add_argument("--stale-after", type=float, default=900.0)
     s.set_defaults(fn=cmd_stranded)
+
+    s = sub.add_parser("production", help="verify the production descriptor (hold, engine, store, credential)")
+    s.add_argument("--role", default="vivarium")
+    s.add_argument("--no-probe", action="store_true")
+    s.set_defaults(fn=cmd_production)
 
     s = sub.add_parser("release")
     s.add_argument("experiment_id")

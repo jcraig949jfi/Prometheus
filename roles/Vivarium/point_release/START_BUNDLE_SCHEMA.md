@@ -48,11 +48,15 @@ Archaeon's preregistration, hashed, so "same design" is a byte equality and
                                                                  producer-declared; C3-SFE-08's reward_mode is the first known value
       "schedule":         {"schedule_id", "kind", "parameters"} | "UNKNOWN",
                                                                  pressure/rung/retention schedule identity (producer-declared)
-      "population":       {"manifest_hash", "manifest_ref", "count", "foundry_profile", "lineage_composition",
-                           "gen0_provenance", "selection_criteria", "selection_evidence_ref"} | "UNKNOWN",
-                                                                 Proteus's manifest contract (s12) once defined; until then the producer
-                                                                 may supply {"manifest_hash": ..., "manifest_ref": ...} only
-      "foundry_profile":  "<Proteus profile id>" | "UNKNOWN",
+      "population":       {"population_schema": "proteus.population_manifest.v1" | "UNKNOWN", "manifest_hash",
+                           "manifest_ref", "foundry_profile", ...manifest fields},
+                                                                 Proteus #338 (Stage 3): the manifest contract is Proteus's; until it
+                                                                 exists the object is {population_schema: UNKNOWN, manifest_hash,
+                                                                 manifest_ref, foundry_profile}. foundry_profile lives HERE and nowhere
+                                                                 else (the top-level slot was dropped on Proteus's review); string form
+                                                                 "pfp1:<16 hex>" once minted, else Archaeon's "instr<lo>-<hi>:<8 hex>"
+                                                                 verbatim (scheme archaeon.wse.reachability.foundry_id.v1); the
+                                                                 structural summary is computed by a Proteus function, never re-implemented
       "initial_artifacts":[{"slot", "digest", "artifact_type", "schema_version", "source_world", "source_artifact"}],
                                                                  the spec's artifact slots + the locators, so the bundle names WHERE the
                                                                  bytes came from as well as what they hash to

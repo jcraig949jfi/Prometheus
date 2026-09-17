@@ -23,7 +23,16 @@ from typing import Any, Dict, List, Optional
 
 from . import spec as _spec
 
-STREAM = "viv.execution.v1"
+#: Two streams, so the fossil path never waits behind provenance events
+#: that PEW cannot ingest yet (Stage 3, Mnemosyne s7.D): each stream is
+#: ordered on its own; a gap in one is invisible to the other.
+STREAM_FOSSIL = "viv.fossil.v1"        # WORLD_ANCHORED, ENCOUNTER_RECORDED -> the existing PEW routes
+STREAM_EXECUTION = "viv.execution.v1"  # attempts, steps, gates, interventions, terminations -> the ingest route
+STREAM = STREAM_EXECUTION
+
+
+def stream_for(kind: str) -> str:
+    return STREAM_FOSSIL if kind in ("WORLD_ANCHORED", "ENCOUNTER_RECORDED") else STREAM_EXECUTION
 KINDS = ("WORLD_ANCHORED", "ENCOUNTER_RECORDED", "ATTEMPT_OPENED", "STEP_COMPLETED",
          "INTERVENTION_RECEIPTED", "GATE_EVALUATED", "ATTEMPT_TERMINATED", "ATTEMPT_REPLAYED")
 
@@ -62,12 +71,13 @@ class Outbox:
         if not self.enabled(conn):
             return None
         pd = payload_digest(payload)
-        eid = event_id(self.producer, STREAM, source_attempt, source_step, kind, pd)
+        stream = stream_for(kind)
+        eid = event_id(self.producer, stream, source_attempt, source_step, kind, pd)
         with conn.cursor() as cur:
             cur.execute("INSERT INTO " + self.schema + ".pew_outbox (event_id, producer, stream, sequence, event_kind, "
                         "source_attempt, source_step, source_experiment, payload, payload_digest) "
                         "VALUES (%s, %s, %s, 0, %s, %s, %s, %s, %s, %s) ON CONFLICT (event_id) DO NOTHING",
-                        (eid, self.producer, STREAM, kind, source_attempt, source_step, source_experiment,
+                        (eid, self.producer, stream, kind, source_attempt, source_step, source_experiment,
                          json.dumps(payload, default=str), pd))
         if commit:
             conn.commit()
