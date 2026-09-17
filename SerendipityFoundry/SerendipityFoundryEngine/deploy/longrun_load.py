@@ -120,8 +120,7 @@ def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
             last = now
             try:
                 pr = subprocess.run([spy, "dump", "--pid", str(pid)], capture_output=True, text=True, timeout=20)
-                out = pr.stdout + ("
-STDERR: " + pr.stderr if pr.stderr else "")
+                out = pr.stdout + (("\nSTDERR: " + pr.stderr) if pr.stderr else "")
             except Exception as e:                                   # noqa: BLE001
                 out = "py-spy failed: %r" % e
             # keep only the engine frames + thread headers
