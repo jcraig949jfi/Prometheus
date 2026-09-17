@@ -78,3 +78,12 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   the shelf and RAISED final delay-4 competence (0.36 -> 0.61-0.69). Delay-1
   solutions were delay-invariant on arrival; the ladder reached W1_d4 in 4/6
   seeds (corridor). Ledger L2-033..L2-035. Next: C2-SFE-07.
+
+## 05:05-05:20 -- C2-SFE-07 (dry a01; engine a02 of record; WEAK_POSITIVE at the margin)
+
+- 100 s; 2 worlds; 3/6 producers solved W0 by 17-19 (gate closed 3); 3
+  artifacts, 3/3 imports ok, 24 records, 0 errors. parallel - mono = +0.109
+  (3/6 vs 2/6; 3/6 paired wins): wall-clock exchange keeps the gain of open
+  gates without the closed-gate cost; serial gating 2/6 = mono (closed gates
+  cost their cap). Injected elites take over (share 1.0); 0/24 full solves.
+  Ledger L2-037, L2-038. Next: C2-SFE-08.
