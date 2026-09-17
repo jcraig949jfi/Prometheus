@@ -16,6 +16,7 @@ import binascii
 import hashlib
 import logging
 import secrets
+import threading
 from typing import Any, Literal, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
@@ -563,14 +564,36 @@ def create_app(db_path: str, *, registration_open: bool = True,
                    max_artifact_bytes=max_artifact_bytes)
     boot.close()
 
+    # 9.0.1 (2026-09-17, SFE_LONG_RUN_REPORT.md s7). Before this, get_foundry
+    # constructed a NEW Foundry -- a new Store, a new SQLite connection,
+    # PRAGMA journal_mode=WAL -- on EVERY request and closed it after. Store's
+    # own docstring says "one per worker". Measured at 20 worlds x 1,000
+    # generations: ~115,000 open/close pairs; when the LAST connection closed,
+    # SQLite checkpointed and truncated the whole WAL of an 80 MB ledger, and
+    # every request arriving in that window stalled 5-13 s (0.13% of calls,
+    # reads and writes alike); the next open could also fail outright with
+    # "database is locked" on a lock path the busy handler does not retry
+    # (two 500s in the no-reader control). One Store PER WORKER THREAD, kept
+    # open, is what the Store was written for. The boot-time Foundry above
+    # still runs the migration once, before any worker exists.
+    tls = threading.local()
+    # bump app.state.foundry_generation to make every worker thread reopen its
+    # handle on its next request (a ledger swap, or a test that needs a fresh
+    # Store with a patched timeout); nothing is closed under a caller's feet.
+    app.state.foundry_generation = 0
+
     def get_foundry():
-        f = Foundry(app.state.db_path,
-                    science_profile=app.state.science_profile,
-                    max_artifact_bytes=app.state.max_artifact_bytes)
-        try:
-            yield f
-        finally:
-            f.close()
+        f = getattr(tls, "foundry", None)
+        gen = app.state.foundry_generation
+        if f is None or f.store.db_path != str(app.state.db_path)                 or getattr(f, "_generation", None) != gen:
+            if f is not None:
+                f.close()
+            f = Foundry(app.state.db_path,
+                        science_profile=app.state.science_profile,
+                        max_artifact_bytes=app.state.max_artifact_bytes)
+            f._generation = gen
+            tls.foundry = f
+        yield f
 
     def auth(authorization: Optional[str] = Header(default=None),
              f: Foundry = Depends(get_foundry)) -> str:
