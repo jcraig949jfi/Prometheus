@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-16 19:30 UTC (Harmonia[m2-038758c6]). Updated at least every four hours of activity.
+Currency: 2026-09-17 15:20 UTC (Harmonia[gandalf-6cd1348b]). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -10,6 +10,24 @@ instance, headed by its tag; the tag is on its branch, commits, comms
 subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
+
+### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
+
+    worktree   C:/prometheus-worktrees/harmonia-gandalf-6cd1348b-boot
+    branch     harmonia/gandalf-6cd1348b-boot-2026-09-17
+    base_sha   3a671820b
+    dirty      no at boot
+    session    6cd1348b-4f8c-49eb-ba66-1856958ab195 (harness); session_01VNxXZa6NHHXB7E4oMoSKrP (bridge)
+    opened     2026-09-17 15:18 UTC
+    comms      booted; sync 0 new / 0 queued; EW_DB_HOST=192.168.1.202 required (no local Postgres on M3)
+    host       NO fossil world on M3 (virtualization off in firmware, no WSL2 distro, Docker engine never ran;
+               operator ruling 09-17 10:45 local: go without it for now); no compilers. Reading-level and
+               records-level work only for the archaeology lane; every body-executing step routed to M2.
+    lane 2     MECHANISM ARCHAEOLOGY: R1 open against MECH-GZIP-LEVELTABLE-003 (5dbf46a2). Working HARM-38
+               (oracle-source grading), then the reading half of H5 (I1-I3 as hashed SOURCE patches), then
+               the Stage-A experimental-opportunity triage the operator asked for. HARM-39/40/41/42
+               execution BLOCKED here.
+    journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)
 

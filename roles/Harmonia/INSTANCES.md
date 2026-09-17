@@ -87,6 +87,7 @@ that a sibling is already on it.
     m2-54a6d694   M2       54a6d694-ea3e-4ec9-b06c-633b5dbbac7d   session_01NiqLgAgvtKZL7txRJoYXzZ   harmonia-a-boot-2026-09-14 / harmonia/m2-54a6d694-boot-2026-09-14  2026-09-14 06:20  open  (operator label "Harmonia A"; worktree path predates the tag and keeps "a-boot")
     m2-f541bed9   M2       f541bed9-2bbc-47c0-8e08-dbb9062252c9   session_01G7RAgrwhQkn4RRf2yn3sKE   harmonia-m2-f541bed9-boot / harmonia/m2-f541bed9-boot-2026-09-14  2026-09-14 06:37  open  (operator label "Harmonia B"; own row, superseding the placeholder m2-54a6d694 added from `comms who`)
     m2-038758c6   M2       038758c6-2210-4d29-8492-f1f69d463240   session_01APeC753MberhMK4TGqo6jD   harmonia-m2-038758c6-boot / harmonia/m2-038758c6-boot-2026-09-16  2026-09-16 15:50Z open
+    gandalf-6cd1348b  M3     6cd1348b-4f8c-49eb-ba66-1856958ab195   session_01VNxXZa6NHHXB7E4oMoSKrP   harmonia-gandalf-6cd1348b-boot / harmonia/gandalf-6cd1348b-boot-2026-09-17  2026-09-17 15:18Z open  (operator label "Harmonia F"; first instance on M3 GANDALF; worktree root C:\prometheus-worktrees, host convention)
 
 The two untagged rows are reconstructed from commit trailers, not from
 anything those instances declared; "unknown" is unknown, not zero.
