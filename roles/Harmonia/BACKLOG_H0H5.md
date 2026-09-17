@@ -1,7 +1,7 @@
 # Harmonia backlog -- H0-H5 qualification
 
 Schema: `roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md`.
-Priority order. The first five are what I start today. 44 items (HARM-37..46 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
+Priority order. The first five are what I start today. 49 items (HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
 
 Seat scope: controls, units, qualification, and what the evidence permits. I
 own no execution and gate no release -- a scientific verdict and a software
@@ -80,6 +80,11 @@ HARM-44 | Answer Proteus #341: (1) audit the V0.5 detailed-balance instrument (d
 HARM-42 | H5: verify I1/I2/I3 of the packet can be expressed identically or equivalently on fossil and surrogate (SOURCE-level edits at deflate.c:225-245, :672, trees.c:987 and their surrogate counterparts); then adjudicate the packet (CUT_SUPPORTED / CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE) | ARCHAEOLOGY | R3 | L | packet 003 (Nyx; PREDICTION_PACKET_CHALLENGE returned 2026-09-16 on the 667/672 line defect), HARM-41 | the typed return with rows; RESURRECTION-GZIP-001 delivered
 HARM-45 | Adjudicate MECH-PARTICLES-ESSTRIGGER-002 when Nyx freezes it (001 returned PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE on C-POS-N-SCALING 2026-09-17; ruler science/particles_ruler/ruler.py ready; I1-I3 must carry over unchanged) | ARCHAEOLOGY | R2-R3 | S | Nyx (packet 002) | the typed return with rows within one tick of the freeze; RESURRECTION packet keys for particles-chopin-0.4
 HARM-46 | Stage-A experimental-opportunity triage of the 39 cuts (operator ask 2026-09-17): per cut, reproduction / mutation / new-experiment candidates, world needed, oracle source, downstream consumer (Theophrastus cells, SFE queue via Archaeon, Nestor primordial receipt); a feasibility map, not a ranking (C8) | ARCHAEOLOGY | R1 | M | none for the reading | roles/Harmonia/archaeology/TRIAGE_STAGE_A_2026-09-17.md
+HARM-47 | POET (TECHNE-104): PATA-EC recomputation ruler + reconstructability meter over one traced lineage; basis-population ablation cell (P_t(E) != P_{t+k}(E)); preservation-cost shim as a DESCENDANT | ARCHAEOLOGY | R1-R3 | L | Techne lineage (M2); Nyx organs + packet | archaeology/poet/ ruler + controls; typed return; cell row draft
+HARM-48 | Avida (TECHNE-105): ANCESTRY GROUND-TRUTH RULER (recorded .spop graph vs genome-only reconstruction; controls: true ids -> recall 1.0, 10% scrambled -> falls, no reproduction -> empty); written first against converters-avida example data (instrument before specimen) | ARCHAEOLOGY | R1 | M | none for the instrument; Techne .spop (M2) for the specimen | archaeology/avida/ ruler passing its own controls; provenance-ablation curve when the .spop lands
+HARM-49 | Tierra (TECHNE-106): gene-bank admission-rule replay + threshold sweep | ARCHAEOLOGY | R1-R2 | M | Techne licence reading + build + one bank (M2) | replay agreement 1.0 on the fossil's own decisions; specimen-count vs threshold curve
+HARM-50 | ASAL (TECHNE-107): level-1 metric ruler reproducing Techne's four numbers (M3 now); level-2 through CLIP (order of cycle/noise/drift/Lenia; iid/drift ratio L2 over L1) when an install or host is authorised | ARCHAEOLOGY | R1-R2 | M | level 2: operator (torch + CLIP on M3, or M2); Techne .npz + CLIP id | archaeology/asal/ level-1 receipt; level-2 order + ratio with controls
+HARM-51 | TerraLingua (TECHNE-108): method-1 vs method-2 disagreement table + confidence calibration audit + scrambled-candidate control, graded in the Avida ruler's vocabulary | ARCHAEOLOGY | R1 | M | Techne one-experiment slice; operator for the LLM arm | archaeology/terralingua/ table + audit; no LLM call without the operator's yes
 
 ## Blocked, listed rather than hidden
 
