@@ -1,0 +1,252 @@
+{
+ "controls": {
+  "inert_outputs_nothing": true,
+  "negative_one_value_exact": [
+   3,
+   6
+  ],
+  "negative_one_value_scores_below_keyed": true
+ },
+ "probe": "two input channels (key, value-or-empty), one output channel; keys 0..15; persist=tape, code_writable=false; NOT a qualification world",
+ "rows": {
+  "inert": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 0,
+    "ops": 512,
+    "ops_by_category": {
+     "halt_yield": 512
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "statuses": [
+     "budget"
+    ]
+   },
+   "genome_instructions": 12,
+   "organism_id": "6c3c41e8ae7a155a5802c56e299a69942f836e5e4ed45678249e7a3d3358597c",
+   "two_key": {
+    "asks": 6,
+    "correct": 0,
+    "ops": 144,
+    "ops_by_category": {
+     "halt_yield": 144
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "statuses": [
+     "budget"
+    ]
+   }
+  },
+  "keyed": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 16,
+    "ops": 288,
+    "ops_by_category": {
+     "arithmetic": 32,
+     "control": 32,
+     "halt_yield": 32,
+     "indirection": 32,
+     "opaque_io": 96,
+     "read_write": 64
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5105,
+     5098,
+     5091,
+     5084,
+     5077,
+     5070,
+     5063,
+     5056,
+     5049,
+     5042,
+     5035,
+     5028,
+     5021,
+     5014,
+     5007,
+     5000
+    ],
+    "statuses": [
+     "halt"
+    ]
+   },
+   "genome_instructions": 12,
+   "organism_id": "40f1933f127df7530ac36c0c173ca2d5d02d62c6fbd75c27255cf509262b7fca",
+   "two_key": {
+    "asks": 6,
+    "correct": 6,
+    "ops": 81,
+    "ops_by_category": {
+     "arithmetic": 9,
+     "control": 9,
+     "halt_yield": 9,
+     "indirection": 9,
+     "opaque_io": 27,
+     "read_write": 18
+    },
+    "outputs": [
+     null,
+     null,
+     1001,
+     2002,
+     null,
+     3003,
+     2002,
+     2002,
+     3003
+    ],
+    "statuses": [
+     "halt"
+    ]
+   }
+  },
+  "one_value": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 1,
+    "ops": 224,
+    "ops_by_category": {
+     "control": 32,
+     "halt_yield": 32,
+     "indirection": 32,
+     "opaque_io": 64,
+     "read_write": 64
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105
+    ],
+    "statuses": [
+     "halt"
+    ]
+   },
+   "genome_instructions": 10,
+   "organism_id": "1bf2110c49b5604c51c2f51ebeb753671ea79ee74a955743e2dc6d8aa1610524",
+   "two_key": {
+    "asks": 6,
+    "correct": 3,
+    "ops": 63,
+    "ops_by_category": {
+     "control": 9,
+     "halt_yield": 9,
+     "indirection": 9,
+     "opaque_io": 18,
+     "read_write": 18
+    },
+    "outputs": [
+     null,
+     null,
+     2002,
+     2002,
+     null,
+     3003,
+     3003,
+     3003,
+     3003
+    ],
+    "statuses": [
+     "halt"
+    ]
+   }
+  }
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "schema_version": "proteus.keyed_memory_witness.v1",
+ "verdict": "ISA_EXPRESSES_KEYED_MEMORY",
+ "what_this_does_not_establish": [
+  "that search under proteus.grammar.v0.4 reaches this program (C3 says 0/60 runs did on W2_K2)",
+  "anything about W2_K2's protocol, which this seat has not read",
+  "that this is the smallest such program"
+ ]
+}
