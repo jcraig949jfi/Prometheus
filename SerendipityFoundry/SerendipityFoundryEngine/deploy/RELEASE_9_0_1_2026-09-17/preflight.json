@@ -1,0 +1,112 @@
+{
+ "phase": "preflight",
+ "at": "2026-09-17T17:00:37Z",
+ "checks": [
+  {
+   "check": "production ledger identity",
+   "pass": true,
+   "live": "eng_906356f7fb1da180131f9290",
+   "ledger": "eng_906356f7fb1da180131f9290"
+  },
+  {
+   "check": "current schema is 9 (this release: 9 -> 9)",
+   "pass": true
+  },
+  {
+   "check": "pin agrees with the running build",
+   "pass": true
+  },
+  {
+   "check": "release commit resolvable",
+   "pass": true,
+   "sha": "b0d75218382d"
+  },
+  {
+   "check": "candidate tree hashes to a NEW build",
+   "pass": true,
+   "candidate": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc"
+  },
+  {
+   "check": "no scientific writes in the last 10 min",
+   "pass": true,
+   "events_last_10min": 0,
+   "last_event_age_s": 634
+  },
+  {
+   "check": "no work in flight",
+   "pass": true,
+   "work_items": {
+    "COMPLETED": 323,
+    "QUEUED": 3
+   }
+  },
+  {
+   "check": "backup written and verified",
+   "pass": true,
+   "path": "D:\\Prometheus-data\\sfe\\backup\\engine.db.pre-release-20260917T170038Z.bak",
+   "events": 12611,
+   "integrity": "ok",
+   "sha256": "6ff3d1e79285011f1af004b7abc49d335266b3b20c3562f782bd38861c2db4e9",
+   "s": 0.9
+  }
+ ],
+ "commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+ "production_descriptor_before": {
+  "recorded_at": "2026-09-17T17:00:38Z",
+  "process_start_utc": "2026-09-17T10:51:30Z",
+  "pid": 5596,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"D:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"D:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"D:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+  "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382",
+  "schema_version": 9,
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "capabilities_features": {
+   "logical_time": true,
+   "typed_termination": true,
+   "world_events": true,
+   "manifest_envelope": true,
+   "labels": true,
+   "artifact_list": true,
+   "cursor_pagination": true,
+   "fork_changed_fields": true
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 9,
+   "events": 12611
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+   "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382"
+  }
+ },
+ "candidate_engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+ "ledger_before": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "schema_version": 9,
+  "events": 12611,
+  "max_event_seq": 12611,
+  "last_event_ts": 1789663804.2920232,
+  "events_last_10min": 0,
+  "work_items": {
+   "COMPLETED": 323,
+   "QUEUED": 3
+  },
+  "max_observations_per_world": 228,
+  "max_experiments_per_world": 228
+ },
+ "consumer_tolerance": "additive routes read INCOMPLETE-covered, never DRIFT, for consumers that declare their routes (#256 C5); the schema bump 8->9 reads as a mismatch to any gate until the contract is regenerated and landed in the same window; no consumer process is running (C3 closed #326; Vivarium not launched, #318/#329); default list responses gain keys, no consumer parses them positionally",
+ "backup": {
+  "path": "D:\\Prometheus-data\\sfe\\backup\\engine.db.pre-release-20260917T170038Z.bak",
+  "sha256": "6ff3d1e79285011f1af004b7abc49d335266b3b20c3562f782bd38861c2db4e9",
+  "events": 12611,
+  "schema": "9"
+ },
+ "blobs_files": 261,
+ "ok": true
+}

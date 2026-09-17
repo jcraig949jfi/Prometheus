@@ -75,13 +75,26 @@ def main():
     cols = {r["name"] for r in live.execute("PRAGMA table_info(worlds)")}
     shape("v9 columns present", {"manifest", "manifest_hash", "labels", "termination"} <= cols
           and "logical_time" in {r["name"] for r in live.execute("PRAGMA table_info(observations)")})
-    n_old_worlds = old.execute("SELECT COUNT(*) FROM worlds").fetchone()[0]
-    nulls = live.execute("SELECT COUNT(*) FROM worlds WHERE manifest IS NULL AND labels IS NULL AND termination IS NULL "
-                         "AND world_id IN (SELECT world_id FROM worlds ORDER BY created_ts LIMIT ?)", (n_old_worlds,)).fetchone()[0]
-    shape("every pre-migration world reads NULL facts (no backfill)", nulls == n_old_worlds, worlds=n_old_worlds)
-    n_old_obs = old.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
-    onull = live.execute("SELECT COUNT(*) FROM observations WHERE logical_time IS NULL").fetchone()[0]
-    shape("every pre-migration observation reads logical_time NULL", onull >= n_old_obs, old=n_old_obs, null_now=onull)
+    # The two "pre-migration facts read NULL" shapes are a property of the 8->9
+    # MIGRATION (no backfill), so they hold only when the backup is a schema-8
+    # ledger. On a code-only release over a schema-9 ledger (9.0.1) worlds
+    # created after the migration legitimately carry manifests / labels /
+    # logical_time, and the checks misreported BROKE (RELEASE_9_0_1 qualify.json,
+    # 16/18). Gate them on the BACKUP's schema, and say so in the receipt.
+    bak_schema = int((old.execute("SELECT value FROM meta WHERE key='schema_version'").fetchone() or ["0"])[0])
+    rec["backup_schema_version"] = bak_schema
+    if bak_schema < 9:
+        n_old_worlds = old.execute("SELECT COUNT(*) FROM worlds").fetchone()[0]
+        nulls = live.execute("SELECT COUNT(*) FROM worlds WHERE manifest IS NULL AND labels IS NULL AND termination IS NULL "
+                             "AND world_id IN (SELECT world_id FROM worlds ORDER BY created_ts LIMIT ?)", (n_old_worlds,)).fetchone()[0]
+        shape("every pre-migration world reads NULL facts (no backfill)", nulls == n_old_worlds, worlds=n_old_worlds)
+        n_old_obs = old.execute("SELECT COUNT(*) FROM observations").fetchone()[0]
+        onull = live.execute("SELECT COUNT(*) FROM observations WHERE logical_time IS NULL").fetchone()[0]
+        shape("every pre-migration observation reads logical_time NULL", onull >= n_old_obs, old=n_old_obs, null_now=onull)
+    else:
+        rec["shapes_not_applicable"] = ["every pre-migration world reads NULL facts (no backfill)",
+                                        "every pre-migration observation reads logical_time NULL"]
+        print("  [N/A ] the two 8->9 no-backfill shapes: backup is already schema %d (code-only release)" % bak_schema)
     heads_old = {r["world_id"]: r["head_hash"] for r in old.execute("SELECT world_id, head_hash FROM worlds ORDER BY created_ts LIMIT 25")}
     heads_new = {r["world_id"]: r["head_hash"] for r in live.execute("SELECT world_id, head_hash FROM worlds WHERE world_id IN (%s)"
                                                                     % ",".join("?" * len(heads_old)), tuple(heads_old))}

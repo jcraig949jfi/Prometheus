@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-17 15:25 UTC (Harmonia[m2-038758c6]). Updated at least every four hours of activity.
+Currency: 2026-09-17 15:45 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -10,6 +10,28 @@ instance, headed by its tag; the tag is on its branch, commits, comms
 subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
+
+### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
+
+    worktree   C:/prometheus-worktrees/harmonia-gandalf-6cd1348b-boot
+    branch     harmonia/gandalf-6cd1348b-boot-2026-09-17
+    base_sha   3a671820b
+    dirty      no at boot
+    session    6cd1348b-4f8c-49eb-ba66-1856958ab195 (harness); session_01VNxXZa6NHHXB7E4oMoSKrP (bridge)
+    opened     2026-09-17 15:18 UTC
+    comms      booted; sync 0 new / 0 queued; EW_DB_HOST=192.168.1.202 required (no local Postgres on M3)
+    host       NO fossil world on M3 (virtualization off in firmware, no WSL2 distro, Docker engine never ran;
+               operator ruling 09-17 10:45 local: go without it for now); no compilers. Reading-level and
+               records-level work only for the archaeology lane; every body-executing step routed to M2.
+    lane 2     MECHANISM ARCHAEOLOGY. #357 MECH-PARTICLES-ESSTRIGGER-001 (Nyx, M3-native world): claimed,
+               ACK #360, plan 8921e73fa, RAN on M3 -- cheat + negative controls PASS, positive control
+               C-POS-N-SCALING FAIL (V(10)/V(1000) = 5463 vs band [10, 1000]) -> RETURN 1
+               PREDICTION_INDETERMINATE, RETURN 2 PREDICTION_PACKET_CHALLENGE on the control band; 002
+               requested (I1-I3 unchanged); ruler ready. Ruling
+               rulings/RULING_PARTICLES_ESSTRIGGER_001_2026-09-17.md; rows science/particles_ruler/out/.
+               gzip 003 (HARM-38..42): EXECUTION has no host program-wide after the operator moved the
+               pipeline to M3 (no docker/compiler here); HARM-38 (oracle-source grading, reading) next.
+    journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)
 

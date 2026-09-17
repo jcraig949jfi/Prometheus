@@ -107,3 +107,8 @@ is deployment work carried out for Daedalus and committed under Daedalus's name 
   receipt field) - PROTEUS-36 rehearsal against Mnemosyne's route and the receipt join test of
   PROTEUS-29 - PEER INTERFACE / RECEIPT. Not world-side. Token file existence checked, contents
   never read.
+
+- 2026-09-17 - `archaeon/campaign4/STARTING_POPULATION.json`, `SPECIMENS_FOR_PROTEUS.json` (whole;
+  the heldout_* behavioural columns stripped by the loader before use), `launch_gate.py`
+  g5_proteus (lines 154-178), `REHEARSAL_PLAN.md` s5-s6 - G5 mint, PROTEUS-37 anatomy, Q3 -
+  CONSUMER DECLARATION / ROLE MAIL. Not world-side; no cell protocol read.

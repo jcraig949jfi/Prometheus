@@ -17,9 +17,20 @@ CREATE TABLE IF NOT EXISTS {schema}.start_bundle (
 ALTER TABLE {schema}.research_experiment_queue
     ADD COLUMN IF NOT EXISTS bundle_declared jsonb;
 
-ALTER TABLE {schema}.execution_attempt
-    ADD CONSTRAINT execution_attempt_bundle_fk
-        FOREIGN KEY (bundle_hash) REFERENCES {schema}.start_bundle(bundle_hash);
+-- idempotent (migrations run on every `viv.cli migrate` and check_drafts
+-- double-applies): ADD CONSTRAINT has no IF NOT EXISTS, so guard it. Edited
+-- after window C4-20260917-W1 applied the original; the production state is
+-- the same constraint, once.
+DO $do$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint c JOIN pg_namespace n ON n.oid = c.connamespace
+                    WHERE c.conname = 'execution_attempt_bundle_fk' AND n.nspname = '{schema}') THEN
+        ALTER TABLE {schema}.execution_attempt
+            ADD CONSTRAINT execution_attempt_bundle_fk
+                FOREIGN KEY (bundle_hash) REFERENCES {schema}.start_bundle(bundle_hash);
+    END IF;
+END
+$do$;
 
 CREATE TABLE IF NOT EXISTS {schema}.intervention_receipt (
     receipt_id        uuid PRIMARY KEY DEFAULT gen_random_uuid(),

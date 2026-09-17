@@ -126,20 +126,493 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ldpc-codes-neal-2001/upstream/tree/dec.c"
+   }
+  ],
+  "inspected_files": [
+   "dec.c (all)"
+  ],
+  "date": "2026-09-17T15:40Z",
+  "note": "two decoders for the same code: exhaustive enumeration (the oracle, feasible to 31 message bits) and probability propagation over the sparse parity-check graph; the propagation is written as two sweeps per iteration with a product-of-likelihood-ratios trick that avoids a division",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:40Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/radfordneal/LDPC-codes@74a8e283be8259dbff7a6bab38ad7e9327825cbf",
+   "payload_manifest_id": "techne tree_sha256 a23b16652f9eabf18774d104158e918f10f44aeb973d24b1d17498545094c739 (93 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/dec.c",
+     "payload_hash_read": "c45a9f2dab4d84cbb68f1bb94e345152e776bb3d8e42a7b204ce54eda3323831",
+     "techne_recorded_hash": "c45a9f2dab4d84cbb68f1bb94e345152e776bb3d8e42a7b204ce54eda3323831",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "ldpc-codes-neal-2001::exhaustive_maximum_likelihood_decoding_as_the_oracle_for_small_codes",
+   "fossil_ancestry": "ldpc-codes-neal-2001",
+   "human_name": "enum_decode (dec.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for every one of 2^(N-M) messages, encode it, multiply the per-bit likelihoods of the resulting codeword, keep the best (block MAP) and accumulate per-bit marginals (bit MAP); refuses more than 31 message bits ('absurd')",
+   "input": "likelihood ratios per received bit",
+   "output": "the most likely codeword, or per-bit most likely values, and marginals",
+   "state": "none",
+   "update": "per block",
+   "assumptions": [
+    "exact but exponential; exists to calibrate the iterative decoder"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword"
+   ],
+   "fitness_value_in_ancestor": "a ground truth inside the body: the instrument ships its own oracle",
+   "failure_landscape": "none (exact)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ldpc-codes-neal-2001/upstream/tree/dec.c:enum_decode_setup, enum_decode"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two enum_ functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "DISTRIBUTION",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "fossil_ancestry": "ldpc-codes-neal-2001",
+   "human_name": "prprp_decode / initprp / iterprp",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each nonzero of the parity-check matrix H carries two messages (pr: bit-to-check probability ratio; lr: check-to-bit likelihood ratio); initprp sets pr from the channel; each iteration: for every check row, a forward pass accumulates the product of (2/(1+pr) - 1) = (1-p)/(1+p) terms and a backward pass forms each edge's outgoing lr = (1-t)/(1+t) from the product of all OTHER edges (forward x backward partial products, no division); for every bit column the same forward/backward trick multiplies the incoming lr into the channel ratio to produce each edge's outgoing pr and the posterior; the tentative decoding is the sign of the posterior; the loop stops when the tentative word satisfies all checks (or after max_iter; a negative max_iter forces the count)",
+   "input": "H (sparse), channel likelihood ratios",
+   "output": "a decoded word, its parity checks, bit posteriors, the iteration count",
+   "state": "two doubles per nonzero of H",
+   "update": "per iteration (two sweeps)",
+   "assumptions": [
+    "the graph is sparse and nearly cycle-free so the product rule is nearly exact (the whole point of LOW density)",
+    "a NaN posterior is treated as 1 (a numerical guard, not a theorem)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ldpc-codes-neal-2001::per_iteration_diagnostics_changed_bits_parity_errors_loglikelihood_expected_errors_entropy",
+    "ldpc-codes-neal-2001::exhaustive_maximum_likelihood_decoding_as_the_oracle_for_small_codes"
+   ],
+   "fitness_value_in_ancestor": "near-Shannon-limit decoding in linear time per iteration; the forward/backward partial products make each sweep linear in the nonzeros",
+   "failure_landscape": "by reading: short cycles in H make the messages overconfident; the decoder can converge to a wrong codeword (early stop accepts any valid codeword) or oscillate",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Gallager 1962 rediscovered by MacKay & Neal 1996; the ratio parametrisation and the two-sweep product trick are Neal's implementation choices",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ldpc-codes-neal-2001/upstream/tree/dec.c:prprp_decode, initprp, iterprp"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three prprp functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "DISTRIBUTION",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ldpc-codes-neal-2001::per_iteration_diagnostics_changed_bits_parity_errors_loglikelihood_expected_errors_entropy",
+   "fossil_ancestry": "ldpc-codes-neal-2001",
+   "human_name": "the table==2 printout in prprp_decode",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at every iteration the decoder can print: bits changed from the channel decision, current parity errors, log-likelihood of the tentative word, expected parity errors and expected log-likelihood under the posteriors, and the posterior entropy -- i.e. it exposes its own convergence as measurables",
+   "input": "the decoder's state",
+   "output": "one row per iteration",
+   "state": "none",
+   "update": "per iteration",
+   "assumptions": [
+    "convergence is a trajectory, not a bit"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword"
+   ],
+   "fitness_value_in_ancestor": "the body's own instrument; the natural Stage C observable",
+   "failure_landscape": "none",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ldpc-codes-neal-2001/upstream/tree/dec.c:prprp_decode table==2"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the printf under table==2",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "make-ldpc.c (parity-check matrix construction: the code design), the encoders (sparse/dense/mixed), mod2sparse/mod2dense, rand.c, channel/transmit",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the matrix constructor is where the 'low density' and cycle avoidance are decided -- the second most important mechanism in the body, unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ldpc-codes-neal-2001"
+  },
+  {
+   "candidate": "'LDPC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the code (H) and the decoder are separate; the decoder is the sum-product algorithm the vault's libdai-mooij (NOT_CUT) holds for general factor graphs",
+   "note": "recurrence candidate: libdai's belief propagation",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ldpc-codes-neal-2001"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "ldpc-codes-neal-2001::P.beliefs_about_many_coupled_binary_unknowns_must_be_refined_by_passing_only_local_messages_on_a_sparse_constraint_graph",
+   "source_fossil": "ldpc-codes-neal-2001",
+   "source_evidence": "dec.c iterprp; the enum_decode oracle",
+   "condition": "N bits, M sparse parity constraints, a noisy observation per bit; the organism may only pass messages along the constraint graph's edges, linearly many per round; it must output a word satisfying every constraint",
+   "resource_or_constraint": "two numbers per edge; rounds",
+   "failure_condition": "no valid word found within the round budget, or a valid but wrong word",
+   "world_punishes": "dense constraints (cycles) and decisions made per bit from the channel alone",
+   "world_rewards": "extrinsic messages (exclude the receiving edge's own contribution)",
+   "observable_consequence": "block error rate vs noise against the exhaustive oracle on codes with <= 31 message bits; iterations to convergence",
+   "vacuity_condition": "no noise, or constraints so few that per-bit decisions suffice",
+   "trivial_shortcuts": "the oracle (exponential); a world that reveals the word",
+   "cheat_control": "the enumerative decoder in the body is the ceiling; a decoder that uses each edge's own message back (no extrinsic exclusion) must be visibly worse: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: iterative decoding of low-density parity-check codes (Gallager 1962; MacKay & Neal 1996)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "to": "ldpc-codes-neal-2001::per_iteration_diagnostics_changed_bits_parity_errors_loglikelihood_expected_errors_entropy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ldpc-codes-neal-2001::exhaustive_maximum_likelihood_decoding_as_the_oracle_for_small_codes",
+   "to": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "label": "verifies",
+   "evidence": "SOURCE_READ",
+   "note": "the oracle for small codes",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "ldpc-codes-neal-2001",
+   "relation": "algorithm_from",
+   "to": "Gallager 1962 (LDPC codes and probabilistic decoding); MacKay & Neal 1996-97 (rediscovery, near-Shannon performance)",
+   "note": "from the record and the code's author; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "ldpc-codes-neal-2001",
+   "relation": "algorithm_from",
+   "to": "Gallager 1962 (LDPC codes and probabilistic decoding); MacKay & Neal 1996-97 (rediscovery, near-Shannon performance)",
+   "note": "from the record and the code's author; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the code construction (make-ldpc.c) and the matrix library not read",
+   "the tail of iterprp (the backward column pass) read to its first lines only",
+   "nothing ran; the body ships an exact oracle for a Stage C world on any host with a C compiler"
+  ],
+  "note": "the decoder is accounted for; the code design is the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

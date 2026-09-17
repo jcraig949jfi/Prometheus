@@ -351,3 +351,74 @@
     NOT done, by order: no storage-engine change; no generalised high-
     concurrency guarantee beyond the three declared regimes; no retention
     change. D16 (idempotency keys on the remaining routes) still deferred.
+
+=======================================================================
+10. 2026-09-17 14:4xZ -- run-to-run VARIANCE on the same code; the machine is shared
+=======================================================================
+
+    v3 (build d4b8283c = v2 + Idempotency-Key on import; the checkpointer
+    and pool byte-identical to v2's) at 14:30-14:44Z:
+      R1 0 stalls; R2 NINE stalls 6-12 s (write-lock max wait 12.3 s);
+      R3 two stalls of 15.7 s (lock max 15.75 s). WAL in R2 stayed SMALL
+      (10-30 MB), so the v1 "big backfill" mechanism does not explain v3.
+    What was different: Vivarium's production window ran on this machine
+    at the same time (83 events on 8811 between 14:33 and 14:41Z, plus its
+    migration I/O), and Windows Defender (MsMpEng) had consumed 5,190 CPU-
+    seconds -- more than any other process -- with NO path exclusions
+    configured: every WAL append, checkpoint backfill and blob write on
+    D:\Prometheus-data\sfe (production) and the scratch dir is scanned in
+    real time.
+    A write-lock wait of 12-15 s means one writer's transaction took that
+    long; inside a transaction the only slow thing is I/O. Concurrent disk
+    load from another process plus real-time scanning of the files being
+    written is the candidate; the v2 runs (0/0/0) happened in a quieter
+    window. Being measured now: R2 again with a py-spy stall watchdog
+    (engine stacks captured whenever a request exceeds 4 s), first WITHOUT
+    and then WITH a Defender path exclusion on the two data directories.
+    Receipts: accept901_v3_d4b8283c_contended/ (the variance run),
+    accept901/ (the diagnosed runs).
+
+=======================================================================
+11. 2026-09-17 15:1xZ -- the residual DIAGNOSED: the checkpointer's own TRUNCATE blocked writers
+=======================================================================
+
+    controlled A/B on the v2/v3 checkpointer (TRUNCATE whenever the passive
+    result was clean), R2 shape (2 writers + tight reader), MsMpEng CPU
+    sampled every 5 s beside the WAL:
+      A1  no Defender exclusion        18 stalls (9 lock-step PAIRS, 5-13 s),
+                                        onset t=265 s; MsMpEng 0.1-0.4 CPU-s per
+                                        5 s throughout, no spike at any stall
+      B1  scratch dir excluded         26 stalls (13 pairs), onset t=270 s;
+                                        MsMpEng delta 49.5 s over the run
+      -> Defender FALSIFIED as the cause (exclusion changes nothing; its CPU
+         is flat when the stalls happen). Vivarium's concurrent window was
+         also over by then (last production event 14:41Z; A1 ran 15:00-15:08Z).
+    The tell was in the pairing: BOTH writers wait the same 5-13 s at the
+    same instant, and B3 reports the wait as write-lock acquisition time.
+    Neither writer holds the lock while both wait; the only other
+    connection is the checkpointer's. SQLite's own documentation for
+    wal_checkpoint(FULL | RESTART | TRUNCATE): "blocks new database writers
+    while it is pending" -- for the whole backfill + database fsync. With the
+    busy handler off the call is REFUSED if a writer is active at entry, but
+    once it gets in (a gap between two writers' transactions, frequent at
+    100-240 gen/s) every writer arriving during its 5-13 s of work waits.
+    Onset at ~265 s in both runs = the point where the database is large
+    enough (~55 MB) for backfill + fsync to take seconds. The lock-step
+    pairs in v1 (s9) were the same mechanism, mis-attributed to "big
+    backfills competing for disk".
+
+    fix (build f528f235): TRUNCATE only when the engine has been IDLE for
+    WAL_IDLE_S = 3 s (no write-lock acquisition, read from the B3 counter);
+    under load PASSIVE only, which never blocks anyone. SQLite restarts the
+    WAL by itself when a writer finds it fully backfilled, and
+    journal_size_limit truncates the file at that restart -- so the file is
+    bounded without a writer-blocking call. Unit test pins both branches
+    (busy engine -> no TRUNCATE; idle -> TRUNCATE; reader-held WAL -> refused
+    in < 2 s). 511 passed.
+
+    measurement tool: added a stall watchdog that runs py-spy against the
+    engine whenever a request exceeds 4 s (the 15:1x runs); its first two
+    attempts recorded no stacks (a filter bug, then a broken string literal
+    from the editing tool) -- kept in accept901_v4_watchdog_runs/ as the
+    record; the mechanism was settled from the lock-step timing + B3 +
+    SQLite's documented semantics, not from a stack.
