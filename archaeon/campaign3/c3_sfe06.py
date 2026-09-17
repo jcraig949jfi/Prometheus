@@ -40,7 +40,8 @@ from archaeon.wse.worlds import WorldSpec, episodes_for
 from archaeon.campaign3.c3base import CAMPAIGN_SEED, Experiment3
 
 W0 = WorldSpec("W0", value_bits=4)
-THRESHOLD = 0.875
+THRESHOLD = 0.875                 # a02 (POSITIVE_CONTROL_FAILED): only 9 of 390,625 genotypes reach it on skelA; unfindable at any affordable climb budget
+MIN_TARGET_SHARE = 0.001          # a03: the threshold is the HARDEST battery level at least this share of genotypes reaches (chosen per table, before any climbing)
 K = 4                       # free opcode positions
 NG = N_OPCODES ** K
 STATS = ["accessible_variation", "useful_variation", "local_improvement_prob", "basin_share", "greedy_path_len", "deceptive_share", "mean_dist_to_threshold"]
@@ -99,6 +100,19 @@ def score_table(sk: dict, eps) -> np.ndarray:
     return tab
 
 
+def choose_threshold(tab: np.ndarray, min_share: float = MIN_TARGET_SHARE) -> dict:
+    """The preregistered adaptive rule (a03): among the battery's achievable levels, take the
+    HIGHEST level reached by at least `min_share` of the genotypes. Fixed per TABLE from the
+    table alone, so every encoding of a table shares it (the instrument check still holds)."""
+    levels = sorted({round(float(v), 6) for v in np.unique(tab)})
+    best = levels[0]
+    for lv in levels:
+        if float((tab >= lv).mean()) >= min_share:
+            best = lv
+    return {"threshold": best, "share": round(float((tab >= best).mean()), 6), "n": int((tab >= best).sum()),
+            "share_at_0.875": round(float((tab >= THRESHOLD).mean()), 8), "n_at_0.875": int((tab >= THRESHOLD).sum()), "max": round(float(tab.max()), 6)}
+
+
 def orderings(n_perms: int) -> Dict[str, List[int]]:
     out = {"identity": list(range(N_OPCODES))}
     cls = sorted(range(N_OPCODES), key=lambda o: (CATEGORY[o], o))
@@ -132,7 +146,7 @@ def all_neighbours(nb: np.ndarray) -> np.ndarray:
     return out
 
 
-def geometry(tab: np.ndarray, NB: np.ndarray) -> dict:
+def geometry(tab: np.ndarray, NB: np.ndarray, thr: float = THRESHOLD) -> dict:
     s = tab
     ns = s[NB]                                                       # (NG, 16) neighbour scores
     acc = np.array([len(set(row)) for row in np.round(ns, 4)])       # distinct neighbour scores (behaviours)
@@ -153,12 +167,12 @@ def geometry(tab: np.ndarray, NB: np.ndarray) -> dict:
         e, base = end[h], plen[h]
         for i, p in enumerate(reversed(path)):
             end[p] = e; plen[p] = base + i + 1
-    reach = s[end] >= THRESHOLD
+    reach = s[end] >= thr
     basin = reach.mean()
     lens = plen[reach]
     decept = ((best_nb >= 0) & ~reach).mean()
     dist = np.full(NG, -1, dtype=np.int64); q = deque()
-    for g in np.where(s >= THRESHOLD)[0]:
+    for g in np.where(s >= thr)[0]:
         dist[g] = 0; q.append(int(g))
     while q:
         g = q.popleft()
@@ -167,19 +181,19 @@ def geometry(tab: np.ndarray, NB: np.ndarray) -> dict:
                 dist[h] = dist[g] + 1; q.append(int(h))
     return {"accessible_variation": round(float(acc.mean()), 4), "useful_variation": round(float(useful.mean()), 4), "local_improvement_prob": round(float(lip.mean()), 4),
             "basin_share": round(float(basin), 4), "greedy_path_len": round(float(lens.mean()), 4) if len(lens) else None, "deceptive_share": round(float(decept), 4),
-            "mean_dist_to_threshold": round(float(dist[dist >= 0].mean()), 4) if (dist >= 0).any() else None, "threshold_share": round(float((s >= THRESHOLD).mean()), 6)}
+            "mean_dist_to_threshold": round(float(dist[dist >= 0].mean()), 4) if (dist >= 0).any() else None, "threshold": round(float(thr), 6), "threshold_share": round(float((s >= thr).mean()), 6)}
 
 
-def climb_first_improvement(tab: np.ndarray, NB: np.ndarray, seed: int, restarts: int = 8, steps: int = 400) -> dict:
+def climb_first_improvement(tab: np.ndarray, NB: np.ndarray, seed: int, restarts: int = 20, steps: int = 400, thr: float = THRESHOLD) -> dict:
     rng = np.random.default_rng(seed)
     evals = 0; first = None
     for r in range(restarts):
         g = int(rng.integers(NG)); sc = tab[g]; evals += 1
-        if sc >= THRESHOLD and first is None:
+        if sc >= thr and first is None:
             first = evals
         for _ in range(steps):
             h = int(NB[g, rng.integers(NB.shape[1])]); evals += 1
-            if tab[h] >= THRESHOLD and first is None:
+            if tab[h] >= thr and first is None:
                 first = evals
             if tab[h] > sc:
                 g, sc = h, tab[h]
@@ -188,12 +202,12 @@ def climb_first_improvement(tab: np.ndarray, NB: np.ndarray, seed: int, restarts
     return {"first_hit": first, "evals": evals}
 
 
-def climb_population(tab: np.ndarray, NB: np.ndarray, seed: int, N: int = 50, G: int = 40, elitism: int = 4, k: int = 4) -> dict:
+def climb_population(tab: np.ndarray, NB: np.ndarray, seed: int, N: int = 50, G: int = 80, elitism: int = 4, k: int = 4, thr: float = THRESHOLD) -> dict:
     rng = np.random.default_rng(seed)
     pop = rng.integers(NG, size=N); evals = 0; first = None
     for g in range(G):
         sc = tab[pop]; evals += N
-        if first is None and (sc >= THRESHOLD).any():
+        if first is None and (sc >= thr).any():
             first = evals - N + int(np.argmax(sc >= THRESHOLD)) + 1
             break
         order = np.argsort(-sc)
@@ -207,13 +221,14 @@ def climb_population(tab: np.ndarray, NB: np.ndarray, seed: int, N: int = 50, G:
 
 def run_cell(job: dict) -> dict:
     enc, order, table_name, tab, climber, seeds = job["encoding"], job["order"], job["table"], job["tab"], job["climber"], job["seeds"]
+    thr = job.get("threshold", THRESHOLD)
     t0 = time.time()
     NB = all_neighbours(neighbours_table(order))
-    geo = job.get("geo") or geometry(tab, NB)
+    geo = job.get("geo") or geometry(tab, NB, thr)
     firsts = []; budget = None
     for s in seeds:
-        hc = (climb_first_improvement if climber == "first_improvement" else climb_population)(tab, NB, CAMPAIGN_SEED + 100 * s + hash(enc) % 1000)
-        budget = 8 * 401 if climber == "first_improvement" else 50 * 40
+        hc = (climb_first_improvement if climber == "first_improvement" else climb_population)(tab, NB, CAMPAIGN_SEED + 100 * s + hash(enc) % 1000, thr=thr)
+        budget = 20 * 401 if climber == "first_improvement" else 50 * 80
         firsts.append(hc["first_hit"] if hc["first_hit"] is not None else budget + 1)
     med = sorted(firsts)[len(firsts) // 2]
     return {"arm": enc, "encoding": enc, "table": table_name, "climber": climber, "seed": "%s/%s" % (table_name, climber), **geo, "first_hits": firsts,
@@ -246,14 +261,16 @@ def main(argv=None) -> int:
         "parent_evidence": "C2-SFE-08 (CA block-output evaluator, best-of-lambda climb, 52 rows): basin_share rho -0.59, deceptive_share +0.57, accessible variation -0.23.",
         "why_this_slot": "A geometry that predicts search only on the evaluator/climber pair that produced it is a description of one landscape; the campaign needs to know "
                          "whether basin share is a general instrument before C3-SFE-07 spends compute on manipulating it.",
-        "assay_capability_requirement": "each score table contains threshold genotypes (threshold_share > 0) and the identity encoding's climbers hit the threshold in >= 1 of "
-                                        "%d seeds on each table (POSITIVE_CONTROL_FAILED otherwise); threshold_share must be identical across encodings of one table" % len(a.search_seeds),
-        "positive_control": "identity ordering, both climbers, both tables",
+        "assay_capability_requirement": "the identity encoding's climbers hit the table's threshold in >= 1 of %d seeds on each table x climber (POSITIVE_CONTROL_FAILED otherwise); "
+                                        "threshold_share must be identical across encodings of one table. a02 FAILED this with a fixed 0.875 threshold: only 9 of 390,625 genotypes (2.3e-05) "
+                                        "reach it on skelA, so a 2,000-3,200 evaluation climb cannot find it and the primary observable was censored in 44 of 48 rows. a03 therefore "
+                                        "sets the threshold PER TABLE by a rule fixed before the run: the HIGHEST battery level at least %.3f of genotypes reach" % (len(a.search_seeds), MIN_TARGET_SHARE),
+        "positive_control": "identity ordering, both climbers, both tables, at each table's adaptive threshold (climb budgets widened to 20 restarts x 400 steps and N=50 x G=80)",
         "reachability_estimate": {"note": "exhaustive space; the reachability table does not apply; skeleton solvers found by reconnaissance (seeds 2 and 6, minimized to 4 instructions)"},
         "arms": sorted(encs),
         "crn_policy": "one score table per skeleton shared by every encoding; climber seeds keyed on (search seed, encoding); neighbourhood moves keyed on the encoding",
-        "budget": {"n_encodings": len(encs), "tables": list(sk), "genotypes_per_table": NG, "neighbours": 4 * K, "search_seeds": a.search_seeds, "threshold": THRESHOLD,
-                   "climber_a": "first-improvement, 8 restarts x 400 steps", "climber_b": "(mu+lambda) N=50 G=40 elitism 4 tournament 4"},
+        "budget": {"n_encodings": len(encs), "tables": list(sk), "genotypes_per_table": NG, "neighbours": 4 * K, "search_seeds": a.search_seeds, "threshold_rule": "highest level reached by >= %.3f of genotypes, per table" % MIN_TARGET_SHARE,
+                   "threshold_fixed_a02": THRESHOLD, "climber_a": "first-improvement, 20 restarts x 400 steps", "climber_b": "(mu+lambda) N=50 G=80 elitism 4 tournament 4"},
         "primary_observable": "log10(median evaluations to threshold, censored) per encoding x table x climber; Spearman rho of basin_share with it",
         "claim_ceiling": "weak: two skeleton spaces, one cell, two climbers; a negative kills basin share as a general predictor for this substrate",
         "falsification_condition": "rho(basin_share, log_first_hit) > -0.5 over all rows => basin share does not generalize; per-climber rho reported",
@@ -261,11 +278,12 @@ def main(argv=None) -> int:
         "typed_failure_conditions": ["POSITIVE_CONTROL_FAILED", "INSTRUMENT_FAILURE (threshold_share differs across encodings of one table)"],
         "expected_machine_telemetry": ["seven geometry statistics per encoding x table", "first hits per seed per climber", "rho table (all rows; per climber)"],
         "replacement_condition": "none",
-        "ancestry": "original (queue slot 6)",
-        "machine_changes_exercised": ["B rank_correlation primary", "I"],
+        "ancestry": "original (queue slot 6); a03 = a02 with a data-derived threshold after POSITIVE_CONTROL_FAILED",
+        "machine_changes_exercised": ["B rank_correlation primary", "I", "adaptive per-table threshold (a03)"],
         "decl": {"positive_control": {"arm": "identity", "metric": "hits", "min": 1, "min_rows": 2},
                  "primary": {"type": "rank_correlation", "x": "basin_share", "y": "log_first_hit", "expected_sign": -1, "min_abs_rho": 0.5}, "statistics": STATS},
     })
+    X.decision("D3-021: the target level is chosen from the table's own score distribution (highest level reached by >= 0.1%% of genotypes) because a fixed 0.875 is reached by 9 of 390,625 genotypes and cannot be found at any affordable climb budget (a02 POSITIVE_CONTROL_FAILED); the level is fixed per table before any climbing and shared by every encoding")
     X.decision("D3-011: basin share is the preregistered PRIMARY; the neighbourhood is +-1/+-2 in the encoding's opcode ordering (campaign 2's A_words geometry on the opcode word); two climbers unlike campaign 2's")
     X.open("cmp3-sfe06")
     wid = X.world("basin", "ISOLATED", use_group=False)
@@ -277,19 +295,20 @@ def main(argv=None) -> int:
             continue
         tables[name] = score_table(s, eps) if not a.dry_run else np.random.default_rng(1).random(NG).astype(np.float32)
     X.att.timing("tables_s", t0)
-    X.receipt["tables"] = {n: {"threshold_share": float((t >= THRESHOLD).mean()), "max": float(t.max()), "n_solvers": int((t >= THRESHOLD).sum())} for n, t in tables.items()}
+    thr = {n: choose_threshold(t) for n, t in tables.items()}
+    X.receipt["tables"] = {n: dict(thr[n], max=float(t.max())) for n, t in tables.items()}
     X.att.save()
     t0 = time.time()
     geos = {}
     for tn, tab in tables.items():
         for en, order in encs.items():
-            geos[(tn, en)] = geometry(tab, all_neighbours(neighbours_table(order)))
+            geos[(tn, en)] = geometry(tab, all_neighbours(neighbours_table(order)), thr[tn]["threshold"])
     X.att.timing("geometry_s", t0)
     rows = []
     for tn, tab in tables.items():
         for en, order in encs.items():
             for cl in ("first_improvement", "population"):
-                rows.append(run_cell({"encoding": en, "order": order, "table": tn, "tab": tab, "climber": cl, "seeds": a.search_seeds, "geo": geos[(tn, en)]}))
+                rows.append(run_cell({"encoding": en, "order": order, "table": tn, "tab": tab, "climber": cl, "seeds": a.search_seeds, "geo": geos[(tn, en)], "threshold": thr[tn]["threshold"]}))
     X.att.timing("climbs_s", t0)
     rhos = {st: S.spearman([r[st] for r in rows if r.get(st) is not None], [r["log_first_hit"] for r in rows if r.get(st) is not None]) for st in STATS}
     per_cl = {cl: {st: S.spearman([r[st] for r in rows if r["climber"] == cl and r.get(st) is not None], [r["log_first_hit"] for r in rows if r["climber"] == cl and r.get(st) is not None]) for st in STATS} for cl in ("first_improvement", "population")}

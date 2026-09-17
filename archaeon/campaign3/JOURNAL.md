@@ -113,3 +113,26 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   row for row under CRN, across two sealed preregistrations.
 - Next: C3-SFE-06 (basin geometry out-of-family) running; C3-SFE-07 consumes
   its geometry rows.
+
+## 11:25-12:10 -- C3-SFE-06 (a02 POSITIVE_CONTROL_FAILED; a05 of record; INCONCLUSIVE: the pooled primary was confounded)
+
+- a02 (fixed 0.875 threshold): only 9 of 390,625 genotypes reach it on skelA
+  (2.3e-05), so a 2,000-3,200 evaluation climb cannot find it; 44 of 48 rows
+  censored, identity hit in 1 of 4 cells. Same shape as the fixed first rung
+  (L3-031). Fix D3-021: threshold chosen PER TABLE from its own score
+  distribution (highest level >= 0.1% of genotypes reach), climbs widened.
+- a05: 422 s, 48 records, 0 errors. Pooled rho(basin_share, log evals)
+  = -0.568, which would have replicated C2-SFE-08's -0.59 exactly -- and is
+  CONFOUNDED: skelB has basin 0.41-0.43 and is trivially easy, skelA has
+  basin 0.026-0.034 and is hard, so the pooled statistic has two informative
+  points (L3-029). Within table: skelA first-improvement -0.527 (replicates),
+  skelA population +0.187, skelB ~0 / undefined.
+- Second instrument defect (L3-030): the adaptive rule can pick the CHANCE
+  level on a bimodal table. skelB's target came out at 1/16, hit at
+  evaluation 1 by every population climb. Fix: require threshold > chance
+  and type the table READOUT_CANNOT_EXPRESS.
+- Disposition INCONCLUSIVE: the out-of-family test was not delivered.
+- D3-022: C3-SFE-07 selects its encodings from skelA only. Selected:
+  high perm_7 (basin 0.0338), low identity (0.0256), gap 0.0082, matched on
+  accessible variation (1.4450 vs 1.4399); scale pair perm_3 / perm_6 (gap 0).
+- Next: C3-SFE-07 running.

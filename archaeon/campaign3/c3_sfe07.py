@@ -43,6 +43,7 @@ from archaeon.campaign3.c3base import CAMPAIGN_3, CAMPAIGN_SEED, Experiment3, le
 from archaeon.campaign3.c3_sfe06 import orderings
 
 TARGET = WorldSpec("W0", value_bits=4)
+CHANCE = 1 / 16                # W0 4-bit; a C3-SFE-06 table whose threshold is at or below chance cannot express search difficulty (L3-030)
 ACC_TOL = 0.15                 # matched on gross accessible variation: |acc_high - acc_low| / mean <= this
 MOVES = (1, -1, 2, -2)
 
@@ -115,9 +116,13 @@ class CausalBasin(Experiment3):
 
 
 def select_pair(geo_rows: List[dict], tol: float = ACC_TOL) -> dict:
-    """The preregistered selection: among encodings measured by C3-SFE-06 on the W0 tables, take
-    the pair with the LARGEST basin-share gap whose accessible variation matches within `tol`
-    (relative). Random-ordering pair: the two basin-closest random orderings, also matched."""
+    """The preregistered selection: among encodings measured by C3-SFE-06 on the INFORMATIVE W0
+    tables (threshold above chance; L3-030 -- skelB's target came out at the 1/16 chance level and
+    carries no search information), take the pair with the LARGEST basin-share gap whose
+    accessible variation matches within `tol` (relative). Random-ordering pair: the two
+    basin-closest random orderings, also matched."""
+    tables_used = sorted({r["table"] for r in geo_rows if r.get("threshold", 1.0) > CHANCE})
+    geo_rows = [r for r in geo_rows if r["table"] in tables_used]
     by_enc: Dict[str, dict] = {}
     for r in geo_rows:
         e = by_enc.setdefault(r["encoding"], {"encoding": r["encoding"], "basin": [], "acc": [], "dec": []})
@@ -147,7 +152,7 @@ def select_pair(geo_rows: List[dict], tol: float = ACC_TOL) -> dict:
             gap = abs(x["basin_share"] - y["basin_share"])
             if pair_r is None or gap < pair_r[0]:
                 pair_r = (gap, x, y)
-    return {"encodings": encs, "gap": None if best is None else round(best[0], 6),
+    return {"tables_used": tables_used, "encodings": encs, "gap": None if best is None else round(best[0], 6),
             "high": None if best is None else best[1], "low": None if best is None else best[2],
             "rand_a": None if pair_r is None else pair_r[1], "rand_b": None if pair_r is None else pair_r[2],
             "rand_gap": None if pair_r is None else round(pair_r[0], 6)}
@@ -176,10 +181,11 @@ def main(argv=None) -> int:
                     "the ordering with the lower basin share (%s: basin %.4f), matched on gross accessible variation within %.0f%%?"
                     % (a.N, a.G, a.E, (hi or {}).get("encoding"), (hi or {}).get("basin_share", 0.0), (lo or {}).get("encoding"), (lo or {}).get("basin_share", 0.0), 100 * ACC_TOL),
         "parent_evidence": "C3-SFE-06 measured basin share, deceptive share and accessible variation exhaustively over 25^4 opcode genotypes of two minimal W0 solver "
-                           "skeletons, under %d orderings, with two climbers, and correlated them with search efficiency in that toy space. The pair selected here by "
-                           "the preregistered rule: %s. Random-ordering scale pair: %s (gap %s). C2-SFE-08: basin share -0.59 / deceptive +0.57 with the CA evaluator "
-                           "and one climber -- correlational, in-family."
-                           % (len(sel["encodings"]), {"high": hi, "low": lo, "gap": sel["gap"]}, {"a": sel["rand_a"], "b": sel["rand_b"]}, sel["rand_gap"]),
+                           "skeletons, under %d orderings, with two climbers. Its pooled rank correlation was CONFOUNDED by table difficulty (INCONCLUSIVE, L3-029); within the one "
+                           "informative table %s the first-improvement climber gives rho = -0.527 and the population climber +0.187, and the other table's target fell at the chance "
+                           "level (L3-030) so it is excluded here. The pair selected by the preregistered rule from the informative table(s): %s. Random-ordering scale pair: %s "
+                           "(gap %s). C2-SFE-08: basin share -0.59 / deceptive +0.57 with the CA evaluator and one climber -- correlational, in-family."
+                           % (len(sel["encodings"]), sel["tables_used"], {"high": hi, "low": lo, "gap": sel["gap"]}, {"a": sel["rand_a"], "b": sel["rand_b"]}, sel["rand_gap"]),
         "why_this_slot": "every geometry number campaigns 2 and 3 produced is correlational: measured on the same space whose search it predicts. If a geometry knob "
                          "moves a real evolutionary run, geometry becomes a design variable; if it does not, the measurements are descriptive and the line dies here.",
         "assay_capability_requirement": "the grammar arm reaches W0 competence (held-out >= 0.9) in >= 6 of %d seeds (the table: W0 REACHABLE, 13/21 pooled) -- else "
@@ -192,8 +198,9 @@ def main(argv=None) -> int:
         "budget": {"N": a.N, "E": a.E, "G": a.G, "seeds": a.seeds, "arms": arms, "acc_tolerance": ACC_TOL, "moves": list(MOVES),
                    "selected": {"high": hi, "low": lo, "rand_a": sel["rand_a"], "rand_b": sel["rand_b"]}},
         "primary_observable": "confirmed (held-out-confirmed W0 competence within G) and confirmed_gen per seed; high_basin vs low_basin, paired by seed",
-        "claim_ceiling": "one task, one genotype-space slice (the opcode field), n=%d paired seeds: whether a preregistered geometric difference moves realized search "
-                         "efficiency in the predicted direction; no claim that basin share is THE explanatory variable" % len(a.seeds),
+        "claim_ceiling": "one task, one genotype-space slice (the opcode field), n=%d paired seeds, and a SMALL geometric difference (the informative table's encodings span a "
+                         "32%% relative range in basin share): whether a preregistered geometric difference moves realized search efficiency in the predicted direction; no claim "
+                         "that basin share is THE explanatory variable, and a null here does not separate 'geometry is inert' from 'this gap is too small'" % len(a.seeds),
         "falsification_condition": "high_basin does not beat low_basin by >= 0.25 in confirmed rate (or by >= 5 generations in median confirmed_gen) => basin share does "
                                    "not act causally on this search at this budget",
         "kill_condition": "the two random orderings (matched basin share) differ by as much as high vs low => the contrast is ordering noise, not geometry; the line is "
@@ -211,6 +218,7 @@ def main(argv=None) -> int:
                              {"name": "operator_masses_matched_across_arms", "passed": None},
                              {"name": "intervention_applied_every_arm", "passed": None}]},
     })
+    X.decision("D3-022: only C3-SFE-06 tables whose threshold is ABOVE CHANCE are used to choose the encodings (L3-030); skelB's target fell at 1/16 and its rows carry no search information")
     X.decision("D3-018: the encodings are chosen by the preregistered rule (largest basin gap among pairs matched on accessible variation within %.0f%%), from geometry "
                "measured by C3-SFE-06 BEFORE this run; no ordering was chosen on a known search time" % (100 * ACC_TOL))
     X.open("C3-SFE-07 basin geometry as a causal target on W0")
@@ -264,7 +272,7 @@ def main(argv=None) -> int:
                   "basin_share": meta[arm].get("basin_share"), "accessible_variation": meta[arm].get("accessible_variation")} for arm in arms}
     X.receipt["summary"] = summ; X.receipt["battery"] = battery; X.receipt["selection"] = sel
     out = X.close(rows, meas_extra={"battery": battery})
-    print(json.dumps({"summary": summ, "battery": battery, "selection": {k: sel[k] for k in ("gap", "high", "low", "rand_a", "rand_b", "rand_gap")}, **out}, indent=1, default=str))
+    print(json.dumps({"summary": summ, "battery": battery, "selection": {k: sel[k] for k in ("tables_used", "gap", "high", "low", "rand_a", "rand_b", "rand_gap")}, **out}, indent=1, default=str))
     return 0
 
 
