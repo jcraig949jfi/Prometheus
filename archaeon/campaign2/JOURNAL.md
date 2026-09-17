@@ -42,3 +42,13 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   W1_d4 4-bit: B - A = +0.01, 0/8 vs 0/8 -> CAPABLE_NEGATIVE; C 1/8 exploratory.
   Operator masses within 0.01 across arms. 48 records, 0 errors, 1 world
   TERMINATED per attempt. Next: C2-SFE-03.
+
+## 03:55-04:20 -- C2-SFE-03 (dry a01; engine a02 of record; CAPABLE_NEGATIVE: SFE-01 component effect retired)
+
+- 491 s; 3 worlds, 25 artifacts (maturity on every population set), 25/25
+  imports hash ok, 108 records, 0 errors, 132 reachability rows. components -
+  random_segments = +0.009 (5/12 paired wins), 6/12 vs 5/12, baseline 6/12;
+  kill battery moot (shuffled/opcode_matched/self_segments within 0.06).
+  Probe mature_source 11/12 at 0.49 = W0 sub-solution half credit on a K=2
+  cell (exploratory). Landscape: W2_K2 half-credit shelf at 0.5 (L2-025);
+  W0 4-bit COMMON by ~G35 (10/12); W1_d1 4-bit G100 3/12. Next: C2-SFE-04.

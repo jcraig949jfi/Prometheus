@@ -188,6 +188,27 @@ def test_attempts_are_numbered_persisted_and_resumable(tmp_path):
     assert step_key("a", 1) == step_key("a", 1) != step_key("a", 2)
 
 
+def test_resume_never_replays_a_different_design(tmp_path):
+    """C2-SFE-02 a05 replayed a04's records for a changed design; keys now carry the sealed prereg digest."""
+    calls = {"n": 0}
+
+    def post():
+        calls["n"] += 1
+        return {"obs": calls["n"]}
+    a1 = Attempt("C2-TEST2", root=tmp_path, dry_run=True)
+    a1.receipt["prereg_digest"] = "sha256:design-A"
+    a1.step("record", post, parts=("arm", 1))
+    a1.finalize(rows=[], of_record=False)
+    a2 = Attempt("C2-TEST2", root=tmp_path, dry_run=True)
+    a2.receipt["prereg_digest"] = "sha256:design-B"
+    a2.step("record", post, parts=("arm", 1))
+    assert calls["n"] == 2 and a2.receipt["replayed"] == []
+    a2.finalize(rows=[], of_record=False)
+    a3 = Attempt("C2-TEST2", root=tmp_path, dry_run=True)
+    a3.receipt["prereg_digest"] = "sha256:design-B"
+    assert a3.step("record", post, parts=("arm", 1)) == {"obs": 2} and calls["n"] == 2   # same design: replayed
+
+
 def test_engine_wrapper_refuses_population_material_without_maturity():
     e = Engine(dry_run=True)
     with pytest.raises(ValueError):

@@ -160,7 +160,9 @@ def disposition_candidate(decl: dict, meas: dict, states: Optional[List[dict]] =
           "n_treatment": len(t), "n_control": len(c), "paired": pairs, "paired_wins": wins, "min_effect": pr["min_effect"]}
     capable = "POSITIVE_CONTROL_FAILED" not in names and "TARGET_UNREACHABLE" not in names
     if effect >= pr["min_effect"]:
-        battery = decl.get("battery") or []
+        # the battery's NAMES and rule are preregistered (decl.battery); its outcomes are
+        # measurements the harness computes from rows and passes in meas.battery
+        battery = meas.get("battery") or decl.get("battery") or []
         attacked = [b for b in battery if b.get("passed") is not None]
         survived = [b for b in attacked if b.get("passed")]
         if n >= 10 and battery and attacked and len(survived) == len(attacked) and len(attacked) == len(battery):
