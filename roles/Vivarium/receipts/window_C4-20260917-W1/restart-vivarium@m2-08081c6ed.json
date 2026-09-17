@@ -1,19 +1,19 @@
 {
   "schema": "viv",
-  "at": "2026-09-17T16:15:02Z",
+  "at": "2026-09-17T16:40:02Z",
   "process": {
-    "pid": 21108,
+    "pid": 16880,
     "host": "SPECTREX5",
     "worker_id": "vivarium@m2",
     "instance": {
       "tag": "m2-nosession",
-      "pid": 21108,
+      "pid": 16880,
       "session_id": null
     },
-    "started_at": 1789661702.2236574
+    "started_at": 1789663202.711632
   },
   "code": {
-    "base_sha": "609772a79024480a60bdec2c6206454a9a2e9dd4",
+    "base_sha": "08081c6ed2a3c4f32731164b94936f608c071f81",
     "branch": "HEAD",
     "detached": true,
     "worktree_path": "D:\\Prometheus-worktrees\\vivarium-consumer",
@@ -73,17 +73,17 @@
   "outbox": {
     "enabled": true,
     "by_state": {
-      "PENDING": 92
+      "PENDING": 125
     },
     "streams": [
       {
         "producer": "vivarium@m2",
         "stream": "viv.execution.v1",
-        "max_sequence": 92,
-        "pending": 92
+        "max_sequence": 125,
+        "pending": 125
       }
     ],
-    "pending": 92
+    "pending": 125
   },
   "refuse": [],
   "ok": true

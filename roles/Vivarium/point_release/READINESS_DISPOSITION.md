@@ -2,13 +2,13 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-17 16:2x UTC (Vivarium m2-fce3fe0b). Operator "PRE-CAMPAIGN-4 REPAIR ORDER" s2 (execute the
+Currency: 2026-09-17 17:0x UTC (Vivarium m2-fce3fe0b). Window C4-20260917-W1 CLOSED at canary run 10. Operator "PRE-CAMPAIGN-4 REPAIR ORDER" s2 (execute the
 rehearsed window; resolve the five foreign rows; fixture; canary; disposition) and "Stage 3 / implementation
 order" s16 (exactly one disposition) and s18 (the five plain statements).
 
 ## DISPOSITION
 
-    QUALIFIED_FOR_CAMPAIGN  --  Vivarium's execution seat, at pinned build 609772a79, on production `viv`
+    QUALIFIED_FOR_CAMPAIGN  --  Vivarium's execution seat, at pinned build 08081c6ed, on production `viv`
                                 (migrations 001-010) against engine eng_906356f7 (schema 9, bc8d3a0c), with
                                 the caveats in s3 below, which are named and bounded, none of them Vivarium
                                 defects that could masquerade as a Campaign 4 result.
@@ -35,7 +35,7 @@ gate + intervention receipts, termination envelope, PEW outbox, production descr
     restart     dead-man ENABLED -> first tick launched the consumer; restart receipt ok (engine ANSWERED,     run6
                 store prometheus-canonical, credential sfe_token present, hold none, point_release_tables true)
     fixture     s13 synthetic qualification at the deployed SHA: 16/16 checks, all eight s16 answers true      qualification-*.json
-    canary      s14: 7 runs + one deliberate re-attempt on production (below)
+    canary      s14: 10 runs + one deliberate re-attempt on production (below)
     010         migration 010 applied through the same migrate step (invariants re-proved: 1,150 = 1,150,      run12
                 0 steps fabricated, every old row unchanged)
 
@@ -43,7 +43,7 @@ gate + intervention receipts, termination envelope, PEW outbox, production descr
 
 The canary (vivarium/deploy/canary.py) runs through the PRODUCTION consumer, queue and engine as the production
 identity: A gate-FAIL control; B a 3-repeat GKL run; C the consumer killed inside the repeat loop; D the
-consumer killed while posting observations. Seven runs; every failure below was a real defect on the
+consumer killed while posting observations. Ten runs; every failure below was a real defect on the
 production path that the synthetic fixture had not caught because its doubles were more permissive than the
 engine:
 
@@ -78,8 +78,12 @@ engine:
                   landed): attempt FAILED/ENGINE_TRANSPORT (correct) and     in the release path, ONLY when the newest   name; trigger refuses; bare
                   the ROW went terminal `failed` -- frozen; the only rerun   attempt's reason is ENGINE_TRANSPORT, ONLY  UPDATE refused); rehearsal
                   was a new row = a second world                             with no open attempt (ca1a5a314)            001-010 on a copy of live rows 7/7
-    -  #354       Daedalus: send the Idempotency-Key                         step key = Idempotency-Key on hypothesis/   keys equal step_key(design,
-                                                                             prediction/experiment/observation posts     kind, parts)
+    -  #354       Daedalus: send the Idempotency-Key                         step key = Idempotency-Key on hypothesis/   keys equal the scoped key
+                                                                             prediction/experiment/observation posts
+    10 run 8      the step key is per DESIGN (on purpose); the engine's      engine key = step key SCOPED TO THE ROW     a second row of one design
+                  idempotency store is per client: the same design enqueued  (stepkey.engine_key; unique per row,        gets a different key; the
+                  twice -> 409 "key reused for a materially different        stable across its attempts) (08081c6ed)     same row's attempts the same
+                  request" on the first observation of every row
 
 Production evidence at the end (row D of run 7, experiment ad6254d7, the hardest shape, on production):
 
@@ -93,7 +97,18 @@ Production evidence at the end (row D of run 7, experiment ad6254d7, the hardest
     events     enqueued, claimed, running, stranded_released, claimed, running, execution_failed, failed,
                transport_failure_released, claimed, running, completed
 
-Rows C (killed inside the loop) passed end to end in runs 5, 6 and 7: world/experiment REPLAYED, claim
+Run 9 (build 08081c6ed, every fix above deployed): A, B, C green; D COMPLETED on production in attempt 2
+with 12 observations in ONE world -- the recorder had seen 1 observation at the kill, the engine held 2 (a
+POST landed before its step result), attempt 2 REPLAYED both (one by id, one recovered by content) and posted
+10 NEW. The canary's own predicate (replayed == recorded at the kill) was the only thing that flagged; it is
+corrected to replayed >= recorded (the receipt carries the re-evaluation).
+
+**Run 10 (build 08081c6ed): canary OK, 35/35** -- A (gate FAIL, no world), B (3 repeats, every step NEW,
+engine holds exactly 3), C (killed in the loop: claim RECOMPUTED after the lease expired, 5 observations, ONE
+world, relaunch 234 s), D (killed while posting: claim REPLAYED, 12 observations, ONE world, relaunch 237 s);
+no canary work left in the queue. Receipt canary-C4-20260917-W1-run10.json.
+
+Rows C (killed inside the loop) passed end to end in runs 5, 6, 7 and 9: world/experiment REPLAYED, claim
 RECOMPUTED after the lease expired, 5 observations, ONE world, both attempts in the outbox, dead-man relaunch
 in 132-282 s. Row A (gate FAIL, no world) and row B (3 repeats, every step NEW, labels recorded, engine holds
 exactly 3 observations) passed in every run.
@@ -122,7 +137,7 @@ exactly 3 observations) passed in every run.
 
 ## 4. Frozen for Campaign 4 (operator s7)
 
-    Vivarium build         609772a79 (pinned worktree D:\Prometheus-worktrees\vivarium-consumer, detached, clean)
+    Vivarium build         08081c6ed (pinned worktree D:\Prometheus-worktrees\vivarium-consumer, detached, clean)
     queue schema           viv, migrations 001-010 (apply_migrations ledger in the restart receipt)
     step key               "idem:" + sha256(design_digest|kind|parts_json)[:32]; statuses NEW/REUSED/REPLAYED/RECOMPUTED/FAILED
     termination reasons    the closed set in viv/attempts.py (COMPLETED_ALL_REPEATS ... UNKNOWN); 4xx = ENGINE_REJECTED -> EXECUTOR_ERROR
@@ -165,7 +180,7 @@ and a canary run.
 ## 6. Where everything is
 
     receipts   roles/Vivarium/receipts/window_C4-20260917-W1/ (backup, migrate, advance, bootstrap, restart, 010, fixture,
-               canary runs 5-7 + row D attempt 3, restart receipt at 609772a79); the live copies under
+               canary runs 5-10 + row D attempt 3, restart receipt at the pinned build); the live copies under
                D:\Prometheus-data\vivarium\window\ and \var\ (restart-vivarium@m2.json, deadman state, park clearances)
     tools      vivarium/deploy/{window.py, rehearse_window.py, canary.py, redeploy.sh, prepare_m2.py}
     tests      vivarium/tests/test_point_release_attempts.py (16), test_deadman.py (14), test_deliver.py (9), test_qualification.py
