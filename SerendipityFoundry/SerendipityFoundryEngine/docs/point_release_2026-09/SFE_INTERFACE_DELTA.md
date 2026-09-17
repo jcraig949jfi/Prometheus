@@ -244,3 +244,23 @@ STAGE 3 CLOSE -- answers in hand and how each question was resolved
 =======================================================================
 AMENDMENT LINES (appended during implementation; never edited above)
 =======================================================================
+
+    A1  2026-09-17 10:4xZ  s2.D route form RESOLVED EMPIRICALLY: Harmonia's
+        generator run against two scratch engines of candidate bc8d3a0c
+        emits POST /v2/worlds/{wid}/terminate with required_body [] --
+        UNCHANGED from the live contract. The optional body ships on the
+        existing route; no new route. Surface delta vs live: +4 routes
+        (GET /v2/capabilities, GET .../artifacts, GET .../manifest, POST
+        .../events), 0 changed, 0 removed; 72 routes, 64 scoped, 8 exempt.
+        Also learned: the generator REFUSES a pre-deploy (--candidate-hash)
+        contract across a schema change by design, so the production
+        contract is regenerated AFTER the restart (deploy step 5), and the
+        window between restart and landing reads schema-mismatch to any
+        gate -- acceptable because no consumer runs today (C3 closed,
+        Vivarium not launched); stated in the deployment receipt.
+    A2  2026-09-17  D1 event payload: OBSERVATION_RECORDED carries
+        logical_time (null when absent) -- as specified, no deviation.
+    A3  2026-09-17  D2: an empty body {} on /terminate is accepted and
+        means "no termination facts" (the pre-v9 client sends json={}).
+        `reason` is therefore Optional at the wire level and REQUIRED by
+        the runtime whenever any other field is present.
