@@ -676,20 +676,24 @@ class Checkpointer:
     thread dying is itself visible (alive=false, last_run_at ageing)."""
 
     def __init__(self, db_path: str, *, interval_s: float = 2.0,
-                 reset_mode: str = "restart_when_big"):
+                 reset_mode: str = "truncate_when_idle"):
         """reset_mode -- how the WAL FILE gets reset (all modes checkpoint
         PASSIVE continuously; the difference is the writer-blocking step):
-          "restart_when_big"  wal_checkpoint(RESTART) only when the passive
-                              result is clean AND the WAL file exceeds the
-                              soft limit; busy handler off, so it is refused
-                              (not waited for) while a reader holds the WAL;
-                              with nothing left to backfill its blocking
-                              window is the reset itself.  (SHIPPED)
-          "truncate_when_idle" TRUNCATE only after WAL_IDLE_S without a
-                              write; never blocks a writer, but under a
-                              continuous reader SQLite's own restart starves
-                              and the file grows without bound (measured:
-                              3.4 GB in 289 s at R2).
+          "truncate_when_idle" (SHIPPED) TRUNCATE only after WAL_IDLE_S
+                              without a write; never blocks a writer. Under a
+                              SATURATING writer that never pauses (100-240
+                              generations/s, 300-800x any campaign's rate)
+                              SQLite's own WAL restart is starved and the
+                              file grows for the duration (3.4 GB in 289 s at
+                              R2); at campaign rates the passive backfill
+                              completes between writes and the WAL restarts
+                              by itself. Growth is visible on /v2/health.
+          "restart_when_big"  REJECTED: a forced RESTART above a hard limit
+                              held writers off > 30 s at 538 MB (a writer hit
+                              busy_timeout -> 500 "database is locked"); and
+                              at 8 MB it fired 1,556 times, 34 stalls,
+                              throughput halved (modes_ab/M1,
+                              accept901_v6_valve_rejected).
           "truncate_when_clean" TRUNCATE whenever clean (v2/v3): backfill +
                               fsync with writers blocked, 5-13 s lock-step
                               stalls (measured, defender_ab/A1 and B1)."""

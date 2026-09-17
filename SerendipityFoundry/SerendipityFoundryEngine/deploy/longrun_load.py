@@ -130,7 +130,7 @@ def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
     rec["stall_dumps"] = dumps
 
 
-def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_every=100):
+def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_every=100, gen_pause=0.0):
     """one world, `gens` generations"""
     w = api.ok("POST", "/v2/worlds", {"session_id": sess_id, "name": "load-" + tag,
                                       "manifest": {"logical_time_unit": "generation", "load": tag},
@@ -157,6 +157,8 @@ def producer(api, sess_id, gens, tag, rec, lat, ck_every=50, ev_every=10, art_ev
             api.ok("POST", "/v2/worlds/%s/artifacts" % wid,
                    {"kind": "trace", "data_b64": base64.b64encode(os.urandom(8192)).decode()},
                    headers={"Idempotency-Key": "idem:%s:art:%d" % (tag, g)})
+        if gen_pause:
+            time.sleep(gen_pause)
     if cks:
         api.ok("POST", "/v2/worlds/%s/fork" % wid, {"checkpoint_id": cks[-1]["checkpoint_id"],
                                                     "children": [{"name": "cf", "interventions": {"p": "Q"}}]})
@@ -222,6 +224,9 @@ def main():
     ap.add_argument("--reader-pause", type=float, default=0.0,
                     help="seconds between reader pages (a PACED reader, the PEW-ingestion shape); 0 = tight loop")
     ap.add_argument("--label", default=None, help="free text recorded in the receipt")
+    ap.add_argument("--gen-pause", type=float, default=0.0,
+                    help="seconds between generations per producer (a CAMPAIGN-RATE writer; Campaign 3 ran ~0.02 "
+                         "observations/s per slot, i.e. pauses of tens of seconds -- 0.5 s here is still 25x faster)")
     a = ap.parse_args()
     if not port_free(a.port):
         print("REFUSING: port %d is held" % a.port); return 2
@@ -248,7 +253,7 @@ def main():
     def prod_worker(k):
         api = TimedApi(api0.base, lat, t_origin); api.token = api0.token; api.session_key = api0.session_key
         for j in range(k, a.worlds, a.producers):
-            wid = producer(api, sess["session_id"], a.gens, "w%02d" % j, rec, lat)
+            wid = producer(api, sess["session_id"], a.gens, "w%02d" % j, rec, lat, gen_pause=a.gen_pause)
             with lock:
                 wids.append(wid)
     rapi = TimedApi(api0.base, lat, t_origin); rapi.token = api0.token; rapi.session_key = api0.session_key
