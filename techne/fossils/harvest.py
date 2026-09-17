@@ -304,6 +304,102 @@ def validate_run_receipt(receipt: dict) -> list[str]:
     return why
 
 
+# --------------------------------------------------------------------------- native shell (TECHNE-101)
+# The native runner used to launch ["bash", ...] by NAME. On Windows, CreateProcess searches
+# System32 before PATH, so the process that ran was C:\Windows\System32\bash.exe -- the WSL
+# launcher -- while the tests' guard, shutil.which("bash"), answered from PATH (Git's bash).
+# On a host without a WSL distro every native recipe therefore reported exit 1 (found on M3,
+# 2026-09-17); on M1/M2 the two resolutions agreed only because there the launcher IS a distro.
+# Now the shell is resolved once per process BY CAPABILITY -- it must run and print its own
+# BASH_VERSION -- to an absolute path that the receipt records. Candidates are tried in the
+# order CreateProcess would have used (System32 first, then PATH), so a host where the old
+# resolution worked keeps the same bash and its receipts do not change.
+NATIVE_SHELL_PROBE = "echo BASH_VERSION=$BASH_VERSION; uname -s"
+
+
+class NativeShellUnavailable(RuntimeError):
+    """No candidate bash passed the capability probe on this host."""
+
+
+def native_shell_candidates() -> list[str]:
+    """Every file a bare "bash" could resolve to, System32 first (what CreateProcess did), then
+    PATH order; absolute, existing, de-duplicated. No drive letter is assumed anywhere."""
+    cands: list[str] = []
+    names = ("bash.exe", "bash") if os.name == "nt" else ("bash",)
+    if os.name == "nt":
+        sysroot = vault.getenv("SystemRoot") or vault.getenv("WINDIR")   # recorded reads (RQ-4)
+        if sysroot:
+            cands.append(str(pathlib.Path(sysroot) / "System32" / "bash.exe"))
+    for d in (vault.getenv("PATH", "") or "").split(os.pathsep):
+        if not d:
+            continue
+        for n in names:
+            cands.append(str(pathlib.Path(d) / n))
+    out, seen = [], set()
+    for c in cands:
+        try:
+            if not os.path.isfile(c):
+                continue
+        except OSError:
+            continue
+        k = os.path.normcase(os.path.abspath(c))
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(os.path.abspath(c))
+    return out
+
+
+def probe_native_shell(path: str, timeout: int = 20) -> dict:
+    """Run the candidate. It is a usable bash only if the probe exits 0 AND prints a BASH_VERSION;
+    an exit code alone is a label (the cheat control in test_fossil_native_shell proves it)."""
+    pr = {"path": path, "exit": None, "bash_version": None, "uname": None, "capable": False, "error": None}
+    try:
+        p = subprocess.run([path, "-c", NATIVE_SHELL_PROBE], capture_output=True, text=True,
+                           timeout=timeout, errors="replace")
+        out = (p.stdout or "").replace("\x00", "")
+        m = re.search(r"BASH_VERSION=(\S+)", out)
+        pr["exit"] = p.returncode
+        pr["bash_version"] = m.group(1) if m else None
+        lines = [ln.strip() for ln in out.splitlines() if ln.strip() and not ln.startswith("BASH_VERSION=")]
+        pr["uname"] = lines[0][:60] if lines else None
+        pr["capable"] = p.returncode == 0 and pr["bash_version"] is not None
+    except (OSError, subprocess.TimeoutExpired) as e:
+        pr["error"] = "%s: %s" % (type(e).__name__, str(e)[:120])
+    return pr
+
+
+_NATIVE_SHELL: dict | None = None
+_NATIVE_SHELL_RESOLVED = False
+_NATIVE_SHELL_PROBES: list[dict] = []
+
+
+def native_shell(candidates: list[str] | None = None, refresh: bool = False) -> dict | None:
+    """The first candidate that PROVES it is a bash, with every probe made on the way in
+    ["probes"]; None when none does. Resolved once per process (explicit candidates are never
+    cached: they are the tests' instrument)."""
+    global _NATIVE_SHELL, _NATIVE_SHELL_RESOLVED, _NATIVE_SHELL_PROBES
+    if candidates is None and _NATIVE_SHELL_RESOLVED and not refresh:
+        return _NATIVE_SHELL
+    probes: list[dict] = []
+    chosen = None
+    for c in (candidates if candidates is not None else native_shell_candidates()):
+        pr = probe_native_shell(c)
+        probes.append(pr)
+        if pr["capable"]:
+            chosen = dict(pr)
+            chosen["probes"] = probes
+            break
+    if candidates is None:
+        _NATIVE_SHELL, _NATIVE_SHELL_RESOLVED, _NATIVE_SHELL_PROBES = chosen, True, probes
+    return chosen
+
+
+def native_shell_probes() -> list[dict]:
+    """The probes of the last process-level resolution (what was tried and refused)."""
+    return list(_NATIVE_SHELL_PROBES)
+
+
 # --------------------------------------------------------------------------- runners
 def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int,
            readonly: bool = False) -> dict:
@@ -320,9 +416,13 @@ def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | Non
                 "docker run --rm -v %s:/w%s -w /w %s bash -lc %s" % (
                     shlex.quote(vault.to_wsl(body)), ":ro" if readonly else "", shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
     elif runner == "native":
+        sh = native_shell()
+        if sh is None:
+            raise NativeShellUnavailable("no candidate bash passed the capability probe on %s: %s" % (
+                platform.node(), "; ".join("%s -> exit %s" % (p["path"], p["exit"]) for p in native_shell_probes()) or "no candidates"))
         b = str(body).replace("\\", "/")
         pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["bash", "-lc", pre + cmd]
+        full = [sh["path"], "-lc", pre + cmd]
     else:
         raise ValueError("unknown runner " + runner)
     try:
@@ -832,16 +932,34 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
                 return False
         return all_ok
 
-    before = {r[0]: r[1] for r in vault.hash_tree(workdir)} if recipe.get("track_products", True) else {}
-    do("probe", recipe.get("probe", []))
-    built = do("build", recipe.get("build", []))
-    ran = do("runs", recipe.get("runs", [])) if built else False
-    tested = do("tests", recipe.get("tests", [])) if built and recipe.get("tests") else None
-    if recipe.get("track_products", True):
+    # TECHNE-101: a native run names the shell that will execute it, resolved by capability.
+    # No capable shell is a fact about THIS HOST, so the run is refused with a typed reason,
+    # nothing is attempted, and nothing is persisted to the specimen's record.
+    blocked = None
+    if runner == "native":
+        sh = native_shell()
+        receipt["native_shell"] = sh if sh else {"path": None, "capable": False, "probes": native_shell_probes()}
+        if sh is None:
+            blocked = "NATIVE_SHELL_UNAVAILABLE"
+            receipt["blocked_reason"] = blocked
+            print("BLOCKED", specimen_id, blocked, "on host", platform.node(),
+                  "-- candidates refused:", ", ".join(p["path"] for p in native_shell_probes()) or "none", flush=True)
+    track = recipe.get("track_products", True) and not blocked
+    before = {r[0]: r[1] for r in vault.hash_tree(workdir)} if track else {}
+    if blocked:
+        built, ran, tested = False, False, None
+    else:
+        do("probe", recipe.get("probe", []))
+        built = do("build", recipe.get("build", []))
+        ran = do("runs", recipe.get("runs", [])) if built else False
+        tested = do("tests", recipe.get("tests", [])) if built and recipe.get("tests") else None
+    if track:
         after = vault.hash_tree(workdir)
         receipt["produced"] = [{"path": rel, "sha256": h, "bytes": n} for rel, h, n in after
                                if before.get(rel) != h][:200]
-    if built and ran:
+    if blocked:
+        receipt["classification"] = "BLOCKED_PLATFORM"
+    elif built and ran:
         receipt["classification"] = recipe.get("classification_if_ok", "RUNNABLE_NATIVE")
     elif built:
         receipt["classification"] = recipe.get("classification_if_built_only", "BUILDS_BUT_NOT_RUN")
@@ -863,6 +981,10 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     defects = validate_run_receipt(receipt)
     if defects:
         raise RuntimeError("run receipt fails its own environment check: " + "; ".join(defects))
+    if blocked:
+        receipt["persisted"] = False
+        print("BLOCKED", specimen_id, blocked, receipt["classification"], "(not persisted: a host fact is not a specimen fact)")
+        return receipt
     if not persist:
         receipt["persisted"] = False
         receipt["world_override_image"] = recipe.get("image")

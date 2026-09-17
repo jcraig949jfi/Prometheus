@@ -126,7 +126,17 @@ class Deliverer:
                     client = self._client()
                     if client is None:
                         conn.rollback()
-                        return self._idle(prev, stats, reason="no PEW client (no credential)")
+                        # No credential is a HOLD, not a failed tick: the
+                        # outbox keeps every row and delivery starts the tick
+                        # the token lands (PEW_OUTBOX_DESIGN.md; the s14 window
+                        # parked the deliverer 12 ticks after registration and
+                        # would have needed a manual unpark when Mnemosyne's
+                        # token arrived). The bound counts ticks that TRIED.
+                        st = self._write_state(verdict="HELD_NO_CREDENTIAL", pending_total=stats.get("pending", 0),
+                                               consecutive_idle=int(prev.get("consecutive_idle") or 0),
+                                               last_success_at=prev.get("last_success_at"), parked=False)
+                        self._log("held: no PEW credential; %d pending kept" % stats.get("pending", 0))
+                        return {"exit": 0, "verdict": "HELD_NO_CREDENTIAL", "state": st}
                 state, http, err, ref = self._deliver_one(client, r)
                 ob.mark(conn, r["event_id"], state=state, http=http, error=err, pew_reference=ref)
                 if state == "DELIVERED":

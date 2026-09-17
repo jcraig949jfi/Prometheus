@@ -278,3 +278,147 @@
                stands: engine-call timeouts >= 30 s, idempotent retries.
                Campaign 4 with one sequential runner and a paced PEW reader
                is inside the envelope Campaigns 1-3 ran in (0 errors).
+
+=======================================================================
+9. 2026-09-17 14:2xZ -- 9.0.1 BUILT AND MEASURED (repair order s1)
+=======================================================================
+
+    design    (a) connection POOL, exclusive per request (attempt 2's shape);
+              (b) request-path handles: PRAGMA wal_autocheckpoint=0 and
+                  journal_size_limit=64 MiB -- a request never checkpoints;
+              (c) Checkpointer thread on its own connection, busy handler OFF:
+                  wal_checkpoint(PASSIVE) every 2 s, TRUNCATE only when the
+                  passive result is clean (refused, never blocked, when a
+                  reader holds the WAL); ADAPTIVE: 50 ms cadence while the WAL
+                  file is above 8 MB, so backfills stay small;
+              (d) /v2/health.checkpointer: alive, runs, truncates, errors,
+                  last_run_age_s, wal_bytes, db_bytes, max_wal_bytes_seen;
+              (e) A6 journal appends via the threadpool (ordering kept, loop
+                  freed); uvicorn access log via a QueueHandler.
+              No schema, route, identity or contract-semantics change.
+              build sha256:3c7c3732ea13... at main 36f8608be.
+
+    tests     510 (3 new: request-path pragmas pinned; 1,500 commits leave a
+              > 1 MB WAL untouched by the request path and one checkpointer
+              tick backfills + truncates it; TRUNCATE with a reader holding
+              the WAL returns in < 2 s -- measured 5.6 s of blocking before
+              the busy handler was disabled; thread alive on /v2/health and
+              its death visible). D11 fixture 16/16 with kill -9 under the
+              checkpointer. The unit tests SAY they do not reproduce the
+              real-process race; the runs below are the acceptance.
+
+    acceptance runs: 20 worlds x 1,000 generations, scratch engine of the
+    candidate, disposable ledger on D:, keep-alive client (a connection per
+    request exhausted Windows' ephemeral ports at ~117 req/s in the very
+    first attempt: WinError 10048, a defect of the measurement, kept in
+    accept901_v1_fixed_cadence/R1 as the record)
+
+    v1 fixed 2 s cadence           R1  ABORTED (client/self-inflicted; see s9 text)  engine side: 5xx 1 stalls 0
+    v1 fixed 2 s cadence           R2  write  355.3 s  5xx 0  >5s 2  lock_max 10.09 s  wal_peak  88 MB  ck runs 122 trunc  73 err 0  restart 0.73 s  anchors 50/50
+    v1 fixed 2 s cadence           R3  write  190.9 s  5xx 0  >5s 2  lock_max 10.86 s  wal_peak 137 MB  ck runs  52 trunc  37 err 0  restart 0.54 s  anchors 50/50
+    v2 adaptive cadence (SHIPPED)  R1  write  187.9 s  5xx 0  >5s 0  lock_max  0.89 s  wal_peak  94 MB  ck runs  60 trunc  52 err 0  restart 0.51 s  anchors 50/50
+    v2 adaptive cadence (SHIPPED)  R2  write  370.4 s  5xx 0  >5s 0  lock_max  2.44 s  wal_peak  81 MB  ck runs 208 trunc 118 err 0  restart 0.53 s  anchors 50/50
+    v2 adaptive cadence (SHIPPED)  R3  write  188.7 s  5xx 0  >5s 0  lock_max  1.69 s  wal_peak  87 MB  ck runs  70 trunc  52 err 0  restart 0.52 s  anchors 50/50
+
+    v1 -> v2  the fixed 2 s cadence let a saturating writer build 90-137 MB
+              of WAL between resets; each such backfill competed with the
+              writers for the disk while one held the lock, and B3 measured
+              the wait exactly (write_lock max_wait 10.09 s in R2, 10.86 s in
+              R3; both writers stalled at the same instant, once per run).
+              v2's adaptive cadence keeps backfills small: lock max wait
+              0.89 / 2.44 / 1.69 s, 0 calls over 5 s, in all three regimes.
+              v2's R1 first attempt ABORTED because I deleted the live run's
+              scratch directory while cleaning orphans (FileNotFoundError on
+              a blob write -> 500); self-inflicted, rerun clean.
+
+    what the numbers say
+      - throughput 8-16x the deployed engine at the same shape (188-370 s vs
+        3,042 s): the per-request open/pragma/schema-check was most of every
+        call (POST p50 1-9 ms vs 16-67 ms)
+      - medians and p95 flat across quarters; no growth with history
+      - WAL: a sawtooth that resets every few seconds; peaks 77-103 MB only
+        under 100-240 generations/s of saturating load (two to three orders
+        above any campaign's rate); at campaign rates it stays in the KB
+      - write-lock waits now the ONLY residual tail (max 2.4 s) and visible
+        on /v2/health as before
+      - restart at full history 0.5 s; identity unchanged; anchors 50/50
+
+    operational consequence (recorded in the tests and the runbook): a
+    plain file copy of engine.db is NOT a complete backup with persistent
+    handles -- recent writes live in engine.db-wal until the checkpointer
+    resets it; the SQLite backup API (release tool preflight) is the method.
+
+    NOT done, by order: no storage-engine change; no generalised high-
+    concurrency guarantee beyond the three declared regimes; no retention
+    change. D16 (idempotency keys on the remaining routes) still deferred.
+
+=======================================================================
+10. 2026-09-17 14:4xZ -- run-to-run VARIANCE on the same code; the machine is shared
+=======================================================================
+
+    v3 (build d4b8283c = v2 + Idempotency-Key on import; the checkpointer
+    and pool byte-identical to v2's) at 14:30-14:44Z:
+      R1 0 stalls; R2 NINE stalls 6-12 s (write-lock max wait 12.3 s);
+      R3 two stalls of 15.7 s (lock max 15.75 s). WAL in R2 stayed SMALL
+      (10-30 MB), so the v1 "big backfill" mechanism does not explain v3.
+    What was different: Vivarium's production window ran on this machine
+    at the same time (83 events on 8811 between 14:33 and 14:41Z, plus its
+    migration I/O), and Windows Defender (MsMpEng) had consumed 5,190 CPU-
+    seconds -- more than any other process -- with NO path exclusions
+    configured: every WAL append, checkpoint backfill and blob write on
+    D:\Prometheus-data\sfe (production) and the scratch dir is scanned in
+    real time.
+    A write-lock wait of 12-15 s means one writer's transaction took that
+    long; inside a transaction the only slow thing is I/O. Concurrent disk
+    load from another process plus real-time scanning of the files being
+    written is the candidate; the v2 runs (0/0/0) happened in a quieter
+    window. Being measured now: R2 again with a py-spy stall watchdog
+    (engine stacks captured whenever a request exceeds 4 s), first WITHOUT
+    and then WITH a Defender path exclusion on the two data directories.
+    Receipts: accept901_v3_d4b8283c_contended/ (the variance run),
+    accept901/ (the diagnosed runs).
+
+=======================================================================
+11. 2026-09-17 15:1xZ -- the residual DIAGNOSED: the checkpointer's own TRUNCATE blocked writers
+=======================================================================
+
+    controlled A/B on the v2/v3 checkpointer (TRUNCATE whenever the passive
+    result was clean), R2 shape (2 writers + tight reader), MsMpEng CPU
+    sampled every 5 s beside the WAL:
+      A1  no Defender exclusion        18 stalls (9 lock-step PAIRS, 5-13 s),
+                                        onset t=265 s; MsMpEng 0.1-0.4 CPU-s per
+                                        5 s throughout, no spike at any stall
+      B1  scratch dir excluded         26 stalls (13 pairs), onset t=270 s;
+                                        MsMpEng delta 49.5 s over the run
+      -> Defender FALSIFIED as the cause (exclusion changes nothing; its CPU
+         is flat when the stalls happen). Vivarium's concurrent window was
+         also over by then (last production event 14:41Z; A1 ran 15:00-15:08Z).
+    The tell was in the pairing: BOTH writers wait the same 5-13 s at the
+    same instant, and B3 reports the wait as write-lock acquisition time.
+    Neither writer holds the lock while both wait; the only other
+    connection is the checkpointer's. SQLite's own documentation for
+    wal_checkpoint(FULL | RESTART | TRUNCATE): "blocks new database writers
+    while it is pending" -- for the whole backfill + database fsync. With the
+    busy handler off the call is REFUSED if a writer is active at entry, but
+    once it gets in (a gap between two writers' transactions, frequent at
+    100-240 gen/s) every writer arriving during its 5-13 s of work waits.
+    Onset at ~265 s in both runs = the point where the database is large
+    enough (~55 MB) for backfill + fsync to take seconds. The lock-step
+    pairs in v1 (s9) were the same mechanism, mis-attributed to "big
+    backfills competing for disk".
+
+    fix (build f528f235): TRUNCATE only when the engine has been IDLE for
+    WAL_IDLE_S = 3 s (no write-lock acquisition, read from the B3 counter);
+    under load PASSIVE only, which never blocks anyone. SQLite restarts the
+    WAL by itself when a writer finds it fully backfilled, and
+    journal_size_limit truncates the file at that restart -- so the file is
+    bounded without a writer-blocking call. Unit test pins both branches
+    (busy engine -> no TRUNCATE; idle -> TRUNCATE; reader-held WAL -> refused
+    in < 2 s). 511 passed.
+
+    measurement tool: added a stall watchdog that runs py-spy against the
+    engine whenever a request exceeds 4 s (the 15:1x runs); its first two
+    attempts recorded no stacks (a filter bug, then a broken string literal
+    from the editing tool) -- kept in accept901_v4_watchdog_runs/ as the
+    record; the mechanism was settled from the lock-step timing + B3 +
+    SQLite's documented semantics, not from a stack.

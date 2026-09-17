@@ -126,8 +126,17 @@ def step_migrate(out: dict) -> bool:
             out["migrate"] = {"ok": False, "reason": "VIV_SCHEMA is not viv; the window migrates PRODUCTION only"}
             return False
         with conn.cursor() as cur:
-            cur.execute("SELECT count(*) FROM viv.research_experiment_queue WHERE status IN ('completed','failed','cancelled')")
-            terminal_before = cur.fetchone()[0]
+            # 007 backfills PRE-RELEASE rows (created before the window's cutoff); after the
+            # window, canary/campaign rows carry their own attempts and steps
+            cur.execute("SELECT count(*) FROM viv.research_experiment_queue q WHERE status IN ('completed','failed','cancelled') "
+                        "AND created_at < TIMESTAMPTZ '2026-09-17 14:00:00+00'"
+                        + (" AND NOT EXISTS (SELECT 1 FROM viv.execution_attempt a WHERE a.experiment_id = q.experiment_id "
+                           "AND coalesce(a.claim_grant->>'backfill', '') <> '007')" if _exists(cur, "viv.execution_attempt") else ""))
+            terminal_before = cur.fetchone()[0]                 # pre-release rows with no attempt of their own
+            steps_before = 0
+            if _exists(cur, "viv.execution_step"):
+                cur.execute("SELECT count(*) FROM viv.execution_step")
+                steps_before = cur.fetchone()[0]
             cur.execute("SELECT count(*) FROM viv.research_experiment_queue")
             rows_before = cur.fetchone()[0]
             # every old row, hashed over its PRE-migration columns (rehearse_window.py proved this on a copy)
@@ -141,13 +150,14 @@ def step_migrate(out: dict) -> bool:
         conn.rollback()
         applied = _db.apply_migrations(conn)
         with conn.cursor() as cur:
-            cur.execute("SELECT count(*) FROM viv.execution_attempt")
+            cur.execute("SELECT count(*) FROM viv.execution_attempt WHERE claim_grant->>'backfill' = '007'")
             attempts = cur.fetchone()[0]
             cur.execute("SELECT count(*) FROM viv.execution_step")
-            steps = cur.fetchone()[0]
+            steps = cur.fetchone()[0] - steps_before                # fabricated BY the migration
             cur.execute("SELECT count(*) FROM viv.research_experiment_queue")
             rows_after = cur.fetchone()[0]
-            cur.execute("SELECT count(*) FROM viv.execution_attempt WHERE termination->>'termination_reason' = 'UNKNOWN'")
+            cur.execute("SELECT count(*) FROM viv.execution_attempt WHERE termination->>'termination_reason' = 'UNKNOWN' "
+                        "AND claim_grant->>'backfill' = '007'")
             unknown = cur.fetchone()[0]
             cur.execute(proj)
             after = dict(cur.fetchall())
@@ -162,6 +172,11 @@ def step_migrate(out: dict) -> bool:
         return ok
     finally:
         conn.close()
+
+
+def _exists(cur, rel: str) -> bool:
+    cur.execute("SELECT to_regclass(%s)", (rel,))
+    return cur.fetchone()[0] is not None
 
 
 def step_verify_old_rows(out: dict, sample_ids: list) -> bool:
@@ -239,7 +254,7 @@ def main(argv=None) -> int:
             ok = step_verify_old_rows(out, [s for s in a.sample.split(",") if s])
         elif step == "advance":
             prep = data_dir / ("prepare_m2-window-%s.json" % a.confirm)
-            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance", "--register",
+            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance",
                                 "--receipt", str(prep)],
                                capture_output=True, text=True, cwd=str(VIVARIUM), timeout=1800)
             try:

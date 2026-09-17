@@ -2,11 +2,11 @@
  "_what_this_is": "The exact source constituting the SFE build deployed on M2 -- THE PRODUCTION ENGINE from 2026-09-16 (operator: the SFE ecosystem runs on M2; M1's ledger stays on M1 as an archive). Recovery record independent of any worktree's git state.",
  "engine": "M2 / SPECTREX5 -- PRODUCTION",
  "endpoint": "https://192.168.1.191:8811",
- "pinned_at": "2026-09-17T10:51:44Z",
+ "pinned_at": "2026-09-17T17:01:23Z",
  "pinned_by": "Daedalus[m2-d6ecd70b]",
  "schema_version": 9,
- "source_commit_containing_build": "1b9286292e3fb7755282a468f55bc97564ab9382",
- "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+ "source_commit_containing_build": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+ "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
  "engine_instance_id": "eng_906356f7fb1da180131f9290",
  "code_from": "D:\\Prometheus-worktrees\\daedalus-sfengine (detached)",
  "data_dir": "D:\\Prometheus-data\\sfe",
@@ -21,6 +21,9 @@
   },
   {
    "2026-09-17T10:51:44Z": "point release schema 9: 1b9286292e3f / sha256:bc8d3a0caea47"
+  },
+  {
+   "2026-09-17T17:01:23Z": "release (schema 9): b0d75218382d / sha256:699ca0f952448"
   }
  ],
  "not_shown": "scoped reads (/v2/read/*) are not exercised by the harness; they are covered by unit tests and gate-probed for scoping only. POST scoping is the gate's stated limit.",

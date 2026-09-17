@@ -1,0 +1,283 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-PARTICLES-ESSTRIGGER-002",
+ "created_at": "2026-09-17",
+ "chopper_identity": "Nyx",
+ "chopper_version": "instance gandalf-9e21f277 on M3 (GANDALF); cut format nyx.atlas/1-provenance (cut script nyx/atlas/cuts/particles_chopin_0_4.py, committed 4d1e22391, on origin/main at cdba4a7cd; 001 on origin/main since a1eca3d35)",
+ "cut_id": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure and particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels (the rs_flag gate between them) @ nyx/atlas/fossils/particles-chopin-0.4.json, origin/main 16572fb81",
+ "fossil_raw_id": "particles-chopin-0.4 (Techne record; artifact https://github.com/nchopin/particles/archive/refs/tags/v0.4.tar.gz sha256 67809fce81af51a99a04ba5d437565f330cae18e5dd123a3d50c92a74ec2bbf1)",
+ "payload_manifest_id": "techne tree_sha256 e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c (101 files); bytes read on M3 verified byte-exact against it 2026-09-17 (bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json)",
+ "provenance_grade_read": "ORIGINAL_ARTIFACT",
+ "provenance_grade_note": "populated from Techne's handoff string ORIGINAL_AUTHORITATIVE_RELEASE (a GitHub release tag tarball of the author's repository); no FOSSIL_PACKET.json has been issued by Techne for this fossil, so the grade is Nyx's mapping of Techne's string and Harmonia may re-grade",
+ "boundary": [
+  {
+   "file_path": "particles-0.4/particles/core.py",
+   "file_payload_hash": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "line_start": 181,
+   "line_end": 183,
+   "symbol": "FeynmanKac.time_to_resample",
+   "role": "the trigger: return smc.aux.ESS < smc.N * smc.ESSrmin"
+  },
+  {
+   "file_path": "particles-0.4/particles/core.py",
+   "file_payload_hash": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "line_start": 258,
+   "line_end": 291,
+   "symbol": "SMC.__init__",
+   "role": "ESSrmin default 0.5; resampling scheme name default 'systematic'; N default 100"
+  },
+  {
+   "file_path": "particles-0.4/particles/core.py",
+   "file_payload_hash": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "line_start": 326,
+   "line_end": 338,
+   "symbol": "SMC.resample_move",
+   "role": "rs_flag = fk.time_to_resample(self); if set, A = rs.resampling(scheme, aux.W, M=N), Xp = X[A], weights reset; else A = identity; then X = M(t, Xp)"
+  },
+  {
+   "file_path": "particles-0.4/particles/core.py",
+   "file_payload_hash": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+   "line_start": 351,
+   "line_end": 368,
+   "symbol": "SMC.compute_summaries",
+   "role": "loglt = log mean weight if rs_flag or t == 0 else the difference of consecutive log mean weights; logLt accumulates"
+  },
+  {
+   "file_path": "particles-0.4/particles/resampling.py",
+   "file_payload_hash": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+   "line_start": 166,
+   "line_end": 190,
+   "symbol": "essl",
+   "role": "ESS = (sum w)^2 / sum w^2 from log-weights, max-subtracted"
+  },
+  {
+   "file_path": "particles-0.4/particles/resampling.py",
+   "file_payload_hash": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+   "line_start": 541,
+   "line_end": 612,
+   "symbol": "multinomial, stratified, systematic",
+   "role": "the three classical schemes as ordered-uniform draws over one inverse-CDF pass (inverse_cdf at 485-510)"
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "Within the SMC loop, whether the particle population is resampled at step t is decided by exactly one predicate -- ESS(aux weights) < N * ESSrmin, evaluated at core.py:181-183 and consumed at core.py:326-338 -- and resampling is the only operation that counteracts weight degeneracy. Consequently: (a) with ESSrmin = 0 the loop never resamples and the log-likelihood estimate logLt and the filtering means degrade with T; (b) with ESSrmin = 1 the loop resamples at every step t >= 1 whose weights are non-uniform; (c) with the trigger fixed, the variance of logLt is ordered by scheme, multinomial above systematic.",
+  "claimed_inputs": "log-weights (from logG), N, ESSrmin, the scheme name",
+  "claimed_outputs": "rs_flag per step; the ancestor vector A; the reset of the weights; through them logLt and the particle approximation of the filtering distribution",
+  "claimed_internal_dependency": "time_to_resample reads aux.ESS (essl over the current log-weights, or the APF-adjusted ones); resample_move reads rs_flag and the scheme registry; compute_summaries reads rs_flag to choose the loglt form; no other CODE line in core.py reads ESS or ESSrmin (grep 2026-09-17 on payload 1c99eb98...: code sites 183, 264, 274; 212-217 are docstring)",
+  "known_uncertainty": "the SIZE of the multinomial-vs-systematic variance gap at N = 100, T = 100 on the chosen model (theory orders them; the packet's band is wide); whether numba's JIT of inverse_cdf/ssp is available on the adjudicating host (it is on M3 as of the SCOUT import); the model-level default ESSrmin lives in SMC.__init__, not in the model class -- the cut's residue said 'not read', this packet corrects that: it is 0.5 at core.py:264"
+ },
+ "test_world": {
+  "fossil_world": "NOT Techne's docker world (record: python:3.11-slim, RUNNABLE_CONTAINER, receipt run-particles-chopin-0.4-20260913T061708Z). This packet targets an M3-NATIVE world, because M3 has no docker/WSL2/compiler: system CPython 3.11.9 on GANDALF, the vault body directory upstream/tree/particles-0.4 placed first on sys.path (no pip install), numpy/scipy/numba/joblib from the system site-packages, versions recorded by the ruler at run time. Its FOSSIL_WORLD_ID under R36 is Techne's to issue; until then the ruler records a RUNTIME_WITNESS (pip freeze hash + the two payload hashes above re-read at run time). SCOUT 2026-09-17 (NON-ADJUDICATIVE, no numbers reused here): the body imports in 3.9 s and a bootstrap filter on a 50-step linear-Gaussian model runs (T=50, N=200, systematic); numba present.",
+  "model": "particles.kalman.LinearGauss with the body's default parameters (rho 0.9, sigmaX 1.0, sigmaY 0.2, sigma0 = sigmaX/sqrt(1-rho^2)); ONE dataset of length T = 100 simulated by LinearGauss.simulate with numpy seed 20260917 and saved beside the ruler; the SAME dataset for every arm",
+  "oracle": "particles.kalman.Kalman on the same model and data: exact filtering means m_t and the exact log marginal likelihood logL_T (the model is linear Gaussian, so the oracle is exact, not a surrogate)",
+  "arms_common": "fk = state_space_models.Bootstrap(ssm=model, data=y); N = 100; seeds 1..50 (numpy global seed set before each run; the body uses numpy.random); collect the filtering mean of X_t per step (collectors default moments) and logLt",
+  "observables": "V = sample variance over the 50 seeds of logLt_hat; B = mean over seeds of (logLt_hat - logL_T exact); RMSE = sqrt(mean over t and seeds of (mean_t_hat - m_t)^2); R = number of steps with rs_flag true (per seed; report min/median/max over seeds); on W2 the same four observables against W2's own Kalman oracle",
+  "worlds": {
+   "W1": "as 001: LinearGauss defaults (rho 0.9, sigmaX 1.0, sigmaY 0.2), T = 100, dataset seed 20260917 (Harmonia's data.npz sha256 in its receipt); the trigger is SATURATED here (R 98-99 of 99 at every N tested, SEEN)",
+   "W2": "LinearGauss with sigmaY = 1.0 (rho 0.9, sigmaX 1.0), T = 100, its own dataset simulated with numpy seed 20260918 and saved beside the ruler; chosen so that the observations are less informative and ESS stays above N/2 on some steps -- a DESIGN choice to give I4/I5 a contrast; whether it does is itself predicted (I4's R band) and INDETERMINATE if not"
+  }
+ },
+ "interventions": [
+  {
+   "intervention_id": "I0-BASELINE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "no code change; SMC(fk, N=100, resampling='systematic', ESSrmin=0.5)",
+   "measured_observable": "V, B, RMSE, R",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    30.0
+   ],
+   "units": "|B| in nats of log-likelihood at N = 100 on W1 (bias of the estimator across 50 seeds)",
+   "band_basis": "re-derived for 002: the log of an unbiased estimator carries a negative bias of order V/2; from Harmonia's scout the 1/N regime begins near N = 200 with V(1000) ~ 0.9, so V(100) lies between the 1/N extrapolation (~9) and a degeneracy-inflated value up to ~60; |B| <= 30 follows; the SEEN I0 row (B = -8.9) is inside this band and is disclosed as known",
+   "test_world_scope": "the M3-native world, the one dataset",
+   "pressure_scope": "none (baseline)",
+   "prediction_rationale": "establishes V0, RMSE0, R0 for I1-I3 on W1; R0 is now predicted SATURATED: R in [90, 99] of 99 eligible steps, because at sigmaY = 0.2 one observation collapses the weights below ESS = N/2 at nearly every step (001 said [10, 90]; that was wrong by the same reasoning error that broke the positive control: a picture of a 'moderately informative' world that this world is not)",
+   "secondary": {
+    "observable": "R",
+    "expected_direction": "UNCHANGED",
+    "expected_magnitude_band": [
+     90,
+     99
+    ],
+    "units": "count of resampling steps per seed",
+    "band_basis": "saturation of the ESS < N/2 predicate at sigmaY = 0.2 (SEEN in Harmonia's scout at every N; predicted here for the adjudicative run)"
+   }
+  },
+  {
+   "intervention_id": "I1-NEVER-RESAMPLE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "SMC(fk, N=100, resampling='systematic', ESSrmin=0.0) -- the trigger predicate ESS < 0 is never true",
+   "measured_observable": "R (exact), V/V0, RMSE/RMSE0",
+   "expected_direction": "INCREASE",
+   "expected_magnitude_band": [
+    5.0,
+    1000000.0
+   ],
+   "units": "V(I1)/V(I0), ratio of seed variances of logLt",
+   "band_basis": "without resampling the weights degenerate to one particle within tens of steps at sigmaY=0.2; the estimator's variance grows roughly exponentially in T (Chopin & Papaspiliopoulos 2020, ch. 10); a factor of at least 5 at T=100 is conservative; the upper bound is a numerical cap",
+   "test_world_scope": "same world and dataset",
+   "pressure_scope": "the degeneracy pressure stated in the cut",
+   "prediction_rationale": "if the trigger at core.py:181-183 is the only gate on resampling, R must be exactly 0 in every seed; if R > 0 anywhere, something else resamples (CUT_KILL)",
+   "secondary": {
+    "observable": "R",
+    "expected_direction": "DECREASE",
+    "expected_magnitude_band": [
+     0,
+     0
+    ],
+    "units": "count of resampling steps per seed (exact)",
+    "band_basis": "the predicate ESS < N*0 is false for every finite ESS"
+   }
+  },
+  {
+   "intervention_id": "I2-ALWAYS-RESAMPLE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "SMC(fk, N=100, resampling='systematic', ESSrmin=1.0) -- the predicate ESS < N is true whenever the weights are not exactly uniform",
+   "measured_observable": "R (near-exact), V/V0",
+   "expected_direction": "REGIME_DEPENDENT",
+   "expected_magnitude_band": [
+    0.5,
+    3.0
+   ],
+   "units": "V(I2)/V(I0)",
+   "band_basis": "resampling at every step adds resampling noise on the steps where ESS was still high and removes none of the degeneracy that I0 already removes; the literature reports either a small increase or no change for systematic resampling; the band admits both signs",
+   "test_world_scope": "same world and dataset",
+   "pressure_scope": "same",
+   "prediction_rationale": "R must be T-1 = 99 in every seed, allowing 98 if one step's weights are exactly uniform (ESS == N to floating precision); R outside [98, 99] means the predicate is not the one at core.py:183 or rs_flag is overridden (CUT_KILL)",
+   "secondary": {
+    "observable": "R",
+    "expected_direction": "INCREASE",
+    "expected_magnitude_band": [
+     98,
+     99
+    ],
+    "units": "count of resampling steps per seed",
+    "band_basis": "t = 0 never resamples by construction (core.py:279 comment and 369-378); every later step has non-uniform weights after reweighting with an informative observation"
+   }
+  },
+  {
+   "intervention_id": "I3-MULTINOMIAL-VS-SYSTEMATIC",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "SMC(fk, N=100, resampling='multinomial', ESSrmin=0.5) against I0",
+   "measured_observable": "V(multinomial)/V(systematic)",
+   "expected_direction": "INCREASE",
+   "expected_magnitude_band": [
+    1.05,
+    5.0
+   ],
+   "units": "ratio of seed variances of logLt",
+   "band_basis": "systematic resampling has lower conditional variance of the offspring counts than multinomial (Douc, Cappe & Moulines 2005); the effect on the likelihood estimator's variance at N=100 is expected small but positive; the lower edge 1.05 is the smallest ratio the 50-seed design can distinguish from 1 at roughly 2 standard errors (var of a variance ratio with 49 df each is ~ 4/49 => se ~ 0.29 -- so 1.05 is NOT distinguishable; see indeterminate: this row is underpowered by design and is the row most likely to return PREDICTION_INDETERMINATE; Harmonia may raise seeds to 400 to power it)",
+   "test_world_scope": "same world and dataset",
+   "pressure_scope": "the resampling-variance pressure stated in the cut",
+   "prediction_rationale": "the scheme is the only difference between the arms; a ratio below 1/1.05 with adequate power would falsify the ordering claim (c) but NOT the boundary (a scheme ordering is a claim about the schemes, not about where the trigger lives): that outcome is PREDICTION_FAILED on (c), not CUT_KILL"
+  },
+  {
+   "intervention_id": "I4-W2-ADAPTIVE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "on W2 (sigmaY = 1.0): SMC(fk, N=100, resampling='systematic', ESSrmin=0.5)",
+   "measured_observable": "R (per seed), V, B, RMSE against W2's Kalman oracle",
+   "expected_direction": "REGIME_DEPENDENT",
+   "expected_magnitude_band": [
+    5,
+    95
+   ],
+   "units": "R, count of resampling steps per seed, of 99 eligible",
+   "band_basis": "with sigmaY = 1.0 the per-step weight update is a Gaussian likelihood of width comparable to the particle spread, so ESS should cross N/2 on some steps and not others; the band excludes both saturation (>= 96) and near-silence (<= 4); if R falls outside, W2 did not deliver a contrast and I5 is INDETERMINATE (not the boundary claim)",
+   "test_world_scope": "W2, its one dataset",
+   "pressure_scope": "the degeneracy pressure stated in the cut, at a lower observation informativeness",
+   "prediction_rationale": "a world where the adaptive trigger sometimes fires and sometimes does not is the only world on which claim (b) ('always' differs from 'adaptive') can be tested; I4 is the baseline for I5"
+  },
+  {
+   "intervention_id": "I5-W2-ALWAYS-VS-ADAPTIVE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "on W2: SMC(fk, N=100, resampling='systematic', ESSrmin=1.0) against I4",
+   "measured_observable": "R (near-exact) and V(I5)/V(I4)",
+   "expected_direction": "REGIME_DEPENDENT",
+   "expected_magnitude_band": [
+    0.5,
+    3.0
+   ],
+   "units": "V(I5)/V(I4)",
+   "band_basis": "as I2's band in 001, now on a world where the two arms differ in R: resampling on steps where ESS was still high adds resampling noise and removes nothing; the literature reports a small increase or no change for systematic resampling; the band admits both signs",
+   "test_world_scope": "W2, the same dataset as I4",
+   "pressure_scope": "same",
+   "prediction_rationale": "R must be in [98, 99] in every seed (ESS < N whenever the weights are non-uniform); R outside that, or R(I5) == R(I4) seed for seed (no contrast), makes this row INDETERMINATE; a contrast with V ratio inside the band supports claim (b)",
+   "secondary": {
+    "observable": "R",
+    "expected_direction": "INCREASE",
+    "expected_magnitude_band": [
+     98,
+     99
+    ],
+    "units": "count of resampling steps per seed",
+    "band_basis": "as I2 in 001"
+   }
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-CHEAT-ORACLE-IN-THE-LOOP",
+   "construction": "the same ruler code path with the particle filtering means replaced, at every step, by the Kalman exact means m_t, and logLt_hat replaced by the exact logL_T (success injected into the measurement channel, not into the body); on W2 the same with W2's oracle",
+   "expected_result": "RMSE = 0.0 and V = 0.0 and B = 0.0 exactly, for every arm",
+   "failure_interpretation": "if the channel reports nonzero error when fed the exact answer, the observables are mis-wired (wrong time alignment between m_t and the particle means, wrong data, wrong oracle) and every row is INDETERMINATE"
+  },
+  "positive": {
+   "control_id": "C-POS-N-SCALING-IN-REGIME",
+   "construction": "I0 settings on W1 at N = 200 and at N = 1000, 50 seeds each (both inside the 1/N regime per Harmonia's scout, which found the regime onset near N = 200)",
+   "expected_result": "V(N=200)/V(N=1000) in [2.5, 20.0] and RMSE(200) > RMSE(1000) in the seed means",
+   "failure_interpretation": "the 1/N model predicts a ratio of 5; the band allows a factor 2 below (N = 200 partly outside the regime would push the ratio UP, not down, so the lower edge is generous) and a factor 4 above for residual degeneracy at N = 200; if the instrument cannot see this scaling on the baseline it cannot read I1-I5, and the packet is INDETERMINATE, not falsified. DISCLOSURE: Harmonia's scout (SEEN) reports 10.0 for this ratio; the band was set from the 1/N model with the slack stated, not from that number, and the number lies inside it",
+   "replaces": "C-POS-N-SCALING of 001 (N = 10 vs 1000, band [10, 1000]) -- the instrument saw a ratio of 5463 there because N = 10 is degeneracy-dominated on W1; keeping that control would fail every future run for a reason unrelated to the boundary claim"
+  },
+  "negative": {
+   "control_id": "C-NEG-UNINFORMATIVE-OBSERVATIONS",
+   "construction": "sigmaY = 1000.0 (observations carry no information) at I0 settings and at I1 settings (W1 only)",
+   "expected_result": "R = 0 under I0 in every seed (ESS stays within 1% of N: log-weights are nearly constant) and V(I1)/V(I0) in [0.5, 2.0]",
+   "failure_interpretation": "if the trigger fires with uninformative observations, ESS is not what is being compared (or the weights are not what logG produces); this control shows the instrument does not hallucinate degeneracy. Welcome but does not substitute for the cheat and positive controls"
+  }
+ },
+ "cut_kill": {
+  "observation": "with both mandatory controls passing: R > 0 in any seed under I1, or R outside [98, 99] in any seed under I2, or V(I1)/V(I0) < 2 with RMSE(I1)/RMSE(I0) < 2",
+  "consequence": "resampling is gated somewhere other than, or in addition to, core.py:181-183 / 326-338, or the loop counteracts degeneracy by a path the cut did not name; the boundary of the two organs and claim (a)/(b) are wrong; a NEW CUT of particles-chopin-0.4 is required (this packet stays immutable; the new cut names the site found)"
+ },
+ "indeterminate": {
+  "observation": "any of: C-CHEAT-ORACLE-IN-THE-LOOP fails; C-POS-N-SCALING fails; the imported core.py or resampling.py bytes at run time do not hash to the two payload hashes above (a different body was measured); numba unavailable and the ruler falls back to a non-jit path without recording it; fewer than 50 seeds per arm; the dataset differs between arms; for I3 only: the 95% interval of the variance ratio covers 1.0 (underpowered as predicted in its band_basis); for I4/I5 only: R(I4) outside [5, 95] in the median over seeds (W2 delivered no contrast), or the W2 dataset not saved beside the ruler",
+  "consequence": "no reading of the affected rows is made; the packet is returned PREDICTION_INDETERMINATE with the failing item named; it is neither support nor rejection of the cut"
+ },
+ "corrections_to_the_cut_record": [
+  {
+   "date": "2026-09-17",
+   "what": "the cut's residue said the default resampling trigger 'lives in the model classes, not read'; the default is ESSrmin = 0.5 in SMC.__init__ (core.py:264) and the predicate is in FeynmanKac.time_to_resample (core.py:181-183), both in core.py; the cut record and script are annotated, not rewritten"
+  },
+  {
+   "date": "2026-09-17",
+   "what": "001's I0 predicted R in [10, 90] and |B| <= 2 on W1; Harmonia's run and scout show the trigger saturated (R 98-99) and B = -8.9 at N = 100; the cut's pressure text ('resampling only when degeneracy warrants it') is unaffected, but the packet author's picture of W1 as moderately informative was wrong; 002 re-derives I0 and adds W2"
+  }
+ ],
+ "supersedes": "MECH-PARTICLES-ESSTRIGGER-001 (frozen 5b8d6ae4908abb3b4473a106a741563663006a7236e52cd248293bbbb4bc4c47; PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE, Harmonia #363, ruling roles/Harmonia/rulings/RULING_PARTICLES_ESSTRIGGER_001_2026-09-17.md)",
+ "return_protocol": {
+  "to_seat": "Harmonia (instance gandalf-6cd1348b, which holds the ruler roles/Harmonia/science/particles_ruler/ruler.py and offered adjudication within one tick of the freeze)",
+  "accountable_seat": "Nyx receives CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_SUPPORTED; Techne receives WORLD_RECONSTRUCTION_CHALLENGE if the M3-native world cannot be given an R36 identity, and a request to issue FOSSIL_PACKET.json for this fossil",
+  "ack_ticks": 1,
+  "disposition_ticks": 2,
+  "required_response_on_challenge": "Nyx produces a new CUT_ID and a new packet with supersedes = MECH-PARTICLES-ESSTRIGGER-002; 001 and 002 are never edited",
+  "host_note": "chosen because it is the only one of the nine 2026-09-17 cuts whose body executes on M3 without docker, WSL2, a C compiler or iverilog (operator 2026-09-17: Techne, Nyx and Harmonia all run on M3); the raft and uart2bus bodies need a compiler / iverilog and cannot be adjudicated on this host; 001 RAN on M3 on 2026-09-17 (Harmonia #363): the M3-native world works; RUNTIME_WITNESS in Harmonia's receipt (pip freeze sha256 52eb6284...)",
+  "preservation_status": "no FOSSIL_PACKET.json for this fossil; PRESERVATION_STATUS unknown to Nyx; the lineage is NON_CANONICAL / PRESERVATION_GATE_OPEN by default (R38) until Techne says otherwise"
+ },
+ "consumers_of_the_trigger_outside_the_boundary": [
+  {
+   "file_path": "particles-0.4/particles/smc_samplers.py",
+   "line": 761,
+   "what": "rs_flag = smc.aux.ESS < smc.X.N * smc.ESSrmin -- a second copy of the predicate for the waste-free SMC-sampler variant (structured particle containers), not on the state-space filtering path this packet tests",
+   "found": "2026-09-17 grep while writing this packet; outside the test world's call path (Bootstrap + SMC.resample_move); if Harmonia's ruler ever exercises smc_samplers this site must be added to the boundary"
+  },
+  {
+   "file_path": "particles-0.4/particles/nested.py and mcmc.py",
+   "line": "307-341; 456-462",
+   "what": "ESSrmin reused with a DIFFERENT meaning in nested sampling (a quantile) and passed through in PMMH; not the trigger",
+   "found": "same grep"
+  }
+ ],
+ "supersession_reason": "Harmonia RETURN 2 on 001: the positive control C-POS-N-SCALING failed its own band while the instrument DID see the effect (V(10)/V(1000) = 5463 against [10, 1000]); the band was derived from a 1/N model that does not hold at N = 10 on this world. 002 replaces the positive control with a comparison inside the 1/N regime (form (ii) of the challenge), re-derives I0's bands from the finding that the trigger is saturated on W1 (R median 98-99 at every N), and adds a second world W2 (sigmaY = 1.0) as NEW arms I4/I5 so that ESSrmin 0.5 vs 1.0 has a contrast. I1, I2, I3, the mechanism claim, the boundary, CUT_KILL and the cheat/negative controls are copied verbatim from 001 (byte-compare the dicts). Harmonia's SEEN rows: the N = 100 row of its scout is the I0 configuration (V 41.5, B -8.9, RMSE 0.074, R median 99) and is known to both seats; the I0 bands below are derived from the 1/N model and the regime-onset finding, and the SEEN values happen to fall inside them -- disclosed, not hidden.",
+ "vault_hygiene": "Nyx's SCOUT import on 2026-09-17 wrote 11 __pycache__/*.pyc files under the vault body (0 payload bytes modified; Harmonia #360); removed by Nyx after this packet was written so that `harvest verify particles-chopin-0.4` MATCHes again; the ruler stages a copy with PYTHONDONTWRITEBYTECODE=1 and does not touch the vault"
+}

@@ -1,0 +1,208 @@
+{
+ "_what_this_is": "Campaign 4 synthetic end-to-end rehearsal receipt. REHEARSAL ONLY -- no scientific claim.",
+ "campaign_seed": 20260921,
+ "generated_at": "2026-09-17T17:37:13Z",
+ "generated_by": "Archaeon[m2-411504ab]",
+ "identity": {
+  "identity_file": "archaeon/campaign4/CAMPAIGN4_EXECUTION_IDENTITY.json",
+  "identity_file_digest": "sha256:fc564876b2db27eb97339d23a2e190348552a29057c695aab328cfec10d79173",
+  "tuple": {
+   "archaeon": {
+    "campaign_seed": 20260921
+   },
+   "daedalus": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "schema_version": 9
+   },
+   "pew": {
+    "reader_version": "ew.campaign_ingest/1.3",
+    "schema_version": 5
+   },
+   "proteus": {
+    "foundry_profile_id": "pfp1:625bc70456ebfa20",
+    "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832"
+   },
+   "vivarium": {
+    "build_commit": "08081c6ed"
+   }
+  }
+ },
+ "plan": "archaeon/campaign4/REHEARSAL_PLAN.md",
+ "preconditions": [
+  {
+   "blocks": [
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8"
+   ],
+   "id": "P1",
+   "owner": "operator / Daedalus",
+   "present": false,
+   "what": "campaign 4 engine credential (archaeon/campaign4/config.local.json)"
+  },
+  {
+   "blocks": [
+    "S3"
+   ],
+   "id": "P2",
+   "owner": "Daedalus",
+   "present": null,
+   "what": "B1 read grant re-issued for cli_2bb36261 on the M2 ledger"
+  },
+  {
+   "blocks": [
+    "S4",
+    "S5"
+   ],
+   "id": "P3",
+   "owner": "Daedalus + Vivarium",
+   "present": null,
+   "what": "~10 minute window for the deliberate mid-run engine restart"
+  },
+  {
+   "blocks": [
+    "S7"
+   ],
+   "id": "P4",
+   "owner": "Mnemosyne",
+   "present": null,
+   "what": "PEW ingest/rebuild/release-check leg"
+  },
+  {
+   "blocks": [],
+   "id": "P5",
+   "owner": "Archaeon",
+   "present": null,
+   "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
+  }
+ ],
+ "stage_mode": "local",
+ "stages": [
+  {
+   "bundle_digest": "sha256:184e08fc611fa5890d6d2b8755504f8b9b684ce0d168163a1504fb3aeddb666b",
+   "bundle_manifest": "archaeon/campaign4/rehearsal/bundle/MANIFEST.json",
+   "stage": "S1",
+   "status": "OK",
+   "units": 8
+  },
+  {
+   "all_valid": true,
+   "arm_collision_by_contract": true,
+   "arm_collision_note": "arms a and b differ only in QUEUE COLUMNS (arm_id, request_key), which viv/spec.py deliberately banishes from the sealed hash, so the pair shares one spec_hash and one derived world name. For this rehearsal that is correct and useful: the two arms are a REPLICATION PAIR, not a contrast, and the collision exercises the request-key path that keeps them distinct rows. CONSEQUENCE FOR CAMPAIGN 4: two arms that differ only in provenance are the same experiment; any real C4 contrast must differ in an EXECUTION INPUT or it will not be distinguishable in the sealed record.",
+   "distinct_spec_hashes": 4,
+   "rows": [
+    {
+     "arm": "a",
+     "seed": 1,
+     "spec_hash": "sha256:c1c86a1f46a65cb6a0cd89617364af38e8bcdd1deb103af4e5ee48030ef0ed89",
+     "valid": true,
+     "world_name": "viv-c1c86a1f46a65cb6"
+    },
+    {
+     "arm": "a",
+     "seed": 2,
+     "spec_hash": "sha256:24249743aa3b48961cc0de4f5a293c04a70c2a0d9a7e9c7c149987535c04aa5b",
+     "valid": true,
+     "world_name": "viv-24249743aa3b4896"
+    },
+    {
+     "arm": "a",
+     "seed": 3,
+     "spec_hash": "sha256:84197c931962e26f04d32ffe03d149c7c2302a910ac8949c7f329c568acc06e2",
+     "valid": true,
+     "world_name": "viv-84197c931962e26f"
+    },
+    {
+     "arm": "a",
+     "seed": 4,
+     "spec_hash": "sha256:d784afc10b364ef549b920be4335045db9b13db89531074b1e5b48754eba262e",
+     "valid": true,
+     "world_name": "viv-d784afc10b364ef5"
+    },
+    {
+     "arm": "b",
+     "seed": 1,
+     "spec_hash": "sha256:c1c86a1f46a65cb6a0cd89617364af38e8bcdd1deb103af4e5ee48030ef0ed89",
+     "valid": true,
+     "world_name": "viv-c1c86a1f46a65cb6"
+    },
+    {
+     "arm": "b",
+     "seed": 2,
+     "spec_hash": "sha256:24249743aa3b48961cc0de4f5a293c04a70c2a0d9a7e9c7c149987535c04aa5b",
+     "valid": true,
+     "world_name": "viv-24249743aa3b4896"
+    },
+    {
+     "arm": "b",
+     "seed": 3,
+     "spec_hash": "sha256:84197c931962e26f04d32ffe03d149c7c2302a910ac8949c7f329c568acc06e2",
+     "valid": true,
+     "world_name": "viv-84197c931962e26f"
+    },
+    {
+     "arm": "b",
+     "seed": 4,
+     "spec_hash": "sha256:d784afc10b364ef549b920be4335045db9b13db89531074b1e5b48754eba262e",
+     "valid": true,
+     "world_name": "viv-d784afc10b364ef5"
+    }
+   ],
+   "spec_version": 3,
+   "stage": "S2-validate",
+   "status": "OK",
+   "units": 8
+  },
+  {
+   "preconditions": [
+    "P1",
+    "P2"
+   ],
+   "stage": "S3",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P1",
+    "P3"
+   ],
+   "stage": "S4",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P1",
+    "P3"
+   ],
+   "stage": "S5",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P1"
+   ],
+   "stage": "S6",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P1",
+    "P4"
+   ],
+   "stage": "S7",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P1"
+   ],
+   "stage": "S8",
+   "status": "BLOCKED"
+  }
+ ],
+ "wall_s": 0.0
+}

@@ -48,6 +48,7 @@ DB = os.path.join(DATA, "engine.db")
 CA = os.path.join(DATA, "m2.crt")
 WATCHDOG = os.path.join(DATA, "sfengine_m2_watchdog.ps1")
 RECEIPTS = os.path.join(HERE, "POINT_RELEASE_2026-09-17")
+FROM_SCHEMA, TO_SCHEMA, ROUTES_DELTA = 8, 9, 4
 PROD_INSTANCE = "eng_906356f7fb1da180131f9290"
 BASE = "https://%s:%d" % (HOST, PORT)
 
@@ -142,7 +143,8 @@ def preflight(commit):
     rec["production_descriptor_before"] = ident
     row("production ledger identity", ident["engine_instance_id"] == PROD_INSTANCE == ident["ledger"]["engine_instance_id"],
         live=ident["engine_instance_id"], ledger=ident["ledger"]["engine_instance_id"])
-    row("current schema is 8 (this release migrates 8 -> 9)", ident["schema_version"] == 8 == ident["ledger"]["schema_version"])
+    row("current schema is %d (this release: %d -> %d)" % (FROM_SCHEMA, FROM_SCHEMA, TO_SCHEMA),
+        ident["schema_version"] == FROM_SCHEMA == ident["ledger"]["schema_version"])
     row("pin agrees with the running build", ident["descriptor_pin"]["engine_source_hash"] == ident["engine_source_hash"])
     # the release commit exists in the pinned worktree's repo and reproduces the expected hash
     rc, out = git("fetch", "-q", "origin")
@@ -173,7 +175,9 @@ def preflight(commit):
                                  "launched, #318/#329); default list responses gain keys, no consumer parses them positionally")
     # backup (SQLite backup API, then verified by re-open)
     os.makedirs(os.path.join(DATA, "backup"), exist_ok=True)
-    bak = os.path.join(DATA, "backup", "engine.db.pre-schema9-%s.bak" % time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()))
+    bak = os.path.join(DATA, "backup", "engine.db.pre-%s-%s.bak" % (
+        ("schema%d" % TO_SCHEMA) if TO_SCHEMA != FROM_SCHEMA else "release",
+        time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())))
     t0 = time.time()
     src = sqlite3.connect("file:%s?mode=ro" % DB.replace("\\", "/"), uri=True, timeout=30)
     dst = sqlite3.connect(bak)
@@ -262,8 +266,17 @@ def apply(commit):
         before=before["process_start_utc"], after=after["process_start_utc"])
     row("engine instance UNCHANGED (ledger state)", after["engine_instance_id"] == PROD_INSTANCE == after["ledger"]["engine_instance_id"])
     row("source hash == candidate", after["engine_source_hash"] == pre["candidate_engine_source_hash"], live=after["engine_source_hash"])
-    row("schema 9 live AND in the ledger", after["schema_version"] == 9 == after["ledger"]["schema_version"])
-    row("route digest changed (4 routes added)", after["routes"] == before["routes"] + 4, before=before["routes"], after=after["routes"])
+    row("schema %d live AND in the ledger" % TO_SCHEMA, after["schema_version"] == TO_SCHEMA == after["ledger"]["schema_version"])
+    row("route count delta == %+d" % ROUTES_DELTA, after["routes"] == before["routes"] + ROUTES_DELTA,
+        before=before["routes"], after=after["routes"])
+    if TO_SCHEMA >= 9:
+        try:
+            ck = get("/v2/health").get("checkpointer")
+        except Exception:                                    # noqa: BLE001
+            ck = None
+        if ck is not None:
+            row("checkpointer alive on the new process", ck.get("alive") is True and ck.get("errors") == 0,
+                runs=ck.get("runs"), wal_bytes=ck.get("wal_bytes"))
     row("ledger path and bind unchanged", after["ledger"]["path"] == before["ledger"]["path"] and after["bind"] == before["bind"], bind=after["bind"])
     row("no event lost across the migration", after["ledger"]["events"] == before["ledger"]["events"], events=after["ledger"]["events"])
     row("capabilities advertises the release", bool(after["capabilities_features"]) and all(after["capabilities_features"].values()))
@@ -271,8 +284,8 @@ def apply(commit):
     if ok:
         pin_path = os.path.join(HERE, "DEPLOYED_BUILD_M2.json")
         pin = json.load(open(pin_path, encoding="utf-8"))
-        pin["history"].append({after["recorded_at"]: "point release schema 9: %s / %s" % (head[:12], after["engine_source_hash"][:20])})
-        pin.update({"pinned_at": after["recorded_at"], "schema_version": 9,
+        pin["history"].append({after["recorded_at"]: "release (schema %d): %s / %s" % (TO_SCHEMA, head[:12], after["engine_source_hash"][:20])})
+        pin.update({"pinned_at": after["recorded_at"], "schema_version": TO_SCHEMA,
                     "source_commit_containing_build": head, "engine_source_hash": after["engine_source_hash"],
                     "route_digest": after["route_digest"], "routes": after["routes"],
                     "contract": "roles/Harmonia/contracts/sfe_contract.json (REGENERATED after this restart; see POINT_RELEASE_2026-09-17/)"})
@@ -300,7 +313,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("phase", choices=("preflight", "apply", "verify"))
     ap.add_argument("--commit", default=None)
+    ap.add_argument("--from-schema", type=int, default=8, help="schema the ledger must be at before apply")
+    ap.add_argument("--to-schema", type=int, default=9, help="schema the ledger must be at after apply")
+    ap.add_argument("--routes-delta", type=int, default=4, help="expected change in route count")
+    ap.add_argument("--tag", default=None, help="receipt subdirectory (default POINT_RELEASE_2026-09-17)")
     a = ap.parse_args()
+    global RECEIPTS, FROM_SCHEMA, TO_SCHEMA, ROUTES_DELTA
+    FROM_SCHEMA, TO_SCHEMA, ROUTES_DELTA = a.from_schema, a.to_schema, a.routes_delta
+    if a.tag:
+        RECEIPTS = os.path.join(HERE, a.tag)
     if a.phase == "preflight":
         return preflight(a.commit)
     if a.phase == "apply":
