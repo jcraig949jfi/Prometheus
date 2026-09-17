@@ -129,6 +129,33 @@ def g2_rehearsal() -> dict:
             "blocks_launch": True}
 
 
+def g3_vivarium_proved() -> dict:
+    """G3 from a MEASURED read, not from a grant row and not from a message.
+
+    The grant existing on the ledger is not the completion test. The test is that the Campaign 4
+    identity actually reads scoped rows back. verify_g3.py performs that read and writes the
+    receipt this check consumes.
+    """
+    p = C4 / "G3_READ_PROOF.json"
+    if not p.exists():
+        return g3_vivarium()
+    d = json.loads(p.read_text(encoding="utf-8"))
+    checks = d.get("checks", {})
+    missing = [k for k, v in checks.items() if not v]
+    return {"id": "G3", "owner": "Vivarium (grant) + Archaeon (read proof)",
+            "requirement": "Campaign-4 consumer identity live and its M2 read grant valid",
+            "status": GREEN if (d.get("all_pass") and not missing) else RED,
+            "missing": missing,
+            "evidence": {"proof": "archaeon/campaign4/G3_READ_PROOF.json",
+                         "proof_digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest(),
+                         "client": d.get("client"), "engine": d.get("engine"),
+                         "grants_to_me": d.get("grants_to_me"),
+                         "read_worlds_n": d.get("read_worlds_n"),
+                         "read_observations_n": d.get("read_observations_n"),
+                         "checks": checks},
+            "blocks_launch": True}
+
+
 def g3_vivarium() -> dict:
     """Consumer identity live AND the M2 B1 read grant valid. The grant is the part this gate
     cannot prove from here: it is an engine-side authorization, and comms #368 states it still
@@ -249,7 +276,7 @@ def main(argv=None) -> int:
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
-    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium(), g4_pew(a.ref), g5_proteus(a.ref)]
+    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium_proved(), g4_pew(a.ref), g5_proteus(a.ref)]
     blocking = [c for c in checks if c["blocks_launch"]]
     green = all(c["status"] == GREEN for c in blocking)
     receipt = {

@@ -12,11 +12,6 @@
    "status": "RED"
   },
   {
-   "id": "G3",
-   "owner": "Vivarium + Daedalus",
-   "status": "CLAIMED_NOT_PROVEN"
-  },
-  {
    "id": "G5",
    "owner": "Proteus + Archaeon",
    "status": "RED"
@@ -187,15 +182,38 @@
   {
    "blocks_launch": true,
    "evidence": {
-    "consumer_alive_claim": "Vivarium #368: consumer ALIVE on M2 (build 08081c6ed)",
-    "grant_defect_claim": "Vivarium #368 caveat: Archaeon's B1 read grant names an M1-ledger client; must be re-issued for the M2 ledger client",
-    "verifiable_from_here": false,
-    "why": "grant validity is engine-side authorization; proving it requires a campaign-4 engine identity this seat does not yet hold"
+    "checks": {
+     "grant_not_revoked": true,
+     "grant_present": true,
+     "scoped_observation_read_returned_rows": true,
+     "scoped_world_read_returned_rows": true
+    },
+    "client": "cmp4-archaeon",
+    "engine": {
+     "endpoint": "https://192.168.1.191:8811",
+     "instance": "eng_906356f7fb1da180131f9290",
+     "schema": 9,
+     "source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc"
+    },
+    "grants_to_me": [
+     {
+      "grant_id": "gnt_2006a1ac5b254962fbc1ed9d",
+      "granted_by": "cli_2bb36261427e607191ece250",
+      "grantee_client_id": "cli_6354da5b5955a711dcc0b2af",
+      "revoked_at": null,
+      "scope_id": "scp_4aff817e018de830f9193cbd"
+     }
+    ],
+    "proof": "archaeon/campaign4/G3_READ_PROOF.json",
+    "proof_digest": "sha256:fe09c7b85a2a071698291f4c5bbc5c573922e059b1a6937e74d3b7cd8e873630",
+    "read_observations_n": 104,
+    "read_worlds_n": 26
    },
    "id": "G3",
-   "owner": "Vivarium + Daedalus",
-   "requirement": "Campaign-4 consumer identity live and its M2 B1 read grant valid",
-   "status": "CLAIMED_NOT_PROVEN"
+   "missing": [],
+   "owner": "Vivarium (grant) + Archaeon (read proof)",
+   "requirement": "Campaign-4 consumer identity live and its M2 read grant valid",
+   "status": "GREEN"
   },
   {
    "blocks_launch": false,
@@ -300,9 +318,9 @@
   }
  ],
  "gate": "RED",
- "generated_at": "2026-09-17T23:23:12Z",
+ "generated_at": "2026-09-17T23:25:00Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "fe4f0cca37810981bc5bebdbb0a909f02ba364c5",
+ "read_at_commit": "6e7ac48f015479290ef40f866a2e2630cace8e35",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }
