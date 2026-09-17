@@ -88,3 +88,14 @@ plus rows/receipts). Every timestamp UTC.
   evaluations, balanced 653/97/89 with 50% more accessible variation,
   scrambled 971/-/190 (2/3). Encoding effect weak positive; accessible
   variation decoupled from navigability. Ledger L-023, L-024. Next: SFE-07.
+
+## 04:45-05:05 -- SFE-07 (two attempts; COMPLETE)
+
+- Attempt 1 (9.3 s): SFE-01's failure artifacts unreadable from the new
+  session (403 SESSION_MISMATCH; L-026); probe showed a session-less read
+  is admitted (D-013). Attempt 2 (13.4 s): 135 failed genotypes fetched
+  from the TERMINATED SFE-01 world, hashes 3/3 OK; 0 errors.
+- Science: failed_A seeds World B (W3_K2) in 2/3 seeds (0.58/0.56) vs
+  random 0/3; specialized_A and best_A transfer by direct reuse
+  (0.52-0.58). Predeclaration artifact precedes everything. Ledger
+  L-025, L-026; L-012/L-013 recurrences. Next: SFE-08.

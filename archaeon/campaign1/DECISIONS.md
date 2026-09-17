@@ -133,3 +133,13 @@ an interaction; on the distractor axis the same organisms fall from 1.0
 toward chance. Found before any engine call; no rows discarded. |
 Alternative: keep delay and drop transfer (loses the 2x2). | Revisit
 never for this campaign.
+
+D-013 | 2026-09-17 04:55 | Cross-experiment artifact reads use a SESSION-LESS
+EngineClient (token + client id, no X-SFE-Session header). | The campaign
+session's key is refused on an earlier session's world (403
+SESSION_MISMATCH) and the earlier key was never persisted; a no-key read
+is admitted under the engine's advisory enforcement (probed, L-026). |
+Alternative: re-create the artifacts in the new session (breaks provenance:
+the point of the experiment is reading FROZEN prior residue). | Revisit if
+the engine moves to strict session enforcement: then keys must be
+persisted per experiment and reused.
