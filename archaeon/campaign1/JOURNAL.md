@@ -47,3 +47,13 @@ plus rows/receipts). Every timestamp UTC.
   25-28, uniform 17-20, top_k 10-17 under one cap; count cap bound every
   policy, byte cap never. Record: SFE-02/RECORD.md. Ledger L-014..L-016,
   L-012 recurrence 1. Next: SFE-03.
+
+## 02:45-03:20 -- SFE-03 (one attempt; INCONCLUSIVE)
+
+- 127.6 s; engine 0 errors (3 worlds, 6 failure artifacts under
+  FAILURES_ONLY, 6 imports, 9 experiments + 9 observations, teardown
+  0.49 s). All nine rows at the chance floor (W1_d4 unreachable by fresh
+  search at N=200 G=60, as v01 and SSF c3 already showed) -> assay
+  incapable -> INCONCLUSIVE. Memorisation shelf visible in train-vs-held
+  split (transported episodes recur every generation). Ledger L-017;
+  L-009 recurrence 1 (my digest check again). Next: SFE-04.

@@ -103,3 +103,13 @@ a budget parameter, not a semantic one. | Alternative: lower the solve
 threshold (changes the claim); or accept INCONCLUSIVE. | Revisit if the
 4096 stream's ceiling is still < 0.5: then the H3 question cannot be posed
 on this substrate at this budget and stays INCONCLUSIVE.
+
+D-010 | 2026-09-17 03:25 | SFE-04 uses the D-18 v1 non-uniform reset
+(herakles.ca_stream.reset_v2, density 0.5, reset root 20260917) and a
+linearly readable new task (delayed recall d=3) for the reuse question. |
+The alpha's all-zero reset is provably inert (OBSTRUCTION.md); temporal
+XOR is not linearly separable so every substrate, including the perfect
+shift register, sat at chance in the dry run. | Alternative: run the
+alpha as specified and record an obstruction again (no information). |
+Revisit if the operator rules on D-18; the campaign's artifact declares
+"ca_stream_v2 semantics, campaign-local".

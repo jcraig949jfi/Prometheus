@@ -1,0 +1,241 @@
+{
+ "artifacts": {},
+ "campaign_seed": 20260917,
+ "config": {
+  "delay": 2,
+  "horizon": 8,
+  "n_cells": 31,
+  "reset_density": 0.5,
+  "reset_root": 20260917,
+  "window": 5
+ },
+ "engine_path": false,
+ "errors": [],
+ "experiment": "SFE-04",
+ "result": {
+  "best_ca": "ca:particle2",
+  "q1_delayed_recall": {
+   "ca:GKL": {
+    "accuracy": 0.5013020833333334,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.4983933971774194
+   },
+   "ca:exp": {
+    "accuracy": 0.51953125,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.19926600302419356
+   },
+   "ca:maj": {
+    "accuracy": 0.4986979166666667,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.5009135584677419
+   },
+   "ca:par": {
+    "accuracy": 0.546875,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.46723790322580644
+   },
+   "ca:particle1": {
+    "accuracy": 0.5625,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.37545677923387094
+   },
+   "ca:particle2": {
+    "accuracy": 0.6080729166666666,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.43316847278225806
+   },
+   "direct": {
+    "accuracy": 0.5,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.016129032258064516
+   },
+   "random": {
+    "accuracy": 0.5,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 1.0
+   },
+   "shift": {
+    "accuracy": 1.0,
+    "base_rate": 0.5,
+    "n_scored": 768,
+    "nonzero_share": 0.07258064516129033
+   }
+  },
+  "q2_base_accuracy": 0.6080729166666666,
+  "q2_components": [],
+  "q2_lesion_map": {
+   "0": 0.0977,
+   "1": 0.0924,
+   "2": 0.0911,
+   "3": 0.0964,
+   "4": 0.0977,
+   "5": 0.0807,
+   "6": 0.0807,
+   "7": 0.0833,
+   "8": 0.0977,
+   "9": 0.0833,
+   "10": 0.0716,
+   "11": 0.0404,
+   "12": 0.0547,
+   "13": 0.0234,
+   "14": 0.0221,
+   "15": 0.0052,
+   "16": -0.0065,
+   "17": -0.0091,
+   "18": -0.0182,
+   "19": -0.0091,
+   "20": -0.0078,
+   "21": 0.0078,
+   "22": 0.0052,
+   "23": 0.0026,
+   "24": 0.0091,
+   "25": 0.0378,
+   "26": 0.0326,
+   "27": 0.0365,
+   "28": 0.0547,
+   "29": 0.069,
+   "30": 0.1081
+  },
+  "q2_max_random_drop": 0.1133,
+  "q2_random_lesion_drops": [
+   0.0703,
+   0.0964,
+   0.056,
+   0.0911,
+   0.0938,
+   0.0938,
+   0.0404,
+   0.0365,
+   0.069,
+   0.0508,
+   0.1133,
+   0.082
+  ],
+  "q2_shift_lesion_map": {
+   "0": 0.5,
+   "1": 0.5,
+   "2": 0.5,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0,
+   "8": 0.0,
+   "9": 0.0,
+   "10": 0.0,
+   "11": 0.0,
+   "12": 0.0,
+   "13": 0.0,
+   "14": 0.0,
+   "15": 0.0,
+   "16": 0.0,
+   "17": 0.0,
+   "18": 0.0,
+   "19": 0.0,
+   "20": 0.0,
+   "21": 0.0,
+   "22": 0.0,
+   "23": 0.0,
+   "24": 0.0,
+   "25": 0.0,
+   "26": 0.0,
+   "27": 0.0,
+   "28": 0.0,
+   "29": 0.5,
+   "30": 0.5
+  },
+  "q3_component_window": [
+   30,
+   0,
+   1,
+   2,
+   3
+  ],
+  "q3_random_window": [
+   0,
+   1,
+   7,
+   15,
+   20
+  ],
+  "q3_reuse": {
+   "ca_only": {
+    "accuracy": 0.5130208333333334,
+    "base_rate": 0.5065104166666667,
+    "n_scored": 768
+   },
+   "component_window+random": {
+    "accuracy": 0.4830729166666667,
+    "base_rate": 0.5065104166666667,
+    "cells": [
+     30,
+     0,
+     1,
+     2,
+     3
+    ],
+    "n_scored": 768
+   },
+   "composite": {
+    "accuracy": 0.5130208333333334,
+    "base_rate": 0.5065104166666667,
+    "n_scored": 768
+   },
+   "direct": {
+    "accuracy": 0.4765625,
+    "base_rate": 0.5065104166666667,
+    "n_scored": 768
+   },
+   "random_only": {
+    "accuracy": 0.4934895833333333,
+    "base_rate": 0.5065104166666667,
+    "n_scored": 768
+   },
+   "random_window+random": {
+    "accuracy": 0.4869791666666667,
+    "base_rate": 0.5065104166666667,
+    "cells": [
+     0,
+     1,
+     7,
+     15,
+     20
+    ],
+    "n_scored": 768
+   },
+   "shift": {
+    "accuracy": 0.4361979166666667,
+    "base_rate": 0.5065104166666667,
+    "n_scored": 768
+   }
+  },
+  "reset_leakage_probe": null,
+  "useful_bounded_computation": true
+ },
+ "timings": {
+  "q1_s": 0.67,
+  "q2_s": 2.42,
+  "q3_s": 0.01,
+  "total_s": 3.1
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "53e4f485e4759eaa3995af7ee1cc5542019cbeed",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}
