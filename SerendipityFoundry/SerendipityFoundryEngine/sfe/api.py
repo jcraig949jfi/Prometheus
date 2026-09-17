@@ -18,7 +18,7 @@ import logging
 import secrets
 from typing import Any, Literal, Optional
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from sfe import release
@@ -26,7 +26,7 @@ from sfe.errors import (FoundryError, SessionClosed, SessionMalformed,
                         SessionMismatch, SessionRequired, SessionUnknown,
                         WrongSession)
 from sfe.ids import key_fingerprint
-from sfe.runtime import (DEFAULT_MAX_ARTIFACT_BYTES, Foundry,
+from sfe.runtime import (DEFAULT_MAX_ARTIFACT_BYTES, Foundry, page_envelope,
                          SCIENCE_PROFILES)
 
 API_VERSION = "v2"
@@ -78,6 +78,11 @@ class WorldCreate(_Body):
     seed_root: Optional[int] = None
     require_attestation: bool = False   # observations in this world MUST carry
                                         # a work_id; set at creation, immutable
+    # v9: the world's definition envelope (validated for shape/size, hashed,
+    # sealed, immutable, never read for meaning) and opaque producer labels.
+    manifest: Optional[dict[str, Any]] = None
+    manifest_schema: Optional[str] = None
+    labels: Optional[dict[str, str]] = None
 
 
 class HypothesisCreate(_Body):
@@ -140,6 +145,8 @@ class ObservationCreate(_Body):
     replication: bool = False          # F3: required for a SECOND observation
                                        # bound to a prediction (a retest that
                                        # never re-adjudicates the original)
+    logical_time: Optional[int] = None  # v9: the caller's logical clock; unit
+                                        # per the world's manifest
 
 
 class FailureCreate(_Body):
@@ -199,6 +206,33 @@ class ForkChild(_Body):
     # will not record a fork whose own manifest contradicts its arithmetic.
     intervention_effect: Optional[dict[str, Any]] = None
     intervention_effective: Optional[bool] = None
+    # v9: a child may carry its own manifest/labels; absent = inherit
+    manifest: Optional[dict[str, Any]] = None
+    manifest_schema: Optional[str] = None
+    labels: Optional[dict[str, str]] = None
+
+
+class Termination(_Body):
+    """v9 (D2): WHY execution ended, as the caller's facts. `reason` is the
+    stop rule that fired (e.g. "budget_exhausted", "stop_rule:first_solve",
+    "horizon", "operator"); it is never an outcome and the engine never
+    sets it."""
+    reason: Optional[str] = None       # required unless the body is empty {}
+    logical_time: Optional[int] = None
+    horizon: Optional[int] = None
+    budget_consumed: Optional[dict[str, Any]] = None
+    reference: Optional[str] = None
+    note: Optional[str] = None
+
+
+class WorldEventCreate(_Body):
+    """v9 (D3): a caller-described world change, sealed in the chain as
+    event_type WORLD_EVENT. `kind` is the caller's word; the engine owns no
+    vocabulary of kinds and reads none of this for meaning."""
+    kind: str
+    payload: dict[str, Any]
+    logical_time: Optional[int] = None
+    refs: Optional[dict[str, str]] = None
 
 
 class ForkRequest(_Body):
@@ -736,6 +770,18 @@ def create_app(db_path: str, *, registration_open: bool = True,
                 # -- both of those already publish it.
                 **f.engine_identity()}
 
+    @app.get("/v2/capabilities")
+    def capabilities(f: Foundry = Depends(get_foundry)):
+        # v9 (D9): discovery without probing by failure. Unauthenticated and
+        # session-exempt like /v2/version: it discloses the engine's own
+        # vocabularies and limits, never a client's data.
+        return f.capabilities(
+            session_enforcement=app.state.session_enforcement,
+            science_profile=app.state.science_profile,
+            max_artifact_bytes=(app.state.max_artifact_bytes
+                                if app.state.max_artifact_bytes is not None
+                                else DEFAULT_MAX_ARTIFACT_BYTES))
+
     @app.get("/v2/health")
     def health(f: Foundry = Depends(get_foundry)):
         """B3 (2026-09-12): what the engine MEASURES about itself, and only
@@ -819,8 +865,39 @@ def create_app(db_path: str, *, registration_open: bool = True,
                               require_attestation=body.require_attestation,
                               budget={k: v.model_dump()
                                       for k, v in body.budget.items()},
+                              manifest=body.manifest,
+                              manifest_schema=body.manifest_schema,
+                              labels=body.labels,
                               idem_key=idem,
                               request_hash=_req_hash("worlds", None, body))
+
+    @app.get("/v2/worlds/{wid}/manifest")
+    def get_manifest(wid: str, _sess: dict = Depends(session_ctx),
+                     cid: str = Depends(auth), f: Foundry = Depends(get_foundry)):
+        return f.get_manifest(wid, cid)
+
+    @app.post("/v2/worlds/{wid}/events")
+    def world_event(wid: str, body: WorldEventCreate,
+                    _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
+                    f: Foundry = Depends(get_foundry),
+                    idem: Optional[str] = Header(default=None,
+                                                 alias="Idempotency-Key")):
+        return f.record_world_event(wid, body.kind, body.payload, client_id=cid,
+                                    logical_time=body.logical_time,
+                                    refs=body.refs, idem_key=idem,
+                                    request_hash=_req_hash("world_events", wid, body))
+
+    @app.get("/v2/worlds/{wid}/artifacts")
+    def list_artifacts(wid: str, kind: Optional[str] = None,
+                       origin: Optional[str] = None,
+                       after_seq: Optional[int] = None,
+                       limit: Optional[int] = None,
+                       _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
+                       f: Foundry = Depends(get_foundry)):
+        rows = f.list_artifacts(wid, client_id=cid, kind=kind, origin=origin,
+                                after_seq=after_seq, limit=limit)
+        return {"artifacts": rows, **page_envelope(rows, "created_seq",
+                                                   after_seq, limit)}
 
     @app.get("/v2/worlds")
     def list_worlds(_sess: dict = Depends(session_ctx),
@@ -828,13 +905,24 @@ def create_app(db_path: str, *, registration_open: bool = True,
                     session_id: Optional[str] = None,
                     state: Optional[str] = None,
                     created_after: Optional[float] = None,
-                    created_before: Optional[float] = None):
+                    created_before: Optional[float] = None,
+                    label: Optional[list[str]] = Query(default=None)):
+        # v9: `label=k=v` (repeatable) filters on the opaque producer labels.
+        labels = None
+        if label:
+            labels = {}
+            for item in label:
+                if "=" not in item:
+                    raise HTTPException(status_code=422, detail={
+                        "error": "validation", "message": "label must be k=v"})
+                k, v = item.split("=", 1)
+                labels[k] = v
         # Always client-scoped (a client has NEVER been able to see another's
         # worlds here). The filters exist so an ORCHESTRATOR can answer "which
         # of my worlds are still active / finished / from this run" without
         # pulling every world it has ever made. This is scoping, not search.
         return {"worlds": f.list_worlds(client_id=cid, session_id=session_id,
-                                        state=state,
+                                        state=state, labels=labels,
                                         created_after=created_after,
                                         created_before=created_before)}
 
@@ -843,9 +931,23 @@ def create_app(db_path: str, *, registration_open: bool = True,
                   f: Foundry = Depends(get_foundry)):
         return f.get_world(wid, cid)
 
+    @app.post("/v2/worlds/{wid}/terminate")
+    def terminate(wid: str, body: Optional[Termination] = None,
+                  _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
+                  f: Foundry = Depends(get_foundry),
+                  idem: Optional[str] = Header(default=None,
+                                               alias="Idempotency-Key")):
+        # v9 (D2): the body is OPTIONAL and strict when present. Without it
+        # the route behaves exactly as before (termination = NOT_SUPPLIED).
+        term = body.model_dump() if body is not None else None
+        if term is not None and all(v is None for v in term.values()):
+            term = None                       # {} == no termination facts
+        return f.terminate_world(wid, cid, termination=term, idem_key=idem,
+                                 request_hash=_req_hash("terminate", wid, term)
+                                 if idem else None)
+
     for _act, _fn in (("start", "start_world"), ("pause", "pause_world"),
-                      ("resume", "resume_world"),
-                      ("terminate", "terminate_world")):
+                      ("resume", "resume_world")):
         def _make(fnname):
             # These four are registered in a loop rather than with decorators,
             # so they are easy to miss when wiring a cross-cutting dependency.
@@ -877,9 +979,18 @@ def create_app(db_path: str, *, registration_open: bool = True,
                                    client_id=cid)}
 
     @app.get("/v2/worlds/{wid}/events")
-    def world_events(wid: str, limit: int = 100, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
+    def world_events(wid: str, limit: Optional[int] = None,
+                     after_seq: Optional[int] = None,
+                     _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                      f: Foundry = Depends(get_foundry)):
-        return {"events": f.world_events(wid, client_id=cid, limit=limit)}
+        if after_seq is None:
+            # unchanged: the newest `limit` (default 100) in chain order
+            return {"events": f.world_events(wid, client_id=cid,
+                                             limit=100 if limit is None else limit),
+                    "next_after_seq": None, "truncated": False}
+        rows = f.world_events(wid, client_id=cid, after_seq=after_seq,
+                              limit=200 if limit is None else limit)
+        return {"events": rows, **page_envelope(rows, "event_seq", after_seq, limit)}
 
     @app.get("/v2/worlds/{wid}/status")
     def status(wid: str, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
@@ -967,6 +1078,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
             wid, body.exp_id, body.content, body.outcome, client_id=cid,
             pred_id=body.pred_id, work_id=body.work_id,
             retrospective=body.retrospective, replication=body.replication,
+            logical_time=body.logical_time,
             idem_key=idem,
             request_hash=_req_hash("observations", wid, body))
 
@@ -1087,10 +1199,14 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.get("/v2/worlds/{wid}/experiments")
     def list_experiments(wid: str, state: Optional[str] = None,
+                         after_seq: Optional[int] = None,
+                         limit: Optional[int] = None,
                          _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                          f: Foundry = Depends(get_foundry)):
-        return {"experiments": f.list_experiments(wid, client_id=cid,
-                                                  state=state)}
+        rows = f.list_experiments(wid, client_id=cid, state=state,
+                                  after_seq=after_seq, limit=limit)
+        return {"experiments": rows, **page_envelope(rows, "created_seq",
+                                                     after_seq, limit)}
 
     @app.get("/v2/worlds/{wid}/experiments/{eid}/analysis")
     def analysis_report(wid: str, eid: str,
@@ -1137,10 +1253,14 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.get("/v2/worlds/{wid}/observations")
     def list_observations(wid: str, exp_id: Optional[str] = None,
+                          after_seq: Optional[int] = None,
+                          limit: Optional[int] = None,
                           _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
                           f: Foundry = Depends(get_foundry)):
-        return {"observations": f.list_observations(wid, client_id=cid,
-                                                    exp_id=exp_id)}
+        rows = f.list_observations(wid, client_id=cid, exp_id=exp_id,
+                                   after_seq=after_seq, limit=limit)
+        return {"observations": rows, **page_envelope(rows, "created_seq",
+                                                      after_seq, limit)}
 
     @app.get("/v2/worlds/{wid}/knowledge")
     def knowledge(wid: str, seq: Optional[int] = None, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
@@ -1384,6 +1504,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
                           measurement: Optional[str] = None,
                           limit: int = 1000,
                           include_spec: bool = False,
+                          after_seq: Optional[int] = None,
                           _sess: dict = Depends(session_ctx),
                           cid: str = Depends(auth),
                           f: Foundry = Depends(get_foundry)):
@@ -1395,7 +1516,8 @@ def create_app(db_path: str, *, registration_open: bool = True,
         return f.read_observations(cid, group_id=scope, world_id=world_id,
                                    evidence_class=evidence_class,
                                    measurement_id=measurement, limit=limit,
-                                   include_spec=include_spec)
+                                   include_spec=include_spec,
+                                   after_seq=after_seq)
 
     @app.post("/v2/claims/{clm}/retract")
     def retract_claim(clm: str, body: ClaimRetract,
