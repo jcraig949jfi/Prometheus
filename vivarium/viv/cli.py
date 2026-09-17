@@ -372,14 +372,15 @@ def cmd_release(args, conn) -> int:
     that -- check SFE and PEW, then enqueue a fresh item if appropriate."""
     try:
         row = _q.release_stranded(conn, args.experiment_id, actor=args.by,
-                                  reason=args.reason, schema=args.schema)
+                                  reason=args.reason, schema=args.schema,
+                                  new_attempt=bool(getattr(args, "new_attempt", False)))
     except RuntimeError as exc:
         conn.rollback()
         print(str(exc), file=sys.stderr)
         return 1
     conn.commit()
-    print("released %s -> failed (was %s). SFE experiment: %s"
-          % (row["experiment_id"], "claimed/running",
+    print("released %s -> %s (was %s). SFE experiment: %s"
+          % (row["experiment_id"], row["status"], "claimed/running",
              row["sfe_experiment_id"] or "none recorded"))
     return 0
 
@@ -824,6 +825,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("experiment_id")
     s.add_argument("--by", required=True)
     s.add_argument("--reason", required=True)
+    s.add_argument("--new-attempt", action="store_true",
+                   help="close the open attempt STRANDED and requeue the row for attempt n+1 "
+                        "(point release; needs migration 006)")
     s.set_defaults(fn=cmd_release)
 
     s = sub.add_parser("run", help="the daemon: a thin loop around tick()")

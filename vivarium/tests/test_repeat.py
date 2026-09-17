@@ -184,9 +184,14 @@ def test_a_non_positive_time_budget_is_refused():
     assert any("max_seconds" in r for r in exc.value.reasons)
 
 
-def test_exhausting_the_time_budget_fails_with_its_own_class():
-    """A budget that stops a run mid-repeat is a declared bound doing its job,
-    and must be distinguishable from an executor that broke."""
+def test_exhausting_the_time_budget_completes_censored_not_failed():
+    """TERMINATION_ENVELOPE.md (point release, Campaign 3 semantics accepted
+    by the operator 2026-09-17): a budget that stops a run mid-repeat is a
+    declared bound doing its job. The attempt COMPLETES with the observations
+    it has, the reason is BUDGET_EXHAUSTED, and censoring is the envelope's
+    business -- it is no longer a failure class. Before this the same run was
+    FAILED / BUDGET_EXCEEDED, indistinguishable in the failed count from an
+    executor that broke."""
     spec = _walk_payload(walk_spec(count=6, state="reset"), steps=2)
     spec["repeat"]["budget"]["max_seconds"] = 1e-9   # exhausted immediately
     sealed = _spec.spec_hash(spec)
@@ -195,12 +200,41 @@ def test_exhausting_the_time_budget_fails_with_its_own_class():
     req = ExecutionRequest(experiment_id="e",
                            spec_json=_spec.canonical_bytes(spec),
                            spec_hash=sealed)
-    with pytest.raises(ExecutionFailure) as exc:
-        runner.run(req)
-    assert exc.value.failure_class == "BUDGET_EXCEEDED"
-    assert "budget exhausted" in str(exc.value)
-    # partial repeats are preserved, not discarded
-    assert exc.value.partial.crossed_boundary is True
+    out = runner.run(req)
+    assert out.crossed_boundary is True
+    assert out.termination_reason == "BUDGET_EXHAUSTED"
+    assert out.termination_detail["after_repeats"] == 0
+    assert out.termination_detail["declared_repeats"] == 6
+    assert out.repeats == [] and out.obs_ids == []
+    assert out.outcome == spec["outcome_rule"]["if_indeterminate"]
+    assert out.work_result["termination_reason"] == "BUDGET_EXHAUSTED"
+    # the work item was COMPLETED on the engine, not failed
+    kinds = [name for name, _ in client.calls]
+    assert "complete" in kinds and "fail" not in kinds
+
+
+def test_a_budget_that_stops_after_some_repeats_keeps_them():
+    spec = _walk_payload(walk_spec(count=6, state="reset"), steps=2)
+    spec["repeat"]["budget"]["max_seconds"] = 0.05
+    sealed = _spec.spec_hash(spec)
+    client = RecordingClient()
+    runner = _runner_over(client, sealed)
+    import time as _t
+    from viv import executors as _ex
+    real = _ex.run
+
+    def slow(*a, **k):
+        _t.sleep(0.03)
+        return real(*a, **k)
+    _ex.run = slow
+    try:
+        out = runner.run(ExecutionRequest(experiment_id="e", spec_json=_spec.canonical_bytes(spec), spec_hash=sealed))
+    finally:
+        _ex.run = real
+    assert out.termination_reason == "BUDGET_EXHAUSTED"
+    assert 1 <= len(out.repeats) < 6
+    assert len(out.obs_ids) == len(out.repeats)
+    assert out.outcome is not None
 
 
 # ------------------------------------------------------- the execution itself
