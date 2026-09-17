@@ -1,0 +1,126 @@
+{
+ "predicate_id": "C-R8-AP-02",
+ "values_rescored": false,
+ "balance": {
+  "control": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  },
+  "null": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  },
+  "cell": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  }
+ },
+ "scramble_flag_mismatches": [],
+ "floor_rows": 2115113.734375,
+ "null_check_replay": {
+  "null_predicate": "FAIL",
+  "median": 2097601.625,
+  "iqr": 0.0,
+  "control_median": 2238692.59375,
+  "control_iqr": 33058.52734375,
+  "bar": 2222163.330078125,
+  "floor": 2115113.734375,
+  "P1_parity": false,
+  "P2_above_floor": false,
+  "P3_scramble_lowers_runs": 0,
+  "P3_uses_channel": false,
+  "n": 32
+ },
+ "null_check_rows": "FAIL",
+ "cell_replay": {
+  "median": 2245539.46875,
+  "iqr": 12432.71875,
+  "control_median": 2238692.59375,
+  "control_iqr": 33058.52734375,
+  "bar": 2222163.330078125,
+  "floor": 2115113.734375,
+  "P1_parity": true,
+  "P2_above_floor": true,
+  "P3_scramble_lowers_runs": 32,
+  "P3_uses_channel": true,
+  "n": 32,
+  "vacuous": false,
+  "primary": "PASS"
+ },
+ "summary_disagreements": {},
+ "verdict_agrees": true,
+ "mdd80_reading": {
+  "post_hoc": true,
+  "pressure_direct_magnitude_train_flipped_tick_share": null,
+  "hand_code_yield_loss_under_pressure": NaN,
+  "median_cell_minus_control": 6846.875,
+  "mannwhitney_p": 0.0035271540622301405,
+  "ks_p": 0.0005331447143638634,
+  "largest_relative_median_drop_P1_accepts": 0.007383445015193946,
+  "P1_fail_rate_for_planted_relative_drop": {
+   "0.05": 1.0,
+   "0.1": 1.0,
+   "0.15": 1.0,
+   "0.2": 1.0,
+   "0.3": 1.0,
+   "0.5": 1.0
+  },
+  "draws": 2000,
+  "seed": 0,
+  "MDD80": 0.05,
+  "observed_relative_median_drop": -0.0030584257164718576,
+  "pressure_direct_magnitude_c": 0.004032913268799065,
+  "largest_relative_drop_P1_accepts": 0.007383445015193946,
+  "reading_rule": "VACUOUS"
+ },
+ "rule_consistency": {
+  "predicate_id": "C-R8-AP-02",
+  "posts": 1,
+  "event_id": "1789594102998-0",
+  "predicate_ts": 1789594102.979,
+  "first_row_ts": 1789600827.804,
+  "code_sha": "26b55dc46e9257244344ba6ed21c1a764a0067ea",
+  "pin": [
+   "26b55dc46e9257244344ba6ed21c1a764a0067ea"
+  ],
+  "evidence": {
+   "evidence_class": "VERDICT",
+   "experiment_class": "ANTI_PRIOR",
+   "rule": "EVIDENCE_N_v1",
+   "sample": {
+    "families": [
+     4200,
+     2101,
+     3303,
+     5501
+    ],
+    "n_per_family": {
+     "2101": 8,
+     "3303": 8,
+     "4200": 8,
+     "5501": 8
+    },
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "runs_total": 32
+   }
+  },
+  "ok": true,
+  "failures": []
+ },
+ "judge_reading": {
+  "verdict_layer": "ARITHMETIC AGREE: PASS re-derived from recorded per-run values (NOT re-scored from bytes -- replay power limit); balanced 32/4/8 x3 arms; scramble flags consistent with values; NULL_CHECK FAIL; 0 summary disagreements; predicate pinned 26b55dc46 before first row.",
+  "preregistered_reading_rule": "MDD80 = 0.05 (the grid minimum), (c) = HAND relative held loss under the pressure = 0.0040 < MDD80 -> VACUOUS (rule as fixed in bus 1789595069735-0).",
+  "rule_defect_self_disclosed": "H's grid starts at 5%, far coarser than this instrument (P1 accepts at most a 0.74% median drop): the rule would call ANY pressure < 5% vacuous here. Checked substantively (POST HOC): a planted drop of exactly (c) fails P1 in 26.9% of 2000 draws vs 25.0% at 0.2% (the bootstrap's own false-fail level) -- no power at the pressure's size, so VACUOUS holds on substance, not only by the grid. Also: NK held values sit on a floor offset (floor = 94% of level), so relative drops on the raw scale compress effects; a margin-above-floor scale is the better instrument (residue).",
+  "observation_descriptive": "POST HOC: the cell arm (selected under observation corruption) scores ABOVE control on clean HELD: median +6847 (+5.5% of control's margin above floor), Mann-Whitney two-sided p 0.0035. The pressure did not degrade and may have helped. Hand code: corrupt TRAIN fitness > clean (2370731 vs 2270339) while corrupt HELD < clean. INTERPRETATION candidate only: observation noise acting on the plastic refit as a regulariser. Not a verdict; the anti-prior predicate does not test direction."
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "host": {
+  "arch_list": [
+   "sm_75",
+   "sm_80",
+   "sm_86",
+   "sm_90",
+   "sm_100",
+   "sm_120"
+  ],
+  "capability": "12.0",
+  "cuda_available": true,
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "torch": "2.11.0+cu128",
+  "torch_cuda": "12.8"
+ },
+ "rows": [
+  {
+   "argmax_agree": 1.0,
+   "max_abs_err": 2.9262183502964945e-06,
+   "ok": true,
+   "probe": "torch_matmul_fp32"
+  },
+  {
+   "argmax_agree": 1.0,
+   "max_abs_err": 0.012095841839315113,
+   "ok": true,
+   "probe": "torch_matmul_fp16"
+  },
+  {
+   "argmax_agree": 1.0,
+   "max_abs_err": 0.06720286473809445,
+   "ok": true,
+   "probe": "torch_matmul_bf16"
+  },
+  {
+   "error": "RuntimeError: mat2 shape (48x8) must be divisible by 16",
+   "ok": false,
+   "probe": "torch_fp8_scaled_mm",
+   "shape": "64x48x8"
+  },
+  {
+   "error": "RuntimeError: mat2 shape (48x8) must be divisible by 16",
+   "ok": false,
+   "probe": "torch_fp8_e5m2",
+   "shape": "64x48x8"
+  },
+  {
+   "error": "RuntimeError: CUDA error: CUBLAS_STATUS_NOT_SUPPORTED when calling `cublasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor(), Ddesc.descriptor(), preference.descriptor(), 1, &heuristicResult, &returnedResult)`",
+   "ok": false,
+   "probe": "torch_fp8_scaled_mm_pad16",
+   "shape": "64x48x16"
+  },
+  {
+   "error": "ValueError: Multiplication of two Float8_e5m2 matrices is not supported",
+   "ok": false,
+   "probe": "torch_fp8_e5m2_pad16",
+   "shape": "64x48x16"
+  },
+  {
+   "error": "RuntimeError: CUDA error: CUBLAS_STATUS_NOT_SUPPORTED when calling `cublasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor(), Ddesc.descriptor(), preference.descriptor(), 1, &heuristicResult, &returnedResult)`",
+   "ok": false,
+   "probe": "torch_fp8_scaled_mm_pad16_outbf16",
+   "shape": "64x48x16"
+  },
+  {
+   "error": "RuntimeError: mat2 shape (48x8) must be divisible by 16",
+   "ok": false,
+   "probe": "torch_fp8_scaled_mm_outbf16",
+   "shape": "64x48x8"
+  },
+  {
+   "error": "RuntimeError: CUDA error: CUBLAS_STATUS_NOT_SUPPORTED when calling `cublasLtMatmulAlgoGetHeuristic( ltHandle, computeDesc.descriptor(), Adesc.descriptor(), Bdesc.descriptor(), Cdesc.descriptor(), Ddesc.descriptor(), preference.descriptor(), 1, &heuristicResult, &returnedResult)`",
+   "ok": false,
+   "probe": "torch_fp8_e4m3_x_e5m2_pad16_outbf16",
+   "shape": "64x48x16"
+  },
+  {
+   "bit_exact": true,
+   "ok": true,
+   "out_dtype": "torch.int32",
+   "probe": "torch_int8_int_mm"
+  },
+  {
+   "error": "NotImplementedError: \"addmm_cuda\" not implemented for 'Int'",
+   "ok": false,
+   "probe": "torch_int8_mm_cast"
+  },
+  {
+   "dist_version": "4.2.0.0",
+   "module": "cutlass_cppgen",
+   "ok": true,
+   "probe": "cutlass_import"
+  },
+  {
+   "cuda_install_path": "ERROR: FileNotFoundError: [WinError 2] The system cannot find the file specified",
+   "device_cc": "120",
+   "error": "cuda_install_path: FileNotFoundError: [WinError 2] The system cannot find the file specified",
+   "nvcc_version": "12.6",
+   "ok": false,
+   "probe": "cutlass_env"
+  },
+  {
+   "error": "KeyError: 120",
+   "ok": false,
+   "probe": "cutlass_gemm_fp32",
+   "where": "cutlass_cppgen/utils/check.py:136 (valid_stage_count)"
+  },
+  {
+   "error": "KeyError: 120",
+   "ok": false,
+   "probe": "cutlass_gemm_fp32_cc86_override",
+   "where": "cutlass_cppgen/utils/check.py:136 (valid_stage_count)"
+  }
+ ]
+}

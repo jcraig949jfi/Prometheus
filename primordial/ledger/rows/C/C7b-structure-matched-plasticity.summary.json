@@ -1,0 +1,96 @@
+{
+ "exp_id": "C7b-structure-matched-plasticity",
+ "source": "C7b-structure-matched-plasticity.jsonl",
+ "git": "c737a4b7bcbee55df60d05fdd3fa5079e0d4681c",
+ "posted_rule": {
+  "status": "FAIL",
+  "eligible_targets": 29,
+  "eligible_worlds": 17,
+  "H1": true,
+  "H2": false,
+  "H3": false,
+  "H4": false,
+  "leak_probe": true,
+  "affine_detected": "251/251",
+  "digit_tt_detected": 3,
+  "null_surprises_max": 254
+ },
+ "why_failed": "eligibility required flip sensitivity only; targets whose next value needs >=2 registers never fit the single-source affine model, so they surprise every tick even in the no_regime_flip null (H4), have no steady in-regime ticks (H3 None), and make H1 detection vacuous for them",
+ "post_hoc_NOT_the_verdict": {
+  "rule": "restrict to targets whose null-world surprises after first fit <= 2 (model fits within a regime); chosen AFTER seeing rows",
+  "fitting_targets": 22,
+  "fitting_worlds": 14,
+  "affine_detected": "168/168",
+  "digit_tt_detected": 0,
+  "corrupted_support_vs_arithmetic": [
+   [
+    46,
+    0,
+    0.940966796875,
+    0.9384765625
+   ],
+   [
+    235,
+    1,
+    0.7654889216188525,
+    0.765625
+   ],
+   [
+    271,
+    0,
+    0.9386311848958333,
+    0.9384765625
+   ],
+   [
+    440,
+    2,
+    0.87646484375,
+    0.87890625
+   ],
+   [
+    532,
+    1,
+    0.8787397904829546,
+    0.87890625
+   ]
+  ],
+  "max_abs_support_deviation": 0.0024902343749999556,
+  "nonfitting_targets": [
+   [
+    222,
+    3,
+    126
+   ],
+   [
+    281,
+    2,
+    14
+   ],
+   [
+    46,
+    3,
+    62
+   ],
+   [
+    60,
+    5,
+    62
+   ],
+   [
+    115,
+    0,
+    30
+   ],
+   [
+    255,
+    0,
+    254
+   ],
+   [
+    255,
+    3,
+    254
+   ]
+  ]
+ }
+}

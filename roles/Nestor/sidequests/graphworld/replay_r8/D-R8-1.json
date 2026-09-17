@@ -1,0 +1,111 @@
+{
+ "predicate_id": "D-R8-1-byte-parity-rerank",
+ "balance": {
+  "rows": 168,
+  "missing": 0,
+  "extra": [],
+  "duplicates": [],
+  "complete_168": true
+ },
+ "i1_per_world": {
+  "4": true,
+  "1": false,
+  "3": true
+ },
+ "i1_ok": true,
+ "controls_ok": false,
+ "oracle_rows": 21,
+ "failing_oracle_cells": [
+  [
+   "tt_digits",
+   1,
+   3
+  ],
+  [
+   "tt_digits",
+   1,
+   4
+  ],
+  [
+   "tt_feat",
+   1,
+   3
+  ],
+  [
+   "tt_feat",
+   1,
+   4
+  ]
+ ],
+ "per_world": {
+  "4": {
+   "linear": 84.8076171875,
+   "tt_feat@1": 95.9833984375,
+   "margin": 11.17578125
+  },
+  "1": {
+   "linear": 39.15087890625,
+   "tt_feat@1": 57.8427734375,
+   "margin": 18.69189453125
+  },
+  "3": {
+   "linear": 101.41845703125,
+   "tt_feat@1": 98.7890625,
+   "margin": -2.62939453125
+  }
+ },
+ "worlds_matched_ge_linear": 2,
+ "worlds_linear_ahead": 1,
+ "decision_replay": "INDETERMINATE",
+ "values_rescored": false,
+ "replay_power_limit": "rows store no elite bytes: held64/train values are taken as recorded",
+ "median_grid": {
+  "linear@0|w1": 39.15087890625,
+  "linear@0|w3": 101.41845703125,
+  "linear@0|w4": 84.8076171875,
+  "tt_digits@1|w1": 64.0478515625,
+  "tt_digits@1|w3": 97.13232421875,
+  "tt_digits@1|w4": 93.2666015625,
+  "tt_digits@2|w1": 22.54541015625,
+  "tt_digits@2|w3": 86.16943359375,
+  "tt_digits@2|w4": 74.41943359375,
+  "tt_digits@3|w1": 8.65673828125,
+  "tt_digits@3|w3": 61.6201171875,
+  "tt_digits@3|w4": 52.8349609375,
+  "tt_feat@1|w1": 57.8427734375,
+  "tt_feat@1|w3": 98.7890625,
+  "tt_feat@1|w4": 95.9833984375,
+  "tt_feat@2|w1": 28.9921875,
+  "tt_feat@2|w3": 97.640625,
+  "tt_feat@2|w4": 89.14013671875,
+  "tt_feat@3|w1": 8.1962890625,
+  "tt_feat@3|w3": 85.14111328125,
+  "tt_feat@3|w4": 77.01416015625
+ },
+ "decision_rows": "INDETERMINATE",
+ "summary_disagreements": {},
+ "grid_disagreements": {},
+ "verdict_agrees": true,
+ "rule_consistency": {
+  "predicate_id": "D-R8-1-byte-parity-rerank",
+  "posts": 1,
+  "event_id": "1789592362632-0",
+  "predicate_ts": 1789592362.614,
+  "first_row_ts": 1789592364.532,
+  "code_sha": "d7cc4cd1b15796bfd77d6d1210aedb60140d3d62",
+  "pin": [
+   "d7cc4cd1b15796bfd77d6d1210aedb60140d3d62"
+  ],
+  "evidence": {
+   "evidence_class": "OBSERVATION",
+   "experiment_class": "ANOMALY_DISCRIMINATOR",
+   "rule": "EVIDENCE_N_v1",
+   "sample": null
+  },
+  "ok": true,
+  "failures": []
+ },
+ "rows_path": "primordial/ledger/rows/D/D-R8-1-byte-parity-rerank.jsonl",
+ "rows_ref": "origin/nestor/sidequest-graphworld-2026-09-14",
+ "rows_count": 169
+}

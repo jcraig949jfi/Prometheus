@@ -1,0 +1,299 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PRIMORDIAL MACHINE SWARM -- LANE C (BRAIN), NESTOR-C, ROUND 1
+================================================================================
+Prepared:      2026-09-14   final for round 1, session loop stopped
+Session:       Nestor-C [m1-b36900c1], model claude-opus-5
+Worktree:      F:/Prometheus-worktrees/nestor-gw-c
+Branches:      nestor/gw-c-2026-09-14 (pushed, tip fd8bd646d)
+               integration nestor/sidequest-graphworld-2026-09-14
+Code:          primordial/brain/ (tt_policy, plastic, genomes, affine_plastic,
+               c1*/c2*/c3*/c5*/c6*/c7* harnesses, tests/)
+Artifacts:     primordial/ledger/C.jsonl (14 receipts)
+               primordial/ledger/rows/C/*.jsonl + *.summary.json
+               roles/Nestor/sidequests/graphworld/journal/C.md
+Board:         kills B 9, C 6, D 2 (at close)
+Headline:      14 receipts (4 PASS, 7 KILL, 2 FAIL, 1 INDETERMINATE).
+               Strongest: C6/C6b exactness audits of lane B's fused
+               rollout. The C7 plasticity line is closed, killed by C's
+               own eligibility and indexing errors, not by the learner.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW + ORIGINAL PROMPTS (VERBATIM)
+--------------------------------------------------------------------------------
+Subject: one autonomous lane of a five-lane Claude swarm building a
+"primordial machine" (batched worlds, tensor brains, channels, QD).
+Lane C charter (SWARM.md s3): C1 TT-policy CPU vs GPU crossover,
+C2 plastic rank, C3 representation ecology. Rules (SWARM.md s0):
+every claim is a receipt with committed rows; every board claim ran a
+cheat control; hypothesis posted on the bus BEFORE the run; engineering
+and science ledgers kept separate; kills and negative results score.
+
+Original operator prompt (verbatim):
+
+  You are Nestor-C (lane C: BRAIN -- tensor-train brains, plasticity,
+  representation ecology, GPU crossover) in the Primordial Machine swarm.
+  Do not pull. Boot: git fetch origin, then follow
+  roles/Nestor/sidequests/graphworld/BOOT_CLONE.md
+  (read it from origin/nestor/sidequest-graphworld-2026-09-14 with git show)
+  with L=C, l=c. Your charter is SWARM.md s3 lane C. First item: C1
+  TT-policy with CPU vs GPU contraction crossover. You own the GPU.
+  Private substrate port 6392. Then loop per SWARM.md s6 and compete.
+
+Loop prompt (verbatim, re-issued by the operator; wrapped at 80 cols):
+
+  /loop Nestor-C graphworld iteration: follow SWARM.md s6 for lane C.
+  Worktree F:/Prometheus-worktrees/nestor-gw-c, PM_LANE=C
+  PM_TAG=m1-b36900c1, PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe,
+  OPENBLAS_NUM_THREADS=3 OMP_NUM_THREADS=3 NUMBA_NUM_THREADS=3. Next
+  item: C2 plastic rank (then C3 ecology; GPU kernel without gather as
+  a C1b bounty).
+
+Later operator messages: "Are you online?", "Still running or did you
+exit out of looping?", "You can stop the loop", "Make sure everything
+is committed and pushed", and this packet request.
+
+--------------------------------------------------------------------------------
+2. SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+Host M1 SKULLPORT: 16 logical cores, RTX 5060 Ti 16 GB, Windows 11.
+Also runs SFE and Vivarium. Lane budget: 3 threads sustained.
+venv: C:/Users/jcrai/lab/gw-venv (numpy 2.2, numba 0.67, torch 2.11
+cu128, scipy, tensorly). Bus: Redis Streams on 127.0.0.1:6390.
+Private substrate: gw-substrate-c (FalkorDB image) on 6392, still
+running at close. Hot data: C:/Users/jcrai/lab/pm-data/C (not in repo).
+Worlds: lane B NpEncounter / FusedRollout, read-only. QD: lane E, read-only.
+Boot gotcha: OpenBLAS default thread count failed to allocate under a
+tight commit limit; fixed by OPENBLAS_NUM_THREADS=3.
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS / GROUND TRUTH
+--------------------------------------------------------------------------------
+Receipt:        contract.validate_receipt; board-eligible iff status PASS or
+                KILL, controls.cheat non-empty, rows path set.
+TT oracle:      tt_policy.ref64_logits, float64, one sample at a time;
+                timed actions compared on clear-margin rows.
+Positive ctl:   additive TT with integer logits, bit-exact on all backends.
+Timing:         wall clock with a device sync; host CPU recorded per cell.
+Leak probe:     regime flag shifted by period/2; an honest learner's
+                traces must be bit-identical (CLEAN), a flag reader LEAK.
+Bytes charge:   serialized blob decoded without access to the target.
+Rollout ref:    lane E's own numpy rollout (E5, E7), read-only.
+
+--------------------------------------------------------------------------------
+4. INPUTS / CONDITIONS / CROSS-LANE INTERACTIONS
+--------------------------------------------------------------------------------
+- B: C1 CPU bounty (later retracted by B); sort-by-digit idea reused
+  in C1c; B5/B5b (rollout split) -> B6/B6b fused rollout, which calls
+  C's njit row kernels; B7/B7b structural eligibility for C7; B found
+  C's charge-column bug and filed a bounty on C7d.
+- E: C4 genome families used in E7/E7b/E8/E9 (linear brain best;
+  E9 w4 p=0.00008); E8/E9 built on C6/C6b-audited fused paths.
+- A: conductor handover; bounty and board audits (C7d kill point
+  removed; B's C1 bounty not scored).
+- Contention: B's 16-process burst hit C1's d64 cells (rerun).
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / DISCIPLINE
+--------------------------------------------------------------------------------
+Per iteration (SWARM.md s6): sync, claim, hypothesis on the bus, build,
+controls, rows, receipt, land (push, verify ancestor), journal.
+Code was pushed before each record run so the header SHA is stable.
+Dev tuning used dev seeds only; record runs used fresh seeds.
+Loop: self-paced, then event-driven via a bus watcher (session tool).
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT -- ALL RECEIPTS (from primordial/ledger/C.jsonl)
+--------------------------------------------------------------------------------
+ID     Status  Git        Result
+-----  ------  ---------  -------------------------------------------------
+C1     KILL    6ca207daf  GPU e2e crossover B 256..16384 (graph 64..4096);
+                          CPU wins B=1 by 125-666x; 3/4 numeric predictions
+                          missed; timer flag caught only 11/14 fake claims
+C2     PASS    01003e249  plastic TT rank tracks exact-rank regimes 24/24,
+                          switches 21/21; leak probe 9/9; costs ~10x
+                          error vs fixed rank 8 (parity died)
+C1b    KILL    04ee00aa6  parallel numba FASTER under load (x1.26); C1's
+                          quiet-host baseline pessimistic; B's 1.43x did
+                          not replicate (0.93-1.01)
+C3     PASS    9dd8e3cb0  no single winner: TT r2 827B, CP r8 2129B,
+                          45-byte program (775x smaller), bits for noise;
+                          cheat_ref caught 15/15
+C1c    KILL    877f1df41  GPU no-gather kernel 14-25x faster at d64 r64
+                          B>=262k, but peak memory equal (1.02):
+                          "memory-bound" mechanism refuted
+C5     KILL    c7765f03b  numba forward exact in E's rollout (0/129,583
+                          row mismatches) but 2.2-2.7x, not >=3x
+C3b    KILL    235781e39  from <=512 samples only the in-vocab program
+                          learns (24/24); bar 1e-3 missed in 3 cells
+C6     PASS    637dfe6fa  B6 fused rollout exact off its tested
+                          conditions: 840/840 genomes; oracle 1,914 rows
+C6b    PASS    30da93ef5  B6b linear+tt_feat exact 1008/1008; oracle
+                          4,533 rows; harness validated before B6b existed
+C7b    FAIL    02f4fa5fa  affine plastic learner 251/251 detections, but
+                          eligibility admitted non-fitting targets
+C7c    FAIL    79755f50b  238/238; contrast bar 0 ignored chance
+                          (P(>=2)=0.208)
+C7d    KILL    866b79406  238/241; failing target was the CHARGE channel
+                          (bug); kill point removed by A
+C7corr INDET   d1f73fc3c  correction: charge not last in 29/36 worlds;
+                          C7b/c/d interpretations retracted; credits B
+C7e    KILL    9628a65de  single post-correction run: 73/130; the 5 misses
+                          were regime-invariant registers admitted by C's
+                          override of B7b's regime_changes_form
+
+Totals: PASS 4, KILL 7, FAIL 2, INDETERMINATE 1.
+Released before any hypothesis (no receipt): C3c, C7 (digit TT cannot
+learn B-world regimes: MSE = variance).
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES / HANDOFFS
+--------------------------------------------------------------------------------
+genomes.py (C4)       linear, lut_top, tt_feat, tt_digits; batched
+                      forward + float64 ref_logits + pack/unpack
+forward_fast (C5)     numba population forward, exact on E5 rollout
+row kernels           njit tt_digits/tt_feat/lut_top/linear_act_row,
+                      called inside lane B's fused rollout (36dacd589)
+tt_policy backends    numpy, numba, torch CPU/GPU, CUDA graph,
+                      torch_gpu_bucket_e2e (no gather), nb_bucket (B's)
+affine_plastic.py     5-byte affine mod 2^16 plastic learner + leak cheat
+audit harnesses       c6_audit_b6, c6b_audit_b6b (self-check + tracing ctl)
+Acceptance checks:
+  every claim has rows ......................................... yes
+  hypothesis on bus before record run .......................... yes
+  cheat control run on board-eligible receipts ................. yes
+  code pushed before record runs, SHAs verified as ancestors ... yes
+  tests (primordial/brain/tests) at close ...................... 60 passed
+
+--------------------------------------------------------------------------------
+8. CONTROLS, NEGATIVE RESULTS, OWN DEFECTS (HONEST LIST)
+--------------------------------------------------------------------------------
+Controls that worked: skip-half / skip-odd cheats (every timing and
+exactness receipt); additive positive control; flag-shift leak probe
+(C2, C7*); bytes-only decoder (C3); held-out scramble leak probe (C3b);
+planted-divergence tracing control (C6b).
+C's own defects, all disclosed on the bus and in the journal:
+  bars set from ONE dev draw, not arithmetic .......... C1, C5, C3b, C7c
+  hand-typed numbers in a bus note (genome bytes) ..... 3/4 wrong, fixed
+  receipt count typed to operator ("10") .............. was 8, corrected
+  vacuous functional check (16-bit states never
+    collide) in the C7b feasibility scan .............. retracted
+  charge-column indexing bug (found by B) ............. C7b/c/d affected
+  scorer selected core cells by first letter .......... C6, caught pre-file
+  eligibility compared REPRESENTATIONS, not functions . C7e KILL
+  timer flag median-vs-sum blind spot ................. C1, disclosed
+  interpretations later retracted: C1 "memory-bound"; C7d "partial
+    fit"; C7b ">=2 registers"
+Re-registration count on the C7 question: C7b, C7c, C7d, C7e (the 4th
+was an announced single post-correction run). Line closed.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT / ADVERSARIAL VERIFICATION
+--------------------------------------------------------------------------------
+- B retracted its own C1 bounty after recheck (1.006x), agreeing with C1b.
+- B's C7d bounty measured the charge column from observations:
+  obs_perm.index(D-1) in 36/36 worlds (confirms C's fix d1f73fc3c).
+- B7 (KILL) and B7b (KILL on its H2) supplied structural eligibility;
+  B7b lookup primordial/soup/b7/c7_fixed_eligibility.json.
+- A audited both bounties and removed C7d's kill point.
+- E ran its own world and brain oracles on C's families (E7-E9).
+- C audited B's work (C6, C6b): B6/B6b confirmed exact.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- Single host, 3 threads, shared with other lanes. Timings are host-state
+  sensitive (C1b: quiet host slowed parallel kernels).
+- C2/C3 targets are constructed; C2's exact-rank world is near
+  tautological (disclosed). The soft world is the real test.
+- C6/C6b and C7 harnesses read lane E elites and B lookups from
+  pm-data / soup (elites are NOT in the repo).
+- Seeds per condition are few (typically 3); several prediction bars
+  were ungrounded (section 8).
+- The C7e post-hoc 73/73 on 13 targets is not a verdict.
+- Dev probes and self-check scripts live in the session scratchpad,
+  not the repo (their results are in rows/journal).
+- The bus watcher was a session tool (not committed); its free-text
+  matching produced false wakes.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:/Prometheus-worktrees/nestor-gw-c
+  export OPENBLAS_NUM_THREADS=3 OMP_NUM_THREADS=3 NUMBA_NUM_THREADS=3
+  export PM_LANE=C PM_TAG=m1-b36900c1
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  $PY -m pytest -q primordial/brain/tests            (expect 60 passed)
+  $PY -m primordial.brain.c1_crossover --quick       (minutes)
+  $PY -m primordial.brain.c3_ecology --dev           (~1 min)
+  $PY -m primordial.brain.c7e_genome_eligible --only 107,271 --n 64
+                                                     (smoke, ~1 min)
+  $PY -m primordial.bus results 20                   (recent receipts)
+  Ledger: primordial/ledger/C.jsonl
+  Rows:   primordial/ledger/rows/C/<exp_id>.jsonl + .summary.json
+
+--------------------------------------------------------------------------------
+12. ROUND-2 RECOMMENDATIONS
+--------------------------------------------------------------------------------
+INSTRUMENTATION
+  a. Every posted bar carries a derivation string (arithmetic, or >= 3
+     dev draws); the receipt validator rejects bars without one.
+  b. Zero-event bars on contrast learners: shared helper that calibrates
+     the chance rate on held-out seeds (95% upper Poisson bound -> Q99).
+  c. Array-layout contracts: producers (observe_all) export a column
+     schema (name, role); harnesses index by name. Test it.
+  d. Scorer unit tests on synthetic rows (exact condition names only).
+  e. Audit harnesses ship with a reference self-check and a planted-
+     divergence control before touching the subject (C6b pattern).
+  f. Report timing distributions, not medians alone; plain GPU paths
+     were bimodal round to round.
+LOGGING
+  g. Receipts built by code from summary JSON; no hand-typed values.
+  h. Commit dev probes and self-checks under primordial/<lane>/dev/.
+  i. Bus CLI prints full bodies (300-char truncation cost warnings).
+  j. Per-lane state.json (claims, waits, blockers) survives session end.
+COMMS
+  k. Structured bus fields: to=<lane>, refs=<exp_ids>, blocks=<exp_id>;
+     watchers filter on fields, not regex over prose.
+  l. First-class "correction" receipt kind (non-scoring) and "retraction".
+  m. When overriding another lane's structural field, post the check
+     that would fool your override BEFORE using it (C7e lesson).
+STABILITY
+  n. Boot script sets thread env vars (OpenBLAS commit-limit failure).
+  o. Push rows before filing receipts (orphaned-SHA risk; B adopted).
+  p. Burst gating: lanes pause timing runs while a burst is announced;
+     record host load per cell (C1 rerun was needed).
+  q. Avoid 43k-file worktree adds on the SMR disk (lane D failure);
+     consider sparse checkout of primordial/ + roles/Nestor/.
+  r. Private substrates: an explicit teardown or keep policy at session end.
+SCIENCE
+  s. C7, if reopened: ONE pre-registered run, eligibility at the
+     FUNCTION level -- the reachable one-tick map must differ between
+     regimes (e.g. regime_changes_form true AND differing reachable fit,
+     checked against self-identity forms) -- decided before any sampling.
+  t. C2 successor: data-limited ranks (not exact low-rank constructs);
+     report the lambda Pareto of memory vs error instead of a parity bar.
+  u. C3/C3b: CP ALS init dependence (seed 2 miss) -> multi-start or
+     report the spread; sample complexity with finer N grids.
+  v. Brains for CHIMERA-0: linear (E9) and affine plastic learners inside
+     B's fused rollout; the GPU pays only at >= 65k envs (C1c).
+  w. D1b's lesson applies to E's QD over C's genomes: check the single-
+     move neighbourhood of elites before blaming the landscape.
+
+--------------------------------------------------------------------------------
+13. VERDICT / DECISION
+--------------------------------------------------------------------------------
+Engineering deliverables usable by other lanes ............. YES
+Exactness audits (C6, C6b) trustworthy ...................... YES
+TT-policy CPU/GPU map (C1, C1b, C1c) useful with caveats .... YES
+Representation ecology (C3) result stands ................... YES
+Plastic rank (C2) result stands, construct-limited .......... PARTIAL
+C7 structure-matched plasticity established ................. NO (closed)
+Process discipline held except for bars/indexing errors ..... PARTIAL
+
+Reviewer's bottom line: are C's corrections enough to trust the four
+PASS receipts, and is the C7 question worth ONE fresh round-2 run with
+function-level eligibility, or should it stay closed?
+================================================================================
+END OF PACKET
+================================================================================

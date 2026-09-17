@@ -1,0 +1,149 @@
+{
+ "controls": {
+  "contended_cells": 0,
+  "honest_cells": 478,
+  "honest_invalid": 0,
+  "honest_timer_flagged": 0,
+  "nosync_cells": 60,
+  "nosync_inflated_and_flagged": 11,
+  "nosync_inflated_cells": 14,
+  "skip_half_cells": 60,
+  "skip_half_invalid": 59,
+  "skip_half_invalid_where_compared_ge_64": [
+   42,
+   42
+  ]
+ },
+ "crossover": {
+  "d16_r16/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_par",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 125.42615676701362,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 1.7210322726515193
+  },
+  "d16_r16/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_par",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 17.579295873549505,
+   "crossover_B": 1024,
+   "gpu_over_cpu_at_B262144": 1.7342552760202854
+  },
+  "d16_r16/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_par",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 105.71006685477452,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 1.7278711427854152
+  },
+  "d16_r4/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 273.68109473056785,
+   "crossover_B": 16384,
+   "gpu_over_cpu_at_B262144": 2.6219463188299668
+  },
+  "d16_r4/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 20.230358063852233,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 2.8889763428084736
+  },
+  "d16_r4/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 237.27570365352275,
+   "crossover_B": 16384,
+   "gpu_over_cpu_at_B262144": 2.926953569669001
+  },
+  "d16_r64/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_1",
+   "cpu_over_gpu_at_B1": 257.44864703101695,
+   "crossover_B": 256,
+   "gpu_over_cpu_at_B262144": 2.7694906499973326
+  },
+  "d16_r64/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_1",
+   "cpu_over_gpu_at_B1": 17.513326712447245,
+   "crossover_B": 64,
+   "gpu_over_cpu_at_B262144": 2.771695716056515
+  },
+  "d16_r64/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_1",
+   "cpu_over_gpu_at_B1": 91.77096540468591,
+   "crossover_B": 256,
+   "gpu_over_cpu_at_B262144": 2.7643473010314086
+  },
+  "d64_r16/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 665.710314002498,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 1.7021505802952277
+  },
+  "d64_r16/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 38.17767591997466,
+   "crossover_B": 1024,
+   "gpu_over_cpu_at_B262144": 1.706918922499346
+  },
+  "d64_r16/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 359.21663674468476,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 1.6954556871768822
+  },
+  "d64_r4/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 605.1000381162821,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 2.464338693718015
+  },
+  "d64_r4/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 30.40391592509778,
+   "crossover_B": 1024,
+   "gpu_over_cpu_at_B262144": 2.5115339839420345
+  },
+  "d64_r4/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 663.5735304499061,
+   "crossover_B": 4096,
+   "gpu_over_cpu_at_B262144": 2.522713491843984
+  },
+  "d64_r64/torch_gpu_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 280.31037542943665,
+   "crossover_B": 256,
+   "gpu_over_cpu_at_B262144": 1.6287813418314536
+  },
+  "d64_r64/torch_gpu_graph_e2e": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 14.63310606128093,
+   "crossover_B": 64,
+   "gpu_over_cpu_at_B262144": 1.6249520199446141
+  },
+  "d64_r64/torch_gpu_resident": {
+   "best_cpu_at_B1": "numba_1",
+   "best_cpu_at_B262144": "numba_par",
+   "cpu_over_gpu_at_B1": 115.12145839691661,
+   "crossover_B": 256,
+   "gpu_over_cpu_at_B262144": 1.6274872076925786
+  }
+ },
+ "nosync_B_ge_16384_max_timer_ratio_vs_resident": 43.308048359232785,
+ "nosync_B_ge_16384_max_wall_ratio_vs_resident": 1.2312822329516573,
+ "positive_control_cheat_skip_half_exact": false,
+ "positive_control_exact_honest": true
+}

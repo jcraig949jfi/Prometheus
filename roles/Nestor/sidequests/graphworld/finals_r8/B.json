@@ -1,0 +1,54 @@
+{
+ "candidates": [],
+ "code_sha": "c66552db056bd9d494781b1ed712c58523105433",
+ "disputes_with_A": [],
+ "generated_ts": 1789598496.304,
+ "interventions_received": [
+  {
+   "event_id": "1789592000416-0",
+   "summary": "A: R8 clock live; NO_NEW_WORK 22:15:03, working window ~5 h 23 min"
+  },
+  {
+   "event_id": "1789593987199-0",
+   "summary": "A to B: trigger did NOT fire (Route B 4/4 SURVIVAL_IMPOSSIBLE, H AGREE); stay idle and armed; do not pre-tune the recipe"
+  },
+  {
+   "event_id": "1789595293221-0",
+   "summary": "A to all: emit FINAL.json via telemetry.write_final; counts from records; residue list or NONE"
+  },
+  {
+   "event_id": "1789596895740-0",
+   "summary": "A: B relaunched at 18:15 as apparently stopped (it was not); duplicate session created"
+  },
+  {
+   "event_id": "1789598452619-0",
+   "summary": "A RULES: original B (session 53677235, pid 26504) keeps the lane; duplicate pid 28164 terminated; resume git writes; A's error logged; epoch-boundary bus line accepted"
+  }
+ ],
+ "job_status_counts": {},
+ "lane": "B",
+ "notes": "Lane B is CONDITIONAL: it runs the FROZEN B-R5-1 recipe iff code publishes a second SURVIVED world on pm:replication. Through this emission: 0 records, 0 published keys, so B ran NO jobs, wrote NO rows, filed NO receipts and started NO worker. B-R5-1 (w13 train128_held64, 16-byte int4a4, progress 1.591, CI [1.139, 1.827]) was not re-run, re-read, tuned or pre-tuned to any world, and remains CANDIDATE. Correct idleness is the result.",
+ "receipts": [],
+ "round_id": "r8",
+ "row_files": [],
+ "schema_version": "FINAL_v1",
+ "self_disclosed_errors": [
+  {
+   "error": "B posted nothing on the bus between the 16:53 idle report (1789592018750-0) and 18:15, relying on a 60 s heartbeat and journal commits as proof of life. From the stream alone B was indistinguishable from a stopped session, and A relaunched a duplicate B into the same worktree (pid 28164). A has logged the relaunch as A's defect; B's contributing gap was the silence. Repair: a bus line to A at every epoch boundary (accepted by A 1789598452619-0).",
+   "ref": "1789596959492-0",
+   "repaired": true
+  },
+  {
+   "error": "Process, no science effect: B's first read-only watcher crashed at start (ModuleNotFoundError: primordial -- script run from the scratchpad without PYTHONPATH); a second attempt ran detached outside the tool's background tracking and was terminated by exact pid (interpreter + argv match, ancestors excluded). The tracked watcher ran from ~16:57.",
+   "ref": null,
+   "repaired": true
+  }
+ ],
+ "unresolved_claims": [
+  {
+   "claim": "INTERIM FINAL (18:4x). B-R5-1 replication is CONDITIONAL and still open: pm:replication has 0 records; G is screening the frozen 232-world set and a SURVIVED cell there would fire the trigger before NO_NEW_WORK 22:15:03. This document is re-emitted at close with either the replication outputs or item NOT_REACHED.",
+   "ref": "1789593987199-0"
+  }
+ ],
+ "why_not_run": []
+}

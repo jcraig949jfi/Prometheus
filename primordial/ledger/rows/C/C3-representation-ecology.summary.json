@@ -1,0 +1,877 @@
+{
+ "H1_tt_rank2": {
+  "held": true,
+  "per_seed": [
+   {
+    "best_cp": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 2.0354844891653664e-05,
+     "rep": "cp8"
+    },
+    "best_tt": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.7122906843877892e-06,
+     "rep": "tt2"
+    },
+    "best_tucker": {
+     "bytes": 2109,
+     "flops": 340,
+     "rel_mse": 1.6077850869567101e-06,
+     "rep": "tucker4"
+    },
+    "held": true,
+    "seed": 0,
+    "winner": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.7122906843877892e-06,
+     "rep": "tt2"
+    }
+   },
+   {
+    "best_cp": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 1.5185592485762075e-07,
+     "rep": "cp8"
+    },
+    "best_tt": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.5312983448269142e-07,
+     "rep": "tt2"
+    },
+    "best_tucker": {
+     "bytes": 2109,
+     "flops": 340,
+     "rel_mse": 1.390648214394888e-07,
+     "rep": "tucker4"
+    },
+    "held": true,
+    "seed": 1,
+    "winner": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.5312983448269142e-07,
+     "rep": "tt2"
+    }
+   },
+   {
+    "best_cp": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 2.3935463373782016e-05,
+     "rep": "cp8"
+    },
+    "best_tt": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.1217424348408945e-06,
+     "rep": "tt2"
+    },
+    "best_tucker": {
+     "bytes": 2109,
+     "flops": 340,
+     "rel_mse": 1.067768874917141e-06,
+     "rep": "tucker4"
+    },
+    "held": true,
+    "seed": 2,
+    "winner": {
+     "bytes": 827,
+     "flops": 12,
+     "rel_mse": 1.1217424348408945e-06,
+     "rep": "tt2"
+    }
+   }
+  ]
+ },
+ "H2_separable_decay": {
+  "held": true,
+  "per_seed": [
+   {
+    "best_tt": {
+     "bytes": 9275,
+     "flops": 144,
+     "rel_mse": 4.99063114414752e-07,
+     "rep": "tt8"
+    },
+    "held": true,
+    "seed": 0,
+    "winner": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 5.016362400938452e-07,
+     "rep": "cp8"
+    }
+   },
+   {
+    "best_tt": {
+     "bytes": 9275,
+     "flops": 144,
+     "rel_mse": 8.664104089203896e-07,
+     "rep": "tt8"
+    },
+    "held": true,
+    "seed": 1,
+    "winner": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 8.761990925298672e-07,
+     "rep": "cp8"
+    }
+   },
+   {
+    "best_tt": {
+     "bytes": 9275,
+     "flops": 144,
+     "rel_mse": 2.7993995044979184e-07,
+     "rep": "tt8"
+    },
+    "held": true,
+    "seed": 2,
+    "winner": {
+     "bytes": 2129,
+     "flops": 40,
+     "rel_mse": 2.8139536696248157e-07,
+     "rep": "cp8"
+    }
+   }
+  ]
+ },
+ "H3_program_in": {
+  "held": true,
+  "per_seed": [
+   {
+    "best_tensor": {
+     "bytes": 34875,
+     "flops": 544,
+     "rel_mse": 2.287161450087037e-15,
+     "rep": "tt16"
+    },
+    "held": true,
+    "seed": 0,
+    "winner": {
+     "bytes": 45,
+     "flops": 5,
+     "rel_mse": 7.505345901452987e-15,
+     "rep": "program"
+    }
+   },
+   {
+    "best_tensor": {
+     "bytes": 34875,
+     "flops": 544,
+     "rel_mse": 2.287161450087037e-15,
+     "rep": "tt16"
+    },
+    "held": true,
+    "seed": 1,
+    "winner": {
+     "bytes": 45,
+     "flops": 5,
+     "rel_mse": 7.505345901452987e-15,
+     "rep": "program"
+    }
+   },
+   {
+    "best_tensor": {
+     "bytes": 34875,
+     "flops": 544,
+     "rel_mse": 2.287161450087037e-15,
+     "rep": "tt16"
+    },
+    "held": true,
+    "seed": 2,
+    "winner": {
+     "bytes": 45,
+     "flops": 5,
+     "rel_mse": 7.505345901452987e-15,
+     "rep": "program"
+    }
+   }
+  ]
+ },
+ "H4_program_out": {
+  "held": false,
+  "per_seed": [
+   {
+    "bits8": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 1.1461368995263673e-05,
+     "rep": "bits8"
+    },
+    "held": true,
+    "program_rel": 0.989630682439887,
+    "seed": 0,
+    "winner": {
+     "bytes": 8369,
+     "flops": 160,
+     "rel_mse": 8.26835140296501e-15,
+     "rep": "cp32"
+    }
+   },
+   {
+    "bits8": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 1.1461368995263673e-05,
+     "rep": "bits8"
+    },
+    "held": true,
+    "program_rel": 0.989630682439887,
+    "seed": 1,
+    "winner": {
+     "bytes": 8369,
+     "flops": 160,
+     "rel_mse": 6.486584277358992e-07,
+     "rep": "cp32"
+    }
+   },
+   {
+    "bits8": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 1.1461368995263673e-05,
+     "rep": "bits8"
+    },
+    "held": false,
+    "program_rel": 0.989630682439887,
+    "seed": 2,
+    "winner": {
+     "bytes": 34875,
+     "flops": 544,
+     "rel_mse": 2.326012208622615e-15,
+     "rep": "tt16"
+    }
+   }
+  ]
+ },
+ "H5_noise": {
+  "held": true,
+  "per_seed": [
+   {
+    "held": true,
+    "seed": 0,
+    "structured_reps_rel_le_0.5_under_half_dense": [],
+    "winner_at_1e-2": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 0.0001039484492172787,
+     "rep": "bits8"
+    }
+   },
+   {
+    "held": true,
+    "seed": 1,
+    "structured_reps_rel_le_0.5_under_half_dense": [],
+    "winner_at_1e-2": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 8.668022427904835e-05,
+     "rep": "bits8"
+    }
+   },
+   {
+    "held": true,
+    "seed": 2,
+    "structured_reps_rel_le_0.5_under_half_dense": [],
+    "winner_at_1e-2": {
+     "bytes": 65563,
+     "flops": 2,
+     "rel_mse": 9.815923725441978e-05,
+     "rep": "bits8"
+    }
+   }
+  ]
+ },
+ "controls": {
+  "cheat_flagged": "15/15",
+  "dense_max_rel": 8.601963564062346e-16,
+  "honest_flagged": [],
+  "program_in_program_rel": [
+   7.505345901452987e-15,
+   7.505345901452987e-15,
+   7.505345901452987e-15
+  ]
+ },
+ "controls_ok": true,
+ "exp_id": "C3-representation-ecology",
+ "fronts": [
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt3",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt2",
+    "tt3",
+    "tt4",
+    "tt6",
+    "cp1",
+    "cp2",
+    "tucker1",
+    "tucker2",
+    "additive",
+    "program"
+   ],
+   "seed": 0,
+   "target": "tt_rank2"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt12",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt3",
+    "tt12",
+    "tt16",
+    "cp1",
+    "cp4",
+    "cp8",
+    "cp16",
+    "tucker2",
+    "tucker4",
+    "program"
+   ],
+   "seed": 0,
+   "target": "separable_decay"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits4",
+    "program"
+   ],
+   "seed": 0,
+   "target": "program_in"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt16",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker2",
+    "additive",
+    "program"
+   ],
+   "seed": 0,
+   "target": "program_out"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "dense",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "bits8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "bits4",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "dense",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits2",
+    "bits4",
+    "bits8",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker1",
+    "tucker2",
+    "tucker4",
+    "additive",
+    "program"
+   ],
+   "seed": 0,
+   "target": "noise"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt3",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt2",
+    "tt3",
+    "tt4",
+    "cp1",
+    "cp2",
+    "tucker2",
+    "program"
+   ],
+   "seed": 1,
+   "target": "tt_rank2"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt1",
+    "tt12",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker1",
+    "tucker2",
+    "tucker4",
+    "additive",
+    "program"
+   ],
+   "seed": 1,
+   "target": "separable_decay"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits4",
+    "program"
+   ],
+   "seed": 1,
+   "target": "program_in"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp16",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt16",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt16",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker2",
+    "additive",
+    "program"
+   ],
+   "seed": 1,
+   "target": "program_out"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "bits8",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "bits8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "bits4",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "dense",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits2",
+    "bits4",
+    "bits8",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker1",
+    "tucker2",
+    "tucker4",
+    "additive",
+    "program"
+   ],
+   "seed": 1,
+   "target": "noise"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "tt2",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt3",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt2",
+    "tt3",
+    "tt4",
+    "tt6",
+    "tt8",
+    "cp1",
+    "cp2",
+    "tucker1",
+    "tucker2",
+    "additive",
+    "program"
+   ],
+   "seed": 2,
+   "target": "tt_rank2"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp8",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt12",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "tt1",
+    "tt8",
+    "tt12",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "tucker1",
+    "tucker2",
+    "tucker4",
+    "tucker8",
+    "additive",
+    "program"
+   ],
+   "seed": 2,
+   "target": "separable_decay"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "program",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits4",
+    "program"
+   ],
+   "seed": 2,
+   "target": "program_in"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "tt16",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "cp32",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "tt16",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits4",
+    "tt16",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker1",
+    "tucker2",
+    "additive",
+    "program"
+   ],
+   "seed": 2,
+   "target": "program_out"
+  },
+  {
+   "cheapest_at_eps": {
+    "0.0001": {
+     "min_bytes": "bits8",
+     "min_flops": "dense"
+    },
+    "0.01": {
+     "min_bytes": "bits8",
+     "min_flops": "dense"
+    },
+    "0.1": {
+     "min_bytes": "bits4",
+     "min_flops": "dense"
+    },
+    "1e-08": {
+     "min_bytes": "dense",
+     "min_flops": "dense"
+    }
+   },
+   "flagged": [
+    "cheat_ref"
+   ],
+   "front_bytes_err": [
+    "dense",
+    "bits2",
+    "bits4",
+    "bits8",
+    "cp1",
+    "cp2",
+    "cp4",
+    "cp8",
+    "cp16",
+    "cp32",
+    "tucker2",
+    "tucker4",
+    "additive",
+    "program"
+   ],
+   "seed": 2,
+   "target": "noise"
+  }
+ ],
+ "git": "36a6e3eee8ca254d4d38c1229da852950ffddf46",
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "source": "C3-representation-ecology_record_20260914T084801.jsonl",
+ "status_by_posted_rule": "PASS"
+}

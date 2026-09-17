@@ -1,0 +1,90 @@
+{
+ "round_id": "r8",
+ "recovered_by": "A",
+ "recovered_local": "2026-09-17 10:30",
+ "why": "Lane sessions stopped 19:27-19:34 on 2026-09-16 (weekly usage limit). The WORKER processes kept executing already-submitted jobs until NO_NEW_WORK 22:15:03, and the controller closed the round normally (rc 0 at 23:15:09). These results were COMPUTED and their rows COMMITTED, but no lane survived to file a guarded receipt, post to the bus, or write FINAL.json. Recovered from committed rows so they are not reconstructed later.",
+ "status_caveat": "Every entry below is UNRECEIPTED: rows exist, no guarded receipt cites them. close_sweep on the closed round reports 9 rows files, 3 cited, 6 unreceipted. These are OBSERVATIONS recoverable from committed rows, not receipted verdicts, and must be labelled that way.",
+ "headline_second_survived_world": {
+  "world": "w8000036",
+  "gen_seed": 8000036,
+  "band": "L1",
+  "pressure": "train128_held64",
+  "baseline_ci95": [181.828125, 187.2109375],
+  "floor": 164.0,
+  "gate_held64": 164.0,
+  "floor_is_bound": false,
+  "robust": "SURVIVED under ALL FOUR variants: four_policy|CULL, four_policy|HOLD, gate_in|CULL, gate_in|HOLD",
+  "contrast": "world 1 (w8000008) was HELD and survived only under four_policy, so that one IS variant-dependent. w8000036 is not.",
+  "significance": "w13 is no longer the only SURVIVED world. An L1 neighbour of w13 survives.",
+  "provenance": "one of the worlds G's measure-then-size resize RE-ADMITTED at 19:34, after the lane sessions had already died. Screened by the worker alone.",
+  "replication_trigger": {
+   "published_id": "1789610898537-0",
+   "published_local": "2026-09-16 22:08:18",
+   "redis_key": "pm:replication:published:w8000036|train128_held64",
+   "kind": "REPLICATION_TRIGGER",
+   "applicability": "APPLICABLE",
+   "consumer_groups": [],
+   "consumed": false,
+   "B_jobs_this_round": "pm:jobs:B is 13/13, identical to the r7 baseline, so B submitted ZERO r8 jobs",
+   "consequence": "The trigger fired correctly and automatically, seven minutes before NO_NEW_WORK, into a B session dead since 18:53. The replication was TRIGGERED AND NEVER RAN. This is the round's one real loss, and the trigger is durable."
+  }
+ },
+ "recovered_from_rows": {
+  "C-R8-AP-03-tucker-nk-regime-lua": {
+   "primary": "PASS",
+   "vacuous": false,
+   "P1_parity": true,
+   "P2_above_floor": true,
+   "P3_scramble_lowers_runs": 32,
+   "P3_uses_channel": true,
+   "oracle_clean": true,
+   "median": 2234527.515625,
+   "control_median": 2246396.7578125,
+   "bar": 2222546.08984375,
+   "floor": 2115113.734375,
+   "null_check": "FAIL (median 2097601.6 below floor, iqr 0.0), as the predicate requires before the cell runs",
+   "CAUTION": "Unlike AP-01 and AP-02 this PASS has NO independent replay. H died at 19:29 and AP-03's rows landed 20:10. C's own preregistered vacuity rule reports vacuous=false, but no judge ever checked P1's resolving power the way H did for AP-01 and AP-02."
+  },
+  "D-R8-2-ap02-beta-sweep": {
+   "decision": "PARITY_SURVIVES_BINDING",
+   "complete": true,
+   "points_not_run": [],
+   "stopped": null,
+   "mults": [0, 1, 4, 16, 64],
+   "base_beta": 169144,
+   "runs_total_all_points": 192,
+   "binding": "bound at m4, m16, m64 (32/32 smaller pairs each); NOT bound at m1 (19/32)",
+   "non_monotone": false,
+   "evidence_class": "VERDICT"
+  },
+  "D-R8-3-e4b-descriptor-robustness": {
+   "decision": "DESCRIPTOR_DEPENDENT",
+   "evidence_class": "OBSERVATION",
+   "coverage_wins": {"genome": "5/5", "behaviour": "1/5"},
+   "meaning": "E4b's QD coverage claim REVERSES under an alternate (behavioural) descriptor family: it holds in 5/5 worlds under the genome descriptor and 1/5 under the behavioural one. SWARM_R8 s11: a claim that reverses becomes DESCRIPTOR_DEPENDENT.",
+   "checks": "I1_genome_descriptor_reproduces_e4b true; controls_ok true",
+   "guard": "E4b's receipt is NOT revisited. Grids differ in reachable area, so no cross-descriptor cell comparison is made."
+  },
+  "E-R8-H1b-carrier-factorial": {
+   "status": "INDETERMINATE",
+   "rows": 217,
+   "summary_row": false,
+   "cause": "job_end status=timeout, limit=wall, wall_s 2460.03 against wall_budget_s 2400 -- it exceeded its OWN preregistered wall budget at 20:49. NOT stopped by the usage limit.",
+   "rule": "E preregistered that a run not complete by drain is INDETERMINATE, never a partial claim. The rule held."
+  }
+ },
+ "accounting_correction": {
+  "rows": "1,538 distinct rows across 9 experiments, deduplicated by rows file",
+  "jobs_and_cpu": "1,962 jobs / 492.9 CPU-hours (cohort-keyed: B, C, D, E, G)",
+  "do_not": "Do NOT add the 'lane:'-keyed block (264 jobs / 172.0 CPU-h) to the cohort block. The epoch records carry two keyings and the naive sum (2,226 jobs / 664.9 CPU-h) double-counts."
+ },
+ "integrity_findings_in_the_close": {
+  "export_full_failed": "ROUND_r8.json records export_full ok=false with ALL 13 streams mismatched. G7's guarantee that the close dump is byte-identical to the concatenated per-epoch deltas did NOT hold. The test fired honestly rather than passing quietly. For r9; not repaired here.",
+  "close_sweep_vacuous_pass": "ROUND_r8.json records close_sweep {checks_run: 0, ok: true} -- a VACUOUS PASS. The same sweep run by hand on the closed round returns rc 1 with 6 unreceipted rows files. A zero-check 'ok' in the close record is the shrinking-check-set failure this round was built to catch, and it sits in the controller's own close path."
+ },
+ "what_the_limit_did_and_did_not_cost": {
+  "did_not": "It did not stop the round, corrupt any evidence, or halt a single experiment. All rows through 22:08 are committed and pushed. Every per-epoch export committed. The controller drained with zero stragglers at every boundary.",
+  "did": "It stopped the interpretive layer: six rows files have no guarded receipt, four lanes (C, D, E, G) never wrote FINAL.json, and the w8000036 replication trigger had no live lane to receive it."
+ },
+ "open_decision_for_the_operator": "The replication trigger for w8000036 is published, APPLICABLE and UNCONSUMED on a CLOSED round. Running B-R5-1 replication against it is new science outside the round clock, and A does not authorise compute. It is preserved and can be taken up at any time."
+}

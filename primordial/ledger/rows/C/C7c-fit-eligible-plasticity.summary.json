@@ -1,0 +1,102 @@
+{
+ "exp_id": "C7c-fit-eligible-plasticity",
+ "source": "C7c-fit-eligible-plasticity.jsonl",
+ "git": "50337549b04c5b58dba43a5ea6fe693f09b960c3",
+ "posted_rule": {
+  "worlds_scanned": 36,
+  "eligible_worlds": 24,
+  "eligible_targets": 34,
+  "switches_total": 238,
+  "affine_detected_total": 238,
+  "digit_tt_detected_total": 2,
+  "H1": true,
+  "H2": false,
+  "H3": true,
+  "H4": true,
+  "leak_probe": true,
+  "null_surprises_max": 1,
+  "status_by_posted_rule": "FAIL"
+ },
+ "H3_max_abs_deviation": 0.027569731404958664,
+ "H3_corrupted_targets": 15,
+ "eligibility_excluded_nonfitting": {
+  "71": {
+   "0": 5,
+   "1": 254
+  },
+  "380": {
+   "2": 15,
+   "3": 30,
+   "4": 15
+  },
+  "60": {
+   "5": 62
+  },
+  "115": {
+   "0": 30
+  },
+  "255": {
+   "0": 254,
+   "3": 254
+  },
+  "428": {
+   "4": 5
+  },
+  "612": {
+   "0": 62,
+   "1": 62,
+   "2": 4
+  },
+  "730": {
+   "1": 16,
+   "2": 16,
+   "6": 17
+  }
+ },
+ "H2_diagnosis_post_hoc": {
+  "digit_tt_surprises_inside_switch_windows": 2,
+  "digit_tt_surprises_outside_windows": 7,
+  "ticks_inside_windows": 476,
+  "ticks_outside_windows": 3936,
+  "tt_surprise_rate_outside_windows_per_tick": 0.0017784552845528454,
+  "chance_expected_hits_inside_windows": 0.8465447154471545,
+  "targets_with_any_tt_surprise": [
+   [
+    281,
+    3,
+    0,
+    0,
+    4
+   ],
+   [
+    271,
+    0,
+    32,
+    0,
+    1
+   ],
+   [
+    440,
+    2,
+    16,
+    1,
+    0
+   ],
+   [
+    494,
+    0,
+    32,
+    1,
+    1
+   ],
+   [
+    599,
+    5,
+    16,
+    0,
+    1
+   ]
+  ],
+  "note": "H2 bar (0 detections) was not derived from the contrast learner chance surprise rate; this diagnosis does not change the posted FAIL"
+ }
+}

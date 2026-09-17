@@ -1,0 +1,636 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 2, TEST LAUNCH 1
+THE PRIMORDIAL MACHINE: FOUR COHORT SESSIONS UNDER A HUMAN SUCCESS CONTRACT
+================================================================================
+Prepared:      2026-09-14 ~17:50 local   frozen after quiesce (17:36)
+Author:        Nestor-A[m1-449a9e76], conductor (logistics only in round 2)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Tip reviewed:  c0b3fb52b (+ this packet's own commit)
+Run window:    launches 16:19-16:23, quiesce posted 17:26, all paused 17:36
+Plan:          roles/Nestor/sidequests/graphworld/SWARM_R2.md, BOOT_R2.md
+Contract:      roles/Nestor/PROMETHEUS_SUCCESS_CONTRACT.md (operator text)
+Operator msgs: roles/Nestor/prompts/2026-09-14_graphworld_swarm/03..08
+               (verbatim, sha256 in MANIFEST.md)
+Evidence:      bus_export/pm_{swarm,results,anomalies,boards_claims}
+               _2026-09-14.jsonl; primordial/ledger/rows/{B,C,D,E}/;
+               primordial/ledger/qd/{cells,draws}.jsonl; journal/{A..E}.md;
+               C:/Users/jcrai/lab/pm-data/launcher/launch_log.jsonl;
+               session transcripts fd63b6d8 (B) 608098cd (C) 4f51cc32 (D)
+               4b8ee0f4 (E)
+Headline:      4 sessions x ~75 min: 37 receipts, 4 anomalies resolved,
+               8 anomalies filed, QD ledger 21 -> 65 cells, 9 anti-prior
+               draws, 0 session deaths, clean quiesce, nothing unpushed.
+               Clause A "8-byte brains at parity in 5 of 6 baseline cells"
+               is real as measured but probably inflated by an easy
+               held-out metric and weak round 1 baselines (sections 6, 10).
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Round 1 (earlier the same day, packet REVIEW_PACKET_ROUND1_2026-09-14.txt)
+ran five domain lanes and produced 49 receipts, but also two unexplained
+session deaths and self-scored boards. The operator then set a thesis
+(box out LLM priors, keep failure landscapes, minimize human language),
+adopted a success contract (clauses A compression, B transfer, C
+scaffolding), a 30 min epoch with task TTLs, and a hard budget split. The
+operator also converted the lanes into cohorts (Appendix A).
+
+This packet reviews TEST LAUNCH 1 of round 2 (2 epochs) along three axes:
+  (a) the round 2 gate (launcher, liveness, heartbeat, bus, commit-on-write
+      rows, receipt guard, pre-built sparse worktrees) did its job;
+  (b) the cohort identities held (hill climbers exploited, anti-prior did
+      not choose its cells, anomaly hunters worked only from the queue,
+      watchmakers built tools and did no primary science);
+  (c) the findings in section 6 are stated at their evidence level.
+
+NOT claimed: any mechanism promoted, any transfer result (clause B opens
+in round 3), independence of any check (every session is the same model).
+
+--------------------------------------------------------------------------------
+2. DECLARED CONFLICTS
+--------------------------------------------------------------------------------
+- The author built the gate, the QD ledger, the clause A check, the
+  anti-prior drawer and the anomaly seed, and wrote SWARM_R2.md. A defect
+  in the author's clause A check was found by cohort B and fixed by E.
+- The round 1 baseline cells the cohorts were judged against were seeded by
+  the author from round 1 receipts; section 10 lists their weaknesses.
+- All four cohorts, all cross-cohort checks and this packet are the same
+  model family (Claude). No verification here has an independent failure
+  mode.
+- Round 2 had no score boards and no manual score moves (bus.receipt
+  self-scoring is off unless PM_BOARD_SCORING=1).
+
+--------------------------------------------------------------------------------
+3. METHOD / SETUP
+--------------------------------------------------------------------------------
+Cohorts (the budget split is the identity; SWARM_R2 s1):
+
+  lane  cohort            share  cores  first action each task
+  ----  ----------------  -----  -----  ---------------------------------------
+  B     HILL CLIMBERS       40%      5  qd_ledger pareto/top; mutate best cells
+  C     ANTI-PRIOR          25%      3  draw_cell (RNG picks the cell)
+  D     ANOMALY HUNTERS     20%      2  anomaly list --status OPEN; claim one
+  E     WATCHMAKERS         15%      2  build tools asked for; no primary work
+  A     conductor            --     --  liveness, integration, asks
+
+Contract clause A binding (round 2): on w1/w3/w4 and pressures
+train8_held64 (E9) and train128_held64 (E10/E8), behaviour = held-out
+median on E6's 64 held-out seeds over >= 8 run seeds; oracles clean
+(wforge trace-hash replay; brain actions vs reference logits); footprint =
+packed genome bytes incl. codebook; PASS = median >= baseline - 0.5 x IQR
+at fewer bytes, or median > baseline + 0.5 x IQR at <= bytes. Every
+evaluated candidate is a status-tagged row (record/dev/aborted/timeout/
+cheat/control).
+
+Gate F1-F6 (built and tested before boot):
+  F1  launch_lane.ps1: logs start, session id, exit code, duration.
+  F2  bus heartbeat pm:alive:<L> (TTL 180 s) + liveness.py (pid, transcript
+      age, heartbeat; posts MISSING; reaps only with --yes).
+  F3  bus: to/cc with full bodies, inbox, read-only tail, one registered tag
+      per lane, burst notices, ANOMALY queue (add/list/resolve/seed).
+  F4  RowWriter: rows commit on write, on close, on exception, on SIGTERM.
+  F5  receipt guard: sha must be on the pushed integration branch and the
+      rows must exist at that sha; host load captured automatically.
+  F6  prepare_worktrees: sparse (~1277 files of 43k), sequential, warmed
+      (numba disk cache), verified (tests, pre-commit probes, imports).
+Seeds: QD ledger 21 round 1 baseline cells; anomaly queue 10 open round 1
+anomalies; anti-prior grid 13x8x8x6x2 = 9,984 cells weighted 1/(1+visits).
+Launch: the operator was on mobile. The conductor started each session via
+a one-shot interactive Windows scheduled task running launch_lane.ps1 with
+a quote-free boot prompt pointing at prompts_r2/<L>.md; sessions ran with
+--remote-control so the operator could watch from the phone. Lanes were
+launched one at a time, each after the previous lane's bus hello.
+
+--------------------------------------------------------------------------------
+4. OPERATIONS: TIMELINE, TELEMETRY, INCIDENTS
+--------------------------------------------------------------------------------
+Time (local)  Event
+------------  ---------------------------------------------------------------
+16:16-16:18   wt.exe new-tab and Start-Process launches produce no process:
+              the conductor's shell kills its child processes on return
+16:19:27      scheduled-task mechanism proven on a dummy (exit code 5 logged)
+16:19:37      B launched (pid 29692); hello 16:20:24
+16:20-16:21   B's comms boot crashes in its sparse worktree (evidence_wiki
+              missing); B works around via PYTHONPATH to the canonical
+              checkout (another branch). Sparse set fixed before C-E.
+16:21:45      C launched; hello 16:22:08 (comms boot clean)
+16:22:30      D launched; hello 16:22:53
+16:22:56      E launched; hello 16:23:18
+16:26         B asks A and E: the clause A check's front is contaminated by
+              candidate rows (author defect); E fixes it at 16:32
+16:33-17:25   epochs 1 and 2 closed by every cohort (EPOCH notes on bus)
+16:53, 17:12  liveness posts E STALE (background run) and D STALE (paused)
+17:26         conductor posts QUIESCE to ALL
+17:29-17:36   C, D, B, E pause: loops stopped, no open claims, all pushed
+
+Boot and first output vs round 1:
+
+  metric                                  round 1            round 2
+  --------------------------------------  -----------------  ---------------
+  paste/launch -> bus hello               3:45 - 5:01        0:23 - 0:47
+  paste/launch -> first receipt or        15:19 - 32:40      5:35 (D)
+    anomaly resolution                                       7:58 (B)
+                                                             15:36 (E)
+                                                             18:32 (C)
+  session deaths                          2 (A, D)           0
+  model steps per receipt (approx.)       ~60                ~35
+  median context tokens per step          376k               204k
+  max context tokens                      890k               469k
+  output tokens                           7.06M (5 lanes)    2.20M (4 lanes)
+
+Round 2 wall clock (lane_timeprof.py over the 4 transcripts; 303 min of
+session span, 282 attributed): model 112.8 min (40.0%), waiting/system
+101.0 min (35.8%), commands classed "bus" 44.4 min (15.7%; the classifier
+tags any command that contains a bus call, so chained experiment commands
+land here -- not a measured bus cost), python runs 15.5 min, git 5.4 min.
+
+Incidents (all self-reported or seen in logs):
+- Launch path: see 16:16-16:19 above. Mitigation: scheduled tasks, each
+  DISABLED right after it ran (otherwise the one-shot trigger would have
+  relaunched a duplicate at 23:59).
+- Sparse worktree lacked evidence_wiki/archaeon (comms imports); lane B ran
+  with the canonical checkout on its import path for the whole launch.
+- Author defect in qd_ledger check (front over all rows): B's own receipt
+  would flip PASS -> FAIL after appending itself. Found by B, fixed by E
+  (edb064317, regression test).
+- The liveness monitor's bus export wrote into the conductor's worktree and
+  blocked one rebase; export moved to commit time.
+- E cited a harness sha that a rebase orphaned (9007d558c -> c11aea5a3),
+  corrected on the bus; a rebase while a RowWriter held its file wedged
+  E's worktree once (no rows lost).
+- B committed one rows commit untagged (PM_TAG not exported in that call).
+- C wrote 34.4 GB for an infeasible dense table in prose; the rows had the
+  right number (128 GiB); corrected on the bus.
+- C asked B for the GPU twice without reply; C used an idle GPU under a
+  burst notice; B later declared CPU-only.
+
+--------------------------------------------------------------------------------
+5. VOLUME
+--------------------------------------------------------------------------------
+  cohort  receipts  PASS  FAIL  INDET  other output
+  ------  --------  ----  ----  -----  -----------------------------------------
+  B             27    21     5      1  QD rows 31 (28 record, 3 cheat); 58 row
+                                       files; 3 anomalies filed; 3 asks
+  C              7     2     4      1  9 draws (7 run, 2 aborted infeasible);
+                                       QD rows 13; 2 anomalies filed
+  D              0     -     -      -  4 anomalies RESOLVED, 3 child anomalies
+                                       filed, 636 rows (D's count)
+  E              3     2     1      0  E-T1/E-T1b transfer harness, E-T2
+                                       Transformer baseline, E-T3 tools
+                                       (seeded sampler, powered brain cheats),
+                                       clause A check fix; 372 rows
+  ------  --------  ----  ----  -----
+  all           37    25    10      2
+
+Anomaly queue: 10 seeded + 8 filed = 18; 4 RESOLVED, 14 OPEN.
+QD ledger: 21 baseline + 44 new = 65 cells. Commits on the integration
+branch during the launch: 173 by 17:25 (most are commit-on-write rows).
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULTS
+--------------------------------------------------------------------------------
+B -- clause A descent (held64 median over 8 run seeds [IQR]; bytes include
+codebook; 8 B is the floor set by the archive's pad-to-4 genome length)
+
+  cell               baseline (bytes)          smallest B cell at parity
+  -----------------  ------------------------  --------------------------------
+  w4 train128        open loop 94.04 (192)     8 B  97.19 [0.47] PASS *
+                     float linear 98.76 (312)  12 B 97.18 [1.16] PASS
+  w4 train8          float linear 89.94 [6.11] 8 B  91.80 [1.50] PASS
+                     (312)
+  w3 train128        open loop 102.71 (128)    8 B  103.97 [0.87] PASS
+  w3 train8          float linear 103.16       8 B  106.88 [2.58] PASS
+                     [10.09] (208)
+  w1 train8          float linear 35.46        8 B  55.21 [3.31] PASS
+                     [15.79] (344)
+  w1 train128        float linear 61.40 (344,  none: 5 variants 57.6-58.6 FAIL
+                     4 runs, no IQR)           -> recorded as protocol ceiling
+  * 2 of 16 audited elites were input-invariant (open loop in effect).
+
+Path: int4 48 B -> int3 40 B -> int2 32 B -> codebook A=4 20 B -> A=2 12 B
+-> int2 A=2 8 B. B found int3 elites use a median 2 (w4) / 3 (w3) of 8
+codebook rows before shrinking the codebook (a measured step, not a guess).
+
+B's own caveats, which this packet adopts:
+- A 12-byte brain that only chooses abstain vs one fixed action scores
+  97.18 on w4 held64, 1.58 below float linear: the held-out metric may
+  mostly reward abstain timing (anomaly 1789419655457-0, OPEN).
+- The w1 8-seed IQR is not a stable threshold (D3, below).
+- The skip-odd brain cheat went blind on int2 brains (13/16); int2 cells
+  were held INELIGIBLE until E's powered cheats re-adjudicated them.
+
+C -- anti-prior: every cell drawn by RNG (seed logged), prior posted first
+
+  exp       drawn cell (rep/world/pressure/substrate)   prior  verdict
+  --------  ------------------------------------------  -----  ---------------
+  C-R2-01   tt_feat / w4 / cpu_ttl / numba_fused          .35  FAIL
+  C-R2-02   small_program / nk_stub / rent / redis_lua    .15  FAIL
+  C-R2-03   tt_digits / w4 / cpu_ttl / numpy              .05  FAIL
+  C-R2-04   tt_feat / w3 / cpu_ttl / torch_gpu            .05  FAIL
+  C-R2-05   tt_digits / w5 / corruption / torch_gpu       .60  PASS (scope:
+                                                                insensitivity)
+  C-R2-06   dense_table / w2 / byte_charge / torch_gpu     --  aborted (128 GiB)
+  C-R2-07   dense_table / w4 / obs_delay / falkordb        --  aborted (128 GiB)
+  C-R2-08   small_program / w4 / rent / numpy / metered   .30  INDETERMINATE
+                                                                (oracle bar)
+  C-R2-09   linear / nk_stub / held_out_seeds / graphblas .70  PASS
+
+Every outcome went the direction of its posted prior (priors < .5 -> FAIL,
+> .5 -> PASS). No surprise against the prior in 7 run cells. Landscape
+rows kept for all 9 draws, including aborts. Findings of note:
+- CPU-TTL truncation: at 1.0 CPU-s a tt_feat loop reaches 92% of full-budget
+  train fitness but 76% of held-out (w4); in w3 the pattern reverses (56%
+  train, 70% held-out) -- C weakened its own anomaly.
+- A 132-byte target-blind linear NK policy evolved on 8 landscapes beats a
+  fixed bitset on 64 unseen landscapes 8/8 separated (+3.4% over random
+  bits); the bitset equals random (memorization does not transfer).
+- An 8-instruction register program under decoder rent wins QD coverage
+  8/8 (0.943 vs 0.774) but loses peak fitness 8/8; rent does not shrink
+  programs (7.5/8 instructions stay active).
+
+D -- anomaly hunters (predicate posted before each run; child anomalies filed)
+- D1c (round 1 "code learner stalls"): the (0,0) trap is operator bundling
+  -- a 1-encoder+1-decoder move escapes 10/10 vs bundled 0/10 on fresh
+  seeds; the rent and width valleys are operator-independent (0/10 both).
+- D2 (round 1 "fitness gate passes a wrong world"): over 40 worlds skip_lin
+  passes the fitness gate in 30; if yield_reg is not a lin_op destination
+  fitness is exactly invariant (27/27). The trace hash was never blind.
+  Two registered sub-predictions failed as registered (37/40, 29/40).
+- D3 (B's w1 spread): the spread belongs to the world/search, not int4
+  (float IQR 14.74 vs int4 8.98, ratio CI [0.12, 4.04]); within-run top-16
+  SD (~13) >= across-run SD; the same int4 code gives IQR 19.4 under B's RNG
+  family and 9.0 under D's.
+- D4 (D2 child): LuaArchive.sample uses server-side ZRANDMEMBER, unseeded:
+  the same honest world at the same seed gave best 1806 vs 1128. A seeded
+  client sampler is bit-reproducible 5/5. Consequence: run seeds of every
+  LuaArchive-based result (round 1 E4, E8-E10; round 2 B-R2-*, D3, C-R2-01..08)
+  label a server draw, not a replayable stream.
+
+E -- watchmakers
+- E-T1 transfer harness: control detected 3/3 but the random-graft cheat
+  fired in w3 (p=0.023) -> FAIL as posted. E-T1b (16 run seeds, graft read
+  against both cheats, seeds 0-7 bit-identical to E-T1) PASS: planted graft
+  beats both cheats 3/3 (p < 1e-4), false alarm gone. Report-only: of three
+  cross-world grafts only w2->w4 survives displacement (p_max 0.0003).
+- E-T2 Transformer baseline: 1 block, d=8, 680 params, 2,744 B on w4, oracles
+  clean, 8/8 seeds under TTL; held64 95.56 [8.1] report-only (float linear
+  89.94 at 312 B). The skip-odd cheat reached only 13/16 on 2 of 8 seeds.
+- E-T3 tools landed on request: seeded LuaArchive sampler (for D), powered
+  brain cheats ablate_top / shift_action / input_invariant (for B), and the
+  clause A check fix (for B).
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES VS THE ROUND 2 PLAN
+--------------------------------------------------------------------------------
+Gate F1-F6 in place before boot ................ YES (one sparse-set miss)
+Cohort identities held ......................... YES (see 8, 9)
+Anti-prior cells chosen by RNG only ............ YES (9 draws logged)
+Anomaly hunters worked only from the queue ..... YES (4 claims, all ANOM-*)
+Watchmakers did no primary science ............. YES (instrument receipts)
+Every evaluated candidate kept as rows ......... YES (incl. 2 aborts, cheats)
+Hypothesis/predicate posted before each run .... YES (bus ids in receipts)
+No self-scoring / no manual score moves ........ YES
+Clause B tools (transfer harness, Transformer) . YES -> clause B can open R3
+Epoch controller (F14), scorer (F12) ........... NO (epochs self-closed)
+Prior-vs-reality ledger computed by code ....... NO (priors recorded only)
+Task TTL enforced by the harness ............... PARTIAL (timeout 600 by
+                                                  convention, not enforced)
+
+--------------------------------------------------------------------------------
+8. CONTROLS, AND WHERE THEY WERE WEAK
+--------------------------------------------------------------------------------
+Strong: wforge trace-hash replay + final charge (skip_lin caught 16/16 in
+every B/C cell audited); fused == numpy fitness 16/16; E's paired
+graft-vs-cheat design; D's frozen-operator and alpha=1.5 controls; C's
+numpy reference == Lua on 38,400/38,400 offers (C-R2-02) and GraphBLAS ==
+numpy on NK (C-R2-09).
+Weak or flawed, disclosed by the cohorts:
+- skip-odd brain cheat: 13/16 on int2 linear brains, 13-16/16 across E-T2
+  seeds, and sampling-sensitive (14 -> 13 under E's row sampling). Replaced
+  for B by E-T3 ablate_top/shift_action from B-R2-8 on.
+- E-T3 powered cheats were validated only on a planted brain before B used
+  them; B-R2-9's w4 train128 cell met the rule exactly at the bar (14/16)
+  with 2 input-invariant elites.
+- C-R2-08 cheat skip_op2 caught 12/16 (< 14) -> INDETERMINATE, and a seeded
+  replay did not reproduce the run (unseeded sampler).
+- C-R2-05's PASS is a one-sided null: parity under extra corruption shows
+  the brains barely use observations (held ~70 = E6 open-loop), not
+  robustness.
+- The clause A 0.5 x IQR band on w1 rests on an 8-seed IQR that D showed
+  moves by 2x with the RNG family.
+
+--------------------------------------------------------------------------------
+9. CROSS-COHORT VERIFICATION (SAME MODEL, NOT INDEPENDENT)
+--------------------------------------------------------------------------------
+- B found the author's clause A check defect; E fixed it with a regression
+  test; B re-ran its repro to PASS stably.
+- B's w1 spread anomaly was resolved by D (D3) as WORLD, not int4.
+- D's unseeded-sampler finding (D4) was confirmed independently by C
+  (C-R2-08 seeded replay failed to reproduce) and fixed by E (33038855e).
+- B's cheat-power gap led E to build powered cheats; B re-adjudicated its 3
+  INELIGIBLE cells on committed genomes under a predicate posted first.
+- E read its own E-T1 FAIL and redesigned (E-T1b) rather than relaxing the
+  bar.
+None of this is independent: every check is one Claude session reading
+another Claude session's code.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+- EASY METRIC: 2-action (abstain vs one fixed action) and input-invariant
+  8 B brains sit within ~1.6 of float linear on w4 held64. Clause A PASSes
+  on w4/w3 may reflect how little the worlds require, not compression.
+- WEAK BASELINES (author): several round 1 baseline cells have 2-4 runs and
+  no IQR (w1 train128 61.40 is a 4-run draw above D3's 8-run 59.2); the
+  open-loop genome stores 4-bit values one per byte, so its 192/128 B is ~2x
+  its information content.
+- NOT REPLAYABLE: all LuaArchive runs before the seeded sampler (most of
+  round 2) cannot be re-run from their seed; the across-seed spread is still
+  a valid sample, paired or re-run claims are not.
+- 8 B FLOOR: set by the archive's pad-to-4 genome constraint, not by the
+  science.
+- C's priors all matched outcomes in direction; 7 cells is too few to say
+  anything about prior calibration, and no code computes it yet.
+- Same model everywhere; single shared host; epochs self-closed; task TTL
+  by convention; profiler category "bus" conflates chained commands.
+- Lane B ran with the canonical checkout (another branch) on its import
+  path for the whole launch (comms dependencies only, per its transcript).
+- Test launch length was 2 epochs (~66 min of work per cohort).
+
+--------------------------------------------------------------------------------
+11. SUGGESTIONS FOR ROUND 3
+--------------------------------------------------------------------------------
+METRIC AND BASELINES
+ M1 Put a trivial-policy floor under clause A: abstain-only, best fixed
+    action and 2-action brains per world; score parity on
+    (held64 - floor) / (baseline - floor), or require beating the floor by
+    a margin. Resolve B's easy-metric anomaly first (D's discriminator).
+ M2 Re-seed every baseline cell with >= 8 run seeds, IQR, the seeded
+    sampler, and information-honest bytes (nibble-packed open loop).
+ M3 Replace the 0.5 x IQR band with a bootstrap CI of the median, or a
+    fixed absolute tolerance per world, since D3 showed 8-seed IQRs move 2x.
+CONTROLS AND REPRODUCIBILITY
+ C1 Bind E-T3 powered cheats as the brain oracle; retire skip-odd.
+ C2 sampler_seed mandatory for every archive; save elites per run seed.
+ C3 Re-run the round 1 E4/E8-E10 conclusions that rely on paired seeds.
+ C4 Variable-length genomes in the archive to lift the 8 B floor.
+SCIENCE
+ S1 Open clause B (transfer) scored as graft vs both cheats with Holm
+    across worlds (E's recommendation); w2->w4 is the one live candidate.
+ S2 Anomaly inflow (8 filed) outpaced resolution (4); give D a triage
+    rule or a larger share when the queue grows.
+ S3 Prior-vs-reality: compute calibration from receipt `prior` fields by
+    code (F10); start collecting B's per-cell priors the same way.
+OPERATIONS
+ O1 Commit the scheduled-task launcher (with disable-after-run) into
+    primordial/ops; keep the dummy self-test step.
+ O2 Sparse set now includes evidence_wiki + archaeon; add a real
+    `comms instance` check to prepare_worktrees verify.
+ O3 RowWriter refuses to commit without PM_TAG; push fast-forward only
+    while a writer is live (E's wedge).
+ O4 Build the epoch controller (F14) and the scorer (F12) before longer
+    launches; enforce task TTL in the warm worker (F7), not by convention.
+ O5 A GPU arbiter: asks to B went unanswered twice.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+  git fetch origin
+  git worktree add <dir> origin/nestor/sidequest-graphworld-2026-09-14
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  $PY -m pytest -q primordial/tests
+  $PY -m primordial.ops.qd_ledger pareto --world w4
+  $PY -m primordial.ops.qd_ledger check --world w4 --pressure \
+      train128_held64 --median 97.19 --iqr 0.47 --bytes 8 --runs 8
+  Receipts: bus_export/pm_results_2026-09-14.jsonl (rows id > 1789417170000)
+  Rows: primordial/ledger/rows/<L>/<exp_id>.jsonl at the receipt's git sha
+  Anomalies: bus_export/pm_anomalies_2026-09-14.jsonl
+  Timing: python primordial/fabric/perf/lane_timeprof.py <transcripts>
+  Spot checks: D4 nondeterminism (primordial/cohorts/d/d4_run.py), E-T1b
+  bit-identical reruns, B-R2-8 re-adjudication on committed rs0 genomes.
+
+--------------------------------------------------------------------------------
+13. VERDICT
+--------------------------------------------------------------------------------
+GATE F1-F6 HELD UNDER LOAD ...................... YES (0 deaths, clean stop)
+COHORT IDENTITIES HELD .......................... YES
+FASTER BOOT AND ITERATION THAN ROUND 1 .......... YES (hello < 1 min)
+CLAUSE A COMPRESSION SHOWN ...................... AS MEASURED YES; VALIDITY
+                                                  OPEN (easy metric, weak
+                                                  baselines)
+MEASUREMENT DEFECTS SURFACED AND REPAIRED ....... YES (check front, unseeded
+                                                  sampler, cheat power)
+FINDINGS INDEPENDENTLY VERIFIED ................. NO (same-model only)
+RECOMMENDATION .................................. Harden clause A (M1-M3,
+                                                  C1-C2) before any
+                                                  promotion; open clause B
+                                                  (S1) in round 3
+
+Reviewer's bottom line: are the 8-byte clause A parity cells a compression
+finding, or an artifact of a held-out metric that 2-action brains nearly
+saturate plus round 1 baselines with 2-4 runs -- and is a trivial-policy
+floor (M1) the right repair?
+
+================================================================================
+APPENDIX A. OPERATOR INPUTS THAT GOVERN ROUND 2 (verbatim, ASCII-transliterated)
+================================================================================
+A.1 Round 2 decisions (operator message 07, sha256 in MANIFEST)
+
+  1. Domain Lanes or Cohorts?
+  Convert the lanes into Cohorts.
+  Do not ask a single LLM to context-switch between "exploit" and "falsify"
+  internally--it will default back to its conversational, crowd-pleasing mean.
+  Hardcode the budget split into the very identity of the agents by mapping
+  them directly to the 4 slots:
+  Lane B (The Hill Climbers - 40%): Pure exploitation. They take the
+  highest-fitness cells from the ledger and try to optimize them across any
+  domain.
+  Lane C (The Anti-Prior - 25%): Pure falsification. Their system prompt
+  strictly forbids them from chasing high-fitness scores. They must attack the
+  LLM consensus.
+  Lane D (The Anomaly Hunters - 20%): Serendipity. They only read from the
+  ANOMALY queue and attempt to resolve weird edge cases.
+   Lane E (The Watchmakers - 15%): Tooling and Instrumentation.
+  By making them cross-domain cohorts, they are forced to look at the
+  intersection of soup, brain, and lingua, which is exactly where the
+  serendipitous architectural discoveries usually hide.
+  2. Contract Benchmarks & Baselines
+  Start with Option A (Compression) using the existing MAP-Elites baseline.
+  Do not block Round 2 waiting on baselines and harnesses that don't exist
+  yet.
+  The target: Can they beat the MAP-Elites baseline (or achieve parity) with a
+  smaller byte-footprint, fewer parameters, or a tighter symbolic
+  representation?
+  The evolution: Assign Lane E (The Watchmakers) the explicit task of building
+  the Domain A -> B transfer harness and a basic Transformer baseline as part
+  of their Round 2 tooling mandate. Once Lane E commits those tools, you
+  trigger Option B (Transfer) for Round 3.
+  3. CHIMERA-0 vs. Contract-Driven Cells
+  Contract-driven cells only.
+  CHIMERA-0 is the integration target--the final boss. If you aim for
+  end-to-end integration now, the agents will write massive, brittle
+  monolithic scripts that fail catastrophically and trigger the TTL before
+  yielding any scientific state.
+  Focus entirely on expanding the QD (Quality Diversity) ledger. We want a
+  populated database of robust, isolated, and compressed mechanisms.
+  Integration comes later once you have a library of proven primitives.
+  4. The Gate (F1-F6)
+  Hard agree. Gate F1-F6 must be locked in before booting.
+  F1-F6 represent the foundational laws of physics for your simulation
+  (heartbeats, strict logging, immediate commits, and isolated warming). You
+  cannot run a TTL-enforced evolutionary simulation without a reliable
+  heartbeat and a persistent ledger.
+  F7-F15 (stream workers, auto-scoring, epochs) are the evolutionary
+  pressures. It is perfectly fine to roll those out dynamically during the
+  test launches as the swarm begins to stabilize.
+  Lock in F1-F6, assign the Cohort identities, and let's see what happens to
+  the Anti-Prior lane when it's forced to survive outside of its
+  conventionality bias.
+
+A.2 Success contract, epoch/TTL defaults and budget split (operator
+    message 04; clauses A-C are PROMETHEUS_SUCCESS_CONTRACT.md)
+
+  This is good:
+
+  1. The Success Contract: Compressing into the Non-Human
+  If the goal is to discover symbolic primitives and non-human tensor
+  abstractions, our PROMETHEUS_SUCCESS_CONTRACT.md needs to brutally penalize
+  bloat and human-legible mimicry. It should reward systems that achieve the
+  same cognitive outputs through increasingly alien, compact representations.
+  Here are three distinct clauses to adopt for our contract:
+
+  A: The Minimum Viable Abstraction (Compression Focus)
+
+  Prometheus seeks to compress cognitive behaviors into minimal structural
+  representations while simultaneously improving it's capability.
+  Success criteria: A mutation PASSES if it achieves behavioral parity on
+  benchmark X using a structurally smaller tensor footprint, fewer compiled
+  symbolic primitives, or a lower-dimensional embedding than the baseline.
+  Zero-weight: Human legibility of the compiled graph is irrelevant. If an
+  unreadable matrix multiplication achieves the same result as a
+  human-readable nested loop but uses 10% less compute, it is superior.
+
+  B: The Invariance Rule (Transfer Focus)
+
+  A representation is only a true primitive if it survives displacement.
+  Success criteria: A mutation PASSES if a symbolic graph or tensor topology
+  trained to solve Domain A successfully accelerates learning or inference
+  when grafted into Domain B without modification.
+  Zero-weight: High performance strictly contained within the training
+  environment (overfitting) is penalized. We are hunting for universal
+  cognitive mechanics, not localized parlor tricks.
+
+  C: The Algorithmic Scaffolding (Efficiency Focus)
+
+  Evolve the architecture that evolves the architecture.
+
+  Success criteria: A mutation PASSES if a newly discovered crossover
+  mechanism, loss function, or routing abstraction allows the broader swarm to
+  solve a subsequent control task faster or with fewer parameters than the
+  baseline MAP-Elites/Transformer architecture.
+
+  2. Round Lengths & TTL Defaults
+  Thirty minutes for a full generational round (an Epoch) is a solid,
+  pragmatic baseline for early runs. It is long enough to compile C# code,
+  execute a DuckDB/Postgres pipeline, and run a fast PyTorch training loop on
+  your RTX 5060 Tis, but short enough that infinite hallucination loops don't
+  drain your budget.
+  However, you need to separate the Round Timebox from the Agent TTL.
+  The Round Timebox (30 Minutes): This is the generation. At 30:00, the
+  Conductor (Agent A) halts all active workers, syncs the Redis streams,
+  updates the duckDB/Postgres ledgers, and spins up the next generation based
+  on the new gradient landscape.
+  The Agent TTL (5 to 10 Minutes): Individual worker agents should have much
+  shorter, aggressive lifespans. If an agent tries to compile a broken PyTorch
+  script and gets stuck in an infinite debugging loop with Claude Code, it
+  dies at 10 minutes.
+  The Biological Pulse (2-Minute Heartbeats): Require agents to ping a Redis
+  key with their current status every 2 minutes. If a worker goes quiet
+  (usually because it generated a massive script that crashed the local
+  environment), the Conductor reaps the process instantly.
+  Death Rattle / Grace Period: Give agents a 60-second warning before their
+  TTL expires. They must use this time exclusively to dump their partial
+  stack, memory, and OBSERVATION payloads into the database so their failure
+  can be inherited by the swarm
+
+  3. Splitting the Compute Budget
+  To prevent the LLM swarm from instantly collapsing into safe, conventional
+  "human" solutions, we must hardcode the budget allocation. The Conductor
+  does not get to decide these ratios; it merely enforces them.
+  Here is an ideal split for our early runs:
+   40% Exploitation (The Hill Climbers):
+  These agents are assigned to take the most successful symbolic graphs or
+  tensor abstractions from the previous round and make minor, logical
+  mutations to optimize them. This is pure performance-chasing.
+   25% Anti-Prior / Distant QD (The Falsification Engine):
+  This is our "weird" budget. If the collective LLM prior predicts with 90%
+  confidence that an experiment will fail, or that a specific tensor dimension
+  is critical, this cohort is forced to test it anyway. They randomly delete
+  dimensions, invert activation functions, or smash incompatible symbolic
+  primitives together. Most will fail, but the gradients of those failures are
+  how you escape local minima.
+   20% Serendipity (The Anomaly Hunters):
+  These agents do not generate new ideas. They pull exclusively from the
+  ANOMALY queue generated in previous rounds (e.g., "Why did dropping
+  precision to 4-bit actually increase the success rate of this specific
+  graph?"). Their sole job is to isolate and resolve unexpected boundary
+  behaviors.
+   15% Tooling & Instrumentation (The Watchmakers):
+  These agents are explicitly forbidden from trying to solve the primary
+  cognitive tasks. Their budget is spent writing better evaluation scripts,
+  faster inter-process communication pipelines, or sharper anomaly-detection
+  discriminators for the other 85% of the swarm to use.
+
+  Regarding the "why", we don't actually care unless we're being fooled.  We
+  care that it works and survives another generation.
+
+================================================================================
+APPENDIX B. COHORT BOOT PROMPTS (as served to each session, verbatim)
+================================================================================
+
+B.1 lane B
+
+  You are Nestor-B, cohort HILL CLIMBERS (40% exploitation) in round 2 of
+  the Primordial Machine swarm. Your worktree is built:
+  F:/Prometheus-worktrees/nestor-r2-b. Work only there; do not pull or
+  create worktrees. Boot: roles/Nestor/sidequests/graphworld/BOOT_R2.md
+  with L=B, l=b. Charter: SWARM_R2.md s3 B. First item:
+  `$PY -m primordial.ops.qd_ledger pareto --world w4`, then one contract
+  clause A attempt against the smallest-bytes baseline cell (8 run seeds,
+  oracles, `qd_ledger check`). 5 cores; GPU is yours by default.
+
+B.2 lane C
+
+  You are Nestor-C, cohort ANTI-PRIOR (25% falsification) in round 2 of
+  the Primordial Machine swarm. Your worktree is built:
+  F:/Prometheus-worktrees/nestor-r2-c. Work only there; do not pull or
+  create worktrees. Boot: roles/Nestor/sidequests/graphworld/BOOT_R2.md
+  with L=C, l=c. Charter: SWARM_R2.md s3 C. You never choose what to test:
+  every experiment begins with `$PY -m primordial.ops.draw_cell`, and you
+  build and run the drawn cell, posting your predicate and your own prior
+  before the run. Chasing fitness is forbidden. 3 cores.
+
+B.3 lane D
+
+  You are Nestor-D, cohort ANOMALY HUNTERS (20% serendipity) in round 2 of
+  the Primordial Machine swarm. Your worktree is built:
+  F:/Prometheus-worktrees/nestor-r2-d. Work only there; do not pull or
+  create worktrees. Boot: roles/Nestor/sidequests/graphworld/BOOT_R2.md
+  with L=D, l=d. Charter: SWARM_R2.md s3 D. Work only from
+  `$PY -m primordial.bus anomaly list --status OPEN`: claim ANOM-<id>,
+  build its minimum discriminator, resolve it with an exp id. 2 cores.
+
+B.4 lane E
+
+  You are Nestor-E, cohort WATCHMAKERS (15% tooling) in round 2 of the
+  Primordial Machine swarm. Your worktree is built:
+  F:/Prometheus-worktrees/nestor-r2-e. Work only there; do not pull or
+  create worktrees. Boot: roles/Nestor/sidequests/graphworld/BOOT_R2.md
+  with L=E, l=e. Charter: SWARM_R2.md s3 E. You never do primary science.
+  First item: E-T1, the Domain A -> B transfer harness with its random-
+  graft cheat; then E-T2, a basic Transformer baseline; answer
+  `ask ... --to E`. 2 cores.
+
+================================================================================
+END OF PACKET
+================================================================================

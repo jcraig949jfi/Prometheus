@@ -1,0 +1,446 @@
+{
+ "controls": {
+  "burn8_host_ok": true,
+  "honest_valid": true,
+  "sham_host_ok": true,
+  "sham_outside_15pct": {
+   "d16_r16_B1024/torch_gpu_e2e/sham8": 1.6041135880225972,
+   "d16_r16_B16384/torch_gpu_e2e/sham8": 1.1780528005314042,
+   "d16_r16_B4096/torch_gpu_e2e/sham8": 1.5347447190269663,
+   "d64_r64_B1024/numba_par/sham8": 1.199770066473937
+  },
+  "sham_within_15pct": false,
+  "skip_half_caught": true
+ },
+ "controls_ok": false,
+ "crossover": {
+  "d16_r16/torch_gpu_e2e/burn4": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par",
+    "256": "numba_par",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 4096,
+   "gpu_over_best_cpu": {
+    "1024": 0.2828555170485748,
+    "16384": 2.2642155129344923,
+    "256": 0.10344349060780385,
+    "4096": 1.2782033470518777
+   }
+  },
+  "d16_r16/torch_gpu_e2e/burn8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "256": "numba_par",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 4096,
+   "gpu_over_best_cpu": {
+    "1024": 0.37867897599798156,
+    "16384": 2.2910290174269425,
+    "256": 0.09649472740042664,
+    "4096": 1.577037842413663
+   }
+  },
+  "d16_r16/torch_gpu_e2e/idle": {
+   "best_cpu": {
+    "1024": "numba_par",
+    "16384": "numba_par",
+    "256": "numba_par",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 16384,
+   "gpu_over_best_cpu": {
+    "1024": 0.2758805810920587,
+    "16384": 1.8878638842015036,
+    "256": 0.0768392088584182,
+    "4096": 0.9670766670784452
+   }
+  },
+  "d16_r16/torch_gpu_e2e/sham8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "256": "numba_par",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 4096,
+   "gpu_over_best_cpu": {
+    "1024": 0.47005308221965536,
+    "16384": 2.067048432692233,
+    "256": 0.07312246287911744,
+    "4096": 1.5618533345931103
+   }
+  },
+  "d16_r16/torch_gpu_graph_e2e/burn4": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par",
+    "256": "numba_par",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.4551836760300767,
+    "16384": 2.488446147729859,
+    "256": 0.675296336548265,
+    "4096": 2.0871005781986423
+   }
+  },
+  "d16_r16/torch_gpu_graph_e2e/burn8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "256": "numba_par",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.457269627053133,
+    "16384": 2.527280098823996,
+    "256": 0.6605010111197015,
+    "4096": 2.1829172742831
+   }
+  },
+  "d16_r16/torch_gpu_graph_e2e/idle": {
+   "best_cpu": {
+    "1024": "numba_par",
+    "16384": "numba_par",
+    "256": "numba_par",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.2238247932017383,
+    "16384": 2.3985186463216244,
+    "256": 0.5442734858498959,
+    "4096": 1.9533459958803996
+   }
+  },
+  "d16_r16/torch_gpu_graph_e2e/sham8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "256": "numba_par",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.3002340770263507,
+    "16384": 2.233914818411695,
+    "256": 0.5942399513262773,
+    "4096": 1.995235225287842
+   }
+  },
+  "d64_r64/torch_gpu_e2e/burn4": {
+   "best_cpu": {
+    "1024": "nb_bucket_c3",
+    "16384": "numba_par_c3",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.345728142170313,
+    "16384": 1.0438341856244797,
+    "4096": 1.0795003814677766
+   }
+  },
+  "d64_r64/torch_gpu_e2e/burn8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 16384,
+   "gpu_over_best_cpu": {
+    "1024": 1.4062485488837095,
+    "16384": 1.0314805298691214,
+    "4096": 0.9580151789075122
+   }
+  },
+  "d64_r64/torch_gpu_e2e/idle": {
+   "best_cpu": {
+    "1024": "nb_bucket_c3",
+    "16384": "nb_bucket_c3",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.6176481939685732,
+    "16384": 1.2206169157238047,
+    "4096": 1.2798299730532572
+   }
+  },
+  "d64_r64/torch_gpu_e2e/sham8": {
+   "best_cpu": {
+    "1024": "numba_par",
+    "16384": "nb_bucket_c3",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.39388373907022,
+    "16384": 1.2164084690258627,
+    "4096": 1.2572561845594947
+   }
+  },
+  "d64_r64/torch_gpu_graph_e2e/burn4": {
+   "best_cpu": {
+    "1024": "nb_bucket_c3",
+    "16384": "numba_par_c3",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.5345217914012377,
+    "16384": 1.0470692528072834,
+    "4096": 1.1119816285408162
+   }
+  },
+  "d64_r64/torch_gpu_graph_e2e/burn8": {
+   "best_cpu": {
+    "1024": "numba_par_c3",
+    "16384": "numba_par_c3",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.5768349611269337,
+    "16384": 1.0431211080890905,
+    "4096": 1.057525444518978
+   }
+  },
+  "d64_r64/torch_gpu_graph_e2e/idle": {
+   "best_cpu": {
+    "1024": "nb_bucket_c3",
+    "16384": "nb_bucket_c3",
+    "4096": "numba_par_c3"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.7839747126639123,
+    "16384": 1.223500399365571,
+    "4096": 1.3079375342444748
+   }
+  },
+  "d64_r64/torch_gpu_graph_e2e/sham8": {
+   "best_cpu": {
+    "1024": "numba_par",
+    "16384": "nb_bucket_c3",
+    "4096": "numba_par"
+   },
+   "crossover_B_in_tested": 1024,
+   "gpu_over_best_cpu": {
+    "1024": 1.5432478669260268,
+    "16384": 1.2255563021831801,
+    "4096": 1.2847094407013104
+   }
+  }
+ },
+ "exp_id": "C1b-load-sensitivity",
+ "git": "aa04076c1d9145a35d8b9f6d0b3a8376c381b0ee",
+ "host_cpu_median_by_load": {
+  "burn4": 43.4,
+  "burn8": 69.65,
+  "idle": 19.1,
+  "sham8": 19.75
+ },
+ "p1_burn8_ratio_d64r64_B4096": {
+  "nb_bucket_c3": 1.1516831871367086,
+  "np_bucket": 0.868256931365468,
+  "numba_1": 0.8358297509220054,
+  "numba_par": 1.255000351075915,
+  "numba_par_c3": 1.2120243563643511
+ },
+ "p1_held": false,
+ "p2_graph_burn8_ratios": {
+  "d16_r16_B1024/torch_gpu_graph_e2e/burn8": 1.0260407382531909,
+  "d16_r16_B16384/torch_gpu_graph_e2e/burn8": 1.0025515536868526,
+  "d16_r16_B256/torch_gpu_graph_e2e/burn8": 1.0721438239872574,
+  "d16_r16_B4096/torch_gpu_graph_e2e/burn8": 0.9807850264617571,
+  "d64_r64_B1024/torch_gpu_graph_e2e/burn8": 1.0017240137272576,
+  "d64_r64_B16384/torch_gpu_graph_e2e/burn8": 1.0097047121985838,
+  "d64_r64_B4096/torch_gpu_graph_e2e/burn8": 1.0011238744022106
+ },
+ "p2_held": true,
+ "p3_crossover_d16r16_idle_burn8": [
+  16384,
+  4096
+ ],
+ "p3_d64r64_B4096_gpu_over_best_cpu_idle": 1.2798299730532572,
+ "p3_held": true,
+ "ratio_vs_idle": {
+  "d16_r16_B1024/cheat_skip_half/burn4": 0.6993715934424559,
+  "d16_r16_B1024/cheat_skip_half/burn8": 0.7732740171900113,
+  "d16_r16_B1024/cheat_skip_half/sham8": 0.9751908108529583,
+  "d16_r16_B1024/nb_bucket_c3/burn4": 0.9461489972621028,
+  "d16_r16_B1024/nb_bucket_c3/burn8": 0.9383649264619285,
+  "d16_r16_B1024/nb_bucket_c3/sham8": 0.9999424280843201,
+  "d16_r16_B1024/np_bucket/burn4": 0.9827174304303676,
+  "d16_r16_B1024/np_bucket/burn8": 0.7787033909839008,
+  "d16_r16_B1024/np_bucket/sham8": 1.1230538837964017,
+  "d16_r16_B1024/numba_1/burn4": 0.7170818385698603,
+  "d16_r16_B1024/numba_1/burn8": 0.6552430670828631,
+  "d16_r16_B1024/numba_1/sham8": 0.8653691230282199,
+  "d16_r16_B1024/numba_par/burn4": 0.8815881351244508,
+  "d16_r16_B1024/numba_par/burn8": 0.8595725539280539,
+  "d16_r16_B1024/numba_par/sham8": 0.9347360525941061,
+  "d16_r16_B1024/numba_par_c3/burn4": 0.9628544287973588,
+  "d16_r16_B1024/numba_par_c3/burn8": 0.9392690875900938,
+  "d16_r16_B1024/numba_par_c3/sham8": 1.0262553541975752,
+  "d16_r16_B1024/torch_gpu_e2e/burn4": 0.9056451449477958,
+  "d16_r16_B1024/torch_gpu_e2e/burn8": 1.182752842383865,
+  "d16_r16_B1024/torch_gpu_e2e/sham8": 1.6041135880225972,
+  "d16_r16_B1024/torch_gpu_graph_e2e/burn4": 1.050299378184657,
+  "d16_r16_B1024/torch_gpu_graph_e2e/burn8": 1.0260407382531909,
+  "d16_r16_B1024/torch_gpu_graph_e2e/sham8": 1.0002570975940328,
+  "d16_r16_B16384/cheat_skip_half/burn4": 0.7539221657857462,
+  "d16_r16_B16384/cheat_skip_half/burn8": 0.7301513461710564,
+  "d16_r16_B16384/cheat_skip_half/sham8": 0.9871323546825389,
+  "d16_r16_B16384/nb_bucket_c3/burn4": 0.9259598601050048,
+  "d16_r16_B16384/nb_bucket_c3/burn8": 0.9184148795964588,
+  "d16_r16_B16384/nb_bucket_c3/sham8": 1.0027815782819418,
+  "d16_r16_B16384/np_bucket/burn4": 0.7519337897366066,
+  "d16_r16_B16384/np_bucket/burn8": 0.7051189703879834,
+  "d16_r16_B16384/np_bucket/sham8": 1.042845706401416,
+  "d16_r16_B16384/numba_1/burn4": 0.6155424454741115,
+  "d16_r16_B16384/numba_1/burn8": 0.5942485872337769,
+  "d16_r16_B16384/numba_1/sham8": 0.9879024341374425,
+  "d16_r16_B16384/numba_par/burn4": 0.9659541689860134,
+  "d16_r16_B16384/numba_par/burn8": 0.9412077562677553,
+  "d16_r16_B16384/numba_par/sham8": 0.9791816970891891,
+  "d16_r16_B16384/numba_par_c3/burn4": 0.9609368385212922,
+  "d16_r16_B16384/numba_par_c3/burn8": 0.9610469557640704,
+  "d16_r16_B16384/numba_par_c3/sham8": 1.086758268405984,
+  "d16_r16_B16384/torch_gpu_e2e/burn4": 1.1585201838462795,
+  "d16_r16_B16384/torch_gpu_e2e/burn8": 1.154665919247029,
+  "d16_r16_B16384/torch_gpu_e2e/sham8": 1.1780528005314042,
+  "d16_r16_B16384/torch_gpu_graph_e2e/burn4": 1.002170624932686,
+  "d16_r16_B16384/torch_gpu_graph_e2e/burn8": 1.0025515536868526,
+  "d16_r16_B16384/torch_gpu_graph_e2e/sham8": 1.002093607224875,
+  "d16_r16_B256/cheat_skip_half/burn4": 0.7605951391958437,
+  "d16_r16_B256/cheat_skip_half/burn8": 0.8660160982976932,
+  "d16_r16_B256/cheat_skip_half/sham8": 1.0884401683437985,
+  "d16_r16_B256/nb_bucket_c3/burn4": 0.8514855998228081,
+  "d16_r16_B256/nb_bucket_c3/burn8": 0.8678121266260955,
+  "d16_r16_B256/nb_bucket_c3/sham8": 0.9808473945775156,
+  "d16_r16_B256/np_bucket/burn4": 0.7978747505654097,
+  "d16_r16_B256/np_bucket/burn8": 0.7119173558470813,
+  "d16_r16_B256/np_bucket/sham8": 0.8666000754429065,
+  "d16_r16_B256/numba_1/burn4": 0.6753538109478506,
+  "d16_r16_B256/numba_1/burn8": 0.7179563920941335,
+  "d16_r16_B256/numba_1/sham8": 0.9708668217733674,
+  "d16_r16_B256/numba_par/burn4": 0.9098606922000678,
+  "d16_r16_B256/numba_par/burn8": 0.8834800349885126,
+  "d16_r16_B256/numba_par/sham8": 0.9487041104372936,
+  "d16_r16_B256/numba_par_c3/burn4": 0.9278764090428259,
+  "d16_r16_B256/numba_par_c3/burn8": 0.9178736016970344,
+  "d16_r16_B256/numba_par_c3/sham8": 0.933057075829226,
+  "d16_r16_B256/torch_gpu_e2e/burn4": 1.2248846307284214,
+  "d16_r16_B256/torch_gpu_e2e/burn8": 1.109474790364088,
+  "d16_r16_B256/torch_gpu_e2e/sham8": 0.9028148796604517,
+  "d16_r16_B256/torch_gpu_graph_e2e/burn4": 1.1288912801852442,
+  "d16_r16_B256/torch_gpu_graph_e2e/burn8": 1.0721438239872574,
+  "d16_r16_B256/torch_gpu_graph_e2e/sham8": 1.035798911881543,
+  "d16_r16_B4096/cheat_skip_half/burn4": 0.7461273493264705,
+  "d16_r16_B4096/cheat_skip_half/burn8": 0.7842197511405289,
+  "d16_r16_B4096/cheat_skip_half/sham8": 1.125536355740083,
+  "d16_r16_B4096/nb_bucket_c3/burn4": 0.9630445400949436,
+  "d16_r16_B4096/nb_bucket_c3/burn8": 0.8597937429162351,
+  "d16_r16_B4096/nb_bucket_c3/sham8": 0.9895595710608411,
+  "d16_r16_B4096/np_bucket/burn4": 0.7884829460016719,
+  "d16_r16_B4096/np_bucket/burn8": 0.7416171693348281,
+  "d16_r16_B4096/np_bucket/sham8": 0.969920754616916,
+  "d16_r16_B4096/numba_1/burn4": 0.7286880227054501,
+  "d16_r16_B4096/numba_1/burn8": 0.6688790673293264,
+  "d16_r16_B4096/numba_1/sham8": 1.1150568157692236,
+  "d16_r16_B4096/numba_par/burn4": 0.9155504473930542,
+  "d16_r16_B4096/numba_par/burn8": 0.8776386200378136,
+  "d16_r16_B4096/numba_par/sham8": 0.9377347156052649,
+  "d16_r16_B4096/numba_par_c3/burn4": 0.9649900763838517,
+  "d16_r16_B4096/numba_par_c3/burn8": 0.8936296036520762,
+  "d16_r16_B4096/numba_par_c3/sham8": 0.9822023540782892,
+  "d16_r16_B4096/torch_gpu_e2e/burn4": 1.2340072904953954,
+  "d16_r16_B4096/torch_gpu_e2e/burn8": 1.4311888218176483,
+  "d16_r16_B4096/torch_gpu_e2e/sham8": 1.5347447190269663,
+  "d16_r16_B4096/torch_gpu_graph_e2e/burn4": 0.9975688556948992,
+  "d16_r16_B4096/torch_gpu_graph_e2e/burn8": 0.9807850264617571,
+  "d16_r16_B4096/torch_gpu_graph_e2e/sham8": 0.9706702753684022,
+  "d64_r64_B1024/cheat_skip_half/burn4": 0.788078020887812,
+  "d64_r64_B1024/cheat_skip_half/burn8": 0.7621765191571674,
+  "d64_r64_B1024/cheat_skip_half/sham8": 1.0111975893359346,
+  "d64_r64_B1024/nb_bucket_c3/burn4": 1.1639951208108623,
+  "d64_r64_B1024/nb_bucket_c3/burn8": 1.0403304014122956,
+  "d64_r64_B1024/nb_bucket_c3/sham8": 1.0173103642998855,
+  "d64_r64_B1024/np_bucket/burn4": 0.8318477601539908,
+  "d64_r64_B1024/np_bucket/burn8": 0.7796145493740221,
+  "d64_r64_B1024/np_bucket/sham8": 1.003389841863555,
+  "d64_r64_B1024/numba_1/burn4": 0.8473441638724154,
+  "d64_r64_B1024/numba_1/burn8": 0.7940172386150663,
+  "d64_r64_B1024/numba_1/sham8": 1.0042274472677517,
+  "d64_r64_B1024/numba_par/burn4": 1.1427199904939402,
+  "d64_r64_B1024/numba_par/burn8": 1.1653883190956833,
+  "d64_r64_B1024/numba_par/sham8": 1.199770066473937,
+  "d64_r64_B1024/numba_par_c3/burn4": 1.186747110269723,
+  "d64_r64_B1024/numba_par_c3/burn8": 1.1688512479660436,
+  "d64_r64_B1024/numba_par_c3/sham8": 0.9946761536360242,
+  "d64_r64_B1024/torch_gpu_e2e/burn4": 0.9683322970127473,
+  "d64_r64_B1024/torch_gpu_e2e/burn8": 0.9852094042813688,
+  "d64_r64_B1024/torch_gpu_e2e/sham8": 1.0003790622227142,
+  "d64_r64_B1024/torch_gpu_graph_e2e/burn4": 1.0012338545437034,
+  "d64_r64_B1024/torch_gpu_graph_e2e/burn8": 1.0017240137272576,
+  "d64_r64_B1024/torch_gpu_graph_e2e/sham8": 1.0043130599706487,
+  "d64_r64_B16384/cheat_skip_half/burn4": 0.9278929700662065,
+  "d64_r64_B16384/cheat_skip_half/burn8": 0.8275697923298587,
+  "d64_r64_B16384/cheat_skip_half/sham8": 1.0096363297428461,
+  "d64_r64_B16384/nb_bucket_c3/burn4": 1.0472134198611964,
+  "d64_r64_B16384/nb_bucket_c3/burn8": 1.130180001542988,
+  "d64_r64_B16384/nb_bucket_c3/sham8": 1.0048018954011946,
+  "d64_r64_B16384/np_bucket/burn4": 0.890998105142726,
+  "d64_r64_B16384/np_bucket/burn8": 0.8461189087710673,
+  "d64_r64_B16384/np_bucket/sham8": 0.9987344861572871,
+  "d64_r64_B16384/numba_1/burn4": 0.8764113266063124,
+  "d64_r64_B16384/numba_1/burn8": 0.846257385378382,
+  "d64_r64_B16384/numba_1/sham8": 1.026827342277847,
+  "d64_r64_B16384/numba_par/burn4": 1.100342495342227,
+  "d64_r64_B16384/numba_par/burn8": 1.207371975696279,
+  "d64_r64_B16384/numba_par/sham8": 1.0154407371726442,
+  "d64_r64_B16384/numba_par_c3/burn4": 1.210642852166249,
+  "d64_r64_B16384/numba_par_c3/burn8": 1.219895452324206,
+  "d64_r64_B16384/numba_par_c3/sham8": 1.0201175461287908,
+  "d64_r64_B16384/torch_gpu_e2e/burn4": 1.0051001237280102,
+  "d64_r64_B16384/torch_gpu_e2e/burn8": 1.0007956644528266,
+  "d64_r64_B16384/torch_gpu_e2e/sham8": 1.0013375363837878,
+  "d64_r64_B16384/torch_gpu_graph_e2e/burn4": 1.0058390354194122,
+  "d64_r64_B16384/torch_gpu_graph_e2e/burn8": 1.0097047121985838,
+  "d64_r64_B16384/torch_gpu_graph_e2e/sham8": 1.0064903092741817,
+  "d64_r64_B4096/cheat_skip_half/burn4": 0.9190103773854496,
+  "d64_r64_B4096/cheat_skip_half/burn8": 0.8717818833596943,
+  "d64_r64_B4096/cheat_skip_half/sham8": 1.0277537209440448,
+  "d64_r64_B4096/nb_bucket_c3/burn4": 1.1616361673045013,
+  "d64_r64_B4096/nb_bucket_c3/burn8": 1.1516831871367086,
+  "d64_r64_B4096/nb_bucket_c3/sham8": 1.005011396885044,
+  "d64_r64_B4096/np_bucket/burn4": 0.8930246511357679,
+  "d64_r64_B4096/np_bucket/burn8": 0.868256931365468,
+  "d64_r64_B4096/np_bucket/sham8": 0.9940801918861789,
+  "d64_r64_B4096/numba_1/burn4": 0.8299471396510034,
+  "d64_r64_B4096/numba_1/burn8": 0.8358297509220054,
+  "d64_r64_B4096/numba_1/sham8": 0.9616011689973091,
+  "d64_r64_B4096/numba_par/burn4": 1.126847446759764,
+  "d64_r64_B4096/numba_par/burn8": 1.255000351075915,
+  "d64_r64_B4096/numba_par/sham8": 1.0311359306620032,
+  "d64_r64_B4096/numba_par_c3/burn4": 1.1834147860187032,
+  "d64_r64_B4096/numba_par_c3/burn8": 1.2120243563643511,
+  "d64_r64_B4096/numba_par_c3/sham8": 1.0105151463160065,
+  "d64_r64_B4096/torch_gpu_e2e/burn4": 0.9981768983688566,
+  "d64_r64_B4096/torch_gpu_e2e/burn8": 0.9268385927288572,
+  "d64_r64_B4096/torch_gpu_e2e/sham8": 0.9993729097227997,
+  "d64_r64_B4096/torch_gpu_graph_e2e/burn4": 1.0061149455096146,
+  "d64_r64_B4096/torch_gpu_graph_e2e/burn8": 1.0011238744022106,
+  "d64_r64_B4096/torch_gpu_graph_e2e/sham8": 0.9992495964872898
+ },
+ "source": "C1b-load-sensitivity_record_20260914T083338.jsonl",
+ "status_by_posted_rule": "KILL"
+}

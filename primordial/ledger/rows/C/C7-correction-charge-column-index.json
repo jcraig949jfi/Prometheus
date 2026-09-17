@@ -1,0 +1,548 @@
+{
+ "exp_id": "C7-correction-charge-column-index",
+ "found_by": "lane B (bus 1789400167694-0)",
+ "rule": "charge column = index c with obs_perm[c] == D-1 (NpEncounter.observe_all returns vals[:, :, obs_perm] after placing charge at D-1)",
+ "worlds_charge_not_last": "29/36",
+ "per_world": {
+  "30": {
+   "D": 6,
+   "charge_column": 5,
+   "charge_is_last": true
+  },
+  "45": {
+   "D": 4,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "46": {
+   "D": 5,
+   "charge_column": 4,
+   "charge_is_last": true
+  },
+  "60": {
+   "D": 8,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "71": {
+   "D": 3,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "107": {
+   "D": 3,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "115": {
+   "D": 5,
+   "charge_column": 3,
+   "charge_is_last": false
+  },
+  "168": {
+   "D": 4,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "173": {
+   "D": 5,
+   "charge_column": 4,
+   "charge_is_last": true
+  },
+  "195": {
+   "D": 6,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "222": {
+   "D": 7,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "228": {
+   "D": 5,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "233": {
+   "D": 5,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "235": {
+   "D": 6,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "248": {
+   "D": 10,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "255": {
+   "D": 6,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "261": {
+   "D": 9,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "271": {
+   "D": 4,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "281": {
+   "D": 6,
+   "charge_column": 4,
+   "charge_is_last": false
+  },
+  "300": {
+   "D": 7,
+   "charge_column": 5,
+   "charge_is_last": false
+  },
+  "359": {
+   "D": 8,
+   "charge_column": 3,
+   "charge_is_last": false
+  },
+  "380": {
+   "D": 7,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "389": {
+   "D": 6,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "428": {
+   "D": 6,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "440": {
+   "D": 4,
+   "charge_column": 1,
+   "charge_is_last": false
+  },
+  "494": {
+   "D": 3,
+   "charge_column": 2,
+   "charge_is_last": true
+  },
+  "497": {
+   "D": 4,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "512": {
+   "D": 4,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "527": {
+   "D": 7,
+   "charge_column": 4,
+   "charge_is_last": false
+  },
+  "532": {
+   "D": 4,
+   "charge_column": 3,
+   "charge_is_last": true
+  },
+  "599": {
+   "D": 7,
+   "charge_column": 0,
+   "charge_is_last": false
+  },
+  "612": {
+   "D": 4,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "649": {
+   "D": 6,
+   "charge_column": 5,
+   "charge_is_last": true
+  },
+  "678": {
+   "D": 6,
+   "charge_column": 5,
+   "charge_is_last": true
+  },
+  "699": {
+   "D": 9,
+   "charge_column": 2,
+   "charge_is_last": false
+  },
+  "730": {
+   "D": 9,
+   "charge_column": 5,
+   "charge_is_last": false
+  }
+ },
+ "receipts": {
+  "C7b-structure-matched-plasticity": {
+   "targets": 29,
+   "targets_in_affected_worlds": [
+    [
+     107,
+     0
+    ],
+    [
+     195,
+     1
+    ],
+    [
+     222,
+     3
+    ],
+    [
+     222,
+     4
+    ],
+    [
+     228,
+     2
+    ],
+    [
+     228,
+     3
+    ],
+    [
+     248,
+     0
+    ],
+    [
+     248,
+     4
+    ],
+    [
+     248,
+     6
+    ],
+    [
+     261,
+     1
+    ],
+    [
+     261,
+     3
+    ],
+    [
+     281,
+     0
+    ],
+    [
+     281,
+     2
+    ],
+    [
+     281,
+     3
+    ],
+    [
+     60,
+     5
+    ],
+    [
+     115,
+     0
+    ],
+    [
+     235,
+     1
+    ],
+    [
+     255,
+     0
+    ],
+    [
+     255,
+     3
+    ],
+    [
+     271,
+     0
+    ],
+    [
+     440,
+     2
+    ]
+   ],
+   "targets_that_are_charge_channel": []
+  },
+  "C7c-fit-eligible-plasticity": {
+   "targets": 34,
+   "targets_in_affected_worlds": [
+    [
+     107,
+     0
+    ],
+    [
+     195,
+     1
+    ],
+    [
+     222,
+     4
+    ],
+    [
+     228,
+     2
+    ],
+    [
+     228,
+     3
+    ],
+    [
+     233,
+     2
+    ],
+    [
+     248,
+     0
+    ],
+    [
+     248,
+     4
+    ],
+    [
+     248,
+     6
+    ],
+    [
+     261,
+     1
+    ],
+    [
+     261,
+     3
+    ],
+    [
+     281,
+     0
+    ],
+    [
+     281,
+     3
+    ],
+    [
+     359,
+     5
+    ],
+    [
+     235,
+     1
+    ],
+    [
+     271,
+     0
+    ],
+    [
+     300,
+     3
+    ],
+    [
+     440,
+     2
+    ],
+    [
+     497,
+     2
+    ],
+    [
+     527,
+     1
+    ],
+    [
+     599,
+     4
+    ],
+    [
+     599,
+     5
+    ],
+    [
+     699,
+     5
+    ]
+   ],
+   "targets_that_are_charge_channel": []
+  },
+  "C7d-chance-grounded-contrast": {
+   "targets": 35,
+   "targets_in_affected_worlds": [
+    [
+     107,
+     0
+    ],
+    [
+     195,
+     1
+    ],
+    [
+     222,
+     4
+    ],
+    [
+     228,
+     2
+    ],
+    [
+     228,
+     3
+    ],
+    [
+     233,
+     2
+    ],
+    [
+     248,
+     0
+    ],
+    [
+     248,
+     4
+    ],
+    [
+     248,
+     6
+    ],
+    [
+     261,
+     1
+    ],
+    [
+     261,
+     3
+    ],
+    [
+     281,
+     0
+    ],
+    [
+     281,
+     3
+    ],
+    [
+     359,
+     5
+    ],
+    [
+     235,
+     1
+    ],
+    [
+     271,
+     0
+    ],
+    [
+     300,
+     3
+    ],
+    [
+     440,
+     2
+    ],
+    [
+     497,
+     2
+    ],
+    [
+     527,
+     1
+    ],
+    [
+     599,
+     4
+    ],
+    [
+     599,
+     5
+    ],
+    [
+     612,
+     2
+    ],
+    [
+     699,
+     5
+    ]
+   ],
+   "targets_that_are_charge_channel": [
+    [
+     612,
+     2
+    ]
+   ]
+  }
+ },
+ "fix_verification": {
+  "612": {
+   "corrupt_rate": 16,
+   "expected_last_col_match": 0.9375,
+   "match_fraction_per_reordered_column": [
+    0.0,
+    0.0,
+    0.0,
+    0.9356689453125
+   ]
+  },
+  "440": {
+   "corrupt_rate": 16,
+   "expected_last_col_match": 0.9375,
+   "match_fraction_per_reordered_column": [
+    0.0,
+    0.0,
+    0.0,
+    0.935302734375
+   ]
+  },
+  "235": {
+   "corrupt_rate": 8,
+   "expected_last_col_match": 0.875,
+   "match_fraction_per_reordered_column": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.87359619140625
+   ]
+  },
+  "107": {
+   "corrupt_rate": 0,
+   "expected_last_col_match": 1.0,
+   "match_fraction_per_reordered_column": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "248": {
+   "corrupt_rate": 0,
+   "expected_last_col_match": 1.0,
+   "match_fraction_per_reordered_column": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  }
+ },
+ "verification_seeds": [
+  97000,
+  97127
+ ]
+}

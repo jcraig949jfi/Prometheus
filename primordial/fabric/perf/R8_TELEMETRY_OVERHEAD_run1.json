@@ -1,0 +1,151 @@
+{
+ "ceiling_pct": 5.0,
+ "code_sha_base": "6c02b89a969855aeb958ad66b4e549dc67f565b4",
+ "cpu_count": 16,
+ "host": "SKULLPORT",
+ "measured_at": 1789565567.164,
+ "note": "measured while other builders' test suites shared the host; ABBA interleaving spreads that load over both arms. A negative overhead is noise, not a speedup.",
+ "production_overhead_pct": 5.637,
+ "python": "3.12.10",
+ "runs": [
+  {
+   "arms": {
+    "off": [
+     {
+      "child_wall_s": 10.821873500011861,
+      "samples": 0,
+      "wall_s": 10.823
+     },
+     {
+      "child_wall_s": 10.796126100001857,
+      "samples": 0,
+      "wall_s": 10.797
+     },
+     {
+      "child_wall_s": 10.916147500014631,
+      "samples": 0,
+      "wall_s": 10.917
+     },
+     {
+      "child_wall_s": 12.577588699990883,
+      "samples": 0,
+      "wall_s": 12.578
+     }
+    ],
+    "on": [
+     {
+      "child_wall_s": 10.741426499997033,
+      "samples": 1,
+      "wall_s": 10.742
+     },
+     {
+      "child_wall_s": 10.27711540000746,
+      "samples": 1,
+      "wall_s": 10.278
+     },
+     {
+      "child_wall_s": 12.655168199999025,
+      "samples": 1,
+      "wall_s": 12.656
+     },
+     {
+      "child_wall_s": 12.221971799997846,
+      "samples": 1,
+      "wall_s": 12.223
+     }
+    ]
+   },
+   "interval_s": 30.0,
+   "median_off_child_wall_s": 10.869,
+   "median_off_wall_s": 10.87,
+   "median_on_child_wall_s": 11.4817,
+   "median_on_wall_s": 11.4825,
+   "order": [
+    "on",
+    "off",
+    "off",
+    "on",
+    "on",
+    "off",
+    "off",
+    "on"
+   ],
+   "overhead_pct_child_wall_s": 5.637,
+   "overhead_pct_wall_s": 5.635,
+   "pairs": 4,
+   "record_cost_ms_per_grant": 1.706,
+   "units": 1500
+  },
+  {
+   "arms": {
+    "off": [
+     {
+      "child_wall_s": 10.780448500008788,
+      "samples": 0,
+      "wall_s": 10.782
+     },
+     {
+      "child_wall_s": 11.600057699979516,
+      "samples": 0,
+      "wall_s": 11.601
+     },
+     {
+      "child_wall_s": 11.241555900021922,
+      "samples": 0,
+      "wall_s": 11.243
+     },
+     {
+      "child_wall_s": 11.411881100008031,
+      "samples": 0,
+      "wall_s": 11.413
+     }
+    ],
+    "on": [
+     {
+      "child_wall_s": 9.984284900012426,
+      "samples": 10,
+      "wall_s": 9.985
+     },
+     {
+      "child_wall_s": 13.410672300000442,
+      "samples": 13,
+      "wall_s": 13.412
+     },
+     {
+      "child_wall_s": 11.098713899991708,
+      "samples": 11,
+      "wall_s": 11.1
+     },
+     {
+      "child_wall_s": 10.96992269999464,
+      "samples": 11,
+      "wall_s": 10.971
+     }
+    ]
+   },
+   "interval_s": 1.0,
+   "median_off_child_wall_s": 11.3267,
+   "median_off_wall_s": 11.328,
+   "median_on_child_wall_s": 11.0343,
+   "median_on_wall_s": 11.0355,
+   "order": [
+    "on",
+    "off",
+    "off",
+    "on",
+    "on",
+    "off",
+    "off",
+    "on"
+   ],
+   "overhead_pct_child_wall_s": -2.582,
+   "overhead_pct_wall_s": -2.582,
+   "pairs": 4,
+   "record_cost_ms_per_grant": 1.536,
+   "units": 1500
+  }
+ ],
+ "verdict_metric": "overhead_pct_child_wall_s at the production interval (30 s)",
+ "what": "R9 telemetry overhead calibration pair (G5 acceptance 4)",
+ "within_ceiling": false
+}

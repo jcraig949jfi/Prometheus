@@ -1,0 +1,69 @@
+{
+ "kept_to_run": [
+  {
+   "fn": "primordial.metric.r16:learner128_job",
+   "job_id": "3cefe0ca84d2",
+   "kwargs": "{\"cells\": [[13, \"train128_held64\"]]}",
+   "stream_id": "1789455879103-0"
+  }
+ ],
+ "parked": [
+  {
+   "checkpoint": "C:\\Users\\jcrai\\lab\\pm-data\\ckpt\\G\\cd9335d8b8af.pkl",
+   "checkpoint_bytes": 29036,
+   "checkpoint_exists": true,
+   "cpu_prior": "1628.859375",
+   "exp_id": "G-R16-floors",
+   "fn": "primordial.metric.r16:floors_job",
+   "job_id": "ec1e42d33c84",
+   "job_key": "cd9335d8b8af",
+   "kwargs": "{\"gen_seeds\": [13, 7, 1, 26, 34, 10, 2, 3, 4, 5, 6, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37]}",
+   "rows": "primordial/ledger/rows/G/G-R16-floors.jsonl",
+   "segment": "1",
+   "stream_id": "1789456259344-0",
+   "ttl_cpu_s": "60000.0"
+  },
+  {
+   "checkpoint": "C:\\Users\\jcrai\\lab\\pm-data\\ckpt\\G\\cd266a1b007d.pkl",
+   "checkpoint_bytes": 74080,
+   "checkpoint_exists": true,
+   "cpu_prior": "11231.828125",
+   "exp_id": "G-R16-baseline",
+   "fn": "primordial.metric.r16:baseline_job",
+   "job_id": "59f33f4c5198",
+   "job_key": "cd266a1b007d",
+   "kwargs": "{\"cells\": [[13, \"train128_held64\"], [7, \"train8_held64\"], [7, \"train128_held64\"], [26, \"train128_held64\"], [1, \"train8_held64\"], [1, \"train128_held64\"], [34, \"train128_held64\"], [34, \"train8_held64\"], [10, \"train128_held64\"], [13, \"train8_held64\"], [2, \"train8_held64\"], [2, \"train128_held64\"], [3, \"train8_held64\"], [3, \"train128_held64\"], [4, \"train8_held64\"], [4, \"train128_held64\"], [5, \"train8_held64\"], [5, \"train128_held64\"], [9, \"train128_held64\"], [12, \"train8_held64\"], [12, \"train128_held64\"], [14, \"train128_held64\"], [16, \"train8_held64\"], [16, \"train128_held64\"], [17, \"train128_held64\"], [19, \"train8_held64\"], [19, \"train128_held64\"], [21, \"train128_held64\"], [22, \"train128_held64\"], [23, \"train8_held64\"], [23, \"train128_held64\"], [24, \"train8_held64\"], [24, \"train128_held64\"], [25, \"train8_held64\"], [25, \"train128_held64\"], [30, \"train8_held64\"], [30, \"train128_held64\"], [31, \"train8_held64\"], [31, \"train128_held64\"], [21, \"train8_held64\"], [29, \"train128_held64\"], [20, \"train128_held64\"], [27, \"train128_held64\"], [20, \"train8_held64\"], [36, \"train8_held64\"], [36, \"train128_held64\"], [15, \"train8_held64\"], [35, \"train8_held64\"], [14, \"train8_held64\"], [35, \"train128_held64\"], [22, \"train8_held64\"], [32, \"train128_held64\"], [32, \"train8_held64\"], [15, \"train128_held64\"], [8, \"train8_held64\"], [8, \"train128_held64\"], [33, \"train128_held64\"], [6, \"train8_held64\"], [6, \"train128_held64\"], [37, \"train8_held64\"], [37, \"train128_held64\"], [27, \"train8_held64\"], [28, \"train8_held64\"], [28, \"train128_held64\"], [17, \"train8_held64\"], [11, \"train128_held64\"], [10, \"train8_held64\"], [29, \"train8_held64\"], [18, \"train8_held64\"], [18, \"train128_held64\"], [9, \"train8_held64\"], [11, \"train8_held64\"], [33, \"train8_held64\"], [26, \"train8_held64\"]]}",
+   "rows": "primordial/ledger/rows/G/G-R16-baseline.jsonl",
+   "segment": "1",
+   "stream_id": "1789458569332-0",
+   "ttl_cpu_s": "200000.0"
+  }
+ ],
+ "ruling": "operator 18 via A (smoke test stop)",
+ "segments_so_far": {
+  "cd266a1b007d": [
+   {
+    "cpu_s": 11231.828125,
+    "job_id": "cd266a1b007d",
+    "rows": 213,
+    "segment": 0,
+    "sha": "38e5b0808",
+    "status": "paused",
+    "wall_s": 2302.53
+   }
+  ],
+  "cd9335d8b8af": [
+   {
+    "cpu_s": 1628.859375,
+    "job_id": "cd9335d8b8af",
+    "rows": 67,
+    "segment": 0,
+    "sha": "ca5f76af1",
+    "status": "paused",
+    "wall_s": 362.265
+   }
+  ]
+ },
+ "stop_waited_s": 2.0,
+ "ts": 1789458569.6555555
+}

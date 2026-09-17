@@ -1,0 +1,45 @@
+{
+ "candidates": [],
+ "code_sha": "6ee4fb64ce3f7be2b17c468c446a84a9c7a62ea7",
+ "disputes_with_A": [],
+ "generated_ts": 1789597002.854,
+ "interventions_received": [
+  {
+   "event_id": "1789591818153-0",
+   "summary": "A: anti_prior.write_residue defect filed, not fixed (G1 vocabulary refuses status=None rows); the r8 rejected set (24) can be recovered from pm:prior:r8:candidates; R proceed"
+  },
+  {
+   "event_id": "1789592000416-0",
+   "summary": "A: R8 clock live, NO_NEW_WORK 22:15:03; R seal priors BEFORE assignment"
+  },
+  {
+   "event_id": "1789595293221-0",
+   "summary": "A: emit FINAL.json via telemetry.write_final; keep counts machine-readable"
+  },
+  {
+   "event_id": "1789596895740-0",
+   "summary": "A: R relaunched at 18:15; the 48 sealed priors stand; predict nothing further, do not experiment, do not look at outcomes; emit FINAL.json; confirm alive"
+  }
+ ],
+ "job_status_counts": {},
+ "lane": "R",
+ "notes": "Lane R is PREDICT-ONLY and ran no jobs, rows, receipts or experiments. The r8 anti-prior ledger, checked by code at relaunch: candidates published n=48 (examined 72, rejected 24 by G2 precheck, short False, ts 1789591641.738); sealed 48/48 with 48/48 sha256 commitments verified, one per published cell, all by predictor_id Nestor-R[m1-8c2ece8b], prediction_ids r8-R-00..r8-R-47, seal ts 1789592023.417..1789592023.477; ranks frozen 1789592049.035 (after every seal); first assignment 1789592049.035; 3 assignments exist (C-R8-AP-01..03). Report to A: 1789592028952-0 (R PRIORS SEALED n=48). Convention: P(PASS) = probability that the receipt verdict is PASS; INDETERMINATE or not-run counts as not PASS. No prior values appear here or on the bus. Calibration is scored descriptively at close by the conductor; small N, no inference.",
+ "receipts": [],
+ "round_id": "r8",
+ "row_files": [],
+ "schema_version": "FINAL_v1",
+ "self_disclosed_errors": [
+  {
+   "error": "Lane R session Nestor-R[m1-8c2ece8b] sealed the 48 r8 priors, then stopped: about 80 min silent with no worker, and did not act on A's close note. A relaunched R at 18:15. The priors themselves were unaffected (all sealed before ranks froze and before the first assignment).",
+   "ref": "1789596895740-0",
+   "repaired": true
+  },
+  {
+   "error": "DISCLOSURE, not a prior defect: while booting, relaunched session Nestor-R[m1-210bb53d] read branch commit subjects that name the three r8 assigned cells (C-R8-AP-01..03) and one r8 outcome (H's replay of C-R8-AP-01). This was after every r8 prior sealed (seal ts 1789592023.4 < ranks freeze 1789592049.0). No prior was changed or added, R made no prediction after seeing it, and seal() refuses a re-seal anyway. Arms, ranks, quantiles and prior values were not read.",
+   "ref": "6ee4fb64c",
+   "repaired": true
+  }
+ ],
+ "unresolved_claims": [],
+ "why_not_run": []
+}

@@ -1,0 +1,227 @@
+"""G-R4-4 (round 4 P0, builder G): the screen list primordial/ledger/qd/worlds_r4.json and its JIT guard.
+
+Schema worlds_r4/v1 (H 1789433688592-0, A 1789433714703-0, G 1789433928197-0). One record per
+world x pressure:
+  floor_parts        abstain, best_constant, uniform_random_median, input_invariant_learner (null = not run)
+  floor, floor_kind  max of the parts run; floor_is_bound + bound_parts when the learner was not run
+  gate_held64        the gate column
+  learner            {status run|not_run, median, iqr, held64_by_run_seed, run_seeds, budget_ok}
+  baseline           M2: {median, ci95, bytes, n_runs, held64_by_run_seed, elites} or null (never reached stage 2)
+  stage              1 (no baseline) or 2
+  verdicts           {"q1|q2": {verdict SURVIVED|CULLED|HELD, cull_reason, floor}} for all four variants
+  verdict, cull_reason   the active variant's (top-level q1_floor_policy / q2_policy)
+  sources            exp_ids and rows files of every number
+Numbers are never recomputed here: records are assembled from the floor_suite, baseline and learner rows.
+A record whose floor is a bound that could change a verdict (screen.needs_learner) is PENDING
+(conductor 1789440120713-0):
+  survivable      ci95[0] > bound: every variant PENDING; `write` refuses (the learner decides SURVIVED)
+  non-survivable  ci95[0] <= bound (gate > bound): no variant can SURVIVE, exact. HOLD variants PENDING
+                  (HELD vs CULLED needs the learner); CULL variants CULLED with cull_reason PENDING.
+                  learner {status not_run, est_hours, reason}. Written; check() gives INELIGIBLE(PENDING).
+
+The guard: `guard(doc, world, pressure)` -> None for a SURVIVED cell under the active variant, else an
+INELIGIBLE dict (UNSCREENED if absent, else CULLED or HELD). Graphworld worlds are named w<gen_seed>.
+"""
+from __future__ import annotations
+
+import json
+import pathlib
+import re
+
+from primordial.metric import screen as SC
+from primordial.metric import readout as RO
+from primordial.metric import suite as SU
+from primordial.metric.ci import BOOT_SEED, N_BOOT
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+WORLDS_R4 = ROOT / "primordial" / "ledger" / "qd" / "worlds_r4.json"
+SCHEMA = "worlds_r4/v1"
+GRAPHWORLD = re.compile(r"^w\d+$")
+PENDING = "PENDING"
+NON_SURVIVABLE_REASON = "non-survivable exact; HELD/CULLED needs learner"
+SCHEMA_V2 = "worlds_r4/v2"            # operator 16 (SWARM_R4 s9): pooled 32 runs x 4 RNG families, 8 each
+V2_NEED = {"min_runs": 32, "min_families": 4, "per_family": 8}
+
+
+def pooled_ok(stats: dict | None) -> bool:
+    """A pooled block (baseline or floor_stats entry) meets the operator 16 minimum."""
+    if not stats:
+        return False
+    per = stats.get("n_per_family") or {}
+    return (int(stats.get("n_runs") or 0) >= V2_NEED["min_runs"] and len(set(stats.get("families") or ())) >= V2_NEED["min_families"]
+            and bool(per) and min(int(v) for v in per.values()) >= V2_NEED["per_family"])
+
+
+def is_graphworld(world: str) -> bool:
+    return bool(GRAPHWORLD.match(str(world)))
+
+
+def _learner_block(summary: dict) -> dict:
+    out = {"status": "run", "median": summary["invariant_held64_median"], "iqr": summary["invariant_held64_iqr"],
+           "run_seeds": summary["run_seeds"], "budget_ok": summary["budget_ok"]}
+    for k in ("held64_by_run_seed", "held64_by_run", "n_runs", "families", "n_per_family", "readout"):
+        if k in summary:
+            out[k] = summary[k]
+    return out
+
+
+def _stats(summary: dict) -> dict:
+    from primordial.metric import sample as SM
+    return {**SM.from_counts(summary["n_per_family"]), "n_runs": summary["n_runs"],
+            "readout": summary.get("readout"), "median": summary["invariant_held64_median"]}
+
+
+def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = None, sources: dict | None = None,
+         est_runs: int = 8) -> dict:
+    """One record from a floor_suite row (v1 floor_suite or R16 floor_suite_r16), the cell's baseline row (v1
+    baseline or R16 baseline_r16, or None) and, for a pressure whose suite row has no learner, that pressure's own
+    learner summary (or None). est_runs: run count the PENDING learner-hour estimate assumes (32 under R16)."""
+    key = (suite_row["gen_seed"], suite_row["pressure"])
+    parts, lrn = dict(suite_row["floor_parts"]), dict(suite_row["learner"])
+    stats = {k: dict(v) for k, v in (suite_row.get("floor_stats") or {}).items()}
+    if learner is not None:
+        if (learner["gen_seed"], learner["pressure"]) != key:
+            raise ValueError(f"learner {learner['gen_seed']}/{learner['pressure']} is not this cell's {key}")
+        parts["input_invariant_learner"] = learner["invariant_held64_median"]
+        lrn = _learner_block(learner)
+        if "families" in learner:
+            stats["input_invariant_learner"] = _stats(learner)
+    f = SU.floor_of_parts(parts)
+    gate = float(suite_row["gate_held64"])
+    rec = {"world": suite_row["world"], "gen_seed": int(suite_row["gen_seed"]), "pressure": suite_row["pressure"],
+           "floor_parts": parts, **f, "gate_held64": gate, "learner": lrn, "sources": sources or {}}
+    if stats:
+        rec["floor_stats"] = stats
+    vf = {SC.vkey(*v): SC.variant_floor(f["floor"], gate, v[0]) for v in SC.VARIANTS}
+    if baseline is None:
+        rec.update(stage=1, baseline=None,
+                   verdicts={k: {"verdict": "CULLED", "cull_reason": "NOT_REACHED", "floor": vf[k]} for k in vf})
+        return rec
+    if (baseline["gen_seed"], baseline["pressure"]) != key:
+        raise ValueError(f"baseline {baseline['gen_seed']}/{baseline['pressure']} is not this cell's {key}")
+    lo = float(baseline["ci95"][0])
+    bl = {k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs")} | {
+        "elites": baseline.get("elites"), "readout": baseline.get("readout", RO.LEGACY),
+        "families": baseline.get("families"), "n_per_family": baseline.get("n_per_family")}
+    for k in ("held64_by_run_seed", "held64_by_run"):          # v1 per run seed; R16 per 'F|rs' run id
+        if k in baseline:
+            bl[k] = baseline[k]
+    if baseline.get("n_per_family"):                             # G-R5-1: the explicit three fields, top-level in the stamp
+        from primordial.metric import sample as SM
+        bl.update({k: v for k, v in SM.from_counts(baseline["n_per_family"]).items() if k in SM.FIELDS})
+    rec.update(stage=2, baseline=bl)
+    rec["pending"] = None
+    if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):
+        from primordial.metric.invariant import est_hours
+        est = round(est_hours(int(suite_row["gen_seed"]), suite_row["pressure"], runs=est_runs), 2)
+        if lo > f["floor"]:
+            rec["pending"] = "survivable"
+            rec["verdicts"] = {k: {"verdict": PENDING, "cull_reason": None, "floor": vf[k]} for k in vf}
+            rec["learner"] = {**lrn, "status": "not_run", "est_hours": est, "reason": "survivor-deciding"}
+        else:
+            rec["pending"] = "non_survivable"
+            rec["verdicts"] = {SC.vkey(*v): ({"verdict": PENDING, "cull_reason": None, "floor": vf[SC.vkey(*v)]}
+                                             if v[1] == "HOLD" else
+                                             {"verdict": "CULLED", "cull_reason": PENDING, "floor": vf[SC.vkey(*v)]})
+                               for v in SC.VARIANTS}
+            rec["learner"] = {**lrn, "status": "not_run", "est_hours": est, "reason": NON_SURVIVABLE_REASON}
+    else:
+        rec["verdicts"] = SC.verdicts(f["floor"], gate, lo)
+    return rec
+
+
+def build(records: list[dict], commit: str, active=SC.ACTIVE, max_survivors: int | None = SC.MAX_SURVIVORS,
+          schema: str = SCHEMA) -> dict:
+    """max_survivors=None: no stop (operator 16 re-screens every candidate cell)."""
+    cells = SC.apply_stop(records, len(records) + 1 if max_survivors is None else max_survivors)
+    k = SC.vkey(*active)
+    for c in cells:
+        c["verdict"], c["cull_reason"] = c["verdicts"][k]["verdict"], c["verdicts"][k]["cull_reason"]
+    doc = {"schema": schema, "commit": commit,
+           "bootstrap": {"fn": "primordial.metric.ci.median_ci", "stat": "median", "resamples": N_BOOT,
+                         "alpha": 0.05, "rng": "numpy PCG64", "seed": BOOT_SEED},
+           "q1_floor_policy": active[0], "q2_policy": active[1], "max_survivors": max_survivors,
+           "variants": [SC.vkey(*v) for v in SC.VARIANTS], "cells": cells}
+    if schema == SCHEMA_V2:
+        doc.update(V2_NEED, families=[4200, 2101, 3303, 5501], ruling="operator 16 (SWARM_R4 s9)")
+    return doc
+
+
+def v2_defects(doc: dict) -> list[tuple]:
+    """Cells of a v2 document below the operator 16 minimum: a stage 2 baseline, or a stochastic floor part that
+    was run (uniform random always; the learner wherever it entered the floor)."""
+    bad = []
+    for c in doc["cells"]:
+        fs = c.get("floor_stats") or {}
+        if not pooled_ok(fs.get("uniform_random_median")):
+            bad.append((c["world"], c["pressure"], "uniform_random_median"))
+        if c["floor_parts"].get("input_invariant_learner") is not None and not pooled_ok(fs.get("input_invariant_learner")):
+            bad.append((c["world"], c["pressure"], "input_invariant_learner"))
+        if c.get("baseline") is not None and not pooled_ok(c["baseline"]):
+            bad.append((c["world"], c["pressure"], "baseline"))
+    return bad
+
+
+def pending(doc: dict) -> list[tuple]:
+    """Every cell with a PENDING verdict (survivable or not)."""
+    return [(c["world"], c["pressure"]) for c in doc["cells"] if c.get("pending")]
+
+
+def blocking(doc: dict) -> list[tuple]:
+    """Survivable PENDING cells: the learner decides SURVIVED, so the file cannot be written yet."""
+    return [(c["world"], c["pressure"]) for c in doc["cells"] if c.get("pending") == "survivable"]
+
+
+def write(doc: dict, path=WORLDS_R4) -> pathlib.Path:
+    p = blocking(doc)
+    if p:
+        raise ValueError(f"{len(p)} survivable cells still need the learner before a verdict is exact: {p[:5]}")
+    if doc.get("schema") == SCHEMA_V2:
+        bad = v2_defects(doc)
+        if bad:
+            raise ValueError(f"BASELINE_N: {len(bad)} v2 entries below 32 runs x 4 families x 8: {bad[:5]}")
+    path = pathlib.Path(path)                        # an all-culled screen is written too: it is the result
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(doc, sort_keys=True, indent=1) + "\n", encoding="utf-8", newline="\n")
+    return path
+
+
+def load(path=WORLDS_R4) -> dict | None:
+    p = pathlib.Path(path)
+    if not p.exists():
+        return None
+    doc = json.loads(p.read_text(encoding="utf-8"))
+    if doc.get("schema") not in (SCHEMA, SCHEMA_V2):
+        raise ValueError(f"{p} is neither {SCHEMA} nor {SCHEMA_V2}")
+    return doc
+
+
+def lookup(doc: dict | None, world: str, pressure: str) -> dict | None:
+    if not doc:
+        return None
+    for c in doc["cells"]:
+        if c["world"] == world and c["pressure"] == pressure:
+            return c
+    return None
+
+
+def guard(doc: dict | None, world: str, pressure: str) -> dict | None:
+    """JIT lookup guard: None iff the cell SURVIVED under the file's active variant. Never recomputes."""
+    c = lookup(doc, world, pressure)
+    if c is None:
+        return {"verdict": "INELIGIBLE", "why": "UNSCREENED", "world": world, "pressure": pressure}
+    k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
+    v = c["verdicts"][k]
+    if v["verdict"] == "SURVIVED":
+        return None
+    return {"verdict": "INELIGIBLE", "why": v["verdict"], "cull_reason": v.get("cull_reason"),
+            "world": world, "pressure": pressure, "variant": k}
+
+
+def survivor_worlds(doc: dict | None) -> list[str]:
+    """Graphworld worlds with >= 1 SURVIVED pressure under the active variant, in gen_seed order."""
+    if not doc:
+        return []
+    k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
+    ws = {c["world"]: c["gen_seed"] for c in doc["cells"] if c["verdicts"][k]["verdict"] == "SURVIVED"}
+    return sorted(ws, key=ws.get)

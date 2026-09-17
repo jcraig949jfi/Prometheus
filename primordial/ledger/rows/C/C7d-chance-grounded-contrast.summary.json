@@ -1,0 +1,64 @@
+{
+ "exp_id": "C7d-chance-grounded-contrast",
+ "source": "C7d-chance-grounded-contrast.jsonl",
+ "git": "e03edcc2b3fb9757063e62ca44b65bade8ed95cc",
+ "h2_rule": {
+  "kind": "h2_rule",
+  "tt_out_surprises_elig": 8,
+  "count_upper95": 14.434649715196311,
+  "tt_out_ticks_elig": 3992,
+  "rate_per_tick_upper": 0.003615894217233545,
+  "record_window_ticks": 482,
+  "poisson_mean": 1.7428610127065687,
+  "q99_bar": 5,
+  "amended": "upper-95% count bound, posted before record run"
+ },
+ "posted_rule": {
+  "eligible_targets": 35,
+  "eligible_worlds": 25,
+  "switches_total": 241,
+  "affine_detected_total": 238,
+  "digit_tt_in_window_surprises": 1,
+  "h2_q99_bar": 5,
+  "H1": false,
+  "H2_chance_grounded": true,
+  "H3": false,
+  "H3_max_abs_deviation": 0.06799086084905659,
+  "H4": false,
+  "leak_probe": true,
+  "null_surprises_max": 4,
+  "status_by_posted_rule": "KILL"
+ },
+ "failing_targets": [
+  {
+   "gen_seed": 612,
+   "j": 2,
+   "corrupt_rate": 16,
+   "detected": "0/3",
+   "support": 0.8109153891509434,
+   "expected": 0.87890625,
+   "null_surprises": 4
+  }
+ ],
+ "all_other_targets": {
+  "count": 34,
+  "detected": "238/238"
+ },
+ "post_hoc_NOT_the_verdict": {
+  "criterion": "record in-regime support within 0.05 of (1-1/rate)^2 (1.0 if clean) -- an exact-fit test; evaluated on RECORD rows after seeing them, so it cannot be used as a verdict",
+  "targets_kept": 34,
+  "detected": "238/238",
+  "null_max": 1,
+  "excluded": [
+   [
+    612,
+    2
+   ]
+  ]
+ },
+ "reregistration_history": [
+  "C7b 02f4fa5fa FAIL (eligibility = sensitivity only)",
+  "C7c 79755f50b FAIL (H2 bar ignored chance)",
+  "C7d this run KILL (fit test by null-surprise count admitted a partial fit)"
+ ]
+}

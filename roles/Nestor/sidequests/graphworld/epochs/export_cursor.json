@@ -1,0 +1,615 @@
+{
+ "cursor": {
+  "pm:anomalies": "1789601239749-0",
+  "pm:anomaly_events": "1789520636282-0",
+  "pm:jobs:B:done": "1789485116834-0",
+  "pm:jobs:C:done": "1789603821898-0",
+  "pm:jobs:D:done": "1789604246200-0",
+  "pm:jobs:E:done": "1789606152287-0",
+  "pm:jobs:G:done": "1789610900315-0",
+  "pm:jobs:H:done": "1789473568844-0",
+  "pm:results": "1789601241298-0",
+  "pm:swarm": "1789613103892-0",
+  "pm:telemetry:queue": "1789614876125-0",
+  "pm:telemetry:watch": "1789614902885-0",
+  "pm:why_not_run": "1789600861193-1"
+ },
+ "partitions": [
+  {
+   "dir": "epoch_1",
+   "stamp": "e1",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e1.jsonl",
+     "from": null,
+     "rows": 36,
+     "to": "1789517546515-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e1.jsonl",
+     "from": null,
+     "rows": 29,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e1.jsonl",
+     "from": null,
+     "rows": 13,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e1.jsonl",
+     "from": null,
+     "rows": 19,
+     "to": "1789594027596-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e1.jsonl",
+     "from": null,
+     "rows": 41,
+     "to": "1789593467898-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e1.jsonl",
+     "from": null,
+     "rows": 57,
+     "to": "1789595591057-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e1.jsonl",
+     "from": null,
+     "rows": 228,
+     "to": "1789595517316-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e1.jsonl",
+     "from": null,
+     "rows": 1,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e1.jsonl",
+     "from": null,
+     "rows": 156,
+     "to": "1789594148944-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e1.jsonl",
+     "from": null,
+     "rows": 1385,
+     "to": "1789595516737-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e1.jsonl",
+     "from": null,
+     "rows": 99,
+     "to": "1789595591060-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e1.jsonl",
+     "from": null,
+     "rows": 523,
+     "to": "1789595591058-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e1.jsonl",
+     "from": null,
+     "rows": 1,
+     "to": "1789594034931-0"
+    }
+   },
+   "ts": 1789595591.126
+  },
+  {
+   "dir": "epoch_2",
+   "stamp": "e2",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e2.jsonl",
+     "from": "1789517546515-0",
+     "rows": 0,
+     "to": "1789517546515-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e2.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e2.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e2.jsonl",
+     "from": "1789594027596-0",
+     "rows": 0,
+     "to": "1789594027596-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e2.jsonl",
+     "from": "1789593467898-0",
+     "rows": 2,
+     "to": "1789599144726-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e2.jsonl",
+     "from": "1789595591057-0",
+     "rows": 1,
+     "to": "1789598958430-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e2.jsonl",
+     "from": "1789595517316-0",
+     "rows": 2,
+     "to": "1789599119670-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e2.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e2.jsonl",
+     "from": "1789594148944-0",
+     "rows": 1,
+     "to": "1789599074033-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e2.jsonl",
+     "from": "1789595516737-0",
+     "rows": 13,
+     "to": "1789599116737-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e2.jsonl",
+     "from": "1789595591060-0",
+     "rows": 127,
+     "to": "1789599144729-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e2.jsonl",
+     "from": "1789595591058-0",
+     "rows": 716,
+     "to": "1789599144727-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e2.jsonl",
+     "from": "1789594034931-0",
+     "rows": 0,
+     "to": "1789594034931-0"
+    }
+   },
+   "ts": 1789599144.797
+  },
+  {
+   "dir": "epoch_3",
+   "stamp": "e3",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e3.jsonl",
+     "from": "1789517546515-0",
+     "rows": 1,
+     "to": "1789601239749-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e3.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e3.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e3.jsonl",
+     "from": "1789594027596-0",
+     "rows": 2,
+     "to": "1789602726386-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e3.jsonl",
+     "from": "1789599144726-0",
+     "rows": 2,
+     "to": "1789602742538-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e3.jsonl",
+     "from": "1789598958430-0",
+     "rows": 0,
+     "to": "1789598958430-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e3.jsonl",
+     "from": "1789599119670-0",
+     "rows": 3,
+     "to": "1789601622103-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e3.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e3.jsonl",
+     "from": "1789599074033-0",
+     "rows": 1,
+     "to": "1789601241298-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e3.jsonl",
+     "from": "1789599116737-0",
+     "rows": 15,
+     "to": "1789602716737-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e3.jsonl",
+     "from": "1789599144729-0",
+     "rows": 133,
+     "to": "1789602742541-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e3.jsonl",
+     "from": "1789599144727-0",
+     "rows": 726,
+     "to": "1789602742539-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e3.jsonl",
+     "from": "1789594034931-0",
+     "rows": 230,
+     "to": "1789600861193-1"
+    }
+   },
+   "ts": 1789602742.567
+  },
+  {
+   "dir": "epoch_4",
+   "stamp": "e4",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e4.jsonl",
+     "from": "1789601239749-0",
+     "rows": 0,
+     "to": "1789601239749-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e4.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e4.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e4.jsonl",
+     "from": "1789602726386-0",
+     "rows": 1,
+     "to": "1789603821898-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e4.jsonl",
+     "from": "1789602742538-0",
+     "rows": 2,
+     "to": "1789604246200-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e4.jsonl",
+     "from": "1789598958430-0",
+     "rows": 1,
+     "to": "1789606152287-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e4.jsonl",
+     "from": "1789601622103-0",
+     "rows": 2,
+     "to": "1789606319085-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e4.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e4.jsonl",
+     "from": "1789601241298-0",
+     "rows": 0,
+     "to": "1789601241298-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e4.jsonl",
+     "from": "1789602716737-0",
+     "rows": 1,
+     "to": "1789606316737-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e4.jsonl",
+     "from": "1789602742541-0",
+     "rows": 131,
+     "to": "1789606319088-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e4.jsonl",
+     "from": "1789602742539-0",
+     "rows": 735,
+     "to": "1789606319086-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e4.jsonl",
+     "from": "1789600861193-1",
+     "rows": 0,
+     "to": "1789600861193-1"
+    }
+   },
+   "ts": 1789606319.12
+  },
+  {
+   "dir": "epoch_5",
+   "stamp": "e5",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e5.jsonl",
+     "from": "1789601239749-0",
+     "rows": 0,
+     "to": "1789601239749-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e5.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e5.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e5.jsonl",
+     "from": "1789603821898-0",
+     "rows": 0,
+     "to": "1789603821898-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e5.jsonl",
+     "from": "1789604246200-0",
+     "rows": 0,
+     "to": "1789604246200-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e5.jsonl",
+     "from": "1789606152287-0",
+     "rows": 0,
+     "to": "1789606152287-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e5.jsonl",
+     "from": "1789606319085-0",
+     "rows": 2,
+     "to": "1789609918137-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e5.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e5.jsonl",
+     "from": "1789601241298-0",
+     "rows": 0,
+     "to": "1789601241298-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e5.jsonl",
+     "from": "1789606316737-0",
+     "rows": 1,
+     "to": "1789609916737-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e5.jsonl",
+     "from": "1789606319088-0",
+     "rows": 184,
+     "to": "1789609918141-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e5.jsonl",
+     "from": "1789606319086-0",
+     "rows": 1075,
+     "to": "1789609918138-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e5.jsonl",
+     "from": "1789600861193-1",
+     "rows": 0,
+     "to": "1789600861193-1"
+    }
+   },
+   "ts": 1789609918.216
+  },
+  {
+   "dir": "epoch_6",
+   "stamp": "e6",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_e6.jsonl",
+     "from": "1789601239749-0",
+     "rows": 0,
+     "to": "1789601239749-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_e6.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_e6.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_e6.jsonl",
+     "from": "1789603821898-0",
+     "rows": 0,
+     "to": "1789603821898-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_e6.jsonl",
+     "from": "1789604246200-0",
+     "rows": 0,
+     "to": "1789604246200-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_e6.jsonl",
+     "from": "1789606152287-0",
+     "rows": 0,
+     "to": "1789606152287-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_e6.jsonl",
+     "from": "1789609918137-0",
+     "rows": 3,
+     "to": "1789610900315-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_e6.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_e6.jsonl",
+     "from": "1789601241298-0",
+     "rows": 0,
+     "to": "1789601241298-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_e6.jsonl",
+     "from": "1789609916737-0",
+     "rows": 2,
+     "to": "1789613103892-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_e6.jsonl",
+     "from": "1789609918141-0",
+     "rows": 199,
+     "to": "1789613075202-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_e6.jsonl",
+     "from": "1789609918138-0",
+     "rows": 1168,
+     "to": "1789613103139-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_e6.jsonl",
+     "from": "1789600861193-1",
+     "rows": 0,
+     "to": "1789600861193-1"
+    }
+   },
+   "ts": 1789613104.031
+  },
+  {
+   "dir": "close",
+   "stamp": "close",
+   "streams": {
+    "pm:anomalies": {
+     "file": "pm_anomalies_close.jsonl",
+     "from": "1789601239749-0",
+     "rows": 0,
+     "to": "1789601239749-0"
+    },
+    "pm:anomaly_events": {
+     "file": "pm_anomaly_events_close.jsonl",
+     "from": "1789520636282-0",
+     "rows": 0,
+     "to": "1789520636282-0"
+    },
+    "pm:jobs:B:done": {
+     "file": "pm_jobs_B_done_close.jsonl",
+     "from": "1789485116834-0",
+     "rows": 0,
+     "to": "1789485116834-0"
+    },
+    "pm:jobs:C:done": {
+     "file": "pm_jobs_C_done_close.jsonl",
+     "from": "1789603821898-0",
+     "rows": 0,
+     "to": "1789603821898-0"
+    },
+    "pm:jobs:D:done": {
+     "file": "pm_jobs_D_done_close.jsonl",
+     "from": "1789604246200-0",
+     "rows": 0,
+     "to": "1789604246200-0"
+    },
+    "pm:jobs:E:done": {
+     "file": "pm_jobs_E_done_close.jsonl",
+     "from": "1789606152287-0",
+     "rows": 0,
+     "to": "1789606152287-0"
+    },
+    "pm:jobs:G:done": {
+     "file": "pm_jobs_G_done_close.jsonl",
+     "from": "1789610900315-0",
+     "rows": 0,
+     "to": "1789610900315-0"
+    },
+    "pm:jobs:H:done": {
+     "file": "pm_jobs_H_done_close.jsonl",
+     "from": "1789473568844-0",
+     "rows": 0,
+     "to": "1789473568844-0"
+    },
+    "pm:results": {
+     "file": "pm_results_close.jsonl",
+     "from": "1789601241298-0",
+     "rows": 0,
+     "to": "1789601241298-0"
+    },
+    "pm:swarm": {
+     "file": "pm_swarm_close.jsonl",
+     "from": "1789613103892-0",
+     "rows": 0,
+     "to": "1789613103892-0"
+    },
+    "pm:telemetry:queue": {
+     "file": "pm_telemetry_queue_close.jsonl",
+     "from": "1789613075202-0",
+     "rows": 120,
+     "to": "1789614876125-0"
+    },
+    "pm:telemetry:watch": {
+     "file": "pm_telemetry_watch_close.jsonl",
+     "from": "1789613103139-0",
+     "rows": 714,
+     "to": "1789614902885-0"
+    },
+    "pm:why_not_run": {
+     "file": "pm_why_not_run_close.jsonl",
+     "from": "1789600861193-1",
+     "rows": 0,
+     "to": "1789600861193-1"
+    }
+   },
+   "ts": 1789614903.917
+  }
+ ],
+ "version": 1
+}
