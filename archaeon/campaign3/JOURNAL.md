@@ -136,3 +136,22 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   high perm_7 (basin 0.0338), low identity (0.0256), gap 0.0082, matched on
   accessible variation (1.4450 vs 1.4399); scale pair perm_3 / perm_6 (gap 0).
 - Next: C3-SFE-07 running.
+
+## 12:10-12:20 -- C3-SFE-07 (dry a01; a02 of record; CAPABLE_NEGATIVE: the basin line is killed)
+
+- 121 s; 60 runs, 60 records, 60 reach rows, 0 errors. Intervention verified
+  (567-573 opcode rewrites per treated run, 0 in grammar; realized operator
+  masses within 0.008 across arms).
+- Confirmed W0 competence: grammar 8/12, high basin 8/12, low basin 9/12,
+  random A 7/12, random B 8/12. Effect -0.083, wrong direction; the two
+  RANDOM orderings matched on basin share differ by the same 0.083, so the
+  preregistered kill condition fires on its own terms (L3-033).
+- Median generation to confirmation: high 24, low 25, randoms 13-15 -- the
+  two selected arms are the two slowest.
+- Instrument defect recorded (L3-034): a noise-control battery attack coded
+  with an absolute 0.1 floor passes exactly when it should fail; the record
+  is read from its values, not its flag.
+- Read with C3-SFE-06: basin share is measurable, correlates inside one
+  exhaustive table under one climber, and predicts nothing when used to
+  steer a real evolutionary run. The line dies as the directive allows.
+- Next: C3-SFE-08 (replacement: partial-credit removal on W2_K2) running.
