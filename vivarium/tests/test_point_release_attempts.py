@@ -384,3 +384,147 @@ def test_cheat_the_same_fact_has_the_same_outbox_event_id(conn, drafted):
     e2 = ob.enqueue(conn, kind="ATTEMPT_OPENED", source_attempt=aid, source_experiment=eid, payload={"n": 1})
     assert e1 == e2
     assert len(_outbox(conn, drafted, eid)) == 1
+
+
+# ------------------------------------------------------------- s14 canary finding (2026-09-17): SESSION_MISMATCH
+
+class SessionBoundClient(VerifyingClient):
+    """The production engine binds a world to the SESSION that created it and
+    answers 403 SESSION_MISMATCH to every read or write from another session,
+    which is what a relaunched consumer is. Mints a distinct session (and key)
+    per create_session, like the engine."""
+
+    def __init__(self, *a, **k):
+        super().__init__(*a, **k)
+        self.session_key = None
+        self._n = 0
+        self.keys = {}                 # session_id -> key
+        self.world_session = {}        # world_id -> session_id
+
+    def create_session(self, name):
+        self._n += 1
+        sid, key = "ses_%d" % self._n, "key_%d" % self._n
+        self.keys[sid] = key
+        self.session_key = key
+        self._rec("create_session", name=name)
+        return sid
+
+    def _owning(self, wid):
+        sid = self.world_session.get(wid)
+        if sid is None or self.keys.get(sid) != self.session_key:
+            raise RuntimeError("HTTP 403: SESSION_MISMATCH this session does not own that world")
+
+    def create_world(self, sid, name, seed_root=None):
+        self._n += 1
+        wid = "wld_%d" % self._n
+        self.world_session[wid] = sid
+        self._rec("create_world", session=sid, name=name, seed_root=seed_root)
+        return {"world_id": wid}
+
+    def get_world(self, wid):
+        self._owning(wid)
+        return super().get_world(wid)
+
+    def get_experiment(self, wid, exp_id):
+        self._owning(wid)
+        return super().get_experiment(wid, exp_id)
+
+    def list_observations(self, wid):
+        self._owning(wid)
+        return super().list_observations(wid)
+
+    def observation(self, wid, exp_id, content, outcome, **kw):
+        self._owning(wid)
+        return super().observation(wid, exp_id, content, outcome, **kw)
+
+
+def _strand_after_first_observation(conn, schema, spec, client, worker, session_store):
+    v = _viv(schema, client, spec, worker=worker)
+    v._runner.session_store = session_store
+    real = client.observation
+    calls = {"n": 0}
+
+    def crash_on_second(wid, exp_id, content, outcome, **kw):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            raise RuntimeError("simulated worker death during observation 1")
+        return real(wid, exp_id, content, outcome, **kw)
+    client.observation = crash_on_second
+    eid = _enqueue(conn, schema, spec)
+    r1 = v.tick(conn)
+    assert r1.outcome == FAILED
+    client.observation = real
+    atts = _attempts(conn, schema, eid)
+    with conn.cursor() as cur:
+        cur.execute("INSERT INTO " + schema + ".execution_attempt (experiment_id, attempt_number, parent_attempt_id, design_digest, worker_id) "
+                    "VALUES (%s, 2, %s, %s, %s)", (eid, atts[0]["attempt_id"], _spec.spec_hash(spec), worker))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='running', claimed_by=%s, finished_at=NULL WHERE experiment_id=%s", (worker, eid))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
+    conn.commit()
+    _q.release_stranded(conn, eid, actor="op", reason="worker died", schema=schema, new_attempt=True)
+    conn.commit()
+    return eid
+
+
+def _fresh_process(schema, client, spec, worker, session_store):
+    """A relaunched consumer: a NEW runner (new session on first use) over the
+    same engine, with whatever session keys this host holds."""
+    v = _viv(schema, client, spec, worker=worker)
+    v._runner.session_store = session_store
+    client.session_key = None              # the new process has no key until it opens or adopts a session
+    return v
+
+
+def test_a_relaunched_consumer_adopts_the_prior_worlds_session_and_replays(conn, drafted, tmp_path):
+    """POSITIVE: with the predecessor's session key held on this host, attempt
+    2 reads the world it did not create (REPLAYED world/experiment/observe:0)
+    and no second world is minted. This is the s14 canary defect: on
+    production the new process opened a new session, every verifier got 403
+    SESSION_MISMATCH, the world was RECOMPUTED and attempt 1's observations
+    were orphaned in a world nobody could reach."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-ses-1", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = SessionBoundClient()
+    store = tmp_path / "sessions"
+    eid = _strand_after_first_observation(conn, schema, spec, client, "ses-w1", store)
+    assert (store / "ses_1.key").read_text(encoding="utf-8") == "key_1"     # persisted, host-local
+    v2 = _fresh_process(schema, client, spec, "ses-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    steps = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert steps[("world", ("plain",))] == "REPLAYED" and steps[("observe", (0,))] == "REPLAYED" and steps[("observe", (1,))] == "NEW"
+    assert sum(1 for name, _ in client.calls if name == "create_world") == 1, "a second world was minted"
+    assert v2._runner._session_id == "ses_1"                                  # adopted, not a new session
+    # the outbox carries the stranded attempt's termination too (the other canary finding)
+    with conn.cursor() as cur:
+        cur.execute("SELECT event_kind, count(*) FROM " + schema + ".pew_outbox WHERE source_experiment=%s GROUP BY 1 ORDER BY 1", (eid,))
+        kinds = dict(cur.fetchall())
+    conn.rollback()
+    assert kinds.get("ATTEMPT_TERMINATED") == 3 and kinds.get("ATTEMPT_OPENED") == 2   # FAILED, STRANDED, COMPLETED / attempts 1 and 3
+
+
+def test_negative_without_the_key_the_prior_world_is_recomputed_and_says_so(conn, drafted, tmp_path):
+    """NEGATIVE: a host that does not hold the key cannot reach the world; the
+    step is RECOMPUTED (typed, receipted), never silently REPLAYED from a
+    world it could not verify. CHEAT: a key file for the WRONG session does
+    not open the world either."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-ses-2", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = SessionBoundClient()
+    eid = _strand_after_first_observation(conn, schema, spec, client, "ses-w1", tmp_path / "gone")
+    other = tmp_path / "other-host"
+    other.mkdir()
+    (other / "ses_1.key").write_text("key_not_the_engine_s", encoding="utf-8")   # CHEAT: wrong key
+    v2 = _fresh_process(schema, client, spec, "ses-w2", other)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    steps = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert steps[("world", ("plain",))] == "RECOMPUTED"
+    assert sum(1 for name, _ in client.calls if name == "create_world") == 2

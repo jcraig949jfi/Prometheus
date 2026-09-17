@@ -239,7 +239,7 @@ def main(argv=None) -> int:
             ok = step_verify_old_rows(out, [s for s in a.sample.split(",") if s])
         elif step == "advance":
             prep = data_dir / ("prepare_m2-window-%s.json" % a.confirm)
-            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance", "--register",
+            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance",
                                 "--receipt", str(prep)],
                                capture_output=True, text=True, cwd=str(VIVARIUM), timeout=1800)
             try:

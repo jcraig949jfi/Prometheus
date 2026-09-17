@@ -222,6 +222,13 @@ class Attempts:
         return result
 
     @staticmethod
+    def prior_result(ctx: AttemptCtx, kind: str, parts: list):
+        """The prior attempt's result for (kind, parts), or None. A read."""
+        key = _sk.step_key(ctx.design_digest, kind, parts)
+        prior = ctx.prior_steps.get(key)
+        return None if prior is None else prior.get("result")
+
+    @staticmethod
     def _verify(verify, prior_result) -> bool:
         try:
             return bool(verify(prior_result))

@@ -265,7 +265,8 @@ class SfeRunner:
                  client_id: Optional[str] = None,
                  limits: Optional[_artifacts.Limits] = None,
                  log=lambda *_a: None,
-                 require_grant: bool = True):
+                 require_grant: bool = True,
+                 session_store: Optional[str] = None):
         from sfclient import EngineClient          # noqa: PLC0415
         # D7: the production client commits worlds ONLY for claimed rows.
         # A caller may waive the grant for a marked identity only; waiving it
@@ -305,6 +306,19 @@ class SfeRunner:
                 "sfe-identity --ensure")
         self.version = self.c.version()
         self._session_id: Optional[str] = None
+        # s14 canary (2026-09-17): the engine binds a world to the SESSION that
+        # created it (403 SESSION_MISMATCH from any other session, reads
+        # included). A relaunched consumer opened a new session, so every
+        # replay verifier failed and attempt 2 RECOMPUTED the world -- a
+        # duplicate world on the ledger with the first attempt's observations
+        # orphaned in the old one. The affinity key is a bearer capability the
+        # client API says to "hand to another process"; it is held HERE, on
+        # this host, outside the repo and outside the queue tables (never in a
+        # step result, never in a receipt), keyed by session id, so the next
+        # process of this worker can adopt the session its predecessor's
+        # worlds live in. Absent the key, a prior world is honestly unreachable
+        # and the step is RECOMPUTED with the reason logged.
+        self.session_store = Path(session_store) if session_store else None
 
     # -- identity ---------------------------------------------------------
     @property
@@ -317,7 +331,57 @@ class SfeRunner:
     def session(self, name: str) -> str:
         if self._session_id is None:
             self._session_id = self.c.create_session(name)
+            self._store_session_key(self._session_id)
         return self._session_id
+
+    def _store_session_key(self, session_id: str) -> None:
+        store = getattr(self, "session_store", None)          # doubles built without __init__
+        key = getattr(self.c, "session_key", None)
+        if not (store and session_id and key):
+            return
+        try:
+            store.mkdir(parents=True, exist_ok=True)
+            (store / (session_id + ".key")).write_text(key, encoding="utf-8")
+        except OSError as exc:
+            self.log("[viv] could not persist the session key for %s: %s "
+                     "(a relaunch will not be able to adopt this session)" % (session_id, exc))
+
+    def _held_session_key(self, session_id: Optional[str]) -> Optional[str]:
+        store = getattr(self, "session_store", None)
+        if not (store and session_id):
+            return None
+        try:
+            return (store / (session_id + ".key")).read_text(encoding="utf-8").strip() or None
+        except OSError:
+            return None
+
+    def adopt_prior_session(self, prior_world: Optional[dict]) -> Optional[dict]:
+        """Before a run: if a prior attempt's world names a session whose key
+        this host holds, ADOPT that session (the client sends its key from now
+        on) so the world/experiment/observations verifiers can read it and the
+        run continues in it. Returns a record of what happened, for the log."""
+        sid = (prior_world or {}).get("session_id") if isinstance(prior_world, dict) else None
+        if not sid:
+            return None
+        if sid == getattr(self, "_session_id", None):
+            return {"session_id": sid, "adopted": False, "reason": "already this session"}
+        key = self._held_session_key(sid)
+        if not key:
+            return {"session_id": sid, "adopted": False,
+                    "reason": "no key held on this host; the prior world is unreachable (SESSION_MISMATCH) and will be recomputed"}
+        prev_key, prev_sid = getattr(self.c, "session_key", None), getattr(self, "_session_id", None)
+        self.c.session_key = key
+        self._session_id = sid
+        # a held key is adopted only if the engine accepts it for THAT world;
+        # a stale or wrong key would otherwise 403 every later write
+        try:
+            self.c.get_world(prior_world["world_id"])
+        except Exception as exc:                                     # noqa: BLE001
+            self.c.session_key, self._session_id = prev_key, prev_sid
+            return {"session_id": sid, "adopted": False,
+                    "reason": "held key rejected by the engine for %s (%s); the prior world will be recomputed"
+                              % (prior_world.get("world_id"), str(exc)[:80])}
+        return {"session_id": sid, "adopted": True}
 
     @property
     def session_lineage(self) -> dict:
@@ -351,7 +415,8 @@ class SfeRunner:
         else:
             w = c.create_world(sid, name, seed_root=seed_root)
         c.start(w["world_id"])
-        return {"world_id": w["world_id"], "labels": labels or {}, "labels_applied": applied}
+        return {"world_id": w["world_id"], "labels": labels or {}, "labels_applied": applied,
+                "session_id": sid}
 
     @staticmethod
     def _world_alive(c, prior) -> bool:
@@ -437,6 +502,12 @@ class SfeRunner:
         out.attempt_id = request.experiment_id
         meter = _res.Meter(label=sealed).start()
         c = self.c
+        peek = getattr(record, "prior", None)
+        if peek is not None:
+            adopted = self.adopt_prior_session(peek("world", ["plain"]))
+            if adopted:
+                self.log("[viv] prior world's session %s: %s" % (adopted["session_id"],
+                         "ADOPTED (key held on this host)" if adopted["adopted"] else adopted["reason"]))
         sid = self.session("vivarium-%s" % self.worker_id)
 
         # THE WORLD'S SHAPE IS DERIVED FROM THE SEALED SPEC, never supplied.
