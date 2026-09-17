@@ -94,4 +94,16 @@
 4. DEPLOYMENT (appended by release_v9.py apply / qualify_v9.py)
 =======================================================================
 
-    [appended below]
+    applied     2026-09-17T17:01:06Z  outage 13.3 s  (release_v9.py apply, 13/13 identity checks)
+    process     pid 5596 2026-09-17T10:51:30Z -> pid 8900 2026-09-17T17:01:12Z
+    instance    eng_906356f7fb1da180131f9290 (unchanged)   schema 9 live + ledger   routes 72 -> 72
+    build       sha256:bc8d3a0caea47 -> sha256:699ca0f952448
+    events      12611 == 12611   checkpointer alive on the new process
+    contract    regenerated (routes identical), landed with provenance, gate CONFORMANT
+    qualify     18/18 engine checks held (harness 12/12, isolation 7/7, gate 0, D11 on the
+                live service, capabilities, facts, pagination, termination, anchors 20/20);
+                the two 'pre-migration NULL facts' checks are the 8->9 tool's assumption
+                and do not apply to a code-only release (worlds with v9 facts now exist)
+    receipts    deploy/RELEASE_9_0_1_2026-09-17/{preflight,apply,qualify}.json, contract/,
+                gate_after_landing.txt, longrun_restart_production.json
+
