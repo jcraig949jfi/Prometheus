@@ -1,0 +1,46 @@
+{
+ "phase": "verify",
+ "identities": {
+  "recorded_at": "2026-09-17T23:12:54Z",
+  "process_start_utc": "2026-09-17T23:12:13Z",
+  "pid": 21084,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+  "schema_version": 9,
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "capabilities_features": {
+   "logical_time": true,
+   "typed_termination": true,
+   "world_events": true,
+   "manifest_envelope": true,
+   "labels": true,
+   "artifact_list": true,
+   "cursor_pagination": true,
+   "fork_changed_fields": true
+  },
+  "ledger": {
+   "path": "C:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 9,
+   "events": 13665
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  }
+ },
+ "same_as_apply": {
+  "process_start_utc": false,
+  "pid": false,
+  "engine_instance_id": true,
+  "engine_source_hash": false,
+  "schema_version": true,
+  "route_digest": true,
+  "bind": true
+ }
+}
