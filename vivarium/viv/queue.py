@@ -630,6 +630,21 @@ def release_stranded(conn, experiment_id, *, actor: str, reason: str,
 # Worker liveness
 # ---------------------------------------------------------------------------
 
+def touch_heartbeat(conn, worker_id: str, *, pid: int,
+                    schema: Optional[str] = None) -> int:
+    """C2 (2026-09-16): advance last_seen and NOTHING else, and only for the
+    row this pid wrote. Used by the in-row pulse; `build`, `current_experiment`
+    and the counters stay exactly as the last full heartbeat left them, so a
+    pulse can never be mistaken for a productive tick or clear a current
+    row. Returns the number of rows touched (0 = this pid no longer owns the
+    row; the pulse stops)."""
+    s = schema or _db.schema()
+    with conn.cursor() as cur:
+        cur.execute("UPDATE " + s + ".worker_heartbeat SET last_seen = now() "
+                    "WHERE worker_id = %s AND pid = %s", (worker_id, pid))
+        return cur.rowcount
+
+
 def heartbeat(conn, worker_id: str, *, host: str, pid: int,
               current_experiment=None, build: Optional[dict] = None,
               schema: Optional[str] = None) -> None:

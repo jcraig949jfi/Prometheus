@@ -1,0 +1,70 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-16T18:35Z",
+ "fossils_available": 121,
+ "fossils_inspected": 30,
+ "fossils_decomposed": 30,
+ "fossils_ORGAN0": 0,
+ "fossils_blocked": 0,
+ "by_cut_state": {
+  "NOT_CUT": 91,
+  "COARSE": 21,
+  "DEEP": 9
+ },
+ "candidate_fragments": 224,
+ "accepted_organs": 192,
+ "candidate_organs": 32,
+ "rejected_cuts": 121,
+ "max_depth_distribution": {
+  "1": 17,
+  "2": 10,
+  "3": 3
+ },
+ "organ_count_distribution": {
+  "2": 1,
+  "4": 2,
+  "5": 2,
+  "6": 6,
+  "7": 9,
+  "8": 1,
+  "9": 3,
+  "10": 3,
+  "11": 1,
+  "14": 1,
+  "15": 1
+ },
+ "evidence_grades": {
+  "SOURCE_READ": 217,
+  "METADATA": 4,
+  "EXECUTED": 1,
+  "INTERVENED": 2
+ },
+ "runnable_organs": "UNKNOWN (no organ has been run in isolation; 1 fossil-level ablation exists)",
+ "intervention_tested_organs": 3,
+ "fingerprinted_organs": 0,
+ "pressures": 69,
+ "composition_edges": 298,
+ "ancestry_edges": 131,
+ "artifact_hashes_sha256_16": {
+  "FOSSIL_ANATOMY": "e00978d65c51a614",
+  "ORGAN_CATALOG": "9db9e2a4c861c8d9",
+  "REJECTED_CUTS": "683d991fe15bab69",
+  "PRESSURE_CATALOG": "051802ffd0a0dc43",
+  "ANCESTRY_GRAPH": "ea3cd27e02e6b1c3",
+  "COMPOSITION_GRAPH": "160facbcd17cc103",
+  "BEHAVIORAL_FINGERPRINTS": "298242a8cb0722d1",
+  "RECURRENCE_CANDIDATES": "bcdefeebecfad52f",
+  "BLIND_CUT_COMPARISON": "6a22e039ffa766c4",
+  "ATLAS_COVERAGE": "b5e407bbb0df8dba",
+  "UNEXPLAINED_RESIDUE": "5aad9bcf291f0f0c"
+ },
+ "gates": {
+  "cuts_created": 30,
+  "cuts_returned_with_verdict": 0,
+  "handoffs_open": 2,
+  "handoffs_open_max_age_ticks": 0,
+  "returns_received": 3,
+  "escalations": 0,
+  "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"
+ }
+}

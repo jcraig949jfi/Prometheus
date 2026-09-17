@@ -63,7 +63,7 @@ from . import executors as _ex
 from . import preflight as _preflight
 from . import resources as _res
 from . import spec as _spec
-from .request import ExecutionRequest, SpecIntegrityError
+from .request import ClaimGrant, ExecutionRequest, SpecIntegrityError
 
 REPO = Path(__file__).resolve().parent.parent.parent
 _CLIENT = REPO / "SerendipityFoundry" / "SerendipityFoundryClient"
@@ -257,8 +257,20 @@ class SfeRunner:
                  insecure: bool = False, lease_s: float = 120.0,
                  client_id: Optional[str] = None,
                  limits: Optional[_artifacts.Limits] = None,
-                 log=lambda *_a: None):
+                 log=lambda *_a: None,
+                 require_grant: bool = True):
         from sfclient import EngineClient          # noqa: PLC0415
+        # D7: the production client commits worlds ONLY for claimed rows.
+        # A caller may waive the grant for a marked identity only; waiving it
+        # for the production client is refused here, at construction, so the
+        # one-off path is visible in the ledger by its client name.
+        if not require_grant and client_name == "vivarium":
+            raise ValueError(
+                "require_grant=False is refused for the production client "
+                "'vivarium': a world committed outside a claimed row can never "
+                "be adjudicated (D7). Run one-offs as the marked identity "
+                "(identity_role=test -> client 'vivarium-test').")
+        self.require_grant = bool(require_grant)
         self.worker_id = worker_id
         self.lease_s = lease_s
         # The principal an artifact cache entry is authorized FOR. Absent, the
@@ -315,7 +327,8 @@ class SfeRunner:
     # noqa: C901 -- the repeat loop is linear and reads top-to-bottom
     def run(self, request: ExecutionRequest, *,
             on_running: Optional[Callable[[str, dict], None]] = None,
-            claim_attempts: int = 40, claim_pause_s: float = 0.25) -> RunResult:
+            claim_attempts: int = 40, claim_pause_s: float = 0.25,
+            grant: Optional[ClaimGrant] = None) -> RunResult:
         """Execute one request. Accepts ONLY an ExecutionRequest.
 
         The type check is the boundary. A queue row passed here would carry
@@ -328,6 +341,21 @@ class SfeRunner:
                 "source_reason, arm_id, ...) across the execution boundary. "
                 "Use ExecutionRequest.from_queue_row(row). Got %r"
                 % type(request).__name__)
+
+        # D7: no claimed row, no world. Checked before validate and long
+        # before create_world, so a refusal leaves nothing in the ledger.
+        # getattr: an object built without __init__ (test doubles) still
+        # requires a grant -- absence of the flag fails closed.
+        if getattr(self, "require_grant", True) and not (isinstance(grant, ClaimGrant)
+                                       and grant.covers(request, self.worker_id)):
+            raise ExecutionFailure(
+                "refusing to execute %s without a claim grant for it: a world "
+                "committed outside a claimed row is a ledger orphan nobody can "
+                "adjudicate (D7). The loop issues the grant after `claim`; a "
+                "one-off runs as the marked test identity."
+                % (request.experiment_id,),
+                partial=RunResult(spec_hash_hint=request.spec_hash),
+                failure_class="UNCLAIMED_EXECUTION")
 
         spec = request.spec              # verified against spec_hash already
         sealed = request.spec_hash

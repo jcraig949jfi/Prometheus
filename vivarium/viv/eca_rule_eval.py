@@ -65,6 +65,24 @@ def _fixture():
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def payload_problems(payload: dict) -> list:
+    """D2b (2026-09-16): the library's three refusals as reasons, with
+    nothing executed; the registry's value_checker and run()'s entry."""
+    try:
+        core = _eca()
+    except Exception as exc:                                  # noqa: BLE001
+        return [str(exc)[:300]]
+    r = []
+    for name, fn in (("rule_number", core.require_rule),
+                     ("n_cells", core.require_lattice),
+                     ("steps", core.require_steps)):
+        try:
+            fn(payload.get(name))
+        except Exception as exc:                              # noqa: BLE001
+            r.append("%s: %s" % (name, str(exc)[:300]))
+    return r
+
+
 def run(payload: dict, *, seed: int) -> dict:
     """Evaluate one elementary CA rule on the declared scope.
 
@@ -74,6 +92,9 @@ def run(payload: dict, *, seed: int) -> dict:
     parameter that silently does nothing.
     """
     core = _eca()
+    problems = payload_problems(payload)             # D2b: same refusals
+    if problems:
+        raise core.EcaError("; ".join(problems))
     rule = payload["rule_number"]
     n_cells = payload["n_cells"]
     steps = payload["steps"]

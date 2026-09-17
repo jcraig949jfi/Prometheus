@@ -1,0 +1,24 @@
+G1 masses from edges [57, 59, 61, 63, 64, 65, 67, 69, 71], region_of = #edges strictly below popcount
+   pc00  0.1252199403096297  archaeon 0.1252199403096297  diff 0.0e+00
+   pc01  0.0879998079123824  archaeon 0.0879998079123824  diff 0.0e+00
+   pc02  0.1161308940483079  archaeon 0.1161308940483079  diff 1.4e-17
+   pc03  0.1354563116446725  archaeon 0.1354563116446725  diff 0.0e+00
+   pc04  0.0703860921700151  archaeon 0.0703860921700151  diff 0.0e+00
+   pc05  0.0693032292135534  archaeon 0.0693032292135534  diff 0.0e+00
+   pc06  0.1273693676658861  archaeon 0.1273693676658861  diff 0.0e+00
+   pc07  0.1026664425644461  archaeon 0.1026664425644461  diff 0.0e+00
+   pc08  0.0731266009412755  archaeon 0.0731266009412755  diff 0.0e+00
+   pc09  0.0923413135298314  archaeon 0.0923413135298314  diff 5.6e-17
+   sum 1.000000000000000 (exact True)  max |diff vs Archaeon| 5.6e-17
+   pc04 = popcount 64 alone: True; pc05 = popcount 65 alone: True
+G2 n=120  P(all >= 8)  inclexcl 0.1184184351298  direct 0.1184184351298  |A-B| 1.1e-15
+G2 n=176  P(all >= 8)  inclexcl 0.8000147312643  direct 0.8000147312643  |A-B| 2.9e-15
+G2 n=175  P(all >= 8)  inclexcl 0.7925398000911  direct 0.7925398000911  |A-B| 3.1e-15
+G2 n=180  P(all >= 8)  inclexcl 0.8277184844225  direct 0.8277184844225  |A-B| 3.1e-15
+   vs Archaeon: 180 diff 9.0e-15; 120 diff 4.2e-15
+   min corpus reaching 0.80: 176 -> True (175 gives 0.7925, 176 gives 0.8000)
+CONTROLS
+   negative  n=120 fails 0.80: True (0.1184)
+   positive  n=180 passes 0.80: True (0.8277)
+   cheat     pc04 starved to 0.001 at n=180: 3.18e-11 (must be ~0): True
+VERDICT G1, G2 REPRODUCED INDEPENDENTLY: True

@@ -1,0 +1,250 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-01/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-006: pack maturity is recorded, not gating (transported material is episodes; the source's own success is not required for its failures to be informative)"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "effects": {
+  "footholds": {
+   "fresh": 0,
+   "random": 0,
+   "relevant": 0
+  },
+  "means": {
+   "fresh": 0.041666666666666664,
+   "random": 0.041666666666666664,
+   "relevant": 0.041666666666666664
+  },
+  "random_minus_fresh": 0.0,
+  "relevant_minus_fresh": 0.0,
+  "relevant_minus_random": 0.0
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-01",
+ "finished_at": "2026-09-17T02:56:45Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "packs": {
+  "random_s1": {
+   "first_solved_gen": null,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {
+     "ancestry_depth": 0,
+     "elite_lineage_id": "c136f5f4f316c60f380740ed4b0c3e328a61e7995b03ef190a9097d919f232c2"
+    },
+    "share_above_chance": 0.0,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 4,
+     "N": 20
+    },
+    "source_cell": "W7_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.0,
+    "source_generation": 3
+   },
+   "n_episodes": 2,
+   "n_failed_of": [
+    4,
+    4
+   ],
+   "seed": 1,
+   "source": "random",
+   "spec": {
+    "E": 4,
+    "G": 4,
+    "N": 20
+   }
+  },
+  "random_s2": {
+   "first_solved_gen": null,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {
+     "ancestry_depth": 0,
+     "elite_lineage_id": "4e8083fa848e95aee377a73dd063513822f9e4fc628712107a2b3c05e4394d2f"
+    },
+    "share_above_chance": 0.1,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 4,
+     "N": 20
+    },
+    "source_cell": "W7_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.25,
+    "source_generation": 3
+   },
+   "n_episodes": 2,
+   "n_failed_of": [
+    4,
+    4
+   ],
+   "seed": 2,
+   "source": "random",
+   "spec": {
+    "E": 4,
+    "G": 4,
+    "N": 20
+   }
+  },
+  "relevant_s1": {
+   "first_solved_gen": null,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {
+     "ancestry_depth": 0,
+     "elite_lineage_id": "c136f5f4f316c60f380740ed4b0c3e328a61e7995b03ef190a9097d919f232c2"
+    },
+    "share_above_chance": 0.0,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 4,
+     "N": 20
+    },
+    "source_cell": "W2_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.0,
+    "source_generation": 3
+   },
+   "n_episodes": 2,
+   "n_failed_of": [
+    4,
+    4
+   ],
+   "seed": 1,
+   "source": "relevant",
+   "spec": {
+    "E": 4,
+    "G": 4,
+    "N": 20
+   }
+  },
+  "relevant_s2": {
+   "first_solved_gen": null,
+   "maturity": {
+    "chance": 0.0625,
+    "lineage": {
+     "ancestry_depth": 0,
+     "elite_lineage_id": "dbc22b4d4e2bcea0f1ace08509fa81b1bf3f5a092669a46ec81469ea238007d2"
+    },
+    "share_above_chance": 0.0,
+    "solve_threshold": 0.5,
+    "solved": false,
+    "source_budget": {
+     "E": 4,
+     "G": 4,
+     "N": 20
+    },
+    "source_cell": "W2_K2",
+    "source_competence": null,
+    "source_elite_reward": 0.0,
+    "source_generation": 3
+   },
+   "n_episodes": 2,
+   "n_failed_of": [
+    4,
+    4
+   ],
+   "seed": 2,
+   "source": "relevant",
+   "spec": {
+    "E": 4,
+    "G": 4,
+    "N": 20
+   }
+  }
+ },
+ "prereg_digest": "sha256:17657cc511adb4b14621776789ba0ccdf25a62b02ef201f85de29845cd3a2ddb",
+ "purpose": "dry run",
+ "reachability_rows_appended": 10,
+ "records": {},
+ "relevance": {
+  "random": {
+   "relevant": false,
+   "rule": "all of K,D,ask_kind,ask_mode,op_mode,topology,delay equal (value_bits free)",
+   "same": {
+    "D": true,
+    "K": true,
+    "ask_kind": false,
+    "ask_mode": true,
+    "delay": true,
+    "op_mode": true,
+    "topology": true
+   }
+  },
+  "relevant": {
+   "relevant": true,
+   "rule": "all of K,D,ask_kind,ask_mode,op_mode,topology,delay equal (value_bits free)",
+   "same": {
+    "D": true,
+    "K": true,
+    "ask_kind": true,
+    "ask_mode": true,
+    "delay": true,
+    "op_mode": true,
+    "topology": true
+   }
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T02:56:44Z",
+ "steps": {},
+ "teardown": {},
+ "timings": {
+  "exchange_s": 0.0,
+  "records_s": 0.0,
+  "sources_s": 0.13,
+  "targets_s": 0.2,
+  "total_s": 0.5
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "fresh",
+    "metric": "reached",
+    "min": 1,
+    "rows": 2,
+    "rows_meeting": 0,
+    "values": [
+     0,
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "b0281a9b5193015a4db7cd698f73390c9a06910a",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

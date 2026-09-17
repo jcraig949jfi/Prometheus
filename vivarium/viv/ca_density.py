@@ -221,6 +221,50 @@ def apply_transform(name, table, ics, np):
     raise ValueError("unknown transform %r" % (name,))
 
 
+def payload_problems(payload: dict) -> list:
+    """D2 (2026-09-16): every VALUE refusal this kind makes, as a list of
+    reasons, with nothing executed. Called at admission (viv.kinds, through
+    the registry's value_checker) and by run() at its entry, so the two
+    cannot drift: run() refuses exactly what admission would have refused.
+    The library's own require_* functions are the authority for the
+    numbers; this only sequences them and turns raises into reasons."""
+    try:
+        _, core = _evca()
+    except CaLibraryUnavailable as exc:
+        return [str(exc)]
+    reasons = []
+
+    def _try(what, fn):
+        try:
+            fn()
+        except Exception as exc:                              # noqa: BLE001
+            reasons.append("%s: %s" % (what, str(exc)[:300]))
+
+    if payload.get("transform") not in TRANSFORMS:
+        reasons.append(
+            "transform must be one of %s, got %r; these are the four EXACT "
+            "symmetries of the density task, so a transformed arm is a NULL "
+            "arm -- accuracy that moves under one is a defect, not a result"
+            % (list(TRANSFORMS), payload.get("transform")))
+    if payload.get("success_criterion") not in SUCCESS_CRITERIA:
+        reasons.append(
+            "success_criterion must be one of %s, got %r; `accuracy` is scored "
+            "under it and the choice is the requester's"
+            % (list(SUCCESS_CRITERIA), payload.get("success_criterion")))
+    _try("radius", lambda: core.require_radius(payload.get("radius")))
+    _try("n_cells", lambda: core.require_lattice(payload.get("n_cells")))
+    _try("steps", lambda: core.require_steps(payload.get("steps")))
+    n_cells = payload.get("n_cells")
+    _try("ic_density_set", lambda: _require_density_set(
+        payload.get("ic_density_set"), core,
+        n_cells=n_cells if isinstance(n_cells, int) else None))
+    n_ic = payload.get("n_ic")
+    if not isinstance(n_ic, int) or isinstance(n_ic, bool) or n_ic < 1:
+        reasons.append("n_ic must be a positive integer, got %r" % (n_ic,))
+    _try("rule_hex", lambda: core.decode_table(payload.get("rule_hex")))
+    return reasons
+
+
 def run(payload: dict, *, seed: int) -> dict:
     """Execute one CA density-classification measurement.
 
@@ -233,6 +277,13 @@ def run(payload: dict, *, seed: int) -> dict:
 
     evca, core = _evca()
 
+    # D2: the same refusals admission makes, made again here. A row that
+    # reached execution with a bad value (a pre-D2 row, or an enqueue path
+    # that skipped the registry) is refused BEFORE the world is committed.
+    problems = payload_problems(payload)
+    if problems:
+        raise core.EvcaError("; ".join(problems))
+
     rule_hex = payload["rule_hex"]
     radius = payload["radius"]
     n_cells = payload["n_cells"]
@@ -240,17 +291,8 @@ def run(payload: dict, *, seed: int) -> dict:
     n_ic = payload["n_ic"]
     criterion = payload["success_criterion"]
     transform = payload["transform"]
-    if transform not in TRANSFORMS:
-        raise core.EvcaError(
-            "transform must be one of %s, got %r; these are the four EXACT "
-            "symmetries of the density task, so a transformed arm is a NULL "
-            "arm -- accuracy that moves under one is a defect, not a result"
-            % (list(TRANSFORMS), transform))
-    if criterion not in SUCCESS_CRITERIA:
-        raise core.EvcaError(
-            "success_criterion must be one of %s, got %r; `accuracy` is scored "
-            "under it and the choice is the requester's"
-            % (list(SUCCESS_CRITERIA), criterion))
+    # transform / success_criterion membership: refused above by
+    # payload_problems (D2), which is the single owner of those messages.
 
     core.require_radius(radius)          # r=3 only; the library's refusal
     core.require_lattice(n_cells)        # odd, so majority never ties

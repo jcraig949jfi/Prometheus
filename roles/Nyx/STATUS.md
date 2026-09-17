@@ -1,25 +1,33 @@
 # Nyx status
 
-Currency: 2026-09-15 ~16:35 UTC (instance m1-509ff7bc; NYX-44 run, ruling requested; ATLAS PASS 01 first-pass return NOT yet filed).
+Currency: 2026-09-16 ~14:10 UTC (instance m2-0c0adfe1 on M2; Mechanism Archaeology Pipeline Amendment 3 N1-N4 executed).
 
-seat state: ACTIVE. Governing prompt: ATLAS PASS 01 (roles/Nyx/prompts/2026-09-13_atlas_pass_01/, sha256 7da74389...),
-  which orders the chop of Techne's fossil vault into an atlas (nyx/atlas/). Catalogue loop (nyx/catalog) STOPPED.
-what it asserts (atlas, unchanged since 09-14):
-  census 121 whole-system records; stratified Stage A sample n=30 (seed 20260913); 5 fossils cut DEEP, 116 NOT_CUT;
-  DEEP: glibc rwlock (9 organs), SPIN Pathfinder model (2), zchaff (11), DES reference (4), EISPACK 1976 (9);
-  1 ablation executed (Pathfinder); 0 blind cuts; 0 recurrence tests.
-catalogue (frozen at bc37f828d): 321 bits; EVAL01 retrieval test INDETERMINATE (053cc6c8e).
-anatomy ledger (pre-atlas): 6 specimens; 18 organs delivered, 1 attempted, 0 CONSUMED.
-NYX-44 (go-explore c04), 09-15: import clears in prometheus-fossil-goexplore:min. The frozen control was MALFORMED
-  (guessed RLEArray.fromarray); repair ledgered before rerun (9a46e93c2), repaired sha256 6ce4ed61. Repaired runs
-  r2-r5 (r1 receipt lost): positive 4 parts, negative 1, dynamic_state 200 -> 4 in every run; decisive CHEAT returns
-  200 parts on r2 (frozen kill fires) and 8 / 4 / 8 on r3-r5. Post-result diagnostic: the ancestor score prefers 4 parts
-  (0.745) over 200 (0.141); the unseeded search misses in 1 of 4. c04 UNCHANGED, PENDING RULING
-  (roles/Nyx/prompts/2026-09-15_nyx44_ruling_request/). N4 reopen condition A met.
-open comms: queue #235 (atlas charter), #241 (THEO-REQ-003, composition -- not Nyx's); older #176 #189 #190 #192 #197 #198 #202.
-holds: c07 reopen only on an EXISTING consumer meeting the four conditions; c03 / c01 held; Proteus/Diomedes halves HELD;
-  c04 held pending the NYX-44 ruling.
+seat state: ACTIVE. Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3;
+  roles/Nyx/prompts/2026-09-16_mechanism_archaeology_pipeline/, Amendment 1 NOT received) over the ATLAS PASS 01 charter
+  (roles/Nyx/prompts/2026-09-13_atlas_pass_01/), whose Stage C/D adjudication by Nyx is SUPERSEDED (R32). Nyx owns
+  Stage A/B (dissection, cuts), C' (prediction packets), D' (assimilating typed returns).
+what it asserts (atlas, python -m nyx.atlas.build):
+  census 121; sample n=30 all cut (COARSE 21, DEEP 9); NOT_CUT 91; 224 fragments (192 ACCEPTED); 121 rejected; 69 pressures;
+  298 composition edges; recurrence candidates 15 by reading (R3+ 0); blind cuts 0; fingerprints 0; measured cells 0.
+  R34 provenance on all 30 cuts: 98 files hashed on M2, 87 match Techne's recorded hashes, 10 mismatch (all the known
+  CRLF class: libfec-karn 7, corewar 3), 12 refs unresolved (receipts / prose, listed per fossil).
+gates (nyx/atlas/gates/LEDGER.json): cuts_created 30; cuts_returned_with_verdict 0; handoffs open 3 (max age 0 ticks).
+pipeline objects (this session):
+  MECH-GZIP-LEVELTABLE-001  frozen sha256 861dded070d138e3... (nyx/atlas/predictions/); boundary deflate.c:225-245, 286-356
+    bound to payload hashes; 4 interventions (I0 baseline, I1 table-flatten, I2 flatten+switches [decisive], I3 chain-only);
+    cheat control C-CHEAT-PRECOMPRESSED; positive control C-POS-LEVEL-EXTREMES; CUT_KILL and INDETERMINATE defined.
+    SELF-FOUND CORRECTION before adjudication: the level is consumed at THREE sites, not one (deflate.c:667 fast/lazy switch;
+    trees.c:987 flush heuristic); the cut record and script carry the annotation; the original sentence is preserved.
+  RS_CALIBRATION_PAIR_001  (nyx/atlas/calibration/): Rockliff 1991 -> Karn; ruler must find R-ID-1/2 identical, R-DIV-1
+    divergent (tt+1: silent pass-through vs -1).
+  Preservation status of the gzip lineage: NON_CANONICAL / PRESERVATION_GATE_OPEN (R38; TECHNE-65 undecided).
+first-pass return (ATLAS): nyx/atlas/FIRST_PASS_RETURN_2026-09-16.md; comms #296 to Techne (queued; Techne offline at post).
+NYX-44 (go-explore c04): UNCHANGED, PENDING RULING. Older holds unchanged (c07 / c03 / c01; Proteus/Diomedes halves).
+own defects open: 12/69 pressure cost_class free text (NYX-47); five 09-13 cut scripts carry F:/ paths (NYX-48; their
+  provenance is now hashed regardless); tunnel.py hardcodes WSL distro "Ubuntu" (M2 has Ubuntu-24.04) -- irrelevant to Nyx
+  under R32 unless a SCOUT run is wanted.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action: (1) resume ATLAS PASS 01 Stage A on the remaining 25 sampled fossils, then Stages B-E;
-  first-pass return after. (2) c04 / N4 only after the ruling.
+next executable action: Stage A/B on the 91 NOT_CUT under nyx.atlas/1-provenance (N1), in the census's stratified order,
+  reporting cuts_created beside cuts_returned_with_verdict (0 until Harmonia's lane currency exists). Assimilate the first
+  typed return (CUT_SUPPORTED / CUT_CHALLENGE / PREDICTION_*) on MECH-GZIP-LEVELTABLE-001 when it arrives (D').

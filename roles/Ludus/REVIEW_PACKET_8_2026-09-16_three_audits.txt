@@ -1,0 +1,134 @@
+================================================================================
+REVIEW PACKET 8
+LUDUS -- FLIP 7, INCAN GOLD, CAN'T STOP AGAINST PUBLISHER SOURCES (LUDUS-15)
+================================================================================
+Prepared:        2026-09-16   frozen   Ludus[m2-c3a5ef7a], Claude Opus 5, M2
+For:             the operator (HITL) and any external reviewer; self-contained
+Location/Code:   ludus/bench/{rules_audit.json, RULES_AUDIT.md, verify.py,
+                 rules_sources/README.md}; ludus/atlas/rules_fidelity.json
+Version/Hash:    on top of 18bcd844c; commit SHA in the closing receipt
+Headline:        Three more worlds audited the same day as Martian Dice.
+                 Flip 7: COMPLETE, nothing moved. Incan Gold and Can't Stop:
+                 PARTIAL -- every RULE confirmed, but one CONSTANT each
+                 (the 15 treasure values; the 11 column heights) appears in
+                 no publisher text, only on the cards/board. One audit-sheet
+                 sentence (Can't Stop pairing) was stricter than the rule;
+                 the code was right. W3 under P3: 2 of 30 complete, 2
+                 partial, 26 untouched. Total across the four named bench
+                 worlds: 0 constants moved, 2 rules moved (both Martian
+                 Dice, packet 7), 2 constants unconfirmable from text.
+
+--------------------------------------------------------------------------------
+1. SOURCES (sha256; files kept locally, not committed; README has URLs)
+--------------------------------------------------------------------------------
+  Flip 7        The Op / USAopoly, RULESET EDITION 3.1 (2025), 2 pp
+                c17884d1cde5317ba3e67fae27e06b071a60134788fe0950d2712f8a078394f9
+                linked from theop.games/pages/flip-7
+  Incan Gold    Eagle-Gryphon rulebook, 2018 ed. (PDF 2020-05-20), 4 pp
+                50d0f6a1142ee5232457fcb94a4648acd6e6bcb8246274ed96b9a2e93607bdae
+                Eagle-Gryphon INCAN GOLD RULES 2023 v7 (2024 ed.), 4 pp
+                bfcb3cf9bce73631ef1dfe107efdf99c1f0895f694b8ea130c7c1c6b5a03793a
+                both from the publisher's Drive folder on the product page
+                (secondary: Universal Head aid 2008; BGA help page)
+  Can't Stop    Eagle-Gryphon / FRED 2021 rulesheet CSrulesv15, 2 pp
+                9d7b6caa8f6205b981bd1326ca236b41d225763735e0d8b943efe2967379e24b
+                from the publisher's Drive folder (secondary: Wikipedia)
+
+--------------------------------------------------------------------------------
+2. LINE RESULTS (ids and verbatim citations in rules_audit.json)
+--------------------------------------------------------------------------------
+FLIP 7                                                             COMPLETE
+  F7-1  rank r appears r times, one 0 (79 number cards)            OK
+        "twelve 12's, eleven 11's, ten 10's... until you get to one 1;
+        there is even one 0"
+  F7-2  7 unique -> +15 and the round ends                         OK
+  F7-3  duplicate rank busts, scores nothing                       OK
+  F7-4  first card dealt; Stay only with a card in front of you    OK
+        (the bench starts at the about-to-draw value, so no stop is
+        offered on the empty line -- matches)
+  F7-S1 action + modifier cards not modelled                       SCOPE
+  F7-S2 NEW: one round from a full deck (later rounds draw from the
+        depleted deck: "Do not shuffle them back into the deck")   SCOPE
+  F7-S3 solitaire                                                  SCOPE
+
+INCAN GOLD                                                         PARTIAL
+  IG-1  5 hazard types x 3; second copy ends the round, those still
+        in lose their unbanked take                                OK
+        "15 Hazard cards (3 each of the 5 different Hazards)";
+        "If this is the second Hazard card of the same type ... the
+        round is over. All players still in the Temple give back all
+        the Treasures they took during the round"
+  IG-2  treasure values 1 2 3 4 5 5 7 7 9 11 11 13 14 15 17       UNSURE
+        publisher confirms "15 Treasure cards" and prints no values.
+        BGA's help page lists FOURTEEN values, without the 17; a
+        GitHub reimplementation lists the seat's fifteen. Two
+        secondary sources disagree; no publisher text decides it.
+  IG-3  division rounded down, leftovers stay (solitaire: /1)      OK
+  IG-4  first card before any leave decision                       OK
+  IG-S1 solitaire, one round, no artifacts                         SCOPE
+        NOTE: in solitaire the player is always "the lone leaver",
+        so the omitted artifact card (5/7/8/10/12) would be claimable
+        on every exit. Materially different from the multiplayer
+        reading of the cut. Recorded, not fixed.
+
+CAN'T STOP                                                         PARTIAL
+  CS-1  heights 3 5 7 9 11 13 11 9 7 5 3                           UNSURE
+        rulesheet: "The columns consist of a varying number of
+        squares" -- no numbers; Wikipedia gives exactly these
+  CS-2  three runners                                              OK
+  CS-3  pairing: must use both sums of the CHOSEN pairing if both
+        are playable; a one-runner pairing may be chosen
+        deliberately; no move -> bust            OK IN CODE, sheet wording
+        was stricter ("if ANY pairing allows it"). options()
+        enumerates every pairing and forces both only within a
+        pairing, which is the rule. Annotated; code unchanged.
+  CS-4  a topped runner cannot move; that sum is unplayable        OK
+  CS-5  all three topped = forced end that scores  OK BY DOMINANCE, not
+        text (the sheet lets you keep rolling into a certain bust;
+        the bench removes the dominated option; values unchanged)
+  CS-S1 single turn; summed-fraction valuation                     SCOPE
+
+--------------------------------------------------------------------------------
+3. LEDGER RULE ADDED
+--------------------------------------------------------------------------------
+A world is rules_audited=true only when every RULE line is OK or
+CORRECTED against a PUBLISHER source. Any UNSURE line makes the world
+PARTIAL and rules_audited=false, whatever secondary sources say. verify.py
+now prints the state:
+  FLIP7          VERIFIED-INTERNALLY (rules AUDITED by seat, P3)
+  INCAN_GOLD     VERIFIED-INTERNALLY (rules audit PARTIAL)
+  MARTIAN_DICE   VERIFIED-INTERNALLY (rules AUDITED by seat, P3)
+  CANT_STOP      VERIFIED-INTERNALLY (rules audit PARTIAL)
+  (17 FOUNDRY/LUCKY_NUMBERS/COLORETTO still FAIL: no invariants, LUDUS-04)
+
+--------------------------------------------------------------------------------
+4. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+Establishes: no rule in Flip 7, Incan Gold or Can't Stop moved; the
+Can't Stop code implements the published pairing rule although its audit
+sentence did not; two constants are unconfirmable from any publisher TEXT
+and are marked as such rather than promoted on secondary agreement.
+Nothing in the matrix changed on this pass.
+
+Does NOT establish: IG-2 or CS-1 (open, LUDUS-37: a components list, a
+card/board image, or a publisher FAQ closes each; the operator's own
+copy of either game is the cheapest instrument). Independence: one seat,
+one reading per source; LUDUS-16 (second implementation) has not run.
+Editions: the reconstructions may have been of other printings; the
+sources are 2021-2025 editions.
+
+Day total for the four named bench worlds: constants moved 0; rules
+moved 2 (Martian Dice); constants unconfirmed 2; audit-sheet wording
+errors 1. The 2026-08-27 sheet's own risk ranking (Martian Dice's ray
+face as "the single highest-leverage constant") was wrong about WHERE the
+error was and right about WHICH world carried it.
+
+--------------------------------------------------------------------------------
+5. NEXT
+--------------------------------------------------------------------------------
+LUDUS-02 (chopping grammar v0), then LUDUS-04 (invariants for the 17).
+LUDUS-37 waits on a components source; LUDUS-31 (P3) on the operator.
+
+================================================================================
+END OF PACKET.
+================================================================================

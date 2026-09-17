@@ -1,0 +1,127 @@
+{
+ "artifacts": {},
+ "attempt": 2,
+ "attempt_id": "C3-SFE-02/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "complementary": {
+  "E4_complementary_unjoinable": false,
+  "profiles": {
+   "00": 3
+  },
+  "recombination": null
+ },
+ "decisions": [
+  "D3-010: explanation flags E1-E5 are rules on class fractions (E1 summit adjacent but < 1%%; E2 second-stream gains only below the parent; E3 tradeoff >= 80%% of second-stream gains; E4 complementary profiles with 0 joins; E5 second_up < 0.5%% and basin 0)"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "INSTRUMENT_FAILURE",
+  "reason": "execution state fired",
+  "states": [
+   "INSTRUMENT_FAILURE"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-02",
+ "finished_at": "2026-09-17T05:49:37Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:f409f32f57a14f2269104578f54e1dd5a8e3f692d7a449302a951972c4b7c7bb",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "shelf_reproduced": {
+  "in_band": 2,
+  "n_shelf": 3
+ },
+ "shelf_summit_distances": [],
+ "started_at": "2026-09-17T05:49:36Z",
+ "steps": {},
+ "summary": {
+  "random_org": {
+   "basin_share": 0.0,
+   "f_deceptive": 0.0167,
+   "f_destructive": 0.0667,
+   "f_first_down": 0.0,
+   "f_neutral": 0.9167,
+   "f_second_up": 0.0,
+   "f_second_up_keep": 0.0,
+   "f_summit": 0.0,
+   "f_tradeoff": 0.0,
+   "f_useful": 0.0167,
+   "flags": {
+    "E1_summit_adjacent_rare": 0,
+    "E2_valley": 0,
+    "E3_stream2_destroys_stream1": 0,
+    "E5_no_gradient": 3
+   },
+   "n": 3,
+   "parent_r": 0.0104,
+   "profiles": [
+    "00",
+    "00",
+    "00"
+   ]
+  },
+  "shelf_org": {
+   "basin_share": 0.0,
+   "f_deceptive": 0.0,
+   "f_destructive": 0.3833,
+   "f_first_down": 0.3333,
+   "f_neutral": 0.6167,
+   "f_second_up": 0.0,
+   "f_second_up_keep": 0.0,
+   "f_summit": 0.0,
+   "f_tradeoff": 0.0,
+   "f_useful": 0.0,
+   "flags": {
+    "E1_summit_adjacent_rare": 0,
+    "E2_valley": 0,
+    "E3_stream2_destroys_stream1": 0,
+    "E5_no_gradient": 3
+   },
+   "n": 3,
+   "parent_r": 0.5,
+   "profiles": [
+    "00",
+    "00",
+    "00"
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "anatomy_s": 1.34,
+  "records_s": 0.0,
+  "total_s": 1.5
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "first": {
+     "error": "shelf organisms not in band on the battery",
+     "step": "battery"
+    },
+    "n_errors": 1
+   },
+   "state": "INSTRUMENT_FAILURE"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "19f09278156e450aec0dcc6b32f25bff63f7e445",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

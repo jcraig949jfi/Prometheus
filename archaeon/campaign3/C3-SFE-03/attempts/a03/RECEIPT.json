@@ -1,0 +1,141 @@
+{
+ "artifacts": {},
+ "attempt": 3,
+ "attempt_id": "C3-SFE-03/a03",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-008: generality = elite >= 0.75 on all four rungs at a probe (24 eval episodes each), confirmed at the end by 48 held-out episodes per rung; the primary is descriptive (rate and timing), not a comparison"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-03",
+ "finished_at": "2026-09-17T05:58:02Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:db386ed382e0ff04af89b136e2f43590bf126d3e0fd3d6c655ad59d72f5963d9",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T05:57:53Z",
+ "steps": {},
+ "summary": {
+  "adapt": [
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   },
+   {
+    "R1": null,
+    "R2": null,
+    "R3": null
+   }
+  ],
+  "fell_r0_at": [
+   null,
+   null
+  ],
+  "final_r0": [
+   0.083333,
+   0.041667
+  ],
+  "final_r3": [
+   0.0,
+   0.166667
+  ],
+  "general_gen": [
+   null,
+   null
+  ],
+  "general_gen_ladder": [
+   null,
+   null
+  ],
+  "general_heldout": 0,
+  "general_survives": 0,
+  "heldout_by_rung": [
+   {
+    "R0": 0.1042,
+    "R1": 0.1042,
+    "R2": 0.0208,
+    "R3": 0.0625
+   },
+   {
+    "R0": 0.0417,
+    "R1": 0.0417,
+    "R2": 0.125,
+    "R3": 0.0625
+   }
+  ],
+  "hold_gens": [
+   30,
+   30
+  ],
+  "hold_released_by": [
+   "cap",
+   "cap"
+  ],
+  "instr": [
+   8,
+   4
+  ],
+  "persist": [
+   "all",
+   "regs"
+  ],
+  "r3_rise_gens": [
+   null,
+   null
+  ],
+  "rung_at_general": [
+   null,
+   null
+  ]
+ },
+ "teardown": {},
+ "timings": {
+  "ladder_s": 7.99,
+  "records_s": 0.0,
+  "total_s": 8.2
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "p0.1",
+    "metric": "reached_r0_by_rung_end",
+    "min": 1,
+    "rows": 2,
+    "rows_meeting": 0,
+    "values": [
+     0,
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8c16a71b1e9d088b829e5247f217890492a5910a",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

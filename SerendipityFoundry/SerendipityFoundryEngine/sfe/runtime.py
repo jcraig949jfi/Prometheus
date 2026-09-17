@@ -4329,14 +4329,23 @@ class Foundry:
                           world_id: Optional[str] = None,
                           evidence_class: Optional[str] = None,
                           measurement_id: Optional[str] = None,
-                          limit: int = 1000) -> dict:
+                          limit: int = 1000,
+                          include_spec: bool = False) -> dict:
         """The cross-seat read surface for OBSERVATIONS.
 
         `corpus` is returned beside the rows on purpose. An archaeologist's
         first scientific obligation is to say what population it drew from,
         and the commonest way to fail is to pool tenancies and evidence classes
         without noticing. The engine cannot stop a bad analysis, but it can
-        refuse to hand over rows without also handing over their provenance."""
+        refuse to hand over rows without also handing over their provenance.
+
+        Each row also carries its experiment's `spec_hash` and `committed_seq`
+        (Archaeon #223, F-25 residue): a grantee reading observations without
+        the experiment they answer cannot anchor them on the spec axis or
+        order them against the commit, so the provenance anchors arrived as
+        None. Ids only, from columns the census already joins; `include_spec`
+        adds the experiment spec itself under `spec`. No owner-shaped access
+        is conferred: the experiment rows are those of the granted worlds."""
         if evidence_class is not None and evidence_class not in EVIDENCE_CLASSES:
             raise ValidationError("unknown evidence_class",
                                   evidence_class=evidence_class,
@@ -4349,8 +4358,11 @@ class Foundry:
             return {"observations": [], "corpus": {"worlds": 0, "by_client": [],
                                                    "by_evidence_class": []}}
         qs = ",".join("?" * len(scopes))
-        q = ("SELECT o.*, w.client_id AS owner FROM observations o "
+        q = ("SELECT o.*, w.client_id AS owner, e.spec_hash AS exp_spec_hash, "
+             "e.committed_seq AS exp_committed_seq, e.spec AS exp_spec "
+             "FROM observations o "
              "JOIN worlds w ON w.world_id=o.world_id "
+             "JOIN experiments e ON e.exp_id=o.exp_id "
              "JOIN read_scope_worlds rw ON rw.world_id = w.world_id "
              "WHERE rw.scope_id IN (%s) AND w.client_id != ?" % qs)
         args = [*scopes, client_id]
@@ -4383,6 +4395,10 @@ class Foundry:
         out_obs = []
         for r in rows:
             d = _observation_dict(r)
+            d["spec_hash"] = r["exp_spec_hash"]
+            d["committed_seq"] = r["exp_committed_seq"]
+            if include_spec:
+                d["spec"] = json.loads(r["exp_spec"])
             if meas is not None:
                 found, val = _dig(d["content"], meas["value_path"])
                 m = {"measurement_id": meas["measurement_id"],

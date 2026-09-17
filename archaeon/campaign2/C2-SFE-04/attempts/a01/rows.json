@@ -1,0 +1,1244 @@
+[
+ {
+  "arm": "random",
+  "competence_heldout": 0.0625,
+  "direct_best": null,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "indirection": 0.5,
+    "opaque_io": 0.25,
+    "randomness": 0.25
+   },
+   "distinct_opcodes": 3,
+   "instr": 4,
+   "n_regs": 14,
+   "opcode_hist": {
+    "LD": 2,
+    "OUT": 1,
+    "RND": 1
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "import_share_final": null,
+  "n_members": 0,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_A",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "failed_A"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0588,
+    "comparison": 0.1765,
+    "halt_yield": 0.0588,
+    "indirection": 0.0588,
+    "logical": 0.2941,
+    "opaque_io": 0.0588,
+    "randomness": 0.0588,
+    "read_write": 0.2353
+   },
+   "distinct_opcodes": 12,
+   "instr": 17,
+   "n_regs": 9,
+   "opcode_hist": {
+    "EQ": 1,
+    "LD": 1,
+    "LDC": 2,
+    "LT": 2,
+    "MOV": 2,
+    "MUL": 1,
+    "OR": 2,
+    "OUT": 1,
+    "RND": 1,
+    "SHL": 2,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 64,
+   "words": 68
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_A",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.25,
+   0.25,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_shuffled",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "failed_shuffled"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "logical": 0.3333,
+    "opaque_io": 0.3333,
+    "read_write": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 12,
+   "opcode_hist": {
+    "MOV": 1,
+    "OUT": 1,
+    "XOR": 1
+   },
+   "persist": "all",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 12
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_shuffled",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "all",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_opcodes",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "failed_opcodes"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "logical": 0.3333,
+    "opaque_io": 0.3333,
+    "read_write": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 15,
+   "opcode_hist": {
+    "MOV": 1,
+    "OUT": 1,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 32,
+   "tick_budget": 16,
+   "words": 12
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_opcodes",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "length_matched",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "length_matched"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "control": 0.0667,
+    "indirection": 0.1333,
+    "logical": 0.2667,
+    "opaque_io": 0.2,
+    "randomness": 0.2
+   },
+   "distinct_opcodes": 12,
+   "instr": 15,
+   "n_regs": 16,
+   "opcode_hist": {
+    "ADD": 1,
+    "AND": 1,
+    "IN": 1,
+    "INQ": 1,
+    "JZ": 1,
+    "LD": 1,
+    "OR": 1,
+    "OUT": 1,
+    "RND": 3,
+    "SHL": 2,
+    "ST": 1,
+    "SUB": 1
+   },
+   "persist": "tape",
+   "tape_words": 128,
+   "tick_budget": 256,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "length_matched",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_unrelated",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "evolved_unrelated"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "comparison": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 8,
+   "opcode_hist": {
+    "EQ": 1,
+    "MUL": 1,
+    "OUT": 1,
+    "SHL": 1
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 16,
+   "words": 16
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_unrelated",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 92,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.25,
+   0.25,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_solved",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "evolved_solved"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1667,
+    "halt_yield": 0.3333,
+    "indirection": 0.1667,
+    "opaque_io": 0.3333
+   },
+   "distinct_opcodes": 6,
+   "instr": 6,
+   "n_regs": 6,
+   "opcode_hist": {
+    "IN": 1,
+    "LD": 1,
+    "LT": 1,
+    "NOP": 1,
+    "OUT": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 24
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_solved",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 100,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random",
+  "competence_heldout": 0.020833333333333332,
+  "direct_best": null,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "halt_yield": 0.1875,
+    "indirection": 0.125,
+    "logical": 0.125,
+    "opaque_io": 0.1875,
+    "randomness": 0.0625,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 12,
+   "instr": 16,
+   "n_regs": 16,
+   "opcode_hist": {
+    "ADD": 3,
+    "HALT": 1,
+    "IN": 1,
+    "INQ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "MUL": 1,
+    "NOP": 2,
+    "OUT": 1,
+    "RND": 1,
+    "ST": 1,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "import_share_final": null,
+  "n_members": 0,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.25
+  ],
+  "train_last": 0.25,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "arm": "failed_A",
+  "competence_heldout": 0.0,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "failed_A"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.5,
+    "opaque_io": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 5,
+   "opcode_hist": {
+    "INQ": 1,
+    "LT": 1
+   },
+   "persist": "regs",
+   "tape_words": 64,
+   "tick_budget": 16,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_A",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_shuffled",
+  "competence_heldout": 0.020833333333333332,
+  "direct_best": 0.08333333333333333,
+  "elite_origins": [
+   "failed_shuffled"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0667,
+    "comparison": 0.2,
+    "indirection": 0.0667,
+    "logical": 0.2667,
+    "opaque_io": 0.0667,
+    "randomness": 0.1333,
+    "read_write": 0.2
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 5,
+   "opcode_hist": {
+    "EQ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "LT": 2,
+    "MOV": 2,
+    "MUL": 1,
+    "OR": 1,
+    "OUT": 1,
+    "RND": 2,
+    "SHL": 2,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 16,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_shuffled",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0,
+   0.25
+  ],
+  "train_last": 0.25,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "failed_opcodes",
+  "competence_heldout": 0.0,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "failed_opcodes"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.5,
+    "opaque_io": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 4,
+   "opcode_hist": {
+    "INQ": 1,
+    "LT": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_opcodes",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "length_matched",
+  "competence_heldout": 0.0,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "length_matched"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.5,
+    "logical": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 8,
+   "opcode_hist": {
+    "MUL": 1,
+    "SHL": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "length_matched",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "all",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_unrelated",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "evolved_unrelated"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "control": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 8,
+   "opcode_hist": {
+    "JNZ": 1,
+    "MUL": 1,
+    "OUT": 1,
+    "SHR": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 16,
+   "words": 16
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_unrelated",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 100,
+  "persist": "all",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_solved",
+  "competence_heldout": 0.0625,
+  "direct_best": 0.0625,
+  "elite_origins": [
+   "evolved_solved"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "halt_yield": 0.1875,
+    "indirection": 0.125,
+    "logical": 0.125,
+    "opaque_io": 0.1875,
+    "randomness": 0.0625,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 12,
+   "instr": 16,
+   "n_regs": 12,
+   "opcode_hist": {
+    "ADD": 3,
+    "HALT": 1,
+    "IN": 1,
+    "INQ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "MUL": 1,
+    "NOP": 2,
+    "OUT": 1,
+    "RND": 1,
+    "ST": 1,
+    "XOR": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 64
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_solved",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 100,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random",
+  "competence_heldout": 0.0,
+  "direct_best": null,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "control": 0.0833,
+    "halt_yield": 0.0833,
+    "indirection": 0.0833,
+    "logical": 0.1667,
+    "opaque_io": 0.25,
+    "randomness": 0.0833
+   },
+   "distinct_opcodes": 10,
+   "instr": 12,
+   "n_regs": 3,
+   "opcode_hist": {
+    "EQ": 2,
+    "IN": 1,
+    "JZ": 1,
+    "LD": 1,
+    "LT": 1,
+    "OUT": 2,
+    "RND": 1,
+    "SHL": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 48
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "import_share_final": null,
+  "n_members": 0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "arm": "failed_A",
+  "competence_heldout": 0.041666666666666664,
+  "direct_best": 0.041666666666666664,
+  "elite_origins": [
+   "failed_A"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "logical": 0.3333,
+    "opaque_io": 0.3333,
+    "read_write": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 7,
+   "opcode_hist": {
+    "MOV": 1,
+    "OUT": 1,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 16,
+   "words": 12
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_A",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_shuffled",
+  "competence_heldout": 0.041666666666666664,
+  "direct_best": 0.125,
+  "elite_origins": [
+   "failed_shuffled"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "logical": 0.3333,
+    "opaque_io": 0.3333,
+    "read_write": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 8,
+   "opcode_hist": {
+    "MOV": 1,
+    "OUT": 1,
+    "XOR": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 12
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_shuffled",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "failed_opcodes",
+  "competence_heldout": 0.125,
+  "direct_best": 0.125,
+  "elite_origins": [
+   "failed_opcodes"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.125,
+    "control": 0.125,
+    "indirection": 0.125,
+    "logical": 0.5,
+    "opaque_io": 0.125
+   },
+   "distinct_opcodes": 8,
+   "instr": 8,
+   "n_regs": 5,
+   "opcode_hist": {
+    "AND": 1,
+    "EQ": 1,
+    "JZ": 1,
+    "LD": 1,
+    "OR": 1,
+    "OUT": 1,
+    "SHL": 1,
+    "SHR": 1
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 32
+  },
+  "first_solved_gen": 1,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "failed_opcodes",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "regs",
+  "reached": 1,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.5,
+   0.25,
+   0.25,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "length_matched",
+  "competence_heldout": 0.041666666666666664,
+  "direct_best": 0.041666666666666664,
+  "elite_origins": [
+   "length_matched"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.2222,
+    "control": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.2222,
+    "opaque_io": 0.1111,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 13,
+   "opcode_hist": {
+    "ADD": 1,
+    "AND": 1,
+    "JMP": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "MUL": 1,
+    "OUT": 1,
+    "SHR": 1
+   },
+   "persist": "tape",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "length_matched",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 24,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_unrelated",
+  "competence_heldout": 0.125,
+  "direct_best": 0.041666666666666664,
+  "elite_origins": [
+   "evolved_unrelated"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.2222,
+    "comparison": 0.1667,
+    "control": 0.0556,
+    "indirection": 0.0556,
+    "logical": 0.3333,
+    "opaque_io": 0.0556,
+    "randomness": 0.0556,
+    "read_write": 0.0556
+   },
+   "distinct_opcodes": 13,
+   "instr": 18,
+   "n_regs": 10,
+   "opcode_hist": {
+    "ADD": 1,
+    "AND": 1,
+    "EQ": 2,
+    "JNZ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "LT": 1,
+    "MUL": 3,
+    "OR": 2,
+    "OUT": 1,
+    "RND": 1,
+    "SHR": 1,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 16,
+   "words": 72
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_unrelated",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 100,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.25,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "evolved_solved",
+  "competence_heldout": 0.041666666666666664,
+  "direct_best": 0.125,
+  "elite_origins": [
+   "evolved_solved"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.4167,
+    "control": 0.1667,
+    "logical": 0.25,
+    "opaque_io": 0.0833,
+    "read_write": 0.0833
+   },
+   "distinct_opcodes": 7,
+   "instr": 12,
+   "n_regs": 3,
+   "opcode_hist": {
+    "AND": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LDC": 1,
+    "LT": 5,
+    "NOT": 2,
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 128,
+   "tick_budget": 64,
+   "words": 48
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "evolved_solved",
+   "verified_common": true
+  },
+  "import_share_final": 1.0,
+  "n_members": 100,
+  "persist": "none",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.25,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ }
+]

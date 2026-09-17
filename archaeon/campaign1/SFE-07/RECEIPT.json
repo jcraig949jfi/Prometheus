@@ -1,0 +1,179 @@
+{
+ "artifacts": {
+  "predeclaration": "sha256:e460fc134107059f9d2e194fb62efed964f159d2dbb97edbdc724a099706dd03",
+  "set_best_A": "sha256:ca6bd1ae6a9269fd418f3a31e42c5ca32ddfd6c8ba421a27c259c8041069d53c",
+  "set_failed_A": "sha256:6d1bfe565eb5f3e43d995cdc50222fa7178854fa0b78247a98d8333583c8c133",
+  "set_random": "sha256:9310b16e4a13603ccbb6482fc93295b89f15e031093af299942a70ad6468e0e1",
+  "set_specialized_A": "sha256:ed9279969a1283d831b6e8683253e034b47dc598bed0670dd6c8b33702b71e63"
+ },
+ "campaign_seed": 20260917,
+ "engine_path": true,
+ "errors": [],
+ "experiment": "SFE-07",
+ "fetch": {
+  "failures_s1": {
+   "bytes": 5859,
+   "hash_ok": true,
+   "world_state_at_fetch": "TERMINATED (SFE-01 teardown)"
+  },
+  "failures_s2": {
+   "bytes": 64418,
+   "hash_ok": true,
+   "world_state_at_fetch": "TERMINATED (SFE-01 teardown)"
+  },
+  "failures_s3": {
+   "bytes": 59592,
+   "hash_ok": true,
+   "world_state_at_fetch": "TERMINATED (SFE-01 teardown)"
+  }
+ },
+ "hypothesis": "hyp_222474b0ddee00fcef573457",
+ "predeclaration": {
+  "declared_at": 1789605844.6753423,
+  "exposure": {
+   "direct": "best held-out competence of any member on B (48 episodes)",
+   "evolved": "N=100 G=40 E=16 from the set, common RNG"
+  },
+  "sets": {
+   "best_A": "SFE-05 adaptive/on elites",
+   "failed_A": "SFE-01 cmp1.failures.v0 floor genotypes of W1_d1 (fetched from the engine)",
+   "random": "matched-count random genotypes",
+   "specialized_A": "SFE-05 fixed/on elites"
+  },
+  "world_B": {
+   "D": 1,
+   "K": 2,
+   "Kd": 0,
+   "ask_kind": "ASK",
+   "ask_mode": "one",
+   "ask_timing": "end",
+   "delay": 0,
+   "delays": [],
+   "expensive": 0,
+   "fanout": 1,
+   "interfere": false,
+   "interleave": "sequential",
+   "n_defs": 0,
+   "name": "W3_K2",
+   "noise_rate": 0.0,
+   "op_mode": "fixed",
+   "recycle": false,
+   "retire_rate": 0.0,
+   "topology": "streams",
+   "value_bits": 4,
+   "vocab": "train"
+  }
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "session_id": "ses_c617d022b489d717af803bd3",
+ "set_sizes": {
+  "best_A": 3,
+  "failed_A": 135,
+  "random": 135,
+  "specialized_A": 3
+ },
+ "summary": {
+  "best_A": {
+   "direct_best": [
+    0.5208333333333334,
+    0.5208333333333334,
+    0.5416666666666666
+   ],
+   "evolved_heldout": [
+    0.5208333333333334,
+    0.5833333333333334,
+    0.6458333333333334
+   ],
+   "evolved_mean": 0.5833333333333334,
+   "footholds": 3
+  },
+  "failed_A": {
+   "direct_best": [
+    0.125,
+    0.10416666666666667,
+    0.10416666666666667
+   ],
+   "evolved_heldout": [
+    0.041666666666666664,
+    0.5833333333333334,
+    0.5625
+   ],
+   "evolved_mean": 0.3958333333333333,
+   "footholds": 2
+  },
+  "random": {
+   "direct_best": [
+    0.041666666666666664,
+    0.0625,
+    0.10416666666666667
+   ],
+   "evolved_heldout": [
+    0.020833333333333332,
+    0.020833333333333332,
+    0.10416666666666667
+   ],
+   "evolved_mean": 0.04861111111111111,
+   "footholds": 0
+  },
+  "specialized_A": {
+   "direct_best": [
+    0.5625,
+    0.5833333333333334,
+    0.5625
+   ],
+   "evolved_heldout": [
+    0.5625,
+    0.5833333333333334,
+    0.5625
+   ],
+   "evolved_mean": 0.5694444444444445,
+   "footholds": 3
+  }
+ },
+ "teardown": {
+  "B": "TERMINATED"
+ },
+ "timings": {
+  "exposure_s": 7.9,
+  "records_s": 3.83,
+  "startup_s": 0.65,
+  "teardown_s": 0.2,
+  "total_s": 13.4
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "5e8871b2653304274fa6ebb00ab43ef230187374",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "world_B": {
+  "D": 1,
+  "K": 2,
+  "Kd": 0,
+  "ask_kind": "ASK",
+  "ask_mode": "one",
+  "ask_timing": "end",
+  "delay": 0,
+  "delays": [],
+  "expensive": 0,
+  "fanout": 1,
+  "interfere": false,
+  "interleave": "sequential",
+  "n_defs": 0,
+  "name": "W3_K2",
+  "noise_rate": 0.0,
+  "op_mode": "fixed",
+  "recycle": false,
+  "retire_rate": 0.0,
+  "topology": "streams",
+  "value_bits": 4,
+  "vocab": "train"
+ },
+ "worlds": {
+  "B": "wld_b1b7a49edb4cf220fa577b2d"
+ }
+}

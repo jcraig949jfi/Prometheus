@@ -313,11 +313,14 @@ def write_lock(entry_id: str, env_name: str, resolved: list[dict], extra_header:
     return out
 
 
-def install_locked(env_name: str, lock: pathlib.Path, budget: Budget) -> dict:
+def install_locked(env_name: str, lock: pathlib.Path, budget: Budget, ignore_installed: bool = False) -> dict:
+    """ignore_installed forces pip to fetch and hash-check every line even when the env already
+    satisfies it: a tampered-hash control run AFTER a real install is otherwise vacuous, because
+    pip reports "already satisfied" without touching the hash (found 2026-09-16, M2)."""
     budget.require_network()
     py = env_python(env_name)
     r = budget.run([str(py), "-m", "pip", "install", "--require-hashes", "--no-deps",
-                    "-r", str(lock)])
+                    *(["--ignore-installed"] if ignore_installed else []), "-r", str(lock)])
     return {"lock": str(lock), "returncode": r["returncode"], "timed_out": r["timed_out"],
             "wall_seconds": r["wall_seconds"],
             "stdout_tail": r["stdout"][-4000:], "stderr_tail": r["stderr"][-4000:]}

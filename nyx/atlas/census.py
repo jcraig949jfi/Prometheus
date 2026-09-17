@@ -21,7 +21,7 @@ from nyx.atlas.schema import SCHEMA, ROOT
 
 REPO = ROOT.parent.parent
 SPECIMENS = REPO / "techne" / "fossils" / "specimens"
-PRED = {"algorithm_from", "derived_from", "historical_version_of", "port_of", "reimplementation_of", "rewrote"}
+PRED = {"algorithm_from", "derived_from", "historical_version_of", "port_of", "reimplementation_of", "rewrote", "supersedes"}  # supersedes X => X is a predecessor (Techne 1bb9965b4, 2026-09-16)
 
 
 def _v(value, basis="TECHNE_RECORD"):
@@ -45,7 +45,9 @@ def whole_system(rec: dict) -> dict:
     cap = rec.get("human_capability_summary") or {}
     obs = rec.get("observability") or {}
     preds = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") in PRED]
-    succs = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "superseded"]
+    # 2026-09-16 (later the same day): Techne replaced the undirected 'superseded' with superseded_by / supersedes and
+    # migrated every edge (1bb9965b4). superseded_by X => X is a successor; supersedes X => X is a predecessor (PRED).
+    succs = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "superseded_by"]
     rivals = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "shares_ancestor_with"]
     disp = hd.get("state") if hd else None
     if disp and disp != "UNKNOWN":

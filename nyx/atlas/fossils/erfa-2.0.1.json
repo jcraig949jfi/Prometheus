@@ -131,18 +131,1118 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/atciq.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/nut00a.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/dat.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/t_erfa_c.c"
+   }
+  ],
+  "inspected_files": [
+   "atciq.c",
+   "nut00a.c (series loop)",
+   "dat.c",
+   "t_erfa_c.c (vvd/viv)",
+   "routine list (247 names)"
+  ],
+  "date": "2026-09-16T12:14Z",
+  "note": "247 routines, but a handful of mechanism SHAPES: trigonometric series over fundamental-argument polynomials, rotation-matrix algebra, fixed correction pipelines, table lookups with validity windows, and a two-part date representation; the library keeps every superseded model side by side",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/liberfa/erfa/releases/download/v2.0.1/erfa-2.0.1.tar.xz sha256:45111f0addf6ef69345aaf093bd054705b41ac2db7541dd3f0e105362c8e20e4",
+   "payload_manifest_id": "techne tree_sha256 18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7 (270 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/atciq.c",
+     "payload_hash_read": "006c76e70b33d47e2c44bd5500e19b4d5b1696c0824f2a3c50c8ddb1d552db5e",
+     "techne_recorded_hash": "006c76e70b33d47e2c44bd5500e19b4d5b1696c0824f2a3c50c8ddb1d552db5e",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/nut00a.c",
+     "payload_hash_read": "a1538ec0277745db974ab76ca4b678a7602249bccecf9474e2b0268f9c2032ef",
+     "techne_recorded_hash": "a1538ec0277745db974ab76ca4b678a7602249bccecf9474e2b0268f9c2032ef",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/dat.c",
+     "payload_hash_read": "09e3377ff0c770372c759dc16af12aadc70975d3c549d9524e5c3dd44e24fa88",
+     "techne_recorded_hash": "09e3377ff0c770372c759dc16af12aadc70975d3c549d9524e5c3dd44e24fa88",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/t_erfa_c.c",
+     "payload_hash_read": "8a92d0099c48df31ca566bea881c19497dc295dba58dba7136cc2f8443c31f15",
+     "techne_recorded_hash": "8a92d0099c48df31ca566bea881c19497dc295dba58dba7136cc2f8443c31f15",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/taitt.c",
+     "payload_hash_read": "2e235092b443057893b8cbb27cbf1bd88ab1a5f43ad42cec0ff4ae656ea3ae9a",
+     "techne_recorded_hash": "2e235092b443057893b8cbb27cbf1bd88ab1a5f43ad42cec0ff4ae656ea3ae9a",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "nutation / planetary / lunar series (nut00a: 678 + 687 terms; plan94, epv00, moon98 same shape)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each term is (integer multipliers of 5 fundamental arguments -> arg = fmod(sum n_k * F_k, 2pi)) and coefficients (sin, t*sin, cos for longitude; cos, t*cos, sin for obliquity); the loop runs from the LAST (smallest) term to the first so rounding error accumulates on the small terms; two tables (luni-solar, planetary) are summed separately then combined; the result is scaled from 0.1 microarcseconds to radians",
+   "input": "t (Julian centuries since J2000)",
+   "output": "dpsi, deps (radians)",
+   "state": "none (the tables are constants)",
+   "update": "none",
+   "assumptions": [
+    "the MHB2000 tables are truth; the argument polynomials are those of IERS 2003"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+    "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+    "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets"
+   ],
+   "fitness_value_in_ancestor": "the accuracy of every frame transform rests on these series",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/nut00a.c:159-180,998,1852,1880-1990"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the series loops of nut00a/nut00b/nut06a/plan94/epv00/moon98 (only nut00a read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "fal03 falp03 faf03 fad03 faom03 (and the inline polynomials in nut00a 1870-1885)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each argument (mean anomalies, elongation, node) is a quartic in t with arcsecond coefficients, reduced mod 1296000 arcseconds then converted to radians; nested Horner form",
+   "input": "t",
+   "output": "an angle",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+    "erfa-2.0.1::two_part_julian_date_carried_through_every_interface"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/nut00a.c:1870-1885; fa*03.c by name"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the fa*03 routines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::two_part_julian_date_carried_through_every_interface",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "(date1, date2) convention",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every epoch argument is a pair of doubles whose sum is the Julian Date; the caller chooses the split (JD and 0, MJD form, date and fraction) so the fractional day keeps its full precision instead of being lost after 2.4 million; time-scale conversions return the same shape",
+   "input": "two doubles",
+   "output": "two doubles",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "IEEE double; a 53-bit mantissa cannot hold a JD to microseconds in one number"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+    "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets"
+   ],
+   "fitness_value_in_ancestor": "the precision pressure made concrete in a representation",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/atciq.c (astrom carries it), utctai.c, taitt.c, dat.c:70-87 (djm + fd)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the argument convention of the whole library",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "rx ry rz rxr rxp trxp c2s s2c ir tr cr pxp pdp ... and the bias-precession-nutation matrices (pnm06a, bp06, c2i*)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "frames are related by 3x3 rotation matrices built from Euler angles (rx/ry/rz apply an elementary rotation in place), composed (rxr), applied to vectors (rxp) or transposed (trxp); spherical <-> Cartesian conversions (c2s, s2c) bracket the vector algebra; a frame transform routine is a product of these",
+   "input": "angles, vectors",
+   "output": "matrices, vectors",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+    "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/atciq.c:10 (eraRxp astrom->bpn); rx.c, rxr.c, c2s.c by name"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the vector/matrix routine family (~40 files)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "eraAtciq (ICRS -> CIRS): pmpx -> ldsun -> ab -> rxp(bpn) -> c2s; eraApci13 builds the context",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "apply proper motion and parallax (eraPmpx), light deflection by the Sun (eraLdsun), stellar aberration (eraAb), then rotate by the bias-precession-nutation matrix and convert to spherical; every step reads a precomputed eraASTROM context (observer position/velocity, matrix, Sun direction) built once per epoch by eraApci13 so many stars can be transformed cheaply",
+   "input": "ICRS coordinates + proper motion + parallax + radial velocity; eraASTROM",
+   "output": "CIRS right ascension / declination",
+   "state": "eraASTROM (per epoch)",
+   "update": "context per epoch; transform per star",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+    "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets"
+   ],
+   "fitness_value_in_ancestor": "the catalogue-to-sky pipeline the record's failure condition speaks of",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/atciq.c:1-16; apci13.c (name and size)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "atciq + the at*/ap* family",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::leap_second_table_with_a_pre_1972_drift_formula_and_a_validity_horizon",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "eraDat",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a compiled-in table of (year, month, delta-AT) changes since 1960 (extendable at run time via eraDatini / erfadatextra); find the latest entry not after the date; for the 1960-1972 entries add a linear drift term (djm - epoch) * rate; return a status: warning if the date is more than 5 years past the table's last year (IYV + 5), error before 1960 or for a bad date",
+   "input": "calendar date + fraction",
+   "output": "TAI - UTC in seconds, status",
+   "state": "the table (static + optional extension)",
+   "update": "none (the table is data)",
+   "assumptions": [
+    "someone updates the table when the IERS announces a leap second"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets"
+   ],
+   "fitness_value_in_ancestor": "the one place the library's truth expires on a calendar",
+   "failure_landscape": "UNKNOWN by run; by reading: dates after the table's horizon silently use the last value with only a status warning",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/dat.c:6-87"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dat.c + erfadatextra.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ASSUMES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "fossil_ancestry": "erfa-2.0.1",
+   "human_name": "taitt tttai taiutc utctai tttdb tdbtt tcgtt ttut1 ... (24 routines)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each edge of the scale graph (TAI, TT, UTC, UT1, TDB, TCB, TCG) is a routine adding a constant (TT - TAI = 32.184 s), a table value (UTC via eraDat, with the leap-second day-length rule in utctai), a caller-supplied value (UT1 - UTC) or a series (TDB - TT via eraDtdb, a ~1000-term series of the same shape as organ 1); each preserves the two-part date",
+   "input": "(date1, date2) in one scale",
+   "output": "(date1, date2) in another",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "erfa-2.0.1::leap_second_table_with_a_pre_1972_drift_formula_and_a_validity_horizon",
+    "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+    "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+    "erfa-2.0.1::two_part_julian_date_carried_through_every_interface"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/taitt.c, utctai.c, dtdb.c by name; utctai.c 191 lines"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the 24 two-letter-scale routines",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "t_erfa_c.c / vvd / viv (the validation program)",
+   "reason": "OTHER",
+   "evidence": "vault:erfa-2.0.1/upstream/tree/erfa-2.0.1/src/t_erfa_c.c:25-98 and 247 t_* functions comparing to compiled-in reference values within absolute or fractional tolerances",
+   "note": "an INSTRUMENT (the record's ORACLE); the atlas records that this fossil ships its own oracle -- rare in the sample",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "erfa-2.0.1"
+  },
+  {
+   "candidate": "247 routines as 247 organs",
+   "reason": "OTHER",
+   "evidence": "the routine list groups by shape: series (nut*, plan94, epv00, moon98, dtdb, s00/s06, xy06), fundamental arguments (fa*03), matrix/vector algebra (~40), astrometry pipelines (at*, ap*), time scales (24), calendar/angle formatting (a2af, d2dtf, cal2jd...)",
+   "note": "formatting routines (a2af, a2tf, d2tf, dtf2d, cal2jd, jd2cal) not given an organ: representation conversions with no state",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "erfa-2.0.1"
+  },
+  {
+   "candidate": "'the IAU model' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the library keeps nut80 / nut00a / nut00b / nut06a and prec76 / pmat00 / pmat06 side by side; the human name changes with the standard, the machinery shape does not",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "erfa-2.0.1"
+  },
+  {
+   "candidate": "autotools / meson build",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "configure, Makefile.am, meson.build",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "erfa-2.0.1"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "erfa-2.0.1::P.positions_must_be_right_to_a_part_in_1e9_over_centuries_using_64_bit_arithmetic",
+   "source_fossil": "erfa-2.0.1",
+   "source_evidence": "record pressure / failure; nut00a loop order; the date convention",
+   "condition": "a milliarcsecond error misplaces catalogue stars; the quantities span 2.4 million days and 1e-10 radians in the same computation",
+   "resource_or_constraint": "IEEE double; the ordering of floating-point sums",
+   "failure_condition": "a term off by 1e-9 (record)",
+   "world_punishes": "single-number dates; summing large terms first; truncated series",
+   "world_rewards": "split representations, smallest-first summation, long series with a published reference",
+   "observable_consequence": "make check: 247 routines within tolerance of reference values",
+   "vacuity_condition": "arcsecond-level needs",
+   "trivial_shortcuts": "extended precision arithmetic (slower; the world may allow it)",
+   "cheat_control": "a routine with the reference values compiled in must pass; if it passes with a perturbed constant (the record's entry point), the tolerance is too loose -- the fossil's own validation is the cheat control's mirror",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: fundamental astronomy for catalogues and observatories",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "erfa-2.0.1::P.the_definition_of_truth_is_revised_by_a_standards_body_while_old_results_must_stay_reproducible",
+   "source_fossil": "erfa-2.0.1",
+   "source_evidence": "the routine names",
+   "condition": "the IAU replaces precession/nutation models every decade; results computed under an old model must remain reproducible and comparable",
+   "resource_or_constraint": "one library serving all generations",
+   "failure_condition": "silent drift when a model is swapped",
+   "world_punishes": "a single 'current' model",
+   "world_rewards": "coexisting versioned routines with the model in the name (nut80 / nut00a / nut06a)",
+   "observable_consequence": "the routine list; the same transform under two models differs by a known amount",
+   "vacuity_condition": "a frozen standard",
+   "trivial_shortcuts": "none",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "erfa-2.0.1::P.a_fact_about_the_world_that_is_announced_a_few_months_ahead_must_be_carried_as_data_with_an_expiry",
+   "source_fossil": "erfa-2.0.1",
+   "source_evidence": "dat.c:77-78; erfadatextra",
+   "condition": "leap seconds are decided by the IERS; code compiled before the decision cannot know it; a result past the table's horizon is quietly wrong",
+   "resource_or_constraint": "compile time vs the calendar",
+   "failure_condition": "wrong TAI - UTC after the horizon",
+   "world_punishes": "a table with no horizon",
+   "world_rewards": "a table with a run-time extension hook and a dated validity warning",
+   "observable_consequence": "eraDat's status code past IYV + 5",
+   "vacuity_condition": "a world with no leap seconds",
+   "trivial_shortcuts": "refuse dates past the horizon (the world may reward or punish this)",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+   "to": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::two_part_julian_date_carried_through_every_interface",
+   "to": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "t from the two-part date",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "to": "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "nutation angles -> matrices",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+   "to": "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bpn matrix in the context",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::leap_second_table_with_a_pre_1972_drift_formula_and_a_validity_horizon",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "to": "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "epoch in TT/TDB for the context",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "TDB - TT series",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::two_part_julian_date_carried_through_every_interface",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
+  {
+   "from": "erfa-2.0.1",
+   "relation": "forked_from",
+   "to": "IAU SOFA (the code's own headers)",
+   "note": "not re-read from the record",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "erfa-2.0.1",
    "relation": "derived_from",
@@ -152,7 +1252,14 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "plan94 / epv00 / moon98 / dtdb assumed to be organ-1-shaped from size and name only",
+   "the matrix family and the astrometry family read from one routine each",
+   "the calendar / angle formatting routines are unassigned",
+   "nothing ran here; Techne's make check (t_erfa_c) is the executed evidence on M1"
+  ],
+  "note": "seven shapes cover the 247 names; the claim that each name belongs to a shape is by name for ~230 of them",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

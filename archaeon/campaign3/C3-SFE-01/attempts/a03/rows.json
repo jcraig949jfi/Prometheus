@@ -1,0 +1,589 @@
+[
+ {
+  "G": 12,
+  "ancestry_ops_final": {
+   "depth": 7,
+   "ops": {
+    "duplication": 1,
+    "operand_perturbation": 2,
+    "reference_redirection": 1,
+    "replacement": 2,
+    "splice": 1
+   }
+  },
+  "ancestry_ops_summit": null,
+  "arm": "fresh",
+  "best_train_max": 0.125,
+  "candidates": [],
+  "competence_heldout": 0.08333333333333333,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 3,
+   "opcode_hist": {
+    "IN": 1,
+    "OUT": 1
+   },
+   "persist": "all",
+   "tape_words": 32,
+   "tick_budget": 64,
+   "words": 8
+  },
+  "final_elite_manifest": {
+   "code_writable": true,
+   "genome": [
+    387301746,
+    2009108049,
+    2949576749,
+    3196558002,
+    3425711198,
+    3354153747,
+    3353524351,
+    242137265
+   ],
+   "n_regs": 3,
+   "out_cap": 4,
+   "persist": "all",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 32,
+   "tick_budget": 64
+  },
+  "final_profile": "00",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_solved_gen": null,
+  "first_summit_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "gens_below_shelf_after": 0,
+  "heldout_per_ask": [
+   0.0833,
+   0.0833
+  ],
+  "import_share_final": 0.0,
+  "ladder": {},
+  "level": "FLOOR",
+  "pop_max_per_ask_last": [
+   0.0,
+   0.25
+  ],
+  "profile_first_gen": {},
+  "reached": 0,
+  "seed": 1,
+  "shelf_reached": 0,
+  "shelf_residence": null,
+  "shelf_residence_censored": true,
+  "stream_profiles_seen": [],
+  "stream_switches": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "summit_candidates": 0,
+  "summit_candidates_confirmed": 0,
+  "summit_elite_manifest": null,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.125,
+   0.125,
+   0.0,
+   0.125,
+   0.0,
+   0.125,
+   0.125,
+   0.125
+  ],
+  "trace_mean": [
+   0.0,
+   0.0,
+   0.020833,
+   0.072917,
+   0.098958,
+   0.005208,
+   0.0,
+   0.015625,
+   0.0,
+   0.026042,
+   0.072917,
+   0.005208
+  ],
+  "trace_profile": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "G": 12,
+  "ancestry_ops_final": {
+   "depth": 6,
+   "ops": {
+    "region_swap": 4,
+    "replacement": 1,
+    "unreachable_removal": 1
+   }
+  },
+  "ancestry_ops_summit": null,
+  "arm": "fresh",
+  "best_train_max": 0.125,
+  "candidates": [],
+  "competence_heldout": 0.010416666666666666,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "halt_yield": 0.4,
+    "indirection": 0.2,
+    "opaque_io": 0.2,
+    "read_write": 0.2
+   },
+   "distinct_opcodes": 5,
+   "instr": 5,
+   "n_regs": 2,
+   "opcode_hist": {
+    "HALT": 1,
+    "LDC": 1,
+    "OUT": 1,
+    "ST": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 20
+  },
+  "final_elite_manifest": {
+   "code_writable": false,
+   "genome": [
+    238863173,
+    1685646683,
+    2127199363,
+    644954973,
+    3110286053,
+    1996057746,
+    3286495605,
+    514434206,
+    2161781026,
+    2043550210,
+    3620749094,
+    3238071488,
+    2162348802,
+    3875209195,
+    1361484844,
+    325103440,
+    1796511006,
+    473294110,
+    3645905264,
+    2296062082
+   ],
+   "n_regs": 2,
+   "out_cap": 1,
+   "persist": "tape",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 64,
+   "tick_budget": 256
+  },
+  "final_profile": "00",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_solved_gen": null,
+  "first_summit_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "gens_below_shelf_after": 0,
+  "heldout_per_ask": [
+   0.0,
+   0.0208
+  ],
+  "import_share_final": 0.0,
+  "ladder": {},
+  "level": "FLOOR",
+  "pop_max_per_ask_last": [
+   0.25,
+   0.0
+  ],
+  "profile_first_gen": {},
+  "reached": 0,
+  "seed": 2,
+  "shelf_reached": 0,
+  "shelf_residence": null,
+  "shelf_residence_censored": true,
+  "stream_profiles_seen": [],
+  "stream_switches": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "summit_candidates": 0,
+  "summit_candidates_confirmed": 0,
+  "summit_elite_manifest": null,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.125
+  ],
+  "trace_mean": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.005208,
+   0.015625,
+   0.036458
+  ],
+  "trace_profile": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "G": 12,
+  "ancestry_ops_final": {
+   "depth": 3,
+   "ops": {
+    "deletion": 1,
+    "insertion": 1,
+    "replacement": 1
+   }
+  },
+  "ancestry_ops_summit": null,
+  "arm": "shelf",
+  "best_train_max": 0.125,
+  "candidates": [],
+  "competence_heldout": 0.041666666666666664,
+  "elite_origins": [
+   "shelf",
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.3333,
+    "indirection": 0.3333,
+    "opaque_io": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 15,
+   "opcode_hist": {
+    "LD": 1,
+    "MUL": 1,
+    "OUT": 1
+   },
+   "persist": "tape",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 12
+  },
+  "final_elite_manifest": {
+   "code_writable": false,
+   "genome": [
+    3171606748,
+    905372704,
+    3452439290,
+    3892641411,
+    4061212884,
+    1886458143,
+    908424202,
+    2684144931,
+    3157604330,
+    3959703450,
+    2660171003,
+    317614954
+   ],
+   "n_regs": 15,
+   "out_cap": 1,
+   "persist": "tape",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 16,
+   "tick_budget": 64
+  },
+  "final_profile": "00",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_solved_gen": null,
+  "first_summit_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "shelf",
+   "verified_common": true
+  },
+  "gens_below_shelf_after": 0,
+  "heldout_per_ask": [
+   0.0625,
+   0.0208
+  ],
+  "import_share_final": 1.0,
+  "ladder": {},
+  "level": "FLOOR",
+  "pop_max_per_ask_last": [
+   0.0,
+   0.0
+  ],
+  "profile_first_gen": {},
+  "reached": 0,
+  "seed": 1,
+  "shelf_reached": 0,
+  "shelf_residence": null,
+  "shelf_residence_censored": true,
+  "stream_profiles_seen": [],
+  "stream_switches": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "summit_candidates": 0,
+  "summit_candidates_confirmed": 0,
+  "summit_elite_manifest": null,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.0
+  ],
+  "trace_mean": [
+   0.0,
+   0.0,
+   0.010417,
+   0.0625,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.078125,
+   0.088542,
+   0.0
+  ],
+  "trace_profile": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "G": 12,
+  "ancestry_ops_final": {
+   "depth": 7,
+   "ops": {
+    "config_perturbation": 4,
+    "deletion": 1,
+    "operand_perturbation": 2
+   }
+  },
+  "ancestry_ops_summit": null,
+  "arm": "shelf",
+  "best_train_max": 0.125,
+  "candidates": [],
+  "competence_heldout": 0.010416666666666666,
+  "elite_origins": [
+   "gen0",
+   "shelf"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.6667,
+    "opaque_io": 0.3333
+   },
+   "distinct_opcodes": 3,
+   "instr": 3,
+   "n_regs": 2,
+   "opcode_hist": {
+    "ADD": 1,
+    "MUL": 1,
+    "OUT": 1
+   },
+   "persist": "tape",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 12
+  },
+  "final_elite_manifest": {
+   "code_writable": false,
+   "genome": [
+    2716285184,
+    3237844084,
+    3909402001,
+    854267196,
+    4168285932,
+    2179143732,
+    1867826607,
+    2955959342,
+    112114198,
+    1082676617,
+    3015397828,
+    2855975798
+   ],
+   "n_regs": 2,
+   "out_cap": 2,
+   "persist": "tape",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 16,
+   "tick_budget": 64
+  },
+  "final_profile": "00",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_solved_gen": null,
+  "first_summit_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "shelf",
+   "verified_common": true
+  },
+  "gens_below_shelf_after": 0,
+  "heldout_per_ask": [
+   0.0,
+   0.0208
+  ],
+  "import_share_final": 1.0,
+  "ladder": {},
+  "level": "FLOOR",
+  "pop_max_per_ask_last": [
+   0.25,
+   0.0
+  ],
+  "profile_first_gen": {},
+  "reached": 0,
+  "seed": 2,
+  "shelf_reached": 0,
+  "shelf_residence": null,
+  "shelf_residence_censored": true,
+  "stream_profiles_seen": [],
+  "stream_switches": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "summit_candidates": 0,
+  "summit_candidates_confirmed": 0,
+  "summit_elite_manifest": null,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.125,
+   0.125,
+   0.125
+  ],
+  "trace_mean": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.010417,
+   0.03125,
+   0.0,
+   0.0,
+   0.0,
+   0.119792,
+   0.119792,
+   0.057292
+  ],
+  "trace_profile": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.2,
+  "warnings": []
+ }
+]

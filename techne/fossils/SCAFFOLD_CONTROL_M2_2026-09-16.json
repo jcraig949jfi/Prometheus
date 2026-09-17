@@ -1,0 +1,1542 @@
+{
+ "schema": "techne.fossil.scaffold_control/1",
+ "written_utc": "2026-09-16T17:34:07Z",
+ "host": "SPECTREX5",
+ "n": 107,
+ "complete": true,
+ "counts": {
+  "NO_ACCOMMODATIONS": 74,
+  "NOT_REQUIRED": 15,
+  "NOT_DOCKER": 13,
+  "REQUIRED": 4,
+  "UNDECIDED": 1
+ },
+ "rows": [
+  {
+   "specimen_id": "arduino-pid",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "g++ -O2 -DARDUINO=10800 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "avida",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "export AVIDA_DISABLE_BACKTRACE=1; mkdir -p cbuild && cd cbuild && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release .. >/tmp/cmake.log 2>&1 && make -j4 avida >/tmp/make.log 2>&1; test -x ./bin/avida && echo BUILT || { tail -20 /tmp/make.log; false; }"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "backoff-2.2.1",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "basic-computer-games-1978",
+   "image": "prometheus-fossil-legacy:bookworm",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "bdwgc-8.2.6",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "( [ -x ./configure ] || ./autogen.sh ) >/dev/null 2>&1; ./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "biriscv-branch-predictor",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -g2012 -I src/core -o $BODY/build/sim $HARNESS/tb_npc.v src/core/biriscv_npc.v 2>&1 | grep -v warning | head -5; test -f $BODY/build/sim && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "bsd-4.3-distribution-tape-1986",
+   "image": "prometheus-fossil-simh:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "python3 $HARNESS/simh_mktape.py 43bsd.tap $BODY/upstream/stand.gz:512 $BODY/upstream/miniroot.gz:10240 $BODY/upstream/rootdump.gz:10240 $BODY/upstream/usr.tar.gz:10240 && gunzip -c $BODY/upstream/miniroot.gz > miniroot.raw && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "buddy-alloc-spaskalev",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "gcc -O2 -I. -o $BODY/bd $HARNESS/drv.c 2>&1 | grep -i 'error:' | head -3; test -x $BODY/bd"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 4.1
+  },
+  {
+   "specimen_id": "buddy-bdd",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; find . -name libbdd.a | head -1"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "bzip2-1.0.8",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s bzip2 2>&1 | grep -viE 'warning' | tail -3; test -x ./bzip2"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "c-cmaes-hansen",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "cjson-1.7.18",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "gcc -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -I. -o $BODY/build/parse_all cJSON.c $HARNESS/parse_all.c 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/parse_all && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "clips-6.4.2-nasa",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "cobol-programming-course-omp",
+   "image": "prometheus-fossil-legacy:bookworm",
+   "removed": [
+    "-std=ibm"
+   ],
+   "stripped_build": [
+    "cobc -x -o $BODY/build/payrol00 PAYROL00.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/srchbin SRCHBIN.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/cbl0014 CBL0014.cobol 2>&1 | tail -2; cobc -x -o /tmp/c1 CBL0001.cobol 2>&1 | head -1; test -x $BODY/build/payrol00 && test -x $BODY/build/srchbin && test -x $BODY/build/cbl0014 && echo built"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 3.4
+  },
+  {
+   "specimen_id": "cocagne-plain-paxos",
+   "image": "python:2.7-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=gnu89",
+    "-fcommon",
+    "-w",
+    "-std=gnu89",
+    "-fcommon",
+    "-w"
+   ],
+   "stripped_build": [
+    "apt-get -qq update >/dev/null && apt-get -qq install -y gcc-multilib libc6-dev-i386 >/dev/null 2>&1; gcc -m32 -static -Dvax -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -m32 -static -Dvax -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built"
+   ],
+   "verdict": "REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": false,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": 11.2,
+   "stripped_build_error": "collect2: error: ld returned 1 exit status\ncollect2: error: ld returned 1 exit status\n"
+  },
+  {
+   "specimen_id": "compress-4.2.4-lzw",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "make -s 2>&1 | grep -i 'error:' ; ls compress 2>/dev/null; test -x ./compress || (gcc -O2 -o compress *.c 2>&1 | grep -i error: ; test -x ./compress)"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.5
+  },
+  {
+   "specimen_id": "concurrencykit-0.7.2",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; test -f src/libck.a && echo built",
+    "for d in ck_spinlock ck_backoff ck_ring; do make -s -C regressions/$d/validate 2>&1 | grep -iE '\\berror' | head -2; done; ls regressions/ck_spinlock/validate | grep -v '\\.' | head -20"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "corewar-redcode",
+   "image": "python:2.7-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "des-reference",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "gcc -O2 -o run_des des.c run_des.c 2>&1 | grep -i 'error' | head -3; test -x ./run_des && echo BUILT"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "dlmalloc",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "gcc -O2 -DUSE_DL_PREFIX=1 -o $BODY/drv $HARNESS/drv.c malloc.c 2>&1 | grep -i 'error:' ; test -x $BODY/drv"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.8
+  },
+  {
+   "specimen_id": "dmtcp-3.1.2",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure -q >/dev/null 2>&1 && make -s -j4 2>&1 | grep -iE '\\berror' | head -3; test -x bin/dmtcp_launch && test -x bin/dmtcp_restart && echo built",
+    "gcc -O0 -o $BODY/build/counter $HARNESS/counter.c && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "do-mpc",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q casadi scipy numpy matplotlib pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "eispack-netlib",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "eispack-netlib-1976",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=legacy",
+    "-w"
+   ],
+   "stripped_build": [
+    "cp $HARNESS/driver.f . && gfortran -O2 -o eig driver.f rs.f tred2.f tql2.f tred1.f tqlrat.f pythag.f epslon.f tql1.f 2>&1 | grep -iE 'error|undefined' | head -8; test -x ./eig && echo BUILT"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.7
+  },
+  {
+   "specimen_id": "eliza-anthay-1966",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [
+    "-std=c++20"
+   ],
+   "stripped_build": [
+    "g++ -O2 -o eliza src/eliza.cpp 2>&1 | head -5; test -x ./eliza && echo built"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 14.4
+  },
+  {
+   "specimen_id": "emcee-3.1.6",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "SETUPTOOLS_SCM_PRETEND_VERSION=3.1.6 pip install -q -c $HARNESS/world_constraints.txt numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "eprover-2.6",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name eprover -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\""
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "erfa-2.0.1",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./bootstrap.sh >/dev/null 2>&1; ./configure -q >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; test -f src/.libs/liberfa.a -o -f src/liberfa.la && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "espresso-logic",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make 2>&1 | grep -viE 'warning' | tail -2; test -x ../bin/espresso"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "femtolisp",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s release 2>&1 | grep -viE 'warning' | tail -3; test -x ./flisp"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "ff-planner-2.3",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [
+    "ADDONS=-fcommon"
+   ],
+   "stripped_build": [
+    "make clean >/dev/null 2>&1; make -s 2>&1 | grep -viE 'warning|deprecat' | tail -3; test -x ./ff"
+   ],
+   "verdict": "REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": false,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": 10.3,
+   "stripped_build_error": "/usr/bin/ld: scan-fct_pddl.tab.o:/w/upstream/tree/FF-v2.3/lex-fct_pddl.l:9: multiple definition of `gbracket_count'; main.o:/w/upstream/tree/FF-v2.3/main.c:147: first defined here\ncollect2: error: ld returned 1 exit status\nmake: *** [makefile:74: ff] Error 1\n"
+  },
+  {
+   "specimen_id": "fftpack-netlib",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "filterpy-labbe",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "genann",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./example1 || ls example1"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "glibc-rwlock-writer-starvation-2.36",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "gcc -O2 -pthread -o $BODY/build/starve $HARNESS/starve.c && echo built; grep -c 'PREFER_READER' pthread_rwlock_common.c"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "glpk-5.0",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure --disable-shared >/dev/null 2>&1; echo configured",
+    "make -s 2>&1 | tail -2; test -x examples/glpsol || test -x src/glpsol || find . -name glpsol -type f"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "gnu-apl-2.0",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure --quiet >/dev/null 2>&1 && make -s >/dev/null 2>&1; test -x src/apl && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "gnu-prolog-1.5.0",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -3; find . -name gprolog -type f | head -1"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "go-explore-uber-2022",
+   "image": "prometheus-fossil-goexplore:min",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+   "image": "golang:1.22-bookworm",
+   "removed": [],
+   "stripped_build": [
+    "export PATH=$PATH:/usr/local/go/bin; mkdir -p $BODY/build/prog && cp deadlock.go main.go $BODY/build/prog/ && cd $BODY/build/prog && go mod init testprog >/dev/null 2>&1; go vet . 2>&1 | tail -2; go build -o $BODY/build/testprog . && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "graphplan-blum-furst-1995",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "gzip-1.2.4-1993",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1; make -s 2>&1 | grep -iE '\berror|multiple definition' | head -5; test -x ./gzip && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "hashicorp-memberlist-0.5.4",
+   "image": "golang:1.24-bookworm",
+   "removed": [],
+   "stripped_build": [
+    "export PATH=$PATH:/usr/local/go/bin; go build ./... 2>&1 | tail -3; echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "hopfield-takyamamoto",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "indirect-self-tuning-regulator-liaosteve",
+   "image": "prometheus-fossil-octave:bookworm",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "kissfft-131.1.0",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s all 2>&1 | grep -viE 'warning' | tail -3; ls kiss_fft.c.o"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "l1-adaptive-control-basics-xkhainguyen",
+   "image": "prometheus-fossil-octave:bookworm",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "ldpc-codes-neal-2001",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "leveldb-1.23",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=c++11"
+   ],
+   "stripped_build": [
+    "mkdir -p $BODY/build/ldb && cd $BODY/build/ldb && cmake -DCMAKE_BUILD_TYPE=Release -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_BENCHMARKS=OFF $BODY/upstream/tree/leveldb-1.23 >/dev/null && make -s leveldb 2>&1 | grep -iE '\\berror' | head -3; test -f libleveldb.a && echo built",
+    "g++ -O1 -Iinclude -o $BODY/build/recover $HARNESS/recover.cc $BODY/build/ldb/libleveldb.a -lpthread && echo built"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 58.7
+  },
+  {
+   "specimen_id": "libcorrect-quiet",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "mkdir -p $BODY/build/lc && cd $BODY/build/lc && cmake $BODY/upstream/tree >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; ls tests 2>/dev/null | head; test -f lib/libcorrect.a -o -f libcorrect.a && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "libdai-mooij",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples 2>&1 | grep -iE '\\berror' | head -5; ls examples/example_sprinkler examples/example 2>&1; test -x examples/example_sprinkler && echo built",
+    "echo noted"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "libfec-karn",
+   "image": "prometheus-fossil-i386:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1; make -s vtest27 2>&1 | grep -viE 'warning|deprecated|^a - ' | tail -3; test -x ./vtest27 && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "linpack-netlib-1979",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=legacy",
+    "-w"
+   ],
+   "stripped_build": [
+    "gfortran -O2 -o linpackd linpackd.f 2>&1 | grep -i 'error' | head -3; test -x ./linpackd && echo BUILT"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.8
+  },
+  {
+   "specimen_id": "linpackd-netlib-1979",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "lisp-1-5-ibm7090-1962",
+   "image": "prometheus-fossil-ibm709x:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "make ASM7090=asm7090 lisp15.src >/dev/null && wc -l lisp15.src",
+    "asm7090 -c 7090 -a -f -p -x -d LISP15 -t 'BONNIE-S BIRTHDAY ASSEMBLY' -l lisp15.lst.new -o lisp15.out lisp15.src 2>&1 | tail -1; n=$(grep -c '^ERROR' lisp15.lst.new); echo \"assembler_errors=$n\"; test -s lisp15.out && test \"$n\" = 0 && echo ASSEMBLED_0_ERRORS && sha256sum lisp15.out"
+   ],
+   "verdict": "UNDECIDED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": 1.6,
+   "recipe_runs_failed": [
+    {
+     "name": "s709-boot-wang-job",
+     "why": [
+      "stdout lacks 'JOB_PRODUCED_OUTPUT'"
+     ]
+    }
+   ],
+   "recipe_runs_ok": false
+  },
+  {
+   "specimen_id": "lmdb-0.9.31",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s liblmdb.a mtest mtest3 2>&1 | grep -iE '\\berror' | head -3; test -x ./mtest && test -f liblmdb.a && echo built",
+    "gcc -O1 -I. -o $BODY/build/crash $HARNESS/crash.c liblmdb.a -lpthread && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "lru-cache-goldsborough",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=c++17"
+   ],
+   "stripped_build": [
+    "g++ -O2 -Iinclude -o $BODY/lru $HARNESS/drv.cpp 2>&1 | grep -i 'error:' | head -5; test -x $BODY/lru"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 3.3
+  },
+  {
+   "specimen_id": "md5-rfc1321",
+   "image": "prometheus-fossil-i386:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "sed -n '/^A\\.1 global\\.h/,/^A\\.2 md5\\.h/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > global.h; sed -n '/^A\\.2 md5\\.h/,/^A\\.3 md5c\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5.h; sed -n '/^A\\.3 md5c\\.c/,/^A\\.4 mddriver\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5c.c; sed -n '/^A\\.4 mddriver\\.c/,/^A\\.5 Test suite/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > mddriver.c; wc -l global.h md5.h md5c.c mddriver.c; gcc -DMD=5 -o mddriver md5c.c mddriver.c 2>&1 | head -5; test -x ./mddriver && echo BUILT"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.7
+  },
+  {
+   "specimen_id": "microkanren-scheme",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "minisat-1.14-2006",
+   "image": "gcc:4.9",
+   "removed": [],
+   "stripped_build": [
+    "make -s rs 2>&1 | grep -iE '\\berror' | head -5; ls minisat* 2>/dev/null | head; test -x ./minisat_static -o -x ./minisat && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "minisat-2.2.0",
+   "image": "gcc:4.9",
+   "removed": [],
+   "stripped_build": [
+    "cd core && MROOT=$(cd .. && pwd) make -s r 2>&1 | grep -v -i warning | tail -3; test -x ./minisat_release"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "minisom",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "minpack-netlib-1980",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "ncompress-5.0-lzw-1985",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "odepack-netlib",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-std=legacy",
+    "-w"
+   ],
+   "stripped_build": [
+    "gfortran -O1 -o $BODY/build/rob $HARNESS/robertson.f opkdmain.f opkda1.f opkda2.f 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/rob && echo built"
+   ],
+   "verdict": "REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": false,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": 2.8,
+   "stripped_build_error": "Error: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).\nError: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).\nError: Type mismatch in argument \u00e2\u20ac\u02dciwk\u00e2\u20ac\u2122 at (1); passed REAL(8) to INTEGER(4)\n"
+  },
+  {
+   "specimen_id": "padasip-1.2.2",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "paip-lisp-norvig-1991",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "pari-gp-2.17",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./Configure >/dev/null 2>&1 && make -s gp 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name gp-dyn -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\""
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "particles-chopin-0.4",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "pforth",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "cd platforms/unix && make -s 2>&1 | grep -viE 'warning' | tail -3; ls pforth pforth_standalone 2>/dev/null; test -x pforth || test -x pforth_standalone"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "picorv32",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -o $BODY/tb_ez.vvp testbench_ez.v picorv32.v 2>&1 | grep -viE 'warning' | tail -3; test -f $BODY/tb_ez.vvp"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "picosat-965",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure.sh >/dev/null && make -s 2>&1 | tail -2; test -x ./picosat"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "pid-autotune-hirschmann",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "py-vollib-lets-be-rational",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q py_lets_be_rational . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "pybreaker-1.2.0",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "pyportfolioopt-1.5.5",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "pip install -q pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "python-control",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "python-sgp4-2.23",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "apt-get -qq update >/dev/null && apt-get -qq install -y build-essential >/dev/null 2>&1; pip install -q -c $HARNESS/world_constraints.txt numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "quadpack-netlib",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "radamsa-0.6",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "cp $BODY/upstream/ol-0.1.19.c.gz ol.c.gz && make -s bin/radamsa 2>&1 | grep -iE '\\berror' | head -3; test -x bin/radamsa && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "redlock-py-redis-2014",
+   "image": "python:3.11-slim",
+   "removed": [],
+   "stripped_build": [
+    "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; redis-server --version | head -1; pip install -q . 2>&1 | tail -1; echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "reed-solomon-rockliff-1991",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [
+    "-w",
+    "-std=gnu89"
+   ],
+   "stripped_build": [
+    "gcc -o $BODY/rs rs.c -lm 2>&1 | grep -i error; test -x $BODY/rs"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 1.2
+  },
+  {
+   "specimen_id": "simple-kalman-denyssene",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "g++ -O2 -I. -I$HARNESS -o $BODY/kf $HARNESS/drv.cpp SimpleKalmanFilter.cpp 2>&1 | grep -i 'error:'; test -x $BODY/kf"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "spacewar-pdp1-1962",
+   "image": "prometheus-fossil-pdp1:display",
+   "removed": [],
+   "stripped_build": [
+    "python3 $HARNESS/prep_macro1.py spacewar_2b_25mar62.txt sw2.mac",
+    "macro1 -r sw2.mac 2>&1 | tail -3; test -s sw2.rim && sha256sum sw2.rim"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "spin-6.5.2-holzmann",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -v -i warning | tail -3; test -x ./spin"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "spin-pathfinder-priority-inversion-1997",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "cd Src && make -s 2>&1 | grep -v -i warning | grep -iE '\\berror' | head -3; test -x ./spin && echo built",
+    "cd Examples && ../Src/spin -a pathfinder.pml 2>&1 | tail -2; gcc -O2 -o $BODY/build/pan pan.c && echo built"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 12.7
+  },
+  {
+   "specimen_id": "sqlite-3.49.1-amalgamation",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "ssw-smith-waterman",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./ssw_test && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tiny-aes-c",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "gcc -O2 -o aes_test aes.c test.c 2>&1 | grep -i 'error' | head -3; test -x ./aes_test && echo BUILT"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tinycc",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "bash ./configure >/dev/null 2>&1 && make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./tcc"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tinyekf-levy",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s gps 2>&1 | grep -iE '\\berror' | head -3; test -x ./gps && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tinyscheme-1.42",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tinystm-marlier",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -iE '\\berror' | head -3; make -s -C test/bank 2>&1 | grep -iE '\\berror' | head -3; test -x test/bank/bank && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "tscp-1.81-kerrigan-1997",
+   "image": null,
+   "removed": [],
+   "stripped_build": [],
+   "verdict": "NOT_DOCKER",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "umdhmm-kanungo-1.02",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "make -s CFLAGS=\"-O -I$HARNESS\" 2>&1 | grep -iE '\\berror' | head -3; test -x ./esthmm && test -x ./testfor && echo built"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 4.2,
+   "recipe_runs_failed": [],
+   "recipe_runs_ok": true
+  },
+  {
+   "specimen_id": "valgrind-helgrind-fixtures-3.19",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "for t in tc01_simple_race tc05_simple_race tc09_bad_unlock tc13_laog1 tc19_shadowmem; do gcc -O0 -g -pthread -o $BODY/build/$t $t.c || echo FAIL $t; done; ls $BODY/build | tr '\\n' ' '"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 41.9
+  },
+  {
+   "specimen_id": "verilog-arbiter-forencich",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -g2012 -o $BODY/build/sim $HARNESS/tb_arbiter.v arbiter.v priority_encoder.v 2>&1 | head -5; test -f $BODY/build/sim && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "verilog-generic-fifo",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -Irtl/verilog -o $BODY/fifo.vvp $HARNESS/tb_sc.v rtl/verilog/generic_fifo_sc_a.v $HARNESS/generic_dpram.v 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/fifo.vvp"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "verilog-rr-arbiter",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -o $BODY/arb.vvp $HARNESS/tb_techne.v round_robin_arbiter.v 2>&1 | grep -viE 'warning' | tail -4; test -f $BODY/arb.vvp"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "verilog-uart2bus",
+   "image": "prometheus-fossil-hw:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "iverilog -Ibench -Irtl -o $BODY/uart.vvp bench/tb_uart2bus_top.v bench/reg_file_model.v $(ls rtl/*.v) 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/uart.vvp"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "viterbi-hmm-xukmin",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -viE 'warning' | tail -3; ls viterbi viterbi_test 2>/dev/null; test -x ./viterbi_test || test -x ./viterbi"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "walksat-v56",
+   "image": "prometheus-fossil-lang:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s 2>&1 | grep -vi warning | tail -3; test -x ./walksat && test -x ./makewff"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "whitakers-words-ada",
+   "image": "prometheus-fossil-legacy:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "make -s commands sorter 2>&1 | grep -iE '\\berror' | head -5; test -x bin/words && test -x bin/wakedict && test -x bin/sorter && echo built",
+    "timeout 600 bash -c 'echo g | bin/wakedict DICTLINE.GEN' >/dev/null 2>&1; mv -f STEMLIST.GEN STEMLIST_generated.GEN; timeout 2400 bash -c 'bin/sorter < stemlist-sort.txt' >/dev/null 2>&1; mv -f STEMLIST_new.GEN STEMLIST.GEN 2>/dev/null; timeout 600 bash -c 'echo g | bin/makestem STEMLIST.GEN' >/dev/null 2>&1; timeout 600 bash -c 'echo g | bin/makeewds DICTLINE.GEN' >/dev/null 2>&1; LC_COLLATE=C sort -o EWDSLIST.GEN EWDSLIST.GEN; timeout 600 bin/makeefil >/dev/null 2>&1; timeout 600 bin/makeinfl INFLECTS.LAT >/dev/null 2>&1; ls -la DICTFILE.GEN STEMFILE.GEN INDXFILE.GEN EWDSFILE.GEN INFLECTS.SEC 2>&1 | awk '{print $5, $9}'; test -s STEMFILE.GEN && test -s INDXFILE.GEN && echo built"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  },
+  {
+   "specimen_id": "willemt-raft",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w"
+   ],
+   "stripped_build": [
+    "cd tests && sh make-tests.sh 'test_*.c' > main_test.c && cd .. && gcc -O2 -Iinclude -Itests -I$HARNESS -o $BODY/traft src/raft_server.c src/raft_server_properties.c src/raft_log.c src/raft_node.c tests/main_test.c tests/test_log.c tests/test_node.c tests/test_scenario.c tests/test_server.c tests/test_snapshotting.c tests/mock_send_functions.c tests/CuTest.c $HARNESS/linked_list_queue.c 2>&1 | grep -i 'error:' | head; test -x $BODY/traft"
+   ],
+   "verdict": "NOT_REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": true,
+   "runs_ok": true,
+   "runs_failed": [],
+   "seconds": 4.5
+  },
+  {
+   "specimen_id": "zchaff-2007",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [
+    "-w",
+    "-include cstring",
+    "-include cstdlib",
+    "-include cstdio",
+    "-include climits",
+    "-fpermissive"
+   ],
+   "stripped_build": [
+    "make -s CFLAGS='-O2' 2>&1 | grep -iE '\\berror' | head -5; test -x ./zchaff && echo built"
+   ],
+   "verdict": "REQUIRED",
+   "recipe_build_ok": true,
+   "stripped_build_ok": false,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": 3.8,
+   "stripped_build_error": "sat_solver.cpp:101:21: error: \u00e2\u20ac\u02dcstrlen\u00e2\u20ac\u2122 was not declared in this scope\nmake: *** [Makefile:63: sat_solver.o] Error 1\n"
+  },
+  {
+   "specimen_id": "zlib-1.3.1",
+   "image": "prometheus-fossil-c:bookworm",
+   "removed": [],
+   "stripped_build": [
+    "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; test -f libz.a"
+   ],
+   "verdict": "NO_ACCOMMODATIONS",
+   "recipe_build_ok": null,
+   "stripped_build_ok": null,
+   "runs_ok": null,
+   "runs_failed": [],
+   "seconds": null
+  }
+ ],
+ "note": "umdhmm and lisp-1-5 re-measured after two instrument defects (quote style; run baseline) were fixed, 2026-09-16"
+}

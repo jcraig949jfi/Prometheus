@@ -1,0 +1,105 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-08/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-016: the primary is the PARENT'S proxy (accessible variation); the other six statistics are reported with their rho and none is promoted by the harness"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative for this predictor on this evaluator",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "expected_sign": -1,
+   "min_abs_rho": 0.5,
+   "n": 6,
+   "rho": -0.207
+  },
+  "reason": "predictor does not rank-correlate at the declared strength/direction",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-08",
+ "finished_at": "2026-09-17T04:03:46Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "per_kind": {
+  "balanced": {
+   "hits": [
+    1,
+    1
+   ],
+   "median_first_hit": [
+    21,
+    552
+   ]
+  },
+  "direct": {
+   "hits": [
+    1,
+    1
+   ],
+   "median_first_hit": [
+    37,
+    41
+   ]
+  },
+  "scrambled": {
+   "hits": [
+    1,
+    1
+   ],
+   "median_first_hit": [
+    117,
+    624
+   ]
+  }
+ },
+ "prereg_digest": "sha256:9d6e635e549f68d55a8ec67ebda78b717b1171588e11261d6a774df540881300",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "rho": {
+  "accessible_variation": -0.207,
+  "basin_share": -0.6377,
+  "deceptive_share": 0.7714,
+  "greedy_path_len": -0.3714,
+  "local_improvement_prob": 0.0286,
+  "mean_dist_to_threshold": 0.4781,
+  "useful_variation": 0.0286
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T04:03:46Z",
+ "steps": {},
+ "teardown": {},
+ "threshold_share_by_table": {
+  "1": [
+   0.0078
+  ],
+  "2": [
+   0.0078
+  ]
+ },
+ "timings": {
+  "geometry_s": 0.21,
+  "records_s": 0.0,
+  "total_s": 0.4
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "27504986eb5828a99b7ff573761e677fba0bc032",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

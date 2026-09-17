@@ -286,6 +286,10 @@ def cmd_kinds(args, _conn) -> int:
                  ("  [" + ", ".join(flags) + "]") if flags else ""))
         if k.retired:
             print("     retired: %s" % k.retired_note[:200])
+        # THEO-REQ-002: the axis of every parameter, UNCLASSIFIED said aloud.
+        if k.params:
+            print("     axes    %s" % ", ".join(
+                "%s=%s" % (p, k.axis_of(p)) for p in sorted(k.params)))
         # WP-0f: the SAME contract validation uses, printed. A template author
         # reading this and a run being validated must not consult two sources.
         if k.declares_result:

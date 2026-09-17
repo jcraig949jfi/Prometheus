@@ -29,8 +29,31 @@ os.environ["VIV_SCHEMA"] = TEST_SCHEMA
 os.environ.setdefault("ARCHAEON_CONFORMANCE_MODE", "off")
 
 
+# ARCH-53 (Vivarium #298, 2026-09-16): this fixture was autouse for EVERY test
+# in the directory, including the base-role tests that touch no database, and
+# on M2 with no EW_DB_HOST its connect() resolved the tracked default host
+# (localhost) = the QUARANTINED fork (incident c84e26826cc12217): "passed with
+# no database" was in fact "migrated and dropped a schema on the fork on every
+# run". The store is now touched only when a collected test lives in a module
+# that uses it, and never on a host whose store is not named.
+_DB_TEST_MODULES = {
+    "test_cadence", "test_chaos_health_coverage", "test_conformance",
+    "test_exploration_and_provenance", "test_producer",
+    "test_region_directed_and_campaign", "test_tenancy_and_census",
+    "test_vivqueue_integration",
+}
+_NEEDS_DB = {"value": False}
+
+
+def pytest_collection_modifyitems(session, config, items):
+    _NEEDS_DB["value"] = any(item.module.__name__.rsplit(".", 1)[-1] in _DB_TEST_MODULES for item in items)
+
+
 @pytest.fixture(scope="session", autouse=True)
 def _viv_test_schema():
+    if not _NEEDS_DB["value"]:
+        yield None                       # no database-touching test collected: the store is never opened
+        return
     from viv import db as _vdb
     conn = _vdb.connect()
     try:
