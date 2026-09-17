@@ -116,7 +116,7 @@
       ],
       "id": "P1",
       "owner": "operator / Daedalus",
-      "present": false,
+      "present": true,
       "what": "campaign 4 engine credential (archaeon/campaign4/config.local.json)"
      },
      {
@@ -155,7 +155,7 @@
       "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
      }
     ],
-    "receipt_digest": "sha256:bda6e9f316f0c2ec4ad92de86e32a5d8bf7158b79cbe80c99efee17da4dbae66",
+    "receipt_digest": "sha256:53f5e1a3e15858105a9dee7c7d1db74960477070109d572471bc0cdac65232f9",
     "stage_status": {
      "S1": "OK",
      "S2-validate": "OK",
@@ -200,12 +200,57 @@
   {
    "blocks_launch": false,
    "evidence": {
-    "claim": "Vivarium #368: 100+ outbox rows PENDING, deliverer HELD pending the writer identity",
-    "directive_consequence": "Campaign 4 MAY execute (the outbox is durable), but the final campaign disposition may not claim complete PEW closure until the backlog is delivered"
+    "backlog_delivered": false,
+    "backlog_pending_reported": 56,
+    "backlog_source": "Mnemosyne tail-closure report; the queue's own health readout does not expose it",
+    "campaign4_rows_seen": 0,
+    "closure_condition": "last_seq 56, gaps []",
+    "directive_consequence": "Campaign 4 MAY execute -- the queue is durable and nothing on the execution path imports the observer -- but the FINAL campaign disposition may not claim complete observational closure until the backlog reconciles.",
+    "observer_leg_ready": true,
+    "reader_version": "ew.campaign_ingest/1.4",
+    "rebuild_digests": {
+     "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7",
+     "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+     "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9"
+    },
+    "s7_all_pass": true,
+    "s7_gates": {
+     "C1_release_check": {
+      "pass": true,
+      "skipped": false
+     },
+     "F1_frozen_surface_holds": {
+      "pass": true,
+      "skipped": false
+     },
+     "I1_ingest_campaign4": {
+      "pass": true,
+      "skipped": false
+     },
+     "I2_second_ingest_idempotent": {
+      "pass": true,
+      "skipped": false
+     },
+     "I3_campaign4_rows_present": {
+      "pass": true,
+      "skipped": true
+     },
+     "R1_rebuild_equal_and_unchanged_from_frozen": {
+      "pass": true,
+      "skipped": false
+     },
+     "X1_vivarium_outbox_reconciliation": {
+      "pass": true,
+      "skipped": true
+     }
+    },
+    "s7_precheck": true,
+    "s7_receipt": "evidence_wiki/integration/s7_rehearsal_results.json",
+    "s7_seconds": 19.0
    },
    "id": "G4",
-   "owner": "Mnemosyne",
-   "requirement": "drain the Vivarium outbox if the PEW writer credential is available",
+   "owner": "Mnemosyne + Vivarium",
+   "requirement": "observer leg ready; historical backlog delivered (advisory for launch)",
    "status": "CONDITIONAL"
   },
   {
@@ -255,9 +300,9 @@
   }
  ],
  "gate": "RED",
- "generated_at": "2026-09-17T22:52:51Z",
+ "generated_at": "2026-09-17T23:23:12Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "15424485a72360636a7aa3deec40534685b5cbbe",
+ "read_at_commit": "fe4f0cca37810981bc5bebdbb0a909f02ba364c5",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }
