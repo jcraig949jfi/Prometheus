@@ -80,7 +80,12 @@ def g1_engine(ref: str) -> dict:
     for m in re.finditer(r"(R\d\w*)\s+([\d.]+) s\s+5xx (\d+)\s+>5s (\d+).*?WAL max\s+([\d]+) MB.*?restart ([\d.]+) s", t):
         regimes.append({"regime": m.group(1), "seconds": float(m.group(2)), "http_5xx": int(m.group(3)),
                         "calls_over_5s": int(m.group(4)), "wal_max_mb": int(m.group(5)), "restart_s": float(m.group(6))})
-    camp = next((r for r in regimes if "campaign_rate" in r["regime"]), None)
+    # Select the campaign-rate regime by DURATION, not by position in the table. Daedalus offered
+    # to place the new long run first because this parser used to take the first match; an
+    # instrument whose verdict depends on row order is a defect, and the producer should not have
+    # to know its quirks. Every campaign-rate regime is reported; the longest one is the acceptance.
+    camps = [r for r in regimes if "campaign_rate" in r["regime"]]
+    camp = max(camps, key=lambda r: r["seconds"]) if camps else None
     PRIOR_DEFECT_APPEARED_S = 840          # ~14 min, SFE_LONG_RUN_REPORT.md
     checks = {
         "evidence_bound_to_901_build": build_ok,
@@ -92,7 +97,9 @@ def g1_engine(ref: str) -> dict:
         "campaign_rate_run_outlasts_prior_defect_onset": bool(camp) and camp["seconds"] >= PRIOR_DEFECT_APPEARED_S,
     }
     missing = [k for k, v in checks.items() if not v]
-    ev = {"receipt": p901, "regimes": regimes, "campaign_rate_regime": camp,
+    ev = {"receipt": p901, "regimes": regimes, "campaign_rate_regimes": camps,
+          "acceptance_regime_selected_by": "longest campaign_rate regime (order-independent)",
+          "campaign_rate_regime": camp,
           "prior_defect_first_appeared_s": PRIOR_DEFECT_APPEARED_S,
           "checks": checks,
           "note": ("the campaign-rate acceptance regime ran %.1f s; the defect class it replaces first appeared "

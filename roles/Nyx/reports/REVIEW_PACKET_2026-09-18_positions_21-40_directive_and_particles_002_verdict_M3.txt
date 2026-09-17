@@ -1,0 +1,230 @@
+================================================================================
+REVIEW PACKET -- Stage A positions 21-40, the POET/ALife "cut into the bodies"
+directive, and the first adjudicated cut (particles 002) -- Nyx (Chop Shop),
+2026-09-17/18 (third packet of this instance)
+Commits of record: 6da25082b (positions 21-30), 8036a50c1 (#377 reply + the
+operator's 2026-09-18 directive verbatim), a476d6e9f (positions 31-40),
+c2921864d (H4: novelty_kind in the packet schema), 8605ab215 (Stage D' on
+Harmonia #382), and the commit named in the closing recap (#384 reply + this
+packet). All on origin/main (ancestor checks passed at each push).
+Author: Nyx, instance gandalf-9e21f277 (M3/GANDALF), model claude-fable-5-1
+Invoked by: operator, "Do that. Also watch the channel and commit. Techne is
+pulling down bodies from Alife, POET and more" and, mid-block, the review of
+Techne's autopsy ending "At this point I'd let Techne and Nyx actually cut
+into the bodies."
+================================================================================
+
+0. WHAT THIS PACKET IS
+   The block after the second packet: twenty more source-reading dissections
+   (positions 21-40 of the preregistered order), the operator's POET/ALife
+   directive recorded and relayed with a per-body cut plan, a one-field
+   schema change asked for by Harmonia, and the first verdict any cut of this
+   atlas has received: Harmonia ran packet 002 on this machine and returned
+   CUT_SUPPORTED on the boundary claim and a conflict on a secondary claim
+   that I have now withdrawn. Conflict of interest, declared: I wrote the
+   cuts, the packet whose verdict is reported, the disposition on that
+   verdict, and this report. Harmonia's numbers are quoted from its ruling
+   (E1 for me); nothing adjudicative ran on this side.
+
+1. CONTEXT
+   The pipeline is Techne (preserves code bodies in a vault) -> Nyx (reads a
+   body and records its mechanisms as ORGANs and the selection PRESSUREs they
+   answer, in a validated atlas) -> Harmonia (runs a preregistered prediction
+   packet against the body and returns a typed verdict) -> benches. All three
+   seats now run on M3, a Windows host with no compiler, no docker and no
+   virtualization, so only pure-Python bodies can execute here. The atlas is
+   121 fossils; a seeded order over the 91 not-yet-cut ones was preregistered
+   on 2026-09-17 and is being worked in tens. The operator's new interest is
+   five open-endedness / artificial-life systems (POET, Avida, Tierra, ASAL,
+   TerraLingua) that Techne has pinned but not yet landed as bodies.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+   (a) "watch the channel and commit" (operator, verbatim): keep the comms
+       queue answered within the R31 latencies and push each block.
+   (b) Amendment 3 N1: continue Stage A over the preregistered order.
+   (c) "let Techne and Nyx actually cut into the bodies" (operator, 2026-09-18):
+       what can Nyx cut of POET / Avida / Tierra / ASAL / TerraLingua now?
+   (d) Stage D' (Amendment 3): what does Nyx do with Harmonia's verdict on
+       MECH-PARTICLES-ESSTRIGGER-002?
+
+3. WHAT WAS DONE, STEP BY STEP
+   a. Positions 21-30 [E3, 6da25082b]: ten bodies rematerialised 10/10 MATCH
+      against Techne's tree hashes; ten cuts saved and validated (121 fossil
+      files, 0 problems): libcorrect (5 organs), simple-kalman (2: NOT a
+      Kalman filter), CLIPS (3, LARGE_RESIDUE), PyPortfolioOpt (4), TSCP (5),
+      biRISC-V branch predictor (5), libDAI (3), GNU APL (2, LARGE_RESIDUE),
+      pForth (4), SWI-Prolog (3, LARGE_RESIDUE). A SCOUT (non-adjudicative)
+      found cocagne-plain-paxos is Python-2-only; the M3 packet candidate list
+      I had sent Techne was corrected by me in the journal.
+   b. Techne #377 (POET/ALife autopsy) read in full with its ledger; the
+      operator's review of it arrived in my chat and was recorded VERBATIM
+      (ASCII-normalised, transcription note) and relayed to Techne and
+      Harmonia with a per-body cut plan and three typed asks (#379,
+      8036a50c1). No body of the five is in the vault; nothing was cut.
+   c. Positions 31-40 [E3, a476d6e9f]: 10/10 MATCH; ten cuts: buddy-alloc
+      (3, DEEP), LRU cache (3, DEEP), SPIN (4, COARSE), Whitaker's Words (3,
+      COARSE), 4.3BSD-Reno TCP (3, DEEP; ancestry-linked to the 1983 cut by
+      reading both), MINPACK (4, DEEP), LINPACK (2, DEEP), the 4.3-Reno
+      distribution tape (0 organs, ORGAN0: the vault holds tape files 1-4 and
+      the record's claim needs files 5-7), Boehm GC (4, COARSE), CMA-ES (5,
+      DEEP). The validator rejected two ancestry relations I invented
+      ('original', 'contains') before anything was saved; fixed to Techne's
+      vocabulary.
+   d. Harmonia #381 (steering note) answered: ask H4 implemented as an
+      OPTIONAL per-intervention field novelty_kind in the packet schema with
+      the vocabulary {structure, behavior, observer, consequential}; a test
+      asserts both frozen packets still validate and hash to their FREEZE
+      files [E3, 23 tests pass, c2921864d]. Ask H5 (POET PATA-EC packet next
+      on the ruler) accepted as an order, conditional on the body.
+   e. Harmonia #382 (verdict on 002) assimilated [E3, 8605ab215]: see s4.
+   f. Techne #384 (TECHNE-107, ASAL through CLIP, 6/6 preregistered) ACKed
+      and dispositioned as data; the morning's "recurrence" reading that my
+      #379 had cited is retracted by Techne's own run (s4 row).
+   g. Bodies 41-50 rematerialised in the background: 9/10 MATCH; pari-gp-2.17
+      ORIGIN_UNREACHABLE (SSL certificate verification fails from this host;
+      a fetch defect, not a body defect).
+
+4. RESULTS
+   Atlas after the block (python -m nyx.atlas.build, E3):
+     inspected 68 / 121  (COARSE 45, DEEP 22, ORGAN0 1; NOT_CUT 53)
+     fragments 402 (362 ACCEPTED, 40 CANDIDATE); rejected candidates 234
+     pressures 119; composition edges 525; fingerprints 0; blind cuts 0
+     gates: cuts_created 68; cuts_returned_with_verdict 1 (was 0);
+            returns_received 12; handoffs open 7
+   Before the block (second packet): inspected 48, fragments 335 (300
+   accepted), rejected 181, pressures 99, edges 452, verdicts 0.
+
+   The verdict (Harmonia RULING_PARTICLES_ESSTRIGGER_002_2026-09-17.md, rows
+   out/002_20260917T222509Z/, all E1 for this author):
+     controls   cheat exact on six paths; positive V(200)/V(1000) = 10.02 in
+                [2.5, 20]; negative R = 0            all PASS
+     I0  W1     |B| 8.92 in [0, 30]; R 99 in [90, 99]            IN_BAND
+     I1  W1     R = 0 in 50/50 seeds; V(I1)/V(I0) = 17,039       IN_BAND
+     I2  W1     R = 99 in 50/50; identical to I0 seed for seed   IN_BAND
+     I4  W2     R median 51 (49-54) in [5, 95]                   IN_BAND
+     I5  W2     R = 99; V(I5)/V(I4) = 1.318 in [0.5, 3]          IN_BAND
+     kill       none fired                        -> CUT_SUPPORTED (a), (b)
+     I3  W1     V(mult)/V(syst) = 0.512 at 50 seeds, F-interval [0.291,
+                0.903] excludes 1, band [1.05, 5]      PREDICTION_FAILED
+     I3x W1     1.161 at 400 seeds, [0.954, 1.413] covers 1  INDETERMINATE
+   The two I3 readings are a conflict Harmonia reported side by side. Both
+   coordinates are kept: the boundary claim is supported; the scheme claim
+   is neither supported nor refuted at this power.
+
+   Stage D' disposition (mine): claim (c) DROPPED from the cut. Two reasons,
+   both against the author: (i) (c) is a property of the resampling-scheme
+   organ, not of the ESS-trigger organ the packet bounded; a packet's claims
+   must be claims about its boundary; (ii) the packet wrote "underpowered by
+   design" beside a band with a 1.05 lower edge. From Harmonia's half-width
+   ~0.27 at 400 seeds and 1/sqrt(n) scaling [E1]: ~1,150 seeds per arm to
+   read 1.16 as above 1; ~11,700 per arm to resolve 1.05 vs 1.00. To be
+   re-posed only as its own packet with that power statement.
+
+   Record defects found for Techne this block (not adjudicated): the 4.3-Reno
+   tape body lacks the source tape files its record cites; viterbi-hmm-xukmin
+   is a convolutional decoder, not an HMM; the ELIZA 1965 matcher is outside
+   the body; pyportfolioopt needs cvxpy; paxos is Python-2-only.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   nyx/atlas/cuts/: +20 cut scripts; particles_chopin_0_4.py residue gains the
+     verdict and the withdrawal (organs unchanged).
+   nyx/atlas/fossils/, nyx/atlas/out/: regenerated by the build.
+   nyx/atlas/predictions/schema.py: NOVELTY_KINDS + optional validation;
+     nyx/tests/test_prediction_schema.py (new; 23 tests total).
+   nyx/atlas/gates/LEDGER.json: handoffs 15 (+2 batch rows), returns 12 (+6:
+     #377, #380, #381, #382 x2, #384); the 002 handoff row closed.
+   nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json: receipt n = 40.
+   roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/: the operator's
+     directive verbatim, four replies (#379, #383, #385, #384's), MANIFEST.
+   roles/Nyx/calibration/LEDGER.md: +2 rows (power; cheat criterion).
+   roles/Nyx/STATUS.md, journal/2026-09-17.md: refreshed per block.
+   Comms posted: #379, #383, #385 (+ the #384 reply). Nothing scheduled.
+   Cost: reading and writing on one host; ~4 minutes of background clones.
+
+6. WHAT THIS DID NOT ESTABLISH
+   - No organ of positions 21-40 has been adjudicated; every one is a reading
+     with SOURCE_READ evidence and no run (nothing can compile here).
+   - The withdrawn claim (c) is not shown false: the 400-seed reading covers
+     1; the honest state is "unresolved at this power on this world".
+   - Nothing of POET / Tierra / ASAL / TerraLingua has been read from a body:
+     none is in the vault. Techne's TECHNE-107 ran a numpy Lenia port and a
+     torch CLIP, both descendants; no line of the ASAL body has been cut.
+   - The tape cut's defect is a claim about what the VAULT holds; whether the
+     TUHS archive has the missing tape files was not checked.
+   - The three LARGE_RESIDUE engines (SPIN, Boehm GC, Whitaker's) are maps,
+     not dissections; ~90 percent of each body is unread.
+   - Positions 13, 18 and 49 (pari-gp) are deferred, not cut.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   - Claim (c) posed on the wrong organ without a power statement: cost one
+     Harmonia run of 800 extra seed-runs and a conflict verdict where a clean
+     CUT_SUPPORTED was available; calibration row.
+   - Cheat criterion "V == 0.0" on a floating variance: Harmonia had to make
+     a post-plan code change (its charter s4 allows it, recorded); one
+     aborted run; calibration row.
+   - Two ancestry relations outside Techne's vocabulary and a zero-organ cut
+     saved in the wrong state: caught by the validator before commit; cost
+     one round of re-saves.
+   - My #379 cited Techne's embedding-space "recurrence" reading as the
+     pre-measurement for the ASAL packet; Techne's #384 retracted it the same
+     day. No packet was written on it; the cut plan is corrected in the
+     #384 reply.
+   - Earlier in the day (second packet): the boot-time pull in the canonical
+     checkout and the 001 positive-control band; both already ledgered.
+
+8. WHAT IS OWED, AND BY WHOM
+   Nyx: positions 41-50 (nine bodies present), then 13, 18; the POET
+     discard-boundary cut and the Avida SavePopulation read the moment bodies
+     land; MECH-PARTICLES-SCHEME-001 with a power statement if the POET body
+     has not landed by the next tick; a NOVELTY_KIND on every intervention
+     of every packet after 002.
+   Techne: ASK 3 (land the five bodies as specimens), ASK 4 (Python version
+     and native deps in records), ASK 5 (data slices); the 4.3-Reno tape
+     record; ASK 1/2 of #358; Harmonia's H1-H3 and RETURN 3 (R36 identity,
+     FOSSIL_PACKET for particles).
+   Harmonia: nothing on 002 (closed); gzip 003 stays with it (not runnable
+     on M3); the Avida ground-truth ruler it announced.
+   Operator: ASAL level-2 host is now moot (Techne ran it on M3 CPU in 56 s);
+     the TerraLingua LLM arm (key, spend); a compiler/docker host for the
+     POET lineage, Avida .spop and Tierra build; the M3 virtualization
+     decision; TECHNE-65.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. Was dropping claim (c) the right D' response, or should the packet's
+      immutability have forced a re-pose at 11,700 seeds before withdrawal?
+      What would falsify "it was mis-attached": is variance ordering by
+      scheme a property the trigger organ's boundary could ever carry?
+   2. The first verdict supports the boundary of the trigger organ on two
+      worlds. Is one Feynman-Kac model (linear-Gaussian, T=100, N=100) enough
+      to call the boundary adjudicated, or should the cut's residue say
+      "supported on W1/W2 only"?
+   3. novelty_kind is optional in the schema so frozen packets stay frozen.
+      Should the NEXT schema version make it mandatory, and who owns the
+      vocabulary if Harmonia's fields and Techne's catalog diverge?
+   4. Twenty cuts in one day at COARSE/DEEP with zero runs: what would
+      falsify the claim that these are mechanism boundaries rather than
+      paraphrases of the code? (My answer: a packet per organ; only one
+      exists.) Should Stage A stop at some inspected fraction until the
+      verdict count rises?
+   5. The ORGAN0 tape cut counts as "inspected". Is that honest, or should a
+      body that cannot be read be BLOCKED and excluded from the numerator?
+   6. What should we stop: the batch cadence of ten cuts per block while
+      five higher-priority bodies wait on a clone that needs no compiler?
+
+10. HOW TO REPRODUCE
+   Worktree at origin/main; set TECHNE_FOSSIL_VAULT to the vault root and
+   NYX_BODIES_RECEIPT to nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json.
+     python -m nyx.atlas.schema                 -> 121 fossil files, 0 with problems
+     python -m pytest -q nyx/tests              -> 23 passed
+     python -m nyx.atlas.build                  -> fossils_inspected 68, gates
+                                                   cuts_returned_with_verdict 1
+     python -m nyx.atlas.cuts.<name>            -> re-saves one cut (deterministic)
+     python -m nyx.atlas.predictions.schema validate \
+         nyx/atlas/predictions/MECH-PARTICLES-ESSTRIGGER-002.json
+                                                -> valid, sha256 186047db...
+   Harmonia's run: roles/Harmonia/science/particles_ruler/ruler_002.py per
+   its PLAN_002_2026-09-17.md (seeds 20260917 / 20260918); rows.jsonl sha256
+   c10b46c8... as stated in its ruling.
+   Body identity: python -m techne.fossils.harvest verify <id> against the
+   receipt's tree_sha256 (40 rows, 40 MATCH).
+================================================================================

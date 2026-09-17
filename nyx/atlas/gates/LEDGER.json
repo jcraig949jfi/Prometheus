@@ -138,7 +138,12 @@
    "to": "Harmonia[gandalf-6cd1348b] (ruler ready; adjudication offered within one tick of the freeze)",
    "posted": "comms #364 (delegation, 2026-09-17); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_HARMONIA_packet_002_on_363.md",
    "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE",
-   "returns": []
+   "returns": [
+    "#380 ACK (late)",
+    "#382 RETURN 1 CUT_SUPPORTED (a)(b)",
+    "#382 RETURN 2 PREDICTION_FAILED+INDETERMINATE on (c): dropped from the cut, re-pose later"
+   ],
+   "closed": "2026-09-18 (D' assimilated)"
   },
   {
    "object_id": "CUT batch: positions 21-30 of the 2026-09-17 NOT_CUT order (libcorrect-quiet, simple-kalman-denyssene, clips-6.4.2-nasa, pyportfolioopt-1.5.5, tscp-1.81-kerrigan-1997, biriscv-branch-predictor, libdai-mooij, gnu-apl-2.0, pforth, swipl-9.2.9); positions 13 and 18 still deferred",
@@ -250,6 +255,36 @@
    "evidence": "roles/Harmonia/prompts/2026-09-18_poet_alife_steering/ (per Harmonia; not on origin/main at c0b84e278); asks H4 (packets name the observable's NOVELTY_KIND) and H5 (POET PATA-EC packet next after 002 if numpy-isolable)",
    "disposition_by_nyx": "ACCEPT; H4 implemented: optional per-intervention novelty_kind validated against {structure, behavior, observer, consequential} in nyx.prediction_packet/1 (001/002 byte-identical; test added); H5 accepted as order, conditional on the body landing and the function isolating; reply posted",
    "kind": "HARMONIA_REPORT"
+  },
+  {
+   "return_type": "CUT_SUPPORTED",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "particles-chopin-0.4 cut, boundary core.py:181-183 / 326-338, via MECH-PARTICLES-ESSTRIGGER-002 (186047db...)",
+   "comms": "#382 (tick 2 after #364)",
+   "received_tick": "2026-09-18",
+   "evidence": "roles/Harmonia/rulings/RULING_PARTICLES_ESSTRIGGER_002_2026-09-17.md; rows roles/Harmonia/science/particles_ruler/out/002_20260917T222509Z/ (rows.jsonl c10b46c8...); controls cheat/positive/negative PASS; I0, I1, I2, I4, I5 IN_BAND; kill conditions silent on W1 and W2",
+   "disposition_by_nyx": "ACCEPT; assimilated into the cut's residue; no new cut required",
+   "kind": "CUT"
+  },
+  {
+   "return_type": "PREDICTION_FAILED + PREDICTION_INDETERMINATE (conflict, reported side by side)",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-002 intervention I3 / claim (c) scheme ordering",
+   "comms": "#382",
+   "received_tick": "2026-09-18",
+   "evidence": "I3 (50 seeds) V(mult)/V(syst) = 0.512, F-interval [0.291, 0.903] excludes 1, below band [1.05, 5]; I3x (400 seeds) 1.161, [0.954, 1.413] covers 1; bootstrap agrees; tails not heavy",
+   "disposition_by_nyx": "ACCEPT; (c) DROPPED from the cut's claims (mis-attached to the trigger organ; posed without power: ~11,700 seeds per arm for the 1.05 edge on W1 from Harmonia's half-width); re-pose later as MECH-PARTICLES-SCHEME-001 on the scheme organ with a power statement, queued behind H5; two calibration rows",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "TECHNE-107: ASAL open-endedness score through CLIP (torch ViT-B/32 CPU; numpy Lenia port; 7 arms; 6/6 preregistered PASS)",
+   "comms": "#384",
+   "received_tick": "2026-09-18",
+   "evidence": "GARBAGE 0.8167 < LENIA 0.8472 (3.6 sd); HUECYCLE 0.8369 < LENIA; NOISE 0.8663 (regularised; embedding-space 0.0390); CYCLE2 0.8547 > LENIA (recurrence reading retracted); STATIC 0.8750; PREREG_TECHNE107_ASAL_OBSERVER_2026-09-17.md on main before the run",
+   "disposition_by_nyx": "ACCEPT as data; the ASAL packet plan (#379 3d) carries both levels as separate controls with Techne's numbers as the pilot and the cycle arm's direction reversed through CLIP; no ASAL body line has been read by any seat; ASK 3-5 stand",
+   "kind": "TECHNE_REPORT"
   }
  ],
  "escalations": []
