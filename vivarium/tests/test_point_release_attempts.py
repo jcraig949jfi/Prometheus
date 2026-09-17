@@ -773,11 +773,17 @@ def test_the_step_key_travels_as_the_idempotency_key_when_the_client_accepts_it(
     client = KeyedClient()
     assert _viv(schema, client, spec).tick(conn).outcome == EXECUTED
     design = _spec.spec_hash(spec)
-    assert client.keys[("observe", 0)] == _sk.step_key(design, "observe", [0])
-    assert client.keys[("observe", 1)] == _sk.step_key(design, "observe", [1])
+    assert client.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid)
+    assert client.keys[("observe", 1)] == _sk.engine_key(_sk.step_key(design, "observe", [1]), eid)
     wid = next(k for k in client.keys if k[0] == "experiment")[1]
-    assert client.keys[("experiment", wid)] == _sk.step_key(design, "experiment", [wid])
-    # NEGATIVE: a client without the parameter is called without it (the recording doubles above)
+    assert client.keys[("experiment", wid)] == _sk.engine_key(_sk.step_key(design, "experiment", [wid]), eid)
+    # NEGATIVE (canary run 8): the SAME design enqueued as a second row must not reuse the engine key
+    eid2 = _enqueue(conn, schema, spec)
+    client2 = KeyedClient()
+    assert _viv(schema, client2, spec).tick(conn).outcome == EXECUTED
+    assert client2.keys[("observe", 0)] != client.keys[("observe", 0)]
+    assert client2.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid2)
+    # a client without the parameter is called without it (the recording doubles above)
 
 
 def test_the_verifiers_read_schema_9_page_objects_and_refuse_a_truncated_page():
