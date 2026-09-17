@@ -1,0 +1,482 @@
+{
+  "schema": "vivarium_canary.v1",
+  "harness": "C4-CANARY-W1",
+  "started_at": "2026-09-17T16:15:38Z",
+  "checks": {
+    "A.terminal": {
+      "ok": true,
+      "status": "failed",
+      "error": "prerequisite gate pc:w0_climbed FAIL"
+    },
+    "A.one_attempt_prerequisite_failed": {
+      "ok": true,
+      "attempts": [
+        [
+          1,
+          "FAILED",
+          "PREREQUISITE_FAILED"
+        ]
+      ]
+    },
+    "A.gate_receipt_fail_aborted": {
+      "ok": true,
+      "receipts": [
+        {
+          "gate_id": "pc:w0_climbed",
+          "result": "FAIL",
+          "action_taken": "aborted_attempt",
+          "measured": 0.3,
+          "reference": 0.45
+        }
+      ]
+    },
+    "A.no_world_created": {
+      "ok": true,
+      "steps": []
+    },
+    "B.terminal_completed": {
+      "ok": false,
+      "status": "failed",
+      "error": "ENGINE_REJECTED: EngineError after the experiment was committed: HTTP 409: {'error': 'conflict', 'message': 'idempotency key reused for a materially different r"
+    },
+    "B.one_attempt_completed_uncensored": {
+      "ok": false,
+      "envelope": {
+        "horizon": {
+          "kind": "observations",
+          "declared": 3,
+          "max_seconds": 600,
+          "max_observations": 3
+        },
+        "partial": true,
+        "censored": false,
+        "terminal_state": "FAILED",
+        "budget_consumed": {
+          "detail": {},
+          "seconds": 0.8547180000000001,
+          "observations": 0
+        },
+        "censoring_reason": null,
+        "envelope_version": "viv.termination.v1",
+        "censored_endpoints": [],
+        "termination_reason": "EXECUTOR_ERROR",
+        "logical_time_reached": "UNKNOWN",
+        "stopped_on_condition": null,
+        "terminal_receipt_ref": {
+          "steps": 9,
+          "attempt_id": "0e2a720b-b41a-43e0-bdfe-7f57ef1dba63"
+        },
+        "observations_recorded": 0,
+        "engine_termination_ref": {
+          "exp_id": "exp_95dd028ff94682b8325fe5a5",
+          "world_id": "wld_46b6becf04f3e66d6e337f1e"
+        }
+      }
+    },
+    "B.steps_all_new": {
+      "ok": false,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "observe",
+          "FAILED"
+        ]
+      ]
+    },
+    "B.labels_recorded": {
+      "ok": true,
+      "labels": {
+        "vivarium.attempt": "1",
+        "vivarium.execution_id": "4b3d3003-a0da-4ea7-ac8f-32f5200b6ca2"
+      },
+      "applied": false
+    },
+    "B.gate_receipt_pass": {
+      "ok": true,
+      "receipts": [
+        {
+          "result": "PASS",
+          "action_taken": "proceeded"
+        }
+      ]
+    },
+    "B.bundle_filled_over_declared": {
+      "ok": true,
+      "declared": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289",
+      "recorded": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289"
+    },
+    "B.outbox_rows_pending_no_pew_token": {
+      "ok": true,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "ATTEMPT_TERMINATED",
+        "GATE_EVALUATED"
+      ],
+      "n": 3
+    },
+    "B.engine_has_world_experiment_3_observations": {
+      "ok": false,
+      "world_id": "wld_46b6becf04f3e66d6e337f1e",
+      "exp_id": "exp_95dd028ff94682b8325fe5a5",
+      "n_obs": 0,
+      "experiment_found": true,
+      "world_found": true,
+      "labels": null
+    },
+    "C.consumer_killed_mid_run": {
+      "ok": true,
+      "pid": 21108,
+      "host": "SPECTREX5",
+      "rc": 0,
+      "out": "SUCCESS: The process with PID 21108 has been terminated.\n",
+      "at": "2026-09-17T16:16:07Z",
+      "observations_before_kill": 0,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ]
+      ]
+    },
+    "C.row_stranded_running": {
+      "ok": true,
+      "status": "running"
+    },
+    "C.released_new_attempt": {
+      "ok": true,
+      "out": "released 380968fb-0285-428d-9d81-32b3b50ad34f -> queued (was claimed/running). SFE experiment: exp_22fbc4ce3f8a144929df89fe\n"
+    },
+    "C.attempt1_stranded": {
+      "ok": true,
+      "a1": [
+        "STRANDED",
+        "STRANDED"
+      ]
+    },
+    "C.deadman_run_requested": {
+      "ok": true,
+      "out": "SUCCESS: Attempted to run the scheduled task \"VivariumDeadmanM2\".\n"
+    },
+    "C.consumer_relaunched_by_deadman": {
+      "ok": true,
+      "new_pid": 6952,
+      "old_pid": 21108,
+      "waited_s": 234
+    },
+    "C.terminal_completed": {
+      "ok": false,
+      "status": "failed",
+      "error": "ENGINE_REJECTED: EngineError after the experiment was committed: HTTP 409: {'error': 'conflict', 'message': 'idempotency key reused for a materially different r"
+    },
+    "C.attempt2_completed_all_observations": {
+      "ok": false,
+      "envelope": {
+        "horizon": {
+          "kind": "observations",
+          "declared": 5,
+          "max_seconds": 900,
+          "max_observations": 5
+        },
+        "partial": true,
+        "censored": false,
+        "terminal_state": "FAILED",
+        "budget_consumed": {
+          "detail": {},
+          "seconds": 52.564861,
+          "observations": 0
+        },
+        "censoring_reason": null,
+        "envelope_version": "viv.termination.v1",
+        "censored_endpoints": [],
+        "termination_reason": "EXECUTOR_ERROR",
+        "logical_time_reached": "UNKNOWN",
+        "stopped_on_condition": null,
+        "terminal_receipt_ref": {
+          "steps": 11,
+          "attempt_id": "8dab4de5-5049-4d03-85e8-10c7534cd035"
+        },
+        "observations_recorded": 0,
+        "engine_termination_ref": {
+          "exp_id": "exp_22fbc4ce3f8a144929df89fe",
+          "world_id": "wld_98528ae69c748f468f282245"
+        }
+      }
+    },
+    "C.attempt2_replayed_world_experiment_claim_recomputed_one_world": {
+      "ok": false,
+      "statuses": {
+        "validate": [
+          "REUSED"
+        ],
+        "build": [
+          "RECOMPUTED"
+        ],
+        "world": [
+          "REPLAYED"
+        ],
+        "experiment": [
+          "REPLAYED"
+        ],
+        "claim": [
+          "RECOMPUTED"
+        ],
+        "run": [
+          "RECOMPUTED",
+          "NEW",
+          "NEW",
+          "NEW",
+          "NEW"
+        ],
+        "observe": [
+          "FAILED"
+        ]
+      },
+      "world_ids": [
+        "wld_98528ae69c748f468f282245"
+      ]
+    },
+    "C.engine_exactly_n_observations_one_world": {
+      "ok": false,
+      "world_id": "wld_98528ae69c748f468f282245",
+      "n_obs": 0,
+      "experiment_found": false,
+      "world_found": true,
+      "labels": null
+    },
+    "C.outbox_has_both_attempts": {
+      "ok": true,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED",
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED"
+      ]
+    },
+    "D.consumer_killed_mid_run": {
+      "ok": true,
+      "pid": 6952,
+      "host": "SPECTREX5",
+      "rc": 0,
+      "out": "SUCCESS: The process with PID 6952 has been terminated.\n",
+      "at": "2026-09-17T16:21:02Z",
+      "observations_before_kill": 1,
+      "steps": [
+        [
+          "validate",
+          "NEW"
+        ],
+        [
+          "build",
+          "NEW"
+        ],
+        [
+          "world",
+          "NEW"
+        ],
+        [
+          "experiment",
+          "NEW"
+        ],
+        [
+          "claim",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "run",
+          "NEW"
+        ],
+        [
+          "observe",
+          "NEW"
+        ]
+      ]
+    },
+    "D.row_stranded_running": {
+      "ok": false,
+      "status": "failed"
+    },
+    "D.released_new_attempt": {
+      "ok": false,
+      "out": "5fb3c2a70b26 to a new attempt: status is failed and its newest attempt's termination_reason is EXECUTOR_ERROR, not ENGINE_TRANSPORT (a design or executor failure stays terminal; a rerun is a NEW ROW)\n"
+    },
+    "D.attempt1_stranded": {
+      "ok": false,
+      "a1": [
+        "FAILED",
+        "EXECUTOR_ERROR"
+      ]
+    },
+    "D.deadman_run_requested": {
+      "ok": true,
+      "out": "SUCCESS: Attempted to run the scheduled task \"VivariumDeadmanM2\".\n"
+    },
+    "D.consumer_relaunched_by_deadman": {
+      "ok": true,
+      "new_pid": 1412,
+      "old_pid": 6952,
+      "waited_s": 240
+    },
+    "D.terminal_completed": {
+      "ok": false,
+      "status": "failed",
+      "error": "ENGINE_REJECTED: EngineError after the experiment was committed: HTTP 409: {'error': 'conflict', 'message': 'idempotency key reused for a materially different r"
+    },
+    "D.attempt2_completed_all_observations": {
+      "ok": false,
+      "envelope": {}
+    },
+    "D.attempt2_replayed_world_experiment_claim_replayed_one_world": {
+      "ok": false,
+      "statuses": {},
+      "world_ids": [
+        "wld_a3611df943edd0e729589096"
+      ]
+    },
+    "D.engine_exactly_n_observations_one_world": {
+      "ok": false,
+      "world_id": "wld_a3611df943edd0e729589096",
+      "n_obs": 0,
+      "experiment_found": false,
+      "world_found": true,
+      "labels": null
+    },
+    "D.outbox_has_both_attempts": {
+      "ok": false,
+      "kinds": [
+        "ATTEMPT_OPENED",
+        "GATE_EVALUATED",
+        "ATTEMPT_TERMINATED"
+      ]
+    },
+    "close.no_canary_work_left_in_queue": {
+      "ok": true,
+      "open_rows": 0
+    }
+  },
+  "rows": {
+    "A-gate-fail": {
+      "experiment_id": "2f731b69-b4bc-4eaa-996e-c44efbe27c9f",
+      "spec_hash": "sha256:969ee066be15bce7033f68e0303baa4188c543d3af5490376fe73003df4adc1c",
+      "bundle_hash_declared": "sha256:0874dc1161cc19eadc13fefcb90c4a97327c1549e5550e7aa8f7c22dc45538e6"
+    },
+    "B-three-repeats": {
+      "experiment_id": "4b3d3003-a0da-4ea7-ac8f-32f5200b6ca2",
+      "spec_hash": "sha256:7bca1b75d121ff0709dbfe21b1fa56b3b06a400fb6d0d2384881d597ccc88c68",
+      "bundle_hash_declared": "sha256:cb2a665c07d7ca4f09e5e7682dca2607caf4cc8f788defedd028934348528289"
+    },
+    "C-resume-in_loop": {
+      "experiment_id": "380968fb-0285-428d-9d81-32b3b50ad34f",
+      "spec_hash": "sha256:3ac3643e075675863153be4ed25637f755d9e9e8a83d6155ab0e5ddb6eafee50",
+      "bundle_hash_declared": "sha256:f28c0ce9ed9a6d6d1822dd37568ee4019d1ea82549b9cad0021f694b33543420"
+    },
+    "D-resume-posting": {
+      "experiment_id": "e8b34615-2555-4bf4-8eb5-5fb3c2a70b26",
+      "spec_hash": "sha256:b5e8514129337fea6804c41ed83af79aeee008e2208a779c3d806a877a0040cd",
+      "bundle_hash_declared": "sha256:14af3883fac5d93a2937607333753beca76b06c2a5eccae54f05c85796eb2488"
+    }
+  },
+  "updated_at": "2026-09-17T16:25:05Z",
+  "ok": false,
+  "finished_at": "2026-09-17T16:25:05Z"
+}
