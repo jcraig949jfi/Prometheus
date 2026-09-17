@@ -150,7 +150,13 @@ class Attempts:
                 cur.execute("SELECT s.step_id, s.step_key, s.step_kind, s.parts, s.status, s.result, s.result_digest "
                             "FROM " + self.schema + ".execution_step s JOIN " + self.schema + ".execution_attempt a "
                             "ON a.attempt_id = s.attempt_id WHERE a.experiment_id = %s AND a.terminal_state IS NOT NULL "
-                            "AND s.status <> 'FAILED' AND s.result IS NOT NULL ORDER BY a.attempt_number DESC, s.started_at DESC", (eid,))
+                            "ORDER BY a.attempt_number DESC, s.result IS NULL, s.started_at DESC", (eid,))
+                # a step with result NULL -- the worker died between the
+                # engine's commit and the result landing (s14 canary D), or the
+                # call raised AFTER the engine wrote (a transport failure past
+                # the commit; the step reads FAILED) -- is a prior too: its
+                # verifier may RECOVER the act by content. A landed result for
+                # the same key wins over a NULL one (the ORDER BY).
                 for r in cur.fetchall():
                     prior.setdefault(r["step_key"], dict(r))
         conn.commit()
@@ -195,7 +201,20 @@ class Attempts:
         status = "NEW"
         replay_of = None
         recomputed_from = None
-        if prior is not None:
+        recovered = None
+        if prior is not None and prior.get("result") is None:
+            # NOTHING LANDED for this key in a prior attempt: the worker died
+            # between the engine's commit and the result (s14 canary D), or
+            # the call raised after the engine wrote. A verifier that can find
+            # the act on the engine BY CONTENT returns the recovered result
+            # (not a bare True) and the step is REPLAYED with it; otherwise
+            # there is nothing to recompute FROM and the step is NEW.
+            found = self._verify(verify, None) if (replayable and verify is not None) else False
+            if found and found is not True:
+                status = "REPLAYED"; replay_of = str(prior["step_id"]); recovered = found
+            else:
+                prior = None
+        elif prior is not None:
             if replayable:
                 ok = True if verify is None else self._verify(verify, prior.get("result"))
                 if ok:
@@ -206,7 +225,9 @@ class Attempts:
             else:
                 status = "RECOMPUTED"; recomputed_from = str(prior["step_id"])
         if status in ("REUSED", "REPLAYED"):
-            result = prior.get("result")
+            result = prior.get("result") if recovered is None else recovered
+            if recovered is not None:
+                self.log("[viv] step %s: prior attempt's result never landed; RECOVERED from the engine by content" % kind)
             self._insert_step(conn, ctx, key, kind, parts, status, result=result, replay_of=replay_of,
                               idempotency_key=idempotency_key or key, completed=True)
             self.log("[viv] step %s %s (attempt %d)" % (kind, status, ctx.attempt_number))
@@ -229,11 +250,16 @@ class Attempts:
         return None if prior is None else prior.get("result")
 
     @staticmethod
-    def _verify(verify, prior_result) -> bool:
+    def _verify(verify, prior_result):
+        """True/False, or a RECOVERED result (truthy, non-bool) when the prior
+        step's result never landed and the verifier found the act by content."""
         try:
-            return bool(verify(prior_result))
+            v = verify(prior_result)
         except Exception:                                          # noqa: BLE001
             return False
+        if isinstance(v, bool) or v is None:
+            return bool(v)
+        return v if prior_result is None else bool(v)
 
     def _insert_step(self, conn, ctx, key, kind, parts, status, *, result=None, replay_of=None,
                      recomputed_from=None, idempotency_key=None, completed=False) -> str:

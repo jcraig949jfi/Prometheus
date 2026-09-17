@@ -122,7 +122,7 @@ def _attempts(conn, schema, eid):
 
 def _steps(conn, schema, attempt_id):
     with _db.dict_cur(conn) as cur:
-        cur.execute("SELECT step_kind, parts, status, replay_of_step, recomputed_from_step, step_key FROM "
+        cur.execute("SELECT step_kind, parts, status, replay_of_step, recomputed_from_step, step_key, result FROM "
                     + schema + ".execution_step WHERE attempt_id=%s ORDER BY started_at", (attempt_id,))
         rows = [dict(r) for r in cur.fetchall()]
     conn.rollback()
@@ -638,3 +638,71 @@ def test_negative_a_lease_that_expired_mid_run_is_claimed_afresh_and_completed_o
     assert [it["status"] for it in client.items.values()] == ["COMPLETED"]
     assert sum(1 for name, _ in client.calls if name == "complete") == 1      # attempt 1 died before its complete was recorded; attempt 2 completed once
     assert sum(1 for name, _ in client.calls if name == "claim") == 2
+
+
+# ------------------------------------------------------------- s14 canary finding D (2026-09-17): the engine committed, the step result never landed
+
+class OriginalOnceClient(WorkItemClient):
+    """The engine's rule: one ORIGINAL observation per experiment; a second
+    non-replication post is 409. list_observations carries exp_id and the
+    posted content (repeat_index), which is what recovery-by-content reads."""
+
+    def observation(self, wid, exp_id, content, outcome, **kw):
+        self._owning(wid)
+        mine = [o for o in self.observations.get(wid, []) if o.get("exp_id") == exp_id]
+        if mine and not kw.get("replication"):
+            raise RuntimeError("HTTP 409: this experiment (or prediction) already has an ORIGINAL observation")
+        oid = RecordingClient.observation(self, wid, exp_id, content, outcome, **kw)
+        self.observations.setdefault(wid, []).append({"obs_id": oid, "exp_id": exp_id, "content": content})
+        return oid
+
+
+def test_a_death_between_the_engines_commit_and_the_step_result_is_recovered_by_content(conn, drafted, tmp_path):
+    """POSITIVE: attempt 1's observe:0 landed on the engine but its step row
+    has result NULL (the worker died in between). Attempt 2 finds it by
+    (exp_id, repeat_index), REPLAYS it with the recovered obs_id, and posts
+    only observe:1. NEGATIVE (the pre-fix behaviour, asserted by the double):
+    re-posting observe:0 would be a 409 -- so a pass here means no re-post
+    happened. CHEAT: a NULL-result step whose act is NOT on the engine is
+    RECOMPUTED, never invented."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-rec-1", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = OriginalOnceClient()
+    store = tmp_path / "sessions"
+    v = _viv(schema, client, spec, worker="rec-w1")
+    v._runner.session_store = store
+    real = client.observation
+
+    def commit_then_die(wid, exp_id, content, outcome, **kw):
+        real(wid, exp_id, content, outcome, **kw)         # the engine has it ...
+        raise RuntimeError("simulated death before the step result landed")   # ... the recorder does not
+    client.observation = commit_then_die
+    eid = _enqueue(conn, schema, spec)
+    assert v.tick(conn).outcome == FAILED
+    client.observation = real
+    atts = _attempts(conn, schema, eid)
+    st1 = {(s["step_kind"], tuple(s["parts"])): s for s in _steps(conn, schema, atts[0]["attempt_id"])}
+    assert st1[("observe", (0,))]["result"] is None                      # the gap, as production showed it
+    with conn.cursor() as cur:
+        cur.execute("INSERT INTO " + schema + ".execution_attempt (experiment_id, attempt_number, parent_attempt_id, design_digest, worker_id) "
+                    "VALUES (%s, 2, %s, %s, 'rec-w1')", (eid, atts[0]["attempt_id"], _spec.spec_hash(spec)))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='running', claimed_by='rec-w1', finished_at=NULL WHERE experiment_id=%s", (eid,))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
+    conn.commit()
+    _q.release_stranded(conn, eid, actor="op", reason="worker died", schema=schema, new_attempt=True)
+    conn.commit()
+    v2 = _fresh_process(schema, client, spec, "rec-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    st2 = {(s["step_kind"], tuple(s["parts"])): s for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert st2[("observe", (0,))]["status"] == "REPLAYED" and st2[("observe", (0,))]["result"] is not None
+    assert st2[("observe", (1,))]["status"] == "NEW"
+    wid = st2[("world", ("plain",))]["result"]["world_id"]
+    assert len(client.observations[wid]) == 2                             # exactly two on the engine, no duplicate
+    # CHEAT: a NULL-result step with nothing on the engine is recomputed, not invented
+    from viv.runner import SfeRunner
+    assert SfeRunner._observation_present(client, wid, None, exp_id="exp_nothing", repeat_index=7) is False
