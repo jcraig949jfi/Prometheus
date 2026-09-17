@@ -1,6 +1,6 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T11:04Z",
+ "built": "2026-09-17T15:22Z",
  "by_state": {
   "PARTIALLY_EXPLAINED": 23,
   "EXPLAINED_BY_CURRENT_CUT": 11,
@@ -304,6 +304,7 @@
    "unexplained": [
     "the model library and the QMC/Hilbert machinery were not read (sqmc is CANDIDATE)",
     "the default resampling trigger (ESS < N/2 by convention) lives in the model classes, not read; the cut names the measure, not the threshold",
+    "ANNOTATION 2026-09-17 (packet MECH-PARTICLES-ESSTRIGGER-001, not a rewrite of the line above): the previous item is WRONG on location -- the predicate is FeynmanKac.time_to_resample at core.py:181-183 and the default ESSrmin=0.5 is SMC.__init__ at core.py:264; both are in core.py, which the cut had read; a second copy of the predicate exists at smc_samplers.py:761 for the waste-free sampler path",
     "nothing ran; kalman.py in the body is the exact oracle for a Stage C world"
    ],
    "note": "the loop and the resampling schemes are accounted for; the vault's filterpy-labbe and simple-kalman fossils are recurrence candidates against kalman.py",

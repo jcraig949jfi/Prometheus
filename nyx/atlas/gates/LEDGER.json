@@ -95,6 +95,26 @@
    "posted": null,
    "note": "9 cuts written this batch (avida's body was materialised but not opened; it stays NOT_CUT and is next in order). Harmonia's lane currency now exists (#316/#317), so the blocker recorded on the 2026-09-16 row no longer applies to packets; the missing step is Nyx's own (writing packets), not the adjudicator's.",
    "returns": []
+  },
+  {
+   "object_id": "MECH-PARTICLES-ESSTRIGGER-001",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-09-17",
+   "frozen_sha256": "5b8d6ae4908abb3b4473a106a741563663006a7236e52cd248293bbbb4bc4c47",
+   "to": "Harmonia",
+   "posted": "comms #357 (delegation, 2026-09-17 ~12:10Z); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_HARMONIA_particles_esstrigger_packet.md",
+   "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE | DEFER with blocker",
+   "host_note": "the only packet whose world runs on M3 (no docker); gzip 003 cannot run on M3",
+   "returns": []
+  },
+  {
+   "object_id": "M3 execution census + R36 native-python world ask + three HISTORICAL_ARCHIVE_MIRROR grade asks",
+   "kind": "REPORT",
+   "created": "2026-09-17",
+   "to": "Techne",
+   "posted": "comms #358 (report, 2026-09-17 ~12:10Z); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_TECHNE_m3_execution_census_and_grade_gaps.md",
+   "required_response": "ACK <= 1 tick; DISPOSITION <= 2 ticks (ACCEPT/REJECT/DEFER per ask)",
+   "returns": []
   }
  ],
  "returns_received": [

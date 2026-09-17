@@ -164,6 +164,17 @@ class _LeaseKeeper:
                 "error": self.error}
 
 
+def _kw_if(fn, **kw) -> dict:
+    """Only the keyword arguments `fn` declares (and that are not None): the
+    production client takes idem_key; the recording doubles do not."""
+    import inspect
+    try:
+        params = inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return {}
+    return {k: v for k, v in kw.items() if v is not None and k in params}
+
+
 class _NotClaimable(Exception):
     """Raised inside the claim step; typed by the caller."""
 
@@ -440,6 +451,20 @@ class SfeRunner:
                 "session_id": sid}
 
     @staticmethod
+    def _items(resp, key):
+        """Schema 9 list routes answer {key: [...], next_after_seq, truncated}
+        (Daedalus D8 cursors); older engines and the test doubles answer a
+        bare list. The s14 canary D showed the verifiers iterating the DICT's
+        keys, so every 'present' check on production read False. A truncated
+        page is NOT a complete answer: the caller gets None and must not
+        claim absence from it."""
+        if isinstance(resp, dict):
+            if resp.get("truncated"):
+                return None
+            return list(resp.get(key) or [])
+        return list(resp or [])
+
+    @staticmethod
     def _world_alive(c, prior, *, name=None, sid=None):
         """Alive by id; with NO recorded result, by NAME among this session's
         worlds (the name is derived from the sealed spec), returning the
@@ -449,7 +474,10 @@ class SfeRunner:
                 return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
             if not name:
                 return False
-            for w in c.list_worlds():
+            worlds = SfeRunner._items(c.list_worlds(), "worlds")
+            if worlds is None:
+                return False
+            for w in worlds:
                 if w.get("name") == name and str(w.get("state")) not in ("TERMINATED", "None") \
                         and (sid is None or w.get("session_id") == sid):
                     return {"world_id": w["world_id"], "labels": {}, "labels_applied": False,
@@ -468,7 +496,10 @@ class SfeRunner:
                 return bool(c.get_experiment(wid, prior["exp_id"]))
             if not spec_hash:
                 return False
-            for e in c.list_experiments(wid):
+            exps = SfeRunner._items(c.list_experiments(wid), "experiments")
+            if exps is None:
+                return False
+            for e in exps:
                 if e.get("spec_hash") == spec_hash:
                     return {"hyp_id": e.get("hyp_id"), "pred_id": e.get("pred_id"), "exp_id": e["exp_id"],
                             "recovered_by": "spec_hash"}
@@ -498,7 +529,9 @@ class SfeRunner:
         so the step is REPLAYED rather than re-posted (which the engine
         refuses: one ORIGINAL per experiment, 409)."""
         try:
-            obs = c.list_observations(wid)
+            obs = SfeRunner._items(c.list_observations(wid), "observations")
+            if obs is None:
+                return False
             if prior_obs_id is not None:
                 return any((o.get("obs_id") or o.get("id")) == prior_obs_id for o in obs)
             if exp_id is None or repeat_index is None:
@@ -640,13 +673,21 @@ class SfeRunner:
                     str(exc), partial=out,
                     failure_class="BUDGET_EXCEEDED") from exc
 
+        key_of = getattr(record, "key", None)
+        idem_exp = key_of("experiment", [wid]) if key_of else None
+
         def _commit_experiment():
-            hyp = c.hypothesis(wid, spec["hypothesis"])
+            # Idempotency-Key = the step key (Daedalus #354): the engine
+            # replays the same ids to a retry or a NEW ATTEMPT's re-post
+            hyp = c.hypothesis(wid, spec["hypothesis"],
+                               **_kw_if(c.hypothesis, idem_key=idem_exp and idem_exp + ":hyp"))
             pred = None
             if spec.get("prediction") is not None:
-                pred = c.prediction(wid, hyp, spec["prediction"])
+                pred = c.prediction(wid, hyp, spec["prediction"],
+                                    **_kw_if(c.prediction, idem_key=idem_exp and idem_exp + ":pred"))
             e = c.experiment(wid, spec, hyp_id=hyp, pred_id=pred,
-                             commit=True, enqueue=True, kind=spec["work"]["kind"])
+                             commit=True, enqueue=True, kind=spec["work"]["kind"],
+                             **_kw_if(c.experiment, idem_key=idem_exp))
             return {"hyp_id": hyp, "pred_id": pred, "exp_id": e["exp_id"]}
 
         committed = record("experiment", _commit_experiment, parts=[wid],
@@ -1117,7 +1158,10 @@ class SfeRunner:
         for rep in repeats:
             outcome_i, prov_i = _spec.apply_outcome_rule(spec, rep["result"])
 
-            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i):
+            key_of = getattr(record, "key", None)
+            idem_obs = key_of("observe", [rep["repeat_index"]]) if key_of else None
+
+            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i, idem_obs=idem_obs):
                 return c.observation(
                     wid, exp_id,
                     {"result": rep["result"], "outcome_rule_provenance": prov_i,
@@ -1128,7 +1172,8 @@ class SfeRunner:
                      "repeat_seed_derivation": plan["seed_derivation"],
                      "executed_by": "vivarium", "worker_id": self.worker_id},
                     outcome_i, pred_id=pred_id, work_id=work_id,
-                    replication=rep["repeat_index"] > 0)
+                    replication=rep["repeat_index"] > 0,
+                    **_kw_if(c.observation, idem_key=idem_obs))
 
             oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
                          verify=lambda r, w=wid, i=rep["repeat_index"]: self._observation_present(

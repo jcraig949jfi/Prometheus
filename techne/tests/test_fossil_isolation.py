@@ -22,7 +22,7 @@ import pytest
 
 from techne.fossils import harvest, record, vault
 
-pytestmark = pytest.mark.skipif(shutil.which("bash") is None, reason="native runner needs bash")
+pytestmark = pytest.mark.skipif(harvest.native_shell() is None, reason="native runner needs a bash that passes the capability probe (TECHNE-101)")
 
 HELLO = b"hello from 1987\n"
 README = b"README of a specimen\n"

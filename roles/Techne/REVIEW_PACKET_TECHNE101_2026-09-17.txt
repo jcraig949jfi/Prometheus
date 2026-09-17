@@ -1,0 +1,69 @@
+================================================================================
+REVIEW PACKET  Techne[gandalf-a04f7c25]  TECHNE-101  native shell by capability
+2026-09-17, M3 (GANDALF)
+================================================================================
+CLAIM
+  The fossil vault's native runner executed a different program than the one
+  its tests checked for. Fixed: the shell is resolved by a capability probe to
+  an absolute path that every receipt now records; a host with no capable
+  shell gets a typed refusal that never touches the specimen's record.
+
+THE DEFECT (E3, measured on M3 at boot)
+  guard   shutil.which("bash")      -> Git's bash (PATH order)      runs
+  runner  subprocess.run(["bash"])  -> System32\bash.exe (CreateProcess
+                                       searches System32 before PATH) = the
+                                       WSL launcher: "no installed
+                                       distributions", exit 1
+  effect  6 tests FAIL on M3; on M1/M2 the launcher IS a distro, so the two
+          resolutions agreed by accident for 5 days.
+
+THE FIX (harvest.py, +~95 lines; 3 test files)
+  native_shell_candidates()  System32 first (the order that used to win),
+                             then PATH; absolute, existing, de-duplicated;
+                             env reads via vault.getenv (RQ-4: PATH and
+                             SystemRoot now appear in env_vars_read)
+  probe_native_shell(path)   runs `echo BASH_VERSION=$BASH_VERSION; uname -s`;
+                             capable = exit 0 AND a version printed
+  native_shell()             first capable candidate; all probes kept;
+                             cached per process; explicit lists never cached
+  _shell(native)             launches [resolved path, "-lc", ...]
+  run()                      receipt["native_shell"]; none -> BLOCKED_PLATFORM,
+                             blocked_reason NATIVE_SHELL_UNAVAILABLE, no stage
+                             attempted, persisted False, record untouched
+
+CONTROLS (techne/tests/test_fossil_native_shell.py)
+  positive   real bash: capable, version, absolute path         PASS
+  cheat 1    exit 0, no BASH_VERSION printed -> refused          PASS
+  cheat 2    WSL launcher text, exit 1 -> refused                PASS
+  ordering   [cheat, real] -> real; refusal on the record        PASS
+  hygiene    candidates absolute, existing, unique               PASS
+  refusal    run() with no shell: BLOCKED_PLATFORM, not persisted,
+             record byte-identical, no receipt file              PASS
+  receipt    a real run names the shell that ran                 PASS
+  pre-fix control: the boot measurement (6 FAIL on this host); with the fix
+  stashed the module cannot collect, which is not a control and is said so.
+
+NUMBERS (M3, CPython 3.11.9)
+  targeted (native_shell + isolation + environment)   31 passed
+  record layer + comms on the same tree               435 passed, 8 skipped
+  resolution on M3: System32 bash.exe REFUSED; Git bash 5.2.21 CHOSEN
+  my own defect caught by the suite on the first run: an os.environ read in
+  harvest.py (RQ-4 source discipline) -> routed through vault.getenv
+
+WHAT THIS DOES NOT CLAIM
+  - No M1/M2 receipt has been re-run under the new resolution. By
+    construction System32 is probed first there, so the chosen bash is the
+    one that always ran; that is an argument, not a measurement.
+  - BLOCKED_PLATFORM here means "this host", never "this specimen": that is
+    exactly why the refusal is not persisted.
+
+WHAT WOULD FALSIFY IT
+  - A native receipt re-run on M2 whose stdout or exit differs from its
+    predecessor: the runner was never host-independent.
+  - A host where the WSL launcher passes the probe but cannot cd into a
+    Windows path: the probe is too weak and needs a cd control.
+
+WHAT TO STOP
+  Nothing. Cost: one unit, no operator decision consumed.
+Conflict of interest: the defect, the fix and the tests are all mine.
+================================================================================

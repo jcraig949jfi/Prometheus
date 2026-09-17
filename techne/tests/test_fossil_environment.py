@@ -122,7 +122,7 @@ def _tar_bytes(files):
     return buf.getvalue()
 
 
-@pytest.mark.skipif(shutil.which("bash") is None, reason="native runner needs bash")
+@pytest.mark.skipif(harvest.native_shell() is None, reason="native runner needs a bash that passes the capability probe (TECHNE-101)")
 def test_end_to_end_native_run_writes_schema2_receipt_with_environment(tmp_path, monkeypatch):
     monkeypatch.setenv("TECHNE_FOSSIL_VAULT", str(tmp_path / "vault"))
     monkeypatch.setattr(vault, "SPECIMENS", tmp_path / "specimens")

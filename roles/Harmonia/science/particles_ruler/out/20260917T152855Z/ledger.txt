@@ -1,0 +1,22 @@
+MECH-PARTICLES-ESSTRIGGER-001  freeze 5b8d6ae4  host GANDALF  python 3.11.9  numba 0.65.1 jit_active True
+payload hashes at run time: MATCH
+world: LinearGauss defaults, T=100, data seed 20260917, logL_exact -146.7227
+
+controls
+  C-CHEAT-ORACLE-IN-THE-LOOP       PASS
+  C-POS-N-SCALING                  FAIL
+  C-NEG-UNINFORMATIVE              PASS
+    CHEAT-I0     RMSE 0 V 0 B 0
+    CHEAT-I1     RMSE 0 V 0 B 0
+    CHEAT-I2     RMSE 0 V 0 B 0
+    CHEAT-I3     RMSE 0 V 0 B 0
+    POS  V(10)/V(1000) = 5.46e+03 band (10.0, 1000.0)  RMSE10 0.3787 RMSE1000 0.0146
+    NEG  R_max under I0 = 0  V(I1)/V(I0) = 1 band (0.5, 2.0)
+
+arm        N scheme       ESSrmin seeds          V         B     RMSE    R min/med/max
+
+
+mandatory controls pass: False   CUT_KILL fires: None
+indeterminate items: ['C-POS-N-SCALING failed: V ratio 5.46e+03, RMSE10 0.3787 vs RMSE1000 0.01457']
+return_type (boundary claim): PREDICTION_INDETERMINATE
+elapsed 19.2 s; rows sha256 0de319da3ddf; out C:\prometheus-worktrees\harmonia-gandalf-6cd1348b-boot\roles\Harmonia\science\particles_ruler\out\20260917T152855Z
