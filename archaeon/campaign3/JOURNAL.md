@@ -95,3 +95,21 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
 - Battery: 2 of 3 passed; the failing one (advantage without inherited
   competence: 5/6 vs 4/6 at n=6) is why the record is WEAK.
 - Next: C3-SFE-05 (retention break-even) running.
+
+## 11:05-11:25 -- C3-SFE-05 (dry a01/a02; a03 of record; CAPABLE_NEGATIVE on the declared primary, break-even located)
+
+- 684 s; 60 runs, 60 records, 60 reach rows, 0 errors. The rung-0 hold
+  released by competence in 60/60 (median 35 generations).
+- Mean final rung-0 competence 0.764 / 0.892 / 1.000 / 1.000 at p =
+  0 / 0.05 / 0.10 / 0.20; runs below 0.75: 3 / 2 / 0 / 0. The preregistered
+  falsification for p0.05 fired: the break-even is in (0.05, 0.10].
+- p0.1_then_0: retention 1.0 in 12/12 and the same generality (11/12, same
+  seeds and generations) for a MEDIAN of 22 revisit episodes instead of 150
+  -- retention is a transient price, not a standing tax (L3-023).
+- No adaptation cost at any share up to 0.20 (adapt to the new rung = 0
+  generations in 57/58 general runs) -- untested rather than absent, since
+  this ladder's adaptation is free after delay 1 (L3-024).
+- Instrument check (L3-025): the p0.1 arm reproduces C3-SFE-03's ladder arm
+  row for row under CRN, across two sealed preregistrations.
+- Next: C3-SFE-06 (basin geometry out-of-family) running; C3-SFE-07 consumes
+  its geometry rows.
