@@ -857,3 +857,32 @@
 - H6 survey: no committed rows file stores full-archive genomes (every harness clears the archive), so every coverage
   re-score needs simulation. Only E4b (E, PASS; coverage + qd_score > random-filled archive, 5/5; UNSEEDED sampler) is
   an untested arm-vs-arm coverage claim. C-R2-02 already done by D-R7-5 (GAP_VANISHES).
+- 17:25 D-R8-2 NOT STARTED: worker D waiting_cpu (C slot 1, G slot 0; E queued ahead of D). No LOW_UTIL class landed, so
+  SWARM_R8 s9 / ADAPT-9 reads "BETA only on an otherwise-idle token"; the sweep would hold one 8-thread slot ~2.3 h at
+  ~4% utilisation. D's reading: assigned brief item + A's r7 restraint ruling was scoped to discretionary additions ->
+  left queued in FIFO order; the tension posted to A (1789593933899-0) with the projection; D withdraws (audit trail
+  first) only on A's ruling. Latest start with margin ~19:30.
+- D-R8-3 (H6) BUILT: r8_3_e4b_descriptor_robustness.py + test (6 passed rc 0). E4b is the only untested arm-vs-arm
+  coverage claim; seeded re-run under E4's genome descriptor (I1) and ONE behavioural family (peak-charge timing x
+  charge-fall share from NbEncounter's own log). OWN DISCLOSURE: the no-rows stub run printed the controls' sampled-elite
+  counts, which equal the behaviour archive's cell count when < 32 (w2 @3 gens 1; w5 @100 gens 2; w1 >= 32) -- a partial
+  read of a response-adjacent value before the predicate. It exposed that E4b's absolute skip_lin 30/32 is unreachable
+  for small archives; control changed to >= 90% of sampled elites BEFORE the predicate; decision thresholds untouched.
+  Both disclosed in the docstring and the predicate.
+- Commit f6f3375c5 + receipt mirror f6ef99ced pushed with the worker PARKED via pm:push:lock:D (state stopped, no live
+  writer) -- first push refused rc 4 on my unstaged ledger mirror; committed it and re-pushed clean. Rebase pulled only
+  H's replay file (H 9b0bd80b3: REPLAY D-R8-1 AGREE INDETERMINATE) -> no worker restart needed.
+- D-R8-3 predicate 1789594016669-0 pinned f6f3375c5; job 51f437b9ca9a queued behind the sweep.
+- H4 WHY_NOT_RUN 1789594034931-0 (telemetry.why_not_run, residue better_instrument) + PC 1789594034932-0 (G6
+  open_candidate). D-R8-1b PC 1789594043551-0 (structural cheat oracle; D has seen the values, must disclose).
+- ITEM 3 (B-R5-1 residual anomalies): the OPEN queue holds none about B-R5-1 (family 3303 was RESOLVED in r7,
+  D-R7-2b). Nothing to run; correct idleness on that item.
+- 17:53 D-R8-2 granted a token (no A ruling arrived before the grant; the question stays on record 1789593933899-0).
+  Reference row: BETA recomputed 169144, C rows sha256 == frozen. Control 4200|0 oracles clean (world 0, k3 1.0,
+  free_stream 8/8 eligible caught, charge 0; 51,200 offers exact). ~37 s/run.
+- 18:33 segment 0 paused at the 2400 s ceiling after 64 runs + the m0 first run: I1 PASSED (the job only enters m0 if
+  all 64 control + m1 runs reproduce C's committed rows exactly on top1_sha256 / train_fit_top1 / held). All runs
+  run_ok so far. Continuation waited 16 min: E's continuation carries an earlier original priority_ts (1789593360 vs
+  D's 1789593551), so FIFO ran E first -- checked in pm:jobs:*:cont, NOT an anomaly.
+- A 1789595293221-0 (all lanes): accumulate FINAL.json via telemetry.write_final as we run. D's generator drafted in
+  scratch (receipts from ledger/D.jsonl since r8 start, rows files, PCs, WHY_NOT_RUN, done-stream counts); validates.

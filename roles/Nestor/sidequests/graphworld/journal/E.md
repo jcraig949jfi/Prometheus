@@ -836,3 +836,9 @@ L2 156.52, L3 156.36, L4 156.95, X 156.88. EVERY donor-derived arm > scratch (+1
 (L0 - L2 +0.19 vs R7 -0.66): both inside noise. Descriptive only: zero-shot X 146.4 > L2 142.0 > L1 139.5 > L0 134.6.
 READING (not a classification, not transfer): the graft-over-scratch gain does not depend on W's feature structure at
 this N; what every donor arm shares and scratch lacks is the donor bias b, codebook C and W scale -> next discriminator.
+
+Iteration 3 (18:50-19:02). H1 receipt 1789599074033-0 filed (guard accepted, 0 refusals; rows rebased b11aae206 ->
+5740ed4c7, byte-identical). Report to A 1789599098114-0. H1b carrier factorial (2^3 swap of W / b / C between donor
+and the same scratch genomes, fresh seeds 32..39) written + 11 tests (26 total rc 0), pushed 20668625e; dry runs admit
+3/3 ok, guard synthetic accepted + 2 planted refusals (6 checks, 0 bad); PREDICATE 1789599207120-0. Worker restarted
+after the harness add (old pid 34276/29112 terminated by verified cmdline + cwd; new 34876/34976). Job 67b9773f42ae.
