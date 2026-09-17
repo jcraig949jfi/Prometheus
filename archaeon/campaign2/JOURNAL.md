@@ -95,3 +95,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   -0.5): the parent's proxy does not predict. Basin share -0.59, deceptive
   share +0.57 do. First use of the rank_correlation primary. Ledger L2-040,
   L2-041. Next: C2-SFE-09.
+
+## 05:30-05:45 -- C2-SFE-09 (dry a01 crashed on helper signatures, a02 clean; engine a03 of record; WEAK_POSITIVE n=4)
+
+- 57 s; 1 world, 36 records, 0 errors; the L-019 probe wired. particle2 -
+  random = +0.079 (4/4); reset-only below chance; time/input shuffles remove
+  the margin; LOCALIZED 4/4 with k50 = 1: one site carries the margin.
+  SFE-04's 'distributed' was the window-vs-random-window null containing the
+  effect (L2-043). Ledger L2-043..L2-045. Next: C2-SFE-10.
