@@ -683,3 +683,32 @@ NOT SHOWN / LIMITS
     - Campaign 3 is still running; its CAMPAIGN_REPORT.md, when it lands,
       is authoritative over the journal I read and may add rows to 0.2.
     - Proteus has not reviewed; Stage 3 cannot close without it.
+
+=======================================================================
+ADDENDUM 2026-09-17 09:5xZ -- Campaign 3 CLOSED (#326; report on main cb9135104)
+=======================================================================
+
+    Read archaeon/campaign3/CAMPAIGN_REPORT.md (authoritative over the
+    journal). Engine-side content: engine errors on attempts of record 0
+    (s15); one successful resume (slot 09 a04 replayed 29 verified steps);
+    L3-015 (self-import on an ISOLATED world refused: correct); #325 (the
+    artifact listing) unchanged. No new engine row. Stage 0.2 stands.
+
+    Two C3 findings that bear on the delta:
+    - s12 / lesson: "import takeover is injection mechanics, not
+      capability; apply a cap and REPORT REALIZED ORIGIN SHARES or state
+      that you are measuring a replaced population." This is the strongest
+      evidence yet for D3 as the sealed slot where a caller records
+      realized dose / origin shares per generation (Vivarium 6G, PEW
+      LINEAGE_SHARE_OBSERVED), and confirms D12's deferral: the fact fits
+      a WORLD_EVENT kind + logical_time + payload; it does not need its
+      own table.
+    - s13 / recurring defect: "an instrument gated on a fixed constant
+      rather than on the measured state of its own space" (twice, slots
+      03 and 06). Archaeon's layer; the engine's only contribution is to
+      hold logical_time (D1) so such gates can be measured after the
+      fact. Nothing to push down.
+
+    Freeze status: Campaign 3 closed; the deploy window is the operator's
+    to open (amendment s14: "until Campaign 3 closes AND the deploy window
+    is opened"). Nothing deployed.
