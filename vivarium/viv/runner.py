@@ -440,16 +440,39 @@ class SfeRunner:
                 "session_id": sid}
 
     @staticmethod
-    def _world_alive(c, prior) -> bool:
+    def _world_alive(c, prior, *, name=None, sid=None):
+        """Alive by id; with NO recorded result, by NAME among this session's
+        worlds (the name is derived from the sealed spec), returning the
+        recovered world record so no second world is minted."""
         try:
-            return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if prior is not None:
+                return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if not name:
+                return False
+            for w in c.list_worlds():
+                if w.get("name") == name and str(w.get("state")) not in ("TERMINATED", "None") \
+                        and (sid is None or w.get("session_id") == sid):
+                    return {"world_id": w["world_id"], "labels": {}, "labels_applied": False,
+                            "session_id": w.get("session_id"), "recovered_by": "name"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
     @staticmethod
-    def _experiment_readable(c, wid, prior) -> bool:
+    def _experiment_readable(c, wid, prior, *, spec_hash=None):
+        """Readable by id; with NO recorded result, by spec_hash among the
+        world's experiments (one design commits one experiment per world),
+        returning the recovered ids so no second experiment is committed."""
         try:
-            return bool(c.get_experiment(wid, prior["exp_id"]))
+            if prior is not None:
+                return bool(c.get_experiment(wid, prior["exp_id"]))
+            if not spec_hash:
+                return False
+            for e in c.list_experiments(wid):
+                if e.get("spec_hash") == spec_hash:
+                    return {"hyp_id": e.get("hyp_id"), "pred_id": e.get("pred_id"), "exp_id": e["exp_id"],
+                            "recovered_by": "spec_hash"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -467,10 +490,23 @@ class SfeRunner:
             return False
 
     @staticmethod
-    def _observation_present(c, wid, prior_obs_id) -> bool:
+    def _observation_present(c, wid, prior_obs_id, *, exp_id=None, repeat_index=None):
+        """Is the prior observation on the engine? With a recorded id: by id.
+        With NO recorded id (the worker died after the engine committed the
+        observation and before the step's result landed -- s14 canary D): by
+        CONTENT, (exp_id, content.repeat_index), returning the recovered obs_id
+        so the step is REPLAYED rather than re-posted (which the engine
+        refuses: one ORIGINAL per experiment, 409)."""
         try:
-            return any((o.get("obs_id") or o.get("id")) == prior_obs_id
-                       for o in c.list_observations(wid))
+            obs = c.list_observations(wid)
+            if prior_obs_id is not None:
+                return any((o.get("obs_id") or o.get("id")) == prior_obs_id for o in obs)
+            if exp_id is None or repeat_index is None:
+                return False
+            for o in obs:
+                if o.get("exp_id") == exp_id and (o.get("content") or {}).get("repeat_index") == repeat_index:
+                    return o.get("obs_id") or o.get("id") or False
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -563,7 +599,8 @@ class SfeRunner:
         else:
             world = record("world", lambda: self._create_world(
                 c, sid, _spec.world_name(sealed), spec["world"]["seed_root"], labels=labels),
-                parts=["plain"], replayable=True, verify=lambda r: self._world_alive(c, r))
+                parts=["plain"], replayable=True,
+                verify=lambda r: self._world_alive(c, r, name=_spec.world_name(sealed), sid=sid))
         wid = world["world_id"]
         out.world_id = wid
 
@@ -614,7 +651,7 @@ class SfeRunner:
 
         committed = record("experiment", _commit_experiment, parts=[wid],
                            replayable=True,
-                           verify=lambda r: self._experiment_readable(c, wid, r))
+                           verify=lambda r: self._experiment_readable(c, wid, r, spec_hash=sealed))
         hyp_id, pred_id, exp_id = committed["hyp_id"], committed["pred_id"], committed["exp_id"]
         out.sfe_experiment_id = exp_id
 
@@ -1086,7 +1123,8 @@ class SfeRunner:
                     replication=rep["repeat_index"] > 0)
 
             oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
-                         verify=lambda r, w=wid: self._observation_present(c, w, r))
+                         verify=lambda r, w=wid, i=rep["repeat_index"]: self._observation_present(
+                             c, w, r, exp_id=exp_id, repeat_index=i))
             obs_ids.append(oid)
         out.obs_ids = obs_ids
         obs_id = obs_ids[0] if obs_ids else None
