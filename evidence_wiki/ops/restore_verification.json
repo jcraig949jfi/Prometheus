@@ -1,21 +1,116 @@
 {
- "dump": "F:\\PrometheusBackups\\pew\\prometheus_fire_20260913T033018.dump",
- "scratch_db": "pew_restore_check_20260913043001",
- "started": "2026-09-13T04:30:01",
+ "dump": "D:\\PrometheusBackups\\pew\\prometheus_fire_20260917T070006.dump",
+ "backup_id": "pewbk-20260917T070006-795ab1c4d323",
+ "dump_sha256_recorded": "795ab1c4d3235f071df53185c48c105f25b498a860d488bb57edf032bb52912b",
+ "dump_sha256_now": "795ab1c4d3235f071df53185c48c105f25b498a860d488bb57edf032bb52912b",
+ "source_host": "192.168.1.202",
+ "target_host": "127.0.0.1",
+ "scratch_db": "pew_restore_check_20260917070240",
+ "started": "2026-09-17T07:02:40",
+ "pg_restore_version": "pg_restore (PostgreSQL) 17.11",
+ "workspace": {
+  "base_sha": "e98d2ee8c9e134b8c92187f65ec92e92eb8cfccf",
+  "branch": "mnemosyne/m2-boot-2026-09-16",
+  "worktree_path": "D:\\Prometheus-worktrees\\mnemosyne-boot-2026-09-16\\evidence_wiki",
+  "dirty": true,
+  "main_worktree": false,
+  "workspace_known": true,
+  "allow_canonical_override": false
+ },
+ "dump_intact": true,
  "pg_restore_rc": 0,
  "pg_restore_stderr_tail": "",
- "restore_seconds": 150.0,
- "tables_live": 37,
- "tables_restored": 37,
+ "restore_seconds": 204.9,
+ "source_identity": {
+  "db_system_id": "7628127204585430828",
+  "server_version": "PostgreSQL 17.9 on x86_64-windows, compiled by msvc-19.44.35223, 64-bit",
+  "db_name": "prometheus_fire"
+ },
+ "target_identity": {
+  "db_system_id": "7681719240261676752",
+  "server_version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "db_name": "pew_restore_check_20260917070240"
+ },
+ "restored_copy_is_canonical_by_identity": false,
+ "tables_live": 171,
+ "tables_restored": 171,
  "tables_missing_in_restore": [],
  "tables_with_differing_counts": {
-  "read_log": {
-   "live": 1825,
-   "restored": 1812
+  "agora.machine_probes": {
+   "live": 131701,
+   "restored": 131695
+  },
+  "archaeon.cadence_log": {
+   "live": 1511,
+   "restored": 1508
+  },
+  "comms.receipt_instances": {
+   "live": 627,
+   "restored": 625
+  },
+  "comms.receipts": {
+   "live": 633,
+   "restored": 631
+  },
+  "ew.read_log": {
+   "live": 3092,
+   "restored": 3091
   }
  },
- "total_rows_live": 36015,
- "total_rows_restored": 36002,
+ "total_rows_live": 5795669,
+ "total_rows_restored": 5795655,
+ "schemas_live": [
+  "agora",
+  "analysis",
+  "archaeon",
+  "bus",
+  "charon_duckdb",
+  "comms",
+  "ew",
+  "kill",
+  "ludus_atlas",
+  "meta",
+  "noesis",
+  "results",
+  "sigma",
+  "signals",
+  "tensor",
+  "viv",
+  "viv_archaeon_test_797363d7",
+  "viv_dev_h0h5",
+  "viv_dev_h1h0",
+  "viv_dev_h1h0b",
+  "viv_dev_h1h0c",
+  "viv_dev_h1h0m",
+  "xref",
+  "zeros"
+ ],
+ "schemas_restored": [
+  "agora",
+  "analysis",
+  "archaeon",
+  "bus",
+  "charon_duckdb",
+  "comms",
+  "ew",
+  "kill",
+  "ludus_atlas",
+  "meta",
+  "noesis",
+  "results",
+  "sigma",
+  "signals",
+  "tensor",
+  "viv",
+  "viv_archaeon_test_797363d7",
+  "viv_dev_h0h5",
+  "viv_dev_h1h0",
+  "viv_dev_h1h0b",
+  "viv_dev_h1h0c",
+  "viv_dev_h1h0m",
+  "xref",
+  "zeros"
+ ],
  "chain_evidence_id": "E-dbe8c504b8cc",
  "chain_live": {
   "found": true,
@@ -148,7 +243,7 @@
   "fossil_by_namespace": [
    {
     "namespace": "prod",
-    "n": 6036
+    "n": 6046
    },
    {
     "namespace": "synthetic",
@@ -156,7 +251,11 @@
    },
    {
     "namespace": "test",
-    "n": 286
+    "n": 345
+   },
+   {
+    "namespace": "theophrastus",
+    "n": 67
    }
   ],
   "prod_row": [
@@ -175,7 +274,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 20928
+    "last_value": 120822
    }
   ],
   "ontology_registry": [
@@ -198,7 +297,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 15
+    "n": 21
    },
    {
     "object_type": "evidence",
@@ -208,7 +307,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 9
+    "n": 11
    },
    {
     "object_type": "relation",
@@ -223,7 +322,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 5
+    "n": 7
    }
   ],
   "fossil_pk": [
@@ -234,6 +333,11 @@
   "evidence_fk": [
    {
     "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
+   }
+  ],
+  "comms_last_message": [
+   {
+    "id": 343
    }
   ]
  },
@@ -241,7 +345,7 @@
   "fossil_by_namespace": [
    {
     "namespace": "prod",
-    "n": 6036
+    "n": 6046
    },
    {
     "namespace": "synthetic",
@@ -249,7 +353,11 @@
    },
    {
     "namespace": "test",
-    "n": 286
+    "n": 345
+   },
+   {
+    "namespace": "theophrastus",
+    "n": 67
    }
   ],
   "prod_row": [
@@ -268,7 +376,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 20928
+    "last_value": 120822
    }
   ],
   "ontology_registry": [
@@ -291,7 +399,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 15
+    "n": 21
    },
    {
     "object_type": "evidence",
@@ -301,7 +409,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 9
+    "n": 11
    },
    {
     "object_type": "relation",
@@ -316,7 +424,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 5
+    "n": 7
    }
   ],
   "fossil_pk": [
@@ -328,9 +436,39 @@
    {
     "d": "FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)"
    }
+  ],
+  "comms_last_message": [
+   {
+    "id": 343
+   }
   ]
  },
  "samples_identical": true,
- "VERDICT": "RESTORE_NOT_VERIFIED",
- "scratch_disposition": "dropped"
+ "count_drift_append_only": {
+  "agora.machine_probes": {
+   "live": 131701,
+   "restored": 131695
+  },
+  "archaeon.cadence_log": {
+   "live": 1511,
+   "restored": 1508
+  },
+  "comms.receipt_instances": {
+   "live": 627,
+   "restored": 625
+  },
+  "comms.receipts": {
+   "live": 633,
+   "restored": 631
+  },
+  "ew.read_log": {
+   "live": 3092,
+   "restored": 3091
+  }
+ },
+ "count_loss": {},
+ "VERDICT": "RESTORE_VERIFIED",
+ "verdict_note": "samples identical",
+ "scratch_disposition": "dropped",
+ "finished": "2026-09-17T07:06:07"
 }

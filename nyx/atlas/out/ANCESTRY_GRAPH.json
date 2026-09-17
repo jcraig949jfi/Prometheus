@@ -1,12 +1,12 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-16T18:35Z",
- "n": 131,
+ "built": "2026-09-17T11:04Z",
+ "n": 141,
  "by_relation": {
-  "algorithm_from": 42,
+  "algorithm_from": 51,
   "derived_from": 7,
   "shares_ancestor_with": 42,
-  "historical_version_of": 8,
+  "historical_version_of": 9,
   "superseded_by": 14,
   "reimplementation_of": 3,
   "port_of": 1,
@@ -90,6 +90,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-reno-1990",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -146,6 +153,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "compress-4.2.4-lzw",
    "relation": "historical_version_of",
    "to": "ncompress-5.0-lzw-1985",
@@ -179,6 +193,13 @@
    "to": "tiny-aes-c",
    "note": "AES (Rijndael) replaced DES by NIST competition [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "dlmalloc",
+   "relation": "algorithm_from",
+   "to": "Knuth boundary tags; Lea's malloc lineage 1987-2012 (the file's own history); the glibc ptmalloc family derives from earlier versions (the comment at 27-30)",
+   "note": "from the source comments; not verified against the record this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "eispack-netlib-1976",
@@ -277,6 +298,13 @@
    "to": "Hoffmann & Nebel, JAIR 2001",
    "note": "relaxed-plan (ignore-delete-lists) heuristic + enforced hill-climbing",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Graphplan (Blum & Furst 1995) planning graph without mutexes; HSP (Bonet & Geffner) heuristic search; Hoffmann & Nebel 2001 JAIR",
+   "note": "from the file headers; the vault's graphplan-blum-furst-1995 is a sibling fossil for a recurrence test",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "glibc-rwlock-writer-starvation-2.36",
@@ -524,6 +552,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "lmdb-0.9.31",
    "relation": "algorithm_from",
    "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
@@ -608,6 +643,20 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "openssl-1.0.1f-heartbleed",
    "relation": "historical_version_of",
    "to": "OpenSSL 1.0.1g (the fix)",
@@ -669,6 +718,13 @@
    "to": "libdai-mooij",
    "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "picosat-965",
@@ -902,6 +958,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "verilog-uart2bus",
+   "relation": "algorithm_from",
+   "to": "the 16x-oversampling UART convention (8250-class devices); the 'uart2bus' OpenCores project (record lineage not re-read)",
+   "note": "from the module headers",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "walksat-v56",
    "relation": "shares_ancestor_with",
    "to": "picosat-965",
@@ -921,6 +984,13 @@
    "to": "Ongaro & Ousterhout 2014",
    "note": "Raft; itself a redesign of Paxos for understandability",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014, In Search of an Understandable Consensus Algorithm (the code cites the paper's section numbers in comments)",
+   "note": "from the source comments; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "zchaff-2007",

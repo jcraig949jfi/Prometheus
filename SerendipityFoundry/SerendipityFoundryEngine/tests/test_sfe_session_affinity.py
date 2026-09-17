@@ -418,6 +418,9 @@ EXEMPT = {
     ("GET", "/v2/health"):         "B3 2026-09-12: measured health; no auth, no per-client resource "
                                    "(counts and timings only; no ids, no tokens); a foreign key is "
                                    "irrelevant because nothing here is owned",
+    ("GET", "/v2/capabilities"):   "v9 D9 2026-09-17: discovery of the engine's OWN vocabularies, "
+                                   "limits and read semantics; no auth, no per-client resource; "
+                                   "the point is to discover the session rule WITHOUT a session",
     ("GET", "/v2/openapi.json"):   "the contract itself; must be readable to "
                                    "discover how to send a session at all",
     ("GET", "/v2/docs"):           "human documentation UI",
