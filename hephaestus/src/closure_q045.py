@@ -29,37 +29,43 @@ PROBES = W.probe_inputs()        # the world's own six probes (seed 20260827)
 # ── programs: recover a minimal full-inventory program per behaviour (the certificate) ──────────
 def closure_with_programs(prims, max_size, max_candidates):
     """Bottom-up enumeration over signatures, keeping ONE minimal program per (type, signature).
-    Mirrors world3.build_closure's semantics (dedupe by signature, minimal size) but also keeps
-    the expression, which build_closure does not return. Used only to (a) select targets and
-    (b) extend a target's behaviour to the verification domains via its certified program."""
+
+    Mirrors world3.build_closure's semantics (dedupe by signature, minimal size) but also keeps the
+    expression, which build_closure does not return. SIGNATURES COMPOSE POINTWISE from child
+    signatures -- the world's own enumerability property. The first version of this function
+    re-evaluated every candidate's whole tree per probe (W.signature) and burned three days of CPU
+    at size 8 / 30M candidates without finishing; author error, recorded in the review packet."""
     x_sig = tuple(PROBES)
     progs = {(W.V, x_sig): ("X",)}
-    layers = {0: {W.V: [("X",)], W.S: []}}
+    # layers[size][type] -> list of (signature, expr); signature is a tuple over the probe set.
+    layers = {0: {W.V: [(x_sig, ("X",))], W.S: []}}
     cand = 0
     for size in range(1, max_size + 1):
         layers[size] = {W.V: [], W.S: []}
         for i, spec in enumerate(prims):
-            ar = len(spec["args"])
-            if ar == 1:
-                for s1 in range(size - 1, size):
-                    for e1 in layers[s1][spec["args"][0]]:
-                        cand += 1
-                        if cand > max_candidates:
-                            return progs, cand, True
-                        e = (i, e1); sig = W.signature(e, PROBES, prims); key = (spec["ret"], sig)
-                        if key not in progs:
-                            progs[key] = e; layers[size][spec["ret"]].append(e)
+            fn, ret = spec["fn"], spec["ret"]
+            if len(spec["args"]) == 1:
+                for sig1, e1 in layers[size - 1][spec["args"][0]]:
+                    cand += 1
+                    if cand > max_candidates:
+                        return progs, cand, True
+                    sig = tuple(fn(a) for a in sig1)
+                    key = (ret, sig)
+                    if key not in progs:
+                        e = (i, e1); progs[key] = e; layers[size][ret].append((sig, e))
             else:
+                t1, t2 = spec["args"]
                 for s1 in range(0, size - 1):
                     s2 = size - 1 - s1
-                    for e1 in layers[s1][spec["args"][0]]:
-                        for e2 in layers[s2][spec["args"][1]]:
+                    for sig1, e1 in layers[s1][t1]:
+                        for sig2, e2 in layers[s2][t2]:
                             cand += 1
                             if cand > max_candidates:
                                 return progs, cand, True
-                            e = (i, e1, e2); sig = W.signature(e, PROBES, prims); key = (spec["ret"], sig)
+                            sig = tuple(fn(a, b) for a, b in zip(sig1, sig2))
+                            key = (ret, sig)
                             if key not in progs:
-                                progs[key] = e; layers[size][spec["ret"]].append(e)
+                                e = (i, e1, e2); progs[key] = e; layers[size][ret].append((sig, e))
     return progs, cand, False
 
 
@@ -120,8 +126,10 @@ def run(deep_size=8, deep_candidates=30_000_000):
     R_deep, c3, exhausted = closure_with_programs(imp, deep_size, deep_candidates)
     deep_used = deep_size
     lost, control = [], []
-    for key, prog in sorted(R_full5.items(), key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
-        if key[0] != W.V or W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
+    # canonical order over V-type behaviours only (S-type signatures are tuples of ints and do not compare)
+    v_items = [kv for kv in R_full5.items() if kv[0][0] == W.V]
+    for key, prog in sorted(v_items, key=lambda kv: (W.size_of(kv[1]), kv[0][1])):
+        if W.size_of(prog) > MAX_FULL_SIZE or prog == ("X",):
             continue
         if key not in R_imp5 and key not in R_deep:
             if len(lost) < N_LOST: lost.append((key, prog))
