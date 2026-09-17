@@ -4,37 +4,32 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-17 12:0x UTC (08:0x local).** Updated at least every four
+**Currency: 2026-09-17 16:4x UTC (12:4x local).** Updated at least every four
 hours of activity, per base role s3. Instance for this pass: `m2-fce3fe0b`,
 the first boot of this seat on M2 (SPECTREX5), worktree
 `D:\Prometheus-worktrees\vivarium-boot-2026-09-16` from `ccb26df01`.
 
 ## Is Vivarium alive
 
-**No consumer is running anywhere.** `vivarium@m1` (pid 13460, build
-fb7aa5bed, pinned `F:\Prometheus-worktrees\vivarium-consumer`) last
-heartbeated **2026-09-14 23:53:44Z** and died with the operator-ordered M1
-reboot (~23:55Z; Nestor comms #262/#263). Found at this boot, 09-16 11:46Z,
-**35.9 h later** -- the second unobserved death in three days (receipt
-`receipts/CONSUMER_DEATH_2026-09-14_M1_REBOOT.md`; backlog C11). Stranded 0
-(IDLE at the reboot); no park record (a dead process cannot park).
+**YES.** `vivarium@m2` runs from the pinned detached worktree
+`D:\Prometheus-worktrees\vivarium-consumer` at the SHA in
+`D:\Prometheus-data\vivarium\var\restart-vivarium@m2.json` (08081c6ed at this
+writing), launched and relaunched by the Task Scheduler task VivariumDeadmanM2
+(every 5 min; a dead pid is detected after 60 s). Production `viv` carries
+migrations 001-010 (window C4-20260917-W1, 2026-09-17 13:46Z-16:xxZ). Engine
+eng_906356f7 at https://192.168.1.191:8811 (schema 9). PEW writes wait on
+Mnemosyne's token in the outbox (deliverer HELD_NO_CREDENTIAL).
 
-**Not relaunched, and not relaunchable today** (base rule 9):
+    read it       python -m viv.cli status   /   var\restart-vivarium@m2.json   /   var\deadman-vivarium@m2.state.json
+    stop it       python -m viv.cli stop --worker-id vivarium@m2      (clean; the dead-man honours the flag)
+    unpark        python -m viv.cli unpark --worker-id vivarium@m2 --by <seat> --reason <why>
+    recover       python -m viv.cli release <id> --new-attempt --by <seat> --reason <why>   (stranded OR ENGINE_TRANSPORT-failed rows)
+    redeploy      sh vivarium/deploy/redeploy.sh <sha>   (clean stop -> advance the pin -> dead-man relaunch -> restart receipt)
 
-    M1 SFE 8811 / M1 PEW 8377   do not answer from M2 (connect times out)
-    M1 shell                    none from M2 (22, 5985, 5986 closed)
-    M2 SFE 192.168.1.191:8811   LIVE, but it is the twin eng_906356f7
-                                (build 726275da), not the production ledger
-    production ledger           eng_8a37a5d3, "wherever it runs; today:
-                                nowhere" (Daedalus RULING, comms #270)
-    M2 PEW 192.168.1.191:8377   LIVE (Mnemosyne)
-    tokens on M2                none: no config.local.json here
-
-The consumer follows the production ledger to M2. Prepared this pass, NOT
-launched: `vivarium/deploy/prepare_m2.py` (pinned detached worktree, two
-launchers, secrets presence by key name, store/PEW/engine preconditions,
-tasks registered with the dead-man DISABLED). Its receipt today reads
-store OK, PEW OK, engine WRONG_ENGINE (the twin), secrets ABSENT.
+Disposition: **QUALIFIED_FOR_CAMPAIGN** / DEPLOYED_AND_QUALIFIED --
+`roles/Vivarium/point_release/READINESS_DISPOSITION.md` (caveats: engine stalls
+are Daedalus's 9.0.1; PEW token is Mnemosyne's; B1 read grant must be re-issued
+on the M2 ledger).
 
 ## Topology ruling (operator, in chat, 2026-09-16 ~12:45 UTC)
 
@@ -49,43 +44,24 @@ over per ccb26df01 / Daedalus #270, or a fresh start on the twin) was
 asked in chat and not yet answered; I proceed on (a) carried over, which
 is what everything below is keyed to.
 
-## Point release: where it stands (2026-09-17, operator Stage 3 order)
+## Point release: where it stands (2026-09-17 16:4x UTC)
 
-    Stage 1/2 docs            accepted by the operator (Stage 3 order s1)
-    Stage 3 interface         answered to Daedalus/Mnemosyne/Proteus (STAGE3_ANSWERS_FROM_VIVARIUM.md);
-                              Proteus #338 absorbed; open: Archaeon A1, Harmonia contract_hash name
-                              (proceeding by default), sfclient create_world(labels=)
-    implementation            DONE on throwaway schemas: attempts/steps, NEW ATTEMPT, start bundle,
-                              intervention + gate receipts, termination envelope, PEW outbox +
-                              deliverer (-> PEW /api/v1/events), production descriptor + restart
-                              gate, engine labels (conditional); suite 688 passed / 43 skipped
-    SCOPE FREEZE + WINDOW     point_release/SCOPE_FREEZE_AND_WINDOW_PLAN.md; rehearsal on a COPY of the
-    PLAN                      real 1,155 rows passed 7/7 (receipts/WINDOW_REHEARSAL_2026-09-17.json)
-    deploy window             NOT OPENED. Waiting on the operator's one line (window id). Nothing in
-                              production `viv` has been touched; no task registered; consumer down.
-    then                      clean restart from the descriptor (restart receipt) -> qualification
-                              (s13) -> canary (s14) -> READINESS_DISPOSITION.md -> five statements
+    window C4-20260917-W1     EXECUTED: backup verified; 006-010 applied; old rows unchanged; identities bootstrapped;
+                              dead-man + deliverer ENABLED; restart receipt ok; s13 fixture 16/16 at the deployed SHA;
+                              s14 canary: 9 runs, 10 production defects found and fixed with acceptance tests
+                              (READINESS_DISPOSITION.md s2); the hardest row (killed while posting, then a real
+                              engine stall) recovered on production in 3 attempts with ONE world and exactly 12
+                              observations
+    disposition               QUALIFIED_FOR_CAMPAIGN (caveats named); receipts under receipts/window_C4-20260917-W1/
+    open, not mine            engine stall (Daedalus 9.0.1, not deployed); PEW writer token (Mnemosyne); B1 read grant
+                              for cli_2bb36261 on the M2 ledger (Archaeon/Daedalus); sfclient labels kwarg
 
 ## Queue, at this writing (canonical store, UTC)
 
-    queued 5   Archaeon rows (spec_version 2, 09-14/09-15), HELD by #284 in prose only:
-               not_before is NULL on all five. window.py's restart step REFUSES while
-               they are unheld; `viv.cli hold` (new) is the mechanism; Archaeon's call
-    stranded 0   completed 579   failed 79   cancelled 492   (rehearsal histogram)
-    last row done   8bc6b162 completed 2026-09-14 23:27:07Z
-
-## What has to happen before the relaunch (in order)
-
-1. **Operator opens the Vivarium deploy window** (one line naming a window id;
-   confirms s10 credential bootstrap of client `vivarium` on eng_906356f7).
-2. Archaeon holds / cancels / releases its five queued rows (#346 ask).
-3. `python vivarium/deploy/window.py --confirm <id> --sha <main sha>` runs the
-   receipted steps (backup, drafts, promote, migrate, verify, advance, tasks,
-   bootstrap, restart); every step refuses on its own precondition.
-4. The dead-man's first tick starts the consumer from the pinned worktree; the
-   consumer writes `var/restart-vivarium@m2.json` and refuses if the descriptor
-   disagrees with what it finds.
-5. Mnemosyne's PEW writer credential lands whenever it lands; the outbox holds.
+    queued 5      Archaeon's rows, HELD to 2027-01-01 (viv.cli hold; `held` events); the restart refused until held
+    canary rows   created_by vivarium-canary: completed / failed (typed) -- no Campaign 4 work exists in the queue
+    outbox        PENDING rows accumulate (no PEW token); deliverer HELD, never parks on that
+    last real row 8bc6b162 completed 2026-09-14 23:27:07Z (pre-release)
 
 ## Landed this pass (main, fast-forward; all tested on the merged tree)
 
