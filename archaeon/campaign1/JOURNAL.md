@@ -79,3 +79,12 @@ plus rows/receipts). Every timestamp UTC.
   adaptive/on keeps it (0.38-1.00) and climbs to Kd 4 in 2/3 seeds.
   Ledger L-021 (generation-step API), L-022 (rung x generation matrix);
   L-008 recurrence with mitigation. Next: SFE-06.
+
+## 04:25-04:45 -- SFE-06 (one engine attempt; COMPLETE)
+
+- 4.9 s; engine 0 errors (1 world, 6 artifacts incl. sha256-identified
+  decoder tables, 9 experiments + 9 observations). Fixed evaluator (block
+  output, rule 184 = 1.000 reachable): direct hits >= 0.9 in 13/53/53
+  evaluations, balanced 653/97/89 with 50% more accessible variation,
+  scrambled 971/-/190 (2/3). Encoding effect weak positive; accessible
+  variation decoupled from navigability. Ledger L-023, L-024. Next: SFE-07.
