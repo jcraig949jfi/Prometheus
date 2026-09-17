@@ -1,8 +1,25 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:51Z",
- "n": 128,
+ "built": "2026-09-17T23:02Z",
+ "n": 138,
  "pressures": [
+  {
+   "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
+   "source_fossil": "arduino-pid",
+   "source_evidence": "PID_v1.cpp Compute, SetTunings, SetMode",
+   "condition": "an organism drives an actuator with hard limits toward a setpoint that steps; the process has lag; the loop runs at a fixed period on a small processor; hand-over from manual happens mid-run",
+   "resource_or_constraint": "the actuator's range; one multiply-add budget per sample",
+   "failure_condition": "overshoot after saturation, a derivative spike on a setpoint step, or a jump at hand-over",
+   "world_punishes": "a textbook PID (error-based integral and derivative, no limits)",
+   "world_rewards": "clamped output-space integral, derivative on measurement, initialisation from the current output",
+   "observable_consequence": "overshoot, settling time and peak actuator demand on a first-order-plus-lag plant with a saturated actuator, for the four organs enabled one at a time",
+   "vacuity_condition": "an unsaturated actuator and a constant setpoint",
+   "trivial_shortcuts": "feedforward from the setpoint (which the world withholds)",
+   "cheat_control": "an organism given the plant model (an exact inverse) must track with zero overshoot at zero derivative kick; the textbook PID must overshoot after saturation; derivative-on-error must spike on the step: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: embedded feedback control (Beauregard 2011-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "pressure_id": "avida::P.a_program_must_copy_its_own_description_under_a_per_symbol_error_rate_while_cpu_time_is_rationed_by_a_score_it_can_raise_by_computing",
    "source_fossil": "avida",
@@ -69,6 +86,23 @@
    "cheat_control": "an organism told the outage's end time must retry exactly once at that time; N clients with no jitter must show a load spike at 2^k intervals; full jitter must flatten it: the world must show both",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: application-level retry (Fenner 2014-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "basic-computer-games-1978::P.a_steward_must_allocate_a_stock_across_consumption_investment_and_reserve_under_multiplicative_random_yields_and_rare_catastrophes_when_the_score_is_a_threshold_rule_on_the_worst_year_and_an_average",
+   "source_fossil": "basic-computer-games-1978",
+   "source_evidence": "hammurabi.bas 310-555, 800, 860-896",
+   "condition": "an organism controls three allocations per round of a stock that grows by a random multiplier; a rare catastrophe halves the population; the score punishes any single year above a starvation threshold (game over) and grades the average; the horizon is ten rounds",
+   "resource_or_constraint": "the stock; ten rounds",
+   "failure_condition": "impeachment (one year over 45 percent starvation) or a low grade",
+   "world_punishes": "maximising expected growth without a reserve (one bad draw ends the game); hoarding (low grade)",
+   "world_rewards": "a reserve sized to the worst plausible draw",
+   "observable_consequence": "grade distribution over seeds for greedy, fixed-reserve and adaptive-reserve policies; probability of impeachment per policy",
+   "vacuity_condition": "deterministic yields",
+   "trivial_shortcuts": "knowing the seed",
+   "cheat_control": "an organism given next year's draw must never be impeached and score 'fantastic'; a greedy organism must show impeachments in the seed distribution; the adaptive reserve must sit between: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a teaching game (Ahl 1973 / Dyment 1968)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -446,6 +480,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "cosell-eliza-bbn-lisp-1969::P.a_conversational_responder_must_choose_which_of_several_input_sentences_to_answer_and_avoid_repeating_itself_with_only_a_keyword_table_and_a_bounded_memory",
+   "source_fossil": "cosell-eliza-bbn-lisp-1969",
+   "source_evidence": "MAKESENTENCE's priority comparison; RPLQQ; MEMORY; the transcript file",
+   "condition": "an organism receives multi-sentence input; it has a table of keywords with priorities and rules; the score is a human's willingness to continue and the absence of verbatim repetition; the organism has no model of meaning",
+   "resource_or_constraint": "a small script; a memory stack",
+   "failure_condition": "answering the wrong sentence, repeating a response, or silence when no keyword fires",
+   "world_punishes": "first-sentence-always; a fixed reassembly per rule; no memory",
+   "world_rewards": "priority selection at read time, rotation of reassembly rules, a memory stack",
+   "observable_consequence": "transcript length and repetition count with human subjects (the body ships a 1969 transcript) for the priority rule vs first-sentence and rotation vs fixed",
+   "vacuity_condition": "single-sentence, single-keyword input",
+   "trivial_shortcuts": "a scripted human",
+   "cheat_control": "an organism given the human's next line must be indistinguishable from the transcript; first-sentence-always must answer the wrong sentence on the transcript's multi-sentence inputs; rotation off must repeat within the transcript's length: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: conversational program (Cosell 1966-1972 after Weizenbaum 1966)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "des-reference::P.adversary_with_growing_compute_against_a_fixed_secret_size",
    "source_fossil": "des-reference",
    "source_evidence": "record.human_failure_condition",
@@ -582,6 +633,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "do-mpc::P.a_nonlinear_constrained_process_with_uncertain_parameters_must_be_driven_to_a_target_while_never_violating_constraints_when_the_uncertainty_resolves_only_as_the_process_runs_and_the_compute_per_step_is_bounded",
+   "source_fossil": "do-mpc",
+   "source_evidence": "_mpc.py _prepare_nlp scenario tree; make_step; optimizer.py collocation",
+   "condition": "an organism controls a nonlinear plant with hard state and input constraints; some parameters are unknown within a finite set; measurements arrive each step; the score is cost over a run, constraint violations (fatal) and compute per step",
+   "resource_or_constraint": "one NLP solve per step; a scenario budget",
+   "failure_condition": "a constraint violation under a realised parameter, or a solve that does not finish within the step",
+   "world_punishes": "nominal MPC (violates under the wrong parameter); full min-max over the horizon (too conservative or too big)",
+   "world_rewards": "a shallow scenario tree with recourse (inputs per branch) and warm-started re-solves",
+   "observable_consequence": "violations and cost over parameter draws for nominal (n_robust = 0), multi-stage (n_robust = 1, 2) and open-loop robust; solve time per step vs tree size",
+   "vacuity_condition": "known parameters and no active constraints",
+   "trivial_shortcuts": "the true parameter revealed at t = 0 (the cheat control)",
+   "cheat_control": "an organism given the true parameter must achieve the nominal cost with zero violations; nominal MPC on the worst draw must violate; multi-stage with n_robust = 1 must not, at higher cost: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: robust nonlinear MPC (Lucia et al. 2013; do-mpc 2016-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "eispack-netlib-1976::P.arithmetic_of_unknown_precision_and_range",
    "source_fossil": "eispack-netlib-1976",
    "source_evidence": "record.human_environmental_pressure 'heterogeneous floating point' + source",
@@ -647,6 +715,23 @@
    "cheat_control": "an organism given the human's expected reply must score 100% responsive; the echo organism must score high on 'contains a fragment' and zero on judged responsiveness: the world must separate those two measures or it is measuring echo",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: natural-language conversation by script (Weizenbaum 1966)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "eprover-2.6::P.a_refutation_must_be_found_in_an_infinite_space_of_derived_clauses_where_the_useful_derivation_is_a_vanishing_fraction_and_fairness_must_be_preserved_so_that_completeness_is_not_lost",
+   "source_fossil": "eprover-2.6",
+   "source_evidence": "cco_proofproc.c Saturate / ProcessClause; che_hcb.c; che_proofcontrol.c weight-function defaults",
+   "condition": "an organism derives consequences from a clause set; the set of derivable clauses is infinite; a proof exists among them; the score is proofs found within a time and memory budget on a problem library; the organism must also terminate on some satisfiable sets",
+   "resource_or_constraint": "time; the unprocessed set's memory",
+   "failure_condition": "starvation (a needed old clause never selected) or drowning (the useful clause buried under quadratic generation)",
+   "world_punishes": "pure FIFO (slow) and pure smallest-first (unfair); no simplification (drowning)",
+   "world_rewards": "interleaved queues, interreduction of the processed set, conjecture-directed weights",
+   "observable_consequence": "problems solved within the budget on a TPTP slice with the selection heuristic set to FIFO only, weight only, and the default mix; and with backward simplification disabled",
+   "vacuity_condition": "propositional or Horn problems solvable by unit propagation",
+   "trivial_shortcuts": "a proof oracle (the world withholds it)",
+   "cheat_control": "an organism given the proof's clauses as a watchlist (E has one: PreferWatchlist) must solve every problem quickly; FIFO-only must time out where the mix succeeds; the mix without simplification must exhaust memory on equational problems: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: first-order theorem proving with equality (Schulz 1998-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -871,6 +956,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "go-runtime-deadlock-fixtures-1.22::P.a_runtime_must_declare_deadlock_exactly_when_no_goroutine_can_ever_run_again_distinguishing_that_from_goroutines_parked_on_timers_locked_os_threads_cgo_and_thread_caps_and_must_say_so_with_one_fixed_message",
+   "source_fossil": "go-runtime-deadlock-fixtures-1.22",
+   "source_evidence": "deadlock.go 44-100; crash_test.go 196-230",
+   "condition": "an organism schedules goroutines onto OS threads; it must detect the global state 'no runnable goroutine and none can be woken by any future event' and abort with a fixed message; near-misses exist: a goroutine locked to a thread and parked (still a deadlock), pending timers (not a deadlock), cgo calls (detection disabled), a thread cap reached (a different fatal error)",
+   "resource_or_constraint": "a constant-time check at idle transitions",
+   "failure_condition": "a false deadlock report while a timer or external event could still wake a goroutine, or a missed report (the program hangs silently)",
+   "world_punishes": "counting only runnable goroutines; ignoring locked threads; ignoring timers",
+   "world_rewards": "a check over idle and spinning thread counts plus locked-M accounting, gated off under cgo",
+   "observable_consequence": "the seven deadlock programs must each abort with the exact string 'fatal error: all goroutines are asleep - deadlock!' (or the Goexit variant), and the non-deadlock programs must not; the harness reads the first line of output",
+   "vacuity_condition": "a single goroutine that returns",
+   "trivial_shortcuts": "a watchdog timeout (which reports late and cannot distinguish slow from stuck)",
+   "cheat_control": "an organism told which programs deadlock must reproduce the harness's verdicts exactly; a runtime with the locked-thread accounting removed must miss LockedDeadlock / LockedDeadlock2 (the fixtures exist because it once did); a runtime that ignores timers must false-alarm on a program sleeping in time.Sleep: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: regression fixtures for the Go runtime's deadlock detector (Go authors 2015-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "graphplan-blum-furst-1995::P.a_goal_must_be_reached_by_a_sequence_of_actions_with_preconditions_and_effects_when_naive_backward_chaining_is_exponential_and_unsolvable_instances_must_be_recognised",
    "source_fossil": "graphplan-blum-furst-1995",
    "source_evidence": "graphplan.c create_graph_layer; planner.c basicplan and the completeness comment",
@@ -987,6 +1089,23 @@
    "cheat_control": "a recaller given the stored list must recover every pattern within its Hamming basin; if the world does not distinguish it from Hebbian recall above capacity, capacity is not being tested",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: associative memory (Hopfield 1982)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "indirect-self-tuning-regulator-liaosteve::P.a_plant_with_unknown_slowly_varying_parameters_must_be_made_to_follow_a_reference_model_by_a_controller_redesigned_from_online_estimates_when_the_estimates_are_wrong_at_first_and_when_cancelling_the_plant_zero_may_be_unstable",
+   "source_fossil": "indirect-self-tuning-regulator-liaosteve",
+   "source_evidence": "main_code.m both experiments; rls_forgetting.m",
+   "condition": "an organism controls a second-order plant whose parameters it does not know; a reference model prescribes the closed-loop response to a square wave; the score is tracking error after the transient and the peak control effort; the plant may have a non-minimum-phase zero in some instances",
+   "resource_or_constraint": "one RLS update and one polynomial solve per sample",
+   "failure_condition": "divergence during the transient (gains from bad estimates), or instability from cancelling an unstable zero",
+   "world_punishes": "fixed-gain control on a drifting plant; zero cancellation on the non-minimum-phase instance",
+   "world_rewards": "forgetting-factor estimation with a bounded initial b0 and a design that keeps the zero",
+   "observable_consequence": "tracking error and peak |u| over time for variant 1 vs variant 2 on the script's plant and on a plant with the zero moved outside the unit circle; estimate trajectories against the true theta",
+   "vacuity_condition": "a known plant",
+   "trivial_shortcuts": "the true parameters as the initial estimate (the cheat control)",
+   "cheat_control": "an organism initialised at the true theta with lambda = 1 must track the model from the first sample; variant 1 on the unstable-zero plant must diverge; variant 2 must not: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: adaptive control (Astrom & Wittenmark 1973-1995), reproduced as a student script",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1174,6 +1293,23 @@
    "cheat_control": "a decoder told the burst boundaries must correct up to nroots/2 symbol errors regardless of bit count",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "linpack-netlib-1979::P.dense_linear_algebra_must_run_near_peak_on_machines_whose_fast_paths_differ_while_the_numerical_code_stays_portable_and_verifiable",
+   "source_fossil": "linpack-netlib-1979",
+   "source_evidence": "the six kernel files; dgefa's call structure",
+   "condition": "an organism factorises matrices on several machine families with different vector hardware; the numerical algorithm must be identical across them (verifiable by residual); each machine's peak is reachable only through its own idioms",
+   "resource_or_constraint": "a fixed, small interface between the algorithm and the machine",
+   "failure_condition": "portable code that runs far below peak, or fast code that differs numerically per machine",
+   "world_punishes": "inlining the loops into the factorisation; interfaces without strides",
+   "world_rewards": "a small set of stride-parameterised kernels with reference implementations",
+   "observable_consequence": "fraction of peak achieved with reference kernels vs tuned kernels, with the residual identical",
+   "vacuity_condition": "one machine",
+   "trivial_shortcuts": "a machine-specific rewrite of the whole factorisation (which the verifiability score punishes)",
+   "cheat_control": "an organism with tuned kernels must show the same residual as the reference within round-off and a higher fraction of peak; the inlined factorisation must be no faster than the reference kernels and unverifiable across machines: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: portable performance for dense linear algebra (Dongarra et al. 1979)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1806,6 +1942,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "spacewar-pdp1-1962::P.several_interacting_bodies_with_player_input_must_be_simulated_and_drawn_at_a_constant_rate_on_a_machine_whose_entire_instruction_budget_per_frame_is_known_and_small",
+   "source_fossil": "spacewar-pdp1-1962",
+   "source_evidence": "the main control routine 572-782; the object tables",
+   "condition": "an organism updates and displays n moving objects, some created and destroyed at run time, within a fixed instruction budget per frame; velocities must mean the same thing whatever n is; behaviour differs per object kind",
+   "resource_or_constraint": "the frame's instruction count; nnn object slots",
+   "failure_condition": "frame time that varies with n (velocities change), or a dispatch cost that grows with the number of kinds",
+   "world_punishes": "a type switch per object; variable frame time",
+   "world_rewards": "a stored routine pointer per object and a burned remainder",
+   "observable_consequence": "frame time vs number of active objects, and per-object dispatch cost vs number of kinds, on a PDP-1 emulator",
+   "vacuity_condition": "one object kind and a fixed n",
+   "trivial_shortcuts": "a faster machine (which changes the game's speed unless the budget is enforced)",
+   "cheat_control": "an organism with unlimited instructions must show constant frame time at any n; the loop without the burn must show frame time falling as objects explode; a switch-based dispatch must show cost growing with kinds: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: real-time two-player simulation (Russell, Graetz, Wiitanen, Samson, Edwards 1961-62)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "spin-6.5.2-holzmann::P.a_reachability_or_cycle_question_over_an_exponential_interleaving_space_must_be_answered_within_fixed_memory_with_a_known_loss_of_completeness",
    "source_fossil": "spin-6.5.2-holzmann",
    "source_evidence": "pangen1.h new_state / bstore; pangen2.c proc_is_safe",
@@ -2007,6 +2160,23 @@
    "cheat_control": "an organism given the game-theoretic value of every position must play perfectly at depth 1; the ancestor with alpha-beta disabled (plain negamax) must search ~35x more nodes per ply: the world must show both",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: chess play under a clock (Kerrigan 1997, a teaching program)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "umdhmm-kanungo-1.02::P.a_hidden_markov_model_must_be_learned_from_one_long_observation_sequence_and_decoded_without_underflow_when_zero_probabilities_are_absorbing_and_the_likelihood_surface_has_local_optima",
+   "source_fossil": "umdhmm-kanungo-1.02",
+   "source_evidence": "baum.c; forward.c scaling; esthmm.c seed handling; genseq.c as generator",
+   "condition": "an organism sees a discrete observation sequence generated by an unknown HMM with N states and M symbols; it must estimate the model and decode states; sequences are long (thousands of steps); the score is held-out log-likelihood and decoding accuracy against the generating model",
+   "resource_or_constraint": "O(T N^2) per iteration; double precision",
+   "failure_condition": "underflow to zero likelihood, a parameter stuck at exactly zero, or convergence to a poor local optimum",
+   "world_punishes": "unscaled recursions; unfloored re-estimation; a single random start",
+   "world_rewards": "scaling, a probability floor, restarts over seeds",
+   "observable_consequence": "held-out log-likelihood and state accuracy vs T for scaled vs unscaled recursions, and the fraction of seeds reaching within 1 percent of the generating model's likelihood with and without the floor",
+   "vacuity_condition": "a one-state model",
+   "trivial_shortcuts": "the generating model as the initial model (which the cheat control uses)",
+   "cheat_control": "an organism initialised at the generating model must not move (one iteration, gain below DELTA); the unscaled recursion must return zero likelihood past a few hundred steps; the unfloored re-estimator must lock a zero on a sequence missing one symbol: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: HMM estimation and decoding (Kanungo 1998 after Rabiner 1989)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

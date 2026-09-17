@@ -1,13 +1,13 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:51Z",
- "n": 197,
+ "built": "2026-09-17T23:02Z",
+ "n": 207,
  "by_relation": {
-  "algorithm_from": 85,
-  "reimplementation_of": 9,
+  "reimplementation_of": 12,
+  "algorithm_from": 88,
   "derived_from": 11,
-  "shares_ancestor_with": 44,
-  "historical_version_of": 16,
+  "historical_version_of": 18,
+  "shares_ancestor_with": 46,
   "superseded_by": 14,
   "port_of": 2,
   "forked_from": 1,
@@ -19,6 +19,13 @@
   "inspired_by": 2
  },
  "edges": [
+  {
+   "from": "arduino-pid",
+   "relation": "reimplementation_of",
+   "to": "discrete PID with anti-windup and bumpless transfer (Astrom & Hagglund 1995); the accumulator-in-output-space form is the author's",
+   "note": "from the record and the author's blog as cited there",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "avida",
    "relation": "algorithm_from",
@@ -46,6 +53,13 @@
    "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "basic-computer-games-1978",
+   "relation": "historical_version_of",
+   "to": "Dyment 1968 'The Sumer Game' (DEC FOCAL) -> Ahl 1973 HAMURABI; Mayfield 1971 Star Trek -> Leedom / Ahl 1974-78 Super Star Trek",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bdwgc-8.2.6",
@@ -321,6 +335,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "cosell-eliza-bbn-lisp-1969",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum 1966 (from the paper, not the code); the atlas's eliza-weizenbaum-mad-slip-1965 is the original",
+   "note": "from the record and the file header",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "des-reference",
    "relation": "superseded_by",
    "to": "tiny-aes-c",
@@ -332,6 +353,13 @@
    "relation": "algorithm_from",
    "to": "Knuth boundary tags; Lea's malloc lineage 1987-2012 (the file's own history); the glibc ptmalloc family derives from earlier versions (the comment at 27-30)",
    "note": "from the source comments; not verified against the record this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "do-mpc",
+   "relation": "algorithm_from",
+   "to": "Richalet 1978 / Rawlings & Mayne 2009 (MPC); Biegler 2010 (collocation); Lucia, Finkler & Engell 2013 (multi-stage); Rao, Rawlings & Mayne 2003 (MHE)",
+   "note": "from the docstrings and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -417,6 +445,13 @@
    "to": "cocagne-plain-paxos",
    "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "algorithm_from",
+   "to": "Robinson 1965 (resolution); McCune 1988 (Otter, given clause); Bachmair & Ganzinger 1994 (superposition); Denzinger et al. 1997 (DISCOUNT loop); Schulz 2002 (E)",
+   "note": "from the record and the source's DOC",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "erfa-2.0.1",
@@ -510,6 +545,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "go-runtime-deadlock-fixtures-1.22",
+   "relation": "shares_ancestor_with",
+   "to": "the Go runtime (golang/go, runtime/proc.go checkdead) of which these files are a test directory",
+   "note": "from the record; the runtime body itself is not in the vault",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "graphplan-blum-furst-1995",
    "relation": "algorithm_from",
    "to": "Blum & Furst 1995 (AI Journal 1997); the atlas's ff-planner-2.3 cut records FF as the successor that kept the graph as a heuristic and replaced extraction with forward search",
@@ -585,6 +627,13 @@
    "to": "padasip-1.2.2",
    "note": "RLS identification is the estimator inside this controller",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "reimplementation_of",
+   "to": "Astrom & Wittenmark 1973 (self-tuning regulator); Adaptive Control 1989/1995 Example 3.5",
+   "note": "from the record and the plot titles",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "kissfft-131.1.0",
@@ -746,6 +795,13 @@
    "to": "fftpack-netlib",
    "note": "both netlib Fortran numerical libraries of the same era",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "linpackd-netlib-1979 (in this atlas): the same driver file; the six kernels are the BLAS-1 of Lawson et al. 1979",
+   "note": "by md5 comparison of linpackd.f and the file headers",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "linpackd-netlib-1979",
@@ -1175,6 +1231,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "spacewar-pdp1-1962",
+   "relation": "shares_ancestor_with",
+   "to": "no software ancestor; the earliest entity-table game loop in the atlas",
+   "note": "from the record; version 2B of 25 March 1962",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "spdylay",
    "relation": "superseded_by",
    "to": "HTTP/2 (RFC 7540)",
@@ -1306,6 +1369,13 @@
    "to": "viterbi-hmm-xukmin",
    "note": "HMM decode-only vs decode+train",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "algorithm_from",
+   "to": "Baum et al. 1970; Viterbi 1967; Rabiner 1989 (the tutorial this code implements section by section)",
+   "note": "from the source headers and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "valgrind-helgrind-fixtures-3.19",
