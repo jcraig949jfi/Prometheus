@@ -38,9 +38,12 @@
       "worker_id": "vivarium@m2",
       "credential_file": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/config.local.json",
       "keys": [
-        "sfe_token",
+        "sfe_token"
+      ],
+      "optional_keys": [
         "pew_token"
       ],
+      "optional_note": "pew_token gates the DELIVERER (VivariumOutboxDelivererM2; the outbox holds without it), not the consumer; issued by Mnemosyne out of band (evidence_wiki agent_identities: sha256 committed, value delivered)",
       "bootstrap": "python -m viv.cli sfe-identity --ensure  (registers the production client on the engine above if absent; refused if a client of that name already exists on this ledger)",
       "dead_man_task": "VivariumDeadmanM2",
       "deliverer_task": "VivariumOutboxDelivererM2"

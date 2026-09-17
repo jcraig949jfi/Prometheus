@@ -1,0 +1,105 @@
+{
+ "ledger": "SCRATCH (temporary directory); proteus/mint/RULE_TABLE_MINTS.jsonl untouched",
+ "ledger_chain_verified": true,
+ "mint_id": "sha256:3888f447ad0bd45febc5d32c0d1a775259c3d10f5dc95acf942653e957fafe63",
+ "mint_record": {
+  "family": "rule_table",
+  "mate_player": null,
+  "mint_id": "sha256:3888f447ad0bd45febc5d32c0d1a775259c3d10f5dc95acf942653e957fafe63",
+  "minter": "Proteus",
+  "mutation_ref": "sha256:683c819dd6890f2e859e5e9b466e504f",
+  "operator": "edit_entries",
+  "operator_params": {
+   "edits": [
+    [
+     11,
+     0
+    ]
+   ]
+  },
+  "organism_ref": "sha256:b94f388e50627dae1f57ad6216a9422e5ae5cf11854cbccfee16a36b8813a171",
+  "parent_player": "evca:r3:005f005f005f005f005fff5f005fff5f",
+  "parents": [
+   {
+    "organism_ref": "sha256:8852edbcfa6bcb3ed00e3fe57ad5091c4252ec9dbbd475440cae6698b9f34423",
+    "player_id": "evca:r3:005f005f005f005f005fff5f005fff5f"
+   }
+  ],
+  "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+  "prev_mint_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "representation_version": "herakles.evca.rule_hex.r3.v1",
+  "rule_hex": "004f005f005f005f005fff5f005fff5f",
+  "schema_version": "proteus.rule_table_mint.v1",
+  "semantic_version": "herakles.evca.core.v1",
+  "verified_by_semantic_owner": true
+ },
+ "namespace": "test",
+ "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+ "schema_version": "proteus.mint_roundtrip_rehearsal.v1",
+ "service": "http://127.0.0.1:8377",
+ "started_at": "2026-09-17T13:47:58Z",
+ "steps": [
+  {
+   "ms": 15,
+   "response": {
+    "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+    "status": "inserted"
+   },
+   "step": "register"
+  },
+  {
+   "mismatches": {},
+   "row": {
+    "arch_hash": null,
+    "created_at": "2026-09-17T09:47:58.802557-04:00",
+    "family": "rule_table",
+    "generation": null,
+    "genome_hash": "sha256:b94f388e50627dae1f57ad6216a9422e5ae5cf11854cbccfee16a36b8813a171",
+    "lineage_id": null,
+    "mate_player": null,
+    "mutation_ref": "sha256:683c819dd6890f2e859e5e9b466e504f",
+    "namespace": "test",
+    "parent_player": "evca:r3:005f005f005f005f005fff5f005fff5f",
+    "phenotype": null,
+    "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+    "producer": {
+     "component": "proteus.rule_table_mint",
+     "mint_id": "sha256:3888f447ad0bd45febc5d32c0d1a775259c3d10f5dc95acf942653e957fafe63",
+     "operator": "edit_entries",
+     "params": {
+      "edits": [
+       [
+        11,
+        0
+       ]
+      ]
+     },
+     "rehearsal": true,
+     "verified": true,
+     "version": "v1"
+    },
+    "representation_version": "herakles.evca.rule_hex.r3.v1",
+    "resources": null,
+    "revision": 120890,
+    "runtime_hash": null,
+    "semantic_version": "herakles.evca.core.v1",
+    "sfe_entry_hash": null,
+    "sfe_world_id": null
+   },
+   "step": "read_back"
+  },
+  {
+   "response": {
+    "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+    "status": "duplicate_identical"
+   },
+   "step": "register_identical_again"
+  },
+  {
+   "refused": "rejected 409: conflict_existing_row_differs:mutation_ref(stored=sha256:683c819dd6890f2e859e5e9b466e504f submitted=sha256:fffffffffffffffffffffffffffffffffffffffffffffffffffff...)",
+   "row_unchanged": true,
+   "step": "register_differing"
+  }
+ ],
+ "verdict": "ROUNDTRIP_OK"
+}
