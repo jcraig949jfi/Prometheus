@@ -85,6 +85,16 @@
    "posted": "comms #319 (Harmonia), #320 (Techne, key update)",
    "required_response": "as 001",
    "returns": []
+  },
+  {
+   "object_id": "CUT batch: 10 fossils (2026-09-17 NOT_CUT order, positions 1-10: odepack-netlib, bsd-tcp-4.2-1983, lisp-1-5-ibm7090-1962, compact-4.2bsd-1983, willemt-raft, dlmalloc, avida[NOT CUT: body fetched, 61.5 s, deferred as the largest], ff-planner-2.3, particles-chopin-0.4, verilog-uart2bus)",
+   "kind": "CUT",
+   "created": "2026-09-17",
+   "host": "M3 (GANDALF); bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json (10/10 MATCH)",
+   "to": "atlas only (R32: a cut is not an adjudicable object; NYX_PREDICTION_PACKETs for these cuts are not yet written -- none of the ten has a Stage C' packet)",
+   "posted": null,
+   "note": "9 cuts written this batch (avida's body was materialised but not opened; it stays NOT_CUT and is next in order). Harmonia's lane currency now exists (#316/#317), so the blocker recorded on the 2026-09-16 row no longer applies to packets; the missing step is Nyx's own (writing packets), not the adjudicator's.",
+   "returns": []
   }
  ],
  "returns_received": [
