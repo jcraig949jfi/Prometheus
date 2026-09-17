@@ -100,7 +100,10 @@ def assay_states(decl: dict, meas: dict) -> List[dict]:
 
     tg = decl.get("target")
     if tg:
-        vals = arm_values(rows, af, tg["baseline_arm"], tg["reach_metric"])
+        # baseline_arm "*": the assay is capable if ANY arm reaches (designs whose premise is
+        # that the baseline cannot reach and a treatment might)
+        vals = ([r[tg["reach_metric"]] for r in rows if r.get(tg["reach_metric"]) is not None] if tg["baseline_arm"] == "*"
+                else arm_values(rows, af, tg["baseline_arm"], tg["reach_metric"]))
         reached = sum(1 for v in vals if v >= tg["reach_min"])
         cls = tg.get("reachability_class")
         if vals and reached == 0 and (len(vals) >= 3 or cls == "OBSERVED_UNREACHABLE_AT_BUDGET"):

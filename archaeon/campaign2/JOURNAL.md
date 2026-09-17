@@ -52,3 +52,13 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   Probe mature_source 11/12 at 0.49 = W0 sub-solution half credit on a K=2
   cell (exploratory). Landscape: W2_K2 half-credit shelf at 0.5 (L2-025);
   W0 4-bit COMMON by ~G35 (10/12); W1_d1 4-bit G100 3/12. Next: C2-SFE-04.
+
+## 04:20-04:35 -- C2-SFE-04 (dry a01; engine a02 of record; CAPABLE_NEGATIVE: SFE-07 failed-genotype effect retired)
+
+- 161 s; SFE-01's failure artifacts fetched cross-campaign (3/3 hash ok, 135
+  genomes); 21 artifacts, 21/21 imports ok, 70 records, 0 errors, 90
+  reachability rows. failed_A - random = +0.002 (3/10 paired wins), 4/10 vs
+  4/10; shuffled 5/10 and opcode-only 6/10 beat the intact genomes;
+  length-matched randoms 1/10 (failed set mean 20.8 instructions vs 5.9);
+  evolved_solved 8/10 = W0 sub-solution again. W3_K2 4-bit N100 G40 is
+  REACHABLE (4/13), not unreachable. Ledger L2-027..L2-029. Next: C2-SFE-05.
