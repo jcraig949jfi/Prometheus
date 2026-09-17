@@ -75,3 +75,23 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   slots 4, 7, 8 written and dry-run. D3-014..D3-020 recorded (D3-020: the
   slots run in DEPENDENCY order, each sealed before its own run).
 - Next: C3-SFE-04 (corridor map) running.
+
+## 10:35-11:05 -- C3-SFE-04 (dry a01/a02; a03 of record; WEAK_POSITIVE: the ladder builds delay INVARIANCE)
+
+- 919 s; 66 runs, 66 records, 66 reach rows, 33 corridor rows, 0 errors.
+  Cheap-first worked: 0.3 s of direct probes removed 2 of 5 targets from the
+  search budget AND produced the main result.
+- MAIN: all 11 delay-general elites read W1_d8 and W1_d16 at held-out 1.0,
+  cells they never saw; matched direct search gets 0/6 and 1/6. The 4 mature
+  W0 solvers score 0.0 on both, so the invariance is the LADDER's product
+  (L3-019; closes L3-013's comparator gap).
+- Edge types: free (d8/d16), half-free to a dead shelf (W2_K2 0.54, W3_K2
+  0.58; 0 summits in 54 K=2 runs), time advantage (W7_K2: foothold median
+  generation 20 vs 82, and the permuted control is WORSE than no import at
+  2/6 -- L3-020), no corridor (W0 solver -> the delay family).
+- Table corrections (L3-021): W7_K2 REACHABLE at G100 (4/6) after
+  OBSERVED_UNREACHABLE at G60; W1_d8 OBSERVED_UNREACHABLE (0/6) and W1_d16
+  RARE (1/6), both previously UNESTABLISHED.
+- Battery: 2 of 3 passed; the failing one (advantage without inherited
+  competence: 5/6 vs 4/6 at n=6) is why the record is WEAK.
+- Next: C3-SFE-05 (retention break-even) running.
