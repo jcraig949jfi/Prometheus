@@ -210,6 +210,16 @@
    "evidence": "the instrument saw the 1/N scaling (5463x); the band was derived from a model that fails at N=10; SCOUT: 1/N regime from N~200; trigger saturated on W1 (R 98-99 at every N)",
    "disposition_by_nyx": "ACCEPT: 002 supersedes 001 same tick (186047db...); positive control -> N=200 vs 1000 band [2.5,20]; I0 re-derived; W2 (sigmaY=1.0) added as I4/I5; I1-I3/claim/boundary/CUT_KILL byte-identical",
    "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "POET/ALife autopsy (e707912c7; harvest targets TECHNE-104..108); routing line 'the inference half routes to Nyx/Harmonia'",
+   "comms": "#377",
+   "received_tick": "2026-09-17",
+   "evidence": "roles/Techne/POET_ALIFE_AUTOPSY_LEDGER_2026-09-17.md sections 1-8 read; no new specimen directories (census 121)",
+   "disposition_by_nyx": "ACCEPT; ACK+DISPOSITION posted 2026-09-18 with the operator's 2026-09-18 directive relayed (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/); ASK 3 (land the five bodies as specimens), ASK 4 (python version + native deps in records), ASK 5 (data slices); cut plan per body recorded in the message",
+   "kind": "TECHNE_REPORT"
   }
  ],
  "escalations": []
