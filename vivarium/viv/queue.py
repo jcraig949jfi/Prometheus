@@ -587,6 +587,28 @@ def cancel(conn, experiment_id, *, actor: str, reason: str,
     return row
 
 
+def hold(conn, experiment_id, *, until, actor: str, reason: str,
+         schema: Optional[str] = None):
+    """Hold a QUEUED experiment until `until` (a tz-aware datetime; None
+    lifts the hold). The row stays queued and its relations untouched; only
+    not_before moves, and the event log says who and why. This is how a
+    producer keeps its rows out of a consumer restart it has not cleared
+    (Archaeon #284) without cancelling them."""
+    s = schema or _db.schema()
+    with _db.dict_cur(conn) as cur:
+        cur.execute(
+            "UPDATE " + _q(s) + " SET not_before=%s WHERE experiment_id = %s "
+            "AND status = 'queued' RETURNING " + COLUMNS,
+            (until, str(experiment_id)))
+        row = cur.fetchone()
+    if row is None:
+        raise RuntimeError("cannot hold %s: it is not queued" % experiment_id)
+    record_event(conn, experiment_id, actor=actor,
+                 event_type="held" if until is not None else "hold_lifted",
+                 payload={"reason": reason, "not_before": until.isoformat() if until else None}, schema=s)
+    return row
+
+
 def release_stranded(conn, experiment_id, *, actor: str, reason: str,
                      schema: Optional[str] = None, new_attempt: bool = False):
     """The explicit operator recovery for a stranded claimed/running row.

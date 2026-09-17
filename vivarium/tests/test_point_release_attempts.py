@@ -89,6 +89,16 @@ class VerifyingClient(RecordingClient):
     def list_observations(self, wid):
         return list(self.observations.get(wid, []))
 
+    def events(self, wid, limit=100):
+        # the base double has only OBSERVATION_RECORDED events; a completed
+        # attempt with ZERO observations (budget-censored) and a boundary-
+        # crossing failure both anchor on EXPERIMENT_COMMITTED, which a real
+        # engine always has once experiment() returned
+        base = super().events(wid, limit=limit)
+        return [{"event_type": "EXPERIMENT_COMMITTED", "event_id": "evt_exp_fixed",
+                 "entry_hash": "sha256:" + "b" * 64, "event_seq": 5,
+                 "refs": {"exp_id": "exp_fixed"}}] + base
+
 
 def _viv(schema, client, spec, worker="pr-worker"):
     runner = _runner_over(client, _spec.spec_hash(spec))

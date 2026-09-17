@@ -183,19 +183,31 @@ class Deliverer:
             if kind == "ENCOUNTER_RECORDED":
                 out = _pew.post_bodies(client, payload)
                 return "DELIVERED", 200, None, out.get("pew_reference")
-            # every other kind is a provenance event; posted when PEW exposes
-            # the ingest route (Stage 3, Mnemosyne); until then it is delivered
-            # to the local ledger as ACCEPTED-BY-CONTRACT-PENDING: we mark it
-            # DELIVERED only if the client has the route, else leave PENDING.
-            if hasattr(client, "post_event"):
-                status, body = client.post_event(payload=payload, event_id=r["event_id"], producer=r["producer"],
-                                                 stream=r["stream"], sequence=r["sequence"], kind=kind)
-                if status in (200, 201) or status == 409:
-                    return "DELIVERED", status, None, (body or {}).get("reference") if isinstance(body, dict) else None
-                if 400 <= status < 500 and status not in (409, 429):
-                    return "REJECTED", status, json.dumps(body, default=str)[:500], None
-                return "PENDING", status, json.dumps(body, default=str)[:500], None
-            return "PENDING", None, "no ingest route for %s yet (Mnemosyne s7.D)" % kind, None
+            # every other kind is a provenance event for PEW's producer-event
+            # inbox (Mnemosyne #344, POST /api/v1/events): body = {producer,
+            # stream, seq, event_id, kind, payload[, envelope]}; answers
+            # accepted | duplicate (both DELIVERED) | checkpoint_mismatch
+            # (REJECTED: same seq, different digest -- never overwritten) |
+            # rejected_malformed / 422 (REJECTED). gap/late are flags PEW
+            # keeps; a gap is visible on both sides and healed by neither.
+            body = {"producer": r["producer"], "stream": r["stream"], "seq": int(r["sequence"]),
+                    "event_id": r["event_id"], "kind": kind, "payload": payload,
+                    "envelope": {"source_attempt": str(r["source_attempt"]),
+                                 "source_step": str(r["source_step"]) if r.get("source_step") else None,
+                                 "source_experiment": str(r["source_experiment"]),
+                                 "payload_digest": r["payload_digest"]}}
+            status, ans = client._req("POST", "/events", body)          # noqa: SLF001
+            res = (ans or {}).get("results") if isinstance(ans, dict) else None
+            res = res if isinstance(res, dict) else {}
+            st = res.get("status")
+            if status in (200, 201) and st in ("accepted", "duplicate"):
+                ref = "pew:event/%s/%s/%s" % (r["producer"], r["stream"], r["sequence"])
+                return "DELIVERED", status, None, ref
+            if status in (200, 201) and st in ("checkpoint_mismatch", "rejected_malformed"):
+                return "REJECTED", status, json.dumps(res, default=str)[:500], None
+            if 400 <= status < 500 and status not in (409, 429):
+                return "REJECTED", status, json.dumps(ans, default=str)[:500], None
+            return "PENDING", status, json.dumps(ans, default=str)[:500], None
         except _pew.PewError as exc:
             msg = str(exc)
             http = None
