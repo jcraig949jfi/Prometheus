@@ -117,3 +117,14 @@ plus rows/receipts). Every timestamp UTC.
   (seed 1, gen 52); B/C 0/6. Positive control failed -> INCONCLUSIVE;
   'stuck' is 1/12 pooled. Ledger L-028, L-029; L-017 recurrence 1.
   Next: SFE-10.
+
+## 05:55-06:25 -- SFE-10 (two engine attempts; COMPLETE, NEGATIVE)
+
+- attempt 1 66 s, attempt 2 52 s; engine 0 errors both (3 worlds, 12
+  artifacts, 12 hash-verified imports, 15 experiments + 15 observations).
+  Attempt 1's harness filled the pc arms' generation 0 from its own seed
+  (L-030, CRN broken; D-014 rerun). Attempt 2: mono 3/3 footholds (gens
+  48-54) vs pc_0.4 1/3, pc_0.2 0/3. The one mature artifact (W0 solved
+  at 1.0) bought a foothold at charged gen 30 vs 50; immature artifacts a
+  loss. Ledger L-030..L-032; L-008 recurrence 2, L-012 recurrence 3.
+  Next: campaign report.

@@ -143,3 +143,13 @@ Alternative: re-create the artifacts in the new session (breaks provenance:
 the point of the experiment is reading FROZEN prior residue). | Revisit if
 the engine moves to strict session enforcement: then keys must be
 persisted per experiment and reused.
+
+D-014 | 2026-09-17 06:20 | SFE-10 was rerun as attempt 2 after the harness's
+generation-0 fill was fixed, and attempt 2 is the row of record. | Attempt
+1 broke common random numbers (D-007) for exactly the arms under
+comparison; the rerun costs 52 s and attempt 1 is preserved beside it. |
+Alternative: report attempt 1 with the confound noted (cheaper, but two of
+fifteen rows crossed the foothold line on the fill alone, so its
+comparison is uninterpretable). | Revisit if attempt-level reruns are
+ruled a budget violation: then the campaign's per-experiment budget must
+be defined over attempts, not runs.

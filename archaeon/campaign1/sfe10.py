@@ -40,7 +40,7 @@ from archaeon import workspace as _ws                          # noqa: E402
 from archaeon.wse.economics import REGIMES                     # noqa: E402
 from archaeon.wse.evolve import evaluate, run_cell             # noqa: E402
 from archaeon.wse.worlds import WorldSpec, episodes_for        # noqa: E402
-from archaeon.campaign1.sfe01 import FOUNDRY_C1, CAMPAIGN_SEED, engine_client, sha   # noqa: E402
+from archaeon.campaign1.sfe01 import FOUNDRY_C1, CAMPAIGN_SEED, engine_client, sha, seed_from, MASK62   # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "SFE-10"
@@ -63,9 +63,10 @@ def run_consumer(job: dict) -> dict:
     init = None
     if job.get("seed_manifests"):
         init = [G.organism_record(m, None, 0) for m in job["seed_manifests"]]
-        fm = dict(FOUNDRY_C1); fm["seed"] = 1010 + seed; fm["n"] = max(0, N - len(init))
-        if fm["n"]:
-            init = init + G.generate(fm)
+        # attempt 2 (L-030): the random fill is the SAME generation 0 that mono/noex draw
+        # (wse.gen0 keyed on the cell seed), truncated; only the imported organisms differ.
+        fm = dict(FOUNDRY_C1); fm["seed"] = seed_from("wse.gen0", CAMPAIGN_SEED, seed) & MASK62; fm["n"] = N
+        init = init + G.generate(fm)[: max(0, N - len(init))]
     t0 = time.time()
     res = run_cell(TARGET, REGIMES["E0"], CAMPAIGN_SEED, seed, N=N, G_=max(1, G_), E=E, init_pop=init, branch="cmp1-sfe10-common", foundry=FOUNDRY_C1)
     ho = evaluate(res["elite"]["manifest"], episodes_for(TARGET, CAMPAIGN_SEED, "heldout", seed, 48), rng_seed=7)
