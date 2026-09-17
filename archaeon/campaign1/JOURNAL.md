@@ -57,3 +57,14 @@ plus rows/receipts). Every timestamp UTC.
   incapable -> INCONCLUSIVE. Memorisation shelf visible in train-vs-held
   split (transported episodes recur every generation). Ledger L-017;
   L-009 recurrence 1 (my digest check again). Next: SFE-04.
+
+## 03:20-03:40 -- SFE-04 (one attempt; COMPLETE)
+
+- 5.5 s; engine 0 errors (1 world, 2 artifacts, 3 experiments + 3
+  observations, teardown 0.22 s). q1 useful computation weak positive
+  (particle2 0.608 vs 0.500 controls; shift 1.000); q2 NO localized
+  component: every 5-cell window costs ~0.10 = the matched random-lesion
+  band (max 0.113), shift-register control localizes at 0.500; q3 frozen
+  whole-substrate reuse positive on delay 3 (0.583 vs 0.483), localized
+  reuse null. D-010 (D-18 v1 reset; linear task). Ledger L-018..L-020.
+  Next: SFE-05.

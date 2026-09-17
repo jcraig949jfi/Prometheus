@@ -1,5 +1,8 @@
 {
- "artifacts": {},
+ "artifacts": {
+  "frozen_component": "sha256:06cdd967d780756ad5d299eede7124f3b7eb1824c51f1dcf0369cc4eba86805a",
+  "lesion_map": "sha256:bb779f26744b72a3a569cd18e7b90becf53c0fa40f20924d09b2358f294e0b21"
+ },
  "campaign_seed": 20260917,
  "config": {
   "delay": 2,
@@ -9,9 +12,24 @@
   "reset_root": 20260917,
   "window": 5
  },
- "engine_path": false,
+ "engine_path": true,
+ "engine_records": {
+  "q1": {
+   "exp_id": "exp_807f756bdf062c471c20683c",
+   "obs_id": "obs_324464c9ea97e53b9b052d79"
+  },
+  "q2": {
+   "exp_id": "exp_bd44a35a4930cead857797d5",
+   "obs_id": "obs_61476a31389a0c84187902e3"
+  },
+  "q3": {
+   "exp_id": "exp_be11a38e9a56f9882e3d4cd5",
+   "obs_id": "obs_51c14caa48d053dda4bdbd1b"
+  }
+ },
  "errors": [],
  "experiment": "SFE-04",
+ "hypothesis": "hyp_c024cc70b75f044b4d4282aa",
  "result": {
   "best_ca": "ca:particle2",
   "q1_delayed_recall": {
@@ -169,13 +187,13 @@
   ],
   "q3_reuse": {
    "ca_only": {
-    "accuracy": 0.5130208333333334,
-    "base_rate": 0.5065104166666667,
-    "n_scored": 768
+    "accuracy": 0.5828125,
+    "base_rate": 0.5171875,
+    "n_scored": 640
    },
    "component_window+random": {
-    "accuracy": 0.4830729166666667,
-    "base_rate": 0.5065104166666667,
+    "accuracy": 0.578125,
+    "base_rate": 0.5171875,
     "cells": [
      30,
      0,
@@ -183,26 +201,26 @@
      2,
      3
     ],
-    "n_scored": 768
+    "n_scored": 640
    },
    "composite": {
-    "accuracy": 0.5130208333333334,
-    "base_rate": 0.5065104166666667,
-    "n_scored": 768
+    "accuracy": 0.578125,
+    "base_rate": 0.5171875,
+    "n_scored": 640
    },
    "direct": {
-    "accuracy": 0.4765625,
-    "base_rate": 0.5065104166666667,
-    "n_scored": 768
+    "accuracy": 0.4828125,
+    "base_rate": 0.5171875,
+    "n_scored": 640
    },
    "random_only": {
-    "accuracy": 0.4934895833333333,
-    "base_rate": 0.5065104166666667,
-    "n_scored": 768
+    "accuracy": 0.4828125,
+    "base_rate": 0.5171875,
+    "n_scored": 640
    },
    "random_window+random": {
-    "accuracy": 0.4869791666666667,
-    "base_rate": 0.5065104166666667,
+    "accuracy": 0.590625,
+    "base_rate": 0.5171875,
     "cells": [
      0,
      1,
@@ -210,26 +228,33 @@
      15,
      20
     ],
-    "n_scored": 768
+    "n_scored": 640
    },
    "shift": {
-    "accuracy": 0.4361979166666667,
-    "base_rate": 0.5065104166666667,
-    "n_scored": 768
+    "accuracy": 1.0,
+    "base_rate": 0.5171875,
+    "n_scored": 640
    }
   },
   "reset_leakage_probe": null,
   "useful_bounded_computation": true
  },
+ "session_id": "ses_2c54adf903a9ee27130537f5",
+ "teardown": {
+  "ca": "TERMINATED"
+ },
  "timings": {
-  "q1_s": 0.67,
-  "q2_s": 2.42,
-  "q3_s": 0.01,
-  "total_s": 3.1
+  "q1_s": 0.69,
+  "q2_s": 2.58,
+  "q3_s": 0.0,
+  "records_s": 1.47,
+  "startup_s": 0.49,
+  "teardown_s": 0.22,
+  "total_s": 5.5
  },
  "workspace": {
   "allow_canonical_override": false,
-  "base_sha": "53e4f485e4759eaa3995af7ee1cc5542019cbeed",
+  "base_sha": "e394092e9143f1cc6bc108bc9e3d5ebf009bb6cf",
   "branch": "archaeon/wse-2026-09-16",
   "dirty": false,
   "main_worktree": false,
@@ -237,5 +262,7 @@
   "workspace_known": true,
   "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
  },
- "worlds": {}
+ "worlds": {
+  "ca": "wld_7c52dbf6be3d971a3a3b4086"
+ }
 }
