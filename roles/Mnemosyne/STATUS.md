@@ -79,7 +79,7 @@ says the service runs on M1; everything else it recorded stands as history.
     surface       docs/point_release/CAMPAIGN4_FROZEN_SURFACE.{md,json},
                   digest sha256:0ba00db3481f...; tests/test_frozen_surface.py
                   fails on any drift
-    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.3; builder
+    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.4; builder
                   ew.projections/1.0; reach_level v1, corridor_edge v1 (v0
                   SUPERSEDED, kept); inbox pew.events.v1; thresholds 0.5 /
                   0.45 / 0.90 + held-out confirmation
