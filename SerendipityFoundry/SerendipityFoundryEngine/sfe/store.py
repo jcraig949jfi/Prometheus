@@ -32,7 +32,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterator, Optional
 
-SCHEMA_VERSION = 8
+SCHEMA_VERSION = 9
 
 # The schema is intentionally explicit and constrained: NOT NULLs, CHECK
 # enumerations on lifecycle columns, and foreign keys, so a bad transition or a
@@ -89,7 +89,18 @@ CREATE TABLE IF NOT EXISTS worlds (
                                         -- fork child inherits the parent's root
                                         -- so forking cannot mint fresh budget)
     created_ts      REAL NOT NULL,
-    terminated_ts   REAL
+    terminated_ts   REAL,
+    -- v9 (2026-09-17, point release): FACTS the caller supplied, opaque to
+    -- the engine. NULL = NOT_SUPPLIED on every row that predates v9.
+    manifest        TEXT,               -- canonical JSON world definition (envelope
+                                        -- validated; content never read for meaning)
+    manifest_schema TEXT,               -- the author's versioned schema name
+    manifest_hash   TEXT,               -- content hash of manifest, engine-computed
+    labels          TEXT,               -- canonical JSON str->str, opaque provenance
+                                        -- (attempt/execution ids are minted ABOVE)
+    termination     TEXT                -- canonical JSON: reason (the STOP RULE,
+                                        -- never an outcome), logical_time, horizon,
+                                        -- budget_consumed, reference, note
 );
 CREATE INDEX IF NOT EXISTS ix_worlds_session ON worlds(session_id);
 CREATE INDEX IF NOT EXISTS ix_worlds_client ON worlds(client_id);
@@ -241,6 +252,9 @@ CREATE TABLE IF NOT EXISTS observations (
     evidence_class TEXT NOT NULL DEFAULT 'CLIENT_ASSERTED'
                  CHECK (evidence_class IN ('ENGINE_WORK_RESULT',
                                            'CLIENT_ASSERTED')),
+    logical_time INTEGER,              -- v9: the caller's logical clock (unit
+                                       -- declared by the world's manifest; a
+                                       -- unitless integer here). NULL = not supplied
     evidence_role TEXT NOT NULL DEFAULT 'ORIGINAL'   -- F3: the FIRST observation
                  CHECK (evidence_role IN ('ORIGINAL', 'REPLICATION')),
                                        -- bound to a prediction is ORIGINAL and
@@ -707,6 +721,8 @@ class Store:
                 self._migrate_6_to_7(cx)
             if have <= 7:
                 self._migrate_7_to_8(cx)
+            if have <= 8:
+                self._migrate_8_to_9(cx)
             cx.execute("UPDATE meta SET value=? WHERE key='schema_version'",
                        (str(SCHEMA_VERSION),))
 
@@ -776,6 +792,28 @@ class Store:
                        "INTEGER NOT NULL DEFAULT 0")
         cx.execute("CREATE INDEX IF NOT EXISTS ix_obs_pred "
                    "ON observations(world_id, pred_id)")
+
+    @staticmethod
+    def _migrate_8_to_9(cx) -> None:
+        """v8 -> v9 (2026-09-17, point release): six nullable FACT columns.
+
+        observations.logical_time; worlds.manifest / manifest_schema /
+        manifest_hash / labels / termination. Additive, PRAGMA-guarded (a
+        second run is a no-op), and NO BACKFILL: a pre-v9 observation has no
+        logical time and a pre-v9 world has no manifest and no typed
+        termination -- those read NULL = NOT_SUPPLIED forever, because
+        inventing them would be manufacturing facts (operator order s6). The
+        sealed events are untouched."""
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(observations)").fetchall()}
+        if "logical_time" not in have:
+            cx.execute("ALTER TABLE observations ADD COLUMN logical_time INTEGER")
+        have = {r["name"] for r in cx.execute(
+            "PRAGMA table_info(worlds)").fetchall()}
+        for col in ("manifest", "manifest_schema", "manifest_hash", "labels",
+                    "termination"):
+            if col not in have:
+                cx.execute(f"ALTER TABLE worlds ADD COLUMN {col} TEXT")
 
     @staticmethod
     def _migrate_7_to_8(cx) -> None:
