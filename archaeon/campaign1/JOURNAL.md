@@ -68,3 +68,14 @@ plus rows/receipts). Every timestamp UTC.
   whole-substrate reuse positive on delay 3 (0.583 vs 0.483), localized
   reuse null. D-010 (D-18 v1 reset; linear task). Ledger L-018..L-020.
   Next: SFE-05.
+
+## 03:40-04:25 -- SFE-05 (one engine attempt; COMPLETE)
+
+- Two dry runs first: the first showed the transfer set saturating every
+  delay (D-012: knob -> distractor count). Engine run 86 s, 0 errors, 13
+  artifacts, 12 experiments + 12 observations, world TERMINATED.
+- adaptive main +0.155, transfer main +0.113, interaction +0.042 (n=3);
+  forgetting shelf: fixed/on loses Kd-0 competence (0.00-0.04) while
+  adaptive/on keeps it (0.38-1.00) and climbs to Kd 4 in 2/3 seeds.
+  Ledger L-021 (generation-step API), L-022 (rung x generation matrix);
+  L-008 recurrence with mitigation. Next: SFE-06.

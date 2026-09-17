@@ -113,3 +113,23 @@ shift register, sat at chance in the dry run. | Alternative: run the
 alpha as specified and record an obstruction again (no information). |
 Revisit if the operator rules on D-18; the campaign's artifact declares
 "ca_stream_v2 semantics, campaign-local".
+
+D-011 | 2026-09-17 03:50 | SFE-05 is the first H4 alpha (no
+curriculum_discrete_v1 kind exists anywhere): challenges = the WSE W1 cell
+with DELAY as the difficulty knob; the adaptive policy is the sealed ladder
+{1,2,4,8,16} with up-at-0.40 / down-at-0.10 on the population mean;
+evaluation is a fixed held-out battery over delays {1,4,16}. | The
+directive asks for a bounded 2x2 with an independently defined
+evaluation; building the designed H4 kind (bounded task grammar +
+validity oracle) is a separate engineering project (directive III). |
+Alternative: TABLE H4 until the kind exists. | Revisit when Vivarium
+registers curriculum_discrete_v1.
+
+D-012 | 2026-09-17 04:00 | SFE-05's difficulty knob is the distractor count
+Kd (ladder {0,1,2,4,8}; fixed 4; eval {0,4,8}) instead of the delay. |
+Dry run: the transfer set scores 1.000 at every delay on W1 (a last-value
+register is delay-invariant on K=1 D=1), so the design could not measure
+an interaction; on the distractor axis the same organisms fall from 1.0
+toward chance. Found before any engine call; no rows discarded. |
+Alternative: keep delay and drop transfer (loses the 2x2). | Revisit
+never for this campaign.
