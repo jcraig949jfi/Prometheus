@@ -174,3 +174,22 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
 - L3-037: a battery attack declared on a median is the wrong summary for a
   bimodal outcome (medians equal at 0.3125 while 5/12 vs 2/12 separate).
 - Next: C3-SFE-09 (CA mechanism, 8 seeds) running -- the last slot.
+
+## 12:40-13:10 -- C3-SFE-09 (a03 crashed in shared code; a04 of record; CAPABLE_NEGATIVE: localization is uninformative) and CAMPAIGN CLOSE
+
+- a03 crashed inside states.disposition_candidate: rows marked
+  uninformative return without the primary metric and the paired maps
+  indexed it directly. 4 seeds hid it, 8 exposed it. Fixed so missing
+  metrics are SKIPPED, never read as zero (L3-039); 47 tests pass.
+- a04: 39 s, 24 records, 0 errors, resumed from a03 replaying 29 steps.
+  particle2 single site carries 0.56-1.68 of the margin -- and GKL, never
+  evolved for the task, carries 0.45-1.39 (primary 0.966 vs 0.976, effect
+  -0.011). Local storage 0/8, routing 2/8: neither named class (L3-040).
+  The site-alone readout survives PERMUTING the reset lattice in 5/8
+  seeds, so the readout is reading position-keyed reset structure
+  (L3-041). Executable hypothesis left for a later run.
+- CAMPAIGN CLOSED: 10/10 slots attempted, 7 CAPABLE_NEGATIVE, 2
+  WEAK_POSITIVE, 1 INCONCLUSIVE, 0 engine errors on attempts of record,
+  0 retired lines reopened. CAMPAIGN_REPORT.md written with the section
+  16 answers, the section 12 accounting and CONTINUE / CONDITIONAL /
+  STOP for campaign 4.

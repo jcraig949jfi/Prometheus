@@ -192,8 +192,10 @@ def disposition_candidate(decl: dict, meas: dict, states: Optional[List[dict]] =
         effect = -effect
     # paired sign count when the arms share seeds (common random numbers): how many seeds favour treatment
     pairs = 0; wins = 0
-    by_seed_t = {r.get("seed"): r[pr["metric"]] for r in rows if r.get(af) == pr["treatment"]}
-    by_seed_c = {r.get("seed"): r[pr["metric"]] for r in rows if r.get(af) == pr["control"]}
+    # rows that do not carry the metric are not pairable (e.g. an arm the harness marked
+    # uninformative and returned early); they are skipped, never read as zero (campaign 3 L3-038)
+    by_seed_t = {r.get("seed"): r[pr["metric"]] for r in rows if r.get(af) == pr["treatment"] and r.get(pr["metric"]) is not None}
+    by_seed_c = {r.get("seed"): r[pr["metric"]] for r in rows if r.get(af) == pr["control"] and r.get(pr["metric"]) is not None}
     for s in by_seed_t:
         if s in by_seed_c:
             pairs += 1
