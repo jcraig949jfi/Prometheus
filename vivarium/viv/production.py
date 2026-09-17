@@ -92,17 +92,22 @@ def credential_presence(d: dict, role: str = "vivarium") -> dict:
     c = (d.get("consumers") or {}).get(role) or {}
     f = c.get("credential_file")
     keys = c.get("keys") or []
+    # optional_keys: presence RECORDED, absence never a refusal -- the PEW
+    # writer token gates the deliverer (the outbox holds without it), not the
+    # consumer (operator repair order 2026-09-17: the restart must not wait on
+    # a credential another seat issues out of band)
+    optional = c.get("optional_keys") or []
     p = REPO / f if f and not os.path.isabs(f) else Path(f) if f else None
     present: Dict[str, bool] = {}
+    have = set()
     if p and p.exists():
         try:
             have = set(json.loads(p.read_text(encoding="utf-8")).keys())
         except Exception:                                         # noqa: BLE001
             have = set()
-        present = {k: (k in have) for k in keys}
-    else:
-        present = {k: False for k in keys}
+    present = {k: (k in have) for k in keys}
     return {"role": role, "credential_file": str(p) if p else None, "present": present,
+            "optional_present": {k: (k in have) for k in optional},
             "ok": bool(keys) and all(present.values())}
 
 
