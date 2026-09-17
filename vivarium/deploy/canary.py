@@ -266,17 +266,32 @@ class Canary:
             self.save()
             return
         self.check(L + ".row_stranded_running", row["status"] in ("running", "claimed"), status=row["status"])
-        r = subprocess.run([sys.executable, "-m", "viv.cli", "release", eid, "--new-attempt", "--by", "vivarium@m2",
-                            "--reason", "s14 canary: consumer killed mid-run; NEW ATTEMPT is the only recovery"],
-                           capture_output=True, text=True, cwd=str(VIVARIUM), timeout=120)
-        self.check(L + ".released_new_attempt", r.returncode == 0, out=(r.stdout or r.stderr)[-200:])
+        if os.environ.get("CANARY_AUTO") == "1":
+            # Campaign 4: no human release -- the dead-man releases the dead
+            # worker's stranded row to a NEW ATTEMPT before it relaunches
+            t_rel = time.time(); rel_event = None
+            while time.time() - t_rel < 420:
+                ev = self.q("SELECT actor, event_type FROM viv.research_experiment_events WHERE experiment_id=%s "
+                            "AND event_type IN ('stranded_released','transport_failure_released') ORDER BY event_id DESC LIMIT 1", eid)
+                if ev:
+                    rel_event = ev[0]; break
+                time.sleep(5)
+            self.check(L + ".released_new_attempt", rel_event is not None and rel_event["actor"] == "VivariumDeadmanM2",
+                       by="dead-man (automatic)", event=rel_event, waited_s=round(time.time() - t_rel))
+        else:
+            r = subprocess.run([sys.executable, "-m", "viv.cli", "release", eid, "--new-attempt", "--by", "vivarium@m2",
+                                "--reason", "s14 canary: consumer killed mid-run; NEW ATTEMPT is the only recovery"],
+                               capture_output=True, text=True, cwd=str(VIVARIUM), timeout=120)
+            self.check(L + ".released_new_attempt", r.returncode == 0, out=(r.stdout or r.stderr)[-200:])
         atts = self.attempts(eid)
         self.check(L + ".attempt1_stranded", bool(atts) and atts[0]["terminal_state"] == "STRANDED"
                    and (atts[0]["termination"] or {}).get("termination_reason") == "STRANDED",
                    a1=(atts[0]["terminal_state"], (atts[0]["termination"] or {}).get("termination_reason")) if atts else None)
-        # the production relaunch path: the dead-man task (run it now rather than wait for its 5-minute tick)
-        rr = subprocess.run(["schtasks", "/Run", "/TN", "VivariumDeadmanM2"], capture_output=True, text=True, timeout=60)
-        self.out["checks"][L + ".deadman_run_requested"] = {"ok": rr.returncode == 0, "out": (rr.stdout or rr.stderr)[-120:]}
+        # the production relaunch path: the dead-man task (run it now rather than wait for its 5-minute tick;
+        # under CANARY_AUTO the scheduled tick itself did the release + relaunch and this is a no-op)
+        if os.environ.get("CANARY_AUTO") != "1":
+            rr = subprocess.run(["schtasks", "/Run", "/TN", "VivariumDeadmanM2"], capture_output=True, text=True, timeout=60)
+            self.out["checks"][L + ".deadman_run_requested"] = {"ok": rr.returncode == 0, "out": (rr.stdout or rr.stderr)[-120:]}
         t1 = time.time(); new_pid = None
         while time.time() - t1 < 420:
             pid, _ = self.consumer_pid()
