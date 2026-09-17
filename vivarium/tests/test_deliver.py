@@ -59,6 +59,19 @@ class FakePew:
             return 200, {"status": "inserted"}
         if path.startswith("/fossil/encounters/"):
             return 200, {"encounter_id": path.rsplit("/", 1)[1]}
+        if path == "/events":
+            # Mnemosyne's producer-event inbox (#344): dedupe on event_id;
+            # same seq with a different digest is a checkpoint_mismatch
+            self.events = getattr(self, "events", {})
+            key = body["event_id"]
+            seqkey = (body["producer"], body["stream"], body["seq"])
+            self.seqs = getattr(self, "seqs", {})
+            if key in self.events:
+                return 200, {"n": 1, "results": {"event_id": key, "status": "duplicate", "gap": False}}
+            if seqkey in self.seqs and self.seqs[seqkey] != body["envelope"]["payload_digest"]:
+                return 200, {"n": 1, "results": {"event_id": key, "status": "checkpoint_mismatch", "gap": False}}
+            self.events[key] = body; self.seqs[seqkey] = body["envelope"]["payload_digest"]
+            return 200, {"n": 1, "results": {"event_id": key, "status": "accepted", "gap": False}}
         return 404, {}
 
 
@@ -99,6 +112,7 @@ def test_positive_execution_completes_with_pew_down_and_delivers_later(conn, dra
     r = d.tick(conn)
     assert r["delivered"] >= 1
     st = _states(conn, schema, eid)
+    assert all(s == "DELIVERED" for _, s, _ in st), st          # provenance events reach the inbox too
     enc = [row for row in st if row[0] == "ENCOUNTER_RECORDED"][0]
     assert enc[1] == "DELIVERED" and enc[2].startswith("pew:encounter/enc-dl-1:")
     # the terminal row stays frozen (pew_reference NULL); the reference is on the outbox row
@@ -130,9 +144,10 @@ def test_negative_a_transport_failure_stops_the_stream_in_order(conn, drafted, t
     real = fake._req
 
     def flaky(method, path, body=None):
-        calls["n"] += 1
-        if path == "/fossil/encounters" and calls["n"] < 3:
-            raise ConnectionError("blip")
+        if path == "/fossil/encounters":
+            calls["n"] += 1
+            if calls["n"] < 3:
+                raise ConnectionError("blip")
         return real(method, path, body)
     fake._req = flaky
     d = _deliverer(tmp_path, fake)
@@ -193,3 +208,18 @@ def test_cheat_the_tick_path_does_not_import_the_http_client():
     src = open(L.__file__, encoding="utf-8").read()
     assert "post_bodies(" not in src
     assert "urllib.request" not in src
+
+
+def test_provenance_events_reach_the_inbox_and_repeat_as_duplicates(conn, drafted, tmp_path):
+    schema = drafted
+    eid = _run_one(conn, schema, "enc-dl-7")
+    fake = FakePew()
+    d = _deliverer(tmp_path, fake)
+    d.tick(conn)
+    assert all(s == "DELIVERED" for _, s, _ in _states(conn, schema, eid))
+    n_events = len(fake.events)
+    assert n_events >= 2                                            # ATTEMPT_OPENED + ATTEMPT_TERMINATED at least
+    # re-post one accepted event: duplicate, not a second row
+    body = next(iter(fake.events.values()))
+    status, ans = fake._req("POST", "/events", body)
+    assert ans["results"]["status"] == "duplicate" and len(fake.events) == n_events
