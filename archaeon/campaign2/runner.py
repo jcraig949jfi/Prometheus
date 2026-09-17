@@ -270,14 +270,16 @@ class Engine:
     def _get(self, path: str, client=None) -> Any:
         return (client or self.c)._req("GET", path)
 
+    # campaign 3 (group E): the three wrappers now live in sfclient.client.EngineClient; these
+    # delegate (and keep the client= override for session-less readers).
     def list_experiments(self, wid: str, client=None) -> list:
-        return self._get("/v2/worlds/%s/experiments" % wid, client)
+        return (client or self.c).list_experiments(wid)
 
     def get_experiment(self, wid: str, exp_id: str, client=None) -> dict:
-        return self._get("/v2/worlds/%s/experiments/%s" % (wid, exp_id), client)
+        return (client or self.c).get_experiment(wid, exp_id)
 
     def list_observations(self, wid: str, client=None) -> list:
-        return self._get("/v2/worlds/%s/observations" % wid, client)
+        return (client or self.c).list_observations(wid)
 
     def list_artifacts(self, wid: str, client=None) -> list:
         """HTTP 405 on the production engine (no GET artifacts route; Phase A smoke); kept for a
@@ -290,9 +292,13 @@ class Engine:
         from sfclient.client import EngineClient
         return EngineClient(self.descriptor["base_url"], self.c.token, cafile=self.descriptor["cacert"], client_id=self.c.client_id)
 
-    def read_campaign1(self, config: Path = REPO / "archaeon" / "campaign1" / "config.local.json"):
-        """A session-less client under campaign 1's OWN principal, for artifacts campaign 1
-        published (a different client id; the campaign-2 token is not that world's owner)."""
+    def read_campaign(self, config: Path):
+        """A session-less client under ANOTHER campaign's principal (its gitignored
+        config.local.json), for artifacts that campaign published: the current campaign's
+        token is not that world's owner (campaign-1 D-013; campaign-3 reads campaign 2)."""
         from sfclient.client import EngineClient
-        cfg = json.loads(config.read_text(encoding="utf-8"))
+        cfg = json.loads(Path(config).read_text(encoding="utf-8"))
         return EngineClient(self.descriptor["base_url"], cfg.get("token"), cafile=self.descriptor["cacert"], client_id=cfg.get("client_id"))
+
+    def read_campaign1(self, config: Path = REPO / "archaeon" / "campaign1" / "config.local.json"):
+        return self.read_campaign(config)

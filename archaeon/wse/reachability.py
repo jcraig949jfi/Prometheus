@@ -1,24 +1,27 @@
-"""Persistent REACHABILITY TABLE (campaign 2, Phase A group A; L-017, L-028; L2-016).
+"""Persistent REACHABILITY TABLE (campaigns 2-3; L-017, L-028, L2-016, L2-025, L2-026).
 
-One row per run (append-only JSONL), keyed by cell, value_bits, N, G, E, regime AND the
-generation-0 FOUNDRY (the sampling distribution of generation 0 is part of the regime: the v01
-survey sampled genomes of 1-32 instructions, campaigns 1 and 2 sample 1-16, and W1_d1 8-bit
-reads 2/3 under the first and 1/6 under the second -- C2-SFE-02 attempt 1 found the gap).
-Pooled summaries carry a Wilson band; five classes:
+One row per run (append-only JSONL), keyed by cell, value_bits, N, G, E, regime and the
+generation-0 FOUNDRY (the sampling distribution of generation 0 is part of the regime).
+Rows carry run identity (campaign_seed, rng_label, seed): under common random numbers two
+experiments that search the same cell at the same budget with the same seeds produce the
+same run, and pooled() counts it once.
 
-  COMMON                              pooled lower band >= 0.5
-  REACHABLE                           reached at least once, pooled frequency >= 0.25
-  RARE                                reached at least once, pooled frequency < 0.25
-  UNESTABLISHED                       fewer than 3 baseline runs and none reached
-  OBSERVED_UNREACHABLE_AT_BUDGET      >= 3 baseline runs, none reached (the band's upper
-                                      edge is reported: 0/3 is < 0.71 at 95%, not "impossible")
+THREE LEVELS OF REACH (campaign 3, D3-002): every row records the best training reward and
+  FLOOR   best <  SHELF_MIN (0.45)
+  SHELF   SHELF_MIN <= best < SUMMIT_MIN (0.90)   (one stream of a K=2 cell; half credit)
+  SUMMIT  best >= SUMMIT_MIN                     (the preregistered full-solve criterion)
+with first_foothold_gen (>= 0.5, the campaign-1/2 criterion), first_shelf_gen and
+first_summit_gen; a row whose run ended without a summit is censored at G for the summit.
 
-A "baseline" run is a plain search from the cell's own generation 0 with no intervention
-and no substituted organisms under the standard grammar; only baseline runs pool into the
-classes. Treated runs are recorded too (kind='treated').
+RIGHT-CENSORING (campaign 3, D3-003): a run stopped k generations after its first solve
+(stopped_on_solve=true) is a BASELINE row with G = generations run. lookup(G) pools every
+row that informs budget G monotonically: rows run for >= G generations (reached iff the
+event happened before G) and stopped rows whose event happened before G.
 
-This is an instrument for knowing what question a budget buys, not a rule that forbids
-exploration: candidates() returns cells in a requested band; lookup() never refuses.
+Classes (foothold criterion, unchanged from campaign 2): COMMON (Wilson lower >= 0.5),
+REACHABLE (freq >= 0.25), RARE (reached, freq < 0.25), OBSERVED_UNREACHABLE_AT_BUDGET
+(>= 3 runs, none), UNESTABLISHED. The same classes are computed for the SUMMIT event
+(class_summit). A shelf histogram (best training reward, bins of 0.1) is pooled per key.
 """
 from __future__ import annotations
 
@@ -35,6 +38,10 @@ REPO = Path(__file__).resolve().parents[2]
 TABLE = REPO / "archaeon" / "campaign2" / "REACHABILITY.jsonl"
 KEY = ("cell", "value_bits", "N", "G", "E", "regime", "foundry")
 CLASSES = ("COMMON", "REACHABLE", "RARE", "UNESTABLISHED", "OBSERVED_UNREACHABLE_AT_BUDGET")
+FOOTHOLD_MIN = 0.5
+SHELF_MIN = 0.45
+SUMMIT_MIN = 0.90
+LEVELS = ("FLOOR", "SHELF", "SUMMIT")
 
 
 def foundry_id(foundry: Optional[dict]) -> str:
@@ -74,6 +81,29 @@ def classify(n: int, k: int) -> str:
     return "RARE"
 
 
+def level_of(best: Optional[float], heldout: Optional[float] = None) -> str:
+    """SUMMIT needs the HELD-OUT competence (>= SUMMIT_MIN) when one is known: a single
+    generation's training best of 0.9375 with held-out 0.53 (C2-SFE-03 seed 9) is a lucky
+    battery, not a full solution (D3-006). A training-only summit is a CANDIDATE (see
+    summit_candidate_gen) and levels as SHELF until confirmed."""
+    if best is None:
+        return "FLOOR"
+    if best >= SUMMIT_MIN and (heldout is None or heldout >= SUMMIT_MIN):
+        return "SUMMIT" if heldout is not None else "SHELF"
+    if best >= SHELF_MIN:
+        return "SHELF"
+    return "FLOOR"
+
+
+def first_at(trace_best: Optional[Sequence[float]], thr: float) -> Optional[int]:
+    if not trace_best:
+        return None
+    for i, v in enumerate(trace_best):
+        if v >= thr:
+            return i
+    return None
+
+
 def spec_of(knobs: dict) -> WorldSpec:
     kw = {k: (tuple(v) if isinstance(v, list) else v) for k, v in knobs.items()}
     return WorldSpec(**kw)
@@ -82,30 +112,35 @@ def spec_of(knobs: dict) -> WorldSpec:
 def row(spec: WorldSpec, *, N: int, G: int, E: int, regime: str, seed: int, source: dict,
         first_solved_gen: Optional[int], best_train_max: float, heldout: Optional[float] = None,
         kind: str = "baseline", solve_threshold: float = 0.5, trace_best: Optional[Sequence[float]] = None,
-        foundry: Optional[str] = None, campaign_seed: Optional[int] = None, rng_label: Optional[str] = None) -> dict:
-    """campaign_seed + rng_label + seed identify the RUN: under common random numbers two
-    experiments that search the same cell at the same budget with the same seeds produce the
-    same run, and pooled() counts it once (C2-SFE-02's control arm reproduced C2-SFE-01's
-    fresh arm row for row)."""
+        foundry: Optional[str] = None, campaign_seed: Optional[int] = None, rng_label: Optional[str] = None,
+        stopped_on_solve: bool = False, heldout_per_ask: Optional[Sequence[float]] = None) -> dict:
+    tb = None if trace_best is None else [round(float(x), 4) for x in trace_best]
     return {
         "cell": spec.name, "world_id": spec.world_id(), "knobs": spec.knobs(), "value_bits": spec.value_bits,
         "N": N, "G": G, "E": E, "regime": regime, "foundry": foundry or default_foundry_id(), "seed": seed, "kind": kind, "source": source,
-        "campaign_seed": campaign_seed, "rng_label": rng_label,
+        "campaign_seed": campaign_seed, "rng_label": rng_label, "stopped_on_solve": bool(stopped_on_solve),
         "solve_threshold": solve_threshold, "first_solved_gen": first_solved_gen,
         "reached": first_solved_gen is not None, "best_train_max": round(float(best_train_max), 6),
+        "level": level_of(best_train_max, heldout), "first_foothold_gen": first_solved_gen if first_solved_gen is not None else first_at(tb, FOOTHOLD_MIN),
+        "first_shelf_gen": first_at(tb, SHELF_MIN),
+        "summit_candidate_gen": first_at(tb, SUMMIT_MIN),                       # training best >= SUMMIT_MIN (one battery)
+        "first_summit_gen": (first_at(tb, SUMMIT_MIN) if (heldout is not None and heldout >= SUMMIT_MIN) else None),   # confirmed held-out
+        "summit_censored": not (heldout is not None and heldout >= SUMMIT_MIN and first_at(tb, SUMMIT_MIN) is not None),
         "heldout": None if heldout is None else round(float(heldout), 6),
+        "heldout_per_ask": None if heldout_per_ask is None else [round(float(x), 4) for x in heldout_per_ask],
         "eval_resolution": round(1.0 / max(1, E), 6),
-        "trace_best": None if trace_best is None else [round(float(x), 4) for x in trace_best],
+        "trace_best": tb,
         "recorded_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
 
 
 def row_from_result(spec: WorldSpec, res: dict, *, N: int, G: int, E: int, regime: str, seed: int,
                     source: dict, heldout: Optional[float] = None, kind: Optional[str] = None,
-                    foundry: Optional[dict] = None, campaign_seed: Optional[int] = None) -> dict:
+                    foundry: Optional[dict] = None, campaign_seed: Optional[int] = None,
+                    stopped_on_solve: bool = False, heldout_per_ask: Optional[Sequence[float]] = None) -> dict:
     """A table row straight from run_cell()/Evolution.result(): kind is baseline iff the loop
     reports a verified common generation 0 with nothing substituted (pass kind='treated' for a
-    non-standard operator set); foundry is the generation-0 dict the run used."""
+    non-standard operator set or schedule); a stopped-on-solve run stays baseline (censored)."""
     prov = res.get("gen0_provenance") or {}
     if kind is None:
         kind = "baseline" if prov.get("verified_common") and prov.get("n_substituted", 0) == 0 else "treated"
@@ -113,7 +148,8 @@ def row_from_result(spec: WorldSpec, res: dict, *, N: int, G: int, E: int, regim
     return row(spec, N=N, G=G, E=E, regime=regime, seed=seed, source=source, first_solved_gen=res.get("first_solved_gen"),
                best_train_max=max(tb) if tb else 0.0, heldout=heldout, kind=kind,
                solve_threshold=res.get("solve_threshold", 0.5), trace_best=tb, foundry=foundry_id(foundry) if foundry else None,
-               campaign_seed=prov.get("campaign_seed", campaign_seed), rng_label=res.get("rng_label"))
+               campaign_seed=prov.get("campaign_seed", campaign_seed), rng_label=res.get("rng_label"),
+               stopped_on_solve=stopped_on_solve, heldout_per_ask=heldout_per_ask)
 
 
 def _identity(r: dict) -> tuple:
@@ -123,8 +159,6 @@ def _identity(r: dict) -> tuple:
 
 
 def run_identity(r: dict) -> tuple:
-    """The RUN a baseline row measured: same cell, budget, foundry, campaign seed, rng label
-    and seed = the same deterministic search, whichever experiment ran it."""
     return (r["cell"], r["value_bits"], r["N"], r["G"], r["E"], r["regime"], r.get("foundry"),
             r.get("campaign_seed"), r.get("rng_label"), r["seed"])
 
@@ -149,8 +183,6 @@ def load(path: Path = TABLE) -> List[dict]:
 
 
 def record(rows: Iterable[dict], path: Path = TABLE) -> int:
-    """Append rows not already present (identity = key + seed + kind + source). Returns the
-    number appended."""
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     have = {_identity(r) for r in load(p)}
@@ -164,42 +196,77 @@ def record(rows: Iterable[dict], path: Path = TABLE) -> int:
     return n
 
 
+def _event_gen(r: dict, event: str) -> Optional[int]:
+    return {"foothold": r.get("first_foothold_gen", r.get("first_solved_gen")), "shelf": r.get("first_shelf_gen"),
+            "summit": r.get("first_summit_gen")}[event]
+
+
+def _summary(key_vals: dict, rows: List[dict], G: Optional[int] = None) -> dict:
+    """Pool rows (already deduped and selected) at budget G (None = each row's own G)."""
+    s = dict(key_vals)
+    s.update({"n": 0, "k": 0, "k_shelf": 0, "k_summit": 0, "first_solved_gens": [], "first_shelf_gens": [], "first_summit_gens": [],
+              "best_train_max": 0.0, "heldout_max": None, "levels": {"FLOOR": 0, "SHELF": 0, "SUMMIT": 0}, "shelf_hist": {},
+              "sources": set(), "seeds": [], "eval_resolution": rows[0].get("eval_resolution") if rows else None})
+    for r in rows:
+        g_budget = G if G is not None else r["G"]
+        s["n"] += 1; s["seeds"].append(r.get("seed"))
+        fg = _event_gen(r, "foothold"); sg = _event_gen(r, "shelf"); mg = _event_gen(r, "summit")
+        if fg is not None and fg < g_budget:
+            s["k"] += 1; s["first_solved_gens"].append(fg)
+        if sg is not None and sg < g_budget:
+            s["k_shelf"] += 1; s["first_shelf_gens"].append(sg)
+        if mg is not None and mg < g_budget:
+            s["k_summit"] += 1; s["first_summit_gens"].append(mg)
+        best = r.get("best_train_max") or 0.0
+        if G is not None and r.get("trace_best") and r["G"] > G:
+            best = max(r["trace_best"][:G]) if r["trace_best"][:G] else 0.0
+        s["best_train_max"] = max(s["best_train_max"], best)
+        lv = level_of(best, r.get("heldout")) if (G is None or r["G"] <= G) else level_of(best, None)
+        if lv == "SUMMIT" and mg is not None and not (mg < g_budget):
+            lv = "SHELF"
+        s["levels"][lv] += 1
+        cg = r.get("summit_candidate_gen")
+        if cg is not None and cg < g_budget:
+            s["k_summit_candidate"] = s.get("k_summit_candidate", 0) + 1
+        b = "%.1f" % (math.floor(best * 10 + 1e-9) / 10); s["shelf_hist"][b] = s["shelf_hist"].get(b, 0) + 1
+        if r.get("heldout") is not None:
+            s["heldout_max"] = max(s["heldout_max"] or 0.0, r["heldout"])
+        src = r.get("source", {}); s["sources"].add("%s/%s/%s" % (src.get("campaign"), src.get("experiment"), src.get("arm")))
+    s["freq"] = round(s["k"] / s["n"], 4) if s["n"] else None
+    s["band95"] = wilson(s["k"], s["n"]); s["class"] = classify(s["n"], s["k"])
+    s["freq_shelf"] = round(s["k_shelf"] / s["n"], 4) if s["n"] else None
+    s["freq_summit"] = round(s["k_summit"] / s["n"], 4) if s["n"] else None
+    # confirmed summits (held-out >= SUMMIT_MIN) plus training-only candidates from rows WITHOUT a
+    # held-out (stop-rule rows recorded before campaign 3): the class is computed over both and
+    # the two counts are reported apart so a reader sees what is confirmed
+    s["k_summit_candidate"] = s.get("k_summit_candidate", 0)
+    s["k_summit_any"] = s["k_summit"] + sum(1 for r in rows if r.get("heldout") is None and r.get("summit_candidate_gen") is not None
+                                            and r["summit_candidate_gen"] < (G if G is not None else r["G"]))
+    s["band95_summit"] = wilson(s["k_summit_any"], s["n"]); s["class_summit"] = classify(s["n"], s["k_summit_any"])
+    for kk in ("first_solved_gens", "first_shelf_gens", "first_summit_gens"):
+        s[kk] = sorted(x for x in s[kk] if x is not None)
+    s["median_first_solved_gen"] = s["first_solved_gens"][len(s["first_solved_gens"]) // 2] if s["first_solved_gens"] else None
+    s["sources"] = sorted(s["sources"])
+    s["shelf_hist"] = dict(sorted(s["shelf_hist"].items()))
+    return s
+
+
 def pooled(rows: Iterable[dict], kinds: Sequence[str] = ("baseline",), key: Sequence[str] = KEY) -> Dict[tuple, dict]:
-    out: Dict[tuple, dict] = {}
+    groups: Dict[tuple, List[dict]] = {}
     for r in dedupe_runs(rows):
         if r.get("kind") not in kinds:
             continue
-        k = tuple(r.get(x) for x in key)
-        s = out.setdefault(k, {kk: r.get(kk) for kk in key} | {"n": 0, "k": 0, "first_solved_gens": [], "best_train_max": 0.0,
-                                                              "heldout_max": None, "eval_resolution": r.get("eval_resolution"),
-                                                              "sources": set(), "seeds": []})
-        s["n"] += 1
-        s["seeds"].append(r.get("seed"))
-        if r.get("reached"):
-            s["k"] += 1
-            s["first_solved_gens"].append(r.get("first_solved_gen"))
-        s["best_train_max"] = max(s["best_train_max"], r.get("best_train_max") or 0.0)
-        if r.get("heldout") is not None:
-            s["heldout_max"] = max(s["heldout_max"] or 0.0, r["heldout"])
-        src = r.get("source", {})
-        s["sources"].add("%s/%s/%s" % (src.get("campaign"), src.get("experiment"), src.get("arm")))
-    for s in out.values():
-        s["freq"] = round(s["k"] / s["n"], 4) if s["n"] else None
-        s["band95"] = wilson(s["k"], s["n"])
-        s["class"] = classify(s["n"], s["k"])
-        s["first_solved_gens"] = sorted(x for x in s["first_solved_gens"] if x is not None)
-        s["median_first_solved_gen"] = (s["first_solved_gens"][len(s["first_solved_gens"]) // 2] if s["first_solved_gens"] else None)
-        s["sources"] = sorted(s["sources"])
-    return out
+        groups.setdefault(tuple(r.get(x) for x in key), []).append(r)
+    return {k: _summary({kk: rs[0].get(kk) for kk in key}, rs) for k, rs in groups.items()}
 
 
 def lookup(cell: str, *, value_bits: int, N: Optional[int] = None, G: Optional[int] = None, E: Optional[int] = None,
            regime: str = "E0", foundry: Optional[str] = "default", G_min: Optional[int] = None, G_max: Optional[int] = None,
-           rows: Optional[List[dict]] = None, path: Path = TABLE) -> dict:
-    """The pooled estimate for a cell at a budget (exact N/G/E when given) or across budgets
-    with G in [G_min, G_max], under one generation-0 foundry ('default' = the campaign
-    foundry; None = pool across foundries, reported as such). Never refuses: an empty pool
-    comes back UNESTABLISHED."""
+           rows: Optional[List[dict]] = None, path: Path = TABLE, monotone: bool = True) -> dict:
+    """The pooled estimate for a cell at a budget under one generation-0 foundry ('default' =
+    the campaign foundry; None = pool across foundries). With G given and monotone=True (D3-003)
+    every row that INFORMS budget G is pooled: rows run for >= G generations (event iff before
+    G) and stopped-on-solve rows whose event happened before G. Never refuses."""
     fid = default_foundry_id() if foundry == "default" else foundry
     rs = rows if rows is not None else load(path)
     sel = [r for r in rs if r["cell"] == cell and r["value_bits"] == value_bits and r["regime"] == regime and r["kind"] == "baseline"]
@@ -210,27 +277,30 @@ def lookup(cell: str, *, value_bits: int, N: Optional[int] = None, G: Optional[i
     if E is not None:
         sel = [r for r in sel if r["E"] == E]
     if G is not None:
-        sel = [r for r in sel if r["G"] == G]
+        if monotone:
+            sel = [r for r in sel if r["G"] >= G or (r.get("stopped_on_solve") and r.get("reached") and (r.get("first_solved_gen") or 0) < G)]
+        else:
+            sel = [r for r in sel if r["G"] == G]
     if G_min is not None:
         sel = [r for r in sel if r["G"] >= G_min]
     if G_max is not None:
         sel = [r for r in sel if r["G"] <= G_max]
-    p = pooled(sel, key=("cell", "value_bits", "regime"))
-    if not p:
-        return {"cell": cell, "value_bits": value_bits, "regime": regime, "foundry": fid, "n": 0, "k": 0, "freq": None,
-                "band95": (0.0, 1.0), "class": "UNESTABLISHED", "budgets": [], "first_solved_gens": [],
-                "median_first_solved_gen": None, "best_train_max": None, "heldout_max": None}
-    s = list(p.values())[0]
-    s["foundry"] = fid
+    sel = dedupe_runs(sel)
+    if not sel:
+        return {"cell": cell, "value_bits": value_bits, "regime": regime, "foundry": fid, "n": 0, "k": 0, "k_shelf": 0, "k_summit": 0, "freq": None,
+                "freq_shelf": None, "freq_summit": None, "band95": (0.0, 1.0), "band95_summit": (0.0, 1.0), "class": "UNESTABLISHED",
+                "class_summit": "UNESTABLISHED", "budgets": [], "first_solved_gens": [], "first_shelf_gens": [], "first_summit_gens": [],
+                "median_first_solved_gen": None, "best_train_max": None, "heldout_max": None, "levels": {"FLOOR": 0, "SHELF": 0, "SUMMIT": 0}, "shelf_hist": {}}
+    s = _summary({"cell": cell, "value_bits": value_bits, "regime": regime}, sel, G=G)
+    s["foundry"] = fid; s["G_pooled"] = G
     s["budgets"] = sorted({(r["N"], r["G"], r["E"]) for r in sel})
     s["foundries_pooled"] = sorted({r.get("foundry") for r in sel})
+    s["n_censored_runs"] = sum(1 for r in sel if r.get("stopped_on_solve"))
     return s
 
 
 def candidates(lo: float, hi: float, *, value_bits: Optional[int] = None, regime: str = "E0", foundry: Optional[str] = "default",
                min_n: int = 3, rows: Optional[List[dict]] = None, path: Path = TABLE, key: Sequence[str] = KEY) -> List[dict]:
-    """Cells (at their recorded budgets) whose pooled baseline frequency lies in [lo, hi] with
-    at least min_n runs, nearest to the band's centre first."""
     fid = default_foundry_id() if foundry == "default" else foundry
     rs = rows if rows is not None else load(path)
     if value_bits is not None:
@@ -244,16 +314,19 @@ def candidates(lo: float, hi: float, *, value_bits: Optional[int] = None, regime
 
 
 def table_text(summaries: Iterable[dict]) -> str:
-    lines = ["%-14s %4s %5s %5s %3s %-5s %-11s %3s %3s %-6s %-13s %-32s %s" % ("cell", "bits", "N", "G", "E", "reg", "foundry", "n", "k", "freq", "band95", "class", "first_solved")]
-    for s in sorted(summaries, key=lambda s: (s["cell"], s["value_bits"], s["N"], s["G"], s["E"], s["regime"], str(s.get("foundry")))):
-        lines.append("%-14s %4d %5d %5d %3d %-5s %-11s %3d %3d %-6s %-13s %-32s %s" % (
-            s["cell"], s["value_bits"], s["N"], s["G"], s["E"], s["regime"], str(s.get("foundry"))[:11], s["n"], s["k"],
+    lines = ["%-14s %4s %5s %5s %3s %-5s %-11s %3s %3s %-6s %-13s %-30s %-9s %s" % (
+        "cell", "bits", "N", "G", "E", "reg", "foundry", "n", "k", "freq", "band95", "class", "F/S/Su", "first_solved")]
+    for s in sorted(summaries, key=lambda s: (s["cell"], s["value_bits"], s.get("N") or 0, s.get("G") or 0, s.get("E") or 0, s["regime"], str(s.get("foundry")))):
+        lv = s.get("levels", {})
+        lines.append("%-14s %4d %5d %5d %3d %-5s %-11s %3d %3d %-6s %-13s %-30s %-9s %s" % (
+            s["cell"], s["value_bits"], s.get("N") or 0, s.get("G") or 0, s.get("E") or 0, s["regime"], str(s.get("foundry"))[:11], s["n"], s["k"],
             "-" if s["freq"] is None else "%.2f" % s["freq"], "%.2f-%.2f" % tuple(s["band95"]), s["class"],
+            "%d/%d/%d" % (lv.get("FLOOR", 0), lv.get("SHELF", 0), lv.get("SUMMIT", 0)),
             ",".join(str(x) for x in s["first_solved_gens"]) or "-"))
     return "\n".join(lines)
 
 
-# ------------------------------------------------------------------ campaign-1 import
+# ------------------------------------------------------------------ campaign-1 import (unchanged from campaign 2)
 def _sfe_spec(name: str) -> WorldSpec:
     table = {
         "W0": WorldSpec("W0", value_bits=4), "W1_d1": WorldSpec("W1_d1", delay=1, value_bits=4),
@@ -264,29 +337,20 @@ def _sfe_spec(name: str) -> WorldSpec:
 
 
 def _first_solved(trace_best: Sequence[float], thr: float = 0.5) -> Optional[int]:
-    for i, v in enumerate(trace_best):
-        if v >= thr:
-            return i
-    return None
+    return first_at(trace_best, thr)
 
 
 def import_campaign1(repo: Path = REPO, path: Path = TABLE) -> dict:
-    """Every campaign-1 search whose generation 0 was the cell's own random population and
-    whose loop ran without an intervention (kind=baseline), plus the treated arms, plus the
-    v01 survey (foundry instr1-32) and the SSF cycles (instr1-16). Idempotent."""
     from .evolve import FOUNDRY
     c1 = repo / "archaeon" / "campaign1"
-    F16 = default_foundry_id()
-    F32 = foundry_id(FOUNDRY)
+    F16 = default_foundry_id(); F32 = foundry_id(FOUNDRY)
     rows: List[dict] = []
 
     def add(spec, rec, *, N, G, E, regime, seed, exp, arm, attempt, kind, heldout):
         tb = rec.get("trace_best") or []
-        # campaign-1 loops keyed their RNG on the branch label: every experiment/arm/attempt was its own run
         rows.append(row(spec, N=N, G=G, E=E, regime=regime, seed=seed, source={"campaign": "cmp1", "experiment": exp, "arm": arm, "attempt": attempt},
                         first_solved_gen=rec.get("first_solved_gen", _first_solved(tb)), best_train_max=max(tb) if tb else 0.0,
-                        heldout=heldout, kind=kind, trace_best=tb, foundry=F16, campaign_seed=20260917,
-                        rng_label="cmp1/%s/%s/a%s" % (exp, arm, attempt)))
+                        heldout=heldout, kind=kind, trace_best=tb, foundry=F16, campaign_seed=20260917, rng_label="cmp1/%s/%s/a%s" % (exp, arm, attempt)))
 
     def rows_of(exp, fname):
         p = c1 / exp / fname
@@ -334,11 +398,20 @@ def import_campaign1(repo: Path = REPO, path: Path = TABLE) -> dict:
     return {"candidate_rows": len(rows), "appended": n, "table": str(path)}
 
 
+# ------------------------------------------------------------------ migrations
+def migrate_foundry(path: Path = TABLE) -> dict:
+    from .evolve import FOUNDRY
+    F16 = default_foundry_id(); F32 = foundry_id(FOUNDRY)
+    rows = load(path); n = 0
+    for r in rows:
+        if not r.get("foundry"):
+            r["foundry"] = F32 if r.get("source", {}).get("campaign") == "wse-survey-v01" else F16; n += 1
+    Path(path).write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8", newline="\n")
+    return {"rows": len(rows), "migrated": n}
+
+
 def migrate_runs(path: Path = TABLE, campaign2_seed: int = 20260918) -> dict:
-    """Rows written before run identity existed get campaign_seed + rng_label from their source
-    (cmp2 rows: the campaign-2 seed and the CRN label; cmp1/survey/ssf: as import_campaign1)."""
-    rows = load(path)
-    n = 0
+    rows = load(path); n = 0
     for r in rows:
         if r.get("campaign_seed") is not None:
             continue
@@ -356,15 +429,27 @@ def migrate_runs(path: Path = TABLE, campaign2_seed: int = 20260918) -> dict:
     return {"rows": len(rows), "migrated": n}
 
 
-def migrate_foundry(path: Path = TABLE) -> dict:
-    """L2-016: rows written before the foundry key get it from their source campaign."""
-    from .evolve import FOUNDRY
-    F16 = default_foundry_id(); F32 = foundry_id(FOUNDRY)
-    rows = load(path)
-    n = 0
+STOP_RULE_ARMS = {"source-mature", "source-solved", "producer", "stream"}     # campaign-2 arms run with a stop-on-solve rule
+
+
+def migrate_levels(path: Path = TABLE) -> dict:
+    """Campaign 3 (D3-002, D3-003): levels, first_shelf/first_summit, censoring flag on every
+    row; campaign-2 stop-rule rows become baseline + stopped_on_solve."""
+    rows = load(path); n = 0; recl = 0
     for r in rows:
-        if not r.get("foundry"):
-            r["foundry"] = F32 if r.get("source", {}).get("campaign") == "wse-survey-v01" else F16
-            n += 1
+        tb = r.get("trace_best")
+        best = r.get("best_train_max") or 0.0
+        ho = r.get("heldout")
+        r["level"] = level_of(best, ho)
+        r["first_foothold_gen"] = r.get("first_solved_gen") if r.get("first_solved_gen") is not None else first_at(tb, FOOTHOLD_MIN)
+        r["first_shelf_gen"] = first_at(tb, SHELF_MIN)
+        r["summit_candidate_gen"] = first_at(tb, SUMMIT_MIN)
+        r["first_summit_gen"] = r["summit_candidate_gen"] if (ho is not None and ho >= SUMMIT_MIN) else None
+        r["summit_censored"] = r["first_summit_gen"] is None
+        r.setdefault("stopped_on_solve", False)
+        src = r.get("source", {})
+        if src.get("campaign") == "cmp2" and src.get("arm") in STOP_RULE_ARMS and r.get("kind") == "treated":
+            r["kind"] = "baseline"; r["stopped_on_solve"] = True; recl += 1
+        n += 1
     Path(path).write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8", newline="\n")
-    return {"rows": len(rows), "migrated": n, "F16": F16, "F32": F32}
+    return {"rows": n, "reclassified_stop_rule_rows": recl}

@@ -97,6 +97,36 @@ def rung_matrix_row(evaluate_fn, manifest: dict, rungs: Sequence[tuple], gen: in
     return row
 
 
+def probe_plan(G: int, transitions: Sequence[int], dense: int = 5, sparse: int = 5) -> List[int]:
+    """Generations at which a curriculum probes every rung (campaign 3, Phase A group D):
+    every generation within `dense` of a transition (before, at, after), every `sparse`
+    generations elsewhere, plus 0 and G-1. Cheap where nothing changes, dense where it does."""
+    gens = set(range(0, G, sparse)) | {0, G - 1}
+    for t in transitions:
+        gens |= set(range(max(0, t - dense), min(G, t + dense + 1)))
+    return sorted(g for g in gens if 0 <= g < G)
+
+
+def transition_events(matrix: List[dict], rung: str, *, appear: float = 0.5, collapse: float = 0.25) -> dict:
+    """From a rung x generation matrix: the generation competence on `rung` first APPEARS
+    (>= appear), first COLLAPSES (falls >= collapse below its running peak after appearing)
+    and first RECOVERS (returns to >= appear after a collapse)."""
+    peak = -1.0; appeared = collapsed = recovered = None
+    for row in matrix:
+        v = row.get(rung)
+        if v is None:
+            continue
+        if appeared is None and v >= appear:
+            appeared = row["gen"]
+        if v > peak:
+            peak = v
+        if appeared is not None and collapsed is None and peak - v >= collapse:
+            collapsed = row["gen"]
+        if collapsed is not None and recovered is None and row["gen"] > collapsed and v >= appear:
+            recovered = row["gen"]
+    return {"appeared": appeared, "collapsed": collapsed, "recovered": recovered, "peak": peak if peak >= 0 else None}
+
+
 def shelf_report(matrix: List[dict], rungs: Sequence[str], drop: float = 0.25) -> dict:
     """Where a rung's competence FELL by >= `drop` from its running maximum: the forgetting
     shelf SFE-05's battery mean hid. Reported per rung with the generation of the fall."""

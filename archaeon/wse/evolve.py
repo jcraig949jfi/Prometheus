@@ -27,7 +27,7 @@ Everything derives from the campaign seed; no LLM anywhere.
 """
 from __future__ import annotations
 
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Sequence
 
 from proteus.foundry import generate as G
 from proteus.foundry.lineage import descend
@@ -76,6 +76,8 @@ def evaluate(manifest: dict, episodes: List[Episode], intervention: Optional[str
     tape_writes = 0
     answered = 0
     applied = 0
+    per_ask_correct: List[int] = []                    # campaign 3: credit per ask POSITION (which stream is solved)
+    per_ask_n: List[int] = []
     irng = SplitMix64(seed_from("wse.intervention", rng_seed, intervention or ""))
     for ei, ep in enumerate(episodes):
         st = player.fresh_state()
@@ -102,17 +104,23 @@ def evaluate(manifest: dict, episodes: List[Episode], intervention: Optional[str
             if occ > occupancy_max:
                 occupancy_max = occ
             if ti in ep.expected:
+                ask_i = sum(1 for t in ep.expected if t < ti)          # position of this ask within the episode
+                while len(per_ask_n) <= ask_i:
+                    per_ask_n.append(0); per_ask_correct.append(0)
+                per_ask_n[ask_i] += 1
                 asks += 1
                 if outs[0]:
                     answered += 1
                     if outs[0][0] == ep.expected[ti]:
                         correct += 1
+                        per_ask_correct[ask_i] += 1
     n = max(1, len(episodes))
     m = meter.as_dict(manifest)
     return {
         "reward": correct / max(1, asks),
         "asks": asks,
         "correct": correct,
+        "per_ask_reward": [round(c / max(1, k), 4) for c, k in zip(per_ask_correct, per_ask_n)],
         "answered_share": answered / max(1, asks),
         "meter": m,
         "ops_per_episode": m["ops"] / n,
@@ -183,8 +191,13 @@ class Evolution:
                  tabu: Optional[set] = None, tabu_retries: int = 1, tabu_key=None,
                  descend_fn: Optional[Callable] = None, foundry: Optional[dict] = None,
                  curve_every: int = 0, curve_episodes: Optional[List[Episode]] = None,
-                 solve_threshold: float = 0.5, train_family: str = "train"):
+                 solve_threshold: float = 0.5, train_family: str = "train",
+                 offspring_cap: Optional[float] = None, import_tags: Sequence[str] = ("import",)):
+        """offspring_cap (campaign 3, group F): at most this SHARE of each generation's children
+        may have a primary parent carrying an import origin (tags in import_tags); beyond it the
+        parent is redrawn among resident organisms. None = no cap (campaign-2 behaviour)."""
         self.spec, self.regime = spec, regime
+        self.offspring_cap, self.import_tags = offspring_cap, tuple(import_tags)
         self.campaign_seed, self.cell_seed = campaign_seed, cell_seed
         self.N, self.E, self.elitism, self.tournament = N, E, elitism, tournament
         self.branch = branch
@@ -272,6 +285,9 @@ class Evolution:
             "persist_shares": _shares(scored),
             "origin_shares": origin_shares(self.pop),
             "elite_origins": list(top[1].get("origins", ["gen0"])),
+            "elite_per_ask": top[2].get("per_ask_reward", []),        # campaign 3: which stream the elite solves
+            "pop_max_per_ask": [round(max(z[2]["per_ask_reward"][i] for z in scored if len(z[2]["per_ask_reward"]) > i), 4)
+                                for i in range(len(top[2].get("per_ask_reward", [])))],
             "cell": self.spec.name,
         }
         if g == 0:
@@ -280,12 +296,22 @@ class Evolution:
         self.scored = scored
         return row
 
+    def _is_import(self, org: dict) -> bool:
+        return any(t in org.get("origins", ()) for t in self.import_tags)
+
     def reproduce(self) -> None:
         scored, rng = self.scored, self.rng
         new_pop = [z[1] for z in scored[:self.elitism]]
+        cap_n = None if self.offspring_cap is None else int(self.offspring_cap * (self.N - self.elitism))
+        import_children = 0
+        residents = [z for z in scored if not self._is_import(z[1])]
         while len(new_pop) < self.N:
             parent = _tournament(scored, rng, self.tournament)
             mate = _tournament(scored, rng, self.tournament)
+            if cap_n is not None and self._is_import(parent) and import_children >= cap_n and residents:
+                parent = _tournament(residents, rng, self.tournament)     # the cap: redraw among residents
+            if cap_n is not None and self._is_import(parent):
+                import_children += 1
             child, rec = self.descend_fn(parent, rng.next_u64() & MASK62, mate=mate if mate is not parent else None)
             # Campaign-1 SFE-01: FAILURE residue as a tabu set; a tabu child is re-drawn
             # (tabu_retries times); the residue prunes, never proposes.
@@ -310,6 +336,26 @@ class Evolution:
             new_pop.append(child)
         self.pop = new_pop
         self.g += 1
+
+    def inject(self, manifests: List[dict], tag: str = "import") -> int:
+        """Campaign 3 (group F): imported organisms enter the CURRENT scored generation in place
+        of its worst members and compete from this generation on (elitism and tournament see
+        them); the offspring cap applies to their children. Call after evaluate_generation()
+        and before reproduce(). Returns the number injected."""
+        eps = self.episodes()
+        rs = seed_from("wse.eval", self.campaign_seed, self.g, self.cell_seed)
+        new = []
+        for m in manifests:
+            org = G.organism_record(dict(m), None, self.g); org["origins"] = [tag]
+            e = evaluate(m, eps, rng_seed=rs)
+            new.append((self.regime.fitness(e["reward"], e["meter"], self.E, multiplier=self.multiplier()), org, e))
+        scored = sorted(self.scored, key=lambda z: -z[0])
+        scored = scored[: max(0, len(scored) - len(new))] + new
+        scored.sort(key=lambda z: -z[0])
+        self.scored = scored
+        self.pop = [z[1] for z in scored]
+        self.trace[-1]["injected"] = {"n": len(new), "tag": tag, "origin_shares_after": origin_shares(self.pop)}
+        return len(new)
 
     def step(self, episodes: Optional[List[Episode]] = None) -> dict:
         """Score the current generation and produce the next one."""

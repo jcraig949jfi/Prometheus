@@ -128,13 +128,13 @@ def render_record(prereg: dict, receipt: dict, rows: List[dict], attempts_index:
 
 
 # ------------------------------------------------------------------ ledger
-def next_ledger_id(path: Path = LEDGER) -> str:
+def next_ledger_id(path: Path = LEDGER, prefix: str = "L2") -> str:
     n = 0
     if path.exists():
         for l in path.read_text(encoding="utf-8").splitlines():
             if l.strip():
                 n = max(n, int(json.loads(l)["id"].split("-")[1]))
-    return "L2-%03d" % (n + 1)
+    return "%s-%03d" % (prefix, n + 1)
 
 
 def ledger_candidates(experiment: str, receipt: dict, states: List[dict], attempts_index: dict) -> List[dict]:
@@ -162,13 +162,13 @@ def ledger_candidates(experiment: str, receipt: dict, states: List[dict], attemp
     return out
 
 
-def append_ledger(entries: List[dict], path: Path = LEDGER) -> List[str]:
+def append_ledger(entries: List[dict], path: Path = LEDGER, prefix: str = "L2") -> List[str]:
     ids = []
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8", newline="\n") as f:
         for e in entries:
             e = dict(e)
-            e.setdefault("id", next_ledger_id(path))
+            e.setdefault("id", next_ledger_id(path, prefix))
             e.setdefault("recurrence", 0); e.setdefault("recurred_in", []); e.setdefault("mitigation_helped", None)
             e.setdefault("links", []); e.setdefault("recorded_at", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
             f.write(json.dumps(e, sort_keys=True) + "\n"); f.flush()

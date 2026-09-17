@@ -35,6 +35,9 @@ from archaeon.campaign2.runner import Attempt, Engine, C2, CAMPAIGN_SEED   # noq
 
 FOUNDRY_C2 = dict(FOUNDRY, genome_instr_range=[1, 16], tape_words_choices=[16, 32, 64, 128, 256], tick_budget_choices=[16, 64, 256])
 FUNNEL = C2 / "FUNNEL.json"
+# One shared machine, parametrized per campaign (campaign 3, D3-001): root directory, campaign
+# seed, engine client name, gitignored client config, ledger id prefix.
+CAMPAIGN_2 = {"root": C2, "seed": CAMPAIGN_SEED, "client": "cmp2-archaeon", "config": C2 / "config.local.json", "ledger_prefix": "L2", "campaign": "cmp2"}
 
 
 class Experiment:
@@ -43,11 +46,15 @@ class Experiment:
     PARENTS: List[str] = []
     ARM_FIELD = "arm"
     METRICS: Sequence[str] = ("competence_heldout",)
+    CAMPAIGN: dict = CAMPAIGN_2
+    PREREG_FIELDS: Sequence[str] = tuple(P.FIELDS)          # a campaign may extend the sealed contract (campaign 3)
 
     def __init__(self, *, dry_run: bool = False, procs: int = 12, purpose: str = ""):
         self.dry_run, self.procs = dry_run, procs
-        self.att = Attempt(self.ID, dry_run=dry_run, purpose=purpose or ("dry run" if dry_run else "engine"))
-        self.eng = Engine(dry_run=dry_run)
+        C = self.CAMPAIGN
+        self.campaign_seed = C["seed"]
+        self.att = Attempt(self.ID, root=C["root"], dry_run=dry_run, purpose=purpose or ("dry run" if dry_run else "engine"), campaign_seed=C["seed"])
+        self.eng = Engine(dry_run=dry_run, config=C["config"], client_name=C["client"])
         self.receipt = self.att.receipt
         self.prereg: Dict[str, Any] = {}
         self.rows: List[dict] = []
@@ -76,10 +83,12 @@ class Experiment:
 
     def seal(self, prereg: dict) -> dict:
         prereg = dict(prereg, experiment=self.ID, title=self.TITLE, parents=self.PARENTS, attempt=self.att.number)
-        path = P.save(prereg, self.att.path)                    # every attempt keeps its own sealed prereg
+        path = P.save(prereg, self.att.path, list(self.PREREG_FIELDS))   # every attempt keeps its own sealed prereg
         self.prereg = json.loads(path.read_text(encoding="utf-8"))
+        (self.att.path / "PREREG.md").write_text(P.render(self.prereg), encoding="utf-8", newline="\n")
         if not self.dry_run:
             (self.att.dir / "PREREG.json").write_text(path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
+            (self.att.dir / "PREREG.md").write_text(P.render(self.prereg), encoding="utf-8", newline="\n")
         self.receipt["prereg_digest"] = self.prereg["prereg_digest"]
         self.att.save()
         return self.prereg
@@ -168,12 +177,14 @@ class Experiment:
         return out
 
     def reach_row(self, spec: WorldSpec, res: dict, *, N: int, G: int, E: int, regime: str, seed: int, arm: str,
-                  heldout: Optional[float] = None, kind: Optional[str] = None) -> None:
+                  heldout: Optional[float] = None, kind: Optional[str] = None, stopped_on_solve: bool = False,
+                  heldout_per_ask: Optional[Sequence[float]] = None) -> None:
         """kind=None: baseline iff the loop's own generation 0 with nothing substituted; pass
         kind='treated' explicitly for a non-standard operator set or schedule."""
         self.reach_rows.append(R.row_from_result(spec, res, N=N, G=G, E=E, regime=regime, seed=seed, heldout=heldout, kind=kind,
-                                                 foundry=getattr(self, "foundry", None) or FOUNDRY_C2, campaign_seed=CAMPAIGN_SEED,
-                                                 source={"campaign": "cmp2", "experiment": self.ID, "arm": arm, "attempt": self.att.number}))
+                                                 foundry=getattr(self, "foundry", None) or FOUNDRY_C2, campaign_seed=self.campaign_seed,
+                                                 stopped_on_solve=stopped_on_solve, heldout_per_ask=heldout_per_ask,
+                                                 source={"campaign": self.CAMPAIGN["campaign"], "experiment": self.ID, "arm": arm, "attempt": self.att.number}))
 
     def decision(self, text: str) -> None:
         self.decisions.append(text)
@@ -203,12 +214,13 @@ class Experiment:
         if of_record:
             (self.att.dir / "RECORD.md").write_text(text, encoding="utf-8", newline="\n")
             cands = A.ledger_candidates(self.ID, self.receipt, states, idx)
-            ids = A.append_ledger(cands)
+            ids = A.append_ledger(cands, self.CAMPAIGN["root"] / "LEDGER.jsonl", self.CAMPAIGN["ledger_prefix"])
             self.receipt["ledger_ids"] = ids
             f = A.funnel_row(self.ID, self.prereg, self.receipt, states, disp, idx, decisions=self.decisions, **(funnel_extra or {}))
-            funnel = json.loads(FUNNEL.read_text(encoding="utf-8")) if FUNNEL.exists() else {}
+            fp = self.CAMPAIGN["root"] / "FUNNEL.json"
+            funnel = json.loads(fp.read_text(encoding="utf-8")) if fp.exists() else {}
             funnel[self.ID] = f
-            FUNNEL.write_text(json.dumps(funnel, indent=1, sort_keys=True), encoding="utf-8", newline="\n")
+            fp.write_text(json.dumps(funnel, indent=1, sort_keys=True), encoding="utf-8", newline="\n")
             self.att.save()
         return {"disposition": disp, "states": [s["state"] for s in states], "attempt": self.att.number, "errors": len(self.receipt["errors"]),
                 "timings": self.receipt["timings"], "teardown": self.receipt.get("teardown")}
