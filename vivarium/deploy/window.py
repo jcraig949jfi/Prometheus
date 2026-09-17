@@ -80,6 +80,18 @@ def step_backup(data_dir: Path, out: dict) -> bool:
     ok = r.returncode == 0 and target.exists() and target.stat().st_size > 0
     out["backup"] = {"ok": ok, "path": str(target), "bytes": target.stat().st_size if target.exists() else 0,
                      "sha256": _sha(target) if ok else None, "stderr": (r.stderr or "")[-300:]}
+    if ok:
+        # VERIFY the backup: the archive lists, and it lists every viv table the
+        # migration touches (a dump that exists is not a dump that restores)
+        lst = subprocess.run([PG_DUMP.replace("pg_dump.exe", "pg_restore.exe"), "--list", str(target)],
+                             capture_output=True, text=True, env=env, timeout=600)
+        tables = sorted({ln.split(" TABLE ")[1].split()[1] for ln in lst.stdout.splitlines()
+                         if " TABLE " in ln and " TABLE DATA " not in ln})
+        need = {"research_experiment_queue", "research_experiment_events", "worker_heartbeat"}
+        out["backup"]["verify"] = {"ok": lst.returncode == 0 and need <= set(tables), "tables": tables,
+                                   "data_entries": sum(1 for ln in lst.stdout.splitlines() if " TABLE DATA " in ln)}
+        ok = out["backup"]["verify"]["ok"]
+        out["backup"]["ok"] = ok
     return ok
 
 

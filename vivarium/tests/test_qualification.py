@@ -248,10 +248,21 @@ def test_qualification_campaign4_shaped_run(conn, drafted, tmp_path):
     e_old = str(_q.enqueue(conn, created_by="legacy", source_reason="pre-release", experiment_spec=make_spec(), schema=schema))
     with conn.cursor() as cur:
         cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
-        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='failed', finished_at=now(), error='BUDGET_EXCEEDED: execution budget exhausted after 3 of 6' WHERE experiment_id=%s", (e_old,))
+        # a PRE-RELEASE row is one created before the window; 007's cutoff is the window
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='failed', finished_at=now(), created_at='2026-09-14 00:00:00+00', error='BUDGET_EXCEEDED: execution budget exhausted after 3 of 6' WHERE experiment_id=%s", (e_old,))
         cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
         cur.execute((DRAFTS / "007_backfill_attempts_reversible.sql").read_text(encoding="utf-8").replace("{schema}", schema))
     conn.commit()
+    # NEGATIVE: a post-window row cancelled while queued has no attempt by design and is NOT backfilled
+    e_new = str(_q.enqueue(conn, created_by="post-release", source_reason="cancelled while queued", experiment_spec=make_spec(hypothesis="probe post"), schema=schema))
+    _q.cancel(conn, e_new, actor="t", reason="never claimed", schema=schema)
+    with conn.cursor() as cur:
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET created_at='2026-09-18 00:00:00+00' WHERE experiment_id=%s", (e_new,))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
+        cur.execute((DRAFTS / "007_backfill_attempts_reversible.sql").read_text(encoding="utf-8").replace("{schema}", schema))
+    conn.commit()
+    assert _read(conn, schema, "SELECT count(*) AS n FROM {S}.execution_attempt WHERE experiment_id=%s", e_new)[0]["n"] == 0
     old = _read(conn, schema, "SELECT attempt_number, terminal_state, termination FROM {S}.execution_attempt WHERE experiment_id=%s", e_old)[0]
     assert old["attempt_number"] == 1 and old["terminal_state"] == "FAILED"
     assert old["termination"]["termination_reason"] == "UNKNOWN" and old["termination"]["censored"] is None

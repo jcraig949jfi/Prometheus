@@ -29,6 +29,11 @@ SELECT q.experiment_id, 1, q.spec_hash, coalesce(q.claimed_by, 'UNKNOWN'),
        (q.status = 'completed')
   FROM {schema}.research_experiment_queue q
  WHERE q.status IN ('completed','failed','cancelled')
+   -- PRE-RELEASE means created before the window (C4-20260917-W1). apply_migrations
+   -- runs on every consumer start; without this cutoff a post-release row cancelled
+   -- while queued (which has no attempt by design) would be backfilled as if it
+   -- were history.
+   AND q.created_at < TIMESTAMPTZ '2026-09-17 14:00:00+00'
    AND NOT EXISTS (SELECT 1 FROM {schema}.execution_attempt a WHERE a.experiment_id = q.experiment_id);
 
 -- queued / claimed / running rows at migration time get NO backfilled attempt:
