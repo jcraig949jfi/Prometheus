@@ -1,0 +1,88 @@
+{
+ "ancestry": "original (queue slot 3)",
+ "arms": [
+  "hard_executed",
+  "proxy_fatal_reachable",
+  "proxy_fatal_present",
+  "parents_control"
+ ],
+ "assay_capability_requirement": "positive 57/57 injected fatal detected; negative 57/57 identity predicates equal parent's; integrity: every regenerated child digest equals the committed child_digest (5,472 + 2,280); cheat: a D7 fatal row counts coherent",
+ "attempt": 1,
+ "budget": {
+  "c401_children": 5472,
+  "c402_children": 2280,
+  "fatal_definition": "opcode word >= 25 at an instruction start",
+  "parents": 57
+ },
+ "claim_ceiling": "what share of the substrate's measured variation sits on fizzled operations, and of what kind; NOT what a real HARD interpreter would do to search (static proxies over-count)",
+ "crn_policy": "no evaluation; children regenerated from the C4-01/C4-02 seeds",
+ "decl": {
+  "n_min": 1,
+  "positive_control": {
+   "arm": "parents_control",
+   "metric": "injected_fatal_detected",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "proxy_nonfatal",
+   "metric": "coherent_share",
+   "min_effect": -0.1,
+   "treatment": "proxy_fatal_reachable"
+  }
+ },
+ "design_digest": "sha256:11d5199fba361cb4c4f4190da2b3155478942953b046a1c6de62b755a291fbc7",
+ "expected_machine_telemetry": [
+  "fatal predicates per child and parent",
+  "share tables by operator/stratum/radius",
+  "integrity counts"
+ ],
+ "experiment": "C4-03",
+ "falsification_condition": "INERT_CONVERSION: coherent share among reachable would-be-fatal children < 0.10 or Wilson lower bound < 0.05",
+ "kill_condition": "any control or integrity failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "deterministic child regeneration from committed seeds (no evaluation)"
+ ],
+ "parent_evidence": "C4-01 (54ce467f2): 5,472 single edits, D7 = 0, displacement bimodal; C4-02 (300f9d4e4): loss monotone in radius. D4-002: total interpreter, no fault status.",
+ "parents": [
+  "C4-01",
+  "C4-02"
+ ],
+ "positive_control": "arm parents_control: injected_fatal_detected >= 1.0 on 57/57",
+ "prereg_digest": "sha256:f480bae71126726f696a19c95d651b9d1cd0a142b2a8fd50fa06f2c26ca0c333",
+ "primary_observable": "P(fatal_present), P(fatal_reachable) per operator/stratum/radius; among reachable would-be-fatal children the FIZZLE class distribution, coherent share (D3/D4/D6/D7 or D5 with displacement > 0) with Wilson band, to_D2 and to_D3_D7 masses; the same among non-fatal children",
+ "question": "When one edited operation becomes invalid, is search better served by killing the program variant (HARD) or by letting the invalid operation do nothing (FIZZLE)? HARD cannot be executed on this substrate (D4-002); the static proxy reads what FIZZLE made of would-be-fatal children.",
+ "reachability_estimate": {
+  "note": "no search; static proxy over committed rows"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "local failure vs global death (static proxy; HARD executed = REPRESENTATION_BLOCKED)",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID",
+  "REPRESENTATION_BLOCKED (hard_executed arm, by construction)"
+ ],
+ "why_this_slot": "The directive's critical distinction -- does insulation preserve coherent variation or merely convert fatal to inert -- is answerable on the committed rows without a substrate change; the executed HARD arm is recorded REPRESENTATION_BLOCKED, not converted into an ISA change."
+}

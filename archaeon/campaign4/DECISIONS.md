@@ -97,3 +97,33 @@ of per-operator distributions (measured .029). | C4-02/DESIGN.md. |
 Alternative: count only effective steps (would make the radius depend on
 the parent's length and hide the noop mass). | Revisit never in C4.
 DETERMINISTIC.
+
+D4-007 | 2026-09-18 06:35 | C4-03: the executed HARD arm is REPRESENTATION_BLOCKED
+(D4-002). The static proxy ("an out-of-table opcode word") was preregistered
+with a VACUITY CHECK added before any row when the runner's self-test showed a
+synthetic draw with 9/9 instruction words out of table; the 57 parents carry
+932/932 out-of-table words: the foundry writes uniformly random 32-bit words
+and the interpreter's modulo IS the decode. The proxy partitions nothing
+(P(fatal) = 1.000 on 5,472 C4-01 children and 2,280 C4-02 children); the proxy
+arm is REPRESENTATION_BLOCKED too, with the numbers. Operand and address
+words were excluded from "invalid" because their reduction is published ISA
+semantics. Consequence recorded for C4-07 and C4-08: "the fizzle event" and
+"free semantic insulation" have no extension on this substrate; both slots
+are re-premised in their own preregistrations, never by changing the ISA. |
+C4-03/DESIGN.md; attempts/a01/PROXY_TABLES.json. | Alternative: define
+"invalid" as some subset of the table (e.g. RND or opaque_io) -- that would
+be a recognizer for a hoped-for result and is forbidden. | Revisit never in
+C4. DETERMINISTIC.
+
+D4-008 | 2026-09-18 06:55 | C4-04: references = the relative offsets of statically
+reachable control instructions (JMP/JZ/JNZ) in the parent; BROKEN = after the
+edit, the instruction the offset lands on has different 4-word content than
+before; REMOVED = the jump itself was cut; the operator index maps copy the
+grammar's word moves exactly (insertion/duplication shift >= pos; deletion/
+splice remove [pos, pos+k) and shift; movement = remove then insert;
+region_swap swaps the two regions). LD/ST register addressing is data-
+dependent and NOT counted. The executed comparison of addressing modes is
+REPRESENTATION_BLOCKED (one static mode exists). | C4-04/DESIGN.md. |
+Alternative: count any content change at any old target as broken (would
+label every edit inside the genome as a reference break). | Revisit never.
+DETERMINISTIC.
