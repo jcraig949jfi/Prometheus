@@ -167,15 +167,25 @@ def s3():
     pers = {r["c"]: r for r in rows("s3p")}
     runs0 = pers[0.0]["runs"]
     frac_persist = statistics.fmean([1.0 if x["x_end"] >= 0.8 else 0.0 for x in runs0])
-    h3b = within(frac_persist, binse(frac_persist, len(runs0)), 0.9, 1.0 + 1e-9)
+    # bug fixed after first run: the gate is ">= 90% of runs"; the first version
+    # closed it at 1.0 + 1e-9, so an all-runs result "straddled" an upper bound
+    # the prereg never set (first-run verdict INDETERMINATE; see RESULTS).
+    h3b = within(frac_persist, binse(frac_persist, len(runs0)), 0.9, math.inf)
     runs1 = pers[0.1]["runs"]
     x0 = statistics.fmean([x["x_at_fix"] for x in runs1])
     model_half = M.s3_persistence_half_gen(x0, 0.1, 0.005, 300)
     halves = [x["half_gen"] if x["half_gen"] is not None else 10 ** 6 for x in runs1]
     med = statistics.median(halves)
     lo, hi = boot(halves, statistics.median)
-    h3c = "SUPPORTED" if (0.75 * model_half <= lo and hi <= 1.25 * model_half) else (
-        "REFUTED" if (hi < 0.75 * model_half or lo > 1.25 * model_half) else "INDETERMINATE")
+    never_sim = all(x["half_gen"] is None for x in runs1)
+    if math.isinf(model_half) and never_sim:
+        # the prereg compared finite medians; when the model predicts no halving
+        # and no run halves, the gate is undefined. First-run code printed
+        # REFUTED here (inf vs inf). Reported NOT_EVALUABLE with the reason.
+        h3c = "NOT_EVALUABLE (model and all runs never halve: honest variant extinct at fix)"
+    else:
+        h3c = "SUPPORTED" if (0.75 * model_half <= lo and hi <= 1.25 * model_half) else (
+            "REFUTED" if (hi < 0.75 * model_half or lo > 1.25 * model_half) else "INDETERMINATE")
     runs2 = pers[0.02]["runs"]
     return {"H-S3a": combine(va), "H-S3b": h3b, "H-S3c": h3c, "by_g": res,
             "persistence": {"c0_fraction_runs_end_ge_0.8": frac_persist,

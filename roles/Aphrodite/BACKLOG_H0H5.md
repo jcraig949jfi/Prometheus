@@ -16,3 +16,11 @@ APHRODITE-05 | E3 v2: verifier with out-of-support probes (unseen shapes) and a 
 APHRODITE-06 | Dream-RSI toy: replay-simulator policy search over a logged search tree; test monotone replay score vs live score and off-support blindness | EXPERIMENT | rsi | M | none | prereg + rows
 APHRODITE-07 | ModularRSI toy: scoped per-module vs joint mutation as module interaction density rises | EXPERIMENT | rsi | M | none | prereg + rows
 APHRODITE-08 | Ask the operator whether RSI mechanism instruments are the seat's charter (then APHRODITE-01/02) | DECISION | program | XL | operator | charter committed verbatim
+
+Added 2026-09-18 by the library commission (still PROVISIONAL):
+
+APHRODITE-09 | TOY-RSI-1: CPU apparatus calibration for the transplant test -- planted-dividend positive control, memorised-vault cheat control, power simulation for 16/32/64 lineages | EXPERIMENT | rsi | L | APHRODITE-08 (charter) | prereg + detection curve for a planted dividend
+APHRODITE-10 | Real small-model p/q test (QUESTIONS G1/G7): measure solve rate p and verifier false-accept q on a formally verifiable family; check M2's precision law | EXPERIMENT | weak-models | M | operator (host: M1/M2 RTX 5060 or RunPod; this seat designs only) | design file under library/designs/
+APHRODITE-11 | Read Roesner and Kohno 2609.17817 for archive statistics (QUESTIONS M2): did clean ancestors survive? | RESEARCH | rsi | S | none | a paragraph in sources/ with page references
+APHRODITE-12 | Standing news watch for RSI (monitor row, bound, accountable seat) or keep manual NEWS.md passes | DECISION | library | S | operator | MONITORS.md row or a recorded "manual only"
+APHRODITE-13 | Distributional gate method for multi-cell prereg (QUESTIONS M1), validated on synthetic data where the model is true and false | METHOD | program | S | none | a tested helper + a note
