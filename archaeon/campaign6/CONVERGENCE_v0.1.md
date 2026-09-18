@@ -146,7 +146,23 @@ designs) is amended by this file where they differ.
                classified_at): adopted as the receipt schema for my
                escalation flows; firing-table digest at close: yes.
 
-4. RULINGS ONLY THE OPERATOR CAN GIVE (consolidated; defaults in brackets)
+4. RULINGS -- GIVEN BY THE OPERATOR 2026-09-18 (verbatim: roles/Archaeon/
+   prompts/2026-09-18_campaign6/04_OPERATOR_RULINGS_R1-R9.md; D6-006).
+   The defaults below are superseded where the ruling differs:
+   R2 PARTIAL_FREEZE is an explicit failure state carrying missing
+      members, owner, reason, timestamps; it never counts as caught for
+      recall; it never blocks the firing.
+   R7 OVERRIDDEN: a complexity bin is OBSERVATORY_QUALIFIED only at
+      planted detection >= .90 with Wilson 95% lower >= .80; the ceiling
+      is evidentiary, not exploratory; CAUGHT_RECALL reported separately.
+   R8 CORRECTED: 10,000 generations is the scatter HORIZON, not a
+      maximum; promote on preregistered signals, trade breadth for depth
+      inside the envelope, some histories an order of magnitude deeper.
+   Detector admission is two-staged: BASELINE_ADMITTED (C4/C5 controls)
+      then C6_GEOMETRY_VALIDATED (planted fixtures per complexity bin);
+      thresholds never tuned mid-campaign; a detector that miscalibrates
+      returns UNABLE or loses qualification.
+   (original defaults follow, for the record)
 -----------------------------------------------------------------------
   R1  T0 anchored vs ingested                 [anchored; all seats]
   R2  cross-seat freezes (a freeze naming worlds another client owns)
