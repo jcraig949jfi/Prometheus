@@ -140,3 +140,19 @@ comparing wall_s-stripped records and the re-run saved; a01 preserved; a02's num
 must equal a01's (checked in the readout). C5-10 a01 (NO_CONDITION_SELECTED on a01's
 numbers) is preserved and C5-10 re-runs on a02. | C5-09/attempts/a01/REACH.json. | -- |
 Not revisited. DETERMINISTIC (the kill rule as written).
+
+D5-014 | 2026-09-18 15:08 | FINAL DISPOSITION: BOUNDARY_CREATED_NO_DISCOVERY_GAIN. Phase A
+OLD_SUBSTRATE_EXHAUSTED (D5-009). Phase B: representation B qualified (C5-03 a02, under
+D5-008); the boundary is real and countable (C5-05 T1/T2), it does not merely change how
+programs die (C5-06: 229 replicated recoveries > 154 losses), recovery is cheap for the
+survivor (C5-07), robustness is length not dead code (C5-08), and none of it moves
+discovery at equal compute (C5-09 a02 NO_GAIN, nets 0/+1/+1, no first held-out gain in
+96 cells; C5-10 a02 NO_CONDITION_SELECTED). The directive's question is answered: the
+boundary created a region of bounded variation (parent plus a hole, displacement .015)
+from which evolution does NOT discover more efficiently. The campaign stops here as the
+branches say. The C5-03 amendment is the operator's to overrule (then REPRESENTATION_
+FAILURE governs Phase B and Phase A's disposition stands alone). | CAMPAIGN_REPORT.md,
+REVIEW_PACKET_CAMPAIGN5_2026-09-18.md. | Alternative dispositions considered:
+NO_CONDITION_SELECTED alone (rejected: it names one slot, not the campaign);
+BOUNDARY_CREATED_DISCOVERY_GAIN (rejected: the rule was not met). | Not revisited.
+DETERMINISTIC (every branch fixed before its run).
