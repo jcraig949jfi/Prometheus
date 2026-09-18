@@ -1,0 +1,258 @@
+================================================================================
+REVIEW PACKET -- the first golden-path packet adjudicated (ASAL legitimate-
+                 search exploitability) + the ancestry ground-truth ruler
+                 calibrated -- Harmonia seat, 2026-09-18
+Commit(s) of record: a80f257ef (directive verbatim), 8178e98bf (rules +
+ASAL prereg), d59575e10 (ASAL amendment A), 51df96271 (fixture pass),
+ffd11a1c0 (SEAL, unread), d8381a961 (plan before unseal), 850fec325 (run,
+ruling); ancestry: 7897999dd, ad52da420, a696a5335 (controls, curves).
+Author: Harmonia[gandalf-6cd1348b], claude-fable-5-1.
+Invoked by: the operator's refinery directive, 2026-09-18: "Harmonia:
+adjudicate ASAL; prepare POET rulers; build the reusable Avida
+reconstruction ruler; adopt plan-amendment, power, and disjoint-seed rules."
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+Two instruments were preregistered, built and run in one session. (1) The
+ASAL fast lane: an instrument that asks whether a search restricted to
+legitimate Lenia parameters can push ASAL's "open-endedness" score below
+the score that meaningless garbage images achieve through the same CLIP
+observer. Nyx froze a prediction packet on that question; this seat ran
+the search sealed, then unsealed it against the freeze and ruled. (2) The
+ancestry ground-truth ruler: a calibration instrument for "how much
+evolutionary information is lost when history is compressed", built and
+controlled on synthetic ground truth before any real fossil is measured.
+CONFLICT OF INTEREST: the author wrote both instruments, their plans,
+their amendments, the class thresholds, and the rulings. The author also
+made the coverage defect in section 7 and found it only after reading
+the results.
+
+1. CONTEXT
+
+ASAL (Sakana AI, 2024) scores a simulation's "open-endedness" as: embed
+8 frames with CLIP, and for each frame take its maximum similarity to any
+earlier frame; average; lower is "more open-ended". Techne had shown on
+M3 that eight unrelated ellipse scenes ("GARBAGE") score 0.8167, below a
+living Lenia glider ("Orbium", 0.8472); the operator asked whether
+LEGITIMATE Lenia, searched within its own parameter space, could cross
+below garbage, and whether the crosser would be a metric exploit or real
+dynamics. Lenia is a continuous cellular automaton; a "lifeform" is a
+parameter set plus an initial pattern from a public catalogue of 548.
+The three rules adopted this session (plan amendment with a hash on any
+criterion change; no verdict on a stochastic comparison without a power
+statement; extension seeds disjoint) are now in roles/Harmonia/
+STANDING_RULES.md, merged as a union with a sibling instance's
+executable version.
+
+2. THE QUESTIONS
+
+(a) Packet MECH-ASAL-LEGIT-SEARCH-001, four exact rows: I0 the raw
+    catalogue's best ALIVE score stays in [0.8167, 0.875] (no crossing
+    without search); I1 the search's best ALIVE score falls below 0.8167;
+    I2 below 0.7999 (garbage mean minus two sd); I3 the best crosser is a
+    metric or observer exploit, not genuine dynamical novelty.
+(b) Instrument-level: does the ancestry ruler pass its own cheat, positive,
+    negative and order controls, and what do six degradations of a known
+    history cost, measured?
+
+3. WHAT WAS DONE, STEP BY STEP
+
+ 1. Directive transcribed verbatim with a manifest; rules A1-A3 written;
+    a retroactive amendment record for the particles-002 cheat repair.
+ 2. ASAL preregistration BEFORE any search (8178e98bf): domain from the
+    catalogue's parameter envelope, not from the score; ALIVE = mass in
+    [1, half the world] on every sampled frame; budget 545 catalogue + 300
+    random + 200 local = 1,045 rollouts, no early stop; observables
+    (pixel change, embedding change, structural coherence by FFT
+    cross-correlation, centroid displacement, mass variability); four
+    classes; five controls.
+ 3. Fixture run 1: Techne's seven CLIP arms reproduced within 1e-6 (E3);
+    three controls failed on the author's construction (float32 tolerance;
+    a new random generator per FRAME in two controls, making every frame
+    identical). Amendment A (no search had run). Fixture run 2: all pass
+    (metric identity 5.6e-16 in float64; free-image search reaches 0.7949
+    in 50 evaluations) (E3). Class thresholds frozen from Orbium and the
+    hue-cycle arm before any search.
+ 4. Search launched into a sealed scratch directory (deterministic seed).
+    On completion, sha256 of all outputs committed as SEAL.md with the
+    contents unread. Nyx's freeze landed independently (Nyx had not seen
+    the contents). Plan with the packet's bands committed. Unsealed:
+    hashes identical (E3).
+ 5. Ruling written; disposition posted; rows, trajectories (64x64 for all
+    rollouts), embeddings and the 20 best at full resolution committed.
+ 6. Ancestry ruler preregistered (synthetic asexual world, 12,200
+    organisms, six degradations, parsimony reconstruction, six loss
+    measures, four controls, four predictions). Amendment A before any
+    run (feasibility: fixed genome length, 12-generation window).
+    Controls: C-ORDER failed by one edge in 4,000 (tie-break read the id);
+    Amendment B (tie-break by genome string). Controls 4/4 (E3).
+ 7. Loss curves run 1 crashed computing a prediction on a measure that is
+    undefined for two degradations; Amendment C (rows SEEN): the measures
+    that read those degradations added and labelled post-hoc; P1-P4
+    still reported exactly as preregistered. Curves run 2 complete (E3).
+
+4. RESULTS
+
+ASAL (all E3; 395 rollouts executed of 1,045 budgeted, see s7; 333 ALIVE):
+
+  row  observable                              value    band              reading
+  I0   min ALIVE score, catalogue only         0.8076   [0.8167, 0.875]   PREDICTION_FAILED
+  I1   min ALIVE score, whole search           0.7665   [0.0, 0.8167]     IN_BAND
+  I2   same vs garbage mean - 2 sd             0.7665   [0.0, 0.7999]     IN_BAND
+  I3   best crosser is an exploit (1/0)        1        [1, 1]            IN_BAND
+  controls: cheat 0.8303 (params do not leak into the score), positive
+  0.7949, negative 0.875 exactly / NOT_ALIVE; cut_kill silent.
+
+  Best crosser: Orbium's cells at R 28, T 5, m 0.050, s 0.024, three-ring
+  kernel; coherence 0.28 against Orbium's 0.97; mass swinging 77 to 2,724
+  across the 8 frames; the contact sheet is a turbulent explode-and-regrow
+  texture with no persistent object. Class METRIC_EXPLOIT.
+  Catalogue-only: 5 of 152 ALIVE catalogued lifeforms score below 0.8167
+  with their own published parameters (best 0.8076, margin 0.009 = 1.1
+  garbage sd). One of the five is coherent living dynamics (coh 0.94).
+  Beyond the indicator: 105 crossers of the mean (49 metric exploit, 47
+  unclassified, 9 genuine, 0 observer exploit); 22 crossers of the 2-sd
+  line (12 / 9 / 1). The best GENUINE rollout scores 0.7933, below the
+  2-sd line: a two-lobed body that shrinks into a small persistent
+  rotating glider (coh 0.80). No Lenia rollout produced an observer-only
+  exploit (pixels still, embedding moving).
+  Typed returns: CUT_SUPPORTED on the boundary (I1/I2/I3); PREDICTION_
+  FAILED on I0; an INSTRUMENT note to Techne on the port's limits.
+  Reading in one line: the score rewards embedding drift, which turbulent
+  Lenia supplies cheaply and coherent morphing Lenia supplies as well;
+  selection over the published catalogue already crosses garbage, search
+  deepens it; the score cannot separate the two, the class rule can.
+
+Ancestry ruler (E3; three seeds; mean [min, max]):
+
+  degradation             edge_recall        anc_recall_all     extinct_branch   mrca_err (gens)
+  D0 none                 1.000              1.000              1.000            0.000
+  D1 endpoints only       undefined          undefined          0.000            9.17 [5.0, 15.3]
+  D2 endpoints+ancestors  1.000              1.000              0.000            0.000
+  D3 every 2nd gen        undefined          0.922              0.503            0.18 [0.02, 0.41]
+  D3 every 5th gen        undefined          0.921              0.204            0.67 [0.21, 1.10]
+  D3 every 10th gen       undefined          0.927              0.104            1.39 [0.84, 2.12]
+  D4 ids dropped          0.928 [.926,.930]  0.926              1.000            0.015
+  D5 ids corrupted 5%     0.952              0.480              1.000            7.77
+  D5 ids corrupted 10%    0.905              0.310              1.000            11.76
+  D5 ids corrupted 25%    0.751              0.105              1.000            10.62
+  Controls 4/4 pass (cheat exact; scrambled ids flagged 99.8%; no
+  reproduction -> NO_EDGES; id permutation invariant). Predictions as
+  preregistered: P4 PASS (genomes+times alone recover 92.8% of parent
+  edges at mutation 0.02); P1 and P3 VACUOUS/UNEVALUABLE (they named a
+  measure that is undefined when no parent survives); P2 FAIL as written
+  (it confused extinct ancestors, which the .spop shape keeps, with
+  extinct branches, which it loses entirely). Post-hoc, labelled: the
+  .spop-with-ancestry shape (D2) loses 100% of extinct branches and
+  nothing else; endpoints alone misplace common ancestors by 9 generations;
+  corrupted ids are far worse than missing ids at equal rate (recorded
+  ids are never overridden, so corruption propagates up every chain).
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+  roles/Harmonia/prompts/2026-09-18_refinery_directive/   directive + manifest
+  roles/Harmonia/STANDING_RULES.md                         A1-A3, B1-B10, C1-C8 (+ sibling's E)
+  roles/Harmonia/science/particles_ruler/PLAN_002_AMENDMENT_A.md
+  roles/Harmonia/science/asal_ruler/   PREREG, AMENDMENT_A, AMENDMENT_B, PLAN_ASAL_001,
+        asal_ruler.py, fixtures/animals.json, out/run_2026-09-18/ (fixture, thresholds,
+        SEAL, search/: rows, readouts, trajectories, embeddings, top20; ~18 MB)
+  roles/Harmonia/science/ancestry_ruler/   PREREG, AMENDMENTS A-C, ancestry_ruler.py,
+        out/synthetic_2026-09-18/ (controls, first attempt, curves)
+  roles/Harmonia/rulings/RULING_ASAL_LEGIT_SEARCH_001_2026-09-18.md
+  roles/Harmonia/prompts/2026-09-17_particles_packet/ACK_NYX_385.md
+  roles/Harmonia/prompts/2026-09-18_asal_fast_lane/   instrument notice, ACKs, disposition
+  Queue: posts #423, #429, #435, #438, #441. About 40 min of CPU on M3 (1,118 s
+  search + fixtures + ancestry 151 s). Techne's isolated CLIP env used read-only.
+
+6. WHAT THIS DID NOT ESTABLISH
+
+- Anything about ASAL's own JAX Lenia or Flax CLIP: the instrument is a
+  descendant port; the fossil's lines were never executed.
+- The full preregistered domain: 650 of 1,045 draws were refused by the
+  port (s7). Directions of I0-I2 are robust to that (a subset minimum
+  bounds the full minimum from above); I3's object is the best crosser
+  of the executed budget only.
+- Whether the class thresholds, frozen from a single Orbium rollout,
+  generalise; 47 crossers were UNCLASSIFIED.
+- Any Avida result: the ancestry ruler has measured synthetic truth
+  only; the .spop from Techne does not yet exist.
+- No POET ruler exists yet; the bodies landed on M3 during this session.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+- The ASAL search domain was written from the catalogue and never
+  validated against the port that would execute it: fractional kernel
+  rings ("1/2,1") and kernel/growth cores 3-4 raise in the port. Cost: a
+  1,045-rollout budget executed 395; the catalogue scan covered 154 of
+  545 lifeforms; a full-domain run needs an extended port and a new
+  preregistration. A domain-acceptance check now belongs in the fixture.
+- Two controls were built with a fresh random generator per frame,
+  making every frame identical; a float32 tolerance of 1e-9 could never
+  pass. Cost: one aborted fixture run and Amendment A.
+- The ancestry ruler's first tie-break read organism ids, which its own
+  order control forbids. Cost: Amendment B and a re-run.
+- Two ancestry predictions named a measure (parent-edge recall) that is
+  undefined for the degradations they were about, and a third confused
+  extinct ancestors with extinct branches. Cost: a crash, Amendment C,
+  and the honest label VACUOUS on two of four preregistered predictions.
+- The first ancestry control run used an unwindowed pure-Python
+  Levenshtein and would have taken hours; killed after 10 minutes.
+- 18 MB of trajectories and frames were committed to the repository;
+  a reviewer may prefer an artifact store.
+
+8. WHAT IS OWED, AND BY WHOM
+
+  Nyx       Stage D' on the ASAL returns (I0 failed: the catalogue crosses
+            without search; the mechanism reading is stronger); the
+            scoreboard's first verdict on the golden path
+  Techne    port extension (fractional b, kn/gn >= 3) or the JAX Lenia on an
+            AVX host; animals.json inside the executable fossil packet;
+            the Avida .spop for the ancestry ruler
+  Theophrastus  accept or challenge the offered cell (CONTRAST best
+            legitimate vs GARBAGE = -0.050; best genuine vs GARBAGE = -0.023)
+  Harmonia  domain-acceptance check in the ASAL fixture; POET rulers
+            (PATA-EC recomputation, reconstructability meter); the .spop
+            adapter and a fossil preregistration for the ancestry ruler
+            with mrca_error and extinct_branch_recoverable as measures
+  Operator  nothing blocking these; the docker/compiler host still gates
+            Tierra and the POET lineage run
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+ 1. The ASAL verdicts were issued on 395 of 1,045 budgeted rollouts with
+    the argument that a subset minimum bounds the full minimum from
+    above. Is that sufficient for CUT_SUPPORTED on I1/I2, or should the
+    packet have been returned INDETERMINATE pending a full-domain run?
+ 2. What would falsify RETURN 1? We name: the same 395 rollouts through
+    ASAL's own Flax CLIP giving a minimum ALIVE score above 0.8167. Is a
+    seven-arm fixture agreement at 1e-6 enough to waive that test?
+ 3. I0 failed by 0.009, which is 1.1 sd of the garbage arm's 5-seed mean.
+    The packet chose the mean as an exact threshold. Should a threshold
+    derived from a 5-seed mean ever be treated as exact?
+ 4. The sealed-then-frozen ordering (results fixed before the prediction,
+    prediction fixed before the results were read) is stronger than
+    prereg-then-run. Should it become the standard when the instrument
+    exists before the packet?
+ 5. What should we stop? Candidates: freezing a domain the port has not
+    accepted; preregistering a measure without checking it is defined on
+    every arm; committing multi-megabyte trajectories to git.
+ 6. The class rule split the crossers into turbulence (49), unclassified
+    (47) and genuine (9). Is a rule frozen from one Orbium rollout a
+    defensible instrument, or does the 47 say the thresholds need their
+    own calibration set?
+
+10. HOW TO REPRODUCE
+
+  ASAL (Techne's isolated env: torch 2.14 CPU + clip; CLIP ViT-B/32
+  weights sha 40d36571...; animals.json sha 09cf0a83...):
+    cd roles/Harmonia/science/asal_ruler
+    <asal107 python> asal_ruler.py --stage fixture     (~1 min; ALL_CONTROLS_PASS True)
+    <asal107 python> asal_ruler.py --stage search      (~19 min; deterministic, seed 20260918)
+  Expected: readouts.json best_legit score 0.76645 (S2_189), catalogue-only
+  min 0.80763, 333 ALIVE, 650 rows with "error"; rows.jsonl sha256 c467e2b9...
+  Ancestry (system Python 3.11, numpy):
+    cd roles/Harmonia/science/ancestry_ruler
+    python ancestry_ruler.py --stage controls          (~2 min; all_controls_pass true)
+    python ancestry_ruler.py --stage curves            (~150 s; table of section 4)
+================================================================================
