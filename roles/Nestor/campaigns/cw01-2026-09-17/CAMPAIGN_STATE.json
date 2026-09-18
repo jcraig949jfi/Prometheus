@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 10:12:34",
+ "updated_local": "2026-09-18 10:23:08",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -373,8 +373,51 @@
   {
    "id": "cw01-e09",
    "title": "Algorithmic soup",
-   "status": "PENDING",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e09-a01",
+     "phase": "RECONCILE",
+     "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
+     "started_local": "2026-09-18 10:25:00",
+     "ended_local": "2026-09-18 10:23:08",
+     "preregistered": false,
+     "executed_under_frozen_contract": false
+    }
+   ],
+   "disposition": "INCONCLUSIVE",
+   "headline": {
+    "reason": "closed at reconcile: the organism has no call/compose/reuse mechanism (one 3-bit nudge into one world register per tick); the only native chain form cannot exceed its primitive ceiling on held64, which is itself the abstain floor",
+    "single_op_ceiling_held64": {
+     "best_by_train": 142.5,
+     "max_over_top64": 159.0,
+     "competent": "0/64",
+     "note": "at or below the abstain floor 159.0"
+    },
+    "chain_arith_held64": [
+     145.6,
+     148.7,
+     145.9,
+     145.9
+    ],
+    "chain_scrambled_held64": [
+     158.3,
+     166.2,
+     154.9,
+     148.6
+    ],
+    "not_null_because": "no comparison was posed; there is no composition mechanism to give or withhold"
+   },
+   "limitations": [
+    "No PREREGISTRATION.md: writing one for an instrument the substrate cannot supply would be a ritual.",
+    "No VM, no persistent workspace, no soup interface on top of the 3-bit action channel: the brief forbids inventing them and the probe shows the world would not reward them on held-out seeds.",
+    "e08 was not reopened or reinterpreted."
+   ],
+   "what_a_future_attempt_would_need": [
+    "An organism that can select, invoke and chain operations over an addressable workspace it owns, with reuse expressible as one intermediate feeding two consumers.",
+    "A world screen in which capability generalises from training seeds to held-out seeds, so a primitive ceiling and an above-ceiling target both exist on the assay distribution (in w13 every probed program form sits at the floor on held64).",
+    "Both are new substrate work (organism family + world screen), not an interface; they belong to a substrate build round, not to a campaign experiment."
+   ]
   },
   {
    "id": "cw01-e10",
@@ -384,22 +427,14 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e08",
-  "attempt_id": "cw01-e08-a01",
-  "phase": "PACKAGE",
-  "disposition": "INCONCLUSIVE",
+  "experiment_id": "cw01-e09",
+  "attempt_id": "cw01-e09-a01",
+  "phase": "CLOSED_AT_RECONCILE",
+  "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
   "phase_completed": [
-   "RECONCILE",
-   "PREFLIGHT",
-   "INSTANTIATE",
-   "QUALIFY",
-   "EXECUTE",
-   "CLOSE_SCIENCE",
-   "TEARDOWN",
-   "VERIFY_ABSENCE",
-   "PACKAGE"
+   "RECONCILE"
   ],
-  "next": "CONTINUE -> cw01-e09 algorithmic soup (awaiting operator brief)"
+  "next": "CONTINUE -> cw01-e10 mutable graph physics / semiring mutation (awaiting operator brief)"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -471,7 +506,10 @@
   "experiments/cw01-e08/VERDICT_CONTRACT.json - hashed before EXECUTE",
   "experiments/cw01-e08/rows/cw01-e08-a01.jsonl - generation, assay and lineage rows, every row stamped with the contract hash",
   "experiments/cw01-e08/fossils/representatives.npz - packed genomes of every representative with arm/lineage/sha metadata",
-  "experiments/cw01-e08/RESULT.json - disposition through lineage.decide; per-coordinate secondary contrasts"
+  "experiments/cw01-e08/RESULT.json - disposition through lineage.decide; per-coordinate secondary contrasts",
+  "experiments/cw01-e09/SUBSTRATE_RECONCILE.md - the seven composition questions answered from code; probe table; decision",
+  "experiments/cw01-e09/probe_e09.py + PROBE_E09.json - single-op ceiling (exhaustive 2400) and 3-op chain pilots, arithmetic and scrambled, on held64",
+  "experiments/cw01-e09/DISPOSITION.json - INCONCLUSIVE / DESIGN UNREACHABLE at reconcile, with what a future attempt needs"
  ],
  "reconcile_result": {
   "processes": "3 claude.exe (self + Aporia + Techne), 0 stray workers",
@@ -509,7 +547,8 @@
   "The independent replication lane earned its cost in defects, not in confirmation. It reproduced the canonical run across 381 comparisons with 0 divergences - and then found five things the canonical lane structurally could not, because it had never seen the code: a self-invalidating verifier (D044), provenance that silently stamps an outside executor as the canonical lane (D045), an experiment that is reproducible in place but not relocatable (D046), a rows path pinned to one attempt (D047), and an ambiguity in my own brief (D048). An executor who shares the author's assumptions cannot test those assumptions.",
   "e06 produced no ecological result but a reusable doctrine: representation neutrality has THREE layers - neutral reward, neutral task generation, neutral ecological bookkeeping. e06 satisfied the first and violated the second, because the target distribution was expressed in one substrate's native geometry even though the scorer never read a label. It also showed the value of a cheap pre-QUALIFY admissibility gate: mutual invasibility cost minutes to evaluate and would have refused all four world iterations before any evolutionary budget was spent.",
   "e07 was refused by its own admissibility gate in ~2 s per run, twice, before any lineage was evolved under weather; the full EXECUTE (96 lineages) would have reached the same INCONCLUSIVE at far greater cost. The refusal exposed two independent defects, and the one-correction budget could address only one: a preregistered magnitude threshold frozen without its attainable range (D058) and a search that never reaches state-dependent computation (D059). Seven cheap probes (~4 s) chose the correction, refuted my own meltdown reading of a noisy trajectory, and produced a measured list of what a future attempt needs. The doctrine that survives: a gate threshold must ship with the reference probe's attainability curve, computed before freezing.",
-  "e08 ran on the REAL substrate organism for the first time in the campaign: the reconcile step found that literal rank exists but is a constant, that the only rank tax in the repo was never joined to evolution, and that the substrate's entry module needs a redis client the interpreter lacks - all three shaped the design before a line of evolutionary code. Qualification refused twice on its own fixtures (both checker defects, repaired once each) and then passed; the frozen tax landed at the top of its sweep because a preregistered upper-bound criterion could not bind, which is the kind of rule defect e07's D058 predicted and this time was caught as an observation rather than a wall. Disposition: INCONCLUSIVE."
+  "e08 ran on the REAL substrate organism for the first time in the campaign: the reconcile step found that literal rank exists but is a constant, that the only rank tax in the repo was never joined to evolution, and that the substrate's entry module needs a redis client the interpreter lacks - all three shaped the design before a line of evolutionary code. Qualification refused twice on its own fixtures (both checker defects, repaired once each) and then passed; the frozen tax landed at the top of its sweep because a preregistered upper-bound criterion could not bind, which is the kind of rule defect e07's D058 predicted and this time was caught as an observation rather than a wall. Disposition: INCONCLUSIVE.",
+  "e09 was rejected at RECONCILE in under an hour: reading the world's action semantics (one 3-bit nudge times 251 into one register per tick) answered the brief's seven composition questions from code, and a 32-second probe of the substrate's only native chain form showed every program policy at or below the abstain floor on held-out seeds, scrambled op tables included. No preregistration was written for an instrument the substrate cannot supply. The held64-vs-train8 decoupling seen in e08 (D065) recurred across three organism families (D069): w13's train fitness is a weak proxy for capability, which is a substrate screening finding rather than an experiment finding."
  ],
  "verify_absence_e01": {
   "campaign_redis_keys": 0,
@@ -520,12 +559,12 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 8,
+  "experiments_attempted": 9,
   "complete": 2,
   "null": 2,
   "negative": 0,
-  "inconclusive": 4,
-  "defects_logged": 68,
+  "inconclusive": 5,
+  "defects_logged": 70,
   "science_defects": 28,
   "defects_per_experiment": {
    "e01": 17,
@@ -535,7 +574,8 @@
    "e05": 16,
    "e06": 6,
    "e07": 4,
-   "e08": 6
+   "e08": 6,
+   "e09": 2
   },
   "reusable_components_landed": [
    "lib/seeds.py",
