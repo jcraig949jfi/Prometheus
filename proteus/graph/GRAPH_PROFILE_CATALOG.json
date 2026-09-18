@@ -1,0 +1,126 @@
+{
+ "affordance_hash": "b2973cc8e41b582814ac6304d5168250e578a5b016060a83125a73f701be3a45",
+ "catalog_id": "b4d8e62aaa74601f59ecc029682aa18bcf3f5c80ba16cbe1a2469e4661529de5",
+ "currency": "2026-09-18",
+ "grammar": {
+  "grammar_hash": "dc689a334aca2bd0f9f999a549523b0a788e63ecf3e6986dc5d4dfdbac69637f",
+  "grammar_version": "proteus.graph_grammar.v1",
+  "grammar_weights": {
+   "CONFIG_PERTURB": 0.06,
+   "CROSSOVER_SUBGRAPH": 0.04,
+   "EDGE_ADD": 0.1,
+   "EDGE_CUT": 0.1,
+   "EDGE_RETARGET": 0.1,
+   "NODE_ADD": 0.07,
+   "NODE_KIND": 0.08,
+   "NODE_PARAM": 0.1,
+   "NODE_REMOVE": 0.11,
+   "SUBGRAPH_COPY": 0.04,
+   "SUBGRAPH_COPY_ATTACH": 0.04,
+   "SUBGRAPH_MOVE": 0.06,
+   "SUBGRAPH_REMOVE": 0.1
+  }
+ },
+ "kernel_qualification": {
+  "grammar": "proteus.graph_grammar.v1",
+  "mutation_current_source": "NOT_MEASURED (V0.5 detailed-balance instrument admitted as DETECTOR only, Harmonia #412; no absence claim)",
+  "mutation_neutrality": "R4_NODE_COUNT_DRIFT_WITHIN_0.02_PER_STEP_NO_SELECTION (measured 2026-09-18, 3 seeds; test_graph_grammar.py pins the band)",
+  "operational_significance": "NOT_YET_ADJUDICATED",
+  "permitted_use": "USE_A_FROZEN_SPECIMEN_SOURCE and selection-driven search CONDITIONAL on this kernel",
+  "prohibited_use": "USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR (no neutral-variation, drift or operator-independent claims)"
+ },
+ "note": "Graph-substrate profiles. The v0 catalog proteus/eval/FOUNDRY_PROFILE_CATALOG.json is frozen for Campaign 4 and unchanged; a graph profile cannot alias a v0 profile (different runtime_hash).",
+ "profiles": [
+  {
+   "affordance_hash": "b2973cc8e41b582814ac6304d5168250e578a5b016060a83125a73f701be3a45",
+   "archaeon_regime_id": null,
+   "archaeon_regime_scheme": null,
+   "grammar": {
+    "grammar_hash": "dc689a334aca2bd0f9f999a549523b0a788e63ecf3e6986dc5d4dfdbac69637f",
+    "grammar_version": "proteus.graph_grammar.v1",
+    "grammar_weights": {
+     "CONFIG_PERTURB": 0.06,
+     "CROSSOVER_SUBGRAPH": 0.04,
+     "EDGE_ADD": 0.1,
+     "EDGE_CUT": 0.1,
+     "EDGE_RETARGET": 0.1,
+     "NODE_ADD": 0.07,
+     "NODE_KIND": 0.08,
+     "NODE_PARAM": 0.1,
+     "NODE_REMOVE": 0.11,
+     "SUBGRAPH_COPY": 0.04,
+     "SUBGRAPH_COPY_ATTACH": 0.04,
+     "SUBGRAPH_MOVE": 0.06,
+     "SUBGRAPH_REMOVE": 0.1
+    }
+   },
+   "kernel_qualification": {
+    "grammar": "proteus.graph_grammar.v1",
+    "mutation_current_source": "NOT_MEASURED (V0.5 detailed-balance instrument admitted as DETECTOR only, Harmonia #412; no absence claim)",
+    "mutation_neutrality": "R4_NODE_COUNT_DRIFT_WITHIN_0.02_PER_STEP_NO_SELECTION (measured 2026-09-18, 3 seeds; test_graph_grammar.py pins the band)",
+    "operational_significance": "NOT_YET_ADJUDICATED",
+    "permitted_use": "USE_A_FROZEN_SPECIMEN_SOURCE and selection-driven search CONDITIONAL on this kernel",
+    "prohibited_use": "USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR (no neutral-variation, drift or operator-independent claims)"
+   },
+   "name": "graph_default_v1",
+   "note": "Archaeon's instr<lo>-<hi> rule is defined over v0 foundry manifests only; a graph regime has none",
+   "profile_id": "pfp1:3081a8ef23da2f49",
+   "profile_sha256": "3081a8ef23da2f498fbb88493d80d8938765a5877c3dd4a42c67d33c3c507673",
+   "ran_in": [
+    "nothing yet: opened 2026-09-18, no world has run it"
+   ],
+   "regime": {
+    "call_depth_choices": [
+     0,
+     2,
+     8
+    ],
+    "control_edge_density_range": [
+     0.2,
+     1.0
+    ],
+    "data_edge_density_range": [
+     0.0,
+     1.0
+    ],
+    "n_nodes_range": [
+     2,
+     24
+    ],
+    "out_cap_choices": [
+     1,
+     4,
+     16
+    ],
+    "persist_node_weights": [
+     3,
+     1
+    ],
+    "persist_state_weights": [
+     1,
+     1
+    ],
+    "schema_version": "proteus.graph_foundry_manifest.v1",
+    "state_words_choices": [
+     4,
+     16,
+     64,
+     256
+    ],
+    "tick_budget_choices": [
+     16,
+     64,
+     256,
+     1024
+    ]
+   },
+   "runtime_hash": "92a44ad48bc9c6f841c1aa94cc4d23a12483f37321f0c838e277c5fafb6f1dc8",
+   "runtime_version": "proteus.runtime.graph.v1",
+   "schema_version": "proteus.foundry_profile.v1",
+   "substrate": "graph"
+  }
+ ],
+ "runtime_hash": "92a44ad48bc9c6f841c1aa94cc4d23a12483f37321f0c838e277c5fafb6f1dc8",
+ "schema_version": "proteus.foundry_profile_catalog.v1",
+ "substrate": "graph"
+}

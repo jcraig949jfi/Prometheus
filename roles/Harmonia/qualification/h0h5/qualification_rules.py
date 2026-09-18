@@ -35,7 +35,7 @@ import math
 from dataclasses import dataclass, field, asdict
 from itertools import combinations
 
-RULES_VERSION = "QR-1.2.0"
+RULES_VERSION = "QR-1.2.1"
 
 # QR-1.2.0 (2026-09-18, Harmonia[m2-ca1148a0]) ADDS, without changing any QR-1.1.0
 # number or refusal:
@@ -57,6 +57,10 @@ RULES_VERSION = "QR-1.2.0"
 #                              HARM-28: a bit-identical replay is an ATTESTATION and never
 #                              a replicate
 #   MULTIPLICITY.md, SIZING_RULE.md beside this module (HARM-11, HARM-12)
+# QR-1.2.1 (2026-09-18, self-attack on 1.2.0, review packet Q1/Q2): refuse_relabel admits a
+#   NEW confirmatory plan whose confirmation set is DISJOINT from the diagnostic's tasks
+#   (freeze_plan records task_ids); validate_cell_payloads resolves alias chains and refuses
+#   cycles; h5_reach_bounds_computed() derives 8 / 12 over the 4,096-entry map.
 
 # QR-1.1.0 amends QR-1.0.0 in three places, after Archaeon reproduced
 # Appendix A (SE(I)/SE(G) = sqrt(6) with equal marginal variances 0.005079)
@@ -510,7 +514,10 @@ def freeze_plan(p: LanePlan, frozen_at: str = "") -> dict:
     return {"digest_without_purpose": "sha256:" + hashlib.sha256(
                 json.dumps(body, sort_keys=True, default=str).encode()).hexdigest(),
             "purpose": purpose, "plan_version": p.plan_version, "lane": p.lane,
-            "frozen_at": frozen_at, "digest": p.digest()}
+            "frozen_at": frozen_at, "digest": p.digest(),
+            # QR-1.2.1: the task ids the frozen plan touched, so a later CONFIRMATORY plan can
+            # be admitted when, and only when, its confirmation set is disjoint from them
+            "task_ids": sorted(set(p.pilot_task_ids) | set(p.confirmation_task_ids))}
 
 
 def refuse_relabel(p: LanePlan, frozen: dict, data_opened: bool) -> None:
@@ -521,11 +528,20 @@ def refuse_relabel(p: LanePlan, frozen: dict, data_opened: bool) -> None:
     is opened."""
     if frozen.get("purpose") == "DIAGNOSTIC" and p.purpose == "CONFIRMATORY" and data_opened:
         same = freeze_plan(p)["digest_without_purpose"] == frozen.get("digest_without_purpose")
-        raise PlanRefused(
-            "a DIAGNOSTIC plan (%s, frozen %s) may not be relabelled CONFIRMATORY after its "
-            "data was read%s; version a new plan with a disjoint confirmation set"
-            % (frozen.get("plan_version"), frozen.get("frozen_at") or "?",
-               " (same plan body)" if same else " (body also changed)"))
+        seen = set(frozen.get("task_ids") or [])
+        overlap = seen & set(p.confirmation_task_ids)
+        # QR-1.2.1 (self-attack 2026-09-18): a NEW plan whose confirmation set is DISJOINT from
+        # every task the diagnostic touched is the route the refusal itself prescribes, so it is
+        # admitted; the refusal fires on the same body, or on any confirmation task the
+        # diagnostic already read. A frozen record without task_ids (pre-1.2.1) refuses as before.
+        if same or overlap or not frozen.get("task_ids"):
+            raise PlanRefused(
+                "a DIAGNOSTIC plan (%s, frozen %s) may not be relabelled CONFIRMATORY after its "
+                "data was read%s; version a new plan with a disjoint confirmation set"
+                % (frozen.get("plan_version"), frozen.get("frozen_at") or "?",
+                   " (same plan body)" if same else
+                   (" (%d confirmation task(s) were read by the diagnostic)" % len(overlap) if overlap
+                    else " (frozen record carries no task ids)")))
 
 
 _validate_plan_1_1_0 = validate_plan
@@ -610,12 +626,22 @@ def validate_cell_payloads(plan: dict) -> dict:
         raise PlanRefused("identical declared payload under two cell labels (hashes differ, so a "
                           "label leaked into the hash): %s" % "; ".join(str(ls) for ls in dup_p.values()))
     aliases = plan.get("aliases", {})
-    for alias, target in aliases.items():
+    resolved = {}
+    for alias in aliases:                    # QR-1.2.1: an alias may name an alias; chains resolve,
+        if alias in cells:                   # cycles, dangling targets and alias/cell double-use refused
+            raise PlanRefused("%s is both an alias and a cell label" % alias)
+        target, hops = alias, []
+        while target in aliases:
+            hops.append(target)
+            target = aliases[target]
+            if target in hops:
+                raise PlanRefused("alias cycle %s -> %s" % (" -> ".join(hops), target))
         if target not in cells:
             raise PlanRefused("alias %s -> %s names no cell" % (alias, target))
+        resolved[alias] = target
     return {"distinct_payloads": len(by_hash), "cell_labels": len(cells),
-            "aliases": {a: {"cell": t, "payload_hash": cells[t]["payload_hash"]} for a, t in aliases.items()},
-            "baselines_under_two_labels": [(a, t) for a, t in aliases.items()]}
+            "aliases": {a: {"cell": t, "payload_hash": cells[t]["payload_hash"]} for a, t in resolved.items()},
+            "baselines_under_two_labels": [(a, t) for a, t in resolved.items()]}
 
 
 # ------------------------------------- HARM-28: replay is an attestation
@@ -921,3 +947,53 @@ def program_family(alpha: float = 0.05, lanes=PROGRAM_LANES) -> dict:
             "expected_false_supports_if_uncorrected": n * alpha,
             "program_level_alpha_per_lane": alpha / n,
             "rule": "lane verdicts at lane_alpha (within-lane Bonferroni); cross-lane claims at alpha/n"}
+
+
+# ------------------------------------ QR-1.2.1: the H5 bounds COMPUTED, not quoted
+
+def h5_reach_bounds_computed(seed: int = 7, n_permutations: int = 3) -> dict:
+    """Self-attack 2026-09-18 (review packet Q2): the constants 8 / 12 were quoted
+    from Archaeon's readout. Compute them over the full map instead.
+    Genome: 12 bits; direct decoder = the low 8 bits (rule 0..255); a genome's
+    neighbours are its 12 single-bit flips. Reach = number of DISTINCT rules among
+    the neighbours' decodings. For the direct decoder every genome reaches
+    exactly 8 non-parent rules (each low-bit flip changes exactly one rule bit; the
+    4 high bits are inert and give 4 NEUTRAL neighbours). For ANY decoder the reach
+    is at most the neighbour count, 12, attained only when no neighbour is neutral. A
+    balanced random permutation (16 genomes per rule preserved) is sampled to show
+    where a permuted map lands (the live balanced_7 read 11.7305)."""
+    import random as _r
+    N, BITS = 4096, 12
+    direct = [g & 0xFF for g in range(N)]
+
+    # DEFINITION FOUND BY THIS CHECK: the readout's "reach" counts distinct rules among
+    # the neighbours EXCLUDING the parent's own rule; neutral neighbours (same rule as the
+    # parent) are counted separately as mean_neutral (4.0000 for direct). Counting the
+    # parent's rule as well gives 9 for the direct decoder, not 8. Both are computed;
+    # the constants 8 / 12 are the non-parent definition and the file says so.
+    def reach_excl(dec):
+        return [len({dec[g ^ (1 << b)] for b in range(BITS)} - {dec[g]}) for g in range(N)]
+
+    def reach_incl(dec):
+        return [len({dec[g ^ (1 << b)] for b in range(BITS)}) for g in range(N)]
+
+    def neutral(dec):
+        return [sum(1 for b in range(BITS) if dec[g ^ (1 << b)] == dec[g]) for g in range(N)]
+    de, di, dn = reach_excl(direct), reach_incl(direct), neutral(direct)
+    rng = _r.Random(seed)
+    perm_means = []
+    for _ in range(n_permutations):
+        table = list(range(256)) * 16                # exactly 16 genomes per rule
+        rng.shuffle(table)
+        perm_means.append(sum(reach_excl(table)) / N)
+    return {"genomes": N, "neighbours_per_genome": BITS,
+            "definition": "reach = distinct rules among the 12 neighbours EXCLUDING the parent's rule; "
+                          "neutral = neighbours decoding to the parent's rule",
+            "direct_reach_excl_parent": {"min": min(de), "max": max(de), "mean": sum(de) / N},
+            "direct_reach_incl_parent": {"min": min(di), "max": max(di), "mean": sum(di) / N},
+            "direct_neutral_mean": sum(dn) / N,
+            "H5_DIRECT_REACH_BOUND": H5_DIRECT_REACH_BOUND, "direct_bound_holds": max(de) == H5_DIRECT_REACH_BOUND,
+            "H5_PERMUTED_REACH_BOUND": H5_PERMUTED_REACH_BOUND,
+            "permuted_bound_is_neighbour_count": H5_PERMUTED_REACH_BOUND == BITS,
+            "balanced_random_permutation_mean_reach_excl_parent": perm_means,
+            "multiplicity_preserved": True}

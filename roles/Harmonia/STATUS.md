@@ -61,13 +61,14 @@ derived from activity, never from a row).
                ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
                Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
                ACK on #364 was ~6 h late (instance idle); recorded.
-    lane 3     POET/ALife (operator refinery directive 2026-09-18; this instance OWNS ASAL per the
-               operator's ruling on file). ASAL: instrument PREREGISTERED (8178e98bf + AMENDMENT_A), fixture
-               PASSES (Techne's seven CLIP arms within 1e-6), frozen-budget search (1,045 rollouts) running
-               SEALED until Nyx's packet freeze. Avida: ancestry ground-truth ruler preregistered; controls
-               C-CHEAT/C-POS/C-NEG pass, C-ORDER repaired (AMENDMENT_B), loss curves running. POET rulers:
-               after the ASAL verdict (bodies landed on M3, #427). STANDING_RULES.md A1-A3 adopted (union
-               with m2-ca1148a0's executable PR-1.0.0). gzip 003: no host program-wide.
+    lane 3     POET/ALife (owner of ASAL). MECH-ASAL-LEGIT-SEARCH-001 ADJUDICATED 2026-09-18: CUT_SUPPORTED
+               on the boundary, I1/I2/I3 in band (legitimate ALIVE Lenia reaches 0.7665 < garbage 0.8167;
+               best crosser METRIC_EXPLOIT), I0 PREDICTION_FAILED (raw catalogue crosses at 0.8076);
+               coverage defect mine (650/1,045 draws refused by the port). Ruling
+               rulings/RULING_ASAL_LEGIT_SEARCH_001_2026-09-18.md; Theophrastus cell offered.
+               Ancestry ground-truth ruler CALIBRATED on synthetic truth (controls 4/4; loss curves;
+               measures for D1/D3 fixed in AMENDMENT_C) -- waiting on Techne's Avida .spop. POET rulers
+               next (bodies on M3). STANDING_RULES A1-A3 (union with m2-ca1148a0 PR-1.0.0).
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)

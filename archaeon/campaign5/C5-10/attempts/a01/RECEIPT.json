@@ -1,0 +1,193 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:ece9c37bfab6205e297513901968494c6869865431f554568de65895de9a1139",
+   "blob_hash": "sha256:427c8718e03eb5403f8d1a8534f9db04ae79c2aaeb6c8719274e8432906fecab",
+   "bytes": 1573,
+   "declared": "sha256:427c8718e03eb5403f8d1a8534f9db04ae79c2aaeb6c8719274e8432906fecab",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  },
+  "trial": {
+   "artifact_id": "sha256:975cbdac39e39ae59e5e684659466f2b62f9403fb2aba5882f2aea692540f16e",
+   "blob_hash": "sha256:42a10b1d502894c10ade7c901f1c12407d9e5874c16222619740ecbed5d7019c",
+   "bytes": 210,
+   "declared": "sha256:42a10b1d502894c10ade7c901f1c12407d9e5874c16222619740ecbed5d7019c",
+   "hash_ok": true,
+   "kind": "cmp5.c510_trial.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C5-10/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260922,
+ "decisions": [],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "INCONCLUSIVE",
+  "reason": "an arm of the primary comparison has no rows",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C5-10",
+ "finished_at": "2026-09-18T14:59:05Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_7b2ab69b6383d03688fb6e44",
+ "imports": {},
+ "ledger_ids": [],
+ "prereg_digest": "sha256:2123bdc1c5ecca77db315a90cf8c0fd4ade38361e87124196635370806097679",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "selection": {
+   "exp_id": "exp_1cf8cc45dd65ef2a7721a046",
+   "obs_id": "obs_332dda25fd5d1fa1e020c640"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T14:59:04Z",
+ "steps": {
+  "idem:0d0a0d32d2dee30e006346f3a9a92521": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "selection"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_1cf8cc45dd65ef2a7721a046",
+    "obs_id": "obs_332dda25fd5d1fa1e020c640"
+   },
+   "wall_s": 0.05
+  },
+  "idem:333f4f12428f95e1cf1ab44676ca60b7": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "trial"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:975cbdac39e39ae59e5e684659466f2b62f9403fb2aba5882f2aea692540f16e",
+    "blob_hash": "sha256:42a10b1d502894c10ade7c901f1c12407d9e5874c16222619740ecbed5d7019c",
+    "bytes": 210,
+    "declared": "sha256:42a10b1d502894c10ade7c901f1c12407d9e5874c16222619740ecbed5d7019c",
+    "hash_ok": true,
+    "kind": "cmp5.c510_trial.v1"
+   },
+   "wall_s": 0.012
+  },
+  "idem:4bcac39fe03ebe783e4899123cf95253": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_7b2ab69b6383d03688fb6e44",
+   "wall_s": 0.006
+  },
+  "idem:ba2327a27beb08edc0f292acbb97a837": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "held-out-trial"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c5-10-held-out-trial",
+    "policy": "ISOLATED",
+    "world_id": "wld_2ed1cbf6703d40434edef6aa"
+   },
+   "wall_s": 0.009
+  },
+  "idem:baddc143286779d6380e6b102593008f": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:ece9c37bfab6205e297513901968494c6869865431f554568de65895de9a1139",
+    "blob_hash": "sha256:427c8718e03eb5403f8d1a8534f9db04ae79c2aaeb6c8719274e8432906fecab",
+    "bytes": 1573,
+    "declared": "sha256:427c8718e03eb5403f8d1a8534f9db04ae79c2aaeb6c8719274e8432906fecab",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.012
+  },
+  "idem:d0650368e04d247a8abc2cd8c4af6640": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.008
+  },
+  "idem:e120944e4734000d9ef82b165d642cea": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_e195e39c77a848dd9e113408",
+   "wall_s": 0.024
+  }
+ },
+ "teardown": {
+  "held-out-trial": "TERMINATED"
+ },
+ "timings": {
+  "startup_s": 0.03,
+  "teardown_s": 0.05,
+  "total_s": 0.3
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "0cacc45a7628fa4a236de6478c98bac78d22bc58",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "held-out-trial": "wld_2ed1cbf6703d40434edef6aa"
+ }
+}

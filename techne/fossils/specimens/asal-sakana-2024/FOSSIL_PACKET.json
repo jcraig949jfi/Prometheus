@@ -2,7 +2,7 @@
  "schema": "techne.fossil.packet/1",
  "specimen_id": "asal-sakana-2024",
  "pipeline_id": "MECHANISM_ARCHAEOLOGY",
- "written_utc": "2026-09-18T05:54:01Z",
+ "written_utc": "2026-09-18T21:31:10Z",
  "written_by": "Techne[gandalf-a04f7c25] (M3)",
  "amendment": "Founding Charter + Amendments 1-3; operator directive 4 s5 (executable fossil packet)",
  "FOSSIL_RAW_ID": {
@@ -136,7 +136,7 @@
     "object": "body tree 188a6adae350 + 3 npz",
     "location_class": "host-local vault (C:/Prometheus/vault/fossils, GANDALF)",
     "failure_domain": "M3",
-    "verification_time": "2026-09-18T05:54:01Z",
+    "verification_time": "2026-09-18T21:31:10Z",
     "verification_result": "VERIFIED",
     "artifact": "harvest verify 2026-09-18 (journal)"
    }
@@ -154,6 +154,23 @@
    ],
    "host_class": "any x86-64 with AVX for the JAX path; M3 runs the metric + observer via torch"
   },
+  "executor": {
+   "executor": "techne/scripts/techne107_asal_observer.py Lenia2D (numpy port; NOT the body's substrates/lenia.py)",
+   "catalogue": {
+    "specimen": "lenia-chan-2019",
+    "file": "Python/animals.json",
+    "sha256": "09cf0a831c1ef8a73ebfaa9126257fbe076108362b706a98d88650ca9848d206",
+    "entries_with_params_and_cells": 548
+   },
+   "accepted": 537,
+   "refused": 11,
+   "refusal_reasons": {
+    "ValueError:pattern_larger_than_world_128": 11
+   },
+   "supports": "kn 1-4, gn 1-3, fractional rings, world 128",
+   "receipt": "techne/acquisition/poet_alife/PORT_ACCEPTANCE_2026-09-18.json",
+   "receipt_sha256_lf": "c2c4ba324b533f9854b80cc1bd27f15e0da37325cf5dac3c74b46e737ed48341"
+  },
   "entry_point": {
    "path": "asal_metrics.py",
    "symbol": "calc_open_endedness_score(z)",
@@ -164,7 +181,7 @@
    ]
   },
   "demonstration": {
-   "command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --animals <Chakazul/Lenia@adfc5429 Python/animals.json> --out receipt.json --frames frames/",
+   "command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --out receipt.json --frames frames/   (pattern file resolved from the vault specimen lenia-chan-2019, never from a temp path; Harmonia #429)",
    "observable": "seven per-arm scores of the open-endedness metric through CLIP ViT-B/32 (lower = more open-ended) + two controls; 56 s on M3",
    "runs_the_body": false,
    "what_it_runs_instead": "a numpy port of asal_metrics.py:53 and a torch CLIP with the same weights (sha256 40d36571..950af); Lenia from Chakazul/Lenia@adfc5429, not substrates/lenia.py",
@@ -240,6 +257,12 @@
     "name": "TECHNE-107 seven-arm CLIP values (Harmonia calibration/cheat fixture)",
     "path_or_url": "techne/acquisition/poet_alife/TECHNE107_RECEIPT_2026-09-17.json",
     "sha256": "31256f81ddf4af02dbbe9cc08f6a8bbb9dc9ee8ad4099ab9521bd43e455f3e21"
+   },
+   {
+    "name": "Lenia lifeform catalogue animals.json (Orbium O2u)",
+    "path_or_url": "vault specimen lenia-chan-2019 (Chakazul/Lenia@adfc5429) upstream/tree/Python/animals.json",
+    "sha256": "09cf0a831c1ef8a73ebfaa9126257fbe076108362b706a98d88650ca9848d206",
+    "specimen": "lenia-chan-2019"
    }
   ]
  },

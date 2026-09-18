@@ -6,14 +6,15 @@
   "014",
   "015"
  ],
- "reader_version": "ew.campaign_ingest/1.4",
+ "reader_version": "ew.campaign_ingest/1.5",
  "ingestion_contract": "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)",
  "foundry_profile_scheme": "archaeon.wse.reachability.foundry_id.v1",
  "campaign_seed_map": {
   "20260917": "cmp1",
   "20260918": "cmp2",
   "20260920": "cmp3",
-  "20260921": "cmp4"
+  "20260921": "cmp4",
+  "20260922": "cmp5"
  },
  "shared_tables": [
   [
@@ -119,5 +120,5 @@
  ],
  "absent_value_rule": "UNKNOWN = an owner exists and the value was not supplied; NULL = not applicable; the envelope's UNKNOWN never shares a column with a measured indeterminate value",
  "surface_digest_rule": "surface_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, separators=(',', ':'), default=str) ) where D is this object WITHOUT the keys surface_digest and surface_digest_rule; a third party recomputes it with `python -m ew.frozen_surface` or by that one line. The file's own sha256 is ALSO a valid identity of this pin (Archaeon #370 Q1) and changes whenever the digest does.",
- "surface_digest": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a"
+ "surface_digest": "sha256:bea12eae36fde243c1150a711ac67f055e5c0eef271a9d3f7ca2492b5837f9c5"
 }

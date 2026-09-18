@@ -167,6 +167,13 @@ def losses(truth, record, edges, rng, pairs=200):
     res["depth_error"] = float(np.mean([abs(inf_depth(oid) - len([a for a in ancestors(tby, oid) if a in kept])) for oid in kept]))
     extinct = [o for o in truth if not o["alive_at_end"]]
     res["extinct_recoverable"] = (sum(1 for o in extinct if o["id"] in kept) / len(extinct)) if extinct else None
+    # AMENDMENT_C: extinct BRANCHES = extinct organisms with no surviving descendant (the thing D2 loses)
+    surv_anc = set()
+    for o in truth:
+        if o["alive_at_end"]: surv_anc.update(ancestors(tby, o["id"]))
+    branches = [o for o in extinct if o["id"] not in surv_anc]
+    res["n_extinct_branch_organisms"] = len(branches)
+    res["extinct_branch_recoverable"] = (sum(1 for o in branches if o["id"] in kept) / len(branches)) if branches else None
     # MRCA error on survivor pairs
     surv = [o["id"] for o in truth if o["alive_at_end"] and o["id"] in kept]
     def mrca_gen(anc_fn, a, b):
@@ -230,8 +237,41 @@ def stage_controls(out):
     return res["all_controls_pass"]
 
 
+PLAN = [("D0", None), ("D1", None), ("D2", None), ("D3", 2), ("D3", 5), ("D3", 10), ("D4", None), ("D5", 0.05), ("D5", 0.10), ("D5", 0.25)]
+MEASURES = ("edge_recall", "edge_precision", "ancestor_recall_1", "ancestor_recall_5", "ancestor_recall_all", "depth_error", "extinct_recoverable", "extinct_branch_recoverable", "mrca_error")
+
+
+def stage_definedness(out):
+    """HARM-57, rule A5: every measure evaluated on a tiny synthetic fixture (N 10, G 3, seed 1) for every
+    degradation of the plan BEFORE curves run; a measure that is None / NO_EDGES on an arm is UNDEFINED there
+    and a prediction may not be posed on it for that arm. Writes definedness.json."""
+    # G = 10 so the fixture has every divisibility/parity structure of the real world (G 60): every k of D3
+    # divides it, and the survivors' parent generation is dropped by every subsampling exactly as at G 60.
+    truth = synth_world(1, n=10, g=10)
+    table = {}
+    for mode, param in PLAN:
+        rec = degrade(truth, mode, param, random.Random(2)); e = reconstruct(rec); l = losses(truth, rec, e, random.Random(3), pairs=20)
+        table[f"{mode}:{param}"] = {m: ("DEFINED" if isinstance(l.get(m), (int, float)) else f"UNDEFINED ({l.get(m)})") for m in MEASURES}
+    undefined = {arm: [m for m, v in row.items() if v.startswith("UNDEFINED")] for arm, row in table.items()}
+    res = {"stage": "definedness", "fixture": {"N": 10, "G": 10, "seed": 1, "n_organisms": len(truth)}, "table": table, "undefined_by_arm": {k: v for k, v in undefined.items() if v},
+           "note": "a preregistered prediction on (arm, measure) listed in undefined_by_arm is refused at plan time (rule A5)"}
+    os.makedirs(out, exist_ok=True)
+    json.dump(res, open(os.path.join(out, "definedness.json"), "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
+    for k, v in res["undefined_by_arm"].items(): print("UNDEFINED", k, v)
+    print("definedness written;", sum(len(v) for v in res["undefined_by_arm"].values()), "undefined (arm, measure) pairs")
+    return res
+
+
 def stage_curves(out):
     c = json.load(open(os.path.join(out, "controls.json"))); assert c["all_controls_pass"], "controls did not pass; curves refused"
+    dpath = os.path.join(out, "definedness.json")  # rule A5 (HARM-57)
+    assert os.path.exists(dpath), "definedness.json missing: run --stage definedness first; curves refused"
+    undefined = json.load(open(dpath))["undefined_by_arm"]
+    # the preregistered predictions and the (arm, measure) each reads; any pair undefined at plan time is refused
+    pred_reads = {"P1": ("D1:None", "edge_recall"), "P2": ("D2:None", "extinct_recoverable"), "P3": ("D3:2", "edge_recall"), "P4": ("D4:None", "edge_recall")}
+    refused = {p: am for p, am in pred_reads.items() if am[1] in undefined.get(am[0], [])}
+    if refused:
+        print("A5 REFUSAL: predictions posed on measures undefined for their arm:", refused)
     rows = []; t0 = time.time()
     plan = [("D0", None), ("D1", None), ("D2", None), ("D3", 2), ("D3", 5), ("D3", 10), ("D4", None), ("D5", 0.05), ("D5", 0.10), ("D5", 0.25)]
     for seed in (20260918, 20260919, 20260920):
@@ -242,17 +282,27 @@ def stage_curves(out):
     def agg(mode, param, key):
         v = [r[key] for r in rows if r["mode"] == mode and r["param"] == param and isinstance(r[key], (int, float))]
         return (float(np.mean(v)), float(np.min(v)), float(np.max(v))) if v else None
-    P = {"P1_D1_recall_lt_0.5_all_reps": all((r["edge_recall"] is None) or r["edge_recall"] < 0.5 for r in rows if r["mode"] == "D1"),
-         "P2_D2_recall_1_and_extinct_0": all(r["edge_recall"] == 1.0 and r["extinct_recoverable"] == 0.0 for r in rows if r["mode"] == "D2"),
-         "P3_D3_monotone_in_k": (agg("D3", 2, "edge_recall")[0] > agg("D3", 5, "edge_recall")[0] > agg("D3", 10, "edge_recall")[0]),
-         "P4_D4_recall_in_0.6_0.95": all(0.6 <= r["edge_recall"] <= 0.95 for r in rows if r["mode"] == "D4")}
-    res = {"rows": rows, "predictions": P, "summary": {f"{m}:{p}": {k: agg(m, p, k) for k in ("edge_recall", "edge_precision", "ancestor_recall_all", "depth_error", "extinct_recoverable", "mrca_error")} for m, p in plan}, "seconds": round(time.time() - t0, 1)}
+    def a0(m, p, k):
+        v = agg(m, p, k); return v[0] if v else None
+    # P1-P4 exactly as preregistered, with VACUOUS / UNEVALUABLE where the measure has no value
+    d1 = [r for r in rows if r["mode"] == "D1"]; d2 = [r for r in rows if r["mode"] == "D2"]
+    P = {"P1_D1_recall_lt_0.5_all_reps": ("VACUOUS: no true parent edge has both endpoints among the survivors (non-overlapping generations); edge_recall undefined" if all(r["edge_recall"] is None for r in d1) else all(r["edge_recall"] < 0.5 for r in d1)),
+         "P2_D2_recall_1_and_extinct_0": all(r["edge_recall"] == 1.0 and r["extinct_recoverable"] == 0.0 for r in d2),
+         "P2_as_written_fails_because": "extinct_recoverable counts extinct ANCESTORS of survivors, which D2 keeps by construction; the loss D2 causes is of extinct BRANCHES (see extinct_branch_recoverable, AMENDMENT_C)" if not all(r["extinct_recoverable"] == 0.0 for r in d2) else None,
+         "P3_D3_monotone_in_k": ("UNEVALUABLE on edge_recall: with every k-th generation kept no true parent edge has both endpoints retained" if a0("D3", 2, "edge_recall") is None else (a0("D3", 2, "edge_recall") > a0("D3", 5, "edge_recall") > a0("D3", 10, "edge_recall"))),
+         "P4_D4_recall_in_0.6_0.95": all(0.6 <= r["edge_recall"] <= 0.95 for r in rows if r["mode"] == "D4"),
+         # POST-HOC (labelled; not preregistered): the measures that DO read D1/D3
+         "POSTHOC_P3_mrca_error_monotone_in_k": (a0("D3", 2, "mrca_error") < a0("D3", 5, "mrca_error") < a0("D3", 10, "mrca_error")),
+         "POSTHOC_P2_extinct_branch_recoverable_D2": a0("D2", None, "extinct_branch_recoverable"),
+         "POSTHOC_P1_D1_mrca_error": a0("D1", None, "mrca_error")}
+    res = {"rows": rows, "predictions": P, "summary": {f"{m}:{p}": {k: agg(m, p, k) for k in ("edge_recall", "edge_precision", "ancestor_recall_1", "ancestor_recall_all", "depth_error", "extinct_recoverable", "extinct_branch_recoverable", "mrca_error")} for m, p in plan}, "seconds": round(time.time() - t0, 1)}
     json.dump(res, open(os.path.join(out, "curves.json"), "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True, default=str)
     print(json.dumps(P, indent=1)); print("seconds", res["seconds"])
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--stage", choices=["controls", "curves"], required=True); ap.add_argument("--out", default=os.path.join(HERE, "out", "synthetic_2026-09-18"))
+    ap = argparse.ArgumentParser(); ap.add_argument("--stage", choices=["definedness", "controls", "curves"], required=True); ap.add_argument("--out", default=os.path.join(HERE, "out", "synthetic_2026-09-18"))
     a = ap.parse_args()
+    if a.stage == "definedness": stage_definedness(a.out); sys.exit(0)
     if a.stage == "controls": sys.exit(0 if stage_controls(a.out) else 2)
     stage_curves(a.out)

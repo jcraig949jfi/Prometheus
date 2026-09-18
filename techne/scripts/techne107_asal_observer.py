@@ -76,9 +76,23 @@ def rle2arr_2d(st: str) -> np.ndarray:
     return np.array([r + [0.0] * (w - len(r)) for r in rows], dtype=np.float64)
 
 
-KERNEL_CORE = {0: lambda r: (4 * r * (1 - r)) ** 4, 1: lambda r: np.exp(4 - 1 / (r * (1 - r)))}
-GROWTH = {0: lambda n, m, s: np.maximum(0, 1 - (n - m) ** 2 / (9 * s ** 2)) ** 4 * 2 - 1,
-          1: lambda n, m, s: np.exp(-(n - m) ** 2 / (2 * s ** 2)) * 2 - 1}
+# LeniaND.py Automaton.kernel_core / growth_func, all four / three entries (port extension 2026-09-18,
+# Harmonia #4xx item (b): kn 3-4 and gn 3 raised KeyError; fractional rings "1/2,1" raised ValueError)
+KERNEL_CORE = {0: lambda r: (4 * r * (1 - r)) ** 4,                      # polynomial (quad4)
+               1: lambda r: np.exp(4 - 1 / (r * (1 - r))),                # exponential bump (bump4)
+               2: lambda r, q=1 / 4: ((r >= q) & (r <= 1 - q)).astype(float),               # step (stpz1/4)
+               3: lambda r, q=1 / 4: ((r >= q) & (r <= 1 - q)).astype(float) + (r < q) * 0.5}  # staircase (life)
+GROWTH = {0: lambda n, m, s: np.maximum(0, 1 - (n - m) ** 2 / (9 * s ** 2)) ** 4 * 2 - 1,   # polynomial (quad4)
+          1: lambda n, m, s: np.exp(-(n - m) ** 2 / (2 * s ** 2)) * 2 - 1,                 # exponential (gaus)
+          2: lambda n, m, s: (np.abs(n - m) <= s) * 2.0 - 1}                              # step (stpz)
+
+
+def parse_rings(b) -> np.ndarray:
+    """LeniaND.py Board.st2fracs: 'b' is a comma list of fractions ('1', '1/2,1', '3/4,1,1', ...)."""
+    from fractions import Fraction
+    if isinstance(b, (list, tuple)):
+        return np.asarray([float(Fraction(str(x))) for x in b], dtype=float)
+    return np.asarray([float(Fraction(x.strip())) for x in str(b).split(",") if x.strip()], dtype=float)
 
 
 class Lenia2D:
@@ -89,16 +103,21 @@ class Lenia2D:
         mid = size // 2
         y, x = np.mgrid[0:size, 0:size]
         D = np.sqrt(((x - mid) / R) ** 2 + ((y - mid) / R) ** 2)
-        b = np.asarray([float(f) for f in str(params["b"]).split(",")])
+        b = parse_rings(params["b"])
         B = len(b)
         Br = B * D
         bs = b[np.minimum(np.floor(Br).astype(int), B - 1)]
+        kn, gn = int(params.get("kn", 1)), int(params.get("gn", 1))
+        if kn - 1 not in KERNEL_CORE or gn - 1 not in GROWTH:
+            raise ValueError("unsupported kn=%s gn=%s (port supports kn 1-4, gn 1-3)" % (kn, gn))
         with np.errstate(divide="ignore", invalid="ignore"):
-            kfunc = KERNEL_CORE[params.get("kn", 1) - 1]
+            kfunc = KERNEL_CORE[kn - 1]
             K = (D < 1) * np.nan_to_num(kfunc(np.minimum(Br % 1, 1))) * bs
+        if not np.isfinite(K).all() or K.sum() <= 0:
+            raise ValueError("degenerate kernel for R=%s b=%s kn=%s" % (params.get("R"), params.get("b"), kn))
         self.kernel = K / K.sum()
         self.kernel_fft = np.fft.fft2(self.kernel)
-        self.gfunc = GROWTH[params.get("gn", 1) - 1]
+        self.gfunc = GROWTH[gn - 1]
 
     def place(self, pattern: np.ndarray) -> np.ndarray:
         A = np.zeros((self.size, self.size))
@@ -192,12 +211,16 @@ class Observer:
 # --------------------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--animals", required=True, help="Chakazul/Lenia Python/animals.json (pinned)")
+    ap.add_argument("--animals", default=None, help="Chakazul/Lenia Python/animals.json; default = the vault body of specimen lenia-chan-2019 (Harmonia #429: the fixture comes from the packet, never from a temp directory)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--frames", default=None, help="directory for contact-sheet PNGs (evidence)")
     ap.add_argument("--seeds", type=int, default=5)
     a = ap.parse_args()
     t0 = time.time()
+    if a.animals is None:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
+        from techne.fossils import vault as _vault
+        a.animals = str(_vault.body_dir("lenia-chan-2019") / "upstream" / "tree" / "Python" / "animals.json")
     animals = json.load(open(a.animals, encoding="utf-8"))
     orb = next(e for e in animals if isinstance(e, dict) and e.get("code") == "O2u")
     params = dict(orb["params"]); params["b"] = str(params["b"])
