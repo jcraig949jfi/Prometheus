@@ -59,15 +59,27 @@ def frozen_table() -> Tuple[dict, dict]:
 def build(lineage: dict, tr: dict, frozen: dict, thr: dict, *, N: int = 32, E: int = 8, gens: int = 1000) -> Tuple[Optional[dict], Optional[List[dict]], str]:
     key = lineage["originating_observation"].get("key", "")
     tid = tr["id"]; to = str(tr.get("to", "")); dims = tr.get("dims", [])
+    ov = tr.get("params", {})
+    gens = int(gens * ov.get("gens_mult", 1))
     parents = C1.parents_from_population()
     init = [p["parent"] for p in parents][:N]
     while len(init) < N:
         init.append(init[len(init) % len(parents)])
-    needs_graph = "graph" in to.lower() or "organism_profile" in dims and "graph" in to.lower()
+    needs_graph = "graph" in to.lower()
     if needs_graph:
-        return None, None, "BLOCKED: graph profile not registered (PROTEUS-47)"
-    ov = tr.get("params", {})
-    gens = int(gens * ov.get("gens_mult", 1))
+        gate = HERE / "PROTEUS-46_FALSIFIER.json"
+        if not gate.exists():
+            return None, None, "WAIT: graph profile registered (Proteus handover) but PROTEUS-46 falsifier pending; retire under condition A if the cliff survives connectivity edits"
+        verdict = json.loads(gate.read_text(encoding="utf-8")).get("verdict")
+        if verdict != "CLIFF_DOES_NOT_SURVIVE":
+            return None, None, "RETIRE_CANDIDATE(A): PROTEUS-46 verdict %s" % verdict
+        from archaeon.campaign6.substrate import gen0_any
+        seed = 30000 + (hash(tid) % 1000)
+        w = sample_world(seed, bin_target=int(ov.get("bin", 4))) if "world_geometry" in dims or key.startswith("C6") else None
+        world = {"kind": "c6.composed.v1", "params": w["params"]} if w else {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W0"].knobs()}
+        prov = S.provenance("LLM_PROPOSED", "frontier.graph", "0.1", seed, {"transformation": tid}, thresholds_digest=frozen["digest"])
+        return dict(run_id=prov["run_id"], provenance=prov, world=world, profile="graph", schedule=P.stable(gens), N=N, E=E,
+                    archive={"dense_until": 64, "neighbourhood": 16}, thresholds=thr, spread=frozen["spread"], seed=seed, freeze_policy="tiered"), gen0_any("graph", N, seed), "OK"
     if key.startswith("B-scatter"):
         seed = int(to.split("world seed")[1].split(",")[0]) if "world seed" in to else int(ov.get("seed", 10000))
         seed += int(ov.get("seed_offset", 0))

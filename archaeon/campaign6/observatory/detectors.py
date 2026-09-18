@@ -20,7 +20,8 @@ from proteus.foundry.grammar import static_reachable
 
 from ..c6base import DETECTORS
 from ..schemas import detector_verdict
-from .fingerprint import fp_distance, struct_distance
+from .fingerprint import fp_distance
+from archaeon.campaign6.substrate import struct_distance_any as struct_distance
 
 
 class Subject:
@@ -101,6 +102,10 @@ def unexpected_transfer(s: Subject, c: Context) -> dict:
 def structural_reuse(s: Subject, c: Context) -> dict:
     """v0 profile: a 4-word instruction block that appears >= 2 times with every copy statically reachable."""
     name = "structural_reuse"; thr = c.t(name) or 2
+    if "genome" not in s.manifest:
+        # graph profile: a node kind+params signature executed at >= 2 sites is reuse only when the meter says both ran; until the
+        # per-node execution counts are read from the fingerprint, report UNABLE (C6_GEOMETRY stage owns this detector)
+        return _v(name, "UNABLE", None, thr, {"reason": "graph profile: component reuse needs node execution counts (C6_GEOMETRY stage)"}, s)
     g = s.manifest["genome"]; n = len(g) // 4
     if n < 2:
         return _v(name, "UNABLE", None, thr, {"reason": "genome too short"}, s)

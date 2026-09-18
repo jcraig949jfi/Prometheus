@@ -30,6 +30,7 @@ from archaeon.campaign6 import schemas as S
 from archaeon.campaign6.c6base import LANES
 from archaeon.campaign6.observatory.fingerprint import rows_v0
 from archaeon.campaign6.observatory import detectors as D
+from archaeon.campaign6 import substrate as SUB
 from archaeon.campaign6.worlds import ComposedWorld, evaluate_world
 from archaeon.campaign6.pressure import schedules as P
 
@@ -65,6 +66,9 @@ def resolve_profile(profile: str):
     """Returns (evaluate_fn(manifest, episodes, rng_seed) -> ev, descend_fn(parent, seed, mate) -> (child, record), answers_fn(manifest, episodes))."""
     if profile == "v0":
         return (lambda m, eps, rs: evaluate(m, eps, rng_seed=rs, reward_mode="per_ask"), lambda p, s, mate=None: descend(p, s, mate=mate), C1.answers)
+    if profile == "graph":
+        # Proteus's handover (proteus/graph/handover.py): the same five call shapes, dispatched on the manifest schema
+        return (lambda m, eps, rs: SUB.evaluate_any(m, eps, rng_seed=rs, reward_mode="per_ask"), lambda p, s, mate=None: SUB.descend_for(p, s, mate=mate), SUB.answers_any)
     if profile == "repb_fizzle":
         from archaeon.campaign5.repb.evaluate_b import evaluate_b
         from archaeon.campaign5.repb.grammar_b import descend_b
@@ -103,7 +107,7 @@ def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, sched
 def initial_checkpoint(spec: dict, init_manifests: List[dict]) -> dict:
     pop = []
     for m in init_manifests:
-        org = G.organism_record(dict(m), None, 0); org["origins"] = ["start"]; pop.append(org)
+        org = SUB.organism_record_for(dict(m), None, 0); org["origins"] = ["start"]; pop.append(org)
     rng = SplitMix64(seed_from("c6.segment", spec["run_id"], spec["seed"]))
     ck = {"schema": SCHEMA_CKPT, "run_id": spec["run_id"], "generation": spec["g0"], "eval_ordinal": 0, "rng_state": rng.state,
           "population": pop, "records": {}, "lineage_pairs": {}, "library": [], "prev_anchor_hash": None, "history": {}}
@@ -158,18 +162,18 @@ def run_segment(spec: dict, ck: dict) -> dict:
         planted_now: set = set()
         if g in planted and planted[g]["kind"] == "inject_child_of":
             pid_ = planted[g]["parent_id"]
-            org = G.organism_record(json.loads(json.dumps(planted[g]["manifest"])), pid_, g); org["origins"] = ["planted_child"]
+            org = SUB.organism_record_for(json.loads(json.dumps(planted[g]["manifest"])), pid_, g); org["origins"] = ["planted_child"]
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [pid_], "generation": g, "operators": [{"operator": planted[g].get("operator", "planted_edit")}]}
             pop[planted[g].get("index", 0)] = org; planted_now.add(org["organism_id"])
         if g in planted and planted[g]["kind"] == "inject_foreign":
             victim = pop[planted[g].get("index", 0)]
-            org = G.organism_record(json.loads(json.dumps(planted[g]["manifest"])), victim["lineage_id"], g); org["origins"] = ["planted_foreign"]
+            org = SUB.organism_record_for(json.loads(json.dumps(planted[g]["manifest"])), victim["lineage_id"], g); org["origins"] = ["planted_foreign"]
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [victim["organism_id"]], "generation": g, "operators": [{"operator": "planted_foreign"}]}
             pop[planted[g].get("index", 0)] = org; planted_now.add(org["organism_id"])
         if g in planted and planted[g]["kind"] == "inject_randomized":
             prng = SplitMix64(seed_from("c6.plant", spec["run_id"], g)); victim = pop[planted[g].get("index", 0)]
             m = json.loads(json.dumps(victim["manifest"])); m["genome"] = [prng.next_u32() for _ in m["genome"]]
-            org = G.organism_record(m, victim["lineage_id"], g); org["origins"] = list(victim.get("origins", [])) + ["planted"]
+            org = SUB.organism_record_for(m, victim["lineage_id"], g); org["origins"] = list(victim.get("origins", [])) + ["planted"]
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [victim["organism_id"]], "generation": g, "operators": [{"operator": "planted_randomize"}]}
             pop[planted[g].get("index", 0)] = org; planted_now.add(org["organism_id"])
         composed = isinstance(world, ComposedWorld)
@@ -205,7 +209,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
                 ev = eval_fn(org["manifest"], eps, rs); a = answers_fn(org["manifest"], eps)
             pid = records.get(org["organism_id"], {}).get("parent_ids", [None])[0]
             wf = ev["world"]["env_dependencies"] if composed else [world.name]
-            t0, ext = rows_v0(org["manifest"], org["organism_id"], pid, eval_ord, g, ev, a, world_features=wf, asks_per_episode=asks)
+            t0, ext = SUB.rows_any(org["manifest"], org["organism_id"], pid, eval_ord, g, ev, a, world_features=wf, asks_per_episode=asks)
             if composed:
                 ext.update({"action_hist": ev["world"]["action_hist"], "resources_touched": ev["world"]["resources_touched"], "survival": ev["world"]["survival"],
                             "objects_changed": ev["world"]["objects_changed"]})

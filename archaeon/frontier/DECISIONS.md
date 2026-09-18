@@ -47,3 +47,19 @@ view on disagreement, adjacent-bin on classifier failure, 1-in-50 audit) as new 
 transformations with param overrides, lane EVOLUTION_GENERATED. | loop self-test: 2 chunks,
 branches deduped, lineage versions advance, gate refuses. | -- | Builders grow with the
 frontier; the gate rule never changes without the operator. DETERMINISTIC.
+
+DF-006 | 2026-09-18 22:25 | GRAPH PROFILE REGISTERED through Proteus's handover (proteus/graph/handover.py:
+player_for / meter_for / organism_record_for / descend_for / generate_for / fingerprint_for;
+runtime f850a6ed1e52..., profile pfp1:2595e1aefd59975f). archaeon/campaign6/substrate.py is the
+substrate-neutral evaluator/rows/gen-0; segment.resolve_profile("graph") uses it; the worlds
+runtime and detectors dispatch on the manifest schema; structural_reuse returns UNABLE on graph
+until node execution counts are read (C6_GEOMETRY stage). test_graph_profile: gen-0 from the
+graph foundry, evaluate deterministic, Proteus's graph row <= 1 KiB, composed world runs a graph
+organism, cross-substrate mate refused, 12-generation segment deterministic and continuous
+across a boundary. THE THREE GRAPH TRANSFORMATIONS (C4-cliff.T1, C6-blind.T1, C5-asym.T1) are
+GATED on Proteus's PROTEUS-46 falsifier: the loop runs them only if archaeon/frontier/
+PROTEUS-46_FALSIFIER.json carries verdict CLIFF_DOES_NOT_SURVIVE; a CLIFF_SURVIVES verdict makes
+them retirement candidates under condition A before they run, as Proteus asked. Graph gen-0 comes
+from the graph foundry; no lift from v0 parents exists or is offered. | Proteus #478 report;
+test_graph_profile. | -- | The gate file is written by the lead from Proteus's posted verdict.
+DETERMINISTIC.

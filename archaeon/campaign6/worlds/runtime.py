@@ -32,6 +32,7 @@ from typing import Dict, List, Optional
 
 from proteus.foundry.prng import SplitMix64, seed_from
 from proteus.foundry.vm import Player, Meter
+from proteus.graph.handover import player_for, meter_for
 
 MASK32 = 0xFFFFFFFF
 FEATURES = ("resources", "locality", "objects", "delayed", "hidden", "hazards", "history", "coupling", "regime", "channels")
@@ -193,9 +194,9 @@ def evaluate_world(manifest: dict, world: ComposedWorld, seed: int, E: int, rng_
                    player_factory=None) -> dict:
     """The interactive evaluator: same result shape as archaeon.wse.evolve.evaluate (reward, reward_per_ask, meter, statuses, ...)
     plus the world-side fields the extension needs. `shared` (per generation) carries coupling state across organisms."""
-    player = (player_factory or Player)(manifest)
-    meter = Meter()
-    glen = player.genome_len
+    player = player_factory(manifest) if player_factory else player_for(manifest)
+    meter = meter_for(manifest)
+    glen = getattr(player, "genome_len", 0); has_tape = "genome" in manifest
     statuses = {"halt": 0, "yield": 0, "budget": 0, "trap": 0}
     total = 0.0; max_total = 0.0; occ = 0; tape_writes = 0
     answers: List[Optional[int]] = []; asks_per_episode: List[int] = []
@@ -207,13 +208,14 @@ def evaluate_world(manifest: dict, world: ComposedWorld, seed: int, E: int, rng_
         while not world.done(st):
             inputs = world.observe(st)
             player.begin_tick(vm)
-            before = vm["tape"][glen:]
+            before = vm["tape"][glen:] if has_tape else None
             outs, status = player.run_tick(vm, inputs, world.K, rng, meter=meter)
             statuses[status] = statuses.get(status, 0) + 1
-            after = vm["tape"][glen:]
-            if after != before:
-                tape_writes += sum(1 for a, b in zip(after, before) if a != b)
-            occ = max(occ, sum(1 for w in after if w != 0))
+            if has_tape:
+                after = vm["tape"][glen:]
+                if after != before:
+                    tape_writes += sum(1 for a, b in zip(after, before) if a != b)
+                occ = max(occ, sum(1 for w in after if w != 0))
             answers.append(outs[0][0] if outs and outs[0] else None); n_ask += 1
             world.act(st, outs)
             if status == "trap":
@@ -223,12 +225,12 @@ def evaluate_world(manifest: dict, world: ComposedWorld, seed: int, E: int, rng_
         for ch, n in st["actions"].items():
             action_hist[str(ch)] = action_hist.get(str(ch), 0) + n
         touched |= st["touched"]; deps |= st["deps"]; objects_changed += st["objects_changed"]; died += st["died"]; moves += st["moves"]; signals += st["signals"]
-    m = meter.as_dict(manifest)
+    m = {k: v for k, v in meter.as_dict(manifest).items() if k not in ("wall_s", "cpu_s", "gpu")}
     reward = min(1.0, total / max(1e-9, max_total))
     answered = sum(1 for a in answers if a is not None) / max(1, len(answers))
     return {"reward": reward, "reward_per_ask": reward, "reward_episode": reward, "reward_mode": "world", "asks": len(answers), "correct": None,
-            "answered_share": answered, "meter": m, "ops_per_episode": m["ops"] / max(1, E), "persist": manifest["persist"], "tick_budget": manifest["tick_budget"],
-            "tape_words": manifest["tape_words"], "n_regs": manifest["n_regs"], "code_writable": manifest["code_writable"], "statuses": statuses,
+            "answered_share": answered, "meter": m, "ops_per_episode": m["ops"] / max(1, E), "persist": manifest.get("persist", manifest.get("persist_state")), "tick_budget": manifest["tick_budget"],
+            "tape_words": manifest.get("tape_words", 0), "n_regs": manifest.get("n_regs", manifest.get("state_words", 0)), "code_writable": manifest.get("code_writable", False), "statuses": statuses,
             "yield_share": statuses["yield"] / max(1, sum(statuses.values())), "tape_occupancy_max": occ, "tape_writes_per_episode": tape_writes / max(1, E),
             "intervention": None, "interventions_applied": 0, "faults": 0, "trapped": False,
             "_answers": answers, "_asks_per_episode": asks_per_episode,
