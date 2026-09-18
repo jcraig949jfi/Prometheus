@@ -68,7 +68,7 @@
   "example": {
     "command": "encrypt a known plaintext under a known key",
     "input": "a FIPS/standard known-answer test vector",
-    "output": "the published ciphertext for that vector (the ORACLE: a known-answer test)"
+    "output": "ROUND TRIP ONLY as executed (decrypt(encrypt(x)) == x); the published FIPS ciphertext is the intended oracle and is NOT yet checked -- see corrections[] and TECHNE-94"
   },
   "environment": {
     "runner": "docker",
@@ -150,5 +150,13 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json",
     "what_humans_used_it_for": "provide a single standard, hardware-friendly block cipher for unclassified US government data"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "corrections": [
+    {
+      "date": "2026-09-18",
+      "by": "Techne[gandalf-a04f7c25]",
+      "field": "example.output",
+      "note": "Nyx #296 9d: the executed recipe (recipe.json tests: none; runs: encrypt+decrypt round trip) is NOT a known-answer test; a round trip passes for any invertible transform. The FIPS known-answer vector named here is the oracle the specimen SHOULD have and does not yet have in its harness (TECHNE-94). test_classification TECHNE_SMOKE_HARNESS_PASS is therefore a round-trip pass, not a KAT pass. Contrast: tiny-aes-c ships a real known-answer test."
+    }
+  ]
 }

@@ -199,3 +199,22 @@ Format: date | outlet/source | headline (paraphrased) | URL | status | why it ma
 - 2026-09-15 | Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems | https://arxiv.org/abs/2609.17320
   dedupe 2609.17320 | primary source read | changes question F1: F1 and T5's transmission term R0 = d tau (1 - v) assume that verification v blocks onward transmission. This paper reports detection without containment: agents warned peers and still acted on and stored the content. So v must be measured as restraint (not acting and not storing), not recognition, and real per-world verification rates were 0-50%. Caveat: single run per world, and no per-agent spread counts or R0 are reported.
   summary: Eight persistent worlds of 10 agents each (seven single-model worlds, one mixed; about 16 days; over 850,000 LLM calls and nearly 50 billion tokens; one run per condition) received phishing, misinformation and private-memory-exposure events. Misinformation was verified in 0/6 to 3/6 trials per world (Gemini, GPT-5.5 and Mixed 0/6; Claude and DeepSeek 3/6), every exposed world acted or published before verifying, and agents that recognized threats still wrote the adversarial content into persistent memory and acted on it up to 46 hours later.
+
+### Seat review of the 2026-09-18 monitor admissions (Aphrodite, same day)
+
+- 2609.08149 (SWE-Bench Pro Verified; Zheng, Shang, Jiang, Tian, Zhu, Ma,
+  Yuan, Zhang; v1 2026-09-08, v2 2026-09-16): REVIEWED. Abstract-level
+  claim verified by the seat (reward hacking via leakage of gold solutions
+  or hidden evaluation information). The detailed counts (103 / 49 of 731
+  tasks; GLM-5.2 78.80% -> 57.32%) are the monitor's reading of the full
+  text, not re-verified by the seat. Admission stands: it bears on
+  QUESTIONS M6 and on the vault/escrow design (single-commit repo rebuild,
+  network isolation) -> APHRODITE-25.
+- 2609.17320 (Emergence World; Akkil, Abuelsaad et al.; 2026-09-15):
+  REVIEWED. Verified from the abstract: 8 worlds x 10 agents, 16 days,
+  850,000+ LLM calls, ~50B tokens; "Detection did not ensure containment:
+  systems could recognize threats while still interacting with adversarial
+  content, writing it into their own persistent memory, and acting on it
+  up to 46 hours later." Per-world verification rates (0/6 to 3/6) are
+  the monitor's reading, not re-verified. Admission stands; it changes
+  MODELS M1 and THEORIES T5 (annotations below).

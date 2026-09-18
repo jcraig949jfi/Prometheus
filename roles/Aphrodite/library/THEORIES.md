@@ -158,6 +158,12 @@ agents (LIT) -- a regime where none of the ratios bind?
 Falsifier: a real swarm whose damage onset is far from every ratio's
 predicted boundary with the ratios measured.
 Status: HELD at toy level; the ratios are measurable on real swarms.
+ANNOTATION 2026-09-18 (monitor admission 2609.17320, reviewed): the
+contagion ratio's verification term must be measured as RESTRAINT, not
+recognition; Emergence World found agents that recognised adversarial
+content still stored and acted on it. T5 is not weakened in form, but any
+real-swarm measurement that scores recognition would overstate v and
+understate R0.
 
 ## T6. Verification is only as good as its probe distribution
 

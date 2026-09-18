@@ -71,3 +71,29 @@ parent's own. | STARTING_POPULATION.json ancestries (experiment and arm
 per organism); worlds.WorldSpec. | Alternative: one environment for all
 (would call every delay-general organism "worse" on W0 by construction).
 | Revisit never within C4-01. DETERMINISTIC (ancestry -> world map).
+
+D4-005 | 2026-09-18 05:57 | C4-01 attempt a01 FAILED at the final publish step
+(engine HTTP 422: artifact meta info_kind "measurement" is not one of the
+engine's five: artifact/failure/hypothesis/observation/success) AFTER the
+census and all 798 records had landed; the runner was repaired (info_kind
+"artifact") and the slot rerun as a02, which RESUMED a01 (803 steps replayed
+by the harness's attempt machinery; same world, same records; 0 errors) and
+is the attempt of record. a01 is preserved beside it. Flow tables of a01 and
+a02 are byte-identical (wall_s excluded). | Directive: harness defects are
+repaired and the same experiment rerun with the failed attempt preserved;
+this was a harness defect (a wrong string), not a scientific failure. |
+Alternative: hand-edit a01's receipt -- never. | Revisit never.
+DETERMINISTIC (the census is a pure function of its seeds).
+
+D4-006 | 2026-09-18 06:05 | C4-02 RADIUS = the number of grammar.mutate()
+applications from one rng seeded by (campaign_seed, organism_id, radius,
+draw), operators drawn by the FROZEN WEIGHTS (name=None), INCLUDING steps
+whose operator returns its noop record (noop_steps recorded per child):
+the radius is what the grammar was asked to do, not what changed. The
+prediction written to be lost: loss_rate(r8) - loss_rate(r1) >= 0.05
+(measured: .930 - .522 = .408, not lost). Consistency control: the
+radius-1 D-distribution within TVD 0.10 of C4-01's frozen-weight mixture
+of per-operator distributions (measured .029). | C4-02/DESIGN.md. |
+Alternative: count only effective steps (would make the radius depend on
+the parent's length and hide the noop mass). | Revisit never in C4.
+DETERMINISTIC.

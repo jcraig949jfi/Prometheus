@@ -28,7 +28,10 @@ def _decl():
 def test_committed_mint_recomputes_and_binds_the_declaration_bytes():
     decl, digest = _decl()
     committed = json.load(open(C4.OUT, encoding="utf-8"))
-    assert committed["declaration_digest"] == digest
+    assert committed["declaration_canonical_digest"] == C4.canonical_digest(decl) == decl["population_digest"]
+    assert committed["declaration_canonical_digest"] == "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1"
+    # the raw-byte digest is kept beside it but is checkout-dependent: on THIS checkout it must
+    # equal the file's bytes; it is not asserted equal to the committed value
     assert digest == "sha256:" + hashlib.sha256(open(C4.DECL, "rb").read()).hexdigest()
     fm = C4.recipe_of(decl)
     prof = C4.check_identity(decl, fm)
@@ -39,6 +42,19 @@ def test_committed_mint_recomputes_and_binds_the_declaration_bytes():
     assert pm["count"] == 57 == len(set(pm["members"]))
     assert pm["lineage_composition"] == {"delay_general": 11, "gen0": 12, "shelf": 19, "w0_solver": 15}
     assert len(pm["imported"]) == 45 and pm["selection_criteria"] == "NONE"
+
+
+def test_canonical_digest_is_line_ending_invariant_and_content_sensitive():
+    decl, _ = _decl()
+    crlf = json.dumps(decl, indent=1).replace(chr(10), chr(13) + chr(10)).encode("utf-8")
+    lf = json.dumps(decl, indent=1).encode("utf-8")
+    assert hashlib.sha256(crlf).hexdigest() != hashlib.sha256(lf).hexdigest()      # the defect
+    assert C4.canonical_digest(json.loads(crlf)) == C4.canonical_digest(json.loads(lf))
+    changed = copy.deepcopy(decl)
+    changed["organisms"][0]["multiplicity"] += 1
+    assert C4.canonical_digest(changed) != C4.canonical_digest(decl)
+    volatile = dict(decl, generated_at="1999-01-01T00:00:00Z", wall_s=99.0)
+    assert C4.canonical_digest(volatile) == C4.canonical_digest(decl)
 
 
 def test_gen0_draws_regenerate_and_a_moved_index_is_refused():
