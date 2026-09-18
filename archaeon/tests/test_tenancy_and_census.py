@@ -127,7 +127,9 @@ def test_client_asserted_is_not_a_fossil(tmp_path):
 
 def test_newer_schema_is_refused_not_misread(tmp_path):
     db = str(tmp_path / "t9.db")
-    _ledger(db, schema_version=9)          # the reader understands 8 (M1 deployed 7 -> 8 on 2026-09-10)
+    # one newer than whatever the reader declares (8 until 2026-09-18; 9 since ARCH-54), so the
+    # property under test -- a newer ledger is refused, never misread -- outlives the bump
+    _ledger(db, schema_version=cfg.DEFAULT.tenancy.expected_schema_version + 1)
     c = fossils.read_sfe(db)
     assert c.rows == [] and "newer" in c.window["error"]
 

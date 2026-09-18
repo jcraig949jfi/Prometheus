@@ -1,0 +1,91 @@
+{
+  "schema": "viv",
+  "at": "2026-09-17T23:40:02Z",
+  "process": {
+    "pid": 10408,
+    "host": "SPECTREX5",
+    "worker_id": "vivarium@m2",
+    "instance": {
+      "tag": "m2-nosession",
+      "pid": 10408,
+      "session_id": null
+    },
+    "started_at": 1789688401.8394508
+  },
+  "code": {
+    "base_sha": "6e7ac48f015479290ef40f866a2e2630cace8e35",
+    "branch": "HEAD",
+    "detached": true,
+    "worktree_path": "D:\\Prometheus-worktrees\\vivarium-consumer",
+    "dirty": false
+  },
+  "migrations": {
+    "tables": [
+      "artifact_consuming_rows",
+      "candidate_sets",
+      "execution_attempt",
+      "execution_attempts",
+      "execution_step",
+      "gate_receipt",
+      "intervention_receipt",
+      "pew_outbox",
+      "provenance_envelope",
+      "register_clean",
+      "register_errata",
+      "register_errata_rows",
+      "register_excluded",
+      "research_experiment_events",
+      "research_experiment_queue",
+      "start_bundle",
+      "worker_heartbeat"
+    ],
+    "point_release_tables": true
+  },
+  "descriptor": "D:\\Prometheus-worktrees\\vivarium-consumer\\vivarium\\deploy\\PRODUCTION.draft.json",
+  "store": {
+    "ok": true,
+    "environment": "prometheus-canonical",
+    "expected": "prometheus-canonical"
+  },
+  "engine": {
+    "ok": true,
+    "reason": "ANSWERED",
+    "url": "https://192.168.1.191:8811/v2/version",
+    "observed": "eng_906356f7fb1da180131f9290",
+    "schema_version": 9,
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "expected_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "source_hash_matches": true
+  },
+  "credential": {
+    "role": "vivarium",
+    "credential_file": "D:\\Prometheus-worktrees\\vivarium-consumer\\vivarium\\config.local.json",
+    "present": {
+      "sfe_token": true
+    },
+    "optional_present": {
+      "pew_token": true
+    },
+    "ok": true
+  },
+  "hold": null,
+  "dead_man_target": "eng_906356f7fb1da180131f9290",
+  "outbox": {
+    "enabled": true,
+    "by_state": {
+      "PENDING": 1,
+      "DELIVERED": 160
+    },
+    "streams": [
+      {
+        "producer": "vivarium@m2",
+        "stream": "viv.execution.v1",
+        "max_sequence": 161,
+        "pending": 1
+      }
+    ],
+    "pending": 1
+  },
+  "refuse": [],
+  "ok": true
+}

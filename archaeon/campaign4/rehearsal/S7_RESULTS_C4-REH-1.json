@@ -1,0 +1,150 @@
+{
+ "stage": "S7",
+ "all_pass": true,
+ "precheck": false,
+ "commit": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+ "reader_version": "ew.campaign_ingest/1.4",
+ "ingest_run1": {
+  "seen": 1517,
+  "new": 97,
+  "envelope_refreshed": 0,
+  "conflicts": 0,
+  "streams": {
+   "archaeon/campaign2/REACHABILITY.jsonl": {
+    "blob": "ee55726b182b32a5ef82b39e13844361978cbe96",
+    "lines": 1265,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign3/CORRIDOR.jsonl": {
+    "blob": "f7defa55dede343d3a3ec0565e881b8bac9bd22f",
+    "lines": 155,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign4/C4-REH-1/RECEIPT.json": {
+    "blob": "9ce09eced3b7afb54ebe50eed72a54175587d87e",
+    "lines": 1,
+    "seen": 0,
+    "new": 49
+   },
+   "archaeon/campaign4/C4-REH-1/rows.json": {
+    "blob": "db2e62db4a7fefd592f3db9761a8bc94a43d16f4",
+    "lines": 48,
+    "seen": 0,
+    "new": 48
+   }
+  },
+  "write_log_payload_sha256": "2d5237a42c7cfdd93327bb960a3a8f33d28331441c5c9bcd5ed3034d35908da1"
+ },
+ "ingest_run2": {
+  "seen": 1517,
+  "new": 0,
+  "envelope_refreshed": 0,
+  "conflicts": 0,
+  "streams": {
+   "archaeon/campaign2/REACHABILITY.jsonl": {
+    "blob": "ee55726b182b32a5ef82b39e13844361978cbe96",
+    "lines": 1265,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign3/CORRIDOR.jsonl": {
+    "blob": "f7defa55dede343d3a3ec0565e881b8bac9bd22f",
+    "lines": 155,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign4/C4-REH-1/RECEIPT.json": {
+    "blob": "9ce09eced3b7afb54ebe50eed72a54175587d87e",
+    "lines": 1,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign4/C4-REH-1/rows.json": {
+    "blob": "db2e62db4a7fefd592f3db9761a8bc94a43d16f4",
+    "lines": 48,
+    "seen": 0,
+    "new": 0
+   }
+  },
+  "write_log_payload_sha256": "2d5237a42c7cfdd93327bb960a3a8f33d28331441c5c9bcd5ed3034d35908da1"
+ },
+ "campaign4_rows": {
+  "n": 97,
+  "harnesses": 1,
+  "attempts": 2,
+  "kinds": {
+   "engine_record": 48,
+   "receipt": 1,
+   "run": 48
+  }
+ },
+ "rebuild_digests": {
+  "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9",
+  "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+  "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+ },
+ "frozen_digests": {
+  "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9",
+  "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+  "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+ },
+ "vivarium_outbox": {
+  "checkpoint": {
+   "last_seq": 184,
+   "rows_seen": 184,
+   "rows_new": 184,
+   "gaps": [],
+   "duplicate_seqs": [],
+   "updated_at": "2026-09-17 20:14:02.992162-04:00"
+  },
+  "events_stored": 184
+ },
+ "ran_at": "2026-09-17T20:22:10",
+ "seconds": 6.5,
+ "gates": [
+  {
+   "gate": "I1_ingest_campaign4",
+   "pass": true,
+   "skipped": false,
+   "detail": "commit 87ab74a1a reader ew.campaign_ingest/1.4 seen 1517 new 97 conflicts 0 "
+  },
+  {
+   "gate": "I2_second_ingest_idempotent",
+   "pass": true,
+   "skipped": false,
+   "detail": "seen 1517 new 0 conflicts 0 "
+  },
+  {
+   "gate": "I3_campaign4_rows_present",
+   "pass": true,
+   "skipped": false,
+   "detail": "97 rows from archaeon/campaign4/ (1 harnesses, 2 attempts) kinds={'engine_record': 48, 'receipt': 1, 'run': 48}"
+  },
+  {
+   "gate": "R1_rebuild_equal_and_unchanged_from_frozen",
+   "pass": true,
+   "skipped": false,
+   "detail": "{\"reach_level/v1\": \"e7625bfb967f\", \"reach_level/v0\": \"7037fbc41aff\", \"corridor_edge/v1\": \"719fa5a1ec6f\"}"
+  },
+  {
+   "gate": "C1_release_check",
+   "pass": true,
+   "skipped": false,
+   "detail": "16/16 failed=[]"
+  },
+  {
+   "gate": "F1_frozen_surface_holds",
+   "pass": true,
+   "skipped": false,
+   "detail": "2 passed in 0.13s"
+  },
+  {
+   "gate": "X1_vivarium_outbox_reconciliation",
+   "pass": true,
+   "skipped": false,
+   "detail": "{\"checkpoint\": {\"last_seq\": 184, \"rows_seen\": 184, \"rows_new\": 184, \"gaps\": [], \"duplicate_seqs\": [], \"updated_at\": \"2026-09-17 20:14:02.992162-04:00\"}, \"events_stored\": 184}"
+  }
+ ]
+}

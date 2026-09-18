@@ -30,6 +30,8 @@ import os
 import platform
 import socket
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 import time
 from datetime import datetime, timezone
@@ -95,7 +97,7 @@ def collect_cpu() -> dict:
     if platform.system() == "Windows":
         try:
             r = subprocess.run(["wmic", "cpu", "get", "loadpercentage", "/value"],
-                               capture_output=True, text=True, timeout=10)
+                               capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=10)
             for line in r.stdout.splitlines():
                 if "LoadPercentage" in line and "=" in line:
                     return {"pct": float(line.split("=", 1)[1].strip()), "count_logical": os.cpu_count()}
@@ -124,7 +126,7 @@ def collect_memory() -> dict:
     if platform.system() == "Windows":
         try:
             r = subprocess.run(["wmic", "OS", "get", "TotalVisibleMemorySize,FreePhysicalMemory", "/format:list"],
-                               capture_output=True, text=True, timeout=10)
+                               capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=10)
             kv = {}
             for line in r.stdout.splitlines():
                 if "=" in line:
@@ -168,7 +170,7 @@ def collect_disks() -> list:
         try:
             r = subprocess.run(["wmic", "logicaldisk", "where", "DriveType=3",
                                 "get", "DeviceID,Size,FreeSpace", "/format:list"],
-                               capture_output=True, text=True, timeout=10)
+                               capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=10)
             current = {}
             for line in r.stdout.splitlines():
                 line = line.strip()

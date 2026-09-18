@@ -37,7 +37,8 @@ decides what the evidence permits, against executable checks. Concretely:
     detector calibration  rates per geometry and null family, beside exact
                           references, before any live use (D-21 d3.v2)
     claim boundaries      what a readout may and may not be quoted as
-    qualification         H0-H5 gates: QR-1.1.0, AF-1.0.0, H4-ADAPTIVE-1.0.0
+    qualification         H0-H5 gates: QR-1.2.0, AF-1.1.0, H4-ADAPTIVE-1.0.1, EX-1.0.0, FP-1.0.0
+                          (2026-09-18; the 09-14 line read QR-1.1.0 / AF-1.0.0 / H4-ADAPTIVE-1.0.0)
     conformance contract  the SFE route/scoping contract and the four-state
                           gate Archaeon and Vivarium run before engine work
     rulings               adjudications of other seats' designs and readouts,

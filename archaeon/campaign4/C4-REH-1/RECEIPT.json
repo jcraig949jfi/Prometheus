@@ -1,0 +1,596 @@
+{
+ "_what_this_is": "Campaign 4 integration rehearsal receipt. REHEARSAL -- NOT EVIDENCE",
+ "attempt": 1,
+ "attempt_id": "C4-REH-1/attempt-1",
+ "bundle": {
+  "accounting_invariants": {
+   "duplicates_permitted": 0,
+   "lost_permitted": 0,
+   "manual_repair_permitted": 0,
+   "note": "checked across the deliberate interruption: one world per unit, exact observation count, no duplicate minted, no row repaired by hand",
+   "observations_exactly": 1152,
+   "worlds_per_unit": 1
+  },
+  "expected_observations": 1152,
+  "manifest": "archaeon/campaign4/rehearsal/bundle/MANIFEST.json",
+  "repeats_per_unit": 24,
+  "units": 48
+ },
+ "campaign": "cmp4",
+ "campaign_seed": 20260921,
+ "engine": {
+  "descriptor_digest": "sha256:d2dd72f00264d2292286eaf4bce3a4d22c7ccafaf93cbc6c3244dac34f6584cb",
+  "descriptor_path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json",
+  "endpoint": "https://192.168.1.191:8811",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "owner": "Daedalus",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "release": "SFE 9.0.1",
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "schema_version": 9,
+  "source_commit_containing_build": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+  "surface": "engine (Serendipity Foundry)"
+ },
+ "engine_path": true,
+ "experiment": "C4-REH-1",
+ "finished_at": "2026-09-17 20:20:26.443355-04:00",
+ "hypothesis": "REHEARSAL ONLY -- no scientific content.",
+ "identity": {
+  "file": "archaeon/campaign4/CAMPAIGN4_EXECUTION_IDENTITY.json",
+  "tuple": {
+   "archaeon": {
+    "campaign": "cmp4",
+    "campaign_seed": 20260921,
+    "engine_client": "cmp4-archaeon",
+    "grammar_seen_by_archaeon": {
+     "hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+     "version": "proteus.grammar.v0.4"
+    },
+    "ledger_prefix": "L4",
+    "owner": "Archaeon",
+    "root": "archaeon/campaign4/",
+    "runtime_hash_seen_by_archaeon": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+    "seed_rule": "first unused value after cmp3 (20260916-20260920 already appear in REACHABILITY.jsonl)",
+    "spec_status": "seed FROZEN; per-slot preregistrations sealed at run time as in campaigns 2 and 3",
+    "surface": "campaign seed / spec"
+   },
+   "daedalus": {
+    "descriptor_digest": "sha256:d2dd72f00264d2292286eaf4bce3a4d22c7ccafaf93cbc6c3244dac34f6584cb",
+    "descriptor_path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json",
+    "endpoint": "https://192.168.1.191:8811",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "owner": "Daedalus",
+    "pinned_at": "2026-09-17T17:01:23Z",
+    "pinned_by": "Daedalus[m2-d6ecd70b]",
+    "release": "SFE 9.0.1",
+    "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+    "routes": 72,
+    "schema_version": 9,
+    "source_commit_containing_build": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+    "surface": "engine (Serendipity Foundry)"
+   },
+   "pew": {
+    "DIGEST_NOTE": "REPRODUCED: the derivation rule is published inside the pinned file and recomputing it here yields the declared digest. Both the declared surface_digest and the file's own sha256 are valid identities of this pin (Q1 closed, comms #371/#375).",
+    "campaign_seed_map_before_c4": {
+     "20260917": "cmp1",
+     "20260918": "cmp2",
+     "20260920": "cmp3",
+     "20260921": "cmp4"
+    },
+    "fossil_contract": "pew.fossil.v2",
+    "foundry_profile_scheme": "archaeon.wse.reachability.foundry_id.v1",
+    "ingestion_contract": "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)",
+    "migrations": [
+     "014",
+     "015"
+    ],
+    "owner": "Mnemosyne",
+    "projection_builder": "ew.projections/1.0",
+    "reader_version": "ew.campaign_ingest/1.4",
+    "schema_version": 5,
+    "surface": "evidence / projections (PEW)",
+    "surface_digest_declared_in_file": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a",
+    "surface_digest_recomputed_by_rule": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a",
+    "surface_digest_reproducible": true,
+    "surface_digest_rule_published": true,
+    "surface_file_digest_computed_here": "sha256:b102cd7f98591eaa2818b62e62c89a7502f38a0d47f3d6e609d6fcee5e28427c",
+    "surface_path": "evidence_wiki/docs/point_release/CAMPAIGN4_FROZEN_SURFACE.json"
+   },
+   "proteus": {
+    "CONSTRAINT_ON_CAMPAIGN_4": "permitted_use USE_A_FROZEN_SPECIMEN_SOURCE; prohibited_use USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR. Campaigns 1-3 used this grammar AS an evolutionary operator. Campaign 4 must either stay inside USE_A, or carry Proteus's ruling that USE_B is licensed, or state the claim ceiling this imposes.",
+    "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+    "archaeon_regime_id": "instr1-16:6528b9dc",
+    "archaeon_regime_scheme": "archaeon.wse.reachability.foundry_id.v1",
+    "catalog_digest": "sha256:4f35e4b0522d090ba4436ed6dd5b858a13b200672eb8a30eb2f9dc5d6a2c6c1b",
+    "catalog_id": "42e4db36db259a16f82498e5de3df315683d7dc662e4a861c16ff5d4040eabe4",
+    "catalog_path": "proteus/eval/FOUNDRY_PROFILE_CATALOG.json",
+    "foundry_profile_id": "pfp1:625bc70456ebfa20",
+    "foundry_profile_name": "c1_c2_c3_instr1_16",
+    "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+    "grammar_version": "proteus.grammar.v0.4",
+    "kernel_qualification": {
+     "mutation_current_source": "FULL_SPACE_CURRENT_SOURCE_UNRESOLVED",
+     "mutation_neutrality": "NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT",
+     "operational_significance": "NOT_YET_ADJUDICATED",
+     "permitted_use": "USE_A_FROZEN_SPECIMEN_SOURCE",
+     "prohibited_use": "USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR",
+     "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917"
+    },
+    "owner": "Proteus",
+    "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+    "surface": "population / regime identity"
+   },
+   "vivarium": {
+    "build_commit": "08081c6ed",
+    "build_commit_source": "comms #368 (Vivarium m2-fce3fe0b); not derivable from the descriptor",
+    "descriptor_digest": "sha256:7576dd3d19b61be7f3827472731712d84a0858dac00f15db9e2eb3dedfcdd3f6",
+    "descriptor_path": "vivarium/deploy/PRODUCTION.draft.json",
+    "descriptor_version": "prometheus.production.v1",
+    "migrations": "viv 001-010",
+    "note": "descriptor is still the DRAFT: viv/production.py prefers deploy/PRODUCTION.json when the shared file lands",
+    "owner": "Vivarium",
+    "surface": "execution / queue"
+   }
+  }
+ },
+ "interruption": {
+  "invariants_all_true": true,
+  "mid_request_kill_present": true,
+  "origin_main": "66f90c39a45aa34b8d9aceab98e415c69c96f494",
+  "receipts": {
+   "k1": {
+    "digest_lf_blob": "sha256:82ec9d5d11381ba8067e94b711048e7e248b641b46a3ed59079eb10fbd69bf6b",
+    "interrupt": {
+     "listener_pid": 21084,
+     "open_intents_at_kill": [],
+     "port_free_after_s": 0.64,
+     "t0": 1789689638.5988162,
+     "t0_utc": "2026-09-18T00:00:38Z"
+    },
+    "invariants_all_true": true,
+    "mid_request": false,
+    "path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1.json",
+    "recovery": {
+     "answered_after_s": 266.0,
+     "identity_checks": {
+      "bind": true,
+      "engine_instance_id": true,
+      "engine_source_hash": true,
+      "new_process": true,
+      "pin_engine_source_hash": true,
+      "route_digest": true,
+      "routes": true,
+      "schema_version": true
+     },
+     "version": {
+      "api": "v2",
+      "engine_instance_id": "eng_906356f7fb1da180131f9290",
+      "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+      "max_artifact_bytes": 33554432,
+      "registration_open": true,
+      "runtime": "serendipity-foundry-sfe",
+      "schema_version": 9,
+      "science_profile": "warn",
+      "session_enforcement": "advisory",
+      "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+     }
+    },
+    "result": "PASS"
+   },
+   "k2": {
+    "digest_lf_blob": "sha256:3ea3b2c12e1ac41fca8f9483ae04aca50d341e6c62e34d4fe98330f5628fd40d",
+    "interrupt": {
+     "listener_pid": 10384,
+     "open_intents_at_kill": [
+      {
+       "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+       "rid": "req_457b0a6d55b5b1bcb72c821c",
+       "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/observations",
+       "ts": 1789690206.2696433
+      }
+     ],
+     "port_free_after_s": 0.79,
+     "t0": 1789690206.0496926,
+     "t0_utc": "2026-09-18T00:10:06Z"
+    },
+    "invariants_all_true": true,
+    "mid_request": true,
+    "path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1-k2.json",
+    "recovery": {
+     "answered_after_s": 298.5,
+     "identity_checks": {
+      "bind": true,
+      "engine_instance_id": true,
+      "engine_source_hash": true,
+      "new_process": true,
+      "pin_engine_source_hash": true,
+      "route_digest": true,
+      "routes": true,
+      "schema_version": true
+     },
+     "version": {
+      "api": "v2",
+      "engine_instance_id": "eng_906356f7fb1da180131f9290",
+      "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+      "max_artifact_bytes": 33554432,
+      "registration_open": true,
+      "runtime": "serendipity-foundry-sfe",
+      "schema_version": 9,
+      "science_profile": "warn",
+      "session_enforcement": "advisory",
+      "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+     }
+    },
+    "result": "PASS"
+   }
+  },
+  "status": "PRESENT"
+ },
+ "pew_leg": null,
+ "purpose": "launch-gate item G2: one exact tuple of frozen surfaces carries a Campaign-4-shaped unit of work from enqueue to reproduced receipt through an engine restart, without losing, duplicating or silently corrupting a fact. No scientific claim.",
+ "records": {
+  "a/s1": {
+   "exp_id": "exp_2d0e4b9b42bd86a94a3a34c8",
+   "n_obs": 24,
+   "obs_id": "obs_00b42affabb65ca1a56a15fa",
+   "world_id": "wld_01ab0082baa69a68e779da94"
+  },
+  "a/s10": {
+   "exp_id": "exp_fe3c865f0191f08620b86a01",
+   "n_obs": 24,
+   "obs_id": "obs_018ff9ad2f99a5fa73a7ce94",
+   "world_id": "wld_d1940e75e492c148ab4aa0e5"
+  },
+  "a/s11": {
+   "exp_id": "exp_d8d684385bd9ff70d5eaa0b4",
+   "n_obs": 24,
+   "obs_id": "obs_03f21364f40b57e9427be41d",
+   "world_id": "wld_cd1e5d6e537d6736e69d198d"
+  },
+  "a/s12": {
+   "exp_id": "exp_aa2df44f567dfd8fc7568333",
+   "n_obs": 24,
+   "obs_id": "obs_00879c00a7734fe50ef766f7",
+   "world_id": "wld_c8120f75b75d438fb38caf3f"
+  },
+  "a/s13": {
+   "exp_id": "exp_68b858ea315207c1b86e8caa",
+   "n_obs": 24,
+   "obs_id": "obs_03a29e26d8be0216e2cabf4c",
+   "world_id": "wld_3168388df44e11bce456257b"
+  },
+  "a/s14": {
+   "exp_id": "exp_19b555423894fc796d481aa3",
+   "n_obs": 24,
+   "obs_id": "obs_11068820d5f5a9a75181e877",
+   "world_id": "wld_9c3ea07016dcea7ac1581300"
+  },
+  "a/s15": {
+   "exp_id": "exp_8b29f8885422388cc0a4bde1",
+   "n_obs": 24,
+   "obs_id": "obs_056b0bdadea3ee610c884c2d",
+   "world_id": "wld_6d677f376af13ef84b6dea05"
+  },
+  "a/s16": {
+   "exp_id": "exp_c7e80eff13310e864b06d540",
+   "n_obs": 24,
+   "obs_id": "obs_104729223b6896bbf4d7d130",
+   "world_id": "wld_7bd32ad78c58369cc6d25f41"
+  },
+  "a/s17": {
+   "exp_id": "exp_40f6d9504c6d074efbc95dd9",
+   "n_obs": 24,
+   "obs_id": "obs_050233b4ad11fb840c3cd22a",
+   "world_id": "wld_2109d4ccd95ea20875a329bd"
+  },
+  "a/s18": {
+   "exp_id": "exp_e604220999b689f66ded1718",
+   "n_obs": 24,
+   "obs_id": "obs_19e2bb8fabce46e25cd16330",
+   "world_id": "wld_59357cecc5e1a9c57a2d7762"
+  },
+  "a/s19": {
+   "exp_id": "exp_22cb4b0fb15f918a4c177134",
+   "n_obs": 24,
+   "obs_id": "obs_0c14216893d71da92743a86b",
+   "world_id": "wld_44941ecb2311ac386327e71a"
+  },
+  "a/s2": {
+   "exp_id": "exp_92db127bdea2376b408f5a34",
+   "n_obs": 24,
+   "obs_id": "obs_01fc46f7395a4c50a3b77889",
+   "world_id": "wld_00f67ffcbffbe9939941fbdf"
+  },
+  "a/s20": {
+   "exp_id": "exp_a664acf4995c82697de9a6f8",
+   "n_obs": 24,
+   "obs_id": "obs_002862377a099d6632257c28",
+   "world_id": "wld_9d9277821713724262abe0ef"
+  },
+  "a/s21": {
+   "exp_id": "exp_8a2e96e5766441e77a6cc943",
+   "n_obs": 24,
+   "obs_id": "obs_0101a59b72250dda0165123b",
+   "world_id": "wld_398807a539f164dc6a58a45d"
+  },
+  "a/s22": {
+   "exp_id": "exp_8870571a6f84220021801af2",
+   "n_obs": 24,
+   "obs_id": "obs_09afaf642297d5451eb72e80",
+   "world_id": "wld_3fa2ec388a858cf91765126c"
+  },
+  "a/s23": {
+   "exp_id": "exp_f4386cde884c5b0de24438a5",
+   "n_obs": 24,
+   "obs_id": "obs_0e8d849a40b898d2eda8ced5",
+   "world_id": "wld_2a63fe071cd2ecf7cd20d595"
+  },
+  "a/s24": {
+   "exp_id": "exp_795b5ea1c9eab06ce99f9173",
+   "n_obs": 24,
+   "obs_id": "obs_005ce70e6e06a1a2ac661aae",
+   "world_id": "wld_99ba3e0d5d82afd80aa7c522"
+  },
+  "a/s3": {
+   "exp_id": "exp_e543d3867ba5c53ed1f8be85",
+   "n_obs": 24,
+   "obs_id": "obs_0a0bf54e508d466ad9e8b28b",
+   "world_id": "wld_de1d02acc455bb174c9e6c12"
+  },
+  "a/s4": {
+   "exp_id": "exp_4a0537a879bdf68270e2aafd",
+   "n_obs": 24,
+   "obs_id": "obs_079d44d96bda90e3daab1780",
+   "world_id": "wld_5562c559d03ce90a336e96fc"
+  },
+  "a/s5": {
+   "exp_id": "exp_466f46babd58f51e7f7ce9d6",
+   "n_obs": 24,
+   "obs_id": "obs_065c4e850cb18d85e8d01405",
+   "world_id": "wld_3f88ef0700b9d85a4d95f548"
+  },
+  "a/s6": {
+   "exp_id": "exp_767eaa5dc24e89e075a6127a",
+   "n_obs": 24,
+   "obs_id": "obs_06fde4b373001c2ce2e7511f",
+   "world_id": "wld_bbbf4373e22f7bce5a41697d"
+  },
+  "a/s7": {
+   "exp_id": "exp_34cd7d7b02b433bc7037ceb0",
+   "n_obs": 24,
+   "obs_id": "obs_01462d9ac85fbed971924ac1",
+   "world_id": "wld_eee151e3d7091895bace9d02"
+  },
+  "a/s8": {
+   "exp_id": "exp_44bbdbd4c35ad34de3a880eb",
+   "n_obs": 24,
+   "obs_id": "obs_03635907e7babaee91a90cf1",
+   "world_id": "wld_0ef204e7b24c5796b2803498"
+  },
+  "a/s9": {
+   "exp_id": "exp_925609a07d6a073887eed139",
+   "n_obs": 24,
+   "obs_id": "obs_0c035113217f4b84f0afd98a",
+   "world_id": "wld_6c21dfaeede1f472199fffeb"
+  },
+  "b/s1": {
+   "exp_id": "exp_1502c8890fa81dc2be5f9c09",
+   "n_obs": 24,
+   "obs_id": "obs_03b2219a2f4a3cad55c2db1f",
+   "world_id": "wld_fe179c0e2e02ba33bcf50b00"
+  },
+  "b/s10": {
+   "exp_id": "exp_c28ea413ba79a925ed4df9c0",
+   "n_obs": 24,
+   "obs_id": "obs_01d31bcfdc4a7e18033da0e6",
+   "world_id": "wld_8f5c6c3b2c6fb58ca0c56c7c"
+  },
+  "b/s11": {
+   "exp_id": "exp_5b52c3a538657dd4715ee62c",
+   "n_obs": 24,
+   "obs_id": "obs_02c685a07772f9afe19dafde",
+   "world_id": "wld_9102336d9983daafccc17153"
+  },
+  "b/s12": {
+   "exp_id": "exp_c9340f303e99ea80fe85bf9c",
+   "n_obs": 24,
+   "obs_id": "obs_25fac13a66968d5cb872162e",
+   "world_id": "wld_cbc07cfd6d0a1411857478f6"
+  },
+  "b/s13": {
+   "exp_id": "exp_ac9a75865096175d3f50d633",
+   "n_obs": 24,
+   "obs_id": "obs_025a0c0380ebb82af93195e6",
+   "world_id": "wld_5d5cbeff68a6a4e729fe4567"
+  },
+  "b/s14": {
+   "exp_id": "exp_ad27af0c1eef8c0cb35b7724",
+   "n_obs": 24,
+   "obs_id": "obs_02c7afabadf54218a5b57b91",
+   "world_id": "wld_bacbee6f506175574f825241"
+  },
+  "b/s15": {
+   "exp_id": "exp_5fabadabba85690f9ae58593",
+   "n_obs": 24,
+   "obs_id": "obs_02a7f56dac06c321d428c6a1",
+   "world_id": "wld_f34ba5215ce5a803fcfb9d67"
+  },
+  "b/s16": {
+   "exp_id": "exp_c5554d67a1937dfef4945365",
+   "n_obs": 24,
+   "obs_id": "obs_2072d40a37942a89e56f6847",
+   "world_id": "wld_3c2b51a01b13555299c402ca"
+  },
+  "b/s17": {
+   "exp_id": "exp_695cc8829a49cb57d72f45f9",
+   "n_obs": 24,
+   "obs_id": "obs_0621267a3ed45cd1c25595cc",
+   "world_id": "wld_4bcaaae2783add8a42375749"
+  },
+  "b/s18": {
+   "exp_id": "exp_157ac9170599fd02ff24eb50",
+   "n_obs": 24,
+   "obs_id": "obs_03240076896a4508a5d4b3f8",
+   "world_id": "wld_07ad4094b4f4718bf1f2b194"
+  },
+  "b/s19": {
+   "exp_id": "exp_ee45151f09c4552019e127b8",
+   "n_obs": 24,
+   "obs_id": "obs_05a645958d05e9ead3046440",
+   "world_id": "wld_102b2bef641ed714f8a1fd5a"
+  },
+  "b/s2": {
+   "exp_id": "exp_fe0e22142a43c6c2a0890663",
+   "n_obs": 24,
+   "obs_id": "obs_00ad0d706dc528ce1a1e1256",
+   "world_id": "wld_b298cfa0eb0c3d01098699a4"
+  },
+  "b/s20": {
+   "exp_id": "exp_41914e9c87f6132ec78f74cc",
+   "n_obs": 24,
+   "obs_id": "obs_01f9f447625bc24ed99873cc",
+   "world_id": "wld_c7b4ff3611390cfe7c8cf311"
+  },
+  "b/s21": {
+   "exp_id": "exp_11b163c432c80f43209dd701",
+   "n_obs": 24,
+   "obs_id": "obs_13ffded1ac5e72e57d3089e5",
+   "world_id": "wld_7ff306ca91aaf68f89af942c"
+  },
+  "b/s22": {
+   "exp_id": "exp_c445d2a5f321ab474222840e",
+   "n_obs": 24,
+   "obs_id": "obs_21ab2e548b12923c65ab86cd",
+   "world_id": "wld_6cf96ec60bb871843f5c6695"
+  },
+  "b/s23": {
+   "exp_id": "exp_8b9175e212abdb7d377c6ee3",
+   "n_obs": 24,
+   "obs_id": "obs_03b0510891c401ca5f2d2249",
+   "world_id": "wld_2a34150e8adb3fdffbb7b32f"
+  },
+  "b/s24": {
+   "exp_id": "exp_0cd4b4ad62c7f8e719619669",
+   "n_obs": 24,
+   "obs_id": "obs_1cf31c33be1ad6dc4f9b1b3b",
+   "world_id": "wld_637cb041b67c58d567f86c18"
+  },
+  "b/s3": {
+   "exp_id": "exp_6f5cfd7ffd3411b27e06bc0f",
+   "n_obs": 24,
+   "obs_id": "obs_0faab01fb6ce28af953954a8",
+   "world_id": "wld_c392b0a9b31abd1a1e9a7101"
+  },
+  "b/s4": {
+   "exp_id": "exp_52769182df8aa156e987bc0e",
+   "n_obs": 24,
+   "obs_id": "obs_0330845648af19581f053bf9",
+   "world_id": "wld_109fc34aff000367c48a7de1"
+  },
+  "b/s5": {
+   "exp_id": "exp_192ec25587936bf47078a5bb",
+   "n_obs": 24,
+   "obs_id": "obs_031763fe978e797552dfebde",
+   "world_id": "wld_069c86704b76cd2679f9fd8d"
+  },
+  "b/s6": {
+   "exp_id": "exp_4bcd948944bc6b2533dcc354",
+   "n_obs": 24,
+   "obs_id": "obs_0244ec069a8c9ebf5458862f",
+   "world_id": "wld_ef57884f0223baba4d01ffa0"
+  },
+  "b/s7": {
+   "exp_id": "exp_1ddacdbbd116ca143bed24d1",
+   "n_obs": 24,
+   "obs_id": "obs_0497ed4826e6ebc8786f018a",
+   "world_id": "wld_fcdf8addfd9451ded0f7a217"
+  },
+  "b/s8": {
+   "exp_id": "exp_83780deb3796a1588bd473b6",
+   "n_obs": 24,
+   "obs_id": "obs_0b79d4c9584bd6c3f86282d4",
+   "world_id": "wld_a8fb1833022921b9aa548017"
+  },
+  "b/s9": {
+   "exp_id": "exp_13a715d9cacc4f8f53c9a960",
+   "n_obs": 24,
+   "obs_id": "obs_07867e7d9474df9a92b5e213",
+   "world_id": "wld_bbe100e2a5f5fcf7a38bd23c"
+  }
+ },
+ "started_at": "2026-09-17 20:00:27.110362-04:00",
+ "summary": {
+  "completed": 48,
+  "observations_total": 1152,
+  "step_status_census": {
+   "FAILED": 1,
+   "NEW": 2544,
+   "RECOMPUTED": 25,
+   "REPLAYED": 10,
+   "REUSED": 1
+  },
+  "units": 48,
+  "units_resumed_after_interruption": [
+   "a/s10"
+  ],
+  "worlds_distinct": 48
+ },
+ "typed_states": {
+  "rehearsal": "PASS"
+ },
+ "workspace_note": "built in a task worktree; base_sha/branch recorded in REHEARSAL_RECEIPT.json",
+ "worlds": {
+  "a/s1": "wld_01ab0082baa69a68e779da94",
+  "a/s10": "wld_d1940e75e492c148ab4aa0e5",
+  "a/s11": "wld_cd1e5d6e537d6736e69d198d",
+  "a/s12": "wld_c8120f75b75d438fb38caf3f",
+  "a/s13": "wld_3168388df44e11bce456257b",
+  "a/s14": "wld_9c3ea07016dcea7ac1581300",
+  "a/s15": "wld_6d677f376af13ef84b6dea05",
+  "a/s16": "wld_7bd32ad78c58369cc6d25f41",
+  "a/s17": "wld_2109d4ccd95ea20875a329bd",
+  "a/s18": "wld_59357cecc5e1a9c57a2d7762",
+  "a/s19": "wld_44941ecb2311ac386327e71a",
+  "a/s2": "wld_00f67ffcbffbe9939941fbdf",
+  "a/s20": "wld_9d9277821713724262abe0ef",
+  "a/s21": "wld_398807a539f164dc6a58a45d",
+  "a/s22": "wld_3fa2ec388a858cf91765126c",
+  "a/s23": "wld_2a63fe071cd2ecf7cd20d595",
+  "a/s24": "wld_99ba3e0d5d82afd80aa7c522",
+  "a/s3": "wld_de1d02acc455bb174c9e6c12",
+  "a/s4": "wld_5562c559d03ce90a336e96fc",
+  "a/s5": "wld_3f88ef0700b9d85a4d95f548",
+  "a/s6": "wld_bbbf4373e22f7bce5a41697d",
+  "a/s7": "wld_eee151e3d7091895bace9d02",
+  "a/s8": "wld_0ef204e7b24c5796b2803498",
+  "a/s9": "wld_6c21dfaeede1f472199fffeb",
+  "b/s1": "wld_fe179c0e2e02ba33bcf50b00",
+  "b/s10": "wld_8f5c6c3b2c6fb58ca0c56c7c",
+  "b/s11": "wld_9102336d9983daafccc17153",
+  "b/s12": "wld_cbc07cfd6d0a1411857478f6",
+  "b/s13": "wld_5d5cbeff68a6a4e729fe4567",
+  "b/s14": "wld_bacbee6f506175574f825241",
+  "b/s15": "wld_f34ba5215ce5a803fcfb9d67",
+  "b/s16": "wld_3c2b51a01b13555299c402ca",
+  "b/s17": "wld_4bcaaae2783add8a42375749",
+  "b/s18": "wld_07ad4094b4f4718bf1f2b194",
+  "b/s19": "wld_102b2bef641ed714f8a1fd5a",
+  "b/s2": "wld_b298cfa0eb0c3d01098699a4",
+  "b/s20": "wld_c7b4ff3611390cfe7c8cf311",
+  "b/s21": "wld_7ff306ca91aaf68f89af942c",
+  "b/s22": "wld_6cf96ec60bb871843f5c6695",
+  "b/s23": "wld_2a34150e8adb3fdffbb7b32f",
+  "b/s24": "wld_637cb041b67c58d567f86c18",
+  "b/s3": "wld_c392b0a9b31abd1a1e9a7101",
+  "b/s4": "wld_109fc34aff000367c48a7de1",
+  "b/s5": "wld_069c86704b76cd2679f9fd8d",
+  "b/s6": "wld_ef57884f0223baba4d01ffa0",
+  "b/s7": "wld_fcdf8addfd9451ded0f7a217",
+  "b/s8": "wld_a8fb1833022921b9aa548017",
+  "b/s9": "wld_bbe100e2a5f5fcf7a38bd23c"
+ }
+}

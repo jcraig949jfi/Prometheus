@@ -1,0 +1,267 @@
+{
+ "finished_at": "2026-09-18T00:05:05Z",
+ "interrupt": {
+  "listener_pid": 21084,
+  "open_intents_at_kill": [],
+  "port_free_after_s": 0.64,
+  "t0": 1789689638.5988162,
+  "t0_utc": "2026-09-18T00:00:38Z"
+ },
+ "invariants": {
+  "a6_degraded": false,
+  "chain": {
+   "dup_index": [],
+   "events_checked": 3,
+   "hash_mismatches": [],
+   "link_breaks": [],
+   "ok": true,
+   "worlds": 1
+  },
+  "checkpointer_alive": true,
+  "events_monotonic": true,
+  "ledger_after": {
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "events": 13791,
+   "events_last_10min": 70,
+   "last_event_ts": 1789689637.531668,
+   "max_event_seq": 13791,
+   "max_experiments_per_world": 228,
+   "max_observations_per_world": 228,
+   "schema_version": 9,
+   "work_items": {
+    "COMPLETED": 353,
+    "QUEUED": 3
+   }
+  },
+  "ok": true
+ },
+ "pin": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "schema_version": 9
+ },
+ "post": {
+  "first_event_after_restart": {
+   "actor": "cli_2bb36261427e607191ece250",
+   "event_id": "evt_42ca513b014bcbd691ff89a9",
+   "event_seq": 13789,
+   "event_type": "OBSERVATION_RECORDED",
+   "ts": 1789689637.4804895,
+   "world_id": "wld_00f67ffcbffbe9939941fbdf"
+  },
+  "first_op_after_t0_s": -1.1
+ },
+ "pre": {
+  "a6_open_intents": [],
+  "events_last_60s": 68,
+  "health": {
+   "api": "v2",
+   "attestation": {
+    "counts": {
+     "effected": 124,
+     "intent": 124,
+     "refused": 0,
+     "write_failures": 0
+    },
+    "degraded": false,
+    "degraded_reason": null,
+    "dir": "C:\\Prometheus-data\\sfe\\incidents",
+    "open_intents_over_60s": 0
+   },
+   "checkpointer": {
+    "alive": true,
+    "db_bytes": 16330752,
+    "errors": 0,
+    "fast_interval_s": 0.05,
+    "idle_s_for_truncate": 3.0,
+    "interval_s": 2.0,
+    "last_error": null,
+    "last_passive": [
+     0,
+     679,
+     679
+    ],
+    "last_reset_at": 1789689635.6607058,
+    "last_run_age_s": 0.5,
+    "last_run_at": 1789689637.6811173,
+    "last_tick_s": 0.0,
+    "last_truncate": [
+     0,
+     0,
+     0
+    ],
+    "max_wal_bytes_seen": 2797512,
+    "request_path_autocheckpoint": 0,
+    "reset_mode": "truncate_when_idle",
+    "resets": 1428,
+    "runs": 1446,
+    "started_at": 1789686733.5995822,
+    "truncates": 1428,
+    "wal_bytes": 2797512,
+    "wal_hard_limit_bytes": 536870912,
+    "wal_size_limit_bytes": 67108864,
+    "wal_soft_limit_bytes": 8388608
+   },
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "events_last_hour": 126,
+    "experiments_committed_last_hour": 5,
+    "last_event_age_s": 0.6,
+    "last_event_ts": 1789689637.531668,
+    "observations_last_hour": 68,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "volume": "C:",
+    "work_items": {
+     "COMPLETED": 353,
+     "QUEUED": 3
+    }
+   },
+   "measured_at": 1789689638.1351438,
+   "process": {
+    "requests": 655,
+    "responses_4xx": 32,
+    "responses_5xx": 0,
+    "started_at": 1789686733.589623,
+    "uptime_s": 2904.5
+   },
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+   "write_lock": {
+    "acquisitions": 124,
+    "failures": 0,
+    "last_at": 1789689637.6857297,
+    "last_wait_s": 0.0,
+    "max_wait_s": 0.0,
+    "waits_over_1s": 0
+   }
+  },
+  "identities": {
+   "bind": "192.168.1.191",
+   "capabilities_features": {
+    "artifact_list": true,
+    "cursor_pagination": true,
+    "fork_changed_fields": true,
+    "labels": true,
+    "logical_time": true,
+    "manifest_envelope": true,
+    "typed_termination": true,
+    "world_events": true
+   },
+   "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" ",
+   "descriptor_pin": {
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "endpoint": "https://192.168.1.191:8811",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "events": 13791,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "schema_version": 9
+   },
+   "pid": 21084,
+   "process_start_utc": "2026-09-17T23:12:13Z",
+   "recorded_at": "2026-09-18T00:00:38Z",
+   "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+   "routes": 72,
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  },
+  "last_event": {
+   "actor": "cli_2bb36261427e607191ece250",
+   "event_id": "evt_b263f6b90aaca6aa5d5c78ee",
+   "event_seq": 13788,
+   "event_type": "OBSERVATION_RECORDED",
+   "ts": 1789689637.4605362,
+   "world_id": "wld_00f67ffcbffbe9939941fbdf"
+  },
+  "ledger": {
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "events": 13788,
+   "events_last_10min": 67,
+   "last_event_ts": 1789689637.4605362,
+   "max_event_seq": 13788,
+   "max_experiments_per_world": 228,
+   "max_observations_per_world": 228,
+   "schema_version": 9,
+   "work_items": {
+    "COMPLETED": 353,
+    "QUEUED": 3
+   }
+  }
+ },
+ "recovery": {
+  "answered_after_s": 266.0,
+  "identities": {
+   "bind": "192.168.1.191",
+   "capabilities_features": {
+    "artifact_list": true,
+    "cursor_pagination": true,
+    "fork_changed_fields": true,
+    "labels": true,
+    "logical_time": true,
+    "manifest_envelope": true,
+    "typed_termination": true,
+    "world_events": true
+   },
+   "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" ",
+   "descriptor_pin": {
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "endpoint": "https://192.168.1.191:8811",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "events": 13791,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "schema_version": 9
+   },
+   "pid": 10384,
+   "process_start_utc": "2026-09-18T00:05:03Z",
+   "recorded_at": "2026-09-18T00:05:05Z",
+   "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+   "routes": 72,
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  },
+  "identity_checks": {
+   "bind": true,
+   "engine_instance_id": true,
+   "engine_source_hash": true,
+   "new_process": true,
+   "pin_engine_source_hash": true,
+   "route_digest": true,
+   "routes": true,
+   "schema_version": true
+  },
+  "version": {
+   "api": "v2",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "max_artifact_bytes": 33554432,
+   "registration_open": true,
+   "runtime": "serendipity-foundry-sfe",
+   "schema_version": 9,
+   "science_profile": "warn",
+   "session_enforcement": "advisory",
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  }
+ },
+ "relaunch": "watchdog",
+ "result": "PASS",
+ "retry": {
+  "effected_after_t0": 0,
+  "keyed_replays_after_t0": 0,
+  "open_at_kill": [],
+  "refused_after_t0": 0
+ },
+ "schema": "sfe_rehearsal_restart.v1",
+ "started_at": "2026-09-18T00:00:37Z",
+ "tag": "C4-REH-1"
+}

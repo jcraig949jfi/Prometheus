@@ -9,8 +9,8 @@
  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
  "engine_instance_id": "eng_906356f7fb1da180131f9290",
  "code_from": "D:\\Prometheus-worktrees\\daedalus-sfengine (detached)",
- "data_dir": "D:\\Prometheus-data\\sfe",
- "supervisor": "scheduled task SFEngineM2Watchdog -> D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1 (pinned copy)",
+ "data_dir": "C:\\Prometheus-data\\sfe",
+ "supervisor": "scheduled task SFEngineM2Watchdog -> C:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1 (pinned copy)",
  "contract": "roles/Harmonia/contracts/sfe_contract.json (REGENERATED after this restart; see POINT_RELEASE_2026-09-17/)",
  "history": [
   {
@@ -24,9 +24,13 @@
   },
   {
    "2026-09-17T17:01:23Z": "release (schema 9): b0d75218382d / sha256:699ca0f952448"
+  },
+  {
+   "2026-09-17T23:12:13Z": "data dir D: (SMR HDD) -> C: (NVMe); same build b0d75218382d / sha256:699ca0f952448; outage 13.0 s"
   }
  ],
  "not_shown": "scoped reads (/v2/read/*) are not exercised by the harness; they are covered by unit tests and gate-probed for scoping only. POST scoping is the gate's stated limit.",
  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
- "routes": 72
+ "routes": 72,
+ "data_dir_note": "moved 2026-09-17T23:12Z off the Seagate ST8000DM004 SMR HDD (D:) onto the NVMe (C:) after the G1 long run measured the drive stop servicing writes 3.4 h into campaign-rate load (fsync median 7 s / max 59 s with the engine dead; WriteLatencyMax 65,345 ms). Placement remedy, no code: build, instance id and schema unchanged. deploy/LEDGER_TO_NVME_2026-09-17/. The D: copy is the untouched rollback."
 }

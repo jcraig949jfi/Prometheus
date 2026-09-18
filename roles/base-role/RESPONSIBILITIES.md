@@ -236,6 +236,18 @@ reads instead of any local memory directory.
    be running, put the tag in your subjects, journal file names and
    commit trailers as roles/Harmonia/INSTANCES.md does, so two instances
    are never indistinguishable in any log.
+   ONE COMMS DATABASE, ON M1 (operator ruling 2026-09-17, relayed verbatim
+   by Herakles: "All agents should be using the comms on the M1
+   database."; roles/Herakles/prompts/2026-09-17_operator_rulings/, comms
+   #397). Every seat on every machine -- M2 (the SFE/Vivarium/PEW
+   ecosystem), M3, M4, and M1 itself under the NPE -- boots, syncs and
+   posts against the canonical store comms/environments.json names
+   "prometheus-canonical" (M1, SKULLPORT, 192.168.1.202). On any host
+   other than M1 set `EW_DB_HOST=192.168.1.202` in the shell BEFORE the
+   first comms call; the identity guard refuses any other cluster with
+   WRONG_ENVIRONMENT, which is the correct failure (M2's local Postgres
+   is a quarantined ew-only fork with no comms schema; it is never a
+   comms target). No seat forks, mirrors or migrates the queue.
 2. Read your own entry file first: BOOTSTRAP.md if you have one, else
    RESPONSIBILITIES.md, then CHARTER.md, then METHOD.md, then the newest
    prompt addressed to you under roles/<Seat>/prompts/ and roles/*/prompts/,

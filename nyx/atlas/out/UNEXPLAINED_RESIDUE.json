@@ -1,11 +1,11 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:02Z",
+ "built": "2026-09-17T23:27Z",
  "by_state": {
-  "EXPLAINED_BY_CURRENT_CUT": 23,
-  "LARGE_RESIDUE": 16,
-  "PARTIALLY_EXPLAINED": 45,
-  "CUT_INSTRUMENT_INSUFFICIENT": 3
+  "EXPLAINED_BY_CURRENT_CUT": 28,
+  "LARGE_RESIDUE": 25,
+  "PARTIALLY_EXPLAINED": 50,
+  "CUT_INSTRUMENT_INSUFFICIENT": 4
  },
  "residue": [
   {
@@ -72,6 +72,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "bsd-4.3-distribution-tape-1986",
+   "state": "CUT_INSTRUMENT_INSUFFICIENT",
+   "unexplained": [
+    "filesystem images cannot be dissected by reading",
+    "tape files 5-9 absent from the vault; the record's 'COMPLETE' and 'BEFORE point' claims are not verifiable from the body",
+    "no emulator on M3; nothing ran"
+   ],
+   "note": "ORGAN0 inventory cut; the defect goes to Techne with the Reno tape's",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "bsd-4.3-reno-distribution-tape-1990",
    "state": "CUT_INSTRUMENT_INSUFFICIENT",
    "unexplained": [
@@ -105,6 +116,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "bsd-tcp-4.3-tahoe-1988",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "tcp_output and the state machine unread",
+    "nothing ran; the three bodies would make a three-arm world on an emulated network (an M2 world)"
+   ],
+   "note": "the middle of the lineage; the three organs are exactly the 1988 paper's three contributions, located line by line, with Reno's two later additions confirmed absent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "buddy-alloc-spaskalev",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -124,6 +145,16 @@
     "nothing ran"
    ],
    "note": "the three defining mechanisms are located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "bzip2-1.0.8",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the sort bodies, MTF/RLE, the Huffman construction and the decoder unread",
+    "nothing ran"
+   ],
+   "note": "two engineering mechanisms located precisely; the theory stages are named in the residue",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -290,6 +321,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "eispack-netlib",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "no routine body read",
+    "nothing ran"
+   ],
+   "note": "an inventory cut; the library's organisation is recorded as the mechanism, with balancing as one CANDIDATE stage",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "eliza-anthay-1966",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -309,6 +350,17 @@
     "nothing ran (MAD on IBM 7094; the vault's lisp-1-5 record names simh i7094 as a reachable world for the same era)"
    ],
    "note": "the interpreter's control flow is accounted for line by line; the matcher is the residue",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "emcee-3.1.6",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the other moves and the backends unread",
+    "nothing ran",
+    "M3-RUNNABLE PACKET CANDIDATE: pure numpy; the analytic Gaussian is an exact oracle for the mean, covariance and, via the known spectrum, the autocorrelation time"
+   ],
+   "note": "the three published mechanisms are located; the sampler is the third pure-Python body with a self-contained oracle found in this pass (after sgp4 and backoff)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -332,6 +384,27 @@
     "nothing ran here; Techne's make check (t_erfa_c) is the executed evidence on M1"
    ],
    "note": "seven shapes cover the 247 names; the claim that each name belongs to a shape is by name for ~230 of them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "espresso-logic",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "expand1, reduce, irredundant, the complementation machinery and the representation unread",
+    "nothing ran; the examples directory is the benchmark oracle"
+   ],
+   "note": "the loop is located and its three operators named; two are CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "femtolisp",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "opcodes, gc, reader, cvalues and builtins unread",
+    "the compiler read by names (CANDIDATE)",
+    "nothing ran"
+   ],
+   "note": "the organisation (self-hosted compiler + C VM + boot image) is located; the substance is in the residue",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -388,6 +461,17 @@
     "nothing ran"
    ],
    "note": "the evaluation-order mechanism is located; the rest is named",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "gnu-prolog-1.5.0",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "no function body read; both organs at inventory depth",
+    "the FD solver, GC and builtins unread",
+    "nothing ran"
+   ],
+   "note": "the four-stage pipeline is the mechanism this specimen was preserved for, and it is located at the directory level",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -618,6 +702,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "microkanren-scheme",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing unread",
+    "nothing ran; a Python transcription would make it an M3 world (SCOUT candidate)"
+   ],
+   "note": "fifty lines, three mechanisms, all located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "minisat-1.14-2006",
    "state": "EXPLAINED_BY_CURRENT_CUT",
    "unexplained": [
@@ -719,6 +813,50 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "picorv32",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "execution states, ALU, PCPI units and the SoC unread",
+    "the decoder and option organs are MEDIUM / CANDIDATE",
+    "nothing ran (no simulator; the self-checking testbench is the oracle)"
+   ],
+   "note": "the organisation is located; the datapath detail is not",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "picosat-965",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "propagation, analysis, the proof trace and simplification unread",
+    "the scoring organ is CANDIDATE",
+    "nothing ran"
+   ],
+   "note": "an inventory cut that records the three places this solver differs from the atlas's MiniSat cut; the propagation scheme is the next read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "pid-autotune-hirschmann",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "pid.py, kettle.py, sim.py unread (the world)",
+    "nothing ran",
+    "M3-RUNNABLE PACKET CANDIDATE: pure Python with a simulated world whose ultimate point is analytic"
+   ],
+   "note": "240 lines, three mechanisms, all located; the fourth pure-Python candidate of this pass",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "pybreaker-1.2.0",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "async / generator variants and listeners unread (sugar)",
+    "nothing ran",
+    "M3-RUNNABLE PACKET CANDIDATE: pure Python with the in-memory store; a simulated outage is the world"
+   ],
+   "note": "the fifth pure-Python candidate of this pass; the pattern's two mechanisms are located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "pyportfolioopt-1.5.5",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -791,6 +929,17 @@
     "nothing ran (needs a PDP-1 emulator, an M2 world)"
    ],
    "note": "the two structural mechanisms (entity tables with routine pointers; the fixed-budget frame) are located from comments and labels, which the listing carries generously",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "spdylay",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "frame codec, stream states and the receive path unread",
+    "flow control read by name (CANDIDATE)",
+    "nothing ran"
+   ],
+   "note": "the three inherited ideas are located as data structures; the record's point (SPDY as the basis of HTTP/2) is visible in them",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -870,6 +1019,26 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "tinyekf-levy",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "examples and the Python package unread",
+    "nothing ran"
+   ],
+   "note": "a 328-line header fully accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "tinystm-marlier",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "read/write paths, the other two designs and the contention managers unread",
+    "nothing ran"
+   ],
+   "note": "the three mechanisms of the default design are located; the design and CM switches are the atlas's next comparison set",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "tscp-1.81-kerrigan-1997",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -888,6 +1057,26 @@
     "nothing ran; the body ships test models and sequences (test.hmm, t2.*.seq) as an oracle"
    ],
    "note": "a small body fully accounted for; the record's 'complements the vault's viterbi-hmm-xukmin' is corrected: that body is a convolutional decoder, this one is the HMM",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "verilog-arbiter-forencich",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing unread",
+    "nothing ran"
+   ],
+   "note": "two files, three mechanisms, all located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "verilog-generic-fifo",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the gray-coded, single-clock and LFSR variants unread",
+    "nothing ran (a simulator would run the testbench; an M2 world with iverilog)"
+   ],
+   "note": "the dual-clock core is fully read; its three mechanisms and its known hazard are located",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -922,6 +1111,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "walksat-v56",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the other flip rules and the adaptive update site unread",
+    "nothing ran"
+   ],
+   "note": "the four mechanisms are located; a three-solver world (WalkSAT, MiniSat, PicoSAT) is now readable in this atlas",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "whitakers-words-ada",
    "state": "LARGE_RESIDUE",
    "unexplained": [
@@ -940,6 +1139,16 @@
     "no claim was executed; tests/virtraft2.py is a ready world (a Python network simulator with partitions) for a SCOUT run"
    ],
    "note": "the paper's five rules are each located at a line range; the library-specific choices (range [T,2T), length-based backoff, lazy apply, aggressive resend) are named",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "xv6-riscv",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "virtual memory, traps, the file system proper, pipes and exec unread",
+    "nothing ran (needs riscv64 gcc and qemu: an M2 world)"
+   ],
+   "note": "three subsystems located DEEP; the kernel's other five chapters are in the residue",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

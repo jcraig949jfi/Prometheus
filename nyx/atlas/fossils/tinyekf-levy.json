@@ -134,17 +134,352 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:1-328"
+   }
+  ],
+  "inspected_files": [
+   "src/tinyekf.h 1-328"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "the extended Kalman filter with every decision made for a small fixed-point-free microcontroller: state and measurement sizes are compile-time constants (EKF_N, EKF_M) so every matrix is a stack array; the caller supplies the nonlinear prediction and its Jacobian (fx, F) and the measurement prediction and its Jacobian (hx, H), so the filter itself is only the covariance algebra; the innovation covariance is inverted by a Cholesky decomposition that reports failure, so a non-positive-definite S aborts the update instead of corrupting the state",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/simondlevy/TinyEKF@ba0d2a90e22f2f4e4120a91cb05ca2ca6a8e8da3",
+   "payload_manifest_id": "techne tree_sha256 1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4 (26 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/tinyekf.h",
+     "payload_hash_read": "b3ed2e28260f59c7808b0b3b7154e050670d3f336a7980efe8c795d5956715f3",
+     "techne_recorded_hash": "b3ed2e28260f59c7808b0b3b7154e050670d3f336a7980efe8c795d5956715f3",
+     "match": true,
+     "refs": 3
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "fossil_ancestry": "tinyekf-levy",
+   "human_name": "ekf_predict (184-200): memcpy(x, fx); FP = F P; Ft = F^T; P = FP Ft + Q; the _mulmat / _transpose / _addmat helpers (10-70)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the caller evaluates the nonlinear transition f at the current state and its Jacobian F outside the filter and passes both in; the filter copies the predicted state and propagates the covariance with two matrix products and an addition of the process noise, all in fixed-size arrays sized by the compile-time constants",
+   "input": "fx, F, Q",
+   "output": "x, P",
+   "state": "x, P",
+   "update": "per time step",
+   "assumptions": [
+    "the linearisation around the current estimate is the caller's responsibility; keeping the filter ignorant of the model makes it a library of one struct and two functions"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails"
+   ],
+   "fitness_value_in_ancestor": "an EKF that fits an Arduino: no heap, no dynamic sizes, no model code inside",
+   "failure_landscape": "by reading: no symmetrisation of P after the update; round-off can make P asymmetric over many steps in single precision (the _float_t switch exists to choose double)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kalman 1960; the EKF of the Apollo era (Schmidt), the record's lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:184-200"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ekf_predict",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "fossil_ancestry": "tinyekf-levy",
+   "human_name": "ekf_update (215-300): G = P H^T (H P H^T + R)^{-1} via invert() -> _cholsl (116-160, returns nonzero on a non-positive pivot); x += G (z - hx); ekf_update_step3 (199-206): P = (I - G H) P",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the innovation covariance S = H P H^T + R is inverted by Cholesky decomposition (choldc1) followed by forward and backward substitution; a non-positive diagonal during the decomposition returns an error and the update returns false, leaving x and P as predicted; otherwise the gain is P H^T S^-1, the state is corrected by the gain times the innovation z - hx (with hx supplied by the caller from its measurement model), and the covariance is reduced by the Joseph-less form (I - G H) P",
+   "input": "z, hx, H, R",
+   "output": "x, P, a success flag",
+   "state": "x, P",
+   "update": "per measurement",
+   "assumptions": [
+    "S is symmetric positive definite whenever the model and noises are sane; a Cholesky failure is a better signal of a bad measurement or model than a NaN in the state"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays"
+   ],
+   "fitness_value_in_ancestor": "the standard EKF update with a cheap, explicit sanity gate",
+   "failure_landscape": "by reading: (I - G H) P is numerically less stable than the Joseph form; no innovation gating beyond the factorisation check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the standard EKF equations; Cholesky inversion from Numerical Recipes (the attic's origin per the comments)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:116-160, 199-300"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ekf_update, invert, _cholsl",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the matrix helpers (_mulmat, _mulvec, _transpose, _addmat, _negate, _addeye, _addvec, _sub: naive triple loops)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:tinyekf-levy/upstream/tree/src/tinyekf.h:10-160",
+   "note": "substrate; the Cholesky routines are counted in the update organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  },
+  {
+   "candidate": "the GPS and sensor-fusion examples, the Python package (python/tinyekf, altitude_fuser.py, mousetracker.py), the attic",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the GPS example ships data and a reference output: a Stage C oracle",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  },
+  {
+   "candidate": "'Kalman filter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "prediction and update are separable and the model is outside the body; the atlas's simple-kalman (not a Kalman filter) and particles/kalman.py are the recurrence set",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyekf-levy"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tinyekf-levy::P.a_nonlinear_state_must_be_tracked_from_noisy_sensors_on_a_processor_with_no_heap_and_little_arithmetic_where_a_single_bad_measurement_must_not_corrupt_the_estimate",
+   "source_fossil": "tinyekf-levy",
+   "source_evidence": "tinyekf.h ekf_update and _cholsl; the examples' data",
+   "condition": "an organism fuses sensors into a state estimate on a microcontroller; the dynamics and measurements are nonlinear; memory is static; occasional measurements are inconsistent (a corrupt GPS fix); the score is estimate error and the absence of divergence",
+   "resource_or_constraint": "stack arrays sized at compile time; no heap",
+   "failure_condition": "divergence after a bad measurement, or memory that grows with the problem",
+   "world_punishes": "an update that inverts S without checking; dynamic allocation",
+   "world_rewards": "fixed-size arrays and an abort on a failed factorisation",
+   "observable_consequence": "position error on the GPS example's data with a corrupted fix injected, for the update with and without the Cholesky abort; peak stack use",
+   "vacuity_condition": "a linear model with consistent measurements",
+   "trivial_shortcuts": "a desktop EKF with the Joseph form and gating (which costs what the target lacks)",
+   "cheat_control": "an organism given the true trajectory must show zero error; the update without the abort must diverge on the injected fix; with the abort it must skip the fix and continue: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: embedded state estimation (Levy 2015-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "to": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinyekf-levy::update_with_the_gain_from_a_cholesky_inverse_of_the_innovation_covariance_that_aborts_the_update_when_the_factorisation_fails",
+   "to": "tinyekf-levy::prediction_as_caller_supplied_state_and_jacobian_with_the_covariance_propagated_by_f_p_f_transpose_plus_q_on_stack_arrays",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the corrected state",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "tinyekf-levy",
@@ -159,10 +494,22 @@
    "to": "simple-kalman-denyssene",
    "note": "scalar KF vs multivariate EKF",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyekf-levy",
+   "relation": "reimplementation_of",
+   "to": "the extended Kalman filter (Schmidt 1960s after Kalman 1960); Cholesky inversion after Numerical Recipes",
+   "note": "from the header and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "examples and the Python package unread",
+   "nothing ran"
+  ],
+  "note": "a 328-line header fully accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

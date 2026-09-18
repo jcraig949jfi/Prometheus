@@ -1,0 +1,142 @@
+{
+ "alias_evidence": {
+  "fresh == S00": "RULING_REPLICATE_C3_3_H1BETA_D3CUT_2026-09-10.md item 1b (same payload, both slots null, same spec hash; 12 completed, 2 solved in both); RULING_H1H0_PHASE2_CONTRASTS_2026-09-14.md s1: identical 12/12 on status, solved, vm_ops",
+  "history": "the 09-10 alpha four-cell table had THREE distinct payloads under FOUR labels; this plan has four distinct cell payloads and two declared aliases (six labels)",
+  "random_pack == S10": "RULING_H1H0_PHASE2_CONTRASTS_2026-09-14.md s1: identical 12/12; hashes DIFFER for one payload (Charon A1), which is why validate_cell_payloads compares the declared payload as well as the hash"
+ },
+ "aliases": {
+  "fresh": "S00",
+  "random_pack": "S10"
+ },
+ "attainable_range": [
+  -1.0,
+  1.0
+ ],
+ "cells": {
+  "S00": {
+   "declared_payload": {
+    "frozen_component_library": "ABSENT",
+    "kind": "cegis_boolean_v1",
+    "resource_caps": "identical across cells",
+    "solver_policy": "fixed_seeded_enumeration",
+    "source_failure_transport": "ABSENT",
+    "within_task_cegis": true
+   },
+   "frozen_component_library": false,
+   "hash_is_over": "declared spec (pre-run); executor spec_hash once the cell runs",
+   "payload_hash": "sha256:9557e719b685fe178919dc74699fba88b885c5c5b90d3cb82ed579f102043c1b",
+   "source_failure_transport": false
+  },
+  "S01": {
+   "declared_payload": {
+    "frozen_component_library": "frozen_library_artifact",
+    "kind": "cegis_boolean_v1",
+    "resource_caps": "identical across cells",
+    "solver_policy": "fixed_seeded_enumeration",
+    "source_failure_transport": "ABSENT",
+    "within_task_cegis": true
+   },
+   "frozen_component_library": true,
+   "hash_is_over": "declared spec (pre-run); executor spec_hash once the cell runs",
+   "payload_hash": "sha256:0aff927dd6d0c7bfb59b87bb3ef0470822abb4fe96577755a319667520336a81",
+   "source_failure_transport": false
+  },
+  "S10": {
+   "declared_payload": {
+    "frozen_component_library": "ABSENT",
+    "kind": "cegis_boolean_v1",
+    "resource_caps": "identical across cells",
+    "solver_policy": "fixed_seeded_enumeration",
+    "source_failure_transport": "frozen_source_pack",
+    "within_task_cegis": true
+   },
+   "frozen_component_library": false,
+   "hash_is_over": "declared spec (pre-run); executor spec_hash once the cell runs",
+   "payload_hash": "sha256:891522b0eb350bb5cb5c8375e37e844ce00e7624e417615692c4c71f58224f82",
+   "source_failure_transport": true
+  },
+  "S11": {
+   "declared_payload": {
+    "frozen_component_library": "frozen_library_artifact",
+    "kind": "cegis_boolean_v1",
+    "resource_caps": "identical across cells",
+    "solver_policy": "fixed_seeded_enumeration",
+    "source_failure_transport": "frozen_source_pack",
+    "within_task_cegis": true
+   },
+   "frozen_component_library": true,
+   "hash_is_over": "declared spec (pre-run); executor spec_hash once the cell runs",
+   "payload_hash": "sha256:86e3e92662bbaa0b0ea18f865a89ca3a8e09f708646071074adee1ad213b7fd7",
+   "source_failure_transport": true
+  }
+ },
+ "dedup_rule": "cells are deduplicated by payload hash before analysis; one hash under two CELL labels is refused (validate_cell_payloads); a declared alias is one baseline under two labels and contributes ONE arm",
+ "min_eligible_blocks": 6,
+ "multiplicity": "BONFERRONI over the two primaries; secondaries reported with induced correlation",
+ "plan": "h0_analysis_plan",
+ "primary_contrasts": {
+  "G_joint_treatment_S11_minus_S00": {
+   "S00": -1.0,
+   "S01": 0.0,
+   "S10": 0.0,
+   "S11": 1.0
+  },
+  "interaction_I": {
+   "S00": 1.0,
+   "S01": -1.0,
+   "S10": -1.0,
+   "S11": 1.0
+  }
+ },
+ "rules_version": "QR-1.2.0",
+ "secondary_contrasts": {
+  "library_S01_minus_S00": {
+   "S00": -1.0,
+   "S01": 1.0,
+   "S10": 0.0,
+   "S11": 0.0
+  },
+  "transport_S10_minus_S00": {
+   "S00": -1.0,
+   "S01": 0.0,
+   "S10": 1.0,
+   "S11": 0.0
+  }
+ },
+ "shared_arm_correlation": {
+  "exchangeable_equal_variance_reference": {
+   "G|I": 0.0,
+   "G|library": 0.5,
+   "G|transport": 0.5,
+   "note": "0.5 for any rho for two simple differences sharing S00; G and I are uncorrelated under exchangeable equal variances and NOT in general (measure at the pilot Sigma)",
+   "transport|library": 0.5
+  },
+  "rule": "corr = c1' Sigma c2 / sqrt(c1' Sigma c1 c2' Sigma c2); reported at the pilot Sigma"
+ },
+ "unit": "paired (seed x task_block); generations/mutations/candidates are within-unit repeats",
+ "validation": {
+  "aliases": {
+   "fresh": {
+    "cell": "S00",
+    "payload_hash": "sha256:9557e719b685fe178919dc74699fba88b885c5c5b90d3cb82ed579f102043c1b"
+   },
+   "random_pack": {
+    "cell": "S10",
+    "payload_hash": "sha256:891522b0eb350bb5cb5c8375e37e844ce00e7624e417615692c4c71f58224f82"
+   }
+  },
+  "baselines_under_two_labels": [
+   [
+    "fresh",
+    "S00"
+   ],
+   [
+    "random_pack",
+    "S10"
+   ]
+  ],
+  "cell_labels": 4,
+  "distinct_payloads": 4
+ },
+ "version": "1.0.0"
+}
