@@ -100,6 +100,42 @@ def require(verdict):
     return verdict
 
 
+class UncontrolledComparison(AssertionError):
+    """Raised when an intervention was not applied to its own baseline."""
+
+
+def assert_controlled(treatment_conditions, baseline_conditions, label=""):
+    """An intervention must apply to the CONTROL as well as the treatment.
+
+    CW01-D038a: e05's superadditivity forwarded force_disjunctive=True to the mixture
+    but not to solo_values(), so the mixture was measured under one composition law
+    and its baselines under another. The resulting M3 verdict compared two different
+    worlds and was void -- while looking like a clean, decisive number.
+
+    Pass the condition dicts actually used for each side. Any key whose value differs
+    means the two sides were measured under different worlds, and the comparison
+    proves nothing about the intervention.
+
+    The exception is the intervention itself: name it in `expected_difference` at the
+    call site if one side is deliberately meant to differ.
+    """
+    keys = set(treatment_conditions) | set(baseline_conditions)
+    mismatched = {k: (treatment_conditions.get(k), baseline_conditions.get(k))
+                  for k in keys
+                  if treatment_conditions.get(k) != baseline_conditions.get(k)}
+    return {"controlled": not mismatched, "mismatched": mismatched, "label": label,
+            "verdict": ("CONTROLLED" if not mismatched
+                        else "UNCONTROLLED - these differ between arms: %s" % sorted(mismatched))}
+
+
+def require_controlled(treatment_conditions, baseline_conditions, label=""):
+    """Fail closed rather than recording a comparison between two different worlds."""
+    v = assert_controlled(treatment_conditions, baseline_conditions, label)
+    if not v["controlled"]:
+        raise UncontrolledComparison("%s %s" % (label, v["verdict"]))
+    return v
+
+
 class VacuousCheck(AssertionError):
     """Raised when a comparison would pass because nothing happened."""
 
