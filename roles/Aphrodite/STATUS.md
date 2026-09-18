@@ -28,6 +28,11 @@ Campaign 0: ACCEPTED, PASS. Campaign 0B: ACCEPTED as informative failure
   Archaeon, Harmonia, Vivarium (comms #452-#454).
 news monitor: ACTIVE; first pass 2026-09-18 admitted 2 (reviewed); next
   scheduled pass Monday 2026-09-21 03:00.
-next executable action: operator gate -- who runs the benchmark on M1/M2
-  and with which models; meanwhile answer contracts as they arrive. Items needing no new authority:
+benchmark: bundle FROZEN (manifest f9d187ede, canonical 732dbedf...); run
+  via run_frozen.py; harness 618d810b... unchanged; executors Nestor
+  (M1, #471) and Archaeon (M2, #472); models Qwen3-8B, Gemma 3 4B, opt.
+  Llama 3.2 3B. Budget frozen: target 14 days, ceiling 30 days.
+next executable action: wait for receipts; then economics.py and the
+  packet's economics and substrate sections only. Contracts (#452-#454)
+  answered as they arrive. Items needing no new authority:
   APHRODITE-21 (file the deep-research report), -16, -24, -25, -26.
