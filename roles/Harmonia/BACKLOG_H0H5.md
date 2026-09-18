@@ -12,20 +12,31 @@ milestone are separate axes (QR-1.1.0).
 ## Start today
 
 HARM-01 | Amend the four-cell analysis file to dedup by spec hash, record fresh==S00 as one baseline under two labels, and state the shared-arm correlation between the transport contrast and G | H0 | alpha | S | none | `roles/Harmonia/qualification/h0h5/h0_analysis_plan.json` with three distinct payload hashes and four labels, and a refusal test that fires when one hash appears under two cell labels
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/h0_analysis_plan.json (4 cells, 4 distinct payload hashes, aliases fresh->S00 and random_pack->S10 with their evidence) + validate_cell_payloads (refuses one hash under two cell labels AND identical declared payload under two labels, the Charon A1 case); tests/test_qr_1_2_0.py.
 HARM-02 | Add the exchangeability diagnostic to the QR module (serial r against `committed_seq`, trend fraction, and the three-class label at the 0.577/0.816 cuts) so any detector output can carry it | ENGINE | beta | S | none | `exchangeability.py` plus a test reproducing 12/5/23 on the live dossier
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/exchangeability.py (EX-1.0.0: serial r, trend fraction r^2, inflation, three-class label at 0.577/0.816; cuts shown band-derived); test reproduces 12/5/23 on the committed live dossier. Ruling phrase 'in log terms' annotated as wrong (linear half) beside the original.
 HARM-03 | Write the vacuous-reading register and seed it with H2-over-C3-2, `stable`-vs-`at_T`, and the H1 relevance arm at 3 bits | EVIDENCE | program | S | none | `roles/Harmonia/VACUOUS_READINGS.md`, one row per question with the corpus that could not answer it and the reason
 HARM-04 | Extend the adversarial battery to AF-1.1.0 with a degenerate-replicate fixture, a structural-floor fixture, and a non-exchangeable-rows fixture | ENGINE | beta | M | none | `adversarial_fixtures.py` at AF-1.1.0 with 9/9 detected and each new detector's silence verified on a clean control
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: adversarial_fixtures.py at AF-1.1.0: F7 degenerate replicate, F8 structural floor, F9 non-exchangeable rows, each with a clean control; battery 12/12 (8 defects fire, 4 controls silent). Also fixed: detect_f6 KeyError since the QR-1.1.0 rename (runner dead 09-10..09-18).
 HARM-05 | State the QR-1.2.0 beta and 1.0 gate for H1, with attainable range and eligibility count per gate | H1 | beta | M | none | `qualification_rules.py` at QR-1.2.0 with `lane_gate("H1")` returning both gates and their attainable ranges
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H1') in QR-1.2.0: beta (PRECISION, 2 primaries) and 1.0 (POWER, 1 primary), attainable range, eligibility(n) printing NOTHING_COULD_FIRE below 6, pool >= 2K precondition, 3-bits/K=4 refusal.
 
 ## Qualification rules, one lane at a time
 
 HARM-06 | State the QR beta and 1.0 gate for H0, with the joint-treatment and interaction contrasts sized separately from a pilot-estimated Sigma | H0 | beta | M | HARM-05 | `lane_gate("H0")` plus a worked sizing at the pilot Sigma
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H0') + h0_worked_sizing(pilot_blocks): G and I sized SEPARATELY at the pilot Sigma, the three quantities labelled; test proves I needs >= G's n.
 HARM-07 | State the QR beta and 1.0 gate for H2, keeping computation, causal contribution and frozen reuse as three separate results | H2 | beta | M | none | `lane_gate("H2")` with three gates, not one
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H2'): three primaries a_computation / b_causal_contribution / c_frozen_reuse, never merged; refusals for (a)-as-(b)/(c) and readout-explained gain.
 HARM-08 | State the QR beta and 1.0 gate for H3, with prospective utility as the endpoint and archive diversity explicitly excluded from it | H3 | beta | M | none | `lane_gate("H3")` and a refusal test that rejects diversity as an endpoint
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H3') + refuse_endpoint('H3', ...): any diversity measure (archive_diversity, qd_score, coverage, descriptor_spread, novelty) refused as an endpoint; test fires and is silent on future_task_solve_fraction.
 HARM-09 | State the QR beta and 1.0 gate for H4 under `H4-ADAPTIVE-1.0.0`, with the frozen-suite endpoint and the training-task prohibition mechanical | H4 | beta | M | none | `lane_gate("H4")` plus a test that refuses any endpoint computed on training tasks
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H4') under H4-ADAPTIVE-1.0.0 + refuse_endpoint('H4', ..., computed_on='training') refuses mechanically; void conditions carried into the gate's refusals.
 HARM-10 | State the QR beta and 1.0 gate for H5, with the analytic access bound predeclared so only the excess over construction counts | H5 | beta | M | none | `lane_gate("H5")` carrying the <=8 vs 12 bound as a declared constant
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: lane_gate('H5') carries H5_DIRECT_REACH_BOUND=8 / H5_PERMUTED_REACH_BOUND=12 as constants; h5_excess_over_construction labels the live H5_1 numbers (8.0000 direct, 11.7305 learned) AT_OR_UNDER_BOUND_NO_EVIDENCE.
 HARM-11 | Declare the multiplicity rule ACROSS lanes, so six lanes reporting primaries do not accumulate an unstated family-wise rate | program | 1.0 | M | none | `MULTIPLICITY.md` with the declared family, the correction, and the family-wise rate under it
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/MULTIPLICITY.md + program_family(): LANE family (Bonferroni within lane) and PROGRAM family (alpha/6 for any cross-lane claim); uncorrected FWER 0.265, expected false supports 0.30 stated.
 HARM-12 | Publish the three-quantity separation (meaningful effect, precision, power) as a one-page rule every lane cites when it sizes | program | beta | S | none | `SIZING_RULE.md` and every `lane_gate` naming which of the three it promises
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/SIZING_RULE.md; THREE_QUANTITIES in QR-1.2.0; every lane_gate names its promised quantity (beta PRECISION, 1.0 POWER).
 
 ## Detectors and calibration
 
@@ -53,8 +64,11 @@ HARM-25 | Declare the analysis for H3's prospective-utility comparison before it
 HARM-26 | Regenerate the SFE contract at live schema 7 and re-verify the gate in both directions | ENGINE | beta | M | Daedalus (scratch engine at build parity) | a new `sfe_contract.json`, its diff reviewed, and `conformance_check.py` CONFORMANT on live and DRIFT on a mismatched engine
 HARM-27 | Extend the contract procedure to schema 8 without adding version-range tolerance to the gate | ENGINE | 1.1 | S | HARM-26 | the schema-8 contract and a test proving the gate still fails closed on any mismatch
 HARM-28 | Add a payload-determinism attestation to the contract-fixture stage, so a replay is recorded as an attestation and never enters an analysis as a replicate | ENGINE | alpha | S | none | a fixture that passes on bit-identical replay and a refusal test that rejects replay rows used as replicates
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: replay_attestation + refuse_replay_as_replicate in QR-1.2.0; F7 fixture passes on bit-identical replay (attests determinism, 1 unit) and refuses replay rows offered as replicates.
 HARM-29 | Add a structural-floor precheck that any corpus must pass before issue: report modal mass, support size and non-degenerate fraction | ENGINE | beta | M | none | `floor_precheck.py` that refuses a corpus with p_mode > 0.50 and reproduces C3-2's f = 0.000
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/floor_precheck.py (FP-1.0.0): support size, p_mode, f; refuses p_mode > 0.50; reproduces C3-2's f = 0.000 / p_mode 1.000 / support 1 from the committed readout; clean synthetic passes.
 HARM-30 | Add the shared-arm correlation to `paired_contrast` so contrasts sharing a baseline are not reported as independent | ENGINE | beta | S | HARM-01 | the function returning the induced correlation, with a test on the fresh/S00 case
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: contrast_correlation + paired_contrasts_shared_arm in QR-1.2.0; fresh/S00 case: G|transport = 0.5 for every rho under exchangeable equal variances, 0 for G|I; measured at the pilot Sigma otherwise.
 
 HARM-35 | Extend the SFE contract to model the RESPONSE surface, so a removed or renamed response field is DRIFT rather than silence | ENGINE | beta | L | Daedalus A0 (filed b24246097, cross-linked d618c0d22): the engine declares NO response models, so the live spec carries 0 schemas on 67 of 67 200-responses -- there is nothing for the generator to read | contract records per-route response fields; a fixture proving a removed response field reports DRIFT where today it reports CONFORMANT
 
@@ -67,6 +81,7 @@ HARM-31 | Write the standing-rules index so HA-1.1-1.6, R-C3-1..6 and the exchan
 HARM-32 | Audit every number quoted in my own rulings for the population it was measured on, and correct any quoted outside its scope | program | program | M | none | an audit file listing each quoted number, its population, and any correction
 HARM-33 | Run the grant and verify Archaeon's read scope end to end once the credential exists | ENGINE | alpha | S | operator (harmonia-m2 credential) | rows, census and out-of-scope isolation verified, or a recorded reissue path
 HARM-34 | Rule whether a diagnostic alpha may ever be promoted to confirmatory evidence, and write the refusal into `validate_plan` | program | 1.0 | S | none | a test proving a DIAGNOSTIC plan cannot be relabelled CONFIRMATORY after its data is read
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: freeze_plan + refuse_relabel; validate_plan(p, frozen=, data_opened=) refuses DIAGNOSTIC -> CONFIRMATORY after the data is read (same body or changed), allows it before, allows CONFIRMATORY frozen plans; tests prove all three.
 
 ## Mechanism Archaeology lane (added 2026-09-16; FOSSIL-GZIP-001, deliverable RESURRECTION-GZIP-001)
 
