@@ -27,6 +27,7 @@ questions and falsifiable stands over conclusions.
       swarm_failure.md  multi-agent failure, contagion, herding,
                         collusion, and the theory of their thresholds
       weak_models.md    can small, weak models be used, and when
+      external_reports.md  other seats' reports: what to take, what not
     designs/
       RSI-1_TRANSPLANT_TEST_DRAFT.md   the proposed first real
                         experiment (not frozen)
