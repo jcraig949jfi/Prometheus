@@ -1,0 +1,144 @@
+{
+ "fixture": {
+  "G": 10,
+  "N": 10,
+  "n_organisms": 110,
+  "seed": 1
+ },
+ "note": "a preregistered prediction on (arm, measure) listed in undefined_by_arm is refused at plan time (rule A5)",
+ "stage": "definedness",
+ "table": {
+  "D0:None": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D1:None": {
+   "ancestor_recall_1": "UNDEFINED (None)",
+   "ancestor_recall_5": "UNDEFINED (None)",
+   "ancestor_recall_all": "UNDEFINED (None)",
+   "depth_error": "DEFINED",
+   "edge_precision": "UNDEFINED (NO_EDGES)",
+   "edge_recall": "UNDEFINED (None)",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D2:None": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D3:10": {
+   "ancestor_recall_1": "UNDEFINED (None)",
+   "ancestor_recall_5": "UNDEFINED (None)",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "UNDEFINED (None)",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D3:2": {
+   "ancestor_recall_1": "UNDEFINED (None)",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "UNDEFINED (None)",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D3:5": {
+   "ancestor_recall_1": "UNDEFINED (None)",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "UNDEFINED (None)",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D4:None": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D5:0.05": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D5:0.1": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  },
+  "D5:0.25": {
+   "ancestor_recall_1": "DEFINED",
+   "ancestor_recall_5": "DEFINED",
+   "ancestor_recall_all": "DEFINED",
+   "depth_error": "DEFINED",
+   "edge_precision": "DEFINED",
+   "edge_recall": "DEFINED",
+   "extinct_branch_recoverable": "DEFINED",
+   "extinct_recoverable": "DEFINED",
+   "mrca_error": "DEFINED"
+  }
+ },
+ "undefined_by_arm": {
+  "D1:None": [
+   "edge_recall",
+   "edge_precision",
+   "ancestor_recall_1",
+   "ancestor_recall_5",
+   "ancestor_recall_all"
+  ],
+  "D3:10": [
+   "edge_recall",
+   "ancestor_recall_1",
+   "ancestor_recall_5"
+  ],
+  "D3:2": [
+   "edge_recall",
+   "ancestor_recall_1"
+  ],
+  "D3:5": [
+   "edge_recall",
+   "ancestor_recall_1"
+  ]
+ }
+}
