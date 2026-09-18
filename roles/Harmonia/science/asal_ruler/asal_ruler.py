@@ -209,10 +209,61 @@ def stage_fixture(out):
     return allpass
 
 
+# ------------------------------------------------------------------ acceptance stage (HARM-57, rule A4)
+def stage_accept(out):
+    """Instantiate every element class of the preregistered domain on the executor (the Lenia port):
+    every categorical value (b strings, kn, gn), the numeric edges (R, T, m, s), every catalogue pattern
+    (parse + fit in the 128 world). Writes accept.json with exact accepted / refused counts and reasons.
+    The search stage refuses to run unless accept.json exists with refused == 0."""
+    t107 = load_techne()
+    animals = json.load(open(ANIMALS, encoding="utf-8"))
+    cat = [e for e in animals if isinstance(e, dict) and "params" in e and "cells" in e and "x" not in str(e.get("code", ""))]
+    res = {"stage": "accept", "executor": {"script": TECHNE_SCRIPT, "sha256": sha256_file(TECHNE_SCRIPT)}, "classes": {}, "catalogue": {}}
+    base = {"R": 13, "T": 10, "m": 0.15, "s": 0.015, "b": "1", "kn": 1, "gn": 1}
+
+    def try_params(p, world=64):
+        try:
+            sim = t107.Lenia2D(world, dict(p, b=str(p["b"])))
+            A = np.zeros((world, world)); A[world // 2 - 4:world // 2 + 4, world // 2 - 4:world // 2 + 4] = 1.0
+            for _ in range(3): A = sim.step(A)
+            return None
+        except Exception as e:
+            return repr(e)[:120]
+    acc = ref = 0
+    for name, values in (("b", B_DOMAIN), ("kn", [1, 2, 3, 4]), ("gn", [1, 2, 3]), ("R", [6, 30]), ("T", [5, 10, 20]), ("m", [0.05, 0.50]), ("s", [0.005, 0.10])):
+        for v in values:
+            err = try_params(dict(base, **{name: v}))
+            res["classes"][f"{name}={v}"] = "ACCEPTED" if err is None else f"REFUSED: {err}"
+            acc += err is None; ref += err is not None
+    c_acc = c_ref = 0; reasons = {}
+    for e in cat:
+        try:
+            pat = t107.rle2arr_2d(e["cells"])
+            if pat.shape[0] > WORLD or pat.shape[1] > WORLD: raise ValueError(f"pattern {pat.shape} exceeds {WORLD}")
+            err = try_params(dict(e["params"]), world=WORLD)
+            if err: raise ValueError(err)
+            c_acc += 1
+        except Exception as ex:
+            c_ref += 1; k = type(ex).__name__ + ":" + str(ex)[:40]; reasons[k] = reasons.get(k, 0) + 1
+    res["catalogue"] = {"accepted": c_acc, "refused": c_ref, "refusal_reasons": reasons}
+    res["domain_classes"] = {"accepted": acc, "refused": ref}
+    res["executable"] = (ref == 0 and c_ref == 0)
+    os.makedirs(out, exist_ok=True)
+    json.dump(res, open(os.path.join(out, "accept.json"), "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
+    print(json.dumps({k: v for k, v in res.items() if k != "classes"}, indent=1))
+    print("refused classes:", [k for k, v in res["classes"].items() if v != "ACCEPTED"])
+    print("EXECUTABLE", res["executable"])
+    return res["executable"]
+
+
 # ------------------------------------------------------------------ search stage
 def stage_search(out):
     fx = json.load(open(os.path.join(out, "fixture.json")))
     assert fx["all_controls_pass"], "fixture stage did not pass; search refused"
+    ap_ = os.path.join(out, "accept.json")  # rule A4 (HARM-57): no search over a domain the executor refuses
+    assert os.path.exists(ap_), "accept.json missing: run --stage accept first; search refused"
+    acc = json.load(open(ap_))
+    assert acc["executable"], f"domain not executable on this executor: classes refused {acc['domain_classes']['refused']}, catalogue refused {acc['catalogue']['refused']}; search refused"
     th = json.load(open(os.path.join(out, "thresholds.json")))
     t107 = load_techne(); obs = t107.Observer()
     animals = json.load(open(ANIMALS, encoding="utf-8"))
@@ -290,10 +341,12 @@ def stage_search(out):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--stage", choices=["fixture", "search"], required=True); ap.add_argument("--out", default=None)
+    ap = argparse.ArgumentParser(); ap.add_argument("--stage", choices=["accept", "fixture", "search"], required=True); ap.add_argument("--out", default=None)
     a = ap.parse_args()
     out = a.out or os.path.join(OUT, "run_2026-09-18")
-    if a.stage == "fixture":
+    if a.stage == "accept":
+        ok = stage_accept(out); sys.exit(0 if ok else 3)
+    elif a.stage == "fixture":
         ok = stage_fixture(out); sys.exit(0 if ok else 2)
     else:
         stage_search(out)
