@@ -107,3 +107,24 @@ to Harmonia with the recommendation to freeze at the population thresholds and r
 power as a measured blind spot of the old geometry. | CALIBRATION_population_v0.3.json,
 segment self-test. | Alternative: keep tuning the distance -- rejected (tuning toward
 admission; the ruling says UNABLE or lose qualification, not move). SCIENTIFIC DISCRETION.
+
+D6-011 | 2026-09-18 21:14 | ITEMS 3, 4, 7 DELIVERED. Axis W: composed worlds with feedback (ten
+features, PROCEDURAL sampler with uniform complexity bins 0-10 and complete provenance; fixtures
+green incl. non-inertness and the coupling/ENDOGENOUS proof). Axis P: eight labeled kinds + an
+unlabeled random walk + stable; exact reproducible history; EXOGENOUS events realized per
+generation; ENDOGENOUS entries written by the loop from population effects. G6-0 rehearsal,
+Archaeon side (archaeon/campaign6/G6-0/REHEARSAL_2026-09-18*.json): bin-6 world / labeled
+schedule / two segments / planted harvester at gen 20 -> 4 events + 4 freezes at the plant,
+replay A SAME, replay D (rollback) DIFFERENT, anchors chain across the boundary and cover 1,280
+evaluations, PARTIAL_FREEZE visible (80 of 139), interpretation None on every freeze; bin-10
+world adds ENDOGENOUS_PRESSURE to the history. All twelve R9 proofs: YES on mine; NOT_MINE for
+graph checkpointing (Proteus), cross-client freezes (Daedalus R2), fixture commitments
+(Harmonia/engine/PEW); PENDING Harmonia's receipt consumption. OBSERVED COST: escalation volume
+139/1280 evaluations at bin 6 and 415/1280 at bin 10, dominated by the UNVALIDATED
+rulers (structural_reuse count-2 base rate on v0 genomes; classifier_failure = the blind-spot
+count; disagreement). Freezing on every one of them is the preserve-aggressively policy the
+directive asks for and it costs ~32% freezes per evaluation on rich worlds; a freeze budget per
+segment with NOT_ATTEMPTED replays is the preregistered relief, and whether 10/11 should trigger
+a full freeze when they fire alone is put to Harmonia and the operator, not decided here.
+| the two receipts; fixtures. | -- | Not revisited. DETERMINISTIC (proofs), SCIENTIFIC
+DISCRETION (the open policy question is flagged, not answered).
