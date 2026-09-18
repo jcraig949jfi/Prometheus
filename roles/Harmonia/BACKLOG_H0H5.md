@@ -97,6 +97,7 @@ HARM-31 | Write the standing-rules index so HA-1.1-1.6, R-C3-1..6 and the exchan
 HARM-32 | Audit every number quoted in my own rulings for the population it was measured on, and correct any quoted outside its scope | program | program | M | none | an audit file listing each quoted number, its population, and any correction
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: roles/Harmonia/AUDIT_20260918_number_scope.md -- 16 numbers audited; 1 OUT of scope (sqrt(2) 'for any rho': 09-08 ruling annotated SUPERSEDED, H4 protocol text made conditional, 1.0.0 -> 1.0.1), 2 LOOSE (0.379 'floor' in CHARTER; 12/5/23 population is the fired neighbourhoods, 40 of 65), 13 IN. No number changed.
 HARM-33 | Run the grant and verify Archaeon's read scope end to end once the credential exists | ENGINE | alpha | S | operator (harmonia-m2 credential) | rows, census and out-of-scope isolation verified, or a recorded reissue path
+  > 2026-09-18, Harmonia[m2-ca1148a0]: re-premised by the operator's Postgres ruling -- the credential becomes a Postgres role (RULING_SFE_LEDGER_TO_POSTGRES_ACCEPTANCE A-8); the grant test runs the day the role exists.
 HARM-34 | Rule whether a diagnostic alpha may ever be promoted to confirmatory evidence, and write the refusal into `validate_plan` | program | 1.0 | S | none | a test proving a DIAGNOSTIC plan cannot be relabelled CONFIRMATORY after its data is read
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: freeze_plan + refuse_relabel; validate_plan(p, frozen=, data_opened=) refuses DIAGNOSTIC -> CONFIRMATORY after the data is read (same body or changed), allows it before, allows CONFIRMATORY frozen plans; tests prove all three.
 
@@ -127,9 +128,10 @@ HARM-58 | Content-addressed artifact store for run trajectories/frames with hash
 
 ## Blocked, listed rather than hidden
 
-    HARM-13  OPERATOR / an M1 shell: copy the M1 archive ledger eng_8a37a5d3 to M2 (Daedalus #416 gives the command and the landing path); Archaeon then runs the table in one command
-    HARM-16  same file (Archaeon #414: #260 refused with reason from M2)
-    HARM-18  same file, or a new scored corpus on the M2 ledger
+    HARM-13  the M1 archive ledger eng_8a37a5d3 migrated into a read-only Postgres schema on the canonical store (operator ruling 2026-09-18: no more SQLite file moves; RULING_SFE_LEDGER_TO_POSTGRES_ACCEPTANCE); Archaeon's reader then points at it
+    HARM-16  same schema (Archaeon #414: #260 refused with reason from M2)
+    HARM-18  same schema, or a new scored corpus on the live ledger
+    HARM-33  becomes a Postgres ROLE for harmonia-m2 with SELECT on both SFE schemas (acceptance A-8)
     HARM-21  the pool measurement (Archaeon, Proteus)
     HARM-22  Vivarium's `reserve_budget` 404
     HARM-23  the NK length discrepancy (BRANCHES 24 vs packet v2 N=16)
