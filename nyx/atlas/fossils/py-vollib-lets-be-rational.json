@@ -130,16 +130,213 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:py-vollib-lets-be-rational/upstream/tree/vollib/black/implied_volatility.py:59-300"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:py-vollib-lets-be-rational/upstream/tree/vollib/lets_be_rational/core.py:1-3"
+   }
+  ],
+  "inspected_files": [
+   "vollib/black/implied_volatility.py 59-300",
+   "vollib/lets_be_rational/core.py"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "the inverse of the Black option-pricing formula (given a price, find the volatility) solved to machine precision in a bounded number of steps by Jaeckel's 'Let's Be Rational': normalise the price, form a rational-cubic first guess whose branches are chosen by regime (near the intrinsic value, near the money, deep out of the money), then take one or two Householder (third-order) steps on a transformed objective so that the iteration count does not depend on the input; py_vollib is the packaging that exposes this under the Black and Black-Scholes-Merton conventions",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/vollib/py_vollib@11f2058f709328339e3906d99cb04ff41af97776",
+   "payload_manifest_id": "techne tree_sha256 b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e (249 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/vollib/black/implied_volatility.py",
+     "payload_hash_read": "23334de3eb920447a186c5ba3bcc0f190e5b8f7c7e379706ba7e602bb8b8e804",
+     "techne_recorded_hash": "23334de3eb920447a186c5ba3bcc0f190e5b8f7c7e379706ba7e602bb8b8e804",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/vollib/lets_be_rational/core.py",
+     "payload_hash_read": "3c2b678e593ef42f8e8daaf394a24136289154f5139c3f0171a85f05cdd60ac3",
+     "techne_recorded_hash": "3c2b678e593ef42f8e8daaf394a24136289154f5139c3f0171a85f05cdd60ac3",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
+ "organs": [
+  {
+   "organ_id": "py-vollib-lets-be-rational::implied_volatility_by_a_rational_cubic_first_guess_per_price_regime_refined_by_householder_steps_on_a_transformed_objective_in_a_bounded_iteration_count",
+   "fossil_ancestry": "py-vollib-lets-be-rational",
+   "human_name": "implied_volatility_of_discounted_option_price / normalised_implied_volatility (implied_volatility.py 59-228); normalised_implied_volatility_from_a_transformed_rational_guess_with_limited_iterations (the N-iteration entry into py_lets_be_rational)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the discounted price is undiscounted and normalised by the forward and strike; the normalised Black price is a monotone function of volatility with known asymptotics at zero and infinity, so a rational-cubic interpolant (a Pade-like guess with regime-selected control points) gives a starting volatility close to the root everywhere; a Householder step (using the first three derivatives of the normalised price, which are cheap closed forms) then converges cubically, so one or two steps reach double precision regardless of moneyness; the limited-iterations entry exposes N so a caller can trade a little accuracy for a fixed cost",
+   "input": "a price, forward, strike, time, and call/put flag",
+   "output": "the implied volatility",
+   "state": "none",
+   "update": "per solve",
+   "assumptions": [
+    "the normalised Black price is monotone and smooth in volatility with analytic derivatives; a good regime-aware first guess makes a fixed small step count enough (Jaeckel 2013/2015)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "implied volatility to machine precision in two iterations, replacing bisection or Newton loops with input-dependent iteration counts",
+   "failure_landscape": "by reading: prices below the intrinsic value or above the forward have no real volatility; the code has denormalisation/limit branches for those (in the py_lets_be_rational body, not read here)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Black 1976; Jaeckel 2013 'Let's Be Rational'; the rational-cubic interpolation is Jaeckel's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:py-vollib-lets-be-rational/upstream/tree/vollib/black/implied_volatility.py:59-228"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the py_vollib wrappers; the numerics are in py_lets_be_rational (not in this tree); MEDIUM accordingly",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the Black-Scholes-Merton pricing and analytical/numerical greeks, the ref_python reference implementations, the helper and exception modules",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the analytical greeks are one formula each",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "py-vollib-lets-be-rational"
+  },
+  {
+   "candidate": "'option pricing library' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the forward price, the greeks and the implied-vol inverse are separable; the fossil's point is the inverse",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "py-vollib-lets-be-rational"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "py-vollib-lets-be-rational::P.the_volatility_implied_by_an_option_price_must_be_recovered_to_machine_precision_in_a_fixed_number_of_steps_across_all_moneyness_regimes_where_a_generic_root_finder_takes_an_input_dependent_number_of_iterations",
+   "source_fossil": "py-vollib-lets-be-rational",
+   "source_evidence": "implied_volatility.py; the record's 'two iterations' claim",
+   "condition": "an organism inverts a monotone but stiff price-to-volatility map for a stream of quotes spanning deep in, at, and deep out of the money; the score is accuracy and the worst-case iteration count over the stream",
+   "resource_or_constraint": "closed-form derivatives of the price; a fixed step budget",
+   "failure_condition": "an iteration count that blows up near the money or in the wings, or a loss of precision at the regime boundaries",
+   "world_punishes": "bisection (linear, input-dependent); Newton from a fixed guess (diverges in the wings)",
+   "world_rewards": "a regime-aware rational-cubic guess plus a third-order step",
+   "observable_consequence": "iterations to double precision vs moneyness for bisection, Newton, and the rational-guess Householder method on a grid of forwards/strikes; error at the intrinsic-value boundary",
+   "vacuity_condition": "at-the-money quotes only",
+   "trivial_shortcuts": "a lookup table (which the world defeats by spanning the regimes continuously)",
+   "cheat_control": "an organism given the true volatility (invert the analytic Black price of a known vol) must return it to machine precision; bisection must show the input-dependent iteration count; Newton from a flat guess must fail in the wings: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: implied-volatility inversion (Jaeckel 2013; py_vollib packaging)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "composition_edges": [],
  "ancestry_edges": [
   {
@@ -148,10 +345,23 @@
    "to": "Black & Scholes 1973; Jaeckel 2015",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "py-vollib-lets-be-rational",
+   "relation": "reimplementation_of",
+   "to": "Black 1976 (the pricing formula) inverted by Jaeckel 2013/2015 (Let's Be Rational); py_vollib packages py_lets_be_rational",
+   "note": "from the record and the module docstrings",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the numerical core (rational-cubic guess and Householder step) is in py_lets_be_rational, not in this tree",
+   "greeks and pricing unread",
+   "nothing ran; M3-RUNNABLE PACKET CANDIDATE with the analytic Black price as an exact oracle"
+  ],
+  "note": "the mechanism is named and located by call; the body it calls is a dependency, flagged for Techne's packet (entry point + dependency)",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

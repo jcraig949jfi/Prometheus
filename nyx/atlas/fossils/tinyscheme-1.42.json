@@ -131,17 +131,360 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2568-2720"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2362-2410"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:1251-1300"
+   }
+  ],
+  "inspected_files": [
+   "scheme.c 2362-2410, 2568-2720, 1251-1300"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "a Scheme interpreter as a single dispatch loop over opcodes with an explicit continuation stack instead of C recursion: eval either looks a symbol up, dispatches a syntax form, or saves a frame and evaluates the operator then the arguments; apply binds a closure's parameters in a new environment and jumps to the body; the continuation is a heap 'dump' stack of (op, args, code, env) frames, so tail calls do not grow the C stack and call/cc is a copy of that stack; a mark-and-sweep collector reclaims cons cells, rebuilding a sorted free list",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceforge.net/projects/tinyscheme/files/tinyscheme/tinyscheme-1.42/tinyscheme-1.42.tar.gz/download sha256:17b0b1bffd22f3d49d5833e22a120b339039d2cfda0b46d6fc51dd2f01b407ad",
+   "payload_manifest_id": "techne tree_sha256 134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce (16 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/tinyscheme-1.42/scheme.c",
+     "payload_hash_read": "ff922c7941f58a48e793e99bf966f029a23180972981405a7b315bd2882abfe8",
+     "techne_recorded_hash": "ff922c7941f58a48e793e99bf966f029a23180972981405a7b315bd2882abfe8",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c",
+   "fossil_ancestry": "tinyscheme-1.42",
+   "human_name": "OP_EVAL (2568-2599): symbol lookup, syntax dispatch, else s_save(OP_E0ARGS) and eval the operator; OP_APPLY (2640-2708): foreign call, or bind closure params in new_frame_in_env and s_goto(OP_BEGIN), or restore a continuation's dump; s_goto / s_return macros",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the interpreter is a loop that reads the current opcode and branches; OP_EVAL resolves a symbol from the environment, or if the form is a pair dispatches on a syntactic keyword or saves an OP_E0ARGS continuation and recurses (via the loop, not C) into the operator; OP_APPLY, once the operator and arguments are values, either calls a built-in, or extends the closure's captured environment with the bound parameters and jumps to its body via OP_BEGIN, or (for a captured continuation) replaces the dump stack; s_goto sets the next opcode and s_return pops a frame, so control flow is data",
+   "input": "an expression and an environment",
+   "output": "a value",
+   "state": "the registers (code, args, envir, value) and the dump stack",
+   "update": "per opcode",
+   "assumptions": [
+    "representing the continuation explicitly on the heap makes proper tail calls and call/cc natural and bounds the C stack (the trampoline / CPS-by-hand technique)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it"
+   ],
+   "fitness_value_in_ancestor": "a full R5RS-ish Scheme with tail calls and first-class continuations in one C file",
+   "failure_landscape": "by reading: every intermediate value must be reachable from the registers or the dump or the GC frees it (the push_recent_alloc guard around foreign calls exists for this)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the SICP metacircular evaluator made iterative; MiniScheme (Moriwaki 1989)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2568-2720"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the opexe dispatch for eval/apply",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it",
+   "fossil_ancestry": "tinyscheme-1.42",
+   "human_name": "struct dump_stack_frame (2362); s_save (2371-2389) pushes a frame; _s_return (2391-2408) pops; dump_stack_reset / initialize / free (2410-2423); OP_APPLY's continuation branch sets sc->dump = cont_dump(code)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the return continuation is an array of frames each holding the opcode to resume, the pending args, the code and the environment; a non-tail subexpression pushes a frame before recursing and pops it on return; a tail call pushes nothing, so iteration in constant space falls out; call/cc captures the current dump array as a first-class object and invoking a continuation restores it, making non-local control a stack swap",
+   "input": "control-flow points",
+   "output": "saved/restored continuations",
+   "state": "the dump array",
+   "update": "per save/return",
+   "assumptions": [
+    "a reified continuation stack is cheaper and more general than C recursion; copying it for call/cc is acceptable at Scheme scale"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c"
+   ],
+   "fitness_value_in_ancestor": "proper tail calls and call/cc, the two features that distinguish Scheme from a toy Lisp",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "continuation-passing made concrete; the dump register of the SECD machine",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2362-2423"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dump-stack functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "gc (mark-and-sweep from the registers, dump and oblist, rebuilding a sorted free list: 1251-1300) as a separate organ",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:1251-1300",
+   "note": "a textbook mark-sweep; the sorted free list (for vector allocation) is its one wrinkle; counted here, not split out, per the directive's no-deepening line",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyscheme-1.42"
+  },
+  {
+   "candidate": "the s-expression reader, the ~200 opcodes in opdefines.h, the numeric tower, ports and I/O, dynload, init.scm, the FFI",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyscheme-1.42"
+  },
+  {
+   "candidate": "'Scheme interpreter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the dispatch loop and the reified continuation are separable; the atlas's femtolisp compiles to bytecode instead of dispatching over s-expressions",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinyscheme-1.42"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tinyscheme-1.42::P.a_lexically_scoped_functional_language_with_proper_tail_calls_and_first_class_continuations_must_be_interpreted_in_bounded_c_stack_from_one_small_file",
+   "source_fossil": "tinyscheme-1.42",
+   "source_evidence": "scheme.c eval/apply loop; the dump stack",
+   "condition": "an organism interprets a language whose programs recurse deeply and use tail recursion for iteration and call/cc for non-local control; the score is correct tail-call space behaviour, working call/cc, and code size",
+   "resource_or_constraint": "the C stack (must not grow on tail calls); one file",
+   "failure_condition": "C-stack overflow on a tail-recursive loop, or call/cc that cannot re-enter a past control point",
+   "world_punishes": "a C-recursive evaluator (grows the stack); a language without reified continuations",
+   "world_rewards": "an iterative dispatch loop with a heap continuation stack",
+   "observable_consequence": "C-stack depth on a million-iteration named-let loop, and the behaviour of a generator built from call/cc, for the dispatch-loop interpreter vs a C-recursive one",
+   "vacuity_condition": "programs without recursion or continuations",
+   "trivial_shortcuts": "a host language with tail calls and continuations (which C is not)",
+   "cheat_control": "an organism given a host with proper tail calls must show constant stack; a C-recursive Scheme must overflow on the loop; call/cc removed must fail the generator: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a small embeddable Scheme (Moriwaki 1989; Shapiro et al. 2000-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c",
+   "to": "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "eval saves frames",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it",
+   "to": "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "return resumes an opcode",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "tinyscheme-1.42",
@@ -156,10 +499,23 @@
    "to": "microkanren-scheme",
    "note": "both Scheme; microKanren is hosted in a Scheme like this one",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyscheme-1.42",
+   "relation": "derived_from",
+   "to": "MiniScheme (Moriwaki 1989); the SICP metacircular evaluator and the SECD machine; the atlas's femtolisp (bytecode) and lisp-1-5 (the origin) are the family",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the reader, most opcodes, the numeric tower and call/cc capture-in-full unread",
+   "gc folded into a reject",
+   "nothing ran"
+  ],
+  "note": "the two mechanisms that make it Scheme rather than Lisp are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

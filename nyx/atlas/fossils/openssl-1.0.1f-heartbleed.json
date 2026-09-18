@@ -147,16 +147,213 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/t1_lib.c:2554-2611"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/d1_both.c:1455-1475"
+   }
+  ],
+  "inspected_files": [
+   "ssl/t1_lib.c 2554-2611",
+   "ssl/d1_both.c 1455-1475"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "the TLS/DTLS heartbeat responder (RFC 6520): it takes a request carrying a declared payload length, allocates a response sized from that declared length, and copies that many bytes from the request into the response. In 1.0.1 through 1.0.1f the declared length is used without being compared to the length of the record actually received, so a response can be larger than the request was; 1.0.1g adds two bounds checks (a zero-length guard and a check that the declared payload plus overhead does not exceed the received record) that make the responder ignore any request whose declared length is not backed by received bytes. The cut records the responder as one organ and the missing-check-then-added-check as the fossil's point",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.openssl.org/source/old/1.0.1/openssl-1.0.1f.tar.gz sha256:6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a",
+   "payload_manifest_id": "techne tree_sha256 70f4afd6ad289df3408e7a3b4901bd9f1d1e4e402eaf2c6f475aafa03ade6d2b (2254 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/openssl-1.0.1f/ssl/t1_lib.c",
+     "payload_hash_read": "536114785bee47c0f44044aab2ded99f625c2e63b3fcd082cce1d92ef91ea473",
+     "techne_recorded_hash": "536114785bee47c0f44044aab2ded99f625c2e63b3fcd082cce1d92ef91ea473",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/openssl-1.0.1f/ssl/d1_both.c",
+     "payload_hash_read": "215e28d3a4900b674b4408c13a6c224639b344fcab59f8b89f1f284736f60560",
+     "techne_recorded_hash": "215e28d3a4900b674b4408c13a6c224639b344fcab59f8b89f1f284736f60560",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
+ "organs": [
+  {
+   "organ_id": "openssl-1.0.1f-heartbleed::heartbeat_responder_that_sizes_and_fills_a_reply_from_a_caller_declared_length_field_whose_validation_against_the_received_record_length_was_absent_and_was_added_in_the_successor_release",
+   "fossil_ancestry": "openssl-1.0.1f-heartbleed",
+   "human_name": "tls1_process_heartbeat (t1_lib.c 2554-2611) / dtls1_process_heartbeat (d1_both.c 1455-...): read hbtype and a 16-bit payload length; on a REQUEST allocate 1 + 2 + payload + 16 and copy payload bytes then random padding, write it back; the 1.0.1g fix adds 'if (1 + 2 + 16 > s->s3->rrec.length) return 0' and 'if (1 + 2 + payload + 16 > s->s3->rrec.length) return 0' before the allocation",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the responder parses a one-byte type and a two-byte declared payload length from the received record, and for a request builds a response of type, echoed length, echoed payload and 16 bytes of random padding; the read of the payload copies as many bytes as the declared length says; the defect is that nothing tied the declared length to the number of bytes actually received before 1.0.1g, so the response could be assembled from more of the process buffer than the request supplied; the fix is the two comparisons that reject a request whose declared length exceeds the received record",
+   "input": "a received heartbeat record",
+   "output": "a heartbeat response, or (after the fix) nothing when the declared length is unbacked",
+   "state": "none beyond the connection buffer",
+   "update": "per heartbeat",
+   "assumptions": [
+    "BEFORE the fix: that a peer's declared length is backed by the bytes it sent (an untrusted-input assumption that did not hold); AFTER: the declared length must be validated against the received record"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "a keep-alive and path-MTU probe for (D)TLS without renegotiation (RFC 6520)",
+   "failure_landscape": "the missing bounds check is the failure: a length field consumed as a copy count without validation is the classic input-length-trust defect; the fix and CVE-2014-0160 are the recorded outcome; the DTLS copy carried the same defect, so one fossil holds two instances of the same missing check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "RFC 6520 (Seggelmann et al.); the defect and fix are the CVE-2014-0160 record and the 1.0.1g changelog",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/t1_lib.c:2554-2611; vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/d1_both.c:1455-1475"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two heartbeat handlers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the entire rest of OpenSSL (the TLS state machine, the record layer, the crypto library, the BIO abstraction, the 2,250 other files)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; the specimen is preserved for the heartbeat defect only (record)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "openssl-1.0.1f-heartbleed"
+  },
+  {
+   "candidate": "'TLS library' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the fossil's point is one responder and one missing check, not the library",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "openssl-1.0.1f-heartbleed"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "openssl-1.0.1f-heartbleed::P.a_network_service_that_echoes_a_caller_supplied_length_must_validate_that_length_against_the_bytes_actually_received_before_using_it_to_size_or_fill_a_reply",
+   "source_fossil": "openssl-1.0.1f-heartbleed",
+   "source_evidence": "the two handlers; the 1.0.1g bounds-check diff; RFC 6520",
+   "condition": "an organism parses an untrusted message containing a length field and produces a reply built from that many bytes of an input buffer; the message's declared length may not match the bytes the peer actually sent; the score is whether the reply ever contains bytes the peer did not supply",
+   "resource_or_constraint": "one comparison against the received record length",
+   "failure_condition": "a reply assembled from more of the buffer than the request delivered (an over-read), which is the defect",
+   "world_punishes": "trusting the declared length; sizing a copy from it without a check",
+   "world_rewards": "comparing the declared length to the received length and rejecting the mismatch (the 1.0.1g fix)",
+   "observable_consequence": "on a differential test between 1.0.1f and 1.0.1g with requests whose declared length exceeds the sent bytes: 1.0.1f produces an over-long response, 1.0.1g returns nothing; this is a present-vs-absent-check comparison, run in a sandboxed test harness, not an extraction against any live service",
+   "vacuity_condition": "requests whose declared length always equals the bytes sent",
+   "trivial_shortcuts": "rejecting all heartbeats (which the keep-alive requirement forbids)",
+   "cheat_control": "the fixed release (1.0.1g) is the reference: on the same crafted-length test inputs it must never emit a response longer than the request, where 1.0.1f does; the fossil is the before, the fix is the oracle",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: (D)TLS heartbeat / keep-alive (RFC 6520), preserved as the CVE-2014-0160 case study",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "composition_edges": [],
  "ancestry_edges": [
   {
@@ -165,10 +362,22 @@
    "to": "OpenSSL 1.0.1g (the fix)",
    "note": "before-failure body; the replacement is one release later",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "openssl-1.0.1f-heartbleed",
+   "relation": "historical_version_of",
+   "to": "OpenSSL 1.0.1 series; the defect entered at the heartbeat commit and was repaired in 1.0.1g",
+   "note": "from the record and the changelog",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "only the two handlers read; the rest of OpenSSL is out of scope for this fossil",
+   "nothing ran; a present-vs-absent-check differential is an M2 build world (the fix is the oracle)"
+  ],
+  "note": "a defect fossil: the mechanism is an echo responder and the point is the input-length check that was missing and then added",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

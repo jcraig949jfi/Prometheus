@@ -131,17 +131,336 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:1-132"
+   }
+  ],
+  "inspected_files": [
+   "redlock/__init__.py 1-132"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "a lease-based distributed mutex over N independent Redis instances: acquire the same key with a unique random value and a TTL on each instance; the lock is held only if a majority acknowledged within a validity window that subtracts the elapsed acquisition time and a clock-drift margin from the TTL; release is a check-and-delete Lua script that deletes the key only if its value still matches the acquirer's, so a lease that already expired and was retaken is never deleted by the old holder",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/SPSCommerce/redlock-py@42ef491061c3790307d39356b307c4318032c439",
+   "payload_manifest_id": "techne tree_sha256 09488f1ae9cf4bf50049c8646cdac9ccf055482964352b554688304de8f48dc8 (9 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/redlock/__init__.py",
+     "payload_hash_read": "e14450479d582d9ac5883079f54ea8e39d9ed404ac0ff2eccabfd0d6f92c1562",
+     "techne_recorded_hash": "e14450479d582d9ac5883079f54ea8e39d9ed404ac0ff2eccabfd0d6f92c1562",
+     "match": true,
+     "refs": 3
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "redlock-py-redis-2014::acquire_the_same_key_with_a_unique_value_and_ttl_on_every_instance_holding_the_lock_only_if_a_majority_acked_within_a_validity_window_that_discounts_elapsed_time_and_clock_drift",
+   "fossil_ancestry": "redlock-py-redis-2014",
+   "human_name": "Redlock.lock (72-120): val = 22 random chars; drift = ttl * 0.01 + 2; per server SET resource val NX PX ttl; validity = ttl - elapsed - drift; hold if validity > 0 and n >= quorum, else unlock everywhere and retry; quorum = N // 2 + 1",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a unique value identifies this acquisition; the client sets the key with NX (only if absent) and PX (a millisecond TTL) on each of the N servers, timing the whole round; the lock is granted only if at least a majority set succeeded AND the remaining validity (TTL minus the time the round took minus a drift allowance) is still positive; if either fails the client deletes its value from every server and retries after a delay; the drift margin (1 percent of the TTL plus 2 ms) accounts for clock differences between the client and the servers",
+   "input": "a resource name and a TTL",
+   "output": "a Lock (validity, resource, value) or False",
+   "state": "none on the client beyond the returned lock",
+   "update": "per acquire",
+   "assumptions": [
+    "a majority of independent, non-colluding Redis instances is available; clocks drift by less than the margin over the lease; the network round trip is much shorter than the TTL (else validity goes negative)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "redlock-py-redis-2014::release_by_a_check_and_delete_lua_script_that_deletes_the_key_only_when_its_value_still_equals_the_acquirers_so_an_expired_and_retaken_lease_is_never_deleted_by_the_old_holder"
+   ],
+   "fitness_value_in_ancestor": "mutual exclusion without a single point of failure, from plain Redis instances",
+   "failure_landscape": "by reading: the algorithm was criticised (Kleppmann 2016) because a process pause or clock jump longer than the validity window lets two holders believe they hold the lock; the validity return value is the client's own honest bound, not a guarantee the resource enforces",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "antirez / Sanfilippo, redis.io/topics/distlock 2014",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:72-120"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Redlock.lock",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "redlock-py-redis-2014::release_by_a_check_and_delete_lua_script_that_deletes_the_key_only_when_its_value_still_equals_the_acquirers_so_an_expired_and_retaken_lease_is_never_deleted_by_the_old_holder",
+   "fossil_ancestry": "redlock-py-redis-2014",
+   "human_name": "Redlock.unlock (121-132) and unlock_script: 'if redis.call(get, KEYS[1]) == ARGV[1] then return redis.call(del, KEYS[1]) else return 0'; unlock_instance runs it on every server",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "release runs one Lua script per server that atomically compares the stored value with the acquirer's unique value and deletes the key only on a match; because the compare and delete are one server-side script they cannot interleave, and because the value is unique per acquisition, a holder whose lease already expired (and whose key was retaken by another client with a different value) cannot delete the new holder's lock",
+   "input": "a Lock",
+   "output": "the key removed where it still belongs to the caller",
+   "state": "none",
+   "update": "per release",
+   "assumptions": [
+    "the get-and-delete must be atomic (hence a script, not two calls); the value must be unpredictable and unique so no other client can forge a release"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "redlock-py-redis-2014::acquire_the_same_key_with_a_unique_value_and_ttl_on_every_instance_holding_the_lock_only_if_a_majority_acked_within_a_validity_window_that_discounts_elapsed_time_and_clock_drift"
+   ],
+   "fitness_value_in_ancestor": "safe release even after a lease lapses; the mistake it prevents (a plain DEL that could delete someone else's lock) is the reason for the script",
+   "failure_landscape": "by reading: if the server is unreachable at release the key lingers until its TTL, which is acceptable; MultipleRedlockException surfaces per-server errors",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same distlock note",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:25-70, 121-132"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unlock_instance and the script",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the CLI (cli.py), setup.py, the connection-parsing in __init__ (url / dict / object forms), the retry-count and delay bookkeeping",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:36-70",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "redlock-py-redis-2014"
+  },
+  {
+   "candidate": "'distributed lock' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the majority-acquire-with-validity and the check-and-delete release are separable; the atlas's cocagne-plain-paxos and willemt-raft hold the consensus alternatives to a lease",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "redlock-py-redis-2014"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "redlock-py-redis-2014::P.a_shared_resource_must_be_held_by_at_most_one_client_at_a_time_using_only_independent_key_value_stores_with_ttls_when_clients_and_stores_can_fail_and_clocks_can_drift",
+   "source_fossil": "redlock-py-redis-2014",
+   "source_evidence": "Redlock.lock; the unlock script; the distlock note and Kleppmann's critique (record)",
+   "condition": "N independent stores with expiring keys; many clients race for one resource; stores and clients crash; clocks are imperfect; the score is whether two clients ever both believe they hold the lock, and whether the resource is ever left locked forever",
+   "resource_or_constraint": "N stores; a TTL; a drift margin",
+   "failure_condition": "two simultaneous holders (a safety violation), or a permanently locked resource after a crash",
+   "world_punishes": "a single store (a point of failure); a plain DEL release; ignoring elapsed time and drift",
+   "world_rewards": "majority acquisition, a validity window, unique-value check-and-delete, TTL expiry",
+   "observable_consequence": "the count of double-holds and stuck locks under injected store crashes, client pauses and clock skew, for the majority+validity algorithm vs a single-store lock; the sensitivity of double-holds to a pause longer than the validity",
+   "vacuity_condition": "one client",
+   "trivial_shortcuts": "a linearizable consensus service (Raft/Paxos, in this atlas) which the world may offer as the stronger control",
+   "cheat_control": "a Raft-backed lock must show zero double-holds under the same faults; the single-store lock must fail when that store crashes; Redlock must hold except when a pause exceeds the validity (Kleppmann's case): the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: distributed mutual exclusion over Redis (antirez 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "redlock-py-redis-2014::acquire_the_same_key_with_a_unique_value_and_ttl_on_every_instance_holding_the_lock_only_if_a_majority_acked_within_a_validity_window_that_discounts_elapsed_time_and_clock_drift",
+   "to": "redlock-py-redis-2014::release_by_a_check_and_delete_lua_script_that_deletes_the_key_only_when_its_value_still_equals_the_acquirers_so_an_expired_and_retaken_lease_is_never_deleted_by_the_old_holder",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the unique value ties acquire to release",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "redlock-py-redis-2014",
@@ -149,10 +468,22 @@
    "to": "willemt-raft",
    "note": "lease-based exclusion vs consensus-based",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "redlock-py-redis-2014",
+   "relation": "port_of",
+   "to": "antirez's Redlock (redis.io/topics/distlock, 2014); the record notes Kleppmann's 2016 critique",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "connection plumbing and CLI unread",
+   "nothing ran (needs a Redis majority: an M2 world)"
+  ],
+  "note": "a small body; both mechanisms located; a comparison point for the consensus fossils in the atlas",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
