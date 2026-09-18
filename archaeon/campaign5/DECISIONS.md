@@ -40,3 +40,24 @@ gradient branch AND yield per evaluation at depth 64 >= 2 x a random single
 edit's (.0012/evaluation). | C5-01/DESIGN.md. | Alternative: 4 walkers
 (half-width .03, cannot resolve a 2-point difference). | Revisit never in C5.
 SCIENTIFIC thresholds, DETERMINISTIC application.
+
+D5-004 | 2026-09-18 10:30 | C5-01 read: MIXED (r16 .050, r32 .064, r48 .078, r64
+.082; gaps .014/.018 below the .02 step; yield per evaluation .00127 -> .00082
+below the .0012 single-edit comparator); PRESERVE_NEUTRAL_MECHANISM = NO under
+the preregistered rule. Replication of C4-05 3,648/3,648 steps. | C5-01
+DEEPWALK_TABLES.json. | -- | Not revisited in C5. DETERMINISTIC.
+
+D5-005 | 2026-09-18 10:35 | C5-02 WORLD SET, frozen from the screen receipt
+archaeon/campaign5/WORLD_SCREEN_2026-09-18.json (rule fixed in code before any
+candidate was scored: eligible iff best held-out over all 57 parents in
+[3/16, .70)): W2_K2d1 (.510), W2_K2_rand (.542), W3_K3 (.382), W4_K4 (.302) --
+four distinct structures, 27-45 parents above the floor on each, headroom
+.36-.60 to the summit. W2_K2 (.625, eligible) is excluded because C4-06/08
+selected on it for 100 generations from these lineages (not a fresh headroom
+test); the remaining eligible worlds are held in reserve. Pre-solved worlds
+(W0, W1_d4..d16, noise, interleaved, 8-bit delay) are listed in the receipt as
+ineligible; two ask kinds failed the generator's own constraints (recorded).
+| WORLD_SCREEN_2026-09-18.json. | Alternative: reuse C4-09's worlds --
+rejected (three pre-solved). | Revisit never in C5. DETERMINISTIC (rule) +
+SCIENTIFIC DISCRETION (the four picked among nine eligible, before any C5-02
+row).
