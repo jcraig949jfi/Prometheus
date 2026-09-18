@@ -430,7 +430,9 @@ def blocks_for_power(sd_of_block_diff, threshold, true_effect, target_power=0.80
 
 # ------------------------------------------------------------- H4 protocol
 
-H4_PROTOCOL_VERSION = "H4-ADAPTIVE-1.0.0"
+H4_PROTOCOL_VERSION = "H4-ADAPTIVE-1.0.1"   # 1.0.1 (2026-09-18, HARM-32): the "reporting" sentence
+                                            # made CONDITIONAL; no rule, endpoint or void condition changed;
+                                            # H4 is at SCAFFOLD and no campaign ran under 1.0.0
 
 H4_ADAPTIVE_PROTOCOL = {
     "version": H4_PROTOCOL_VERSION,
@@ -467,8 +469,10 @@ H4_ADAPTIVE_PROTOCOL = {
                   "campaign; its own version pinned and hashed"),
     "design": "2x2, fixed/adaptive curriculum x transfer off/on",
     "reporting": ("combined effect and interaction reported SEPARATELY, with "
-                  "simultaneous uncertainty across both; the interaction carries "
-                  "sqrt(2) times the main effect's SE by construction"),
+                  "simultaneous uncertainty across both; the interaction's SE is "
+                  "c_I' Sigma c_I over the pilot Sigma (sqrt(2) times the combined "
+                  "effect's SE ONLY under equal marginal variances and exchangeable "
+                  "within-block correlation; QR-1.1.0)"),
     "denominator": ("every ASSIGNED task in the frozen suite, including those "
                     "never attempted and those censored by budget exhaustion"),
     "censoring": ("budget exhaustion is CENSORED, not failure and not success; "
@@ -860,7 +864,7 @@ def refuse_endpoint(lane: str, endpoint_name: str, computed_on: str = "held_out"
     if lane == "H4" and computed_on == "training":
         raise PlanRefused("H4: endpoint %r computed on TRAINING tasks; an adaptive arm generates its own "
                           "tasks, so training solve rate is confounded by task generation "
-                          "(H4-ADAPTIVE-1.0.0 endpoint_surface.PROHIBITED)" % endpoint_name)
+                          "(%s endpoint_surface.PROHIBITED)" % (endpoint_name, H4_PROTOCOL_VERSION))
 
 
 def h5_excess_over_construction(mean_reach: float, decoder_kind: str) -> dict:
