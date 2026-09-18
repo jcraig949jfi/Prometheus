@@ -1,0 +1,392 @@
+{
+ "controls": {
+  "echo_honest": [
+   0,
+   6
+  ],
+  "echo_leaky": [
+   6,
+   6
+  ],
+  "inert_outputs_nothing": true,
+  "one_value_exact": [
+   3,
+   6
+  ]
+ },
+ "cost_vs_v0": {
+  "graph_keyed_ops_two_key": 72,
+  "graph_nodes": 12,
+  "v0_instructions": 12,
+  "v0_keyed_ops_two_key": 81
+ },
+ "rows": {
+  "echo": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 0,
+    "dormant_nodes": 0,
+    "nodes_executed": 5,
+    "ops": 160,
+    "ops_by_category": {
+     "halt_yield": 32,
+     "opaque_io": 64,
+     "read_write": 64
+    },
+    "outputs": [
+     5000,
+     5007,
+     5014,
+     5021,
+     5028,
+     5035,
+     5042,
+     5049,
+     5056,
+     5063,
+     5070,
+     5077,
+     5084,
+     5091,
+     5098,
+     5105,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 32,
+     "yield": 0
+    }
+   },
+   "n_nodes": 5,
+   "organism_id": "2fd757b9acb23e3fae50bfc8c4301e6f0436aa9804af8a2df61b81f175c73847",
+   "two_key": {
+    "asks": 6,
+    "correct": 0,
+    "dormant_nodes": 0,
+    "nodes_executed": 5,
+    "ops": 45,
+    "ops_by_category": {
+     "halt_yield": 9,
+     "opaque_io": 18,
+     "read_write": 18
+    },
+    "outputs": [
+     1001,
+     2002,
+     0,
+     0,
+     3003,
+     0,
+     0,
+     0,
+     0
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 9,
+     "yield": 0
+    }
+   },
+   "two_key_leaky_probe": {
+    "asks": 6,
+    "correct": 6,
+    "dormant_nodes": 0,
+    "nodes_executed": 5,
+    "ops": 45,
+    "ops_by_category": {
+     "halt_yield": 9,
+     "opaque_io": 18,
+     "read_write": 18
+    },
+    "outputs": [
+     1001,
+     2002,
+     1001,
+     2002,
+     3003,
+     3003,
+     2002,
+     2002,
+     3003
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 9,
+     "yield": 0
+    }
+   }
+  },
+  "inert": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 0,
+    "dormant_nodes": 0,
+    "nodes_executed": 12,
+    "ops": 384,
+    "ops_by_category": {
+     "halt_yield": 384
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 32,
+     "yield": 0
+    }
+   },
+   "n_nodes": 12,
+   "organism_id": "93bb6d6a67dcc13e4f19d330d964d4c414b1de82fd74c6da618fdc022b1b03bb",
+   "two_key": {
+    "asks": 6,
+    "correct": 0,
+    "dormant_nodes": 0,
+    "nodes_executed": 12,
+    "ops": 108,
+    "ops_by_category": {
+     "halt_yield": 108
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 9,
+     "yield": 0
+    }
+   }
+  },
+  "keyed": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 16,
+    "dormant_nodes": 1,
+    "nodes_executed": 11,
+    "ops": 256,
+    "ops_by_category": {
+     "control": 32,
+     "halt_yield": 32,
+     "indirection": 32,
+     "opaque_io": 96,
+     "read_write": 64
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5105,
+     5098,
+     5091,
+     5084,
+     5077,
+     5070,
+     5063,
+     5056,
+     5049,
+     5042,
+     5035,
+     5028,
+     5021,
+     5014,
+     5007,
+     5000
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 32,
+     "yield": 0
+    }
+   },
+   "n_nodes": 12,
+   "organism_id": "a38fec8495d92dd83e381bb198a9d24f16cf51c9d71865f75537f33c7c4715b6",
+   "two_key": {
+    "asks": 6,
+    "correct": 6,
+    "dormant_nodes": 1,
+    "nodes_executed": 11,
+    "ops": 72,
+    "ops_by_category": {
+     "control": 9,
+     "halt_yield": 9,
+     "indirection": 9,
+     "opaque_io": 27,
+     "read_write": 18
+    },
+    "outputs": [
+     null,
+     null,
+     1001,
+     2002,
+     null,
+     3003,
+     2002,
+     2002,
+     3003
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 9,
+     "yield": 0
+    }
+   }
+  },
+  "one_value": {
+   "all_keys": {
+    "asks": 16,
+    "correct": 1,
+    "dormant_nodes": 1,
+    "nodes_executed": 11,
+    "ops": 256,
+    "ops_by_category": {
+     "control": 32,
+     "halt_yield": 32,
+     "indirection": 32,
+     "opaque_io": 96,
+     "read_write": 64
+    },
+    "outputs": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105,
+     5105
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 32,
+     "yield": 0
+    }
+   },
+   "n_nodes": 12,
+   "organism_id": "1a1375471ed8a6e59e732478ead499cfeaa4b0f7894c0de53b4264be28e0b489",
+   "two_key": {
+    "asks": 6,
+    "correct": 3,
+    "dormant_nodes": 1,
+    "nodes_executed": 11,
+    "ops": 72,
+    "ops_by_category": {
+     "control": 9,
+     "halt_yield": 9,
+     "indirection": 9,
+     "opaque_io": 27,
+     "read_write": 18
+    },
+    "outputs": [
+     null,
+     null,
+     2002,
+     2002,
+     null,
+     3003,
+     3003,
+     3003,
+     3003
+    ],
+    "statuses": {
+     "budget": 0,
+     "halt": 9,
+     "yield": 0
+    }
+   }
+  }
+ },
+ "runtime_hash": "92a44ad48bc9c6f841c1aa94cc4d23a12483f37321f0c838e277c5fafb6f1dc8",
+ "schema_version": "proteus.keyed_memory_witness_graph.v1",
+ "verdict": "GRAPH_ISA_EXPRESSES_KEYED_MEMORY"
+}
