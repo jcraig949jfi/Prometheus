@@ -23,6 +23,7 @@ def evaluate_b(manifest: dict, episodes: List, rng_seed: int = 0, reward_mode: s
     occupancy_max = 0; tape_writes = 0; answered = 0
     per_ask_correct: List[int] = []; per_ask_n: List[int] = []
     trapped = False; trap_at = None
+    answers: List = []                                  # first output word per ask position; None when silent or after a trap
     first_fault = None
     for ei, ep in enumerate(episodes):
         if trapped:
@@ -53,6 +54,7 @@ def evaluate_b(manifest: dict, episodes: List, rng_seed: int = 0, reward_mode: s
                     per_ask_n.append(0); per_ask_correct.append(0)
                 per_ask_n[ask_i] += 1
                 asks += 1; ep_asks += 1
+                answers.append(outs[0][0] if outs[0] else None)
                 if outs[0]:
                     answered += 1
                     if outs[0][0] == ep.expected[ti]:
@@ -62,6 +64,8 @@ def evaluate_b(manifest: dict, episodes: List, rng_seed: int = 0, reward_mode: s
     n = max(1, len(episodes))
     m = meter.as_dict(manifest)
     total_asks = sum(ep.n_asks() for ep in episodes)
+    while len(answers) < total_asks:
+        answers.append(None)
     if trapped:
         r_ask, r_ep, answered_share = 0.0, 0.0, 0.0
     else:
@@ -78,5 +82,5 @@ def evaluate_b(manifest: dict, episodes: List, rng_seed: int = 0, reward_mode: s
         "tape_occupancy_max": occupancy_max, "tape_writes_per_episode": tape_writes / n,
         "intervention": None, "interventions_applied": 0,
         "mode": mode, "trapped": trapped, "trap_at": trap_at, "faults": m["faults"], "fault_sites": m["fault_sites"],
-        "fault_ticks": m["fault_ticks"], "first_fault": first_fault, "static": static_validity(manifest),
+        "fault_ticks": m["fault_ticks"], "first_fault": first_fault, "static": static_validity(manifest), "_answers": answers,
     }
