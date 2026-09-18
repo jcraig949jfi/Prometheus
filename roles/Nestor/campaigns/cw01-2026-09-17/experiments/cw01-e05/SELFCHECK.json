@@ -3,9 +3,9 @@
  "experiment_id": "cw01-e05",
  "attempt_id": "cw01-e05-a01",
  "verified_against": "COMMITTED state extracted from HEAD via git archive; the working tree was not used",
- "commit_sha": "6c1251223dd07bd7b581d6be4b79a5d97041c452",
- "commit_short": "6c1251223",
- "branch": "nestor/sidequest-graphworld-2026-09-14",
+ "commit_sha": "971332e9cc94e52de577d8f591821d809962c044",
+ "commit_short": "971332e9c",
+ "branch": "nestor/e05-replica-2026-09-18",
  "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
  "binding_specification": {
   "budget_B": 3,
@@ -200,10 +200,10 @@
   },
   {
    "id": "S9_subtree_clean_at_commit",
-   "passed": true,
-   "detail": "no uncommitted campaign changes"
+   "passed": false,
+   "detail": "uncommitted: M roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e05/SELFCHECK.json"
   }
  ],
- "execute_admissible": true,
+ "execute_admissible": false,
  "freeze_rule": "once the first organism is evaluated under this attempt_id, no metric, normalisation, control, threshold, set-selection rule, budget, null or verdict criterion may change; a defect voids the verdict and opens a new attempt_id"
 }
