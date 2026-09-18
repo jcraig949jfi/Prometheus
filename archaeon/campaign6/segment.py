@@ -30,6 +30,8 @@ from archaeon.campaign6 import schemas as S
 from archaeon.campaign6.c6base import LANES
 from archaeon.campaign6.observatory.fingerprint import rows_v0
 from archaeon.campaign6.observatory import detectors as D
+from archaeon.campaign6.worlds import ComposedWorld, evaluate_world
+from archaeon.campaign6.pressure import schedules as P
 
 SCHEMA_SPEC = "archaeon.c6.segment_spec.v1"
 SCHEMA_CKPT = "archaeon.c6.checkpoint.v1"
@@ -51,10 +53,12 @@ def _h(obj) -> str:
 
 
 # ---------------------------------------------------------------- registries (Phase 0: v0 + WorldSpec + stable pressure)
-def resolve_world(world: dict) -> WorldSpec:
+def resolve_world(world: dict):
     if world["kind"] == "wse.WorldSpec":
         return WorldSpec(**world["knobs"])
-    raise ValueError("unknown world kind %r (Axis W generator worlds register here)" % world["kind"])
+    if world["kind"] == "c6.composed.v1":
+        return ComposedWorld(world["params"])
+    raise ValueError("unknown world kind %r" % world["kind"])
 
 
 def resolve_profile(profile: str):
@@ -69,11 +73,12 @@ def resolve_profile(profile: str):
     raise ValueError("unknown organism profile %r (the graph profile registers here when Proteus hands it over)" % profile)
 
 
-def pressure_at(schedule: List[dict], g: int) -> dict:
-    """The active pressure segment at generation g. Phase 0: {kind: EXOGENOUS_PRESSURE, label: 'stable', params: {}}."""
+def pressure_at(schedule, g: int) -> dict:
+    """The active pressure segment at generation g (list form, Phase 0) or the Axis P record's active segment."""
+    segs = schedule["segments"] if isinstance(schedule, dict) else schedule
     active = None
-    for seg in schedule:
-        if seg["from_gen"] <= g:
+    for seg in segs:
+        if seg["from_gen"] <= g and (seg.get("to_gen") is None or g < seg["to_gen"]):
             active = seg
     return active or {"kind": "EXOGENOUS_PRESSURE", "label": "stable", "from_gen": 0, "params": {}}
 
@@ -161,14 +166,43 @@ def run_segment(spec: dict, ck: dict) -> dict:
             org = G.organism_record(m, victim["lineage_id"], g); org["origins"] = list(victim.get("origins", [])) + ["planted"]
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [victim["organism_id"]], "generation": g, "operators": [{"operator": "planted_randomize"}]}
             pop[planted[g].get("index", 0)] = org; planted_now.add(org["organism_id"])
-        eps = episodes_for(world, spec["seed"], "train", g * 100003 + spec["seed"], E)
-        asks = [e.n_asks() for e in eps]
+        composed = isinstance(world, ComposedWorld)
+        reward_scale = 1.0; exo_events: List[dict] = []
+        if composed:
+            if isinstance(spec["schedule"], dict):
+                params_g, exo_events = P.apply(spec["schedule"], spec["world"]["params"], g)
+                reward_scale = params_g.pop("reward_scale", 1.0); params_g.pop("redistribution_seed", None); params_g.pop("migration", None)
+            else:
+                params_g = spec["world"]["params"]
+            world_g = ComposedWorld(params_g)
+            shared: Optional[dict] = {} if "coupling" in world_g.features else None
+            eps = None; asks = None
+        else:
+            eps = episodes_for(world, spec["seed"], "train", g * 100003 + spec["seed"], E)
+            asks = [e.n_asks() for e in eps]
+        for e_ in exo_events:
+            pressure_history.append({"generation": g, "kind": e_["kind"], "label": e_["label"], "params": {"target": e_["target"], "before": e_["before"], "after": e_["after"]}})
         rs = seed_from("wse.eval", spec["seed"], g, spec["run_id"])
         scored = []; pairs_now: Dict[str, Any] = {}; subjects: Dict[str, D.Subject] = {}
+        endo = {"pool_depletion": 0.0, "signals": 0, "objects_changed": 0}
         for org in pop:
-            ev = eval_fn(org["manifest"], eps, rs); a = answers_fn(org["manifest"], eps)
+            if composed:
+                pools_before = list(shared["pools"]) if (shared is not None and "pools" in shared) else None
+                ev = evaluate_world(org["manifest"], world_g, spec["seed"] * 1000003 + g, E, rng_seed=rs, shared=shared)
+                a = ev["_answers"]; asks = ev["_asks_per_episode"]
+                if pools_before is not None and shared.get("pools"):
+                    endo["pool_depletion"] += max(0.0, sum(pools_before) - sum(shared["pools"]))
+                endo["signals"] += ev["world"]["signals"]; endo["objects_changed"] += ev["world"]["objects_changed"]
+                if reward_scale != 1.0:
+                    ev["reward"] = min(1.0, ev["reward"] * reward_scale)
+            else:
+                ev = eval_fn(org["manifest"], eps, rs); a = answers_fn(org["manifest"], eps)
             pid = records.get(org["organism_id"], {}).get("parent_ids", [None])[0]
-            t0, ext = rows_v0(org["manifest"], org["organism_id"], pid, eval_ord, g, ev, a, world_features=[world.name], asks_per_episode=asks)
+            wf = ev["world"]["env_dependencies"] if composed else [world.name]
+            t0, ext = rows_v0(org["manifest"], org["organism_id"], pid, eval_ord, g, ev, a, world_features=wf, asks_per_episode=asks)
+            if composed:
+                ext.update({"action_hist": ev["world"]["action_hist"], "resources_touched": ev["world"]["resources_touched"], "survival": ev["world"]["survival"],
+                            "objects_changed": ev["world"]["objects_changed"]})
             eval_ord += 1
             row = {"t0": t0, "ext": ext}; rows.append(row); seg_rows.append(row)
             if len(seg_rows) >= spec["anchor_interval"]:
@@ -178,11 +212,16 @@ def run_segment(spec: dict, ck: dict) -> dict:
             parent_subject = None
             if pid and pid in history:
                 hp = history[pid]; parent_subject = D.Subject(pid, hp["manifest"], hp["pair"], None, hp["generation"])
-            subjects[org["organism_id"]] = D.Subject(org["organism_id"], org["manifest"], (t0, ext), parent_subject, g, meta={"reward": ev["reward_per_ask"]})
+            subjects[org["organism_id"]] = D.Subject(org["organism_id"], org["manifest"], (t0, ext), parent_subject, g, meta={"reward": ev["reward_per_ask"] if not composed else ev["reward"]})
         scored.sort(key=lambda z: -z[0])
+        if composed and shared is not None and (endo["pool_depletion"] > 0 or endo["signals"] or endo["objects_changed"]):
+            pressure_history.append({"generation": g, "kind": "ENDOGENOUS_PRESSURE", "label": "population_effect", "params": {k: round(v, 4) if isinstance(v, float) else v for k, v in endo.items()}})
         # ---- executor-side detectors on every child of this generation
         pop_subjects = list(subjects.values())
-        ctx = D.Context(thresholds, spread, library=library, population=pop_subjects,
+        ws = {"persistent": composed and ("objects" in world_g.features or "coupling" in world_g.features), "resources": world_g.R if composed else 1,
+              "persisted_reads": (lambda s: s.pair[1].get("objects_changed", 0))} if composed else None
+        ctx = D.Context(thresholds, spread, library=library, population=pop_subjects, world_state=ws,
+                        regime_events=[e_["generation"] for e_ in pressure_history if e_["kind"] == "EXOGENOUS_PRESSURE" and e_["label"] != "stable"],
                         ancestors=lambda s, depth: _ancestors(s, history, records, depth),
                         siblings=lambda s: [x for x in pop_subjects if x.parent is not None and s.parent is not None and x.parent.organism_id == s.parent.organism_id and x is not s],
                         home_reward=lambda s: s.meta.get("reward"))
@@ -286,7 +325,8 @@ def _freeze(ev_rec: dict, s: D.Subject, history: dict, records: dict, pop: List[
           "parent": {"organism_id": parent.organism_id, "manifest": parent.manifest} if parent else None,
           "ancestors": [{"organism_id": a.organism_id, "manifest": a.manifest, "generation": a.generation} for a in ancestors],
           "siblings": [{"organism_id": o["organism_id"], "manifest": o["manifest"]} for o in sibs][:16],
-          "world": {"kind": spec["world"]["kind"], "knobs": world.knobs(), "world_id": world.world_id(), "seed": spec["seed"]},
+          "world": {"kind": spec["world"]["kind"], "knobs": world.knobs(), "world_id": world.world_id(), "seed": spec["seed"],
+                    "complexity_bin": world.complexity_bin() if hasattr(world, "complexity_bin") else 0},
           "pressure_window": pressure_history[-4:], "mutation_chain": chain, "t1_window_n": len(t1), "t1_window_digest": _h(t1),
           "replay_packet": {"spec_hash": spec["spec_hash"], "generation": s.generation, "run_id": spec["run_id"], "changed": {}},
           "preserved_at": ts, "interpretation": None}
