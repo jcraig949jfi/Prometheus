@@ -1,0 +1,148 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tierra-6.02-ray-1998",
+  "canonical_name": "Tierra 6.02 -- Thomas S. Ray (1991-1998), mirror of the life.ou.edu source",
+  "aliases": [
+    "Tierra",
+    "Tierra Simulator V5.0/6.02"
+  ],
+  "lineage": "Ray 1991 'An approach to the synthesis of life' (Artificial Life II) -> Tierra releases through 6.02 (1998); Avida (1993-) is the instrumentation-rich descendant lineage",
+  "domain": [
+    "artificial-life",
+    "digital-evolution",
+    "self-replication",
+    "virtual-machine",
+    "ecology"
+  ],
+  "era": "1991-1998",
+  "version": "acisternino/tierra master @ 195c2eb84d91a1938faabad38e24b9b47d0e262c (mirror of Tierra v6.02 from life.ou.edu; two further mirrors pinned in SOURCES_2026-09-17.json)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/acisternino/tierra",
+        "commit": "195c2eb84d91a1938faabad38e24b9b47d0e262c",
+        "commit_resolved": "195c2eb84d91a1938faabad38e24b9b47d0e262c",
+        "commit_date": "2016-05-26T08:44:57+00:00"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "life.ou.edu/tierra/source/Tierra6_02.tgz (original URL, offline); mirror github.com/acisternino/tierra"
+  },
+  "hashes": {
+    "tree_sha256": "c289644b4fe19c5146077ec4744565ed5a3f534317a0581a712725d48a8f0e2d",
+    "n_files": 357,
+    "bytes": 8214519,
+    "artifacts": [
+      {
+        "filename": "https://github.com/acisternino/tierra",
+        "sha256": null,
+        "commit": "195c2eb84d91a1938faabad38e24b9b47d0e262c"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\tierra-6.02-ray-1998",
+    "hash_list": "techne/fossils/specimens/tierra-6.02-ray-1998/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom non-commercial (Ray, tierra/license.h 1995): free copying and distribution without fees; no commercial use; modified versions must document changes and notify the principal author; notice must not be removed",
+    "status": "read 2026-09-17; preservation and research permitted; NOT OSI",
+    "evidence": "tierra/license.h at the pin"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (per-platform Makefiles under tierra/)",
+  "compiler_or_interpreter": "gcc (era: SunOS/Linux 1990s; build in fossil-c bookworm to be measured)",
+  "dependencies": [
+    "libc",
+    "X11 (optional GUI: Bgl-GUI_X11)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "tierra/tierra.c (the simulator)",
+    "tierra/genebank.h / rambank.c / diskbank.c (the gene bank: what earns a permanent name and is saved as a .gen)",
+    "tierra/soup_in (configuration)"
+  ],
+  "example": {
+    "command": "make -C tierra && ./tierra soup_in",
+    "input": "soup_in (soup size, mutation rates, gene bank settings) + the ancestor 0080aaa",
+    "output": "gb/ directory of .gen genotypes (the gene bank); tierra.log"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm (to be measured; not built on M3)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ray 1993 Artificial Life 1(1) DOI 10.1162/artl.1993.1.179",
+    "tomray.me/pubs/doc/ (Documentation for the Tierra Simulator)",
+    "tierra/README, Tierra.doc"
+  ],
+  "human_capability_summary": {
+    "built_to": "evolve self-replicating machine-code creatures in a shared memory 'soup' under CPU-time and space competition",
+    "pressure": "study open-ended evolution with a substrate simple enough to run on 1990s hardware and rich enough for parasitism to arise",
+    "success_means": "the gene bank filling with novel, persistent genotypes; parasites, hyperparasites and social behaviour observed"
+  },
+  "known_human_problem_solved": "a minimal executable ecology in which evolution invents ecological relations unprogrammed by the author",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "disk and compute scarcity: only genotypes that earn a name are banked (the admission rule Nyx will cut)",
+  "human_failure_condition": "the soup dies out or fills with the ancestor only; the bank records nothing new",
+  "behavioral_entry_point": "run to a fixed number of instructions and diff gb/ against the ancestor; vary the admission threshold in soup_in",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-106"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": null,
+    "native_deps": [
+      "C toolchain",
+      "X11 for the optional GUI only"
+    ],
+    "host_class": "compiler host (M2 / Linux); NOT M3"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:53:53Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

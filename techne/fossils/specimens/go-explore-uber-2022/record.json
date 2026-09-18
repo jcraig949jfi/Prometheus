@@ -69,7 +69,8 @@
     "robustified/goexplore_py/goexplore.py (archive, cells, return-then-explore loop)",
     "robustified/goexplore_py/randselectors.py (cell selection weights)",
     "robustified/goexplore_py/explorers.py",
-    "robustified/goexplore_py/basics.py"
+    "robustified/goexplore_py/basics.py",
+    "policy_based/ (SECOND BODY: policy-based Go-Explore; not exercised by the smoke harness)"
   ],
   "example": {
     "command": "see recipe.json: import-level smoke of the pure-Python modules without Atari/MuJoCo",
@@ -177,6 +178,14 @@
         "OTHER": 0,
         "ADDED": 0
       }
+    }
+  ],
+  "corrections": [
+    {
+      "date": "2026-09-18",
+      "by": "Techne[gandalf-a04f7c25]",
+      "field": "entry_points",
+      "note": "Nyx #3xx (positions 41-50): the pinned tree holds TWO bodies: robustified/ (the entry points listed) and policy_based/ (the policy-based Go-Explore of the 2021 Nature paper). The record's entry points name only robustified/; policy_based/ is a second mechanism family in the same specimen. Split candidate (TECHNE-110)."
     }
   ]
 }
