@@ -204,6 +204,16 @@
    "posted": null,
    "note": "10 cuts (6 DEEP, 4 COARSE); two more pure-Python packet candidates (pid-autotune with its kettle world; pybreaker with a simulated outage); a three-solver SAT set is now readable (WalkSAT, MiniSat, PicoSAT)",
    "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 81-91 of the 2026-09-17 NOT_CUT order (glpk-5.0, quadpack-netlib, openssl-1.0.1f-heartbleed, lapack-reference, py-vollib-lets-be-rational, redlock-py-redis-2014, filterpy-labbe, zlib-1.3.1, tinyscheme-1.42, ncompress-5.0-lzw-1985, bsd-4.2-distribution-tape-1983 [ORGAN0]) and the deferred 13 (valgrind-helgrind-fixtures-3.19) and 18 (souffle-2.4.1); STAGE A COMPLETE except position 49 pari-gp (ORIGIN_UNREACHABLE from this host)",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 81-91 appended (11/11 MATCH; n=91)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the thirteen",
+   "posted": null,
+   "note": "STAGE A FROZEN at 120/121 inspected per the operator's 2026-09-18 directive s1: 121 is a hard boundary, no new broad census until 10 mechanisms carry Harmonia verdicts. openssl heartbleed cut as a defect fossil (the missing bounds check the 1.0.1g fix adds); bsd-4.2 tape is the third distribution-tape with the same missing-source-tape-file defect; valgrind body contains its detector (unlike go-runtime-deadlock-fixtures); large bodies (glpk, lapack, souffle, valgrind) cut COARSE inventory-only per s1 (no deepening without a downstream question)",
+   "returns": []
   }
  ],
  "returns_received": [
@@ -337,5 +347,24 @@
    "kind": "TECHNE_REPORT"
   }
  ],
- "escalations": []
+ "escalations": [],
+ "packets_issued": [
+  {
+   "packet_id": "MECH-PARTICLES-ESSTRIGGER-001",
+   "cut_id": "particles-chopin-0.4",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-09-17",
+   "verdict_tick": "2026-09-17",
+   "superseded_by": "MECH-PARTICLES-ESSTRIGGER-002",
+   "note": "PREDICTION_INDETERMINATE + CHALLENGE on the positive-control band (#363); superseded same tick"
+  },
+  {
+   "packet_id": "MECH-PARTICLES-ESSTRIGGER-002",
+   "cut_id": "particles-chopin-0.4",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-09-17",
+   "verdict_tick": "2026-09-18",
+   "note": "CUT_SUPPORTED on the boundary (#382); claim (c) PREDICTION_FAILED@50 / INDETERMINATE@400, dropped from the cut (D')"
+  }
+ ]
 }

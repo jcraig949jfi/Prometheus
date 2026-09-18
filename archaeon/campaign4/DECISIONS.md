@@ -84,3 +84,33 @@ repaired and the same experiment rerun with the failed attempt preserved;
 this was a harness defect (a wrong string), not a scientific failure. |
 Alternative: hand-edit a01's receipt -- never. | Revisit never.
 DETERMINISTIC (the census is a pure function of its seeds).
+
+D4-006 | 2026-09-18 06:05 | C4-02 RADIUS = the number of grammar.mutate()
+applications from one rng seeded by (campaign_seed, organism_id, radius,
+draw), operators drawn by the FROZEN WEIGHTS (name=None), INCLUDING steps
+whose operator returns its noop record (noop_steps recorded per child):
+the radius is what the grammar was asked to do, not what changed. The
+prediction written to be lost: loss_rate(r8) - loss_rate(r1) >= 0.05
+(measured: .930 - .522 = .408, not lost). Consistency control: the
+radius-1 D-distribution within TVD 0.10 of C4-01's frozen-weight mixture
+of per-operator distributions (measured .029). | C4-02/DESIGN.md. |
+Alternative: count only effective steps (would make the radius depend on
+the parent's length and hide the noop mass). | Revisit never in C4.
+DETERMINISTIC.
+
+D4-007 | 2026-09-18 06:35 | C4-03: the executed HARD arm is REPRESENTATION_BLOCKED
+(D4-002). The static proxy ("an out-of-table opcode word") was preregistered
+with a VACUITY CHECK added before any row when the runner's self-test showed a
+synthetic draw with 9/9 instruction words out of table; the 57 parents carry
+932/932 out-of-table words: the foundry writes uniformly random 32-bit words
+and the interpreter's modulo IS the decode. The proxy partitions nothing
+(P(fatal) = 1.000 on 5,472 C4-01 children and 2,280 C4-02 children); the proxy
+arm is REPRESENTATION_BLOCKED too, with the numbers. Operand and address
+words were excluded from "invalid" because their reduction is published ISA
+semantics. Consequence recorded for C4-07 and C4-08: "the fizzle event" and
+"free semantic insulation" have no extension on this substrate; both slots
+are re-premised in their own preregistrations, never by changing the ISA. |
+C4-03/DESIGN.md; attempts/a01/PROXY_TABLES.json. | Alternative: define
+"invalid" as some subset of the table (e.g. RND or opaque_io) -- that would
+be a recognizer for a hoped-for result and is forbidden. | Revisit never in
+C4. DETERMINISTIC.

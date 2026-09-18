@@ -132,15 +132,88 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "ORGAN0",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-4.2-distribution-tape-1983/upstream/FORMAT:1-9"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:bsd-4.2-distribution-tape-1983/upstream/usr.tar.gz:tar listing"
+   }
+  ],
+  "inspected_files": [
+   "FORMAT",
+   "usr.tar.gz listing"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "a bootable-system fossil: the record's purpose ('preserved so that the kernel in bsd-tcp-4.2-1983 can be BOOTED under emulation') depends on tape files the vault does not hold. FORMAT lists nine files (stand, miniroot, rootdump, srcsys.tar, usr.tar, vfont.tar, src.tar, new.tar, ingres.tar); the vault has stand, miniroot, rootdump and usr.tar. srcsys.tar (file 4, the kernel source) is absent; usr.tar carries include/netinet (headers) but no netinet/*.c. Same defect class as bsd-4.3-distribution-tape-1986 and bsd-4.3-reno-distribution-tape-1990; the pre-Tahoe TCP SOURCE is the cut bsd-tcp-4.2-1983",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/FORMAT sha256:a104de0480e2367e3b3936cdf6ed2d6fd800c7cc3f414b57ad10f3dd6a40de09; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/stand.gz sha256:2a48b4de94fb63e1fbb57969cd804261bfa384482c5b65f5b592f63e8f1a66ab; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/miniroot.gz sha256:e0bd20d769220f744636519ecfe3b2cdda245e13b591af5b5f1363b88f6c6a67; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/rootdump.gz sha256:0bcb40c2b864f43dce1faeba9f3dcf6059c98055b394c2cfcd1221ab36a5015e; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/usr.tar.gz sha256:73124e1583d5c75b6a7a5540ba7523c6923afa870d0671e5e142e3a0d686e401",
+   "payload_manifest_id": "techne tree_sha256 9dfc093874cc79e14e195292412746248cf079bc4133eb7d06739035aa7718cf (5 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/FORMAT",
+     "payload_hash_read": "a104de0480e2367e3b3936cdf6ed2d6fd800c7cc3f414b57ad10f3dd6a40de09",
+     "techne_recorded_hash": "a104de0480e2367e3b3936cdf6ed2d6fd800c7cc3f414b57ad10f3dd6a40de09",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/usr.tar.gz",
+     "payload_hash_read": "73124e1583d5c75b6a7a5540ba7523c6923afa870d0671e5e142e3a0d686e401",
+     "techne_recorded_hash": "73124e1583d5c75b6a7a5540ba7523c6923afa870d0671e5e142e3a0d686e401",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [],
- "rejected_cuts": [],
+ "rejected_cuts": [
+  {
+   "candidate": "the 4.2BSD kernel (the BEFORE point of the congestion lineage) 'bootable' from the tape",
+   "reason": "OTHER",
+   "evidence": "srcsys.tar (tape file 4) absent from the vault; usr.tar.gz has include/netinet headers only, no netinet/*.c; the bootable images (stand, miniroot, rootdump) need a VAX emulator (an M1/M2 world)",
+   "note": "record defect for Techne (third instance of the class): the object the tape is preserved for -- a bootable kernel -- needs the missing source tape file or an emulator; the source itself is in bsd-tcp-4.2-1983 (cut)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.2-distribution-tape-1983"
+  },
+  {
+   "candidate": "stand, miniroot, rootdump (VAX filesystem images)",
+   "reason": "OTHER",
+   "evidence": "binary images; runnable under SIMH only",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.2-distribution-tape-1983"
+  },
+  {
+   "candidate": "usr.tar.gz contents (bin, adm, include/netinet headers, man, doc)",
+   "reason": "OTHER",
+   "evidence": "userland and headers; no mechanism-bearing kernel source read",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.2-distribution-tape-1983"
+  },
+  {
+   "candidate": "'4.2BSD' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "a distribution is a container",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.2-distribution-tape-1983"
+  }
+ ],
  "pressures": [],
  "composition_edges": [],
  "ancestry_edges": [
@@ -150,10 +223,23 @@
    "to": "bsd-tcp-4.2-1983",
    "note": "this tape CONTAINS the kernel whose netinet/tcp_* files are preserved as that specimen",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.2-distribution-tape-1983",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.2-1983 (the SOURCE of the TCP this system runs); bsd-4.3-distribution-tape-1986 and bsd-4.3-reno-distribution-tape-1990 (the same archive series with the same missing source tape file)",
+   "note": "by FORMAT and the listing",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "CUT_INSTRUMENT_INSUFFICIENT",
+  "unexplained": [
+   "filesystem images cannot be dissected by reading",
+   "srcsys.tar and the other source tape files absent from the vault; the record's 'bootable kernel' purpose is not served by the body",
+   "no emulator on M3; nothing ran"
+  ],
+  "note": "ORGAN0 inventory cut; the three distribution tapes now share one repair note for Techne (complete the source tape files or narrow the records to what the vault holds)",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
