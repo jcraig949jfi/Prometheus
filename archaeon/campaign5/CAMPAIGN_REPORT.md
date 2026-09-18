@@ -200,6 +200,6 @@ for; the one prediction written to be lost that favoured the boundary
     Phase A report packet, MANIFEST.md).
   Commits: campaign opened at f01a00f58; C5-01 2999623c9; Phase A
     823356eec; RULE aad7e9ca0; C5-05 0632ec92b; C5-06 f44c31a31;
-    C5-07/08 aac15fe02; C5-09 a01 0b0a75d5d; final commit named in the
-    review packet.
+    C5-07/08 aac15fe02; C5-09 a01 0b0a75d5d; cf841ed6d (campaign close); 8e0eff852 (packet).
+    (this file: the commit after 8e0eff852).
 +=====================================================================+
