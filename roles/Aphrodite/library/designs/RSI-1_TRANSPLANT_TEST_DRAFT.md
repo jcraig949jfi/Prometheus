@@ -7,6 +7,18 @@ proposes RSI-1 and a charter. This file restates it operationally and
 adds what the seat thinks is missing. Nothing here is launched by this
 seat (operator, 2026-09-18: focus on the thought work).
 
+## 0. Prior art found 2026-09-18 (sources/rsi_core.md)
+
+RSI-1 is not the first transplant-style test. Hyperagents (arXiv
+2603.19461) transferred an evolved meta agent to an unseen domain
+(imp@50 0.630 vs 0.0); AIDE^2 (Weco blog, 2026-07-14) installed its
+evolved improver as the outer loop (faster, no asymptotic gain); HGM
+measures metaproductivity directly; STOP applied a frozen improved
+improver to 5 new tasks (2023). What appears not to exist is the
+compute-matched, multi-seed, memory-stripped, multi-substrate version
+with a planted-dividend positive control. RSI-1 should adopt imp@k and
+metaproductivity as secondary endpoints so results are comparable.
+
 ## 1. The object
 
 An improvement operator I maps (agent, history, budget) -> descendant

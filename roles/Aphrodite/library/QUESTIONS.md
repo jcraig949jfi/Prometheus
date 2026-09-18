@@ -45,7 +45,11 @@ A6. Is "sagacity" (the north star's anchor: a compact handle through
 
 B1. RSI-1 (the reviewer's): given identical fresh agents, unseen
     tasks, equal compute and no memory, does I_8 produce better
-    descendants faster than I_0? STATUS: DESIGN (designs/RSI-1).
+    descendants faster than I_0? STATUS: DESIGN (designs/RSI-1) + LIT
+    PARTIAL: Hyperagents (arXiv 2603.19461) transferred an evolved meta
+    agent to a new domain, imp@50 0.630 vs 0.0; AIDE^2 (Weco, blog)
+    "ignition" test: faster, no asymptotic gain. Neither is
+    compute-matched and multi-seed (sources/rsi_core.md).
 B2. If I_8 > I_0, how much of the advantage survives each strip:
     memory removed; fresh starting agent; new task family; new model
     substrate; new machine; different budget? STATUS: DESIGN.
@@ -91,8 +95,9 @@ C3. How do we stop an improver from buying score with unmetered
     outside the improver's reach, audited. STATUS: TOY (X2 shows the
     hole is found in one generation when reachable).
 C4. Does RSI's advantage survive a compute-matched fixed-improver
-    control? No paper in the library is known to run one (to confirm
-    in sources/rsi_core.md). STATUS: OPEN.
+    control? STATUS: OPEN; as of 2026-09-18 the library subagent found
+    no compute-matched, multi-seed transplant study (AIDE^2 is
+    compute-metered but single-run, blog only).
 C5. At what budget does replay (Dream-RSI style) stop paying because
     the recorded history no longer covers the policy's choices
     (off-support blindness)? STATUS: OPEN; toy candidate.
@@ -281,7 +286,9 @@ L1. Which recent RSI headlines overstate their sources? (Already found
     2026-09-17: "beats GPT-6" is partial credit only; "Google swarm"
     compresses several works.) Maintained in NEWS.md. STATUS: LIT.
 L2. Is any lab measuring second-order improvement publicly, or only
-    capability? STATUS: OPEN (sources/rsi_core.md search).
+    capability? STATUS: LIT PARTIAL: Hyperagents (imp@k), HGM
+    (metaproductivity; benchmark score correlates 0.285 with it), AIDE^2
+    (ignition test, null). See sources/rsi_core.md RSI-16/17/19.
 L3. What would the first credible RSI result look like, and who would
     be positioned to produce it? STATUS: OPEN.
 
@@ -296,10 +303,20 @@ M2. Did the DGM/SICA archives in Roesner and Kohno still hold clean
     ancestors of the poisoned component? If yes, why were they not
     re-selected (costless exploit)? If no, the reservoir mechanism
     (T4) explains the persistence. STATUS: OPEN; answerable by reading
-    the paper's archive statistics.
+    the paper's archive statistics. Note (2026-09-18): persistence held
+    in all three systems (28/30/30 of 30 after 10 clean generations).
 M3. Is there a regime (MacNet-like) where none of T5's ratios bind and
     more agents keep helping, and what property of the task makes it
     so? STATUS: OPEN.
 M4. Can a swarm estimate its own rho, q and R0 online, cheaply enough to
     steer itself away from a damage boundary? (A self-monitoring swarm
     is itself an RSI candidate.) STATUS: OPEN.
+M5. Hyperagents' transfer (imp@50 0.630 vs 0.0) and AIDE^2's null
+    ignition test disagree on whether evolved improvers carry real
+    second-order value. Are they measuring the same thing (transfer of
+    competence to a NEW domain vs acceleration in the SAME loop)?
+    STATUS: OPEN.
+M6. The poisoning authors report answer-key leakage via git history in
+    the original DGM and Hyperagents setups (patched). Do the published
+    DGM/Hyperagents numbers depend on it? STATUS: OPEN (unchecked by
+    anyone, per the subagent).

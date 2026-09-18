@@ -22,6 +22,21 @@ own mutation prompts (second-order by construction; untested by
 transplant as far as known).
 Falsifier: RSI-1's G1-G8 all pass in any system.
 Status: DEFAULT (held until falsified).
+ANNOTATION 2026-09-18 (same day, sources/rsi_core.md arrived): T0 is
+WEAKENED, not fallen. Hyperagents (Zhang et al., Meta/UBC, arXiv
+2603.19461, RSI-17; PARTIAL -- abstract read, body numbers via a
+summariser) transferred an evolved meta agent to a domain it was not
+evolved on (Olympiad-math grading): imp@50 0.630 vs 0.0 for the initial
+meta agent. That is a transplant arm, published. It is one domain, not
+compute-matched, few seeds. AIDE^2 (Weco blog 2026-07-14, RSI-19;
+PARTIAL, no paper) ran the "ignition" test -- evolved improver installed
+as the outer loop -- and reported faster convergence (20 vs 40 steps)
+but NO asymptotic gain, calling it "not strong enough evidence of
+ignition". HGM (RSI-16) measures metaproductivity directly and reports
+benchmark score is a poor proxy for it (correlation 0.285). The seat's
+reading: second-order transfer has one positive and one null in the
+literature; the compute-matched, multi-seed, multi-substrate transplant
+RSI-1 describes appears not to exist as of 2026-09-18.
 
 ## T1. The harness is where both the leverage and the hazard live
 
@@ -83,10 +98,12 @@ back: back-mutation, or an archive that kept clean ancestors); a
 costless one is never selected against at all.
 For: S3 + X-S3 (TOY: at fixation, 0/100 runs ever halved at cost 0.1;
 with a reservoir at r = 0.02, median half-life 18 generations vs model
-17); Roesner and Kohno arXiv 2609.17817: poisoned components "never
-pruned" through later clean evolution in DGM and SICA; poisoned DGM
-produced 30/30 vulnerable solutions on clean held-out tasks (LIT,
-VERIFIED by the swarm subagent).
+17); Roesner and Kohno arXiv 2609.17817 (VERIFIED, full text): poisoned
+benchmarks drove a modified DGM, SICA and Hyperagents to 30/30
+vulnerable held-out solutions, and after 10 further generations of
+CLEAN evolution the counts were 28, 30 and 30 of 30 -- persistence in
+all three systems (one continued run each; the DGM attack needed a
+prompt change outside the authors' own threat model).
 Against: real archives are not well-mixed populations; a vulnerability
 may be cost-free on every task the evaluator sees, which is the
 costless case.
