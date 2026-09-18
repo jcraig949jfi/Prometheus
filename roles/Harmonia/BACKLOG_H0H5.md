@@ -46,16 +46,19 @@ HARM-12 | Publish the three-quantity separation (meaningful effect, precision, p
 
 HARM-13 | Apply the exchangeability diagnostic to D1, D2 and D4-D6 and report each detector's class distribution on the live corpus | ENGINE | beta | M | HARM-02 | a committed table, detector x class, with the eligible count per detector
   > DELEGATED 2026-09-18, Harmonia[m2-ca1148a0]: the committed dossier carries D3 regions only (player/family None), so the per-detector table needs the corpus as each detector sees it. Delegation prompts/2026-09-18_exchangeability_d1_d6/01_DELEGATION_ARCHAEON_d1_d6_exchangeability_table.md (sha256 755323df...) posted to Archaeon. blocked_on -> Archaeon.
+  > 2026-09-18 01:48Z Archaeon #414: table delivered as a CENSUS OF ZEROS with reasons (archaeon/docs/h0h5/EXCHANGEABILITY_D1_D6_2026-09-18.json): the M2 ledger (eng_906356f7) has 0 rows on the candidate-score chart (1,276 vivarium rows, none with a score metric); D1/D2/D4 NO_PLAYER_FIELD, D5 no cell at min_repeats with MAD > 0, D6 every axis zero-span. The 2026-09-10 corpus lives only on the M1 archive ledger eng_8a37a5d3. NEW BLOCKER (operator-level): a consistent copy of D:/Prometheus-data/sfe/engine.db from M1 landed at C:/Prometheus-data/sfe-archive-m1/engine.db on M2 (Daedalus #416 gives the one-line sqlite backup command; no read path M2 -> M1 exists).
 HARM-14 | Declare the calibration-corpus policy: which detectors may be calibrated on i.i.d. draws, and which need a trajectory-structured null | ENGINE | beta | M | HARM-13 | `CALIBRATION_CORPUS_POLICY.md` naming, per detector, the null family its rate is valid under
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/CALIBRATION_CORPUS_POLICY.md names, per detector, the null family its rate is valid under, derived from each detector's statistic (D1 i.i.d. calibration WITHDRAWN; D2/D4 SE understated under autocorrelation; D5 i.i.d. rate an upper bound; D6 by design; D3 per RULING_D3V2). The class distribution (HARM-13) is NOT_EXAMINED and named as what would change the file.
 HARM-15 | Build the trajectory-structured null and recalibrate D3 under it at the live geometry | ENGINE | beta | L | HARM-14 | a rate with its binomial SE at (n=40, k=4) under trended rows, beside the i.i.d. rate
   > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: d3.v1 was superseded by the admitted d3.v2 (D-21), and RULING_D3V2_CALIBRATION_2026-09-14.md already calibrated v2 under a TRENDED null family (N2h at |r| 0.577 and 0.816) beside the i.i.d. one, at FLOOR and LIVE geometries (A2 rows). A v1 recalibration under trend has no consumer; the (n=40, k=4) geometry named here is the 09-10 dossier's, not the admitted LIVE one (36 vs 4 x 36). The live eligibility count remains HARM-18's.
 HARM-16 | Record the three EXCHANGEABLE survivors as a watch-list with their geometry and class, and the reopening condition | ENGINE | program | S | none | `D3_WATCHLIST.md` with three rows and the condition that would license a study
   > 2026-09-14, Harmonia[m2-f541bed9]: the three survivors were computed with /(n-2) detrending, not the admitted d3.v2's /(n-1) (RULING_D3V2_CALIBRATION_2026-09-14.md s5). Now blocked on the v2 live dossier (#260); write the watch-list from that dossier, not from the 09-10 numbers.
+  > 2026-09-18 Archaeon #414: #260 REFUSED WITH REASON -- the 09-10 corpus identity is unreachable from M2; on the M2 ledger the D3 dossier would be an empty census. Same operator-level blocker as HARM-13 (M1 archive ledger copy).
 HARM-17 | Recompute my binomial-null calibration at the family's actual L under the trajectory null, since the i.i.d. result does not apply to the live corpus | ENGINE | beta | M | HARM-15 | an amended calibration file stating which corpus each rate is valid for
   > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: as HARM-15 -- the binomial-null calibration this row would amend is v1's; v2's calibration file (science/ledgers/d3v2_calibration_2026-09-14.json) states per cell the null family and geometry each rate is valid for, which is what this row asked for.
 HARM-18 | Adjudicate d3.v2 (detrended statistic) if the operator admits it, with its own calibration and its own eligibility count | ENGINE | 1.1 | XL | operator decision NEW: admit or refuse d3.v2 as a new detector version | a ruling file, or a recorded refusal with the reason
   > 2026-09-14, Harmonia[m2-f541bed9]: operator admitted d3.v2 (D-21). Synthetic calibration RULED in RULING_D3V2_CALIBRATION_2026-09-14.md (ca0dd0fd7): ADMITTED at LIVE geometry, REFUSED at FLOOR and UNEQUAL. Live eligibility count still OPEN, blocked on Archaeon's v2 live dossier (delegation #260). Row stays open until that count is ruled.
+  > 2026-09-18 Archaeon #414: as HARM-16. The live eligibility count for d3.v2 cannot be produced until the M1 archive ledger is readable on M2, or a NEW corpus with a score metric exists on the M2 ledger (none does: 0 rows on sfe.candidate_score.v0).
 
 ## Corpora and analyses
 
@@ -120,9 +123,9 @@ HARM-51 | TerraLingua (TECHNE-108): method-1 vs method-2 disagreement table + co
 
 ## Blocked, listed rather than hidden
 
-    HARM-13  Archaeon (per-detector exchangeability table; delegation 2026-09-18)
-    HARM-16  Archaeon (#260 v2 live dossier; reminded 2026-09-18)
-    HARM-18  Archaeon (#260 v2 live dossier; the operator decision is made, the live count is not)
+    HARM-13  OPERATOR / an M1 shell: copy the M1 archive ledger eng_8a37a5d3 to M2 (Daedalus #416 gives the command and the landing path); Archaeon then runs the table in one command
+    HARM-16  same file (Archaeon #414: #260 refused with reason from M2)
+    HARM-18  same file, or a new scored corpus on the M2 ledger
     HARM-21  the pool measurement (Archaeon, Proteus)
     HARM-22  Vivarium's `reserve_budget` 404
     HARM-23  the NK length discrepancy (BRANCHES 24 vs packet v2 N=16)
