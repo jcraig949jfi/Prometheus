@@ -131,3 +131,12 @@ neutrality, not unreachable code; the numbers of C4-07 stand. Harness decl readi
 (UNDERPOWERED on C5-04/C5-07, WEAK_POSITIVE on C5-03/C5-06) are the machine's mechanical
 labels beside the preregistered readings, as with C4-08 (D4-012). | C5-06/07/08
 READOUT.md. | -- | Not revisited. DETERMINISTIC.
+
+D5-013 | 2026-09-18 15:03 | C5-09 a01 INSTRUMENT_INVALID BY ITS OWN KILL RULE: the determinism
+control compared the whole run record including wall_s (volatile) and read False; every
+scientific number is on file (NO_GAIN: nets OLD_B 0 / B_FAIL +1 / B_FIZZLE +1; 96 cells
+and not one first held-out gain in any arm). Harness defect -> a02 with the control
+comparing wall_s-stripped records and the re-run saved; a01 preserved; a02's numbers
+must equal a01's (checked in the readout). C5-10 a01 (NO_CONDITION_SELECTED on a01's
+numbers) is preserved and C5-10 re-runs on a02. | C5-09/attempts/a01/REACH.json. | -- |
+Not revisited. DETERMINISTIC (the kill rule as written).

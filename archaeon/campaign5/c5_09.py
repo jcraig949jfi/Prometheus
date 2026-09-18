@@ -186,7 +186,8 @@ def main(argv=None) -> int:
     # controls
     again = run_arm({"arm": BASELINE, "seed": a.seeds[0], "N": a.N, "G": a.G, "E": a.E, "parents": parents}) if not a.dry_run else None
     first = next(r for r in runs if r["arm"] == BASELINE and r["seed"] == a.seeds[0])
-    det = again is not None and json.dumps(again, sort_keys=True) == json.dumps(first, sort_keys=True)
+    strip = lambda r: json.dumps({k: v for k, v in r.items() if k != "wall_s"}, sort_keys=True)     # noqa: E731  a02: wall_s is volatile (a01 compared it: control failed on the harness, D5-013)
+    det = again is not None and strip(again) == strip(first)
     screen = json.loads((C5 / "WORLD_SCREEN_2026-09-18.json").read_text(encoding="utf-8"))
     start_ok = all(first["worlds"][w]["start_best_heldout"] <= screen["worlds"][w]["best"] + 1e-9 for w in WORLDS)
     ctrl = {"deterministic": det, "start_identical": rd["start_identical"], "start_below_screen": start_ok, "pass": det and rd["start_identical"] and start_ok}
@@ -200,6 +201,8 @@ def main(argv=None) -> int:
         X.record(wid, r, {"arm": r["arm"], "seed": r["seed"]}, content, "SURVIVED", key_parts=(r["arm"], r["seed"]))
     summary = {"reading": rd["reading"], "DISCOVERY_GAIN": rd["DISCOVERY_GAIN"], "GRAMMAR_GAIN": rd["GRAMMAR_GAIN"], "cells": rd["cells"], "per_world": rd["per_world"],
                "controls": ctrl, "wall_s": round(time.time() - t0, 1)}
+    if again is not None:
+        X.att.write("determinism_rerun.json", again)
     X.att.write("REACH.json", summary)
     X.att.write("runs.json", runs)
     X.publish(wid, "reach", "cmp5.c509_reach.v1", {k: v for k, v in summary.items() if k != "cells"} | {"nets": {k: {kk: vv for kk, vv in v.items() if kk != "cells"} for k, v in rd["cells"].items()}},
