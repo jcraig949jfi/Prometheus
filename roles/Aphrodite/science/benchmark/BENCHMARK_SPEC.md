@@ -62,3 +62,46 @@ in [0.15, 0.70] on every measured host; else NO_ELIGIBLE_SUBSTRATE.
 Budget (frozen): target <= 14 days; hard ceiling 30 days (conservative
 throughput near the boundary). Beyond 30 days the resize ladder applies
 in the operator's order; delta 3 is never widened; 16 lineages excluded.
+
+## AMENDMENT 1 -- freeze layer (operator, 2026-09-18; before any execution)
+
+Benchmark LOGIC is unchanged: bench.py is byte-identical (sha256
+618d810b...fc3d). Added around it:
+- BUNDLE: bundle/task_fixture_manifest.json (the 200 starting-accuracy
+  tasks with seeds, prompts, golds and hashes; every loop task seed),
+  bundle/generation_evaluation_config.json, bundle/retry_policy.json,
+  bundle/model_candidates.json (served-variant identity rule; Qwen3-8B
+  thinking DISABLED as part of its identity), bundle/receipt_schema.json,
+  economics.py (the preregistered calculation), run_frozen.py (the
+  verifying wrapper), this spec and bench.py -- each SHA-256 in
+  BENCHMARK_MANIFEST.json, plus one canonical SHA-256 of the manifest.
+- EXECUTION ENTRY POINT: executors run run_frozen.py (same arguments as
+  bench.py). It refuses to run unless every bundle file matches the
+  manifest and the fixtures match what the harness generates, then runs
+  the unchanged bench.py and stamps the receipt with
+  bundle_manifest_sha256, bundle_git_commit, bundle_verified and the
+  served-variant identity.
+- IDENTITY: a candidate is the SERVED VARIANT (checkpoint + quantisation
+  + runtime family + inference settings). Accuracy, throughput and
+  eligibility belong to (variant, host); nothing is averaged across
+  hosts; materially different configurations are distinct measurements.
+- STARTING ACCURACY: frozen 200-task / 50-per-family assay; aggregate
+  point estimate controls eligibility in [0.15, 0.70]; per-family values
+  are DIAGNOSTIC only and never used to include or exclude a model. The
+  same variant on two hosts differing by >= 0.05 (10 of 200 tasks) is an
+  infrastructure/configuration ANOMALY to investigate before combining.
+- WALL TIME: reported bounds (A) mean throughput, (B) slowest observed
+  generation, (C) variance-aware upper 95% bound on mean seconds per
+  evaluation over generations. The 30-day decision uses the larger
+  projection of (C) and the harness's frozen conservative value. Raw
+  per-generation times stay in the receipt.
+- TWO HOSTS: combined only for an identical variant eligible on both
+  with no anomaly; sharding over measured decision capacities.
+- TASK-DISTRIBUTION BOUNDARY: the four procedural families are valid for
+  benchmark-based substrate selection. Archaeon's sealed Campaign 1
+  generators replace them only through a design amendment; if that
+  materially changes difficulty or form, starting accuracy is re-qualified
+  on the final distribution before Campaign 1 authorisation; throughput is
+  re-run only if the workload's token/evaluation economics materially
+  change. The final distribution is never tuned to force a model into
+  the window.

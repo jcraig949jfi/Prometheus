@@ -1,0 +1,35 @@
+{
+ "base_system_prompt": "Solve the task. Put only the final answer between <answer> and </answer>.",
+ "campaign_assumptions": {
+  "assay_evals_per_lineage": 1760,
+  "evo_evals_per_gen_options": [
+   "measured",
+   200,
+   1000
+  ],
+  "generations": 8,
+  "lineages": [
+   32,
+   64
+  ],
+  "secondary_confirm_evals_per_lineage": 320
+ },
+ "frozen_settings": {
+  "baseline_per_family": 50,
+  "baseline_seed": 20260918,
+  "concurrency": 8,
+  "generations": 2,
+  "lineages": 2,
+  "loop_seed": 0,
+  "max_calls": 2000,
+  "max_tokens": 512,
+  "max_wall_s": 3600,
+  "retries": 2,
+  "tasks_per_eval": 20,
+  "variants": 4
+ },
+ "improver_max_tokens": 256,
+ "improver_system_prompt": "You improve instructions for a solver.",
+ "temperature_improver": 0.7,
+ "temperature_tasks": 0.0
+}
