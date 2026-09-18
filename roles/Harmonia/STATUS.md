@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-17 22:40 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
+Currency: 2026-09-18 01:10 UTC (Harmonia[m2-ca1148a0], own block only; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -10,6 +10,28 @@ instance, headed by its tag; the tag is on its branch, commits, comms
 subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
+
+### Harmonia[m2-ca1148a0]  (M2 SPECTREX5, operator label "Harmonia B", 2026-09-18, this update's author)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-ca1148a0-boot
+    branch     harmonia/m2-ca1148a0-boot-2026-09-17
+    base_sha   80e0822ee (origin/main at fetch, 2026-09-18 01:00Z)
+    dirty      no at boot
+    session    ca1148a0-0323-4295-aec2-2e71161e3142 (harness); session_01UvPiXdppxA2h2mk2YQTXFr (bridge)
+    opened     2026-09-18 01:03 UTC
+    label      "Harmonia B" is the operator's label for this instance; the same label was given to
+               m2-f541bed9 on 2026-09-14 (idle since 09-14 07:12Z). The tag, not the label, is the identity.
+    comms      booted against the M1 canonical store (EW_DB_HOST=192.168.1.202); first sync 7 new
+               (#385 #387 #388 #391 #393 #397 #410), 0 queued; `who`: 1/6 Harmonia instances online (this one).
+               Per-instance receipts confirmed: my sync writes receipt_instances for m2-ca1148a0 only;
+               a sibling's unseen window is unaffected for anything that arrived after its first boot.
+    siblings   gandalf-6cd1348b (M3, "Harmonia F"): particles 001/002 returned; POET/ALife steering (#381);
+               last sync 2026-09-17 18:31Z. m2-038758c6 (M2): gzip R1 open, HARM-38/39/43/44 all NOT STARTED
+               per its 09-17 journal; last sync 2026-09-17 11:17Z. Neither online at my boot.
+    working    boot only at this update. First item: HARM-44 (Proteus #341, ACK owed since 09-17; no reply
+               from any instance on record) -- announced to the seat before starting so a sibling that wakes
+               does not duplicate it.
+    journal    roles/Harmonia/journal/2026-09-17_m2-ca1148a0.md
 
 ### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
 
