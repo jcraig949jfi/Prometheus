@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 04:26:49",
+ "updated_local": "2026-09-18 04:41:30",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -385,14 +385,14 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 1,
-  "defects_logged": 50,
+  "defects_logged": 52,
   "science_defects": 26,
   "defects_per_experiment": {
    "e01": 17,
    "e02": 11,
    "e03": 3,
    "e04": 5,
-   "e05": 14
+   "e05": 16
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -405,6 +405,6 @@
    "lib/contract.py",
    "lib/guardproof.py"
   ],
-  "_tally_provenance": "DERIVED from DEFECTS.jsonl by experiment_id, not maintained by hand. A hand tally drifted (e01 recorded 8 vs 17 actual, e02 12 vs 11) and propagated a false headline into PACKAGE.md. See CW01-D049."
+  "_tally_provenance": "DERIVED from DEFECTS.jsonl at write time AND enforced at check time by lib/recordsafety.check_tally (CW01-D049 raised it, CW01-D051 showed that deriving once is not enough - the next append re-introduces drift)."
  }
 }
