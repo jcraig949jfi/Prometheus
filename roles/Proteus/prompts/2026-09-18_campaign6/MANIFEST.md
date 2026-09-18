@@ -7,3 +7,4 @@ sha256 over LF-normalised bytes (equals the git blob for text files); see comms/
 - 02_OPERATOR_RULING_G6-0_PROTEUS_AND_46_SEMANTICS.md  sha256:927f8afda7af45e6dbb90c963f24cea415ee833ed7c11303e3d059b776799a34
 - REPLY_ARCHAEON_461_462_DAEDALUS_460.md  sha256:07d4a32cf67c6837577a27e80bf84ad57f72b82193302da557f7879faff819cc
 - REPORT_ARCHAEON_478_graph_handover.md  sha256:1d2a17ae85c56a4ba227e81da32cddcd2629f1883aa0c0c96f75fc53fbf77b29
+- REPORT_ARCHAEON_P46_verdict.md  sha256:214a9c31afc79f43fd57baee6cd89bb237b7c2ebcaf8a3e4bf90ca645e849740

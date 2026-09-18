@@ -9,7 +9,8 @@
                 gained the v0 call shape (vm.py is a runtime source); both ids are in the receipt
     v0          UNTOUCHED: runtime 73f110e2..., grammar v0.4, affordances v0, catalog 42e4db36... recompute
                 byte-identically (test_graph_profile.py::test_v0_catalog_is_untouched_by_the_graph_package)
-    status      BUILT and controlled; NO world has run it; no organism scored; no population minted for a run
+    status      BUILT and controlled; NO world has run it; its own falsifier (PROTEUS-46) FAILED as formulated
+                (s5); graph-dependent frontier transformations blocked as formulated, reopen conditions stand
     currency    2026-09-18
 
 ## 1. Why a graph (the evidence, one line each)
@@ -73,7 +74,19 @@ The keyed two-value memory of the v0 witness, as connectivity: 12 nodes, 72 ops 
 0/6 on the honest probe, 6/6 only when the probe leaks. Expressiveness is held EQUAL across the two
 substrates, so PROTEUS-46's second half -- per-operator neighbourhood anatomy of the same programs under
 graph_grammar.v1 vs v0.4 -- compares SEARCH geometry with expressiveness controlled. That measurement is
-the falsifier of this whole profile: the same cliff => a second exhausted substrate.
+the falsifier of this whole profile.
+
+RESULT (2026-09-18, preregistered at main eb58691fc, proteus/round2/PROTEUS-46_FALSIFIER.{json,md}):
+CLIFF_SURVIVES -> FALSIFIER_FAILED as formulated. One-value parent, two-key probe, K=400 per
+operator: USEFUL 0/4,267 (v0.4) vs 0/4,881 (graph); GRADED_DOWN .0075 vs .0006 (floor .0028);
+DESTROYED .70 vs .36; NEUTRAL .27 vs .64. Greedy 3-step search (width 50) never scored above the
+parent's 3/6 on EITHER substrate: the one-value -> two-value step is a coordinated change with no
+intermediate the probe can see, in both representations. Connectivity edits made the neighbourhood
+SAFER (the dormant-attach operators are neutral by construction), not more GRADED. Under the operator's
+ruling of 2026-09-18 this is FALSIFIER_FAILED / blocked as formulated, NOT retirement: one hand-written
+parent pair on one probe exhausts nothing, and the reopen conditions (a different topology of the same
+function, a different operator set or mass profile, a developmental regime, a representation change)
+stand. The profile stays available as a substrate; the claim "connectivity removes the cliff" is dead.
 
 ## 6. Fingerprint fields (Axis T, organism side; GraphMeter.as_dict)
 
