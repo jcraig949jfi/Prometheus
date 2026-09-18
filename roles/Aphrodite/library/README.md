@@ -48,6 +48,18 @@ file.
     TOY          this seat's own toy; a model/instrument check, never
                  evidence about a real system
 
+## Evidence hierarchy (operator, 2026-09-18; binding on every file here)
+
+    TIER 1  analytic models and CPU toys
+    TIER 2  apparatus calibration
+    TIER 3  real-model experimental designs
+    TIER 4  real-model empirical evidence
+No result silently becomes a claim at a higher tier. The seat's own
+holdings as of 2026-09-18: tier 1 (E1-E4, X1, X2, S1-S4, X-S3, X-Z);
+tier 2 in progress (Campaign 0); tier 3 (designs/); tier 4 none. The
+word TOY in this library means TIER 1. Literature carries the source
+words above (VERIFIED ... NOT FOUND) and is never this seat's tier-4.
+
 ## Rules the library keeps
 
 - No verdict without its rows; no row without its source.

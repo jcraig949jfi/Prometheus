@@ -3,7 +3,10 @@
 Currency: 2026-09-18. Owner: Aphrodite. Each theory is a STAND TO BE
 ATTACKED (base role: take a stand, assume you are wrong until proven).
 Evidence tiers as in README.md; TOY never counts as evidence about real
-systems. A theory that falls is annotated FALLEN with the date and the
+systems.
+EVIDENCE HIERARCHY (2026-09-18): every "For:" item marked TOY is TIER 1;
+no theory here rests on TIER 2 or TIER 4 evidence of this seat's own.
+LIT items are other groups' results, verification word given. A theory that falls is annotated FALLEN with the date and the
 evidence, never deleted.
 
 ## T0. The null hypothesis for every RSI claim
