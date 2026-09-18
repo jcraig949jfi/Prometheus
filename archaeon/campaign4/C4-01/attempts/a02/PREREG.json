@@ -1,0 +1,131 @@
+{
+ "ancestry": "original (queue slot 1)",
+ "arms": [
+  "insertion",
+  "deletion",
+  "duplication",
+  "movement",
+  "replacement",
+  "operand_perturbation",
+  "reference_redirection",
+  "region_swap",
+  "splice",
+  "randomization",
+  "unreachable_removal",
+  "config_perturbation",
+  "control_identity",
+  "control_randomize_all"
+ ],
+ "assay_capability_requirement": "controls: identity edit 57/57 D5 with displacement 0; whole-genome randomization >= 45/57 destroyed (D2 or D3); the D7 detector reads D7 on a hand-set reward (cheat); one parent's rows reproduce byte-for-byte on rerun",
+ "attempt": 2,
+ "budget": {
+  "E": 16,
+  "band": 0.0625,
+  "draws": 8,
+  "environments": [
+   "W0",
+   "W0_heldout",
+   "W1_d1",
+   "W1_d4",
+   "W2_K2"
+  ],
+  "floor": 0.1875,
+  "operators": 12,
+  "other_envs": [
+   "W0_heldout",
+   "W1_d1",
+   "W1_d4",
+   "W2_K2"
+  ],
+  "parent_env": {
+   "delay_general": "W1_d4",
+   "gen0_random": "W0",
+   "shelf": "W2_K2",
+   "w0_solver": "W0"
+  },
+  "parents": 57
+ },
+ "claim_ceiling": "a measured map at 8 draws per (parent, operator) on one frozen substrate; no mechanism; no evolvability claim",
+ "crn_policy": "one fixed episode set per environment (family train, index 1, E=16) shared by every parent and child; edits seeded from (campaign_seed, organism_id, operator, draw)",
+ "decl": {
+  "n_min": 57,
+  "positive_control": {
+   "arm": "control_randomize_all",
+   "metric": "destroyed",
+   "min": 1.0,
+   "min_rows": 45
+  },
+  "primary": {
+   "control": "operand_perturbation",
+   "metric": "loss_rate",
+   "min_effect": 0.05,
+   "treatment": "randomization"
+  },
+  "readout_control": {
+   "arm": "control_identity",
+   "chance": 0.0,
+   "metric": "identity_ok",
+   "min_above": 0.99
+  }
+ },
+ "design_digest": "sha256:1571ea1655db0aa4a7a58a8e9f43484212febafb8145675f119fab1f0b568415",
+ "expected_machine_telemetry": [
+  "flow table D0..D7 by operator / stratum / region",
+  "displacement histograms",
+  "per-child raw evaluate() dicts on 4 environments",
+  "structural descriptors before/after",
+  "operator args with touched positions"
+ ],
+ "experiment": "C4-01",
+ "falsification_condition": "every operator pair has TVD < 0.05 (all classes look alike), or region UNKNOWN for > 20% of applied edits, or D0 > 50% of edits (the instrument cannot say where loss occurs) -> NEGATIVE, recorded, nothing fixed in C4-01",
+ "kill_condition": "a control fails -> INSTRUMENT_INVALID; the slot stops and the defect is recorded",
+ "machine_changes_exercised": [
+  "campaign-4 harness (D4-001)",
+  "classifier D4-003",
+  "total-interpreter accounting (D1 eligible 0)"
+ ],
+ "parent_evidence": "Campaigns 1-3: repeated boundaries where edits stop producing informative phenotypes (unreachable summits, inert shelves). The interpreter is TOTAL (D4-002): D1 cannot fire; D0 is post-edit validation only.",
+ "parents": [
+  "C3-SFE-01",
+  "C3-SFE-03",
+  "C3-SFE-04"
+ ],
+ "positive_control": "control_randomize_all arm: destroyed (D2+D3 share) >= 1.0 on >= 45 of 57 parents",
+ "prereg_digest": "sha256:fa448c85f5d898e287512c026bf2ff136e30976e9c77c7770adc0d7f1e5e516f",
+ "primary_observable": "P(Dk | operator), P(Dk | operator, stratum), P(Dk | region) with Wilson bands and eligible counts; displacement histogram by operator; pairwise total-variation distance between operators' D-distributions",
+ "question": "Where does the frozen substrate destroy variation? For each of the 12 grammar operators applied once to each of the 57 starting program variants (8 draws), the distribution over D0..D7 and the behavioral displacement conditional on executing.",
+ "reachability_estimate": {
+  "note": "not a search; no reachability lookup applies (evaluation census)"
+ },
+ "replacement_condition": "none: first slot",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "damage-boundary census",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ],
+ "why_this_slot": "Establishes the actual damage boundary before any attempt to move it (C4-03, C4-07, C4-08); fills the first column of the damage geometry map."
+}
