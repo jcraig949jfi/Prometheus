@@ -15,10 +15,10 @@ sys.path.insert(0, str(CAMPAIGN / "lib"))
 import recordsafety as RS      # noqa: E402
 
 
-def main(tag):
+def main(tag, expdir="cw01-loop1"):
     pr = json.loads((HERE / ("PRIORITY_%s.json" % tag)).read_text(encoding="utf-8"))
     ten = pr["frozen_top_ten"]
-    exp = CAMPAIGN / "experiments" / "cw01-loop1"
+    exp = CAMPAIGN / "experiments" / expdir
     rows = []
     for c in ten:
         d = exp / c["id"]
@@ -82,4 +82,5 @@ def main(tag):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else time.strftime("%Y-%m-%d")))
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else time.strftime("%Y-%m-%d"),
+                  sys.argv[2] if len(sys.argv) > 2 else "cw01-loop1"))

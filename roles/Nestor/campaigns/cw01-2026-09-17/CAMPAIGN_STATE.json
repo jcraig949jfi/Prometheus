@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 11:31:40",
+ "updated_local": "2026-09-18 12:41:41",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "PRIORITY LOOP (operator directive 2026-09-18): revisit / perturb / stasis / reactivate over the whole history; nothing scientific is killed; see loop/LOOP_RULES.md",
  "phase_model": [
@@ -428,7 +428,7 @@
  ],
  "active": {
   "mode": "priority_loop",
-  "cycle": "2026-09-18",
+  "cycle": "ARCH4_2026-09-18",
   "phase": "APPENDED",
   "next": "next cycle: RECONCILE the whole pool with this cycle's evidence, re-score, re-diversify, freeze a new ten"
  },
@@ -560,9 +560,10 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 5,
-  "defects_logged": 72,
+  "defects_logged": 73,
   "science_defects": 28,
   "defects_per_experiment": {
+   "arch4": 1,
    "e01": 17,
    "e02": 11,
    "e03": 3,
@@ -619,6 +620,30 @@
    "material": 14,
    "in_stasis": 3,
    "report": "loop/CYCLE_REPORT_2026-09-18.md"
+  },
+  "ARCH4_2026-09-18": {
+   "pool": 28,
+   "candidates": 12,
+   "frozen_ten": [
+    "P-C15",
+    "P-C16",
+    "P-C13",
+    "P-C14",
+    "P-C03",
+    "P-C04"
+   ],
+   "dispositions": {
+    "P-C15": "material=True",
+    "P-C16": "material=True",
+    "P-C13": "material=False",
+    "P-C14": "material=True",
+    "P-C03": "material=True",
+    "P-C04": "material=True"
+   },
+   "evidence_events": 46,
+   "material": 30,
+   "in_stasis": 3,
+   "report": "loop/CYCLE_REPORT_ARCH4_2026-09-18.md"
   }
  }
 }
