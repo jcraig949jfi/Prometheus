@@ -162,3 +162,16 @@ the shelf); recorded in READOUT R3, not moved. | C4-06/DESIGN.md. |
 Alternative: store 12 x 200 manifests (2.4k programs) -- rejected for size;
 the rerun is deterministic and self-verifying. | Revisit never in C4.
 DETERMINISTIC.
+
+D4-012 | 2026-09-18 08:05 | C4-08: perturbation regime = descend(n_ops=2, mate=None)
+per birth; descendant sample = top-32 of each final population; the ordinary
+arm is RERUN from C4-06's seeds (C4-06 saved traces, not manifests) and its
+traces are the negative control (6/6 equal); suspected structures chosen only
+after the assay (none differed by >= .10 -> ablation NOT_EXAMINED). ANNOTATION
+after the run: my sealed decl's primary min_effect (-0.10) made the harness
+read the predicted direction as a failure (CAPABLE_NEGATIVE); the slot's own
+preregistered readings (P1 held, P2 lost, length confound) are the record and
+the label stands beside them uncorrected. | C4-08/DESIGN.md. | Alternative:
+store C4-06's final populations -- rejected (D4-010). | Revisit: any later
+slot declares min_effect as a magnitude with an explicit direction field.
+DETERMINISTIC.
