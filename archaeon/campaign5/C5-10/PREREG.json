@@ -1,0 +1,99 @@
+{
+ "ancestry": "original (Phase B, slot 8)",
+ "arms": [
+  "controls",
+  "OLD_v04",
+  "NONE"
+ ],
+ "assay_capability_requirement": "held-out worlds unused by every earlier slot (True); rule digest sealed",
+ "attempt": 2,
+ "budget": {
+  "E": 16,
+  "G": 100,
+  "N": 50,
+  "c5_09_attempt": "a02",
+  "rule_sha256": "6414f2f098ceaeb9ec9ebf2f48a0c2ca3efa3a873e39db3528e4f6babc9fdf91",
+  "seeds": [
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "selected": null,
+  "worlds": [
+   "W3_K3d1",
+   "W2_K2d4"
+  ]
+ },
+ "claim_ceiling": "one selected condition on two held-out worlds",
+ "crn_policy": "held-out seeds 11-16; starting subsample keyed by seed; same evolver streams in both arms",
+ "decl": {
+  "n_min": 1,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "OLD_v04",
+   "metric": "heldout_final",
+   "min_effect": 0.0625,
+   "treatment": "NONE"
+  }
+ },
+ "design_digest": "sha256:a2980dd81ebe7cf4b4f03182c094eb7f6b0074e560d9ce3ac79238059cbb84e6",
+ "expected_machine_telemetry": [
+  "per-cell held-out finals"
+ ],
+ "experiment": "C5-10",
+ "falsification_condition": "FAILED_TO_REPLICATE",
+ "kill_condition": "held-out world previously used -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "rule reader"
+ ],
+ "parent_evidence": "C5-09 attempt a02: nets {\"OLD_B\": 0, \"B_FAIL\": 1, \"B_FIZZLE\": 1}",
+ "parents": [
+  "C5-09"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:d000a73ea3ab7208d79dd3a88484950efb7a6a0b88799f06f2fb9debfccb39c1",
+ "primary_observable": "RULE.md: net cells >= 2 of 12 and no cell lost by >= 2/16 -> REPLICATED",
+ "question": "Does the condition C5-09 selected (if any) replicate on two held-out worlds with held-out seeds, against OLD_v04 at equal total compute?",
+ "reachability_estimate": {
+  "note": "screened held-out worlds (receipt): W3_K3d1 .375, W2_K2d4 .552"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "held-out trial under the committed rule",
+ "typed_failure_conditions": [
+  "NO_CONDITION_SELECTED",
+  "FAILED_TO_REPLICATE",
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "The directive's held-out trial; NO_CONDITION_SELECTED is a success of the rule."
+}

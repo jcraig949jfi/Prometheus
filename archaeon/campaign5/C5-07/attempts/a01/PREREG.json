@@ -1,0 +1,87 @@
+{
+ "ancestry": "original (Phase B, slot 5)",
+ "arms": [
+  "controls",
+  "children",
+  "parents"
+ ],
+ "assay_capability_requirement": "the parent's second-edit neutral share here equals C5-05's grammar-B FIZZLE neutral share for the same parent (same seeds); determinism",
+ "attempt": 1,
+ "budget": {
+  "c5_05_attempt": "a01",
+  "c5_06_attempt": "a02",
+  "draws": 8,
+  "parents": 44,
+  "recovered_children": 229
+ },
+ "claim_ceiling": "costs of single-edit recovery on 57 parents' lineages; no evolution",
+ "crn_policy": "second edits seeded seed_from('c5.05.edit', 20260922, key, 'B', op, draw) with key = child digest / parent id",
+ "decl": {
+  "n_min": 10,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "parents",
+   "metric": "share",
+   "min_effect": -0.0625,
+   "treatment": "children"
+  }
+ },
+ "design_digest": "sha256:80e7ba6055a739fb04ebc30844a72c403d1f64bf1dafbe79976331caf17e3a8c",
+ "expected_machine_telemetry": [
+  "per-child K1/K3",
+  "per-child second-edit label counts"
+ ],
+ "experiment": "C5-07",
+ "falsification_condition": "K2 cost or K1 > 1.10 share >= .50 -> INSULATION_COSTLY",
+ "kill_condition": "parent control mismatch -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "second_edit_neutral",
+  "costs"
+ ],
+ "parent_evidence": "C5-06 a02: 229 replicated recoveries of 1449 executed-crossing children",
+ "parents": [
+  "C5-06",
+  "C5-05"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:db60e6c40c72149e927ff9aafc2c327a4e84833d5332a68b918b89ca654fa6a9",
+ "primary_observable": "K1 median ratio and > 1.10 share; K2 pooled diff and per-child counts; K3 share; reading INSULATION_COSTLY / INSULATION_CHEAP",
+ "question": "What does skipping an executed fault cost the recovered program: compute, second-edit fragility, function elsewhere?",
+ "reachability_estimate": {
+  "note": "not a reach experiment"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "cost of insulation (K1 compute, K2 second-edit fragility, K3 lost function elsewhere)",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "The directive's conditional cost-of-insulation slot; C5-06 read REAL_LOCAL_RECOVERY."
+}

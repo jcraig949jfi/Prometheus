@@ -1,6 +1,6 @@
 +=====================================================================+
 |  C5-04 -- GENERATOR x REPRESENTATION CONTROL: READOUT                 |
-|  Archaeon[m2-49ee5a4d]   2026-09-18 15:35Z   attempt of record a01   |
+|  Archaeon[m2-49ee5a4d]   2026-09-18 14:38Z   attempt of record a01   |
 |  P1-P4 all HOLD; the representation, not the generator, decides       |
 +=====================================================================+
 

@@ -37,11 +37,17 @@ APHRODITE-07 | ModularRSI scoped vs joint mutation toy | EVIDENCE | program | M 
 APHRODITE-13 | Distributional gate method for multi-cell preregs | TOOLS | program | S | FOLDED into APHRODITE-17/19 (lineage-level inference replaces per-cell aggregation) | --
 Swarm toys S1-S4: FROZEN (operator 2026-09-18). A new toy only if it answers a concrete question required by Campaign 0 or a later real-swarm design.
 
-APHRODITE-36 | Campaign 0C: qualify a screen-and-confirm (E-exist) analysis on the nine worlds + P1-P3 before any GPU [T2] | EVIDENCE | program | M | operator: estimand decision (E-mean / E-exist / both) | prereg + results
-APHRODITE-37 | Throughput benchmark of the chosen substrate on the chosen host (not an experiment) | TOOLS | 1.0 | XL | NEW: operator go (model-host deployment) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
+APHRODITE-39 | Update the design packet with MEASURED economics once the benchmark JSON exists; pick the model by the packet's selection rule | ENGINE | 1.0 | S | APHRODITE-37 | CAMPAIGN1_DESIGN_PACKET_v3
+APHRODITE-40 | Review the Archaeon / Harmonia / Vivarium contracts against the measurement needs when they arrive | ENGINE | 1.0 | S | Archaeon, Harmonia, Vivarium | reply per contract
+APHRODITE-37 | Run the throughput benchmark on M1/M2 (harness ready: science/benchmark/bench.py) | TOOLS | 1.0 | XL | NEW: operator -- who runs it on M1/M2 and which models (not reachable from M4) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
 APHRODITE-38 | Campaign 1 preregistration with estimand, delta, substrate, L, budget frozen | EVIDENCE | 1.0 | XL | operator decisions in CAMPAIGN1_DESIGN_PACKET s2-s6 | prereg committed; execution still needs its own go
 
 CLOSED (with the commit that closed them):
+
+APHRODITE-36 Campaign 0C -- PASS, 9ef14c424 (prereg c21e4aab9)
+Contract requests (operator item 9) -- 892e0bce2, comms #452-#454
+Benchmark harness (operator item 8) -- 892e0bce2 (run pending the host path)
+Design packet v2 -- this commit
 
 APHRODITE-15 delta consequences -- delta table in RESULTS_C0B (the operator sets delta)
 Campaign 0B stress test -- this commit (FAIL on power, calibration intact)

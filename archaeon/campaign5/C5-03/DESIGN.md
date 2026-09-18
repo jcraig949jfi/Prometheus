@@ -75,7 +75,7 @@ exist for representation B and cannot (it wraps the old evaluator).
 AMENDMENT FOR ATTEMPT a02 (written AFTER a01 ran; a01 is preserved and
 reported as the result under the text above)
 -----------------------------------------------------------------------
-a01 (2026-09-18 14:45Z) returned F1, F2, F4, F5, F7, controls PASS and
+a01 (2026-09-18 14:30Z) returned F1, F2, F4, F5, F7, controls PASS and
   F3 FAIL: raw-vs-injected(2) fault-COUNT TVD .42 (< .50); the other
      two pairs 1.00 and .83; trap shares raw 1.00 / valid .01 /
      injected(2) .84. A fault inside a loop is executed hundreds of
