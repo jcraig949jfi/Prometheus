@@ -5,7 +5,7 @@ revisit-if. Each decision states SCIENTIFIC DISCRETION or DETERMINISTIC.
 Vocabulary in prose follows archaeon/campaign4/DISPOSITION_C4-REH-1.md s6.
 The directive is verbatim at roles/Archaeon/prompts/2026-09-18_campaign5/.
 
-D5-001 | 2026-09-18 10:05 | EXECUTION PATH AND IDENTITY: the campaign harness
+D5-001 | 2026-09-18 14:05 | EXECUTION PATH AND IDENTITY: the campaign harness
 path (campaign-3 Experiment parametrized: archaeon/campaign5/c5base.py),
 local evaluation, every world / experiment / observation written to the
 engine under a NEW client cmp5-archaeon (self-registered by the Engine
@@ -18,7 +18,7 @@ scientific reason to wait was invented. | Directive HARD RULES; Vivarium
 seed only) -- rejected: one identity per campaign is the C1-C4 convention. |
 Revisit when the kind exists and Phase A is over. DETERMINISTIC.
 
-D5-002 | 2026-09-18 10:05 | THREE QUESTIONS PUT TO THE OPERATOR IN CHAT before
+D5-002 | 2026-09-18 14:05 | THREE QUESTIONS PUT TO THE OPERATOR IN CHAT before
 they went offline, each with the default that applies on silence: (1) LANE --
 Archaeon authors the Phase-B interpreter, generator and grammar variant under
 archaeon/campaign5/ as a campaign-scoped representation, Proteus's frozen VM
@@ -31,7 +31,7 @@ here beside the default it replaces. | Operator preface: "I'll answer
 questions now before you start". | -- | Revisit on the operator's word.
 SCIENTIFIC DISCRETION (defaults chosen by the lead).
 
-D5-003 | 2026-09-18 10:05 | C5-01 RESOLUTION: 6 walkers per competent parent (C4-05
+D5-003 | 2026-09-18 14:05 | C5-01 RESOLUTION: 6 walkers per competent parent (C4-05
 had 4), depth 64, archives 0/16/32/48/64; 282 walkers per depth gives a
 Wilson half-width of about .02 at rates near .05, the smallest effect the
 branches use (.02). Walkers 1-4 reproduce C4-05's walks byte-for-byte for the
@@ -41,13 +41,13 @@ edit's (.0012/evaluation). | C5-01/DESIGN.md. | Alternative: 4 walkers
 (half-width .03, cannot resolve a 2-point difference). | Revisit never in C5.
 SCIENTIFIC thresholds, DETERMINISTIC application.
 
-D5-004 | 2026-09-18 10:30 | C5-01 read: MIXED (r16 .050, r32 .064, r48 .078, r64
+D5-004 | 2026-09-18 14:30 | C5-01 read: MIXED (r16 .050, r32 .064, r48 .078, r64
 .082; gaps .014/.018 below the .02 step; yield per evaluation .00127 -> .00082
 below the .0012 single-edit comparator); PRESERVE_NEUTRAL_MECHANISM = NO under
 the preregistered rule. Replication of C4-05 3,648/3,648 steps. | C5-01
 DEEPWALK_TABLES.json. | -- | Not revisited in C5. DETERMINISTIC.
 
-D5-005 | 2026-09-18 10:35 | C5-02 WORLD SET, frozen from the screen receipt
+D5-005 | 2026-09-18 14:35 | C5-02 WORLD SET, frozen from the screen receipt
 archaeon/campaign5/WORLD_SCREEN_2026-09-18.json (rule fixed in code before any
 candidate was scored: eligible iff best held-out over all 57 parents in
 [3/16, .70)): W2_K2d1 (.510), W2_K2_rand (.542), W3_K3 (.382), W4_K4 (.302) --
