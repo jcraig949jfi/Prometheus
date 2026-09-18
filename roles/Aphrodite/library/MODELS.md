@@ -21,6 +21,13 @@ z +0.38) at N = 2000.
 Breaks: scale-free reading graphs have essentially no threshold
 (sources/swarm_failure.md s6); correlated verification (all readers
 use the same verifier) makes v a single point of failure.
+ANNOTATION 2026-09-18 (monitor admission 2609.17320, reviewed): M1's v
+is the probability a reader is STOPPED, not the probability it
+RECOGNISES the claim. Emergence World reports detection without
+containment -- agents recognised threats yet stored the content and
+acted on it up to 46 hours later. Measured on a real swarm, v must be
+restraint (did not act, did not store), and may be far below the
+recognition rate; the toy's boundary v* then applies to restraint.
 LIT: Agent Smith (arXiv 2402.08567) dies out iff beta <= 2 gamma;
 Jamshidi (arXiv 2606.07941) measured R0 = 1.08 (1.21 scale-free),
 0.81 with a defence.

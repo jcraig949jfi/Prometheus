@@ -5,13 +5,9 @@ APPROVED; the provisional list is kept at superseded/BACKLOG_provisional_
 2026-09-17_18.md). Evidence tier of each item's output in [T1]-[T4]
 (RESPONSIBILITIES.md s1). Operator's execution order for 2026-09-18:
 charter -> monitor -> Campaign 0 prereg -> Campaign 0 run -> stop and
-report. The first five items are today's.
+report. Items 17-20 and 12 are CLOSED (below); the first open items
+now are those needing no new authority.
 
-APHRODITE-17 | Commit the Campaign 0 preregistration (six planted worlds, lineage as the unit, 16/32/64 lineages, pass and stop conditions, analysis choices fixed) before any Campaign 0 code [T2] | EVIDENCE | program | S | none | science/campaign0/PREREG_C0_*.md on origin/main before the first C0 code commit
-APHRODITE-12 | Register and launch the bounded weekly RSI news monitor with the operator's limits and circuit breaker (8 inspected, 3 admitted, primary source, dedupe, change-a-named-item rule, 30-day expiry, park after 4 empty runs, one pause report) | TOOLS | program | M | none | roles/base-role/MONITORS.md row + scheduled task + monitors/news/ runner with tests + first pass record
-APHRODITE-18 | Build the Campaign 0 synthetic-lineage simulator implementing the six worlds exactly as preregistered [T2] | EVIDENCE | program | M | APHRODITE-17 | science/campaign0/worlds.py + controls passing
-APHRODITE-19 | Build the Campaign 0 assay analysis: factorial transplant (improver x state x worker), equal-escrow comparison, necessity/sufficiency decomposition, TOST equivalence, lineage-level inference [T2] | EVIDENCE | program | M | APHRODITE-17 | science/campaign0/assay.py + unit tests
-APHRODITE-20 | Run Campaign 0 at 16/32/64 lineages and report false-positive and false-negative rates, ambiguity, minimum detectable effect, sensitivity to analysis choices, and the smallest reliable lineage count per world [T2] | EVIDENCE | program | M | APHRODITE-18, APHRODITE-19 | science/campaign0/RESULTS_C0_*.md + ledgers + review packet; then STOP for the operator
 APHRODITE-21 | File the 2026-09-18 deep-research report in the library with source tiers and apply its design-changing findings to RSI_PROGRAM_v2 as annotations | LIT | program | S | none | library/sources/deep_research_2026-09-18.md + v2 annotations
 APHRODITE-22 | Tag every result statement in THEORIES, MODELS and results files with its evidence tier and add a check that flags untiered numeric claims [T1] | TOOLS | program | S | none | a tier header per file + tests/test_tiers.py passing
 APHRODITE-23 | Write the Hyperagents causal-object note: what their transferred agent carried (code, memory.json, prompts), and what a strict transplant would strip | LIT | program | S | APHRODITE-21 | library note + QUESTIONS O2 status change
@@ -42,6 +38,11 @@ APHRODITE-13 | Distributional gate method for multi-cell preregs | TOOLS | progr
 Swarm toys S1-S4: FROZEN (operator 2026-09-18). A new toy only if it answers a concrete question required by Campaign 0 or a later real-swarm design.
 
 CLOSED (with the commit that closed them):
+
+APHRODITE-12 monitor registered and launched -- cb3d86985 (MONITORS row), first pass ed4253289 (2 admitted, reviewed)
+APHRODITE-17 Campaign 0 prereg -- f0e04de11 (+ AMENDMENT 1 addb5d4cd)
+APHRODITE-18/19 Campaign 0 simulator and assay -- 6195af410
+APHRODITE-20 Campaign 0 run and report -- this commit (PASS; STOP for the operator)
 
 APHRODITE-01 charter committed verbatim, RESPONSIBILITIES rewritten -- this commit (charter landing)
 APHRODITE-02 backlog filed in the schema -- this commit
