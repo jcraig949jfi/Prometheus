@@ -308,9 +308,9 @@ def main(argv=None) -> int:
             X.record(wid, {"arm": "census", "parent_id": p["organism_id"], "grammar": g}, {"arm": "census", "parent": p["organism_id"], "grammar": g}, content, "SURVIVED", key_parts=(g, p["organism_id"]))
     agg["wall_s"] = round(time.time() - t0, 1)
     X.att.write("GEOMETRY_B.json", agg)
-    with gzip.open(X.att.dir / "children.json.gz", "wt", encoding="utf-8") as f:
+    with gzip.open(X.att.path / "children.json.gz", "wt", encoding="utf-8") as f:
         json.dump(rows, f)
-    (X.att.dir / "CHILDREN_DIGEST.json").write_text(json.dumps({"children.json.gz_rows": len(rows), "sha256_of_rows_json": hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()}, indent=1) + "\n", encoding="utf-8", newline="\n")
+    (X.att.path / "CHILDREN_DIGEST.json").write_text(json.dumps({"children.json.gz_rows": len(rows), "sha256_of_rows_json": hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()}, indent=1) + "\n", encoding="utf-8", newline="\n")
     X.publish(wid, "geometry_b", "cmp5.c505_geometry_b.v1", {k: v for k, v in agg.items() if k != "by_grammar_interp_operator"}, {"info_kind": "artifact", "label": "C5-05 damage geometry under B"})
     out = X.close(grouped, addendum={"thresholds": json.dumps({g: {k: (v.get("pass") if isinstance(v, dict) else v) for k, v in agg["thresholds"][g].items()} for g in GRAMMARS}),
                                      "replication": json.dumps(rep), "crossing": json.dumps(agg["crossing_share"])})
