@@ -156,3 +156,19 @@ REVIEW_PACKET_CAMPAIGN5_2026-09-18.md. | Alternative dispositions considered:
 NO_CONDITION_SELECTED alone (rejected: it names one slot, not the campaign);
 BOUNDARY_CREATED_DISCOVERY_GAIN (rejected: the rule was not met). | Not revisited.
 DETERMINISTIC (every branch fixed before its run).
+
+D5-015 | 2026-09-18 15:25 | OPERATOR RULING (verbatim at roles/Archaeon/prompts/2026-09-18_
+campaign5/03_OPERATOR_RULING_CLOSURE.md): BOUNDARY_CREATED_NO_DISCOVERY_GAIN ACCEPTED; no
+further Campaign-5 slots; Phase A independently sufficient to retire the old substrate/
+grammar search direction; C5-10 NO_CONDITION_SELECTED informative. C5-03 bookkeeping as
+ruled: a01 = PREREGISTRATION_FAILED -- STATISTIC_MISSPECIFIED; D5-008 = protocol
+amendment; a02 = evidence under the amended protocol. Fact determined: a02 re-executed
+a01's population seed (1) and evaluation seed (3) on a deterministic evaluator, so it
+REUSED outcome-bearing data -> a02's qualification is EXPLORATORY / POST-HOC. Phase B is
+not void; the campaign conclusion does not depend on C5-03. C4-07's mechanism reading
+superseded (archaeon/campaign4/SUPERSESSION_2026-09-18.md); its numbers stand. The three
+D5-002 defaults RATIFIED. Representation B RETAINED as a qualified experimental
+instrument, NOT promoted to the platform VM; artifacts handed to Proteus; adoption waits
+for a capability the current representation cannot reach. Next work must alter the
+searchable program structure / grammar of useful behaviours, not fault-boundary tuning.
+| the ruling. | -- | Final. OPERATOR AUTHORITY.

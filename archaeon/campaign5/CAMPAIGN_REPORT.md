@@ -1,7 +1,8 @@
 +=====================================================================+
 |  CAMPAIGN 5 -- ESCAPE THE NEUTRAL CLIFF: CAMPAIGN REPORT              |
 |  Archaeon[m2-49ee5a4d]   2026-09-18   ten slots, 14:16Z - 15:07Z     |
-|  FINAL DISPOSITION: BOUNDARY_CREATED_NO_DISCOVERY_GAIN               |
+|  FINAL DISPOSITION: BOUNDARY_CREATED_NO_DISCOVERY_GAIN -- ACCEPTED   |
+|  by the operator 2026-09-18 (D5-015); no further C5 slots            |
 |  (Phase A: OLD_SUBSTRATE_EXHAUSTED; C5-10: NO_CONDITION_SELECTED)    |
 +=====================================================================+
 
@@ -27,9 +28,10 @@ cliff was not escaped; it was described one level deeper.
   C5-01  deep neutral walk: MIXED; PRESERVE_NEUTRAL NO       a01
   C5-02  fair lateral ecology: A_TAKEOVER_WITHOUT_IMPROVEMENT a01
          Phase A -> OLD_SUBSTRATE_EXHAUSTED (D5-009)
-  C5-03  representation qualification: a01 FAILED its own
-         text; a02 REPRESENTATION_QUALIFIED under a labelled
-         post-hoc amendment (D5-008)                         a01, a02
+  C5-03  representation qualification: a01 PREREGISTRATION_
+         FAILED -- STATISTIC_MISSPECIFIED; D5-008 protocol
+         amendment; a02 QUALIFIED under it, EXPLORATORY /
+         POST-HOC (same seeds as a01; ruling D5-015)          a01, a02
   C5-04  generator x representation: P1-P4 hold              a01
   C5-05  damage geometry under B: C4-01 replicated
          5,586/5,586; boundary fires .84-.86; D5 of
@@ -187,6 +189,23 @@ FINAL: BOUNDARY_CREATED_NO_DISCOVERY_GAIN (C5-10 NO_CONDITION_SELECTED
 recorded as the rule's success). No affirmative answer was optimized
 for; the one prediction written to be lost that favoured the boundary
 (C5-05 T3) lost, and the one that disfavoured it (C5-09 NO_GAIN) held.
+
+6a. OPERATOR CLOSURE (2026-09-18, verbatim on file; D5-015)
+-----------------------------------------------------------------------
+Campaign 5 accepted. Phase A: OLD_SUBSTRATE_EXHAUSTED, independently
+sufficient to retire the old substrate/grammar search direction. Phase
+B: boundary successfully created, mechanistic interpretation improved,
+no discovery advantage observed. C5-03 carries an amendment
+qualification caveat (a01 PREREGISTRATION_FAILED -- STATISTIC_
+MISSPECIFIED; D5-008 protocol amendment; a02 evidence under it,
+exploratory/post-hoc because it re-executed a01's seeds). No further
+Campaign-5 slots. Representation B retained as an experimental
+instrument, not promoted to the platform VM; artifacts handed to
+Proteus. C4-07's mechanism reading superseded (archaeon/campaign4/
+SUPERSESSION_2026-09-18.md), its numbers valid. The three D5-002
+defaults ratified. Next work must alter generative/search structure --
+the searchable program structure or grammar of useful behaviours --
+not continue fault-boundary tuning: the failure has moved upstream.
 
 7. ARTIFACTS
 -----------------------------------------------------------------------
