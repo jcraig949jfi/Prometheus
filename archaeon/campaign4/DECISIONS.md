@@ -139,3 +139,13 @@ the walk is a pure function of its seeds and the frozen evaluator, so C4-06
 regenerates them and verifies the last-step digest against steps.json. |
 C4-05/DESIGN.md. | Alternative: band relative to the current walker (a
 ratchet). | Revisit never in C4. DETERMINISTIC.
+
+D4-011 | 2026-09-18 07:55 | C4-07 closed REPRESENTATION_BLOCKED through the stack (one
+sealed preregistration, one engine record carrying the design digest): no
+condition on the frozen substrate isolates an insulation event from ordinary
+execution (C4-03). Costing reduced operands or addresses instead would price
+the representation itself -- a reward term naming a representational property,
+forbidden by the directive. Recommendation for Campaign 5 in C4-07/DESIGN.md.
+| C4-03 PROXY_TABLES.json (vacuity 932/932; P(fatal) 1.000). | Alternative:
+substitute a different question -- rejected as the forbidden kind. |
+Revisit never in C4. DETERMINISTIC.
