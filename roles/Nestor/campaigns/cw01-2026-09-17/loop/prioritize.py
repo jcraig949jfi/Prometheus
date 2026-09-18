@@ -47,8 +47,24 @@ def score(c):
     return round(s, 2)
 
 
-def main(tag):
-    cands = [json.loads(l) for l in (HERE / "PERTURBATIONS.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+def main(tag, prefix=None, slots=None):
+    """prefix: restrict to candidates whose parent starts with it (a scoped tranche); slots: override SLOTS."""
+    global SLOTS
+    if slots:
+        SLOTS = int(slots)
+    raw = [json.loads(l) for l in (HERE / "PERTURBATIONS.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    byid = {}
+    for d in raw:                                 # amendment lines merge onto the candidate they name
+        if d.get("amend"):
+            if d["id"] in byid:
+                byid[d["id"]].update({k: v for k, v in d.items() if k not in ("amend", "id")})
+        else:
+            byid[d["id"]] = d
+    cands = [c for c in byid.values() if not c.get("superseded_by")]
+    if prefix:
+        cands = [c for c in cands if str(c.get("parent", "")).startswith(prefix)]
+        for c in cands:                           # scoped tranche: diversity is over AXES, not the shared family label
+            c["family"] = c.get("axis") or c["family"]
     states = {}
     for l in (HERE / "STATE.jsonl").read_text(encoding="utf-8").splitlines():
         if l.strip():
@@ -106,7 +122,8 @@ def main(tag):
            "frozen_top_ten": [{"rank": i + 1, "id": c["id"], "parent": c["parent"], "family": c["family"],
                                "type": c["type"], "score": c["score"], "admitted_by": why[c["id"]],
                                "delta": c["delta"], "unchanged": c["unchanged"], "attacks": c["attacks"],
-                               "why_now": c["why_now"], "cost_minutes": c.get("cost_minutes")}
+                               "why_now": c.get("why_now") or c.get("nonredundant"), "axis": c.get("axis"),
+                               "cost_minutes": c.get("cost_minutes")}
                               for i, c in enumerate(chosen)],
            "waiting_not_rejected": [c["id"] for c in ranked if c["id"] not in frozen_ids],
            "_rule": "rank is temporary; exclusion is waiting, not rejection; the ordering allocates compute, not truth"}
@@ -120,4 +137,6 @@ def main(tag):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else time.strftime("%Y-%m-%d")))
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else time.strftime("%Y-%m-%d"),
+                  prefix=(sys.argv[2] if len(sys.argv) > 2 else None),
+                  slots=(sys.argv[3] if len(sys.argv) > 3 else None)))
