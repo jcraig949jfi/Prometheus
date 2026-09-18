@@ -60,7 +60,7 @@ def main(tag, prefix=None, slots=None):
                 byid[d["id"]].update({k: v for k, v in d.items() if k not in ("amend", "id")})
         else:
             byid[d["id"]] = d
-    cands = [c for c in byid.values() if not c.get("superseded_by")]
+    cands = [c for c in byid.values() if not c.get("superseded_by") and not c.get("executed_in")]
     if prefix:
         cands = [c for c in cands if str(c.get("parent", "")).startswith(prefix)]
         for c in cands:                           # scoped tranche: diversity is over AXES, not the shared family label
@@ -74,6 +74,8 @@ def main(tag, prefix=None, slots=None):
         c["score"] = score(c)
         c["parent_state"] = states.get(c["parent"], "UNKNOWN")
         c["awkward"] = bool(c.get("anti_gravity") or c["parent_state"] == "TEMPORAL_STASIS")
+    # a candidate whose parent is in (scoped) stasis is eligible ONLY if it states how it escapes the boundary
+    cands = [c for c in cands if not (str(c["parent_state"]).startswith("TEMPORAL_STASIS") and not c.get("escapes_stasis"))]
     ranked = sorted(cands, key=lambda c: (-c["score"], c["id"]))
 
     chosen, per_parent, per_family, why = [], {}, {}, {}
@@ -89,6 +91,13 @@ def main(tag, prefix=None, slots=None):
                 and per_family.get(c["family"], 0) < MAX_PER_FAMILY
                 and c["id"] not in why)
 
+    # 0. deformation slots: one per deformation family (A/B/C...) so a material deformation found
+    #    in one cycle cannot disappear into global scoring in the next
+    for fam in sorted({x["deformation"] for x in ranked if x.get("deformation")}):
+        for c in [x for x in ranked if x.get("deformation") == fam]:
+            if fits(c):
+                admit(c, "deformation slot (%s)" % fam)
+                break
     # 1. serendipity slots first (by score among serendipity candidates), so the priority
     #    function cannot crowd them out
     for c in [x for x in ranked if x.get("serendipity")]:
@@ -123,6 +132,7 @@ def main(tag, prefix=None, slots=None):
                                "type": c["type"], "score": c["score"], "admitted_by": why[c["id"]],
                                "delta": c["delta"], "unchanged": c["unchanged"], "attacks": c["attacks"],
                                "why_now": c.get("why_now") or c.get("nonredundant"), "axis": c.get("axis"),
+                               "deformation": c.get("deformation"), "continuation": c.get("continuation"),
                                "cost_minutes": c.get("cost_minutes")}
                               for i, c in enumerate(chosen)],
            "waiting_not_rejected": [c["id"] for c in ranked if c["id"] not in frozen_ids],
