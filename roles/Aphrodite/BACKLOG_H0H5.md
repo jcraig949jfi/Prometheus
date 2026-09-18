@@ -37,9 +37,9 @@ APHRODITE-07 | ModularRSI scoped vs joint mutation toy | EVIDENCE | program | M 
 APHRODITE-13 | Distributional gate method for multi-cell preregs | TOOLS | program | S | FOLDED into APHRODITE-17/19 (lineage-level inference replaces per-cell aggregation) | --
 Swarm toys S1-S4: FROZEN (operator 2026-09-18). A new toy only if it answers a concrete question required by Campaign 0 or a later real-swarm design.
 
-APHRODITE-39 | Update the design packet with MEASURED economics once the benchmark JSON exists; pick the model by the packet's selection rule | ENGINE | 1.0 | S | APHRODITE-37 | CAMPAIGN1_DESIGN_PACKET_v3
+APHRODITE-39 | Update ONLY the measured-economics and substrate-selection sections of packet v2 from the receipts (operator 2026-09-18) and return it for review | ENGINE | 1.0 | S | APHRODITE-37 | packet v2 s6 and s5-model updated + economics.json committed
 APHRODITE-40 | Review the Archaeon / Harmonia / Vivarium contracts against the measurement needs when they arrive | ENGINE | 1.0 | S | Archaeon, Harmonia, Vivarium | reply per contract
-APHRODITE-37 | Run the throughput benchmark on M1/M2 (harness ready: science/benchmark/bench.py) | TOOLS | 1.0 | XL | NEW: operator -- who runs it on M1/M2 and which models (not reachable from M4) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
+APHRODITE-37 | Receive the frozen-harness benchmark receipts from Nestor (M1, #471) and Archaeon (M2, #472) and validate them with economics.py | TOOLS | 1.0 | M | Nestor, Archaeon (executors named by the operator) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
 APHRODITE-38 | Campaign 1 preregistration with estimand, delta, substrate, L, budget frozen | EVIDENCE | 1.0 | XL | operator decisions in CAMPAIGN1_DESIGN_PACKET s2-s6 | prereg committed; execution still needs its own go
 
 CLOSED (with the commit that closed them):
