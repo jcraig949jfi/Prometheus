@@ -127,20 +127,368 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:93-127"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1348-1425"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1905-2005"
+   }
+  ],
+  "inspected_files": [
+   "deflate.c 93-127, 1348-1425, 1905-2005"
+  ],
+  "date": "2026-09-18T06:01Z",
+  "note": "LZ77 matching plus Huffman coding, read for its two engineering mechanisms: a hash-chain search for the longest earlier match of the current position, bounded by a per-level chain-length cap and a nice-match early exit; and lazy matching, which defers emitting a match by one byte to see whether the next position has a longer one, choosing the literal-plus-later-match when it does. A ten-row configuration table indexed by compression level sets the four knobs (good/lazy/nice length, max chain), so 'level' is a point in a speed/ratio trade space",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/madler/zlib/archive/refs/tags/v1.3.1.tar.gz sha256:17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+   "payload_manifest_id": "techne tree_sha256 de66ed57b3a84acfb93b8c2e73f365df280754b56118c4f1dc7499cce68fc327 (258 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/zlib-1.3.1/deflate.c",
+     "payload_hash_read": "3b956337350f94c34987750f785587ef33d9c89ceaebb7c2afb189c956360cbe",
+     "techne_recorded_hash": "3b956337350f94c34987750f785587ef33d9c89ceaebb7c2afb189c956360cbe",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter",
+   "fossil_ancestry": "zlib-1.3.1",
+   "human_name": "longest_match (1348-1425): chain_length = max_chain_length (quartered if prev_length >= good_match); best_len; scan_end prefilter; stop at limit (strstart - MAX_DIST) or when a match reaches nice_match",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "positions with the same 3-byte hash are linked in a chain; the search walks the chain from the most recent, and for each candidate first compares the two bytes at the current best length (a cheap reject) before a full compare, keeping the longest match found; the walk stops after max_chain_length steps, when a candidate is older than the window (MAX_DIST), or when a match reaches nice_match; if the previous position already had a good match the chain length is quartered (spend less effort when a match is already in hand)",
+   "input": "the current position and the hash chain",
+   "output": "the best match length and position",
+   "state": "the hash chains, the window",
+   "update": "per position",
+   "assumptions": [
+    "recent positions are the likely matches, so most-recent-first with a cap gives most of the benefit at bounded cost; the end-byte prefilter skips most full compares"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does"
+   ],
+   "fitness_value_in_ancestor": "the LZ77 match search whose cost the level knobs control; the heart of DEFLATE's speed/ratio dial",
+   "failure_landscape": "by reading: the chain cap trades ratio for speed; long runs of one byte make chains degenerate (the reason for the caps)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ziv & Lempel 1977 (LZ77); the hash-chain implementation is Gailly's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1348-1425"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "longest_match",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does",
+   "fossil_ancestry": "zlib-1.3.1",
+   "human_name": "deflate_slow (1905-2005): keep prev_length/prev_match; find match at strstart; if prev_length >= MIN_MATCH and match_length <= prev_length emit the previous match (as a literal at strstart-1 plus the run) else defer the literal; TOO_FAR discards a short far match; match_available",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each position the matcher records the current match but does not emit it; it advances one byte and finds the match there; if the earlier (deferred) match is at least as long as the new one it is emitted, otherwise the byte between them is emitted as a literal and the new, longer match is deferred in turn; a length-3 match whose distance exceeds TOO_FAR is discarded as not worth its code; this one-byte lookahead recovers matches that greedy matching would miss",
+   "input": "the match at each position",
+   "output": "the chosen sequence of literals and matches",
+   "state": "prev_length, prev_match, match_available",
+   "update": "per position",
+   "assumptions": [
+    "a one-position lookahead captures most of the gain of optimal parsing at a fraction of the cost; the greedy choice is often but not always best"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter"
+   ],
+   "fitness_value_in_ancestor": "a few percent better ratio than greedy at levels 4 and up; the default deflate strategy",
+   "failure_landscape": "by reading: only one byte of lookahead, so it is not optimal parsing; the fast levels (deflate_fast) skip it entirely for speed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "lazy evaluation of LZ matches (Gailly); the fuller form is optimal parsing (zopfli, later)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1905-2005, 93-127"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "deflate_slow and the configuration table",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "deflate_fast (greedy, no lazy step), deflate_rle / deflate_huff / deflate_stored, trees.c (dynamic and static Huffman code construction, the block emit), inflate.c and inffast.c (the decoder), adler32 and crc32",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "trees.c (the Huffman half) is the second mechanism family and a DEEP item; the atlas's gzip cut holds the same deflate at a different version",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zlib-1.3.1"
+  },
+  {
+   "candidate": "'DEFLATE' / 'compression' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the LZ match search, the parse strategy and the Huffman coder are separable and separately tunable",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zlib-1.3.1"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "zlib-1.3.1::P.a_byte_stream_must_be_compressed_near_its_lz_entropy_at_a_caller_chosen_point_on_the_speed_ratio_curve_where_the_match_search_cost_and_the_parse_greediness_are_both_tunable",
+   "source_fossil": "zlib-1.3.1",
+   "source_evidence": "deflate.c longest_match, deflate_slow, the configuration table",
+   "condition": "an organism compresses data at a requested level; the score is compressed size and time; the level must span from fast/low-ratio to slow/high-ratio; the format (the decoded output) must be identical regardless of level",
+   "resource_or_constraint": "the match-search budget (chain length); one byte of parse lookahead",
+   "failure_condition": "a level that is slower without being smaller, or a parse that misses easy longer matches (pure greedy)",
+   "world_punishes": "an unbounded chain search; greedy parsing at high levels",
+   "world_rewards": "a chain cap plus nice-match exit, and lazy one-byte lookahead",
+   "observable_consequence": "compressed size and time across levels on the Calgary/Silesia corpus for greedy (deflate_fast) vs lazy (deflate_slow), and vs an optimal parser (zopfli) as the upper control; identical decompression at every level",
+   "vacuity_condition": "incompressible input",
+   "trivial_shortcuts": "storing uncompressed (deflate_stored, a valid level-0 control)",
+   "cheat_control": "an optimal parser must give the smallest size at the highest cost; greedy must be fastest and largest; lazy must sit between on both axes at identical decoded output: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference DEFLATE (Gailly & Adler 1995-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter",
+   "to": "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does",
+   "to": "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "finds the match at each position",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "zlib-1.3.1",
+   "relation": "algorithm_from",
+   "to": "Ziv & Lempel 1977 (LZ77); Huffman 1952; Deutsch RFC 1951 (DEFLATE); the atlas's gzip and ncompress/compress cuts are the LZ family",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the Huffman coder (trees.c), the fast strategy and the decoder unread",
+   "nothing ran"
+  ],
+  "note": "the LZ match-and-parse mechanisms are located; the entropy stage is the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

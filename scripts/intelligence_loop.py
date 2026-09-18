@@ -29,6 +29,8 @@ import argparse
 import logging
 import os
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 import time
 from datetime import datetime, timezone, timedelta
@@ -265,7 +267,7 @@ def push_dashboard_to_main() -> bool:
     def run(args, timeout=60):
         return subprocess.run(
             ["git", *GIT_AUTHOR, *args],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=timeout,
+            cwd=REPO_ROOT, capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=timeout,
         )
 
     # Are there actual changes?
@@ -324,7 +326,7 @@ def run_script(name: str, args: list = None, timeout: int = 600) -> tuple[bool, 
     start = time.monotonic()
     try:
         result = subprocess.run(
-            cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=timeout,
+            cmd, cwd=REPO_ROOT, capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=timeout,
             env={**os.environ},  # inherits PROMETHEUS_CYCLE_ID set by caller
         )
         dur = time.monotonic() - start
@@ -368,6 +370,8 @@ def main():
                         help="Run the hourly cycle once on startup before settling into cadence")
     parser.add_argument("--weekly-recap-hour", type=int, default=22,
                         help="Hour (0-23) LOCAL TIME on Friday to fire weekly_recap.py (default 22, i.e. 10pm)")
+    parser.add_argument("--tick-sec", type=float, default=60.0,
+                        help="Heartbeat + scheduler wake interval in seconds (default 60)")
     parser.add_argument("--no-weekly-recap", action="store_true",
                         help="Skip the Friday weekly recap")
     args = parser.parse_args()
@@ -384,7 +388,7 @@ def main():
     # configuration, before the heartbeat thread starts. Taken from the
     # configured interval rather than from observed behaviour (PRON-03).
     PRONOIA_STATE["work_cadence_sec"] = float(args.hourly_min) * 60.0
-    pg_heartbeat_thread = _start_pronoia_pg_heartbeat(machine=machine, interval_sec=60)
+    pg_heartbeat_thread = _start_pronoia_pg_heartbeat(machine=machine, interval_sec=int(args.tick_sec))
 
     # ── Agora connection ───────────────────────────────────────────
     agora_client = None
@@ -392,7 +396,7 @@ def main():
         try:
             agora_client = AgoraClient(agent_name="Pronoia", machine=machine, persist=False)
             agora_client.connect()
-            agora_client.start_heartbeat()
+            agora_client.start_heartbeat(interval_sec=args.tick_sec)
             agora_client.send(
                 stream="main",
                 subject="Pronoia online (intelligence loop)",
@@ -587,8 +591,8 @@ def main():
                     except Exception:
                         pass
 
-            # Sleep until either next_hourly or 60s, whichever sooner
-            sleep_s = min(60.0, max(1.0, (next_hourly - now).total_seconds()))
+            # Sleep until either next_hourly or --tick-sec, whichever sooner
+            sleep_s = min(args.tick_sec, max(1.0, (next_hourly - now).total_seconds()))
             time.sleep(sleep_s)
 
     except KeyboardInterrupt:

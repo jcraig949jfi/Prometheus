@@ -1,0 +1,255 @@
+{
+ "F1": {
+  "mismatches": [],
+  "n": 57,
+  "ok": {
+   "W0": 57,
+   "parent_env": 57
+  },
+  "pass": true
+ },
+ "F2": {
+  "injected_k1": {
+   "all_valid_share": 0.0,
+   "invalid_eq_k_share": 1.0,
+   "mean_invalid": 1.0
+  },
+  "injected_k2": {
+   "all_valid_share": 0.0,
+   "invalid_eq_k_share": 1.0,
+   "mean_invalid": 2.0
+  },
+  "injected_k4": {
+   "all_valid_share": 0.0,
+   "invalid_eq_k_share": 1.0,
+   "mean_invalid": 4.0
+  },
+  "pass": true,
+  "raw": {
+   "all_valid_share": 0.0,
+   "mean_invalid": 8.59
+  },
+  "valid": {
+   "all_valid_share": 1.0,
+   "mean_invalid": 0.0
+  }
+ },
+ "F3": {
+  "fault_hist": {
+   "injected_k2": {
+    "0-0": 32,
+    "1-3": 0,
+    "16-63": 41,
+    "4-15": 34,
+    "64-1000000000": 93
+   },
+   "raw": {
+    "0-0": 0,
+    "1-3": 0,
+    "16-63": 23,
+    "4-15": 0,
+    "64-1000000000": 177
+   },
+   "valid": {
+    "0-0": 198,
+    "1-3": 0,
+    "16-63": 0,
+    "4-15": 2,
+    "64-1000000000": 0
+   }
+  },
+  "mean_faults": {
+   "injected_k2": 143.82,
+   "raw": 483.32,
+   "valid": 0.1
+  },
+  "pass": true,
+  "pass_a01_rule": false,
+  "pass_a02_rule": true,
+  "site_hist": {
+   "injected_k2": {
+    "0-0": 32,
+    "1-2": 168,
+    "3-4": 0,
+    "5-8": 0,
+    "9-1000000000": 0
+   },
+   "raw": {
+    "0-0": 0,
+    "1-2": 43,
+    "3-4": 47,
+    "5-8": 45,
+    "9-1000000000": 65
+   },
+   "valid": {
+    "0-0": 198,
+    "1-2": 2,
+    "3-4": 0,
+    "5-8": 0,
+    "9-1000000000": 0
+   }
+  },
+  "trap_share": {
+   "injected_k2": 0.84,
+   "raw": 1.0,
+   "valid": 0.01
+  },
+  "tvd": {
+   "raw_vs_injected2": 0.42,
+   "raw_vs_valid": 1.0,
+   "valid_vs_injected2": 0.83
+  },
+  "tvd_sites": {
+   "raw_vs_injected2": 0.785,
+   "raw_vs_valid": 0.99,
+   "valid_vs_injected2": 0.83
+  }
+ },
+ "F4": {
+  "coherence": {
+   "injected_k2": 1.0,
+   "raw": 1.0,
+   "valid": 1.0
+  },
+  "injected2_answer_under_fizzle": 0.1,
+  "pass": true,
+  "trapped_that_answered": 0
+ },
+ "F5": {
+  "k1": {
+   "not_writable_n": 108,
+   "sites_le_k_share": 1.0,
+   "writable_n": 92,
+   "writable_sites_gt_k_share": 0.0
+  },
+  "k2": {
+   "not_writable_n": 101,
+   "sites_le_k_share": 1.0,
+   "writable_n": 99,
+   "writable_sites_gt_k_share": 0.0
+  },
+  "k4": {
+   "not_writable_n": 103,
+   "sites_le_k_share": 1.0,
+   "writable_n": 97,
+   "writable_sites_gt_k_share": 0.0103
+  },
+  "pass": true
+ },
+ "F6": {
+  "deterministic": {
+   "injected_k2": true,
+   "raw": true,
+   "valid": true
+  },
+  "pass": true
+ },
+ "F7": {
+  "n": 200,
+  "pass": true,
+  "raw_answer_old_but_trap_new": 32
+ },
+ "F8": {
+  "by_operator": {
+   "config_perturbation": {
+    "crossed": 7,
+    "n": 112,
+    "rate": 0.0625
+   },
+   "deletion": {
+    "crossed": 0,
+    "n": 139,
+    "rate": 0.0
+   },
+   "duplication": {
+    "crossed": 0,
+    "n": 62,
+    "rate": 0.0
+   },
+   "insertion": {
+    "crossed": 0,
+    "n": 104,
+    "rate": 0.0
+   },
+   "movement": {
+    "crossed": 0,
+    "n": 110,
+    "rate": 0.0
+   },
+   "operand_perturbation": {
+    "crossed": 105,
+    "n": 202,
+    "rate": 0.5198
+   },
+   "randomization": {
+    "crossed": 0,
+    "n": 66,
+    "rate": 0.0
+   },
+   "reference_redirection": {
+    "crossed": 0,
+    "n": 98,
+    "rate": 0.0
+   },
+   "region_swap": {
+    "crossed": 0,
+    "n": 67,
+    "rate": 0.0
+   },
+   "replacement": {
+    "crossed": 0,
+    "n": 145,
+    "rate": 0.0
+   },
+   "splice": {
+    "crossed": 0,
+    "n": 65,
+    "rate": 0.0
+   },
+   "unreachable_removal": {
+    "crossed": 0,
+    "n": 30,
+    "rate": 0.0
+   }
+  },
+  "children": 1200,
+  "grammar_b_hash": "fb789d84cbf064d7eff59347533f6cb9e64c5e7b9e208f73d3f90d61a9321cb4",
+  "overall_rate": 0.0933
+ },
+ "controls": {
+  "cheat": {
+   "pass": true,
+   "relabelled_valid_invalid_eq_1_share": 0.0
+  },
+  "pass": true,
+  "positive": {
+   "fail_reward": 0.0,
+   "fail_trap_at": {
+    "episode": 0,
+    "tick": 0
+   },
+   "fail_trapped": true,
+   "fizzle_answered": 1.0,
+   "fizzle_faults": 8,
+   "fizzle_out_writes": 8,
+   "fizzle_sites": 1,
+   "pass": true
+  }
+ },
+ "disposition": "REPRESENTATION_QUALIFIED",
+ "fixtures_pass": {
+  "F1": true,
+  "F2": true,
+  "F3": true,
+  "F4": true,
+  "F5": true,
+  "F6": true,
+  "F7": true,
+  "controls": true
+ },
+ "old_vm_digest_after": "b1b85bba7d8912e506ec23bfdb0748eb8647c2ccb472737a96fe370715c79331",
+ "old_vm_digest_before": "b1b85bba7d8912e506ec23bfdb0748eb8647c2ccb472737a96fe370715c79331",
+ "qualified": true,
+ "representation": "archaeon.repb.narrow.v1",
+ "wall_s": 1.1
+}

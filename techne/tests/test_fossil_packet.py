@@ -72,7 +72,12 @@ def test_worlds_registry_covers_every_dockerfile_and_every_verb():
     reg = packet.worlds_registry()["worlds"]
     import glob
     dfs = {pathlib.Path(x).as_posix() for x in glob.glob("techne/fossils/environment/*.Dockerfile")} | {"techne/fossils/specimens/go-explore-uber-2022/environment/go-explore-min.Dockerfile"}
-    assert {w["dockerfile"] for w in reg.values()} == dfs
+    # container worlds are identified by their Dockerfile; a native world (R36, 2026-09-18) by its canonical manifest
+    assert {w["dockerfile"] for w in reg.values() if "dockerfile" in w} == dfs
+    for name, w in reg.items():
+        if "dockerfile" not in w:
+            assert w.get("class") == "native_python" and pathlib.Path(w["manifest"]).exists(), name
+            assert str(w.get("FOSSIL_WORLD_ID", "")).startswith("fw2-"), name
     for name, w in reg.items():
         assert set(w["capabilities"]) == set(packet.VERBS), name
         assert set(w["capabilities"].values()) <= {"yes", "no", "partial"}, name

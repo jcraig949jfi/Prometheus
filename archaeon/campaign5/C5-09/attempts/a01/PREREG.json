@@ -1,0 +1,101 @@
+{
+ "ancestry": "original (Phase B, slot 7)",
+ "arms": [
+  "OLD_v04",
+  "OLD_B",
+  "B_FAIL",
+  "B_FIZZLE",
+  "controls"
+ ],
+ "assay_capability_requirement": "determinism of OLD_v04 seed 1; identical gen-0 programs across arms (digest); starting best <= screen receipt",
+ "attempt": 1,
+ "budget": {
+  "E": 16,
+  "G": 100,
+  "N": 50,
+  "evals_per_arm_seed": 20000,
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "worlds": [
+   "W2_K2d1",
+   "W2_K2_rand",
+   "W3_K3",
+   "W4_K4"
+  ]
+ },
+ "claim_ceiling": "24 cells per arm; a count; C5-10 replicates any selection on held-out worlds",
+ "crn_policy": "same seeds, same starting subsample, same evolver rng streams per world in every arm; only (evaluator, grammar) differ",
+ "decl": {
+  "n_min": 6,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "OLD_v04",
+   "metric": "heldout_final",
+   "min_effect": 0.0625,
+   "treatment": "B_FIZZLE"
+  }
+ },
+ "design_digest": "sha256:cd11b4efda4cec72c1173529f9fdb7956e33310f7f16235c3d4924220d9dd780",
+ "expected_machine_telemetry": [
+  "probes per 10 generations with crossing/trapped/faulted shares",
+  "elite length and fault sites"
+ ],
+ "experiment": "C5-09",
+ "falsification_condition": "prediction NO_GAIN is lost if any B arm reaches net >= +4 with OLD_B < +4",
+ "kill_condition": "control failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "EvolutionB (pluggable evaluator and grammar)"
+ ],
+ "parent_evidence": "C5-02 (elite flat at the starting parent, 0/24 cells); C5-05 geometry under B; C5-03 F8 crossing 9.3%.",
+ "parents": [
+  "C5-02",
+  "C5-05"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:07aa70486fcd99f66797738090b90a20c74b22aaebe38269e9cef0df2b1aac9e",
+ "primary_observable": "per-cell WON/LOST/TIED vs OLD_v04 on final held-out (band 1/16); net per arm; DISCOVERY_GAIN / GRAMMAR_GAIN / NO_GAIN",
+ "question": "At equal total compute on screened worlds with headroom, does evolution under representation B discover more than under the old representation, and is any gain the representation's or the grammar's?",
+ "reachability_estimate": {
+  "note": "screened worlds (WORLD_SCREEN_2026-09-18.json)"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "reach / discovery at equal total compute: OLD_v04, OLD_B, B_FAIL, B_FIZZLE",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "The directive's reach/discovery test; feeds C5-10's committed rule."
+}

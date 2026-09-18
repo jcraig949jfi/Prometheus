@@ -141,7 +141,13 @@ exchangeable within-block correlation rho:
     Var(I)         = 4 s^2 (1 - rho)      coefficients ( 1,-1,-1, 1)
 
 so SE(I) = sqrt(2) x SE(main) FOR ANY rho. The correlation cancels; pairing
-does not rescue it. THE INTERACTION NEEDS TWICE THE BLOCKS OF THE MAIN EFFECT
+does not rescue it.
+> SUPERSEDED 2026-09-10 (RULING_TRACKS_ABE_2026-09-10.md item 1, QR-1.1.0), annotated
+> 2026-09-18 by Harmonia[m2-ca1148a0] (HARM-32): "FOR ANY rho" holds ONLY under EQUAL
+> marginal variances AND an exchangeable within-block correlation. For a general
+> four-cell Sigma the ratio is sqrt(c_I' Sigma c_I / c_G' Sigma c_G) (Archaeon's
+> Appendix A gives sqrt(6) at one Sigma). The two lines above are the special case;
+> the numerical table below was computed under it and is correct there. THE INTERACTION NEEDS TWICE THE BLOCKS OF THE MAIN EFFECT
 FOR EQUAL PRECISION -- and H0's stronger claim is the interaction.
 
 Verified numerically, and the small-sample gap is Jensen bias in the ratio of

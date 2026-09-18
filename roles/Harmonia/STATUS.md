@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-17 22:40 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
+Currency: 2026-09-18 01:55 UTC (Harmonia[m2-ca1148a0], own block only; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -10,6 +10,38 @@ instance, headed by its tag; the tag is on its branch, commits, comms
 subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
+
+### Harmonia[m2-ca1148a0]  (M2 SPECTREX5, operator label "Harmonia B", 2026-09-18, this update's author)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-ca1148a0-boot
+    branch     harmonia/m2-ca1148a0-boot-2026-09-17
+    base_sha   80e0822ee (origin/main at fetch, 2026-09-18 01:00Z); integrated by fast-forward through the pass
+    dirty      no at boot
+    session    ca1148a0-0323-4295-aec2-2e71161e3142 (harness); session_01UvPiXdppxA2h2mk2YQTXFr (bridge)
+    opened     2026-09-18 01:03 UTC
+    label      "Harmonia B" is the operator's label for this instance; the same label was given to
+               m2-f541bed9 on 2026-09-14 (idle since 09-14 07:12Z). The tag, not the label, is the identity.
+    comms      booted against the M1 canonical store (EW_DB_HOST=192.168.1.202); first sync 7 new
+               (#385 #387 #388 #391 #393 #397 #410), 0 queued; `who`: 1/6 Harmonia instances online (this one).
+               Per-instance receipts confirmed. GAP found: comms.api.inbox filters m.sender <> agent, so a
+               Harmonia -> Harmonia message never reaches a sibling instance; siblings coordinate only through
+               this file, INSTANCES.md and journals (reported to Archaeon).
+    siblings   gandalf-6cd1348b (M3, "Harmonia F"): particles 001/002 returned; POET/ALife steering (#381);
+               HARM-38 "started" 09-17 with no artifact; last sync 2026-09-17 18:31Z. m2-038758c6 (M2): gzip R1
+               open, HARM-38/39/43/44 NOT STARTED per its 09-17 journal; last sync 2026-09-17 11:17Z. Neither
+               online during this pass; HARM-43/44 taken (both idle > 14 h, no artifact); HARM-38/39 left in
+               the gzip lane.
+    done       operator ask "work through every unclaimed HARM row": 24 rows CLOSED, 4 SUPERSEDED, 1 DELEGATED.
+               HARM-44 ruling to Proteus (#412); HARM-43 contract re-verified (CONFORMANT x3, DRIFT control);
+               QR-1.2.0 / AF-1.1.0 / EX-1.0.0 / FP-1.0.0 (HARM-01/02/04/05..12/28/29/30/34; runner dead since
+               09-10 repaired; 25 tests); STANDING_RULES.md (31); VACUOUS_READINGS.md (03);
+               CALIBRATION_CORPUS_POLICY.md (14); HARM-13 delegated to Archaeon (#413) with the #260 reminder;
+               H3 analysis manifest (25); PEW encounter manifests (24); number-scope audit (32; H4-ADAPTIVE
+               1.0.1); Stage-A triage over 107 cuts (46); 15/17/26/27 SUPERSEDED with reasons.
+    open       every remaining OPEN row is blocked on another seat (#260 Archaeon: 16/18; C3-3 issue: 19/20;
+               pool: 21; Vivarium 404: 22; NK length: 23; credential: 33; Daedalus A0: 35) or in a sibling's
+               declared lane (38-42 gzip; 45, 47-51 gandalf).
+    journal    roles/Harmonia/journal/2026-09-17_m2-ca1148a0.md
 
 ### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
 
@@ -29,10 +61,14 @@ derived from activity, never from a row).
                ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
                Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
                ACK on #364 was ~6 h late (instance idle); recorded.
-    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
-               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
-               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
-               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
+    lane 3     POET/ALife (owner of ASAL). MECH-ASAL-LEGIT-SEARCH-001 ADJUDICATED 2026-09-18: CUT_SUPPORTED
+               on the boundary, I1/I2/I3 in band (legitimate ALIVE Lenia reaches 0.7665 < garbage 0.8167;
+               best crosser METRIC_EXPLOIT), I0 PREDICTION_FAILED (raw catalogue crosses at 0.8076);
+               coverage defect mine (650/1,045 draws refused by the port). Ruling
+               rulings/RULING_ASAL_LEGIT_SEARCH_001_2026-09-18.md; Theophrastus cell offered.
+               Ancestry ground-truth ruler CALIBRATED on synthetic truth (controls 4/4; loss curves;
+               measures for D1/D3 fixed in AMENDMENT_C) -- waiting on Techne's Avida .spop. POET rulers
+               next (bodies on M3). STANDING_RULES A1-A3 (union with m2-ca1148a0 PR-1.0.0).
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)

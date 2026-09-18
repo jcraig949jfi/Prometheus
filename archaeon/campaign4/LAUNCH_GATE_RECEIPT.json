@@ -1,23 +1,7 @@
 {
  "_what_this_is": "Campaign 4 launch gate. Execution REFUSES until every blocking requirement is GREEN.",
- "blocking_not_green": [
-  {
-   "id": "G1",
-   "owner": "Daedalus",
-   "status": "CLAIMED_NOT_PROVEN"
-  },
-  {
-   "id": "G2",
-   "owner": "Archaeon + Vivarium",
-   "status": "RED"
-  },
-  {
-   "id": "G5",
-   "owner": "Proteus + Archaeon",
-   "status": "RED"
-  }
- ],
- "campaign_may_start": false,
+ "blocking_not_green": [],
+ "campaign_may_start": true,
  "checks": [
   {
    "blocks_launch": true,
@@ -26,10 +10,10 @@
     "campaign_rate_regime": {
      "calls_over_5s": 0,
      "http_5xx": 0,
-     "regime": "R0_campaign_rate_writer_paced_reader",
-     "restart_s": 1.05,
-     "seconds": 331.8,
-     "wal_max_mb": 8
+     "regime": "R0N_campaign_rate_nvme_4h_paced_reader",
+     "restart_s": 2.05,
+     "seconds": 15408.3,
+     "wal_max_mb": 2
     },
     "campaign_rate_regimes": [
      {
@@ -39,10 +23,18 @@
       "restart_s": 1.05,
       "seconds": 331.8,
       "wal_max_mb": 8
+     },
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R0N_campaign_rate_nvme_4h_paced_reader",
+      "restart_s": 2.05,
+      "seconds": 15408.3,
+      "wal_max_mb": 2
      }
     ],
     "checks": {
-     "campaign_rate_run_outlasts_prior_defect_onset": false,
+     "campaign_rate_run_outlasts_prior_defect_onset": true,
      "crash_restart_recovery_measured": true,
      "evidence_bound_to_901_build": true,
      "no_5xx_any_regime": true,
@@ -50,7 +42,7 @@
      "regimes_parsed": true,
      "wal_bounded_at_campaign_rate": true
     },
-    "note": "the campaign-rate acceptance regime ran 331.8 s; the defect class it replaces first appeared about 840 s into the previous run, so this regime is too short to exclude its return",
+    "note": null,
     "prior_defect_first_appeared_s": 840,
     "receipt": "SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md",
     "regimes": [
@@ -85,16 +77,22 @@
       "restart_s": 9.71,
       "seconds": 254.4,
       "wal_max_mb": 3417
+     },
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R0N_campaign_rate_nvme_4h_paced_reader",
+      "restart_s": 2.05,
+      "seconds": 15408.3,
+      "wal_max_mb": 2
      }
     ]
    },
    "id": "G1",
-   "missing": [
-    "campaign_rate_run_outlasts_prior_defect_onset"
-   ],
+   "missing": [],
    "owner": "Daedalus",
    "requirement": "campaign-rate long run on 9.0.1 + WAL bound + crash/restart recovery measured",
-   "status": "CLAIMED_NOT_PROVEN"
+   "status": "GREEN"
   },
   {
    "blocks_launch": true,
@@ -118,66 +116,91 @@
       "blocks": [
        "S3"
       ],
+      "evidence": "archaeon/campaign4/G3_READ_PROOF.json",
       "id": "P2",
-      "owner": "Daedalus",
-      "present": null,
-      "what": "B1 read grant re-issued for cli_2bb36261 on the M2 ledger"
+      "owner": "Vivarium",
+      "present": true,
+      "what": "B1 read grant for the Campaign 4 identity on the M2 ledger (superseded wording: cli_2bb36261 was the M1-era grantee; the live grantee is cmp4-archaeon cli_6354da5b, Vivarium #399)"
      },
      {
       "blocks": [
        "S4",
        "S5"
       ],
+      "evidence": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1.json",
       "id": "P3",
       "owner": "Daedalus + Vivarium",
-      "present": null,
-      "what": "~10 minute window for the deliberate mid-run engine restart"
+      "present": true,
+      "what": "deliberate mid-run engine restart, executed and receipted by Daedalus"
      },
      {
       "blocks": [
        "S7"
       ],
+      "evidence": "evidence_wiki/integration/s7_rehearsal_results.json",
       "id": "P4",
-      "owner": "Mnemosyne",
-      "present": null,
+      "owner": "Mnemosyne (tool); run by Archaeon with Mnemosyne's written consent, comms #391",
+      "present": true,
       "what": "PEW ingest/rebuild/release-check leg"
      },
      {
       "blocks": [],
+      "evidence": [
+       {
+        "experiment_id": "4b3aa3b1",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "357050fd",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "a3eee9d4",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "2556d667",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "6c2a3016",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       }
+      ],
       "id": "P5",
       "owner": "Archaeon",
-      "present": null,
+      "present": true,
       "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
      }
     ],
-    "receipt_digest": "sha256:53f5e1a3e15858105a9dee7c7d1db74960477070109d572471bc0cdac65232f9",
+    "receipt_digest": "sha256:7e879476916c28b8f588ee03735e98da35dbb76f7278aab4f29932660f5c33d5",
     "stage_status": {
      "S1": "OK",
+     "S2": "OK",
      "S2-validate": "OK",
-     "S3": "BLOCKED",
-     "S4": "BLOCKED",
-     "S5": "BLOCKED",
-     "S6": "BLOCKED",
-     "S7": "BLOCKED",
-     "S8": "BLOCKED"
+     "S3": "OK",
+     "S4": "OK",
+     "S5": "OK",
+     "S6": "OK",
+     "S7": "OK",
+     "S8": "OK"
     },
-    "stages_not_ok": [
+    "stages_not_ok": [],
+    "stages_ok": [
+     "S1",
+     "S2-validate",
      "S3",
      "S4",
      "S5",
      "S6",
      "S7",
      "S8"
-    ],
-    "stages_ok": [
-     "S1",
-     "S2-validate"
     ]
    },
    "id": "G2",
    "owner": "Archaeon + Vivarium",
    "requirement": "synthetic C4 specimen travels the full chain incl. forced restart and a reproducible receipt",
-   "status": "RED"
+   "status": "GREEN"
   },
   {
    "blocks_launch": true,
@@ -280,20 +303,17 @@
      "declaration_digest_reproducible": true,
      "declaration_has_canonical_rule": true,
      "every_organism_has_ancestry": true,
-     "mint_binds_canonical_digest": false,
+     "mint_binds_canonical_digest": true,
      "mint_count_matches": true,
      "organisms_present": true,
      "proteus_catalog_present": true,
      "proteus_mint_present": true
     },
-    "mint_binds_digest": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+    "mint_binds_digest": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
     "mint_count": 57,
     "mint_schema": "proteus.c4_starting_population_mint.v1",
     "minted_by": "Proteus[m2-7d051790]",
-    "missing": [
-     "mint_binds_canonical_digest"
-    ],
-    "next_action": "Proteus remints over the canonical digest sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1 (the content is unchanged: same 57 organisms, same collapsed duplicate). The raw-byte digest it currently binds is a checkout artifact, not a population identity.",
+    "missing": [],
     "organisms_declared": 57,
     "organisms_without_ancestry": 0,
     "population_digest_declared": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
@@ -309,18 +329,16 @@
     }
    },
    "id": "G5",
-   "missing": [
-    "mint_binds_canonical_digest"
-   ],
+   "missing": [],
    "owner": "Proteus + Archaeon",
    "requirement": "manifests + structural descriptors for the exact C4 starting organisms; no organism of unknown ancestry",
-   "status": "RED"
+   "status": "GREEN"
   }
  ],
- "gate": "RED",
- "generated_at": "2026-09-17T23:25:00Z",
+ "gate": "GREEN",
+ "generated_at": "2026-09-18T05:53:18Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "6e7ac48f015479290ef40f866a2e2630cace8e35",
+ "read_at_commit": "d9ae116907b3d11128f5ae766b8f225d14960f3e",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }

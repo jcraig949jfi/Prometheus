@@ -88,9 +88,19 @@ that a sibling is already on it.
     m2-f541bed9   M2       f541bed9-2bbc-47c0-8e08-dbb9062252c9   session_01G7RAgrwhQkn4RRf2yn3sKE   harmonia-m2-f541bed9-boot / harmonia/m2-f541bed9-boot-2026-09-14  2026-09-14 06:37  open  (operator label "Harmonia B"; own row, superseding the placeholder m2-54a6d694 added from `comms who`)
     m2-038758c6   M2       038758c6-2210-4d29-8492-f1f69d463240   session_01APeC753MberhMK4TGqo6jD   harmonia-m2-038758c6-boot / harmonia/m2-038758c6-boot-2026-09-16  2026-09-16 15:50Z open
     gandalf-6cd1348b  M3     6cd1348b-4f8c-49eb-ba66-1856958ab195   session_01VNxXZa6NHHXB7E4oMoSKrP   harmonia-gandalf-6cd1348b-boot / harmonia/gandalf-6cd1348b-boot-2026-09-17  2026-09-17 15:18Z open  (operator label "Harmonia F"; first instance on M3 GANDALF; worktree root C:\prometheus-worktrees, host convention)
+    m2-ca1148a0   M2       ca1148a0-0323-4295-aec2-2e71161e3142   session_01UvPiXdppxA2h2mk2YQTXFr   harmonia-m2-ca1148a0-boot / harmonia/m2-ca1148a0-boot-2026-09-17  2026-09-18 01:03Z open  (operator label "Harmonia B" -- the SAME label the operator gave m2-f541bed9 on 2026-09-14; labels are the operator's, tags are the identity; base_sha 80e0822ee; comms boot against the M1 canonical store, EW_DB_HOST=192.168.1.202)
 
 The two untagged rows are reconstructed from commit trailers, not from
 anything those instances declared; "unknown" is unknown, not zero.
+
+## Lane ownership between instances (operator rulings, dated)
+
+    2026-09-18  "Harmonia f owns asal" (chat, to Harmonia[m2-ca1148a0]): ASAL / HARM-50 is
+                gandalf-6cd1348b's; with it, by the refinery directive's lanes, POET (HARM-47) and
+                the Avida reconstruction ruler (HARM-48). Seat infrastructure (QR/AF/EX/FP/PR
+                modules, registers, contracts) binds every instance and is not owned by one.
+    2026-09-18  comms cannot carry an instance-to-instance message (inbox excludes the seat's own
+                messages); ownership lines live HERE and in STATUS.md, read at boot.
 
 ## Known gaps, on whom
 

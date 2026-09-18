@@ -155,7 +155,13 @@ class TenancyConfig:
     # family_members.arm; the rows this reader consumes (experiments,
     # observations, events, clients) are unchanged, so 7 is accepted. A
     # newer version is still refused rather than misread.
-    expected_schema_version: int = 8      # M1 deployed 7 -> 8 on 2026-09-10 (Daedalus d5be5ec4b, instance eng_8a37a5d3 unchanged)
+    # 8 -> 9 (SFE point release 2026-09-17, M2 ledger eng_906356f7): six ALTER TABLE ADD COLUMN
+    # (docs/point_release_2026-09/SFE_SCHEMA9_MIGRATION_RECEIPT.md). VERIFIED 2026-09-18 by
+    # PRAGMA table_info on the live ledger: every column read_sfe() selects (observations
+    # obs_id/exp_id/world_id/content/outcome/evidence_class/work_id/created_seq; experiments
+    # spec/spec_hash/committed_seq/state; worlds topology_group/client_id; clients; meta) is
+    # present and unrenamed, so 9 is accepted (ARCH-54). A newer version is still refused.
+    expected_schema_version: int = 9      # M1 deployed 7 -> 8 on 2026-09-10 (Daedalus d5be5ec4b); M2 9 on 2026-09-17
 
 
 # --------------------------------------------------------------------------

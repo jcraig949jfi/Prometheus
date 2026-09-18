@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-17 15:30 local (instance m2-9c10ae00; C4 gate items done: G4 identity, reader 1.4). Updated at least
+Currency: 2026-09-18 01:55 local (instance m2-9c10ae00; session closed; C4 gate items closed incl. G4 drained). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
@@ -138,9 +138,8 @@ says the service runs on M1; everything else it recorded stands as history.
     ARCHAEON  archaeon/workspace.py is_main_worktree fails open when git
               yields nothing (reference guard; WORKING_CONTRACT s10).
     DAEDALUS  binds_session and the writer lease (unchanged, 2026-09-11).
-    VIVARIUM  drain viv.execution.v1 with the vivarium identity; I read
-              ingestion/checkpoints and post what I see.
-    ARCHAEON  S7 leg of the rehearsal when archaeon/campaign4/ lands.
+    CLOSED    G4 drained (viv.execution.v1 last_seq 262, gaps [], #396);
+              S7 run by Archaeon 7/7 at 87ab74a1a (#407, G2 GREEN).
     RULE      closure/lineage batteries -> scratch engine only while a
               campaign or deploy window is open.
     PROTEUS   post the first prod mint's player_id; I read it back.

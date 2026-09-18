@@ -1,0 +1,281 @@
+{
+ "schema": "techne.fossil.packet/1",
+ "specimen_id": "asal-sakana-2024",
+ "pipeline_id": "MECHANISM_ARCHAEOLOGY",
+ "written_utc": "2026-09-18T06:25:00Z",
+ "written_by": "Techne[gandalf-a04f7c25] (M3)",
+ "amendment": "Founding Charter + Amendments 1-3; operator directive 4 s5 (executable fossil packet)",
+ "FOSSIL_RAW_ID": {
+  "tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a",
+  "n_files": 32,
+  "git": {
+   "url": "https://github.com/SakanaAI/asal",
+   "commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+   "commit_date": "2025-10-22T21:03:03-04:00"
+  },
+  "hash_list": "techne/fossils/specimens/asal-sakana-2024/UPSTREAM_HASHES.txt",
+  "host_stability": "M3 body acquired and verified 2026-09-18 (harvest acquire + verify); no second host yet"
+ },
+ "PAYLOAD_MANIFEST_ID": "79cea438526a0b873fee780c31176fe4ad0380f03ac4a8bd98b2d8cc011e9ca6",
+ "PAYLOAD_MANIFEST_ID_basis": "sha256 over the LF-normalised bytes of UPSTREAM_HASHES.txt (equals the git blob; R36 encoding rule applied to the manifest, not to the body)",
+ "PROVENANCE_GRADE": [
+  {
+   "artifact": "github.com/SakanaAI/asal @ 677ba0ea4d3b",
+   "grade": "ORIGINAL_ARTIFACT",
+   "basis": "the authors' own repository at a pinned commit; the code as the authors published it",
+   "edges": [
+    "PACKAGES ASAL as released 2024-12 .. 2025-10"
+   ]
+  },
+  {
+   "artifact": "illumination_boids.npz",
+   "grade": "ORIGINAL_ARTIFACT",
+   "basis": "served by the authors' host pub.sakana.ai; sha256 ffd4637d0e93e23155fc41701196c375d793024cbea87cf2ea38d96c4f5fe38c, 6324490 bytes",
+   "edges": [
+    "DATA the simulations the paper's illumination/sweep figures were drawn from (per README)"
+   ]
+  },
+  {
+   "artifact": "illumination_plife.npz",
+   "grade": "ORIGINAL_ARTIFACT",
+   "basis": "served by the authors' host pub.sakana.ai; sha256 6bf7a1c9b9899be7791dda8c3228965625f7f22983b5ff31acf2986e54ff8cea, 86282 bytes",
+   "edges": [
+    "DATA the simulations the paper's illumination/sweep figures were drawn from (per README)"
+   ]
+  },
+  {
+   "artifact": "sweep_gol.npz",
+   "grade": "ORIGINAL_ARTIFACT",
+   "basis": "served by the authors' host pub.sakana.ai; sha256 823a94785c4b294ff9f59e64edf515ef2f714edc649a01997cf930c9bf174a34, 4194818 bytes",
+   "edges": [
+    "DATA the simulations the paper's illumination/sweep figures were drawn from (per README)"
+   ]
+  }
+ ],
+ "FOSSIL_WORLD_ID": "fw2-5886f2b97adbf1a1137b0ebbd98fa81266d8559477288364bbbe14bf3900a4d1",
+ "FOSSIL_WORLD": {
+  "name": "m3-native-python",
+  "class": "native_python",
+  "manifest": "techne/fossils/worlds/m3-native-python.manifest.json",
+  "interpreter": {
+   "implementation": "CPython",
+   "version": "3.11.9"
+  },
+  "n_packages": 234,
+  "note": "R36 identity: sha256 of the canonical manifest; NOT the JAX world the body's own path needs (jaxlib requires AVX, absent on M3)"
+ },
+ "RUNTIME_WITNESS": {
+  "kind": "native_python_interpreter",
+  "executable_basename": "python.exe",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "pip_freeze_sha256": "576f8c8ba62f0c974aafaad8ae7b1b0dc627f0af488fb2f7f8bf15bdd7d538f7",
+  "n_distributions": 244,
+  "host": "GANDALF",
+  "measured_utc": "2026-09-18"
+ },
+ "HOST_CAPS_ID": {
+  "host": "GANDALF (M3)",
+  "cpus": 8,
+  "ram_gb": 24,
+  "container_runtime": "none (no virtualization in firmware)",
+  "cpu_flags": "no AVX",
+  "kernel": "Windows 10 Home 19045"
+ },
+ "CAPABILITY_MATRIX": {
+  "INSTANTIATE": "yes",
+  "EXECUTE": "yes",
+  "OBSERVE": "yes",
+  "SNAPSHOT": "no",
+  "RESTORE": "no",
+  "STEP": "no",
+  "TRACE": "partial",
+  "EXAMINE": "partial",
+  "WATCH": "no",
+  "INTERVENE": "partial",
+  "SCREENSHOT": "no",
+  "INJECT_INPUT": "yes",
+  "EXTRACT_OUTPUT": "yes"
+ },
+ "SCAFFOLDING_LEDGER": {
+  "applied": [],
+  "measured_and_rejected": [],
+  "note": "the body is untouched; the demonstration below runs a PORT beside it (a derived artifact, not a scaffold on the body)"
+ },
+ "INSTRUMENT_CONTROLS": [
+  {
+   "control_id": "TECHNE107-P1",
+   "kind": "positive",
+   "construction": "STATIC arm: one frame repeated 8x must score exactly (T-1)/T = 0.8750",
+   "result": {
+    "value": 0.8749996423721313,
+    "pass": true
+   }
+  },
+  {
+   "control_id": "TECHNE107-CHEAT",
+   "kind": "cheat",
+   "construction": "8 identical images passed as 8 distinct frames through the full pipeline must score 0.8750",
+   "result": {
+    "score": 0.875,
+    "expected": 0.875,
+    "pass": true
+   }
+  }
+ ],
+ "TECHNE_STATE": "BODY_RECOVERED_WORLD_NAMED",
+ "TECHNE_STATE_BASIS": "body pinned and hash-verified on M3; its own JAX execution path cannot run here (no AVX); the world in which it would run (JAX + CLIP) is NAMED by requirements.txt, not reconstructed. What WAS executed on m3-native-python is a numpy/torch port of asal_metrics.py:53 + CLIP (techne/scripts/techne107_asal_observer.py), recorded in the receipt below and declared as runs_the_body=false.",
+ "BEHAVIOR_EVIDENCE": null,
+ "REQUIRED_STATE_FOR_HANDOFF": "BODY_RECOVERED_WORLD_NAMED",
+ "REQUIRED_STATE_BASIS": "Nyx's ASAL cut (#379 3d, operator directive 4 s2) is function-level reading of asal_metrics.py plus a numpy prediction packet; that needs the body and a named world, not an executing JAX path. Harmonia's calibration fixture is the receipt's seven-arm CLIP values.",
+ "TECHNE_RUN_RECEIPTS": [
+  "techne/acquisition/poet_alife/TECHNE107_RECEIPT_2026-09-17.json"
+ ],
+ "PRESERVATION": {
+  "copies": [
+   {
+    "object": "body tree 188a6adae350 + 3 npz",
+    "location_class": "host-local vault (C:/Prometheus/vault/fossils, GANDALF)",
+    "failure_domain": "M3",
+    "verification_time": "2026-09-18T06:25:00Z",
+    "verification_result": "VERIFIED",
+    "artifact": "harvest verify 2026-09-18 (journal)"
+   }
+  ],
+  "note": "one host; re-fetchable from origin by commit + npz sha256; the Google Drive mirror is TECHNE-100 (operator)"
+ },
+ "PRESERVATION_STATUS": "PRESERVATION_GATE_OPEN",
+ "HANDOFF": {
+  "runtime": {
+   "python_major": 3,
+   "native_deps": [
+    "jaxlib (AVX required)",
+    "torch (for the M3 port)",
+    "CLIP ViT-B/32 weights ~354 MB"
+   ],
+   "host_class": "any x86-64 with AVX for the JAX path; M3 runs the metric + observer via torch"
+  },
+  "entry_point": {
+   "path": "asal_metrics.py",
+   "symbol": "calc_open_endedness_score(z)",
+   "also": [
+    "rollout.py rollout_simulation",
+    "foundation_models/clip.py CLIP.embed_img",
+    "substrates/lenia.py"
+   ]
+  },
+  "demonstration": {
+   "command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --out receipt.json --frames frames/   (pattern file resolved from the vault specimen lenia-chan-2019, never from a temp path; Harmonia #429)",
+   "observable": "seven per-arm scores of the open-endedness metric through CLIP ViT-B/32 (lower = more open-ended) + two controls; 56 s on M3",
+   "runs_the_body": false,
+   "what_it_runs_instead": "a numpy port of asal_metrics.py:53 and a torch CLIP with the same weights (sha256 40d36571..950af); Lenia from Chakazul/Lenia@adfc5429, not substrates/lenia.py",
+   "claims": "none",
+   "reference_values": {
+    "LENIA": {
+     "score": 0.847246,
+     "n_frames": 8
+    },
+    "STATIC": {
+     "score": 0.875,
+     "n_frames": 8
+    },
+    "CYCLE2": {
+     "score": 0.854689,
+     "n_frames": 8
+    },
+    "HUECYCLE": {
+     "score": 0.836917,
+     "n_frames": 8
+    },
+    "DRIFT_SYN": {
+     "score": 0.872973,
+     "n_frames": 8
+    },
+    "NOISE": {
+     "mean": 0.866288,
+     "sd": 0.002109,
+     "n": 5
+    },
+    "GARBAGE": {
+     "mean": 0.816686,
+     "sd": 0.008363,
+     "n": 5
+    },
+    "CHEAT_identical_as_distinct": {
+     "score": 0.875,
+     "n_frames": 8
+    }
+   }
+  },
+  "license_constraints": {
+   "spdx": "Apache-2.0",
+   "constraints": [
+    "NOTICE/attribution on redistribution",
+    "datasets carry no separate licence statement (recorded, not assumed)"
+   ]
+  },
+  "preservation_cost": {
+   "class": "CHEAP",
+   "basis": "46 MB body incl. datasets; re-fetchable by commit and sha256 while github.com and pub.sakana.ai serve; illumination_lenia.npz already 404 (2026-09-17), which is the reason to mirror now"
+  },
+  "fixtures": [
+   {
+    "name": "illumination_boids.npz",
+    "path_or_url": "https://pub.sakana.ai/asal/data/illumination_boids.npz",
+    "sha256": "ffd4637d0e93e23155fc41701196c375d793024cbea87cf2ea38d96c4f5fe38c",
+    "bytes": 6324490
+   },
+   {
+    "name": "illumination_plife.npz",
+    "path_or_url": "https://pub.sakana.ai/asal/data/illumination_plife.npz",
+    "sha256": "6bf7a1c9b9899be7791dda8c3228965625f7f22983b5ff31acf2986e54ff8cea",
+    "bytes": 86282
+   },
+   {
+    "name": "sweep_gol.npz",
+    "path_or_url": "https://pub.sakana.ai/asal/data/sweep_gol.npz",
+    "sha256": "823a94785c4b294ff9f59e64edf515ef2f714edc649a01997cf930c9bf174a34",
+    "bytes": 4194818
+   },
+   {
+    "name": "TECHNE-107 seven-arm CLIP values (Harmonia calibration/cheat fixture)",
+    "path_or_url": "techne/acquisition/poet_alife/TECHNE107_RECEIPT_2026-09-17.json",
+    "sha256": "31256f81ddf4af02dbbe9cc08f6a8bbb9dc9ee8ad4099ab9521bd43e455f3e21"
+   },
+   {
+    "name": "Lenia lifeform catalogue animals.json (Orbium O2u)",
+    "path_or_url": "vault specimen lenia-chan-2019 (Chakazul/Lenia@adfc5429) upstream/tree/Python/animals.json",
+    "sha256": "09cf0a831c1ef8a73ebfaa9126257fbe076108362b706a98d88650ca9848d206",
+    "specimen": "lenia-chan-2019"
+   }
+  ]
+ },
+ "CUT_ID": null,
+ "NYX_PREDICTION_PACKET": null,
+ "ORACLE_SOURCES": null,
+ "ORACLE_PROVENANCE_GRADES": null,
+ "HARMONIA_SURROGATE_ID": null,
+ "EQUIVALENCE_RESULT": null,
+ "DIVERGENCE_LEDGER": null,
+ "TEST_WORLD_ID": null,
+ "PRESSURE_ID": null,
+ "INTERVENTION_ID": null,
+ "TENSOR_ADMISSION_RESULT": null,
+ "PAYLOAD_READING_NULL": null,
+ "FINAL_DISPOSITION": null,
+ "downstream_owners": {
+  "CUT_ID": "Nyx",
+  "NYX_PREDICTION_PACKET": "Nyx",
+  "ORACLE_SOURCES": "Harmonia",
+  "ORACLE_PROVENANCE_GRADES": "Harmonia",
+  "HARMONIA_SURROGATE_ID": "Harmonia",
+  "EQUIVALENCE_RESULT": "Harmonia",
+  "DIVERGENCE_LEDGER": "Harmonia",
+  "TEST_WORLD_ID": "Theophrastus",
+  "PRESSURE_ID": "Theophrastus",
+  "INTERVENTION_ID": "Theophrastus",
+  "TENSOR_ADMISSION_RESULT": "Theophrastus",
+  "PAYLOAD_READING_NULL": "Theophrastus",
+  "FINAL_DISPOSITION": "operator"
+ },
+ "HANDOFF_REQUESTED": true
+}

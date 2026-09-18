@@ -1,0 +1,151 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "poet-enhanced-2020",
+  "canonical_name": "Enhanced POET -- Wang, Lehman, Rawal, Zhi, Li, Clune, Stanley (Uber AI, ICML 2020)",
+  "aliases": [
+    "Enhanced POET",
+    "poet_distributed"
+  ],
+  "lineage": "POET (2019, GECCO) -> Enhanced POET (2020, ICML): paired environment/agent coevolution with minimal-criterion admission, PATA-EC novelty and cross-environment transfer; the reference implementation for both lives in one repository (this = branch master)",
+  "domain": [
+    "open-ended-learning",
+    "coevolution",
+    "curriculum",
+    "evolution-strategies",
+    "quality-diversity"
+  ],
+  "era": "2019-2020",
+  "version": "uber-research/poet master @ 8669a17e6958f80cd547b2de61c51d4518c833d9 (last push 2022-03-23)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/uber-research/poet",
+        "commit": "8669a17e6958f80cd547b2de61c51d4518c833d9",
+        "commit_resolved": "8669a17e6958f80cd547b2de61c51d4518c833d9",
+        "commit_date": "2020-04-20T14:26:48-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/uber-research/poet",
+    "branch": "master"
+  },
+  "hashes": {
+    "tree_sha256": "79854087cda8029a39cc74b8c3508adee055684e206449c095a4925e0f46d113",
+    "n_files": 28,
+    "bytes": 124077,
+    "artifacts": [
+      {
+        "filename": "https://github.com/uber-research/poet",
+        "sha256": null,
+        "commit": "8669a17e6958f80cd547b2de61c51d4518c833d9"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\poet-enhanced-2020",
+    "hash_list": "techne/fossils/specimens/poet-enhanced-2020/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "LICENSE + NOTICE in repo (Uber Technologies 2020)"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pip requirements.txt)",
+  "compiler_or_interpreter": "CPython 3 (paper era 3.6-3.7)",
+  "dependencies": [
+    "fiber",
+    "neat-python",
+    "gym[box2d] (Box2D needs SWIG + a C++ compiler)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "master.py (poet_distributed.poet_algo.PopulationManager.optimize)",
+    "poet_distributed/es.py (ESOptimizer: update_pata_ec, evaluate_transfer, pick_proposal)",
+    "poet_distributed/novelty.py (compute_novelty_vs_archive)",
+    "poet_distributed/reproduce_ops.py (Reproducer.mutate)"
+  ],
+  "example": {
+    "command": "./run_poet_local.sh final_test",
+    "input": "run_poet_local.sh arguments (mc_lower/mc_upper, max_num_envs, adjust_interval)",
+    "output": "logs/<name>.<optim_id>.log CSVs + <optim_id>.best.json policies"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "NOT BUILT: needs a gym[box2d] world (SWIG, C++); named, not reconstructed"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:2003.08536 (Enhanced POET, ICML 2020 PMLR 119)",
+    "arXiv:1901.01753 (POET, GECCO 2019 DOI 10.1145/3321707.3321799)",
+    "README.md"
+  ],
+  "human_capability_summary": {
+    "built_to": "invent an unbounded stream of learning challenges and solve them, transferring solutions across challenges",
+    "pressure": "static curricula stall; hand-designed environment distances do not measure meaningful difference",
+    "success_means": "agents solving environments unreachable by direct optimisation; ANNECS (accumulated number of novel environments created and solved) rising"
+  },
+  "known_human_problem_solved": "open-ended coevolution of problems and solvers",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "RL research where the environment distribution, not the learner, was the bottleneck",
+  "human_failure_condition": "the population collapses to trivial or impossible environments; transfers never improve a target",
+  "behavioral_entry_point": "PopulationManager.adjust_envs_niches(): mutate -> pass_mc on the parent's theta -> compute_novelty_vs_archive (PATA-EC) -> admit; ESOptimizer.evaluate_transfer/pick_proposal: the transfer boundary",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-104"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "Box2D (C++ via SWIG)",
+      "fiber (multiprocessing/k8s runtime)"
+    ],
+    "host_class": "compiler+docker host (M2 / Linux); NOT M3"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:53:49Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

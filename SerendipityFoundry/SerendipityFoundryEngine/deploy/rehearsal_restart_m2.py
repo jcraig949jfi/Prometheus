@@ -40,13 +40,18 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from relocate_m2 import DATA, HOST, PORT, TASK, version, ps                # noqa: E402
+from relocate_m2 import DATA, HOST, PORT, TASK, version as _version, ps    # noqa: E402
 from release_v9 import get, identities, ledger_facts, DB, CA                # noqa: E402
 sys.path.insert(0, os.path.dirname(HERE))
 from sfe.events import _entry_hash                                          # noqa: E402
 
 PIN = json.load(open(os.path.join(HERE, "DEPLOYED_BUILD_M2.json"), encoding="utf-8"))
 INCIDENTS = os.path.join(DATA, "incidents")
+
+
+def version(timeout=5):
+    v = _version(CA, timeout=timeout)
+    return v if isinstance(v, dict) and v.get("engine_instance_id") else None
 
 
 def now():
@@ -65,9 +70,9 @@ def event_at(seq):
         return dict(r) if r else None
 
 
-def first_event_after(seq):
+def first_event_after(seq, t0=0.0):
     with ro() as cx:
-        r = cx.execute("SELECT event_seq, event_id, event_type, world_id, ts, actor FROM events WHERE event_seq>? ORDER BY event_seq LIMIT 1", (seq,)).fetchone()
+        r = cx.execute("SELECT event_seq, event_id, event_type, world_id, ts, actor FROM events WHERE event_seq>? AND ts>? ORDER BY event_seq LIMIT 1", (seq, t0)).fetchone()
         return dict(r) if r else None
 
 
@@ -143,6 +148,12 @@ def main(argv=None):
     ap.add_argument("--relaunch", choices=("watchdog", "now"), default="watchdog")
     ap.add_argument("--min-inflight-events", type=int, default=1)
     ap.add_argument("--wait-post", type=float, default=900.0, help="seconds to wait for the first post-restart operation")
+    ap.add_argument("--wait-for-events", type=int, default=0,
+                    help="ARM instead of refusing: poll the ledger and kill the moment >= N events landed in the last --window s")
+    ap.add_argument("--window", type=float, default=20.0)
+    ap.add_argument("--arm-timeout", type=float, default=900.0)
+    ap.add_argument("--mid-request", action="store_true", default=True,
+                    help="once density is met, wait (<= 2 s) for an A6 intent with no outcome -- a request IN the engine -- and kill then")
     ap.add_argument("--out", default=os.path.join(HERE, "REHEARSAL_RESTART_2026-09"))
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
@@ -169,7 +180,30 @@ def main(argv=None):
     print("PRE   max_event_seq %d  last %s %s  events_last_60s %d  open_intents %d" % (
         lf["max_event_seq"], (pre["last_event"] or {}).get("event_type"), (pre["last_event"] or {}).get("world_id"),
         inflight_60s, len(pre["a6_open_intents"])))
-    if inflight_60s < a.min_inflight_events:
+    if a.wait_for_events > 0:
+        # ARMED: the trigger does the timing (Archaeon #402). Poll the ledger
+        # twice a second; fire when the last `window` seconds hold >= N events.
+        print("ARMED wait-for-events %d in %.0f s (timeout %.0f s)" % (a.wait_for_events, a.window, a.arm_timeout), flush=True)
+        rec["armed"] = {"at": now(), "wait_for_events": a.wait_for_events, "window_s": a.window}
+        save()
+        t_arm = time.time()
+        dens = 0
+        while time.time() - t_arm < a.arm_timeout:
+            dens = events_since(time.time() - a.window)
+            if dens >= a.wait_for_events:
+                break
+            time.sleep(0.5)
+        rec["armed"]["events_in_window_at_fire"] = dens
+        rec["armed"]["waited_s"] = round(time.time() - t_arm, 1)
+        if dens < a.wait_for_events:
+            rec["result"] = "ARM_TIMEOUT_NO_DENSITY"; save()
+            print("ARM TIMEOUT: density never reached (%d < %d); nothing killed" % (dens, a.wait_for_events)); return 3
+        # refresh the pre snapshot to the instant before the kill
+        lf = ledger_facts()
+        pre["ledger"] = lf; pre["last_event"] = event_at(lf["max_event_seq"]); pre["events_in_window"] = dens
+        pre["refreshed_at"] = now()
+        rec["pre"] = pre
+    elif inflight_60s < a.min_inflight_events:
         rec["result"] = "REFUSED_NO_LIVE_WORK"
         save()
         print("REFUSING: %d events in the last 60 s < %d; a restart that intersects no live work rehearses nothing" % (inflight_60s, a.min_inflight_events))
@@ -177,6 +211,32 @@ def main(argv=None):
 
     # ---- interrupt
     pid = listener_pid()
+    open_now = []
+    if a.mid_request and a.wait_for_events > 0:
+        # Tail today's journal file for an intent with no outcome: that is a
+        # request INSIDE the engine right now. Up to 2 s, then kill regardless.
+        day = os.path.join(INCIDENTS, time.strftime("%Y-%m-%d", time.gmtime()) + ".jsonl")
+        t_mr = time.time()
+        pos = os.path.getsize(day) if os.path.exists(day) else 0
+        pending = {}
+        while time.time() - t_mr < 2.0:
+            if os.path.exists(day):
+                with open(day, "rb") as fh:
+                    fh.seek(pos); chunk = fh.read(); pos += len(chunk)
+                for ln in chunk.decode("ascii", "replace").splitlines():
+                    try:
+                        r = json.loads(ln)
+                    except ValueError:
+                        continue
+                    if r.get("kind") == "intent":
+                        pending[r["rid"]] = r
+                    else:
+                        pending.pop(r.get("rid"), None)
+                if pending:
+                    open_now = [{"rid": k, "route": v.get("route"), "idem_key": v.get("idem_key"), "ts": v.get("ts")} for k, v in pending.items()]
+                    break
+            time.sleep(0.005)
+        rec["mid_request_trigger"] = {"waited_s": round(time.time() - t_mr, 3), "open_intents_seen": open_now}
     t0 = time.time()
     rec["interrupt"] = {"t0": t0, "t0_utc": now(), "listener_pid": pid}
     ps("$p = Get-CimInstance Win32_Process -Filter 'ProcessId=%d'; Stop-Process -Id %d -Force; "
@@ -215,7 +275,7 @@ def main(argv=None):
     first = None
     t_wait = time.time()
     while time.time() - t_wait < a.wait_post:
-        first = first_event_after(lf["max_event_seq"])
+        first = first_event_after(lf["max_event_seq"], t0)
         if first:
             break
         time.sleep(2)

@@ -1,0 +1,95 @@
+{
+ "ancestry": "original (Phase A, slot 1)",
+ "arms": [
+  "viable",
+  "degenerate_gen0",
+  "controls"
+ ],
+ "assay_capability_requirement": "walkers 1-4 reproduce C4-05's depth-16 steps digest for digest; identity walker depth 64 in 64; randomize-all stalls; determinism; cheat",
+ "attempt": 1,
+ "budget": {
+  "E": 16,
+  "archive_depths": [
+   0,
+   16,
+   32,
+   48,
+   64
+  ],
+  "depth": 64,
+  "max_proposals": 32,
+  "parents": 57,
+  "walkers": 6
+ },
+ "claim_ceiling": "a rate curve at 6 walkers x 64 steps per competent parent on one substrate; no mechanism",
+ "crn_policy": "C4-05's episode sets and walker seeds (campaign_seed 20260921 for the walks, so walkers 1-4 ARE C4-05's); walkers 5-6 new draws from the same rule",
+ "decl": {
+  "n_min": 1,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "positive_ok",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "degenerate_gen0",
+   "metric": "exaptation_64",
+   "min_effect": 0.02,
+   "treatment": "viable"
+  }
+ },
+ "design_digest": "sha256:f93cf6749f3f151cad16d51a905dbc0b789e94d01dd62adfa42d4093f1b186d7",
+ "expected_machine_telemetry": [
+  "steps with proposals per walker",
+  "archived exposures at 5 depths",
+  "yield table"
+ ],
+ "experiment": "C5-01",
+ "falsification_condition": "PLATEAU or DEGRADATION or MIXED -> the neutral mechanism is not preserved for Phase A's disposition",
+ "kill_condition": "control failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "C4-05 walk reused with a deeper archive set",
+  "yield-per-evaluation accounting"
+ ],
+ "parent_evidence": "C4-05: depths 2/4/8/16 = .016/.032/.037/.043 (single edit .006); 188/188 walkers reached 16; acceptance ~.55.",
+ "parents": [
+  "C4-05"
+ ],
+ "positive_control": "controls arm: positive_ok >= 1.0",
+ "prereg_digest": "sha256:8e96396d1d8613bebd2d354abd054d172a6502c34fccc7a5a8195f4a446fa6b1",
+ "primary_observable": "exaptation rate by depth with Wilson bands; yield per evaluation by depth; marginal rate per accepted step between archives; acceptance by bin; the three branches; PRESERVE rule (continued gradient AND Y_64 >= 2 x .0012)",
+ "question": "Does held-out exaptation continue increasing materially beyond neutral depth 16, or has the network entered a yield plateau? Marginal discovery yield per accepted step and per evaluation, not monotonicity.",
+ "reachability_estimate": {
+  "note": "acceptance walk; no search"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "deep neutral walk (depth 64)",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID",
+  "UNDERPOWERED"
+ ],
+ "why_this_slot": "Phase A of the substrate-decision campaign: the first of the two live C4 signals, closed cheaply."
+}

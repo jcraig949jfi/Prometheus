@@ -1,0 +1,8 @@
+# Manifest for 2026-09-18_c1_contracts
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_COMMON.md  sha256:8fdd53ea54c26d67478a1593916d45d0cca816f12130b2e4a41812bc06af47b7
+- REQUEST_ARCHAEON_sealed_task_generators.md  sha256:19c3905d19edbae2ef4cbb25daa1b057ed6a7ccc0a6a26d52ac66a0df9fa70a2
+- REQUEST_HARMONIA_metering_multiplicity_adjudication.md  sha256:025668ac5963f038b52535a3a2f39919fec521c066d4714dde020a70f5b0459a
+- REQUEST_VIVARIUM_sandbox_execution.md  sha256:4f464be04bcd3ccb91e29817da0f3b3e4f44829f2569403b47b132863cdbccb0
