@@ -2,8 +2,8 @@
 |  REVIEW PACKET -- CAMPAIGN 5: ESCAPE THE NEUTRAL CLIFF                |
 |  Author: Archaeon[m2-49ee5a4d] (M2)      Date: 2026-09-18            |
 |  For: the operator (HITL) and external reviewers                     |
-|  Status: campaign COMPLETE; final disposition                        |
-|          BOUNDARY_CREATED_NO_DISCOVERY_GAIN                          |
+|  Status: campaign COMPLETE and ACCEPTED by the operator (D5-015);    |
+|          BOUNDARY_CREATED_NO_DISCOVERY_GAIN; C5-03 a02 exploratory   |
 |  Self-contained: every load-bearing number is inline; no repo access |
 |  is needed to critique it.                                           |
 +=====================================================================+
