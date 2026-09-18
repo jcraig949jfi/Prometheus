@@ -1,0 +1,103 @@
+{
+ "ancestry": "original (Phase B, slot 1)",
+ "arms": [
+  "controls",
+  "F1",
+  "F2",
+  "F3",
+  "F4",
+  "F5",
+  "F6",
+  "F7",
+  "F8"
+ ],
+ "assay_capability_requirement": "positive control (hand-made fault program) and cheat control (relabelled valid population) as in DESIGN.md",
+ "attempt": 2,
+ "budget": {
+  "grammar_children": 1200,
+  "n_per_population": 200,
+  "parents": 57,
+  "populations": [
+   "raw",
+   "valid",
+   "injected_k1",
+   "injected_k2",
+   "injected_k4"
+  ]
+ },
+ "claim_ceiling": "an instrument qualification; nothing about evolution, discovery or robustness",
+ "crn_policy": "fixed population seed 1, evaluation seed 3, four W0 episodes",
+ "decl": {
+  "n_min": 1,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "F2",
+   "metric": "pass",
+   "min_effect": 0.0,
+   "treatment": "F3"
+  }
+ },
+ "design_digest": "sha256:0f3490c62ae31a1a1abedf049baf9d919f120f7a2e901035053b8964c20e0370",
+ "expected_machine_telemetry": [
+  "static validity counts",
+  "fault counts and sites",
+  "trap positions",
+  "grammar crossing by operator"
+ ],
+ "experiment": "C5-03",
+ "falsification_condition": "any of F1-F6 failing its fixed threshold, or F7 = 0",
+ "kill_condition": "control failure -> INSTRUMENT_INVALID; old VM digest changed -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "PlayerB",
+  "evaluate_b",
+  "gen_b",
+  "grammar_b"
+ ],
+ "parent_evidence": "C4-01: total interpreter, 932/932 out-of-table words reinterpreted; C4-03: REPRESENTATION_BLOCKED, proxy only.",
+ "parents": [
+  "C4-01",
+  "C4-03"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:c0863125295f2ffe4422c74824b879c1586ffd39d8ec14f7b515b343fa5f9b89",
+ "primary_observable": "fixtures F1-F6 pass, F7 > 0 (F8 recorded); disposition REPRESENTATION_QUALIFIED / REPRESENTATION_FAILURE",
+ "question": "Is representation B (narrow in-table encoding, FAIL/FIZZLE) a qualified instrument: does it preserve the old programs' meaning, and do raw, generator-valid and controlled-invalid populations separate WITHOUT fitness, with countable recovery?",
+ "reachability_estimate": {
+  "note": "not a reach experiment"
+ },
+ "replacement_condition": "none: a REPRESENTATION_FAILURE is a result (directive)",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "representation qualification (narrow encoding, FAIL/FIZZLE, fixtures without fitness)",
+ "typed_failure_conditions": [
+  "REPRESENTATION_FAILURE",
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "Phase B cannot start without a representation in which a local failure exists."
+}

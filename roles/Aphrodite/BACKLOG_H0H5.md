@@ -11,7 +11,7 @@ now are those needing no new authority.
 APHRODITE-21 | File the 2026-09-18 deep-research report in the library with source tiers and apply its design-changing findings to RSI_PROGRAM_v2 as annotations | LIT | program | S | none | library/sources/deep_research_2026-09-18.md + v2 annotations
 APHRODITE-22 | Tag every result statement in THEORIES, MODELS and results files with its evidence tier and add a check that flags untiered numeric claims [T1] | TOOLS | program | S | none | a tier header per file + tests/test_tiers.py passing
 APHRODITE-23 | Write the Hyperagents causal-object note: what their transferred agent carried (code, memory.json, prompts), and what a strict transplant would strip | LIT | program | S | APHRODITE-21 | library note + QUESTIONS O2 status change
-APHRODITE-15 | Propose delta (smallest meaningful transfer effect, in tasks solved per fixed escrow) from downstream need, using Campaign 0's detectable-effect curves | EVIDENCE | program | S | APHRODITE-20 | memo committed before any Campaign 1 data
+APHRODITE-15-OLD | (superseded by the delta table; the operator owns delta) Propose delta (smallest meaningful transfer effect, in tasks solved per fixed escrow) from downstream need, using Campaign 0's detectable-effect curves | EVIDENCE | program | S | APHRODITE-20 | memo committed before any Campaign 1 data
 APHRODITE-16 | Write the I_0 protocol specification (five modules, typed memory store, resource handles, two-phase commit, null task) as an interface document, no implementation [T3] | ENGINE | program | M | none | library/designs/I0_PROTOCOL_SPEC.md
 APHRODITE-24 | Write the compute-accounting design note: per-model token tariffs, prefill vs decode, accelerator seconds where Prometheus owns the GPUs, and the budget-gaming failures reported by STOP [T3] | ENGINE | program | S | APHRODITE-21 | library/designs/METERING_NOTE.md
 APHRODITE-25 | Write the contamination-proof evaluation note: vault layers C1-C3, beacon commit-then-reveal and its failure modes, generator-distribution leakage [T3] | ENGINE | program | S | none | library/designs/VAULT_NOTE.md
@@ -37,7 +37,15 @@ APHRODITE-07 | ModularRSI scoped vs joint mutation toy | EVIDENCE | program | M 
 APHRODITE-13 | Distributional gate method for multi-cell preregs | TOOLS | program | S | FOLDED into APHRODITE-17/19 (lineage-level inference replaces per-cell aggregation) | --
 Swarm toys S1-S4: FROZEN (operator 2026-09-18). A new toy only if it answers a concrete question required by Campaign 0 or a later real-swarm design.
 
+APHRODITE-36 | Campaign 0C: qualify a screen-and-confirm (E-exist) analysis on the nine worlds + P1-P3 before any GPU [T2] | EVIDENCE | program | M | operator: estimand decision (E-mean / E-exist / both) | prereg + results
+APHRODITE-37 | Throughput benchmark of the chosen substrate on the chosen host (not an experiment) | TOOLS | 1.0 | XL | NEW: operator go (model-host deployment) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
+APHRODITE-38 | Campaign 1 preregistration with estimand, delta, substrate, L, budget frozen | EVIDENCE | 1.0 | XL | operator decisions in CAMPAIGN1_DESIGN_PACKET s2-s6 | prereg committed; execution still needs its own go
+
 CLOSED (with the commit that closed them):
+
+APHRODITE-15 delta consequences -- delta table in RESULTS_C0B (the operator sets delta)
+Campaign 0B stress test -- this commit (FAIL on power, calibration intact)
+Campaign 1 design packet -- library/designs/CAMPAIGN1_DESIGN_PACKET_2026-09-18.md (this commit)
 
 APHRODITE-12 monitor registered and launched -- cb3d86985 (MONITORS row), first pass ed4253289 (2 admitted, reviewed)
 APHRODITE-17 Campaign 0 prereg -- f0e04de11 (+ AMENDMENT 1 addb5d4cd)

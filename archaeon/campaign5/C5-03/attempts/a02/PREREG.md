@@ -1,0 +1,44 @@
+## A. STARTUP (preregistration; sealed sha256:c0863125295f2ffe4422c74824b879c1586ffd39d8ec14f7b515b343fa5f9b89)
+
+- experiment ID: C5-03
+- parents: C4-01, C4-03
+- QUESTION: Is representation B (narrow in-table encoding, FAIL/FIZZLE) a qualified instrument: does it preserve the old programs' meaning, and do raw, generator-valid and controlled-invalid populations separate WITHOUT fitness, with countable recovery?
+- PARENT EVIDENCE: C4-01: total interpreter, 932/932 out-of-table words reinterpreted; C4-03: REPRESENTATION_BLOCKED, proxy only.
+- WHY THIS SLOT IS STILL WORTH SPENDING: Phase B cannot start without a representation in which a local failure exists.
+- ASSAY CAPABILITY REQUIREMENT: positive control (hand-made fault program) and cheat control (relabelled valid population) as in DESIGN.md
+- POSITIVE CONTROL: controls arm: pass >= 1.0
+- REACHABILITY ESTIMATE:
+    {"note": "not a reach experiment"}
+- ARMS:
+    - controls
+    - F1
+    - F2
+    - F3
+    - F4
+    - F5
+    - F6
+    - F7
+    - F8
+- COMMON-RANDOM-NUMBERS POLICY: fixed population seed 1, evaluation seed 3, four W0 episodes
+- BUDGET:
+    {"grammar_children": 1200, "n_per_population": 200, "parents": 57, "populations": ["raw", "valid", "injected_k1", "injected_k2", "injected_k4"]}
+- PRIMARY OBSERVABLE: fixtures F1-F6 pass, F7 > 0 (F8 recorded); disposition REPRESENTATION_QUALIFIED / REPRESENTATION_FAILURE
+- CLAIM CEILING: an instrument qualification; nothing about evolution, discovery or robustness
+- FALSIFICATION CONDITION: any of F1-F6 failing its fixed threshold, or F7 = 0
+- KILL CONDITION: control failure -> INSTRUMENT_INVALID; old VM digest changed -> INSTRUMENT_INVALID
+- TYPED FAILURE CONDITIONS:
+    - REPRESENTATION_FAILURE
+    - INSTRUMENT_INVALID
+- EXPECTED MACHINE TELEMETRY:
+    - static validity counts
+    - fault counts and sites
+    - trap positions
+    - grammar crossing by operator
+- MACHINE CHANGES EXERCISED:
+    - PlayerB
+    - evaluate_b
+    - gen_b
+    - grammar_b
+- REPLACEMENT CONDITION: none: a REPRESENTATION_FAILURE is a result (directive)
+- ANCESTRY (original | replacement): original (Phase B, slot 1)
+- decl (machine-read by archaeon.wse.states): {"n_min": 1, "positive_control": {"arm": "controls", "metric": "pass", "min": 1.0, "min_rows": 1}, "primary": {"control": "F2", "metric": "pass", "min_effect": 0.0, "treatment": "F3"}}

@@ -57,6 +57,20 @@ ruling, were read only where they support a standing rule.
     2.168e-19              same: reversible reference max |J|                     same                               IN       quoted as a control that CANNOT FAIL,
                                                                                                                               which is the audit's finding
 
+## Addendum 2026-09-18 (self-attack, review packet Q1/Q2) -> QR-1.2.1
+
+    8 / 12 (H5 reach)     now COMPUTED (h5_reach_bounds_computed): direct 8 exactly, neutral 4,
+                          permuted cap 12 = neighbour count; the definition is "distinct
+                          NON-PARENT rules" (9 if the parent's rule is counted); a random
+                          balanced permutation reaches 11.72 vs the learned 11.7305
+    refuse_relabel        was OVER-STRICT: it refused every CONFIRMATORY plan after a DIAGNOSTIC
+                          one, including the disjoint-task route it prescribed. 1.2.1 admits a
+                          new plan whose confirmation set is disjoint from the diagnostic's tasks
+                          (freeze_plan now records task_ids) and refuses the same body, any
+                          overlap, or a task-less legacy record.
+    validate_cell_payloads chained aliases were refused as dangling; 1.2.1 resolves chains,
+                          refuses cycles and alias/cell double-use.
+
 ## Not audited on this pass
 
 The 2026-04 cartography numbers (superseded/ directory): out of the seat's
