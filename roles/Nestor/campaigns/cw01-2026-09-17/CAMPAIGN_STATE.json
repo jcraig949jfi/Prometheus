@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 08:30:09",
+ "updated_local": "2026-09-18 10:12:34",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -310,8 +310,65 @@
   {
    "id": "cw01-e08",
    "title": "Rank-tax tensor evolution",
-   "status": "PENDING",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e08-a01",
+     "phase": "PACKAGE",
+     "disposition": "INCONCLUSIVE",
+     "started_local": "2026-09-18 08:30:00",
+     "ended_local": "2026-09-18 10:12:34",
+     "verdict_contract_sha256": "607f4671da26c07f6ccc0fccbc5c0780562a2cd5a993caaeeaf89cf4a5fa72e6",
+     "freeze_boundary_commit": "e902f09a3",
+     "executed_under_frozen_contract": true,
+     "qualify_runs": 3,
+     "rows": 960,
+     "rows_commit": "809ab352f",
+     "result_commit": "the commit that lands RESULT.json and this state (see git log)"
+    }
+   ],
+   "disposition": "INCONCLUSIVE",
+   "headline": {
+    "disposition_reason": "a required contrast is NOT_VERIFIED (counts or common support)",
+    "world": "w13 (the only R4 survivor); organism = substrate tt_digits + evolvable per-bond ranks + read mask",
+    "tax": "lambda 390 = 2 x lambda_max (Q3 rule), equal weights over (bond, params, flops, bits)",
+    "c_tax": null,
+    "c_tax_null": [
+     null,
+     null
+    ],
+    "c_int": null,
+    "c_int_inside_null": null,
+    "competent_lineages_per_arm": {
+     "CONTROL": 2,
+     "TAX": 1,
+     "AMP": 2,
+     "TAX+AMP": 3
+    },
+    "noncompetent_excess": {
+     "sham": 1,
+     "amp": -1
+    },
+    "scalar_burden_per_arm_all_reps": {
+     "CONTROL": 1.725,
+     "TAX": 0.834,
+     "AMP": 0.926,
+     "TAX+AMP": 0.512
+    },
+    "capability_per_arm_all_reps": {
+     "CONTROL": 155.7,
+     "TAX": 155.4,
+     "AMP": 156.0,
+     "TAX+AMP": 171.2
+    },
+    "qualification": "Q1-Q7 QUALIFIED on run 3 after two checker repairs (D062, D063); all 8 accounting fixtures charged or refused"
+   },
+   "limitations": [
+    "One world, one organism family, eight lineages per arm, 200 generations (frozen by the Q4 rule from a pilot that cleared the trivial floor at generation 0).",
+    "The tax coefficient was frozen at the top of the sweep because the preregistered rule takes the largest qualifying value and criterion (d) cannot bind above (CW01-D064).",
+    "Competence on held64 is a minority outcome in every arm (CW01-D065); the analysis is over competent lineages and reports the non-competent count per arm.",
+    "Per-bond rank evolution is a bridge built here; it is not the substrate as previously run."
+   ]
   },
   {
    "id": "cw01-e09",
@@ -327,17 +384,22 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e07",
-  "attempt_id": "cw01-e07-a01",
-  "phase": "CLOSED_BEFORE_EXECUTE",
-  "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
+  "experiment_id": "cw01-e08",
+  "attempt_id": "cw01-e08-a01",
+  "phase": "PACKAGE",
+  "disposition": "INCONCLUSIVE",
   "phase_completed": [
    "RECONCILE",
    "PREFLIGHT",
    "INSTANTIATE",
-   "QUALIFY"
+   "QUALIFY",
+   "EXECUTE",
+   "CLOSE_SCIENCE",
+   "TEARDOWN",
+   "VERIFY_ABSENCE",
+   "PACKAGE"
   ],
-  "next": "CONTINUE -> cw01-e08 rank-tax tensor evolution"
+  "next": "CONTINUE -> cw01-e09 algorithmic soup (awaiting operator brief)"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -401,7 +463,15 @@
   "experiments/cw01-e07/gate_e07.py - P1-P5 admissibility gate + five known-broken fixtures; refused the world twice, refused all fixtures twice",
   "experiments/cw01-e07/GATE_E07_run1.json, GATE_E07.json - both gate runs",
   "experiments/cw01-e07/PROBE_E07.json, PROBE2_E07.json, PROBE3_E07.json - probes A-G: P1 attainability curve, state dependence, evolvability at the real budget, diagonal recurrence, three search-regime features",
-  "experiments/cw01-e07/DISPOSITION.json - INCONCLUSIVE / DESIGN UNREACHABLE with what a future attempt needs"
+  "experiments/cw01-e07/DISPOSITION.json - INCONCLUSIVE / DESIGN UNREACHABLE with what a future attempt needs",
+  "experiments/cw01-e08/SUBSTRATE_RECONCILE.md - what the real TT organism possesses, mapped to (bond, params, flops, bits) before any code",
+  "experiments/cw01-e08/PREREGISTRATION.md - 2x2 factorial, lineage as unit, capability-adjusted burden, Q1-Q7, dispositions incl. INVALID",
+  "experiments/cw01-e08/world_e08.py - per-bond ranks joined to the substrate's TT forward (exact by zero-padding), recount, amputation/sham, assay, stratified randomisation",
+  "experiments/cw01-e08/qualify_e08.py + QUALIFY_run1/run2/QUALIFY.json - three runs; tax attainability curve published",
+  "experiments/cw01-e08/VERDICT_CONTRACT.json - hashed before EXECUTE",
+  "experiments/cw01-e08/rows/cw01-e08-a01.jsonl - generation, assay and lineage rows, every row stamped with the contract hash",
+  "experiments/cw01-e08/fossils/representatives.npz - packed genomes of every representative with arm/lineage/sha metadata",
+  "experiments/cw01-e08/RESULT.json - disposition through lineage.decide; per-coordinate secondary contrasts"
  ],
  "reconcile_result": {
   "processes": "3 claude.exe (self + Aporia + Techne), 0 stray workers",
@@ -438,7 +508,8 @@
   "e05 EXECUTE is the freeze boundary paying for itself. a01, the replicate whose numbers calibrated QUALIFY, passes every condition and reads COMPLETE on its own; r03 and r04 refute it. Because the contract was hashed and frozen before the first organism was evaluated, the criterion could not become an experimental object for the eighth time, and the only available move was to report NULL. Cost: a result I would have liked. Benefit: the result is true.",
   "The independent replication lane earned its cost in defects, not in confirmation. It reproduced the canonical run across 381 comparisons with 0 divergences - and then found five things the canonical lane structurally could not, because it had never seen the code: a self-invalidating verifier (D044), provenance that silently stamps an outside executor as the canonical lane (D045), an experiment that is reproducible in place but not relocatable (D046), a rows path pinned to one attempt (D047), and an ambiguity in my own brief (D048). An executor who shares the author's assumptions cannot test those assumptions.",
   "e06 produced no ecological result but a reusable doctrine: representation neutrality has THREE layers - neutral reward, neutral task generation, neutral ecological bookkeeping. e06 satisfied the first and violated the second, because the target distribution was expressed in one substrate's native geometry even though the scorer never read a label. It also showed the value of a cheap pre-QUALIFY admissibility gate: mutual invasibility cost minutes to evaluate and would have refused all four world iterations before any evolutionary budget was spent.",
-  "e07 was refused by its own admissibility gate in ~2 s per run, twice, before any lineage was evolved under weather; the full EXECUTE (96 lineages) would have reached the same INCONCLUSIVE at far greater cost. The refusal exposed two independent defects, and the one-correction budget could address only one: a preregistered magnitude threshold frozen without its attainable range (D058) and a search that never reaches state-dependent computation (D059). Seven cheap probes (~4 s) chose the correction, refuted my own meltdown reading of a noisy trajectory, and produced a measured list of what a future attempt needs. The doctrine that survives: a gate threshold must ship with the reference probe's attainability curve, computed before freezing."
+  "e07 was refused by its own admissibility gate in ~2 s per run, twice, before any lineage was evolved under weather; the full EXECUTE (96 lineages) would have reached the same INCONCLUSIVE at far greater cost. The refusal exposed two independent defects, and the one-correction budget could address only one: a preregistered magnitude threshold frozen without its attainable range (D058) and a search that never reaches state-dependent computation (D059). Seven cheap probes (~4 s) chose the correction, refuted my own meltdown reading of a noisy trajectory, and produced a measured list of what a future attempt needs. The doctrine that survives: a gate threshold must ship with the reference probe's attainability curve, computed before freezing.",
+  "e08 ran on the REAL substrate organism for the first time in the campaign: the reconcile step found that literal rank exists but is a constant, that the only rank tax in the repo was never joined to evolution, and that the substrate's entry module needs a redis client the interpreter lacks - all three shaped the design before a line of evolutionary code. Qualification refused twice on its own fixtures (both checker defects, repaired once each) and then passed; the frozen tax landed at the top of its sweep because a preregistered upper-bound criterion could not bind, which is the kind of rule defect e07's D058 predicted and this time was caught as an observation rather than a wall. Disposition: INCONCLUSIVE."
  ],
  "verify_absence_e01": {
   "campaign_redis_keys": 0,
@@ -449,12 +520,12 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 7,
+  "experiments_attempted": 8,
   "complete": 2,
   "null": 2,
   "negative": 0,
-  "inconclusive": 3,
-  "defects_logged": 62,
+  "inconclusive": 4,
+  "defects_logged": 68,
   "science_defects": 28,
   "defects_per_experiment": {
    "e01": 17,
@@ -463,7 +534,8 @@
    "e04": 5,
    "e05": 16,
    "e06": 6,
-   "e07": 4
+   "e07": 4,
+   "e08": 6
   },
   "reusable_components_landed": [
    "lib/seeds.py",

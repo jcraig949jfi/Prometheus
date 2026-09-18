@@ -50,6 +50,18 @@ ENTRIES = [
      "evidence": "Four 400-generation no-tax pilots all reach train fitness ~2000 (abstain 1272) but only 2/4 have a representative above the held64 competence floor 166.47 (elite held64 107.8-186.1, 16/32 competent). Train seeds are overfit relative to held64. Q4 passed by branch A (single-bond truncation retains competence on 80% of eligible truncations), not branch B (needs 3/4).",
      "proposed_fix": "No change. Recorded so the analysis reader expects a substantial non-competent count in EVERY arm and reads the competence-excess rule (TAX minus no-TAX <= 2 per level) rather than absolute counts.",
      "found_by": "QUALIFY run 3"},
+    {"id": "CW01-D066", "experiment_id": E, "phase": "CLOSE_SCIENCE", "severity": "critical", "category": "preregistration",
+     "status": "OPEN", "defect_class": "A - science blocker (the question could not be verified)",
+     "title": "e08 minimum-count rule frozen against a pilot that predicted marginal attainability; contrast NOT_VERIFIED",
+     "evidence": "PREREGISTRATION section 5 requires at least 6 competent lineages per TAX level (of 16) and 4-each-way common support. The disjoint pilot had ALREADY shown (D065) that only 2/4 no-tax lineages reach a held64-competent representative, i.e. an expected ~8 of 16 per level with wide variance - marginal against 6 - and I froze the rule anyway. EXECUTE: competent lineages CONTROL 2/8, TAX 1/8, AMP 2/8, TAX+AMP 3/8 -> 4 per TAX level; common support fails. Disposition INCONCLUSIVE by the frozen rules. The descriptive table is unambiguous and is NOT promoted: scalar burden (all representatives) CONTROL 1.725, TAX 0.834, AMP 0.926, TAX+AMP 0.512, at mean held64 155.7 / 155.4 / 156.0 / 171.2; params 2943 / 1199 / 768 / 377; bits 27.6 / 10.6 / 33.5 / 15.4. The non-competent excess rule (TAX minus no-TAX <= 2 per level) PASSED (+1, -1): the tax did not remove competence relative to control.",
+     "proposed_fix": "NOT relaxed post hoc. This is the fourth instance of the eligibility-count lesson in the campaign and the first where the count WAS available and was misread as sufficient. A future attempt must (a) make competence attainable on held64 in most lineages before freezing (more generations, or representatives selected by held-out score on a disjoint selection seed set, or a competence floor defined on the assay distribution), and (b) set the minimum count from the pilot's competent-lineage RATE with a margin, or choose the lineage count to guarantee it. Everything else in the design held: accounting, sham, fixtures, contract, blinded assay.",
+     "found_by": "analyze_e08.py under the frozen contract"},
+    {"id": "CW01-D067", "experiment_id": E, "phase": "PACKAGE", "severity": "medium", "category": "durability",
+     "status": "FIXED", "defect_class": "B - execution/recoverability",
+     "title": "e08 fossil of representative genomes was written as .npz, which the repo .gitignore silently excludes",
+     "evidence": ".gitignore line 492 'roles/**/*.npz' matched fossils/representatives.npz; git status showed the directory as ignored, so the preserved lineages would never have been committed and a recovering executor would have found no fossil.",
+     "proposed_fix": "A .bin form was ignored as well (line 494 'roles/**/*.bin'); only JSON survives under roles. Converted to fossils/representatives.json: base64 of the raw uint8 records with sha256, shape, record_nbytes, contract hash and per-record arm/lineage/rep/sha; npz and bin removed; verified not ignored and round-trips. Standing rule: run git check-ignore on any new artefact type before relying on it as durable.",
+     "found_by": "git status after EXECUTE"},
 ]
 
 
