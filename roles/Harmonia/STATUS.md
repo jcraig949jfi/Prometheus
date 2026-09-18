@@ -61,10 +61,13 @@ derived from activity, never from a row).
                ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
                Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
                ACK on #364 was ~6 h late (instance idle); recorded.
-    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
-               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
-               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
-               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
+    lane 3     POET/ALife (operator refinery directive 2026-09-18; this instance OWNS ASAL per the
+               operator's ruling on file). ASAL: instrument PREREGISTERED (8178e98bf + AMENDMENT_A), fixture
+               PASSES (Techne's seven CLIP arms within 1e-6), frozen-budget search (1,045 rollouts) running
+               SEALED until Nyx's packet freeze. Avida: ancestry ground-truth ruler preregistered; controls
+               C-CHEAT/C-POS/C-NEG pass, C-ORDER repaired (AMENDMENT_B), loss curves running. POET rulers:
+               after the ASAL verdict (bodies landed on M3, #427). STANDING_RULES.md A1-A3 adopted (union
+               with m2-ca1148a0's executable PR-1.0.0). gzip 003: no host program-wide.
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)

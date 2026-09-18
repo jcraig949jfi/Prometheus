@@ -129,20 +129,364 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/sigma_points.py:99-207"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/unscented_transform.py:60-110"
+   }
+  ],
+  "inspected_files": [
+   "kalman/sigma_points.py 24-207",
+   "kalman/unscented_transform.py 22-110"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "the unscented Kalman filter's two reusable pieces, read as the mechanism the library is cited for: a deterministic set of 2n+1 sigma points placed by the matrix square root of the covariance and scaled by (alpha, beta, kappa), and an unscented transform that pushes those points through a nonlinear function and recovers a mean and covariance by weighted sums, with hooks so that quantities living on a manifold (angles) can supply their own mean and residual operators",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/rlabbe/filterpy@3b51149ebcff0401ff1e10bf08ffca7b6bbc4a33",
+   "payload_manifest_id": "techne tree_sha256 c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d (113 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/filterpy/kalman/sigma_points.py",
+     "payload_hash_read": "cfa457511eb6f1dbe95f452e1b2e5b489187b64707c5e7bc2b15f30dad17df9e",
+     "techne_recorded_hash": "cfa457511eb6f1dbe95f452e1b2e5b489187b64707c5e7bc2b15f30dad17df9e",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/filterpy/kalman/unscented_transform.py",
+     "payload_hash_read": "3c499c584c7f6e3f0091b1817853926533a80efa689285d7a4fcfa73bd55be75",
+     "techne_recorded_hash": "3c499c584c7f6e3f0091b1817853926533a80efa689285d7a4fcfa73bd55be75",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "filterpy-labbe::scaled_sigma_points_placed_by_the_matrix_square_root_of_the_covariance_with_merwe_weights_from_alpha_beta_kappa",
+   "fossil_ancestry": "filterpy-labbe",
+   "human_name": "MerweScaledSigmaPoints.sigma_points (124-178): lambda_ = alpha^2 (n + kappa) - n; U = cholesky((lambda_ + n) P); point 0 = x, points i = x +/- U_i; _compute_weights (180-195): Wm and Wc with Wc[0] adding (1 - alpha^2 + beta)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for an n-dimensional Gaussian (x, P) the filter forms 2n+1 points: the mean, and the mean plus and minus each column of the scaled matrix square root sqrt((lambda_ + n) P) (Cholesky by default); the spread is set by alpha (small = tight around the mean), the extra weight on the zeroth point's covariance by beta (2 is optimal for a Gaussian), and kappa is a secondary scaling; the mean weights Wm and covariance weights Wc differ only in the zeroth entry",
+   "input": "a mean and covariance",
+   "output": "2n+1 points and their weights",
+   "state": "none",
+   "update": "per prediction/update",
+   "assumptions": [
+    "a Gaussian is captured to second order by these deterministic points, so a nonlinear map's output mean and covariance are recovered without a Jacobian (the unscented transform's premise, Julier & Uhlmann 1997)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "filterpy-labbe::unscented_transform_recovering_a_mean_and_covariance_of_transformed_points_by_weighted_sums_with_pluggable_mean_and_residual_operators_for_manifold_states"
+   ],
+   "fitness_value_in_ancestor": "a derivative-free nonlinear filter: no Jacobian, better than the EKF on strong nonlinearities",
+   "failure_landscape": "by reading: a non-positive-definite P makes the Cholesky fail (a known UKF fragility; the sqrt_method hook exists to swap in a more robust root)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Julier & Uhlmann 1997; Wan & van der Merwe 2000 (the scaled form)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/sigma_points.py:124-195"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "MerweScaledSigmaPoints",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "filterpy-labbe::unscented_transform_recovering_a_mean_and_covariance_of_transformed_points_by_weighted_sums_with_pluggable_mean_and_residual_operators_for_manifold_states",
+   "fossil_ancestry": "filterpy-labbe",
+   "human_name": "unscented_transform (22-110): x = Wm . sigmas (or mean_fn); P = sum Wc (y - x)(y - x)^T + noise_cov, with residual_fn for the (y - x) so angular states subtract mod 2pi",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sigma points are passed through the process or measurement function outside the transform; the transform then computes the output mean as the Wm-weighted sum of the transformed points (or a caller-supplied circular mean for angles), and the output covariance as the Wc-weighted sum of outer products of the residuals plus an additive noise covariance; a residual function lets states that are not closed under subtraction (angles, quaternions) define their own difference so the covariance is correct on the manifold",
+   "input": "transformed sigma points, the weights, an optional noise covariance",
+   "output": "a mean and covariance",
+   "state": "none",
+   "update": "per transform",
+   "assumptions": [
+    "the weighted sums reproduce the true transformed moments to second order; manifold states need custom mean/residual to avoid wraparound errors"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "filterpy-labbe::scaled_sigma_points_placed_by_the_matrix_square_root_of_the_covariance_with_merwe_weights_from_alpha_beta_kappa"
+   ],
+   "fitness_value_in_ancestor": "the same transform serves the predict and the update of the UKF; the manifold hooks are why FilterPy is used for attitude and heading filters",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Julier & Uhlmann 1997",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/unscented_transform.py:60-110"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unscented_transform",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "kalman_filter.py (the linear KF), UKF.py (the filter loop that calls these two organs), the EKF, the particle filter, the g-h and least-squares filters, stats.py, the discretisation helpers, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "UKF.py is where the two organs compose into a filter; a DEEP pass would read it; the atlas's tinyekf-levy is the EKF cousin and simple-kalman the non-Kalman impostor",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "filterpy-labbe"
+  },
+  {
+   "candidate": "'Kalman library' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the sigma set, the transform, and the filter loop are separable; the library exposes each",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "filterpy-labbe"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "filterpy-labbe::P.a_nonlinear_dynamical_state_must_be_estimated_from_noisy_measurements_without_computing_jacobians_when_the_nonlinearity_is_strong_and_some_state_components_live_on_a_circle_not_a_line",
+   "source_fossil": "filterpy-labbe",
+   "source_evidence": "sigma_points.py; unscented_transform.py; the record's example systems",
+   "condition": "an organism tracks a state through nonlinear process and measurement functions; linearisation (the EKF) is inaccurate; some components are angles that wrap; the score is estimate error and consistency against a linear-Gaussian ground truth where one exists",
+   "resource_or_constraint": "2n+1 function evaluations per step; a covariance square root",
+   "failure_condition": "divergence on strong nonlinearity (EKF's failure), or a covariance corrupted by treating angular residuals as linear",
+   "world_punishes": "a Jacobian-based filter on a non-smooth map; naive subtraction of angles",
+   "world_rewards": "deterministic sigma points and weighted-moment recovery with manifold-aware mean/residual",
+   "observable_consequence": "RMS error and filter consistency (NEES) on a bearings-only or reentry tracking problem for the EKF vs the UKF, and with vs without the angular residual function; exact match to the KF on a linear-Gaussian system",
+   "vacuity_condition": "a linear-Gaussian system (the UKF reduces to the KF)",
+   "trivial_shortcuts": "the true Jacobian where it exists (the EKF's best case, which the world uses as a control)",
+   "cheat_control": "on a linear-Gaussian system the UKF must equal the exact Kalman filter to round-off; the EKF must diverge on a strongly nonlinear map where the UKF holds; the angular residual removed must corrupt the heading covariance: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference Bayesian filters (Labbe 2014-, with the book)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "filterpy-labbe::scaled_sigma_points_placed_by_the_matrix_square_root_of_the_covariance_with_merwe_weights_from_alpha_beta_kappa",
+   "to": "filterpy-labbe::unscented_transform_recovering_a_mean_and_covariance_of_transformed_points_by_weighted_sums_with_pluggable_mean_and_residual_operators_for_manifold_states",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the transform consumes the sigma set",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "filterpy-labbe",
+   "relation": "reimplementation_of",
+   "to": "Julier & Uhlmann 1997 / Wan & van der Merwe 2000 (the unscented/scaled sigma-point filter); Kalman 1960 for the linear base; the atlas's tinyekf-levy and simple-kalman are the family",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the filter loops (UKF/EKF/KF) and the other filters unread",
+   "nothing ran; M3-RUNNABLE PACKET CANDIDATE with a linear-Gaussian system as an exact oracle"
+  ],
+  "note": "the two reusable UKF mechanisms are located; the filter that composes them is the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

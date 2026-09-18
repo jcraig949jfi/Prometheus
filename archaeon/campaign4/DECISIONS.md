@@ -71,3 +71,71 @@ parent's own. | STARTING_POPULATION.json ancestries (experiment and arm
 per organism); worlds.WorldSpec. | Alternative: one environment for all
 (would call every delay-general organism "worse" on W0 by construction).
 | Revisit never within C4-01. DETERMINISTIC (ancestry -> world map).
+
+D4-005 | 2026-09-18 05:57 | C4-01 attempt a01 FAILED at the final publish step
+(engine HTTP 422: artifact meta info_kind "measurement" is not one of the
+engine's five: artifact/failure/hypothesis/observation/success) AFTER the
+census and all 798 records had landed; the runner was repaired (info_kind
+"artifact") and the slot rerun as a02, which RESUMED a01 (803 steps replayed
+by the harness's attempt machinery; same world, same records; 0 errors) and
+is the attempt of record. a01 is preserved beside it. Flow tables of a01 and
+a02 are byte-identical (wall_s excluded). | Directive: harness defects are
+repaired and the same experiment rerun with the failed attempt preserved;
+this was a harness defect (a wrong string), not a scientific failure. |
+Alternative: hand-edit a01's receipt -- never. | Revisit never.
+DETERMINISTIC (the census is a pure function of its seeds).
+
+D4-006 | 2026-09-18 06:05 | C4-02 RADIUS = the number of grammar.mutate()
+applications from one rng seeded by (campaign_seed, organism_id, radius,
+draw), operators drawn by the FROZEN WEIGHTS (name=None), INCLUDING steps
+whose operator returns its noop record (noop_steps recorded per child):
+the radius is what the grammar was asked to do, not what changed. The
+prediction written to be lost: loss_rate(r8) - loss_rate(r1) >= 0.05
+(measured: .930 - .522 = .408, not lost). Consistency control: the
+radius-1 D-distribution within TVD 0.10 of C4-01's frozen-weight mixture
+of per-operator distributions (measured .029). | C4-02/DESIGN.md. |
+Alternative: count only effective steps (would make the radius depend on
+the parent's length and hide the noop mass). | Revisit never in C4.
+DETERMINISTIC.
+
+D4-007 | 2026-09-18 06:35 | C4-03: the executed HARD arm is REPRESENTATION_BLOCKED
+(D4-002). The static proxy ("an out-of-table opcode word") was preregistered
+with a VACUITY CHECK added before any row when the runner's self-test showed a
+synthetic draw with 9/9 instruction words out of table; the 57 parents carry
+932/932 out-of-table words: the foundry writes uniformly random 32-bit words
+and the interpreter's modulo IS the decode. The proxy partitions nothing
+(P(fatal) = 1.000 on 5,472 C4-01 children and 2,280 C4-02 children); the proxy
+arm is REPRESENTATION_BLOCKED too, with the numbers. Operand and address
+words were excluded from "invalid" because their reduction is published ISA
+semantics. Consequence recorded for C4-07 and C4-08: "the fizzle event" and
+"free semantic insulation" have no extension on this substrate; both slots
+are re-premised in their own preregistrations, never by changing the ISA. |
+C4-03/DESIGN.md; attempts/a01/PROXY_TABLES.json. | Alternative: define
+"invalid" as some subset of the table (e.g. RND or opaque_io) -- that would
+be a recognizer for a hoped-for result and is forbidden. | Revisit never in
+C4. DETERMINISTIC.
+
+D4-008 | 2026-09-18 06:55 | C4-04: references = the relative offsets of statically
+reachable control instructions (JMP/JZ/JNZ) in the parent; BROKEN = after the
+edit, the instruction the offset lands on has different 4-word content than
+before; REMOVED = the jump itself was cut; the operator index maps copy the
+grammar's word moves exactly (insertion/duplication shift >= pos; deletion/
+splice remove [pos, pos+k) and shift; movement = remove then insert;
+region_swap swaps the two regions). LD/ST register addressing is data-
+dependent and NOT counted. The executed comparison of addressing modes is
+REPRESENTATION_BLOCKED (one static mode exists). | C4-04/DESIGN.md. |
+Alternative: count any content change at any old target as broken (would
+label every edit inside the genome as a reference break). | Revisit never.
+DETERMINISTIC.
+
+D4-009 | 2026-09-18 07:15 | C4-05 WALK RULES: the equivalence band is relative
+to the ORIGINAL parent's reward on its environment (never the current walker,
+so a walk cannot ratchet); a proposal whose operator returns its noop record
+is not a proposal (does not count toward the 32 or the depth); stall = 32
+rejected proposals at one depth; archived depths 0/2/4/8/16; gen0_random
+parents that are degenerate by the D4-003 flag are walked but reported apart
+(acceptance 1.0 by construction). Archived walker manifests are NOT stored:
+the walk is a pure function of its seeds and the frozen evaluator, so C4-06
+regenerates them and verifies the last-step digest against steps.json. |
+C4-05/DESIGN.md. | Alternative: band relative to the current walker (a
+ratchet). | Revisit never in C4. DETERMINISTIC.

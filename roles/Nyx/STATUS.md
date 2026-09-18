@@ -32,13 +32,14 @@ incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonic
   hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action: Stage A on positions 81-91 of the order (glpk, quadpack, openssl-heartbleed, lapack, py-vollib, redlock-py,
-  filterpy, zlib, tinyscheme, ncompress, the 4.2 tape), then 13, 18, 49; five pure-Python packet candidates are recorded (sgp4,
-  backoff, emcee, pid-autotune, pybreaker) behind the POET and scheme packets; two M3-runnable packet candidates recorded (python-sgp4
-  with tcppver.out as oracle; backoff with its tests) behind the POET / scheme packets;
-  the next packet on the ruler is the POET PATA-EC one if its body lands (H5), else MECH-PARTICLES-SCHEME-001 with a power statement; the operator's 2026-09-18 directive (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/) makes the POET /
-  Avida / Tierra / ASAL / TerraLingua cuts the priority THE MOMENT Techne lands the bodies (ASK 3 in #379): POET's discard
-  boundary first, then Avida's SavePopulation path (extend the existing cut, before any run); refresh the census when they land; the paxos packet is
-  OFF (body is Python-2-only, SCOUT 2026-09-17); the next M3-runnable packet candidate is Lenia (pure numpy) once Techne
-  clones it; write the packet for the
-  4.2BSD TCP Karn-ambiguity claim only if a pure-Python simulation world is acceptable to Harmonia (ask, do not build).
+next executable action (operator refinery directive 2026-09-18, roles/Nyx/prompts/2026-09-18_refinery_directive/): Stage A is DONE
+  and frozen; the scoreboard, not the atlas count, is now the output. FAST LANE -- write the ASAL legitimate-Lenia-search prediction
+  packet: can a search over legitimate Lenia parameters cross below the observed GARBAGE CLIP score (0.817)? Boundary = Techne's
+  techne107_asal_observer.py instrument (hashed; a descendant of the ASAL body, not the body); carry a power statement, disjoint seeds
+  and novelty_kind per intervention; hand Harmonia the six-bullet ruler brief (directive s2). HISTORICAL LANE -- POET's two mechanisms
+  (environment discard / minimal-criterion boundary; PATA-EC recomputation over world x contemporary population, with the basis-
+  population ablation) the moment Techne lands the body; then Avida's save / population / ancestry cut (extend nothing yet exists;
+  it becomes the HISTORY_MODE reconstruction benchmark). The seven pure-Python packet candidates (sgp4, backoff, emcee, pid-autotune,
+  pybreaker, py-vollib, filterpy) are the fallback lane if neither ASAL nor POET is runnable. Particles claim (c) is dropped;
+  MECH-PARTICLES-SCHEME-001 only on a downstream dependency or a larger-effect world. No deepening of the COARSE inventory bodies
+  (glpk, lapack, souffle, valgrind, spin, swipl, ...) without a named downstream question. Cap: 3 open packets per Harmonia lane.
