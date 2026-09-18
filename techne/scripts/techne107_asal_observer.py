@@ -192,12 +192,16 @@ class Observer:
 # --------------------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--animals", required=True, help="Chakazul/Lenia Python/animals.json (pinned)")
+    ap.add_argument("--animals", default=None, help="Chakazul/Lenia Python/animals.json; default = the vault body of specimen lenia-chan-2019 (Harmonia #429: the fixture comes from the packet, never from a temp directory)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--frames", default=None, help="directory for contact-sheet PNGs (evidence)")
     ap.add_argument("--seeds", type=int, default=5)
     a = ap.parse_args()
     t0 = time.time()
+    if a.animals is None:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
+        from techne.fossils import vault as _vault
+        a.animals = str(_vault.body_dir("lenia-chan-2019") / "upstream" / "tree" / "Python" / "animals.json")
     animals = json.load(open(a.animals, encoding="utf-8"))
     orb = next(e for e in animals if isinstance(e, dict) and e.get("code") == "O2u")
     params = dict(orb["params"]); params["b"] = str(params["b"])
