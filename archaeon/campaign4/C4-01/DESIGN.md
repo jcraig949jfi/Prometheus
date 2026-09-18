@@ -35,10 +35,14 @@ baselines are measured, not inherited.
 EDITS (preregistered set; no selection)
 -----------------------------------------------------------------------
 For each parent p, each operator o in the frozen grammar's 12 names
-(insertion, deletion, duplication, movement, replacement,
+(grammar proteus.grammar.v0.4 NAMES, read from the code, never typed:
+insertion, deletion, duplication, movement, replacement,
 operand_perturbation, reference_redirection, region_swap, splice,
-zeroing, randomization, config_perturbation; unreachable_removal is the
-grammar's removed operator and is NOT applied), and each draw r in 1..8:
+randomization, unreachable_removal, config_perturbation; `zeroing` is the
+grammar's REMOVED operator and is NOT applied. CORRECTION 2026-09-18
+01:05Z: an earlier draft of this line named unreachable_removal as the
+removed one; the code's REMOVED_OPERATOR is zeroing), and each draw r in
+1..8:
   rng = SplitMix64(seed_from("c4.01.edit", 20260921, organism_id, o, r))
   child, op_record = grammar.mutate(parent_manifest, rng, mate=None, name=o)
 Splice with no mate splices from self (the grammar's own rule). 57 x 12
@@ -98,7 +102,16 @@ filled from this table.
 -----------------------------------------------------------------------
 CONTROLS (run first; a failing control closes the slot INSTRUMENT_INVALID)
 -----------------------------------------------------------------------
-  negative  identity edit (child = parent): 57/57 D5 with displacement 0
+  negative  identity edit (child = parent): 57/57 with displacement 0 AND
+            reward equal to the parent's on every environment (the
+            child's label then equals whatever the parent's own would
+            be; a parent that is itself DEGENERATE on its environment
+            yields D2 here BY CONSTRUCTION, which is why "57/57 D5" is
+            the wrong test -- CORRECTION 2026-09-18 01:05Z, found by the
+            self-test on synthetic draws). Parents that are degenerate on
+            their own environment (answered_share 0) are flagged
+            parent_degenerate and every table is reported with and
+            without them.
   positive  whole-genome randomization (randomization with k = every
             instruction, applied by the census code, NOT a grammar
             operator): expected >= 45/57 in D2 or D3 (a destroyed
