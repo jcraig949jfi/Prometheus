@@ -1,48 +1,64 @@
-# Campaign 1 host-path throughput benchmark: specification (2026-09-18)
+# Campaign 1 host-path throughput benchmark: specification v2 (FROZEN, 2026-09-18)
 
-Authority: operator directive of 2026-09-18, item 8 ("run a bounded
-throughput benchmark on the intended M1/M2 host path using representative
-short procedural tasks and the actual evolutionary/evaluation loop.
-Measure rather than extrapolate ... This benchmark authorizes no Campaign
-1 evolution."). Evidence tier: a MEASUREMENT OF HARDWARE COST, not of any
-scientific quantity.
+Authority: operator directives of 2026-09-18 (item 8 of the post-0B
+directive; the "BENCHMARK EXECUTION / MODEL CANDIDATES / WALL-TIME BUDGET"
+directive, verbatim in roles/Aphrodite/prompts/2026-09-18_benchmark_
+execution/). Evidence tier: a MEASUREMENT OF HARDWARE COST and of the
+selection-rule input (starting accuracy); not a scientific result. No
+Campaign 1 evolution is authorised.
 
-## What it runs (bench.py)
+## Executors and hosts
 
-The loop shape of Campaign 1 at capped scale: per lineage and generation,
-the improver makes (variants - 1) model calls proposing worker
-instructions; each variant is evaluated on tasks-per-eval short
-procedural tasks (four families: arithmetic, sort-by-key, string ops,
-number theory; answers checked by code; one model call per task); the
-best variant is kept. Defaults: 2 lineages x 2 generations x 4 variants x
-20 tasks = 320 task evaluations + 12 improver calls. Hard caps: 2,000
-model calls, 3,600 s wall; the script refuses more than 4 lineages or 3
-generations. Concurrency 8 (to use a batching server).
+Nestor runs it on M1; Archaeon runs it on M2. Same harness commit, same
+file (sha256 recorded in every receipt and checked by economics.py), same
+fixtures, settings, caps and schema. Executors do not alter the harness
+or the Campaign 1 design. M4 does not run it (not reachable; not to be
+repaired in this campaign).
 
-## What it measures
+## Models, in order (candidates, not selections)
 
-tokens/task (mean, p50, p95); wall time per evaluation (mean, p95);
-evaluations per generation; wall per generation; evaluation throughput at
-the chosen concurrency; lineage cost (tokens, wall); GPU utilisation and
-memory (nvidia-smi, 1 s); task accuracy (only to show the tasks are not
-trivially failed -- not a result); and a projection of full-campaign
-task evaluations and single-host wall days for L = 32 and 64, 8
-generations, at the measured evaluations/generation and at 200 and 1,000.
+1. Qwen3-8B (primary). Thinking mode DISABLED (the 512-token output cap
+   would otherwise truncate reasoning); pass the runtime's mechanism in
+   --extra-body or the runtime flags and record it.
+2. Gemma 3 4B (independent-family substrate-transfer candidate).
+3. Llama 3.2 3B (optional lower-cost reference point).
+One practical fixed quantisation/runtime configuration per host and
+model, recorded exactly (--checkpoint, --quant, --runtime). No repeated
+re-tuning of a model to pass the selection rule.
 
-## Host path (the gate this seat cannot pass)
+## What bench.py v2 runs (frozen settings in the file)
 
-It must run ON M1 or M2 against an OpenAI-compatible server (llama.cpp
-server, vLLM or Ollama) serving the candidate small model on the RTX
-5060. From M4 (harry1) neither host is reachable (ssh port 22 timed out;
-no model server on 11434/8000/8080/5000/1234; probed 2026-09-18). The
-operator decides who runs it (the operator, or a seat on M1/M2) and which
-model to serve. One command:
-    python roles/Aphrodite/science/benchmark/bench.py --base-url http://127.0.0.1:<port> \
-        --model <served-model-name> --out <host>_<model>_bench.json
-Commit the JSON under roles/Aphrodite/science/benchmark/results/ (or post
-it to Aphrodite on comms); run once per candidate model.
+Phase 1 STARTING ACCURACY: base worker, 200 fixed tasks (50 per family:
+arithmetic, sort-by-key, string ops, number theory), fixed seeds shared by
+all hosts, temperature 0. Phase 2 LOOP: 2 lineages x 2 generations x 4
+variants x 20 tasks + 3 improver calls per generation; concurrency 8;
+max_tokens 512; retries 2; caps 2,000 calls and 3,600 s.
+These four procedural families are FROZEN as the Campaign 1 task
+distribution for substrate selection; replacing them (e.g. by Archaeon's
+sealed generators) requires a design amendment and re-qualification.
 
-## Validation done here
+## What each receipt records
 
-Dry run with the stub model on M4: 332 calls, 320 evaluations; task
-generators and checkers verified. Stub timings are meaningless by design.
+harness version, sha256 and git HEAD; host label; model (requested,
+served list, checkpoint, quant, runtime, extra body); GPU identity (name,
+total memory, driver); starting accuracy (overall with Wilson 95%, by
+family, format-failure rate); tokens in and out per task separately;
+tokens per task; wall time per evaluation (mean, p95); evaluations and
+model calls per generation; per-generation wall and throughput; eval
+throughput (mean and conservative = min of per-generation throughputs,
+or mean - 1.2816 sd when 3+); failure, retry and format-failure rates;
+GPU utilisation and memory high-water mark; single-host projections for
+32 and 64 lineages x evolution effort {measured, 200, 1000} x
+{mean, conservative} throughput, with lineages/day.
+
+## Economics (economics.py, run by Aphrodite on the committed receipts)
+
+Validity: frozen harness sha256; measurement present; failure rate <=
+0.05. Two-host: integer sharding of independent lineages minimising
+makespan over MEASURED capacities (never an assumed 2x); one valid host
+is reported alone. Selection: the fastest model (shortest conservative
+64-lineage time at measured evolution effort) whose starting accuracy is
+in [0.15, 0.70] on every measured host; else NO_ELIGIBLE_SUBSTRATE.
+Budget (frozen): target <= 14 days; hard ceiling 30 days (conservative
+throughput near the boundary). Beyond 30 days the resize ladder applies
+in the operator's order; delta 3 is never widened; 16 lineages excluded.
