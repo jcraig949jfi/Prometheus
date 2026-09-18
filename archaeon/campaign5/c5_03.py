@@ -48,6 +48,27 @@ def _bin(x: int) -> int:
     return len(BINS) - 1
 
 
+def _stable(r: dict) -> str:
+    """a02 harness fix: the meter's wall_s/cpu_s are volatile (as in C4-01) and are not part of the result."""
+    m = {k: v for k, v in r["meter"].items() if k not in ("wall_s", "cpu_s")}
+    return json.dumps({**r, "meter": m}, sort_keys=True)
+
+
+SITE_BINS = ((0, 0), (1, 2), (3, 4), (5, 8), (9, 10 ** 9))
+
+
+def _sbin(x: int) -> int:
+    for i, (lo, hi) in enumerate(SITE_BINS):
+        if lo <= x <= hi:
+            return i
+    return len(SITE_BINS) - 1
+
+
+def tvd_sites(a: List[int], b: List[int]) -> float:
+    ca, cb = Counter(_sbin(x) for x in a), Counter(_sbin(x) for x in b)
+    return round(0.5 * sum(abs(ca.get(i, 0) / max(1, len(a)) - cb.get(i, 0) / max(1, len(b))) for i in range(len(SITE_BINS))), 4)
+
+
 def tvd(a: List[int], b: List[int]) -> float:
     ca, cb = Counter(_bin(x) for x in a), Counter(_bin(x) for x in b)
     return round(0.5 * sum(abs(ca.get(i, 0) / max(1, len(a)) - cb.get(i, 0) / max(1, len(b))) for i in range(len(BINS))), 4)
@@ -88,15 +109,22 @@ def f3_f6_dynamic(pops: dict, eps: list) -> dict:
         Z = [evaluate_b(m, eps, rng_seed=3, mode="FIZZLE") for m in pops[name]]
         Z2 = [evaluate_b(m, eps, rng_seed=3, mode="FIZZLE") for m in pops[name]]
         F2 = [evaluate_b(m, eps, rng_seed=3, mode="FAIL") for m in pops[name]]
-        evs[name] = {"F": F, "Z": Z, "det": all(json.dumps(x, sort_keys=True) == json.dumps(y, sort_keys=True) for x, y in zip(Z, Z2))
-                     and all(json.dumps(x, sort_keys=True) == json.dumps(y, sort_keys=True) for x, y in zip(F, F2))}
+        evs[name] = {"F": F, "Z": Z, "det": all(_stable(x) == _stable(y) for x, y in zip(Z, Z2)) and all(_stable(x) == _stable(y) for x, y in zip(F, F2))}
     trap = {n: round(sum(r["trapped"] for r in e["F"]) / len(e["F"]), 4) for n, e in evs.items()}
     faults = {n: [r["faults"] for r in e["Z"]] for n, e in evs.items()}
     hist = {n: {"%d-%d" % b: sum(1 for x in faults[n] if _bin(x) == i) for i, b in enumerate(BINS)} for n in faults}
     pair = {"raw_vs_valid": tvd(faults["raw"], faults["valid"]), "valid_vs_injected2": tvd(faults["valid"], faults["injected_k2"]),
             "raw_vs_injected2": tvd(faults["raw"], faults["injected_k2"])}
+    sites = {n: [r["fault_sites"] for r in e["Z"]] for n, e in evs.items()}
+    site_hist = {n: {"%d-%d" % b: sum(1 for x in sites[n] if _sbin(x) == i) for i, b in enumerate(SITE_BINS)} for n in sites}
+    pair_sites = {"raw_vs_valid": tvd_sites(sites["raw"], sites["valid"]), "valid_vs_injected2": tvd_sites(sites["valid"], sites["injected_k2"]),
+                  "raw_vs_injected2": tvd_sites(sites["raw"], sites["injected_k2"])}
+    # a01 rule (count histograms for all three pairs) and the a02 AMENDED rule (D5-008: the raw-vs-injected2 pair on DISTINCT SITES)
+    pass_a01 = trap["raw"] >= 0.95 and trap["valid"] <= 0.10 and trap["injected_k2"] >= 0.50 and all(v >= 0.5 for v in pair.values())
+    pass_a02 = (trap["raw"] >= 0.95 and trap["valid"] <= 0.10 and trap["injected_k2"] >= 0.50 and pair["raw_vs_valid"] >= 0.5
+                and pair["valid_vs_injected2"] >= 0.5 and pair_sites["raw_vs_injected2"] >= 0.5)
     f3 = {"trap_share": trap, "fault_hist": hist, "mean_faults": {n: round(sum(f) / len(f), 2) for n, f in faults.items()}, "tvd": pair,
-          "pass": trap["raw"] >= 0.95 and trap["valid"] <= 0.10 and trap["injected_k2"] >= 0.50 and all(v >= 0.5 for v in pair.values())}
+          "site_hist": site_hist, "tvd_sites": pair_sites, "pass_a01_rule": pass_a01, "pass_a02_rule": pass_a02, "pass": pass_a02}
     coh = {n: sum(1 for f, z in zip(e["F"], e["Z"]) if f["trapped"] == (z["faults"] > 0)) / len(e["F"]) for n, e in evs.items()}
     inj_answer_fizzle = sum(1 for z in evs["injected_k2"]["Z"] if z["answered_share"] > 0) / len(evs["injected_k2"]["Z"])
     trapped_answer = sum(1 for f in evs["injected_k2"]["F"] if f["trapped"] and f["answered_share"] > 0)
@@ -216,6 +244,7 @@ def main(argv=None) -> int:
         "decl": {"n_min": 1, "positive_control": {"arm": "controls", "metric": "pass", "min": 1.0, "min_rows": 1},
                  "primary": {"treatment": "F3", "control": "F2", "metric": "pass", "min_effect": 0.0}},
     })
+    X.decision("D5-008: a02 AMENDMENT (post-hoc, a01 preserved): F3 raw-vs-injected2 measured on distinct fault SITES; F6 compares results with volatile timings stripped; failing fixtures recorded FALSIFIED")
     X.decision("D5-007: representation B boundary = encoding only (opcode word < 25, read register fields < n_regs); addresses and offsets stay modulo tape; FAIL = whole evaluation")
     X.open("cmp5-c5-03")
     wid = X.world("representation-qualification", "ISOLATED", use_group=False)
@@ -227,7 +256,7 @@ def main(argv=None) -> int:
         if f == "F3":
             row["trap_share"] = res["F3"]["trap_share"]["raw"]; row["tvd_min"] = min(res["F3"]["tvd"].values())
         grouped.append(row)
-        X.record(wid, row, {"arm": f}, {k: v for k, v in res[f].items()}, "SURVIVED" if res[f]["pass"] else "FAILED", key_parts=(f,))
+        X.record(wid, row, {"arm": f}, {k: v for k, v in res[f].items()}, "SURVIVED" if res[f]["pass"] else "FALSIFIED", key_parts=(f,))
     X.record(wid, {"arm": "F8"}, {"arm": "F8"}, res["F8"], "SURVIVED", key_parts=("F8",))
     X.att.write("QUALIFICATION.json", res)
     X.publish(wid, "qualification", "cmp5.c503_qualification.v1", res, {"info_kind": "artifact", "label": "C5-03 representation B qualification"})

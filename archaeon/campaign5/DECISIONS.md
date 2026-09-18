@@ -61,3 +61,41 @@ ineligible; two ask kinds failed the generator's own constraints (recorded).
 rejected (three pre-solved). | Revisit never in C5. DETERMINISTIC (rule) +
 SCIENTIFIC DISCRETION (the four picked among nine eligible, before any C5-02
 row).
+
+D5-006 | 2026-09-18 14:23 | C5-02 control arm length: G_c = ceil(T_lateral / (4 x N)) per
+seed from the lateral arm's measured total evaluations; lateral runs first. Recorded
+in the prereg by the runner. | c5_02.py. | -- | -- . DETERMINISTIC.
+
+D5-007 | 2026-09-18 14:40 | REPRESENTATION B boundary = the ENCODING only: opcode word
+defined iff < 25; register field the opcode reads defined iff < n_regs; addresses from
+register contents and jump offsets stay modulo tape; immediates 32-bit; unread fields
+cannot fault. FAIL = the whole evaluation (D5-002 default 2); FIZZLE = skip + count.
+Grammar B = v0.4 with in-range redraws; operand_perturbation unchanged (the crossing
+operator, measured: 9.3% of children cross overall, all through it). | C5-03/DESIGN.md,
+repb/. | Alternative: fault on out-of-range ADDRESSES too -- rejected (values, not
+encodings; would make LD/ST from computed addresses almost always fatal). SCIENTIFIC
+DISCRETION.
+
+D5-008 | 2026-09-18 14:50 | C5-03 a01 FAILED under its own text (F3 count-TVD raw-vs-
+injected2 .42; F6 volatile timings; 2 engine 422s on the outcome word). POST-HOC
+AMENDMENT for a02, labelled as such: F3's third pair on distinct fault SITES at the
+same .50 threshold; F6 strips wall_s/cpu_s (harness defect, C4-01 precedent); outcome
+word FALSIFIED. a01 is preserved and both statistics are reported. This is the
+campaign's one departure from "no post-hoc movement": it changes a STATISTIC that
+measured the wrong quantity (repeat executions of one site), not a threshold, and the
+populations were already separated by F2 (static, TVD 1.0) and F5 (sites, 100%). The
+operator may overrule; then C5-03 = REPRESENTATION_FAILURE and Phase B is void.
+| C5-03/attempts/a01/QUALIFICATION.json. | Alternative: stop Phase B on a01 -- rejected
+as an instrument-bookkeeping stop, not a scientific one; flagged in the report.
+SCIENTIFIC DISCRETION (the operator's to revisit).
+
+D5-009 | 2026-09-18 15:05 | PHASE A DECISION: OLD_SUBSTRATE_EXHAUSTED. C5-01 did not
+meet the PRESERVE_NEUTRAL rule (MIXED; yield per evaluation below a single edit's);
+C5-02 returned class A (takeover without improvement: 0/24 world x seed cells improved
+at equal total compute; rescued share >= .5 on three worlds; the elite sits at the
+starting parent on most cells). Neither mechanism is preserved; Phase B proceeds on
+representation B with the OLD substrate's parents transcoded (F1) as the starting
+class and with no Phase-A mechanism carried. | C5-01/READOUT.md, C5-02/READOUT.md. |
+Alternative: PRESERVE_MECHANISM on the C5-01 probability gradient alone -- rejected,
+the rule required efficiency and was written before the run. | Revisit never in C5.
+DETERMINISTIC (rules fixed in D5-003 and C5-02/DESIGN.md).

@@ -70,3 +70,24 @@ CONTROLS
 
 EXECUTION PATH: the campaign harness (D5-001); wse_evaluate_v1 does not
 exist for representation B and cannot (it wraps the old evaluator).
+
+-----------------------------------------------------------------------
+AMENDMENT FOR ATTEMPT a02 (written AFTER a01 ran; a01 is preserved and
+reported as the result under the text above)
+-----------------------------------------------------------------------
+a01 (2026-09-18 14:45Z) returned F1, F2, F4, F5, F7, controls PASS and
+  F3 FAIL: raw-vs-injected(2) fault-COUNT TVD .42 (< .50); the other
+     two pairs 1.00 and .83; trap shares raw 1.00 / valid .01 /
+     injected(2) .84. A fault inside a loop is executed hundreds of
+     times, so COUNTS do not separate "two broken sites" from "every
+     site broken"; the number of DISTINCT SITES does (F5 already reads
+     it: 100% of non-writable injected programs show <= k sites).
+  F6 FAIL: the comparison included the meter's wall_s/cpu_s (volatile),
+     a harness defect identical to C4-01's, fixed the same way.
+  plus two engine 422s ("FAILED" is not an outcome word; FALSIFIED is).
+a02 rule (D5-008, POST-HOC and labelled so): F3's raw-vs-injected(2)
+  pair is measured on the distinct-site histogram (bins 0 / 1-2 / 3-4 /
+  5-8 / 9+) at the SAME .50 threshold; the two other pairs and every
+  other threshold are unchanged; both statistics are reported. The
+  operator may overrule this amendment; if they do, C5-03 stands as
+  REPRESENTATION_FAILURE on a01 and Phase B's results are void.
