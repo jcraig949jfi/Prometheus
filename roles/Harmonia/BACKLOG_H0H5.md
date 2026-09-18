@@ -16,6 +16,7 @@ HARM-01 | Amend the four-cell analysis file to dedup by spec hash, record fresh=
 HARM-02 | Add the exchangeability diagnostic to the QR module (serial r against `committed_seq`, trend fraction, and the three-class label at the 0.577/0.816 cuts) so any detector output can carry it | ENGINE | beta | S | none | `exchangeability.py` plus a test reproducing 12/5/23 on the live dossier
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/exchangeability.py (EX-1.0.0: serial r, trend fraction r^2, inflation, three-class label at 0.577/0.816; cuts shown band-derived); test reproduces 12/5/23 on the committed live dossier. Ruling phrase 'in log terms' annotated as wrong (linear half) beside the original.
 HARM-03 | Write the vacuous-reading register and seed it with H2-over-C3-2, `stable`-vs-`at_T`, and the H1 relevance arm at 3 bits | EVIDENCE | program | S | none | `roles/Harmonia/VACUOUS_READINGS.md`, one row per question with the corpus that could not answer it and the reason
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: roles/Harmonia/VACUOUS_READINGS.md seeded with V-001..V-008 (H2-over-C3-2, stable-vs-at_T, H1 relevance at 3 bits, plus phase-2 cross-deploy, H5 analytic bound, D3 live fires, particles claim (c), Proteus occupancy TV); each row carries the corpus, the reason, and the reopening precondition.
 HARM-04 | Extend the adversarial battery to AF-1.1.0 with a degenerate-replicate fixture, a structural-floor fixture, and a non-exchangeable-rows fixture | ENGINE | beta | M | none | `adversarial_fixtures.py` at AF-1.1.0 with 9/9 detected and each new detector's silence verified on a clean control
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: adversarial_fixtures.py at AF-1.1.0: F7 degenerate replicate, F8 structural floor, F9 non-exchangeable rows, each with a clean control; battery 12/12 (8 defects fire, 4 controls silent). Also fixed: detect_f6 KeyError since the QR-1.1.0 rename (runner dead 09-10..09-18).
 HARM-05 | State the QR-1.2.0 beta and 1.0 gate for H1, with attainable range and eligibility count per gate | H1 | beta | M | none | `qualification_rules.py` at QR-1.2.0 with `lane_gate("H1")` returning both gates and their attainable ranges
@@ -41,7 +42,9 @@ HARM-12 | Publish the three-quantity separation (meaningful effect, precision, p
 ## Detectors and calibration
 
 HARM-13 | Apply the exchangeability diagnostic to D1, D2 and D4-D6 and report each detector's class distribution on the live corpus | ENGINE | beta | M | HARM-02 | a committed table, detector x class, with the eligible count per detector
+  > DELEGATED 2026-09-18, Harmonia[m2-ca1148a0]: the committed dossier carries D3 regions only (player/family None), so the per-detector table needs the corpus as each detector sees it. Delegation prompts/2026-09-18_exchangeability_d1_d6/01_DELEGATION_ARCHAEON_d1_d6_exchangeability_table.md (sha256 755323df...) posted to Archaeon. blocked_on -> Archaeon.
 HARM-14 | Declare the calibration-corpus policy: which detectors may be calibrated on i.i.d. draws, and which need a trajectory-structured null | ENGINE | beta | M | HARM-13 | `CALIBRATION_CORPUS_POLICY.md` naming, per detector, the null family its rate is valid under
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/CALIBRATION_CORPUS_POLICY.md names, per detector, the null family its rate is valid under, derived from each detector's statistic (D1 i.i.d. calibration WITHDRAWN; D2/D4 SE understated under autocorrelation; D5 i.i.d. rate an upper bound; D6 by design; D3 per RULING_D3V2). The class distribution (HARM-13) is NOT_EXAMINED and named as what would change the file.
 HARM-15 | Build the trajectory-structured null and recalibrate D3 under it at the live geometry | ENGINE | beta | L | HARM-14 | a rate with its binomial SE at (n=40, k=4) under trended rows, beside the i.i.d. rate
 HARM-16 | Record the three EXCHANGEABLE survivors as a watch-list with their geometry and class, and the reopening condition | ENGINE | program | S | none | `D3_WATCHLIST.md` with three rows and the condition that would license a study
   > 2026-09-14, Harmonia[m2-f541bed9]: the three survivors were computed with /(n-2) detrending, not the admitted d3.v2's /(n-1) (RULING_D3V2_CALIBRATION_2026-09-14.md s5). Now blocked on the v2 live dossier (#260); write the watch-list from that dossier, not from the 09-10 numbers.
@@ -62,7 +65,9 @@ HARM-25 | Declare the analysis for H3's prospective-utility comparison before it
 ## Contracts and instruments
 
 HARM-26 | Regenerate the SFE contract at live schema 7 and re-verify the gate in both directions | ENGINE | beta | M | Daedalus (scratch engine at build parity) | a new `sfe_contract.json`, its diff reviewed, and `conformance_check.py` CONFORMANT on live and DRIFT on a mismatched engine
+  > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: the live schema moved 7 -> 8 -> 9 and Daedalus regenerated and landed the contract at each step (a1dd1458c, fbfcfb276, 2983bd548); HARM-43 re-verified the schema-9 landing from an independent worktree (CONFORMANT both directions: DRIFT on a mismatched engine). A schema-7 regeneration has no live engine to run against.
 HARM-27 | Extend the contract procedure to schema 8 without adding version-range tolerance to the gate | ENGINE | 1.1 | S | HARM-26 | the schema-8 contract and a test proving the gate still fails closed on any mismatch
+  > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: as HARM-26; the gate at schema 9 still fails closed on any mismatch (verify_landed_2026-09-18: superseded candidate reads DRIFT on engine_instance_id, exit 1, and ADDED on hash/schema/routes). No version-range tolerance was added.
 HARM-28 | Add a payload-determinism attestation to the contract-fixture stage, so a replay is recorded as an attestation and never enters an analysis as a replicate | ENGINE | alpha | S | none | a fixture that passes on bit-identical replay and a refusal test that rejects replay rows used as replicates
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: replay_attestation + refuse_replay_as_replicate in QR-1.2.0; F7 fixture passes on bit-identical replay (attests determinism, 1 unit) and refuses replay rows offered as replicates.
 HARM-29 | Add a structural-floor precheck that any corpus must pass before issue: report modal mass, support size and non-degenerate fraction | ENGINE | beta | M | none | `floor_precheck.py` that refuses a corpus with p_mode > 0.50 and reproduces C3-2's f = 0.000
@@ -78,6 +83,7 @@ HARM-36 | Replace RESPONSIBILITIES.md and CHARTER.md, which are dated 2026-04 an
 ## Standing and program
 
 HARM-31 | Write the standing-rules index so HA-1.1-1.6, R-C3-1..6 and the exchangeability cut are findable from one file | program | program | S | none | `roles/Harmonia/STANDING_RULES.md` linking every rule to the ruling that established it
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: roles/Harmonia/STANDING_RULES.md -- 40 rows (HA-1.1..1.6, QR-*, AF, C3-U1..3, R-C3-1..6, EX-CUT, D3-*, GATE-SPLIT, WP-X1, ARM-BIND, RS-RULER, R23, CURRENT-DET, NA-BY-CONSTR), each linked to the ruling that set it and its executable form where one exists.
 HARM-32 | Audit every number quoted in my own rulings for the population it was measured on, and correct any quoted outside its scope | program | program | M | none | an audit file listing each quoted number, its population, and any correction
 HARM-33 | Run the grant and verify Archaeon's read scope end to end once the credential exists | ENGINE | alpha | S | operator (harmonia-m2 credential) | rows, census and out-of-scope isolation verified, or a recorded reissue path
 HARM-34 | Rule whether a diagnostic alpha may ever be promoted to confirmatory evidence, and write the refusal into `validate_plan` | program | 1.0 | S | none | a test proving a DIAGNOSTIC plan cannot be relabelled CONFIRMATORY after its data is read
@@ -105,11 +111,12 @@ HARM-51 | TerraLingua (TECHNE-108): method-1 vs method-2 disagreement table + co
 
 ## Blocked, listed rather than hidden
 
-    HARM-18  operator decision on d3.v2
+    HARM-13  Archaeon (per-detector exchangeability table; delegation 2026-09-18)
+    HARM-16  Archaeon (#260 v2 live dossier; reminded 2026-09-18)
+    HARM-18  Archaeon (#260 v2 live dossier; the operator decision is made, the live count is not)
     HARM-21  the pool measurement (Archaeon, Proteus)
     HARM-22  Vivarium's `reserve_budget` 404
     HARM-23  the NK length discrepancy (BRANCHES 24 vs packet v2 N=16)
-    HARM-26  a scratch engine at live-7 build parity (Daedalus)
     HARM-33  the harmonia-m2 credential (operator), and F-6 (Daedalus)
     HARM-35  Daedalus A0 -- response models must exist before a contract can record them
     HARM-42  packet 003 from Nyx (line 667 -> 672); HARM-41
