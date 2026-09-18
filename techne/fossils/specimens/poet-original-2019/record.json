@@ -1,0 +1,152 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "poet-original-2019",
+  "canonical_name": "POET (original) -- Wang, Lehman, Clune, Stanley (Uber AI, 2019)",
+  "aliases": [
+    "Paired Open-Ended Trailblazer",
+    "original_poet branch"
+  ],
+  "lineage": "the 2019 algorithm on the repository's legacy branch original_poet; Enhanced POET (branch master) supersedes it with CPPN environments, PATA-EC novelty and ANNECS",
+  "domain": [
+    "open-ended-learning",
+    "coevolution",
+    "curriculum",
+    "evolution-strategies"
+  ],
+  "era": "2019",
+  "version": "uber-research/poet original_poet @ 0b40743d414a11e1b96cb0b7869483462724bb1e",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/uber-research/poet",
+        "commit": "0b40743d414a11e1b96cb0b7869483462724bb1e",
+        "commit_resolved": "0b40743d414a11e1b96cb0b7869483462724bb1e",
+        "commit_date": "2020-04-14T17:15:13-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/uber-research/poet",
+    "branch": "original_poet"
+  },
+  "hashes": {
+    "tree_sha256": "889276ac26c34554991a6b8e9488c7f6f64035c7e19810ca37662bfb7ce4aa37",
+    "n_files": 23,
+    "bytes": 112775,
+    "artifacts": [
+      {
+        "filename": "https://github.com/uber-research/poet",
+        "sha256": null,
+        "commit": "0b40743d414a11e1b96cb0b7869483462724bb1e"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\poet-original-2019",
+    "hash_list": "techne/fossils/specimens/poet-original-2019/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pip)",
+  "compiler_or_interpreter": "CPython 3 (2019 era 3.6)",
+  "dependencies": [
+    "gym[box2d]",
+    "ipyparallel or fiber (era-dependent; see README at the pin)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "master.py",
+    "poet_distributed/poet_algo.py"
+  ],
+  "example": {
+    "command": "see README at the pin (legacy branch)",
+    "input": "",
+    "output": ""
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "NOT BUILT (gym[box2d] world)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:1901.01753",
+    "GECCO 2019 DOI 10.1145/3321707.3321799"
+  ],
+  "human_capability_summary": {
+    "built_to": "co-generate environments and their solutions with periodic transfer",
+    "pressure": "same as Enhanced POET",
+    "success_means": "environments solved that direct optimisation cannot reach"
+  },
+  "known_human_problem_solved": "open-ended coevolution of problems and solvers (first version)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded_by",
+      "target": "poet-enhanced-2020",
+      "note": "same repository, branch master"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-104",
+    "TECHNE-18"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "Box2D (C++ via SWIG)"
+    ],
+    "host_class": "compiler+docker host; NOT M3"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:53:50Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

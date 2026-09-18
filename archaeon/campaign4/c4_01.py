@@ -442,7 +442,9 @@ def main(argv=None) -> int:
     tables["wall_s"] = round(time.time() - t0, 1)
     X.att.write("FLOW_TABLES.json", tables)
     X.att.write("children.json", rows)
-    X.publish(wid, "flow_tables", "cmp4.flow_tables.v1", tables, {"info_kind": "measurement", "label": "C4-01 census"})
+    # info_kind must be one of the engine's five (artifact/failure/hypothesis/observation/success);
+    # attempt a01 failed here on "measurement" (HTTP 422) and is preserved beside this rerun
+    X.publish(wid, "flow_tables", "cmp4.flow_tables.v1", tables, {"info_kind": "artifact", "label": "C4-01 census"})
     out = X.close(grouped, meas_extra={"tables_digest": hashlib.sha256(json.dumps(tables, sort_keys=True, default=str).encode()).hexdigest()},
                   addendum={"falsifying_outcome_check": json.dumps({"max_pairwise_tvd": tables["max_pairwise_tvd"], "region_unknown_share": tables["region_unknown_share"],
                                                                      "d0_share": tables["d0_share"]})})
