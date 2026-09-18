@@ -95,4 +95,48 @@ operator's ruling names the second stage for that. It establishes that
 on the old substrate the rulers separate identity from movement from
 death, and that the old geometry leaves 6 of 11 rulers blind, which is
 the number Campaign 6 is built to change.
+
+-----------------------------------------------------------------------
+ADDENDUM A -- POPULATION STAGE (rounds 4-6; CALIBRATION_population_v0.1/2/3)
+-----------------------------------------------------------------------
+DETECTORS_v0.1 named a second negative class: children of a plain
+evolving population (the C5-09 kind). I ran it INSIDE the segment loop,
+scoring every child exactly as production does (pool = library +
+population + ancestors + siblings; W0; N=32; E=16; 60 generations; 3
+seeds; the 12 canonical W0 solvers as run A, the gen0_random parents as
+run B). Positives: run A, a single-edit child from the C5-05 census
+(displacement >= .5, struct <= .25, alive) planted one generation after
+its parent (lineage_discontinuity); run B, a canonical W0 solver planted
+into the degenerate population (behavioral_novelty). Rounds 4 and 5 had
+mis-specified positives / plant bookkeeping defects and are preserved.
+
+  detector                 pop. threshold  neg n / fire       pos n / fire    pos min
+  behavioral_novelty        25.49         11,159 / 0.010   12 / 0.25      0.83
+  lineage_discontinuity     50.79         6,378 / 0.010    12 / 0.00      19.46
+  (single-edit stage thresholds were 5.76 and 6.27; at those, a live
+  population escalates on 30% of its evaluations.)
+
+READING. On the old substrate a live population's own churn -- 1% of
+natural children sit farther from everything the run has seen than any
+single-organism event I can plant -- is as large as the events. At the
+1% false-fire level neither ruler catches its planted positives; at the
+single-edit thresholds both drown in natural churn. This is not a code
+defect (the self-test's planted event fires; identity scores are zero);
+it is a measured blind spot of the old geometry for single-organism
+behavioural rulers, and it is what Phase 0 exists to find.
+
+RECOMMENDATION TO HARMONIA (I will not run a round 7):
+  - freeze detectors 1 and 2 at the POPULATION thresholds (25.49 / 50.79):
+    the false-escalation rate they buy (1%) is the honest one; record
+    their measured power on v0 plants (25% / 0%) as
+    NOT_ADMITTED_ON_V0 for detection power, admitted for false-fire
+    control; C6_GEOMETRY_VALIDATED decides them on your fixtures;
+  - or refuse both now and let 3, 10, 11 (and 4-9 once ABLE) carry the
+    observatory into the richer geometry. Either reading is fair.
+  - Detector 3 (transfer) is unaffected: it reads probe rewards, not
+    distances.
+Escalation volume at the population thresholds: ~1 event per 100
+evaluations by construction = ~1,000 freezes per 1e5-evaluation run;
+replays A-D on every freeze will need the preregistered per-segment
+replay budget (NOT_ATTEMPTED is a recorded outcome).
 +=====================================================================+

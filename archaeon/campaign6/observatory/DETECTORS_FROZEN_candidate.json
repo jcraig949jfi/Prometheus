@@ -3,14 +3,17 @@
  "calibration_rounds": [
   "CALIBRATION_round1_preserved.json",
   "CALIBRATION_round2_preserved.json",
-  "CALIBRATION_v0.1.json (round 3)"
+  "CALIBRATION_v0.1.json (round 3)",
+  "CALIBRATION_population_v0.1.json (round 4, preserved, mis-specified positives)",
+  "CALIBRATION_population_v0.2.json (round 5, preserved, plant bookkeeping defects)",
+  "CALIBRATION_population_v0.3.json (round 6)"
  ],
  "code_sha256": {
   "calibrate.py": "98cca8b0d4576e281869997526b1ce615aa21a0188090440aa73928798aa5972",
   "detectors.py": "485a84389a168306e1e8b5485b2be38a7fce9a509070861d437332dfa8f363d4",
   "fingerprint.py": "eef793a42d0bc8558d1180b3f1bc266e912f971c3fbb8ae4368874799fb3ca19"
  },
- "digest": "sha256:60627de68fc0ae6c3851b45543222e28bc7db76b84b11aa19eb6cceadede3395",
+ "digest": "sha256:88f28db8841527a83a9a58cc49e8b33a77c560dc748549b0a65abc1f4f028c7b",
  "n_children": 4992,
  "n_parents": 57,
  "schema": "archaeon.c6.detectors_frozen.v1",
@@ -43,9 +46,11 @@
  "thresholds": {
   "behavioral_novelty": {
    "admittable_on_v0": false,
-   "reason": "a positive control does not fire at the 1% threshold",
+   "calibrated_on": "population round 6 (CALIBRATION_population_v0.3.json)",
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_stage_threshold": 5.759519,
    "stage": "NOT_ADMITTED_ON_V0",
-   "threshold": 5.759519
+   "threshold": 25.493395
   },
   "classifier_failure": {
    "admittable_on_v0": true,
@@ -66,11 +71,13 @@
    "threshold": null
   },
   "lineage_discontinuity": {
-   "admittable_on_v0": true,
-   "reason": "",
-   "stage": "BASELINE_ADMITTED_CANDIDATE",
+   "admittable_on_v0": false,
+   "calibrated_on": "population round 6 (CALIBRATION_population_v0.3.json)",
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_stage_threshold": 6.271749,
+   "stage": "NOT_ADMITTED_ON_V0",
    "struct_max": 0.25,
-   "threshold": 6.271749
+   "threshold": 50.788747
   },
   "niche_divergence": {
    "admittable_on_v0": false,

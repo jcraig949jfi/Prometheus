@@ -1,0 +1,73 @@
+{
+ "E": 16,
+ "N": 32,
+ "calibration": {
+  "behavioral_novelty": {
+   "admittable": false,
+   "neg_fire": 0.01,
+   "neg_n": 5687,
+   "pos_fire": 0.0,
+   "pos_min": 1.43818,
+   "pos_n": 12,
+   "pos_scores": [
+    1.43818,
+    1.735458,
+    2.252934,
+    2.755877,
+    3.316719,
+    3.911251,
+    4.571832,
+    5.496087,
+    5.730454,
+    6.494432,
+    7.488609,
+    7.933787
+   ],
+   "reason": "a planted foreign organism did not fire at the population 1% threshold",
+   "single_edit_threshold": 5.759519,
+   "threshold": 28.496362
+  },
+  "lineage_discontinuity": {
+   "admittable": false,
+   "neg_fire": 0.01,
+   "neg_n": 2990,
+   "pos_fire": 0.0,
+   "pos_min": null,
+   "pos_n": 0,
+   "pos_scores": [],
+   "reason": "a planted foreign organism did not fire at the population 1% threshold",
+   "single_edit_threshold": 6.271749,
+   "threshold": 51.138091
+  }
+ },
+ "escalation_rate_at_single_edit_thresholds": 0.6979,
+ "generations": 60,
+ "runs": [
+  {
+   "evaluations": 1920,
+   "events_with_single_edit_thresholds": 1341,
+   "seed": 1,
+   "wall_s": 4.2
+  },
+  {
+   "evaluations": 1920,
+   "events_with_single_edit_thresholds": 1299,
+   "seed": 2,
+   "wall_s": 4.1
+  },
+  {
+   "evaluations": 1920,
+   "events_with_single_edit_thresholds": 1380,
+   "seed": 3,
+   "wall_s": 4.4
+  }
+ ],
+ "schema": "archaeon.c6.calibration_population.v1",
+ "seeds": [
+  1,
+  2,
+  3
+ ],
+ "stage": "BASELINE_ADMITTED_CANDIDATE (population round)",
+ "world": "W0"
+}

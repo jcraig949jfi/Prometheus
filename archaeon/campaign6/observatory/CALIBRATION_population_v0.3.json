@@ -1,0 +1,387 @@
+{
+ "E": 16,
+ "N": 32,
+ "calibration": {
+  "behavioral_novelty": {
+   "admittable": false,
+   "neg_fire": 0.01,
+   "neg_n": 11159,
+   "pos_fire": 0.25,
+   "pos_min": 0.832261,
+   "pos_n": 12,
+   "pos_scores": [
+    0.832261,
+    2.137483,
+    3.130937,
+    4.431318,
+    4.820563,
+    7.426707,
+    7.577293,
+    8.300367,
+    8.69609,
+    26.499241,
+    29.047734,
+    30.387372
+   ],
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_threshold": 5.759519,
+   "threshold": 25.493395
+  },
+  "lineage_discontinuity": {
+   "admittable": false,
+   "neg_fire": 0.01,
+   "neg_n": 6378,
+   "pos_fire": 0.0,
+   "pos_min": 19.462698,
+   "pos_n": 12,
+   "pos_scores": [
+    19.462698,
+    20.712698,
+    20.871787,
+    21.362553,
+    22.126676,
+    23.212698,
+    23.527521,
+    26.27584,
+    27.108133,
+    27.995923,
+    29.158262,
+    32.146742
+   ],
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_threshold": 6.271749,
+   "threshold": 50.788747
+  }
+ },
+ "edited_child_candidates": 90,
+ "escalation_rate_at_single_edit_thresholds": 0.2981,
+ "generations": 60,
+ "runs": [
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 494,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      6.598419
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "QUIET",
+      27.108133
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      10.293745
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "QUIET",
+      23.212698
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      8.921851
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "QUIET",
+      23.527521
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      0.0
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "QUIET",
+      20.712698
+     ]
+    }
+   ],
+   "run": "A",
+   "seed": 1,
+   "wall_s": 3.9
+  },
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 239,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "FIRE",
+      30.387372
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      8.69609
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      7.577293
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      2.137483
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    }
+   ],
+   "run": "B",
+   "seed": 1,
+   "wall_s": 3.7
+  },
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 639,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      7.290394
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "QUIET",
+      26.27584
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      1.19285
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "QUIET",
+      29.158262
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      21.31515
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "QUIET",
+      27.995923
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      6.566722
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "QUIET",
+      22.126676
+     ]
+    }
+   ],
+   "run": "A",
+   "seed": 2,
+   "wall_s": 3.9
+  },
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 1230,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "FIRE",
+      29.047734
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      0.832261
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      4.820563
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      8.300367
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    }
+   ],
+   "run": "B",
+   "seed": 2,
+   "wall_s": 5.1
+  },
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 501,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      25.784576
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "QUIET",
+      32.146742
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      3.937458
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "QUIET",
+      19.462698
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      11.899655
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "QUIET",
+      21.362553
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      2.943345
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "QUIET",
+      20.871787
+     ]
+    }
+   ],
+   "run": "A",
+   "seed": 3,
+   "wall_s": 3.9
+  },
+  {
+   "evaluations": 1920,
+   "events_at_single_edit_thresholds": 331,
+   "planted_scores": [
+    {
+     "behavioral_novelty": [
+      "FIRE",
+      26.499241
+     ],
+     "gen": 12,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      4.431318
+     ],
+     "gen": 24,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      3.130937
+     ],
+     "gen": 36,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    },
+    {
+     "behavioral_novelty": [
+      "QUIET",
+      7.426707
+     ],
+     "gen": 48,
+     "lineage_discontinuity": [
+      "UNABLE",
+      null
+     ]
+    }
+   ],
+   "run": "B",
+   "seed": 3,
+   "wall_s": 3.3
+  }
+ ],
+ "schema": "archaeon.c6.calibration_population.v1",
+ "seeds": [
+  1,
+  2,
+  3
+ ],
+ "stage": "BASELINE_ADMITTED_CANDIDATE (population round 5)",
+ "world": "W0"
+}

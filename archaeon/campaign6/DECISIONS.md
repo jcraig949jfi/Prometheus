@@ -93,3 +93,17 @@ DETECTORS_FROZEN_candidate.json (digest inside); Harmonia's admission freezes it
 three JSONs; ADMISSION_PACKET_v0.1.md. | Alternative: a 4th round to reach 489/489 --
 rejected (tuning toward admission). SCIENTIFIC DISCRETION (instrument design),
 DETERMINISTIC (the 1%/all-positives rule, unchanged through the rounds).
+
+D6-010 | 2026-09-18 21:06 | SEGMENT LOOP delivered (segment.py, SEGMENT_CONTRACT.md): pure function of
+(spec, checkpoint); self-test green on determinism, continuity across a segment boundary
+(defect found and fixed: reproduction was skipped at the boundary), anchor coverage, and a
+planted event through detection -> freeze with COMPLETE and PARTIAL_FREEZE both exercised;
+wall-clock stamps never enter a digest (second defect found by the determinism check).
+POPULATION-STAGE CALIBRATION (rounds 4-6, preserved): at the preregistered 1% false-fire
+rule, novelty threshold 25.49 catches 25% of planted W0 solvers, discontinuity
+50.79 catches 0% of planted small-edit jumps; at the single-edit thresholds a live
+population escalates on 30% of evaluations. Stopped at round 6; both stages
+to Harmonia with the recommendation to freeze at the population thresholds and record the
+power as a measured blind spot of the old geometry. | CALIBRATION_population_v0.3.json,
+segment self-test. | Alternative: keep tuning the distance -- rejected (tuning toward
+admission; the ruling says UNABLE or lose qualification, not move). SCIENTIFIC DISCRETION.
