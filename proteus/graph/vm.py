@@ -139,8 +139,10 @@ class GraphMeter:
         self.budget_exhausted_ticks = 0
         self.statuses = {"halt": 0, "yield": 0, "budget": 0}
 
-    def as_dict(self) -> dict:
-        return {
+    def as_dict(self, manifest: dict | None = None) -> dict:
+        """`manifest` is accepted for call-shape parity with the v0 Meter.as_dict(manifest); when given,
+        the footprint limits are reported beside the counts."""
+        d = {
             "ops": self.ops,
             "ops_by_category": dict(sorted(self.by_category.items())),
             "node_exec": list(self.node_exec),
@@ -155,6 +157,11 @@ class GraphMeter:
             "ticks": self.ticks, "budget_exhausted_ticks": self.budget_exhausted_ticks,
             "statuses": dict(self.statuses),
         }
+        if manifest is not None:
+            d["footprint"] = {"nodes": len(manifest["nodes"]), "state_words": manifest["state_words"],
+                              "tick_budget": manifest["tick_budget"], "out_cap": manifest["out_cap"],
+                              "call_depth_max": manifest["call_depth_max"], "persist_state": manifest["persist_state"]}
+        return d
 
 
 class GraphPlayer:

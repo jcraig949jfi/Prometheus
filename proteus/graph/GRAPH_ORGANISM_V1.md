@@ -4,7 +4,9 @@
                 01_OPERATOR_RULING_PROTEUS-43.md): ONE new runtime profile for Campaign 6, v0 frozen as control
     identity    runtime proteus.runtime.graph.v1 (proteus/graph/identity.py RUNTIME_HASH, sha256 over the
                 LF-normalised affordances.py + vm.py + grammar.py + the node-kind table hash); grammar
-                proteus.graph_grammar.v1; profile pfp1:3081a8ef23da2f49 (proteus/graph/GRAPH_PROFILE_CATALOG.json)
+                proteus.graph_grammar.v1; profile pfp1:2595e1aefd59975f (proteus/graph/GRAPH_PROFILE_CATALOG.json).
+                The profile id moved once after the opening receipt (pfp1:3081a8ef...) when GraphMeter.as_dict
+                gained the v0 call shape (vm.py is a runtime source); both ids are in the receipt
     v0          UNTOUCHED: runtime 73f110e2..., grammar v0.4, affordances v0, catalog 42e4db36... recompute
                 byte-identically (test_graph_profile.py::test_v0_catalog_is_untouched_by_the_graph_package)
     status      BUILT and controlled; NO world has run it; no organism scored; no population minted for a run
@@ -79,6 +81,16 @@ ops, ops_by_category, node_exec (per node), nodes_executed, route_taken per ROUT
 call_depth_max_reached, call_depth_refused, in_reads/out_writes/out_dropped, rnd_draws, state_writes,
 state_addresses_written, ticks, budget_exhausted_ticks, statuses. No timings (the 09-05 lesson).
 `proteus.behavior_fingerprint.v1` (PROTEUS-45) wraps these for both substrates.
+
+## 6a. Handover to executors (proteus/graph/handover.py)
+
+`substrate_of / player_for / meter_for / organism_record_for / descend_for / generate_for /
+fingerprint_for` dispatch on the manifest's schema_version with the exact v0 call shapes Archaeon's
+evaluator and segment loop already use; a v0 manifest can never receive the graph runtime hash or
+vice versa, and a cross-substrate mate is refused. `resolve_profile("graph")` in the executor is
+then: evaluate built on player_for/meter_for; descend_for; answers built on player_for. Start
+populations for graph transformations come from generate_for(graph foundry manifest) -- v0 parents
+cannot be lifted into graph form and no lift is offered.
 
 ## 7. What this does NOT do
 
