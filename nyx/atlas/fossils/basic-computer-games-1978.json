@@ -130,16 +130,334 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:basic-computer-games-1978/upstream/hammurabi.bas:10-999"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:basic-computer-games-1978/upstream/superstartrek.bas:4250-4550"
+   }
+  ],
+  "inspected_files": [
+   "hammurabi.bas 10-999",
+   "superstartrek.bas (grep: 370, 475, 820-980, 2880-3000, 4250-4550)"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "two small resource games whose mechanism is a scoring rule over a stochastic resource loop: HAMURABI is a ten-round allocation problem (buy/sell land, feed, plant) with a uniform random yield, a rat loss on even yields, a plague with a fixed probability, population growth from stored grain, and an impeachment rule on starvation; STAR TREK is a grid game where every action costs energy from a shared budget and every hit is a random fraction of the energy committed. They are worlds, not organisms: the cut records the pressure each defines",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://raw.githubusercontent.com/coding-horror/basic-computer-games/main/43_Hammurabi/hammurabi.bas sha256:93fea01f8b63766a83919653f798932ba33d4ca2654b70e87a54653d60c73831; https://raw.githubusercontent.com/coding-horror/basic-computer-games/main/84_Super_Star_Trek/superstartrek.bas sha256:a80bf9f6e4a32888e89809145c778d16ebcde5feaa24b159d922edd7f5b9b94a",
+   "payload_manifest_id": "techne tree_sha256 3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75 (2 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/hammurabi.bas",
+     "payload_hash_read": "93fea01f8b63766a83919653f798932ba33d4ca2654b70e87a54653d60c73831",
+     "techne_recorded_hash": "93fea01f8b63766a83919653f798932ba33d4ca2654b70e87a54653d60c73831",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/superstartrek.bas",
+     "payload_hash_read": "a80bf9f6e4a32888e89809145c778d16ebcde5feaa24b159d922edd7f5b9b94a",
+     "techne_recorded_hash": "a80bf9f6e4a32888e89809145c778d16ebcde5feaa24b159d922edd7f5b9b94a",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
+ "organs": [
+  {
+   "organ_id": "basic-computer-games-1978::ten_round_allocation_loop_with_uniform_random_yield_rat_loss_on_even_yields_a_fixed_plague_chance_population_growth_from_stored_grain_and_an_impeachment_threshold_on_starvation",
+   "fossil_ancestry": "basic-computer-games-1978",
+   "human_name": "hammurabi.bas: 310 (land price 17-26), 800 (C = RND*5+1 yield / rats / babies), 515-533 (harvest, rats when C even: E = S/C, immigrants), 540-555 (fed = Q/20; starved D; impeach if D > 0.45 P), 542 (plague: Q < 0 with probability 0.15), 860-896 (final grading by starvation percent and acres per person)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each year: report; halve the population on a plague (15 percent); price land at 17-26 per acre (uniform); take buy/sell, feed and plant decisions, each validated against stock, acreage and one tender per ten acres; draw one uniform 1-5 that serves as the yield per acre, then redraw: if the draw is even, rats eat stock/C; immigration = C * (20 A + S) / P / 100 + 1; people fed = Q/20; if more than 45 percent starve the game ends with impeachment; after ten years grade on average starvation percent and acres per person",
+   "input": "three integers per year",
+   "output": "a report and a grade",
+   "state": "P, S, A, Y, and the two running tallies",
+   "update": "per year",
+   "assumptions": [
+    "one uniform draw reused for yield, rats and immigration is enough randomness for a game; the grade thresholds (3, 10, 33 percent; 7, 9, 10 acres) define what good governance means"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "the most copied 'resource management under uncertainty' toy of the era; every constant is visible",
+   "failure_landscape": "by reading: the same draw C drives yield and immigration, so a bad harvest also means few immigrants (a correlation the player cannot see); plague is independent of everything",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ahl 1973 from Dyment's 1968 'The Sumer Game' (record)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:basic-computer-games-1978/upstream/hammurabi.bas:310-555, 800, 860-896"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "hammurabi.bas",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "basic-computer-games-1978::shared_energy_budget_spent_by_movement_shields_and_phasers_with_hits_as_a_random_fraction_of_energy_committed_and_random_damage_to_named_subsystems",
+   "fossil_ancestry": "basic-computer-games-1978",
+   "human_name": "superstartrek.bas: 370 (E = 3000, Klingons and stardates random), 475 (FNR), 2880-3000 (damage: a random device D(R1) gains or loses a random amount), 4250-4550 (phasers: X units split over Klingons, hit H = (X/K3 / distance) * (RND + 2), a hit below 15 percent of the target's energy is absorbed)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one energy pool pays for warp movement, shields and phaser fire; a phaser volley of X units is divided among the Klingons in the quadrant and scaled by inverse distance and a random factor in [2, 3); a hit smaller than 15 percent of the target's remaining energy does no damage; after actions, with probability 0.2 a random subsystem is damaged or repaired by a random amount, disabling the corresponding command until repaired; Klingons return fire when the ship moves",
+   "input": "commands",
+   "output": "state changes and messages",
+   "state": "E, shields, K(I,3), D(1..8)",
+   "update": "per command",
+   "assumptions": [
+    "a single budget makes every choice a trade-off; random subsystem damage forces plan changes"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "the most copied game of the 1970s (the record); a budget-and-risk loop in 425 lines",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:basic-computer-games-1978/upstream/superstartrek.bas:370, 475, 2880-3000, 4250-4550"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "superstartrek.bas; CANDIDATE because read by grep, not line by line",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the text of the reports, the input validation subroutines (710, 720), the galaxy setup and display code of Star Trek",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:basic-computer-games-1978/upstream/hammurabi.bas:710-730; vault:basic-computer-games-1978/upstream/superstartrek.bas:820-1300",
+   "note": "presentation",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "basic-computer-games-1978"
+  },
+  {
+   "candidate": "'game' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop, the random draws and the grading rule are separable constants and could be varied independently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "basic-computer-games-1978"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "basic-computer-games-1978::P.a_steward_must_allocate_a_stock_across_consumption_investment_and_reserve_under_multiplicative_random_yields_and_rare_catastrophes_when_the_score_is_a_threshold_rule_on_the_worst_year_and_an_average",
+   "source_fossil": "basic-computer-games-1978",
+   "source_evidence": "hammurabi.bas 310-555, 800, 860-896",
+   "condition": "an organism controls three allocations per round of a stock that grows by a random multiplier; a rare catastrophe halves the population; the score punishes any single year above a starvation threshold (game over) and grades the average; the horizon is ten rounds",
+   "resource_or_constraint": "the stock; ten rounds",
+   "failure_condition": "impeachment (one year over 45 percent starvation) or a low grade",
+   "world_punishes": "maximising expected growth without a reserve (one bad draw ends the game); hoarding (low grade)",
+   "world_rewards": "a reserve sized to the worst plausible draw",
+   "observable_consequence": "grade distribution over seeds for greedy, fixed-reserve and adaptive-reserve policies; probability of impeachment per policy",
+   "vacuity_condition": "deterministic yields",
+   "trivial_shortcuts": "knowing the seed",
+   "cheat_control": "an organism given next year's draw must never be impeached and score 'fantastic'; a greedy organism must show impeachments in the seed distribution; the adaptive reserve must sit between: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a teaching game (Ahl 1973 / Dyment 1968)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "composition_edges": [],
  "ancestry_edges": [
   {
@@ -148,10 +466,22 @@
    "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "basic-computer-games-1978",
+   "relation": "historical_version_of",
+   "to": "Dyment 1968 'The Sumer Game' (DEC FOCAL) -> Ahl 1973 HAMURABI; Mayfield 1971 Star Trek -> Leedom / Ahl 1974-78 Super Star Trek",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "Star Trek read by grep only",
+   "nothing ran (no BASIC interpreter on M3; the vault's bwbasic would be the world)"
+  ],
+  "note": "both programs are WORLDS in this atlas's sense; recorded so a bench can lift HAMURABI's constants as a pressure definition",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

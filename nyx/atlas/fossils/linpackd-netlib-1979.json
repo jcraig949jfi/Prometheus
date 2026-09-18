@@ -144,14 +144,14 @@
   "inspected_files": [
    "linpackd.f 1-802"
   ],
-  "date": "2026-09-17T22:26Z",
+  "date": "2026-09-17T22:50Z",
   "note": "LU factorisation with partial pivoting written as a loop over columns calling three BLAS-1 kernels (idamax, dscal, daxpy) so that the machine-specific work is in the kernels; wrapped in a benchmark driver that times the factor/solve, checks a normalised residual, and reports MFLOPS against a fixed operation count 2n^3/3 + 2n^2. The mechanism of interest is the second: a benchmark whose score is defined by a formula, not by the work actually done",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T22:26Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://www.netlib.org/benchmark/linpackd sha256:4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
    "payload_manifest_id": "techne tree_sha256 568392d920a61e0ef0b715d670f9e78bfcaad1ed1228f71c1731454af25b27c7 (1 files)",
    "host_tree_matches_record": true,
@@ -472,6 +472,13 @@
   }
  ],
  "ancestry_edges": [
+  {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "linpackd-netlib-1979",
    "relation": "historical_version_of",

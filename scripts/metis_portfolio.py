@@ -22,6 +22,8 @@ import argparse
 import os
 import json
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 import time
 from datetime import datetime, timezone
@@ -272,7 +274,7 @@ def recent_git_log(hours: int = 24) -> str:
     try:
         out = subprocess.run(
             ["git", "log", f"--since={hours} hours ago", "--oneline", "--no-merges"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=10,
+            cwd=REPO_ROOT, capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=10,
         )
         return out.stdout.strip() or "(no commits in window)"
     except Exception as e:
@@ -740,7 +742,7 @@ def _deterministic_brief(state: dict, manual_status: str) -> str:
     try:
         import subprocess as _sp
         _log = _sp.run(["git", "log", "--since=72.hours.ago", "--pretty=%s"],
-                       capture_output=True, text=True, timeout=60).stdout
+                       capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=60).stdout
         _real = [x for x in _log.splitlines() if "auto: portfolio" not in x]
         lines.append(f"Session-model activity (the live operating model): "
                      f"{len(_real)} non-cron commits in 72h. "

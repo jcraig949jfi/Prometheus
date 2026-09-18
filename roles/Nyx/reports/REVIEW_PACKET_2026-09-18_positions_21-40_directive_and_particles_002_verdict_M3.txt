@@ -214,11 +214,11 @@ into the bodies."
 10. HOW TO REPRODUCE
    Worktree at origin/main; set TECHNE_FOSSIL_VAULT to the vault root and
    NYX_BODIES_RECEIPT to nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json.
-     python -m nyx.atlas.schema                 -> 121 fossil files, 0 with problems
+     python -m nyx.atlas.schema            -> 121 fossil files, 0 with problems
      python -m pytest -q nyx/tests              -> 23 passed
      python -m nyx.atlas.build                  -> fossils_inspected 68, gates
                                                    cuts_returned_with_verdict 1
-     python -m nyx.atlas.cuts.<name>            -> re-saves one cut (deterministic)
+     python -m nyx.atlas.cuts.<name>       -> re-saves one cut (deterministic)
      python -m nyx.atlas.predictions.schema validate \
          nyx/atlas/predictions/MECH-PARTICLES-ESSTRIGGER-002.json
                                                 -> valid, sha256 186047db...

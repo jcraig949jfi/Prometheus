@@ -3,9 +3,10 @@
 Input (Archaeon's, read-only, never edited by Proteus): archaeon/campaign4/STARTING_POPULATION.json
 -- 57 distinct organisms in four strata (gen0_random 12 foundry draws under the C4 recipe seed
 20260921; delay_general 11, shelf 19, w0_solver 15 campaign-3 specimens), each with ancestries.
-Output: proteus/eval/C4_STARTING_POPULATION_MANIFEST.json, bound to the declaration by the sha256
-of its raw bytes (the same digest archaeon/campaign4/launch_gate.py computes), so Archaeon can set
-`minted_by_proteus` against a manifest that names THIS file and no other.
+Output: proteus/eval/C4_STARTING_POPULATION_MANIFEST.json, bound to the declaration by its CANONICAL
+digest (Archaeon's published population_digest_rule: sorted compact JSON minus volatile keys), which
+is line-ending invariant; the raw-byte digest of this checkout is kept beside it as evidence of the
+CRLF/LF defect (#389/#400) and is not what the gate binds.
 
 What the mint checks (all refused on failure): every organism_id hashes from its manifest under
 the frozen runtime; no duplicates; the 12 gen0 draws are exactly reproduced by the recipe
@@ -36,9 +37,28 @@ OUT = os.path.join(ROOT, "proteus", "eval", "C4_STARTING_POPULATION_MANIFEST.jso
 GEN0_CLASS = "gen0_random"
 
 
+CANONICAL_EXCLUDE = ("generated_at", "wall_s", "population_digest", "population_digest_rule",
+                     "superseded_raw_byte_digests")
+
+
+def canonical_digest(decl: dict) -> str:
+    """Archaeon's published rule (STARTING_POPULATION.json population_digest_rule): sha256 over
+    json.dumps(D, sort_keys=True, separators=(',',':'), ensure_ascii=False) with the volatile keys
+    removed. Line-ending invariant, unlike the raw-byte digest (which differs between a CRLF and an
+    LF checkout of the same content -- the defect #389/#400 report)."""
+    D = {k: v for k, v in decl.items() if k not in CANONICAL_EXCLUDE}
+    return "sha256:" + hashlib.sha256(
+        json.dumps(D, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
 def load_declaration(path=DECL):
     raw = open(path, "rb").read()
-    return json.loads(raw.decode("utf-8")), "sha256:" + hashlib.sha256(raw).hexdigest()
+    decl = json.loads(raw.decode("utf-8"))
+    canon = canonical_digest(decl)
+    if decl.get("population_digest") != canon:
+        raise ValueError("declaration's published population_digest does not recompute under its own rule: %s vs %s"
+                         % (decl.get("population_digest"), canon))
+    return decl, "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
 def recipe_of(decl: dict) -> dict:
@@ -105,6 +125,7 @@ def main() -> int:
     from proteus.workspace import assert_not_canonical
     assert_not_canonical("run emit_c4_starting_population.py")
     decl, digest = load_declaration()
+    canon = canonical_digest(decl)
     fm = recipe_of(decl)
     prof = check_identity(decl, fm)
     n_gen0 = check_gen0_draws(decl, fm)
@@ -114,14 +135,17 @@ def main() -> int:
         gen0_provenance={"fill": "proteus.foundry.generate.generate", "campaign_seed": decl["campaign_seed"],
                          "recipe_seed": fm["seed"], "n": fm["n"], "declared_by": decl["generated_by"],
                          "declaration": "archaeon/campaign4/STARTING_POPULATION.json",
-                         "declaration_digest": digest, "collapsed_duplicates": decl["collapsed_duplicates"]},
+                         "declaration_canonical_digest": canon, "collapsed_duplicates": decl["collapsed_duplicates"]},
         imported_sources=sources, selection_criteria="NONE", sealed_at=decl["generated_at"],
-        population_label="campaign4 starting population (Archaeon declaration %s)" % digest[7:23])
+        population_label="campaign4 starting population (Archaeon declaration %s)" % canon[7:23])
     doc = {
         "schema_version": "proteus.c4_starting_population_mint.v1",
         "minted_by": "Proteus[m2-7d051790]",
         "declaration": "archaeon/campaign4/STARTING_POPULATION.json",
         "declaration_digest": digest,
+        "declaration_digest_note": "raw bytes of this checkout; NOT checkout-invariant (CRLF vs LF); superseded for the gate by declaration_canonical_digest",
+        "declaration_canonical_digest": canon,
+        "declaration_canonical_digest_rule": decl["population_digest_rule"],
         "declaration_generated_at": decl["generated_at"],
         "foundry_profile": prof["profile_id"],
         "archaeon_regime_id": prof["archaeon_regime_id"],
@@ -133,7 +157,8 @@ def main() -> int:
         json.dump(doc, f, indent=1, sort_keys=True)
         f.write("\n")
     print(OUT)
-    print("declaration_digest", digest)
+    print("declaration_digest (raw bytes)", digest)
+    print("declaration_canonical_digest", canonical_digest(decl), "== published:", canonical_digest(decl) == decl["population_digest"])
     print("population_manifest_id", pm["population_manifest_id"], "| manifest_hash", pm["manifest_hash"])
     print("profile", pm["foundry_profile"], "| count", pm["count"], "| composition", pm["lineage_composition"])
     print("gen0 draws regenerated:", n_gen0, "| imports listed:", len(pm["imported"]))

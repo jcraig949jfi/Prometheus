@@ -130,17 +130,636 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/stretch.py:1-30"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/red_blue.py:37-106"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/autocorr.py:42-120"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/ensemble.py:85-130"
+   }
+  ],
+  "inspected_files": [
+   "moves/stretch.py 1-30",
+   "moves/red_blue.py 37-106",
+   "autocorr.py 42-120",
+   "ensemble.py 85-130, 258-290"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "MCMC with an ensemble of walkers where the proposal for one walker is built from the positions of the others: the stretch move draws a scale z from a density proportional to 1/sqrt(z) on [1/a, a], proposes along the line from a randomly chosen other walker through the current one, and corrects acceptance by z^(ndim-1); the ensemble is split into halves updated alternately so the 'other' walkers are fixed during a half-update (detailed balance and parallel evaluation); convergence is judged by an integrated autocorrelation time estimated with Sokal's automatic window; the whole thing needs no tuning of a proposal covariance because the moves are affine invariant",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/dfm/emcee/archive/refs/tags/v3.1.6.tar.gz sha256:1a8997b2b80c86deeafb7bd78450ef570ea58e04fe2a790f651348ba1e35f540",
+   "payload_manifest_id": "techne tree_sha256 76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f (105 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/emcee-3.1.6/src/emcee/moves/stretch.py",
+     "payload_hash_read": "37e6b16a390a522846799184aed45fcfbe48323a36ea405b425b9351855830ad",
+     "techne_recorded_hash": "37e6b16a390a522846799184aed45fcfbe48323a36ea405b425b9351855830ad",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/emcee-3.1.6/src/emcee/moves/red_blue.py",
+     "payload_hash_read": "4abaa9154aa6a7358db3882fdccbc4009a41a33c391e9702cef42edb7aad129d",
+     "techne_recorded_hash": "4abaa9154aa6a7358db3882fdccbc4009a41a33c391e9702cef42edb7aad129d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/emcee-3.1.6/src/emcee/autocorr.py",
+     "payload_hash_read": "df747988b68369be6fd31397fb619021c385d0bda5b112bfd682665b912d0b1b",
+     "techne_recorded_hash": "df747988b68369be6fd31397fb619021c385d0bda5b112bfd682665b912d0b1b",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/emcee-3.1.6/src/emcee/ensemble.py",
+     "payload_hash_read": "7eed3abf94939c81e87441d9bfd8b3de617eb65dafb549b59dd9b93791f973ce",
+     "techne_recorded_hash": "7eed3abf94939c81e87441d9bfd8b3de617eb65dafb549b59dd9b93791f973ce",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "emcee-3.1.6::stretch_move_proposing_along_the_line_through_a_random_complementary_walker_with_a_scale_drawn_from_g_z_proportional_to_one_over_sqrt_z_and_an_acceptance_factor_of_z_to_the_ndim_minus_one",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "StretchMove.get_proposal (stretch.py): zz = ((a - 1) rand + 1)^2 / a; factors = (ndim - 1) log zz; rint random complementary index; q = c[rint] - (c[rint] - s) zz",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each walker in the active half, pick a walker from the other half at random, draw z by squaring a uniform on [1, sqrt(a)] scaled by 1/a (which yields the density proportional to 1/sqrt(z) on [1/a, a], symmetric under z -> 1/z), and propose x' = y + z (x - y): the point on the line through y and x at stretch z; the Metropolis ratio includes z^(ndim - 1) so the move satisfies detailed balance; a = 2 by default",
+   "input": "the active half, the complementary half, a random state",
+   "output": "proposals and log correction factors",
+   "state": "none",
+   "update": "per half-step",
+   "assumptions": [
+    "the ensemble's spread approximates the target's covariance, so proposals along inter-walker lines are automatically scaled and oriented (affine invariance, Goodman & Weare 2010)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "no proposal tuning; the same code works on a badly scaled, correlated posterior as on a spherical one",
+   "failure_landscape": "by reading: in high dimension the acceptance falls (the z^(ndim-1) factor) and the ensemble needs at least 2 ndim walkers; multimodal targets trap walkers in modes (the ensemble does not mix between modes)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Goodman & Weare 2010; Christen & Fox 2010 for the earlier 'walk' idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/stretch.py:14-30"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "StretchMove",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "RedBlueMove.propose (red_blue.py 52-106): inds = all_inds % nsplits (shuffled if randomize_split); for each split: s = active, c = the others; get_proposal; compute_log_prob_fn(q) on the whole half at once; lnpdiff = factor + new - old; accept if lnpdiff > log(rand); state.update",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "walkers are assigned to nsplits groups (two by default, reshuffled each step); each group in turn proposes new positions using only walkers from the other groups, evaluates all its proposals' log-probabilities in one vectorised (or pooled) call, and accepts each independently by the Metropolis rule with the move's correction factor; because the complementary walkers do not move during a group's update, the update is a valid Markov transition and the group's evaluations are embarrassingly parallel",
+   "input": "the ensemble state",
+   "output": "a new state and an accepted mask",
+   "state": "none",
+   "update": "per step",
+   "assumptions": [
+    "updating all walkers simultaneously from each other would break detailed balance (Foreman-Mackey et al. 2013 section 3); two halves are enough"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::stretch_move_proposing_along_the_line_through_a_random_complementary_walker_with_a_scale_drawn_from_g_z_proportional_to_one_over_sqrt_z_and_an_acceptance_factor_of_z_to_the_ndim_minus_one",
+    "emcee-3.1.6::integrated_autocorrelation_time_from_the_fft_autocorrelation_with_sokal_automatic_windowing_and_a_reliability_flag_when_the_chain_is_shorter_than_tol_times_tau",
+    "emcee-3.1.6::moves_as_a_weighted_list_sampled_per_step"
+   ],
+   "fitness_value_in_ancestor": "one likelihood call per half-ensemble per step: the reason the sampler scales to clusters",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Foreman-Mackey, Hogg, Lang & Goodman 2013 (the parallel red-blue scheme)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/moves/red_blue.py:37-106"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "RedBlueMove.propose",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::integrated_autocorrelation_time_from_the_fft_autocorrelation_with_sokal_automatic_windowing_and_a_reliability_flag_when_the_chain_is_shorter_than_tol_times_tau",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "autocorr.integrated_time (49-130): function_1d by FFT; taus = 2 cumsum(f) - 1; auto_window(taus, c = 5): the first M with M >= c tau(M); flag if tol * tau > n",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the normalised autocorrelation function of each chain (averaged over walkers) is computed by FFT; the integrated time is 2 times the running sum minus one; the window M is the first lag at which M exceeds c times the estimate at M (Sokal's rule, c = 5 by default), which balances bias against variance; if the chain is shorter than tol (50) autocorrelation times the estimate is flagged as unreliable (a warning or an exception)",
+   "input": "chains of shape (n_steps, n_walkers, n_dim)",
+   "output": "tau per dimension",
+   "state": "none",
+   "update": "on request",
+   "assumptions": [
+    "the autocorrelation function decays; the automatic window is the standard estimator (Sokal 1997); 50 tau is the recommended minimum chain length"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "a convergence diagnostic that says when it cannot be trusted",
+   "failure_landscape": "by reading: the estimate itself is biased low for short chains, which is why tol exists",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Sokal 1997 (Monte Carlo methods in statistical mechanics, the windowing lecture); Goodman & Weare 2010 acor",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/autocorr.py:42-130"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "autocorr.py",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "INTERVAL",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "emcee-3.1.6::moves_as_a_weighted_list_sampled_per_step",
+   "fossil_ancestry": "emcee-3.1.6",
+   "human_name": "EnsembleSampler.__init__ (ensemble.py 85-130): moves as a move, a list, or [(move, weight), ...]; the default [StretchMove()]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each step one move is drawn from the list with the given weights and applied to the whole ensemble; the other shipped moves (walk, differential evolution, DE snooker, KDE, Gaussian) share the red-blue interface, so mixtures of proposals are a configuration",
+   "input": "a list of moves and weights",
+   "output": "one move per step",
+   "state": "none",
+   "update": "per step",
+   "assumptions": [
+    "mixing proposals helps on multimodal targets (DE snooker is the paper's remedy)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance"
+   ],
+   "fitness_value_in_ancestor": "the sampler is a framework for ensemble moves, not one move",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:emcee-3.1.6/upstream/tree/emcee-3.1.6/src/emcee/ensemble.py:85-130 (the per-step draw not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the moves argument; CANDIDATE because sample's draw was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the other moves (walk, de, de_snooker, kde, gaussian, mh), the HDF5 backend, State / Model / interruptible pool, the progress bar, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "DE-snooker is the second mechanism of interest (Ter Braak & Vrugt 2008) and should be a DEEP item",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "emcee-3.1.6"
+  },
+  {
+   "candidate": "'MCMC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the move, the parallel update scheme and the diagnostic are separable and separately published",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "emcee-3.1.6"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "emcee-3.1.6::P.a_posterior_with_unknown_scale_and_strong_linear_correlations_must_be_sampled_without_any_hand_tuned_proposal_while_likelihood_evaluations_are_expensive_and_parallelisable_and_the_sampler_must_say_when_its_chain_is_too_short",
+   "source_fossil": "emcee-3.1.6",
+   "source_evidence": "stretch.py; red_blue.py; autocorr.py; the paper's tests",
+   "condition": "an organism draws samples from a log-density it can only evaluate; the density is a badly scaled, correlated Gaussian (the Rosenbrock or the 'ill-conditioned' tests) of moderate dimension; evaluations can run in parallel; the score is effective samples per evaluation and a correct statement of the autocorrelation time",
+   "resource_or_constraint": "evaluations; walkers",
+   "failure_condition": "acceptance near zero or one (untuned Metropolis), correlated chains reported as converged, or a serial evaluation pattern that wastes the parallel budget",
+   "world_punishes": "isotropic random-walk Metropolis; simultaneous ensemble updates (biased); reporting tau without a length check",
+   "world_rewards": "affine-invariant moves, red-blue halves, windowed autocorrelation with a reliability flag",
+   "observable_consequence": "effective samples per evaluation on a 10-d Gaussian with condition number 1e4, for isotropic Metropolis vs the stretch move; bias of the simultaneous-update variant on the mean; the tol flag's false-negative rate on short chains",
+   "vacuity_condition": "a spherical target",
+   "trivial_shortcuts": "the target's covariance handed to the proposal (which the world withholds)",
+   "cheat_control": "an organism given the covariance must match the stretch move's efficiency; isotropic Metropolis must fall by the condition number; the simultaneous update must bias the mean on a two-walker test: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: affine-invariant ensemble MCMC (Foreman-Mackey et al. 2013)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "emcee-3.1.6::stretch_move_proposing_along_the_line_through_a_random_complementary_walker_with_a_scale_drawn_from_g_z_proportional_to_one_over_sqrt_z_and_an_acceptance_factor_of_z_to_the_ndim_minus_one",
+   "to": "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "get_proposal",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance",
+   "to": "emcee-3.1.6::integrated_autocorrelation_time_from_the_fft_autocorrelation_with_sokal_automatic_windowing_and_a_reliability_flag_when_the_chain_is_shorter_than_tol_times_tau",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "chains",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "emcee-3.1.6::moves_as_a_weighted_list_sampled_per_step",
+   "to": "emcee-3.1.6::ensemble_split_into_sub_ensembles_updated_in_turn_so_the_complementary_set_is_fixed_during_a_half_update_allowing_parallel_likelihood_evaluation_and_preserving_detailed_balance",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "emcee-3.1.6",
@@ -148,10 +767,23 @@
    "to": "Goodman & Weare 2010; Metropolis et al. 1953",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "emcee-3.1.6",
+   "relation": "algorithm_from",
+   "to": "Metropolis 1953 / Hastings 1970; Goodman & Weare 2010 (stretch move); Foreman-Mackey et al. 2013 (parallel red-blue); Sokal 1997 (windowing)",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the other moves and the backends unread",
+   "nothing ran",
+   "M3-RUNNABLE PACKET CANDIDATE: pure numpy; the analytic Gaussian is an exact oracle for the mean, covariance and, via the known spectrum, the autocorrelation time"
+  ],
+  "note": "the three published mechanisms are located; the sampler is the third pure-Python body with a self-contained oracle found in this pass (after sgp4 and backoff)",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

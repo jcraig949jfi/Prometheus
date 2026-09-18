@@ -100,8 +100,19 @@ class Deliverer:
     def tick(self, conn=None) -> dict:
         prev = self._read_state()
         if prev.get("parked"):
-            self._log("PARKED since %s; refusing to run until %s is cleared" % (prev.get("parked_at"), self.park_path))
-            return {"exit": 3, "verdict": "PARKED"}
+            if self.park_path.exists():
+                self._log("PARKED since %s; refusing to run until %s is cleared" % (prev.get("parked_at"), self.park_path))
+                return {"exit": 3, "verdict": "PARKED"}
+            # The park RECORD is the clearance surface (its documented clearance
+            # is to remove/rename it); the state file mirrored `parked` and kept
+            # refusing after the record was cleared (Mnemosyne #375: parked on
+            # stale STATE from 14:54Z to 19:29Z with the credential in place).
+            # A cleared record clears the state, once, loudly.
+            self._log("park record %s is gone: clearance observed; resuming (was parked since %s)"
+                      % (self.park_path, prev.get("parked_at")))
+            keep = {k: v for k, v in prev.items() if k in ("last_success_at",)}
+            prev = self._write_state(verdict="CLEARED", parked=False, consecutive_idle=0,
+                                     clearance_observed_at=_utc(), **keep)
         own = conn is None
         conn = conn or _db.connect()
         try:

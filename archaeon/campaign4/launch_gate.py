@@ -129,6 +129,33 @@ def g2_rehearsal() -> dict:
             "blocks_launch": True}
 
 
+def g3_vivarium_proved() -> dict:
+    """G3 from a MEASURED read, not from a grant row and not from a message.
+
+    The grant existing on the ledger is not the completion test. The test is that the Campaign 4
+    identity actually reads scoped rows back. verify_g3.py performs that read and writes the
+    receipt this check consumes.
+    """
+    p = C4 / "G3_READ_PROOF.json"
+    if not p.exists():
+        return g3_vivarium()
+    d = json.loads(p.read_text(encoding="utf-8"))
+    checks = d.get("checks", {})
+    missing = [k for k, v in checks.items() if not v]
+    return {"id": "G3", "owner": "Vivarium (grant) + Archaeon (read proof)",
+            "requirement": "Campaign-4 consumer identity live and its M2 read grant valid",
+            "status": GREEN if (d.get("all_pass") and not missing) else RED,
+            "missing": missing,
+            "evidence": {"proof": "archaeon/campaign4/G3_READ_PROOF.json",
+                         "proof_digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest(),
+                         "client": d.get("client"), "engine": d.get("engine"),
+                         "grants_to_me": d.get("grants_to_me"),
+                         "read_worlds_n": d.get("read_worlds_n"),
+                         "read_observations_n": d.get("read_observations_n"),
+                         "checks": checks},
+            "blocks_launch": True}
+
+
 def g3_vivarium() -> dict:
     """Consumer identity live AND the M2 B1 read grant valid. The grant is the part this gate
     cannot prove from here: it is an engine-side authorization, and comms #368 states it still
@@ -145,42 +172,103 @@ def g3_vivarium() -> dict:
             "blocks_launch": True}
 
 
-def g4_pew() -> dict:
-    """Non-blocking by the directive's own words, but it constrains what the FINAL disposition
-    may claim, so it is recorded with that consequence attached."""
-    return {"id": "G4", "owner": "Mnemosyne",
-            "requirement": "drain the Vivarium outbox if the PEW writer credential is available",
-            "status": CONDITIONAL,
-            "evidence": {"claim": "Vivarium #368: 100+ outbox rows PENDING, deliverer HELD pending the writer identity",
-                         "directive_consequence": "Campaign 4 MAY execute (the outbox is durable), but the final "
-                                                  "campaign disposition may not claim complete PEW closure until the "
-                                                  "backlog is delivered"},
-            "blocks_launch": False}
+def g4_pew(ref: str) -> dict:
+    """Non-blocking by the directive's own words, but it bounds what the FINAL disposition may
+    claim, so the bound is recorded as data rather than as a footnote.
+
+    Two separable facts, kept apart on purpose:
+      (a) is the observer leg READY to run when artifacts land?   -- verified from its own receipt
+      (b) has the historical backlog been delivered?              -- advisory, quantified
+    """
+    ev = {}
+    b = at_ref(ref, "evidence_wiki/integration/s7_rehearsal_results.json")
+    if b is None:
+        ev["s7_leg"] = "no receipt at origin/main"
+        ready = False
+    else:
+        r = json.loads(b)
+        gates = {g["gate"]: {"pass": g.get("pass"), "skipped": g.get("skipped")} for g in r.get("gates", [])}
+        ev.update({"s7_receipt": "evidence_wiki/integration/s7_rehearsal_results.json",
+                   "s7_all_pass": r.get("all_pass"), "s7_precheck": r.get("precheck"),
+                   "reader_version": r.get("reader_version"), "s7_seconds": r.get("seconds"),
+                   "s7_gates": gates, "rebuild_digests": r.get("rebuild_digests"),
+                   "campaign4_rows_seen": (r.get("campaign4_rows") or {}).get("n")})
+        ready = bool(r.get("all_pass"))
+    ev["observer_leg_ready"] = ready
+    ev["backlog_delivered"] = False
+    ev["backlog_pending_reported"] = 56
+    ev["backlog_source"] = "Mnemosyne tail-closure report; the queue's own health readout does not expose it"
+    ev["closure_condition"] = "last_seq 56, gaps []"
+    ev["directive_consequence"] = ("Campaign 4 MAY execute -- the queue is durable and nothing on the execution "
+                                  "path imports the observer -- but the FINAL campaign disposition may not claim "
+                                  "complete observational closure until the backlog reconciles.")
+    return {"id": "G4", "owner": "Mnemosyne + Vivarium",
+            "requirement": "observer leg ready; historical backlog delivered (advisory for launch)",
+            "status": CONDITIONAL, "evidence": ev, "blocks_launch": False}
+
+
+def canonical_population_digest(d: dict) -> str:
+    """The published rule, reimplemented here rather than imported, so the gate verifies the
+    declaration instead of trusting the tool that wrote it."""
+    volatile = ("generated_at", "wall_s", "population_digest", "population_digest_rule",
+                "superseded_raw_byte_digests")
+    D = {k: v for k, v in d.items() if k not in volatile}
+    return "sha256:" + hashlib.sha256(
+        json.dumps(D, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
 
 
 def g5_proteus(ref: str) -> dict:
-    """Manifests and structural descriptors for the EXACT starting organisms. Two halves:
-    Proteus's machinery must exist, and Archaeon must have DECLARED the starting population."""
-    registry = at_ref(ref, "proteus/eval/REGISTRY_POPULATION_MANIFEST.json")
+    """Manifests and structural descriptors for the EXACT starting organisms.
+
+    Identity rule (repaired 2026-09-17): the population is identified by a CANONICAL digest that
+    is invariant to checkout line endings. The first rule hashed raw worktree bytes, and this repo
+    sets core.autocrlf=true, so Proteus minted over a CRLF reading (a3f9816f) of the same content
+    this seat writes as LF (3c2ebfd9). Content was never in dispute; the identity rule was.
+
+    The gate no longer reads a self-set `minted_by_proteus` flag -- a declaration must not certify
+    itself. It reads Proteus's minted manifest and requires it to bind THIS canonical digest.
+    """
     catalog = at_ref(ref, "proteus/eval/FOUNDRY_PROFILE_CATALOG.json")
+    mint_b = at_ref(ref, "proteus/eval/C4_STARTING_POPULATION_MANIFEST.json")
     decl = C4 / "STARTING_POPULATION.json"
-    ev = {"proteus_registry_present": registry is not None,
-          "proteus_catalog_present": catalog is not None,
+    ev = {"proteus_catalog_present": catalog is not None,
+          "proteus_mint_present": mint_b is not None,
           "archaeon_declaration_present": decl.exists()}
-    unknown = None
+    checks = {k: bool(v) for k, v in ev.items()}
     if decl.exists():
         d = json.loads(decl.read_text(encoding="utf-8"))
         orgs = d.get("organisms", [])
-        unknown = [o.get("organism_id") for o in orgs if not o.get("ancestry")]
+        unknown = [o.get("organism_id") for o in orgs if not (o.get("ancestries") or o.get("ancestry"))]
+        declared = d.get("population_digest")
+        recomputed = canonical_population_digest(d)
         ev.update({"organisms_declared": len(orgs), "organisms_without_ancestry": len(unknown),
-                   "declaration_digest": "sha256:" + hashlib.sha256(decl.read_bytes()).hexdigest(),
-                   "minted_by_proteus": d.get("minted_by_proteus", False)})
-    ok = all(ev.values() if not decl.exists() else
-             [ev["proteus_registry_present"], ev["proteus_catalog_present"], ev["archaeon_declaration_present"],
-              unknown == [], bool(ev.get("minted_by_proteus"))])
+                   "population_digest_declared": declared,
+                   "population_digest_recomputed_here": recomputed,
+                   "population_digest_rule_published": bool(d.get("population_digest_rule")),
+                   "superseded_raw_byte_digests": d.get("superseded_raw_byte_digests")})
+        checks["declaration_has_canonical_rule"] = bool(d.get("population_digest_rule"))
+        checks["declaration_digest_reproducible"] = bool(declared) and declared == recomputed
+        checks["every_organism_has_ancestry"] = unknown == []
+        checks["organisms_present"] = len(orgs) > 0
+    if mint_b is not None:
+        m = json.loads(mint_b)
+        bound = (m.get("declaration_canonical_digest") or m.get("population_digest")
+                 or m.get("declaration_digest"))
+        ev.update({"mint_binds_digest": bound, "mint_count": (m.get("population_manifest") or {}).get("count"),
+                   "mint_schema": m.get("schema_version"), "minted_by": m.get("minted_by")})
+        checks["mint_binds_canonical_digest"] = bool(bound) and bound == ev.get("population_digest_recomputed_here")
+        checks["mint_count_matches"] = ev.get("mint_count") == ev.get("organisms_declared")
+    ev["checks"] = checks
+    missing = [k for k, v in checks.items() if not v]
+    ev["missing"] = missing
+    if missing == ["mint_binds_canonical_digest"]:
+        ev["next_action"] = ("Proteus remints over the canonical digest %s (the content is unchanged: same 57 "
+                             "organisms, same collapsed duplicate). The raw-byte digest it currently binds is a "
+                             "checkout artifact, not a population identity."
+                             % ev.get("population_digest_recomputed_here"))
     return {"id": "G5", "owner": "Proteus + Archaeon",
             "requirement": "manifests + structural descriptors for the exact C4 starting organisms; no organism of unknown ancestry",
-            "status": GREEN if ok else RED, "evidence": ev, "blocks_launch": True}
+            "status": GREEN if not missing else RED, "missing": missing, "evidence": ev, "blocks_launch": True}
 
 
 def main(argv=None) -> int:
@@ -188,7 +276,7 @@ def main(argv=None) -> int:
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
-    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium(), g4_pew(), g5_proteus(a.ref)]
+    checks = [g1_engine(a.ref), g2_rehearsal(), g3_vivarium_proved(), g4_pew(a.ref), g5_proteus(a.ref)]
     blocking = [c for c in checks if c["blocks_launch"]]
     green = all(c["status"] == GREEN for c in blocking)
     receipt = {

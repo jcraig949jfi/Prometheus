@@ -131,16 +131,100 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "ORGAN0",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-runtime-deadlock-fixtures-1.22/upstream/deadlock.go:1-100"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-runtime-deadlock-fixtures-1.22/upstream/crash_test.go:190-230"
+   }
+  ],
+  "inspected_files": [
+   "deadlock.go 1-100",
+   "crash_test.go 190-230",
+   "main.go 1-35"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "the body is a set of STIMULI, not a mechanism: each registered program constructs one blocking topology (every goroutine parked on a select with no cases; the main thread locked to an OS thread and parked; a locked helper plus a parked main; all goroutines exited via Goexit; thread exhaustion under a thread cap; stack overflow; recursive panics) and the harness asserts the runtime's exact fatal message. The detector that turns 'all goroutines are asleep' into a fatal error lives in runtime/proc.go, outside the body. No organ can be cut; the pressure the fixtures define is recorded",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/deadlock.go sha256:a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3; https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/main.go sha256:6fd26614bafc3969b083d3f87d2692c663db14daa9e11264cf2471a14ae079c0; https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/crash_test.go sha256:95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
+   "payload_manifest_id": "techne tree_sha256 b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93 (3 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/deadlock.go",
+     "payload_hash_read": "a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3",
+     "techne_recorded_hash": "a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/crash_test.go",
+     "payload_hash_read": "95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
+     "techne_recorded_hash": "95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [],
- "rejected_cuts": [],
- "pressures": [],
+ "rejected_cuts": [
+  {
+   "candidate": "checkdead() and the scheduler bookkeeping it reads (sched.nmidle, nmspinning, locked M counts, timers)",
+   "reason": "OTHER",
+   "evidence": "NOT IN THE BODY (runtime/proc.go); the fixtures name its outputs only",
+   "note": "record note for Techne: the mechanism this specimen is preserved for is not in the vault; the fixtures are the world, the runtime is the organism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  },
+  {
+   "candidate": "the crash-handler, panic-traceback and Goexit-ordering programs (RecursivePanic*, GoexitInPanic, PanicAfterGoexit, PanicTraceback, GoschedInPanic, SyscallInPanic, PanicLoop)",
+   "reason": "OTHER",
+   "evidence": "vault:go-runtime-deadlock-fixtures-1.22/upstream/deadlock.go:24-41 (names)",
+   "note": "stimuli for other runtime properties (panic ordering, traceback format), not deadlock",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  },
+  {
+   "candidate": "main.go's name -> function registry",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "main.go 1-35",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "go-runtime-deadlock-fixtures-1.22::P.a_runtime_must_declare_deadlock_exactly_when_no_goroutine_can_ever_run_again_distinguishing_that_from_goroutines_parked_on_timers_locked_os_threads_cgo_and_thread_caps_and_must_say_so_with_one_fixed_message",
+   "source_fossil": "go-runtime-deadlock-fixtures-1.22",
+   "source_evidence": "deadlock.go 44-100; crash_test.go 196-230",
+   "condition": "an organism schedules goroutines onto OS threads; it must detect the global state 'no runnable goroutine and none can be woken by any future event' and abort with a fixed message; near-misses exist: a goroutine locked to a thread and parked (still a deadlock), pending timers (not a deadlock), cgo calls (detection disabled), a thread cap reached (a different fatal error)",
+   "resource_or_constraint": "a constant-time check at idle transitions",
+   "failure_condition": "a false deadlock report while a timer or external event could still wake a goroutine, or a missed report (the program hangs silently)",
+   "world_punishes": "counting only runnable goroutines; ignoring locked threads; ignoring timers",
+   "world_rewards": "a check over idle and spinning thread counts plus locked-M accounting, gated off under cgo",
+   "observable_consequence": "the seven deadlock programs must each abort with the exact string 'fatal error: all goroutines are asleep - deadlock!' (or the Goexit variant), and the non-deadlock programs must not; the harness reads the first line of output",
+   "vacuity_condition": "a single goroutine that returns",
+   "trivial_shortcuts": "a watchdog timeout (which reports late and cannot distinguish slow from stuck)",
+   "cheat_control": "an organism told which programs deadlock must reproduce the harness's verdicts exactly; a runtime with the locked-thread accounting removed must miss LockedDeadlock / LockedDeadlock2 (the fixtures exist because it once did); a runtime that ignores timers must false-alarm on a program sleeping in time.Sleep: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: regression fixtures for the Go runtime's deadlock detector (Go authors 2015-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "composition_edges": [],
  "ancestry_edges": [
   {
@@ -149,10 +233,23 @@
    "to": "spin-pathfinder-priority-inversion-1997",
    "note": "a deadlock found by execution + runtime detector vs one found by model checking",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "go-runtime-deadlock-fixtures-1.22",
+   "relation": "shares_ancestor_with",
+   "to": "the Go runtime (golang/go, runtime/proc.go checkdead) of which these files are a test directory",
+   "note": "from the record; the runtime body itself is not in the vault",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "CUT_INSTRUMENT_INSUFFICIENT",
+  "unexplained": [
+   "the mechanism under test is outside the body",
+   "the fixtures were read; nothing ran (no Go toolchain on M3)",
+   "record note: preserve runtime/proc.go beside the fixtures if the detector is the object of interest"
+  ],
+  "note": "ORGAN0 with one PRESSURE: the fixtures are a precise world definition (seven deadlock topologies and the exact expected message), which is what the atlas can keep from them",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

@@ -143,14 +143,14 @@
   "inspected_files": [
    "src/bp.cpp: run, calcNewMessage, beliefV, function list"
   ],
-  "date": "2026-09-17T22:03Z",
+  "date": "2026-09-17T22:50Z",
   "note": "loopy belief propagation on a factor graph, cut where libDAI differs from the LDPC decoder in the vault: three message schedules (parallel, sequential random, sequential by maximum residual), a log-domain option, sum-product vs max-product in one code path, and convergence measured on beliefs, not messages",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://github.com/dbtsai/libDAI@6df66a8ce7eb6f669bae933ab6ec35bbba56182f",
    "payload_manifest_id": "techne tree_sha256 fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96 (176 files)",
    "host_tree_matches_record": true,
@@ -626,6 +626,13 @@
    "to": "ldpc-codes-neal-2001",
    "note": "BP as a decoder vs BP as a general inference engine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "libdai-mooij",

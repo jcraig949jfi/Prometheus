@@ -56,7 +56,8 @@ A detector version, a criterion or a corpus is admitted at a stated geometry,
 null family and scale, with the chance floor of that condition beside it.
   exercised: RULING_D3V2_CALIBRATION_2026-09-14.md (LIVE admitted, FLOOR and
              UNEQUAL refused); RULING_3B_C3_3_PREFLIGHT_2026-09-14.md s5
-             (D3 band floor 0.379 at corpus 120)
+             (D3 band false-fire rate 0.379 at corpus 120 = 10 regions x 12,
+             true ratio 1.0, i.i.d. tables; a rate at that geometry, not a floor)
 
 ## 7. Thresholds come from downstream need, fixed before the rate
 

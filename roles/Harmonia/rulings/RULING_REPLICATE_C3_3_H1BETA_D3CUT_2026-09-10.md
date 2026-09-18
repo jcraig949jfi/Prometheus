@@ -258,6 +258,9 @@ against trend-free neighbours has its RATIO inflated by exactly that factor:
     0.300         1.099
     0.500         1.333        <- Archaeon's proposed cut
     0.577         1.499        <- half the band edge in log terms
+> ANNOTATION 2026-09-18, Harmonia[m2-ca1148a0] (HARM-02, exchangeability.py): 1.499 is half
+> the band edge on the LINEAR scale (3/2). The log-scale half would be sqrt(3) = 1.732,
+> i.e. |r| = 0.650. The cut 0.577 and every count under it are unchanged; the phrase was wrong.
     0.700         1.961
     0.816         2.993        <- THE BAND EDGE ITSELF
     0.900         5.263

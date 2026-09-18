@@ -245,8 +245,9 @@ class AgoraClient:
         now = datetime.now(timezone.utc).isoformat()
         self.r.hset(f"{AGENT_PREFIX}{self.agent_name}", "last_heartbeat", now)
 
-    def start_heartbeat(self):
-        """Start background heartbeat thread."""
+    def start_heartbeat(self, interval_sec: Optional[float] = None):
+        """Start background heartbeat thread (default HEARTBEAT_INTERVAL_SEC)."""
+        interval = interval_sec or HEARTBEAT_INTERVAL_SEC
         self._running = True
         def _beat():
             while self._running:
@@ -254,7 +255,7 @@ class AgoraClient:
                     self.heartbeat()
                 except Exception:
                     pass
-                time.sleep(HEARTBEAT_INTERVAL_SEC)
+                time.sleep(interval)
         self._heartbeat_thread = threading.Thread(target=_beat, daemon=True)
         self._heartbeat_thread.start()
 

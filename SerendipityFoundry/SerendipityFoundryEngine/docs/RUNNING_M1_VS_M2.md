@@ -38,11 +38,11 @@ already held, and M2 got its own instance for new work.
 | Interpreter | `H:\Python312\python.exe` (project venv) | `D:\Prometheus\.venv-m2\Scripts\python.exe` (3.12.10) |
 | Engine URL | `https://192.168.1.202:8811/v2` | `https://192.168.1.191:8811/v2` |
 | TLS cert (public) | `deploy\m1.crt`, SAN `192.168.1.202`, valid to Dec 2028 | `deploy\m2.crt`, SAN `192.168.1.191`, valid to Sep 2036 |
-| TLS key (never in git) | `D:\Prometheus-data\sfe\m1.key`, stays on M1 | `D:\Prometheus-data\sfe\m2.key`, stays on M2 (copied out of `deploy\` 2026-09-16; the `deploy\` copy is not yet removed) |
-| Launcher | `D:\Prometheus-data\sfe\sfengine.cmd` (outside the repo, since 2026-09-12) | `D:\Prometheus-data\sfe\sfengine_m2.cmd` (outside the repo, since 2026-09-16; the tracked `deploy\sfengine_m2.cmd` is superseded and refused by the guard) |
-| Database | `D:\Prometheus-data\sfe\engine.db` on M1 (NVMe, since 2026-09-12) | `D:\Prometheus-data\sfe\engine.db` on M2 (since 2026-09-16; ledger `eng_906356f7`, schema 8) — **a different database**; the canonical `var\engine.db` copy is the schema-4 rollback and is not deleted. Same path string on both machines: identity is the `engine_instance_id`, never the path |
-| Kept alive by | scheduled task `SFEngine` (S4U, AtLogOn+AtStartup) | watchdog task `SFEngineM2Watchdog` (S4U, AtStartup + every 5 min) running the PINNED copy `D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1` (since 2026-09-16; a tracked script under the canonical checkout was replaced mid-run by a `git pull` on 2026-09-16 11:40Z, which is why it is pinned) |
-| Log | `D:\Prometheus-data\sfe\sfengine.log` | `D:\Prometheus-data\sfe\sfengine_m2.log`, watchdog `D:\Prometheus-data\sfe\sfengine_m2_watchdog.log` + `.state.json` (every tick) + `.park.json` (on park) |
+| TLS key (never in git) | `D:\Prometheus-data\sfe\m1.key`, stays on M1 | `C:\Prometheus-data\sfe\m2.key`, stays on M2 (on the NVMe since 2026-09-17 23:12Z; the `D:\Prometheus-data\sfe` copy is the rollback; the `deploy\` copy is not yet removed) |
+| Launcher | `D:\Prometheus-data\sfe\sfengine.cmd` (outside the repo, since 2026-09-12) | `C:\Prometheus-data\sfe\sfengine_m2.cmd` (outside the repo; on the NVMe since 2026-09-17; the tracked `deploy\sfengine_m2.cmd` is superseded and refused by the guard) |
+| Database | `D:\Prometheus-data\sfe\engine.db` on M1 (NVMe, since 2026-09-12) | `C:\Prometheus-data\sfe\engine.db` on M2 (NVMe since 2026-09-17 23:12Z -- on M2 `D:` is the Seagate ST8000DM004 **SMR HDD**, which stopped servicing writes 3.4 h into campaign-rate load, see `deploy/LEDGER_TO_NVME_2026-09-17/`; ledger `eng_906356f7`, schema 9) — **a different database**; the canonical `var\engine.db` copy is the schema-4 rollback and is not deleted. Same path string on both machines: identity is the `engine_instance_id`, never the path |
+| Kept alive by | scheduled task `SFEngine` (S4U, AtLogOn+AtStartup) | watchdog task `SFEngineM2Watchdog` (S4U, AtStartup + every 5 min) running the PINNED copy `C:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1` (on the NVMe since 2026-09-17; a tracked script under the canonical checkout was replaced mid-run by a `git pull` on 2026-09-16 11:40Z, which is why it is pinned) |
+| Log | `D:\Prometheus-data\sfe\sfengine.log` | `C:\Prometheus-data\sfe\sfengine_m2.log`, watchdog `C:\Prometheus-data\sfe\sfengine_m2_watchdog.log` + `.state.json` (every tick) + `.park.json` (on park) |
 | Firewall rule | `SFEngine (LAN)`, TCP 8811, `192.168.1.0/24` | `SFEngine M2 (LAN)`, TCP 8811, `192.168.1.0/24` |
 | Neighbour to leave alone | D-13 instrument on `:8799` | *(none — D-13 does not run here)* |
 | D-13 release pin check | `F:\SerendipityD\RELEASE_MANIFEST.json` gives `50b5c232…` | **not applicable**; there is no `F:` drive on M2 |
@@ -81,7 +81,7 @@ Same shape as M1's, different names. The launcher `cmd.exe` spawns a child
 
     # start: let the watchdog do it, so the running instance is the supervised one
     powershell -NoProfile -ExecutionPolicy Bypass -File `
-      D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1
+      C:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1
 
 Verify before declaring it up:
 
@@ -106,8 +106,8 @@ snapshot that opens without error. A backup is one of:
     # the SQLite backup API from another process -- consistent, no outage
     python - <<'PY'
     import sqlite3
-    src = sqlite3.connect("file:D:/Prometheus-data/sfe/engine.db?mode=ro", uri=True)
-    dst = sqlite3.connect("D:/Prometheus-data/sfe/backup/engine_<stamp>.db")
+    src = sqlite3.connect("file:C:/Prometheus-data/sfe/engine.db?mode=ro", uri=True)
+    dst = sqlite3.connect("C:/Prometheus-data/sfe/backup/engine_<stamp>.db")
     src.backup(dst); dst.close(); src.close()
     PY
 

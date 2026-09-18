@@ -143,14 +143,14 @@
   "inspected_files": [
    "compress42.c 238-382 (defines), 1341-1530 (compress())"
   ],
-  "date": "2026-09-17T15:39Z",
+  "date": "2026-09-17T22:50Z",
   "note": "LZW as shipped in Unix compress: a dictionary that is never stored, only re-derived; codes that widen as the dictionary fills; and a block-mode heuristic that throws the dictionary away when the compression ratio starts falling",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T15:39Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://github.com/vapier/ncompress/archive/refs/tags/v4.2.4.6.tar.gz sha256:112acfc76382e7b631d6cfc8e6ff9c8fd5b3677e5d49d3d9f1657bc15ad13d13",
    "payload_manifest_id": "techne tree_sha256 d729870244f7739a50fed2b8382a405ef37261fcb0f935bdd2a391e3e88f13a5 (24 files)",
    "host_tree_matches_record": true,
@@ -635,6 +635,13 @@
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compress-4.2.4-lzw",
