@@ -52,6 +52,30 @@
     R3_two_writers_no_reader                  131.2 s  5xx 0  >5s 0  lock_max 0.265 s  obsPOST p50 q1/q4 0.0/0.0 ms  WAL max 3402 MB  ck runs  890 err 0  restart 4.86 s  anchors 50/50
     R2_two_writers_tight_reader               254.4 s  5xx 0  >5s 0  lock_max 0.344 s  obsPOST p50 q1/q4 3.1/7.9 ms  WAL max 3417 MB  ck runs 2081 err 0  restart 9.71 s  anchors 50/50
 
+    R0N_campaign_rate_nvme_4h_paced_reader   15408.3 s  5xx 0  >5s 0  lock_max 0.006 s  obsPOST p50 q1/q4 1.9/1.9 ms  WAL max    2 MB  ck runs 7664 err 0  restart 2.05 s  anchors 50/50
+
+    R0N (added 2026-09-18 03:30Z, Campaign-4 gate G1): 30 worlds x 1,000 generations at 0.5 s/gen with a
+    0.5 s paced cursor reader, 15,408 s (4 h 17 min) of continuous campaign-rate writing -- 18x the 840 s
+    onset of the defect 9.0.1 replaced -- on the SHIPPED build from the PINNED worktree (699ca0f9), scratch
+    ledger on the NVMe (C:). 123,990 events, 30,000 observations, 30,000 experiments, 570 checkpoints;
+    0 5xx, 0 calls over 5 s, slowest call 65 ms (a GET), write-lock max wait 5.7 ms, WAL never above
+    1.92 MB (the checkpointer stayed at its 2 s cadence: 7,664 runs, 0 errors, p50 1.5 ms, max 26 ms);
+    kill -> port free 1.02 s -> /v2/version 2.05 s; identity unchanged; anchors 50/50.
+
+    R0L (the run BEFORE it, deploy/LONG_RUN_2026-09-17/accept901/R0L_campaign_rate_4h_writer_paced_reader/,
+    preserved, NOT an acceptance row): the same shape on the production volume as it then was, D:, a
+    Seagate ST8000DM004 SMR HDD. Clean for 12,400 seconds (WAL pinned at 8.4 MB, no server error), then the
+    drive stopped servicing writes: the checkpointer's PASSIVE tick went 5 ms -> 26 s -> never returned, a
+    read stalled 33 s, one write waited 33.3 s for BEGIN IMMEDIATE and was refused with 'database is
+    locked' (one server error), the client timed out and the tool aborted. With the engine dead, a 4 KB
+    write+fsync on D: measured median 7.0 s / max 59 s; on C: under 1 ms; the drive's counters record
+    WriteLatencyMax 65,345 ms. Not an engine defect: placement. Production's data dir moved to
+    C:\Prometheus-data\sfe at 23:12Z (deploy/move_ledger_to_nvme_m2.py, LEDGER_TO_NVME_2026-09-17/,
+    identity unchanged, 13.0 s outage), and R0N is the proof on the volume production now runs on.
+    Recorded for the next point release (not deployed, not a C4 blocker): the checkpointer's fast-mode
+    trigger reads the WAL FILE size, which never shrinks below the soft limit once reached, so on a slow
+    disk it holds PASSIVE checkpoints at 20/s for the rest of the run (R0L: 130K runs in 3.4 h).
+
     criteria    0 5xx: MET in all four.  0 calls > 5 s: MET in all four.
                 sequential campaign-style writer + paced reader: R0 (2 gen/s,
                 600 obs) and R1 (saturating). modest concurrent writers reproducing
