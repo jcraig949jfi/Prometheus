@@ -1,5 +1,8 @@
 # Campaign 1 design packet (DRAFT for the operator; TIER 3; execution NOT authorised)
 
+SUPERSEDED 2026-09-18 by CAMPAIGN1_DESIGN_PACKET_v2_2026-09-18.md (after the
+operator's directive on 0B, Campaign 0C and the benchmark harness). Kept as written.
+
 Currency: 2026-09-18. Requested by the operator's Campaign 0 disposition
 ("Next deliverable: Campaign 1 design packet with substrate choice, real
 compute budget, lineage economics, frozen delta, and explicit statement

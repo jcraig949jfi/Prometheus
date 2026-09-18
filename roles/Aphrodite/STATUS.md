@@ -21,13 +21,13 @@ blockers: none for today's items. Operator decisions open: APHRODITE-31
   APHRODITE-32 (Campaign 1, after the Campaign 0 report).
 open incident (2026-09-17): canonical checkout pulled before the working
   contract was read (a6969bfbb -> b70d4f76e); recorded in the ledger.
-Campaign 0: ACCEPTED, PASS by the operator (tier 2). Campaign 0B stress:
-  FAIL on power (jackpot lineages defeat mean-based transfer detection),
-  calibration intact. Campaign 1 design packet delivered (tier 3);
-  execution NOT authorised.
+Campaign 0: ACCEPTED, PASS. Campaign 0B: ACCEPTED as informative failure
+  (power boundary). Campaign 0C (secondary endpoint): PASS (tier 2).
+  Design packet v2 delivered (tier 3), measured economics pending.
+  Campaign 1 execution NOT authorised. Contract requests out to
+  Archaeon, Harmonia, Vivarium (comms #452-#454).
 news monitor: ACTIVE; first pass 2026-09-18 admitted 2 (reviewed); next
   scheduled pass Monday 2026-09-21 03:00.
-next executable action: operator decisions in the Campaign 1 design
-  packet (estimand, delta, substrate/host, L and budget); then Campaign 0C
-  if E-exist is adopted. Items needing no new authority:
+next executable action: operator gate -- who runs the benchmark on M1/M2
+  and with which models; meanwhile answer contracts as they arrive. Items needing no new authority:
   APHRODITE-21 (file the deep-research report), -16, -24, -25, -26.
