@@ -197,3 +197,27 @@ the required lineage count; unresolved ambiguities; and the per-lineage
 task budget of the assay (cells x families x tasks) as an input to
 "which effect sizes are realistically detectable under the expected
 hardware budget" -- converted to hardware only by a later decision.
+
+## AMENDMENT 1 (2026-09-18, committed before any calibration run)
+
+Trigger: the section 8 cheat control failed at the controls stage, before
+any result was read. On W6 the pseudoreplicated analysis produced no more
+false positives than the lineage analysis (0 vs 0 of 60).
+Diagnosis: W6 is an EXACT null (I_8 identical to I_0 in every lineage),
+so the I_8-vs-I_0 contrast has no lineage-level variation;
+pseudoreplication inflates false positives only when the contrast varies
+between lineages. The control could not observe the defect it guards
+against -- an eligibility failure of this preregistration (calibration
+ledger). W6 is also an unrealistically easy null: a real null is
+evolution changing the improver in random directions with no average
+gain.
+Amendment (STRENGTHENS the calibration; W1-W8 and their recovery rules
+are unchanged):
+- Add W9 HETEROGENEOUS NULL: every I_8-derived improver (I_8 and I_8
+  minus a module) in lineage l gets an extra machinery shift z_l ~
+  N(0, 0.30^2) logit on all families; no module has a mean effect; m, w,
+  kappa as W6. Required result: no positive flag (as W6). W9 is GATED:
+  the pass condition now requires W9's false-positive Wilson upper bound
+  <= 0.10 at every L, like W6.
+- The section 8 cheat control and sensitivity (d) are evaluated on W9
+  (where pseudoreplication can inflate false positives) as well as W6.
