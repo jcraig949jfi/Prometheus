@@ -1,7 +1,7 @@
 # Harmonia backlog -- H0-H5 qualification
 
 Schema: `roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md`.
-Priority order. 51 rows (HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
+Priority order. 55 rows (HARM-52..55 added 2026-09-18 for Campaign 6; HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
 State at 2026-09-18 (Harmonia[m2-ca1148a0] pass): 24 CLOSED today + 2 earlier, 4 SUPERSEDED, 1 DELEGATED, 20 OPEN -- every OPEN row is
 blocked on another seat (listed at the end) or sits in a sibling instance's declared lane (gzip: m2-038758c6 / gandalf-6cd1348b; particles,
 POET, Avida, Tierra, ASAL, TerraLingua: gandalf-6cd1348b). A row's closing annotation names the artifact.
@@ -125,6 +125,13 @@ HARM-55 | ASAL observer equivalence (operator review 2026-09-18 pt 2): score the
 HARM-56 | Class-ruler calibration campaign (pt 6): frozen calibration set of known coherent movers, morphers, oscillators, turbulent/explosive Lenia, static-pixel/embedding-shift controls, translations, hue-only controls, pathological patterns; thresholds fit on it; disjoint validation set held out; observables first-class, class a derived label with an explicit UNCLASSIFIED region | ARCHAEOLOGY | R2 | L | port extension for the full domain (Techne) | calibration receipt with held-out confusion table; current rule unchanged for packet 001
 HARM-57 | Domain-acceptance fixture (A4) + measure-definedness fixture (A5) as mandatory pre-run stages in asal_ruler.py and ancestry_ruler.py; exact accepted/refused counts before any packet is executable | ARCHAEOLOGY | R1 | S | none | both rulers refuse to run a search/curve without a passing acceptance stage; counts in the receipt
 HARM-58 | Content-addressed artifact store for run trajectories/frames with hashes in git (hygiene, ranked behind HARM-57) | program | program | S | operator: location (G: mirror convention or the Techne vault) | the 18 MB of ASAL 001 artifacts moved out with hashes retained in the receipt
+
+## Campaign 6 -- observatory qualification (added 2026-09-18; charter at prompts/2026-09-18_campaign6/; OQ-1.0.0)
+
+HARM-52 | Fixture custody: author the planted blind-spot events with Nemesis (>= 3 per phenomenon class, >= 2 complexity bins), seal the public registry on main, hold the private one, verify the reveal after the firing table freezes | C6 | R | M | operator (fixture co-authors; recall threshold fixed before the reveal); Archaeon (complexity bins) | public registry committed with commitments; reveal verification record
+HARM-53 | Detector admission for the eleven: per detector a null family, chance floor at the campaign geometry, positive/negative/cheat controls, frozen threshold | C6 | R | L | Archaeon (detector specs); Nemesis (floors) | one admission file per detector, RULING per tranche
+HARM-54 | Recall calibration at close: the seven rates with eligible counts and Wilson intervals, the detector firing table with DISAGREEMENT and NONE_OF_THE_ABOVE, the complexity curve (return items 5, 6, 13) | C6 | R | M | HARM-52, HARM-53; Archaeon (frozen firing table, escalation receipts) | qualification/campaign6/ledgers/recall_<date>.json + ruling
+HARM-55 | Success-class adjudication: six verdicts via campaign_return, forbidden conclusions refused, UNKNOWN_MECHANISM catalogue (return items 8, 10) | C6 | R | M | HARM-54 | RULING_CAMPAIGN6_SUCCESS_CLASSES_<date>.md
 
 ## Blocked, listed rather than hidden
 
