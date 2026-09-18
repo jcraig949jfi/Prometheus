@@ -99,3 +99,21 @@ class and with no Phase-A mechanism carried. | C5-01/READOUT.md, C5-02/READOUT.m
 Alternative: PRESERVE_MECHANISM on the C5-01 probability gradient alone -- rejected,
 the rule required efficiency and was written before the run. | Revisit never in C5.
 DETERMINISTIC (rules fixed in D5-003 and C5-02/DESIGN.md).
+
+D5-010 | 2026-09-18 15:40 | C5-05 bins DT/DF read BEFORE the unchanged C4-01 classifier;
+crossing = static invalidity of the child's genome; thresholds T1-T6 fixed in
+C5-05/DESIGN.md; arm R must replicate C4-01 a02 digest for digest. Result: 5,586/5,586;
+T1/T2 pass on both grammars; T3 prediction lost (D6 lower by a tenth of a band);
+T4 recovered-competent .46 / .42 among executed-crossing children (C5-06 owns the
+reading); D7 = 0 everywhere. | C5-05/attempts/a01/GEOMETRY_B.json. | -- | Not
+revisited. DETERMINISTIC.
+
+D5-011 | 2026-09-18 15:45 | C5-06..C5-10 PREREGISTERED BEFORE C5-05 REPORTED (designs
+committed in the same series as C5-05's run): C5-06 matched classes RECOVERY /
+BOTH_LIVE / INSULATION_LOSS / BOTH_DIE with held-out replication (3 rng seeds, >= 2/3)
+and the fixed gate for C5-07 (>= 10 replicated recoveries AND Wilson lower bound
+> .01 of executed-crossing children; degenerate parents excluded); C5-07 costs K1-K3
+(conditional); C5-08 M1-M4 with dead-code ablation and length bins; C5-09 four arms
+(OLD_v04, OLD_B, B_FAIL, B_FIZZLE) at identical compute with WON/LOST/TIED cells and
+the +4 net rule; C5-10 reads RULE.md verbatim. | archaeon/campaign5/C5-0[6-9]/DESIGN.md,
+C5-10/RULE.md. | -- | Not revisited. SCIENTIFIC thresholds, DETERMINISTIC application.
