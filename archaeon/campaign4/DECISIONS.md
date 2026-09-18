@@ -84,3 +84,16 @@ repaired and the same experiment rerun with the failed attempt preserved;
 this was a harness defect (a wrong string), not a scientific failure. |
 Alternative: hand-edit a01's receipt -- never. | Revisit never.
 DETERMINISTIC (the census is a pure function of its seeds).
+
+D4-006 | 2026-09-18 06:05 | C4-02 RADIUS = the number of grammar.mutate()
+applications from one rng seeded by (campaign_seed, organism_id, radius,
+draw), operators drawn by the FROZEN WEIGHTS (name=None), INCLUDING steps
+whose operator returns its noop record (noop_steps recorded per child):
+the radius is what the grammar was asked to do, not what changed. The
+prediction written to be lost: loss_rate(r8) - loss_rate(r1) >= 0.05
+(measured: .930 - .522 = .408, not lost). Consistency control: the
+radius-1 D-distribution within TVD 0.10 of C4-01's frozen-weight mixture
+of per-operator distributions (measured .029). | C4-02/DESIGN.md. |
+Alternative: count only effective steps (would make the radius depend on
+the parent's length and hide the noop mass). | Revisit never in C4.
+DETERMINISTIC.
