@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-18 01:55 local (instance m2-9c10ae00; session closed; C4 gate items closed incl. G4 drained). Updated at least
+Currency: 2026-09-18 17:45 local (instance m2-9c10ae00; C4+C5 ingested, reader 1.5, surface re-pinned; C6 readiness starting). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
