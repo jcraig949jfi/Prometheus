@@ -280,7 +280,7 @@ C5-10/RULE.md, repb/, c5_NN.py, geometry_map_v2.py. Directive and
 packets: roles/Archaeon/prompts/2026-09-18_campaign5/. Commits on main:
 2999623c9 (C5-01), 823356eec (Phase A), aad7e9ca0 (RULE), 0632ec92b
 (C5-05), f44c31a31 (C5-06), aac15fe02 (C5-07/08, map), 0b0a75d5d
-(C5-09 a01); the final commit is named in the comms report.
+(C5-09 a01); the campaign-close commit is cf841ed6d.
 +=====================================================================+
 |  END. "Not worth continuing" is a first-class answer; section 8     |
 |  already gives it.                                                   |
