@@ -1,7 +1,10 @@
 # Harmonia backlog -- H0-H5 qualification
 
 Schema: `roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md`.
-Priority order. The first five are what I start today. 49 items (HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
+Priority order. 51 rows (HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
+State at 2026-09-18 (Harmonia[m2-ca1148a0] pass): 24 CLOSED today + 2 earlier, 4 SUPERSEDED, 1 DELEGATED, 20 OPEN -- every OPEN row is
+blocked on another seat (listed at the end) or sits in a sibling instance's declared lane (gzip: m2-038758c6 / gandalf-6cd1348b; particles,
+POET, Avida, Tierra, ASAL, TerraLingua: gandalf-6cd1348b). A row's closing annotation names the artifact.
 
 Seat scope: controls, units, qualification, and what the evidence permits. I
 own no execution and gate no release -- a scientific verdict and a software
@@ -46,9 +49,11 @@ HARM-13 | Apply the exchangeability diagnostic to D1, D2 and D4-D6 and report ea
 HARM-14 | Declare the calibration-corpus policy: which detectors may be calibrated on i.i.d. draws, and which need a trajectory-structured null | ENGINE | beta | M | HARM-13 | `CALIBRATION_CORPUS_POLICY.md` naming, per detector, the null family its rate is valid under
   > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/CALIBRATION_CORPUS_POLICY.md names, per detector, the null family its rate is valid under, derived from each detector's statistic (D1 i.i.d. calibration WITHDRAWN; D2/D4 SE understated under autocorrelation; D5 i.i.d. rate an upper bound; D6 by design; D3 per RULING_D3V2). The class distribution (HARM-13) is NOT_EXAMINED and named as what would change the file.
 HARM-15 | Build the trajectory-structured null and recalibrate D3 under it at the live geometry | ENGINE | beta | L | HARM-14 | a rate with its binomial SE at (n=40, k=4) under trended rows, beside the i.i.d. rate
+  > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: d3.v1 was superseded by the admitted d3.v2 (D-21), and RULING_D3V2_CALIBRATION_2026-09-14.md already calibrated v2 under a TRENDED null family (N2h at |r| 0.577 and 0.816) beside the i.i.d. one, at FLOOR and LIVE geometries (A2 rows). A v1 recalibration under trend has no consumer; the (n=40, k=4) geometry named here is the 09-10 dossier's, not the admitted LIVE one (36 vs 4 x 36). The live eligibility count remains HARM-18's.
 HARM-16 | Record the three EXCHANGEABLE survivors as a watch-list with their geometry and class, and the reopening condition | ENGINE | program | S | none | `D3_WATCHLIST.md` with three rows and the condition that would license a study
   > 2026-09-14, Harmonia[m2-f541bed9]: the three survivors were computed with /(n-2) detrending, not the admitted d3.v2's /(n-1) (RULING_D3V2_CALIBRATION_2026-09-14.md s5). Now blocked on the v2 live dossier (#260); write the watch-list from that dossier, not from the 09-10 numbers.
 HARM-17 | Recompute my binomial-null calibration at the family's actual L under the trajectory null, since the i.i.d. result does not apply to the live corpus | ENGINE | beta | M | HARM-15 | an amended calibration file stating which corpus each rate is valid for
+  > SUPERSEDED 2026-09-18, Harmonia[m2-ca1148a0]: as HARM-15 -- the binomial-null calibration this row would amend is v1's; v2's calibration file (science/ledgers/d3v2_calibration_2026-09-14.json) states per cell the null family and geometry each rate is valid for, which is what this row asked for.
 HARM-18 | Adjudicate d3.v2 (detrended statistic) if the operator admits it, with its own calibration and its own eligibility count | ENGINE | 1.1 | XL | operator decision NEW: admit or refuse d3.v2 as a new detector version | a ruling file, or a recorded refusal with the reason
   > 2026-09-14, Harmonia[m2-f541bed9]: operator admitted d3.v2 (D-21). Synthetic calibration RULED in RULING_D3V2_CALIBRATION_2026-09-14.md (ca0dd0fd7): ADMITTED at LIVE geometry, REFUSED at FLOOR and UNEQUAL. Live eligibility count still OPEN, blocked on Archaeon's v2 live dossier (delegation #260). Row stays open until that count is ruled.
 

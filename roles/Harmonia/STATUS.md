@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-18 01:10 UTC (Harmonia[m2-ca1148a0], own block only; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
+Currency: 2026-09-18 01:55 UTC (Harmonia[m2-ca1148a0], own block only; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -15,7 +15,7 @@ derived from activity, never from a row).
 
     worktree   D:/Prometheus-worktrees/harmonia-m2-ca1148a0-boot
     branch     harmonia/m2-ca1148a0-boot-2026-09-17
-    base_sha   80e0822ee (origin/main at fetch, 2026-09-18 01:00Z)
+    base_sha   80e0822ee (origin/main at fetch, 2026-09-18 01:00Z); integrated by fast-forward through the pass
     dirty      no at boot
     session    ca1148a0-0323-4295-aec2-2e71161e3142 (harness); session_01UvPiXdppxA2h2mk2YQTXFr (bridge)
     opened     2026-09-18 01:03 UTC
@@ -23,14 +23,24 @@ derived from activity, never from a row).
                m2-f541bed9 on 2026-09-14 (idle since 09-14 07:12Z). The tag, not the label, is the identity.
     comms      booted against the M1 canonical store (EW_DB_HOST=192.168.1.202); first sync 7 new
                (#385 #387 #388 #391 #393 #397 #410), 0 queued; `who`: 1/6 Harmonia instances online (this one).
-               Per-instance receipts confirmed: my sync writes receipt_instances for m2-ca1148a0 only;
-               a sibling's unseen window is unaffected for anything that arrived after its first boot.
+               Per-instance receipts confirmed. GAP found: comms.api.inbox filters m.sender <> agent, so a
+               Harmonia -> Harmonia message never reaches a sibling instance; siblings coordinate only through
+               this file, INSTANCES.md and journals (reported to Archaeon).
     siblings   gandalf-6cd1348b (M3, "Harmonia F"): particles 001/002 returned; POET/ALife steering (#381);
-               last sync 2026-09-17 18:31Z. m2-038758c6 (M2): gzip R1 open, HARM-38/39/43/44 all NOT STARTED
-               per its 09-17 journal; last sync 2026-09-17 11:17Z. Neither online at my boot.
-    working    boot only at this update. First item: HARM-44 (Proteus #341, ACK owed since 09-17; no reply
-               from any instance on record) -- announced to the seat before starting so a sibling that wakes
-               does not duplicate it.
+               HARM-38 "started" 09-17 with no artifact; last sync 2026-09-17 18:31Z. m2-038758c6 (M2): gzip R1
+               open, HARM-38/39/43/44 NOT STARTED per its 09-17 journal; last sync 2026-09-17 11:17Z. Neither
+               online during this pass; HARM-43/44 taken (both idle > 14 h, no artifact); HARM-38/39 left in
+               the gzip lane.
+    done       operator ask "work through every unclaimed HARM row": 24 rows CLOSED, 4 SUPERSEDED, 1 DELEGATED.
+               HARM-44 ruling to Proteus (#412); HARM-43 contract re-verified (CONFORMANT x3, DRIFT control);
+               QR-1.2.0 / AF-1.1.0 / EX-1.0.0 / FP-1.0.0 (HARM-01/02/04/05..12/28/29/30/34; runner dead since
+               09-10 repaired; 25 tests); STANDING_RULES.md (31); VACUOUS_READINGS.md (03);
+               CALIBRATION_CORPUS_POLICY.md (14); HARM-13 delegated to Archaeon (#413) with the #260 reminder;
+               H3 analysis manifest (25); PEW encounter manifests (24); number-scope audit (32; H4-ADAPTIVE
+               1.0.1); Stage-A triage over 107 cuts (46); 15/17/26/27 SUPERSEDED with reasons.
+    open       every remaining OPEN row is blocked on another seat (#260 Archaeon: 16/18; C3-3 issue: 19/20;
+               pool: 21; Vivarium 404: 22; NK length: 23; credential: 33; Daedalus A0: 35) or in a sibling's
+               declared lane (38-42 gzip; 45, 47-51 gandalf).
     journal    roles/Harmonia/journal/2026-09-17_m2-ca1148a0.md
 
 ### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
