@@ -21,11 +21,17 @@ blockers: none for today's items. Operator decisions open: APHRODITE-31
   APHRODITE-32 (Campaign 1, after the Campaign 0 report).
 open incident (2026-09-17): canonical checkout pulled before the working
   contract was read (a6969bfbb -> b70d4f76e); recorded in the ledger.
-Campaign 0: PASS (tier 2), STOPPED for the operator's review per the
-  stop condition. Required lineage count 64; MDE ~4.7 points at L 64;
-  specialisation is the fragile distinction (delta-dependent).
+Campaign 0: ACCEPTED, PASS. Campaign 0B: ACCEPTED as informative failure
+  (power boundary). Campaign 0C (secondary endpoint): PASS (tier 2).
+  Design packet v2 delivered (tier 3), measured economics pending.
+  Campaign 1 execution NOT authorised. Contract requests out to
+  Archaeon, Harmonia, Vivarium (comms #452-#454).
 news monitor: ACTIVE; first pass 2026-09-18 admitted 2 (reviewed); next
   scheduled pass Monday 2026-09-21 03:00.
-next executable action: none that needs authority -- await the operator's
-  review of Campaign 0 (APHRODITE-32). Items needing no new authority:
+benchmark: harness FROZEN 8f229b634 (sha256 618d810b...); executors Nestor
+  (M1, #471) and Archaeon (M2, #472); models Qwen3-8B, Gemma 3 4B, opt.
+  Llama 3.2 3B. Budget frozen: target 14 days, ceiling 30 days.
+next executable action: wait for receipts; then economics.py and the
+  packet's economics and substrate sections only. Contracts (#452-#454)
+  answered as they arrive. Items needing no new authority:
   APHRODITE-21 (file the deep-research report), -16, -24, -25, -26.

@@ -139,3 +139,63 @@ the walk is a pure function of its seeds and the frozen evaluator, so C4-06
 regenerates them and verifies the last-step digest against steps.json. |
 C4-05/DESIGN.md. | Alternative: band relative to the current walker (a
 ratchet). | Revisit never in C4. DETERMINISTIC.
+
+D4-011 | 2026-09-18 07:55 | C4-07 closed REPRESENTATION_BLOCKED through the stack (one
+sealed preregistration, one engine record carrying the design digest): no
+condition on the frozen substrate isolates an insulation event from ordinary
+execution (C4-03). Costing reduced operands or addresses instead would price
+the representation itself -- a reward term naming a representational property,
+forbidden by the directive. Recommendation for Campaign 5 in C4-07/DESIGN.md.
+| C4-03 PROXY_TABLES.json (vacuity 932/932; P(fatal) 1.000). | Alternative:
+substitute a different question -- rejected as the forbidden kind. |
+Revisit never in C4. DETERMINISTIC.
+
+D4-010 | 2026-09-18 07:45 | C4-06: D* = 16 (every C4-05 walker reached it); the
+starting population is the 188 depth-16 walkers of the non-degenerate parents,
+repeated to N by the evolver's init_pop rule; mutation_only = descend(mate=None)
+always; recombination = the evolver's mate policy unchanged (independent
+tournament, splice copies from the mate). Walker manifests are regenerated
+from C4-05's seeds and digest-verified; final populations are NOT stored
+(C4-08 reruns the ordinary arm and checks its traces). ANNOTATION after the
+run: the shelf positive control is weak by construction (walkers start on
+the shelf); recorded in READOUT R3, not moved. | C4-06/DESIGN.md. |
+Alternative: store 12 x 200 manifests (2.4k programs) -- rejected for size;
+the rerun is deterministic and self-verifying. | Revisit never in C4.
+DETERMINISTIC.
+
+D4-012 | 2026-09-18 08:05 | C4-08: perturbation regime = descend(n_ops=2, mate=None)
+per birth; descendant sample = top-32 of each final population; the ordinary
+arm is RERUN from C4-06's seeds (C4-06 saved traces, not manifests) and its
+traces are the negative control (6/6 equal); suspected structures chosen only
+after the assay (none differed by >= .10 -> ablation NOT_EXAMINED). ANNOTATION
+after the run: my sealed decl's primary min_effect (-0.10) made the harness
+read the predicted direction as a failure (CAPABLE_NEGATIVE); the slot's own
+preregistered readings (P1 held, P2 lost, length confound) are the record and
+the label stands beside them uncorrected. | C4-08/DESIGN.md. | Alternative:
+store C4-06's final populations -- rejected (D4-010). | Revisit: any later
+slot declares min_effect as a magnitude with an explicit direction field.
+DETERMINISTIC.
+
+D4-013 | 2026-09-18 08:30 | C4-09: lateral entry rule = measured reward on the
+receiving world >= 3/16 AND fitness >= that world's current median; candidates
+in organism-id order (no ranking), at most B=24 per world per generation;
+inject replaces the receiving world's worst members; the transfer
+evaluations are counted as extra compute (not equalized). ANNOTATION after
+the run: three of the four ecology worlds were solved by the starting walkers
+at generation 0 (held-out 1.0), a check this preregistration lacked; the
+improvement measure had one world of headroom. Recorded (READOUT R3); C4-10
+carries the check. | C4-09/DESIGN.md. | Alternative: equalize TOTAL budget by
+giving the control ~70% more generations -- not run; a later slot's design.
+| Revisit in Campaign 5. DETERMINISTIC.
+
+D4-014 | 2026-09-18 09:10 | C4-10: conditions selected by the preregistered rule
+from the committed tables: NONE (mutation_load: loss down but coherent share
+down; lateral: P2 lost). Baseline alone on the held-out family. ANNOTATION
+after the run: the negative control found W1_d2, W1_d3 and W0_8b solved by
+the 57 parents at generation 0 (held-out 1.0); the runner computed the drop
+set and still ran all four worlds (my defect); their rows are committed and
+flagged PRE-SOLVED, W2_K2d1 is the live column, nothing was re-run after
+seeing the rows. | C4-10/DESIGN.md; TRIAL.json. | Alternative: re-run on
+W2_K2d1 alone -- rejected (a post-hoc re-run after seeing results). | Revisit
+in Campaign 5: check the family against the parents BEFORE choosing either.
+DETERMINISTIC.

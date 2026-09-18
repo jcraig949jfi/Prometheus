@@ -1,0 +1,410 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:6732078edbd48314e5691e2cc6e51c7f5e3f91b287b9c3773d6fd69cb34f0493",
+   "blob_hash": "sha256:1edc3e9478f06881bd4d0fdc63a80fa58a4c87b0f99ca6b0e0008efb82cbaa7d",
+   "bytes": 3462,
+   "declared": "sha256:1edc3e9478f06881bd4d0fdc63a80fa58a4c87b0f99ca6b0e0008efb82cbaa7d",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  },
+  "summary": {
+   "artifact_id": "sha256:3945e03058973f008699552159fd14083eb6da60b63079094176ddda51745c03",
+   "blob_hash": "sha256:412af0acb087b30c32a52faef44b456d91e378eed73fbd0cefa9d5b8efb4900a",
+   "bytes": 1256,
+   "declared": "sha256:412af0acb087b30c32a52faef44b456d91e378eed73fbd0cefa9d5b8efb4900a",
+   "hash_ok": true,
+   "kind": "cmp4.c406_summary.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C4-06/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260921,
+ "decisions": [
+  "D4-010: D* = 16 (every C4-05 walker reached it); the starting population is the 188 depth-16 walkers of the non-degenerate parents, repeated to N by the evolver's init_pop rule; mutation_only = descend(mate=None) always; recombination = the evolver's mate policy unchanged"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "TARGET_UNREACHABLE",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "TARGET_UNREACHABLE"
+  ]
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C4-06",
+ "finished_at": "2026-09-18T06:23:49Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_55f97a67ddb82f332a70ee5b",
+ "imports": {},
+ "ledger_ids": [
+  "L4-001"
+ ],
+ "prereg_digest": "sha256:3dc2a098e06e22c060b68b05355cca5a4b5edf64dec79240df23fabc99458556",
+ "purpose": "engine",
+ "reachability_rows_appended": 12,
+ "records": {
+  "mutation_only/1": {
+   "exp_id": "exp_c8b9ee51442880bc51540676",
+   "obs_id": "obs_95a3557b0d75227a85a4479d"
+  },
+  "mutation_only/2": {
+   "exp_id": "exp_2f3f48248972bf77e663695e",
+   "obs_id": "obs_f89a3c1a633f5477569a58bd"
+  },
+  "mutation_only/3": {
+   "exp_id": "exp_bd33bd37168c26be609b9c2e",
+   "obs_id": "obs_ba6ffc17f9827cf7784e6f23"
+  },
+  "mutation_only/4": {
+   "exp_id": "exp_3d0e9a14ac6d529283afb93a",
+   "obs_id": "obs_3cdf12ccea1fff2eb52e286c"
+  },
+  "mutation_only/5": {
+   "exp_id": "exp_5c71e67e2282d8a41d013011",
+   "obs_id": "obs_4a243783b6704c3871754d8b"
+  },
+  "mutation_only/6": {
+   "exp_id": "exp_94a9f9dfd15ef762760338df",
+   "obs_id": "obs_1232f8c82528fb9c09518192"
+  },
+  "recombination/1": {
+   "exp_id": "exp_4f6725bd1a2c90429788ce37",
+   "obs_id": "obs_3e5e936c31aa692df720b9d2"
+  },
+  "recombination/2": {
+   "exp_id": "exp_6fec7ff54d6794ceffdc4ceb",
+   "obs_id": "obs_e09a5d4acb7999158e07f75b"
+  },
+  "recombination/3": {
+   "exp_id": "exp_ebb711afcd3ec3b77715c116",
+   "obs_id": "obs_2faf0ee25c4b6b64e7746962"
+  },
+  "recombination/4": {
+   "exp_id": "exp_3735633785834a8e447f1e81",
+   "obs_id": "obs_41cd1b881c1ecaf943620294"
+  },
+  "recombination/5": {
+   "exp_id": "exp_9005b8b8bca9fb1f2c0b6c75",
+   "obs_id": "obs_77193fbf67ffd9b080c14b13"
+  },
+  "recombination/6": {
+   "exp_id": "exp_ee1c1d0935231123e19bfdb0",
+   "obs_id": "obs_f7469d6c64eaa49a366686f2"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T06:21:24Z",
+ "steps": {
+  "idem:16b0aa1f8cce423117e261045add102c": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_5c71e67e2282d8a41d013011",
+    "obs_id": "obs_4a243783b6704c3871754d8b"
+   },
+   "wall_s": 0.043
+  },
+  "idem:302b572bea9ef0678d6ea4f75b29c0a6": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:6732078edbd48314e5691e2cc6e51c7f5e3f91b287b9c3773d6fd69cb34f0493",
+    "blob_hash": "sha256:1edc3e9478f06881bd4d0fdc63a80fa58a4c87b0f99ca6b0e0008efb82cbaa7d",
+    "bytes": 3462,
+    "declared": "sha256:1edc3e9478f06881bd4d0fdc63a80fa58a4c87b0f99ca6b0e0008efb82cbaa7d",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.013
+  },
+  "idem:34a8985eaac9fb635ca9635643d983ba": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ebb711afcd3ec3b77715c116",
+    "obs_id": "obs_2faf0ee25c4b6b64e7746962"
+   },
+   "wall_s": 0.066
+  },
+  "idem:3572a1ec17dd9c842f26d2845610a1cb": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.008
+  },
+  "idem:3ff4f512786a6163a0b020485687e66d": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_55f97a67ddb82f332a70ee5b",
+   "wall_s": 0.016
+  },
+  "idem:4f8a898ed7a1454b467bd78fdb37c14c": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6fec7ff54d6794ceffdc4ceb",
+    "obs_id": "obs_e09a5d4acb7999158e07f75b"
+   },
+   "wall_s": 0.019
+  },
+  "idem:70613b6572c73cdd256c0120db771b17": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_158fbab66b8aca41d85ecf62",
+   "wall_s": 0.025
+  },
+  "idem:758cf6d0384fedd42e3eeb28196193dd": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_bd33bd37168c26be609b9c2e",
+    "obs_id": "obs_ba6ffc17f9827cf7784e6f23"
+   },
+   "wall_s": 0.029
+  },
+  "idem:7bd6306c6af2c33537e68954731b37d9": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_2f3f48248972bf77e663695e",
+    "obs_id": "obs_f89a3c1a633f5477569a58bd"
+   },
+   "wall_s": 0.062
+  },
+  "idem:895798e49aa31042730075e5e25127ad": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    5
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_9005b8b8bca9fb1f2c0b6c75",
+    "obs_id": "obs_77193fbf67ffd9b080c14b13"
+   },
+   "wall_s": 0.038
+  },
+  "idem:995cc2707c8acd199f9a6634956eb2c4": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_c8b9ee51442880bc51540676",
+    "obs_id": "obs_95a3557b0d75227a85a4479d"
+   },
+   "wall_s": 0.057
+  },
+  "idem:9b4e2edeab2f0afa099b0b8e8d926e89": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_3d0e9a14ac6d529283afb93a",
+    "obs_id": "obs_3cdf12ccea1fff2eb52e286c"
+   },
+   "wall_s": 0.018
+  },
+  "idem:9e4c69009bd5c7a5606f19f011786359": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "summary"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:3945e03058973f008699552159fd14083eb6da60b63079094176ddda51745c03",
+    "blob_hash": "sha256:412af0acb087b30c32a52faef44b456d91e378eed73fbd0cefa9d5b8efb4900a",
+    "bytes": 1256,
+    "declared": "sha256:412af0acb087b30c32a52faef44b456d91e378eed73fbd0cefa9d5b8efb4900a",
+    "hash_ok": true,
+    "kind": "cmp4.c406_summary.v1"
+   },
+   "wall_s": 0.01
+  },
+  "idem:a0bdaa8a3e976133cb896ffd3f9ba715": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ee1c1d0935231123e19bfdb0",
+    "obs_id": "obs_f7469d6c64eaa49a366686f2"
+   },
+   "wall_s": 0.052
+  },
+  "idem:b5a1fbcacb037ce857faddfe9cb7a41f": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_3735633785834a8e447f1e81",
+    "obs_id": "obs_41cd1b881c1ecaf943620294"
+   },
+   "wall_s": 0.06
+  },
+  "idem:ba314b0fa2ed9d66e0dcfbbf1f9b381a": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "mutation_only",
+    6
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_94a9f9dfd15ef762760338df",
+    "obs_id": "obs_1232f8c82528fb9c09518192"
+   },
+   "wall_s": 0.032
+  },
+  "idem:d0069b37b0ea1566c0bfee330a016865": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "recomb"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c4-06-recomb",
+    "policy": "ISOLATED",
+    "world_id": "wld_1a3f4699c13a8e3fc3534a1e"
+   },
+   "wall_s": 0.055
+  },
+  "idem:d61ab8653c13500ed740a5d5b59dbecb": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "recombination",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_4f6725bd1a2c90429788ce37",
+    "obs_id": "obs_3e5e936c31aa692df720b9d2"
+   },
+   "wall_s": 0.029
+  }
+ },
+ "teardown": {
+  "recomb": "TERMINATED"
+ },
+ "timings": {
+  "evolve_s": 123.96,
+  "startup_s": 0.03,
+  "teardown_s": 0.04,
+  "total_s": 145.8
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "band95_upper": 0.2425,
+    "baseline_arm": "*",
+    "reached": 0,
+    "rows": 12,
+    "table_class": "OBSERVED_UNREACHABLE_AT_BUDGET"
+   },
+   "state": "TARGET_UNREACHABLE"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "a6383d2ca8dd1d2470160a0dc921dd9d85fa39ab",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "recomb": "wld_1a3f4699c13a8e3fc3534a1e"
+ }
+}

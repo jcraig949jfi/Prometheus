@@ -1,0 +1,169 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:9cc394f4d76959e98ae189ad74784b7e40938719b26034f6935fe444935fdceb",
+   "blob_hash": "sha256:29fb91eab46da38fa6786d80c54981c7823ad743c36f75c5db0f8d6da202a59f",
+   "bytes": 1177,
+   "declared": "sha256:29fb91eab46da38fa6786d80c54981c7823ad743c36f75c5db0f8d6da202a59f",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C4-07/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260921,
+ "decisions": [
+  "D4-011: C4-07 REPRESENTATION_BLOCKED; costing reduced operands or addresses would price the representation itself (a forbidden reward term); recommendation for Campaign 5 recorded in DESIGN.md"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "INCONCLUSIVE",
+  "reason": "no primary comparison declared or no rows",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C4-07",
+ "finished_at": "2026-09-18T06:23:15Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_fbfd9523f25ae3495f200455",
+ "imports": {},
+ "prereg_digest": "sha256:ff8b154eadc35e650267dfe353f64372ca4f9f16e298fdf6da3e6ca08bd2e448",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "blocked": {
+   "exp_id": "exp_cc37b6fe9dbee7ff542a042c",
+   "obs_id": "obs_c6a51175bc5f720cf5eee767"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T06:23:15Z",
+ "steps": {
+  "idem:00c461052ab73ee0630c9c8772c3127f": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:9cc394f4d76959e98ae189ad74784b7e40938719b26034f6935fe444935fdceb",
+    "blob_hash": "sha256:29fb91eab46da38fa6786d80c54981c7823ad743c36f75c5db0f8d6da202a59f",
+    "bytes": 1177,
+    "declared": "sha256:29fb91eab46da38fa6786d80c54981c7823ad743c36f75c5db0f8d6da202a59f",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.023
+  },
+  "idem:5e2149fe663bef39bb356c4fe1770d69": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_fbfd9523f25ae3495f200455",
+   "wall_s": 0.013
+  },
+  "idem:5e6b5a15c03e1c2f19b68fffad30fa56": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.01
+  },
+  "idem:61ead6d8eb1635f269f47b3419167340": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "blocked"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c4-07-blocked",
+    "policy": "ISOLATED",
+    "world_id": "wld_68541779816fb11960df0a0d"
+   },
+   "wall_s": 0.048
+  },
+  "idem:97a778297c08f0a626bdf6f18c6b7d8f": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_d9ca189e64e74651b8d07759",
+   "wall_s": 0.022
+  },
+  "idem:dfd9033311400fbda8ece9efc54f12b9": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "blocked"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_cc37b6fe9dbee7ff542a042c",
+    "obs_id": "obs_c6a51175bc5f720cf5eee767"
+   },
+   "wall_s": 0.031
+  }
+ },
+ "teardown": {
+  "blocked": "TERMINATED"
+ },
+ "timings": {
+  "startup_s": 0.03,
+  "teardown_s": 0.01,
+  "total_s": 0.3
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "69505568bc162716f26ace2540ad1ba01da6a8ef",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "blocked": "wld_68541779816fb11960df0a0d"
+ }
+}

@@ -41,7 +41,7 @@ def _plan(**kw):
 # ------------------------------------------------------------ versions
 
 def test_versions():
-    assert q.RULES_VERSION == "QR-1.2.0"
+    assert q.RULES_VERSION == "QR-1.2.1"
     assert af.FIXTURES_VERSION == "AF-1.1.0"
     assert ex.EX_VERSION == "EX-1.0.0"
     assert fp.FP_VERSION == "FP-1.0.0"
@@ -313,3 +313,43 @@ def test_h4_protocol_reporting_is_conditional_and_versioned():
     assert q.H4_PROTOCOL_VERSION == "H4-ADAPTIVE-1.0.1"
     rep = q.H4_ADAPTIVE_PROTOCOL["reporting"]
     assert "ONLY under" in rep and "by construction" not in rep
+
+
+# ============================== QR-1.2.1: self-attack on 1.2.0 (review packet Q1, Q2)
+
+def test_relabel_admits_a_new_plan_on_disjoint_tasks_and_refuses_overlap():
+    # 12 blocks so the relabel path, not HA-1.6, is what fires on the same-body case
+    diag = _plan(purpose="DIAGNOSTIC", n_blocks=12, pilot_task_ids=(1, 2, 3), confirmation_task_ids=(4, 5))
+    frozen = q.freeze_plan(diag, "2026-09-18")
+    assert frozen["task_ids"] == [1, 2, 3, 4, 5]
+    fresh = _plan(purpose="CONFIRMATORY", plan_version="t2", pilot_task_ids=(6, 7), confirmation_task_ids=(8, 9))
+    assert "no_relabel_after_data_opened" in q.validate_plan(fresh, frozen=frozen, data_opened=True)
+    reused = _plan(purpose="CONFIRMATORY", plan_version="t2", pilot_task_ids=(6, 7), confirmation_task_ids=(5, 9))
+    with pytest.raises(q.PlanRefused, match="1 confirmation task"):
+        q.validate_plan(reused, frozen=frozen, data_opened=True)
+    same = _plan(purpose="CONFIRMATORY", n_blocks=12, pilot_task_ids=(1, 2, 3), confirmation_task_ids=(4, 5))
+    with pytest.raises(q.PlanRefused, match="same plan body"):
+        q.validate_plan(same, frozen=frozen, data_opened=True)
+    legacy = {k: v for k, v in frozen.items() if k != "task_ids"}     # a pre-1.2.1 record
+    with pytest.raises(q.PlanRefused, match="no task ids"):
+        q.validate_plan(fresh, frozen=legacy, data_opened=True)
+
+
+def test_alias_chains_resolve_and_cycles_are_refused():
+    cells = {"S00": {"payload_hash": "a"}, "S10": {"payload_hash": "b"}}
+    rec = q.validate_cell_payloads({"cells": cells, "aliases": {"fresh": "S00", "baseline": "fresh"}})
+    assert rec["aliases"]["baseline"]["cell"] == "S00"
+    with pytest.raises(q.PlanRefused, match="alias cycle"):
+        q.validate_cell_payloads({"cells": cells, "aliases": {"x": "y", "y": "x"}})
+    with pytest.raises(q.PlanRefused, match="both an alias and a cell"):
+        q.validate_cell_payloads({"cells": cells, "aliases": {"S10": "S00"}})
+
+
+def test_h5_bounds_are_computed_and_the_definition_is_the_non_parent_one():
+    r = q.h5_reach_bounds_computed(n_permutations=1)
+    assert r["direct_reach_excl_parent"] == {"min": 8, "max": 8, "mean": 8.0}
+    assert r["direct_reach_incl_parent"]["max"] == 9          # the parent's own rule counts as a ninth
+    assert r["direct_neutral_mean"] == 4.0                    # the live readout's mean_neutral 4.0000
+    assert r["direct_bound_holds"] and r["permuted_bound_is_neighbour_count"]
+    # a balanced RANDOM permutation reaches ~11.72; the live learned balanced_7 read 11.7305
+    assert 11.6 < r["balanced_random_permutation_mean_reach_excl_parent"][0] < 11.85

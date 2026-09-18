@@ -9,8 +9,8 @@ Steps (each a gate in the receipt):
     I2  ingest again: 0 new, 0 conflicts (replay / idempotence)
     I3  campaign-4 rows exist (source_path under archaeon/campaign4/) --
         SKIPPED in --precheck (no artifacts yet), FAIL otherwise
-    R1  rebuild-check reach_level v1, reach_level v0, corridor_edge v1: equal,
-        and unchanged from the frozen point-release digests
+    R1  rebuild-check reach_level v1, reach_level v0, corridor_edge v1: equal
+        (row digests move with evidence; the DEFINITIONS are gate F1)
     C1  campaign_release_check: all gates pass on the deployed service
     F1  the frozen surface test passes (the pinned identities still equal
         the code that just ran)
@@ -101,9 +101,12 @@ def main():
         except Exception:
             j = {"rebuild_equal": False, "rebuild_digest": None}
         digests[f"{name}/{ver}"] = j.get("rebuild_digest")
-        ok_all = ok_all and j.get("rebuild_equal") and j.get("rebuild_digest") == FROZEN_DIGESTS[f"{name}/{ver}"]
-    gate("R1_rebuild_equal_and_unchanged_from_frozen", ok_all,
-         json.dumps({k: (v[:12] if v else None) for k, v in digests.items()}))
+        ok_all = ok_all and bool(j.get("rebuild_equal"))
+    # Row digests MOVE when evidence grows (a new campaign adds reachability
+    # rows); what must not move is the DEFINITION (pinned in the frozen
+    # surface, gate F1). The C4-era row digests are reported for comparison.
+    gate("R1_rebuild_equal", ok_all,
+         json.dumps({k: (v[:12] if v else None) for k, v in digests.items()}) + f" (C4-era: {json.dumps({k: v[:12] for k, v in FROZEN_DIGESTS.items()})})")
 
     r = run([sys.executable, "integration/campaign_release_check.py", "--machine", "M2", "--host", a.host, "--port", str(a.port)])
     try:

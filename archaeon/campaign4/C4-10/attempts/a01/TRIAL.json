@@ -1,0 +1,110 @@
+{
+ "campaign_disposition": "NO_CONDITION_SELECTED",
+ "claims": {},
+ "conditions": [
+  "baseline"
+ ],
+ "dropped_worlds": [
+  "W1_d2",
+  "W1_d3",
+  "W0_8b"
+ ],
+ "selection": {
+  "evidence": {
+   "lateral": {
+    "P1": {
+     "held": true,
+     "stated": "rescue survival >= .25",
+     "values": [
+      0.4043,
+      0.3049,
+      0.5463
+     ]
+    },
+    "P2": {
+     "held": false,
+     "per_world": {
+      "W0": 0,
+      "W1_d1": 0,
+      "W1_d4": 0,
+      "W2_K2": 1
+     },
+     "stated": "some world improved by >= 1/16 in >= 2 of 3 seeds"
+    },
+    "qualifies": false
+   },
+   "mutation_load": {
+    "ancestral_coherent": {
+     "band95": [
+      0.1417,
+      0.1571
+     ],
+     "k": 1234,
+     "p": 0.1492
+    },
+    "ancestral_loss": {
+     "band95": [
+      0.4081,
+      0.4294
+     ],
+     "k": 3463,
+     "p": 0.4187
+    },
+    "coherent_increased": false,
+    "loss_decreased_bands_apart": true,
+    "perturbed_coherent": {
+     "band95": [
+      0.0396,
+      0.048
+     ],
+     "k": 398,
+     "p": 0.0436
+    },
+    "perturbed_loss": {
+     "band95": [
+      0.118,
+      0.1315
+     ],
+     "k": 1138,
+     "p": 0.1246
+    },
+    "qualifies": false
+   }
+  },
+  "selected": []
+ },
+ "start_best_heldout": {
+  "W0_8b": 1.0,
+  "W1_d2": 1.0,
+  "W1_d3": 1.0,
+  "W2_K2d1": 0.5312
+ },
+ "tables": {
+  "baseline": {
+   "behavioural_diversity_mean": 14.25,
+   "births": 185230,
+   "cells": 16,
+   "compute_evals": 192000,
+   "fatal_mass": {
+    "band95": [
+     0.2583,
+     0.2623
+    ],
+    "p": 0.2603
+   },
+   "heldout_final_mean": 0.8835,
+   "lineage_depth_mean": 0.38,
+   "nontrivial_yield": {
+    "band95": [
+     0.7377,
+     0.7417
+    ],
+    "p": 0.7397
+   },
+   "novel_capability_cells": 12,
+   "runs": 4,
+   "useful_per_birth": 0.7397
+  }
+ },
+ "wall_s": 184.5
+}

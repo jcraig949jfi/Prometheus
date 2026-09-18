@@ -1,0 +1,674 @@
+{
+ "artifacts": {
+  "genrep": {
+   "artifact_id": "sha256:739d12ec04f5ead2370bf0e64d37b66d92f0a45bbd97e015194d83d048f76524",
+   "blob_hash": "sha256:64b828a56c8fac4ad3a5757b3ecf5721c8950c7979113608a01ac77b1805fe26",
+   "bytes": 1176,
+   "declared": "sha256:64b828a56c8fac4ad3a5757b3ecf5721c8950c7979113608a01ac77b1805fe26",
+   "hash_ok": true,
+   "kind": "cmp5.c504_genrep.v1"
+  },
+  "prereg": {
+   "artifact_id": "sha256:bca3459569efb9ddfb50c11e70d67cc4659ace1644fb1edfb5fc7764b7ad5e26",
+   "blob_hash": "sha256:49ba11da95eb543ebc7fd12cedc4191d8678c8388d594144e6e533149dce9fb8",
+   "bytes": 1609,
+   "declared": "sha256:49ba11da95eb543ebc7fd12cedc4191d8678c8388d594144e6e533149dce9fb8",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C5-04/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260922,
+ "decisions": [],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "UNDERPOWERED",
+  "reason": "fewer rows than the preregistered minimum",
+  "states": [
+   "UNDERPOWERED"
+  ]
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C5-04",
+ "finished_at": "2026-09-18T14:37:42Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_29da42c8e87534f75b26d656",
+ "imports": {},
+ "prereg_digest": "sha256:222115bb859cddf71b23773fd1fd614415c44bfc46d69fcbfa3495ebf2e08977",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "injected2 x B_FAIL/1": {
+   "exp_id": "exp_c6531f8c16726ca316a52bee",
+   "obs_id": "obs_12cd25a1d2bb21b9b4a2eeeb"
+  },
+  "injected2 x B_FAIL/2": {
+   "exp_id": "exp_116b312867ffeb03e1b0e2c8",
+   "obs_id": "obs_afbbfcca5acf029efc028fef"
+  },
+  "injected2 x B_FAIL/3": {
+   "exp_id": "exp_d7956607bc7d3b2fd3b2b99e",
+   "obs_id": "obs_b21a0d87e8afcf9753f98ede"
+  },
+  "injected2 x B_FIZZLE/1": {
+   "exp_id": "exp_f2b297f1366c25c586fc15df",
+   "obs_id": "obs_3f7641d08f64f3f08fe278de"
+  },
+  "injected2 x B_FIZZLE/2": {
+   "exp_id": "exp_90b7197bc1d87e05f416baf5",
+   "obs_id": "obs_5b9942b9734e1c2c83290e78"
+  },
+  "injected2 x B_FIZZLE/3": {
+   "exp_id": "exp_fe4facf9a6549ca35e7c831f",
+   "obs_id": "obs_7099217aa758e857809c9047"
+  },
+  "injected2 x OLD/1": {
+   "exp_id": "exp_59c00602644fbd66e57b9b8d",
+   "obs_id": "obs_4d40e7d9e2559690b4d520a8"
+  },
+  "injected2 x OLD/2": {
+   "exp_id": "exp_7f8ab9ebd04c80721405f36f",
+   "obs_id": "obs_9c26ab68f3f4fd0a6a862b47"
+  },
+  "injected2 x OLD/3": {
+   "exp_id": "exp_be993e6862681cc0a94af49d",
+   "obs_id": "obs_6792fb3394bd16dc96744d58"
+  },
+  "raw x B_FAIL/1": {
+   "exp_id": "exp_9ee7eba0e0db4e0a6d845e87",
+   "obs_id": "obs_ef853876b4d196bad0d72dd7"
+  },
+  "raw x B_FAIL/2": {
+   "exp_id": "exp_1506b41444c9e1380ed210d7",
+   "obs_id": "obs_cf59feb98759f896c807c97c"
+  },
+  "raw x B_FAIL/3": {
+   "exp_id": "exp_c00012e53bda754e8d77c55b",
+   "obs_id": "obs_37e1d25f5d7ea6c236cfd268"
+  },
+  "raw x B_FIZZLE/1": {
+   "exp_id": "exp_0749ae9c44eb1b055bd4f7b2",
+   "obs_id": "obs_3630656da5b6b1580c5bcfce"
+  },
+  "raw x B_FIZZLE/2": {
+   "exp_id": "exp_d0a549857f1ad988c78bcfa6",
+   "obs_id": "obs_04589681f5858343c1257997"
+  },
+  "raw x B_FIZZLE/3": {
+   "exp_id": "exp_29c33593049d00aeaa187665",
+   "obs_id": "obs_59b047fdd6412e7f9a90e886"
+  },
+  "raw x OLD/1": {
+   "exp_id": "exp_87fdc28affff0631eb26f2f1",
+   "obs_id": "obs_04f05fc6c98090c7eaea4895"
+  },
+  "raw x OLD/2": {
+   "exp_id": "exp_33683786ba2b5c7857f4d837",
+   "obs_id": "obs_61652afb4f62aab7e33257dd"
+  },
+  "raw x OLD/3": {
+   "exp_id": "exp_75f100b8b6c39443138c8cc7",
+   "obs_id": "obs_09a9a1fb556a9faaedc91bd0"
+  },
+  "valid x B_FAIL/1": {
+   "exp_id": "exp_53d2430bb609fd5376ac0e41",
+   "obs_id": "obs_d834a3572b9a24d76a6b42aa"
+  },
+  "valid x B_FAIL/2": {
+   "exp_id": "exp_f7af205fd35ca52ea4a5beb7",
+   "obs_id": "obs_9a2ddb274ff92befeabf582d"
+  },
+  "valid x B_FAIL/3": {
+   "exp_id": "exp_2e2efa708259dcfc38447b1a",
+   "obs_id": "obs_bdd5f8134048aad3addf13f9"
+  },
+  "valid x B_FIZZLE/1": {
+   "exp_id": "exp_7163f957ca13ce66b50a5638",
+   "obs_id": "obs_fc008219bfdcbe63b168a933"
+  },
+  "valid x B_FIZZLE/2": {
+   "exp_id": "exp_fe74f99b17a9a7deabb8a6f3",
+   "obs_id": "obs_06697fdeb01257e0977e32c7"
+  },
+  "valid x B_FIZZLE/3": {
+   "exp_id": "exp_916316a708e9211b1f9fca80",
+   "obs_id": "obs_4cbd82b7a272c0425ff66da1"
+  },
+  "valid x OLD/1": {
+   "exp_id": "exp_231f4e9a6a5c7b84f9ee99b0",
+   "obs_id": "obs_216c5f894b535e36ce0ab9a0"
+  },
+  "valid x OLD/2": {
+   "exp_id": "exp_57f77e5683a296b9e6913e5b",
+   "obs_id": "obs_16eb6a54fd8b81a8196d5fe9"
+  },
+  "valid x OLD/3": {
+   "exp_id": "exp_333689f7d511b8068cb21230",
+   "obs_id": "obs_7042899194567b09b30e0ab0"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T14:37:40Z",
+ "steps": {
+  "idem:02647bcf2f26af04e0074ce8f71248d2": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FIZZLE",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_f2b297f1366c25c586fc15df",
+    "obs_id": "obs_3f7641d08f64f3f08fe278de"
+   },
+   "wall_s": 0.049
+  },
+  "idem:08caf3913f4d7891ace81165620acb8f": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FAIL",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_f7af205fd35ca52ea4a5beb7",
+    "obs_id": "obs_9a2ddb274ff92befeabf582d"
+   },
+   "wall_s": 0.056
+  },
+  "idem:0f7d8a8f62992b4f7466a37cf441ed4a": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x OLD",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_7f8ab9ebd04c80721405f36f",
+    "obs_id": "obs_9c26ab68f3f4fd0a6a862b47"
+   },
+   "wall_s": 0.02
+  },
+  "idem:1227963a6d211b6f4f59d41bbde559bd": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FAIL",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_d7956607bc7d3b2fd3b2b99e",
+    "obs_id": "obs_b21a0d87e8afcf9753f98ede"
+   },
+   "wall_s": 0.035
+  },
+  "idem:31ed3cfee5136e9a7e6449de08934225": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:bca3459569efb9ddfb50c11e70d67cc4659ace1644fb1edfb5fc7764b7ad5e26",
+    "blob_hash": "sha256:49ba11da95eb543ebc7fd12cedc4191d8678c8388d594144e6e533149dce9fb8",
+    "bytes": 1609,
+    "declared": "sha256:49ba11da95eb543ebc7fd12cedc4191d8678c8388d594144e6e533149dce9fb8",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.013
+  },
+  "idem:4f409cf493b5b2e1fde994cc6ae1e4e8": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x OLD",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_231f4e9a6a5c7b84f9ee99b0",
+    "obs_id": "obs_216c5f894b535e36ce0ab9a0"
+   },
+   "wall_s": 0.043
+  },
+  "idem:50107fb5e2e2a1f4f2ef65f45e801968": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "generator-x-representation"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c5-04-generator-x-representation",
+    "policy": "ISOLATED",
+    "world_id": "wld_b2e2ee68b9eb9ecc01181510"
+   },
+   "wall_s": 0.016
+  },
+  "idem:61bc7631e09d74d89e56f04f9a338d67": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FIZZLE",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_90b7197bc1d87e05f416baf5",
+    "obs_id": "obs_5b9942b9734e1c2c83290e78"
+   },
+   "wall_s": 0.041
+  },
+  "idem:6208a53d9bb710c3b5b696ede2c4d0f5": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FAIL",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_2e2efa708259dcfc38447b1a",
+    "obs_id": "obs_bdd5f8134048aad3addf13f9"
+   },
+   "wall_s": 0.032
+  },
+  "idem:6ab05fd41b80d3deb8b49ece6f54a2dc": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "genrep"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:739d12ec04f5ead2370bf0e64d37b66d92f0a45bbd97e015194d83d048f76524",
+    "blob_hash": "sha256:64b828a56c8fac4ad3a5757b3ecf5721c8950c7979113608a01ac77b1805fe26",
+    "bytes": 1176,
+    "declared": "sha256:64b828a56c8fac4ad3a5757b3ecf5721c8950c7979113608a01ac77b1805fe26",
+    "hash_ok": true,
+    "kind": "cmp5.c504_genrep.v1"
+   },
+   "wall_s": 0.034
+  },
+  "idem:7a794bee760e71be9230ca115523109b": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FIZZLE",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_7163f957ca13ce66b50a5638",
+    "obs_id": "obs_fc008219bfdcbe63b168a933"
+   },
+   "wall_s": 0.047
+  },
+  "idem:7d24313da3f574fde113fc555e6be031": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FIZZLE",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_fe4facf9a6549ca35e7c831f",
+    "obs_id": "obs_7099217aa758e857809c9047"
+   },
+   "wall_s": 0.012
+  },
+  "idem:7d4663fc1d1bb486527a72ffae810ab7": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_a8f6b1167087e91fd77e2f28",
+   "wall_s": 0.018
+  },
+  "idem:83b981b3e3fc62f12dade5c637465112": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x OLD",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_59c00602644fbd66e57b9b8d",
+    "obs_id": "obs_4d40e7d9e2559690b4d520a8"
+   },
+   "wall_s": 0.047
+  },
+  "idem:99f90e78b7b25992122b4e269b36708a": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x OLD",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_be993e6862681cc0a94af49d",
+    "obs_id": "obs_6792fb3394bd16dc96744d58"
+   },
+   "wall_s": 0.008
+  },
+  "idem:9b634a0a3aebd6b63335790a508cb896": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FAIL",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_c00012e53bda754e8d77c55b",
+    "obs_id": "obs_37e1d25f5d7ea6c236cfd268"
+   },
+   "wall_s": 0.035
+  },
+  "idem:a11b2fa01330dd207353821884ffa485": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x OLD",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_33683786ba2b5c7857f4d837",
+    "obs_id": "obs_61652afb4f62aab7e33257dd"
+   },
+   "wall_s": 0.066
+  },
+  "idem:a1c5f8ee3ea02463d8abf7df056f6763": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FAIL",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_9ee7eba0e0db4e0a6d845e87",
+    "obs_id": "obs_ef853876b4d196bad0d72dd7"
+   },
+   "wall_s": 0.008
+  },
+  "idem:a7c756805647d69caf749b41b2fd593d": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_29da42c8e87534f75b26d656",
+   "wall_s": 0.014
+  },
+  "idem:a8f7d747cb02483ddf5aeacdf3cd4aef": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x OLD",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_87fdc28affff0631eb26f2f1",
+    "obs_id": "obs_04f05fc6c98090c7eaea4895"
+   },
+   "wall_s": 0.008
+  },
+  "idem:ab010146bb16cceeca2def79169bbf61": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FIZZLE",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_916316a708e9211b1f9fca80",
+    "obs_id": "obs_4cbd82b7a272c0425ff66da1"
+   },
+   "wall_s": 0.064
+  },
+  "idem:adb77ed689e919d37a72a6d2271b75b3": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FAIL",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_116b312867ffeb03e1b0e2c8",
+    "obs_id": "obs_afbbfcca5acf029efc028fef"
+   },
+   "wall_s": 0.052
+  },
+  "idem:ae213dd0bc9ffc770dd69a380f87f772": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "injected2 x B_FAIL",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_c6531f8c16726ca316a52bee",
+    "obs_id": "obs_12cd25a1d2bb21b9b4a2eeeb"
+   },
+   "wall_s": 0.019
+  },
+  "idem:af522ec248be380d19a30945a9ed52e7": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FIZZLE",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_0749ae9c44eb1b055bd4f7b2",
+    "obs_id": "obs_3630656da5b6b1580c5bcfce"
+   },
+   "wall_s": 0.072
+  },
+  "idem:b75ba7140af2546f4bda5e33706b603e": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FIZZLE",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_29c33593049d00aeaa187665",
+    "obs_id": "obs_59b047fdd6412e7f9a90e886"
+   },
+   "wall_s": 0.048
+  },
+  "idem:c4116aadd835472ba089040b37908379": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x OLD",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_333689f7d511b8068cb21230",
+    "obs_id": "obs_7042899194567b09b30e0ab0"
+   },
+   "wall_s": 0.068
+  },
+  "idem:e5f68c762df48783f570b1fc7e5df768": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FAIL",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_1506b41444c9e1380ed210d7",
+    "obs_id": "obs_cf59feb98759f896c807c97c"
+   },
+   "wall_s": 0.013
+  },
+  "idem:e9c846fdaf8617b757257f82d7e4d349": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.007
+  },
+  "idem:ede52ddc47f599094103b248fc0cd277": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FAIL",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_53d2430bb609fd5376ac0e41",
+    "obs_id": "obs_d834a3572b9a24d76a6b42aa"
+   },
+   "wall_s": 0.072
+  },
+  "idem:f0568c3b3a1a93002c71e3fe3b96a3ac": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x OLD",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_57f77e5683a296b9e6913e5b",
+    "obs_id": "obs_16eb6a54fd8b81a8196d5fe9"
+   },
+   "wall_s": 0.029
+  },
+  "idem:fa52eec057600c75af0136afca0a7019": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x B_FIZZLE",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_d0a549857f1ad988c78bcfa6",
+    "obs_id": "obs_04589681f5858343c1257997"
+   },
+   "wall_s": 0.022
+  },
+  "idem:fc3340e44a2c284d75aa15532deb1ea1": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "raw x OLD",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_75f100b8b6c39443138c8cc7",
+    "obs_id": "obs_09a9a1fb556a9faaedc91bd0"
+   },
+   "wall_s": 0.068
+  },
+  "idem:fff028a0c550696e18fbfbda39ea3dfd": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "valid x B_FIZZLE",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_fe74f99b17a9a7deabb8a6f3",
+    "obs_id": "obs_06697fdeb01257e0977e32c7"
+   },
+   "wall_s": 0.034
+  }
+ },
+ "teardown": {
+  "generator-x-representation": "TERMINATED"
+ },
+ "timings": {
+  "cells_s": 0.6,
+  "startup_s": 0.03,
+  "teardown_s": 0.03,
+  "total_s": 2.0
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arms_below": {
+     "controls": 1
+    },
+    "n_min": 3
+   },
+   "state": "UNDERPOWERED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "aad7e9ca094e1b24647034514faa15f99fd8d0a7",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "generator-x-representation": "wld_b2e2ee68b9eb9ecc01181510"
+ }
+}
