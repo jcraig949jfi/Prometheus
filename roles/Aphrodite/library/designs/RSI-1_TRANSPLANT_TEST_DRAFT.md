@@ -1,6 +1,9 @@
 # RSI-1: does the improver become a better improver? (DESIGN DRAFT)
 
 Currency: 2026-09-18. Status: DRAFT, NOT FROZEN, NOT A PREREGISTRATION.
+SUPERSEDED 2026-09-18 by designs/RSI_PROGRAM_v2.md (after the Gemini Pro
+and ChatGPT reviews; adjudication in RSI_PROGRAM_ADJUDICATION_2026-09-18.md).
+Kept unchanged below as the record of the first draft.
 Source: the external review relayed by the operator 2026-09-18
 (prompts/2026-09-18_rsi_library/RELAYED_REVIEW_verbatim.md), which
 proposes RSI-1 and a charter. This file restates it operationally and

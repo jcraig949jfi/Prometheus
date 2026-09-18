@@ -24,3 +24,9 @@ APHRODITE-10 | Real small-model p/q test (QUESTIONS G1/G7): measure solve rate p
 APHRODITE-11 | Read Roesner and Kohno 2609.17817 for archive statistics (QUESTIONS M2): did clean ancestors survive? | RESEARCH | rsi | S | none | a paragraph in sources/ with page references
 APHRODITE-12 | Standing news watch for RSI (monitor row, bound, accountable seat) or keep manual NEWS.md passes | DECISION | library | S | operator | MONITORS.md row or a recorded "manual only"
 APHRODITE-13 | Distributional gate method for multi-cell prereg (QUESTIONS M1), validated on synthetic data where the model is true and false | METHOD | program | S | none | a tested helper + a note
+
+Added 2026-09-18 after the Gemini Pro / ChatGPT reviews:
+
+APHRODITE-14 | Campaign 0 assay simulator: synthetic lineages with known truth (planted dividend, none, memorised vault, planted module effect, exploiter lineage) through the full factorial + decomposition + hierarchical analysis; power and EQUIVALENCE curves vs lineages/families/instances | EXPERIMENT | rsi | L | APHRODITE-08 or an explicit go for Campaign 0 | prereg + verdict-recovery table (true vs assay verdict) + curves
+APHRODITE-15 | delta proposal memo from downstream need (QUESTIONS N1) | METHOD | rsi | S | APHRODITE-14 curves | memo committed before any Campaign 1 data
+APHRODITE-16 | I_0 protocol spec (five modules, typed memory store, resource handles, two-phase commit, null task) as a written interface, no implementation | DESIGN | rsi | M | none | spec file under library/designs/

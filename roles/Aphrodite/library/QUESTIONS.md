@@ -320,3 +320,25 @@ M6. The poisoning authors report answer-key leakage via git history in
     the original DGM and Hyperagents setups (patched). Do the published
     DGM/Hyperagents numbers depend on it? STATUS: OPEN (unchecked by
     anyone, per the subagent).
+
+## N. Questions raised by the Gemini Pro and ChatGPT reviews (2026-09-18)
+
+N1. What is delta, the smallest transferable improvement worth calling
+    meaningful, in tasks solved per fixed escrow -- and what downstream
+    decision would it change? Must be fixed before Campaign 1 data.
+    STATUS: OPEN (Campaign 0 proposes).
+N2. How many lineages x families x instances does EQUIVALENCE within
+    delta need, as opposed to detection? STATUS: OPEN (Campaign 0).
+N3. Can an evolved memory store be read by I_0's memory module at all?
+    If not, the I_0 x M_8 cell is undefined. STATUS: OPEN (design).
+N4. Does the EVIDENCE module (what the improver measures before it
+    mutates itself) evolve measurably, and how is its value separated
+    from the within-task modules? STATUS: OPEN.
+N5. Does a single-budget escrow select budget-specific policies that
+    look like improvement at that budget only? STATUS: OPEN (budget
+    grid addresses it).
+N6. Is a public randomness beacon trustworthy enough, and what if it
+    fails on the day? STATUS: OPEN (named fallback proposed).
+N7. Which is the right primary contrast: Hyperagents-style transfer to a
+    new domain, or AIDE^2-style acceleration of the same loop? v2 takes
+    the first as primary and the second as a pattern. STATUS: OPEN.
