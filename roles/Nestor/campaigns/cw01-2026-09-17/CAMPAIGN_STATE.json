@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-17 20:15:36",
+ "updated_local": "2026-09-18 03:26:41",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -150,8 +150,19 @@
   {
    "id": "cw01-e05",
    "title": "Mixture of marginally useful organisms",
-   "status": "NEXT",
-   "attempts": []
+   "status": "IN_PROGRESS",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e05-a01",
+     "phase": "EXECUTE",
+     "disposition": null,
+     "qualify_closed_local": "2026-09-18 03:26:41",
+     "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+     "freeze_boundary_commit": "6c1251223dd07bd7b581d6be4b79a5d97041c452",
+     "execute_admissible": true,
+     "_no_result_yet": "No experimental genome has been evaluated under this attempt_id."
+    }
+   ]
   },
   {
    "id": "cw01-e06",
@@ -187,9 +198,39 @@
  "active": {
   "experiment_id": "cw01-e05",
   "attempt_id": "cw01-e05-a01",
-  "phase": "PENDING_RECONCILE",
-  "phase_completed": [],
-  "title": "Mixture of marginally useful organisms"
+  "phase": "EXECUTE",
+  "phase_completed": [
+   "RECONCILE",
+   "PREFLIGHT",
+   "INSTANTIATE",
+   "QUALIFY"
+  ],
+  "title": "Mixture of marginally useful organisms",
+  "freeze_boundary": {
+   "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+   "commit": "6c1251223dd07bd7b581d6be4b79a5d97041c452",
+   "branch": "nestor/sidequest-graphworld-2026-09-14",
+   "fixtures": "7/7",
+   "consistency_gate": "PASS",
+   "self_check": "9/9",
+   "binding": {
+    "budget_B": 3,
+    "statistic_name": "difference_in_differences_normalised_information_superadditivity",
+    "BEST": [
+     0,
+     2,
+     4
+    ],
+    "WORST": [
+     4,
+     5,
+     7
+    ],
+    "n_subsets": 56
+   },
+   "freeze_rule": "once the first organism is evaluated under this attempt_id, no metric, normalisation, control, threshold, set-selection rule, budget, null or verdict criterion may change; a defect voids the verdict and opens a new attempt_id",
+   "_rule": "Any required criterion change VOIDS this attempt and opens a new attempt_id. Criteria are never repaired in place while evidence accumulates."
+  }
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -231,7 +272,14 @@
   "lib/lineage.py - TestLog/decide (D024), ancestor-seeded detect_gains (D025), emit_generations (D026), fixation_order",
   "experiments/cw01-e03/PACKAGE.md - XIII ledger; the cost curve appeared (8 -> 12 -> 3 defects)",
   "lib/infometrics.py - MI with a shuffled-label null (the bias is measured, not assumed away)",
-  "lib/learnability.py - prove the effect COULD be found before spending budget; fails closed"
+  "lib/learnability.py - prove the effect COULD be found before spending budget; fails closed",
+  "lib/contract.py - verdict contracts as first-class objects; canonical hash, freeze(), require_matches()",
+  "experiments/cw01-e05/VERDICT_CONTRACT.json - the frozen binding specification, hashed",
+  "experiments/cw01-e05/QUALIFY.json - 17 predicates + 7 measurement/specification defects, failed reasoning preserved",
+  "experiments/cw01-e05/fixtures_e05.py - F1-F7 against the real driver; F7 proves refusal BEFORE evaluation",
+  "experiments/cw01-e05/consistency_e05.py - gate; specification consistency SEPARATED from empirical reconstruction",
+  "experiments/cw01-e05/selfcheck_e05.py - verifies COMMITTED state by extracting HEAD, not the working tree",
+  "experiments/cw01-e05/SELFCHECK.json - pre-EXECUTE receipt: commit, contract hash, F1-F7, gate, admissibility"
  ],
  "reconcile_result": {
   "processes": "3 claude.exe (self + Aporia + Techne), 0 stray workers",
@@ -260,10 +308,11 @@
   "w8000036 replication trigger: published, APPLICABLE, unconsumed"
  ],
  "factory_findings_so_far": [
-  "The job contract is Redis-free: fn(ctx, **kwargs) with a 5-method ctx. localrun.py makes that a shipped contract instead of something\u6bcf caller re-invents in tests.",
+  "The job contract is Redis-free: fn(ctx, **kwargs) with a 5-method ctx. localrun.py makes that a shipped contract instead of something每 caller re-invents in tests.",
   "Reusing the full fabric would have hardcoded this campaign to F:/Prometheus-worktrees via ops/round_clock.py:45-54, and ops/residue.py would classify any worker outside that table as FOREIGN_REPO and stop it. The in-process path avoids that trap entirely.",
   "e01 requires neither GPU nor Redis - only a git worktree and PM_TAG. That is the most portable an experiment in this ecosystem currently gets.",
-  "Smoking the instrument before spending budget caught 6 defects, 4 of which would have produced a false retention effect. This should become a deterministic gate (CW01-D013, CW01-D015)."
+  "Smoking the instrument before spending budget caught 6 defects, 4 of which would have produced a false retention effect. This should become a deterministic gate (CW01-D013, CW01-D015).",
+  "e05's seven QUALIFY defects were one failure: the criterion itself became an experimental object, three times as a pass criterion. Runtime guards cannot catch that, because each individual measurement looks clean. lib/contract.py is the missing object - the binding specification is hashed and frozen before the first organism is evaluated, and the driver refuses on any drift. The consistency gate separates SPECIFICATION agreement from EMPIRICAL reconstruction, and it earned its keep on its first run by catching WORLD.json still defining superadditivity on score after the specification had moved to information."
  ],
  "verify_absence_e01": {
   "campaign_redis_keys": 0,
@@ -279,13 +328,14 @@
   "null": 1,
   "negative": 0,
   "inconclusive": 1,
-  "defects_logged": 36,
-  "science_defects": 19,
+  "defects_logged": 43,
+  "science_defects": 26,
   "defects_per_experiment": {
    "e01": 8,
    "e02": 12,
    "e03": 3,
-   "e04": 5
+   "e04": 5,
+   "e05": 7
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -294,7 +344,8 @@
    "lib/lineage.py",
    "lib/infometrics.py",
    "lib/learnability.py",
-   "MACHINE_PROFILE.json"
+   "MACHINE_PROFILE.json",
+   "lib/contract.py"
   ]
  }
 }
