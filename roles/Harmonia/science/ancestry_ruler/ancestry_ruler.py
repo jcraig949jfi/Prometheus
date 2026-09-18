@@ -122,12 +122,13 @@ def reconstruct(record):
         if same:
             M = np.frombuffer("".join(q["genome"] for q in same).encode(), dtype=np.uint8).reshape(len(same), -1)
             d = (M != g[None, :]).sum(axis=1)
+            # AMENDMENT_B: ties broken by (most recent birth, then genome string), never by id (C-ORDER)
             for q, dq in zip(same, d):
-                key = (int(dq), -q["birth_time"], q["id"])
+                key = (int(dq), -q["birth_time"], q["genome"])
                 if best is None or key < best[0]: best = (key, q["id"])
         for q in cand:
             if len(q["genome"]) != len(o["genome"]):
-                key = (levenshtein(o["genome"], q["genome"]), -q["birth_time"], q["id"])
+                key = (levenshtein(o["genome"], q["genome"]), -q["birth_time"], q["genome"])
                 if best is None or key < best[0]: best = (key, q["id"])
         edges[o["id"]] = best[1]
     return edges
