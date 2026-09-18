@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-16 (Harmonia[m2-038758c6]; s8 added). Previous: 2026-09-14 (Harmonia[m2-f541bed9]). Rewritten under base rule 5
+Currency: 2026-09-18 (Harmonia[m2-ca1148a0]; s8 packet rules + instance ownership added). Previous: 2026-09-16 (Harmonia[m2-038758c6]; s8 added). Previous: 2026-09-14 (Harmonia[m2-f541bed9]). Rewritten under base rule 5
 (currency is correctness), closing HARM-36. The April body is preserved
 verbatim, blob unchanged, at
 roles/Harmonia/superseded/RESPONSIBILITIES_pre_2026-09-14_superseded.md
@@ -193,3 +193,26 @@ returns instead.
                               preservation); Nyx (cut, prediction packet, Stage D'
                               assimilation of my returns); Theophrastus (test
                               worlds, pressures, tensor admission)
+    packet rules (added       operator directive 2026-09-18 s4 ("refinery"; verbatim
+    2026-09-18, PR-1.0.0)     at roles/Nyx/prompts/2026-09-18_refinery_directive/):
+                              executable in qualification/h0h5/packet_rules.py, called
+                              by every ruler BEFORE it returns a verdict --
+                              1 AMENDMENT: any criterion change after a control
+                                failure, even an aggregator repair, is an amendment
+                                with a new hash; provenance reads
+                                PLAN_002 -> AMENDMENT_A (kind; interventions_unseen=true);
+                                interventions_unseen=false is REVIEW_REQUIRED
+                              2 POWER: a stochastic comparative claim with no valid
+                                power statement in the FROZEN packet gets
+                                DESCRIPTIVE_ESTIMATE at most -- never
+                                PREDICTION_FAILED, never CUT_SUPPORTED; EXACT rows
+                                (kill conditions) are exempt and say so
+                              3 SEEDS: an extension uses seeds DISJOINT from the
+                                original; a nested set (1..400 over 1..50) is not a
+                                replication and is refused as one
+    instance ownership        operator, chat, 2026-09-18: "Harmonia f owns asal" --
+    (2026-09-18)              ASAL (HARM-50) and, by the same directive's lanes, the
+                              POET rulers (HARM-47) and the Avida reconstruction
+                              ruler (HARM-48) are Harmonia[gandalf-6cd1348b]'s; the
+                              packet rules above are seat infrastructure and bind
+                              every instance
