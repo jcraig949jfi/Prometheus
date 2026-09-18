@@ -1,0 +1,552 @@
+{
+ "c410_claims": {},
+ "c410_selection": [],
+ "campaign_disposition": "NO_CONDITION_SELECTED",
+ "descendant_consequences": [
+  {
+   "acceptance_by_bin": {
+    "1-2": 0.5489,
+    "3-4": 0.5281,
+    "5-8": 0.5375,
+    "9-16": 0.5629
+   },
+   "connected_depth_median": 16,
+   "from": "C4-05 neutral walk",
+   "held_out_exaptation_by_depth": {
+    "0": 0.0,
+    "16": 0.0426,
+    "2": 0.016,
+    "4": 0.0319,
+    "8": 0.0372
+   },
+   "reading": "the neutral band is fully connected to depth 16; held-out exaptation grows .016 -> .043 (single edit .006); below the .05 bars",
+   "structural_diversity_by_depth": {
+    "0": 0.0,
+    "16": 0.7601,
+    "2": 0.3041,
+    "4": 0.4658,
+    "8": 0.6432
+   }
+  },
+  {
+   "births_viable_share": {
+    "mutation_only": {
+     "mated_no_splice": null,
+     "mated_splice": null,
+     "mutation": 0.8195
+    },
+    "recombination": {
+     "mated_no_splice": 0.8182,
+     "mated_splice": 0.7337,
+     "mutation": 0.8145
+    }
+   },
+   "crossings": {
+    "mutation_only": 0,
+    "recombination": 0
+   },
+   "from": "C4-06 recombination vs mutation-only",
+   "reading": "no W2_K2 summit in either arm at G=100 from 188 drifted lineages; mate-splice births 8 points less viable"
+  },
+  {
+   "coherent_by_population": {
+    "ancestral": 0.1492,
+    "ordinary": 0.0767,
+    "perturbed": 0.0436
+   },
+   "from": "C4-08 selected descendants",
+   "loss_by_population": {
+    "ancestral": 0.4187,
+    "ordinary": 0.1848,
+    "perturbed": 0.1246
+   },
+   "mean_len_by_population": {
+    "ancestral": 19.133,
+    "ordinary": 40.057,
+    "perturbed": 62.458
+   },
+   "reading": "selection halves single-edit loss (.42 -> .19 -> .13) by building neutrality (coherent .15 -> .04) and length (19 -> 62); no structure to ablate"
+  },
+  {
+   "extra_compute_ratio": [
+    0.739,
+    0.7279,
+    0.6462
+   ],
+   "from": "C4-09 lateral ecology",
+   "overhead_shape": false,
+   "per_world_improved_seeds": {
+    "W0": 0,
+    "W1_d1": 0,
+    "W1_d4": 0,
+    "W2_K2": 1
+   },
+   "predictions": {
+    "P1": {
+     "held": true,
+     "stated": "rescue survival >= .25",
+     "values": [
+      0.4043,
+      0.3049,
+      0.5463
+     ]
+    },
+    "P2": {
+     "held": false,
+     "per_world": {
+      "W0": 0,
+      "W1_d1": 0,
+      "W1_d4": 0,
+      "W2_K2": 1
+     },
+     "stated": "some world improved by >= 1/16 in >= 2 of 3 seeds"
+    }
+   },
+   "rescue_survival": [
+    0.4043,
+    0.3049,
+    0.5463
+   ],
+   "rescues": [
+    460,
+    446,
+    335
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "coherent": 0.0631,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.4463,
+   "displacement_mean": 0.2789,
+   "distinct_nonviable": 0.0537,
+   "exaptive": 0.007,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 428,
+   "neutral": 0.493,
+   "operator": "config_perturbation",
+   "source": "C4-01",
+   "viable": 0.5,
+   "viable_worse": 0.0
+  },
+  {
+   "coherent": 0.1886,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.4841,
+   "displacement_mean": 0.5052,
+   "distinct_nonviable": 0.1545,
+   "exaptive": 0.0068,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 440,
+   "neutral": 0.3273,
+   "operator": "deletion",
+   "source": "C4-01",
+   "viable": 0.3614,
+   "viable_worse": 0.0273
+  },
+  {
+   "coherent": 0.0842,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.5489,
+   "displacement_mean": 0.381,
+   "distinct_nonviable": 0.0707,
+   "exaptive": 0.0,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 368,
+   "neutral": 0.3668,
+   "operator": "duplication",
+   "source": "C4-01",
+   "viable": 0.3804,
+   "viable_worse": 0.0136
+  },
+  {
+   "coherent": 0.0951,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.5707,
+   "displacement_mean": 0.4115,
+   "distinct_nonviable": 0.0734,
+   "exaptive": 0.0082,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 368,
+   "neutral": 0.337,
+   "operator": "insertion",
+   "source": "C4-01",
+   "viable": 0.3559,
+   "viable_worse": 0.0109
+  },
+  {
+   "coherent": 0.1322,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.4688,
+   "displacement_mean": 0.4466,
+   "distinct_nonviable": 0.1154,
+   "exaptive": 0.0048,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 416,
+   "neutral": 0.399,
+   "operator": "movement",
+   "source": "C4-01",
+   "viable": 0.4158,
+   "viable_worse": 0.012
+  },
+  {
+   "coherent": 0.057,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.3289,
+   "displacement_mean": 0.1737,
+   "distinct_nonviable": 0.0482,
+   "exaptive": 0.0044,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 456,
+   "neutral": 0.6162,
+   "operator": "operand_perturbation",
+   "source": "C4-01",
+   "viable": 0.6229,
+   "viable_worse": 0.0022
+  },
+  {
+   "coherent": 0.1447,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.6382,
+   "displacement_mean": 0.5779,
+   "distinct_nonviable": 0.1184,
+   "exaptive": 0.011,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 456,
+   "neutral": 0.2171,
+   "operator": "randomization",
+   "source": "C4-01",
+   "viable": 0.2434,
+   "viable_worse": 0.0154
+  },
+  {
+   "coherent": 0.0395,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.2939,
+   "displacement_mean": 0.1217,
+   "distinct_nonviable": 0.0263,
+   "exaptive": 0.0022,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 456,
+   "neutral": 0.6667,
+   "operator": "reference_redirection",
+   "source": "C4-01",
+   "viable": 0.6798,
+   "viable_worse": 0.011
+  },
+  {
+   "coherent": 0.1455,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.5614,
+   "displacement_mean": 0.533,
+   "distinct_nonviable": 0.1205,
+   "exaptive": 0.0182,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 440,
+   "neutral": 0.2955,
+   "operator": "region_swap",
+   "source": "C4-01",
+   "viable": 0.3181,
+   "viable_worse": 0.0045
+  },
+  {
+   "coherent": 0.1513,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.4715,
+   "displacement_mean": 0.4121,
+   "distinct_nonviable": 0.1316,
+   "exaptive": 0.0088,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 456,
+   "neutral": 0.3794,
+   "operator": "replacement",
+   "source": "C4-01",
+   "viable": 0.3969,
+   "viable_worse": 0.0088
+  },
+  {
+   "coherent": 0.1327,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.5829,
+   "displacement_mean": 0.4923,
+   "distinct_nonviable": 0.1161,
+   "exaptive": 0.0071,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 422,
+   "neutral": 0.2844,
+   "operator": "splice",
+   "source": "C4-01",
+   "viable": 0.301,
+   "viable_worse": 0.0095
+  },
+  {
+   "coherent": 0.0,
+   "condition": "frozen substrate, single edit",
+   "degenerate": 0.15,
+   "displacement_mean": 0.0,
+   "distinct_nonviable": 0.0,
+   "exaptive": 0.0,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 160,
+   "neutral": 0.85,
+   "operator": "unreachable_removal",
+   "source": "C4-01",
+   "viable": 0.85,
+   "viable_worse": 0.0
+  },
+  {
+   "coherent": 0.19,
+   "condition": "single edit, stratum",
+   "degenerate": 0.3902,
+   "displacement_mean": 0.5703,
+   "distinct_nonviable": 0.1799,
+   "exaptive": 0.0,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 984,
+   "neutral": 0.4217,
+   "source": "C4-01",
+   "stratum": "delay_general",
+   "viable": 0.4299,
+   "viable_worse": 0.0081
+  },
+  {
+   "coherent": 0.0019,
+   "condition": "single edit, stratum",
+   "degenerate": 0.9981,
+   "displacement_mean": 0.087,
+   "distinct_nonviable": 0.0,
+   "exaptive": 0.0,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 1035,
+   "neutral": 0.0019,
+   "source": "C4-01",
+   "stratum": "gen0_random",
+   "viable": 0.0019,
+   "viable_worse": 0.0
+  },
+  {
+   "coherent": 0.1326,
+   "condition": "single edit, stratum",
+   "degenerate": 0.2659,
+   "displacement_mean": 0.3755,
+   "distinct_nonviable": 0.0884,
+   "exaptive": 0.0187,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 1606,
+   "neutral": 0.6021,
+   "source": "C4-01",
+   "stratum": "shelf",
+   "viable": 0.6457,
+   "viable_worse": 0.0249
+  },
+  {
+   "coherent": 0.0967,
+   "condition": "single edit, stratum",
+   "degenerate": 0.3985,
+   "displacement_mean": 0.4732,
+   "distinct_nonviable": 0.0923,
+   "exaptive": 0.003,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 1355,
+   "neutral": 0.5055,
+   "source": "C4-01",
+   "stratum": "w0_solver",
+   "viable": 0.5092,
+   "viable_worse": 0.0007
+  },
+  {
+   "coherent": 0.1096,
+   "condition": "frozen substrate, radius 1",
+   "degenerate": 0.4254,
+   "displacement_mean": 0.3192,
+   "distinct_nonviable": 0.0965,
+   "exaptive": 0.0088,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 1,
+   "n": 456,
+   "neutral": 0.4671,
+   "source": "C4-02",
+   "viable": 0.4781,
+   "viable_worse": 0.0022
+  },
+  {
+   "coherent": 0.1491,
+   "condition": "frozen substrate, radius 2",
+   "degenerate": 0.5461,
+   "displacement_mean": 0.4985,
+   "distinct_nonviable": 0.1184,
+   "exaptive": 0.0132,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 2,
+   "n": 456,
+   "neutral": 0.3048,
+   "source": "C4-02",
+   "viable": 0.3355,
+   "viable_worse": 0.0175
+  },
+  {
+   "coherent": 0.1447,
+   "condition": "frozen substrate, radius 4",
+   "degenerate": 0.7127,
+   "displacement_mean": 0.6628,
+   "distinct_nonviable": 0.1206,
+   "exaptive": 0.0044,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 4,
+   "n": 456,
+   "neutral": 0.1469,
+   "source": "C4-02",
+   "viable": 0.1667,
+   "viable_worse": 0.0154
+  },
+  {
+   "coherent": 0.1469,
+   "condition": "frozen substrate, radius 8",
+   "degenerate": 0.8092,
+   "displacement_mean": 0.7691,
+   "distinct_nonviable": 0.1206,
+   "exaptive": 0.0066,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 8,
+   "n": 456,
+   "neutral": 0.0461,
+   "source": "C4-02",
+   "viable": 0.0702,
+   "viable_worse": 0.0175
+  },
+  {
+   "coherent": 0.0943,
+   "condition": "frozen substrate, radius 16",
+   "degenerate": 0.9035,
+   "displacement_mean": 0.8306,
+   "distinct_nonviable": 0.0855,
+   "exaptive": 0.0066,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "magnitude": 16,
+   "n": 456,
+   "neutral": 0.0044,
+   "source": "C4-02",
+   "viable": 0.011,
+   "viable_worse": 0.0
+  },
+  {
+   "coherent": 0.1492,
+   "condition": "single edit of ancestral population on W2_K2",
+   "degenerate": null,
+   "fatal": 0.0,
+   "improved": 0.0012,
+   "loss_D2_D3": 0.4187,
+   "magnitude": 1,
+   "mean_len": 19.133,
+   "n": 8270,
+   "neutral": 0.5376,
+   "population": "ancestral",
+   "source": "C4-08",
+   "viable": 0.5813
+  },
+  {
+   "coherent": 0.0767,
+   "condition": "single edit of ordinary population on W2_K2",
+   "degenerate": null,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "loss_D2_D3": 0.1848,
+   "magnitude": 1,
+   "mean_len": 40.057,
+   "n": 9000,
+   "neutral": 0.7892,
+   "population": "ordinary",
+   "source": "C4-08",
+   "viable": 0.8152
+  },
+  {
+   "coherent": 0.0436,
+   "condition": "single edit of perturbed population on W2_K2",
+   "degenerate": null,
+   "fatal": 0.0,
+   "improved": 0.0,
+   "loss_D2_D3": 0.1246,
+   "magnitude": 1,
+   "mean_len": 62.458,
+   "n": 9135,
+   "neutral": 0.8628,
+   "population": "perturbed",
+   "source": "C4-08",
+   "viable": 0.8754
+  },
+  {
+   "behavioural_diversity": 14.25,
+   "condition": "held-out family, baseline (per birth)",
+   "fatal": 0.0,
+   "lineage_depth": 0.38,
+   "loss_below_floor": 0.2603,
+   "magnitude": "birth",
+   "n": 185230,
+   "nontrivial_yield": 0.7397,
+   "novel_capability_cells": "12/16",
+   "source": "C4-10",
+   "viable": 0.7397
+  }
+ ],
+ "schema": "archaeon.c4.damage_geometry_map.v1",
+ "sources": [
+  "C4-01/attempts/a02/FLOW_TABLES.json",
+  "C4-02/attempts/a01/CURVES.json",
+  "C4-08/attempts/a01/ROBUSTNESS_TABLES.json",
+  "C4-05/attempts/a01/WALK_TABLES.json",
+  "C4-06/attempts/a01/SUMMARY.json",
+  "C4-09/attempts/a01/ECOLOGY.json",
+  "C4-10/attempts/a01/TRIAL.json"
+ ],
+ "substrate": {
+  "d1_eligible": 0,
+  "pairwise_tvd_min_max": [
+   0.0228,
+   0.633
+  ],
+  "traversable_region_by_stratum": {
+   "delay_general": false,
+   "gen0_random": false,
+   "shelf": true,
+   "w0_solver": false
+  }
+ }
+}

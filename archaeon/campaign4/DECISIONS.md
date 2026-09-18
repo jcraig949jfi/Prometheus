@@ -187,3 +187,15 @@ improvement measure had one world of headroom. Recorded (READOUT R3); C4-10
 carries the check. | C4-09/DESIGN.md. | Alternative: equalize TOTAL budget by
 giving the control ~70% more generations -- not run; a later slot's design.
 | Revisit in Campaign 5. DETERMINISTIC.
+
+D4-014 | 2026-09-18 09:10 | C4-10: conditions selected by the preregistered rule
+from the committed tables: NONE (mutation_load: loss down but coherent share
+down; lateral: P2 lost). Baseline alone on the held-out family. ANNOTATION
+after the run: the negative control found W1_d2, W1_d3 and W0_8b solved by
+the 57 parents at generation 0 (held-out 1.0); the runner computed the drop
+set and still ran all four worlds (my defect); their rows are committed and
+flagged PRE-SOLVED, W2_K2d1 is the live column, nothing was re-run after
+seeing the rows. | C4-10/DESIGN.md; TRIAL.json. | Alternative: re-run on
+W2_K2d1 alone -- rejected (a post-hoc re-run after seeing results). | Revisit
+in Campaign 5: check the family against the parents BEFORE choosing either.
+DETERMINISTIC.
