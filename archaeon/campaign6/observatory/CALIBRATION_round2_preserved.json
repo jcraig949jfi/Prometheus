@@ -1,0 +1,138 @@
+{
+ "admittable_now": [
+  "unexpected_transfer",
+  "detector_disagreement",
+  "classifier_failure"
+ ],
+ "c5_05_attempt": "a01",
+ "calibration": {
+  "behavioral_novelty": {
+   "admittable": false,
+   "identity_scores_all_zero": true,
+   "neg_fire": 0.0101,
+   "neg_n": 2179,
+   "negatives": "identity + children with displacement 0 (non-degenerate parents)",
+   "pos_fire": 0.2181,
+   "pos_min": 0.0,
+   "pos_n": 1715,
+   "positives": "children with displacement >= .5",
+   "reason": "a positive control does not fire at the 1% threshold",
+   "threshold": 52.577984
+  },
+  "classifier_failure": {
+   "admittable": true,
+   "rate_on_children": 0.4766,
+   "reason": "definitional; on v0 it fires whenever >= 3 detectors are UNABLE and one fires -- the blind-spot count of the old geometry, reported",
+   "threshold": 3
+  },
+  "detector_disagreement": {
+   "admittable": true,
+   "rate_on_children": 0.4091,
+   "reason": "definitional over the verdict vector; rate reported",
+   "threshold": 1
+  },
+  "environmental_modification": {
+   "admittable": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "threshold": null
+  },
+  "lineage_discontinuity": {
+   "admittable": false,
+   "neg_fire": 0.01,
+   "neg_n": 1604,
+   "negatives": "identity + displacement-0 children with struct <= .25",
+   "pos_fire": 0.3427,
+   "pos_min": 11.922175,
+   "pos_n": 744,
+   "positives": "displacement >= .5 children with struct <= .25",
+   "reason": "a positive control does not fire at the 1% threshold",
+   "threshold": 62.717491
+  },
+  "niche_divergence": {
+   "admittable": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "threshold": null
+  },
+  "regime_persistence": {
+   "admittable": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "threshold": null
+  },
+  "structural_reuse": {
+   "admittable": false,
+   "children_fire": 0.41466346153846156,
+   "children_unable": 0.02844551282051282,
+   "note": "count threshold fixed by definition; base rates reported, no positive control exists on v0 (the profile has no components)",
+   "parents_fire": 0.38596491228070173,
+   "reason": "no positive control on the v0 profile; C6_GEOMETRY stage (graph profile) needed",
+   "threshold": 2
+  },
+  "unexpected_causal_dependence": {
+   "admittable": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "threshold": null
+  },
+  "unexpected_transfer": {
+   "admittable": true,
+   "neg_fire": 0.0,
+   "neg_n": 1051,
+   "negatives": "all other archived walkers",
+   "pos_fire": 1.0,
+   "pos_n": 77,
+   "positives": "C5-01 walkers exaptive on another environment (C4 rule)",
+   "reason": "",
+   "threshold": 0.0625
+  },
+  "unexplained_gain": {
+   "admittable": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "threshold": null
+  }
+ },
+ "code_sha256": {
+  "calibrate.py": "7b8bb8b6dea5141c59ce4ac2f1e77e973910876f6332194b3fc3aa228c18d270",
+  "detectors.py": "485a84389a168306e1e8b5485b2be38a7fce9a509070861d437332dfa8f363d4",
+  "fingerprint.py": "bf67c5ade7abe44e84ab315fdfca85bbea45f60dd515c76c1571f1ee30dcc23a"
+ },
+ "n_children": 4992,
+ "n_parents": 57,
+ "not_admittable_on_v0": [
+  "behavioral_novelty",
+  "lineage_discontinuity",
+  "structural_reuse",
+  "environmental_modification",
+  "niche_divergence",
+  "regime_persistence",
+  "unexplained_gain",
+  "unexpected_causal_dependence"
+ ],
+ "schema": "archaeon.c6.calibration.v1",
+ "spread": {
+  "answered_share": 0.05,
+  "branches_taken": 3.1206691465669936,
+  "budget_exhausted_ticks": 0.6778797084291566,
+  "cat_arithmetic": 2.833213344056216,
+  "cat_comparison": 0.1,
+  "cat_control": 2.330584487494404,
+  "cat_halt_yield": 1.7303601669285609,
+  "cat_indirection": 0.1,
+  "cat_logical": 1.0934309299261127,
+  "cat_opaque_io": 0.900397465507071,
+  "cat_randomness": 0.1,
+  "cat_read_write": 2.833213344056216,
+  "code_region_writes": 0.1,
+  "distinct_answers": 0.5306282510621703,
+  "faults": 0.1,
+  "in_reads": 0.686955210312024,
+  "occupancy_max": 0.1,
+  "ops": 1.1133618185941723,
+  "out_dropped": 0.1,
+  "out_writes": 0.6778797084291566,
+  "rnd_draws": 0.1,
+  "tape_writes": 0.1,
+  "ticks": 0.400323708607746
+ },
+ "stage": "BASELINE_ADMITTED_CANDIDATE",
+ "wall_s": 11.2,
+ "weights": "fingerprint.DEFAULT_WEIGHTS"
+}

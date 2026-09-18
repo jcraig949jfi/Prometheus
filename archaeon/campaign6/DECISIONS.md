@@ -79,3 +79,17 @@ extension record keyed by the same (eval, organism_id) -- NOT a second emitter. 
 enters a fingerprint row (it lives in the archived-generation observation); my draft
 fingerprint_v0 carried a reward field and is corrected. | Proteus REPLY_ARCHAEON_461_462. |
 -- | -- . DETERMINISTIC.
+
+D6-009 | 2026-09-18 20:57 | DETECTOR CALIBRATION, THREE ROUNDS BEFORE ANY FREEZE (all preserved under
+observatory/CALIBRATION_round1_preserved.json, _round2_preserved.json, CALIBRATION_v0.1.json):
+round 1 raw-count distance + reward-based labels failed novelty/discontinuity positives at
+.09/.09; round 2 per-episode answer digests, log counts, transfer floor, displacement
+labels: .22/.34, transfer 77/77; round 3 count weights .1, alive-moved positives for
+novelty: discontinuity 744/744 at 6.27, novelty 484/489 at 5.76 (five cases listed),
+transfer 77/77 + 0/1,051, disagreement/classifier definitional. STOPPED at round 3: the
+five novelty cases are put to Harmonia, not tuned away. Detectors 4-9 NOT ADMITTABLE on v0
+(UNABLE or no positive control) -> C6_GEOMETRY stage per the ruling. Candidate freeze =
+DETECTORS_FROZEN_candidate.json (digest inside); Harmonia's admission freezes it. | the
+three JSONs; ADMISSION_PACKET_v0.1.md. | Alternative: a 4th round to reach 489/489 --
+rejected (tuning toward admission). SCIENTIFIC DISCRETION (instrument design),
+DETERMINISTIC (the 1%/all-positives rule, unchanged through the rounds).
