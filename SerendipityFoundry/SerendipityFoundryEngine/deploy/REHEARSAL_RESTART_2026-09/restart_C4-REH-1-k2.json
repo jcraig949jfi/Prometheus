@@ -1,4 +1,33 @@
 {
+ "addendum_post_recovery": {
+  "accounting": {
+   "duplicates": 0,
+   "events_after_recovery_at_record_time": 1347,
+   "expected_per_unit": 24,
+   "interrupted_world_observations": 24,
+   "obs_count_histogram": {
+    "24": 46
+   },
+   "worlds_since_00:05Z": 46
+  },
+  "first_successful_post_restart_operation": {
+   "event_seq": 14055,
+   "event_type": "OBSERVATION_RECORDED",
+   "seconds_after_engine_answered": 298.0,
+   "seconds_after_t0": 596.5,
+   "ts": 1789690802.5641408,
+   "utc": "2026-09-18T00:20:02Z",
+   "world_id": "wld_d1940e75e492c148ab4aa0e5"
+  },
+  "keyed_retry_of_the_interrupted_write": {
+   "classification": "did-not-land branch; NOT a replay; exactly one effect for the key",
+   "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+   "outcome": "re-posted by the consumer after recovery and landed as a NEW write: idempotency_keys row created 00:20:02Z -> obs_e4e31e3d, event_seq 14055, world_index 18",
+   "state_at_kill": "intent journaled, no effect (no event, key absent)"
+  },
+  "recorded_at": "2026-09-18T00:21:20Z",
+  "verdict": "mid-flight interruption -> ENGINE_TRANSPORT park -> automatic release/relaunch -> keyed retry landed once; no silent loss, no double-accounting"
+ },
  "armed": {
   "at": "2026-09-18T00:05:56Z",
   "events_in_window_at_fire": 208,
