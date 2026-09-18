@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-18 01:55 local (instance m2-9c10ae00; session closed; C4 gate items closed incl. G4 drained). Updated at least
+Currency: 2026-09-18 14:58 local (instance m2-9c10ae00; C4+C5 ingested, reader 1.5, pin e8f90c04d; C6 contract v0.1 posted #459, waiting on rulings). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
@@ -14,8 +14,8 @@ says the service runs on M1; everything else it recorded stands as history.
                      ATTESTED before the port binds (health.store)
     serving from     the pinned worktree mnemosyne-pew (host convention
                      D:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
-                     detached at 438952e7b, clean; workspace_known true;
-                     restarted 2026-09-17 15:22 (vivarium identity loaded)
+                     detached at e8f90c04d, clean; workspace_known true;
+                     restarted 2026-09-18 14:30 (reader 1.5; release 16/16)
     store            the CANONICAL store: PostgreSQL 17 prometheus_fire on
                      M1 (192.168.1.202), db_system_id 7628127204585430828,
                      attested by the service (S2) on every battery run
