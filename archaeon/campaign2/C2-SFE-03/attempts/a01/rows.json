@@ -1,0 +1,556 @@
+[
+ {
+  "arm": "baseline",
+  "competence_heldout": 0.07291666666666667,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 0.5,
+    "randomness": 0.5
+   },
+   "distinct_opcodes": 2,
+   "instr": 2,
+   "n_regs": 3,
+   "opcode_hist": {
+    "OUT": 1,
+    "RND": 1
+   },
+   "persist": "tape",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 8
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 5.38,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_material": 0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random_segments",
+  "competence_heldout": 0.0625,
+  "elite_origins": [
+   "random_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.2,
+    "control": 0.2,
+    "halt_yield": 0.2,
+    "opaque_io": 0.2,
+    "randomness": 0.2
+   },
+   "distinct_opcodes": 5,
+   "instr": 5,
+   "n_regs": 3,
+   "opcode_hist": {
+    "EQ": 1,
+    "JZ": 1,
+    "NOP": 1,
+    "OUT": 1,
+    "RND": 1
+   },
+   "persist": "tape",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 20
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 7.5,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "random_segments",
+   "verified_common": true
+  },
+  "n_material": 108,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "self_segments",
+  "competence_heldout": 0.07291666666666667,
+  "elite_origins": [
+   "self_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25,
+    "randomness": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 3,
+   "opcode_hist": {
+    "OUT": 1,
+    "RND": 1,
+    "SHL": 1,
+    "SUB": 1
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 16
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 7.54,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "self_segments",
+   "verified_common": true
+  },
+  "n_material": 107,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.125,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "baseline",
+  "competence_heldout": 0.08333333333333333,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 7.38,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_material": 0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.25,
+   0.125,
+   0.0,
+   0.125,
+   0.25,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random_segments",
+  "competence_heldout": 0.25,
+  "elite_origins": [
+   "random_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1429,
+    "comparison": 0.0714,
+    "control": 0.1429,
+    "halt_yield": 0.0714,
+    "indirection": 0.2143,
+    "logical": 0.1429,
+    "opaque_io": 0.2143
+   },
+   "distinct_opcodes": 11,
+   "instr": 14,
+   "n_regs": 4,
+   "opcode_hist": {
+    "ADD": 1,
+    "EQ": 1,
+    "IN": 1,
+    "JMP": 1,
+    "JZ": 1,
+    "LD": 2,
+    "MUL": 1,
+    "NOP": 1,
+    "NOT": 2,
+    "OUT": 2,
+    "ST": 1
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 64,
+   "words": 56
+  },
+  "first_solved_gen": 2,
+  "gen0_instr_mean": 9.5,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "random_segments",
+   "verified_common": true
+  },
+  "n_material": 103,
+  "persist": "regs",
+  "reached": 1,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.125,
+   0.5,
+   0.375,
+   0.25,
+   0.125
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "self_segments",
+  "competence_heldout": 0.08333333333333333,
+  "elite_origins": [
+   "self_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.125,
+    "comparison": 0.0625,
+    "control": 0.125,
+    "halt_yield": 0.125,
+    "indirection": 0.125,
+    "logical": 0.1875,
+    "opaque_io": 0.1875,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 11,
+   "instr": 16,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 2,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 9.46,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "self_segments",
+   "verified_common": true
+  },
+  "n_material": 202,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.0,
+   0.125,
+   0.0,
+   0.125,
+   0.25,
+   0.0
+  ],
+  "train_last": 0.0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "baseline",
+  "competence_heldout": 0.03125,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1875,
+    "control": 0.0625,
+    "indirection": 0.1875,
+    "logical": 0.1875,
+    "opaque_io": 0.1875,
+    "randomness": 0.0625,
+    "read_write": 0.125
+   },
+   "distinct_opcodes": 12,
+   "instr": 16,
+   "n_regs": 3,
+   "opcode_hist": {
+    "AND": 1,
+    "EQ": 2,
+    "IN": 1,
+    "JZ": 1,
+    "LD": 2,
+    "LT": 1,
+    "MOV": 2,
+    "OUT": 2,
+    "RND": 1,
+    "SHL": 1,
+    "SHR": 1,
+    "ST": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 64
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 7.33,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "n_material": 0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.125,
+   0.125,
+   0.0,
+   0.125,
+   0.0,
+   0.125
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random_segments",
+  "competence_heldout": 0.041666666666666664,
+  "elite_origins": [
+   "random_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0714,
+    "comparison": 0.2143,
+    "control": 0.0714,
+    "halt_yield": 0.1429,
+    "indirection": 0.0714,
+    "logical": 0.1429,
+    "opaque_io": 0.2143,
+    "read_write": 0.0714
+   },
+   "distinct_opcodes": 12,
+   "instr": 14,
+   "n_regs": 3,
+   "opcode_hist": {
+    "ADD": 1,
+    "EQ": 2,
+    "HALT": 1,
+    "IN": 1,
+    "JMP": 1,
+    "LT": 1,
+    "MOV": 1,
+    "OUT": 2,
+    "SHL": 1,
+    "ST": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 56
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 8.83,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "random_segments",
+   "verified_common": true
+  },
+  "n_material": 138,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.125,
+   0.125,
+   0.0,
+   0.125,
+   0.0,
+   0.125
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "self_segments",
+  "competence_heldout": 0.041666666666666664,
+  "elite_origins": [
+   "self_segments"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.2,
+    "halt_yield": 0.0667,
+    "indirection": 0.2,
+    "logical": 0.1333,
+    "opaque_io": 0.1333,
+    "randomness": 0.0667,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 12,
+   "instr": 15,
+   "n_regs": 3,
+   "opcode_hist": {
+    "ADD": 2,
+    "EQ": 2,
+    "IN": 1,
+    "LD": 1,
+    "LT": 1,
+    "MOV": 1,
+    "OUT": 1,
+    "RND": 1,
+    "SHL": 1,
+    "ST": 2,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_instr_mean": 9.08,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 24,
+   "position": "front",
+   "substitute_tag": "self_segments",
+   "verified_common": true
+  },
+  "n_material": 171,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 3,
+  "trace_best": [
+   0.125,
+   0.125,
+   0.0,
+   0.125,
+   0.0,
+   0.125
+  ],
+  "train_last": 0.125,
+  "wall_s": 0.1,
+  "warnings": []
+ }
+]

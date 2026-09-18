@@ -85,7 +85,7 @@
    "value": {
     "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
     "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
-    "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d"
+    "tree_sha256": "6ce8ba3850505992a1bd33836098219eabef220a9f656510edfc4182a6ddc97f"
    },
    "basis": "TECHNE_RECORD"
   },
@@ -127,20 +127,1676 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:73-150"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:908-1000"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:1177-1230"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:1484-1500"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:1775-1830"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:6914-6920"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:7130-7175"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:7245-7256"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareBase.cc:140-232"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareBase.cc:296-360"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:613-700"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:1353-1400"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:5253-5400"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:5766-5800"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPhenotype.cc:805-860"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPhenotype.cc:1827-1835"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cEnvironment.cc:170-176"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cEnvironment.cc:1610-1760"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cTaskLib.cc:73-142"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:226-260"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cOrganism.cc:220-232"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cMutationRates.h"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/libs/apto/include/apto/scheduler/Integrated.h"
+   }
+  ],
+  "inspected_files": [
+   "cpu/cHardwareCPU.cc (instruction table, label search, single step, head-copy, head-search, if-label, divide main)",
+   "cpu/cHardwareBase.cc (divide viability, divide mutations)",
+   "main/cPopulation.cc (scheduling, offspring activation/placement, process step)",
+   "main/cPhenotype.cc (merit, fitness)",
+   "main/cEnvironment.cc (reaction processing)",
+   "main/cTaskLib.cc (task registry)",
+   "main/cBirthChamber.cc (asexual birth)",
+   "main/cOrganism.cc (age limit)",
+   "main/cMutationRates.h",
+   "libs/apto scheduler/Integrated.h"
+  ],
+  "date": "2026-09-17T15:31Z",
+  "note": "the famous name (Avida, digital evolution) covers a small closed loop: a virtual CPU whose programs copy themselves with per-instruction copy errors; a divide that is refused unless the copy is plausible; a merit that is genome size times a task bonus; a scheduler that hands out CPU cycles in proportion to merit; a placement rule that kills whoever occupies the chosen cell; and an environment that scores logic functions on the organism's own I/O. Everything else in 60k lines is a configuration-gated extension of one of those",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:31Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/devosoft/avida@47f13dadb547fcf10f620ace60247f38b30b8b16",
+   "payload_manifest_id": "techne tree_sha256 6ce8ba3850505992a1bd33836098219eabef220a9f656510edfc4182a6ddc97f (2868 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/avida-core/source/cpu/cHardwareCPU.cc",
+     "payload_hash_read": "98d5b0a2daac40eea73dc7790a1c32c181507b86f89888f2ac14958bdcae1580",
+     "techne_recorded_hash": "98d5b0a2daac40eea73dc7790a1c32c181507b86f89888f2ac14958bdcae1580",
+     "match": true,
+     "refs": 11
+    },
+    {
+     "path": "upstream/tree/avida-core/source/cpu/cHardwareBase.cc",
+     "payload_hash_read": "0b47dc6852147ef36ad17403e5312eae230bb331c4bca140849c793d48a2ac56",
+     "techne_recorded_hash": "0b47dc6852147ef36ad17403e5312eae230bb331c4bca140849c793d48a2ac56",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cPopulation.cc",
+     "payload_hash_read": "221f16aeb05240e634146811f9a1b98869d6578caad95b847349d4e087952b0f",
+     "techne_recorded_hash": "221f16aeb05240e634146811f9a1b98869d6578caad95b847349d4e087952b0f",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cPhenotype.cc",
+     "payload_hash_read": "0c1a8097a7748d31485badbb1eda9fc135e28f3831c3176bda560db5f9499041",
+     "techne_recorded_hash": "0c1a8097a7748d31485badbb1eda9fc135e28f3831c3176bda560db5f9499041",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cEnvironment.cc",
+     "payload_hash_read": "1b2bef69a2f93354cef422902d118e5392a0706a177470c32e99aaaac0573f0f",
+     "techne_recorded_hash": "1b2bef69a2f93354cef422902d118e5392a0706a177470c32e99aaaac0573f0f",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cTaskLib.cc",
+     "payload_hash_read": "08fe262569d8ae860312e8846ea93c46ac89178a9f5252a441226c1b4aac2b15",
+     "techne_recorded_hash": "08fe262569d8ae860312e8846ea93c46ac89178a9f5252a441226c1b4aac2b15",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cBirthChamber.cc",
+     "payload_hash_read": "5a88d01a71b6f4384f4d841163dd9dc4bc0ee8c992b50d9a1f6b093fbd20ec04",
+     "techne_recorded_hash": "5a88d01a71b6f4384f4d841163dd9dc4bc0ee8c992b50d9a1f6b093fbd20ec04",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cOrganism.cc",
+     "payload_hash_read": "55ae45980c636483172a81cda2b895db1ed1c210d622ede5a5612536b7ec29e5",
+     "techne_recorded_hash": "55ae45980c636483172a81cda2b895db1ed1c210d622ede5a5612536b7ec29e5",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/avida-core/source/main/cMutationRates.h",
+     "payload_hash_read": "d1a2a4c2fe2d4d42b7d8478590b8ead820c479d5497384ee927e902ba9fbff4a",
+     "techne_recorded_hash": "d1a2a4c2fe2d4d42b7d8478590b8ead820c479d5497384ee927e902ba9fbff4a",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/libs/apto/include/apto/scheduler/Integrated.h",
+     "payload_hash_read": "2cb9d7fc09ceae5908cd48e9e8315896820db1ccbb05a54b3eaf170b9e9c5a44",
+     "techne_recorded_hash": "2cb9d7fc09ceae5908cd48e9e8315896820db1ccbb05a54b3eaf170b9e9c5a44",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "fossil_ancestry": "avida",
+   "human_name": "nop-A/B/C; the tInstLibEntry table; ReadLabel (cHardwareCPU.cc 73-150, 1484-1500)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every instruction is a fixed-size opcode from a table; nop-A/B/C do nothing when executed but MODIFY the instruction before them (which register ?BX? means) and, in sequence, spell a LABEL that other instructions read by scanning the following nops (ReadLabel); so the same three symbols are the argument system and the addressing system, and every mutation lands on a legal instruction",
+   "input": "the genome as a sequence of opcodes",
+   "output": "register choice and labels",
+   "state": "none (read at execution)",
+   "update": "per instruction",
+   "assumptions": [
+    "a closed alphabet where every string is a valid program (no syntax errors) is what makes random mutation productive rather than fatal"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+    "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson"
+   ],
+   "fitness_value_in_ancestor": "mutational robustness by construction; labels give position-independent addressing so insertions and deletions do not break jumps",
+   "failure_landscape": "by reading: a mutation inside a label changes what it matches, silently; the record's tasks are typically evolved with only 26 of the ~200 table entries enabled (the instruction set is a config file)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ray's Tierra (1991) introduced nop-templates; Avida's three-nop alphabet and register modification are Ofria/Brown/Adami's redesign",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:73-150, 1484-1500"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the s_n_array / s_f_array tables and ReadLabel",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "fossil_ancestry": "avida",
+   "human_name": "Inst_HeadSearch / Inst_IfLabel / FindLabel (7245-7256, 6914-6920, 1177-1230)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "h-search reads the nop label that follows it, takes its COMPLEMENT (Rotate by 1 over the three nops: A->B, B->C, C->A) and searches the genome forward from the start for that complement, leaving the FLOW head after the match and the distance in BX; if-label compares the complement of the label just read with the label most recently copied, so a program can detect that it has finished copying its own end marker; a search that finds nothing leaves the head where it was",
+   "input": "a label read from the genome; the genome",
+   "output": "a head position; a skip decision",
+   "state": "the flow head; the read label",
+   "update": "per h-search / if-label",
+   "assumptions": [
+    "complement matching means a program never matches its own search template accidentally; the default ancestor uses nop-A nop-B ... nop-C nop-A as the copy-loop markers"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+    "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip"
+   ],
+   "fitness_value_in_ancestor": "the self-copy loop terminates by recognising its own end label rather than by counting; loops survive length changes",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Tierra's template addressing; the complement rule is Avida's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:1177-1230, 6914-6920, 7245-7256"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "FindLabel*, Inst_HeadSearch, Inst_IfLabel",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "fossil_ancestry": "avida",
+   "human_name": "Inst_HeadCopy (7130-7175); the copy-time rates in cMutationRates",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "h-copy reads the instruction under the READ head, and with probability copy_mut_prob replaces it with a random instruction from the set before writing it under the WRITE head (flagging the site); then, each with its own probability, inserts a random instruction, deletes one, applies a uniform mutation, or SLIPS (jumps the read head or duplicates/deletes a stretch); both heads advance; the parent program itself decides when and where to copy",
+   "input": "the genome under the read head; the mutation rates",
+   "output": "one instruction written (possibly wrong) under the write head",
+   "state": "the read and write heads; per-site flags (copied, mutated)",
+   "update": "per h-copy executed",
+   "assumptions": [
+    "mutation is an error in the organism's OWN copying act, so an organism that copies less (or copies fewer sites) exposes itself to fewer errors -- the rate is per copied instruction, not per generation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+    "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability"
+   ],
+   "fitness_value_in_ancestor": "variation is produced by the same machinery selection acts on; slip mutations give whole-block duplications (the source of length change)",
+   "failure_landscape": "by reading: an organism can evolve to skip copying part of itself (checked by the divide gate below)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "copy-time error as THE mutation source (Tierra); Avida adds divide-time and inject-time classes",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:7130-7175; vault:avida/upstream/tree/avida-core/source/main/cMutationRates.h"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Inst_HeadCopy and the copy-time TestCopy* probes",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "fossil_ancestry": "avida",
+   "human_name": "cHardwareBase::Divide_CheckViable (140-232); Divide_Main (1775-1830)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a divide instruction succeeds only if: the parent has executed at least JUV_PERIOD and MIN_CYCLES instructions; both halves are within OFFSPRING_SIZE_RANGE of the genome length and within absolute bounds; the parent executed at least MIN_EXE_LINES fraction of its length; the offspring has at least MIN_COPIED_LINES fraction of its sites actually written by h-copy; optionally the offspring must be an exact copy (REQUIRE_EXACT_COPY); then the memory is cropped at the divide point, divide-time mutations are applied, and the parent is reset",
+   "input": "the parent memory, the divide point, the execution/copy flags",
+   "output": "an offspring genome or a fault (divide fails, parent continues)",
+   "state": "per-site executed/copied flags",
+   "update": "per divide attempt",
+   "assumptions": [
+    "a program that divides without copying (or after copying junk) is a cheat the world must refuse, or replication collapses to trivial short genomes"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+    "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+    "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell"
+   ],
+   "fitness_value_in_ancestor": "closes the shortcut of 'divide immediately'; the fractions are the world's minimum notion of a real copy",
+   "failure_landscape": "UNKNOWN by run; by reading: the thresholds are constants, so an organism can sit exactly at MIN_COPIED_LINES",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the size-range and copied-fraction gates are Avida-specific anti-cheat rules (not in Tierra)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareBase.cc:140-232; vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:1775-1830"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Divide_CheckViable + Divide_Main",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "fossil_ancestry": "avida",
+   "human_name": "cHardwareBase::Divide_DoMutations (296-360); cMutationRates.h",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after a successful divide the offspring genome receives, independently: slip, transposition, lateral-gene-transfer, point, insertion, deletion, uniform mutations, each drawn either per site (binomial over genome length, divided by a mut_multiplier), or at most once per divide, or Poisson with a constant genomic mean; parent mutations (applied to the parent's own memory) exist too; meta-mutation can perturb the copy-mutation rate itself",
+   "input": "the offspring genome; the rate table",
+   "output": "a mutated offspring",
+   "state": "none",
+   "update": "per divide",
+   "assumptions": [
+    "divide-time mutation decouples variation from the copy act (a different evolutionary regime from copy-time error, selectable by config)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+    "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet"
+   ],
+   "fitness_value_in_ancestor": "experiments can hold the genomic mutation rate constant across genome lengths (the Poisson class) -- a control the copy-time class cannot offer",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the per-site vs per-genome distinction is the experimenter's, encoded as three rate families",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareBase.cc:296-360; vault:avida/upstream/tree/avida-core/source/main/cMutationRates.h"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "Divide_DoMutations and the divide-time rates",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "fossil_ancestry": "avida",
+   "human_name": "cPhenotype::DivideReset / CalcSizeMerit / CalcFitness; cBirthChamber::DoAsexBirth (805-860, 1827-1835, 226-260)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "merit = base x bonus, where base is a size measure chosen by BASE_MERIT_METHOD (copied size, executed size, full length, least of them, sqrt of least, or a bonus-instruction count) and bonus starts at DEFAULT_BONUS and is modified by reactions during the organism's life; the product is locked in when the organism divides (DivideReset) and the offspring is born with the parent's merit (INHERIT_MERIT) or the bare size merit; fitness (for statistics, not for selection) is merit_base x bonus / gestation_time",
+   "input": "size counts; the bonus from the environment; gestation time",
+   "output": "merit (the scheduler's priority); fitness (a reported number)",
+   "state": "cur_bonus, cur_merit_base, last_* copies",
+   "update": "bonus per reaction; merit per divide",
+   "assumptions": [
+    "size in the base term compensates for the fact that a longer genome needs more cycles to copy: without it, the shortest replicator always wins",
+    "merit is inherited so a lineage's rewards persist until its offspring earn their own"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+    "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+    "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability"
+   ],
+   "fitness_value_in_ancestor": "one scalar carries both 'how much work is a copy' and 'what has this program computed'; selection acts on the product",
+   "failure_landscape": "by reading: with BASE_MERIT_FULL_SIZE an organism gains merit by growing junk; the LEAST_SIZE options exist because of that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "merit x bonus, and merit/gestation as fitness, are Avida's central design decisions (Ofria & Wilke 2004)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPhenotype.cc:805-860, 1827-1835; vault:avida/upstream/tree/avida-core/source/main/cBirthChamber.cc:226-260"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the merit fields of cPhenotype and their two writers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "fossil_ancestry": "avida",
+   "human_name": "cEnvironment::DoProcesses (1610-1760); the reaction process types (170-176); cTaskLib::AddTask (73-142)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when an organism's output matches a task on its inputs (the library: echo, add, sub, not, nand, and, orn, or, andn, nor, xor, equ, three-input logic 3AA-3AV, ...), each reaction process computes consumed = min(max, resource available x max_fraction) x task_quality, and bonus = consumed x value; the bonus is applied to the phenotype as ADD, MULT (bonus *= value), POW (bonus *= 2^value), LIN (value x task count), or into energy; resources may be depletable (a finite pool shared by the population) or unlimited (resource NULL: consumed = max x quality)",
+   "input": "the organism's I/O history; the environment's reaction list; resource levels",
+   "output": "a bonus change; resource consumption",
+   "state": "resource counts; per-organism task counts",
+   "update": "per output event",
+   "assumptions": [
+    "logic functions on 32-bit inputs are the world's notion of computation; the 'nand' primitive is the only logic instruction, so every other function must be built from it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+    "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability"
+   ],
+   "fitness_value_in_ancestor": "the reward structure (multiplicative doubling by task complexity in the classic EQU experiments) is what makes complex functions evolve from simpler ones (Lenski et al. 2003)",
+   "failure_landscape": "by reading: with unlimited resources the bonus is a pure function of the genome; with depletable resources it is frequency-dependent",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the logic-9 environment and its 2^n reward ladder are the experimenter's world design, not the organism's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cEnvironment.cc:170-176, 1610-1760; vault:avida/upstream/tree/avida-core/source/main/cTaskLib.cc:73-142"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "DoProcesses and the task registry",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "SHARED_RESOURCE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "fossil_ancestry": "avida",
+   "human_name": "Apto::Scheduler::Integrated / Probabilistic; cPopulation::AdjustSchedule, ScheduleOrganism, ProcessStep (613-618, 5766-5800)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every cell's priority is its organism's merit (times a deme merit if any); the INTEGRATED scheduler decomposes each merit into powers of two and alternates 'the best' with 'everything else' recursively so that time slices are spread as evenly as possible while honouring the ratios; the PROBABILISTIC scheduler draws the next cell with probability proportional to merit; ROUND_ROBIN ignores merit; each schedule step executes ONE instruction of the chosen organism",
+   "input": "merits; a clock of instruction slots",
+   "output": "the next cell to execute",
+   "state": "the priority chart / node tree",
+   "update": "per instruction executed and per merit change",
+   "assumptions": [
+    "CPU cycles are the only currency; an organism's reproductive rate is its merit divided by the cycles a copy costs"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+    "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+    "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell"
+   ],
+   "fitness_value_in_ancestor": "selection is implemented as scheduling: nothing 'chooses' survivors, higher merit simply runs more often",
+   "failure_landscape": "by reading: the integrated scheduler is deterministic given merits, so identical-merit populations execute in a fixed order (a hidden bias the probabilistic scheduler removes at the cost of variance)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "merit-proportional time slicing (Adami/Brown 1994) is the ecological law of the world; the binary-decomposition trick is an implementation choice",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/libs/apto/include/apto/scheduler/Integrated.h; vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:613-618, 5766-5800"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the scheduler classes and the three cPopulation methods",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "COMPUTE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "fossil_ancestry": "avida",
+   "human_name": "cPopulation::PositionOffspring (5253-5400); ActivateOrganism (1353-1360)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a newborn is assigned a cell by BIRTH_METHOD: a random cell in the whole population (optionally preferring empty cells), the ELDEST cell via a reaper queue, a random cell in the parent's deme, the cell the parent faces, a neighbourhood cell (handlers), or a migration target; population caps kill a random or the oldest organism first; then ActivateOrganism KILLS whatever occupies the target cell and inserts the newborn; death is therefore mostly replacement, not aging",
+   "input": "the parent cell; config",
+   "output": "a target cell (whose occupant dies)",
+   "state": "the reaper queue; deme counters",
+   "update": "per birth",
+   "assumptions": [
+    "space is the second finite resource; a full world means every birth is a death"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+    "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+    "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length"
+   ],
+   "fitness_value_in_ancestor": "the geometry of placement (well-mixed vs neighbourhood) is what makes spatial structure an experimental variable",
+   "failure_landscape": "by reading: FULL_SOUP_RANDOM with a full world gives every organism the same expected lifetime regardless of merit, so selection acts only through birth rate",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the birth-method menu is the experimenter's; 'kill the occupant' is Tierra's reaper generalised",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cPopulation.cc:5253-5400, 1353-1360"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "PositionOffspring and the KillOrganism call in ActivateOrganism",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length",
+   "fossil_ancestry": "avida",
+   "human_name": "cOrganism.cc 220-232 (DEATH_METHOD, AGE_LIMIT, AGE_DEVIATION)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "if DEATH_METHOD is on, each organism draws at birth a maximum instruction count = AGE_LIMIT + N(0,1) x AGE_DEVIATION, optionally multiplied by genome length; an organism that executes more than that dies regardless of merit",
+   "input": "config; a normal draw",
+   "output": "a death time per organism",
+   "state": "m_max_executed",
+   "update": "once per organism",
+   "assumptions": [
+    "a lifetime cap prevents an immortal non-replicating high-merit organism from holding a cell forever"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell"
+   ],
+   "fitness_value_in_ancestor": "the only death that is not replacement; off by default",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:avida/upstream/tree/avida-core/source/main/cOrganism.cc:220-232"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the DEATH_METHOD block in cOrganism's constructor",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",
+   "reason": "OTHER",
+   "evidence": "NOT READ (configuration-gated extensions, ~30,000 lines); residue, not rejected on the merits",
+   "note": "each is a separate experimental world built on the core loop; a second pass should treat them as separate specimens",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "cHardwareBCR / GP8 / TransSMT / Experimental hardware variants",
+   "reason": "OTHER",
+   "evidence": "NOT READ; alternative CPUs sharing cHardwareBase's divide gates and mutation code",
+   "note": "the shared base (read) is the anatomy; the variants are alternative instruction semantics",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "analyze mode (cAnalyze), AvidaScript, cStats, the viewers (macOS app, CorePlot), the speculative-execution cache (ProcessStepSpeculative: up to 32 instructions run ahead)",
+   "reason": "OTHER",
+   "evidence": "instruments, tooling and a performance optimisation; the speculative cache changes no semantics by design",
+   "note": "instruments",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "'digital evolution' / 'Avida' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop is ten separable mechanisms with independent config switches; the platform's own literature varies each independently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  },
+  {
+   "candidate": "the ~200-entry instruction table beyond the nop/copy/divide/search/if-label core",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:avida/upstream/tree/avida-core/source/cpu/cHardwareCPU.cc:73-150 and onward; arithmetic, stack, I/O and sensing instructions are the organism's alphabet, not mechanisms of the world",
+   "note": "the alphabet is data for a world; the mechanisms above are what act on it",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "avida"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "avida::P.a_program_must_copy_its_own_description_under_a_per_symbol_error_rate_while_cpu_time_is_rationed_by_a_score_it_can_raise_by_computing",
+   "source_fossil": "avida",
+   "source_evidence": "record human_capability_summary; cHardwareCPU Inst_HeadCopy; cHardwareBase Divide_CheckViable; cPhenotype DivideReset; Apto Integrated scheduler; cPopulation PositionOffspring",
+   "condition": "the world executes many programs a few instructions at a time; a program persists only by producing a copy of itself that passes a plausibility gate; each copied symbol is corrupted with a fixed probability; the share of execution a lineage receives is proportional to a score that starts at its length and multiplies when its inputs and outputs satisfy functions the world names",
+   "resource_or_constraint": "instruction slots per world step; cells (a copy needs an empty or killed cell); a mutation rate per copied symbol",
+   "failure_condition": "no lineage replicates within the run (the ancestor is lost), or the population collapses to minimal replicators that compute nothing",
+   "world_punishes": "long genomes (more to copy per cycle) and computation that does not pay in score; slow copiers under replacement death",
+   "world_rewards": "lineages whose copy is fast and accurate enough AND whose extra instructions earn multiplicative score",
+   "observable_consequence": "fraction of runs in which any named function appears by generation G; genome length and per-site mutation load over time; time to the highest-value function as the reward ladder's base (ADD vs MULT vs POW) is varied",
+   "vacuity_condition": "no copy error (nothing varies), or unlimited CPU and space (no competition), or a score independent of computation",
+   "trivial_shortcuts": "a program that divides without copying (closed by the copied-fraction gate); a world that rewards length alone",
+   "cheat_control": "an organism handed the full score directly (bonus injected) must dominate the population within a few generations without computing anything -- if it does not, the scheduler is not reading merit; a non-replicating organism must vanish within one replacement cycle -- if it persists, death is not replacement",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: experimental digital evolution (Adami, Ofria, Brown; Avida 1993-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "avida::P.a_reward_ladder_composed_multiplicatively_across_functions_decides_whether_complex_functions_are_reachable_from_simple_ones",
+   "source_fossil": "avida",
+   "source_evidence": "cEnvironment DoProcesses 1729-1760 (ADD/MULT/POW); cTaskLib logic-9 registry",
+   "condition": "the world names a set of functions with values; an organism's score is the composition (add, multiply, or 2^value) of the rewards of every function it performs; complex functions are built from simpler ones the same programs already perform",
+   "resource_or_constraint": "the score is the only lever on CPU share; the functions cost instructions to perform",
+   "failure_condition": "the most complex function never appears because its stepping stones are not rewarded, or because rewards for stepping stones saturate",
+   "world_punishes": "a ladder whose intermediate rungs pay nothing",
+   "world_rewards": "a ladder whose rungs compound",
+   "observable_consequence": "appearance rate of the top function across reward compositions (Lenski et al. 2003 shape: EQU evolves only when simpler functions are rewarded)",
+   "vacuity_condition": "one function, or additive rewards so small that score is dominated by length",
+   "trivial_shortcuts": "rewarding the top function directly at a value that dwarfs length",
+   "cheat_control": "a world rewarding only the top function must show it evolving rarely or never; the same world with the compounding ladder must show it often: if the difference is not visible, the ladder is not the operative pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: evolution of complex features (Lenski, Ofria, Pennock, Adami 2003)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "avida::P.finite_space_where_every_birth_is_a_death_and_the_victim_is_chosen_by_a_placement_rule_not_by_fitness",
+   "source_fossil": "avida",
+   "source_evidence": "cPopulation PositionOffspring 5253-5400; ActivateOrganism 1353-1360",
+   "condition": "N cells; a newborn takes a cell and its occupant dies; the cell is chosen at random (well-mixed), by age (eldest), or by neighbourhood (spatial); no organism dies for being unfit -- it dies because a neighbour reproduced",
+   "resource_or_constraint": "cells",
+   "failure_condition": "a lineage that reproduces slowly is replaced before it reproduces even when its score is high (score buys cycles, not immunity)",
+   "world_punishes": "long gestation",
+   "world_rewards": "short gestation relative to neighbours; in spatial worlds, local clustering",
+   "observable_consequence": "lineage persistence vs gestation time under each placement rule; spatial correlation of genotypes under neighbourhood placement vs well-mixed",
+   "vacuity_condition": "more cells than organisms (nobody is replaced)",
+   "trivial_shortcuts": "a world that never fills",
+   "cheat_control": "an organism given a cell that is excluded from placement must never die and must not spread: the world must show both, or placement is not the death mechanism",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: population structure in digital evolution (Avida birth methods)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "to": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "h-search places the flow head; the copy loop jumps to it",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "DivideReset locks merit in",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bonus",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "priority = merit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "CPU cycles",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "cycles to compute",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new cell priority; killed cell removed",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the two deaths",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "offspring inherits merit via the birth chamber",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "to": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "every mutant is a legal program",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "avida",
+   "relation": "algorithm_from",
+   "to": "Tierra (Ray 1991): self-replicating programs with template addressing and a reaper; Avida (Adami & Brown 1994) adds per-organism CPUs, merit-proportional scheduling, and the task-reward environment",
+   "note": "from the code's structure and the record's lineage; not verified against the papers this pass",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "about two thirds of avida-core is unread: demes, predator/prey, mating, tolerance, energy, HGT, promoters, resource bins, alternative hardwares, analyze mode, script, stats, viewers",
+   "the default instruction set and default config (which of the ~200 instructions and which BIRTH/SLICING/BASE_MERIT settings are in force) live in config files not opened this pass; every 'default' claim above names the config key instead",
+   "nothing ran; the body is a docker world (Techne TECHNE_SMOKE_HARNESS_PASS) and cannot run on M3"
+  ],
+  "note": "the core replication-selection-reward loop is located function by function; the platform's scale is why this is COARSE despite ten organs",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

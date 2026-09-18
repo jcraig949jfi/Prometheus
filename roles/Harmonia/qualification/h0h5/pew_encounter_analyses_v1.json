@@ -1,0 +1,90 @@
+{
+ "family": "pew_encounter_analyses",
+ "family_version": "1.0.0",
+ "declared_by": "Harmonia[m2-ca1148a0]",
+ "declared_on": "2026-09-18",
+ "convention": "RULING_WP_X1_ANALYSIS_FAMILY_2026-09-08.md s1 (ten fields per manifest); HARM-24",
+ "record": {
+  "table": "ew.fossil_encounters (migrations 005, 006, 007, 010)",
+  "identity": "(encounter_id, run_key); encounter_id is a deterministic function of the spec, run_key of the execution, so several run_keys under one encounter_id are REPLAYS of one spec",
+  "fields_the_record_carries": ["sfe_entry_hash (required anchor)", "sfe_world_id", "sfe_event_id", "sfe_event_seq", "world_id", "players[]", "ecology", "seed", "budget", "outcome (native token, not prose)", "failure_class", "resources_used", "occurred_ts", "namespace", "revision", "sfe_engine_instance_id", "sfe_session_id", "sfe_session_key_fp", "sfe_affinity_mode (STRICT|LEGACY)", "sfe_ledger_head_hash"],
+  "fields_it_does_not_carry": ["any score or metric (scores live on SFE observations, reached through sfe_entry_hash)", "any intervention flag", "any arm label"],
+  "consequence": "the encounter record answers questions about OUTCOME TOKENS, FAILURE CLASSES, RESOURCES, REPLAY IDENTITY, PROVENANCE COVERAGE and LINEAGE EDGES. It cannot answer a performance question (no metric) or a causal one (no intervention): HA-1.1, HA-1.2. Every manifest below is bounded accordingly."
+ },
+ "common": {
+  "source_refs_form": "an ORDERED list of (encounter_id, run_key, sfe_entry_hash, revision) enumerated by a read whose filter (namespace = prod, occurred_ts window, world set) is written into the manifest addendum BEFORE the statistic; the list, not the filter, is the source",
+  "source_set_digest": "sha256 over the canonicalised, sorted source_refs, computed by the addendum",
+  "mode": "FROZEN for each manifest below: this file's commit precedes any read for these questions; EXPLORATORY output from earlier ad-hoc reads (none on record for these questions at 2026-09-18) is never relabelled",
+  "exclusions_rule": "namespace <> 'prod' (fixtures) excluded and COUNTED; rows whose sfe_entry_hash does not resolve on the SFE ledger excluded and COUNTED as UNANCHORED; the rule is identical across every group compared",
+  "replay_rule": "run_keys under one encounter_id are ONE unit (QR-REPLAY; replay_attestation); the unit count is the count of distinct encounter_ids after exclusions",
+  "eligible_count_printed_first": true
+ },
+ "manifests": [
+  {
+   "id": "PEW-E1",
+   "question": "Is an encounter spec deterministic across executions? (replay identity)",
+   "analysis_version": "1.0.0",
+   "unit_of_analysis": {"unit": "the encounter_id with >= 2 run_keys", "declared_n": "count of such encounter_ids after exclusions", "mapping_rule": "group source_refs by encounter_id; a group of size 1 is ineligible for this question and is counted, not dropped silently"},
+   "measurement_identity": {"kind_field": "ew.fossil_encounters.outcome + resources_used", "direction": "n/a (identity)", "range": "{IDENTICAL, DIVERGENT}", "definition": "IDENTICAL iff every run_key of the encounter_id carries the same outcome token AND the same resources_used JSON (canonicalised)"},
+   "declared_null": {"generator": "none needed: the statistic is a count of exact identities", "attainable_range": "fraction in [0, 1]; the interval is a Clopper-Pearson binomial on n eligible encounter_ids", "controls": {"positive": "fixture pairs (namespace test) with identical bytes read IDENTICAL", "negative": "a fixture pair with a perturbed resources_used reads DIVERGENT", "cheat": "a pair whose run_keys are the same string is REFUSED as a replay (one execution, two rows)"}},
+   "eligible_count": "n_encounter_ids_with_>=2_runs, printed before the fraction",
+   "min_attainable_p": "not a hypothesis test; interval only; n < 1 -> NOTHING_COULD_FIRE",
+   "exclusions": "common rule; groups of size 1 listed as INELIGIBLE with their count",
+   "reading_bound": "a DIVERGENT fraction > 0 is a finding about the executor (nondeterminism or a leaked run-specific input), never about the world; it feeds QR-REPLAY, which then refuses those rows as attestations"
+  },
+  {
+   "id": "PEW-E2",
+   "question": "What is the outcome-token distribution per world and per player, and does it change across occurred_ts? (descriptive; no causal reading)",
+   "analysis_version": "1.0.0",
+   "unit_of_analysis": {"unit": "the distinct encounter_id (replays collapsed to one row by PEW-E1's rule, the FIRST run_key in revision order)", "declared_n": "distinct encounter_ids after exclusions, per (world_id) and per (player)", "mapping_rule": "one row per encounter_id; a multi-player encounter contributes to each of its players' tables and the double-counting is printed"},
+   "measurement_identity": {"kind_field": "ew.fossil_encounters.outcome", "direction": "none (categorical)", "range": "the native token vocabulary, enumerated from the rows and printed", "definition": "counts per token; failure_class cross-tabulated within the failure tokens"},
+   "declared_null": {"generator": "token labels permuted across encounter_ids within a world (exchangeable-in-time null); the time-change statistic is the chi-square over occurred_ts quartiles", "attainable_range": "chi-square in [0, inf); with k tokens and 4 quartiles the lattice minimum p is printed from the permutation count", "controls": {"positive": "a synthetic world whose token mix flips at its median timestamp must fire", "negative": "a permuted copy must not fire above alpha", "cheat": "a world with one token everywhere is a structural floor (floor_precheck p_mode = 1.0) and is REFUSED, not reported as 'no change'"}},
+   "eligible_count": "worlds with >= 8 distinct encounter_ids AND >= 2 tokens in support; printed before any chi-square",
+   "min_attainable_p": "from the permutation lattice at the eligible n; worlds below alpha-attainability are NOTHING_COULD_FIRE",
+   "exclusions": "common rule; worlds failing floor_precheck listed with p_mode",
+   "reading_bound": "HA-1.1 / HA-1.2: a time-change in token mix is an ASSOCIATION with time; it names no cause and licenses no performance claim. Rows within a world are ordered by occurred_ts, so the exchangeability diagnostic (EX-1.0.0) is printed per world and a VIOLATED world's permutation p is not quoted"
+  },
+  {
+   "id": "PEW-E3",
+   "question": "Is resource use (resources_used.*) associated with outcome token, within a world?",
+   "analysis_version": "1.0.0",
+   "unit_of_analysis": {"unit": "the distinct encounter_id", "declared_n": "per world", "mapping_rule": "as PEW-E2"},
+   "measurement_identity": {"kind_field": "ew.fossil_encounters.resources_used.<key>", "direction": "higher is more resource", "range": "[0, inf) per key; keys enumerated from the rows and each analysed SEPARATELY, never pooled (X1-b)", "definition": "per key, the distribution of the value by outcome token"},
+   "declared_null": {"generator": "outcome labels permuted within the world (Mann-Whitney / Kruskal on the resource value)", "attainable_range": "U statistic lattice; minimum p from the group sizes, printed", "controls": {"positive": "a synthetic world where failures cost 2x must fire", "negative": "permuted labels must not", "cheat": "a resources_used key that is a deterministic function of the outcome token (e.g. a 'failed_at_tick' present only on failures) is detected by a presence-by-token table and REFUSED as an analysis of association"}},
+   "eligible_count": "worlds with >= 8 encounter_ids per compared token; printed first",
+   "min_attainable_p": "from the rank lattice at the eligible group sizes",
+   "exclusions": "common rule; encounters with resources_used = null listed and counted",
+   "reading_bound": "association within a world; resource use is not an intervention here (budget is declared per encounter, not assigned by an experimenter); any 'cost of failure' sentence is descriptive"
+  },
+  {
+   "id": "PEW-E4",
+   "question": "What fraction of encounters is anchor-verifiable (STRICT provenance with a resolvable sfe_entry_hash), per engine instance and over time?",
+   "analysis_version": "1.0.0",
+   "unit_of_analysis": {"unit": "the (encounter_id, run_key) row -- every execution's provenance is its own fact", "declared_n": "rows after namespace exclusion only", "mapping_rule": "no collapsing: a replay with a different engine instance is a different provenance row"},
+   "measurement_identity": {"kind_field": "ew.fossil_encounters.sfe_affinity_mode + sfe_entry_hash resolvability", "direction": "higher is better", "range": "[0, 1]", "definition": "fraction with sfe_affinity_mode = STRICT AND sfe_entry_hash resolving on the ledger named by sfe_engine_instance_id (verify_anchor), per engine instance and per occurred_ts month"},
+   "declared_null": {"generator": "none: a coverage count", "attainable_range": "[0, 1] with a binomial interval", "controls": {"positive": "a fixture row with a known-good anchor resolves", "negative": "a fixture row with a fabricated hash does NOT resolve and is counted UNANCHORED", "cheat": "a row whose sfe_entry_hash resolves on a DIFFERENT engine instance than its sfe_engine_instance_id names is counted MIS-ANCHORED, never verified"}},
+   "eligible_count": "rows per engine instance; printed first",
+   "min_attainable_p": "n/a (coverage)",
+   "exclusions": "namespace <> prod only; nothing else is excluded because unanchored rows are the object",
+   "reading_bound": "this is the eligibility denominator for every other manifest in this family: PEW-E1..E3, E5 run on the anchor-verifiable subset, and the fraction here is printed beside their results"
+  },
+  {
+   "id": "PEW-E5",
+   "question": "Do lineage edges (ew.fossil_edges: SURVIVAL / EXTINCTION / TRANSFER / ...) associate with encounter outcome tokens for the same player?",
+   "analysis_version": "1.0.0",
+   "unit_of_analysis": {"unit": "the player (src_id of kind player)", "declared_n": "players with >= 1 edge AND >= 8 distinct encounter_ids", "mapping_rule": "join fossil_edges.src_id = player to encounters where player = ANY(players); a player's encounters are within-unit repeats"},
+   "measurement_identity": {"kind_field": "ew.fossil_edges.relation x ew.fossil_encounters.outcome", "direction": "none (categorical x categorical)", "range": "contingency counts", "definition": "per player: relation counts and outcome-token counts; the association statistic is over PLAYERS (unit), not over encounters"},
+   "declared_null": {"generator": "edge relations permuted across players", "attainable_range": "from the permutation lattice at n_players", "controls": {"positive": "a synthetic lineage where EXTINCTION follows a run of failure tokens must fire", "negative": "permuted must not", "cheat": "an edge whose sfe_entry_hash equals an encounter's sfe_entry_hash is the SAME event recorded twice, and the pair is collapsed before counting (else the association is with itself)"}},
+   "eligible_count": "n_players meeting the mapping rule; printed first",
+   "min_attainable_p": "2 / permutation count at n_players; below alpha-attainability -> NOTHING_COULD_FIRE",
+   "exclusions": "common rule; edges with no sfe_entry_hash listed as UNANCHORED and counted",
+   "reading_bound": "HA-1.2: an association between lineage events and outcome tokens; the direction of cause is not in the record"
+  }
+ ],
+ "not_declared_because_the_record_cannot_answer": [
+  "any question of the form 'which player performs better' (no metric on the record; go through sfe_entry_hash to the observation and declare an SFE analysis under WP-X1)",
+  "any question of the form 'does X cause Y' (no intervention field; HA-1.2)",
+  "any question about ecology or budget effects (declared inputs, not assigned treatments; an association manifest may be added as PEW-E6 when a question is actually asked)"
+ ],
+ "consumers": "Mnemosyne (PEW owner) may run E1 and E4 as substrate validation; Archaeon may run E2/E3/E5 on the anchor-verifiable subset; each run binds source_refs by addendum first"
+}

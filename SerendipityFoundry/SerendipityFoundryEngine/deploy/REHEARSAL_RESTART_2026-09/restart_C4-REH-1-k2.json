@@ -1,0 +1,331 @@
+{
+ "addendum_post_recovery": {
+  "accounting": {
+   "duplicates": 0,
+   "events_after_recovery_at_record_time": 1347,
+   "expected_per_unit": 24,
+   "interrupted_world_observations": 24,
+   "obs_count_histogram": {
+    "24": 46
+   },
+   "worlds_since_00:05Z": 46
+  },
+  "first_successful_post_restart_operation": {
+   "event_seq": 14055,
+   "event_type": "OBSERVATION_RECORDED",
+   "seconds_after_engine_answered": 298.0,
+   "seconds_after_t0": 596.5,
+   "ts": 1789690802.5641408,
+   "utc": "2026-09-18T00:20:02Z",
+   "world_id": "wld_d1940e75e492c148ab4aa0e5"
+  },
+  "keyed_retry_of_the_interrupted_write": {
+   "classification": "did-not-land branch; NOT a replay; exactly one effect for the key",
+   "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+   "outcome": "re-posted by the consumer after recovery and landed as a NEW write: idempotency_keys row created 00:20:02Z -> obs_e4e31e3d, event_seq 14055, world_index 18",
+   "state_at_kill": "intent journaled, no effect (no event, key absent)"
+  },
+  "recorded_at": "2026-09-18T00:21:20Z",
+  "verdict": "mid-flight interruption -> ENGINE_TRANSPORT park -> automatic release/relaunch -> keyed retry landed once; no silent loss, no double-accounting"
+ },
+ "armed": {
+  "at": "2026-09-18T00:05:56Z",
+  "events_in_window_at_fire": 208,
+  "wait_for_events": 200,
+  "waited_s": 248.7,
+  "window_s": 20.0
+ },
+ "finished_at": "2026-09-18T00:15:05Z",
+ "interrupt": {
+  "listener_pid": 10384,
+  "open_intents_at_kill": [
+   {
+    "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+    "rid": "req_457b0a6d55b5b1bcb72c821c",
+    "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/observations",
+    "ts": 1789690206.2696433
+   }
+  ],
+  "port_free_after_s": 0.79,
+  "t0": 1789690206.0496926,
+  "t0_utc": "2026-09-18T00:10:06Z"
+ },
+ "invariants": {
+  "a6_degraded": false,
+  "chain": {
+   "dup_index": [],
+   "events_checked": 55,
+   "hash_mismatches": [],
+   "link_breaks": [],
+   "ok": true,
+   "worlds": 3
+  },
+  "checkpointer_alive": true,
+  "events_monotonic": true,
+  "ledger_after": {
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "events": 14054,
+   "events_last_10min": 263,
+   "last_event_ts": 1789690206.258084,
+   "max_event_seq": 14054,
+   "max_experiments_per_world": 228,
+   "max_observations_per_world": 228,
+   "schema_version": 9,
+   "work_items": {
+    "COMPLETED": 361,
+    "QUEUED": 3
+   }
+  },
+  "ok": true
+ },
+ "mid_request_trigger": {
+  "open_intents_seen": [
+   {
+    "idem_key": null,
+    "rid": "req_5963309428884fc907cdf79b",
+    "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/experiments",
+    "ts": 1789690206.0441663
+   }
+  ],
+  "waited_s": 0.038
+ },
+ "pin": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "schema_version": 9
+ },
+ "post": {
+  "first_event_after_restart": {
+   "actor": "cli_2bb36261427e607191ece250",
+   "event_id": "evt_47566f6374f67b297a1e8463",
+   "event_seq": 14040,
+   "event_type": "EXPERIMENT_CREATED",
+   "ts": 1789690206.0550928,
+   "world_id": "wld_d1940e75e492c148ab4aa0e5"
+  },
+  "first_op_after_t0_s": 0.0
+ },
+ "pre": {
+  "a6_open_intents": [],
+  "events_in_window": 208,
+  "events_last_60s": 0,
+  "health": {
+   "api": "v2",
+   "attestation": {
+    "counts": {
+     "effected": 0,
+     "intent": 0,
+     "refused": 0,
+     "write_failures": 0
+    },
+    "degraded": false,
+    "degraded_reason": null,
+    "dir": "C:\\Prometheus-data\\sfe\\incidents",
+    "open_intents_over_60s": 0
+   },
+   "checkpointer": {
+    "alive": true,
+    "db_bytes": 16330752,
+    "errors": 0,
+    "fast_interval_s": 0.05,
+    "idle_s_for_truncate": 3.0,
+    "interval_s": 2.0,
+    "last_error": null,
+    "last_passive": [
+     0,
+     0,
+     0
+    ],
+    "last_reset_at": 1789689956.255435,
+    "last_run_age_s": 0.4,
+    "last_run_at": 1789689956.255435,
+    "last_tick_s": 0.0,
+    "last_truncate": [
+     0,
+     0,
+     0
+    ],
+    "max_wal_bytes_seen": 0,
+    "request_path_autocheckpoint": 0,
+    "reset_mode": "truncate_when_idle",
+    "resets": 26,
+    "runs": 26,
+    "started_at": 1789689904.0004346,
+    "truncates": 26,
+    "wal_bytes": 0,
+    "wal_hard_limit_bytes": 536870912,
+    "wal_size_limit_bytes": 67108864,
+    "wal_soft_limit_bytes": 8388608
+   },
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "events_last_hour": 126,
+    "experiments_committed_last_hour": 5,
+    "last_event_age_s": 319.1,
+    "last_event_ts": 1789689637.531668,
+    "observations_last_hour": 68,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "volume": "C:",
+    "work_items": {
+     "COMPLETED": 353,
+     "QUEUED": 3
+    }
+   },
+   "measured_at": 1789689956.620192,
+   "process": {
+    "requests": 15,
+    "responses_4xx": 0,
+    "responses_5xx": 0,
+    "started_at": 1789689903.9934938,
+    "uptime_s": 52.6
+   },
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+   "write_lock": {
+    "acquisitions": 0,
+    "failures": 0,
+    "last_at": null,
+    "last_wait_s": null,
+    "max_wait_s": 0.0,
+    "waits_over_1s": 0
+   }
+  },
+  "identities": {
+   "bind": "192.168.1.191",
+   "capabilities_features": {
+    "artifact_list": true,
+    "cursor_pagination": true,
+    "fork_changed_fields": true,
+    "labels": true,
+    "logical_time": true,
+    "manifest_envelope": true,
+    "typed_termination": true,
+    "world_events": true
+   },
+   "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" ",
+   "descriptor_pin": {
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "endpoint": "https://192.168.1.191:8811",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "events": 13791,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "schema_version": 9
+   },
+   "pid": 10384,
+   "process_start_utc": "2026-09-18T00:05:03Z",
+   "recorded_at": "2026-09-18T00:05:56Z",
+   "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+   "routes": 72,
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  },
+  "last_event": {
+   "actor": "cli_2bb36261427e607191ece250",
+   "event_id": "evt_938f6fc53acd1604647f8373",
+   "event_seq": 13999,
+   "event_type": "OBSERVATION_RECORDED",
+   "ts": 1789690205.3881185,
+   "world_id": "wld_0ef204e7b24c5796b2803498"
+  },
+  "ledger": {
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "events": 13999,
+   "events_last_10min": 278,
+   "last_event_ts": 1789690205.3881185,
+   "max_event_seq": 13999,
+   "max_experiments_per_world": 228,
+   "max_observations_per_world": 228,
+   "schema_version": 9,
+   "work_items": {
+    "COMPLETED": 359,
+    "QUEUED": 3
+   }
+  },
+  "refreshed_at": "2026-09-18T00:10:05Z"
+ },
+ "recovery": {
+  "answered_after_s": 298.5,
+  "identities": {
+   "bind": "192.168.1.191",
+   "capabilities_features": {
+    "artifact_list": true,
+    "cursor_pagination": true,
+    "fork_changed_fields": true,
+    "labels": true,
+    "logical_time": true,
+    "manifest_envelope": true,
+    "typed_termination": true,
+    "world_events": true
+   },
+   "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" ",
+   "descriptor_pin": {
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "endpoint": "https://192.168.1.191:8811",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "ledger": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "events": 14054,
+    "path": "C:\\Prometheus-data\\sfe\\engine.db",
+    "schema_version": 9
+   },
+   "pid": 21684,
+   "process_start_utc": "2026-09-18T00:15:03Z",
+   "recorded_at": "2026-09-18T00:15:05Z",
+   "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+   "routes": 72,
+   "schema_version": 9,
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  },
+  "identity_checks": {
+   "bind": true,
+   "engine_instance_id": true,
+   "engine_source_hash": true,
+   "new_process": true,
+   "pin_engine_source_hash": true,
+   "route_digest": true,
+   "routes": true,
+   "schema_version": true
+  },
+  "version": {
+   "api": "v2",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "max_artifact_bytes": 33554432,
+   "registration_open": true,
+   "runtime": "serendipity-foundry-sfe",
+   "schema_version": 9,
+   "science_profile": "warn",
+   "session_enforcement": "advisory",
+   "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+  }
+ },
+ "relaunch": "watchdog",
+ "result": "PASS",
+ "retry": {
+  "effected_after_t0": 9,
+  "keyed_replays_after_t0": 0,
+  "open_at_kill": [
+   {
+    "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+    "outcome_now": null,
+    "ref": null,
+    "rid": "req_457b0a6d55b5b1bcb72c821c",
+    "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/observations"
+   }
+  ],
+  "refused_after_t0": 0
+ },
+ "schema": "sfe_rehearsal_restart.v1",
+ "started_at": "2026-09-18T00:05:55Z",
+ "tag": "C4-REH-1-k2"
+}

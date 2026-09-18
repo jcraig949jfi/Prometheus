@@ -1,0 +1,305 @@
+{
+ "artifacts": {},
+ "attempt": 2,
+ "attempt_id": "C3-SFE-04/a02",
+ "battery": [
+  {
+   "name": "permuted_control_gives_no_advantage",
+   "passed": true,
+   "value": {
+    "control_advantage": 0,
+    "mature_advantage": 0.6667
+   }
+  },
+  {
+   "name": "advantage_survives_excluding_directly_solved_edges",
+   "passed": false,
+   "value": {
+    "baseline": 0.0,
+    "mature": 0.0,
+    "targets": [
+     "W7_K2"
+    ]
+   }
+  },
+  {
+   "name": "advantage_is_not_only_generation_0",
+   "passed": true,
+   "value": {
+    "median_best_by_g20_baseline": 0.125,
+    "median_best_by_g20_mature": 0.5938
+   }
+  }
+ ],
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-016: mature sources only -- W0 solvers harvested here (held-out >= 0.9) and C3-SFE-03 delay-general elites; the W2_K2 shelf material is excluded (not solved)",
+  "D3-017: edge selection is preregistered and cheap-first: a target is informative unless a mature family already solves it directly (>= 0.90 held-out)"
+ ],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 3,
+   "declared": 3,
+   "survived": 2
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 0.0,
+   "effect": 0.6667,
+   "min_effect": 0.25,
+   "n_control": 5,
+   "n_treatment": 3,
+   "paired": 1,
+   "paired_wins": 0,
+   "treatment_mean": 0.6667
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-04",
+ "finished_at": "2026-09-17T06:15:26Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:6d8c0b6b42b0550e1eb6bec5d391b56936625d6758d13ce7d3c0c25a6fd05b51",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T06:15:17Z",
+ "steps": {},
+ "summary": {
+  "best_family": {
+   "W1_d16": "delay_general",
+   "W1_d8": "delay_general",
+   "W2_K2": "delay_general",
+   "W3_K2": "delay_general",
+   "W7_K2": "delay_general"
+  },
+  "direct": {
+   "delay_general->W0": {
+    "best": 1.0,
+    "median": 1.0,
+    "n": 11,
+    "solved": 11
+   },
+   "delay_general->W1_d16": {
+    "best": 1.0,
+    "median": 1.0,
+    "n": 11,
+    "solved": 11
+   },
+   "delay_general->W1_d8": {
+    "best": 1.0,
+    "median": 1.0,
+    "n": 11,
+    "solved": 11
+   },
+   "delay_general->W2_K2": {
+    "best": 0.5417,
+    "median": 0.5417,
+    "n": 11,
+    "solved": 0
+   },
+   "delay_general->W3_K2": {
+    "best": 0.5833,
+    "median": 0.5833,
+    "n": 11,
+    "solved": 0
+   },
+   "delay_general->W7_K2": {
+    "best": 0.1458,
+    "median": 0.1354,
+    "n": 11,
+    "solved": 0
+   }
+  },
+  "edges": {
+   "W2_K2": {
+    "baseline": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0417,
+     "import_final": 0.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_control": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0625,
+     "import_final": 1.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_mature": {
+     "foothold": 1,
+     "foothold_gen": [
+      0
+     ],
+     "heldout_med": 0.5417,
+     "import_final": 1.0,
+     "n": 1,
+     "shelf": 1,
+     "shelf_gen": [
+      0
+     ],
+     "summit": 0
+    }
+   },
+   "W3_K2": {
+    "baseline": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0625,
+     "import_final": 0.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_control": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0625,
+     "import_final": 0.9833,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_mature": {
+     "foothold": 1,
+     "foothold_gen": [
+      0
+     ],
+     "heldout_med": 0.5,
+     "import_final": 1.0,
+     "n": 1,
+     "shelf": 1,
+     "shelf_gen": [
+      0
+     ],
+     "summit": 0
+    }
+   },
+   "W7_K2": {
+    "baseline": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0417,
+     "import_final": 0.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_control": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.0208,
+     "import_final": 1.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    },
+    "init_mature": {
+     "foothold": 0,
+     "foothold_gen": [
+      null
+     ],
+     "heldout_med": 0.2292,
+     "import_final": 1.0,
+     "n": 1,
+     "shelf": 0,
+     "shelf_gen": [
+      null
+     ],
+     "summit": 0
+    }
+   }
+  },
+  "harvest": {
+   "gens": [],
+   "heldout": [],
+   "n": 0
+  },
+  "informative": [
+   "W2_K2",
+   "W3_K2",
+   "W7_K2"
+  ],
+  "table_fill": {
+   "W1_d16": {
+    "foothold": 0,
+    "heldout_med": 0.0625,
+    "n": 1,
+    "shelf": 0,
+    "summit": 0
+   },
+   "W1_d8": {
+    "foothold": 0,
+    "heldout_med": 0.0417,
+    "n": 1,
+    "shelf": 0,
+    "summit": 0
+   }
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "direct_s": 0.81,
+  "harvest_s": 1.08,
+  "phase1_s": 1.9,
+  "records_s": 0.0,
+  "search_s": 6.89,
+  "total_s": 9.2
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "fe3c1647c1e4d09950a67bfa2377e30592553770",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

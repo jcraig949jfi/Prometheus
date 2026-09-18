@@ -127,20 +127,655 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:371-440"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:860-952"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:1-96"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:191-330"
+   }
+  ],
+  "inspected_files": [
+   "graphplan.c 371-440, 860-952",
+   "planner.c 1-96, 191-330"
+  ],
+  "date": "2026-09-17T22:47Z",
+  "note": "planning as two phases over a layered graph: forward, build alternating fact and action layers (every applicable ground action plus a no-op per fact) and mark pairs that cannot co-occur (mutex), until the layers stop changing; backward, extract a plan by choosing, for each goal at the last layer, an achieving action not mutex with the actions already chosen, recursing to the previous layer; unsolvable goal sets are memoised per layer, and the graph levelling off plus a non-growing memo table proves unsolvability",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/Source.tar.gz sha256:bf98cf7f87c7d95deb560403f1d5b3cd4124138ce3107af806c843440c30723c; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/BW.tar.gz sha256:b2b8fea70312cdcd6beee9717ce9c51d06c22faf3f38f83e6c260de32c5e50b0; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/README sha256:18071e82d76f0a63237f4764978b91236ffb01fa76915b75c92f2078a187d4aa; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_ops sha256:651faadab7704d0f2cf25ccdf1cbbd630bb418b786650a8f73e38c3e51a241fc; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_facts2 sha256:623c6c438c65d440d8a6f463d7cad847267614ab87b6e37baf71a9de3f693328; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/rocket_facts4 sha256:0b7104d55de730f4460a71d2e7104b3d996034c6475dd1baac9279b46e11ea2e; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/monkey_ops sha256:8210d71d5524f3ea1ceb82ee4e82da2124b3b0f9f6268873376a45a900b34237; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/monkey_facts1 sha256:4b6125fc6a91976a17f99b24b4dce6182b72358af7ee45b3ecc386a8cf1e65dc; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/blocks_ops sha256:a30ed76ff974954f477fa91312207b113757838f7f53c279d7737780604b20ba; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/blocks_facts4 sha256:981cd581a90f88423f5f5ea9027a784ab55372cd512ced60b9c8c5aab6a9bf66; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/logistics_ops sha256:d7316a8855da92d580564ba4d0aec388cfc18db5978fac404252bb27c85ba190; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/logistics_facts4 sha256:0fd3d590a45e15e0d95050f043efd0d21691fb299bf11859ce542ff6073ec732; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/fixit_ops sha256:f79f8a4fe62f28fdb914d45dddfbf1c6202ea8d54b328f668000b109fe1928b8; https://www.cs.cmu.edu/afs/cs.cmu.edu/usr/avrim/Planning/Graphplan/fixit_facts1 sha256:f4285a62b93afa704a605ab7d1cc6e1640e428e7e20c5fd50252f235f9941164",
+   "payload_manifest_id": "techne tree_sha256 b0abf2bffcad7f5f05713bd91698153593b94b27bce9948f88e3ae41cb47aab2 (27 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/Source/graphplan.c",
+     "payload_hash_read": "9444b495c22e870c6c0a3d0dcde99f2f4e0a562f5947d8322bbdb717fa9d77c9",
+     "techne_recorded_hash": "9444b495c22e870c6c0a3d0dcde99f2f4e0a562f5947d8322bbdb717fa9d77c9",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/Source/planner.c",
+     "payload_hash_read": "eb0c68098046b8940c9c7a5e16804357d51a6239b56fb22bce1151167bc26ece",
+     "techne_recorded_hash": "eb0c68098046b8940c9c7a5e16804357d51a6239b56fb22bce1151167bc26ece",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "create_graph_layer (371-440): copy facts forward, do_operator per op, make_noop_layer, set_uid, find_all_mutex_ops, find_mutex_facts, same_as_prev_flag / first_full_time; make_graph_piece (860-952) builds one action node with its precondition and effect edges",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each time step the facts are copied to the next layer (linked prev/next), every operator is instantiated against the current facts (an action whose preconditions are pairwise mutex is not inserted: 'Avoiding'), a no-op action per fact is inserted FIRST so the planner tries persistence before change, ids are assigned, mutexes computed, and if the fact count and mutex count equal the previous layer's the graph has levelled off and later layers are copies (make_copy)",
+   "input": "ground operators, initial facts",
+   "output": "fact_table[t], op_table[t] with edges",
+   "state": "the layered graph (hash tables per layer)",
+   "update": "per layer",
+   "assumptions": [
+    "the reachable-fact set and its mutexes are a polynomial-size over-approximation of reachability that tightens the search (the Graphplan insight); levelling off is detectable by counts"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "a polynomial forward pass replaces most of the exponential backward search",
+   "failure_landscape": "by reading: the graph is built on GROUND actions (all instantiations), so large domains blow up here first (MAXNODES); delete effects are stored on the action as strings and consulted only for mutexes",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Blum & Furst 1995/1997 'Fast planning through planning graph analysis'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:371-440, 860-952"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "create_graph_layer and make_graph_piece",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "find_all_mutex_ops / find_mutex_facts (called at 415-419; bodies not read); are_mutex; mark_exclusive / unmark_exclusive (planner.c 131-142)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "two actions at a layer are mutex if one deletes a precondition or effect of the other (interference) or if their preconditions are mutex (competing needs); two facts at a layer are mutex if every pair of their achievers is mutex; the relation is a per-layer bit vector (bvec_len) read by are_mutex; during extraction, choosing an action marks every action mutex with it as unavailable (mark_exclusive) and unmarks on backtrack",
+   "input": "the layer's actions and their precondition/effect/delete lists",
+   "output": "a symmetric relation per layer",
+   "state": "bit vectors",
+   "update": "per layer",
+   "assumptions": [
+    "binary exclusion captures most of what makes goal sets unachievable; higher-order exclusions are left to the search"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "the pruning that makes the backward search feasible and the reason the graph levels off",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:415-419 (calls); vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:131-142"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two find_* functions and the marking; CANDIDATE because their bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "basicplan (planner.c 191-330): goals_at[time][cindex]; in_edges loop with IS_MARKED skip; goals_still_possible; used / is_true counters; the undo block; action_set_is_minimal at the layer boundary",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at a layer, take the next unsatisfied goal (skipping goals already made true by chosen actions), try each achiever (no-ops first) that is not marked mutex with a prior choice: mark its exclusions, check every remaining goal still has an unmarked achiever, add its preconditions to the previous layer's goal set (counting uses so duplicates are shared), recurse to the next goal; when all goals at the layer are served, recurse to the previous layer with the new goal set; undo counters and marks on return; success at time 0",
+   "input": "a goal set at the last layer",
+   "output": "a plan (the used actions per layer) or failure",
+   "state": "goals_at arrays, marks, used/is_true counts",
+   "update": "per choice",
+   "assumptions": [
+    "the mutex relations in the graph make the chosen action set legal without further checking ('it does no other redundant checking')"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+    "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+    "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table"
+   ],
+   "fitness_value_in_ancestor": "a plan is a set of actions per layer, so parallel actions come for free",
+   "failure_landscape": "by reading: the search is exponential in the worst case; the memo table and the lower bound (do_lower) are the mitigations; the authors note a smallest-achiever-count goal ordering 'didn't generally help much'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:191-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "basicplan / runbasicplan",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "insert_bad / lookup_bad / PARTIALsubset_lookup (called at basicplan 232-241; bodies not read; random per-fact codes rand1 set at create_graph_layer 407); the completeness comment (planner.c 11-24); can_stop",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a goal set that fails at a layer is inserted in a per-layer hash table keyed by the sum of random per-fact codes; a later visit of the same set (or, with do_subsets, a superset of a known-bad set) fails immediately; once the graph has levelled off, if a full time step passes in which the table at the levelled layer does not grow, every plan would have to pass through a known-bad set and the problem is declared unsolvable (the argument in the file header)",
+   "input": "failed goal sets",
+   "output": "a fast 'no', and termination",
+   "state": "bad_table per layer",
+   "update": "per failure",
+   "assumptions": [
+    "goal sets recur across branches (they do: the same subgoals arise from different orderings); the random-code hash is collision-tolerant in practice"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "the planner terminates on unsolvable problems, which forward-search planners of the time did not",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper (section on termination)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:11-24, 232-241; vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:407"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the bad_table functions and can_stop; CANDIDATE because the table code was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "do_operator_rec (matching operator parameters against facts and types), the lex/yacc operator and fact readers, useful_facts / delete_useless (irrelevance pruning), the X viewer, constrict (greedy) and build_up_to_plan",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "graphplan-blum-furst-1995"
+  },
+  {
+   "candidate": "'Graphplan' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "graph building, mutex, extraction and memoisation are four separable mechanisms; later planners (FF, in this atlas) kept the first and dropped the third",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "graphplan-blum-furst-1995"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "graphplan-blum-furst-1995::P.a_goal_must_be_reached_by_a_sequence_of_actions_with_preconditions_and_effects_when_naive_backward_chaining_is_exponential_and_unsolvable_instances_must_be_recognised",
+   "source_fossil": "graphplan-blum-furst-1995",
+   "source_evidence": "graphplan.c create_graph_layer; planner.c basicplan and the completeness comment",
+   "condition": "an organism is given ground actions (preconditions, adds, deletes), an initial state and goals; it must return a valid (possibly parallel) plan or 'unsolvable'; instances include unsolvable ones",
+   "resource_or_constraint": "time and memory polynomial in the reachable facts for the forward phase; the backward phase is the exponential budget",
+   "failure_condition": "an invalid plan, a solvable instance missed, or non-termination on an unsolvable one",
+   "world_punishes": "plain backward chaining (no pruning; no termination proof); plain forward search (no goal focus)",
+   "world_rewards": "a reachability over-approximation with binary exclusions, memoised failures and a termination argument",
+   "observable_consequence": "nodes expanded and plans found on the 1995 benchmark set (rocket, blocks, logistics) with mutexes on/off and memoisation on/off; termination on unsolvable variants",
+   "vacuity_condition": "a domain with no deletes (the graph is exact and the plan is the first layer where goals appear)",
+   "trivial_shortcuts": "a domain-specific heuristic (which the world must withhold)",
+   "cheat_control": "an organism given a plan oracle must expand zero nodes; the extraction with mutexes disabled must expand exponentially more on rocket; with memoisation disabled the unsolvable variant must not terminate within the budget: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: STRIPS planning (Blum & Furst 1995)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "to": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "failed sets",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "graphplan-blum-furst-1995",
+   "relation": "algorithm_from",
+   "to": "Blum & Furst 1995 (AI Journal 1997); the atlas's ff-planner-2.3 cut records FF as the successor that kept the graph as a heuristic and replaced extraction with forward search",
+   "note": "from the source and the FF cut in this atlas",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "mutex computation and the memo table read at their call sites only",
+   "the front end and instantiation unread",
+   "nothing ran"
+  ],
+  "note": "the four mechanisms are located; two are CANDIDATE pending a read of their bodies",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

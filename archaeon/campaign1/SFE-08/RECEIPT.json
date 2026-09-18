@@ -1,0 +1,225 @@
+{
+ "artifacts": {
+  "chimera_XY": "sha256:8c29bc344e140f8f32f1025931d0d38cbd67c563052be40820bc93843c8dba65",
+  "random_recomb": "sha256:e6e1862109b8d4c6cf01cff82acb2a6f5cbf718950adafb7bbe5e865941e6271",
+  "shuffled_organs": "sha256:50f165fae95940e0c158e0de269a0cfbdbbb1a05bc560ca77e1c96c46d7bab4f"
+ },
+ "campaign_seed": 20260917,
+ "engine_path": true,
+ "errors": [],
+ "experiment": "SFE-08",
+ "fetch": {
+  "L1": {
+   "bytes": 5859,
+   "hash_ok": true
+  },
+  "L2": {
+   "bytes": 64418,
+   "hash_ok": true
+  },
+  "L3": {
+   "bytes": 59592,
+   "hash_ok": true
+  }
+ },
+ "hypothesis": "hyp_5eeb06122db1cf123fb97972",
+ "lineage_sizes": {
+  "L1": 7,
+  "L2": 64,
+  "L3": 64
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "session_id": "ses_8c3d21e4f95ea8036222b2d2",
+ "summary": {
+  "ancestors_L1": {
+   "direct_best": [
+    0.021,
+    0.021,
+    0.052
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.104,
+    0.031,
+    0.062
+   ],
+   "evolved_mean": 0.066,
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0
+  },
+  "ancestors_L2": {
+   "direct_best": [
+    0.094,
+    0.073,
+    0.073
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.104,
+    0.5,
+    0.292
+   ],
+   "evolved_mean": 0.2986,
+   "first_solved_gen": [
+    null,
+    39,
+    null
+   ],
+   "footholds": 1
+  },
+  "ancestors_L3": {
+   "direct_best": [
+    0.115,
+    0.073,
+    0.073
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.104,
+    0.073,
+    0.542
+   ],
+   "evolved_mean": 0.2396,
+   "first_solved_gen": [
+    null,
+    null,
+    11
+   ],
+   "footholds": 1
+  },
+  "chimera_XY": {
+   "direct_best": [
+    0.115,
+    0.073,
+    0.073
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.104,
+    0.062,
+    0.073
+   ],
+   "evolved_mean": 0.0799,
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0
+  },
+  "random_recomb": {
+   "direct_best": [
+    0.042,
+    0.073,
+    0.062
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.104,
+    0.031,
+    0.073
+   ],
+   "evolved_mean": 0.0694,
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0
+  },
+  "shuffled_organs": {
+   "direct_best": [
+    0.042,
+    0.073,
+    0.062
+   ],
+   "direct_share_above_chance": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved": [
+    0.115,
+    0.083,
+    0.062
+   ],
+   "evolved_mean": 0.0868,
+   "first_solved_gen": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0
+  }
+ },
+ "task": {
+  "D": 1,
+  "K": 2,
+  "Kd": 0,
+  "ask_kind": "ASK",
+  "ask_mode": "all",
+  "ask_timing": "end",
+  "delay": 0,
+  "delays": [],
+  "expensive": 0,
+  "fanout": 1,
+  "interfere": false,
+  "interleave": "sequential",
+  "n_defs": 0,
+  "name": "W2_K2",
+  "noise_rate": 0.0,
+  "op_mode": "fixed",
+  "recycle": false,
+  "retire_rate": 0.0,
+  "topology": "streams",
+  "value_bits": 4,
+  "vocab": "train"
+ },
+ "teardown": {
+  "chimera": "TERMINATED"
+ },
+ "timings": {
+  "exposure_s": 17.8,
+  "records_s": 4.77,
+  "startup_s": 0.54,
+  "teardown_s": 0.22,
+  "total_s": 23.8
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "ac3d2d8970aca1bc653fb130493ae9ec49854a71",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "chimera": "wld_e9b6a6be327d515a37b96838"
+ }
+}

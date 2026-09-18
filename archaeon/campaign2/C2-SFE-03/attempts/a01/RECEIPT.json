@@ -1,0 +1,342 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-03/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-011: IMMATURE_ARTIFACT is telemetry here, not a gate: the SFE-01 effect under test was produced by an immature source; the mature_source probe measures whether maturity changes it"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "TARGET_UNREACHABLE",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "TARGET_UNREACHABLE"
+  ]
+ },
+ "effects": {
+  "battery": [
+   {
+    "components_minus": null,
+    "name": "shuffled",
+    "passed": false,
+    "type": "kill"
+   },
+   {
+    "components_minus": null,
+    "name": "opcode_matched",
+    "passed": false,
+    "type": "kill"
+   },
+   {
+    "components_minus": -0.066,
+    "name": "self_segments",
+    "passed": false,
+    "type": "kill"
+   }
+  ],
+  "components_minus_random": -0.1181,
+  "footholds": {
+   "baseline": 0,
+   "components": 0,
+   "mature_source": 0,
+   "opcode_matched": 0,
+   "other_lineage": 0,
+   "position_front": 0,
+   "random_segments": 1,
+   "self_segments": 0,
+   "shuffled": 0
+  },
+  "means": {
+   "baseline": 0.0625,
+   "components": 0.0,
+   "mature_source": 0.0,
+   "opcode_matched": 0.0,
+   "other_lineage": 0.0,
+   "position_front": 0.0,
+   "random_segments": 0.1181,
+   "self_segments": 0.066,
+   "shuffled": 0.0
+  },
+  "n": {
+   "baseline": 3,
+   "components": 0,
+   "mature_source": 0,
+   "opcode_matched": 0,
+   "other_lineage": 0,
+   "position_front": 0,
+   "random_segments": 3,
+   "self_segments": 3,
+   "shuffled": 0
+  },
+  "probes": {
+   "mature_source": {
+    "components_minus": 0.0,
+    "footholds": 0,
+    "mean": 0.0,
+    "n": 0
+   },
+   "other_lineage": {
+    "components_minus": 0.0,
+    "footholds": 0,
+    "mean": 0.0,
+    "n": 0
+   },
+   "position_front": {
+    "components_minus": 0.0,
+    "footholds": 0,
+    "mean": 0.0,
+    "n": 0
+   }
+  }
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-03",
+ "finished_at": "2026-09-17T03:25:39Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "material_summaries": {
+  "components": {
+   "category_shares": {},
+   "k_hist": {
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "k_mean": 0.0,
+   "n": 0
+  },
+  "mature_source": {
+   "category_shares": {},
+   "k_hist": {
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "k_mean": 0.0,
+   "n": 0
+  },
+  "opcode_matched": {
+   "category_shares": {},
+   "k_hist": {
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "k_mean": 0.0,
+   "n": 0
+  },
+  "random_segments": {
+   "category_shares": {
+    "arithmetic": 0.2258,
+    "comparison": 0.0387,
+    "control": 0.1161,
+    "halt_yield": 0.0677,
+    "indirection": 0.1581,
+    "logical": 0.1742,
+    "opaque_io": 0.1516,
+    "randomness": 0.0355,
+    "read_write": 0.0323
+   },
+   "k_hist": {
+    "2": 43,
+    "3": 36,
+    "4": 29
+   },
+   "k_mean": 2.87,
+   "n": 108
+  },
+  "self_segments": {
+   "category_shares": {
+    "arithmetic": 0.1336,
+    "comparison": 0.0586,
+    "control": 0.0619,
+    "halt_yield": 0.0782,
+    "indirection": 0.0684,
+    "logical": 0.4039,
+    "opaque_io": 0.0293,
+    "randomness": 0.0651,
+    "read_write": 0.101
+   },
+   "k_hist": {
+    "2": 43,
+    "3": 35,
+    "4": 29
+   },
+   "k_mean": 2.869,
+   "n": 107
+  },
+  "shuffled": {
+   "category_shares": {},
+   "k_hist": {
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "k_mean": 0.0,
+   "n": 0
+  }
+ },
+ "prereg_digest": "sha256:3430e2d56734bea90c16b6fa3fcecc5389d61db5b00fff38abf75e31d9771159",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "sources": {
+  "immature": {
+   "1": {
+    "elite": 0.0,
+    "first_solved_gen": null,
+    "n_segments": 0,
+    "solved": false,
+    "summary": {
+     "category_shares": {},
+     "k_hist": {
+      "2": 0,
+      "3": 0,
+      "4": 0
+     },
+     "k_mean": 0.0,
+     "n": 0
+    }
+   },
+   "2": {
+    "elite": 0.0,
+    "first_solved_gen": null,
+    "n_segments": 0,
+    "solved": false,
+    "summary": {
+     "category_shares": {},
+     "k_hist": {
+      "2": 0,
+      "3": 0,
+      "4": 0
+     },
+     "k_mean": 0.0,
+     "n": 0
+    }
+   },
+   "3": {
+    "elite": 0.0,
+    "first_solved_gen": null,
+    "n_segments": 0,
+    "solved": false,
+    "summary": {
+     "category_shares": {},
+     "k_hist": {
+      "2": 0,
+      "3": 0,
+      "4": 0
+     },
+     "k_mean": 0.0,
+     "n": 0
+    }
+   }
+  },
+  "mature": {
+   "1": {
+    "elite": 0.0,
+    "first_solved_gen": 6,
+    "generations": 8,
+    "n_segments": 0,
+    "solved": false,
+    "summary": {
+     "category_shares": {},
+     "k_hist": {
+      "2": 0,
+      "3": 0,
+      "4": 0
+     },
+     "k_mean": 0.0,
+     "n": 0
+    }
+   },
+   "2": {
+    "elite": 0.25,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n_segments": 156,
+    "solved": false,
+    "summary": {
+     "category_shares": {
+      "arithmetic": 0.25,
+      "control": 0.0196,
+      "halt_yield": 0.1696,
+      "indirection": 0.137,
+      "logical": 0.163,
+      "opaque_io": 0.1565,
+      "randomness": 0.0261,
+      "read_write": 0.0783
+     },
+     "k_hist": {
+      "2": 56,
+      "3": 52,
+      "4": 48
+     },
+     "k_mean": 2.949,
+     "n": 156
+    }
+   },
+   "3": {
+    "elite": 0.0,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n_segments": 0,
+    "solved": false,
+    "summary": {
+     "category_shares": {},
+     "k_hist": {
+      "2": 0,
+      "3": 0,
+      "4": 0
+     },
+     "k_mean": 0.0,
+     "n": 0
+    }
+   }
+  },
+  "mature_pool": {
+   "n_segments": 0,
+   "solved_seeds": [],
+   "summary": null
+  }
+ },
+ "started_at": "2026-09-17T03:25:38Z",
+ "steps": {},
+ "teardown": {},
+ "timings": {
+  "exchange_s": 0.0,
+  "records_s": 0.0,
+  "sources_s": 0.16,
+  "targets_s": 0.21,
+  "total_s": 0.6
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "band95_upper": 0.5615,
+    "baseline_arm": "baseline",
+    "reached": 0,
+    "rows": 3,
+    "table_class": "UNESTABLISHED"
+   },
+   "state": "TARGET_UNREACHABLE"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "9729b31ff5217b52f3e413a403ab9ddfc212c83b",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

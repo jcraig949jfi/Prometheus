@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-14 (Harmonia[m2-f541bed9]). Rewritten under base rule 5
+Currency: 2026-09-16 (Harmonia[m2-038758c6]; s8 added). Previous: 2026-09-14 (Harmonia[m2-f541bed9]). Rewritten under base rule 5
 (currency is correctness), closing HARM-36. The April body is preserved
 verbatim, blob unchanged, at
 roles/Harmonia/superseded/RESPONSIBILITIES_pre_2026-09-14_superseded.md
@@ -37,7 +37,8 @@ decides what the evidence permits, against executable checks. Concretely:
     detector calibration  rates per geometry and null family, beside exact
                           references, before any live use (D-21 d3.v2)
     claim boundaries      what a readout may and may not be quoted as
-    qualification         H0-H5 gates: QR-1.1.0, AF-1.0.0, H4-ADAPTIVE-1.0.0
+    qualification         H0-H5 gates: QR-1.2.0, AF-1.1.0, H4-ADAPTIVE-1.0.1, EX-1.0.0, FP-1.0.0
+                          (2026-09-18; the 09-14 line read QR-1.1.0 / AF-1.0.0 / H4-ADAPTIVE-1.0.0)
     conformance contract  the SFE route/scoping contract and the four-state
                           gate Archaeon and Vivarium run before engine work
     rulings               adjudications of other seats' designs and readouts,
@@ -127,3 +128,68 @@ was found in the files read on this pass, not that none exists.
 
 Nothing above is STILL_LIVE for this seat. Waking any PARKED line is the
 operator's call.
+
+## 8. Second lane (added 2026-09-16): the Mechanism Archaeology Pipeline, Harmonia stage
+
+Source: the operator's Founding Charter and Amendments 2 and 3 of the
+Mechanism Archaeology Pipeline, received in chat 2026-09-16 and transcribed
+verbatim at roles/Nyx/prompts/2026-09-16_mechanism_archaeology_pipeline/
+(Nyx) and roles/Harmonia/prompts/2026-09-16_mechanism_archaeology/
+AMENDMENT_3_as_received_by_Harmonia.md (this seat; identical to Nyx's after
+ASCII normalisation, 413/413 lines). Amendment 1 is not on record at either
+seat. Pipeline: TECHNE -> NYX -> HARMONIA -> THEOPHRASTUS -> ARCHAEON/VIVARIUM.
+
+This lane does not replace section 1; it is a second standing lane with its
+own instruments, and section 2 still holds: this seat edits no object it
+audits (a cut, a packet, a fossil record) and returns findings as typed
+returns instead.
+
+    stages (Amendment 2 R26)  R1 oracle construction (grade every oracle datum
+                              per R23: EXECUTION / CONTEMPORARY_DOCUMENT /
+                              CONTEMPORARY_LISTING / HISTORICAL_DATASET /
+                              AUTHOR_STATEMENT / LATER_RECONSTRUCTION /
+                              RECOVERY_PROJECT / MODERN_REFERENCE_IMPLEMENTATION;
+                              conflicts recorded, never repaired)
+                              R2 behavioural resurrection (differential tests
+                              historical vs surrogate; no disagreement disappears)
+                              R3 mechanistic equivalence (ablation, substitution,
+                              internal state) where experimentally possible
+                              R4 divergence characterisation (the ledger)
+    inputs                    FOSSIL_ID, FOSSIL_WORLD_ID, RUNTIME_WITNESS,
+                              SCAFFOLDING_LEDGER, TECHNE_EXECUTION_RECEIPTS,
+                              ORACLE_SOURCES, CUT_ID, NYX_PREDICTION_PACKET
+    outputs                   RESURRECTION PACKET (charter s6): oracle corpus +
+                              hashes, surrogate + hashes, equivalence results,
+                              divergence ledger, unsupported regions, replay
+                              instructions; keys ORACLE_SOURCES,
+                              ORACLE_PROVENANCE_GRADES, HARMONIA_SURROGATE_ID,
+                              EQUIVALENCE_RESULT, DIVERGENCE_LEDGER in Techne's
+                              FOSSIL_PACKET
+    typed returns I emit      to Nyx: CUT_CHALLENGE, PREDICTION_FAILED,
+    (Amendment 3 R31)         PREDICTION_INDETERMINATE, CUT_SUPPORTED, and
+                              PREDICTION_PACKET_CHALLENGE (added 2026-09-16 for
+                              a defect in a packet's intervention spec that is
+                              not a boundary defect and not a measured miss)
+                              to Techne: WORLD_RECONSTRUCTION_CHALLENGE,
+                              INSTRUMENT_CHALLENGE, ORACLE_PROVENANCE_CHALLENGE
+    typed returns I receive   from Theophrastus: SURROGATE_CHALLENGE,
+                              EQUIVALENCE_CHALLENGE
+    latency                   ACK <= 1 tick, DISPOSITION <= 2 ticks; a DEFER names
+                              blocker, accountable seat, evidence required, next
+                              due tick; a third unresolved tick escalates
+    hard law                  improvement and resurrection are different
+                              experiments; the faithful branch is preserved
+                              before any divergent descendant exists
+    instrument-before-        Amendment 2 R24 / C11: an apparent fossil failure is
+    specimen                  not fossil evidence until the modern instrument has
+                              survived controls that could reveal instrument failure
+    instruments (this seat)   roles/Harmonia/science/rs_ruler/  the equivalence
+                              ruler, calibrated on RS_CALIBRATION_PAIR_001
+                              (RULING_RS_CALIBRATION_PAIR_001_2026-09-16.md)
+    first specimen            FOSSIL-GZIP-001 (gzip-1.2.4-1993): H0-H5 of the
+                              charter's gzip pilot, deliverable RESURRECTION-GZIP-001;
+                              rows HARM-37..HARM-42 in BACKLOG_H0H5.md
+    counterparts              Techne (body, world, provenance, scaffolding ledger,
+                              preservation); Nyx (cut, prediction packet, Stage D'
+                              assimilation of my returns); Theophrastus (test
+                              worlds, pressures, tensor admission)

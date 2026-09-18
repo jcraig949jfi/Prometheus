@@ -35,7 +35,7 @@
       "defect_present": true,
       "detected": true,
       "evidence": [
-        "positive control recovered with REVERSED sign: point -0.203 CI [-0.218, -0.188], declared sign +1",
+        "positive control recovered with REVERSED sign: point -0.198 CI [-0.215, -0.180], declared sign +1",
         "positive control failed to read as SUPPORTED (UNSUPPORTED)"
       ],
       "pass": true
@@ -47,7 +47,7 @@
       "evidence": [
         "denominator 38 != assigned 50; 12 run(s) dropped",
         "12 BUDGET_EXHAUSTED run(s) scored as failure and excluded; exhaustion is CENSORED and stays in the denominator",
-        "solve fraction 0.579 on the truncated denominator vs 0.440 on all assigned tasks (+13.9 pp inflation)"
+        "solve fraction 0.526 on the truncated denominator vs 0.400 on all assigned tasks (+12.6 pp inflation)"
       ],
       "pass": true
     },
@@ -57,10 +57,59 @@
       "detected": false,
       "evidence": [],
       "pass": true
+    },
+    {
+      "fixture": "F7_degenerate_replicate",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "payload sha256:f0a6389905c0 appears 4 times (bit-identical: attests determinism); counts as 1 unit",
+        "REFUSED as replicates: replay rows offered as replicates: sha256:f0a6389905c0 x4; a bit-identical replay is an attestation (replay_attestation) and contributes one unit"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F7_control_distinct",
+      "defect_present": false,
+      "detected": false,
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "fixture": "F8_structural_floor",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "REFUSED: p_mode 0.833 > 0.50 (mode value 0.0 on 100 of 120 units; support 21; f 0.167): the corpus sits on a structural floor and a detector over it measures the floor"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F8_control_clean",
+      "defect_present": false,
+      "detected": false,
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "fixture": "F9_non_exchangeable_rows",
+      "defect_present": true,
+      "detected": true,
+      "evidence": [
+        "EXCHANGEABILITY_VIOLATED: serial r +0.998, trend explains 100% of the variance, ratio inflation x200.39; no i.i.d.-calibrated rate may be quoted for this region"
+      ],
+      "pass": true
+    },
+    {
+      "fixture": "F9_control_exchangeable",
+      "defect_present": false,
+      "detected": false,
+      "evidence": [],
+      "pass": true
     }
   ],
   "f6_false_support_rate": {
-    "thr=0.00/additive_gain_S11_minus_S00": {
+    "thr=0.00/G_joint_treatment_S11_minus_S00": {
       "false_support_rate": 0.013875,
       "binomial_se": 0.0013077884182370633,
       "mean_se_of_estimate": 0.0159688652813749,
@@ -76,7 +125,7 @@
       "expected": 0.0125,
       "vacuous": false
     },
-    "thr=0.05/additive_gain_S11_minus_S00": {
+    "thr=0.05/G_joint_treatment_S11_minus_S00": {
       "false_support_rate": 0.0,
       "binomial_se": 3.5355339059327374e-07,
       "mean_se_of_estimate": 0.0159688652813749,
@@ -148,7 +197,7 @@
     }
   ],
   "reference_plan": {
-    "digest": "sha256:c603fd091b79bd9ae10ea24dd8e1578280f6661cdd05f288e21a218198e71a41",
+    "digest": "sha256:bbdb7fc5cb74799d8d51d1c707a27cec8f4745d34d31c3984588ed4a99175b53",
     "checks": [
       "unit_is_paired_seed_x_task_block",
       "denominator_is_all_assigned",
@@ -188,7 +237,7 @@
     }
   ],
   "h4_protocol": {
-    "version": "H4-ADAPTIVE-1.0.0",
+    "version": "H4-ADAPTIVE-1.0.1",
     "distinct_from_m_signal": {
       "m_signal": "FROZEN corpus and FROZEN universe; both the directed and the matched random order committed before any outcome is revealed; endpoint is detector discrimination among regions on that frozen corpus. The policy does not change the universe while it runs.",
       "h4": "The curriculum policy CHANGES THE TASK DISTRIBUTION while it runs -- that change IS the intervention. There is therefore no common universe during training, and no frozen candidate order to commit in advance.",
@@ -212,7 +261,7 @@
     ],
     "evaluator": "fixed and independent of every arm; never updated during the campaign; its own version pinned and hashed",
     "design": "2x2, fixed/adaptive curriculum x transfer off/on",
-    "reporting": "combined effect and interaction reported SEPARATELY, with simultaneous uncertainty across both; the interaction carries sqrt(2) times the main effect's SE by construction",
+    "reporting": "combined effect and interaction reported SEPARATELY, with simultaneous uncertainty across both; the interaction's SE is c_I' Sigma c_I over the pilot Sigma (sqrt(2) times the combined effect's SE ONLY under equal marginal variances and exchangeable within-block correlation; QR-1.1.0)",
     "denominator": "every ASSIGNED task in the frozen suite, including those never attempted and those censored by budget exhaustion",
     "censoring": "budget exhaustion is CENSORED, not failure and not success; censored runs stay in the denominator and their count is reported beside the endpoint",
     "void_conditions": [
@@ -221,5 +270,510 @@
       "historical suite fed back into training without an explicit licence",
       "confirmation opened before the plan hash was committed"
     ]
+  },
+  "lane_gates": {
+    "H0": {
+      "lane": "H0",
+      "claim": "failure transport + component reuse improve held-out solving; interaction is a separate, stronger claim",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "solve fraction over all assigned held-out tasks, four cells",
+        "primary_contrasts": [
+          "G_joint_treatment_S11_minus_S00",
+          "interaction_I"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "pilot Sigma estimated on DISJOINT blocks (sigma_from_blocks)",
+          "se_ratio_report printed beside both estimands",
+          "shared-arm correlation printed for any contrast pair sharing S00 (paired_contrasts_shared_arm)",
+          "cell payload hashes distinct (validate_cell_payloads)"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "G reported as a marginal main effect",
+          "a supported G read as synergy"
+        ],
+        "secondary": [
+          "C_M1",
+          "C_M2"
+        ],
+        "constants": {}
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "solve fraction over all assigned held-out tasks, four cells",
+        "primary_contrasts": [
+          "G_joint_treatment_S11_minus_S00",
+          "interaction_I"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "pilot Sigma estimated on DISJOINT blocks (sigma_from_blocks)",
+          "se_ratio_report printed beside both estimands",
+          "shared-arm correlation printed for any contrast pair sharing S00 (paired_contrasts_shared_arm)",
+          "cell payload hashes distinct (validate_cell_payloads)",
+          "block count from blocks_for_power at the pilot Sigma, SEPARATELY for G and for I (I needs ~2x)",
+          "threshold FROZEN_FROM_PILOT"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "G reported as a marginal main effect",
+          "a supported G read as synergy",
+          "confirmation opened before the plan hash was committed"
+        ],
+        "secondary": [
+          "C_M1",
+          "C_M2"
+        ],
+        "constants": {}
+      }
+    },
+    "H1": {
+      "lane": "H1",
+      "claim": "relevant compatible source failures improve later CEGIS over random-compatible retrieval and fresh search",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "solve fraction over all assigned target tasks, three arms",
+        "primary_contrasts": [
+          "relevant_minus_random",
+          "random_minus_fresh"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "realised pool size P and K printed; pool >= 2K measured BEFORE a relevance arm is licensed",
+          "mean inter-arm pack overlap printed",
+          "input width >= 4 bits, or K <= 2 at 3 bits (fairness ruling s2c)",
+          "every retrieved input queried against the target oracle; fresh arm's probe allowance equal"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "relevance arm at 3 bits with K = 4 (pool cannot reach 2K)",
+          "witness == null read as solved",
+          "extra oracle access or source/target solution overlap"
+        ],
+        "secondary": [],
+        "constants": {}
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "solve fraction over all assigned target tasks, three arms",
+        "primary_contrasts": [
+          "relevant_minus_random"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "NONE",
+        "preconditions": [
+          "realised pool size P and K printed; pool >= 2K measured BEFORE a relevance arm is licensed",
+          "mean inter-arm pack overlap printed",
+          "input width >= 4 bits, or K <= 2 at 3 bits (fairness ruling s2c)",
+          "every retrieved input queried against the target oracle; fresh arm's probe allowance equal",
+          "threshold FROZEN_FROM_PILOT on a disjoint pilot",
+          "block count from blocks_for_power"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "relevance arm at 3 bits with K = 4 (pool cannot reach 2K)",
+          "witness == null read as solved",
+          "extra oracle access or source/target solution overlap",
+          "retrospective search for favourable task partitions"
+        ],
+        "secondary": [
+          "resource_to_solve including unsolved cases"
+        ],
+        "constants": {}
+      }
+    },
+    "H2": {
+      "lane": "H2",
+      "claim": "bounded CA dynamics contribute causally to computation and become reusable stateful components",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "(a) computation: task accuracy on the frozen catalogue; (b) causal contribution: targeted vs matched-random intervention delta; (c) frozen reuse: new-composition accuracy with vs without the component",
+        "primary_contrasts": [
+          "a_computation",
+          "b_causal_contribution",
+          "c_frozen_reuse"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "readout-only / direct-input baseline printed beside (a)",
+          "matched random rules, matched intervention magnitude, matched state size and readout capacity",
+          "confirmation labels inaccessible to rule search and readout fitting"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "(a) reported as (b) or (c)",
+          "a readout-explained gain attributed to the substrate",
+          "criticality measures used as a gate"
+        ],
+        "secondary": [],
+        "constants": {}
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "(a) computation: task accuracy on the frozen catalogue; (b) causal contribution: targeted vs matched-random intervention delta; (c) frozen reuse: new-composition accuracy with vs without the component",
+        "primary_contrasts": [
+          "a_computation",
+          "b_causal_contribution",
+          "c_frozen_reuse"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "readout-only / direct-input baseline printed beside (a)",
+          "matched random rules, matched intervention magnitude, matched state size and readout capacity",
+          "confirmation labels inaccessible to rule search and readout fitting",
+          "untouched finite task manifests for each of (a), (b), (c)"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "(a) reported as (b) or (c)",
+          "a readout-explained gain attributed to the substrate",
+          "criticality measures used as a gate",
+          "a null on (b) or (c) discarding the CA runner"
+        ],
+        "secondary": [],
+        "constants": {}
+      }
+    },
+    "H3": {
+      "lane": "H3",
+      "claim": "bounded behavioral/random retention improves future utility over top-K, uniform and behavioral-only",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "prospective utility: solve fraction on the sealed future-task manifest, four policies",
+        "primary_contrasts": [
+          "hybrid_minus_topk",
+          "behavioral_minus_topk",
+          "uniform_minus_topk"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "identical ordered stream across the four policies (digest)",
+          "byte cap and item cap parity across policies",
+          "future queries frozen and sealed before any archive is replayed",
+          "descriptor, bins, tie order and capacity frozen"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "any diversity measure as an endpoint (archive_diversity, qd_score, coverage, descriptor_spread, novelty)",
+          "retrospective descriptor change",
+          "cherry-picked query subset"
+        ],
+        "secondary": [
+          "archive diversity, reported and never a gate"
+        ],
+        "constants": {}
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "prospective utility: solve fraction on the sealed future-task manifest, four policies",
+        "primary_contrasts": [
+          "hybrid_minus_topk",
+          "behavioral_minus_topk",
+          "uniform_minus_topk"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "identical ordered stream across the four policies (digest)",
+          "byte cap and item cap parity across policies",
+          "future queries frozen and sealed before any archive is replayed",
+          "descriptor, bins, tie order and capacity frozen",
+          "policy cost receipts complete; costs charged in every arm"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "any diversity measure as an endpoint (archive_diversity, qd_score, coverage, descriptor_spread, novelty)",
+          "retrospective descriptor change",
+          "cherry-picked query subset"
+        ],
+        "secondary": [
+          "archive diversity, reported and never a gate"
+        ],
+        "constants": {}
+      }
+    },
+    "H4": {
+      "lane": "H4",
+      "claim": "adaptive challenges and transfer improve independently evaluated competence",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "competence on the FROZEN final suite, identical for every arm; retention on the historical suite as secondary",
+        "primary_contrasts": [
+          "combined_effect_adaptive_x_transfer",
+          "interaction"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "protocol version H4-ADAPTIVE-1.0.1 pinned and hashed",
+          "evaluator fixed, independent of every arm, never updated mid-campaign",
+          "denominator: every ASSIGNED frozen-suite task, censored runs counted",
+          "policy_id, policy_version, seed streams, budgets, stopping and censoring rules precommitted"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "any arm evaluated on tasks it generated",
+          "evaluator updated mid-campaign",
+          "historical suite fed back into training without an explicit licence",
+          "confirmation opened before the plan hash was committed",
+          "training-task solve rate as an endpoint in ANY arm"
+        ],
+        "secondary": [
+          "historical-suite retention/forgetting, never fed back"
+        ],
+        "constants": {}
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "competence on the FROZEN final suite, identical for every arm; retention on the historical suite as secondary",
+        "primary_contrasts": [
+          "combined_effect_adaptive_x_transfer",
+          "interaction"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "protocol version H4-ADAPTIVE-1.0.1 pinned and hashed",
+          "evaluator fixed, independent of every arm, never updated mid-campaign",
+          "denominator: every ASSIGNED frozen-suite task, censored runs counted",
+          "policy_id, policy_version, seed streams, budgets, stopping and censoring rules precommitted",
+          "interaction sized at sqrt(2) worse precision than the combined effect, by construction"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "any arm evaluated on tasks it generated",
+          "evaluator updated mid-campaign",
+          "historical suite fed back into training without an explicit licence",
+          "confirmation opened before the plan hash was committed",
+          "training-task solve rate as an endpoint in ANY arm"
+        ],
+        "secondary": [
+          "historical-suite retention/forgetting, never fed back"
+        ],
+        "constants": {}
+      }
+    },
+    "H5": {
+      "lane": "H5",
+      "claim": "a learned balanced decoder improves access to useful variation after phenotype frequencies and total costs are controlled",
+      "beta": {
+        "stage": "BETA",
+        "endpoint": "held-out solve fraction AND functional offspring yield, learned-balanced vs direct vs scrambled-learned decoders",
+        "primary_contrasts": [
+          "learned_minus_scrambled_solve",
+          "learned_minus_scrambled_yield"
+        ],
+        "promised_quantity": "PRECISION",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "phenotype multiplicities EXACTLY preserved (16 per rule, 4096 entries)",
+          "initial phenotype distribution, mutation operator and target budget matched",
+          "training and decoding costs charged; total-cost result before any amortisation",
+          "mean class-reach reported as EXCESS over the analytic bound for the decoder's construction (direct <= 8, any permutation <= 12)"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "reach at or under the construction bound quoted as evolvability evidence",
+          "a hand-designed or scrambled decoder read as a learned effect",
+          "benefit that disappears after frequency / initial-phenotype / cost controls"
+        ],
+        "secondary": [],
+        "constants": {
+          "H5_DIRECT_REACH_BOUND": 8,
+          "H5_PERMUTED_REACH_BOUND": 12,
+          "H5_GENOME_BITS": 12,
+          "H5_RULES": 256,
+          "H5_ENCODINGS_PER_RULE": 16
+        }
+      },
+      "one_point_zero": {
+        "stage": "ONE_POINT_ZERO",
+        "endpoint": "held-out solve fraction AND functional offspring yield, learned-balanced vs direct vs scrambled-learned decoders",
+        "primary_contrasts": [
+          "learned_minus_scrambled_solve",
+          "learned_minus_scrambled_yield"
+        ],
+        "promised_quantity": "POWER",
+        "attainable_range": [
+          -1.0,
+          1.0
+        ],
+        "unit": "paired (seed x task_block)",
+        "min_blocks": 6,
+        "multiplicity": "BONFERRONI",
+        "preconditions": [
+          "phenotype multiplicities EXACTLY preserved (16 per rule, 4096 entries)",
+          "initial phenotype distribution, mutation operator and target budget matched",
+          "training and decoding costs charged; total-cost result before any amortisation",
+          "mean class-reach reported as EXCESS over the analytic bound for the decoder's construction (direct <= 8, any permutation <= 12)",
+          "decoder frozen and hashed before target evaluation"
+        ],
+        "refusals": [
+          "unit other than paired (seed x task_block)",
+          "denominator other than all assigned tasks",
+          "pilot/confirmation overlap",
+          "primary contrasts > 1 with multiplicity NONE",
+          "n_blocks below the HA-1.6 minimum",
+          "threshold moved after the pilot SD is seen",
+          "reach at or under the construction bound quoted as evolvability evidence",
+          "a hand-designed or scrambled decoder read as a learned effect",
+          "benefit that disappears after frequency / initial-phenotype / cost controls"
+        ],
+        "secondary": [],
+        "constants": {
+          "H5_DIRECT_REACH_BOUND": 8,
+          "H5_PERMUTED_REACH_BOUND": 12,
+          "H5_GENOME_BITS": 12,
+          "H5_RULES": 256,
+          "H5_ENCODINGS_PER_RULE": 16
+        }
+      }
+    }
+  },
+  "three_quantities": [
+    "MEANINGFUL_EFFECT",
+    "PRECISION",
+    "POWER"
+  ],
+  "exchangeability_live_dossier": {
+    "version": "EX-1.0.0",
+    "dossier": "D:\\Prometheus-worktrees\\harmonia-m2-ca1148a0-boot\\archaeon\\docs\\h0h5\\D3_LIVE_DOSSIER_2026-09-10.json",
+    "min_units": 8,
+    "n_regions": 40,
+    "counts": {
+      "EXCHANGEABLE": 12,
+      "EXCHANGEABILITY_SUSPECT": 5,
+      "EXCHANGEABILITY_VIOLATED": 23,
+      "INDETERMINATE": 0
+    }
   }
 }

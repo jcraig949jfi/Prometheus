@@ -1,0 +1,33 @@
+MECH-PARTICLES-ESSTRIGGER-002 freeze 186047db host GANDALF python 3.11.9 numba 0.65.1 jit True payload MATCH
+W1 logL_exact -146.7227 (data matches 001 run: True); W2 sigmaY 1.0 seed 20260918 logL_exact -207.9231
+
+controls
+  C-CHEAT-ORACLE-IN-THE-LOOP     PASS
+  C-POS-N-SCALING-IN-REGIME      PASS
+  C-NEG-UNINFORMATIVE            PASS
+    POS V(200)/V(1000) = 10.02 band (2.5, 20.0) ci95 [5.685, 17.652]  RMSE200 0.0426 RMSE1000 0.0146
+    NEG R_max(I0) 0 V ratio 1
+
+arm   W       N scheme       ESSrmin seeds          V         B     RMSE   R min/med/max
+I0    W1    100 systematic      0.50    50      41.49   -8.9207   0.0740   99/ 99.0/ 99
+I1    W1    100 systematic      0.00    50  7.069e+05 -5471.0704   1.9710    0/  0.0/  0
+I2    W1    100 systematic      1.00    50      41.49   -8.9207   0.0740   99/ 99.0/ 99
+I3    W1    100 multinomial     0.50    50      21.26   -7.3843   0.0711   99/ 99.0/ 99
+I0x   W1    100 systematic      0.50   400      31.61   -7.2593   0.0686   99/ 99.0/ 99
+I3x   W1    100 multinomial     0.50   400      36.71   -7.4833   0.0713   99/ 99.0/ 99
+I4    W2    100 systematic      0.50    50      3.068   -1.8640   0.1767   49/ 51.0/ 54
+I5    W2    100 systematic      1.00    50      4.044   -1.4968   0.1694   99/ 99.0/ 99
+
+  I0: {"absB": 8.920709609948053, "absB_in_band": true, "R_range": [99, 99], "R_in_band_all_seeds": true}
+  I1: {"R_max": 0, "R_exactly_0_all_seeds": true, "V_ratio": 17039.125058402664, "V_ratio_in_band": true, "RMSE_ratio": 26.65006527559751}
+  I2: {"R_range": [99, 99], "R_in_98_99_all_seeds": true, "V_ratio": 1.0, "V_ratio_in_band": true, "identical_to_I0_seed_for_seed": true}
+  I3: {"V_ratio": 0.5124418924729127, "V_ratio_in_band": false, "ci95": [0.29079856225611883, 0.9030192278940499], "ci_covers_1": false, "df": [49, 49]}
+  I3x: {"V_ratio": 1.1612878860851072, "V_ratio_in_band": true, "ci95": [0.9540941744189306, 1.4134763533058408], "ci_covers_1": true, "df": [399, 399]}
+  I4: {"R_median": 51.0, "R_range": [49, 54], "Rmed_in_band": true, "V": 3.06796403837795, "B": -1.8639761250592972, "RMSE": 0.17670447684033713}
+  I5: {"R_range": [99, 99], "R_in_98_99_all_seeds": true, "V_ratio": 1.3182557613476222, "V_ratio_in_band": true, "ci95": [0.7480787299332623, 2.3230151891649586], "R_equal_to_I4_seed_for_seed": false, "RMSE_ratio": 0.9585624617879901, "B_I5": -1.4967897483995187, "B_I4": -1.8639761250592972}
+
+mandatory controls pass: True   CUT_KILL fires: False
+indeterminate items: none
+return_type (boundary claim): CUT_SUPPORTED
+row readings: {'I0': 'IN_BAND', 'I1': 'IN_BAND', 'I2': 'IN_BAND', 'I3': 'OUT_OF_BAND', 'I4': 'IN_BAND', 'I3x': 'INDETERMINATE', 'I5': 'IN_BAND'}
+elapsed 88.9 s; rows sha256 c10b46c8af47; out C:\prometheus-worktrees\harmonia-gandalf-6cd1348b-boot\roles\Harmonia\science\particles_ruler\out\002_20260917T222509Z

@@ -1,0 +1,105 @@
+{
+ "_what_this_is": "The Campaign 4 EXECUTION IDENTITY: five frozen surfaces, each by immutable identity. 'Current main' is not an identity.",
+ "freeze_rule": "after the rehearsal passes, this file's own sha256 becomes the Campaign 4 execution identity; any surface that moves requires a new tuple and a new rehearsal.",
+ "generated_at": "2026-09-17T22:36:02Z",
+ "generated_by": "Archaeon[m2-411504ab]",
+ "read_at_commit": "f5f760883cd2bed72a1570ef76c2fdab1053cecd",
+ "read_at_ref": "origin/main",
+ "status": "PROPOSED -- freezes when the end-to-end rehearsal proves this exact tuple",
+ "tuple": {
+  "archaeon": {
+   "campaign": "cmp4",
+   "campaign_seed": 20260921,
+   "engine_client": "cmp4-archaeon",
+   "grammar_seen_by_archaeon": {
+    "hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+    "version": "proteus.grammar.v0.4"
+   },
+   "ledger_prefix": "L4",
+   "owner": "Archaeon",
+   "root": "archaeon/campaign4/",
+   "runtime_hash_seen_by_archaeon": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+   "seed_rule": "first unused value after cmp3 (20260916-20260920 already appear in REACHABILITY.jsonl)",
+   "spec_status": "seed FROZEN; per-slot preregistrations sealed at run time as in campaigns 2 and 3",
+   "surface": "campaign seed / spec"
+  },
+  "daedalus": {
+   "descriptor_digest": "sha256:d2dd72f00264d2292286eaf4bce3a4d22c7ccafaf93cbc6c3244dac34f6584cb",
+   "descriptor_path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json",
+   "endpoint": "https://192.168.1.191:8811",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+   "owner": "Daedalus",
+   "pinned_at": "2026-09-17T17:01:23Z",
+   "pinned_by": "Daedalus[m2-d6ecd70b]",
+   "release": "SFE 9.0.1",
+   "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+   "routes": 72,
+   "schema_version": 9,
+   "source_commit_containing_build": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+   "surface": "engine (Serendipity Foundry)"
+  },
+  "pew": {
+   "DIGEST_NOTE": "REPRODUCED: the derivation rule is published inside the pinned file and recomputing it here yields the declared digest. Both the declared surface_digest and the file's own sha256 are valid identities of this pin (Q1 closed, comms #371/#375).",
+   "campaign_seed_map_before_c4": {
+    "20260917": "cmp1",
+    "20260918": "cmp2",
+    "20260920": "cmp3",
+    "20260921": "cmp4"
+   },
+   "fossil_contract": "pew.fossil.v2",
+   "foundry_profile_scheme": "archaeon.wse.reachability.foundry_id.v1",
+   "ingestion_contract": "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)",
+   "migrations": [
+    "014",
+    "015"
+   ],
+   "owner": "Mnemosyne",
+   "projection_builder": "ew.projections/1.0",
+   "reader_version": "ew.campaign_ingest/1.4",
+   "schema_version": 5,
+   "surface": "evidence / projections (PEW)",
+   "surface_digest_declared_in_file": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a",
+   "surface_digest_recomputed_by_rule": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a",
+   "surface_digest_reproducible": true,
+   "surface_digest_rule_published": true,
+   "surface_file_digest_computed_here": "sha256:b102cd7f98591eaa2818b62e62c89a7502f38a0d47f3d6e609d6fcee5e28427c",
+   "surface_path": "evidence_wiki/docs/point_release/CAMPAIGN4_FROZEN_SURFACE.json"
+  },
+  "proteus": {
+   "CONSTRAINT_ON_CAMPAIGN_4": "permitted_use USE_A_FROZEN_SPECIMEN_SOURCE; prohibited_use USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR. Campaigns 1-3 used this grammar AS an evolutionary operator. Campaign 4 must either stay inside USE_A, or carry Proteus's ruling that USE_B is licensed, or state the claim ceiling this imposes.",
+   "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+   "archaeon_regime_id": "instr1-16:6528b9dc",
+   "archaeon_regime_scheme": "archaeon.wse.reachability.foundry_id.v1",
+   "catalog_digest": "sha256:4f35e4b0522d090ba4436ed6dd5b858a13b200672eb8a30eb2f9dc5d6a2c6c1b",
+   "catalog_id": "42e4db36db259a16f82498e5de3df315683d7dc662e4a861c16ff5d4040eabe4",
+   "catalog_path": "proteus/eval/FOUNDRY_PROFILE_CATALOG.json",
+   "foundry_profile_id": "pfp1:625bc70456ebfa20",
+   "foundry_profile_name": "c1_c2_c3_instr1_16",
+   "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+   "grammar_version": "proteus.grammar.v0.4",
+   "kernel_qualification": {
+    "mutation_current_source": "FULL_SPACE_CURRENT_SOURCE_UNRESOLVED",
+    "mutation_neutrality": "NOT_QUALIFIED_AUTHORED_NONEQUILIBRIUM_CURRENT",
+    "operational_significance": "NOT_YET_ADJUDICATED",
+    "permitted_use": "USE_A_FROZEN_SPECIMEN_SOURCE",
+    "prohibited_use": "USE_B_NEUTRAL_EVOLUTIONARY_OPERATOR",
+    "registry_id": "b15e0a7f5f2dcb99b8b28c73a99441d8d53e82b1bae42fddd5e274eeef396917"
+   },
+   "owner": "Proteus",
+   "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+   "surface": "population / regime identity"
+  },
+  "vivarium": {
+   "build_commit": "08081c6ed",
+   "build_commit_source": "comms #368 (Vivarium m2-fce3fe0b); not derivable from the descriptor",
+   "descriptor_digest": "sha256:7576dd3d19b61be7f3827472731712d84a0858dac00f15db9e2eb3dedfcdd3f6",
+   "descriptor_path": "vivarium/deploy/PRODUCTION.draft.json",
+   "descriptor_version": "prometheus.production.v1",
+   "migrations": "viv 001-010",
+   "note": "descriptor is still the DRAFT: viv/production.py prefers deploy/PRODUCTION.json when the shared file lands",
+   "owner": "Vivarium",
+   "surface": "execution / queue"
+  }
+ }
+}

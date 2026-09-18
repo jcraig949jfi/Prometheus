@@ -156,17 +156,908 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:236-445"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:1-100"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/ELIZA_transcription_annotated.txt:1-60"
+   }
+  ],
+  "inspected_files": [
+   "MAD-SLIP_translation.txt (all); ELIZA_transcription_annotated.txt (header)"
+  ],
+  "date": "2026-09-17T22:50Z",
+  "note": "the 1965 program is a script interpreter: keywords hashed into 32 buckets with a precedence number; a scan that keeps the highest-precedence keyword found before a clause break; decomposition/reassembly rules applied by two SLIP library functions; a four-slot MEMORY that queues a transformed earlier sentence for use when nothing matches; and a live script editor",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/MAD-SLIP_transcription.txt sha256:dd4b3a6db52c83f7da93ad04ac937352836f4a888a21344c69a214edad887389; https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/MAD-SLIP_translation.txt sha256:bf24f16a001190f965d4a28190001c4aea98fbf596b8b7ce846cbfeecf5d80e9; https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/1966_01_CACM_article_Eliza_script.txt sha256:2c6548897ffecda72a9a1856cce8d1b94584c8ca7eb3b0ff34f60029d587a6b6; https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/ELIZA_transcription_annotated_20220216.txt sha256:a4929226e01fc11a3b63899c08b3f743daad691e1a4207c7c0985813e1cd7c5f",
+   "payload_manifest_id": "techne tree_sha256 20266056630b3650e28df5e1a24c583a6b1a0cf9b935f37788b9746cd23c5853 (4 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/MAD-SLIP_translation.txt",
+     "payload_hash_read": "bf24f16a001190f965d4a28190001c4aea98fbf596b8b7ce846cbfeecf5d80e9",
+     "techne_recorded_hash": "bf24f16a001190f965d4a28190001c4aea98fbf596b8b7ce846cbfeecf5d80e9",
+     "match": true,
+     "refs": 8
+    },
+    {
+     "path": "upstream/ELIZA_transcription_annotated.txt",
+     "payload_hash_read": "a4929226e01fc11a3b63899c08b3f743daad691e1a4207c7c0985813e1cd7c5f",
+     "techne_recorded_hash": "a4929226e01fc11a3b63899c08b3f743daad691e1a4207c7c0985813e1cd7c5f",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "KEY(HASH.(word,5)); the script reader BEGIN; the scan NOTYET-KEYFND (236-330)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each script entry is a list headed by a keyword, hashed on 5 bits into KEY(0..31); KEY(32) holds the NONE rules; the scan walks the input words, hashes each, searches its bucket for the keyword, and TESTS the entry: a substitution word (DL) may replace the input word in place (NEWTOP), and an optional precedence number ranks the keyword; the highest precedence seen so far becomes IT/KEYWRD",
+   "input": "the input word list; the script lists",
+   "output": "the selected keyword's rule list and the substituted input",
+   "state": "KEY(0..32) (the script); IT, KEYWRD, PREDNC per sentence",
+   "update": "per word",
+   "assumptions": [
+    "a 5-bit hash and linear bucket search suffice for a script of a few hundred keywords; precedence is a small integer set by the script author"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+    "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+    "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+    "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign"
+   ],
+   "fitness_value_in_ancestor": "the program is data-driven: the DOCTOR persona is entirely in the script",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "keyword precedence (the 'rank' in the 1966 paper) is Weizenbaum's mechanism for deciding which of several keywords wins",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:236-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "BEGIN through PLCKEY",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "the '.' ',' 'BUT' test in the scan (NULSTL / NULSTR)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when a period, comma or BUT is met: if no keyword has been found yet, the words before it are discarded (NULSTL) and scanning continues; if one has, the words after it are discarded (NULSTR) and the scan ends -- so the sentence is truncated to the clause containing the winning keyword",
+   "input": "the word stream and the keyword-found flag",
+   "output": "a truncated input list",
+   "state": "IT",
+   "update": "per punctuation",
+   "assumptions": [
+    "one clause holds the topic; the rest is noise for pattern matching"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+    "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies"
+   ],
+   "fitness_value_in_ancestor": "decomposition patterns need only match a clause, not a whole sentence",
+   "failure_landscape": "by reading: a keyword after the first comma in a keyword-less first clause is kept, one before a comma after a found keyword is lost -- the rule is asymmetric by design",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:the WORD = '.' block"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the punctuation test inside NOTYET",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "MATCH / TRY / HIT with YMATCH and ASSMBL (SLIP); the POINT counter",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for the selected keyword's rule list, each decomposition pattern is tried by YMATCH (a SLIP function: match the input against a template with wildcards, binding pieces into TEST); on success the rule's reassembly list is chosen by a counter POINT stored in the rule (incremented and wrapped so successive uses cycle through the reassemblies), and ASSMBL builds the output from the template and the bound pieces; a rule of the form '= WORD' redirects to another keyword's rules",
+   "input": "the truncated input; the rule list",
+   "output": "a reply sentence",
+   "state": "POINT per rule (persistent across sentences)",
+   "update": "per reply",
+   "assumptions": [
+    "YMATCH/ASSMBL are library code outside this body (the SLIP manual is cited); their semantics are inferred from the calls",
+    "cycling through reassemblies is what prevents identical replies to identical inputs"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+    "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+    "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase"
+   ],
+   "fitness_value_in_ancestor": "the illusion of understanding: a reply built from the user's own words in a new frame",
+   "failure_landscape": "by reading: a decomposition that matches nothing falls through to the next; a keyword with no matching rule falls to NOMATCH",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Weizenbaum's decomposition/reassembly rules (CACM 1966)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:MATCH through HIT"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "MATCH/TRY/FNDHIT/HIT; the library calls are outside the body",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "MEMORY / MYTRAN(1..4) / MYLIST; ENDTXT (the LIMIT = 4 branch)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the script names one keyword as MEMORY with four transformation rules; whenever that keyword wins, the input is ALSO transformed by one of the four rules (chosen by a 2-bit hash of the last word) and appended to MYLIST; later, when a sentence has no keyword and the sentence counter LIMIT (cycling 1..4) equals 4 and MYLIST is not empty, the oldest stored transformation is printed instead of a NONE reply",
+   "input": "sentences containing the MEMORY keyword; keyword-less sentences",
+   "output": "a delayed reply about an earlier topic",
+   "state": "MYLIST (a queue), LIMIT (1..4 counter)",
+   "update": "per sentence",
+   "assumptions": [
+    "returning to an earlier topic reads as attentiveness; the 1-in-4 cadence is a constant"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+    "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase"
+   ],
+   "fitness_value_in_ancestor": "the only cross-sentence state in the program; the 1966 paper's 'memory' feature",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the MEMORY keyword is usually MY in the DOCTOR script ('earlier you said your ...')",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:BEGIN (MEMORY branch); ENDTXT"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the MEMORY reader, the KEYWRD = MEMORY branch, the LIMIT = 4 branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "KEY(32) NONE rules; NOMATCH(1..4) indexed by LIMIT",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a sentence with no keyword goes to the NONE rule list (KEY(32), 'ES = BOT.(TOP.(KEY(32)))'); a keyword whose decompositions all fail goes to one of four fixed replies chosen by the sentence counter ('PLEASE CONTINUE', 'HMMM', 'GO ON, PLEASE', 'I SEE')",
+   "input": "the failure branch",
+   "output": "a content-free reply",
+   "state": "LIMIT",
+   "update": "per failure",
+   "assumptions": [
+    "silence would break the illusion; a rotating stock reply is cheaper than a rule"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+    "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies"
+   ],
+   "fitness_value_in_ancestor": "the conversation never stops",
+   "failure_landscape": "none",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:ENDTXT (IT = 0), NOMATCH(1..4)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two fallback paths",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign",
+   "fossil_ancestry": "eliza-weizenbaum-mad-slip-1965",
+   "human_name": "CHANGE (1-100): TYPE, SUBST, APPEND, ADD, START, RANK, DISPLA",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an input beginning with '+' enters CHANGE, which reads commands to print a keyword's rules, substitute or append to a rule, add a rule, set a keyword's rank, or display everything including the memory list; '*' adds a new keyword list; at end of input the revised script is dumped as a new numbered script",
+   "input": "editor commands",
+   "output": "a modified script in memory; a dumped script file",
+   "state": "the script lists",
+   "update": "per command",
+   "assumptions": [
+    "the script is edited in the same session it runs in; the persona is grown by conversation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution"
+   ],
+   "fitness_value_in_ancestor": "Weizenbaum's stated purpose: a tool for building scripts, not a fixed DOCTOR",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-weizenbaum-mad-slip-1965/upstream/MAD-SLIP_translation.txt:1-100; NEWLST; ENDPLA"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the CHANGE function and the '+' / '*' branches",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "TPRINT, TREAD, TXTPRT, LISTRD and the SLIP list primitives (SEQRDR, SEQLR, NEWTOP, POPTOP, ...)",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "SLIP is Weizenbaum's list-processing library, not in the body; YMATCH/ASSMBL are its pattern functions",
+   "note": "the two pattern functions ARE load-bearing and are outside the body: a provenance gap to report",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
+   "candidate": "the DOCTOR script (CACM_1966_eliza_script.txt)",
+   "reason": "OTHER",
+   "evidence": "data, not mechanism; the persona",
+   "note": "the script is the world's content; a different script is a different conversation with the same organs",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
+   "candidate": "'ELIZA' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the 1966 C++ re-implementation in the vault (eliza-anthay-1966, cut 09-16) has the same five mechanisms in a different language; recurrence R1 by reading",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-weizenbaum-mad-slip-1965"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "eliza-weizenbaum-mad-slip-1965::P.a_reply_must_be_produced_to_any_sentence_within_one_scan_from_a_small_editable_rule_set_and_must_not_repeat_itself",
+   "source_fossil": "eliza-weizenbaum-mad-slip-1965",
+   "source_evidence": "MAD-SLIP_translation.txt main loop; record human_capability_summary",
+   "condition": "an interlocutor types free text; the organism must answer every line with something that reads as responsive, using rules a non-programmer can edit; it has one pass over the words and a few hundred rules; identical inputs must not draw identical replies",
+   "resource_or_constraint": "one scan; a hash table of rules; a handful of words of state across turns",
+   "failure_condition": "silence, an off-topic reply where a keyword was present, or a repeated reply",
+   "world_punishes": "parsing (too slow, too brittle) and canned replies (repetition)",
+   "world_rewards": "keyword precedence, clause truncation, template reassembly from the user's words, a rotating choice, a small memory",
+   "observable_consequence": "fraction of test sentences answered with a reply containing a fragment of the input; repeat rate over a scripted dialogue; human judgement of responsiveness (the record's 1966 outcome)",
+   "vacuity_condition": "a fixed set of inputs (a lookup table suffices)",
+   "trivial_shortcuts": "echoing the input verbatim",
+   "cheat_control": "an organism given the human's expected reply must score 100% responsive; the echo organism must score high on 'contains a fragment' and zero on judged responsiveness: the world must separate those two measures or it is measuring echo",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: natural-language conversation by script (Weizenbaum 1966)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the MEMORY keyword",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "a stored line beats a NONE reply at LIMIT = 4",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "no decomposition matched",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign",
+   "to": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "eliza-weizenbaum-mad-slip-1965",
@@ -181,10 +1072,30 @@
    "to": "cosell-eliza-bbn-lisp-1969",
    "note": "independent reimplementation in a different language and world",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "the 1966 CACM description; eliza-anthay-1966 (C++ recreation, in the vault) and cosell-eliza-bbn-lisp-1969 (BBN Lisp port, in the vault) descend from this listing",
+   "note": "from the record and the vault; the recurrence across the three is the natural Stage E test",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "YMATCH and ASSMBL (the pattern matcher and rebuilder) are SLIP library functions outside the body; their semantics are inferred from the call sites and the annotation's pointer to the SLIP manual -- a provenance gap for Techne",
+   "the CACM script not read; the annotated transcription read only at its head",
+   "nothing ran (MAD on IBM 7094; the vault's lisp-1-5 record names simh i7094 as a reachable world for the same era)"
+  ],
+  "note": "the interpreter's control flow is accounted for line by line; the matcher is the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

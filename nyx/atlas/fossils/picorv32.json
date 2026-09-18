@@ -86,7 +86,7 @@
    "value": {
     "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
     "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
-    "tree_sha256": "647455da29695832218941a94052b274f9ce2cf7b1b57d59eddfdfb5d661d653"
+    "tree_sha256": "4fc00e02722b9098da35ea77d0e18d866f14e70dcab178ba963e3be1f86420a9"
    },
    "basis": "TECHNE_RECORD"
   },
@@ -129,20 +129,505 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:1172-1200"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:1491-1578"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:356-640"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:60-120"
+   }
+  ],
+  "inspected_files": [
+   "picorv32.v 60-120, 356-640, 646-1140 (structure), 1172-1200, 1400-1578"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "a deliberately small, slow core: instructions take several cycles through a one-hot state machine (trap, fetch, ld_rs1, ld_rs2, exec, shift, stmem, ldmem) with one memory port shared by fetch and data; the decoder latches instruction fields when fetch data arrives; optional features (multiply/divide via a co-processor interface, compressed instructions, a barrel shifter, a custom interrupt scheme with shadow registers and a timer) are Verilog parameters, so area and speed are chosen per instance",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/YosysHQ/picorv32@ef203c2b0a3fb793280f5114941416c425c5b461",
+   "payload_manifest_id": "techne tree_sha256 4fc00e02722b9098da35ea77d0e18d866f14e70dcab178ba963e3be1f86420a9 (247 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/picorv32.v",
+     "payload_hash_read": "0836050971b3c6cdd28ac3b1e5719a67fb645161912bef1e472e63995ceb0622",
+     "techne_recorded_hash": "0836050971b3c6cdd28ac3b1e5719a67fb645161912bef1e472e63995ceb0622",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access",
+   "fossil_ancestry": "picorv32",
+   "human_name": "localparam cpu_state_* (1172-1180); the case over cpu_state (1487-); mem_do_rinst / mem_do_rdata / mem_do_wdata and mem_state (356-640); latched_branch / latched_store / latched_stalu resolved in the fetch state (1491-1535)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each instruction passes through fetch (which also commits the previous instruction's register write and branch, then requests the next instruction word), operand load states (one or two, reading the register file one port at a time), exec (ALU, or the shift state that shifts one or two bits per cycle unless a barrel shifter is enabled), and a memory state for loads or stores; the memory interface is a single valid/ready port whose request kind is set by three flags, and a prefetch of the next word can overlap the tail of the current instruction",
+   "input": "instruction words and data from one memory port",
+   "output": "register-file writes, memory requests, a program counter",
+   "state": "cpu_state, the latched decode, the register file",
+   "update": "per clock",
+   "assumptions": [
+    "cycles are cheap and gates are not (the design goal is minimal area and high clock rate); a single port suffices because fetch and data never overlap in this pipeline"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+    "picorv32::area_speed_trade_offs_as_verilog_parameters_including_a_co_processor_interface_for_multiply_and_divide_and_a_custom_interrupt_scheme"
+   ],
+   "fitness_value_in_ancestor": "a few hundred LUTs on an FPGA at hundreds of MHz; the reference small RISC-V",
+   "failure_landscape": "by reading: 3-4 cycles per simple instruction and up to 32 for a shift without the barrel shifter; a slow memory stalls everything",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "microcoded / multi-cycle CPU organisation (Patterson & Hennessy's multicycle datapath)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:1172-1200, 1487-1578, 356-640"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the state machine and the memory-interface flags",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+   "fossil_ancestry": "picorv32",
+   "human_name": "instr_* and is_* registers (646-700); the decode block on mem_do_rinst && mem_done (866-1140); COMPRESSED_ISA expansion (930-1000); instr_trap for unrecognised words (679)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the instruction word lands, one register per instruction (lui, jal, beq, ...) and per useful class (is_lui_auipc_jal, ...) is set from the opcode and function fields; 16-bit compressed forms are recognised and expanded into the same flags; the immediate is decoded into one register by class; a word matching nothing raises a trap flag; the flags, not the word, drive later states, so decoding costs no cycle of its own",
+   "input": "mem_rdata",
+   "output": "instruction flags and the immediate",
+   "state": "the flag registers",
+   "update": "on fetch completion",
+   "assumptions": [
+    "one register per instruction is cheap and makes the later states' case statements one-hot"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access"
+   ],
+   "fitness_value_in_ancestor": "the execution states read flags, never bit fields; compressed support is confined to the decoder",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:646-1140"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the decoder always-block; MEDIUM because the compressed expansion was skimmed",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picorv32::area_speed_trade_offs_as_verilog_parameters_including_a_co_processor_interface_for_multiply_and_divide_and_a_custom_interrupt_scheme",
+   "fossil_ancestry": "picorv32",
+   "human_name": "parameters ENABLE_COUNTERS, TWO_STAGE_SHIFT, BARREL_SHIFTER, ENABLE_MUL / FAST_MUL / DIV, ENABLE_IRQ / IRQ_QREGS / IRQ_TIMER, COMPRESSED_ISA, ENABLE_PCPI (60-120); pcpi_* port and the picorv32_pcpi_mul / fast_mul / div instances (257-300); irq_pending / irq_mask / timer and the irq_state sequence in fetch (1400-1450, 1538-1560)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "multiply and divide are not in the core: an optional co-processor port (valid, insn, rs1, rs2 out; wr, rd, wait, ready in) lets an external unit claim an instruction, and the shipped mul/div units attach to it; the barrel-shifter and two-stage-shift parameters trade a cycle-per-bit shifter for area; the interrupt scheme is non-standard: a mask, a pending vector, an optional timer instruction, and four extra 'q' registers reached by custom instructions (getq/setq/retirq/maskirq/waitirq) so that an interrupt handler saves state without touching the ISA's registers",
+   "input": "parameters at elaboration; the PCPI port at run time",
+   "output": "a core variant",
+   "state": "irq_mask, irq_pending, timer",
+   "update": "at elaboration / per clock",
+   "assumptions": [
+    "users know their area budget; a co-processor port is more reusable than a fixed multiplier; RISC-V's standard interrupt model is too large for this core's goal"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access"
+   ],
+   "fitness_value_in_ancestor": "one source file yields cores from ~750 to ~2000 LUTs",
+   "failure_landscape": "by reading: the custom interrupt instructions make binaries non-portable to other RISC-V cores (documented in the README)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picorv32/upstream/tree/picorv32.v:60-120, 257-300, 1400-1450, 1538-1560"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the parameter list, the PCPI port and the irq blocks; CANDIDATE because the PCPI units were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the exec / shift / ldmem / stmem states in detail, the ALU, the register file implementation, the PCPI mul/div modules, the AXI4-lite and Wishbone wrappers, the trace port, the formal assertions, picosoc/, testbenches, firmware, dhrystone",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picorv32"
+  },
+  {
+   "candidate": "'RISC-V core' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the state machine, the decoder and the option set are separable; the same ISA is implemented by pipelines with none of them (biriscv in this atlas holds a branch predictor for a pipelined one)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picorv32"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "picorv32::P.an_instruction_set_must_be_executed_correctly_in_the_smallest_area_at_the_highest_clock_rate_when_cycles_per_instruction_are_negotiable_and_features_must_be_removable_per_instance",
+   "source_fossil": "picorv32",
+   "source_evidence": "picorv32.v parameters, state machine, PCPI port; the README's area figures",
+   "condition": "an organism implements a fixed ISA on an FPGA; the score is area (LUTs), maximum clock and correctness on the ISA tests; instructions per cycle is not scored; instances differ in which optional features they need",
+   "resource_or_constraint": "LUTs; one memory port",
+   "failure_condition": "an ISA-test failure, or area above the budget for a feature set",
+   "world_punishes": "pipelines with hazard logic; fixed multipliers; standard interrupt controllers",
+   "world_rewards": "a multi-cycle state machine, a co-processor port, parameters",
+   "observable_consequence": "LUT count and maximum clock vs feature set on one FPGA family; ISA test pass count per variant; cycles per Dhrystone",
+   "vacuity_condition": "unlimited area",
+   "trivial_shortcuts": "a soft core from the vendor (which fixes the feature set)",
+   "cheat_control": "an organism given a pipelined reference must show more area at higher IPC; the multi-cycle core with the barrel shifter must show more area and fewer cycles on shift-heavy code than the two-stage shifter; both must pass the same tests: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a small RISC-V soft core (Wolf 2015-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+   "to": "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access",
+   "to": "picorv32::decoder_that_latches_instruction_class_flags_when_the_fetched_word_arrives_with_compressed_instructions_expanded_in_the_same_step",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "fetch completion",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "picorv32::area_speed_trade_offs_as_verilog_parameters_including_a_co_processor_interface_for_multiply_and_divide_and_a_custom_interrupt_scheme",
+   "to": "picorv32::multi_cycle_execution_through_a_one_hot_state_machine_with_a_single_memory_port_shared_by_instruction_fetch_and_data_access",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "which states exist",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "picorv32",
+   "relation": "algorithm_from",
+   "to": "the RISC-V RV32I specification (Waterman et al.); multi-cycle datapath organisation",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "execution states, ALU, PCPI units and the SoC unread",
+   "the decoder and option organs are MEDIUM / CANDIDATE",
+   "nothing ran (no simulator; the self-checking testbench is the oracle)"
+  ],
+  "note": "the organisation is located; the datapath detail is not",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

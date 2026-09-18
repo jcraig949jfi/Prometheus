@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: ''): lapack-reference"
+    "superseded_by: lapack-reference"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -174,7 +174,56 @@
    "harness/driver.f (listed, not read)"
   ],
   "date": "2026-09-14T00:12Z",
-  "note": "SUPERSEDED (by LAPACK) per Techne; 1976 code in a world with no floating-point standard: three of its mechanisms exist because the arithmetic was unknown"
+  "note": "SUPERSEDED (by LAPACK) per Techne; 1976 code in a world with no floating-point standard: three of its mechanisms exist because the arithmetic was unknown",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.netlib.org/eispack/rs.f sha256:398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e; https://www.netlib.org/eispack/tred2.f sha256:38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c; https://www.netlib.org/eispack/tql2.f sha256:b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c; https://www.netlib.org/eispack/tred1.f sha256:ad3896adf002bcb62fefb58a5dc7bb934918fe0d8f1e6e67764df0ffb34aff79; https://www.netlib.org/eispack/tqlrat.f sha256:c80ae07ed3ad940785da74c59a4cc2d77126e5fb405ab216a4ffe679d8b3df85; https://www.netlib.org/eispack/pythag.f sha256:4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50; https://www.netlib.org/eispack/epslon.f sha256:17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894; https://www.netlib.org/eispack/tql1.f sha256:39b91aced74d9e3f853e25d8536c49c723f2751faa7d1d3946779514d08dee7d",
+   "payload_manifest_id": "techne tree_sha256 c635228297e5f865dc71ca98755319c32ada205bdf8831a8673333f020c29d81 (8 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tql2.f",
+     "payload_hash_read": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+     "techne_recorded_hash": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tred2.f",
+     "payload_hash_read": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+     "techne_recorded_hash": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/pythag.f",
+     "payload_hash_read": "4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50",
+     "techne_recorded_hash": "4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/epslon.f",
+     "payload_hash_read": "17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894",
+     "techne_recorded_hash": "17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/rs.f",
+     "payload_hash_read": "398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e",
+     "techne_recorded_hash": "398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
@@ -1430,9 +1479,9 @@
   },
   {
    "from": "eispack-netlib-1976",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "lapack-reference",
-   "note": "",
+   "note": "[relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

@@ -66,14 +66,14 @@
    "basis": "TECHNE_RECORD"
   },
   "KNOWN_PREDECESSORS": {
-   "value": "UNKNOWN",
-   "basis": "UNKNOWN"
-  },
-  "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'AES replaced DES as the US standard'): des-reference"
+    "supersedes: des-reference"
    ],
    "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
   },
   "KNOWN_RIVALS": {
    "value": "UNKNOWN",
@@ -146,7 +146,28 @@
    "aes.c (all 572 lines; round functions by structure)"
   ],
   "date": "2026-09-16T12:26Z",
-  "note": "the DES successor in the same sample: same purpose, same three ingredient KINDS (substitution table, permutation, key schedule), but a substitution-permutation network needs explicit inverse round functions where DES's Feistel structure needed none -- a human-similar / mechanism-different pair for Stage E"
+  "note": "the DES successor in the same sample: same purpose, same three ingredient KINDS (substitution table, permutation, key schedule), but a substitution-permutation network needs explicit inverse round functions where DES's Feistel structure needed none -- a human-similar / mechanism-different pair for Stage E",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/kokke/tiny-AES-c@23856752fbd139da0b8ca6e471a13d5bcc99a08d",
+   "payload_manifest_id": "techne tree_sha256 ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0 (16 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/aes.c",
+     "payload_hash_read": "f7f78b44654efd3542b6886923dd05194286807ebcfeb078ea05d21fe901ee9e",
+     "techne_recorded_hash": "f7f78b44654efd3542b6886923dd05194286807ebcfeb078ea05d21fe901ee9e",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
@@ -1035,16 +1056,16 @@
  "ancestry_edges": [
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note)",
+   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note) [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: AES replaced DES as the US standard]",
    "basis": "SOURCE_READ"
   },
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "AES replaced DES as the US standard",
+   "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

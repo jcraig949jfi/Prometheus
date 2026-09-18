@@ -54,7 +54,10 @@ from move_service_out_of_canonical import instance_of, sha256_file, _hash_sfe  #
 CANON = r"D:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine"
 PINNED_WT = r"D:\Prometheus-worktrees\daedalus-sfengine"
 PINNED = os.path.join(PINNED_WT, "SerendipityFoundry", "SerendipityFoundryEngine")
-DATA = r"D:\Prometheus-data\sfe"
+# 2026-09-17 23:20Z: the data dir moved to the NVMe (deploy/move_ledger_to_nvme_m2.py,
+# receipt deploy/LEDGER_TO_NVME_2026-09-17/). The D: copy is the untouched rollback.
+# Every deploy tool that imports DATA from here now reads the live ledger.
+DATA = r"C:\Prometheus-data\sfe"
 PYTHON = r"D:\Prometheus\.venv-m2\Scripts\python.exe"
 HOST, PORT = "192.168.1.191", 8811
 VERSION_URL = "https://%s:%d/v2/version" % (HOST, PORT)

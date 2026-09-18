@@ -87,10 +87,12 @@ def test_negative_malformed_count_entries_are_refused_before_any_lattice(bad):
         _cd._require_density_set([bad], core, n_cells=N)
 
 
-def test_negative_refusal_happens_at_the_executor_too():
+def test_negative_refusal_happens_at_admission_and_at_the_executor():
     _, core = _evca()
-    with pytest.raises(core.EvcaError):
+    with pytest.raises(_ex.ExecutorUnavailable):        # D2: the contract
         _ex.run(_spec([{"count": 22}]), seed=1, state=None)
+    with pytest.raises(core.EvcaError):                 # the executor itself
+        _cd.run(_payload([{"count": 22}]), seed=1)
 
 
 def test_cheat_count_block_is_not_the_bernoulli_block_of_the_same_density():

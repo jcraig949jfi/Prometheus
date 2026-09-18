@@ -1,0 +1,190 @@
+{
+ "schema": "techne.acquisition.experiment_receipt/1",
+ "id": "TECHNE-107",
+ "prereg": "techne/acquisition/poet_alife/PREREG_TECHNE107_ASAL_OBSERVER_2026-09-17.md",
+ "written_utc": "2026-09-17T22:30:28Z",
+ "host": "GANDALF",
+ "observer": {
+  "model": "openai clip ViT-B/32 via the `clip` package",
+  "weights_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+  "torch": "2.14.0+cpu",
+  "python": "3.11.9"
+ },
+ "substrate": {
+  "lenia_reference": "Chakazul/Lenia@adfc542939266de7f4bb7ebb552e8499701ee107 Python/LeniaND.py (numpy port in this script)",
+  "animals_json_sha256": "09cf0a831c1ef8a73ebfaa9126257fbe076108362b706a98d88650ca9848d206",
+  "pattern": {
+   "code": "O2u",
+   "params": {
+    "R": 13,
+    "T": 10,
+    "b": "1",
+    "m": 0.15,
+    "s": 0.015,
+    "kn": 1,
+    "gn": 1
+   }
+  },
+  "world": 128,
+  "steps": 256,
+  "frames": 8,
+  "sampling": "rollout.py time_sampling=(8, False): steps 0,32,...,224",
+  "note": "ASAL's own JAX Lenia not used: this host has no AVX and jaxlib refuses to load",
+  "mass_per_sampled_frame_and_final": [
+   76.863,
+   73.511,
+   73.696,
+   73.512,
+   73.361,
+   73.617,
+   73.789,
+   73.784,
+   73.279
+  ]
+ },
+ "metric": "asal_metrics.py:53 calc_open_endedness_score, numpy port; LOWER = more open-ended",
+ "arms": {
+  "LENIA": {
+   "score": 0.847246,
+   "n_frames": 8
+  },
+  "STATIC": {
+   "score": 0.875,
+   "n_frames": 8
+  },
+  "CYCLE2": {
+   "score": 0.854689,
+   "n_frames": 8
+  },
+  "HUECYCLE": {
+   "score": 0.836917,
+   "n_frames": 8
+  },
+  "DRIFT_SYN": {
+   "score": 0.872973,
+   "n_frames": 8
+  },
+  "NOISE_seed0": {
+   "score": 0.867845,
+   "n_frames": 8
+  },
+  "NOISE_seed1": {
+   "score": 0.866065,
+   "n_frames": 8
+  },
+  "NOISE_seed2": {
+   "score": 0.866618,
+   "n_frames": 8
+  },
+  "NOISE_seed3": {
+   "score": 0.86848,
+   "n_frames": 8
+  },
+  "NOISE_seed4": {
+   "score": 0.862434,
+   "n_frames": 8
+  },
+  "NOISE": {
+   "mean": 0.866288,
+   "sd": 0.002109,
+   "n": 5
+  },
+  "GARBAGE_seed0": {
+   "score": 0.830329,
+   "n_frames": 8
+  },
+  "GARBAGE_seed1": {
+   "score": 0.809366,
+   "n_frames": 8
+  },
+  "GARBAGE_seed2": {
+   "score": 0.814759,
+   "n_frames": 8
+  },
+  "GARBAGE_seed3": {
+   "score": 0.82144,
+   "n_frames": 8
+  },
+  "GARBAGE_seed4": {
+   "score": 0.807538,
+   "n_frames": 8
+  },
+  "GARBAGE": {
+   "mean": 0.816686,
+   "sd": 0.008363,
+   "n": 5
+  },
+  "CHEAT_identical_as_distinct": {
+   "score": 0.875,
+   "n_frames": 8
+  }
+ },
+ "controls": {
+  "cheat_8_identical_images": {
+   "score": 0.875,
+   "expected": 0.875,
+   "pass": true
+  }
+ },
+ "predictions": {
+  "P1_static_equals_0.8750": {
+   "value": 0.8749996423721313,
+   "pass": true
+  },
+  "P2_noise_above_0.60": {
+   "value": 0.8662884354591369,
+   "pass": true,
+   "kill_noise_below_lenia": false
+  },
+  "P3_garbage_below_lenia": {
+   "garbage": 0.8166863799095154,
+   "lenia": 0.8472459316253662,
+   "pass": true
+  },
+  "P4_cycle2_between_static_and_lenia": {
+   "value": 0.8546890020370483,
+   "pass": true,
+   "kill_cycle_below_lenia": false
+  },
+  "P5_huecycle_below_static": {
+   "value": 0.8369166254997253,
+   "pass": true,
+   "vs_lenia": "below"
+  },
+  "P6_driftsyn_within_0.05_of_lenia": {
+   "value": 0.8729726076126099,
+   "delta": 0.025727,
+   "pass": true,
+   "kill_over_0.10": false
+  }
+ },
+ "indeterminate": [],
+ "ordering_low_to_high": [
+  "GARBAGE",
+  "HUECYCLE",
+  "LENIA",
+  "CYCLE2",
+  "NOISE",
+  "DRIFT_SYN",
+  "STATIC"
+ ],
+ "seconds": 55.9,
+ "evidence_frames": {
+  "LENIA": {
+   "path": "techne/acquisition/poet_alife/techne107/LENIA_contact.png",
+   "sha256": "d6685a2f1d83decb29f8aeae008ae168ac4fce0633e2e5f5f79dabb85c322538"
+  },
+  "HUECYCLE": {
+   "path": "techne/acquisition/poet_alife/techne107/HUECYCLE_contact.png",
+   "sha256": "448077ed971cecb3a475ab6780fd479ed9fbd1e5f36fcdef57f6a9072a979100"
+  },
+  "GARBAGE_seed0": {
+   "path": "techne/acquisition/poet_alife/techne107/GARBAGE_seed0_contact.png",
+   "sha256": "a985f101ecbef587b8141fe87f7dfc325dd4c27609343964612420b1da6fb31f"
+  },
+  "NOISE_seed0": {
+   "path": "techne/acquisition/poet_alife/techne107/NOISE_seed0_contact.png",
+   "sha256": "2259df33d4ed107e1dc5d900511acf671abf3d5667245dc78d865774e708570e"
+  }
+ }
+}

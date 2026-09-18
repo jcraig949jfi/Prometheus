@@ -71,7 +71,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: \"MiniSat (2003) reimplemented Chaff's ideas and displaced it\"): minisat-2.2.0"
+    "superseded_by: minisat-2.2.0"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -167,7 +167,30 @@
    "method index"
   ],
   "date": "2026-09-14T00:09Z",
-  "note": "a LOSING_RIVAL by Techne's disposition audit (superseded by minisat); the distinctive 2007 machinery (shrinking) is exactly what its successors dropped"
+  "note": "a LOSING_RIVAL by Techne's disposition audit (superseded by minisat); the distinctive 2007 machinery (shrinking) is exactly what its successors dropped",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.princeton.edu/~chaff/zchaff/zchaff.64bit.2007.3.12.zip sha256:9b88d8f366d0dc6b3cacd9d497e755d06af069ff27411870cc8b40fe0f11911f",
+   "payload_manifest_id": "techne tree_sha256 3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf (20 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/zchaff64/zchaff_solver.cpp",
+     "payload_hash_read": "bf7a5ae43a4bb7105e8d7c4e2b8cf5bc77611f8aff587b5fd65b3d3493c61fc0",
+     "techne_recorded_hash": "bf7a5ae43a4bb7105e8d7c4e2b8cf5bc77611f8aff587b5fd65b3d3493c61fc0",
+     "match": true,
+     "refs": 11
+    }
+   ],
+   "unresolved_refs": [
+    "zverify_df.cpp exists; solver lines 1065-1099 emit the trace"
+   ]
+  }
  },
  "organs": [
   {
@@ -1775,9 +1798,9 @@
  "ancestry_edges": [
   {
    "from": "zchaff-2007",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "minisat-2.2.0",
-   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it",
+   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {

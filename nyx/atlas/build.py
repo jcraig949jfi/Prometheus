@@ -79,6 +79,17 @@ def build() -> dict:
           "fingerprinted_organs": 0 if not fps else len({r.get("organ_id") for r in fps if r.get("organ_id")}),
           "pressures": len(pressures), "composition_edges": len(comp), "ancestry_edges": len(anc),
           "artifact_hashes_sha256_16": hashes}
+    # Amendment 3 R32: the ledger reports cuts created AND cuts returned with a verdict, and gate latency
+    gl = ROOT / "gates" / "LEDGER.json"
+    if gl.exists():
+        g = json.loads(gl.read_text(encoding="utf-8"))
+        today = _dt.datetime.now(_dt.timezone.utc).date()
+        open_rows = [h for h in g["handoffs"] if h.get("to") not in (None, "") and not str(h.get("to")).startswith("none") and not h.get("returns")]
+        ages = [(today - _dt.date.fromisoformat(h["created"])).days for h in open_rows]
+        dm["gates"] = {"cuts_created": len(cut), "cuts_returned_with_verdict": len([r for r in g.get("returns_received", []) if r.get("kind") == "CUT"]),
+                       "handoffs_open": len(open_rows), "handoffs_open_max_age_ticks": max(ages) if ages else 0,
+                       "returns_received": len(g.get("returns_received", [])), "escalations": len(g.get("escalations", [])),
+                       "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"}
     _dump("DEPTH_MAP", dm)
     return dm
 

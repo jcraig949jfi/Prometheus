@@ -10,6 +10,7 @@
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
     python -m techne.fossils.harvest rematerialize <id> | --all [--out F]  second host: fetch from origin, verify by hash, never write tracked files
+    python -m techne.fossils.harvest repin <id> --reason R     repair a CRLF/residue-defective record from upstream.drifted/ (old list kept as superseded)
     python -m techne.fossils.harvest receipt-check [--out F]      RQ-4 census: receipts carrying / predating the environment block
 
 A RECIPE (techne/fossils/specimens/<id>/recipe.json) is the executable statement of "how to
@@ -303,8 +304,105 @@ def validate_run_receipt(receipt: dict) -> list[str]:
     return why
 
 
+# --------------------------------------------------------------------------- native shell (TECHNE-101)
+# The native runner used to launch ["bash", ...] by NAME. On Windows, CreateProcess searches
+# System32 before PATH, so the process that ran was C:\Windows\System32\bash.exe -- the WSL
+# launcher -- while the tests' guard, shutil.which("bash"), answered from PATH (Git's bash).
+# On a host without a WSL distro every native recipe therefore reported exit 1 (found on M3,
+# 2026-09-17); on M1/M2 the two resolutions agreed only because there the launcher IS a distro.
+# Now the shell is resolved once per process BY CAPABILITY -- it must run and print its own
+# BASH_VERSION -- to an absolute path that the receipt records. Candidates are tried in the
+# order CreateProcess would have used (System32 first, then PATH), so a host where the old
+# resolution worked keeps the same bash and its receipts do not change.
+NATIVE_SHELL_PROBE = "echo BASH_VERSION=$BASH_VERSION; uname -s"
+
+
+class NativeShellUnavailable(RuntimeError):
+    """No candidate bash passed the capability probe on this host."""
+
+
+def native_shell_candidates() -> list[str]:
+    """Every file a bare "bash" could resolve to, System32 first (what CreateProcess did), then
+    PATH order; absolute, existing, de-duplicated. No drive letter is assumed anywhere."""
+    cands: list[str] = []
+    names = ("bash.exe", "bash") if os.name == "nt" else ("bash",)
+    if os.name == "nt":
+        sysroot = vault.getenv("SystemRoot") or vault.getenv("WINDIR")   # recorded reads (RQ-4)
+        if sysroot:
+            cands.append(str(pathlib.Path(sysroot) / "System32" / "bash.exe"))
+    for d in (vault.getenv("PATH", "") or "").split(os.pathsep):
+        if not d:
+            continue
+        for n in names:
+            cands.append(str(pathlib.Path(d) / n))
+    out, seen = [], set()
+    for c in cands:
+        try:
+            if not os.path.isfile(c):
+                continue
+        except OSError:
+            continue
+        k = os.path.normcase(os.path.abspath(c))
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(os.path.abspath(c))
+    return out
+
+
+def probe_native_shell(path: str, timeout: int = 20) -> dict:
+    """Run the candidate. It is a usable bash only if the probe exits 0 AND prints a BASH_VERSION;
+    an exit code alone is a label (the cheat control in test_fossil_native_shell proves it)."""
+    pr = {"path": path, "exit": None, "bash_version": None, "uname": None, "capable": False, "error": None}
+    try:
+        p = subprocess.run([path, "-c", NATIVE_SHELL_PROBE], capture_output=True, text=True,
+                           timeout=timeout, errors="replace")
+        out = (p.stdout or "").replace("\x00", "")
+        m = re.search(r"BASH_VERSION=(\S+)", out)
+        pr["exit"] = p.returncode
+        pr["bash_version"] = m.group(1) if m else None
+        lines = [ln.strip() for ln in out.splitlines() if ln.strip() and not ln.startswith("BASH_VERSION=")]
+        pr["uname"] = lines[0][:60] if lines else None
+        pr["capable"] = p.returncode == 0 and pr["bash_version"] is not None
+    except (OSError, subprocess.TimeoutExpired) as e:
+        pr["error"] = "%s: %s" % (type(e).__name__, str(e)[:120])
+    return pr
+
+
+_NATIVE_SHELL: dict | None = None
+_NATIVE_SHELL_RESOLVED = False
+_NATIVE_SHELL_PROBES: list[dict] = []
+
+
+def native_shell(candidates: list[str] | None = None, refresh: bool = False) -> dict | None:
+    """The first candidate that PROVES it is a bash, with every probe made on the way in
+    ["probes"]; None when none does. Resolved once per process (explicit candidates are never
+    cached: they are the tests' instrument)."""
+    global _NATIVE_SHELL, _NATIVE_SHELL_RESOLVED, _NATIVE_SHELL_PROBES
+    if candidates is None and _NATIVE_SHELL_RESOLVED and not refresh:
+        return _NATIVE_SHELL
+    probes: list[dict] = []
+    chosen = None
+    for c in (candidates if candidates is not None else native_shell_candidates()):
+        pr = probe_native_shell(c)
+        probes.append(pr)
+        if pr["capable"]:
+            chosen = dict(pr)
+            chosen["probes"] = probes
+            break
+    if candidates is None:
+        _NATIVE_SHELL, _NATIVE_SHELL_RESOLVED, _NATIVE_SHELL_PROBES = chosen, True, probes
+    return chosen
+
+
+def native_shell_probes() -> list[dict]:
+    """The probes of the last process-level resolution (what was tried and refused)."""
+    return list(_NATIVE_SHELL_PROBES)
+
+
 # --------------------------------------------------------------------------- runners
-def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int) -> dict:
+def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int,
+           readonly: bool = False) -> dict:
     """Run `cmd` in <body>/<rel>. $HARNESS is the body's harness/ copy (Techne's smoke inputs),
     $BODY the body root, whatever the runner; the command text in the receipt is what ran."""
     t0 = time.time()
@@ -315,12 +413,16 @@ def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | Non
     elif runner == "docker":
         pre = "export BODY=/w HARNESS=/w/harness; cd %s && " % shlex.quote("/w/" + rel)
         full = ["wsl.exe", "-e", "bash", "-lc",
-                "docker run --rm -v %s:/w -w /w %s bash -lc %s" % (
-                    shlex.quote(vault.to_wsl(body)), shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
+                "docker run --rm -v %s:/w%s -w /w %s bash -lc %s" % (
+                    shlex.quote(vault.to_wsl(body)), ":ro" if readonly else "", shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
     elif runner == "native":
+        sh = native_shell()
+        if sh is None:
+            raise NativeShellUnavailable("no candidate bash passed the capability probe on %s: %s" % (
+                platform.node(), "; ".join("%s -> exit %s" % (p["path"], p["exit"]) for p in native_shell_probes()) or "no candidates"))
         b = str(body).replace("\\", "/")
         pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["bash", "-lc", pre + cmd]
+        full = [sh["path"], "-lc", pre + cmd]
     else:
         raise ValueError("unknown runner " + runner)
     try:
@@ -533,6 +635,119 @@ def rematerialize_all(out=None, specimen_ids=None, timeout: int = 900) -> dict:
     return census
 
 
+
+# --------------------------------------------------------------------------- repin (record repair)
+REPIN_SCHEMA = "techne.fossil.repin_receipt/1"
+
+
+def classify_drift(specimen_id: str, fetched_root: pathlib.Path) -> dict:
+    """Explain a DRIFT file by file against a hash-verified fetch. Classes:
+    SAME; RECORD_IS_CRLF (recorded hash == sha256 of the fetched bytes with LF->CRLF, i.e. the
+    record was taken over a Windows-converted checkout); NOT_IN_ORIGIN (recorded, absent from
+    the pinned fetch -- by construction not upstream content: a build product or interpreter
+    residue hashed into the record); FETCH_IS_CRLF (the reverse smudge, a fetch-side defect);
+    OTHER (real content difference); plus ADDED (in the fetch, not in the record)."""
+    import hashlib
+    want = _want_rows(specimen_id)
+    got = {rel: (h, n) for rel, h, n in vault.hash_tree(fetched_root)}
+    classes = {"SAME": [], "RECORD_IS_CRLF": [], "NOT_IN_ORIGIN": [], "FETCH_IS_CRLF": [], "OTHER": [],
+               "ADDED": sorted(set(got) - set(want))}
+    for rel, (h, n) in want.items():
+        p = fetched_root / rel
+        if rel not in got:
+            classes["NOT_IN_ORIGIN"].append(rel)
+            continue
+        if got[rel][0] == h:
+            classes["SAME"].append(rel)
+            continue
+        b = p.read_bytes()
+        lf = b.replace(b"\r\n", b"\n")
+        if hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest() == h:
+            classes["RECORD_IS_CRLF"].append(rel)
+        elif hashlib.sha256(lf).hexdigest() == h:
+            classes["FETCH_IS_CRLF"].append(rel)
+        else:
+            classes["OTHER"].append(rel)
+    return classes
+
+
+def repin(specimen_id: str, reason: str) -> dict:
+    """Repair a record whose hash list was taken over a Windows-converted and/or build-dirtied
+    body, using the byte-exact fetch that `rematerialize` kept at upstream.drifted/.
+
+    REFUSES unless the drift is FULLY explained by RECORD_IS_CRLF and NOT_IN_ORIGIN: any
+    ADDED, FETCH_IS_CRLF or OTHER file means this is not a record defect and nothing is
+    touched. On success: UPSTREAM_HASHES.txt is renamed UPSTREAM_HASHES.superseded-<date>.txt
+    (kept, tracked), a new list is written from the fetch, record.hashes is replaced and the
+    old block appended to record.hashes_superseded with the reason and the receipt path, the
+    fetch becomes upstream/, and a tracked repin receipt carries every classified path.
+    Any host still holding the old body will now fail `verify` for it -- that is correct and
+    the receipt says so."""
+    rec = record.load(specimen_id)
+    sd = vault.specimen_dir(specimen_id)
+    body = vault.body_dir(specimen_id)
+    drifted = body / "upstream.drifted"
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    out = {"schema": REPIN_SCHEMA, "specimen_id": specimen_id, "receipt_id": "repin-%s-%s" % (specimen_id, ts),
+           "written_utc": ts, "host": platform.node(), "reason": reason, "status": None,
+           "tree_sha256_old": rec["hashes"].get("tree_sha256"), "tree_sha256_new": None,
+           "classes": None, "refused_because": []}
+    if (body / "upstream").exists():
+        out["refused_because"].append("upstream/ already present on this host; nothing to repin from")
+    if not drifted.exists():
+        out["refused_because"].append("no upstream.drifted/ (run rematerialize first; it keeps the fetch there on DRIFT)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    classes = classify_drift(specimen_id, drifted)
+    out["classes"] = {k: sorted(v) for k, v in classes.items()}
+    out["class_counts"] = {k: len(v) for k, v in classes.items()}
+    for k in ("ADDED", "FETCH_IS_CRLF", "OTHER"):
+        if classes[k]:
+            out["refused_because"].append("%d file(s) %s -- not a record defect: %s" % (len(classes[k]), k, classes[k][:5]))
+    if not (classes["RECORD_IS_CRLF"] or classes["NOT_IN_ORIGIN"]):
+        out["refused_because"].append("nothing to repair (no RECORD_IS_CRLF or NOT_IN_ORIGIN files)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    # --- repair, in the order that leaves a recoverable state at every step
+    rows = vault.hash_tree(drifted)
+    old_list = sd / "UPSTREAM_HASHES.txt"
+    superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts[:8])
+    if superseded.exists():
+        superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts)
+    old_text = old_list.read_text(encoding="utf-8")
+    superseded.write_text("# SUPERSEDED %s by %s -- %s\n" % (ts, out["receipt_id"], reason) + old_text,
+                          encoding="utf-8", newline="\n")
+    vault.write_hashes(specimen_id, rows)
+    new_hashes = {"tree_sha256": vault.tree_hash_of(rows), "n_files": len(rows), "bytes": sum(r[2] for r in rows),
+                  "artifacts": rec["hashes"].get("artifacts"), "body_location": str(body),
+                  "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
+    rp = sd / "receipts" / (out["receipt_id"] + ".json")
+    rp_rel = "techne/fossils/specimens/%s/receipts/%s.json" % (specimen_id, out["receipt_id"])
+    old_block = dict(rec["hashes"])
+    old_block.update({"superseded_utc": ts, "reason": reason, "receipt": rp_rel,
+                      "superseded_hash_list": "techne/fossils/specimens/%s/%s" % (specimen_id, superseded.name),
+                      "class_counts": out["class_counts"]})
+    rec.setdefault("hashes_superseded", []).append(old_block)
+    rec["hashes"] = new_hashes
+    record.save(rec)
+    shutil.move(str(drifted), str(body / "upstream"))
+    out["tree_sha256_new"] = new_hashes["tree_sha256"]
+    out["n_files_old"] = old_block.get("n_files")
+    out["n_files_new"] = len(rows)
+    out["superseded_hash_list"] = old_block["superseded_hash_list"]
+    out["consequence"] = ("any host whose body was hashed into the old list now fails verify for this specimen; "
+                          "receipts before %s were run on that body (tree %s)" % (ts, out["tree_sha256_old"]))
+    out["status"] = "REPINNED"
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    rp.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print("REPIN", specimen_id, "REPINNED", out["tree_sha256_old"][:12], "->", out["tree_sha256_new"][:12],
+          json.dumps(out["class_counts"], sort_keys=True))
+    return out
+
 # --------------------------------------------------------------------------- mirror
 def mirror(dest: str, specimen_ids=None, dry_run: bool = False, allow_same_volume: bool = False) -> dict:
     """Copy preserved bodies to an off-host store keyed by their immutable tree hash.
@@ -717,16 +932,34 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
                 return False
         return all_ok
 
-    before = {r[0]: r[1] for r in vault.hash_tree(workdir)} if recipe.get("track_products", True) else {}
-    do("probe", recipe.get("probe", []))
-    built = do("build", recipe.get("build", []))
-    ran = do("runs", recipe.get("runs", [])) if built else False
-    tested = do("tests", recipe.get("tests", [])) if built and recipe.get("tests") else None
-    if recipe.get("track_products", True):
+    # TECHNE-101: a native run names the shell that will execute it, resolved by capability.
+    # No capable shell is a fact about THIS HOST, so the run is refused with a typed reason,
+    # nothing is attempted, and nothing is persisted to the specimen's record.
+    blocked = None
+    if runner == "native":
+        sh = native_shell()
+        receipt["native_shell"] = sh if sh else {"path": None, "capable": False, "probes": native_shell_probes()}
+        if sh is None:
+            blocked = "NATIVE_SHELL_UNAVAILABLE"
+            receipt["blocked_reason"] = blocked
+            print("BLOCKED", specimen_id, blocked, "on host", platform.node(),
+                  "-- candidates refused:", ", ".join(p["path"] for p in native_shell_probes()) or "none", flush=True)
+    track = recipe.get("track_products", True) and not blocked
+    before = {r[0]: r[1] for r in vault.hash_tree(workdir)} if track else {}
+    if blocked:
+        built, ran, tested = False, False, None
+    else:
+        do("probe", recipe.get("probe", []))
+        built = do("build", recipe.get("build", []))
+        ran = do("runs", recipe.get("runs", [])) if built else False
+        tested = do("tests", recipe.get("tests", [])) if built and recipe.get("tests") else None
+    if track:
         after = vault.hash_tree(workdir)
         receipt["produced"] = [{"path": rel, "sha256": h, "bytes": n} for rel, h, n in after
                                if before.get(rel) != h][:200]
-    if built and ran:
+    if blocked:
+        receipt["classification"] = "BLOCKED_PLATFORM"
+    elif built and ran:
         receipt["classification"] = recipe.get("classification_if_ok", "RUNNABLE_NATIVE")
     elif built:
         receipt["classification"] = recipe.get("classification_if_built_only", "BUILDS_BUT_NOT_RUN")
@@ -748,6 +981,10 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     defects = validate_run_receipt(receipt)
     if defects:
         raise RuntimeError("run receipt fails its own environment check: " + "; ".join(defects))
+    if blocked:
+        receipt["persisted"] = False
+        print("BLOCKED", specimen_id, blocked, receipt["classification"], "(not persisted: a host fact is not a specimen fact)")
+        return receipt
     if not persist:
         receipt["persisted"] = False
         receipt["world_override_image"] = recipe.get("image")
@@ -996,6 +1233,7 @@ def main(argv=None) -> int:
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
     rm = sub.add_parser("rematerialize", help="bring bodies onto THIS host from their recorded origins and verify by hash; tracked files untouched"); rm.add_argument("specimen_id", nargs="?"); rm.add_argument("--all", action="store_true"); rm.add_argument("--out"); rm.add_argument("--timeout", type=int, default=900)
+    rpn = sub.add_parser("repin", help="repair a record whose hash list was CRLF-converted / build-dirtied, from the byte-exact fetch at upstream.drifted/; refuses any real content difference"); rpn.add_argument("specimen_id"); rpn.add_argument("--reason", required=True)
     rc_ = sub.add_parser("receipt-check", help="RQ-4 census: every tracked run receipt by schema, defects listed"); rc_.add_argument("--out")
     pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
@@ -1033,6 +1271,8 @@ def main(argv=None) -> int:
             return 0 if bad == 0 else 1
         r = rematerialize(args.specimen_id, timeout=args.timeout)
         return 0 if r["status"] in ("MATCH", "ALREADY_PRESENT_VERIFIED") else 1
+    elif args.cmd == "repin":
+        return 0 if repin(args.specimen_id, args.reason)["status"] == "REPINNED" else 1
     elif args.cmd == "receipt-check":
         c = receipt_census(args.out)
         return 0 if c["defective"] == 0 else 1

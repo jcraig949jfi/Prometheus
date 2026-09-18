@@ -1,0 +1,40 @@
+{
+ "_what_this_is": "G3 completion evidence: a real scoped read on the M2 ledger using the Campaign 4 identity.",
+ "all_pass": true,
+ "checks": {
+  "grant_not_revoked": true,
+  "grant_present": true,
+  "scoped_observation_read_returned_rows": true,
+  "scoped_world_read_returned_rows": true
+ },
+ "client": "cmp4-archaeon",
+ "engine": {
+  "endpoint": "https://192.168.1.191:8811",
+  "instance": "eng_906356f7fb1da180131f9290",
+  "schema": 9,
+  "source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc"
+ },
+ "generated_at": "2026-09-17T23:24:47Z",
+ "generated_by": "Archaeon[m2-411504ab]",
+ "grants_to_me": [
+  {
+   "grant_id": "gnt_2006a1ac5b254962fbc1ed9d",
+   "granted_by": "cli_2bb36261427e607191ece250",
+   "grantee_client_id": "cli_6354da5b5955a711dcc0b2af",
+   "revoked_at": null,
+   "scope_id": "scp_4aff817e018de830f9193cbd"
+  }
+ ],
+ "read_observations_n": 104,
+ "read_worlds_n": 26,
+ "sample_obs_ids": [
+  "obs_83d22a4cd1d980d730802a60",
+  "obs_3fb4c69f6ef2ae47a73bc746",
+  "obs_8d9d8c2f740699d63037382c"
+ ],
+ "sample_world_ids": [
+  "wld_00588c4faa17566c79709fe3",
+  "wld_1bdf41c9988656a02062a6b8",
+  "wld_4a950bf5426e5d2dab0759aa"
+ ]
+}

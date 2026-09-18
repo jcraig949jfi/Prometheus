@@ -1,0 +1,213 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C3-SFE-10/a01",
+ "battery": [
+  {
+   "name": "control_takeover_at_mid_dose_below_half",
+   "passed": false,
+   "value": 1.0
+  },
+  {
+   "name": "mature_takeover_monotone_in_dose",
+   "passed": true,
+   "value": [
+    1.0
+   ]
+  },
+  {
+   "name": "cap_slows_takeover",
+   "passed": true,
+   "value": {
+    "median_gen_cap": 3,
+    "median_gen_nocap": 2,
+    "rate_cap": 1.0,
+    "rate_nocap": 1.0
+   }
+  }
+ ],
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-014: the matched control is the SAME instruction blocks permuted (length, opcode multiset, operands and VM knobs preserved; competence removed, verified < 0.25 held-out)",
+  "D3-015: injection at generation 0 after the first evaluation (inject replaces the worst-scored residents); the cap arm uses offspring_cap=0.25 on the 'import' origin"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-10",
+ "finished_at": "2026-09-17T06:02:04Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:8b15b3c9e0f2ac7d0120bbb189d8c8b92a028b8f2e5d2ff5025a1734bf7a25eb",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "sources": {
+  "control_direct": [
+   0.125,
+   0.0,
+   0.0208,
+   0.0,
+   0.0208,
+   0.0,
+   0.125
+  ],
+  "mature_direct": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "mature_seeds": [
+   2,
+   4,
+   6,
+   7,
+   10,
+   11,
+   12
+  ]
+ },
+ "started_at": "2026-09-17T06:02:00Z",
+ "steps": {},
+ "summary": {
+  "control_d4_cap": {
+   "distinct_min_med": 0.8667,
+   "elite_import_final": 2,
+   "first_summit_med": null,
+   "half_gen_med": 4,
+   "heldout_med": 0.125,
+   "n": 2,
+   "pure_resident_final_med": 0.1,
+   "resident_best_med": 0.0625,
+   "resident_survives": 2,
+   "shelf": 0,
+   "summit": 0,
+   "takeover": 2,
+   "takeover_gen": [
+    7,
+    11
+   ]
+  },
+  "control_d4_nocap": {
+   "distinct_min_med": 0.8833,
+   "elite_import_final": 2,
+   "first_summit_med": null,
+   "half_gen_med": 4,
+   "heldout_med": 0.1458,
+   "n": 2,
+   "pure_resident_final_med": 0.0,
+   "resident_best_med": null,
+   "resident_survives": 0,
+   "shelf": 0,
+   "summit": 0,
+   "takeover": 2,
+   "takeover_gen": [
+    3,
+    6
+   ]
+  },
+  "mature_d4_cap": {
+   "distinct_min_med": 0.7833,
+   "elite_import_final": 2,
+   "first_summit_med": 1,
+   "half_gen_med": 2,
+   "heldout_med": 1.0,
+   "n": 2,
+   "pure_resident_final_med": 0.0,
+   "resident_best_med": null,
+   "resident_survives": 0,
+   "shelf": 2,
+   "summit": 2,
+   "takeover": 2,
+   "takeover_gen": [
+    3,
+    3
+   ]
+  },
+  "mature_d4_nocap": {
+   "distinct_min_med": 0.9667,
+   "elite_import_final": 2,
+   "first_summit_med": 1,
+   "half_gen_med": 2,
+   "heldout_med": 1.0,
+   "n": 2,
+   "pure_resident_final_med": 0.0,
+   "resident_best_med": null,
+   "resident_survives": 0,
+   "shelf": 2,
+   "summit": 2,
+   "takeover": 2,
+   "takeover_gen": [
+    2,
+    2
+   ]
+  },
+  "none_d0_nocap": {
+   "distinct_min_med": 0.9333,
+   "elite_import_final": 0,
+   "first_summit_med": null,
+   "half_gen_med": null,
+   "heldout_med": 0.0417,
+   "n": 2,
+   "pure_resident_final_med": 1.0,
+   "resident_best_med": 0.125,
+   "resident_survives": 2,
+   "shelf": 0,
+   "summit": 0,
+   "takeover": 0,
+   "takeover_gen": [
+    null,
+    null
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "ecology_s": 3.84,
+  "records_s": 0.0,
+  "total_s": 4.0
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "mature_d4_nocap",
+    "metric": "takeover",
+    "min": 1,
+    "rows": 2,
+    "rows_meeting": 2,
+    "values": [
+     1,
+     1
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8c16a71b1e9d088b829e5247f217890492a5910a",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

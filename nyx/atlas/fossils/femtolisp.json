@@ -87,7 +87,7 @@
    "value": {
     "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
     "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
-    "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788"
+    "tree_sha256": "29bbc9f1eb0c0ebdd3648e33a8d1c4f45a7598c3a6d6e898c8eca2aae6d3fad7"
    },
    "basis": "TECHNE_RECORD"
   },
@@ -130,20 +130,365 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/flisp.c:934-1000"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/compiler.lsp:52-320"
+   }
+  ],
+  "inspected_files": [
+   "flisp.c 934-1000, 335-410, 525 (names)",
+   "compiler.lsp function inventory"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "a small Lisp whose compiler is written in the Lisp itself and whose runtime is a C bytecode interpreter: the compiler (compiler.lsp) emits bytecode into a code object with a constant table; the interpreter (apply_cl) runs a stack machine with explicit frames (environment, previous frame, argument count, captured flag) and computed-goto dispatch when available; a boot image (flisp.boot) holds the compiled compiler so the system starts without interpreting source; a mark-and-sweep collector with a handle stack protects C-held references",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/JeffBezanson/femtolisp@ec7601076a976f845bc05ad6bd3ed5b8cde58a97",
+   "payload_manifest_id": "techne tree_sha256 29bbc9f1eb0c0ebdd3648e33a8d1c4f45a7598c3a6d6e898c8eca2aae6d3fad7 (112 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/flisp.c",
+     "payload_hash_read": "1a372271394fde21979080bff5fb67017138fb89cc5bab45b8a7fdb3e800c8f2",
+     "techne_recorded_hash": "1a372271394fde21979080bff5fb67017138fb89cc5bab45b8a7fdb3e800c8f2",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/compiler.lsp",
+     "payload_hash_read": "c930eed31e0b4a5c546a5868824efaf1060dffc2d074e03800688dd45f82a6d1",
+     "techne_recorded_hash": "c930eed31e0b4a5c546a5868824efaf1060dffc2d074e03800688dd45f82a6d1",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto",
+   "fossil_ancestry": "femtolisp",
+   "human_name": "apply_cl (934-1000): func from the stack, ip from fn_bcode, stack growth check from the code's declared depth, the frame push (fn_env, curr_frame, nargs, ip slot, captured), OP(OP_ARGC) and the 59 opcode cases; USE_COMPUTED_GOTO",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "calling a closure pushes its environment, the caller's frame pointer, the argument count and a flag saying whether the frame's variables have been captured by an inner closure (in which case they live in a heap vector, not the stack); the code object declares its maximum stack depth so the check happens once per call; opcodes are dispatched by a jump table of label addresses when the compiler supports it; tail calls reuse the frame (the record's 'tail calls')",
+   "input": "a closure and arguments on the stack",
+   "output": "a value",
+   "state": "the value stack, curr_frame",
+   "update": "per instruction",
+   "assumptions": [
+    "a stack machine with a per-function depth declaration is simple and fast enough; capturing decides at compile time which frames must be heap-allocated"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image"
+   ],
+   "fitness_value_in_ancestor": "a Lisp small enough to embed (it bootstraps Julia's parser) with proper tail calls",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the classic bytecode Lisp/Scheme VM; computed-goto dispatch from the gcc idiom",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/flisp.c:934-1000"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "apply_cl; MEDIUM because the opcode bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image",
+   "fossil_ancestry": "femtolisp",
+   "human_name": "compiler.lsp: bcode:code / ctable / nconst / cdepth (52-57), emit (65), compile-sym, compile-if, compile-begin, compile-while, compile-for (245-320); flisp.boot; mkboot0.lsp / mkboot1.lsp; bootstrap.sh",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the compiler walks source forms with an environment of lexical variables, emitting opcodes and constant-table indices into a growing code vector while tracking the maximum stack depth; special forms each have a compile function; the result is a closure over a code object; because the compiler is itself Lisp, the build compiles it once into flisp.boot (a serialised heap image) that the C runtime loads at start, and rebuilding the image from source is a two-stage bootstrap",
+   "input": "source forms",
+   "output": "code objects",
+   "state": "the code vector under construction",
+   "update": "per form",
+   "assumptions": [
+    "writing the compiler in the language keeps the C core small; a boot image avoids interpreting the compiler at every start"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto"
+   ],
+   "fitness_value_in_ancestor": "the C core is under 3,000 lines with the compiler outside it",
+   "failure_landscape": "by reading: a change to the VM's opcodes requires regenerating the boot image with the old image (the bootstrap chicken-and-egg the two mkboot files handle)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the metacircular compiler with a boot image (every self-hosting Lisp since MacLisp)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:femtolisp/upstream/tree/compiler.lsp:52-320 (names)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "compiler.lsp and the boot files; CANDIDATE because bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "gc (mark-and-sweep with a handle stack: 335-410, 525-620), the reader, printer, equal/hash, cvalues (a C-type and foreign-value layer), builtins, operators, iostream, the numeric tower, the examples and the ASCII Mona Lisa",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "cvalues (typed C values as first-class Lisp objects) is the part Julia inherited and deserves its own DEEP item",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "femtolisp"
+  },
+  {
+   "candidate": "'Lisp interpreter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the VM, the compiler and the collector are separable; the atlas's lisp-1-5-ibm7090-1962 cut holds the ancestor's interpreter",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "femtolisp"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "femtolisp::P.a_language_runtime_must_be_small_enough_to_embed_in_another_system_yet_fast_enough_to_run_its_own_compiler_at_startup_and_support_deep_recursion_by_tail_calls",
+   "source_fossil": "femtolisp",
+   "source_evidence": "flisp.c apply_cl; compiler.lsp; the boot files",
+   "condition": "an organism implements a Lisp for use inside a larger program; the score is core size (lines of C), startup time, and correct tail-call behaviour on deep recursion; the compiler must be part of the system",
+   "resource_or_constraint": "a few thousand lines of C; one boot image",
+   "failure_condition": "a core too large to embed, a startup that interprets the compiler from source, or stack growth on tail recursion",
+   "world_punishes": "a tree-walking interpreter with the compiler in C; no boot image",
+   "world_rewards": "a bytecode VM with frame reuse and a self-hosted compiler shipped as an image",
+   "observable_consequence": "lines of C in the core, startup time with and without the boot image, and stack depth on a million-iteration tail loop",
+   "vacuity_condition": "a language without recursion",
+   "trivial_shortcuts": "linking an existing large Lisp (which the size score punishes)",
+   "cheat_control": "an organism given a precompiled image must start in milliseconds; the same system bootstrapped from source must take seconds; a VM without tail-call frame reuse must overflow on the loop: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: an embeddable Scheme-like Lisp (Bezanson 2008-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "femtolisp::compiler_written_in_the_language_emitting_bytecode_into_a_code_object_with_a_constant_table_and_shipped_as_a_boot_image",
+   "to": "femtolisp::bytecode_stack_machine_with_explicit_frames_holding_environment_previous_frame_argument_count_and_a_captured_flag_dispatched_by_computed_goto",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "code objects",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "femtolisp",
+   "relation": "derived_from",
+   "to": "Scheme (Sussman & Steele 1975) in design; the atlas's lisp-1-5-ibm7090-1962 is the family's origin",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "opcodes, gc, reader, cvalues and builtins unread",
+   "the compiler read by names (CANDIDATE)",
+   "nothing ran"
+  ],
+  "note": "the organisation (self-hosted compiler + C VM + boot image) is located; the substance is in the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

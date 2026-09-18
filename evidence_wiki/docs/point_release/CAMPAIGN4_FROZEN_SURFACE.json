@@ -1,0 +1,123 @@
+{
+ "frozen_for": "campaign 4",
+ "schema_version": 5,
+ "fossil_contract": "pew.fossil.v2",
+ "migrations": [
+  "014",
+  "015"
+ ],
+ "reader_version": "ew.campaign_ingest/1.4",
+ "ingestion_contract": "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)",
+ "foundry_profile_scheme": "archaeon.wse.reachability.foundry_id.v1",
+ "campaign_seed_map": {
+  "20260917": "cmp1",
+  "20260918": "cmp2",
+  "20260920": "cmp3",
+  "20260921": "cmp4"
+ },
+ "shared_tables": [
+  [
+   "archaeon/campaign2/REACHABILITY.jsonl",
+   "reachability"
+  ],
+  [
+   "archaeon/campaign3/CORRIDOR.jsonl",
+   "corridor"
+  ]
+ ],
+ "design_factor_keys": [
+  "family",
+  "target",
+  "table",
+  "climber",
+  "encoding",
+  "quality",
+  "dose",
+  "dose_frac",
+  "cap",
+  "n_imported",
+  "site",
+  "cell",
+  "regime",
+  "rung",
+  "delay",
+  "schedule_name",
+  "readout",
+  "world",
+  "budget_evals",
+  "G",
+  "N",
+  "E"
+ ],
+ "projection_builder": "ew.projections/1.0",
+ "projection_thresholds": {
+  "FOOTHOLD_MIN": 0.5,
+  "SHELF_MIN": 0.45,
+  "SUMMIT_MIN": 0.9
+ },
+ "projections": {
+  "reach_level/v1": {
+   "thresholds": {
+    "FOOTHOLD_MIN": 0.5,
+    "SHELF_MIN": 0.45,
+    "SUMMIT_MIN": 0.9,
+    "summit_confirmed_by": "heldout >= SUMMIT_MIN (D3-006)"
+   },
+   "status": "BUILT",
+   "definition_sha256": "a0ee8beb1d1c03355457490cec4a3d1a41f05efae7309bbaa73eb4c5039a0743"
+  },
+  "reach_level/v0": {
+   "thresholds": {
+    "FOOTHOLD_MIN": 0.5,
+    "FULL_SOLVE_TRAINING_MIN": 0.9,
+    "heldout_confirmation": "none"
+   },
+   "status": "SUPERSEDED",
+   "definition_sha256": "ee77edef25341f4bef2a233104c38c9e491f0bd237937a3c7dc0631a45e7aa7b"
+  },
+  "corridor_edge/v1": {
+   "thresholds": {
+    "none": "no threshold; pooled statistics only"
+   },
+   "status": "BUILT",
+   "definition_sha256": "0d99ad73923315587c174b205b0964d767dacf5ad0774d147f34d8befb55fa70"
+  }
+ },
+ "campaign4_projection_versions": {
+  "reach_level": "v1",
+  "corridor_edge": "v1"
+ },
+ "superseded_projection_versions": {
+  "reach_level": [
+   "v0"
+  ]
+ },
+ "inbox_contract": "pew.events.v1",
+ "envelope_columns": [
+  "campaign_id",
+  "harness_id",
+  "execution_id",
+  "design_id",
+  "design_kind",
+  "attempt_id",
+  "attempt_number",
+  "resumed_from_attempt",
+  "step_id",
+  "foundry_profile",
+  "schedule_id",
+  "rng_identity",
+  "world_id",
+  "engine_instance_id",
+  "engine_source_hash",
+  "logical_time/generation",
+  "origin_kind"
+ ],
+ "origin_kind_values": [
+  "producer",
+  "reconstructed",
+  "vivarium"
+ ],
+ "absent_value_rule": "UNKNOWN = an owner exists and the value was not supplied; NULL = not applicable; the envelope's UNKNOWN never shares a column with a measured indeterminate value",
+ "surface_digest_rule": "surface_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, separators=(',', ':'), default=str) ) where D is this object WITHOUT the keys surface_digest and surface_digest_rule; a third party recomputes it with `python -m ew.frozen_surface` or by that one line. The file's own sha256 is ALSO a valid identity of this pin (Archaeon #370 Q1) and changes whenever the digest does.",
+ "surface_digest": "sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a"
+}

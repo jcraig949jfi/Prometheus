@@ -49,9 +49,9 @@
     "repo": "github.com/devosoft/avida"
   },
   "hashes": {
-    "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+    "tree_sha256": "6ce8ba3850505992a1bd33836098219eabef220a9f656510edfc4182a6ddc97f",
     "n_files": 2868,
-    "bytes": 144442411,
+    "bytes": 143653382,
     "artifacts": [
       {
         "filename": "https://github.com/devosoft/avida",
@@ -59,7 +59,7 @@
         "commit": "47f13dadb547fcf10f620ace60247f38b30b8b16"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\avida",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\avida",
     "hash_list": "techne/fossils/specimens/avida/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -167,5 +167,33 @@
     "network_fetch_in_recipe": [],
     "checked_utc": "2026-09-13T14:04:17Z",
     "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
-  }
+  },
+  "hashes_superseded": [
+    {
+      "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+      "n_files": 2868,
+      "bytes": 144442411,
+      "artifacts": [
+        {
+          "filename": "https://github.com/devosoft/avida",
+          "sha256": null,
+          "commit": "47f13dadb547fcf10f620ace60247f38b30b8b16"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\avida",
+      "hash_list": "techne/fossils/specimens/avida/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134954Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/avida/receipts/repin-avida-20260916T134954Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/avida/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 479,
+        "RECORD_IS_CRLF": 2389,
+        "NOT_IN_ORIGIN": 0,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

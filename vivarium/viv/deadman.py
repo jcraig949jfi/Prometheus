@@ -84,6 +84,16 @@ class Config:
     task_name: str = "VivariumDeadmanM2"
     launcher: Optional[str] = None            # cmd file; None -> no relaunch
     fresh_s: float = 900.0                    # MONITORS.md: 15 min
+    pid_grace_s: float = 60.0                 # younger than this: never pid-check (a launch settles)
+    #: Campaign 4 (operator PROMPT 3, 2026-09-17): the two operator commands
+    #: after an engine stall or a worker death -- `viv.cli unpark` and
+    #: `viv.cli release <id> --new-attempt` -- become a BOUNDED automatic
+    #: state transition of this loop. At most this many auto-recoveries per
+    #: rolling 24 h; the (n+1)th stays parked for a person. The park record
+    #: and its notice are unchanged (evidence first); the clearance is
+    #: recorded like a human one, with the engine's answer as the reason.
+    auto_recover_bound: int = 3
+    auto_recover_window_s: float = 86400.0
     settle_s: float = 25.0                    # after launch, before re-read
     bound: int = 3
     accountable_seat: str = "Archaeon"
@@ -106,6 +116,8 @@ class Hooks:
     disable: Optional[Callable[[str], bool]] = None
     post: Optional[Callable[[dict, Path], dict]] = None
     sleep: Callable[[float], None] = time.sleep
+    release: Optional[Callable[[str, str], dict]] = None       # (experiment_id, reason) -> record
+    stranded_rows: Optional[Callable[[str], list]] = None      # worker_id -> [experiment_id, ...]
     extra: dict = field(default_factory=dict)
 
 
@@ -125,6 +137,38 @@ def read_heartbeat(worker_id: str) -> Optional[dict]:
                         "WHERE worker_id = %s", (worker_id,))
             row = cur.fetchone()
         return dict(row) if row else None
+    finally:
+        conn.close()
+
+
+def stranded_rows_of(worker_id: str) -> list:
+    """Rows this worker holds claimed/running (its process is gone when this
+    is asked): the ones a NEW ATTEMPT must release before a relaunch would
+    otherwise leave them stranded until a person notices."""
+    conn = _db.connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT experiment_id::text FROM " + _db.schema() + ".research_experiment_queue "
+                        "WHERE claimed_by = %s AND status IN ('claimed', 'running') ORDER BY claimed_at", (worker_id,))
+            return [r[0] for r in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def release_new_attempt(experiment_id: str, reason: str) -> dict:
+    """`viv.cli release <id> --new-attempt`, as a call: the stranded (or
+    ENGINE_TRANSPORT-failed, migration 010) row returns to queued for attempt
+    n+1. The queue's own rules decide; a refusal is returned, not raised."""
+    from . import queue as _q                                   # noqa: PLC0415
+    conn = _db.connect()
+    try:
+        row = _q.release_stranded(conn, experiment_id, actor="VivariumDeadmanM2", reason=reason,
+                                  new_attempt=True)
+        conn.commit()
+        return {"experiment_id": experiment_id, "released": True, "status": row.get("status") if row else None}
+    except Exception as exc:                                     # noqa: BLE001
+        conn.rollback()
+        return {"experiment_id": experiment_id, "released": False, "error": str(exc)[:300]}
     finally:
         conn.close()
 
@@ -235,6 +279,13 @@ class Deadman:
         return {}
 
     def _write_state(self, **kw) -> dict:
+        # the rolling auto-recovery ledger survives every rewrite
+        try:
+            prev = self._read_state()
+        except Exception:                                      # noqa: BLE001
+            prev = {}
+        if "auto_recoveries" not in kw and prev.get("auto_recoveries"):
+            kw["auto_recoveries"] = prev["auto_recoveries"]
         st = {"schema": STATE_SCHEMA, "task": self.cfg.task_name,
               "worker_id": self.cfg.worker_id, "host": os.environ.get("COMPUTERNAME"),
               "last_probe_at": _utc(), "bound": self.cfg.bound,
@@ -283,6 +334,17 @@ class Deadman:
         ev = {"age_s": round(age, 1), "pid": hb.get("pid"), "host": hb.get("host"),
               "current_experiment": hb.get("current_experiment")}
         if age < self.cfg.fresh_s:
+            # A heartbeat can be young and the process gone: the s14 canary
+            # killed the consumer mid-row and the dead-man read LIVE for the
+            # whole fresh_s (15 min) before it would even look at the pid.
+            # Past a short grace, a heartbeat FROM THIS HOST whose pid is not
+            # a live python here is DEAD now, not in 15 minutes.
+            same_host = (str(hb.get("host") or "").upper()
+                         == os.environ.get("COMPUTERNAME", "").upper())
+            if (age >= self.cfg.pid_grace_s and same_host and hb.get("pid")
+                    and not self._pid_alive(int(hb["pid"]), str(hb["host"]))):
+                return {"verdict": "DEAD", **ev,
+                        "note": "heartbeat young but its pid is gone from this host"}
             return {"verdict": "LIVE", **ev}
         if self._pid_alive(int(hb.get("pid") or 0), str(hb.get("host") or "")):
             return {"verdict": "BUSY", **ev,
@@ -315,15 +377,27 @@ class Deadman:
                                     reason="the canonical store could not be read or proved")
 
         v = self.verdict(hb)
+        recovery = None
+        if v["verdict"] == "PARKED":
+            recovery = self._auto_recover_park(v.get("park") or {}, prev)
+            if recovery and recovery.get("cleared"):
+                v = self.verdict(hb)                       # the record is gone; the consumer exited when it parked
         if v["verdict"] in ("LIVE", "BUSY", "PARKED", "STOPPING"):
             if consecutive:
                 self._log("%s again after %d failed tick(s)" % (v["verdict"], consecutive))
             st = self._write_state(consecutive_failures=0, last_success_at=_utc(),
-                                   parked=False, **v)
+                                   parked=False, **v, **({"auto_recovery": recovery} if recovery else {}))
             return {"exit": 0, **v, "state": st}
 
         # DEAD or NEVER: rule 9 before any launch.
         up = self._upstream()
+        if up.get("ok") and v["verdict"] == "DEAD":
+            # a dead worker's claimed/running rows are stranded by definition:
+            # release them to a NEW ATTEMPT before the relaunch (bounded with
+            # the same counter; the queue's rules decide each release)
+            released = self._release_stranded(v)
+            if released:
+                v = dict(v, released_before_relaunch=released)
         if not up.get("ok"):
             consecutive += 1
             st = self._write_state(consecutive_failures=consecutive,
@@ -346,11 +420,14 @@ class Deadman:
                 hb2 = None
             v2 = self.verdict(hb2)
             if v2["verdict"] in ("LIVE", "BUSY"):
+                extra = {k: v[k] for k in ("released_before_relaunch",) if k in v}
+                if recovery:
+                    extra["auto_recovery"] = recovery
                 st = self._write_state(consecutive_failures=0, last_success_at=_utc(),
-                                       parked=False, relaunched=True, **v2)
+                                       parked=False, relaunched=True, **v2, **extra)
                 self._log("consumer was %s; relaunched via %s; now %s (pid %s)"
                           % (v["verdict"], self.cfg.launcher, v2["verdict"], v2.get("pid")))
-                return {"exit": 0, "relaunched": True, **v2, "state": st}
+                return {"exit": 0, "relaunched": True, **v2, **extra, "state": st}
         consecutive += 1
         st = self._write_state(consecutive_failures=consecutive,
                                last_success_at=last_success, parked=False,
@@ -361,6 +438,79 @@ class Deadman:
         return self._maybe_park(consecutive, last_success, st,
                                 reason="consumer %s and %d consecutive relaunches did not "
                                        "produce a heartbeat" % (v["verdict"], consecutive))
+
+    # -- Campaign 4: bounded auto-recovery -----------------------------------
+    def _recoveries_in_window(self, prev: dict) -> list:
+        cutoff = time.time() - self.cfg.auto_recover_window_s
+        out = []
+        for t in prev.get("auto_recoveries") or []:
+            try:
+                ts = datetime.datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc).timestamp()
+            except Exception:                                  # noqa: BLE001
+                continue
+            if ts >= cutoff:
+                out.append(t)
+        return out
+
+    def _note_recovery(self, prev: dict) -> list:
+        lst = self._recoveries_in_window(prev) + [_utc()]
+        prev["auto_recoveries"] = lst
+        self._write_state(**dict(prev, auto_recoveries=lst))   # persisted NOW; later writes carry it forward
+        return lst
+
+    def _auto_recover_park(self, park: dict, prev: dict) -> Optional[dict]:
+        """A consumer parked on the ENGINE_TRANSPORT halt (rider #136) is
+        cleared automatically when the engine answers again -- at most
+        auto_recover_bound times per window. Everything else stays parked."""
+        if park.get("kind") != "FAILURE_CLASS_HALT":
+            return None
+        fc = ((park.get("last_tick") or {}).get("failure_class")) or ((park.get("last_productive") or {}).get("failure_class"))
+        if fc != "ENGINE_TRANSPORT":
+            return {"cleared": False, "why": "park is %s/%s, not the transport halt; a person clears it" % (park.get("kind"), fc)}
+        used = self._recoveries_in_window(prev)
+        if len(used) >= self.cfg.auto_recover_bound:
+            self._log("transport park NOT auto-cleared: %d auto-recoveries in the last %.0f h (bound %d); a person clears it"
+                      % (len(used), self.cfg.auto_recover_window_s / 3600, self.cfg.auto_recover_bound))
+            return {"cleared": False, "why": "auto-recovery bound reached", "used": used}
+        up = self._upstream()
+        if not up.get("ok"):
+            self._log("transport park NOT auto-cleared: engine still %s" % up.get("reason"))
+            return {"cleared": False, "why": "engine not answering", "upstream": up}
+        eid = (park.get("last_tick") or {}).get("experiment_id") or (park.get("last_productive") or {}).get("experiment_id")
+        n = len(used) + 1
+        reason = ("auto-recovery %d of %d by %s: the ENGINE_TRANSPORT halt's engine answers again (%s %s at %s); "
+                  "the halted row %s is released to a NEW ATTEMPT (migration 010); the park notice stands as evidence"
+                  % (n, self.cfg.auto_recover_bound, self.cfg.task_name, up.get("reason"), up.get("observed"), _utc(), eid))
+        # the clearance, recorded exactly like `viv.cli unpark` records it
+        park_path = _daemon.park_file_for(self.var, self.cfg.worker_id)
+        rec = dict(park); rec["cleared"] = {"by": self.cfg.task_name + " (auto)", "at": _utc(), "reason": reason}
+        dest = park_path.with_name("%s.cleared-%s.json" % (park_path.stem, _utc().replace(":", "").replace("-", "")))
+        try:
+            dest.write_text(json.dumps(rec, indent=2, default=str), encoding="utf-8")
+            park_path.unlink()
+        except OSError as exc:
+            return {"cleared": False, "why": "could not record the clearance: %s" % exc}
+        released = None
+        if eid:
+            released = (self.h.release or release_new_attempt)(eid, reason)
+        self._note_recovery(prev)
+        self._log("transport park AUTO-CLEARED (%d of %d): %s; release %s" % (n, self.cfg.auto_recover_bound, dest.name, released))
+        return {"cleared": True, "n": n, "clearance": str(dest), "released": released, "upstream": up}
+
+    def _release_stranded(self, v: dict) -> list:
+        try:
+            rows = (self.h.stranded_rows or stranded_rows_of)(self.cfg.worker_id)
+        except Exception as exc:                                   # noqa: BLE001
+            self._log("stranded-row lookup failed (%s); relaunching anyway" % str(exc)[:120])
+            return []
+        out = []
+        for eid in rows:
+            r = (self.h.release or release_new_attempt)(
+                eid, "worker %s is DEAD (pid %s gone from %s); its claimed/running row is released to a NEW ATTEMPT "
+                     "before the relaunch (%s)" % (self.cfg.worker_id, v.get("pid"), v.get("host"), self.cfg.task_name))
+            self._log("stranded row %s: %s" % (eid[:8], "released" if r.get("released") else "NOT released: %s" % r.get("error")))
+            out.append(r)
+        return out
 
     # -- rule 10 ----------------------------------------------------------
     def _maybe_park(self, consecutive: int, last_success, st: dict, *,
@@ -435,7 +585,7 @@ def main(argv=None) -> int:
     ap.add_argument("--settle-s", type=float, default=25.0)
     ap.add_argument("--bound", type=int, default=3)
     ap.add_argument("--expected-engine", default=None,
-                    help="engine_instance_id the launch precondition requires")
+                    help="engine_instance_id the launch precondition requires (default: the production descriptor's)")
     ap.add_argument("--sfe-version-url", default=None)
     ap.add_argument("--sfe-cacert", default=None)
     ap.add_argument("--var-dir", default=None)
@@ -444,6 +594,14 @@ def main(argv=None) -> int:
     ap.add_argument("--no-launch", action="store_true",
                     help="observe and record only; never start anything")
     a = ap.parse_args(argv)
+    if a.expected_engine is None:
+        # PRODUCTION_DESCRIPTOR.md s3: the target comes from the descriptor,
+        # not a command line someone typed once
+        from . import production as _prod                    # noqa: PLC0415
+        try:
+            a.expected_engine = (_prod.load().get("engine") or {}).get("engine_instance_id")
+        except Exception:                                     # noqa: BLE001
+            a.expected_engine = None
     cfg = Config(worker_id=a.worker_id, task_name=a.task_name,
                  launcher=None if a.no_launch else a.launcher,
                  fresh_s=a.fresh_s, settle_s=a.settle_s, bound=a.bound,

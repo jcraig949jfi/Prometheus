@@ -140,8 +140,30 @@
   "inspected_files": [
    "rs.c 1-200 read; 200-311 (Chien/Forney) skimmed; main skimmed"
   ],
-  "date": "2026-09-16T12:32Z",
-  "note": "the atlas's calibration pair: this and libfec-karn::rs.* are the same five mechanisms by descent; a Stage E wind tunnel that cannot call them R5 is broken, and one that calls libfec's Viterbi equally close to them is fooled by the domain label"
+  "date": "2026-09-17T22:50Z",
+  "note": "the atlas's calibration pair: this and libfec-karn::rs.* are the same five mechanisms by descent; a Stage E wind tunnel that cannot call them R5 is broken, and one that calls libfec's Viterbi equally close to them is fooled by the domain label",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "http://www.eccpage.com/rs.c sha256:0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+   "payload_manifest_id": "techne tree_sha256 5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744 (1 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [],
+   "unresolved_refs": [
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:44-77",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:78-95",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:96-123",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:150-160",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:161-230",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:231-270 (skimmed)",
+    "vault:reed-solomon-rockliff-1991/upstream/rs.c:271-311 (skimmed)"
+   ]
+  }
  },
  "organs": [
   {
@@ -1144,6 +1166,13 @@
    "to": "ldpc-codes-neal-2001",
    "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {

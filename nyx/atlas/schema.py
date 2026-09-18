@@ -33,6 +33,8 @@ FOSSIL_CUT_STATE = ("NOT_CUT", "COARSE", "DEEP", "ORGAN0", "BLOCKED")
 RESIDUE_STATES = ("EXPLAINED_BY_CURRENT_CUT", "PARTIALLY_EXPLAINED", "LARGE_RESIDUE", "CUT_INSTRUMENT_INSUFFICIENT", "NOT_CHECKED")
 RECURRENCE_LEVELS = ("R0", "R1", "R2", "R3", "R4", "R5")
 TRI = ("YES", "NO", "UNKNOWN", "N/A")
+PROVENANCE_GRADES = ("ORIGINAL_ARTIFACT", "CONTEMPORARY_COPY", "AUTHENTIC_TRANSCRIPTION", "LATER_TRANSCRIPTION", "RECONSTRUCTION",
+                     "DERIVED_RECOVERY_ARTIFACT", "AUTHOR_STATED", "UNKNOWN")  # Amendment 2 R19
 
 # provisional operational labels for composition edges (directive list); others allowed but flagged by the validator
 COMPOSITION_LABELS = ("feeds", "gates", "retries", "selects", "updates", "stores", "forgets", "predicts", "verifies",
@@ -127,6 +129,16 @@ def validate_fossil(f: dict) -> List[str]:
                 p.append(f"cut.evidence entry {e}")
         if cut.get("state") != "ORGAN0" and not f.get("organs"):
             p.append("cut fossil with no organs and not ORGAN0")
+        # nyx.atlas/1-provenance (Amendment 3 R34, 2026-09-16): a cut names the provenance-grade object it read and hashes its files
+        prov = cut.get("provenance") or {}
+        for k in ("provenance_grade_read", "source_object_id", "payload_manifest_id", "files_read"):
+            if k not in prov:
+                p.append(f"cut.provenance missing {k} (R34)")
+        if prov.get("provenance_grade_read") not in PROVENANCE_GRADES:
+            p.append("cut.provenance.provenance_grade_read not in vocabulary")
+        for r in prov.get("files_read", []):
+            if not (isinstance(r.get("payload_hash_read"), str) and len(r["payload_hash_read"]) == 64):
+                p.append(f"cut.provenance.files_read {r.get('path')}: no 64-hex payload hash")
     ids = {o.get("organ_id") for o in f.get("organs", [])}
     for o in f.get("organs", []):
         _need(o, ORGAN_FIELDS, f"organ {o.get('organ_id')}", p)

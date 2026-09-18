@@ -149,7 +149,35 @@
    "file list"
   ],
   "date": "2026-09-16T12:11Z",
-  "note": "a menu of 32 mutators at five representation levels (byte, byte-sequence, line, delimiter-tree, lexed string) under a scheduler whose only feedback is whether the mutation changed the bytes -- there is no signal from the target"
+  "note": "a menu of 32 mutators at five representation levels (byte, byte-sequence, line, delimiter-tree, lexed string) under a scheduler whose only feedback is whether the mutation changed the bytes -- there is no signal from the target",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://gitlab.com/akihe/radamsa/-/archive/v0.6/radamsa-v0.6.tar.gz sha256:a68f11da7a559fceb695a7af7035384ecd2982d666c7c95ce74c849405450b5e; https://gitlab.com/owl-lisp/owl/uploads/0d0730b500976348d1e66b4a1756cdc3/ol-0.1.19.c.gz sha256:86917b9145cf3745ee8294c81fb822d17106698aa1d021916dfb2e0b8cfbb54d",
+   "payload_manifest_id": "techne tree_sha256 d324e3686c126799cfe20a9fb29bdcc7ce806d7268700d7b8c4b9e61122c77fc (56 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/radamsa-v0.6/rad/mutations.scm",
+     "payload_hash_read": "6b397c9c4e870a72505fc838df36f52bee98318b4b1c2309823f15c104c2bd00",
+     "techne_recorded_hash": "6b397c9c4e870a72505fc838df36f52bee98318b4b1c2309823f15c104c2bd00",
+     "match": true,
+     "refs": 10
+    },
+    {
+     "path": "upstream/tree/radamsa-v0.6/rad/patterns.scm",
+     "payload_hash_read": "37b861a14a6028f551d7c4fa41830bb7f43ed6a5cff4cca3eb0824c082e32262",
+     "techne_recorded_hash": "37b861a14a6028f551d7c4fa41830bb7f43ed6a5cff4cca3eb0824c082e32262",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
