@@ -63,3 +63,27 @@ recorded in its header). A standing news loop is NOT launched: under the
 base role a persistent loop needs a registered monitor row, a bound on
 non-productive ticks and an accountable seat (rules 7-10). Proposed as
 backlog item APHRODITE-12 for the operator to accept or decline.
+
+## Stopping rule for the swarm toys (2026-09-18)
+
+S1-S4 have done their job; the seat does not extend them. Swarm work
+reactivates only when one of these becomes measurable in a real swarm:
+q vs p, rho, R0, g vs a, r or c (library/MODELS.md M1-M7).
+
+## Charter candidates on file (the operator decides, APHRODITE-08)
+
+1. First relayed review (2026-09-18): "Determine experimentally whether
+   an autonomous, population-based improvement process can produce
+   transferable improvement in its own improvement operator, beyond
+   gains attributable to memory accumulation, fixed search, replay,
+   selection, or evaluator exploitation."
+2. Packet feedback (2026-09-18): "Determine experimentally what makes
+   collective and self-improving AI systems genuinely improve their
+   ability to produce future improvements, distinguishing transferable
+   algorithmic change from accumulated memory, selection, additional
+   compute, evaluator exploitation, and benchmark specialization.
+   Maintain the research library, adversarial models, calibration
+   apparatus, and experimental designs required to make those
+   distinctions."
+Seat's lean: candidate 2 (a permanent question that covers swarms and
+the library, not tied to one experiment).

@@ -74,6 +74,11 @@ within 3 generations).
 Meaning: purging needs a surviving clean variant AND a true cost (or an
 active reservoir). LIT: Roesner and Kohno arXiv 2609.17817 (poisoned
 components never pruned through clean evolution, DGM and SICA).
+CORRECTION 2026-09-18: persistence in all three systems (DGM 28/30 after
+21 clean generations, SICA 30/30 after 8, Hyperagents 30/30 after 10);
+a poison-aware decontamination benchmark cut them to 8, 0 and 0 of 30.
+In M5's terms that benchmark supplies the cost c > 0 that generic clean
+tasks lacked; which term (c or r) explains the paper is OPEN.
 
 ## M6. Correlated voting (S4 model A) and effective panel size
 

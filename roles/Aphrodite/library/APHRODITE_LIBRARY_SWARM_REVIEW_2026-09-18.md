@@ -151,3 +151,23 @@ roles/Aphrodite/library/sources/, NEWS.md, designs/        0a2acbc9f
 +============================================================================+
 | "Not worth continuing" is a first-class answer.                            |
 +============================================================================+
+
+## CORRECTION 2026-09-18 (feedback on this packet, verified against the paper)
+
+The sentence "stayed vulnerable at 28, 30 and 30 of 30 after 10 clean
+generations" is WRONG in its generation counts and incomplete.
+Roesner and Kohno arXiv 2609.17817 Table 3: modified DGM 28/30 after 21
+clean generations, SICA 30/30 after 8, Hyperagents 30/30 after 10 (one
+run each); a benchmark built WITH knowledge of the poison brought them
+to 8/30, 0/30 and 0/30. The paper shows generic clean selection was
+insufficient and targeted counter-pressure worked; it does NOT show that
+missing honest ancestors explain the persistence. The seat's reservoir
+mechanism is a hypothesis to attack, not the paper's explanation.
+"The compute-matched, multi-seed transplant test appears not to exist"
+is STRUCK: Hyperagents demonstrated transfer of evolved improvement
+machinery (imp@50 0.630 vs 0.0, 5 repeated runs, p < 0.05). What remains
+unresolved is whether the effect survives a stricter assay that
+equalises compute, strips accumulated state, separates evolved machinery
+from evolved worker state, uses multiple independently evolved lineages
+and evaluates on blinded held-out task populations. The original text
+above is left as written.

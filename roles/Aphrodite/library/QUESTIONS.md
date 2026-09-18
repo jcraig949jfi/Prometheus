@@ -120,6 +120,9 @@ D3. The reviewer cites a paper (week of 2026-09-11) on benchmark
     DGM gave 30/30 vulnerable solutions on clean held-out tasks; the
     component was never pruned through clean evolution in DGM or SICA
     (sources/swarm_failure.md 2.6). Open follow-on: M2 below.
+    CORRECTION 2026-09-18 (Table 3, verified): 28/30 DGM after 21 clean
+    generations, 30/30 SICA after 8, 30/30 Hyperagents after 10; a
+    poison-aware decontamination benchmark cut them to 8, 0, 0 of 30.
 D4. What audit rate is sufficient? Toy boundary a* = g/(1+g) (S3):
     the audit rate must exceed the exploit's relative gain. Does any
     real system report its audit rate? STATUS: TOY.
@@ -305,6 +308,12 @@ M2. Did the DGM/SICA archives in Roesner and Kohno still hold clean
     (T4) explains the persistence. STATUS: OPEN; answerable by reading
     the paper's archive statistics. Note (2026-09-18): persistence held
     in all three systems (28/30/30 of 30 after 10 clean generations).
+    CORRECTION same day: after 21 / 8 / 10 clean generations; and
+    targeted counter-pressure (poison-aware benchmarks) worked, 8/0/0 of
+    30. Refined question: is the persistence explained by the absence of
+    COST under generic tasks (c = 0) rather than absence of a clean
+    RESERVOIR (r = 0)? The paper's result fits the cost reading at least
+    as well.
 M3. Is there a regime (MacNet-like) where none of T5's ratios bind and
     more agents keep helping, and what property of the task makes it
     so? STATUS: OPEN.
@@ -342,3 +351,19 @@ N6. Is a public randomness beacon trustworthy enough, and what if it
 N7. Which is the right primary contrast: Hyperagents-style transfer to a
     new domain, or AIDE^2-style acceleration of the same loop? v2 takes
     the first as primary and the second as a pattern. STATUS: OPEN.
+
+## O. Added after the packet feedback (2026-09-18)
+
+O1. Why do Hyperagents (improver transfer across domains: imp@50 0.630
+    vs 0.0) and AIDE^2 (recursive improver in the outer seat: faster,
+    not significant, no asymptotic gain) differ? Different arrows of
+    the same hierarchy (task improvement -> improver transfer ->
+    recursive improver transfer), different substrates, or noise?
+    STATUS: OPEN; the question RSI-1 should be built around.
+O2. In Hyperagents' transfer, which causal object transferred -- meta
+    machinery, worker code, prompts, or accumulated state? STATUS: OPEN;
+    the TRANSFERRED MODULE fixture calibrates the assay for it.
+O3. Can the assay tell "the improver got better" from "the improver
+    moved to another point on its compute curve" (COMPUTE CHEAT) and
+    from "it carried useful state" (MEMORY CHEAT)? STATUS: OPEN
+    (Campaign 0 fixtures).

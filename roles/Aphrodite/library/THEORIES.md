@@ -37,6 +37,17 @@ benchmark score is a poor proxy for it (correlation 0.285). The seat's
 reading: second-order transfer has one positive and one null in the
 literature; the compute-matched, multi-seed, multi-substrate transplant
 RSI-1 describes appears not to exist as of 2026-09-18.
+CORRECTION 2026-09-18 (packet feedback, verified): the sentence above
+overstates novelty -- Hyperagents used 5 repeated runs and reported
+p < 0.05. Replacement position: "Transfer of evolved improvement
+machinery has been demonstrated in Hyperagents. What remains unresolved
+is whether the effect survives a stricter transplant assay that
+equalizes compute, strips accumulated state, separates evolved machinery
+from evolved worker state, uses multiple independently evolved lineages,
+and evaluates against blinded held-out task populations." AIDE^2's
+efficiency gain was itself not statistically significant (Weco). The
+hierarchy: task improvement -> improver transfer (Hyperagents: evidence)
+-> recursive improver transfer (AIDE^2: tested, not convincing).
 
 ## T1. The harness is where both the leverage and the hazard live
 
@@ -111,6 +122,18 @@ Falsifier: a real self-modifying system that purges a costless planted
 component through clean evolution alone.
 Status: HELD; consequence for RSI-1: the archive must retain verified
 clean ancestors, and the counter/evaluator must be out of reach.
+CORRECTION AND DEMOTION 2026-09-18 (packet feedback, verified against
+Table 3): the generation counts above are wrong -- 21 (DGM), 8 (SICA),
+10 (Hyperagents) clean generations, not 10 each -- and the omitted rows
+matter most: a decontamination benchmark built with knowledge of the
+poison reduced vulnerable solutions to 8/30, 0/30 and 0/30. The paper
+establishes that GENERIC clean selection was insufficient and TARGETED
+counter-pressure worked; it does not establish missing honest ancestors
+as the cause. Status of T4 changed: HELD -> HYPOTHESIS TO ATTACK (the
+toy mechanism stands; its application to the paper does not). Rival
+explanation now named: the exploit is costless under generic clean
+tasks, so only tasks that make it costly (targeted counter-pressure)
+select against it -- M5's c > 0 condition, not its r > 0 one.
 
 ## T5. Swarm damage is governed by a few ratios
 

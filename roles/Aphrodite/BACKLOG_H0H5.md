@@ -30,3 +30,15 @@ Added 2026-09-18 after the Gemini Pro / ChatGPT reviews:
 APHRODITE-14 | Campaign 0 assay simulator: synthetic lineages with known truth (planted dividend, none, memorised vault, planted module effect, exploiter lineage) through the full factorial + decomposition + hierarchical analysis; power and EQUIVALENCE curves vs lineages/families/instances | EXPERIMENT | rsi | L | APHRODITE-08 or an explicit go for Campaign 0 | prereg + verdict-recovery table (true vs assay verdict) + curves
 APHRODITE-15 | delta proposal memo from downstream need (QUESTIONS N1) | METHOD | rsi | S | APHRODITE-14 curves | memo committed before any Campaign 1 data
 APHRODITE-16 | I_0 protocol spec (five modules, typed memory store, resource handles, two-phase commit, null task) as a written interface, no implementation | DESIGN | rsi | M | none | spec file under library/designs/
+
+Stopping rule adopted 2026-09-18 (packet feedback; inside the seat's own
+lane, so the seat adopts it): the CPU swarm toys are STOPPED. More
+analytic cells would not change a program decision. Swarm work
+reactivates only when one of the boundary quantities becomes measurable
+in a real swarm: false-accept vs solve rate (q vs p), error correlation
+(rho), contagion vs verification (R0), exploit advantage vs audit
+pressure (g vs a), availability of clean variants (r) or targeted cost
+(c). No backlog item extends S1-S4.
+APHRODITE-12 re-scoped: bounded news monitor SPEC written
+(library/NEWS_MONITOR_SPEC.md); launch awaits the operator.
+APHRODITE-14 re-scoped to the five-fixture assay qualification (TOY-RSI-1).

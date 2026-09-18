@@ -604,3 +604,15 @@ compute-matched controls and more than 3 seeds. That exact experiment appears NO
     enforcement live outside the modifiable code by construction, and does every current framework do this?
 18. Lab claims vs measurements: Z.ai (2-week build, 3x throughput) and OpenAI (3.1 agent-workdays per human workday) report AI-builds-AI
     output metrics. None reports whether the AGENT became a better builder across projects (the second-order question).
+
+## CORRECTION 2026-09-18 (seat, verified against arXiv 2609.17817 Table 3)
+
+Section 0 above says one contaminated agent per system was evolved "for
+10 more generations". Per the paper's Section 3.6 / Table 3 the
+continuations were 21 generations (modified DGM, Qwen3.5-397B), 8
+(SICA, Qwen3.5-397B) and 10 (Hyperagents, Sonnet 4.5), one run each.
+The counts listed in section 0 (clean 28 / 30 / 30; decontamination
+8 / 0 / 0) are correct. Hyperagents transfer (RSI-17) confirmed from the
+primary source the same day: 5 repeated runs, p < 0.05. AIDE^2 (RSI-19):
+Weco states "Even the efficiency claim is not statistically
+significant."
