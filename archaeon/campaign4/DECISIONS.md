@@ -127,3 +127,15 @@ REPRESENTATION_BLOCKED (one static mode exists). | C4-04/DESIGN.md. |
 Alternative: count any content change at any old target as broken (would
 label every edit inside the genome as a reference break). | Revisit never.
 DETERMINISTIC.
+
+D4-009 | 2026-09-18 07:15 | C4-05 WALK RULES: the equivalence band is relative
+to the ORIGINAL parent's reward on its environment (never the current walker,
+so a walk cannot ratchet); a proposal whose operator returns its noop record
+is not a proposal (does not count toward the 32 or the depth); stall = 32
+rejected proposals at one depth; archived depths 0/2/4/8/16; gen0_random
+parents that are degenerate by the D4-003 flag are walked but reported apart
+(acceptance 1.0 by construction). Archived walker manifests are NOT stored:
+the walk is a pure function of its seeds and the frozen evaluator, so C4-06
+regenerates them and verifies the last-step digest against steps.json. |
+C4-05/DESIGN.md. | Alternative: band relative to the current walker (a
+ratchet). | Revisit never in C4. DETERMINISTIC.
