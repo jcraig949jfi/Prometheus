@@ -1,0 +1,857 @@
+{
+ "lane": "independent_replication",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "note": "additional attempt seeds under the UNCHANGED frozen contract; the committed driver was imported, not modified",
+ "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "budget_B": 3,
+ "seeds_requested": [
+  "cw01-e05-r05",
+  "cw01-e05-r06",
+  "cw01-e05-r07",
+  "cw01-e05-r08",
+  "cw01-e05-r09",
+  "cw01-e05-r10",
+  "cw01-e05-r11",
+  "cw01-e05-r12"
+ ],
+ "n_completed": 8,
+ "environment": {
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "numpy": "2.2.6",
+  "executable": "H:\\Python312\\python.exe"
+ },
+ "summary": {
+  "beats_best_single": "8/8",
+  "superadditivity_clears_null": "5/8",
+  "ablation_all_load_bearing": "5/8",
+  "m3_interaction_positive": "7/8",
+  "did_points_mean": 27.537467776963297,
+  "superadditivity_mean_pct": 9.910262822358861
+ },
+ "reported_fields": [
+  "attempt_id",
+  "budget_B",
+  "did_points",
+  "law_effect_best_points",
+  "law_effect_worst_points",
+  "superadditivity_mean_pct",
+  "superadditivity_clears_null",
+  "null_p05",
+  "null_p95",
+  "ablation_targeted",
+  "ablation_random_sham",
+  "ablation_all_load_bearing",
+  "n_load_bearing",
+  "n_carried",
+  "mixture_score",
+  "best_single_score",
+  "beats_best_single",
+  "arms_match",
+  "ancestor_relative_pct"
+ ],
+ "replicates": [
+  {
+   "attempt_id": "cw01-e05-r05",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     1,
+     5
+    ],
+    "best_score": 1.705483104504313,
+    "worst": [
+     0,
+     3,
+     6
+    ],
+    "worst_score": 0.7421408345780711,
+    "n_subsets": 56,
+    "median_score": 1.1468007061932173
+   },
+   "arms_match": true,
+   "did_points": 30.12484041140091,
+   "law_effect_best_points": 28.918256933900157,
+   "law_effect_worst_points": -1.206583477500752,
+   "superadditivity_mean_pct": 7.131408887562143,
+   "superadditivity_blocks": [
+    11.213682867904222,
+    15.713964157592715,
+    0.49767957279858177,
+    -0.844333525324749,
+    8.644580983257583,
+    7.100369717180188,
+    9.256902935322236,
+    5.468424391766372
+   ],
+   "superadditivity_clears_null": false,
+   "null_p05": -9.93718244432483,
+   "null_p95": 11.037375331141485,
+   "ablation_targeted": 58.69139560420498,
+   "ablation_random_sham": 33.91145154508566,
+   "ablation_all_load_bearing": false,
+   "n_load_bearing": 2,
+   "n_carried": 3,
+   "mixture_score": 1.7400387434493523,
+   "best_single_score": 0.7666117664043083,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.7055785119770885,
+   "ancestor_mean": 1.09232426291968,
+   "ancestor_relative_pct": 56.142142940067764,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 3.2024991836109633,
+     "mixture_info": 118.47514260849132,
+     "additive_prediction": 114.79871470719745,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      5
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -25.715757750289193,
+     "mixture_info": 227.15673931822795,
+     "additive_prediction": 305.79397788649084,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      5
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -13.7468320703881,
+     "mixture_info": 53.11196575362355,
+     "additive_prediction": 61.57682903538837,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -12.540248592887348,
+     "mixture_info": 210.5381706052798,
+     "additive_prediction": 240.72578210890936,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      6
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.6
+  },
+  {
+   "attempt_id": "cw01-e05-r06",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     4,
+     6
+    ],
+    "best_score": 2.1172076157989426,
+    "worst": [
+     1,
+     4,
+     5
+    ],
+    "worst_score": 0.841630053289778,
+    "n_subsets": 56,
+    "median_score": 1.344555607528632
+   },
+   "arms_match": true,
+   "did_points": 41.97528042356184,
+   "law_effect_best_points": 48.98502537531219,
+   "law_effect_worst_points": 7.009744951750346,
+   "superadditivity_mean_pct": 24.724434486724952,
+   "superadditivity_blocks": [
+    18.689281256692336,
+    26.118831776963134,
+    28.778525540700585,
+    29.261912112952103,
+    26.764163755072403,
+    25.407826451699673,
+    21.101373536191627,
+    21.673561463527754
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -6.327386847382927,
+   "null_p95": 6.754795810802126,
+   "ablation_targeted": 81.17285713883231,
+   "ablation_random_sham": 56.322764251481075,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 2.087784506155979,
+   "best_single_score": 1.0000286613079985,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.996374995564608,
+   "ancestor_mean": 1.262554545140055,
+   "ancestor_relative_pct": 58.1218810109428,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 18.79534447143197,
+     "mixture_info": 150.3341278379796,
+     "additive_prediction": 126.54883784114293,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      4,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -30.18968090388022,
+     "mixture_info": 235.63305135501585,
+     "additive_prediction": 337.53326786915216,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      4,
+      6
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -16.367461671951137,
+     "mixture_info": 60.383192704148755,
+     "additive_prediction": 72.20059789085381,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      4,
+      5
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -23.377206623701483,
+     "mixture_info": 176.0412463653024,
+     "additive_prediction": 229.75049408699408,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      4,
+      5
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.7
+  },
+  {
+   "attempt_id": "cw01-e05-r07",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     2,
+     3,
+     6
+    ],
+    "best_score": 1.9485127845912362,
+    "worst": [
+     0,
+     1,
+     7
+    ],
+    "worst_score": 0.8063590244996224,
+    "n_subsets": 56,
+    "median_score": 1.3327697182050253
+   },
+   "arms_match": true,
+   "did_points": 54.193472008474615,
+   "law_effect_best_points": 49.41929078877109,
+   "law_effect_worst_points": -4.774181219703518,
+   "superadditivity_mean_pct": 25.463274214520972,
+   "superadditivity_blocks": [
+    31.03554324871423,
+    24.313784665625846,
+    23.724740351836356,
+    23.97956393351616,
+    26.661860256448378,
+    27.531603139280943,
+    25.90491183188192,
+    20.55418628886392
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -5.40636897649343,
+   "null_p95": 5.715379088064813,
+   "ablation_targeted": 67.33538299037437,
+   "ablation_random_sham": 51.1816377410631,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.8606496390115073,
+   "best_single_score": 0.6563908450624618,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.8324003160138855,
+   "ancestor_mean": 1.247542553275152,
+   "ancestor_relative_pct": 46.880786647582994,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 25.635798296281664,
+     "mixture_info": 134.4288541506004,
+     "additive_prediction": 106.9988458493195,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      3,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -23.783492492489433,
+     "mixture_info": 243.5160844189707,
+     "additive_prediction": 319.5056981520362,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      3,
+      6
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -27.153468486667663,
+     "mixture_info": 46.33427924456101,
+     "additive_prediction": 63.60533340709699,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -22.379287266964145,
+     "mixture_info": 158.34845004571267,
+     "additive_prediction": 204.0028292323559,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      7
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.7
+  },
+  {
+   "attempt_id": "cw01-e05-r08",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     5,
+     6,
+     7
+    ],
+    "best_score": 1.7950725206133409,
+    "worst": [
+     0,
+     3,
+     6
+    ],
+    "worst_score": 0.8925716863756847,
+    "n_subsets": 56,
+    "median_score": 1.3602262567112449
+   },
+   "arms_match": true,
+   "did_points": 8.986402472132138,
+   "law_effect_best_points": 30.31487026774726,
+   "law_effect_worst_points": 21.328467795615122,
+   "superadditivity_mean_pct": 12.927577536419923,
+   "superadditivity_blocks": [
+    12.525916925281605,
+    13.606176855571027,
+    13.687846937838632,
+    13.593838008795803,
+    9.680542499408636,
+    13.585865832971841,
+    10.296723091458196,
+    16.443710140033637
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -3.472814861692526,
+   "null_p95": 3.597768379701959,
+   "ablation_targeted": 46.49932075255789,
+   "ablation_random_sham": 39.24837314237091,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.6099583904531496,
+   "best_single_score": 0.7639867786618466,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.616018227635427,
+   "ancestor_mean": 1.1951331622703738,
+   "ancestor_relative_pct": 35.21658327725632,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 12.116932187026597,
+     "mixture_info": 112.39153315116923,
+     "additive_prediction": 100.24492372274739,
+     "carry_cost": 9.0,
+     "carried": [
+      5,
+      6,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -18.19793808072066,
+     "mixture_info": 229.30538540114853,
+     "additive_prediction": 280.3173661165443,
+     "carry_cost": 9.0,
+     "carried": [
+      5,
+      6,
+      7
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": 0.7901453202082074,
+     "mixture_info": 62.92099729026538,
+     "additive_prediction": 62.427727522732184,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -20.538322475406915,
+     "mixture_info": 232.54615088679233,
+     "additive_prediction": 292.6519526533028,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      6
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.7
+  },
+  {
+   "attempt_id": "cw01-e05-r09",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     2,
+     4,
+     6
+    ],
+    "best_score": 1.6757046897487347,
+    "worst": [
+     0,
+     3,
+     5
+    ],
+    "worst_score": 0.8785230021286129,
+    "n_subsets": 56,
+    "median_score": 1.2626367764893867
+   },
+   "arms_match": true,
+   "did_points": 28.31005266556939,
+   "law_effect_best_points": 26.926234698141666,
+   "law_effect_worst_points": -1.3838179674277242,
+   "superadditivity_mean_pct": 6.767819074913689,
+   "superadditivity_blocks": [
+    7.665837499516591,
+    3.8484106571569425,
+    9.367259491766507,
+    5.445376060300415,
+    6.13450732314758,
+    4.485330763370537,
+    8.312615455490745,
+    8.883215348560196
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -4.207142887687453,
+   "null_p95": 4.392167347651198,
+   "ablation_targeted": 52.37204987344225,
+   "ablation_random_sham": 39.50188256043759,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.6803216058081285,
+   "best_single_score": 0.7343123076777972,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.6317441162961728,
+   "ancestor_mean": 1.3099464254525717,
+   "ancestor_relative_pct": 24.565713878903377,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 6.405929679118738,
+     "mixture_info": 119.20819755665619,
+     "additive_prediction": 112.03153613350722,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      4,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -20.520305019022928,
+     "mixture_info": 210.8332936054338,
+     "additive_prediction": 265.2668630093451,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      4,
+      6
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -16.440045352196556,
+     "mixture_info": 69.26724651878192,
+     "additive_prediction": 82.89526581331475,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      5
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -15.056227384768832,
+     "mixture_info": 198.9338210383165,
+     "additive_prediction": 234.1947089393177,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      5
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.6
+  },
+  {
+   "attempt_id": "cw01-e05-r10",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     1,
+     7
+    ],
+    "best_score": 1.5801852550030846,
+    "worst": [
+     2,
+     5,
+     6
+    ],
+    "worst_score": 0.8018470355081856,
+    "n_subsets": 56,
+    "median_score": 1.206714252790302
+   },
+   "arms_match": true,
+   "did_points": -14.452645629173416,
+   "law_effect_best_points": 6.738354974689953,
+   "law_effect_worst_points": 21.19100060386337,
+   "superadditivity_mean_pct": -6.436725232889909,
+   "superadditivity_blocks": [
+    -9.358217730889894,
+    -5.865596855904506,
+    -6.699588199795981,
+    -3.9827666271422766,
+    -8.549063368748069,
+    -6.6512984941036954,
+    -6.714019564081207,
+    -3.67325102245364
+   ],
+   "superadditivity_clears_null": false,
+   "null_p05": -4.8322147585207755,
+   "null_p95": 5.077778111231546,
+   "ablation_targeted": 43.74427933668359,
+   "ablation_random_sham": 28.60990894516209,
+   "ablation_all_load_bearing": false,
+   "n_load_bearing": 1,
+   "n_carried": 3,
+   "mixture_score": 1.6227040516000797,
+   "best_single_score": 0.7926409391237214,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.5105611519573037,
+   "ancestor_mean": 1.1234201618688184,
+   "ancestor_relative_pct": 34.46092594995563,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": -5.443739983703573,
+     "mixture_info": 102.65811534090207,
+     "additive_prediction": 108.56829079662131,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -12.182094958393526,
+     "mixture_info": 224.1925090043763,
+     "additive_prediction": 255.29248152544528,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      7
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -1.1911630325151867,
+     "mixture_info": 51.554556495750894,
+     "additive_prediction": 52.17605841541889,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      5,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -22.382163636378557,
+     "mixture_info": 213.52435445923652,
+     "additive_prediction": 275.09701952902265,
+     "carry_cost": 9.0,
+     "carried": [
+      2,
+      5,
+      6
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.5
+  },
+  {
+   "attempt_id": "cw01-e05-r11",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     1,
+     4,
+     5
+    ],
+    "best_score": 2.0809738894312977,
+    "worst": [
+     0,
+     3,
+     7
+    ],
+    "worst_score": 0.6630736273791143,
+    "n_subsets": 56,
+    "median_score": 1.4208138152428509
+   },
+   "arms_match": true,
+   "did_points": 34.12189569624424,
+   "law_effect_best_points": 15.809384804499636,
+   "law_effect_worst_points": -18.312510891744605,
+   "superadditivity_mean_pct": -7.32086649008702,
+   "superadditivity_blocks": [
+    -9.273362916335225,
+    -6.5542897976764865,
+    -10.67736602275611,
+    -4.68109822490316,
+    -10.09742780429442,
+    -7.960912688503539,
+    -5.135592869284622,
+    -4.186881596942595
+   ],
+   "superadditivity_clears_null": false,
+   "null_p05": -5.923544452463677,
+   "null_p95": 6.296762999087303,
+   "ablation_targeted": 57.935054147426385,
+   "ablation_random_sham": 36.53243976762781,
+   "ablation_all_load_bearing": false,
+   "n_load_bearing": 0,
+   "n_carried": 3,
+   "mixture_score": 2.0740409443957506,
+   "best_single_score": 1.1492561582727545,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.9425677740398175,
+   "ancestor_mean": 1.3503282150088767,
+   "ancestor_relative_pct": 43.858933883496434,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": -9.65910408808044,
+     "mixture_info": 140.056764433363,
+     "additive_prediction": 155.03140966181624,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      4,
+      5
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -25.468488892580076,
+     "mixture_info": 276.207956173187,
+     "additive_prediction": 370.59218586766224,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      4,
+      5
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -37.503569611337284,
+     "mixture_info": 50.60697464140694,
+     "additive_prediction": 80.97578425949172,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -19.19105871959268,
+     "mixture_info": 156.58339749502053,
+     "additive_prediction": 193.7698910714293,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      7
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.6
+  },
+  {
+   "attempt_id": "cw01-e05-r12",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     5,
+     6
+    ],
+    "best_score": 1.5047193970860244,
+    "worst": [
+     1,
+     2,
+     3
+    ],
+    "worst_score": 0.6608880302366542,
+    "n_subsets": 56,
+    "median_score": 0.9463291606862066
+   },
+   "arms_match": true,
+   "did_points": 37.04044416749666,
+   "law_effect_best_points": 35.90773488403411,
+   "law_effect_worst_points": -1.132709283462546,
+   "superadditivity_mean_pct": 16.02518010170613,
+   "superadditivity_blocks": [
+    13.137425949559178,
+    17.046246051866035,
+    21.32920725954935,
+    17.452593321600713,
+    14.47607479683434,
+    13.87771443785953,
+    20.841224702388082,
+    10.040954293991819
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -6.469280359071509,
+   "null_p95": 6.917069507669591,
+   "ablation_targeted": 39.94629803651169,
+   "ablation_random_sham": 36.32459136619433,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.5212070096382435,
+   "best_single_score": 0.6566268902502699,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.3966602867801368,
+   "ancestor_mean": 0.8840484255687201,
+   "ancestor_relative_pct": 57.98459070628927,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 13.394838513620932,
+     "mixture_info": 101.34970766964287,
+     "additive_prediction": 89.37770801399289,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      5,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -22.51289637041318,
+     "mixture_info": 266.80198351381785,
+     "additive_prediction": 344.31792003636735,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      5,
+      6
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -10.171722326074592,
+     "mixture_info": 48.4550105645031,
+     "additive_prediction": 53.941823019688385,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      2,
+      3
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -9.039013042612046,
+     "mixture_info": 201.32380142641057,
+     "additive_prediction": 221.32983398775536,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      2,
+      3
+     ],
+     "law": "disjunctive"
+    }
+   },
+   "wall_s": 7.6
+  }
+ ],
+ "failures": []
+}
