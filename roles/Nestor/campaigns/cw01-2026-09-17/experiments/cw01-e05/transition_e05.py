@@ -89,7 +89,9 @@ def main():
         "reconstruction, and it earned its keep on its first run by catching WORLD.json still "
         "defining superadditivity on score after the specification had moved to information.")
 
-    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=False), encoding="utf-8")
+    # ASCII-safe: a recovery reader's default platform encoding is not ours to choose
+    # (CW01-D050 - ensure_ascii=False made this file crash a naive open() on Windows).
+    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=True), encoding="utf-8")
 
     back = json.loads(STATE.read_text(encoding="utf-8"))
     print("active.phase          : %s" % back["active"]["phase"])

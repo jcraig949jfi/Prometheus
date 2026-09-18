@@ -49,7 +49,7 @@ def main():
             d["fix_evidence"] = EVIDENCE[d["id"]]
             d["fixed_phase"] = "QUALIFY (pre-EXECUTE), freeze boundary"
             flipped.append(d["id"])
-        out.append(json.dumps(d, ensure_ascii=False))
+        out.append(json.dumps(d, ensure_ascii=True))     # CW01-D050: ASCII-safe records
     LEDGER.write_text("\n".join(out) + "\n", encoding="utf-8")
 
     after = [json.loads(l) for l in LEDGER.read_text(encoding="utf-8").splitlines() if l.strip()]

@@ -129,7 +129,9 @@ def main():
         "(D046), a rows path pinned to one attempt (D047), and an ambiguity in my own brief (D048). "
         "An executor who shares the author's assumptions cannot test those assumptions.")
 
-    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=False), encoding="utf-8")
+    # ASCII-safe: a recovery reader's default platform encoding is not ours to choose
+    # (CW01-D050 - ensure_ascii=False made this file crash a naive open() on Windows).
+    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=True), encoding="utf-8")
 
     back = json.loads(STATE.read_text(encoding="utf-8"))
     e5 = [e for e in back["experiments"] if e["id"] == "cw01-e05"][0]

@@ -75,12 +75,14 @@ def main():
                             "looked, so the count partly measures scrutiny, not quality.",
         }
         with LEDGER.open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            fh.write(json.dumps(rec, ensure_ascii=True) + "\n")   # CW01-D050
         added = rec["id"]
         st["campaign_totals"]["defects_logged"] = len(entries) + 1
         st["campaign_totals"]["defects_per_experiment"]["e05"] = derived.get("cw01-e05", 0) + 1
 
-    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=False), encoding="utf-8")
+    # ASCII-safe: a recovery reader's default platform encoding is not ours to choose
+    # (CW01-D050 - ensure_ascii=False made this file crash a naive open() on Windows).
+    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=True), encoding="utf-8")
 
     back = json.loads(STATE.read_text(encoding="utf-8"))
     t = back["campaign_totals"]

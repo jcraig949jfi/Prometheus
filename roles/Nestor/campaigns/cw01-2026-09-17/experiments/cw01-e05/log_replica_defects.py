@@ -97,7 +97,7 @@ def main():
                    "title": spec["title"], "evidence": spec["evidence"],
                    "proposed_fix": spec["proposed_fix"],
                    "found_by": "independent replication lane, branch nestor/e05-replica-2026-09-18"}
-            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            fh.write(json.dumps(rec, ensure_ascii=True) + "\n")   # CW01-D050
             added.append(rec["id"])
 
     after = [json.loads(l) for l in LEDGER.read_text(encoding="utf-8").splitlines() if l.strip()]

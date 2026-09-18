@@ -65,7 +65,7 @@ def main():
                             "from its good case, and GuardLedger.require() refuses to let a driver rely on "
                             "a guard with no observed refusal on record.",
         })
-        LEDGER.write_text("\n".join(json.dumps(d, ensure_ascii=False) for d in entries) + "\n",
+        LEDGER.write_text("\n".join(json.dumps(d, ensure_ascii=True) for d in entries) + "\n",
                           encoding="utf-8")
 
     # ----------------------------------------------------------------- state
@@ -168,7 +168,9 @@ def main():
         "criterion could not become an experimental object for the eighth time, and the only available "
         "move was to report NULL. Cost: a result I would have liked. Benefit: the result is true.")
 
-    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=False), encoding="utf-8")
+    # ASCII-safe: a recovery reader's default platform encoding is not ours to choose
+    # (CW01-D050 - ensure_ascii=False made this file crash a naive open() on Windows).
+    STATE.write_text(json.dumps(st, indent=1, ensure_ascii=True), encoding="utf-8")
 
     back = json.loads(STATE.read_text(encoding="utf-8"))
     print("ledger entries      : %d (new: %s)" % (len(entries), did if not already else "none, already filed"))
