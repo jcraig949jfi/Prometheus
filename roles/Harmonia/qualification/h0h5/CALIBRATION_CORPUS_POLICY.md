@@ -16,7 +16,10 @@ calibration can be quoted at all.
 
 Rows within a region of the live corpus are a TRAJECTORY in committed_seq,
 not exchangeable draws: 23 of 40 D3 regions are EXCHANGEABILITY_VIOLATED and
-5 SUSPECT (exchangeability.py, 12/5/23). A null calibrated on i.i.d. draws
+5 SUSPECT (exchangeability.py, 12/5/23). POPULATION of that count: the
+neighbourhoods of the v0 FIRES in the 09-10 dossier (40 of the corpus's 65
+regions), a selected subset; whether the unfired 25 regions trend as much
+is unknown until the v2 live dossier (#260) or the HARM-13 table exists. A null calibrated on i.i.d. draws
 answers "how often does this statistic fire on exchangeable rows"; it says
 nothing about rows that climb. Whether a given detector NEEDS a
 trajectory-structured null depends on whether its statistic is moved by a

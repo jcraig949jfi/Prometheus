@@ -305,3 +305,11 @@ def test_pew_encounter_manifests_carry_the_ten_fields():
         assert set(m["declared_null"]["controls"]) == {"positive", "negative", "cheat"}, m["id"]
     assert fam["common"]["mode"].startswith("FROZEN")
     assert fam["common"]["eligible_count_printed_first"] is True
+
+
+# ------------------------------------------ HARM-32: sqrt(2) is conditional
+
+def test_h4_protocol_reporting_is_conditional_and_versioned():
+    assert q.H4_PROTOCOL_VERSION == "H4-ADAPTIVE-1.0.1"
+    rep = q.H4_ADAPTIVE_PROTOCOL["reporting"]
+    assert "ONLY under" in rep and "by construction" not in rep

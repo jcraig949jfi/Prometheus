@@ -237,7 +237,7 @@
     }
   ],
   "h4_protocol": {
-    "version": "H4-ADAPTIVE-1.0.0",
+    "version": "H4-ADAPTIVE-1.0.1",
     "distinct_from_m_signal": {
       "m_signal": "FROZEN corpus and FROZEN universe; both the directed and the matched random order committed before any outcome is revealed; endpoint is detector discrimination among regions on that frozen corpus. The policy does not change the universe while it runs.",
       "h4": "The curriculum policy CHANGES THE TASK DISTRIBUTION while it runs -- that change IS the intervention. There is therefore no common universe during training, and no frozen candidate order to commit in advance.",
@@ -261,7 +261,7 @@
     ],
     "evaluator": "fixed and independent of every arm; never updated during the campaign; its own version pinned and hashed",
     "design": "2x2, fixed/adaptive curriculum x transfer off/on",
-    "reporting": "combined effect and interaction reported SEPARATELY, with simultaneous uncertainty across both; the interaction carries sqrt(2) times the main effect's SE by construction",
+    "reporting": "combined effect and interaction reported SEPARATELY, with simultaneous uncertainty across both; the interaction's SE is c_I' Sigma c_I over the pilot Sigma (sqrt(2) times the combined effect's SE ONLY under equal marginal variances and exchangeable within-block correlation; QR-1.1.0)",
     "denominator": "every ASSIGNED task in the frozen suite, including those never attempted and those censored by budget exhaustion",
     "censoring": "budget exhaustion is CENSORED, not failure and not success; censored runs stay in the denominator and their count is reported beside the endpoint",
     "void_conditions": [
@@ -607,7 +607,7 @@
         "min_blocks": 6,
         "multiplicity": "BONFERRONI",
         "preconditions": [
-          "protocol version H4-ADAPTIVE-1.0.0 pinned and hashed",
+          "protocol version H4-ADAPTIVE-1.0.1 pinned and hashed",
           "evaluator fixed, independent of every arm, never updated mid-campaign",
           "denominator: every ASSIGNED frozen-suite task, censored runs counted",
           "policy_id, policy_version, seed streams, budgets, stopping and censoring rules precommitted"
@@ -646,7 +646,7 @@
         "min_blocks": 6,
         "multiplicity": "BONFERRONI",
         "preconditions": [
-          "protocol version H4-ADAPTIVE-1.0.0 pinned and hashed",
+          "protocol version H4-ADAPTIVE-1.0.1 pinned and hashed",
           "evaluator fixed, independent of every arm, never updated mid-campaign",
           "denominator: every ASSIGNED frozen-suite task, censored runs counted",
           "policy_id, policy_version, seed streams, budgets, stopping and censoring rules precommitted",
