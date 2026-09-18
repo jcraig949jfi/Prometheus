@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-17 19:35Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS PRODUCTION (deployed 17:01:12Z). Campaign 3 CLOSED; Campaign 4 gated (Archaeon's launch_gate.py RED at 19:11Z). My G1 proof run is IN FLIGHT on a scratch engine (ends ~00:00Z). Pre-C4 FREEZE is pending: nothing else touches 8811 without an order.
+Currency: 2026-09-17 23:35Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS PRODUCTION, data dir on the NVMe C:\Prometheus-data\sfe since 23:12Z (the G1 run FAILED at 3h27m because the D: SMR HDD stopped servicing writes; deploy/LEDGER_TO_NVME_2026-09-17/). G1 rerunning on the NVMe (lands ~03:45Z). C4 rehearsal restart: ON ARCHAEON'S GO (deploy/rehearsal_restart_m2.py). G3 engine-side GREEN (grant gnt_2006a1ac). Campaign 3 CLOSED; C4 gated by Archaeon.
 (base role s3 requires this file; refreshed at least every four hours of activity).
 
 ## Where I am working
@@ -17,10 +17,10 @@ Currency: 2026-09-17 19:35Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS P
 
 | | |
 |---|---|
-| **SFE PRODUCTION on M2** | `https://192.168.1.191:8811`, **9.0.1**, schema 9, build `sha256:699ca0f9...2264cc` at `b0d752183`, ledger `eng_906356f7` at `D:\Prometheus-data\sfe\engine.db`; pin `deploy/DEPLOYED_BUILD_M2.json`; receipts `deploy/RELEASE_9_0_1_2026-09-17/` and `docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md`. Cert for clients: `SerendipityFoundryClient/config/m2.crt`. Registration OPEN. |
-| supervisor | task `SFEngineM2Watchdog` -> pinned `D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1`; state file beside it |
+| **SFE PRODUCTION on M2** | `https://192.168.1.191:8811`, **9.0.1**, schema 9, build `sha256:699ca0f9...2264cc` at `b0d752183`, ledger `eng_906356f7` at `C:\Prometheus-data\sfe\engine.db` (NVMe; `D:\Prometheus-data\sfe` is the rollback copy); pin `deploy/DEPLOYED_BUILD_M2.json`; receipts `deploy/RELEASE_9_0_1_2026-09-17/` and `docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md`. Cert for clients: `SerendipityFoundryClient/config/m2.crt`. Registration OPEN. |
+| supervisor | task `SFEngineM2Watchdog` -> pinned `C:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1`; state file beside it |
 | contract | `roles/Harmonia/contracts/sfe_contract.json` regenerated against 9.0.1 and landed (routes identical, gate 0); Harmonia's PROMOTION for 699ca0f9 still pending (Vivarium reads INCOMPLETE_PROCEED until then) |
-| **G1 long run (scratch)** | `deploy/longrun_load.py --worlds 30 --gens 1000 --producers 1 --gen-pause 0.5 --reader-pause 0.5`, port 9041, ledger under `D:\Prometheus-data\sfe-scratch\`, started 19:24Z, ~4.5 h, out `deploy/LONG_RUN_2026-09-17/accept901/R0L_campaign_rate_4h_writer_paced_reader/`. Ends with kill + relaunch + anchor verify. |
+| **G1 long run (scratch, NVMe)** | from the PINNED worktree (699ca0f9): `deploy/longrun_load.py --worlds 30 --gens 1000 --producers 1 --gen-pause 0.5 --reader-pause 0.5`, port 9041, ledger under `C:\Prometheus-data\sfe-scratch\`, started 23:12:50Z, ~4.5 h, out `deploy/LONG_RUN_2026-09-17/accept901/R0N_campaign_rate_nvme_4h_paced_reader/`. The D: attempt (R0L_...) is preserved: 0 5xx for 12,400 s, then the SMR drive stalled (fsync 7 s median). |
 | SFE on M1 | RETIRED; ledger `eng_8a37a5d3` is an archive on SKULLPORT. Nothing M1-side is mine. |
 
 ## Engine health, plainly
