@@ -1,0 +1,1422 @@
+{
+ "cost_of_insulation": {
+  "K1": {
+   "median_ratio": 1.0,
+   "n": 229,
+   "share_gt_1_10": 0.0218,
+   "share_lt_0_90": 0.0044
+  },
+  "K2": {
+   "children_n": 20101,
+   "children_neutral": 0.5317,
+   "cost": false,
+   "diff": 0.023,
+   "parents_n": 19729,
+   "parents_neutral_weighted": 0.5087,
+   "per_child_above_parent_by_band": 64,
+   "per_child_below_parent_by_band": 30,
+   "wilson_children": [
+    0.5248,
+    0.5386
+   ]
+  },
+  "K3": {
+   "by_env": {
+    "W1_d1": 9,
+    "W2_K2": 2
+   },
+   "lost_elsewhere": 10,
+   "n": 229,
+   "share": 0.0437
+  },
+  "attempt": "a01",
+  "reading": "INSULATION_CHEAP"
+ },
+ "generator_x_representation": {
+  "attempt": "a01",
+  "predictions": {
+   "P1": true,
+   "P2": true,
+   "P3": true,
+   "P4": true
+  },
+  "table": {
+   "injected2 x B_FAIL": {
+    "faulted": 0.8317,
+    "floor": 0.0,
+    "mean_reward": 0.001,
+    "trapped": 0.8317,
+    "viable": 0.0167
+   },
+   "injected2 x B_FIZZLE": {
+    "faulted": 0.8317,
+    "floor": 0.0,
+    "mean_reward": 0.0071,
+    "trapped": 0.0,
+    "viable": 0.1183
+   },
+   "injected2 x OLD": {
+    "faulted": 0.0,
+    "floor": 0.0,
+    "mean_reward": 0.0098,
+    "trapped": 0.0,
+    "viable": 0.17
+   },
+   "raw x B_FAIL": {
+    "faulted": 1.0,
+    "floor": 0.0,
+    "mean_reward": 0.0,
+    "trapped": 1.0,
+    "viable": 0.0
+   },
+   "raw x B_FIZZLE": {
+    "faulted": 1.0,
+    "floor": 0.0,
+    "mean_reward": 0.0,
+    "trapped": 0.0,
+    "viable": 0.0
+   },
+   "raw x OLD": {
+    "faulted": 0.0,
+    "floor": 0.0,
+    "mean_reward": 0.0089,
+    "trapped": 0.0,
+    "viable": 0.17
+   },
+   "valid x B_FAIL": {
+    "faulted": 0.005,
+    "floor": 0.0,
+    "mean_reward": 0.008,
+    "trapped": 0.005,
+    "viable": 0.15
+   },
+   "valid x B_FIZZLE": {
+    "faulted": 0.005,
+    "floor": 0.0,
+    "mean_reward": 0.0081,
+    "trapped": 0.0,
+    "viable": 0.1517
+   },
+   "valid x OLD": {
+    "faulted": 0.0,
+    "floor": 0.0,
+    "mean_reward": 0.0081,
+    "trapped": 0.0,
+    "viable": 0.1517
+   }
+  }
+ },
+ "local_recovery": {
+  "attempt": "a02",
+  "by_grammar": {
+   "B": {
+    "BOTH_DIE": 49,
+    "BOTH_LIVE": 83,
+    "INSULATION_LOSS": 34,
+    "RECOVERY": 15
+   },
+   "v04": {
+    "BOTH_DIE": 418,
+    "BOTH_LIVE": 508,
+    "INSULATION_LOSS": 123,
+    "RECOVERY": 219
+   }
+  },
+  "by_operator": {
+   "config_perturbation": {
+    "BOTH_DIE": 10,
+    "BOTH_LIVE": 21,
+    "INSULATION_LOSS": 18,
+    "RECOVERY": 1
+   },
+   "deletion": {},
+   "duplication": {},
+   "insertion": {
+    "BOTH_DIE": 21,
+    "BOTH_LIVE": 104,
+    "RECOVERY": 102
+   },
+   "movement": {},
+   "operand_perturbation": {
+    "BOTH_DIE": 82,
+    "BOTH_LIVE": 156,
+    "INSULATION_LOSS": 65,
+    "RECOVERY": 25
+   },
+   "randomization": {
+    "BOTH_DIE": 195,
+    "BOTH_LIVE": 70,
+    "INSULATION_LOSS": 9,
+    "RECOVERY": 46
+   },
+   "reference_redirection": {
+    "BOTH_DIE": 32,
+    "BOTH_LIVE": 121,
+    "INSULATION_LOSS": 60,
+    "RECOVERY": 8
+   },
+   "region_swap": {},
+   "replacement": {
+    "BOTH_DIE": 127,
+    "BOTH_LIVE": 119,
+    "INSULATION_LOSS": 5,
+    "RECOVERY": 52
+   },
+   "splice": {},
+   "unreachable_removal": {}
+  },
+  "disposition": "REAL_LOCAL_RECOVERY",
+  "fault_kinds": {
+   "INSULATION_LOSS/opcode": 15,
+   "INSULATION_LOSS/register": 142,
+   "RECOVERY/opcode": 209,
+   "RECOVERY/register": 25
+  },
+  "gate": {
+   "executed_crossing_n": 1449,
+   "real_recovery": true,
+   "replicated_recovery": 229,
+   "share": 0.158,
+   "wilson": [
+    0.1402,
+    0.1777
+   ]
+  },
+  "input_n": 1449,
+  "old_labels_of_recovery": {
+   "D2": 167,
+   "D3": 56,
+   "D4": 11
+  },
+  "replication": {
+   "candidates": 391,
+   "insulation_loss": {
+    "raw": 157,
+    "replicated": 154
+   },
+   "recovery": {
+    "raw": 234,
+    "replicated": 229
+   }
+  }
+ },
+ "qualification": {
+  "F3_tvd_count": {
+   "raw_vs_injected2": 0.42,
+   "raw_vs_valid": 1.0,
+   "valid_vs_injected2": 0.83
+  },
+  "F3_tvd_sites": {
+   "raw_vs_injected2": 0.785,
+   "raw_vs_valid": 0.99,
+   "valid_vs_injected2": 0.83
+  },
+  "F7_raw_answer_old_trap_new": 32,
+  "F8_crossing_by_operator": {
+   "config_perturbation": 0.0625,
+   "deletion": 0.0,
+   "duplication": 0.0,
+   "insertion": 0.0,
+   "movement": 0.0,
+   "operand_perturbation": 0.5198,
+   "randomization": 0.0,
+   "reference_redirection": 0.0,
+   "region_swap": 0.0,
+   "replacement": 0.0,
+   "splice": 0.0,
+   "unreachable_removal": 0.0
+  },
+  "attempt": "a02",
+  "disposition": "REPRESENTATION_QUALIFIED",
+  "fixtures": {
+   "F1": true,
+   "F2": true,
+   "F3": true,
+   "F4": true,
+   "F5": true,
+   "F6": true,
+   "F7": true,
+   "controls": true
+  }
+ },
+ "representation": {
+  "boundary": "encoding only; addresses/offsets modulo tape; FAIL = whole evaluation; FIZZLE = skip + count",
+  "new": "archaeon.repb.narrow.v1",
+  "old": "proteus.foundry.vm total interpreter (opcode mod 25, register mod n_regs)"
+ },
+ "robustness_mechanism": {
+  "ablated": {
+   "GAP": 0.0207,
+   "R_fail": 0.3844,
+   "R_fizz": 0.4051,
+   "R_old": 0.4086,
+   "executed_crossing": 0.0507,
+   "n": 4792,
+   "wilson_fail": [
+    0.3707,
+    0.3983
+   ],
+   "wilson_fizz": [
+    0.3912,
+    0.419
+   ],
+   "wilson_old": [
+    0.3948,
+    0.4226
+   ]
+  },
+  "attempt": "a01",
+  "by_length_bin": {
+   "ablated/1-8": {
+    "GAP": 0.0067,
+    "R_fail": 0.1623,
+    "R_fizz": 0.169,
+    "R_old": 0.1749,
+    "executed_crossing": 0.0561,
+    "n": 1195,
+    "wilson_fail": [
+     0.1425,
+     0.1843
+    ],
+    "wilson_fizz": [
+     0.1489,
+     0.1913
+    ],
+    "wilson_old": [
+     0.1544,
+     0.1975
+    ]
+   },
+   "ablated/17-32": {
+    "GAP": 0.0341,
+    "R_fail": 0.5391,
+    "R_fizz": 0.5732,
+    "R_old": 0.5741,
+    "executed_crossing": 0.0476,
+    "n": 1113,
+    "wilson_fail": [
+     0.5097,
+     0.5682
+    ],
+    "wilson_fizz": [
+     0.544,
+     0.602
+    ],
+    "wilson_old": [
+     0.5449,
+     0.6029
+    ]
+   },
+   "ablated/33+": {
+    "GAP": 0.0108,
+    "R_fail": 0.5582,
+    "R_fizz": 0.569,
+    "R_old": 0.5711,
+    "executed_crossing": 0.0388,
+    "n": 464,
+    "wilson_fail": [
+     0.5127,
+     0.6027
+    ],
+    "wilson_fizz": [
+     0.5235,
+     0.6133
+    ],
+    "wilson_old": [
+     0.5257,
+     0.6154
+    ]
+   },
+   "ablated/9-16": {
+    "GAP": 0.0238,
+    "R_fail": 0.3906,
+    "R_fizz": 0.4144,
+    "R_old": 0.4183,
+    "executed_crossing": 0.052,
+    "n": 2020,
+    "wilson_fail": [
+     0.3695,
+     0.4121
+    ],
+    "wilson_fizz": [
+     0.3931,
+     0.436
+    ],
+    "wilson_old": [
+     0.397,
+     0.44
+    ]
+   },
+   "full/1-8": {
+    "GAP": 0.0064,
+    "R_fail": 0.1592,
+    "R_fizz": 0.1656,
+    "R_old": 0.1712,
+    "executed_crossing": 0.0512,
+    "n": 1250,
+    "wilson_fail": [
+     0.14,
+     0.1805
+    ],
+    "wilson_fizz": [
+     0.146,
+     0.1872
+    ],
+    "wilson_old": [
+     0.1513,
+     0.1931
+    ]
+   },
+   "full/17-32": {
+    "GAP": 0.0356,
+    "R_fail": 0.5366,
+    "R_fizz": 0.5722,
+    "R_old": 0.5722,
+    "executed_crossing": 0.0484,
+    "n": 1094,
+    "wilson_fail": [
+     0.5069,
+     0.5659
+    ],
+    "wilson_fizz": [
+     0.5427,
+     0.6012
+    ],
+    "wilson_old": [
+     0.5427,
+     0.6012
+    ]
+   },
+   "full/33+": {
+    "GAP": 0.0167,
+    "R_fail": 0.6994,
+    "R_fizz": 0.7161,
+    "R_old": 0.714,
+    "executed_crossing": 0.0292,
+    "n": 479,
+    "wilson_fail": [
+     0.6569,
+     0.7387
+    ],
+    "wilson_fizz": [
+     0.6741,
+     0.7546
+    ],
+    "wilson_old": [
+     0.6719,
+     0.7526
+    ]
+   },
+   "full/9-16": {
+    "GAP": 0.0234,
+    "R_fail": 0.4277,
+    "R_fizz": 0.4511,
+    "R_old": 0.4564,
+    "executed_crossing": 0.0491,
+    "n": 2055,
+    "wilson_fail": [
+     0.4065,
+     0.4492
+    ],
+    "wilson_fizz": [
+     0.4297,
+     0.4727
+    ],
+    "wilson_old": [
+     0.435,
+     0.478
+    ]
+   }
+  },
+  "dead_share_mean": 0.1099,
+  "full": {
+   "GAP": 0.0211,
+   "R_fail": 0.41,
+   "R_fizz": 0.4311,
+   "R_old": 0.4346,
+   "executed_crossing": 0.0476,
+   "n": 4878,
+   "wilson_fail": [
+    0.3963,
+    0.4239
+   ],
+   "wilson_fizz": [
+    0.4173,
+    0.4451
+   ],
+   "wilson_old": [
+    0.4208,
+    0.4486
+   ]
+  },
+  "reading": "MIXED",
+  "tests": {
+   "M1": false,
+   "M1_bins": 1,
+   "M2": true,
+   "M3": true,
+   "M4": true
+  }
+ },
+ "schema": "archaeon.c5.damage_geometry_map.v2",
+ "single_edit_geometry": {
+  "DF_sub": {
+   "B x B_FAIL": {
+    "D2": 0,
+    "D3": 0,
+    "D4": 0,
+    "D5": 0,
+    "D6": 0,
+    "D7": 0
+   },
+   "B x B_FIZZLE": {
+    "D2": 128,
+    "D3": 35,
+    "D4": 9,
+    "D5": 103,
+    "D6": 1,
+    "D7": 0
+   },
+   "B x OLD": {
+    "D2": 0,
+    "D3": 0,
+    "D4": 0,
+    "D5": 0,
+    "D6": 0,
+    "D7": 0
+   },
+   "v04 x B_FAIL": {
+    "D2": 0,
+    "D3": 0,
+    "D4": 0,
+    "D5": 0,
+    "D6": 0,
+    "D7": 0
+   },
+   "v04 x B_FIZZLE": {
+    "D2": 682,
+    "D3": 155,
+    "D4": 27,
+    "D5": 718,
+    "D6": 12,
+    "D7": 0
+   },
+   "v04 x OLD": {
+    "D2": 0,
+    "D3": 0,
+    "D4": 0,
+    "D5": 0,
+    "D6": 0,
+    "D7": 0
+   }
+  },
+  "attempt": "a01",
+  "bins": {
+   "B x B_FAIL": {
+    "D2": 0.4375,
+    "D3": 0.0793,
+    "D4": 0.0105,
+    "D5": 0.41,
+    "D6": 0.0062,
+    "D7": 0.0,
+    "DF": 0.0,
+    "DT": 0.0566
+   },
+   "B x B_FIZZLE": {
+    "D2": 0.4375,
+    "D3": 0.0791,
+    "D4": 0.0105,
+    "D5": 0.41,
+    "D6": 0.0064,
+    "D7": 0.0,
+    "DF": 0.0566,
+    "DT": 0.0
+   },
+   "B x OLD": {
+    "D2": 0.4588,
+    "D3": 0.0867,
+    "D4": 0.0127,
+    "D5": 0.4346,
+    "D6": 0.0072,
+    "D7": 0.0,
+    "DF": 0.0,
+    "DT": 0.0
+   },
+   "v04 x B_FAIL": {
+    "D2": 0.2927,
+    "D3": 0.0551,
+    "D4": 0.0084,
+    "D5": 0.3114,
+    "D6": 0.0055,
+    "D7": 0.0,
+    "DF": 0.0,
+    "DT": 0.3268
+   },
+   "v04 x B_FIZZLE": {
+    "D2": 0.2927,
+    "D3": 0.0551,
+    "D4": 0.0084,
+    "D5": 0.3114,
+    "D6": 0.0055,
+    "D7": 0.0,
+    "DF": 0.3268,
+    "DT": 0.0
+   },
+   "v04 x OLD": {
+    "D2": 0.4512,
+    "D3": 0.0873,
+    "D4": 0.0144,
+    "D5": 0.4391,
+    "D6": 0.008,
+    "D7": 0.0,
+    "DF": 0.0,
+    "DT": 0.0
+   }
+  },
+  "by_operator": {
+   "config_perturbation": {
+    "B x B_FAIL": {
+     "D2": 171,
+     "D3": 14,
+     "D5": 235,
+     "DT": 22,
+     "crossing": 21,
+     "n": 442
+    },
+    "B x B_FIZZLE": {
+     "D2": 171,
+     "D3": 14,
+     "D5": 235,
+     "DF": 22,
+     "crossing": 21,
+     "n": 442
+    },
+    "B x OLD": {
+     "D2": 178,
+     "D3": 17,
+     "D4": 1,
+     "D5": 242,
+     "D6": 4,
+     "crossing": 21,
+     "n": 442
+    },
+    "v04 x B_FAIL": {
+     "D2": 158,
+     "D3": 12,
+     "D4": 1,
+     "D5": 233,
+     "DT": 38,
+     "crossing": 39,
+     "n": 442
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 158,
+     "D3": 12,
+     "D4": 1,
+     "D5": 233,
+     "DF": 38,
+     "crossing": 39,
+     "n": 442
+    },
+    "v04 x OLD": {
+     "D2": 165,
+     "D3": 15,
+     "D4": 1,
+     "D5": 260,
+     "D6": 1,
+     "crossing": 39,
+     "n": 442
+    }
+   },
+   "deletion": {
+    "B x B_FAIL": {
+     "D2": 222,
+     "D3": 66,
+     "D4": 8,
+     "D5": 133,
+     "D6": 9,
+     "DT": 2,
+     "crossing": 0,
+     "n": 440
+    },
+    "B x B_FIZZLE": {
+     "D2": 222,
+     "D3": 66,
+     "D4": 8,
+     "D5": 133,
+     "D6": 9,
+     "DF": 2,
+     "crossing": 0,
+     "n": 440
+    },
+    "B x OLD": {
+     "D2": 223,
+     "D3": 67,
+     "D4": 8,
+     "D5": 133,
+     "D6": 9,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x B_FAIL": {
+     "D2": 232,
+     "D3": 73,
+     "D4": 9,
+     "D5": 116,
+     "D6": 8,
+     "DT": 2,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 232,
+     "D3": 73,
+     "D4": 9,
+     "D5": 116,
+     "D6": 8,
+     "DF": 2,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x OLD": {
+     "D2": 232,
+     "D3": 74,
+     "D4": 9,
+     "D5": 117,
+     "D6": 8,
+     "crossing": 0,
+     "n": 440
+    }
+   },
+   "duplication": {
+    "B x B_FAIL": {
+     "D2": 197,
+     "D3": 28,
+     "D4": 5,
+     "D5": 133,
+     "DT": 5,
+     "crossing": 0,
+     "n": 368
+    },
+    "B x B_FIZZLE": {
+     "D2": 197,
+     "D3": 28,
+     "D4": 5,
+     "D5": 133,
+     "DF": 5,
+     "crossing": 0,
+     "n": 368
+    },
+    "B x OLD": {
+     "D2": 197,
+     "D3": 31,
+     "D4": 6,
+     "D5": 134,
+     "crossing": 0,
+     "n": 368
+    },
+    "v04 x B_FAIL": {
+     "D2": 199,
+     "D3": 25,
+     "D4": 5,
+     "D5": 135,
+     "DT": 4,
+     "crossing": 0,
+     "n": 368
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 199,
+     "D3": 25,
+     "D4": 5,
+     "D5": 135,
+     "DF": 4,
+     "crossing": 0,
+     "n": 368
+    },
+    "v04 x OLD": {
+     "D2": 200,
+     "D3": 27,
+     "D4": 6,
+     "D5": 135,
+     "crossing": 0,
+     "n": 368
+    }
+   },
+   "insertion": {
+    "B x B_FAIL": {
+     "D2": 197,
+     "D3": 20,
+     "D4": 2,
+     "D5": 142,
+     "D6": 1,
+     "DT": 6,
+     "crossing": 0,
+     "n": 368
+    },
+    "B x B_FIZZLE": {
+     "D2": 197,
+     "D3": 20,
+     "D4": 2,
+     "D5": 142,
+     "D6": 1,
+     "DF": 6,
+     "crossing": 0,
+     "n": 368
+    },
+    "B x OLD": {
+     "D2": 198,
+     "D3": 23,
+     "D4": 3,
+     "D5": 143,
+     "D6": 1,
+     "crossing": 0,
+     "n": 368
+    },
+    "v04 x B_FAIL": {
+     "D2": 27,
+     "D3": 3,
+     "D4": 1,
+     "D5": 36,
+     "DT": 301,
+     "crossing": 368,
+     "n": 368
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 27,
+     "D3": 3,
+     "D4": 1,
+     "D5": 36,
+     "DF": 301,
+     "crossing": 368,
+     "n": 368
+    },
+    "v04 x OLD": {
+     "D2": 185,
+     "D3": 38,
+     "D4": 5,
+     "D5": 139,
+     "D6": 1,
+     "crossing": 368,
+     "n": 368
+    }
+   },
+   "movement": {
+    "B x B_FAIL": {
+     "D2": 174,
+     "D3": 42,
+     "D4": 8,
+     "D5": 185,
+     "D6": 4,
+     "DT": 5,
+     "crossing": 0,
+     "n": 418
+    },
+    "B x B_FIZZLE": {
+     "D2": 174,
+     "D3": 42,
+     "D4": 8,
+     "D5": 185,
+     "D6": 4,
+     "DF": 5,
+     "crossing": 0,
+     "n": 418
+    },
+    "B x OLD": {
+     "D2": 175,
+     "D3": 45,
+     "D4": 9,
+     "D5": 185,
+     "D6": 4,
+     "crossing": 0,
+     "n": 418
+    },
+    "v04 x B_FAIL": {
+     "D2": 163,
+     "D3": 40,
+     "D4": 9,
+     "D5": 190,
+     "D6": 3,
+     "DT": 7,
+     "crossing": 0,
+     "n": 412
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 163,
+     "D3": 40,
+     "D4": 9,
+     "D5": 190,
+     "D6": 3,
+     "DF": 7,
+     "crossing": 0,
+     "n": 412
+    },
+    "v04 x OLD": {
+     "D2": 163,
+     "D3": 44,
+     "D4": 10,
+     "D5": 191,
+     "D6": 4,
+     "crossing": 0,
+     "n": 412
+    }
+   },
+   "operand_perturbation": {
+    "B x B_FAIL": {
+     "D2": 61,
+     "D3": 3,
+     "D4": 3,
+     "D5": 176,
+     "DT": 213,
+     "crossing": 249,
+     "n": 456
+    },
+    "B x B_FIZZLE": {
+     "D2": 61,
+     "D3": 3,
+     "D4": 3,
+     "D5": 176,
+     "DF": 213,
+     "crossing": 249,
+     "n": 456
+    },
+    "B x OLD": {
+     "D2": 149,
+     "D3": 20,
+     "D4": 5,
+     "D5": 281,
+     "D6": 1,
+     "crossing": 249,
+     "n": 456
+    },
+    "v04 x B_FAIL": {
+     "D2": 70,
+     "D3": 5,
+     "D4": 2,
+     "D5": 173,
+     "D6": 1,
+     "DT": 205,
+     "crossing": 249,
+     "n": 456
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 70,
+     "D3": 5,
+     "D4": 2,
+     "D5": 173,
+     "D6": 1,
+     "DF": 205,
+     "crossing": 249,
+     "n": 456
+    },
+    "v04 x OLD": {
+     "D2": 140,
+     "D3": 19,
+     "D4": 7,
+     "D5": 288,
+     "D6": 2,
+     "crossing": 249,
+     "n": 456
+    }
+   },
+   "randomization": {
+    "B x B_FAIL": {
+     "D2": 268,
+     "D3": 52,
+     "D4": 5,
+     "D5": 119,
+     "D6": 6,
+     "DT": 6,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x B_FIZZLE": {
+     "D2": 268,
+     "D3": 52,
+     "D4": 5,
+     "D5": 119,
+     "D6": 6,
+     "DF": 6,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x OLD": {
+     "D2": 269,
+     "D3": 54,
+     "D4": 7,
+     "D5": 120,
+     "D6": 6,
+     "crossing": 0,
+     "n": 456
+    },
+    "v04 x B_FAIL": {
+     "D2": 23,
+     "D5": 40,
+     "DT": 393,
+     "crossing": 456,
+     "n": 456
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 23,
+     "D5": 40,
+     "DF": 393,
+     "crossing": 456,
+     "n": 456
+    },
+    "v04 x OLD": {
+     "D2": 283,
+     "D3": 48,
+     "D4": 6,
+     "D5": 113,
+     "D6": 6,
+     "crossing": 456,
+     "n": 456
+    }
+   },
+   "reference_redirection": {
+    "B x B_FAIL": {
+     "D2": 127,
+     "D3": 15,
+     "D4": 6,
+     "D5": 305,
+     "D6": 2,
+     "DT": 1,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x B_FIZZLE": {
+     "D2": 127,
+     "D3": 15,
+     "D4": 6,
+     "D5": 305,
+     "D6": 2,
+     "DF": 1,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x OLD": {
+     "D2": 127,
+     "D3": 15,
+     "D4": 6,
+     "D5": 306,
+     "D6": 2,
+     "crossing": 0,
+     "n": 456
+    },
+    "v04 x B_FAIL": {
+     "D2": 55,
+     "D3": 1,
+     "D5": 135,
+     "D6": 1,
+     "DT": 264,
+     "crossing": 314,
+     "n": 456
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 55,
+     "D3": 1,
+     "D5": 135,
+     "D6": 1,
+     "DF": 264,
+     "crossing": 314,
+     "n": 456
+    },
+    "v04 x OLD": {
+     "D2": 128,
+     "D3": 8,
+     "D4": 3,
+     "D5": 316,
+     "D6": 1,
+     "crossing": 314,
+     "n": 456
+    }
+   },
+   "region_swap": {
+    "B x B_FAIL": {
+     "D2": 250,
+     "D3": 57,
+     "D4": 3,
+     "D5": 123,
+     "D6": 3,
+     "DT": 4,
+     "crossing": 0,
+     "n": 440
+    },
+    "B x B_FIZZLE": {
+     "D2": 250,
+     "D3": 57,
+     "D4": 3,
+     "D5": 123,
+     "D6": 3,
+     "DF": 4,
+     "crossing": 0,
+     "n": 440
+    },
+    "B x OLD": {
+     "D2": 250,
+     "D3": 59,
+     "D4": 4,
+     "D5": 124,
+     "D6": 3,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x B_FAIL": {
+     "D2": 215,
+     "D3": 65,
+     "D4": 10,
+     "D5": 141,
+     "D6": 6,
+     "DT": 3,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 215,
+     "D3": 65,
+     "D4": 10,
+     "D5": 141,
+     "D6": 6,
+     "DF": 3,
+     "crossing": 0,
+     "n": 440
+    },
+    "v04 x OLD": {
+     "D2": 216,
+     "D3": 66,
+     "D4": 11,
+     "D5": 141,
+     "D6": 6,
+     "crossing": 0,
+     "n": 440
+    }
+   },
+   "replacement": {
+    "B x B_FAIL": {
+     "D2": 210,
+     "D3": 48,
+     "D4": 6,
+     "D5": 184,
+     "D6": 1,
+     "DT": 7,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x B_FIZZLE": {
+     "D2": 210,
+     "D3": 47,
+     "D4": 6,
+     "D5": 184,
+     "D6": 2,
+     "DF": 7,
+     "crossing": 0,
+     "n": 456
+    },
+    "B x OLD": {
+     "D2": 213,
+     "D3": 49,
+     "D4": 7,
+     "D5": 186,
+     "D6": 1,
+     "crossing": 0,
+     "n": 456
+    },
+    "v04 x B_FAIL": {
+     "D2": 24,
+     "D5": 57,
+     "DT": 375,
+     "crossing": 456,
+     "n": 456
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 24,
+     "D5": 57,
+     "DF": 375,
+     "crossing": 456,
+     "n": 456
+    },
+    "v04 x OLD": {
+     "D2": 226,
+     "D3": 41,
+     "D4": 8,
+     "D5": 179,
+     "D6": 2,
+     "crossing": 456,
+     "n": 456
+    }
+   },
+   "splice": {
+    "B x B_FAIL": {
+     "D2": 233,
+     "D3": 42,
+     "D4": 5,
+     "D5": 129,
+     "D6": 4,
+     "DT": 5,
+     "crossing": 0,
+     "n": 418
+    },
+    "B x B_FIZZLE": {
+     "D2": 233,
+     "D3": 42,
+     "D4": 5,
+     "D5": 129,
+     "D6": 4,
+     "DF": 5,
+     "crossing": 0,
+     "n": 418
+    },
+    "B x OLD": {
+     "D2": 235,
+     "D3": 43,
+     "D4": 6,
+     "D5": 130,
+     "D6": 4,
+     "crossing": 0,
+     "n": 418
+    },
+    "v04 x B_FAIL": {
+     "D2": 238,
+     "D3": 45,
+     "D4": 4,
+     "D5": 127,
+     "D6": 8,
+     "DT": 2,
+     "crossing": 0,
+     "n": 424
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 238,
+     "D3": 45,
+     "D4": 4,
+     "D5": 127,
+     "D6": 8,
+     "DF": 2,
+     "crossing": 0,
+     "n": 424
+    },
+    "v04 x OLD": {
+     "D2": 239,
+     "D3": 46,
+     "D4": 4,
+     "D5": 127,
+     "D6": 8,
+     "crossing": 0,
+     "n": 424
+    }
+   },
+   "unreachable_removal": {
+    "B x B_FAIL": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    },
+    "B x B_FIZZLE": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    },
+    "B x OLD": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    },
+    "v04 x B_FAIL": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    },
+    "v04 x B_FIZZLE": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    },
+    "v04 x OLD": {
+     "D2": 24,
+     "D5": 136,
+     "crossing": 0,
+     "n": 160
+    }
+   }
+  },
+  "crossing_share": {
+   "B": {
+    "crossing": 270,
+    "n": 4878,
+    "share": 0.0554
+   },
+   "v04": {
+    "crossing": 1882,
+    "n": 4878,
+    "share": 0.3858
+   }
+  },
+  "replication_of_C4_01": {
+   "digest_equal": 5586,
+   "label_equal": 5586,
+   "missing_in_reference": 0,
+   "pass": true,
+   "reference": "archaeon/campaign4/C4-01/attempts/a02/children.json.gz",
+   "rows_matched": 5586,
+   "rows_regenerated": 5586
+  },
+  "thresholds": {
+   "B": {
+    "T1": {
+     "DT": 232,
+     "crossing_n": 270,
+     "pass": true,
+     "share": 0.8593,
+     "wilson": [
+      0.8127,
+      0.8957
+     ]
+    },
+    "T2": {
+     "D5_B_FAIL": 0.4282,
+     "D5_OLD": 0.4293,
+     "non_crossing_n": 4608,
+     "pass": true
+    },
+    "T3": {
+     "D6": {
+      "B_FAIL": {
+       "k": 30,
+       "rate": 0.0062,
+       "wilson": [
+        0.0043,
+        0.0088
+       ]
+      },
+      "B_FIZZLE": {
+       "k": 31,
+       "rate": 0.0064,
+       "wilson": [
+        0.0045,
+        0.009
+       ]
+      },
+      "OLD": {
+       "k": 35,
+       "rate": 0.0072,
+       "wilson": [
+        0.0052,
+        0.01
+       ]
+      }
+     },
+     "prediction_B_FAIL_lower_than_OLD_by_band": false
+    },
+    "T4": {
+     "crossing_faulted_n": 232,
+     "recovered_competent": 98,
+     "share": 0.4224,
+     "sub": {
+      "D2": 106,
+      "D3": 25,
+      "D4": 3,
+      "D5": 97,
+      "D6": 1
+     },
+     "wilson": [
+      0.3606,
+      0.4867
+     ]
+    },
+    "T5_D7": {
+     "B_FAIL": 0,
+     "B_FIZZLE": 0,
+     "OLD": 0
+    }
+   },
+   "T6_crossing": {
+    "B": {
+     "crossing": 270,
+     "n": 4878,
+     "share": 0.0554
+    },
+    "v04": {
+     "crossing": 1882,
+     "n": 4878,
+     "share": 0.3858
+    }
+   },
+   "v04": {
+    "T1": {
+     "DT": 1574,
+     "crossing_n": 1882,
+     "pass": true,
+     "share": 0.8363,
+     "wilson": [
+      0.8189,
+      0.8524
+     ]
+    },
+    "T2": {
+     "D5_B_FAIL": 0.4413,
+     "D5_OLD": 0.4423,
+     "non_crossing_n": 2996,
+     "pass": true
+    },
+    "T3": {
+     "D6": {
+      "B_FAIL": {
+       "k": 27,
+       "rate": 0.0055,
+       "wilson": [
+        0.0038,
+        0.008
+       ]
+      },
+      "B_FIZZLE": {
+       "k": 27,
+       "rate": 0.0055,
+       "wilson": [
+        0.0038,
+        0.008
+       ]
+      },
+      "OLD": {
+       "k": 39,
+       "rate": 0.008,
+       "wilson": [
+        0.0059,
+        0.0109
+       ]
+      }
+     },
+     "prediction_B_FAIL_lower_than_OLD_by_band": false
+    },
+    "T4": {
+     "crossing_faulted_n": 1574,
+     "recovered_competent": 727,
+     "share": 0.4619,
+     "sub": {
+      "D2": 674,
+      "D3": 149,
+      "D4": 24,
+      "D5": 716,
+      "D6": 11
+     },
+     "wilson": [
+      0.4374,
+      0.4866
+     ]
+    },
+    "T5_D7": {
+     "B_FAIL": 0,
+     "B_FIZZLE": 0,
+     "OLD": 0
+    }
+   }
+  }
+ },
+ "v1_reference": {
+  "path": "archaeon/campaign4/DAMAGE_GEOMETRY_MAP.json",
+  "present": true
+ }
+}

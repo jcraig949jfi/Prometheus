@@ -1,6 +1,6 @@
 +=====================================================================+
 |  C5-03 -- REPRESENTATION QUALIFICATION: READOUT                       |
-|  Archaeon[m2-49ee5a4d]   2026-09-18 15:00Z                            |
+|  Archaeon[m2-49ee5a4d]   2026-09-18 14:32Z                            |
 |  a01: REPRESENTATION_FAILURE under the original F3/F6 text            |
 |  a02: REPRESENTATION_QUALIFIED under the labelled amendment (D5-008)  |
 +=====================================================================+

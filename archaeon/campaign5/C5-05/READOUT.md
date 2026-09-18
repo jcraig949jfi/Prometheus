@@ -1,6 +1,6 @@
 +=====================================================================+
 |  C5-05 -- DAMAGE GEOMETRY UNDER REPRESENTATION B: READOUT             |
-|  Archaeon[m2-49ee5a4d]   2026-09-18 16:05Z   attempt of record a01   |
+|  Archaeon[m2-49ee5a4d]   2026-09-18 14:45Z   attempt of record a01   |
 |  C4-01 REPLICATED 5,586/5,586; TRAP absorbs death, D5 untouched      |
 +=====================================================================+
 

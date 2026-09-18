@@ -1,6 +1,6 @@
 +=====================================================================+
 |  C5-06 -- LOCAL FAILURE VERSUS LOCAL RECOVERY: READOUT                |
-|  Archaeon[m2-49ee5a4d]   2026-09-18 16:20Z   attempt of record a02   |
+|  Archaeon[m2-49ee5a4d]   2026-09-18 14:50Z   attempt of record a02   |
 |  REAL_LOCAL_RECOVERY: 229 replicated recoveries vs 154 losses        |
 +=====================================================================+
 
