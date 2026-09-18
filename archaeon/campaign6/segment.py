@@ -86,11 +86,16 @@ def pressure_at(schedule, g: int) -> dict:
 # ---------------------------------------------------------------- spec / checkpoint
 def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, schedule: List[dict], g0: int, g1: int, N: int, E: int,
               archive: dict, thresholds: dict, spread: dict, seed: int, probe_worlds: Optional[List[dict]] = None, planted: Optional[List[dict]] = None,
-              log_scores: bool = False) -> dict:
+              log_scores: bool = False, freeze_policy: str = "c6_all_full", admitted: Optional[List[str]] = None) -> dict:
+    """freeze_policy: 'c6_all_full' (Campaign 6 G6-0: every firing gets the full package) or 'tiered' (Deep Frontier s9 until
+    Harmonia's policy: EVENT_RECORD always; PARTIAL when only 10/11 or unvalidated rulers fire; FULL on an admitted detector,
+    corroboration by two rulers, persistence >= 3 archived generations, or the audit draw 1 in 50). `admitted` lists the
+    detector names Harmonia has admitted (default: transfer, disagreement, classifier_failure per the packet, until she rules)."""
     assert provenance["lane"] in LANES
     spec = {"schema": SCHEMA_SPEC, "run_id": run_id, "provenance": provenance, "world": world, "profile": profile, "schedule": schedule,
             "g0": g0, "g1": g1, "N": N, "E": E, "archive": archive, "thresholds": thresholds, "spread": spread, "seed": seed,
-            "probe_worlds": probe_worlds or [], "planted": planted or [], "anchor_interval": ANCHOR_INTERVAL, "log_scores": log_scores}
+            "probe_worlds": probe_worlds or [], "planted": planted or [], "anchor_interval": ANCHOR_INTERVAL, "log_scores": log_scores,
+            "freeze_policy": freeze_policy, "admitted": admitted or ["unexpected_transfer", "detector_disagreement", "classifier_failure"]}
     spec["spec_hash"] = _h({k: v for k, v in spec.items() if k != "spec_hash"})
     return spec
 
@@ -134,6 +139,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
     prev_anchor = ck["prev_anchor_hash"]; seg_rows: List[dict] = []; score_log: List[dict] = []
     thresholds, spread = spec["thresholds"], spec["spread"]
     planted = {p["generation"]: p for p in spec.get("planted", [])}
+    persist_count: Dict[str, int] = dict(ck.get("persist_count", {}))
 
     def anchor(reason: str):
         nonlocal prev_anchor, seg_rows
@@ -226,6 +232,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
                         siblings=lambda s: [x for x in pop_subjects if x.parent is not None and s.parent is not None and x.parent.organism_id == s.parent.organism_id and x is not s],
                         home_reward=lambda s: s.meta.get("reward"))
         gen_fired: List[dict] = []
+        event_records: List[dict] = []
         for s in pop_subjects:
             vs = D.run_all(s, ctx)
             if spec.get("log_scores"):
@@ -235,7 +242,18 @@ def run_segment(spec: dict, ck: dict) -> dict:
             if any(v["outcome"] == "FIRE" for v in vs):
                 ev_rec = S.event(spec["run_id"], s.organism_id, g, vs, "T1")
                 events.append(ev_rec); gen_fired.append(ev_rec); firings.add(g)
-                freezes.append(_freeze(ev_rec, s, history, records, pop, world, pressure_history, rows, spec))
+                if spec.get("freeze_policy", "c6_all_full") == "tiered":
+                    tier = _tier(ev_rec, spec, s, g, persist_count, rows)
+                    ev_rec["tier_decision"] = tier
+                    if tier == "FULL":
+                        freezes.append(_freeze(ev_rec, s, history, records, pop, world, pressure_history, rows, spec))
+                    elif tier == "PARTIAL":
+                        fz = _freeze(ev_rec, s, history, records, pop, world, pressure_history, rows, spec)
+                        fz = {k: v for k, v in fz.items() if k not in ("siblings", "ancestors")}; fz["scope"] = "PARTIAL_BY_POLICY"; fz["missing"] = fz.get("missing", []) + [{"member": "SIBLINGS+ANCESTORS", "owner": "policy", "reason": "tiered freeze policy: PARTIAL tier", "at": fz["preserved_at"]}]
+                        freezes.append(fz)
+                    # EVENT_RECORD is the event itself plus the archived neighbourhood rows: always kept
+                else:
+                    freezes.append(_freeze(ev_rec, s, history, records, pop, world, pressure_history, rows, spec))
         if gen_fired:
             anchor("escalation")
         # ---- observation per archived generation
@@ -280,13 +298,27 @@ def run_segment(spec: dict, ck: dict) -> dict:
     history = {k: v for k, v in history.items() if k in keep}
     ck_out = {"schema": SCHEMA_CKPT, "run_id": spec["run_id"], "generation": spec["g1"], "eval_ordinal": eval_ord, "rng_state": rng.state, "population": pop,
               "records": {k: v for k, v in records.items() if k in keep or k in {o["organism_id"] for o in pop}}, "lineage_pairs": {k: pairs_prev[k] for k in pairs_prev},
-              "library": library[-256:], "prev_anchor_hash": prev_anchor, "history": history}
+              "library": library[-256:], "prev_anchor_hash": prev_anchor, "history": history, "persist_count": {k: v for k, v in persist_count.items() if k in keep or v >= 2}}
     ck_out["digest"] = _h({k: v for k, v in ck_out.items() if k != "digest"})
     out = {"schema": "archaeon.c6.segment_out.v1", "spec_hash": spec["spec_hash"], "checkpoint_in": ck["digest"], "checkpoint_out": ck_out, "rows": rows, "anchors": anchors,
            "observations": observations, "events": events, "freezes": freezes, "pressure_history": pressure_history, "lineage_delta": lineage_delta,
            "evaluations": eval_ord - ck["eval_ordinal"], "wall_s": round(time.time() - t_start, 1), "score_log": score_log}
     out["out_digest"] = _h({k: v for k, v in out.items() if k not in ("wall_s", "out_digest", "score_log")})
     return out
+
+
+def _tier(ev_rec: dict, spec: dict, s: D.Subject, g: int, persist_count: Dict[str, int], rows: List[dict]) -> str:
+    """Deep Frontier s9 tiers. Persistence is counted per lineage (parent chain) across generations; the audit draw is seeded."""
+    fired = set(ev_rec["fired"]); admitted = set(spec.get("admitted", []))
+    core = fired - {"detector_disagreement", "classifier_failure"}
+    key = s.parent.organism_id if s.parent else s.organism_id
+    persist_count[key] = persist_count.get(key, 0) + 1
+    draw = SplitMix64(seed_from("c6.audit_draw", spec["run_id"], g, s.organism_id)).randbelow(50) == 0
+    if (core & admitted) or len(core) >= 2 or persist_count[key] >= 3 or draw:
+        return "FULL"
+    if core or fired:
+        return "PARTIAL"
+    return "EVENT_RECORD"
 
 
 def _ancestors(s: D.Subject, history: dict, records: dict, depth: int) -> List[D.Subject]:
