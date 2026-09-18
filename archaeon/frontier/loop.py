@@ -41,7 +41,11 @@ from archaeon.frontier.allocation import RULES                               # n
 
 HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"
-GATE = HERE / "G6-0_CLOSED.json"
+GATE = HERE / "G6-0_CLOSED.json"                       # fleet-wide verification receipt (G6_0_ALL_COMPONENTS_VERIFIED)
+OP_GATE = HERE / "OPERATOR_EXECUTION_AUTHORIZED.json"    # operator execution directive 2026-09-18: authorizes execution; is NOT verification
+P46 = REPO / "proteus" / "round2" / "PROTEUS-46_FALSIFIER.json"
+# transformations the PROTEUS-46 falsifier actually covers (per-operator single-edit neighbourhood, graph_grammar.v1 vs v0.4)
+P46_COVERED = {"C4-cliff.T1"}
 BRANCH_TRIGGERS = ("admitted_detector_firing", "persistent_weak_signal", "detector_disagreement", "classifier_failure", "unexplained_phenotype_transition",
                    "unusual_survival", "unexpected_transfer", "large_change_small_distance", "small_change_large_distance", "anomalous_ecological_effect",
                    "unexpected_robustness", "unexpected_fragility", "forensic_nomination", "random_audit_sample")
@@ -67,12 +71,13 @@ def build(lineage: dict, tr: dict, frozen: dict, thr: dict, *, N: int = 32, E: i
         init.append(init[len(init) % len(parents)])
     needs_graph = "graph" in to.lower()
     if needs_graph:
-        gate = HERE / "PROTEUS-46_FALSIFIER.json"
-        if not gate.exists():
-            return None, None, "WAIT: graph profile registered (Proteus handover) but PROTEUS-46 falsifier pending; retire under condition A if the cliff survives connectivity edits"
-        verdict = json.loads(gate.read_text(encoding="utf-8")).get("verdict")
-        if verdict != "CLIFF_DOES_NOT_SURVIVE":
-            return None, None, "RETIRE_CANDIDATE(A): PROTEUS-46 verdict %s" % verdict
+        # PROTEUS-46 (Proteus's committed verdict file; corrected semantics per the operator 2026-09-18): only transformations
+        # the falsifier COVERS stay blocked as formulated while falsifier_status == FALSIFIER_FAILED; neighbourhood_exhausted
+        # false means the lineage stays open; every other graph transformation runs.
+        if P46.exists():
+            v = json.loads(P46.read_text(encoding="utf-8"))
+            if tid in P46_COVERED and v.get("falsifier_status") == "FALSIFIER_FAILED":
+                return None, None, "FALSIFIER_FAILED: covered by PROTEUS-46 as formulated (verdict %s, neighbourhood_exhausted=%s)" % (v.get("verdict"), v.get("neighbourhood_exhausted"))
         from archaeon.campaign6.substrate import gen0_any
         seed = 30000 + (hash(tid) % 1000)
         w = sample_world(seed, bin_target=int(ov.get("bin", 4))) if "world_geometry" in dims or key.startswith("C6") else None
@@ -102,7 +107,48 @@ def build(lineage: dict, tr: dict, frozen: dict, thr: dict, *, N: int = 32, E: i
         prov = S.provenance("LLM_PROPOSED", "frontier.load", "0.1", 5, {"profile": "repb_fizzle"}, thresholds_digest=frozen["digest"])
         return dict(run_id=prov["run_id"], provenance=prov, world={"kind": "wse.WorldSpec", "knobs": C1.ENVS["W2_K2"].knobs()}, profile="repb_fizzle", schedule=P.stable(gens),
                     N=N, E=E, archive={"dense_until": 64, "neighbourhood": 16}, thresholds=thr, spread=frozen["spread"], seed=5, freeze_policy="tiered"), init, "OK"
-    return None, None, "BLOCKED: no concrete builder yet for %s (%s)" % (tid, ", ".join(dims))
+    # ---- generic builders: every transformation names dims and a "to"; map them onto the spec knobs we have.
+    import re
+    seed = 40000 + (sum(ord(c) for c in tid) % 9973)
+    lane = "LLM_PROPOSED"
+    nums = [int(x) for x in re.findall(r"\b(\d{1,6})\b", to)]
+    N_ = N; E_ = E; gens_ = gens; profile = "v0"; sched = None; world = None; init_ = init
+    if "population_size" in dims and nums:
+        N_ = max(8, min(800, nums[0])); init_ = (init * (N_ // len(init) + 1))[:N_]
+    if "evaluation_horizon" in dims and nums:
+        gens_ = max(gens, min(5000, max(nums)))
+    if "pressure_timing" in dims or "pressure_intensity" in dims or "environmental_nonstationarity" in dims:
+        sched = P.labeled(seed, gens_)
+    if "world_geometry" in dims or "world_complexity" in dims or "resource_topology" in dims or "interaction_topology" in dims:
+        bin_ = int(ov.get("bin", nums[0] if nums and nums[0] <= 10 else 5))
+        w = sample_world(seed, bin_target=bin_); world = {"kind": "c6.composed.v1", "params": w["params"]}
+    if "repb" in to.lower() or "fizzle" in to.lower():
+        profile = "repb_fizzle"
+    if key.startswith("C5-flat") and world is None:
+        from archaeon.campaign5.screen_worlds import CANDIDATES
+        world = {"kind": "wse.WorldSpec", "knobs": CANDIDATES["W3_K3"].knobs()}; N_ = max(N_, 50); E_ = 16; init_ = (init * 4)[:N_]
+    if key.startswith("C5-asym") or key.startswith("C5-load"):
+        profile = "repb_fizzle"; world = world or {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W2_K2"].knobs()}
+    if key.startswith("C4-exapt") and world is None:
+        world = {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W2_K2"].knobs()}
+    if key.startswith("C6-blind") and world is None:
+        world = {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W0"].knobs()}
+    if key.startswith("C6-unable"):
+        w = sample_world(seed, bin_target=int(ov.get("bin", 7))); world = {"kind": "c6.composed.v1", "params": w["params"]}
+        if "pressure_timing" in dims:
+            sched = P.labeled(seed, gens_)
+    if key.startswith("B-worldgen") or key.startswith("B-pressure"):
+        w = sample_world(seed, bin_target=int(ov.get("bin", 8))); world = {"kind": "c6.composed.v1", "params": w["params"]}
+        sched = P.labeled(seed, gens_) if key.startswith("B-pressure") else P.unlabeled(seed, gens_)
+        lane = "MIXED"      # an LLM-named direction realised by a procedural sampler
+    if "measurement_view" in dims and world is None and key.startswith("C6-"):
+        world = {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W0"].knobs()}
+    if world is None:
+        world = {"kind": "wse.WorldSpec", "knobs": C1.ENVS["W0"].knobs()}
+    sched = sched or P.stable(gens_)
+    prov = S.provenance(lane, "frontier.generic", "0.1", seed, {"transformation": tid, "dims": dims, "to": to, "N": N_, "E": E_, "gens": gens_, "profile": profile}, thresholds_digest=frozen["digest"])
+    return dict(run_id=prov["run_id"], provenance=prov, world=world, profile=profile, schedule=sched, N=N_, E=E_,
+                archive={"dense_until": 64, "neighbourhood": 16}, thresholds=thr, spread=frozen["spread"], seed=seed, freeze_policy="tiered"), init_, "OK"
 
 
 # ---------------------------------------------------------------- branching on s7 triggers
@@ -157,6 +203,7 @@ def iterate(reg: Registry, q: Queues, shares: Dict[str, float], spent: Dict[str,
         it = dict(q.items[pool][item["item_id"]]); it["priority"] = it["priority"] - 1.0; q._append(pool, it)
         return {"status": "BLOCKED", "lineage": lineage["lineage_id"], "transformation": tr["id"], "reason": why}
     gens = min(gens_cap, max(chunk, tr["budget_evaluations"] // max(1, kw["N"])))
+    gens = max(chunk, min(gens, tr["budget_evaluations"] // max(1, kw["N"])))
     n_chunks = max(1, gens // chunk)
     out_dir = runs_dir / lineage["lineage_id"] / tr["id"]; out_dir.mkdir(parents=True, exist_ok=True)
     spec0 = SG.make_spec(g0=0, g1=min(chunk, gens), **kw); ck = SG.initial_checkpoint(spec0, init)
@@ -221,20 +268,34 @@ def main(argv=None) -> int:
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--iterations", type=int, default=10)
     ap.add_argument("--chunk", type=int, default=1000)
+    ap.add_argument("--wall-hours", type=float, default=6.0)
     a = ap.parse_args(argv)
     if a.self_test:
         return self_test()
     if not a.live:
         print("constructed; nothing executed (pass --live after G6-0 closes; the gate file is %s)" % GATE); return 0
-    if not GATE.exists():
-        print("REFUSED: G6-0 is not closed (no %s)" % GATE); return 2
+    if not (GATE.exists() or OP_GATE.exists()):
+        print("REFUSED: neither %s nor %s exists" % (GATE.name, OP_GATE.name)); return 2
+    authority = "G6_0_ALL_COMPONENTS_VERIFIED" if GATE.exists() else "OPERATOR_EXECUTION_AUTHORIZED"
     reg = Registry(); q = Queues(); shares = dict(RULES["initial"]); spent = {}
+    # crash / interruption recovery: an item left CLAIMED by a dead process returns to PENDING (finished chunks are on disk and in the registry)
+    recovered = 0
+    for pool in q.items:
+        for it in list(q.items[pool].values()):
+            if it["state"] == "CLAIMED":
+                q.set_state(pool, it["item_id"], "PENDING", note="recovered from CLAIMED at start"); recovered += 1
+    t_start = time.time(); ran = blocked = 0
+    print(json.dumps({"authority": authority, "recovered_claimed": recovered, "wall_hours": a.wall_hours}), flush=True)
     for i in range(a.iterations):
+        if time.time() - t_start > a.wall_hours * 3600:
+            print(json.dumps({"status": "WALL_BUDGET_REACHED"}), flush=True); break
         r = iterate(reg, q, shares, spent, chunk=a.chunk)
-        print(json.dumps(r, default=str))
+        r["authority"] = authority; r["at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        print(json.dumps(r, default=str), flush=True)
         if r["status"] == "IDLE":
             break
-    print(json.dumps({"registry": reg.summary(), "queues": q.status(), "spent": spent}, indent=1))
+        ran += r["status"] == "RAN"; blocked += r["status"] == "BLOCKED"
+    print(json.dumps({"registry": reg.summary(), "queues": q.status(), "spent": spent, "ran": ran, "blocked": blocked, "wall_s": round(time.time() - t_start, 1)}, indent=1), flush=True)
     return 0
 
 

@@ -63,3 +63,31 @@ them retirement candidates under condition A before they run, as Proteus asked. 
 from the graph foundry; no lift from v0 parents exists or is offered. | Proteus #478 report;
 test_graph_profile. | -- | The gate file is written by the lead from Proteus's posted verdict.
 DETERMINISTIC.
+
+DF-007 | 2026-09-18 23:36 | OPERATOR EXECUTION DIRECTIVE (verbatim: roles/Archaeon/prompts/2026-09-18_
+deep_frontier/01_OPERATOR_EXECUTION_DIRECTIVE.md): Deep Frontier STARTS NOW. Gate file
+archaeon/frontier/OPERATOR_EXECUTION_AUTHORIZED.json (authority OPERATOR_EXECUTION_AUTHORIZED,
+is_verification false; it lists what G6-0 still has unverified and which integrity invariants
+Archaeon's own tests cover). It is NOT G6_0_ALL_COMPONENTS_VERIFIED. Global stop only for a
+named failing invariant among {deterministic replay, checkpoint continuity, evidence write
+correctness, provenance, observation/interpretation separation, crash recovery} with a
+reproducing receipt and the evidence it would invalidate; everything else is local (BLOCKED /
+UNABLE / FALSIFIER_FAILED / PARTIAL) and the loop moves on. Crash recovery: CLAIMED -> PENDING
+at start; chunks are on disk. | the directive. | -- | OPERATOR AUTHORITY.
+
+DF-008 | 2026-09-18 23:36 | PROTEUS-46 CONSUMED WITH CORRECTED SEMANTICS (verdict file proteus/round2/
+PROTEUS-46_FALSIFIER.json: verdict CLIFF_SURVIVES, falsifier_status FALSIFIER_FAILED,
+neighbourhood_exhausted false, four reopen conditions). Only the transformation the falsifier
+COVERS -- C4-cliff.T1 (the single-edit neighbourhood under graph_grammar.v1 vs v0.4) -- is
+BLOCKED as formulated; no lineage is retired. RECONCILIATION of my 3-vs-8 bookkeeping: I had
+gated all eight graph-touching transformations on the verdict; seven of them (C4-cliff.T3,
+C4-exapt.T2, C5-flat.T2, C5-asym.T1, C6-blind.T1, C6-unable.T4, C6-unable.T5) ask different
+questions (evolution, worlds, walks, blind spots) the falsifier did not measure and are
+UNGATED (registry events per transformation). | Proteus #482; registry EVENTS. | -- | The
+covered set changes only if Proteus extends the falsifier. DETERMINISTIC.
+
+DF-009 | 2026-09-18 23:36 | GENERIC BUILDERS: every transformation maps its dims and target onto the
+spec knobs (N, E, generations, profile v0/graph/repb_fizzle, composed world by bin, labeled/
+unlabeled/stable schedule); lane MIXED for LLM-named directions realised by procedural samplers.
+Resolution before launch: 76 runnable / 1 FALSIFIER_FAILED / 0 BLOCKED of 77. | build() sweep. |
+-- | Builders may be refined per lineage; the mapping is recorded in each run's provenance.
