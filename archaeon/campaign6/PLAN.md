@@ -1,6 +1,8 @@
 +=====================================================================+
 |  CAMPAIGN 6 -- CAMBRIAN EXPANSION / OBSERVATORY STRESS: THE PLAN      |
 |  Archaeon[m2-49ee5a4d]   2026-09-18   v0.1 (before any row)          |
+|  AMENDED by CONVERGENCE_v0.1.md (lanes: Axis O -> Proteus; fixture   |
+|  custody -> Harmonia; s8 Q1 superseded by its s2; rulings R1-R9)     |
 |  Directive verbatim: roles/Archaeon/prompts/2026-09-18_campaign6/     |
 +=====================================================================+
 

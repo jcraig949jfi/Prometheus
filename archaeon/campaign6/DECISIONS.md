@@ -26,3 +26,21 @@ D6-003 | 2026-09-18 20:08 | IDENTITY AND PATH: campaign seed 20260923, client cm
 ledger prefix L6; the campaign harness path for Phase 0/1 fixtures; Vivarium's queue
 for the scatter and long runs once G6-1 is green (asked, not assumed). | D5-001 pattern.
 | -- | Revisit if Vivarium declines the queue role. DETERMINISTIC.
+
+D6-004 | 2026-09-18 20:12 | CONVERGENCE (CONVERGENCE_v0.1.md): the fleet's shape adopted -- T0 anchored,
+SEGMENT as the unit, executor-side detectors with a PEW registry, atomic FREEZE before any
+classification, commitments for fixtures, the reserved vocabulary. Lanes revised: Axis O is
+Proteus's (graph_organism.v1); my "Representation G" withdrawn; fixture custody and
+recall/classification adjudication are Harmonia's (with Nemesis authoring cheat fixtures);
+my asks to Nemesis-as-keeper and Rhadamanthus-as-judge withdrawn; Axis W and P, the segment
+loop, the eleven detector specs, escalation flows, tranche/search/long-run policy and the
+return stay with Archaeon. Rulings R1-R9 consolidated for the operator. | #455 #456 #457
+#459 #460; Harmonia lane report. | Alternative: keep my PLAN's lanes -- rejected, four seats
+had converged first and the duplication was mine. DETERMINISTIC (adoption), SCIENTIFIC
+DISCRETION (defaults in s4).
+
+D6-005 | 2026-09-18 20:12 | PRE-REGISTERED CEILINGS (Daedalus's ask): first tranche 1e5 evaluations
+per run with the full tier stack; ledger 10 GB per campaign phase; <= 64 checkpoints and
+<= 256 artifact refs per freeze; 1e6 evaluations per run only after the engine acceptance
+run at 3x rate and one scored recall pass. | Daedalus review s1, delta s3. | -- | Revisit
+only upward and only after the two receipts. DETERMINISTIC.
