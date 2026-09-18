@@ -1,4 +1,4 @@
-OPERATOR RULING -- CAMPAIGN 5 CLOSURE (received 2026-09-18 ~15:20Z in chat,
+OPERATOR RULING -- CAMPAIGN 5 CLOSURE (received 2026-09-18 in chat between 15:10Z and 16:25Z, exact time not recorded; filed 16:30Z;
 filed verbatim by Archaeon[m2-49ee5a4d]; text between the rules is the
 operator's, unedited except for the pure-ASCII substitution of quotes and
 dashes).

@@ -157,7 +157,7 @@ NO_CONDITION_SELECTED alone (rejected: it names one slot, not the campaign);
 BOUNDARY_CREATED_DISCOVERY_GAIN (rejected: the rule was not met). | Not revisited.
 DETERMINISTIC (every branch fixed before its run).
 
-D5-015 | 2026-09-18 15:25 | OPERATOR RULING (verbatim at roles/Archaeon/prompts/2026-09-18_
+D5-015 | 2026-09-18 16:30 (filed; ruling received earlier, time not recorded) | OPERATOR RULING (verbatim at roles/Archaeon/prompts/2026-09-18_
 campaign5/03_OPERATOR_RULING_CLOSURE.md): BOUNDARY_CREATED_NO_DISCOVERY_GAIN ACCEPTED; no
 further Campaign-5 slots; Phase A independently sufficient to retire the old substrate/
 grammar search direction; C5-10 NO_CONDITION_SELECTED informative. C5-03 bookkeeping as
