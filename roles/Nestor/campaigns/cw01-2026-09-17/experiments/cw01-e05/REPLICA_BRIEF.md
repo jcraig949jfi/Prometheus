@@ -37,7 +37,8 @@ conductor happened to know.
     commit    3e0e6a710 (or later on nestor/sidequest-graphworld-2026-09-14)
     contract  c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619
     budget    B=3
-    sets      BEST [0,2,4], WORST [4,5,7], from exhaustive enumeration of all 56 subsets
+    sets      per replicate, by exhaustive enumeration of all 56 subsets
+              BEST [0,2,4] / WORST [4,5,7] bind attempt cw01-e05-a01 ONLY
     statistic difference-in-differences on normalised INFORMATION superadditivity
     null      >= 8 independent seed blocks; eligibility by effect_clears_null
     baselines measured under the SAME composition law as the mixture they serve
