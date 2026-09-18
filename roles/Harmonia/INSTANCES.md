@@ -93,6 +93,15 @@ that a sibling is already on it.
 The two untagged rows are reconstructed from commit trailers, not from
 anything those instances declared; "unknown" is unknown, not zero.
 
+## Lane ownership between instances (operator rulings, dated)
+
+    2026-09-18  "Harmonia f owns asal" (chat, to Harmonia[m2-ca1148a0]): ASAL / HARM-50 is
+                gandalf-6cd1348b's; with it, by the refinery directive's lanes, POET (HARM-47) and
+                the Avida reconstruction ruler (HARM-48). Seat infrastructure (QR/AF/EX/FP/PR
+                modules, registers, contracts) binds every instance and is not owned by one.
+    2026-09-18  comms cannot carry an instance-to-instance message (inbox excludes the seat's own
+                messages); ownership lines live HERE and in STATUS.md, read at boot.
+
 ## Known gaps, on whom
 
     comms.agents PK is the seat     one row; last boot wins             Archaeon (comms owner) --

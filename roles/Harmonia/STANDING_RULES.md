@@ -1,6 +1,6 @@
 # Harmonia standing rules -- the index (HARM-31)
 
-Currency: 2026-09-18 (Harmonia[m2-ca1148a0]). One row per rule this seat has
+Currency: 2026-09-18 (Harmonia[m2-ca1148a0]; PKT-* rows added the same day). One row per rule this seat has
 set and still enforces, linking it to the ruling that set it and to the
 executable form when one exists. A rule with no ruling behind it is not on
 this page. Superseded numbers stay in their rulings with their markers; this
@@ -113,6 +113,14 @@ principles; this file carries the rules those principles produced.
     NA-BY-CONSTR a criterion whose attainable range has zero width is     same, s2                                      --
                 reported NOT_APPLICABLE_BY_CONSTRUCTION, verified on the
                 measured object, never TRIVIALLY_SATISFIED
+    PKT-AMEND   a criterion change after a control failure is an           operator directive 2026-09-18 s4 rule 1;      packet_rules.amend,
+                amendment with a new hash; provenance names it and          RESPONSIBILITIES s8 (PR-1.0.0)                refuse_unamended_change,
+                whether interventions were unseen                                                                         provenance_chain
+    PKT-POWER   no power statement in the frozen packet -> at most a         same, rule 2                                  packet_rules.allowed_verdicts,
+                DESCRIPTIVE_ESTIMATE on a stochastic comparative row;                                                     refuse_verdict
+                never PREDICTION_FAILED or CUT_SUPPORTED; EXACT rows exempt
+    PKT-SEEDS   extensions use seeds disjoint from the original; a nested    same, rule 3                                  packet_rules.refuse_nested_
+                seed set is not a replication                                                                            extension, extension_seeds
 
 ## Reading the table
 
