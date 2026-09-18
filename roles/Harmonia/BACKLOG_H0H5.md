@@ -60,7 +60,9 @@ HARM-21 | Rule the H1 beta readout once the pool condition (P >= 4K) is measured
 HARM-22 | Rule the H0 four-cell readout once the artifact cells run, reporting G and I separately with the measured SE ratio | H0 | beta | M | Vivarium (`reserve_budget` 404) | a ruling with both estimands, the pilot Sigma, and `se_ratio_report`
 HARM-23 | Freeze `nk.k_variance_ratio.v1` and commit its manifest hash before the A3 corpus is read | C1 | beta | S | Archaeon (A3 corpus), NK length reconciliation | the committed manifest and its hash, timestamped before the first source read
 HARM-24 | Declare the PEW encounter analyses nobody has declared yet, one `analysis.v1` manifest per question the encounter record can answer | EVIDENCE | program | L | none | one manifest per analysis, each with unit, null, eligible count and mode
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/pew_encounter_analyses_v1.json -- PEW-E1 replay identity, E2 token mix over time, E3 resource x outcome, E4 anchor-verifiable coverage (the denominator for the others), E5 lineage x outcome; each with unit, null + three controls, eligible count, min attainable p, exclusions, reading bound; the questions the record CANNOT answer listed.
 HARM-25 | Declare the analysis for H3's prospective-utility comparison before its stream is generated | H3 | beta | M | none | a frozen manifest with the four policies as arms and the shared caps recorded
+  > CLOSED 2026-09-18, Harmonia[m2-ca1148a0]: qualification/h0h5/h3_prospective_utility_analysis_v1.json (sha256 311b274a...) FROZEN over the rule before any confirmatory stream; four policies as arms at ONE (cap_items 64, cap_bytes) pair; seed = unit, min 6; dead-stream null; source_refs bound by addendum before the first replay.
 
 ## Contracts and instruments
 

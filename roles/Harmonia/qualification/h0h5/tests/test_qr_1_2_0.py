@@ -269,3 +269,39 @@ def test_program_family_states_both_rates():
     assert abs(f["program_fwer_if_uncorrected"] - (1 - 0.95 ** 6)) < 1e-12
     assert abs(f["program_level_alpha_per_lane"] - 0.05 / 6) < 1e-12
     assert abs(f["expected_false_supports_if_uncorrected"] - 0.30) < 1e-12
+
+
+# ----------------------------------------------- HARM-25: H3 manifest
+
+def test_h3_manifest_carries_the_ten_fields_and_shared_caps():
+    with open(os.path.join(H0H5, "h3_prospective_utility_analysis_v1.json"), encoding="ascii") as f:
+        m = json.load(f)
+    for fld in ("source_refs", "source_set_digest", "analysis_version", "unit_of_analysis",
+                "measurement_identity", "declared_null", "mode", "eligible_count",
+                "min_attainable_p", "exclusions"):
+        assert fld in m, fld
+    arms = {k: v for k, v in m["arms"].items() if isinstance(v, dict)}
+    assert set(arms) == {"top_k", "uniform", "behavioral", "hybrid"}
+    assert len({(a["cap_items"], a["cap_bytes"]) for a in arms.values()}) == 1
+    assert arms["hybrid"]["reserve"] == 16 and arms["hybrid"]["cap_items"] == 64
+    assert m["mode"] == "FROZEN"
+    assert m["eligible_count"]["min_attainable_p_at_n"]["6"] == q.min_attainable_p_paired(6)
+    for c in m["primary_contrasts"]:
+        if c in ("multiplicity", "estimator"):
+            continue
+        q.refuse_endpoint("H3", c)       # none of the primaries is a diversity measure
+
+
+# ----------------------------------------- HARM-24: PEW encounter manifests
+
+def test_pew_encounter_manifests_carry_the_ten_fields():
+    with open(os.path.join(H0H5, "pew_encounter_analyses_v1.json"), encoding="ascii") as f:
+        fam = json.load(f)
+    assert len(fam["manifests"]) == 5
+    for m in fam["manifests"]:
+        for fld in ("analysis_version", "unit_of_analysis", "measurement_identity", "declared_null",
+                    "eligible_count", "min_attainable_p", "exclusions", "reading_bound"):
+            assert fld in m, (m["id"], fld)
+        assert set(m["declared_null"]["controls"]) == {"positive", "negative", "cheat"}, m["id"]
+    assert fam["common"]["mode"].startswith("FROZEN")
+    assert fam["common"]["eligible_count_printed_first"] is True
