@@ -12,3 +12,5 @@ sha256 over LF-normalised bytes (equals the git blob for text files); see comms/
 - 08_DAEDALUS_M1_ARCHIVE_LEDGER.md  sha256:b00346033efca19c838036006b6978651f7bc2d538b2b11787c5dc52e2d28cc0
 - 09_G5_SOLE_BLOCKER.md  sha256:eb67bc3116917e71e23cc24ceb4cf10c66b86f276c374a79d0a8ead6d9c129a3
 - 10_CAMPAIGN4_STARTED.md  sha256:683adbda5bf0fd6d26730da9ec46261c3067a55cbfeaf9afe61f77e60594e7a9
+- 11_C4_01_DONE.md  sha256:1e2c055e75602e38fcfbe8c786c87c418036905cf46b3fed4a50609bd73c7dac
+- 12_VIVARIUM_KIND_ANSWER.md  sha256:ad34680f78b870621fadf6acbbfd4d610bdd3bdba3f8a9a4dd65e86fbf5bf347

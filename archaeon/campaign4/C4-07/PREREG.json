@@ -1,0 +1,66 @@
+{
+ "ancestry": "original (queue slot 7)",
+ "arms": [
+  "blocked"
+ ],
+ "assay_capability_requirement": "none: no assay is run",
+ "attempt": 1,
+ "budget": {
+  "rows": 0
+ },
+ "claim_ceiling": "a representation fact; the cost frontier is a Campaign 5 question on a substrate with a distinguishable insulation event",
+ "crn_policy": "n/a",
+ "decl": {
+  "n_min": 1
+ },
+ "design_digest": "sha256:96f559cae7707d5c46d63300997aefff74aa04f6d7c5db8bafc9efb2707b88f2",
+ "expected_machine_telemetry": [
+  "one record carrying the design digest"
+ ],
+ "experiment": "C4-07",
+ "falsification_condition": "n/a",
+ "kill_condition": "n/a",
+ "machine_changes_exercised": [
+  "none"
+ ],
+ "parent_evidence": "C4-03 (D4-007): 932/932 parent instruction words out of the opcode table; P(would-be-fatal) = 1.000 on 7,146 children; the modulo decode is the instruction set.",
+ "parents": [
+  "C4-03"
+ ],
+ "positive_control": "none (no measurement)",
+ "prereg_digest": "sha256:ff8b154eadc35e650267dfe353f64372ca4f9f16e298fdf6da3e6ca08bd2e448",
+ "primary_observable": "none; the design digest and the C4-03 vacuity numbers are recorded",
+ "question": "Is graceful degradation useful only when it is free? Cost only the recovery/fizzle event. On this substrate no such event is distinguishable from ordinary execution (C4-03), so the frontier cannot be placed.",
+ "reachability_estimate": {
+  "note": "no search"
+ },
+ "replacement_condition": "none: the directive forbids converting REPRESENTATION_BLOCKED into a substrate change",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "the cost of insulation (REPRESENTATION_BLOCKED)",
+ "typed_failure_conditions": [
+  "REPRESENTATION_BLOCKED"
+ ],
+ "why_this_slot": "The directive requires an attempted disposition for every experiment; this one is REPRESENTATION_BLOCKED and says why."
+}

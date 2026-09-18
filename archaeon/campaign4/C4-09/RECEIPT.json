@@ -1,0 +1,296 @@
+{
+ "artifacts": {
+  "ecology": {
+   "artifact_id": "sha256:dafe071ea12348a123cfca58213eeb6cd11b60a0968074a7be5a50571d7c34a1",
+   "blob_hash": "sha256:b725b7610f4856175dd447b705424bff5a79ad1837fdebbd62cf64307200c4c3",
+   "bytes": 1551,
+   "declared": "sha256:b725b7610f4856175dd447b705424bff5a79ad1837fdebbd62cf64307200c4c3",
+   "hash_ok": true,
+   "kind": "cmp4.c409_ecology.v1"
+  },
+  "prereg": {
+   "artifact_id": "sha256:54c4b92a066edb8fa5535361054a0ff6d53ef5f4c6a86b7cd5e332c443981993",
+   "blob_hash": "sha256:c43d827a38d2effa03f6324e9aed48e93ca1c0ef1d5d55f9e6d86933848918a3",
+   "bytes": 2077,
+   "declared": "sha256:c43d827a38d2effa03f6324e9aed48e93ca1c0ef1d5d55f9e6d86933848918a3",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C4-09/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260921,
+ "decisions": [
+  "D4-013: lateral entry rule = measured reward on the receiving world >= floor AND fitness >= that world's current median; candidates in organism-id order (no ranking), at most B per world per generation; inject replaces the receiving world's worst members"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative at this budget/envelope",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "control_mean": 0.0,
+   "effect": 0.3333,
+   "min_effect": 1.0,
+   "n_control": 3,
+   "n_treatment": 3,
+   "paired": 3,
+   "paired_wins": 1,
+   "treatment_mean": 0.3333
+  },
+  "reason": "assay capable and effect < min_effect",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C4-09",
+ "finished_at": "2026-09-18T06:39:07Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_ebec80b7b5b25611b02b4257",
+ "imports": {},
+ "prereg_digest": "sha256:b49dc8e5020a80f67abd760c15caea1696431298e279839b3a2a15e9935bbc49",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "control/1": {
+   "exp_id": "exp_e14768cfce5ed6d02a1ede6e",
+   "obs_id": "obs_53adb92b4385540175ced853"
+  },
+  "control/2": {
+   "exp_id": "exp_a883f51a58e9adad09962c85",
+   "obs_id": "obs_fe6372a81de4fa8f71562e5e"
+  },
+  "control/3": {
+   "exp_id": "exp_ec8a866082dd90a452685772",
+   "obs_id": "obs_1d550eda12d2f78474db66cc"
+  },
+  "lateral/1": {
+   "exp_id": "exp_6c95adb5b02c4ede7056f557",
+   "obs_id": "obs_ce05cddb61bcf993052f3096"
+  },
+  "lateral/2": {
+   "exp_id": "exp_4181a4be5b0465fd139685f5",
+   "obs_id": "obs_de4ce8fc8e5785b937496521"
+  },
+  "lateral/3": {
+   "exp_id": "exp_8a8eb1f466ec1f342403c111",
+   "obs_id": "obs_c135f1c9ecbc1840c042a4b1"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T06:35:53Z",
+ "steps": {
+  "idem:06f01d8f570703038c53acef9a31c0b0": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "lateral",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_4181a4be5b0465fd139685f5",
+    "obs_id": "obs_de4ce8fc8e5785b937496521"
+   },
+   "wall_s": 0.036
+  },
+  "idem:17599d0c335cc4ccb71e38346d256750": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_a32cb2322e96690133a9c8bd",
+   "wall_s": 0.029
+  },
+  "idem:2882a08c95a9476514ae442e86c97792": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "control",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_a883f51a58e9adad09962c85",
+    "obs_id": "obs_fe6372a81de4fa8f71562e5e"
+   },
+   "wall_s": 0.064
+  },
+  "idem:2893aed95db127a39b8907f658796be6": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "ecology"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c4-09-ecology",
+    "policy": "ISOLATED",
+    "world_id": "wld_5942290559d4ebec941ce8f9"
+   },
+   "wall_s": 0.03
+  },
+  "idem:37bffad3d4fbb9258866ccec3bfac7b4": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "control",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_e14768cfce5ed6d02a1ede6e",
+    "obs_id": "obs_53adb92b4385540175ced853"
+   },
+   "wall_s": 0.061
+  },
+  "idem:39c3d590de9fbfff1a2424e310b060ba": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "ecology"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:dafe071ea12348a123cfca58213eeb6cd11b60a0968074a7be5a50571d7c34a1",
+    "blob_hash": "sha256:b725b7610f4856175dd447b705424bff5a79ad1837fdebbd62cf64307200c4c3",
+    "bytes": 1551,
+    "declared": "sha256:b725b7610f4856175dd447b705424bff5a79ad1837fdebbd62cf64307200c4c3",
+    "hash_ok": true,
+    "kind": "cmp4.c409_ecology.v1"
+   },
+   "wall_s": 0.01
+  },
+  "idem:662f1b60d4423cf604a83a08d5257713": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "control",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ec8a866082dd90a452685772",
+    "obs_id": "obs_1d550eda12d2f78474db66cc"
+   },
+   "wall_s": 0.029
+  },
+  "idem:98badbfe00797f9623b61f4a40ddb78d": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "lateral",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_8a8eb1f466ec1f342403c111",
+    "obs_id": "obs_c135f1c9ecbc1840c042a4b1"
+   },
+   "wall_s": 0.046
+  },
+  "idem:bee76dfd891823aa39bcff3310545aca": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_ebec80b7b5b25611b02b4257",
+   "wall_s": 0.017
+  },
+  "idem:c300387454ac8b1f30f8cbee7c865558": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:54c4b92a066edb8fa5535361054a0ff6d53ef5f4c6a86b7cd5e332c443981993",
+    "blob_hash": "sha256:c43d827a38d2effa03f6324e9aed48e93ca1c0ef1d5d55f9e6d86933848918a3",
+    "bytes": 2077,
+    "declared": "sha256:c43d827a38d2effa03f6324e9aed48e93ca1c0ef1d5d55f9e6d86933848918a3",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.004
+  },
+  "idem:c91ea97ee484b0e0a5eec67d56794500": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.01
+  },
+  "idem:cf03209cb2c219db1ce225d73eb25cfe": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "lateral",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_6c95adb5b02c4ede7056f557",
+    "obs_id": "obs_ce05cddb61bcf993052f3096"
+   },
+   "wall_s": 0.024
+  }
+ },
+ "teardown": {
+  "ecology": "TERMINATED"
+ },
+ "timings": {
+  "ecology_s": 174.47,
+  "startup_s": 0.04,
+  "teardown_s": 0.02,
+  "total_s": 194.2
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "c69bfae9ab315ac957bdcbdf6751e99ba74f022c",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "ecology": "wld_5942290559d4ebec941ce8f9"
+ }
+}

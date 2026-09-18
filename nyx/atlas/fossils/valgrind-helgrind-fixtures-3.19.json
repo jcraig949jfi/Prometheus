@@ -132,17 +132,489 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c:100-330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/hg_main.c:1004-1258"
+   }
+  ],
+  "inspected_files": [
+   "helgrind/libhb_core.c 100-330 (SVal, VtsID, MSM comments)",
+   "helgrind/hg_main.c 1004-1258 (LAOG)",
+   "helgrind/tests file list"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "a happens-before race detector with three mechanisms and its own test corpus: every thread carries a vector timestamp (a VTS, small-integer VtsID) advanced at synchronisation points so that two events are ordered iff one thread's clock dominates the other's; every memory location carries a shadow value (SVal) recording the read/write clocks at which it was last touched, and a memory-state machine flags an access as a race when it is not ordered after the previous conflicting access; and a lock-order acquisition graph (LAOG) records the order in which locks are taken so a cycle warns of a potential deadlock. The fixtures are the calibration set: each program commits one named error and Helgrind must report it",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceware.org/pub/valgrind/valgrind-3.19.0.tar.bz2 sha256:dd5e34486f1a483ff7be7300cc16b4d6b24690987877c3278d797534d6738f02",
+   "payload_manifest_id": "techne tree_sha256 7b0af7d84bd262752ab521f125dfc6f3310488b08e69c8eda0f1c3cfb2b95c4d (6517 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c",
+     "payload_hash_read": "99ab896c6f5b282a2405bfb1854d6388d60f3ce5a01c9b8c2816083d4b1017ba",
+     "techne_recorded_hash": "99ab896c6f5b282a2405bfb1854d6388d60f3ce5a01c9b8c2816083d4b1017ba",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/valgrind-3.19.0/helgrind/hg_main.c",
+     "payload_hash_read": "d90bd5472456c4d6c42387e4fafbca20fad9adc075e3e88dfc1578caa30d269e",
+     "techne_recorded_hash": "d90bd5472456c4d6c42387e4fafbca20fad9adc075e3e88dfc1578caa30d269e",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "libhb_core.c: VtsID (small-int IDs for vector timestamps), SO (synchronisation objects) carrying a VTS, the comment 'the happens-before relationship in concurrent programs'; thread creation, join, lock, unlock and condvar signal transfer clocks",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each thread has a vector clock mapping every thread to the last event of that thread it has synchronised with; a synchronisation operation (unlock/lock on the same lock, signal/wait, create/join) copies the releasing thread's clock into the acquiring thread's by pointwise maximum; event A happens-before event B iff A's whole vector is <= B's, so two accesses are concurrent (a candidate race) exactly when neither clock dominates the other; VtsIDs intern whole vectors as integers so comparison and reference-counting are cheap",
+   "input": "the stream of memory and synchronisation events",
+   "output": "the happens-before order",
+   "state": "the per-thread and per-SO vector timestamps",
+   "update": "per event",
+   "assumptions": [
+    "all inter-thread ordering flows through observable synchronisation primitives, so a race not mediated by one is detectable as unordered (Lamport 1978; the pure happens-before method, no lockset)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+    "valgrind-helgrind-fixtures-3.19::lock_order_acquisition_graph_recording_the_order_locks_are_taken_so_a_cycle_warns_of_a_potential_deadlock_independent_of_whether_it_occurred"
+   ],
+   "fitness_value_in_ancestor": "races reported with no false positives from lock discipline alone (unlike Eraser's lockset), at the cost of missing races that a run's schedule happened to order",
+   "failure_landscape": "by reading: happens-before detection is schedule-dependent (a race not exercised by this interleaving is not reported); vector clocks cost O(threads) per location",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Lamport 1978 (vector clocks); Flanagan & Freund; the FastTrack lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c:100-330"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the VTS/SO machinery; MEDIUM because the arithmetic bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "libhb_core.c: SVal (a 64-bit shadow per location encoding the read-min and write-min VtsIDs, or NOACCESS); msmcread / msmcwrite (the read/write transitions); zsm shadow-memory with line-Z dictionaries of up to 4 distinct SVals per line",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each memory word has a shadow value holding the minimal read and write clocks at which it was last accessed (a compressed 'constraint' C(rmin, wmin)); a new read is a race if it is not ordered after the last write; a new write is a race if it is not ordered after the last write or the last read; the transition functions update the shadow to the new access's clocks; shadow memory is stored in cache lines that hold a small dictionary of distinct SVals (most lines have one or two), so the per-word overhead is amortised",
+   "input": "a memory access with the accessing thread's clock",
+   "output": "a race report or a state update",
+   "state": "the shadow value per location",
+   "update": "per memory access",
+   "assumptions": [
+    "a location's history is summarised by its last read and last write clocks (FastTrack's insight that the full history is unnecessary); most adjacent words share a shadow, so a dictionary per line compresses it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates"
+   ],
+   "fitness_value_in_ancestor": "race detection at constant shadow per location rather than a full access history",
+   "failure_landscape": "by reading: only conflicting accesses are checked; benign races and races the schedule ordered are missed; the 4-SVal line dictionary spills to a LineF when a line is too diverse",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Flanagan & Freund 2009 (FastTrack); Helgrind's own encoding",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c:118-330"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the SVal encoding and the msm transitions; MEDIUM because the transition bodies were skimmed",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::lock_order_acquisition_graph_recording_the_order_locks_are_taken_so_a_cycle_warns_of_a_potential_deadlock_independent_of_whether_it_occurred",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "hg_main.c: univ_laog (sets of Lock*), laog__pre_thread_acquires_lock (1004, 1181, 1258), laog__sanity_check, the lock-order check on each acquisition",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each time a thread acquires a lock while already holding others, an edge is added from each held lock to the newly acquired one; before adding, the graph is checked for a cycle through the new edge, and a cycle means two lock-acquisition orders that could deadlock under the right schedule; the warning is issued whether or not a deadlock actually happened in this run, so it catches latent lock-order bugs that a single interleaving would not expose",
+   "input": "lock acquisitions with the current held-set",
+   "output": "a lock-order graph and cycle warnings",
+   "state": "the LAOG (a graph over Lock*)",
+   "update": "per acquisition",
+   "assumptions": [
+    "a consistent global lock order prevents deadlock, so any cycle in the observed order is a potential deadlock even absent an actual one (the classic lock-hierarchy discipline)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates"
+   ],
+   "fitness_value_in_ancestor": "potential deadlocks found from correct runs; the complement to the go-runtime-deadlock-fixtures detector which fires only on an actual deadlock",
+   "failure_landscape": "by reading: reports order inversions that the program may in fact serialise by another mechanism (false positives on gate locks); the graph is garbage-collected as locks are destroyed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the lock-hierarchy rule; Helgrind's LAOG implementation",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/hg_main.c:1004-1258"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the laog functions; MEDIUM because only the hooks were read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the VTS arithmetic and interning bodies, the shadow-memory cache and line-F spill, the intercept library (hg_intercepts.c: the pthread wrappers), the error formatting, the whole Valgrind core and VEX IR (~125k lines)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the directive of 2026-09-18 s1: no deepening of a large COARSE body without a downstream question; the VEX IR is a specimen-sized mechanism of its own",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "valgrind-helgrind-fixtures-3.19"
+  },
+  {
+   "candidate": "'race detector' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the happens-before order, the per-location state machine and the lock-order graph are three separable detectors sharing the event stream",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "valgrind-helgrind-fixtures-3.19"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "valgrind-helgrind-fixtures-3.19::P.a_concurrency_error_must_be_detected_from_a_single_correct_looking_run_when_the_bug_is_a_data_race_or_a_latent_lock_order_inversion_that_the_run_s_schedule_did_not_actually_trigger",
+   "source_fossil": "valgrind-helgrind-fixtures-3.19",
+   "source_evidence": "libhb_core.c happens-before + MSM; hg_main.c LAOG; the 259-file test corpus",
+   "condition": "an organism observes one execution of a multithreaded program via its memory and synchronisation events; the program may contain a data race or a lock-order inversion that this schedule did not make manifest; the score is detected true errors and false positives on a labelled corpus",
+   "resource_or_constraint": "per-thread vector clocks; per-location shadow; a lock-order graph",
+   "failure_condition": "a real race or potential deadlock missed, or a benign access flagged",
+   "world_punishes": "testing only what the schedule exercised; lockset methods that false-positive on non-lock synchronisation",
+   "world_rewards": "happens-before order, per-location conflict shadows, a lock-order graph that fires on inversions not deadlocks",
+   "observable_consequence": "true-positive and false-positive counts on the helgrind/tests corpus (tc01_simple_race, hg02_deadlock, tc04_free_lock, locked_vs_unlocked, pth_mempcpy_false_races, ...) where each program's intended verdict is known",
+   "vacuity_condition": "a single-threaded program",
+   "trivial_shortcuts": "running every schedule (model checking, infeasible for real programs)",
+   "cheat_control": "an organism given the corpus's labels must match them; a lockset-only detector must false-positive on the happens-before-only fixtures (annotate_hbefore, pth_mempcpy_false_races); a happens-before detector without the LAOG must miss the potential-deadlock fixtures: the corpus is the oracle and shows both gaps",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: dynamic thread-error detection (Nethercote & Seward 2007-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates",
+   "to": "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the clock the state machine compares against",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+   "to": "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "accesses are events too",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "valgrind-helgrind-fixtures-3.19::lock_order_acquisition_graph_recording_the_order_locks_are_taken_so_a_cycle_warns_of_a_potential_deadlock_independent_of_whether_it_occurred",
+   "to": "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "deadlock potential vs data race, from the same lock events",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "valgrind-helgrind-fixtures-3.19",
@@ -150,10 +622,23 @@
    "to": "go-runtime-deadlock-fixtures-1.22",
    "note": "two runtimes' regression corpora for concurrency failure",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "valgrind-helgrind-fixtures-3.19",
+   "relation": "algorithm_from",
+   "to": "Lamport 1978 (vector clocks); Flanagan & Freund 2009 (FastTrack shadow); the lock-hierarchy rule; Helgrind (Nethercote, Seward, Muhlenfeld)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the VTS/shadow/intercept bodies and the whole Valgrind core unread (~125k lines); three MEDIUM organs from data decls and hooks",
+   "nothing ran (needs the Valgrind runtime: an M2 world)",
+   "the test corpus is the labelled oracle a Stage C run would use"
+  ],
+  "note": "unlike go-runtime-deadlock-fixtures this body contains its detector; the three detection mechanisms are located, the arithmetic is residue per the directive",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

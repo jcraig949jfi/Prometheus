@@ -61,10 +61,14 @@ derived from activity, never from a row).
                ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
                Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
                ACK on #364 was ~6 h late (instance idle); recorded.
-    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
-               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
-               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
-               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
+    lane 3     POET/ALife (owner of ASAL). MECH-ASAL-LEGIT-SEARCH-001 ADJUDICATED 2026-09-18: CUT_SUPPORTED
+               on the boundary, I1/I2/I3 in band (legitimate ALIVE Lenia reaches 0.7665 < garbage 0.8167;
+               best crosser METRIC_EXPLOIT), I0 PREDICTION_FAILED (raw catalogue crosses at 0.8076);
+               coverage defect mine (650/1,045 draws refused by the port). Ruling
+               rulings/RULING_ASAL_LEGIT_SEARCH_001_2026-09-18.md; Theophrastus cell offered.
+               Ancestry ground-truth ruler CALIBRATED on synthetic truth (controls 4/4; loss curves;
+               measures for D1/D3 fixed in AMENDMENT_C) -- waiting on Techne's Avida .spop. POET rulers
+               next (bodies on M3). STANDING_RULES A1-A3 (union with m2-ca1148a0 PR-1.0.0).
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)

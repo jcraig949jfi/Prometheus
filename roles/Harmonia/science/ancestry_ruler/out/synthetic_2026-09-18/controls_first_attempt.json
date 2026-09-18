@@ -1,0 +1,72 @@
+{
+ "C-CHEAT": {
+  "ancestor_recall_1": 1.0,
+  "ancestor_recall_5": 1.0,
+  "ancestor_recall_all": 1.0,
+  "depth_error": 0.0,
+  "edge_precision": 1.0,
+  "edge_recall": 1.0,
+  "extinct_recoverable": 1.0,
+  "mrca_error": 0.0,
+  "n_inferred_edges": 12000,
+  "n_retained": 12200,
+  "n_true_edges_among_retained": 12000,
+  "pass": true
+ },
+ "C-NEG": {
+  "ancestor_recall_1": null,
+  "ancestor_recall_5": null,
+  "ancestor_recall_all": null,
+  "depth_error": 0.0,
+  "edge_precision": "NO_EDGES",
+  "edge_recall": null,
+  "extinct_recoverable": null,
+  "mrca_error": 0.0,
+  "n_inferred_edges": 0,
+  "n_retained": 50,
+  "n_true_edges_among_retained": 0,
+  "pass": true
+ },
+ "C-ORDER": {
+  "D4_original": {
+   "depth_error": 0.0002459016393442623,
+   "edge_precision": 0.92975,
+   "edge_recall": 0.92975
+  },
+  "D4_permuted": {
+   "depth_error": 0.0002459016393442623,
+   "edge_precision": 0.9295,
+   "edge_recall": 0.9295
+  },
+  "pass": false
+ },
+ "C-POS": {
+  "ancestor_recall_1": 0.9048333333333334,
+  "ancestor_recall_5": 0.7476724137931035,
+  "ancestor_recall_all": 0.28144535519125685,
+  "depth_error": 27.85106557377049,
+  "edge_precision": 0.9044166666666666,
+  "edge_recall": 0.9044166666666666,
+  "extinct_recoverable": 1.0,
+  "flagged_fraction": 0.998256320836966,
+  "mrca_error": 14.405,
+  "n_corrupted": 1147,
+  "n_inferred_edges": 12000,
+  "n_retained": 12200,
+  "n_true_edges_among_retained": 12000,
+  "pass": true
+ },
+ "all_controls_pass": false,
+ "ruler_sha256": "1266088441aa623588b7daf67c653a158c0c075266ad825b3b1739154346ed3a",
+ "stage": "controls",
+ "world": {
+  "G": 60,
+  "L": 50,
+  "N": 200,
+  "indel": 0.0,
+  "mu": 0.02,
+  "n_organisms": 12200,
+  "seed": 20260918,
+  "truth_sha256": "1689294dd12423ee3f3d064f73f1a9b785ebaae0ac3e543b3a487b86fc6a62a9"
+ }
+}

@@ -1,0 +1,989 @@
+[
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.4342,
+    "n": 19778,
+    "viable_share": 0.8127
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1111,
+    "comparison": 0.1667,
+    "control": 0.1667,
+    "indirection": 0.0556,
+    "logical": 0.0556,
+    "opaque_io": 0.2778,
+    "randomness": 0.1111,
+    "read_write": 0.0556
+   },
+   "distinct_opcodes": 12,
+   "instr": 18,
+   "n_regs": 11,
+   "opcode_hist": {
+    "ADD": 2,
+    "EQ": 1,
+    "IN": 3,
+    "INQ": 1,
+    "JNZ": 2,
+    "JZ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "LT": 2,
+    "OR": 1,
+    "OUT": 1,
+    "RND": 2
+   },
+   "persist": "all",
+   "tape_words": 1024,
+   "tick_budget": 16,
+   "words": 72
+  },
+  "engine": {
+   "exp_id": "exp_c8b9ee51442880bc51540676",
+   "obs_id": "obs_95a3557b0d75227a85a4479d"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 7,
+  "heldout_final": 0.5312,
+  "seed": 1,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13709,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 33.4,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.4431,
+    "n": 19774,
+    "viable_share": 0.8318
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.05,
+    "comparison": 0.05,
+    "control": 0.075,
+    "halt_yield": 0.075,
+    "indirection": 0.025,
+    "logical": 0.2,
+    "opaque_io": 0.35,
+    "randomness": 0.025,
+    "read_write": 0.15
+   },
+   "distinct_opcodes": 17,
+   "instr": 40,
+   "n_regs": 9,
+   "opcode_hist": {
+    "HALT": 2,
+    "IN": 6,
+    "INQ": 2,
+    "JMP": 2,
+    "JZ": 1,
+    "LDC": 5,
+    "LT": 2,
+    "MOV": 1,
+    "MUL": 2,
+    "NOP": 1,
+    "NOT": 1,
+    "OUT": 6,
+    "RND": 1,
+    "SHL": 2,
+    "SHR": 2,
+    "ST": 1,
+    "XOR": 3
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 8,
+   "words": 160
+  },
+  "engine": {
+   "exp_id": "exp_2f3f48248972bf77e663695e",
+   "obs_id": "obs_f89a3c1a633f5477569a58bd"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 4,
+  "heldout_final": 0.3542,
+  "seed": 2,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13794,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 31.9,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.439,
+    "n": 19778,
+    "viable_share": 0.8162
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0741,
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "indirection": 0.1111,
+    "logical": 0.0741,
+    "opaque_io": 0.4444,
+    "randomness": 0.0741
+   },
+   "distinct_opcodes": 11,
+   "instr": 27,
+   "n_regs": 14,
+   "opcode_hist": {
+    "EQ": 3,
+    "IN": 6,
+    "INQ": 1,
+    "JNZ": 3,
+    "LD": 1,
+    "MUL": 2,
+    "OR": 1,
+    "OUT": 5,
+    "RND": 2,
+    "SHL": 1,
+    "ST": 2
+   },
+   "persist": "all",
+   "tape_words": 256,
+   "tick_budget": 128,
+   "words": 108
+  },
+  "engine": {
+   "exp_id": "exp_bd33bd37168c26be609b9c2e",
+   "obs_id": "obs_ba6ffc17f9827cf7784e6f23"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 4,
+  "heldout_final": 0.5312,
+  "seed": 3,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13699,
+  "train_best_final": 0.5625,
+  "train_best_max": 0.75,
+  "wall_s": 66.2,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.4329,
+    "n": 19767,
+    "viable_share": 0.8106
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0625,
+    "comparison": 0.0938,
+    "control": 0.0625,
+    "halt_yield": 0.0312,
+    "indirection": 0.25,
+    "logical": 0.1562,
+    "opaque_io": 0.1875,
+    "randomness": 0.0312,
+    "read_write": 0.125
+   },
+   "distinct_opcodes": 15,
+   "instr": 32,
+   "n_regs": 14,
+   "opcode_hist": {
+    "AND": 2,
+    "IN": 4,
+    "JNZ": 1,
+    "JZ": 1,
+    "LD": 3,
+    "LDC": 4,
+    "LT": 3,
+    "MUL": 2,
+    "NOP": 1,
+    "NOT": 1,
+    "OUT": 2,
+    "RND": 1,
+    "SHR": 1,
+    "ST": 5,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 128,
+   "words": 128
+  },
+  "engine": {
+   "exp_id": "exp_3d0e9a14ac6d529283afb93a",
+   "obs_id": "obs_3cdf12ccea1fff2eb52e286c"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 3,
+  "heldout_final": 0.5104,
+  "seed": 4,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13577,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 79.9,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.4631,
+    "n": 19782,
+    "viable_share": 0.8323
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.2424,
+    "control": 0.0303,
+    "halt_yield": 0.0606,
+    "indirection": 0.2121,
+    "logical": 0.2121,
+    "opaque_io": 0.1818,
+    "randomness": 0.0303,
+    "read_write": 0.0303
+   },
+   "distinct_opcodes": 16,
+   "instr": 33,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 1,
+    "IN": 5,
+    "JZ": 1,
+    "LD": 4,
+    "MOV": 1,
+    "MUL": 4,
+    "NOP": 1,
+    "NOT": 2,
+    "OUT": 1,
+    "RND": 1,
+    "SHL": 2,
+    "SHR": 1,
+    "ST": 3,
+    "SUB": 4,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 512,
+   "tick_budget": 512,
+   "words": 132
+  },
+  "engine": {
+   "exp_id": "exp_5c71e67e2282d8a41d013011",
+   "obs_id": "obs_4a243783b6704c3871754d8b"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 2,
+  "heldout_final": 0.5625,
+  "seed": 5,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13936,
+  "train_best_final": 0.625,
+  "train_best_max": 0.8125,
+  "wall_s": 34.9,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "mutation_only",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "mean_reward": null,
+    "n": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "mean_reward": 0.4372,
+    "n": 19748,
+    "viable_share": 0.8132
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.0526,
+    "control": 0.1053,
+    "halt_yield": 0.1053,
+    "indirection": 0.2368,
+    "logical": 0.2105,
+    "opaque_io": 0.2368,
+    "randomness": 0.0263,
+    "read_write": 0.0263
+   },
+   "distinct_opcodes": 19,
+   "instr": 38,
+   "n_regs": 11,
+   "opcode_hist": {
+    "AND": 1,
+    "EQ": 1,
+    "HALT": 1,
+    "IN": 5,
+    "INQ": 2,
+    "JNZ": 3,
+    "JZ": 1,
+    "LD": 6,
+    "LDC": 1,
+    "LT": 1,
+    "NOP": 1,
+    "OR": 2,
+    "OUT": 2,
+    "RND": 1,
+    "SHL": 1,
+    "SHR": 2,
+    "ST": 3,
+    "XOR": 2,
+    "YIELD": 2
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 16,
+   "words": 152
+  },
+  "engine": {
+   "exp_id": "exp_94a9f9dfd15ef762760338df",
+   "obs_id": "obs_1232f8c82528fb9c09518192"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 3,
+  "heldout_final": 0.5208,
+  "seed": 6,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13716,
+  "train_best_final": 0.53125,
+  "train_best_max": 0.65625,
+  "wall_s": 68.4,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4296,
+    "n": 18493,
+    "viable_share": 0.803
+   },
+   "mated_splice": {
+    "mean_reward": 0.3903,
+    "n": 1104,
+    "viable_share": 0.731
+   },
+   "mutation": {
+    "mean_reward": 0.4161,
+    "n": 177,
+    "viable_share": 0.774
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1714,
+    "control": 0.1429,
+    "halt_yield": 0.0857,
+    "indirection": 0.1143,
+    "logical": 0.0857,
+    "opaque_io": 0.2286,
+    "randomness": 0.0286,
+    "read_write": 0.1429
+   },
+   "distinct_opcodes": 14,
+   "instr": 35,
+   "n_regs": 11,
+   "opcode_hist": {
+    "ADD": 3,
+    "IN": 6,
+    "JNZ": 2,
+    "JZ": 3,
+    "LD": 2,
+    "LDC": 3,
+    "MOV": 2,
+    "MUL": 3,
+    "NOP": 3,
+    "NOT": 1,
+    "OUT": 2,
+    "RND": 1,
+    "ST": 2,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 1024,
+   "tick_budget": 16,
+   "words": 140
+  },
+  "engine": {
+   "exp_id": "exp_4f6725bd1a2c90429788ce37",
+   "obs_id": "obs_3e5e936c31aa692df720b9d2"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 4,
+  "heldout_final": 0.5312,
+  "seed": 1,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13677,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 38.5,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4543,
+    "n": 18601,
+    "viable_share": 0.8502
+   },
+   "mated_splice": {
+    "mean_reward": 0.428,
+    "n": 1039,
+    "viable_share": 0.8046
+   },
+   "mutation": {
+    "mean_reward": 0.448,
+    "n": 146,
+    "viable_share": 0.8356
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.125,
+    "comparison": 0.0469,
+    "control": 0.0938,
+    "halt_yield": 0.0781,
+    "indirection": 0.0469,
+    "logical": 0.3125,
+    "opaque_io": 0.2188,
+    "randomness": 0.0312,
+    "read_write": 0.0469
+   },
+   "distinct_opcodes": 22,
+   "instr": 64,
+   "n_regs": 9,
+   "opcode_hist": {
+    "ADD": 2,
+    "AND": 2,
+    "HALT": 3,
+    "IN": 5,
+    "INQ": 1,
+    "JMP": 3,
+    "JNZ": 2,
+    "JZ": 1,
+    "LD": 1,
+    "LT": 3,
+    "MOV": 3,
+    "MUL": 3,
+    "NOT": 3,
+    "OR": 1,
+    "OUT": 8,
+    "RND": 2,
+    "SHL": 3,
+    "SHR": 5,
+    "ST": 2,
+    "SUB": 3,
+    "XOR": 6,
+    "YIELD": 2
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 8,
+   "words": 256
+  },
+  "engine": {
+   "exp_id": "exp_6fec7ff54d6794ceffdc4ceb",
+   "obs_id": "obs_e09a5d4acb7999158e07f75b"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 1,
+  "heldout_final": 0.3542,
+  "seed": 2,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13889,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 35.4,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4297,
+    "n": 18657,
+    "viable_share": 0.7981
+   },
+   "mated_splice": {
+    "mean_reward": 0.3584,
+    "n": 1010,
+    "viable_share": 0.6584
+   },
+   "mutation": {
+    "mean_reward": 0.4138,
+    "n": 112,
+    "viable_share": 0.7857
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.0588,
+    "control": 0.1176,
+    "halt_yield": 0.1176,
+    "indirection": 0.0588,
+    "logical": 0.1765,
+    "opaque_io": 0.3529,
+    "randomness": 0.1176
+   },
+   "distinct_opcodes": 11,
+   "instr": 17,
+   "n_regs": 14,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "IN": 3,
+    "INQ": 1,
+    "JNZ": 2,
+    "LD": 1,
+    "NOP": 1,
+    "OUT": 2,
+    "RND": 2,
+    "SHR": 2,
+    "XOR": 1
+   },
+   "persist": "all",
+   "tape_words": 256,
+   "tick_budget": 128,
+   "words": 68
+  },
+  "engine": {
+   "exp_id": "exp_ebb711afcd3ec3b77715c116",
+   "obs_id": "obs_2faf0ee25c4b6b64e7746962"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 4,
+  "heldout_final": 0.5312,
+  "seed": 3,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13441,
+  "train_best_final": 0.5625,
+  "train_best_max": 0.75,
+  "wall_s": 66.0,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4339,
+    "n": 18691,
+    "viable_share": 0.8065
+   },
+   "mated_splice": {
+    "mean_reward": 0.3653,
+    "n": 974,
+    "viable_share": 0.6653
+   },
+   "mutation": {
+    "mean_reward": 0.434,
+    "n": 116,
+    "viable_share": 0.8276
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1724,
+    "control": 0.2069,
+    "halt_yield": 0.0345,
+    "logical": 0.2069,
+    "opaque_io": 0.3448,
+    "read_write": 0.0345
+   },
+   "distinct_opcodes": 15,
+   "instr": 29,
+   "n_regs": 14,
+   "opcode_hist": {
+    "AND": 1,
+    "IN": 6,
+    "INQ": 1,
+    "JMP": 2,
+    "JNZ": 3,
+    "JZ": 1,
+    "LDC": 1,
+    "MUL": 4,
+    "NOP": 1,
+    "NOT": 1,
+    "OR": 2,
+    "OUT": 3,
+    "SHL": 1,
+    "SUB": 1,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 16,
+   "words": 116
+  },
+  "engine": {
+   "exp_id": "exp_3735633785834a8e447f1e81",
+   "obs_id": "obs_41cd1b881c1ecaf943620294"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 2,
+  "heldout_final": 0.5104,
+  "seed": 4,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13137,
+  "train_best_final": 0.5,
+  "train_best_max": 0.8125,
+  "wall_s": 123.8,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4708,
+    "n": 18645,
+    "viable_share": 0.8472
+   },
+   "mated_splice": {
+    "mean_reward": 0.4468,
+    "n": 1010,
+    "viable_share": 0.801
+   },
+   "mutation": {
+    "mean_reward": 0.4752,
+    "n": 122,
+    "viable_share": 0.877
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0682,
+    "comparison": 0.0682,
+    "control": 0.0909,
+    "halt_yield": 0.1136,
+    "indirection": 0.0909,
+    "logical": 0.2045,
+    "opaque_io": 0.2955,
+    "randomness": 0.0227,
+    "read_write": 0.0455
+   },
+   "distinct_opcodes": 20,
+   "instr": 44,
+   "n_regs": 9,
+   "opcode_hist": {
+    "ADD": 1,
+    "HALT": 3,
+    "IN": 4,
+    "INQ": 2,
+    "JMP": 1,
+    "JNZ": 3,
+    "LD": 2,
+    "LDC": 2,
+    "LT": 3,
+    "MUL": 1,
+    "NOP": 2,
+    "NOT": 3,
+    "OR": 2,
+    "OUT": 7,
+    "RND": 1,
+    "SHL": 1,
+    "SHR": 2,
+    "ST": 2,
+    "SUB": 1,
+    "XOR": 1
+   },
+   "persist": "all",
+   "tape_words": 256,
+   "tick_budget": 16,
+   "words": 176
+  },
+  "engine": {
+   "exp_id": "exp_9005b8b8bca9fb1f2c0b6c75",
+   "obs_id": "obs_77193fbf67ffd9b080c14b13"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 3,
+  "heldout_final": 0.5625,
+  "seed": 5,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13817,
+  "train_best_final": 0.625,
+  "train_best_max": 0.8125,
+  "wall_s": 28.5,
+  "warnings": []
+ },
+ {
+  "E": 16,
+  "G": 100,
+  "N": 200,
+  "arm": "recombination",
+  "births": {
+   "mated_no_splice": {
+    "mean_reward": 0.4301,
+    "n": 18553,
+    "viable_share": 0.8043
+   },
+   "mated_splice": {
+    "mean_reward": 0.3966,
+    "n": 1081,
+    "viable_share": 0.7373
+   },
+   "mutation": {
+    "mean_reward": 0.4263,
+    "n": 114,
+    "viable_share": 0.7982
+   }
+  },
+  "crossing": 0,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.15,
+    "comparison": 0.025,
+    "control": 0.15,
+    "halt_yield": 0.075,
+    "indirection": 0.075,
+    "logical": 0.275,
+    "opaque_io": 0.15,
+    "randomness": 0.05,
+    "read_write": 0.05
+   },
+   "distinct_opcodes": 22,
+   "instr": 40,
+   "n_regs": 11,
+   "opcode_hist": {
+    "ADD": 3,
+    "AND": 1,
+    "IN": 3,
+    "INQ": 2,
+    "JMP": 1,
+    "JNZ": 4,
+    "JZ": 1,
+    "LD": 2,
+    "LDC": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 1,
+    "NOP": 3,
+    "NOT": 3,
+    "OR": 1,
+    "OUT": 1,
+    "RND": 2,
+    "SHL": 2,
+    "SHR": 2,
+    "ST": 1,
+    "SUB": 2,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 256,
+   "tick_budget": 16,
+   "words": 160
+  },
+  "engine": {
+   "exp_id": "exp_ee1c1d0935231123e19bfdb0",
+   "obs_id": "obs_f7469d6c64eaa49a366686f2"
+  },
+  "first_crossing_gen": null,
+  "first_shelf_gen": 0,
+  "gen0_provenance": {
+   "N": 200,
+   "fill": "c4-05 depth-16 walkers, repeated to N by the evolver's init_pop rule",
+   "n": 188,
+   "verified_common": true
+  },
+  "heldout_behaviour_distinct": 2,
+  "heldout_final": 0.5208,
+  "seed": 6,
+  "shelf_reached": 1,
+  "structural_novelty_total": 13797,
+  "train_best_final": 0.53125,
+  "train_best_max": 0.65625,
+  "wall_s": 32.0,
+  "warnings": []
+ }
+]
