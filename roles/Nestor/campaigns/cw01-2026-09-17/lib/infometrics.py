@@ -87,3 +87,58 @@ def normalised_mi(x, y):
     """I(X;Y) / H(X), the fraction of the label's entropy explained. 0 when H(X)=0."""
     hx = entropy_bits(x)
     return (mutual_information_bits(x, y) / hx) if hx > 0 else 0.0
+
+
+# ---------------------------------------------------------------- effect nulls
+#
+# CW01-D035, the third member of one family. All three are conditions satisfiable
+# in the ABSENCE of the phenomenon:
+#   D022  a gain detector with no noise floor fired on pure noise
+#   D034  a matched-arms check passed with info=0.0 -- nothing happened
+#   D035  an intervention verdict tested DIRECTION but not MAGNITUDE
+#
+# e04's decisive intervention was recorded as (scramble < sham), a bare sign test.
+# It reported 4/4. Measuring the sham against ITSELF across independent seed blocks
+# gives the null for an intervention that does nothing; one replicate's -3.27% sat
+# inside [-6.69, +7.17] and the claim was really 3/4.
+#
+# An effect claim must name its null and clear it.
+
+
+def sham_null(sham_estimates):
+    """Null distribution for 'an intervention that does nothing'.
+
+    sham_estimates: independent estimates of the SAME cost-matched sham, one per
+    seed block. Their pairwise relative differences are the run-to-run noise in the
+    score estimate -- exactly what an inert intervention would produce.
+    """
+    import numpy as np
+    s = np.asarray(sham_estimates, dtype=float)
+    if len(s) < 3:
+        raise ValueError("need at least 3 independent sham estimates to form a null")
+    null = np.array([100.0 * (s[i] - s[j]) / s[j]
+                     for i in range(len(s)) for j in range(len(s)) if i != j])
+    return {"null": null, "p05": float(np.percentile(null, 5)),
+            "p50": float(np.percentile(null, 50)), "p95": float(np.percentile(null, 95)),
+            "n_blocks": int(len(s))}
+
+
+def effect_clears_null(effect_pct, sham_estimates, direction="negative"):
+    """Does an intervention effect exceed the noise floor, in the expected direction?
+
+    direction 'negative' expects the intervention to HURT (effect below p05);
+    'positive' expects it to help (above p95). Returns a verdict dict; `clears`
+    false means the effect is indistinguishable from doing nothing.
+    """
+    n = sham_null(sham_estimates)
+    if direction == "negative":
+        clears = effect_pct < n["p05"]
+        bound = n["p05"]
+    else:
+        clears = effect_pct > n["p95"]
+        bound = n["p95"]
+    return {"clears": bool(clears), "effect_pct": float(effect_pct), "direction": direction,
+            "bound": bound, "null_p05": n["p05"], "null_p95": n["p95"],
+            "n_blocks": n["n_blocks"],
+            "verdict": ("CLEARS the noise floor" if clears else "INSIDE NOISE - proves nothing"),
+            "_caveat": "a sign test is safe only when the margin is enormous; measure the floor"}

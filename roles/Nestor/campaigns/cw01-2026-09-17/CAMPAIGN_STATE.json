@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-17 18:13:47",
+ "updated_local": "2026-09-17 20:15:36",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -114,13 +114,43 @@
   {
    "id": "cw01-e04",
    "title": "Queue / TTL ecology",
-   "status": "NEXT",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e04-a01",
+     "phase": "PACKAGE",
+     "disposition": "INCONCLUSIVE",
+     "ended_local": "2026-09-17 20:15:36",
+     "rows": 726
+    }
+   ],
+   "disposition": "INCONCLUSIVE",
+   "headline": {
+    "what_holds": {
+     "triage_exists": "MI significant against a shuffled null in 4/4 replicates (0.280 bits mean, excess +0.276)",
+     "beats_non_conditional_control": "4/4 (treatment 1.7215-1.7834 vs 1.5742-1.5977)",
+     "beats_always_recompute": "4/4 (vs 0.8691-0.9000)",
+     "ancestor_relative": "+49.1% mean",
+     "_distinction": "The EXISTENCE of selective, worth-conditional carrying is solid. What fails to replicate is the CAUSAL DEPENDENCE on the hidden value structure. Those are different claims and must not be blurred."
+    },
+    "noise_floor": "3/4",
+    "generality": {
+     "ttl_half": -14.833546413997322,
+     "ttl_double": 5.237026621577794,
+     "drop_shock": -8.509750275080656
+    }
+   },
+   "limitations": [
+    "Selectivity and triage are separate quantities; selective-but-blind is a NEGATIVE.",
+    "I(features;handling) understates triage because the feature code bins one feature while worth depends on all four; I(worth;handling) is the informative measure.",
+    "Two 5-parameter linear policies, not a rich program.",
+    "Effect sizes here are an order of magnitude smaller than e03's (triage MI 0.280 vs 1.583 bits; J1 -8.8% vs -37.6%..-61.0%). A sign test was harmless in e03 because the margin was enormous; it was not harmless here."
+   ]
   },
   {
    "id": "cw01-e05",
    "title": "Mixture of marginally useful organisms",
-   "status": "PENDING",
+   "status": "NEXT",
    "attempts": []
   },
   {
@@ -155,11 +185,11 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e04",
-  "attempt_id": "cw01-e04-a01",
+  "experiment_id": "cw01-e05",
+  "attempt_id": "cw01-e05-a01",
   "phase": "PENDING_RECONCILE",
   "phase_completed": [],
-  "title": "Queue / TTL ecology"
+  "title": "Mixture of marginally useful organisms"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -244,17 +274,18 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 3,
+  "experiments_attempted": 4,
   "complete": 2,
   "null": 1,
   "negative": 0,
-  "inconclusive": 0,
-  "defects_logged": 31,
-  "science_defects": 15,
+  "inconclusive": 1,
+  "defects_logged": 36,
+  "science_defects": 19,
   "defects_per_experiment": {
    "e01": 8,
    "e02": 12,
-   "e03": 3
+   "e03": 3,
+   "e04": 5
   },
   "reusable_components_landed": [
    "lib/seeds.py",

@@ -98,3 +98,38 @@ def require(verdict):
     if not verdict.get("learnable"):
         raise NotLearnable(verdict.get("verdict", "not learnable"))
     return verdict
+
+
+class VacuousCheck(AssertionError):
+    """Raised when a comparison would pass because nothing happened."""
+
+
+def assert_live(metrics, required, label=""):
+    """A comparison is only meaningful if the thing being compared actually occurred.
+
+    This family keeps recurring across the campaign:
+      e01  close_sweep recorded {checks_run: 0, ok: true} -- a pass over no checks
+      e01  Q4 'passed' by comparing three EMPTY strings from crashed subprocesses
+      e04  Q10 'passed' with info=0.0 on both arms: two arms agreeing that the world
+           was empty, which is no evidence they are matched
+
+    So identity and equality checks must be gated on liveness. `required` names the
+    metrics that must be non-zero for the comparison to mean anything -- e.g.
+    ("info", "placements") for a channel arm, ("ordered",) for an ordering claim.
+
+    Returns a verdict dict; `live` false means the check proves nothing.
+    """
+    dead = [k for k in required
+            if k not in metrics or metrics[k] == 0 or metrics[k] is False]
+    return {"live": not dead, "dead_metrics": dead, "label": label,
+            "checked": {k: metrics.get(k) for k in required},
+            "verdict": ("LIVE" if not dead
+                        else "VACUOUS - these were zero: %s" % dead)}
+
+
+def require_live(metrics, required, label=""):
+    """Fail closed on a vacuous comparison rather than recording a hollow PASS."""
+    v = assert_live(metrics, required, label)
+    if not v["live"]:
+        raise VacuousCheck("%s %s" % (label, v["verdict"]))
+    return v
