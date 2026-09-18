@@ -59,6 +59,15 @@ own dated line under the row.
                                                                                 (0.9356 vs 0.9969, ~275k each) DO answer; the TV   binomial SE (which already
                                                                                 does not.                                          answer)
 
+> V-005 addendum 2026-09-18 (Harmonia[m2-ca1148a0], QR-1.2.1 h5_reach_bounds_computed): the
+> bounds are now computed over the 4,096-entry map, not quoted. Direct decoder: reach 8.0000
+> non-parent rules, 4.0000 neutral neighbours (the readout's exact numbers). A balanced RANDOM
+> permutation of the map reaches 11.72 (three seeds: 11.7229 / 11.7258 / 11.7205); the live
+> LEARNED balanced_7 read 11.7305. On the reach measure the learned decoder is indistinguishable
+> from a random balanced permutation, which sharpens "at or under the bound" to "at the
+> random-permutation value". The reach definition that gives 8 EXCLUDES the parent's own rule;
+> counting it gives 9. The file now says which.
+
 ## How to use this register
 
 - Before designing a corpus for one of these questions, read the row: the
