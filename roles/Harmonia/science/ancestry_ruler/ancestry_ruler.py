@@ -167,6 +167,13 @@ def losses(truth, record, edges, rng, pairs=200):
     res["depth_error"] = float(np.mean([abs(inf_depth(oid) - len([a for a in ancestors(tby, oid) if a in kept])) for oid in kept]))
     extinct = [o for o in truth if not o["alive_at_end"]]
     res["extinct_recoverable"] = (sum(1 for o in extinct if o["id"] in kept) / len(extinct)) if extinct else None
+    # AMENDMENT_C: extinct BRANCHES = extinct organisms with no surviving descendant (the thing D2 loses)
+    surv_anc = set()
+    for o in truth:
+        if o["alive_at_end"]: surv_anc.update(ancestors(tby, o["id"]))
+    branches = [o for o in extinct if o["id"] not in surv_anc]
+    res["n_extinct_branch_organisms"] = len(branches)
+    res["extinct_branch_recoverable"] = (sum(1 for o in branches if o["id"] in kept) / len(branches)) if branches else None
     # MRCA error on survivor pairs
     surv = [o["id"] for o in truth if o["alive_at_end"] and o["id"] in kept]
     def mrca_gen(anc_fn, a, b):
@@ -242,11 +249,20 @@ def stage_curves(out):
     def agg(mode, param, key):
         v = [r[key] for r in rows if r["mode"] == mode and r["param"] == param and isinstance(r[key], (int, float))]
         return (float(np.mean(v)), float(np.min(v)), float(np.max(v))) if v else None
-    P = {"P1_D1_recall_lt_0.5_all_reps": all((r["edge_recall"] is None) or r["edge_recall"] < 0.5 for r in rows if r["mode"] == "D1"),
-         "P2_D2_recall_1_and_extinct_0": all(r["edge_recall"] == 1.0 and r["extinct_recoverable"] == 0.0 for r in rows if r["mode"] == "D2"),
-         "P3_D3_monotone_in_k": (agg("D3", 2, "edge_recall")[0] > agg("D3", 5, "edge_recall")[0] > agg("D3", 10, "edge_recall")[0]),
-         "P4_D4_recall_in_0.6_0.95": all(0.6 <= r["edge_recall"] <= 0.95 for r in rows if r["mode"] == "D4")}
-    res = {"rows": rows, "predictions": P, "summary": {f"{m}:{p}": {k: agg(m, p, k) for k in ("edge_recall", "edge_precision", "ancestor_recall_all", "depth_error", "extinct_recoverable", "mrca_error")} for m, p in plan}, "seconds": round(time.time() - t0, 1)}
+    def a0(m, p, k):
+        v = agg(m, p, k); return v[0] if v else None
+    # P1-P4 exactly as preregistered, with VACUOUS / UNEVALUABLE where the measure has no value
+    d1 = [r for r in rows if r["mode"] == "D1"]; d2 = [r for r in rows if r["mode"] == "D2"]
+    P = {"P1_D1_recall_lt_0.5_all_reps": ("VACUOUS: no true parent edge has both endpoints among the survivors (non-overlapping generations); edge_recall undefined" if all(r["edge_recall"] is None for r in d1) else all(r["edge_recall"] < 0.5 for r in d1)),
+         "P2_D2_recall_1_and_extinct_0": all(r["edge_recall"] == 1.0 and r["extinct_recoverable"] == 0.0 for r in d2),
+         "P2_as_written_fails_because": "extinct_recoverable counts extinct ANCESTORS of survivors, which D2 keeps by construction; the loss D2 causes is of extinct BRANCHES (see extinct_branch_recoverable, AMENDMENT_C)" if not all(r["extinct_recoverable"] == 0.0 for r in d2) else None,
+         "P3_D3_monotone_in_k": ("UNEVALUABLE on edge_recall: with every k-th generation kept no true parent edge has both endpoints retained" if a0("D3", 2, "edge_recall") is None else (a0("D3", 2, "edge_recall") > a0("D3", 5, "edge_recall") > a0("D3", 10, "edge_recall"))),
+         "P4_D4_recall_in_0.6_0.95": all(0.6 <= r["edge_recall"] <= 0.95 for r in rows if r["mode"] == "D4"),
+         # POST-HOC (labelled; not preregistered): the measures that DO read D1/D3
+         "POSTHOC_P3_mrca_error_monotone_in_k": (a0("D3", 2, "mrca_error") < a0("D3", 5, "mrca_error") < a0("D3", 10, "mrca_error")),
+         "POSTHOC_P2_extinct_branch_recoverable_D2": a0("D2", None, "extinct_branch_recoverable"),
+         "POSTHOC_P1_D1_mrca_error": a0("D1", None, "mrca_error")}
+    res = {"rows": rows, "predictions": P, "summary": {f"{m}:{p}": {k: agg(m, p, k) for k in ("edge_recall", "edge_precision", "ancestor_recall_1", "ancestor_recall_all", "depth_error", "extinct_recoverable", "extinct_branch_recoverable", "mrca_error")} for m, p in plan}, "seconds": round(time.time() - t0, 1)}
     json.dump(res, open(os.path.join(out, "curves.json"), "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True, default=str)
     print(json.dumps(P, indent=1)); print("seconds", res["seconds"])
 
