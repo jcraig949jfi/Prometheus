@@ -255,6 +255,66 @@ Learnability (`lib/learnability.probe`): `ACCUMULATOR` must beat `STATELESS` by 
 Each refusal is demonstrated once. No checker is built for the checker (maximum recursive
 validation depth ONE). The gate is never relaxed to admit the candidate world.
 
+### Amendment 1 — PRE-DATA, before implementation (gate construction only)
+
+No code exists and nothing has been evaluated. The question, the world, the damage
+family, the statistic, the controls and the dispositions are unchanged. Three details of
+the GATE's construction are corrected because, as written, they could not do their job:
+
+1. **Pilot population.** A single 40-generation lineage under tournament selection with
+   elitism converges toward near-clones, so P4 could REFUSE a perfectly good world merely
+   because the pilot lacked diversity. The pilot is therefore FOUR independent
+   40-generation STATIC pilot lineages (own seed components, own task stream), taking
+   the top 16 organisms by intact score from each: 64 organisms. Discarded afterwards.
+2. **F4 fixture.** The `alpha` family is NOT a valid known-broken case: intact score is
+   non-monotone in `alpha` (slow accumulators are biased toward zero within the lifetime,
+   fast ones are noisy), so two `alpha` values can share an intact score while genuinely
+   differing in recovery speed. That is a real robustness dimension, not a defect. F4 is
+   replaced by the **readout-gain family**: 64 copies of `ACCUMULATOR` with
+   `W[q] = g e_q`, `g in [0.3, 1.0]`. Intact score is monotone in `g` and the damage
+   response is a smooth deterministic function of `g`, hence of intact score, by
+   construction. P4 must refuse it.
+3. **F3 fixture.** "All cells zeroed at every episode" leaves a stateless computation
+   available and so is lethal only for organisms whose intact score is high enough; a
+   fixture whose brokenness depends on the pilot's quality is not a fixture. F3 is a
+   **persistent lesion**: all cells held at zero from `T_d` on (the operator applied
+   after every update), so output is exactly the floor and `AURC = 0` for every useful
+   organism regardless of its quality. This lesion path exists only for the fixture.
+
+### Amendment 2 — AFTER THE FIRST GATE REFUSAL (the one permitted correction)
+
+The gate ran once on the candidate world and REFUSED it on P1 and P4, while refusing all
+five known-broken fixtures for the expected reason (gate credibility established). No
+contract was hashed; no organism was evaluated under a frozen criterion. **No threshold,
+statistic, control or disposition rule changes here.** Two independent defects were
+found; the decision budget permits one causal correction.
+
+**Defect 1 (CW01-D058, preregistration).** P1 requires the `ACCUMULATOR`'s grand-mean
+`AURC <= 0.90` at `f = 0.20`. Measured: 0.944 (blocks 0.92-0.985). Probe A measured
+`AURC` against `k` and found the bound is attainable only at `k >= 7` (`f >= 0.44`):
+0.983, 0.956, 0.944, 0.922, 0.910, 0.904, 0.872, 0.871 for `k = 1..8`. Immediate
+retention `rho_0` at `k = 3` is 0.80, so damage measurably fires; the preregistered
+magnitude was placed on the area under recovery, which a fast re-accumulator recovers.
+The threshold was frozen without computing its attainable range (the campaign's
+eligibility-count lesson). **It is not moved.** A future attempt must either preregister
+`f >= 0.44` as primary or place P1's magnitude on `rho_0`.
+
+**Defect 2 (CW01-D059, world).** Evolution does not reach state-dependent computation.
+Pilot representatives have intact score 0.28-0.46 against the hand-built accumulator's
+0.74, and their useful computation above the stateless twin is ~0.05. Probe C at the
+REAL budget (120 generations) reaches 0.35 with state dependence ~0.08. Probe F showed
+diagonal recurrence changes nothing. Probe G tested three single search-regime features
+at the pilot budget: mutation scale x4 and initial scale x5 both collapse the population
+(full-matrix instability); evaluating fitness on 8 lifetimes instead of 2 raises state
+dependence from ~0.03 to ~0.09 and intact score from ~0.33 to ~0.41, the only movement
+in the right direction, and still leaves damage inert (`AURC >= 0.987` at `k = 3`).
+
+**The one correction: `lifetimes_per_eval` 2 -> 8** (fitness ranking noise, the one
+feature that moved state use toward reachability). Everything else is unchanged. The
+gate is re-run ONCE. Probe G predicts it will still refuse; the re-run is made so that
+the refusal of the corrected world is a gate record rather than a probe inference, and
+so that the closure record states what a future attempt needs on measured evidence.
+
 ## 10. Decision budget
 
 - Gate PASSES: freeze the contract (`lib/contract`), hash it, commit, run EXECUTE.

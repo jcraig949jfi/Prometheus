@@ -1,0 +1,69 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e07",
+ "attempt_id": "cw01-e07-a01",
+ "title": "Computational weather / brain damage",
+ "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
+ "phase_reached": "QUALIFY",
+ "executed_under_frozen_contract": false,
+ "_no_contract_was_frozen": "No verdict contract was hashed and no organism was evaluated under a frozen criterion. Every number here comes from the admissibility gate and its diagnostic probes, not from EXECUTE.",
+
+ "why_inconclusive_and_not_null": "NULL would be a claim about the WORLD: that weather-evolved lineages exist, were damaged, recovered, and showed no advantage. None of that happened. The pre-QUALIFY gate refused the world twice, so no lineage was ever evolved under weather and the causal comparison was never posed. PREREGISTRATION section 11 defines INCONCLUSIVE as exactly this case.",
+
+ "decision_budget": {
+  "run_1": "REFUSED on P1 and P4; gate credibility 5/5 fixtures refused for the expected predicate (GATE_E07_run1.json)",
+  "correction": "ONE causal feature: lifetimes_per_eval 2 -> 8 (Amendment 2), chosen from probes A-G as the only single feature that moved state use toward reachability",
+  "run_2": "REFUSED on P1 and P4; gate credibility 5/5 again (GATE_E07.json)",
+  "closed": "no third world-design cycle, per the budget"
+ },
+
+ "gate_results": {
+  "P1_damage_fires": {"outcome": false, "accumulator_AURC_grand": 0.956, "accumulator_blocks": [0.961, 0.922, 0.945, 0.942, 0.985, 0.954, 0.973, 0.974], "accumulator_rho0": 0.80, "stateless_AURC": 1.0, "threshold": "grand <= 0.90 and every block < 0.95", "_reading": "damage fires measurably (rho0 0.80, F1 no-op fixture gives exactly 1.000) but the preregistered magnitude on AURC is unattainable at f=0.20 for the reference probe; attainable only at f >= 0.44 (probe A). CW01-D058."},
+  "P2_sham_inert": {"outcome": true, "sham_max_abs_dev": 0.0, "_reading": "sham lifetimes are bit-identical to intact; bookkeeping neutrality (layer 3) holds"},
+  "P3_non_lethal": {"outcome": true, "_reading": "passes VACUOUSLY: nothing is lost because the pilot organisms barely use state (median AURC at f=0.30 is 0.98 in run 2). A P3 pass under D059 is not evidence of a recoverable regime."},
+  "P4_separable": {"outcome": false, "run1": {"ratio": 0.66, "pairs": 60}, "run2": {"ratio": 0.96, "pairs": 63}, "threshold": 3.0, "_reading": "organisms of like intact ability do not differ in damage response beyond retest noise, because damage barely bites on any of them (D059)"},
+  "P5_blind": {"outcome": true, "same_index_set": "64/64 trials", "_reading": "the production selector is representation- and semantic-blind; the magnitude-targeting fixture F5 was refused"},
+  "learnability": {"accumulator": 0.7394, "stateless": 0.3604, "zero": 0.2638, "accumulator_over_stateless_pct": 105.1, "_reading": "a hand-built organism achieves the effect; the world is learnable in principle, unreachable by this search"},
+  "determinism": "pilot lineage 0 evolved twice from attempt_id alone: bit-identical",
+  "pilot_run2": {"n": 64, "n_useful": 64, "I_mean": 0.402, "I_range": [0.369, 0.435]}
+ },
+
+ "gate_credibility": {
+  "fixtures_refused": "5/5 in both runs, each for the expected predicate",
+  "F1_noop_selector": "P1 fired (AURC exactly 1.000 in every block)",
+  "F2_sham_that_zeros": "P2 fired (sham deviates from intact)",
+  "F3_persistent_lesion": "P3 fired (median AURC 0.0, nothing recovers) and P1's stateless check also fired, correctly: a lesion after the update touches a stateless organism",
+  "F4_readout_gain_family": "P4 fired (damage response a deterministic function of intact ability)",
+  "F5_magnitude_selector": "P5 fired (index set differs across states)",
+  "_rule": "the gate was never relaxed to admit; both refusals are recorded as findings"
+ },
+
+ "what_was_achieved": {
+  "science_fixed_before_code": "PREREGISTRATION.md at 836023206: one damage family, a bit-identical cost-matched sham, three arms with SHAMWEATHER as a mechanically defined M3, lineage as the unit, an exact relabelling null, and an ability-adjusted decisive statistic (AURC normalised per organism by its own intact capability, with intact score as a covariate and an overlap requirement) so intact ability cannot masquerade as robustness in either direction.",
+  "cheap_admissibility_before_evolution": "The gate cost ~2 s per run and refused the world before a single lineage was evolved under weather; the full EXECUTE would have burned 96 lineages to reach the same INCONCLUSIVE.",
+  "gate_with_teeth": "Five known-broken fixtures refused for the right reason, twice, with the fixture set corrected pre-data (Amendment 1) when two of the originals turned out not to be valid known-broken cases.",
+  "three_layer_neutrality": "Reward never mentions damage (layer 1); task stream keyed independently of the weather stream (layer 2); sham bit-identical to intact and one representative-selection rule for all arms (layer 3, P2 PASS).",
+  "measure_before_theorising": "Seven probes (A-G, ~4 s total) refuted my own meltdown hypothesis (the trajectory swings are theta-draw noise), established the P1 attainability curve, and eliminated diagonal recurrence, mutation scale and initial scale as single-feature fixes before the one correction was spent."
+ },
+
+ "what_was_not_achieved": {
+  "damage_never_bit_an_evolved_organism": "CW01-D059: evolution reaches intact score 0.35-0.45 against the accumulator's 0.74 and uses state for ~0.05-0.09 of its score at both the pilot and the real budget.",
+  "P1_magnitude_unattainable_as_preregistered": "CW01-D058: the 0.90 AURC bound needs f >= 0.44 for the reference probe; frozen without an attainability computation and, correctly, not moved after observing results.",
+  "no_weather_lineage_was_evolved": "M1, M2, M3 and controls A-C were never exercised. The decisive statistic has no referent."
+ },
+
+ "limitations_and_residuals": [
+  "CW01-D061 (class C): the usefulness rule admits near-floor organisms whose per-window ratios explode; contained by the clip, not removed.",
+  "The gate's P3 is satisfiable in the absence of the phenomenon when damage does not bite (CW01-D034 family); a future P3 should be gated on P1 having fired on the population under test, not only on the hand-built probe.",
+  "One organism family (464-parameter linear recurrent net), one search regime, four pilot lineages, one attempt_id."
+ ],
+
+ "what_a_future_attempt_would_need": [
+  "Attainability computed BEFORE freezing: place P1's magnitude on rho_0 (0.80 at f=0.20 here), or preregister f >= 0.44 as primary, with the reference probe's curve on record.",
+  "An organism or search in which the accumulator ridge is reachable: e.g. persistence as a bounded per-cell gene a in [0,1] with the input gain tied to (1-a) so the move is one-dimensional, or a search budget an order of magnitude larger; verified by the SAME cheap pilot before the preregistration is frozen.",
+  "P3 gated on P1 having fired on the pilot population itself.",
+  "Keep everything else: the damage family, the bit-identical sham, the SHAMWEATHER M3 arm, the relabelling null, the ability-adjusted statistic and the fixture set all held up and are reusable as written."
+ ],
+
+ "doctrine_promoted": "A preregistered magnitude threshold must come with its attainable range for the reference probe, computed before freezing; otherwise the gate can refuse a world for an arithmetic reason that no causal correction can fix, and the one-correction budget is spent on the wrong defect. This is the eligibility-count lesson (CW01-D043 family) applied to gate thresholds rather than to selection rules."
+}
