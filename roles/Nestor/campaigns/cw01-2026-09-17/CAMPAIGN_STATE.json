@@ -1,9 +1,9 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 10:23:08",
+ "updated_local": "2026-09-18 11:31:40",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
- "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
+ "campaign_order": "PRIORITY LOOP (operator directive 2026-09-18): revisit / perturb / stasis / reactivate over the whole history; nothing scientific is killed; see loop/LOOP_RULES.md",
  "phase_model": [
   "RECONCILE",
   "PREFLIGHT",
@@ -427,14 +427,10 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e09",
-  "attempt_id": "cw01-e09-a01",
-  "phase": "CLOSED_AT_RECONCILE",
-  "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
-  "phase_completed": [
-   "RECONCILE"
-  ],
-  "next": "CONTINUE -> cw01-e10 mutable graph physics / semiring mutation (awaiting operator brief)"
+  "mode": "priority_loop",
+  "cycle": "2026-09-18",
+  "phase": "APPENDED",
+  "next": "next cycle: RECONCILE the whole pool with this cycle's evidence, re-score, re-diversify, freeze a new ten"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -564,7 +560,7 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 5,
-  "defects_logged": 70,
+  "defects_logged": 72,
   "science_defects": 28,
   "defects_per_experiment": {
    "e01": 17,
@@ -575,7 +571,8 @@
    "e06": 6,
    "e07": 4,
    "e08": 6,
-   "e09": 2
+   "e09": 2,
+   "loop1": 2
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -589,5 +586,39 @@
    "lib/guardproof.py"
   ],
   "_tally_provenance": "DERIVED from DEFECTS.jsonl at write time AND enforced at check time by lib/recordsafety.check_tally (CW01-D049 raised it, CW01-D051 showed that deriving once is not enough - the next append re-introduces drift)."
+ },
+ "loop": {
+  "2026-09-18": {
+   "pool": 20,
+   "candidates": 23,
+   "frozen_ten": [
+    "P-A11",
+    "P-B05",
+    "P-A04",
+    "P-B09",
+    "P-B03",
+    "P-A08",
+    "P-A10",
+    "P-A07",
+    "P-B04",
+    "P-A01"
+   ],
+   "dispositions": {
+    "P-A11": "chains do not materially exceed the single-op ceiling on held-out lifetimes",
+    "P-B05": "order unchanged (p_factor first remains the rule)",
+    "P-A04": "material=False",
+    "P-B09": "no relabelling-clearing change in rel(7); inversion persists or is noise",
+    "P-B03": "NEGATIVE (weather lineages retain less)",
+    "P-A08": "no phi gives mutual invasibility; the asymmetry flips between [(0.0, 0.25), (0.25, 0.5), (0.75, 1.0)]",
+    "P-A10": "material=True",
+    "P-A07": "TREE invades under some variation regime",
+    "P-B04": "NULL",
+    "P-A01": "UNREACHABLE_UNDER_RULE"
+   },
+   "evidence_events": 26,
+   "material": 14,
+   "in_stasis": 3,
+   "report": "loop/CYCLE_REPORT_2026-09-18.md"
+  }
  }
 }
