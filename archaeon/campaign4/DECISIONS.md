@@ -175,3 +175,15 @@ the label stands beside them uncorrected. | C4-08/DESIGN.md. | Alternative:
 store C4-06's final populations -- rejected (D4-010). | Revisit: any later
 slot declares min_effect as a magnitude with an explicit direction field.
 DETERMINISTIC.
+
+D4-013 | 2026-09-18 08:30 | C4-09: lateral entry rule = measured reward on the
+receiving world >= 3/16 AND fitness >= that world's current median; candidates
+in organism-id order (no ranking), at most B=24 per world per generation;
+inject replaces the receiving world's worst members; the transfer
+evaluations are counted as extra compute (not equalized). ANNOTATION after
+the run: three of the four ecology worlds were solved by the starting walkers
+at generation 0 (held-out 1.0), a check this preregistration lacked; the
+improvement measure had one world of headroom. Recorded (READOUT R3); C4-10
+carries the check. | C4-09/DESIGN.md. | Alternative: equalize TOTAL budget by
+giving the control ~70% more generations -- not run; a later slot's design.
+| Revisit in Campaign 5. DETERMINISTIC.
