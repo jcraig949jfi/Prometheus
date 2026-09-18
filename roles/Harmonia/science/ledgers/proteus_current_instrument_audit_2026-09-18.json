@@ -1,0 +1,80 @@
+{
+ "C_CHEAT_floor_with_B_equals_A": {
+  "floor": 0.0,
+  "instrument_guard_present": false,
+  "n_above_floor": 4,
+  "n_pairs_nonzero": 4,
+  "verdict": "floor collapses to 0 and every nonzero pair reads ABOVE FLOOR; run_kernel.py would print this as a detection. A floor of 0 must read INDETERMINATE."
+ },
+ "C_NEG_reversible_reference": {
+  "max_abs_J": 0.0,
+  "verdict": "PASSES, BUT CANNOT FAIL: Q_ij = (pi_i P_ij + pi_j P_ji)/(2 pi_i) satisfies detailed balance identically; this checks floating point, not the instrument"
+ },
+ "C_POS_injected_current": {
+  "note": "recovery is exact on an EXACT kernel; on a SAMPLED kernel the same injection sets the minimum detectable current, which run_kernel.py never measures",
+  "pass": true,
+  "rows": [
+   {
+    "eps": 0.01,
+    "recovered_max_abs_J": 0.0050000000000000044,
+    "relative_error": 8.673617379884035e-16,
+    "true_abs_J": 0.005
+   },
+   {
+    "eps": 0.001,
+    "recovered_max_abs_J": 0.0005000000000000004,
+    "relative_error": 8.673617379884035e-16,
+    "true_abs_J": 0.0005
+   },
+   {
+    "eps": 0.0001,
+    "recovered_max_abs_J": 4.999999999999449e-05,
+    "relative_error": 1.1018204577883939e-13,
+    "true_abs_J": 5e-05
+   },
+   {
+    "eps": 1e-05,
+    "recovered_max_abs_J": 5.0000000000050004e-06,
+    "relative_error": 1.000007097528427e-12,
+    "true_abs_J": 5e-06
+   }
+  ]
+ },
+ "audit": "HARM-44 (1) Proteus V0.5 current instrument",
+ "floor_with_independent_B": {
+  "floor": 8.384460860191845e-05,
+  "injected_sampling_sd": 0.001,
+  "n_above_floor": 4,
+  "true_abs_J": 0.05
+ },
+ "states": [
+  [
+   1,
+   16
+  ],
+  [
+   2,
+   16
+  ],
+  [
+   3,
+   16
+  ],
+  [
+   4,
+   16
+  ]
+ ],
+ "synthetic_known_current": {
+  "l1_delta": 0.0,
+  "pass": true,
+  "recovered_abs_J": [
+   0.049999999999999996,
+   0.049999999999999996,
+   0.049999999999999996,
+   0.049999999999999996
+  ],
+  "stationary_iters": 1,
+  "true_abs_J": 0.05
+ }
+}
