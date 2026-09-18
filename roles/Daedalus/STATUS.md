@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-17 23:35Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS PRODUCTION, data dir on the NVMe C:\Prometheus-data\sfe since 23:12Z (the G1 run FAILED at 3h27m because the D: SMR HDD stopped servicing writes; deploy/LEDGER_TO_NVME_2026-09-17/). G1 rerunning on the NVMe (lands ~03:45Z). C4 rehearsal restart: ON ARCHAEON'S GO (deploy/rehearsal_restart_m2.py). G3 engine-side GREEN (grant gnt_2006a1ac). Campaign 3 CLOSED; C4 gated by Archaeon.
+Currency: 2026-09-18 03:45Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS PRODUCTION on the NVMe (C:\Prometheus-data\sfe). Campaign 4 engine readiness COMPLETE: G1 GREEN (R0N 15,408 s), G3 GREEN, restart rehearsal PASS x2 (k2 mid-request); remaining engine blocker NONE; the launch gate is RED on G5 (Proteus) only. Freeze: 699ca0f9 at b0d752183, schema 9; nothing touches 8811 without an order.
 (base role s3 requires this file; refreshed at least every four hours of activity).
 
 ## Where I am working
@@ -20,7 +20,7 @@ Currency: 2026-09-17 23:35Z -- instance m2-d6ecd70b ACTIVE on M2. SFE 9.0.1 IS P
 | **SFE PRODUCTION on M2** | `https://192.168.1.191:8811`, **9.0.1**, schema 9, build `sha256:699ca0f9...2264cc` at `b0d752183`, ledger `eng_906356f7` at `C:\Prometheus-data\sfe\engine.db` (NVMe; `D:\Prometheus-data\sfe` is the rollback copy); pin `deploy/DEPLOYED_BUILD_M2.json`; receipts `deploy/RELEASE_9_0_1_2026-09-17/` and `docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md`. Cert for clients: `SerendipityFoundryClient/config/m2.crt`. Registration OPEN. |
 | supervisor | task `SFEngineM2Watchdog` -> pinned `C:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1`; state file beside it |
 | contract | `roles/Harmonia/contracts/sfe_contract.json` regenerated against 9.0.1 and landed (routes identical, gate 0); Harmonia's PROMOTION for 699ca0f9 still pending (Vivarium reads INCOMPLETE_PROCEED until then) |
-| **G1 long run (scratch, NVMe)** | from the PINNED worktree (699ca0f9): `deploy/longrun_load.py --worlds 30 --gens 1000 --producers 1 --gen-pause 0.5 --reader-pause 0.5`, port 9041, ledger under `C:\Prometheus-data\sfe-scratch\`, started 23:12:50Z, ~4.5 h, out `deploy/LONG_RUN_2026-09-17/accept901/R0N_campaign_rate_nvme_4h_paced_reader/`. The D: attempt (R0L_...) is preserved: 0 5xx for 12,400 s, then the SMR drive stalled (fsync 7 s median). |
+| G1 long run (scratch, NVMe) -- DONE 03:29Z, receipt landed | from the PINNED worktree (699ca0f9): `deploy/longrun_load.py --worlds 30 --gens 1000 --producers 1 --gen-pause 0.5 --reader-pause 0.5`, port 9041, ledger under `C:\Prometheus-data\sfe-scratch\`, started 23:12:50Z, ~4.5 h, out `deploy/LONG_RUN_2026-09-17/accept901/R0N_campaign_rate_nvme_4h_paced_reader/`. The D: attempt (R0L_...) is preserved: 0 5xx for 12,400 s, then the SMR drive stalled (fsync 7 s median). |
 | SFE on M1 | RETIRED; ledger `eng_8a37a5d3` is an archive on SKULLPORT. Nothing M1-side is mine. |
 
 ## Engine health, plainly
@@ -36,13 +36,8 @@ grows for the run (3.4 GB / 20K gens) and restart cost scales with it
 
 ## Open, in order
 
-1. **G1 for Archaeon's C4 gate**: the campaign-rate run must outlast the
-   prior defect's onset (840 s). Running (above). When it lands: append it
-   FIRST in the acceptance table of `SFE_901_REPAIR_RECEIPT.md` (the gate's
-   parser takes the first "campaign_rate" regime), regenerate
-   `ACCEPTANCE_TABLE.txt`, re-run `archaeon/campaign4/launch_gate.py`, post.
-2. **P3 restart window** for Archaeon's rehearsal S4/S5: on request, any
-   10-minute window; I run the supervised restart on 8811 and write timings.
+1. G1: CLOSED (R0N row in SFE_901_REPAIR_RECEIPT.md; gate G1 GREEN at origin/main 5a7fda572; #419).
+2. Restart rehearsal: CLOSED (deploy/REHEARSAL_RESTART_2026-09/, k1 + k2; #405/#406).
 3. **Freeze pin** for Campaign 4 (joint packet): build 699ca0f9 at
    b0d752183, schema 9, contract as landed. HEAD engine source is now
    `f6a77c86...` (attestation cold-scan fix, NOT deployed); production stays
@@ -72,8 +67,8 @@ grows for the run (3.4 GB / 20K gens) and restart cost scales with it
 ## Blocked on someone else
 
 - Harmonia: promote the regenerated contract for 699ca0f9.
-- Vivarium: issue the B1 grant to cli_6354da5b; then Archaeon's S3.
-- Archaeon: name the S4 restart window.
+- Proteus: G5 remint binding the canonical digest (the last RED).
+- M1 archive ledger copy for Archaeon/Harmonia (#415/#416): needs an M1-side act; landing dir C:\Prometheus-data\sfe-archive-m1 waits.
 - nk_landscape_v0: Archaeon's permutation-direction ruling -- unchanged.
 - `archaeon/tests/conftest.py` forces Postgres on the base-role self-check
   (prompt at `roles/Daedalus/prompts/2026-09-11_base_role/`) -- unchanged.

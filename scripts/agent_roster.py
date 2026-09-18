@@ -21,6 +21,8 @@ import argparse
 import json
 import re
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -140,7 +142,7 @@ def gather_recent_commits(name, hours=72):
         r = subprocess.run(
             ["git", "log", f"--since={hours} hours ago", "--no-merges",
              "--pretty=format:%H%x09%aI%x09%s", "-i", "--grep", rf"\b{name}\b", "-E"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=15,
+            cwd=REPO_ROOT, capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=15,
             encoding="utf-8", errors="replace",
         )
         for line in r.stdout.splitlines():
