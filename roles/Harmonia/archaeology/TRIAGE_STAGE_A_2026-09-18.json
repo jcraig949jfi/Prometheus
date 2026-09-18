@@ -1,0 +1,3675 @@
+{
+ "author": "Harmonia[m2-ca1148a0]",
+ "date": "2026-09-18",
+ "method": "Stage-A experimental-opportunity triage of every cut fossil (HARM-46).  2026-09-18.\n\nHarmonia[m2-ca1148a0]. A FEASIBILITY MAP, not a ranking (C8: no LLM selector):\nevery row is derived by fixed predicates over two committed records --\nnyx/atlas/fossils/<id>.json (the cut) and techne/fossils/specimens/<id>/\nrecord.json (the body, its world, its run receipts). No judgement of\nimportance is made anywhere in this file; a reader who wants an order sorts\nthe table by a column of their choosing.\n\nPredicates (all mechanical):\n    world           Techne run_classification + runner + image; NOW if an ok run\n                    receipt exists, else the classification's own word\n    oracle          UPSTREAM_TESTS (test_classification UPSTREAM_TESTS_PASS),\n                    SMOKE_ONLY (TECHNE_SMOKE_HARNESS_PASS: execution grade, narrow),\n                    DECLARED_EXAMPLE (record.example.output states an expected\n                    output), NONE\n    REPRODUCTION    feasible iff the world is NOW (a run receipt ok=True exists)\n    MUTATION        feasible iff REPRODUCTION and >= 1 ACCEPTED organ whose\n                    source_boundary is not UNKNOWN (a named place to edit)\n    NEW_EXPERIMENT  candidate iff the record carries a behavioral_entry_point\n                    (Techne's declared knob) or the cut states >= 1 pressure\n    consumer        THEOPHRASTUS_CELL if MUTATION feasible (an organ with a boundary\n                    in a running world is an ablation cell);\n                    SFE_VIA_ARCHAEON if NEW_EXPERIMENT and the world is NOW (a\n                    parameter sweep is an SFE experiment kind);\n                    NESTOR_PRIMORDIAL if the world is not NOW (reading-level\n                    receipt only); several may apply and all are listed\n\nThe 39-cut scope of the 09-17 ask is superseded by the atlas itself: at\norigin/main 22d5c7432 every one of the 107 cut fossils carries a cut record\n(79 re-saved on 09-17 under nyx.atlas/1-provenance). All 107 are mapped.\nWrites TRIAGE_STAGE_A_2026-09-18.json and .md beside this file.\n",
+ "rows": [
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change the setpoint (step), inject a load disturbance, or set aggressive gains (Kp/Ki high) to drive it UNSTABLE -- the harness does the last as a pathological-",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "arduino-pid",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(10 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 23
+   },
+   "existing_prediction_packet": false,
+   "fossil": "avida",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 10,
+   "organs_bounded": 10,
+   "pressures": 3,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": true,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "compare the wait schedules of expo vs full_jitter over many clients: identical versus spread",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "backoff-2.2.1",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "script different rationing policies into hammurabi.bas's INPUTs and compare the ten-year outcomes",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "basic-computer-games-1978",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-legacy:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 8
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bdwgc-8.2.6",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "shrink NUM_BHT_ENTRIES to force aliasing; toggle GSHARE_ENABLE; compare misprediction traces on the same branch stream",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "biriscv-branch-predictor",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NO_BOUNDED_ORGAN",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "netstat -s before/after a loopback transfer; a second emulated VAX over a lossy Ethernet relay is the boundary (see record notes)",
+   "consumers": [
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "ORGAN0",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bsd-4.3-distribution-tape-1986",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 0,
+   "organs_bounded": 0,
+   "pressures": 0,
+   "residue": "CUT_INSTRUMENT_INSUFFICIENT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-simh:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the same controlled pressure as the 4.3 tape, so the two kernels' netstat -s counters can be set side by side (interpretation is Nyx's)",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "ORGAN0",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bsd-4.3-reno-distribution-tape-1990",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 0,
+   "organs_bounded": 0,
+   "pressures": 0,
+   "residue": "CUT_INSTRUMENT_INSUFFICIENT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-simh:bookworm",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "docker",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "read tcp_output.c/tcp_timer.c: no cwnd, no ssthresh; compare with the same files at BSD-4_3_Tahoe",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bsd-tcp-4.2-1983",
+   "oracle": [
+    "NONE"
+   ],
+   "organs_accepted": 9,
+   "organs_bounded": 9,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the dup-ack counter (t_dupacks) and fast-recovery branch in tcp_input.c; absent in Tahoe",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bsd-tcp-4.3-reno-1990",
+   "oracle": [
+    "NONE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "diff tcp_output.c/tcp_input.c against BSD-4_2: snd_cwnd, snd_ssthresh, the slow-start branch in tcp_input's ack processing",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bsd-tcp-4.3-tahoe-1988",
+   "oracle": [
+    "NONE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "allocate many small blocks then a large one, freeing in an adversarial order, to induce fragmentation failure in the bounded arena",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "buddy-alloc-spaskalev",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "buddy-bdd",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "bzip2-1.0.8",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "c-cmaes-hansen",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "increase radamsa's case count or nesting depth (CJSON_NESTING_LIMIT); watch rejected vs parsed vs crashed",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "cjson-1.7.18",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "clips-6.4.2-nasa",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run CBL0006 (conditional totals) and CBL0033 on the same data; corrupt one COMP-3 field in a copy of the data and watch the report",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "cobol-programming-course-omp",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-legacy:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the tests' contention cases; drop acceptor replies and watch proposal numbers climb",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "cocagne-plain-paxos",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:2.7-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "compress the same corpus with compact, ncompress-5.0 (LZW) and gzip-1.2.4 (DEFLATE) and record ratio and time: the lineage's selection pressure made measurable",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "compact-4.2bsd-1983",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-i386:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "compress-4.2.4-lzw",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run a spinlock validate binary with more threads than cores; switch spinlock implementation (ticket vs MCS vs anderson) and compare",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "concurrencykit-0.7.2",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 3,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "corewar-redcode",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:2.7-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the shipped transcript is a behavioural record; compare its replies against the MAD-SLIP original on the same inputs",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "cosell-eliza-bbn-lisp-1969",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none yet",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run the known-answer vectors; vary rounds to watch avalanche; the failure is economic (keyspace size), not structural",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "des-reference",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "dlmalloc",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(8 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "checkpoint at count N, kill, restart: the first printed count after restart is the observation",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "dmtcp-3.1.2",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 8,
+   "organs_bounded": 8,
+   "pressures": 4,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "tighten a constraint or shorten the solve deadline until the receding-horizon problem becomes infeasible",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "do-mpc",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": true,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "feed matrices with clustered or degenerate eigenvalues and watch convergence; compare rs against LAPACK dsyev on the same matrix",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "eispack-netlib-1976",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "eispack-netlib",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "native",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "feed inputs that hit vs miss the DOCTOR keywords and watch reflection vs the memory/none-keyword fallbacks; swap the script to change the 'personality' with no ",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "eliza-anthay-1966",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "compare the original MAD rule set against the reconstruction's behaviour on the CACM dialogue",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "eliza-weizenbaum-mad-slip-1965",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none yet",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "shrink nwalkers to 2*ndim or stretch the target's condition number; watch acceptance and autocorrelation time",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "emcee-3.1.6",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "give it a harder algebra problem (e.g. a ring identity) and watch generated/processed clause counts and time; vary --auto vs a fixed strategy",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "eprover-2.6",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "perturb a constant in a copy of one routine and re-run make check: the validation names the routine that drifted",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "erfa-2.0.1",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "espresso-logic",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "femtolisp",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "ff-planner-2.3",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "fftpack-netlib",
+   "oracle": [
+    "DRIVERS_NO_ORACLE",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "native",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change the learning rate or hidden-layer size, or corrupt the training labels, and watch convergence/generalisation change",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "genann",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 1,
+   "behavioral_entry_point": "vary reader count and hold time; switch the kind attribute; measure writer acquisitions",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "EXECUTED": 1,
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "glibc-rwlock-writer-starvation-2.36",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "reshape (rho) an array to a non-conforming shape and watch the error; vary the outer-product operator's function",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "gnu-apl-2.0",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "gnu-prolog-1.5.0",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "go-explore-uber-2022",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-goexplore:min",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NO_BOUNDED_ORGAN",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run each named case; compare the goroutine dump; edit nothing (the fixtures are the fossil)",
+   "consumers": [
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "ORGAN0",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "go-runtime-deadlock-fixtures-1.22",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 0,
+   "organs_bounded": 0,
+   "pressures": 1,
+   "residue": "CUT_INSTRUMENT_INSUFFICIENT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "golang:1.22-bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "graphplan-blum-furst-1995",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "vary -1..-9 (the lazy-match effort knob in deflate.c) and record ratio/time; compare with compact and ncompress on one corpus",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": true,
+   "fossil": "gzip-1.2.4-1993",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 3,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the tests' unreachable peers and timeouts; shrink ProbeTimeout / SuspicionMult and watch false positives",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "hashicorp-memberlist-0.5.4",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "golang:1.24-bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "raise the corruption level of the cue, or store MORE patterns than ~0.14N, and watch recall fail into spurious attractors",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "hopfield-takyamamoto",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 3,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the forgetting factor lambda (0.8 in the script) and the initial covariance p: the adaptation speed knob",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "indirect-self-tuning-regulator-liaosteve",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-octave:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "kissfft-131.1.0",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the adaptation gain Gamma and the filter bandwidth in the script",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "l1-adaptive-control-basics-xkhainguyen",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-octave:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "ldpc-codes-neal-2001",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "write without closing cleanly (leave the .log) and reopen; vary write_buffer_size to force memtable flushes and compactions",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "leveldb-1.23",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "raise the injected error rate past the correction bound in the tests and watch decode failures appear",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "libcorrect-quiet",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run BP on a loopy .fg (tests/ ships several) with different damping/update schedules and record convergence",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "libdai-mooij",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(11 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "libfec-karn",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 11,
+   "organs_bounded": 11,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-i386:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(1 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "factor matrices of growing n with LINPACK dgefa and LAPACK dgetrf in the same process and compare time/MFLOPS as n crosses cache sizes",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "linpack-netlib-1979",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 1,
+   "organs_bounded": 1,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "linpackd-netlib-1979",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "native",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the two files ARE the before/after of a documented redesign: CUBIC's loss-triggered cubic window vs BBR's explicit bandwidth+RTT probing. Read them side by side",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "linux-tcp-congestion",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 13,
+   "organs_bounded": 13,
+   "pressures": 4,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none this pass -- SOURCE pinned; a runnable comparison needs a kernel with tc/netem injecting loss and delay (RUNNABLE_EMULATED candidate via a VM)",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(BUILDS_BUT_NOT_RUN)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "the garbage collector and the eval/apply core are separable; cons-cell pressure is the natural perturbation",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 7
+   },
+   "existing_prediction_packet": false,
+   "fossil": "lisp-1-5-ibm7090-1962",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 9,
+   "organs_bounded": 9,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "BUILDS_BUT_NOT_RUN",
+    "runner": "docker prometheus-fossil-ibm709x:bookworm (Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4, MIT), built 2026-09-16 from techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile",
+    "status": "BUILDS_BUT_NOT_RUN"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "kill the process between mdb_put and mdb_txn_commit (or run mtest with a small map size) and reopen: the previous root is what comes back",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "lmdb-0.9.31",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "access a working set LARGER than the capacity (the harness does this) to induce thrashing -- a pathological-behavior receipt",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "lru-cache-goldsborough",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run the RFC's own test vectors; the failure is not visible in them at all, which is itself the point -- a broken hash still passes its published tests",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "md5-rfc1321",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-i386:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "microkanren-scheme",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(9 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "compare decisions/conflicts on one CNF across minisat 1.14, 2.2.0 and zchaff",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "minisat-1.14-2006",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 9,
+   "organs_bounded": 9,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "gcc:4.9",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "minisat-2.2.0",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "gcc:4.9",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "shrink the neighbourhood radius or learning-rate schedule, or feed non-clustered noise, and watch the map fail to organise",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "minisom",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "minpack-netlib-1980",
+   "oracle": [
+    "DRIVERS_NO_ORACLE",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "native",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(11 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "switch MF between 10 (Adams) and 21 (BDF + user Jacobian) on the same problem and tolerance; vary MXSTEP",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 6
+   },
+   "existing_prediction_packet": false,
+   "fossil": "odepack-netlib",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 11,
+   "organs_bounded": 11,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change the plant's taps mid-run and watch re-convergence; raise mu past the stability bound",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "padasip-1.2.2",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "feed GPS the book's pathological goal orderings (leaping before you look; recursive subgoals) and watch it fail as documented",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "paip-lisp-norvig-1991",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "reduce N or switch resampling off (resampling=None) and watch the ESS collapse; change the observation noise",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": true,
+   "fossil": "particles-chopin-0.4",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "pforth",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "picorv32",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "picosat-965",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change --volume / --heater-power / --ambient-temp and compare the tuned gains and the limit-cycle period",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "pid-autotune-hirschmann",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "vary fail_max and reset_timeout; make the dependency heal at a chosen call; read the state transitions",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "pybreaker-1.2.0",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "swap sample covariance for Ledoit-Wolf shrinkage and compare the weight concentration",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "pyportfolioopt-1.5.5",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change Q/R (cheap vs expensive control), perturb the initial state, or add a disturbance to the simulated plant and watch the LQR response",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "python-control",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 2,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "propagate a deep-space TLE past its resonance epoch and compare SGP4 vs SDP4 branches in tcppver.out",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "python-sgp4-2.23",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "python:3.11-slim",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(8 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change the seed and mutation menu (-m); pipe the cases into cjson-1.7.18's parser under ASan",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "radamsa-0.6",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 8,
+   "organs_bounded": 8,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "reed-solomon-rockliff-1991",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "raise the measurement-noise level, or feed a step change in the hidden value, and watch the estimate's lag/variance trade-off",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "simple-kalman-denyssene",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "vary the gravity constant and torpedo parameters and watch orbital stability; the computation budget is the real constraint",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "spacewar-pdp1-1962",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-pdp1:display",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "frame the same request set under SPDY and HTTP/2 header compression and compare bytes on the wire",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "spdylay",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "docker",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "spin-6.5.2-holzmann",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 2,
+   "behavioral_entry_point": "toggle the priority-inheritance option in pathfinder.pml (the model's own switch) and re-run pan: deadlock present vs absent",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "EXECUTED": 1,
+    "INTERVENED": 1,
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "spin-pathfinder-priority-inversion-1997",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "sqlite-3.49.1-amalgamation",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "CUT_INSTRUMENT_INSUFFICIENT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "align a pair with a very high score to probe the 8-bit->16-bit fallback; compare the score with EMBOSS water on the same pair",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "ssw-smith-waterman",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "NOT_NOW(SOURCE_ONLY)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "swipl-9.2.9",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "SOURCE_ONLY",
+    "runner": "none this pass -- SOURCE pinned; build is a heavy cmake tree deferred to a later pass or on demand",
+    "status": "SOURCE_ONLY"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run the FIPS vectors; compare structure against DES on the same plaintext/key sizes",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "tiny-aes-c",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "tinycc",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "scale the measurement-noise matrix R or corrupt a satellite's range and watch the estimate/covariance respond",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "tinyekf-levy",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "shrink the number of accounts (-a 8) with many threads to drive the abort rate up; switch the locking design flags in Makefile.common",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "tinystm-marlier",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(4 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "tscp-1.81-kerrigan-1997",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 4,
+   "organs_bounded": 4,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_NATIVE",
+    "runner": "wsl",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "change -S (the random seed / initial model) and compare the trained models; shorten the training sequence to t2.50.seq",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "umdhmm-kanungo-1.02",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "flip ARB_TYPE_ROUND_ROBIN and ARB_BLOCK parameters in the testbench and compare grant traces under the same request pattern",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "verilog-arbiter-forencich",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "push faster than you pop until 'full' asserts, then confirm the producer is stalled and no data is lost; the flags are the observable decisions",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "verilog-generic-fifo",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(5 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "drive all request lines high every cycle and confirm the grant rotates; hold one requester high forever and confirm others still progress",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "verilog-rr-arbiter",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 5,
+   "organs_bounded": 5,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 2,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(6 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "skew the serial baud slightly from the receiver's, or corrupt a stop bit, and watch the framing-error flag / mis-decode",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 5
+   },
+   "existing_prediction_packet": false,
+   "fossil": "verilog-uart2bus",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 6,
+   "organs_bounded": 6,
+   "pressures": 2,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-hw:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_EMULATED",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(2 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "perturb the emission or transition probabilities, or make two states' emissions overlap, and watch the decoded path change; the shipped test is the oracle",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 2
+   },
+   "existing_prediction_packet": false,
+   "fossil": "viterbi-hmm-xukmin",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 2,
+   "organs_bounded": 2,
+   "pressures": 1,
+   "residue": "EXPLAINED_BY_CURRENT_CUT",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "walksat-v56",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-lang:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(3 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "feed rare, syncopated or enclitic forms (amavisse, amaveruntque) and inspect the analysis trace",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 6
+   },
+   "existing_prediction_packet": false,
+   "fossil": "whitakers-words-ada",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-legacy:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(7 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "in the tests, drop/delay AppendEntries or RequestVote messages, or kill the leader, and watch election + log reconciliation",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "COARSE",
+   "evidence_grades": {
+    "SOURCE_READ": 3
+   },
+   "existing_prediction_packet": false,
+   "fossil": "willemt-raft",
+   "oracle": [
+    "UPSTREAM_TESTS",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 7,
+   "organs_bounded": 7,
+   "pressures": 2,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  },
+  {
+   "MUTATION": "NEEDS_WORLD",
+   "NEW_EXPERIMENT": "CANDIDATE(pressure)",
+   "REPRODUCTION": "NOT_NOW(NOT_ATTEMPTED)",
+   "ablations_run": 0,
+   "behavioral_entry_point": "",
+   "consumers": [
+    "NESTOR_PRIMORDIAL"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 4
+   },
+   "existing_prediction_packet": false,
+   "fossil": "xv6-riscv",
+   "oracle": [
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 3,
+   "organs_bounded": 3,
+   "pressures": 1,
+   "residue": "LARGE_RESIDUE",
+   "world": {
+    "environment_label_stale": false,
+    "image": "",
+    "ok_receipts": 0,
+    "run_classification": "NOT_ATTEMPTED",
+    "runner": "none this pass -- SOURCE pinned; the riscv cross-toolchain + qemu world is a later emulated-run item (RUNNABLE_EMULATED candidate)",
+    "status": "NOT_ATTEMPTED"
+   }
+  },
+  {
+   "MUTATION": "FEASIBLE_NOW(9 bounded organs)",
+   "NEW_EXPERIMENT": "CANDIDATE(entry_point)",
+   "REPRODUCTION": "FEASIBLE_NOW",
+   "ablations_run": 0,
+   "behavioral_entry_point": "run zchaff, minisat-2.2.0 and picosat-965 on one harder CNF and record decisions/conflicts/time -- the lineage's selection pressure made measurable",
+   "consumers": [
+    "THEOPHRASTUS_CELL",
+    "SFE_VIA_ARCHAEON"
+   ],
+   "cut_mode": "ANCESTRY_AWARE",
+   "cut_state": "DEEP",
+   "evidence_grades": {
+    "SOURCE_READ": 1
+   },
+   "existing_prediction_packet": false,
+   "fossil": "zchaff-2007",
+   "oracle": [
+    "SMOKE_ONLY",
+    "DECLARED_EXAMPLE"
+   ],
+   "organs_accepted": 9,
+   "organs_bounded": 9,
+   "pressures": 3,
+   "residue": "PARTIALLY_EXPLAINED",
+   "world": {
+    "environment_label_stale": false,
+    "image": "prometheus-fossil-c:bookworm",
+    "ok_receipts": 1,
+    "run_classification": "RUNNABLE_CONTAINER",
+    "runner": "docker",
+    "status": "NOW"
+   }
+  }
+ ],
+ "summary": {
+  "ablations_run_total": 3,
+  "consumers": {
+   "NESTOR_PRIMORDIAL": 11,
+   "SFE_VIA_ARCHAEON": 96,
+   "THEOPHRASTUS_CELL": 94
+  },
+  "mutation_feasible_now": 94,
+  "n_cut_fossils": 107,
+  "new_experiment_candidates": 107,
+  "oracles": {
+   "DECLARED_EXAMPLE": 8,
+   "DRIVERS_NO_ORACLE+DECLARED_EXAMPLE": 2,
+   "NONE": 3,
+   "SMOKE_ONLY+DECLARED_EXAMPLE": 78,
+   "UPSTREAM_TESTS+DECLARED_EXAMPLE": 16
+  },
+  "records_whose_environment_label_says_none_but_a_receipt_ran": [
+   "avida",
+   "do-mpc"
+  ],
+  "reproduction_feasible_now": 96,
+  "residue": {
+   "CUT_INSTRUMENT_INSUFFICIENT": 4,
+   "EXPLAINED_BY_CURRENT_CUT": 28,
+   "LARGE_RESIDUE": 25,
+   "PARTIALLY_EXPLAINED": 50
+  },
+  "runners": {
+   "docker": 88,
+   "docker prometheus-fossil-ibm709x:bookworm (Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4, MIT), built 2026-09-16 from techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile": 1,
+   "native": 4,
+   "none": 3,
+   "none this pass -- SOURCE pinned; a runnable comparison needs a kernel with tc/netem injecting loss and delay (RUNNABLE_EMULATED candidate via a VM)": 1,
+   "none this pass -- SOURCE pinned; build is a heavy cmake tree deferred to a later pass or on demand": 1,
+   "none this pass -- SOURCE pinned; the riscv cross-toolchain + qemu world is a later emulated-run item (RUNNABLE_EMULATED candidate)": 1,
+   "none yet": 2,
+   "wsl": 6
+  },
+  "with_prediction_packet": [
+   "gzip-1.2.4-1993",
+   "particles-chopin-0.4"
+  ],
+  "worlds": {
+   "BUILDS_BUT_NOT_RUN": 1,
+   "NOT_ATTEMPTED": 1,
+   "NOW": 96,
+   "SOURCE_ONLY": 9
+  }
+ },
+ "triage": "HARM-46 Stage-A feasibility map"
+}

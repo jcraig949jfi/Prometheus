@@ -23,6 +23,8 @@ import json
 import random
 import re
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 import time
 from datetime import datetime, timezone, timedelta
@@ -73,7 +75,7 @@ def git_log(days: int) -> str:
     try:
         out = subprocess.run(
             ["git", "log", f"--since={days} days ago", "--oneline", "--no-merges"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=15,
+            cwd=REPO_ROOT, capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=15,
         )
         return out.stdout.strip() or "(no commits in window)"
     except Exception as e:

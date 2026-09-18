@@ -1,0 +1,749 @@
+{
+ "detectors": {
+  "D1": {
+   "class_counts": {
+    "EXCHANGEABILITY_SUSPECT": 0,
+    "EXCHANGEABILITY_VIOLATED": 0,
+    "EXCHANGEABLE": 0,
+    "INDETERMINATE": 0
+   },
+   "config": {
+    "d1_consistency_blocks": 4,
+    "d1_max_effect_sd": 1.0,
+    "d1_min_runs": 16,
+    "d1_min_t": 2.5
+   },
+   "detector_blob": "72236e79d9339d10d1b851984e39ae1838d6f937",
+   "detector_version": "d1.v1",
+   "eligibility": {
+    "blocked_reason": "chart 'sfe.candidate_score.v0' does not model player identity, so this detector's unit cannot be formed",
+    "detail": {
+     "cause": "NO_PLAYER_FIELD",
+     "chart": "sfe.candidate_score.v0",
+     "rows": 0
+    },
+    "detector": "REPEATED_SMALL_DEVIATION",
+    "eligible_units": 0,
+    "is_eligible": false,
+    "total_units": 0,
+    "unit": "(player, region) cell"
+   },
+   "eligible_grains": 0,
+   "grain_mirror": {
+    "agree": true,
+    "eligible_units_from_detect": 0,
+    "grains_from_mirror": 0,
+    "source": "archaeon.detectors.d1_repeated_deviation.detect (cell construction mirrored; see this module's docstring)"
+   },
+   "grains": [],
+   "signals": 0
+  },
+  "D2": {
+   "class_counts": {
+    "EXCHANGEABILITY_SUSPECT": 0,
+    "EXCHANGEABILITY_VIOLATED": 0,
+    "EXCHANGEABLE": 0,
+    "INDETERMINATE": 0
+   },
+   "config": {
+    "d2_min_runs": 3,
+    "d2_neighbor_radius": 0.15
+   },
+   "detector_blob": "1bed20aabb643c1a457ebf7571d39f69d2daf414",
+   "detector_version": "d2.v1",
+   "eligibility": {
+    "blocked_reason": "chart 'sfe.candidate_score.v0' does not model player identity, so this detector's unit cannot be formed",
+    "detail": {
+     "cause": "NO_PLAYER_FIELD",
+     "chart": "sfe.candidate_score.v0",
+     "rows": 0
+    },
+    "detector": "SIGN_INSTABILITY",
+    "eligible_units": 0,
+    "is_eligible": false,
+    "total_units": 0,
+    "unit": "(player pair, region pair) comparison"
+   },
+   "eligible_grains": 0,
+   "grain_mirror": {
+    "agree": "n/a (pairs report one record per side)",
+    "eligible_units_from_detect": 0,
+    "grains_from_mirror": 0,
+    "source": "archaeon.detectors.d2_sign_instability.detect (cell construction mirrored; see this module's docstring)"
+   },
+   "grains": [],
+   "signals": 0
+  },
+  "D4": {
+   "class_counts": {
+    "EXCHANGEABILITY_SUSPECT": 0,
+    "EXCHANGEABILITY_VIOLATED": 0,
+    "EXCHANGEABLE": 0,
+    "INDETERMINATE": 0
+   },
+   "config": {
+    "d4_min_margin_sd": 0.25,
+    "d4_min_runs": 3
+   },
+   "detector_blob": "b84a0ee1076b275d32a340f6608ee688d9be3d63",
+   "detector_version": "d4.v1",
+   "eligibility": {
+    "blocked_reason": "chart 'sfe.candidate_score.v0' does not model player identity, so this detector's unit cannot be formed",
+    "detail": {
+     "cause": "NO_PLAYER_FIELD",
+     "chart": "sfe.candidate_score.v0",
+     "rows": 0
+    },
+    "detector": "PLAYER_ORDER_REVERSAL",
+    "eligible_units": 0,
+    "is_eligible": false,
+    "total_units": 0,
+    "unit": "(player pair, related region pair) comparison"
+   },
+   "eligible_grains": 0,
+   "grain_mirror": {
+    "agree": "n/a (pairs report one record per side)",
+    "eligible_units_from_detect": 0,
+    "grains_from_mirror": 0,
+    "source": "archaeon.detectors.d4_order_reversal.detect (cell construction mirrored; see this module's docstring)"
+   },
+   "grains": [],
+   "signals": 0
+  },
+  "D5": {
+   "class_counts": {
+    "EXCHANGEABILITY_SUSPECT": 0,
+    "EXCHANGEABILITY_VIOLATED": 0,
+    "EXCHANGEABLE": 0,
+    "INDETERMINATE": 0
+   },
+   "config": {
+    "d5_coord_bin": 0.05,
+    "d5_min_family_n": 30,
+    "d5_min_repeats": 3
+   },
+   "detector_blob": "d1dff4cdb49d439fd6164253f7b20fdbf34b81e4",
+   "detector_version": "d5.v0",
+   "eligibility": {
+    "blocked_reason": "no configuration cell has d5_min_repeats=3 observations inside a family of at least d5_min_family_n=30 with a non-degenerate MAD baseline",
+    "detail": {
+     "families": 0,
+     "families_big_enough": 0,
+     "families_with_degenerate_MAD": [],
+     "largest_cell_n": 0
+    },
+    "detector": "REPEATED_OUTLIER_REGION",
+    "eligible_units": 0,
+    "is_eligible": false,
+    "total_units": 0,
+    "unit": "(family, region, coordinate bin) configuration cell"
+   },
+   "eligible_grains": 0,
+   "grain_mirror": {
+    "agree": true,
+    "eligible_units_from_detect": 0,
+    "grains_from_mirror": 0,
+    "source": "archaeon.detectors.d5_outlier_region.detect (cell construction mirrored; see this module's docstring)"
+   },
+   "grains": [],
+   "signals": 0
+  },
+  "D6": {
+   "class_counts": {
+    "EXCHANGEABILITY_SUSPECT": 0,
+    "EXCHANGEABILITY_VIOLATED": 0,
+    "EXCHANGEABLE": 0,
+    "INDETERMINATE": 0
+   },
+   "config": {
+    "d6_min_n_side": 5,
+    "d6_min_steps_for_trend": 6
+   },
+   "detector_blob": "c75a1b088a9f7814b1f3ff04ef8587eefc9997ec",
+   "detector_version": "d6.v1",
+   "eligibility": {
+    "blocked_reason": "every coordinate axis is degenerate (zero span) in this corpus, so no two settings are distinct",
+    "detail": {
+     "axes": [
+      "spec.candidate"
+     ],
+     "spans": {
+      "spec.candidate": null
+     }
+    },
+    "detector": "BOUNDARY_TRANSITION_HINT",
+    "eligible_units": 0,
+    "is_eligible": false,
+    "total_units": 0,
+    "unit": "adjacent coordinate-bin pair on one axis"
+   },
+   "eligible_grains": 0,
+   "grain_mirror": {
+    "agree": true,
+    "eligible_units_from_detect": 0,
+    "grains_from_mirror": 0,
+    "source": "archaeon.detectors.d6_boundary_hint.detect (cell construction mirrored; see this module's docstring)"
+   },
+   "grains": [],
+   "signals": 0
+  }
+ },
+ "diagnostic": {
+  "blob": "a07d2fdb2b62d4e2609b8be984ff6f7c189dedd0",
+  "module": "roles/Harmonia/qualification/h0h5/exchangeability.py",
+  "version": "EX-1.0.0"
+ },
+ "for": "Harmonia HARM-13 (#413)",
+ "identity": {
+  "chart": "sfe.candidate_score.v0",
+  "corpus_hash": "corpus:e3b0c44298fc1c149afbf4c8",
+  "ledger": {
+   "census_by_client_and_evidence_class": [
+    {
+     "client": "vivarium",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1276,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "cmp3-archaeon",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 624,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "cmp2-archaeon",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 503,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "cmp1-archaeon",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 180,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "qualify-v9-20260917T105229Z",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 163,
+     "with_score_metric": 150,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "qualify-v9-20260917T170155Z",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 163,
+     "with_score_metric": 150,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "iso-A",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 108,
+     "with_score_metric": 108,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "iso-B",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 108,
+     "with_score_metric": 108,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-scale",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 75,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harness-A",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 27,
+     "with_score_metric": 27,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-arena-r2",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 5,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-r1b-A",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 3,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "gen21-A",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 2,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-arena",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 2,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-v4-producer",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 2,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-livebar-1788565703",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-livebar-1788565703",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-livebar-1788571150",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-livebar-1788571150",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-repro-1788555980",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "daedalus-repro-1788565721",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-bisect",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-diag-fossil",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-integration",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-r1b-attest",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-r1b-attest",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-r2-owner",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-v4-batch",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-v4-batch2",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "harmonia-verify-producer",
+     "evidence_class": "ENGINE_WORK_RESULT",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1788605997-peer",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789560945",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789560945-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789560945-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561070",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561070-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561070-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561679",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561679-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789561679-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789641631",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789641631-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789641631-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789642325",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789642325-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789642325-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643341",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643341-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643341-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643844",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643844-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789643844-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789653092",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789653092-b",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "lineage-1789653092-f2",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1788590150",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1788590309",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1788590525",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789560943",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789561068",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789561677",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789641629",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789642322",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789643338",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789643842",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789653090",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "pewC4-1789653751",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "r21-1788571099-producer",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 1,
+     "with_spec_candidate": 0
+    },
+    {
+     "client": "requal-live",
+     "evidence_class": "CLIENT_ASSERTED",
+     "n": 1,
+     "with_score_metric": 0,
+     "with_spec_candidate": 0
+    }
+   ],
+   "census_note": "rows the chart could admit need evidence_class ENGINE_WORK_RESULT, an admitted client name, a score metric and a spec.candidate coordinate",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "path": "C:\\Prometheus-data\\sfe\\engine.db",
+   "schema_version": "9",
+   "table_counts": {
+    "clients": 152,
+    "experiments": 2121,
+    "observations": 3295,
+    "worlds": 483
+   }
+  },
+  "lookback_rows": 2000,
+  "note_2026_09_10_identity": "the 2026-09-10 corpus (M1 ledger eng_8a37a5d3, archive on SKULLPORT) is not reachable from M2; this table is on the ledger named above (printed first, per #413)",
+  "rows": 0,
+  "window": {
+   "join": "observations JOIN experiments JOIN worlds",
+   "lookback_rows": 2000,
+   "order": "observations.created_seq DESC",
+   "returned": 0,
+   "tenancy": {
+    "admitted_client_ids": 1,
+    "admitted_client_names": [
+     "vivarium"
+    ],
+    "basis": "interim raw read with declared tenancy + evidence filter; a cross-tenant read grant is Daedalus's to build",
+    "evidence_classes": [
+     "ENGINE_WORK_RESULT"
+    ],
+    "excluded_attested_by_client_name": {
+     "daedalus-livebar-1788565703": 1,
+     "daedalus-livebar-1788571150": 1,
+     "harmonia-arena": 2,
+     "harmonia-arena-r2": 5,
+     "harmonia-bisect": 1,
+     "harmonia-diag-fossil": 1,
+     "harmonia-integration": 1,
+     "harmonia-r1b-attest": 1,
+     "harmonia-r2-owner": 1,
+     "harmonia-scale": 75,
+     "harmonia-v4-batch": 1,
+     "harmonia-v4-batch2": 1,
+     "harmonia-v4-producer": 2,
+     "harmonia-verify-producer": 1
+    },
+    "schema_version": 9,
+    "snapshot": "single transaction"
+   },
+   "unattributed_multi_player_experiments": 0
+  }
+ },
+ "rows": [],
+ "schema": "archaeon.exchangeability_table.v1",
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "140b28f687d612c3f7f368adee07131909349f17",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "written": "2026-09-18T01:47:32Z"
+}
