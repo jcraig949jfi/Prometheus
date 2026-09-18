@@ -1,0 +1,95 @@
+{
+ "ancestry": "original (queue slot 9)",
+ "arms": [
+  "control",
+  "lateral"
+ ],
+ "assay_capability_requirement": "self-test: determinism; B=0 lateral equals control trace for trace; cheat; walker digests equal C4-05's (188/188)",
+ "attempt": 1,
+ "budget": {
+  "B": 24,
+  "E": 16,
+  "G": 100,
+  "N": 50,
+  "heldout": 48,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "walkers": 188,
+  "worlds": [
+   "W0",
+   "W1_d1",
+   "W1_d4",
+   "W2_K2"
+  ]
+ },
+ "claim_ceiling": "n=3 seeds; a count of rescues and their fates on four fixed worlds; no mechanism",
+ "crn_policy": "identical seeds, identical starting subsamples per world, identical rng streams; the arms differ only in the lateral step",
+ "decl": {
+  "n_min": 3,
+  "primary": {
+   "control": "control",
+   "metric": "worlds_improved",
+   "min_effect": 1.0,
+   "treatment": "lateral"
+  }
+ },
+ "design_digest": "sha256:2c365171fa1e93576dc578b2de5f6e8f29ec5476dba55f16c15ea0ea35eccbe4",
+ "expected_machine_telemetry": [
+  "per-world traces and probes",
+  "transfer matrix",
+  "rescue log",
+  "compute counts"
+ ],
+ "experiment": "C4-09",
+ "falsification_condition": "overhead: rescue survival < .10 AND no world improved by >= 1/16 in >= 2 seeds",
+ "kill_condition": "control failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "multi-world evolver loop",
+  "inject() as the lateral entry path"
+ ],
+ "parent_evidence": "C4-01: D6 exaptive 34/5,472 single edits (30 shelf); C4-05: depth-16 walkers exaptive .043; C4-06: no crossing at G=100.",
+ "parents": [
+  "C4-05",
+  "C4-06"
+ ],
+ "positive_control": "control arm: every world reaches the shelf (train >= .45) in >= 2 of 3 seeds (the walkers start on or near it)",
+ "prereg_digest": "sha256:b49dc8e5020a80f67abd760c15caea1696431298e279839b3a2a15e9935bbc49",
+ "primary_observable": "rescues and the transfer matrix; rescue survival at G=100; per-world held-out best vs control; distinct held-out elite values; extra compute ratio; P1 and P2 as stated; the overhead failure shape",
+ "question": "Are useful stepping stones destroyed merely because they are bad at the environment that produced their parent? Four fixed worlds; a below-floor non-degenerate child is evaluated on the other three (bounded budget B=24 per world per generation) and enters a world only because of its measured reward there.",
+ "reachability_estimate": {
+  "note": "four-world ecology; per-world reachability lookups not applied"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "lateral exaptation / paired ecology",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID",
+  "UNDERPOWERED"
+ ],
+ "why_this_slot": "The campaign's POET-like test without assuming POET is the answer; the only slot that lets a failure in one world be a success in another."
+}
