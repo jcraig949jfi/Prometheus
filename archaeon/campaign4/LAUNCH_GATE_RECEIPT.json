@@ -7,11 +7,6 @@
    "status": "CLAIMED_NOT_PROVEN"
   },
   {
-   "id": "G2",
-   "owner": "Archaeon + Vivarium",
-   "status": "RED"
-  },
-  {
    "id": "G5",
    "owner": "Proteus + Archaeon",
    "status": "RED"
@@ -118,66 +113,91 @@
       "blocks": [
        "S3"
       ],
+      "evidence": "archaeon/campaign4/G3_READ_PROOF.json",
       "id": "P2",
-      "owner": "Daedalus",
-      "present": null,
-      "what": "B1 read grant re-issued for cli_2bb36261 on the M2 ledger"
+      "owner": "Vivarium",
+      "present": true,
+      "what": "B1 read grant for the Campaign 4 identity on the M2 ledger (superseded wording: cli_2bb36261 was the M1-era grantee; the live grantee is cmp4-archaeon cli_6354da5b, Vivarium #399)"
      },
      {
       "blocks": [
        "S4",
        "S5"
       ],
+      "evidence": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1.json",
       "id": "P3",
       "owner": "Daedalus + Vivarium",
-      "present": null,
-      "what": "~10 minute window for the deliberate mid-run engine restart"
+      "present": true,
+      "what": "deliberate mid-run engine restart, executed and receipted by Daedalus"
      },
      {
       "blocks": [
        "S7"
       ],
+      "evidence": "evidence_wiki/integration/s7_rehearsal_results.json",
       "id": "P4",
-      "owner": "Mnemosyne",
-      "present": null,
+      "owner": "Mnemosyne (tool); run by Archaeon with Mnemosyne's written consent, comms #391",
+      "present": true,
       "what": "PEW ingest/rebuild/release-check leg"
      },
      {
       "blocks": [],
+      "evidence": [
+       {
+        "experiment_id": "4b3aa3b1",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "357050fd",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "a3eee9d4",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "2556d667",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       },
+       {
+        "experiment_id": "6c2a3016",
+        "not_before": "2026-12-31 19:00:00-05:00"
+       }
+      ],
       "id": "P5",
       "owner": "Archaeon",
-      "present": null,
+      "present": true,
       "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
      }
     ],
-    "receipt_digest": "sha256:53f5e1a3e15858105a9dee7c7d1db74960477070109d572471bc0cdac65232f9",
+    "receipt_digest": "sha256:7e879476916c28b8f588ee03735e98da35dbb76f7278aab4f29932660f5c33d5",
     "stage_status": {
      "S1": "OK",
+     "S2": "OK",
      "S2-validate": "OK",
-     "S3": "BLOCKED",
-     "S4": "BLOCKED",
-     "S5": "BLOCKED",
-     "S6": "BLOCKED",
-     "S7": "BLOCKED",
-     "S8": "BLOCKED"
+     "S3": "OK",
+     "S4": "OK",
+     "S5": "OK",
+     "S6": "OK",
+     "S7": "OK",
+     "S8": "OK"
     },
-    "stages_not_ok": [
+    "stages_not_ok": [],
+    "stages_ok": [
+     "S1",
+     "S2-validate",
      "S3",
      "S4",
      "S5",
      "S6",
      "S7",
      "S8"
-    ],
-    "stages_ok": [
-     "S1",
-     "S2-validate"
     ]
    },
    "id": "G2",
    "owner": "Archaeon + Vivarium",
    "requirement": "synthetic C4 specimen travels the full chain incl. forced restart and a reproducible receipt",
-   "status": "RED"
+   "status": "GREEN"
   },
   {
    "blocks_launch": true,
@@ -318,9 +338,9 @@
   }
  ],
  "gate": "RED",
- "generated_at": "2026-09-17T23:25:00Z",
+ "generated_at": "2026-09-18T00:22:24Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "6e7ac48f015479290ef40f866a2e2630cace8e35",
+ "read_at_commit": "66f90c39a45aa34b8d9aceab98e415c69c96f494",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }

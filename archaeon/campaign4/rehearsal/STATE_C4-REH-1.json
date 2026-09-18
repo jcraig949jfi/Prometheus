@@ -511,7 +511,64 @@
   "rows_digest": "sha256:3810dfc98e5c45463b09e120cce630920128e168c959064ac96fdb52aeed8d7d"
  },
  "rehearsal_id": "C4-REH-1",
- "updated_at": "2026-09-18T00:21:55Z",
+ "s7": {
+  "all_pass": true,
+  "at": "2026-09-18T00:22:10Z",
+  "commit": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+  "gates": [
+   {
+    "gate": "I1_ingest_campaign4",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "I2_second_ingest_idempotent",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "I3_campaign4_rows_present",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "R1_rebuild_equal_and_unchanged_from_frozen",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "C1_release_check",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "F1_frozen_surface_holds",
+    "pass": true,
+    "skipped": false
+   },
+   {
+    "gate": "X1_vivarium_outbox_reconciliation",
+    "pass": true,
+    "skipped": false
+   }
+  ],
+  "rc": 0,
+  "results_digest": "sha256:0e658b322a9c496a6a9df5b7c31baa6f804581cb441875e1cbddf4e26da0213d",
+  "results_file": "evidence_wiki/integration/s7_rehearsal_results.json",
+  "status": "OK",
+  "stderr_tail": "",
+  "stdout_tail": "[PASS] I1_ingest_campaign4: commit 87ab74a1a reader ew.campaign_ingest/1.4 seen 1517 new 97 conflicts 0 \n[PASS] I2_second_ingest_idempotent: seen 1517 new 0 conflicts 0 \n[PASS] I3_campaign4_rows_present: 97 rows from archaeon/campaign4/ (1 harnesses, 2 attempts) kinds={'engine_record': 48, 'receipt': 1, 'run': 48}\n[PASS] R1_rebuild_equal_and_unchanged_from_frozen: {\"reach_level/v1\": \"e7625bfb967f\", \"reach_level/v0\": \"7037fbc41aff\", \"corridor_edge/v1\": \"719fa5a1ec6f\"}\n[PASS] C1_release_check: 16/16 failed=[]\n[PASS] F1_frozen_surface_holds: 2 passed in 0.13s\n[PASS] X1_vivarium_outbox_reconciliation: {\"checkpoint\": {\"last_seq\": 184, \"rows_seen\": 184, \"rows_new\": 184, \"gaps\": [], \"duplicate_seqs\": [], \"updated_at\": \"2026-09-17 20:14:02.992162-04:00\"}, \"events_stored\": 184}\n{\"all_pass\": true, \"precheck\": false, \"campaign4_rows\": 97, \"seconds\": 6.5}\n"
+ },
+ "s8": {
+  "at": "2026-09-18T00:22:11Z",
+  "bytes_equal": true,
+  "canonical_equal": true,
+  "commit": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+  "receipt_digest_committed": "sha256:79a9320987bdbae524bf0731b1262f581e57c05c139b566aff0319e5292b362d",
+  "receipt_digest_rederived": "sha256:79a9320987bdbae524bf0731b1262f581e57c05c139b566aff0319e5292b362d",
+  "status": "OK"
+ },
+ "updated_at": "2026-09-18T00:22:11Z",
  "verify": {
   "S3": {
    "completed": 48,
