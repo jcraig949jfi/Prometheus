@@ -126,20 +126,508 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:1-165"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:240-390"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqelg.f:1-60"
+   }
+  ],
+  "inspected_files": [
+   "dqagse.f 1-165, 240-390 (calls)",
+   "dqelg.f 1-60"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "adaptive quadrature as three mechanisms: a Gauss-Kronrod pair (21 points) that returns an estimate and an error estimate from the difference of its two rules; globally adaptive bisection that always splits the subinterval with the largest error estimate (a sorted list maintained by dqpsrt) until the total error meets the tolerance or the subdivision limit; and Wynn's epsilon algorithm applied to the sequence of partial results to extrapolate through end-point singularities, with round-off detection that switches extrapolation off",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://www.netlib.org/quadpack/dqag.f sha256:625267148a1282a43ae348282cd8ff2bc794103eef4ed02c6e6f296a097d6809; https://www.netlib.org/quadpack/dqage.f sha256:1a66c327d0f5614149561e682809aed23c0e047c60d25d598b2596ded8ab27bd; https://www.netlib.org/quadpack/dqagi.f sha256:b95b73b8e101efd13ff4f815538eb5ce22ccccdb9f5f9aa3781de8059949d85f; https://www.netlib.org/quadpack/dqagie.f sha256:7cf2ff5c185ddeb930eb106f91e4a19fd0f49fcee9c113da7af621f152be75b2; https://www.netlib.org/quadpack/dqagp.f sha256:d6486bfe67fcceff8aaf56a6c4e4509b1f511f6c1a251885b00ee01db8119417; https://www.netlib.org/quadpack/dqagpe.f sha256:f21cacb31ba7011b6723347651f5b8801ea85d224fe01791090ca1a55a7604d8; https://www.netlib.org/quadpack/dqags.f sha256:53642bc1c5a0d83a3d2f4ce4d05355ceb6198ea4ae86dab3ddb532a4c671490c; https://www.netlib.org/quadpack/dqagse.f sha256:6d1c3ae36964cfd904a5bc5282f4c87431ed2a1fa4531dc25be9ae8041aaecac; https://www.netlib.org/quadpack/dqawc.f sha256:39b517b9035ba275f96914dc8f22c1b50b9a949f4e9908c32665d2157fedc504; https://www.netlib.org/quadpack/dqawce.f sha256:6ffbe8bded7f694d193c69bd93e013b225ad00012b7803efe2bbfb78c97b3553; https://www.netlib.org/quadpack/dqawf.f sha256:57cdbfc874ff9968127280ba0d2040102d02e0a30999f090c47b0bceeec38f47; https://www.netlib.org/quadpack/dqawfe.f sha256:db17d6a68309fbea13e56540a85ab5eb23ce8419d238bef3a7fbb676a5307a2e; https://www.netlib.org/quadpack/dqawo.f sha256:8f539df18583f18174d67faada656668be39a6a27289d342fb64702135bbc3d0; https://www.netlib.org/quadpack/dqawoe.f sha256:e7b9be59564a68fbecc9d63c79d8255ca111edbbe7865e5613e2e13af996b01c; https://www.netlib.org/quadpack/dqaws.f sha256:70fbe1e22555656294a6920b96caadd569e41f693cc786e8070080845c3c227a; https://www.netlib.org/quadpack/dqawse.f sha256:b0b93b1be93723d0ca49f0a27dee6475ffff642ac8b28f27013abecabc2cde8d; https://www.netlib.org/quadpack/dqc25c.f sha256:f03eae211283443a72fca917eff77d2ba7d8ba4a6e0d449209377270ce56affd; https://www.netlib.org/quadpack/dqc25f.f sha256:3500852e5124eba6afce29b14767a506377d994a0935e7acc3762646b250d38e; https://www.netlib.org/quadpack/dqc25s.f sha256:46fabca20a1a5a317c6d0a058e71687956c44a0d5582baa6084ee64a4be59820; https://www.netlib.org/quadpack/dqcheb.f sha256:458429c0d98495cda32897ce02b3e48bf09e54728615659e221c9f9439138ae6; https://www.netlib.org/quadpack/dqelg.f sha256:1a0cdbaed8ab0b95c56e50e8359ee48282030b178330819b8907f021819923c4; https://www.netlib.org/quadpack/dqk15.f sha256:471664a145516508ce6147f1a425d7d3d7f3afe50fd9584ffff020749f534276; https://www.netlib.org/quadpack/dqk15i.f sha256:3998968b2c246fa2c5157121b274464969dcfb2b30d6000b8d5680297ab1a65d; https://www.netlib.org/quadpack/dqk15w.f sha256:8a22cc286fb75524f42486d735e26c0241b0470c7fffe98ac57606f26089a0dd; https://www.netlib.org/quadpack/dqk21.f sha256:4f89799878f42504549e952bf999d5e80e5253096a77dfe074f6353a92cceed7; https://www.netlib.org/quadpack/dqk31.f sha256:72017e6f65cd3ee9b49ed067962fd0254d077fa735821929aa46cdba30b75e9d; https://www.netlib.org/quadpack/dqk41.f sha256:3cc35dfb473cd7ccd7525307a698bfab99f4e3c509f541fa7afe706e80e92489; https://www.netlib.org/quadpack/dqk51.f sha256:a0ff6ad1b7cf30a4454494ed9fc1eddfefdb8fa12e8f0d8c173444616b13b55c; https://www.netlib.org/quadpack/dqk61.f sha256:39decfe58e8892e38e58827335306b0ebbf04d6fb4d701f68edbac8857ee0f72; https://www.netlib.org/quadpack/dqmomo.f sha256:2f16f8261d01380a87dfe8aef9b80af9ff3aab69f38e7c3c9088391375c80477; https://www.netlib.org/quadpack/dqng.f sha256:6bf53c95855a25712d4189b15b01bf898b12d5ed5f68429b14ae31022c954a13; https://www.netlib.org/quadpack/dqpsrt.f sha256:5ca2446ce3cfedd1f222fed695c4985cfd034d0586f55da7da2d7342c7fcfcd4; https://www.netlib.org/quadpack/dqwgtc.f sha256:12d830f621245e1f2ef24a17b0f4481dc123b55a6f9e20f28adea6c8bdb68c23; https://www.netlib.org/quadpack/dqwgtf.f sha256:6894da2afec55d562fd0a8f28f60a5e656afb46ad8b82a6971f5f8b56609ce96; https://www.netlib.org/quadpack/dqwgts.f sha256:fcdb0a63e566f140bb13b3d4c52db37439901164ffcfcc02843e482d1bbab358; https://www.netlib.org/quadpack/qag.f sha256:f7624cb874fc473c17645379459c628c02ff8f497352e8b381560b1033de7226; https://www.netlib.org/quadpack/qage.f sha256:86478dcedfec4789bf3e6d3e885c6081d60ae99a9e3901ad8fae90d9e226dfa0; https://www.netlib.org/quadpack/qagi.f sha256:d5426cde3e3c082d1b1728ed00323ddcbfa6cc971d312266538d18913a8f9d75; https://www.netlib.org/quadpack/qagie.f sha256:6b86e27611cf41a6fe48c4c8c84f9b4827b5454b25328d53768739d4896612cd; https://www.netlib.org/quadpack/qagp.f sha256:28f02885cafe62b5109b6602bf1849b6d9eb5f3f85697060d6e9ac0d4fa81e51; https://www.netlib.org/quadpack/qagpe.f sha256:81aa43193842579d25b07742fe720e9673ed9e6b7f84194de2b9c56075f608b0; https://www.netlib.org/quadpack/qags.f sha256:6558f1609c979586583945d60ef3e37c3b6e9addbaaa82f8cd92461973e80f48; https://www.netlib.org/quadpack/qagse.f sha256:7ad32600ad8e4feb7cc676178ca64218487a706ee818c6739ee741977a762985; https://www.netlib.org/quadpack/qawc.f sha256:361a008fc316bd4392d9d061c6cc4989f0b4d1bfdee3f5234d85d363b8756bca; https://www.netlib.org/quadpack/qawce.f sha256:57696a18b25055502b365727f7558ec459f38ec7c5b3702c4a35e387c587271b; https://www.netlib.org/quadpack/qawf.f sha256:bfd140534c42ae2a98b09352c236e0ddd5903b45d90e59cb1732294390ba12b4; https://www.netlib.org/quadpack/qawfe.f sha256:d8b415bdf99d1a23816adb766a2c0ddde0f31b6cd9ddfa8f77a947479b8828fe; https://www.netlib.org/quadpack/qawo.f sha256:c6a48273bdb9c20e83776904a4ab873d6a5756395a22abc9f7d03ff094c6d5ec; https://www.netlib.org/quadpack/qawoe.f sha256:79f890c164d8075c83636dd5f4e464cf0086afbd6badd07176d4949604dffe29; https://www.netlib.org/quadpack/qaws.f sha256:01bcc620a35a4123d918ecaccd267be9dd560afba387022437acd8244369f50f; https://www.netlib.org/quadpack/qawse.f sha256:e6761850158dccd9b9f9a4b94053bd2e01758b13989cbe6df9a7084b583b74ca; https://www.netlib.org/quadpack/qc25c.f sha256:b74a41a1d97771ae0d81067413a291c3c7dea9178d6e5682c68c47d1fd15fc10; https://www.netlib.org/quadpack/qc25f.f sha256:bed0acd3886f8bf34bb4999744aa2e20e0f2af9341432b95ffbe91720eace762; https://www.netlib.org/quadpack/qc25s.f sha256:ed799eb8715dc2f3d00f8d0bad6b6e8442e467e29babe1525c2ed86edf5a1598; https://www.netlib.org/quadpack/qcheb.f sha256:af3fe889fa8b48a9e98e19f675a69221a6de3df9adb8686c3e5d5eabe2b5299d; https://www.netlib.org/quadpack/qelg.f sha256:29d6c5f472ed9d01a248fe0c0b9b647089c95176ba7b51a57ab9544cdda3271e; https://www.netlib.org/quadpack/qk15.f sha256:e7d54ae07615a4f0e229c0d90ea22eefe5b66b7c12870509dd0c70c8ab82f5d2; https://www.netlib.org/quadpack/qk15i.f sha256:70c0d97cecee91de64ecaa256de499f9f68b60b9ef25f8168f8999e307eb4db4; https://www.netlib.org/quadpack/qk15w.f sha256:6f8316250c61b7902a5d2cd38b4bdb4dc89e5885ff012c47f56f6f1376808d91; https://www.netlib.org/quadpack/qk21.f sha256:768d1a936047e6bc56cd16408c4b95c689e1dc50482421a306b5937b95f8897f; https://www.netlib.org/quadpack/qk31.f sha256:fbc83ebdf40fd4617bd08639cf0412a6d7bbe506d815fc8e3a8282599457f5da; https://www.netlib.org/quadpack/qk41.f sha256:8b4a0b1cfd38ee3e428e59a0f78f1e1d4515404de8ed92cdd9c6aaae6fb46083; https://www.netlib.org/quadpack/qk51.f sha256:1fcab48ba5674f8178e2d10b272c1a2bd8e31500e72aa4b9ae2ae71cdf83f187; https://www.netlib.org/quadpack/qk61.f sha256:8cfb0a7647d29394eb0170ed549bf87b3f5cffd18b261e630ca004641ab7aeb6; https://www.netlib.org/quadpack/qmomo.f sha256:cfa288732576a2f363e77e65fb075861eb893ccc01c0ad133349132c5bd506e5; https://www.netlib.org/quadpack/qng.f sha256:151231080c8bbdd2aab818772040ec96d80eede65f9a6ced6d13068535f345ab; https://www.netlib.org/quadpack/qpsrt.f sha256:1e0fbd6c2a4f1c25ee5e16fe64f5cfb6751f99642934ecb488ad605d33b7643d; https://www.netlib.org/quadpack/qwgtc.f sha256:c584efde7942ffdeff22ff61c34841fdc6c998d96a489caa5d5191f0e3634e8e; https://www.netlib.org/quadpack/qwgtf.f sha256:c5f6ca16f50e361d3d9a71695b6648b5aac2609e009b8cb78bb35aea1ae4a81d; https://www.netlib.org/quadpack/qwgts.f sha256:253f4f18aca55affff57c1e12491a4f7ab353ab4db156061c1956b741fb452bd; https://www.netlib.org/quadpack/readme sha256:1b793978aaf78ac8b5a3149c312ad69e66d740b0be4445294a24828016167d06; https://www.netlib.org/quadpack/doc sha256:6bccfa84cd1b61e13a5583f8aaa825c88dcafc6fdfed949eef18f95f3ab41979; https://www.netlib.org/quadpack/changes sha256:066ff0e85592dbcb6ac716b60f3850ebfc549bbadfbd334a9343cc9bc83daf63; https://www.netlib.org/blas/d1mach.f sha256:4284086126220923bcee0b6cfda533c7d60094fdfa8dd5a7e211158d19b0a13a; https://www.netlib.org/blas/r1mach.f sha256:4df83453a46590557d36131cfa9c0f08fa1c6b6e671831a96ea166825eb39ca2; https://www.netlib.org/linpack/dgtsl.f sha256:029508251a8fa54de81b25479064ed944904b8fe193c194766c860d6e415cc6e; https://www.netlib.org/linpack/sgtsl.f sha256:d877a7b996fce08176ab82e2ef73389c3016f1e6c84e1448d88d147afc2e2208",
+   "payload_manifest_id": "techne tree_sha256 36fcd9b89b93a2c342cca1cd2e6b1d5e645164eaa47b898e2bd84217e6aaec7e (77 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/dqagse.f",
+     "payload_hash_read": "6d1c3ae36964cfd904a5bc5282f4c87431ed2a1fa4531dc25be9ae8041aaecac",
+     "techne_recorded_hash": "6d1c3ae36964cfd904a5bc5282f4c87431ed2a1fa4531dc25be9ae8041aaecac",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/dqelg.f",
+     "payload_hash_read": "1a0cdbaed8ab0b95c56e50e8359ee48282030b178330819b8907f021819923c4",
+     "techne_recorded_hash": "1a0cdbaed8ab0b95c56e50e8359ee48282030b178330819b8907f021819923c4",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "quadpack-netlib::gauss_kronrod_21_point_rule_returning_the_integral_and_an_error_estimate_from_the_difference_with_its_embedded_gauss_rule",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqk21 (called at 240, 289-290; body not read); result, abserr, resabs, resasc",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a 21-point Kronrod rule shares its nodes with an embedded 10-point Gauss rule; the two estimates' difference, scaled by the integral of |f - mean| (resasc) with a heuristic power, gives the error estimate; both the value and the error come from one set of 21 function evaluations",
+   "input": "f on [a, b]",
+   "output": "the estimate and its error",
+   "state": "none",
+   "update": "per subinterval",
+   "assumptions": [
+    "the Kronrod extension of a Gauss rule is the cheapest way to get an error estimate from the same points (Kronrod 1965)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit"
+   ],
+   "fitness_value_in_ancestor": "one function evaluation set per interval yields value and error",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kronrod 1965; Piessens' scaling of the error",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:240, 289-290 (call sites)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqk21; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "INTERVAL",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqagse.f 250-390: the main loop; dqpsrt (346) maintains the descending order of error estimates; limit; the two-interval error sum; ier codes 1-5 (limit, roundoff, bad integrand behaviour, divergence, invalid input)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the interval is split at the midpoint of whichever subinterval currently has the largest error estimate; the two halves are integrated by the rule; the list of subintervals is kept sorted by error estimate (a partial insertion sort that only moves the new entries); the loop stops when the sum of error estimates is within the absolute or relative tolerance, when the subdivision limit is reached, or when round-off is detected (the error estimate stops decreasing as intervals shrink)",
+   "input": "tolerances, limit",
+   "output": "the integral, the error, an ier code",
+   "state": "the interval lists (alist, blist, rlist, elist, iord)",
+   "update": "per bisection",
+   "assumptions": [
+    "error is concentrated where the integrand is hard, so refining the worst interval is the best use of evaluations"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::gauss_kronrod_21_point_rule_returning_the_integral_and_an_error_estimate_from_the_difference_with_its_embedded_gauss_rule",
+    "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection"
+   ],
+   "fitness_value_in_ancestor": "the general-purpose integrator behind scipy.integrate.quad",
+   "failure_landscape": "by reading: a smooth integrand with an undetected feature between rule points can pass (ier 0) with a wrong answer; the ier codes are the documented failure landscape",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Piessens, de Doncker, Uberhuber, Kahaner 1983 (QUADPACK)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:250-390"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqagse's loop and dqpsrt",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqelg (called at 384; header read): the condensed epsilon table; numrl2, rlist2, res3la; ier 2 'roundoff error is detected in the extrapolation table'; the 'extrapolation' flag path in dqagse",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "as bisection concentrates on a singular end point, the partial sums over the shrinking intervals form a sequence converging slowly; Wynn's epsilon algorithm (a nonlinear sequence transformation equivalent to Shanks / Pade) is applied to the sequence to estimate its limit and an error; the extrapolated result replaces the plain sum when its error is smaller; the table is limited (limexp) and the routine detects when round-off dominates and stops extrapolating",
+   "input": "the sequence of results",
+   "output": "an extrapolated result and error",
+   "state": "the epsilon table and the last three results",
+   "update": "per extrapolation step",
+   "assumptions": [
+    "algebraic-logarithmic end-point singularities produce sequences the epsilon algorithm accelerates (de Doncker's analysis)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit"
+   ],
+   "fitness_value_in_ancestor": "integrands with end-point singularities converge in far fewer evaluations; the reason qags is the default in scipy",
+   "failure_landscape": "by reading: extrapolation can be fooled by non-singular slow convergence; the round-off detector is the guard",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wynn 1956; de Doncker 1978",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqelg.f:1-60; vault:quadpack-netlib/upstream/dqagse.f:384"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqelg and its call",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the other rules (qk15/31/41/51/61), the weight-function integrators (qawo, qaws, qawc, qawf), qagi (infinite range by transformation), qagp (user-given singular points), qng (non-adaptive), the single-precision twins",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "quadpack-netlib"
+  },
+  {
+   "candidate": "'numerical integration' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the rule, the adaptive strategy and the extrapolation are separable and separately published",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "quadpack-netlib"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "quadpack-netlib::P.a_definite_integral_must_be_computed_to_a_requested_tolerance_with_the_fewest_evaluations_when_the_integrand_may_have_end_point_singularities_and_the_organism_must_report_when_it_cannot_trust_its_own_error_estimate",
+   "source_fossil": "quadpack-netlib",
+   "source_evidence": "dqagse.f; dqelg.f",
+   "condition": "an organism integrates a black-box f over [a, b]; some integrands are smooth, some have algebraic or logarithmic end-point singularities, some are pathological; the score is evaluations to reach the tolerance and the honesty of the reported error",
+   "resource_or_constraint": "function evaluations; a subdivision limit",
+   "failure_condition": "a wrong answer reported as converged, or evaluations growing without bound on a singular integrand",
+   "world_punishes": "uniform refinement; no error estimate; no extrapolation",
+   "world_rewards": "embedded error estimates, worst-first bisection, sequence extrapolation with round-off detection",
+   "observable_consequence": "evaluations and true error vs reported error on the Piessens test set with extrapolation on and off",
+   "vacuity_condition": "polynomial integrands",
+   "trivial_shortcuts": "an integrand-specific change of variables (which the world withholds)",
+   "cheat_control": "an organism given the analytic integral must report zero error; bisection without extrapolation must need orders of magnitude more evaluations on x^-0.5-type integrands; the pathological integrand must return ier != 0 rather than a confident wrong answer: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automatic quadrature (Piessens et al. 1983)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "quadpack-netlib::gauss_kronrod_21_point_rule_returning_the_integral_and_an_error_estimate_from_the_difference_with_its_embedded_gauss_rule",
+   "to": "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit",
+   "to": "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection",
+   "to": "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "ier 2 stops extrapolation",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "quadpack-netlib",
+   "relation": "algorithm_from",
+   "to": "Kronrod 1965; Wynn 1956; Piessens et al. 1983; the netlib mirror is the authors' channel (record)",
+   "note": "from the headers",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "rule bodies and the special-purpose integrators unread",
+   "nothing ran"
+  ],
+  "note": "the three mechanisms of the default integrator are located; the rule itself is CANDIDATE",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

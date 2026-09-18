@@ -90,6 +90,40 @@ def build() -> dict:
                        "handoffs_open": len(open_rows), "handoffs_open_max_age_ticks": max(ages) if ages else 0,
                        "returns_received": len(g.get("returns_received", [])), "escalations": len(g.get("escalations", [])),
                        "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"}
+        # Operator directive 2026-09-18 (refinery, s6): the scoreboard is verdicts, not cuts. Prediction packets are the issued
+        # objects; a Harmonia typed return on one is a verdict. Latency is issue-tick to verdict-tick. The cap is 3 open packets
+        # per Harmonia execution lane (M3-native is the only lane today). Atlas counts stay above as a reservoir, not the output.
+        VERDICT_KINDS = ("CUT", "NYX_PREDICTION_PACKET")
+        rr = g.get("returns_received", [])
+        pkt_returns = [r for r in rr if r.get("kind") in VERDICT_KINDS]
+        def _has(sub):
+            return sum(1 for r in pkt_returns if sub in str(r.get("return_type", "")).upper())
+        packets = g.get("packets_issued", [])
+        open_pkts = [q for q in packets if not q.get("verdict_tick")]
+        lane_open = {}
+        for q in open_pkts:
+            lane_open[q.get("lane", "m3-native-python")] = lane_open.get(q.get("lane", "m3-native-python"), 0) + 1
+        lat = []
+        for q in packets:
+            if q.get("issued_tick") and q.get("verdict_tick"):
+                try:
+                    lat.append((_dt.date.fromisoformat(q["verdict_tick"]) - _dt.date.fromisoformat(q["issued_tick"])).days)
+                except Exception:
+                    pass
+        lat.sort()
+        median_lat = (lat[len(lat)//2] if len(lat) % 2 else (lat[len(lat)//2 - 1] + lat[len(lat)//2]) / 2) if lat else None
+        dm["scoreboard"] = {
+            "schema": "nyx.scoreboard/1 (operator refinery directive 2026-09-18 s6)",
+            "packets_issued": len(packets),
+            "verdicts_returned": len(pkt_returns),
+            "supported": _has("SUPPORTED"), "failed": _has("FAILED"),
+            "indeterminate": _has("INDETERMINATE"), "interface_insufficient": _has("INTERFACE") + _has("INSTRUMENT_INSUFFICIENT"),
+            "mechanisms_accepted_downstream": len(g.get("downstream_accepted", [])),
+            "median_cut_to_verdict_days": median_lat,
+            "open_packets_by_lane": lane_open, "cap_per_lane": 3,
+            "over_cap_lanes": {k: v for k, v in lane_open.items() if v > 3},
+            "note": "verdicts are the output; the organ atlas above is the reservoir. packets_issued is populated from gates LEDGER packets_issued rows once packets are frozen; before any packet is frozen this reads the frozen prediction files' returns.",
+        }
     _dump("DEPTH_MAP", dm)
     return dm
 
