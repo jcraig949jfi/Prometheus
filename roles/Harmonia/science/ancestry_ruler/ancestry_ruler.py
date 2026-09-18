@@ -198,11 +198,16 @@ def stage_controls(out):
     by = {o["id"]: o for o in rec}
     flagged = 0; corrupted = [o for o in rec if o.get("_corrupted")]
     recs_sorted = sorted(rec, key=lambda o: (o["birth_time"], o["id"]))
+    by_time = {}
+    for q in recs_sorted: by_time.setdefault(q["birth_time"], []).append(q)
     for o in corrupted:
-        earlier = [q for q in recs_sorted if q["birth_time"] < o["birth_time"]]
+        earlier = [q for t in by_time if o["birth_time"] - WINDOW <= t < o["birth_time"] for q in by_time[t]]
         if not earlier: continue
-        dn = min(levenshtein(o["genome"], q["genome"]) for q in earlier)
-        dr = levenshtein(o["genome"], by[o["parent_id"]]["genome"]) if o["parent_id"] in by else 10 ** 6
+        g = np.frombuffer(o["genome"].encode(), dtype=np.uint8)
+        M = np.frombuffer("".join(q["genome"] for q in earlier).encode(), dtype=np.uint8).reshape(len(earlier), -1)
+        dn = int((M != g[None, :]).sum(axis=1).min())
+        pg = by[o["parent_id"]]["genome"] if o["parent_id"] in by else None
+        dr = int((np.frombuffer(pg.encode(), dtype=np.uint8) != g).sum()) if pg is not None and len(pg) == len(o["genome"]) else 10 ** 6
         if dr - dn >= 3: flagged += 1
     frac = flagged / len(corrupted) if corrupted else None
     res["C-POS"] = {**l, "n_corrupted": len(corrupted), "flagged_fraction": frac, "pass": (l["edge_recall"] is not None and l["edge_recall"] <= 0.95) and (frac is not None and frac >= 0.80)}
