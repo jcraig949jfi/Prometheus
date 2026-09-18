@@ -28,7 +28,12 @@ def main():
     t107 = AR.load_techne(); os.makedirs(a.dest, exist_ok=True)
     diffs = {}
     animals = json.load(open(AR.ANIMALS, encoding="utf-8")); orb = next(e for e in animals if isinstance(e, dict) and e.get("code") == "O2u")
-    cat = {f"IC-CAT:{e.get('code')}": e["cells"] for e in animals if isinstance(e, dict) and "params" in e and "cells" in e}
+    # EXACTLY the search's own lookups: S0 used the catalogue entry at its index (cat_list[idx]); S2 looked a base's
+    # pattern up by its "IC-CAT:<code>" string and took the FIRST entry with that code (catalogue codes are not
+    # unique -- a lookup keyed by code alone regenerated the wrong pattern for 5 rollouts in the first attempt).
+    cat_list = [e for e in animals if isinstance(e, dict) and "params" in e and "cells" in e and "x" not in str(e.get("code", ""))]
+    cat_first = {}
+    for e in cat_list: cat_first.setdefault(f"IC-CAT:{e.get('code')}", e["cells"])
     rows = [json.loads(l) for l in open(os.path.join(RUN, "rows.jsonl")) if '"error"' not in l]
     traj = np.load(os.path.join(RUN, "trajectories64.npz"))
     manifest = {"schema": "harmonia.frames128/1", "run": "run_2026-09-18/search", "dest": a.dest, "dtype": "uint8", "shape": [8, 128, 128],
@@ -37,15 +42,21 @@ def main():
     top20_ok = top20_n = traj_ok = 0; t0 = time.time()
     for r in rows:
         key = f"{r['stage']}_{r['idx']}"
-        ic = {"kind": "blob"} if r["ic"] == "IC-BLOB" else {"kind": "cells", "cells": orb["cells"] if r["ic"] == "IC-ORB" else cat[r["ic"]]}
+        if r["ic"] == "IC-BLOB": ic = {"kind": "blob"}
+        elif r["ic"] == "IC-ORB": ic = {"kind": "cells", "cells": orb["cells"]}
+        elif r["stage"] == "S0": ic = {"kind": "cells", "cells": cat_list[r["idx"]]["cells"]}
+        else: ic = {"kind": "cells", "cells": cat_first[r["ic"]]}
         f128, mass, alive = AR.rollout(t107, r["params"], ic)
+        # the search stored frames128 as float32 and fed CLIP from float64; the uint8 delivered here is taken from
+        # the float64 frames (what CLIP saw); C-TOP20 compares through the same float32 cast the store applied
         u8 = (np.clip(f128, 0, 1) * 255).astype(np.uint8)
+        u8_via_f32 = (np.clip(f128.astype(np.float32), 0, 1) * 255).astype(np.uint8)
         # C-TRAJ64: same downsample path as the search
         d64 = (np.clip(np.stack([t107.resize_bilinear(np.repeat(f[:, :, None], 3, axis=2), 64)[:, :, 0] for f in f128]), 0, 1) * 255).astype(np.uint8)
         eq64 = bool(np.array_equal(d64, traj[key])); traj_ok += eq64
         p20 = os.path.join(RUN, "top20", key + "_frames128.npy")
         if os.path.exists(p20):
-            stored = np.load(p20); eq = bool(np.array_equal(u8, (np.clip(stored, 0, 1) * 255).astype(np.uint8)))
+            stored = np.load(p20); eq = bool(np.array_equal(u8_via_f32, (np.clip(stored, 0, 1) * 255).astype(np.uint8))) and bool(np.array_equal(f128.astype(np.float32), stored))
             top20_n += 1; top20_ok += eq
             diffs[key] = {"traj64_equal": eq64, "frames128_equal": eq, "max_abs_diff_128": float(np.abs(f128 - stored).max()), "params": r["params"], "ic": r["ic"]}
         elif not eq64:
