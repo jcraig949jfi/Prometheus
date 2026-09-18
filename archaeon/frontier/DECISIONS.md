@@ -33,3 +33,17 @@ seeded 1-in-50 audit draw); Campaign 6's G6-0 keeps 'c6_all_full'; Harmonia's po
 supersedes both when issued. `admitted` defaults to the three rulers the packet found
 admittable until she rules. | segment.py _tier; charter s5. | -- | Revisit on Harmonia's
 policy. DETERMINISTIC.
+
+DF-005 | 2026-09-18 22:01 | LOOP RUNNER CONSTRUCTED (loop.py), gated: executes only with --live AND the
+gate file archaeon/frontier/G6-0_CLOSED.json (written by the lead when the fleet-wide G6-0
+receipt is on main); the self-test runs on a temporary registry outside the repo. One
+iteration: choose the pool by share deficit -> pop -> build a segment spec from the
+transformation (concrete builders for the procedural scatter, the complexity sweep, the
+flat-elite horizon, the FIZZLE load; graph-profile and other descriptive transformations
+return BLOCKED with the reason and stay on the frontier, demoted) -> run in checkpointed
+chunks (outputs gzipped under frontier/runs/, never rewritten) -> registry CHUNK/FREEZE_REF/
+RUN/OBSERVATION events -> branch on triggers (seed control, horizon x4 persistence, replay
+view on disagreement, adjacent-bin on classifier failure, 1-in-50 audit) as new PENDING
+transformations with param overrides, lane EVOLUTION_GENERATED. | loop self-test: 2 chunks,
+branches deduped, lineage versions advance, gate refuses. | -- | Builders grow with the
+frontier; the gate rule never changes without the operator. DETERMINISTIC.
