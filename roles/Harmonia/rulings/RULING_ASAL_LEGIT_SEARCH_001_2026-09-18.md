@@ -163,3 +163,50 @@ open-endedness score, world = Lenia (this port, this world id),
 intervention = legitimate parameter search, observable = score with
 class; the row is CONTRAST(best legitimate, GARBAGE) = -0.050 and
 CONTRAST(best genuine, GARBAGE) = -0.023, both with their trajectories.
+
+## 7. ANNOTATION 2026-09-18 (operator review; charter s8: corrected beside the original, nothing above rewritten)
+
+Source: prompts/2026-09-18_asal_review/OPERATOR_REVIEW_verbatim.md. The
+operator read the review packet and tightened the return. Applied:
+
+    I1, I2   SUPPORTED_BY_WITNESS. Existential rows: one valid ALIVE rollout below the
+             threshold proves them; the 650 refused draws could only lower the minimum.
+             Unchanged in substance; the label says why the coverage gap cannot touch them.
+    I0       PREDICTION_FAILED against the frozen packet, unchanged -- AND annotated as WEAK
+             NEAR-BOUNDARY EVIDENCE: the margin 0.009 is 1.1 sd of a 5-seed estimated mean
+             that the packet used as an exact cutoff. "Crossed the frozen convention", not
+             "statistically below the garbage population". The 0.7665 and 0.7933 crossers
+             are the substantive tail evidence.
+    I3       SUPPORTED_ON_EXECUTED_SUBSET, not unrestricted: "the minimum-score crosser among
+             executed valid rollouts is METRIC_EXPLOIT". Nothing is established about the best
+             crosser over the frozen 1,045-point intended domain. Section 5's RETURN 1 line
+             "rows in band I1, I2, I3" is read with this restriction on I3.
+    s3       the 49 / 47 / 9 class proportions are DESCRIPTIVE OF THE EXECUTED SUBSET, not
+             estimates for the intended domain.
+    s6       the Flax-CLIP comparison is NOT waived. The falsifier as written ("Flax minimum
+             rises above 0.8167") kills RETURN 1 but is too weak as an equivalence test: an
+             extreme order statistic over hundreds of candidates is exactly where a port's
+             small differences matter. Owed (HARM-55): score the SAME 395 preserved frame
+             sets through ASAL's original Flax CLIP path; compare absolute score error,
+             crossing status at both thresholds, rank correlation, and the identities and
+             classes of the lowest-scoring candidates. That validates the OBSERVER claim only;
+             the claim about ASAL's own JAX Lenia dynamics is separate and untested.
+    s6       the class rule is frozen and legitimate for THIS packet but immature: one Orbium
+             rollout set its thresholds and 47 crossers were UNCLASSIFIED. A calibration
+             campaign with a frozen set and a disjoint validation set is owed (HARM-56); the
+             observables stay first-class and the class stays a derived label with an
+             explicit UNCLASSIFIED region.
+
+MECHANISM RETURN, STRENGTHENED (for Nyx's Stage D'): not "search finds an
+exploit" but "the ASAL scalar admits both exploitative turbulence and
+coherent, persistent morphing dynamics below the garbage reference,
+including crossings already present in the published catalogue; it
+behaves as a detector of sufficiently large CLIP-embedding novelty
+relative to prior sampled frames, and by itself does not identify the
+mechanism that generated the novelty."
+
+Not done, by the operator's direction: completing the 1,045 to make the
+packet whole. A run on the full domain is a NEW preregistered replication
+after the port is extended and the domain-acceptance fixture exists, with
+its own questions (whole-domain extremum, class distribution, whether the
+executed best remains the winner).

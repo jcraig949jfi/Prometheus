@@ -52,6 +52,55 @@ A3  EXTENSIONS USE DISJOINT SEEDS. When this seat runs more seeds than the
     Executable: packet_rules.refuse_nested_extension / extension_seeds;
     packet_gate() runs A1-A3 before a ruler returns.
 
+A4  EXECUTOR-DOMAIN ACCEPTANCE BEFORE A PACKET IS EXECUTABLE. The pre-run
+    fixture instantiates every element class of the preregistered domain on
+    the named executor (every categorical value; the numeric edges) and
+    returns exact accepted / refused counts; a packet over a domain with any
+    refused class is not executable until the domain or the executor changes.
+    Set on: ASAL 001, where 650 of 1,045 budgeted draws were refused by the
+    port (fractional kernel rings, kn/gn >= 3) after the freeze.
+    (operator review 2026-09-18, point 5)
+
+A5  MEASURE DEFINEDNESS BEFORE THE PREREG HASH. Every preregistered measure
+    is evaluated on tiny synthetic fixtures for every arm before the plan is
+    hashed; a measure undefined by construction on an arm is caught before
+    data. Parent-edge recall appears only on arms where the target edge is
+    defined. Set on: ancestry ruler P1/P3 (VACUOUS/UNEVALUABLE) and P2.
+    (operator review 2026-09-18, point 5 and the ancestry paragraph)
+
+A6  EXISTENTIAL vs EXTREMAL ROWS ARE LABELLED. A row proved by one witness
+    (a value below a threshold exists) is SUPPORTED_BY_WITNESS and is robust
+    to incomplete coverage; a row about the extremum or a distribution over
+    a domain is SUPPORTED_ON_EXECUTED_SUBSET unless the whole domain ran.
+    Proportions over an executed subset are descriptive, never estimates
+    for the intended domain. Set on: ASAL 001 I1/I2 vs I3.
+
+A7  AN ESTIMATED MEAN IS NOT AN EXACT THRESHOLD UNLESS NAMED AS A CONVENTION.
+    A packet that uses an estimated quantity (a 5-seed mean) as a cutoff
+    says so ("operational convention"), and the verdict reads "crossed the
+    frozen convention"; a near-boundary crossing is annotated as weak
+    evidence with the margin in the reference's own sd. Future packets
+    freeze a confidence-aware reference distribution or a named cutoff.
+    Set on: ASAL 001 I0 (margin 0.009 = 1.1 sd).
+
+A8  SEALED-THEN-FROZEN IS AN INTERLOCK, NOT A SUBSTITUTE FOR PREREGISTRATION.
+    Standard order: instrument/analysis contract frozen -> run and seal
+    (hashes committed, contents unread) -> the independent prediction packet
+    may be frozen while results stay unread -> unseal with hash check. When
+    the hypothesis exists beforehand, it is frozen before execution too.
+    Set on: ASAL 001 (SEAL ffd11a1c0 before FREEZE 360a33931).
+
+A9  MISSING ANCESTRY METADATA IS PREFERABLE TO UNVERIFIED ANCESTRY METADATA
+    (design rule for evolutionary provenance, this seat's lane and offered to
+    NPE/Soup schema owners). Measured: corrupted ids at 5-25% drove
+    ancestor recall from 0.93 to 0.48-0.10 while dropped ids left it at
+    0.93; authoritative-but-wrong identifiers poison chains. A record that
+    cannot verify a parent id records it as UNVERIFIED, never as a parent.
+    Set on: ancestry ruler curves D4 vs D5 (a696a5335).
+
+Engineering hygiene (ranked behind A4/A5): large run artifacts (trajectories,
+frames) go to a content-addressed store with hashes in git, not into git.
+
 ## B. Mechanism Archaeology lane (RESPONSIBILITIES.md s8; Founding Charter; Amendments 2-3)
 
 B1  PLAN BEFORE RUN. The analysis plan is committed before any adjudicative
@@ -107,9 +156,9 @@ C8  Audit, do not mutate; hand the finding to the owner.
 
 ## D. Where a rule is checked
 
-    plan file        A1 A2 A3 B1 B3 B6 C1 C5
-    ruler receipt    B4 B5 B7
-    ruling           A2 B2 B6 B8 B9 B10 C2 C3 C4 C6 C7 C8
+    plan file        A1 A2 A3 A5 A7 A8 B1 B3 B6 C1 C5
+    ruler receipt    A4 B4 B5 B7
+    ruling           A2 A6 A7 A9 B2 B6 B8 B9 B10 C2 C3 C4 C6 C7 C8
     comms return     B8 B10
 
 A rule that is found not to be checked anywhere is a defect of this file,
