@@ -1,0 +1,42 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e06",
+ "campaign_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17",
+ "repo_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+ "checks": [
+  {
+   "id": "G1",
+   "gate": "repopath",
+   "passed": true,
+   "detail": "same root from depths 8 and 9; unmarked tree refused"
+  },
+  {
+   "id": "G2",
+   "gate": "recordsafety",
+   "passed": true,
+   "detail": "refused non-ascii, admitted escaped, live records all records portable"
+  },
+  {
+   "id": "G3",
+   "gate": "tally",
+   "passed": true,
+   "detail": "refused drift, admitted agreement, live tally PASS"
+  },
+  {
+   "id": "G4",
+   "gate": "guardproof",
+   "passed": true,
+   "detail": "vacuous fixture refused; a real refusal still proves; ledger demands proof"
+  },
+  {
+   "id": "G5",
+   "gate": "writerlock",
+   "passed": true,
+   "detail": "refused while live, admitted when reaped, non-worktree is NOT_VERIFIED"
+  }
+ ],
+ "n_passed": 5,
+ "n_total": 5,
+ "all_proven": true,
+ "_rule": "an inherited gate is not evidence until observed refusing in THIS experiment"
+}

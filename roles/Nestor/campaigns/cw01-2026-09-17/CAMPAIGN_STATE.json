@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 04:41:30",
+ "updated_local": "2026-09-18 07:23:21",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -232,8 +232,38 @@
   {
    "id": "cw01-e06",
    "title": "Representation ecology",
-   "status": "PENDING",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e06-a01",
+     "phase": "QUALIFY",
+     "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
+     "ended_local": "2026-09-18 07:23:21",
+     "executed_under_frozen_contract": false
+    }
+   ],
+   "disposition": "INCONCLUSIVE",
+   "headline": {
+    "reason": "Q16 hard gate refused the world: mutual invasibility (P3) never held in four successive iterations. TAPE invades TREE (0.104->0.740); TREE cannot invade TAPE (0.104->0.000). Coexistence unreachable, so the preregistered ecological statistic has no referent.",
+    "P1_non_degenerate": true,
+    "P2_two_sided": true,
+    "P3_mutually_invasible": false,
+    "delta_r": [
+     -0.026,
+     -0.0148,
+     -0.0109,
+     0.026
+    ],
+    "gate_credibility": "legacy tree-target fixture REFUSED by the same gate in both runs",
+    "substrate_leak_closed": "CW01-D054 FIXED on evidence: Delta(r) changes sign, which the tree-native generator never did; and the invasion direction REVERSES between legacy and redesigned worlds.",
+    "not_null_because": "the ecological interaction was never genuinely exercised; NULL would claim a finding about the world that was not earned"
+   },
+   "limitations": [
+    "Reuse axis weakly realised (measured 0.00/0.07/0.17/0.07 vs bands 0.00/0.25/0.50/0.75); the Delta(r) sign change is not demonstrably reuse-driven.",
+    "CW01-D055 stands: TAPE is universally at least as compact as TREE under this price list, and TREE's only plausible advantage is dynamic and never materialised.",
+    "Control A hitchhiking (fixation ~gen 26 vs drift ~96) deferred and unaddressed; P3 failed first.",
+    "Two substrates, small programs, four-band reuse grid, single attempt_id for qualification."
+   ]
   },
   {
    "id": "cw01-e07",
@@ -261,23 +291,17 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e05",
-  "attempt_id": "cw01-e05-a01",
-  "phase": "PACKAGE",
+  "experiment_id": "cw01-e06",
+  "attempt_id": "cw01-e06-a01",
+  "phase": "CLOSED_BEFORE_EXECUTE",
+  "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
   "phase_completed": [
    "RECONCILE",
    "PREFLIGHT",
    "INSTANTIATE",
-   "QUALIFY",
-   "EXECUTE",
-   "CLOSE_SCIENCE",
-   "TEARDOWN",
-   "VERIFY_ABSENCE"
+   "QUALIFY"
   ],
-  "title": "Mixture of marginally useful organisms",
-  "disposition": "NULL",
-  "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
-  "next": "CONTINUE -> cw01-e06 representation ecology"
+  "next": "CONTINUE -> cw01-e07 computational weather / brain damage"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -369,7 +393,8 @@
   "Smoking the instrument before spending budget caught 6 defects, 4 of which would have produced a false retention effect. This should become a deterministic gate (CW01-D013, CW01-D015).",
   "e05's seven QUALIFY defects were one failure: the criterion itself became an experimental object, three times as a pass criterion. Runtime guards cannot catch that, because each individual measurement looks clean. lib/contract.py is the missing object - the binding specification is hashed and frozen before the first organism is evaluated, and the driver refuses on any drift. The consistency gate separates SPECIFICATION agreement from EMPIRICAL reconstruction, and it earned its keep on its first run by catching WORLD.json still defining superadditivity on score after the specification had moved to information.",
   "e05 EXECUTE is the freeze boundary paying for itself. a01, the replicate whose numbers calibrated QUALIFY, passes every condition and reads COMPLETE on its own; r03 and r04 refute it. Because the contract was hashed and frozen before the first organism was evaluated, the criterion could not become an experimental object for the eighth time, and the only available move was to report NULL. Cost: a result I would have liked. Benefit: the result is true.",
-  "The independent replication lane earned its cost in defects, not in confirmation. It reproduced the canonical run across 381 comparisons with 0 divergences - and then found five things the canonical lane structurally could not, because it had never seen the code: a self-invalidating verifier (D044), provenance that silently stamps an outside executor as the canonical lane (D045), an experiment that is reproducible in place but not relocatable (D046), a rows path pinned to one attempt (D047), and an ambiguity in my own brief (D048). An executor who shares the author's assumptions cannot test those assumptions."
+  "The independent replication lane earned its cost in defects, not in confirmation. It reproduced the canonical run across 381 comparisons with 0 divergences - and then found five things the canonical lane structurally could not, because it had never seen the code: a self-invalidating verifier (D044), provenance that silently stamps an outside executor as the canonical lane (D045), an experiment that is reproducible in place but not relocatable (D046), a rows path pinned to one attempt (D047), and an ambiguity in my own brief (D048). An executor who shares the author's assumptions cannot test those assumptions.",
+  "e06 produced no ecological result but a reusable doctrine: representation neutrality has THREE layers - neutral reward, neutral task generation, neutral ecological bookkeeping. e06 satisfied the first and violated the second, because the target distribution was expressed in one substrate's native geometry even though the scorer never read a label. It also showed the value of a cheap pre-QUALIFY admissibility gate: mutual invasibility cost minutes to evaluate and would have refused all four world iterations before any evolutionary budget was spent."
  ],
  "verify_absence_e01": {
   "campaign_redis_keys": 0,
@@ -380,19 +405,20 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 5,
+  "experiments_attempted": 6,
   "complete": 2,
   "null": 2,
   "negative": 0,
-  "inconclusive": 1,
-  "defects_logged": 52,
+  "inconclusive": 2,
+  "defects_logged": 57,
   "science_defects": 26,
   "defects_per_experiment": {
    "e01": 17,
    "e02": 11,
    "e03": 3,
    "e04": 5,
-   "e05": 16
+   "e05": 16,
+   "e06": 5
   },
   "reusable_components_landed": [
    "lib/seeds.py",
