@@ -114,3 +114,16 @@ C4-03/DESIGN.md; attempts/a01/PROXY_TABLES.json. | Alternative: define
 "invalid" as some subset of the table (e.g. RND or opaque_io) -- that would
 be a recognizer for a hoped-for result and is forbidden. | Revisit never in
 C4. DETERMINISTIC.
+
+D4-008 | 2026-09-18 06:55 | C4-04: references = the relative offsets of statically
+reachable control instructions (JMP/JZ/JNZ) in the parent; BROKEN = after the
+edit, the instruction the offset lands on has different 4-word content than
+before; REMOVED = the jump itself was cut; the operator index maps copy the
+grammar's word moves exactly (insertion/duplication shift >= pos; deletion/
+splice remove [pos, pos+k) and shift; movement = remove then insert;
+region_swap swaps the two regions). LD/ST register addressing is data-
+dependent and NOT counted. The executed comparison of addressing modes is
+REPRESENTATION_BLOCKED (one static mode exists). | C4-04/DESIGN.md. |
+Alternative: count any content change at any old target as broken (would
+label every edit inside the genome as a reference break). | Revisit never.
+DETERMINISTIC.
