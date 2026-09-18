@@ -26,6 +26,8 @@ def build() -> dict:
     receipt_rel = "techne/acquisition/poet_alife/TECHNE107_RECEIPT_2026-09-17.json"
     rcpt = json.loads((vault.REPO / receipt_rel).read_text(encoding="utf-8"))
     arts = rec["source_origin"]["artifacts"]
+    lenia_animals = vault.body_dir("lenia-chan-2019") / "upstream" / "tree" / "Python" / "animals.json"
+    lenia_animals_sha = hashlib.sha256(lenia_animals.read_bytes()).hexdigest() if lenia_animals.exists() else "BODY_MISSING_ON_THIS_HOST"
     git = next(a for a in arts if a["kind"] == "git")
     npz = [a for a in arts if a["kind"] == "url"]
     now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -68,7 +70,7 @@ def build() -> dict:
         "HANDOFF": {
             "runtime": rec["runtime"],
             "entry_point": {"path": "asal_metrics.py", "symbol": "calc_open_endedness_score(z)", "also": ["rollout.py rollout_simulation", "foundation_models/clip.py CLIP.embed_img", "substrates/lenia.py"]},
-            "demonstration": {"command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --animals <Chakazul/Lenia@adfc5429 Python/animals.json> --out receipt.json --frames frames/",
+            "demonstration": {"command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --out receipt.json --frames frames/   (pattern file resolved from the vault specimen lenia-chan-2019, never from a temp path; Harmonia #429)",
                               "observable": "seven per-arm scores of the open-endedness metric through CLIP ViT-B/32 (lower = more open-ended) + two controls; 56 s on M3",
                               "runs_the_body": False,
                               "what_it_runs_instead": "a numpy port of asal_metrics.py:53 and a torch CLIP with the same weights (sha256 40d36571..950af); Lenia from Chakazul/Lenia@adfc5429, not substrates/lenia.py",
@@ -77,7 +79,9 @@ def build() -> dict:
             "license_constraints": {"spdx": "Apache-2.0", "constraints": ["NOTICE/attribution on redistribution", "datasets carry no separate licence statement (recorded, not assumed)"]},
             "preservation_cost": {"class": "CHEAP", "basis": "46 MB body incl. datasets; re-fetchable by commit and sha256 while github.com and pub.sakana.ai serve; illumination_lenia.npz already 404 (2026-09-17), which is the reason to mirror now"},
             "fixtures": [{"name": a["filename"], "path_or_url": a["url"], "sha256": a["sha256"], "bytes": a["bytes"]} for a in npz]
-                        + [{"name": "TECHNE-107 seven-arm CLIP values (Harmonia calibration/cheat fixture)", "path_or_url": receipt_rel, "sha256": lf_sha256(vault.REPO / receipt_rel)}]},
+                        + [{"name": "TECHNE-107 seven-arm CLIP values (Harmonia calibration/cheat fixture)", "path_or_url": receipt_rel, "sha256": lf_sha256(vault.REPO / receipt_rel)},
+                           {"name": "Lenia lifeform catalogue animals.json (Orbium O2u)", "path_or_url": "vault specimen lenia-chan-2019 (Chakazul/Lenia@adfc5429) upstream/tree/Python/animals.json",
+                            "sha256": lenia_animals_sha, "specimen": "lenia-chan-2019"}]},
         "CUT_ID": None, "NYX_PREDICTION_PACKET": None, "ORACLE_SOURCES": None, "ORACLE_PROVENANCE_GRADES": None,
         "HARMONIA_SURROGATE_ID": None, "EQUIVALENCE_RESULT": None, "DIVERGENCE_LEDGER": None, "TEST_WORLD_ID": None,
         "PRESSURE_ID": None, "INTERVENTION_ID": None, "TENSOR_ADMISSION_RESULT": None, "PAYLOAD_READING_NULL": None, "FINAL_DISPOSITION": None,

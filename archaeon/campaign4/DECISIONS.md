@@ -139,3 +139,26 @@ the walk is a pure function of its seeds and the frozen evaluator, so C4-06
 regenerates them and verifies the last-step digest against steps.json. |
 C4-05/DESIGN.md. | Alternative: band relative to the current walker (a
 ratchet). | Revisit never in C4. DETERMINISTIC.
+
+D4-011 | 2026-09-18 07:55 | C4-07 closed REPRESENTATION_BLOCKED through the stack (one
+sealed preregistration, one engine record carrying the design digest): no
+condition on the frozen substrate isolates an insulation event from ordinary
+execution (C4-03). Costing reduced operands or addresses instead would price
+the representation itself -- a reward term naming a representational property,
+forbidden by the directive. Recommendation for Campaign 5 in C4-07/DESIGN.md.
+| C4-03 PROXY_TABLES.json (vacuity 932/932; P(fatal) 1.000). | Alternative:
+substitute a different question -- rejected as the forbidden kind. |
+Revisit never in C4. DETERMINISTIC.
+
+D4-010 | 2026-09-18 07:45 | C4-06: D* = 16 (every C4-05 walker reached it); the
+starting population is the 188 depth-16 walkers of the non-degenerate parents,
+repeated to N by the evolver's init_pop rule; mutation_only = descend(mate=None)
+always; recombination = the evolver's mate policy unchanged (independent
+tournament, splice copies from the mate). Walker manifests are regenerated
+from C4-05's seeds and digest-verified; final populations are NOT stored
+(C4-08 reruns the ordinary arm and checks its traces). ANNOTATION after the
+run: the shelf positive control is weak by construction (walkers start on
+the shelf); recorded in READOUT R3, not moved. | C4-06/DESIGN.md. |
+Alternative: store 12 x 200 manifests (2.4k programs) -- rejected for size;
+the rerun is deterministic and self-verifying. | Revisit never in C4.
+DETERMINISTIC.
