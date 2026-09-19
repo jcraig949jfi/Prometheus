@@ -95,7 +95,8 @@ def resolve(spec: dict, thr: dict, frozen: dict) -> Tuple[dict, List[dict]]:
     else:
         init = SUB.gen0_any(spec["organism"]["profile"], N, pop["seed"])
     kw = dict(run_id=spec["experiment_id"].replace("/", "_"), provenance=spec["provenance"], world=world, profile=spec["organism"]["profile"], schedule=sched, N=N, E=pr["E"],
-              archive=pr["archive"], thresholds=thr, spread=frozen["spread"], seed=spec["seed"], freeze_policy=pr["freeze_policy"], log_scores=spec["telemetry"].get("log_scores", False))
+              archive=pr["archive"], thresholds=thr, spread=frozen["spread"], seed=spec["seed"], freeze_policy=pr["freeze_policy"], log_scores=spec["telemetry"].get("log_scores", False),
+              world_options=pr.get("world_options") or {}, nominate=pr.get("nominate") or {})
     return kw, init
 
 
@@ -146,7 +147,11 @@ def execute(spec: dict, thr: dict, frozen: dict, caps: Dict[str, bool]) -> dict:
             json.dump({"spec": seg, "checkpoint_in_digest": ck["digest"], "out": out}, f, default=str)
         chunks_loaded.append({"out": out, "checkpoint_in_digest": ck["digest"]})
         INT.check_checkpoint_ancestry(chunks_loaded)
-        rec = {"chunk": c, "g0": g0, "g1": g1, "status": "DONE", "spec_hash": seg["spec_hash"], "out_digest": out["out_digest"], "checkpoint_out": out["checkpoint_out"]["digest"],
+        meas = {}
+        if spec["params"].get("measurements"):
+            from archaeon.frontier.design import measurement as MEAS
+            m_all = MEAS.measure(out, frozen["spread"]); meas = {k: v for k, v in m_all.items() if k in spec["params"]["measurements"]}
+        rec = {"chunk": c, "g0": g0, "g1": g1, "status": "DONE", "spec_hash": seg["spec_hash"], "out_digest": out["out_digest"], "checkpoint_out": out["checkpoint_out"]["digest"], "measurements": meas,
                "evaluations": out["evaluations"], "events": len(out["events"]), "freezes": len(out["freezes"]), "anchors": len(out["anchors"]), "wall_s": out["wall_s"],
                "fired": _count(out, "fired"), "unable": _count(out, "unable"), "path": _rel(path)}
         receipt["chunks"].append(rec); total += out["evaluations"]; ck = out["checkpoint_out"]
@@ -168,28 +173,42 @@ def _count(out: dict, key: str) -> dict:
 
 
 # ---------------------------------------------------------------- branching (code, from the receipt)
-def descendants(spec: dict, receipt: dict) -> List[dict]:
+ADMITTED = ("unexpected_transfer", "lineage_discontinuity", "behavioral_novelty", "environmental_modification", "niche_divergence", "regime_persistence")
+
+
+def descendants(spec: dict, receipt: dict) -> List[Tuple[dict, str, str]]:
+    """(spec, why, pool). Controls come only from a run that is not itself a control or descendant (depth 0), go to AUDIT;
+    persistence (x4 horizon) only when an ADMITTED ruler fired, goes to EXPLOITATION; adjacent bins only from a depth-0
+    composed-world run with classifier failure, EXPLORATION. Runaway chains of controls-of-controls are thereby impossible."""
     fired: Dict[str, int] = {}
     for c in receipt["chunks"]:
         for d, n in c["fired"].items():
             fired[d] = fired.get(d, 0) + n
-    core = {d: n for d, n in fired.items() if d not in ("detector_disagreement", "classifier_failure", "structural_reuse")}
+    depth = spec["experiment_id"].count("/") - spec["family_id"].count("/")
+    if depth > 0:
+        return []
+    # Scientific authority is Archaeon's (DF-013): the scheduler proposes ONLY the two evidence controls, and only when an
+    # admitted ruler fired; every other descendant is authored under archaeon/frontier/design/.
     out = []
-    if core:
+    adm = {d: n for d, n in fired.items() if d in ADMITTED}
+    if adm:
         for ctl in spec["controls"]:
             if ctl["kind"] in ("seed", "initialization") and ctl["spec_delta"]:
-                out.append((SP.apply_delta(spec, ctl["spec_delta"]), "control:" + ctl["kind"]))
-        out.append((SP.apply_delta(spec, {"params.generations": "x4", "budget.evaluations": "x4"}), "persistence"))
-    if fired.get("classifier_failure", 0) >= 3 and spec["world"]["kind"] == "c6.composed.sample":
-        b = spec["world"].get("bin")
-        if b is not None:
-            for nb in (b - 1, b + 1):
-                if 0 <= nb <= 10:
-                    out.append((SP.apply_delta(spec, {"world.bin": nb}), "adjacent_bin"))
+                out.append((SP.apply_delta(spec, ctl["spec_delta"]), "control:" + ctl["kind"], "AUDIT"))
     return out
 
 
 # ---------------------------------------------------------------- the loop
+PURSUE = HERE / "pursue.json"          # Archaeon-authored: {"lineages": {lid: multiplier}, "families": {family_id: multiplier}, "note": ...}
+
+
+def pursue_table() -> dict:
+    try:
+        return json.loads(PURSUE.read_text(encoding="utf-8")) if PURSUE.exists() else {}
+    except Exception:                                                # noqa: BLE001
+        return {}
+
+
 def choose_pool(q: Queues, shares: Dict[str, float], spent: Dict[str, int]) -> Optional[str]:
     tot = max(1, sum(spent.values())); best, gap = None, -1.0
     for pool in ("EXPLORATION", "EXPLOITATION", "AUDIT", "REVISIT"):
@@ -214,7 +233,21 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
     pool = choose_pool(q, shares, spent)
     if pool is None:
         return {"status": "IDLE"}
-    item = q.pop(pool); lid = item["lineage_id"]; tid = item["transformation_id"]
+    # pursuit steering: within the pool, Archaeon's multipliers reorder the pending items (data, not prose)
+    pt = pursue_table()
+    if pt:
+        pend = q.pending(pool)
+        def _w(it):
+            m = pt.get("lineages", {}).get(it["lineage_id"], 1.0) * pt.get("families", {}).get(it["transformation_id"].split("/")[0].split(".")[0], 1.0)
+            return -(it["priority"] * m)
+        pend.sort(key=_w)
+        if pend:
+            q.set_state(pool, pend[0]["item_id"], "CLAIMED"); item = q.items[pool][pend[0]["item_id"]]
+        else:
+            return {"status": "IDLE"}
+    else:
+        item = q.pop(pool)
+    lid = item["lineage_id"]; tid = item["transformation_id"]
     spec = spec_of(reg, item)
     if spec is None:
         q.set_state(pool, item["item_id"], "DROPPED", note="no spec"); reg.event(lid, "DROPPED", {"transformation": tid, "reason": "no executable spec"})
@@ -248,16 +281,16 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
     reg.observe(lid, "%s: %d chunks, %d evaluations, firings %s" % (tid, len(receipt["chunks"]), receipt["evaluations"], fired), ref={"receipt": receipt["chunks"][-1]["path"] if receipt["chunks"] else None})
     new = []
     seen = {t["id"] for t in reg.get(lid)["transformations"]}
-    for dspec, why in descendants(spec, receipt):
+    for dspec, why, dpool in descendants(spec, receipt):
         did = dspec["experiment_id"]
         if did in seen:
             continue
         seen.add(did)
-        new.append({"id": did, "dims": [why], "from": tid, "to": why, "budget_evaluations": dspec["budget"]["evaluations"], "status": "PENDING", "trigger": why, "spec": dspec})
+        new.append({"id": did, "dims": [why], "from": tid, "to": why, "budget_evaluations": dspec["budget"]["evaluations"], "status": "PENDING", "trigger": why, "spec": dspec, "pool": dpool})
     if new:
         reg.add_transformations(lid, new)
         for t in new:
-            q.push(pool, lineage_id=lid, transformation_id=t["id"], priority=item["priority"] + 0.5, lane=t["spec"]["provenance"]["lane"] if t["trigger"].startswith("control") else "EVOLUTION_GENERATED",
+            q.push(t["pool"], lineage_id=lid, transformation_id=t["id"], priority=item["priority"] - 0.1, lane=t["spec"]["provenance"]["lane"] if t["trigger"].startswith("control") else "EVOLUTION_GENERATED",
                    budget_evaluations=t["budget_evaluations"], note="branch: " + t["trigger"])
     q.set_state(pool, item["item_id"], "DONE"); spent[pool] = spent.get(pool, 0) + receipt["evaluations"]
     return {"status": "RAN", "pool": pool, "lineage": lid, "transformation": tid, "evaluations": receipt["evaluations"], "chunks": len(receipt["chunks"]), "fired": fired, "descendants": [t["id"] for t in new]}

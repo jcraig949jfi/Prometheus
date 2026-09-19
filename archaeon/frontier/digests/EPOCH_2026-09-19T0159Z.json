@@ -1,0 +1,1088 @@
+{
+ "at": "2026-09-19T0159Z",
+ "events_by_kind": {
+  "BLOCKED_BY_SUPPRESSION": 1,
+  "CHUNK": 2,
+  "CREATED": 13,
+  "FALSIFIER_FAILED": 1,
+  "FREEZE_REF": 12745,
+  "FRONTIER_EXTENDED": 19,
+  "GATED": 8,
+  "OBSERVATION": 19,
+  "RUN": 19,
+  "SPECS_ATTACHED": 12,
+  "UNGATED": 7
+ },
+ "interpretations": [],
+ "queues": {
+  "AUDIT": {
+   "claimed": 0,
+   "done": 2,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 2,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 14,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 16,
+   "pending_budget": 635000
+  },
+  "EXPLOITATION": {
+   "claimed": 0,
+   "done": 3,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 3,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 11,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 14,
+   "pending_budget": 1360000
+  },
+  "EXPLORATION": {
+   "claimed": 1,
+   "done": 13,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 15,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 9,
+    "MIXED": 0,
+    "PROCEDURAL": 212
+   },
+   "pending": 236,
+   "pending_budget": 3427000
+  },
+  "REVISIT": {
+   "claimed": 0,
+   "done": 1,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 3,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 9,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 12,
+   "pending_budget": 790000
+  }
+ },
+ "registry": {
+  "by_mode": {
+   "AUDIT": 2,
+   "BLIND_SPOT": 2,
+   "BREADTH": 4,
+   "DEPTH": 2,
+   "REVISIT": 3
+  },
+  "evaluations_used": 415776,
+  "frontier_total": 279,
+  "lineages": 13,
+  "open": 13,
+  "retired": 0
+ },
+ "runs": [
+  {
+   "chunks": 5,
+   "complexity_bin": 5,
+   "evaluations": 40000,
+   "fired": {
+    "behavioral_novelty": 172,
+    "classifier_failure": 2913,
+    "detector_disagreement": 2910,
+    "lineage_discontinuity": 26,
+    "structural_reuse": 2754
+   },
+   "freeze_scopes": {
+    "COMPLETE": 56,
+    "PARTIAL_BY_POLICY": 2854,
+    "PARTIAL_FREEZE": 3
+   },
+   "generations": 1250,
+   "lineage": "LIN-7e497dc1",
+   "mode": "REVISIT",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 5
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    1249,
+    0.0,
+    0.0
+   ],
+   "reward_max_over_run": 0.0,
+   "tiers": {
+    "FULL": 59,
+    "PARTIAL": 2854
+   },
+   "title": "Neutral-network exaptation rises with depth but yield per evaluation falls",
+   "transformation": "C4-exapt.T1",
+   "trigger": null,
+   "unable": {
+    "lineage_discontinuity": 21,
+    "niche_divergence": 2913,
+    "regime_persistence": 2913,
+    "unexpected_causal_dependence": 2913,
+    "unexpected_transfer": 2913,
+    "unexplained_gain": 2913
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": {},
+   "evaluations": 60000,
+   "fired": {
+    "behavioral_novelty": 327,
+    "classifier_failure": 30473,
+    "detector_disagreement": 30095,
+    "lineage_discontinuity": 355,
+    "structural_reuse": 30100
+   },
+   "freeze_scopes": {
+    "COMPLETE": 6981,
+    "PARTIAL_BY_POLICY": 23238,
+    "PARTIAL_FREEZE": 254
+   },
+   "generations": 300,
+   "lineage": "LIN-ffc7ae5d",
+   "mode": "DEPTH",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 2
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.22916666666666666,
+    0.4375
+   ],
+   "reward_last": [
+    299,
+    0.375,
+    0.375
+   ],
+   "reward_max_over_run": 0.5,
+   "tiers": {
+    "FULL": 7235,
+    "PARTIAL": 23238
+   },
+   "title": "The flat elite: 100-180 generations of N=50 move nothing on screened worlds with headroom",
+   "transformation": "C5-flat.T1",
+   "trigger": null,
+   "unable": {
+    "environmental_modification": 30473,
+    "lineage_discontinuity": 77,
+    "niche_divergence": 30473,
+    "regime_persistence": 30473,
+    "unexpected_causal_dependence": 30473,
+    "unexpected_transfer": 30473,
+    "unexplained_gain": 30473
+   },
+   "world_kind": "wse.WorldSpec"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": {},
+   "evaluations": 60000,
+   "fired": {
+    "behavioral_novelty": 398,
+    "classifier_failure": 26073,
+    "detector_disagreement": 25742,
+    "lineage_discontinuity": 101,
+    "structural_reuse": 25821
+   },
+   "freeze_scopes": {
+    "COMPLETE": 543,
+    "PARTIAL_BY_POLICY": 25514,
+    "PARTIAL_FREEZE": 16
+   },
+   "generations": 300,
+   "lineage": "LIN-ffc7ae5d",
+   "mode": "DEPTH",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 2
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.14583333333333334,
+    0.3333333333333333
+   ],
+   "reward_last": [
+    299,
+    0.3541666666666667,
+    0.375
+   ],
+   "reward_max_over_run": 0.5,
+   "tiers": {
+    "FULL": 559,
+    "PARTIAL": 25514
+   },
+   "title": "The flat elite: 100-180 generations of N=50 move nothing on screened worlds with headroom",
+   "transformation": "C5-flat.T1/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "environmental_modification": 26073,
+    "lineage_discontinuity": 86,
+    "niche_divergence": 26073,
+    "regime_persistence": 26073,
+    "unexpected_causal_dependence": 26073,
+    "unexpected_transfer": 26073,
+    "unexplained_gain": 26073
+   },
+   "world_kind": "wse.WorldSpec"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": {},
+   "evaluations": 60000,
+   "fired": {
+    "behavioral_novelty": 443,
+    "classifier_failure": 16278,
+    "detector_disagreement": 15925,
+    "lineage_discontinuity": 500,
+    "structural_reuse": 15607
+   },
+   "freeze_scopes": {
+    "COMPLETE": 316,
+    "PARTIAL_BY_POLICY": 15951,
+    "PARTIAL_FREEZE": 11
+   },
+   "generations": 300,
+   "lineage": "LIN-ffc7ae5d",
+   "mode": "DEPTH",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 2
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.10416666666666667,
+    0.3541666666666667
+   ],
+   "reward_last": [
+    299,
+    0.3958333333333333,
+    0.4375
+   ],
+   "reward_max_over_run": 0.4583333333333333,
+   "tiers": {
+    "FULL": 327,
+    "PARTIAL": 15951
+   },
+   "title": "The flat elite: 100-180 generations of N=50 move nothing on screened worlds with headroom",
+   "transformation": "C5-flat.T1/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "environmental_modification": 16278,
+    "lineage_discontinuity": 89,
+    "niche_divergence": 16278,
+    "regime_persistence": 16278,
+    "unexpected_causal_dependence": 16278,
+    "unexpected_transfer": 16278,
+    "unexplained_gain": 16278
+   },
+   "world_kind": "wse.WorldSpec"
+  },
+  {
+   "chunks": 4,
+   "complexity_bin": {},
+   "evaluations": 29984,
+   "fired": {
+    "classifier_failure": 15,
+    "lineage_discontinuity": 15
+   },
+   "freeze_scopes": {
+    "COMPLETE": 2,
+    "PARTIAL_BY_POLICY": 13
+   },
+   "generations": 937,
+   "lineage": "LIN-6071e54d",
+   "mode": "BLIND_SPOT",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 4
+   },
+   "profile": "graph",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    936,
+    0.0,
+    0.0
+   ],
+   "reward_max_over_run": 0.375,
+   "tiers": {
+    "FULL": 2,
+    "PARTIAL": 13
+   },
+   "title": "Population churn swamps single-organism novelty/discontinuity on the old substrate",
+   "transformation": "C6-blind.T1",
+   "trigger": null,
+   "unable": {
+    "environmental_modification": 15,
+    "niche_divergence": 15,
+    "regime_persistence": 15,
+    "structural_reuse": 15,
+    "unexpected_causal_dependence": 15,
+    "unexpected_transfer": 15,
+    "unexplained_gain": 15
+   },
+   "world_kind": "wse.WorldSpec"
+  },
+  {
+   "chunks": 4,
+   "complexity_bin": {},
+   "evaluations": 29984,
+   "fired": {
+    "behavioral_novelty": 152,
+    "classifier_failure": 153,
+    "lineage_discontinuity": 1
+   },
+   "freeze_scopes": {
+    "COMPLETE": 1,
+    "PARTIAL_BY_POLICY": 152
+   },
+   "generations": 937,
+   "lineage": "LIN-6071e54d",
+   "mode": "BLIND_SPOT",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 4
+   },
+   "profile": "graph",
+   "reward_first": [
+    0,
+    0.0,
+    0.125
+   ],
+   "reward_last": [
+    936,
+    0.0,
+    0.0
+   ],
+   "reward_max_over_run": 0.5,
+   "tiers": {
+    "FULL": 1,
+    "PARTIAL": 152
+   },
+   "title": "Population churn swamps single-organism novelty/discontinuity on the old substrate",
+   "transformation": "C6-blind.T1/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "environmental_modification": 153,
+    "niche_divergence": 153,
+    "regime_persistence": 153,
+    "structural_reuse": 153,
+    "unexpected_causal_dependence": 153,
+    "unexpected_transfer": 153,
+    "unexplained_gain": 153
+   },
+   "world_kind": "wse.WorldSpec"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 3,
+   "evaluations": 16000,
+   "fired": {
+    "behavioral_novelty": 1108,
+    "classifier_failure": 12745,
+    "detector_disagreement": 12593,
+    "environmental_modification": 526,
+    "lineage_discontinuity": 169,
+    "structural_reuse": 12334
+   },
+   "freeze_scopes": {
+    "COMPLETE": 3094,
+    "PARTIAL_BY_POLICY": 6892,
+    "PARTIAL_FREEZE": 2759
+   },
+   "generations": 500,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 502
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.7129999999999996
+   ],
+   "reward_last": [
+    499,
+    0.7129999999999996,
+    0.7129999999999996
+   ],
+   "reward_max_over_run": 1.0,
+   "tiers": {
+    "FULL": 5853,
+    "PARTIAL": 6892
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000",
+   "trigger": null,
+   "unable": {
+    "lineage_discontinuity": 556,
+    "niche_divergence": 12745,
+    "regime_persistence": 12745,
+    "unexpected_causal_dependence": 12745,
+    "unexpected_transfer": 12745,
+    "unexplained_gain": 12745
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 401,
+    "classifier_failure": 6944,
+    "detector_disagreement": 6924,
+    "environmental_modification": 1640,
+    "lineage_discontinuity": 89,
+    "niche_divergence": 278,
+    "structural_reuse": 6427
+   },
+   "freeze_scopes": {
+    "COMPLETE": 3749,
+    "PARTIAL_BY_POLICY": 3139,
+    "PARTIAL_FREEZE": 56
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 312,
+    "EXOGENOUS_PRESSURE": 624
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    311,
+    0.04644654088050315,
+    0.08291823899371069
+   ],
+   "reward_max_over_run": 0.1785242849388813,
+   "tiers": {
+    "FULL": 3805,
+    "PARTIAL": 3139
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed",
+   "trigger": "admitted_detector_firing",
+   "unable": {
+    "lineage_discontinuity": 34,
+    "regime_persistence": 6944,
+    "unexpected_causal_dependence": 6944,
+    "unexpected_transfer": 6944,
+    "unexplained_gain": 6944
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 381,
+    "classifier_failure": 5706,
+    "detector_disagreement": 5704,
+    "environmental_modification": 302,
+    "lineage_discontinuity": 25,
+    "niche_divergence": 66,
+    "structural_reuse": 5424
+   },
+   "freeze_scopes": {
+    "COMPLETE": 3092,
+    "PARTIAL_BY_POLICY": 2560,
+    "PARTIAL_FREEZE": 54
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 312,
+    "EXOGENOUS_PRESSURE": 624
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.05573201796153855
+   ],
+   "reward_last": [
+    311,
+    0.11731424274642678,
+    0.24199426041267577
+   ],
+   "reward_max_over_run": 0.38630844803330566,
+   "tiers": {
+    "FULL": 3146,
+    "PARTIAL": 2560
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 32,
+    "regime_persistence": 5706,
+    "unexpected_causal_dependence": 5706,
+    "unexpected_transfer": 5706,
+    "unexplained_gain": 5706
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 429,
+    "classifier_failure": 8026,
+    "detector_disagreement": 8020,
+    "environmental_modification": 732,
+    "lineage_discontinuity": 60,
+    "niche_divergence": 185,
+    "structural_reuse": 7812
+   },
+   "freeze_scopes": {
+    "COMPLETE": 159,
+    "PARTIAL_BY_POLICY": 7863,
+    "PARTIAL_FREEZE": 4
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 308,
+    "EXOGENOUS_PRESSURE": 620
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    311,
+    0.11551807992959515,
+    0.11560451900054697
+   ],
+   "reward_max_over_run": 0.3172118475920133,
+   "tiers": {
+    "FULL": 163,
+    "PARTIAL": 7863
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 32,
+    "regime_persistence": 8026,
+    "structural_reuse": 1,
+    "unexpected_causal_dependence": 8026,
+    "unexpected_transfer": 8026,
+    "unexplained_gain": 8026
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 445,
+    "classifier_failure": 7379,
+    "detector_disagreement": 7371,
+    "environmental_modification": 1430,
+    "lineage_discontinuity": 80,
+    "niche_divergence": 137,
+    "structural_reuse": 7003
+   },
+   "freeze_scopes": {
+    "COMPLETE": 146,
+    "PARTIAL_BY_POLICY": 7231,
+    "PARTIAL_FREEZE": 2
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 312,
+    "EXOGENOUS_PRESSURE": 624
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.051969525493386313
+   ],
+   "reward_last": [
+    311,
+    0.0485407179664713,
+    0.0485407179664713
+   ],
+   "reward_max_over_run": 0.25586969558607914,
+   "tiers": {
+    "FULL": 148,
+    "PARTIAL": 7231
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 29,
+    "regime_persistence": 7379,
+    "unexpected_causal_dependence": 7379,
+    "unexpected_transfer": 7379,
+    "unexplained_gain": 7379
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 811,
+    "classifier_failure": 7872,
+    "detector_disagreement": 7846,
+    "environmental_modification": 1192,
+    "lineage_discontinuity": 81,
+    "niche_divergence": 224,
+    "structural_reuse": 7140
+   },
+   "freeze_scopes": {
+    "COMPLETE": 165,
+    "PARTIAL_BY_POLICY": 7704,
+    "PARTIAL_FREEZE": 3
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 312,
+    "EXOGENOUS_PRESSURE": 624
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.05160372033475792
+   ],
+   "reward_last": [
+    311,
+    0.17193339915728165,
+    0.17193339915728165
+   ],
+   "reward_max_over_run": 0.298473053419468,
+   "tiers": {
+    "FULL": 168,
+    "PARTIAL": 7704
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 45,
+    "regime_persistence": 7872,
+    "structural_reuse": 1,
+    "unexpected_causal_dependence": 7872,
+    "unexpected_transfer": 7872,
+    "unexplained_gain": 7872
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 398,
+    "classifier_failure": 6025,
+    "detector_disagreement": 6024,
+    "environmental_modification": 779,
+    "lineage_discontinuity": 10,
+    "niche_divergence": 16,
+    "structural_reuse": 5441
+   },
+   "freeze_scopes": {
+    "COMPLETE": 125,
+    "PARTIAL_BY_POLICY": 5896,
+    "PARTIAL_FREEZE": 4
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 308,
+    "EXOGENOUS_PRESSURE": 620
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    311,
+    0.31092211642853196,
+    0.31092211642853196
+   ],
+   "reward_max_over_run": 0.37043504201541155,
+   "tiers": {
+    "FULL": 129,
+    "PARTIAL": 5896
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 26,
+    "regime_persistence": 6025,
+    "unexpected_causal_dependence": 6025,
+    "unexpected_transfer": 6025,
+    "unexplained_gain": 6025
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 311,
+    "classifier_failure": 5686,
+    "detector_disagreement": 5685,
+    "environmental_modification": 584,
+    "lineage_discontinuity": 27,
+    "niche_divergence": 49,
+    "structural_reuse": 5500
+   },
+   "freeze_scopes": {
+    "COMPLETE": 98,
+    "PARTIAL_BY_POLICY": 5584,
+    "PARTIAL_FREEZE": 4
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 300,
+    "EXOGENOUS_PRESSURE": 613
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.010416666666666666
+   ],
+   "reward_last": [
+    311,
+    0.05206666666666667,
+    0.05206666666666667
+   ],
+   "reward_max_over_run": 0.19306711900702148,
+   "tiers": {
+    "FULL": 102,
+    "PARTIAL": 5584
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 27,
+    "regime_persistence": 5686,
+    "unexpected_causal_dependence": 5686,
+    "unexpected_transfer": 5686,
+    "unexplained_gain": 5686
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 790,
+    "classifier_failure": 4452,
+    "detector_disagreement": 4449,
+    "environmental_modification": 479,
+    "lineage_discontinuity": 555,
+    "niche_divergence": 20,
+    "structural_reuse": 3448
+   },
+   "freeze_scopes": {
+    "COMPLETE": 92,
+    "PARTIAL_BY_POLICY": 4355,
+    "PARTIAL_FREEZE": 5
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 312,
+    "EXOGENOUS_PRESSURE": 624
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.050988968408605444
+   ],
+   "reward_last": [
+    311,
+    0.06940251572327044,
+    0.22968073258260963
+   ],
+   "reward_max_over_run": 0.3220550720366471,
+   "tiers": {
+    "FULL": 97,
+    "PARTIAL": 4355
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 31,
+    "regime_persistence": 4452,
+    "structural_reuse": 1,
+    "unexpected_causal_dependence": 4452,
+    "unexpected_transfer": 4452,
+    "unexplained_gain": 4452
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 537,
+    "classifier_failure": 7651,
+    "detector_disagreement": 7634,
+    "environmental_modification": 1432,
+    "lineage_discontinuity": 87,
+    "niche_divergence": 412,
+    "structural_reuse": 6979
+   },
+   "freeze_scopes": {
+    "COMPLETE": 162,
+    "PARTIAL_BY_POLICY": 7485,
+    "PARTIAL_FREEZE": 4
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 310,
+    "EXOGENOUS_PRESSURE": 622
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.0
+   ],
+   "reward_last": [
+    311,
+    0.1779371035613642,
+    0.23712487394566725
+   ],
+   "reward_max_over_run": 0.39667547317297525,
+   "tiers": {
+    "FULL": 166,
+    "PARTIAL": 7485
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 34,
+    "regime_persistence": 7651,
+    "unexpected_causal_dependence": 7651,
+    "unexpected_transfer": 7651,
+    "unexplained_gain": 7651
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 339,
+    "classifier_failure": 7337,
+    "detector_disagreement": 7325,
+    "environmental_modification": 372,
+    "lineage_discontinuity": 126,
+    "niche_divergence": 138,
+    "structural_reuse": 7069
+   },
+   "freeze_scopes": {
+    "COMPLETE": 150,
+    "PARTIAL_BY_POLICY": 7181,
+    "PARTIAL_FREEZE": 6
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 293,
+    "EXOGENOUS_PRESSURE": 605
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.020833333333333332
+   ],
+   "reward_last": [
+    311,
+    0.05652148719724053,
+    0.14512820512820512
+   ],
+   "reward_max_over_run": 0.2019293867405206,
+   "tiers": {
+    "FULL": 156,
+    "PARTIAL": 7181
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 39,
+    "regime_persistence": 7337,
+    "structural_reuse": 1,
+    "unexpected_causal_dependence": 7337,
+    "unexpected_transfer": 7337,
+    "unexplained_gain": 7337
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 292,
+    "classifier_failure": 5031,
+    "detector_disagreement": 5028,
+    "environmental_modification": 1074,
+    "lineage_discontinuity": 107,
+    "niche_divergence": 247,
+    "structural_reuse": 4091
+   },
+   "freeze_scopes": {
+    "COMPLETE": 104,
+    "PARTIAL_BY_POLICY": 4922,
+    "PARTIAL_FREEZE": 5
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 311,
+    "EXOGENOUS_PRESSURE": 623
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.030612244897959183
+   ],
+   "reward_last": [
+    311,
+    0.272443133494146,
+    0.27878093672301557
+   ],
+   "reward_max_over_run": 0.44341985944873785,
+   "tiers": {
+    "FULL": 109,
+    "PARTIAL": 4922
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 34,
+    "regime_persistence": 5031,
+    "unexpected_causal_dependence": 5031,
+    "unexpected_transfer": 5031,
+    "unexplained_gain": 5031
+   },
+   "world_kind": "c6.composed.v1"
+  },
+  {
+   "chunks": 2,
+   "complexity_bin": 7,
+   "evaluations": 9984,
+   "fired": {
+    "behavioral_novelty": 224,
+    "classifier_failure": 3240,
+    "detector_disagreement": 3239,
+    "environmental_modification": 24,
+    "lineage_discontinuity": 55,
+    "niche_divergence": 2,
+    "structural_reuse": 3050
+   },
+   "freeze_scopes": {
+    "COMPLETE": 77,
+    "PARTIAL_BY_POLICY": 3162,
+    "PARTIAL_FREEZE": 1
+   },
+   "generations": 312,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "ENDOGENOUS_PRESSURE": 209,
+    "EXOGENOUS_PRESSURE": 522
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.09535103750055432
+   ],
+   "reward_last": [
+    311,
+    0.0911764705882353,
+    0.0911764705882353
+   ],
+   "reward_max_over_run": 0.2483327509663773,
+   "tiers": {
+    "FULL": 78,
+    "PARTIAL": 3162
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000.d_seed/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6/d5bcded2cfc6",
+   "trigger": "control:seed",
+   "unable": {
+    "lineage_discontinuity": 29,
+    "regime_persistence": 3240,
+    "unexpected_causal_dependence": 3240,
+    "unexpected_transfer": 3240,
+    "unexplained_gain": 3240
+   },
+   "world_kind": "c6.composed.v1"
+  }
+ ],
+ "schema": "archaeon.frontier.digest.v1"
+}

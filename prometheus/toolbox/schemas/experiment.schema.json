@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus.toolbox.experiment.v1",
+  "title": "Experiment IR (core.experiment.v1)",
+  "description": "Backend-neutral scientific intent. Names components by registry kind; never a library, host, queue or transport. No run(); lowers via compile(target).",
+  "type": "object",
+  "required": ["schema", "family", "world", "substrate", "players", "interventions", "observers", "controls", "transforms", "sweep", "seed_policy", "budget", "required_capabilities", "provenance"],
+  "properties": {
+    "schema": {"const": "prometheus.toolbox.experiment.v1"},
+    "id": {"type": ["string", "null"], "description": "family/<digest> when null"},
+    "family": {"type": "string", "pattern": "^[^/]+$"},
+    "world": {"$ref": "#/$defs/ref"},
+    "substrate": {"$ref": "#/$defs/ref"},
+    "players": {"type": "array", "items": {"$ref": "#/$defs/playerSpec"}},
+    "interventions": {"type": "array", "items": {"$ref": "#/$defs/intervention"}},
+    "objective": {"oneOf": [{"$ref": "#/$defs/ref"}, {"type": "null"}]},
+    "observers": {"type": "array", "items": {"$ref": "#/$defs/ref"}},
+    "controls": {"type": "array", "items": {"$ref": "#/$defs/ref"}},
+    "transforms": {"type": "array", "items": {"$ref": "#/$defs/ref"}},
+    "selector": {"oneOf": [{"$ref": "#/$defs/ref"}, {"type": "null"}]},
+    "sweep": {"type": "object", "additionalProperties": {"type": "array", "minItems": 1},
+              "description": "dotted path -> values; roots: world, substrate, interventions, budget, seed_policy, objective; cartesian product"},
+    "seed_policy": {"type": "object", "required": ["base", "n_seeds"], "properties": {"base": {"type": "integer"}, "n_seeds": {"type": "integer", "minimum": 1}}},
+    "budget": {"type": "object", "required": ["episodes", "horizon"], "properties": {"episodes": {"type": "integer", "minimum": 1}, "horizon": {"type": "integer", "minimum": 1}, "evaluations": {"type": "integer"}, "wall_s": {"type": "number"}}},
+    "required_capabilities": {"type": "array", "items": {"$ref": "#/$defs/capability"}},
+    "provenance": {"type": "object", "description": "designer seat, lane, note, sweep_point, parent; never a verdict"}
+  },
+  "$defs": {
+    "capability": {"type": "string", "pattern": "^(core|ext)\\.[a-z0-9_.]+\\.v[0-9]+$"},
+    "ref": {"type": "object", "required": ["kind"], "properties": {"kind": {"type": "string"}, "params": {"type": "object"}}},
+    "playerSpec": {"type": "object", "required": ["representation", "payload"],
+                   "properties": {"representation": {"type": "string"}, "payload": {"type": "object"}, "initial_state": {"type": "object"},
+                                  "requires": {"type": "array", "items": {"$ref": "#/$defs/capability"}}, "meta": {"type": "object"}}},
+    "intervention": {"type": "object", "required": ["name"],
+                     "properties": {"name": {"type": "string"}, "world_params": {"type": "object"}, "wrappers": {"type": "object", "description": "kernel wrappers keyed by name: observation_delay, observation_permute"}}}
+  }
+}

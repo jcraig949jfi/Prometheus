@@ -84,7 +84,7 @@ def unexpected_transfer(s: Subject, c: Context) -> dict:
     name = "unexpected_transfer"; thr = c.t(name)
     pr = c.probe(s); home = c.home_reward(s)
     if not pr or home is None or s.parent is None:
-        return _v(name, "UNABLE", None, thr, {"reason": "no probe worlds or no parent"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "no probe worlds or no parent", "structural": pr is None}, s)
     ppr = c.probe(s.parent); phome = c.home_reward(s.parent)
     if not ppr or phome is None:
         return _v(name, "UNABLE", None, thr, {"reason": "parent has no probe readings"}, s)
@@ -105,7 +105,7 @@ def structural_reuse(s: Subject, c: Context) -> dict:
     if "genome" not in s.manifest:
         # graph profile: a node kind+params signature executed at >= 2 sites is reuse only when the meter says both ran; until the
         # per-node execution counts are read from the fingerprint, report UNABLE (C6_GEOMETRY stage owns this detector)
-        return _v(name, "UNABLE", None, thr, {"reason": "graph profile: component reuse needs node execution counts (C6_GEOMETRY stage)"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "graph profile: component reuse needs node execution counts (C6_GEOMETRY stage)", "structural": True}, s)
     g = s.manifest["genome"]; n = len(g) // 4
     if n < 2:
         return _v(name, "UNABLE", None, thr, {"reason": "genome too short"}, s)
@@ -122,7 +122,7 @@ def structural_reuse(s: Subject, c: Context) -> dict:
 def environmental_modification(s: Subject, c: Context) -> dict:
     name = "environmental_modification"; thr = c.t(name)
     if not c.world_state.get("persistent") or thr is None:
-        return _v(name, "UNABLE", None, thr, {"reason": "world has no persistent state"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "world has no persistent state", "structural": True}, s)
     k = c.world_state["persisted_reads"](s)
     return _v(name, "FIRE" if k > thr else "QUIET", k, thr, {"persisted_and_read": k}, s)
 
@@ -131,7 +131,7 @@ def environmental_modification(s: Subject, c: Context) -> dict:
 def niche_divergence(s: Subject, c: Context) -> dict:
     name = "niche_divergence"; thr = c.t(name)
     if c.world_state.get("resources", 1) < 2 or len(c.population) < 2 or thr is None:
-        return _v(name, "UNABLE", None, thr, {"reason": "fewer than two resource types or one lineage"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "fewer than two resource types or one lineage", "structural": c.world_state.get("resources", 1) < 2}, s)
     mine = set(s.pair[1]["resources_touched"]) | set(s.pair[1]["env_dependencies"])
     js = []
     for x in c.population:
@@ -147,7 +147,7 @@ def niche_divergence(s: Subject, c: Context) -> dict:
 def regime_persistence(s: Subject, c: Context) -> dict:
     name = "regime_persistence"; thr = c.t(name)
     if not c.regime_events:
-        return _v(name, "UNABLE", None, thr, {"reason": "no regime change yet"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "no regime change yet", "structural": True}, s)
     lt = max(e for e in c.regime_events if e <= s.generation) if any(e <= s.generation for e in c.regime_events) else None
     if lt is None or s.parent is None:
         return _v(name, "UNABLE", None, thr, {"reason": "no regime change before this subject"}, s)
@@ -172,7 +172,7 @@ def unexplained_gain(s: Subject, c: Context) -> dict:
         return _v(name, "QUIET", gain, c.band, {"gain": round(gain, 4), "reason": "no small-edit gain"}, s)
     rd = c.replay_D(s)
     if rd is None:
-        return _v(name, "UNABLE", gain, c.band, {"reason": "mutation rollback (replay D) not yet run", "gain": round(gain, 4)}, s)
+        return _v(name, "UNABLE", gain, c.band, {"reason": "mutation rollback (replay D) not yet run", "gain": round(gain, 4), "structural": True}, s)
     return _v(name, "FIRE" if rd.get("reproduced") else "QUIET", gain, c.band, {"gain": round(gain, 4), "rollback_reproduced_gain": rd.get("reproduced")}, s)
 
 
@@ -181,7 +181,7 @@ def unexpected_causal_dependence(s: Subject, c: Context) -> dict:
     name = "unexpected_causal_dependence"; thr = c.t(name)
     ab = c.ablation(s)
     if ab is None:
-        return _v(name, "UNABLE", None, thr, {"reason": "no ablation set"}, s)
+        return _v(name, "UNABLE", None, thr, {"reason": "no ablation set", "structural": True}, s)
     hits = [x for x in ab if x.get("dormant_in_ancestors") and abs(x.get("delta", 0.0)) >= c.band]
     return _v(name, "FIRE" if hits else "QUIET", len(hits), c.band, {"dormant_causal_nodes": [x.get("node") for x in hits][:8], "ablated": len(ab)}, s)
 
@@ -199,7 +199,10 @@ def detector_disagreement(verdicts: List[dict], s: Subject, c: Context) -> dict:
 def classifier_failure(verdicts: List[dict], s: Subject, c: Context, classification: Optional[str] = None) -> dict:
     name = "classifier_failure"
     core = [v for v in verdicts if v["detector"] not in ("detector_disagreement", "classifier_failure")]
-    unable = [v["detector"] for v in core if v["outcome"] == "UNABLE"]; fired = [v["detector"] for v in core if v["outcome"] == "FIRE"]
+    # CALIBRATION_EPOCH-001 (2026-09-19): an UNABLE whose reason is STRUCTURAL absence (no probe worlds, no replay D, no ablation set,
+    # no regime change, one resource, no persistent state) is not the observatory failing to see; only non-structural UNABLEs count
+    unable = [v["detector"] for v in core if v["outcome"] == "UNABLE" and not v["evidence"].get("structural")]
+    fired = [v["detector"] for v in core if v["outcome"] == "FIRE"]
     none_of_the_above = classification is not None and classification in ("NONE_OF_THE_ABOVE", "UNKNOWN_MECHANISM")
     blind = len(unable) >= 3 and len(fired) >= 1
     fire = none_of_the_above or blind

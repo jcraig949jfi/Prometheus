@@ -90,7 +90,13 @@ def pressure_at(schedule, g: int) -> dict:
 # ---------------------------------------------------------------- spec / checkpoint
 def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, schedule: List[dict], g0: int, g1: int, N: int, E: int,
               archive: dict, thresholds: dict, spread: dict, seed: int, probe_worlds: Optional[List[dict]] = None, planted: Optional[List[dict]] = None,
-              log_scores: bool = False, freeze_policy: str = "c6_all_full", admitted: Optional[List[str]] = None) -> dict:
+              log_scores: bool = False, freeze_policy: str = "c6_all_full", admitted: Optional[List[str]] = None,
+              world_options: Optional[dict] = None, nominate: Optional[dict] = None) -> dict:
+    """world_options (Archaeon's measurement/world mutations, all recorded in the spec hash):
+         eval_order: "population" (default; elites first) | "seeded_shuffle" (a seeded permutation per generation)
+         persist_shared: False (default; coupling state resets each generation) | True (shared pools/cells/signal carried in the
+                         checkpoint across generations -- niche construction across generations)
+       nominate: {"generations": [g, ...], "top_k": k} -> the top-k organisms of those generations get FULL freezes (forensic nomination)."""
     """freeze_policy: 'c6_all_full' (Campaign 6 G6-0: every firing gets the full package) or 'tiered' (Deep Frontier s9 until
     Harmonia's policy: EVENT_RECORD always; PARTIAL when only 10/11 or unvalidated rulers fire; FULL on an admitted detector,
     corroboration by two rulers, persistence >= 3 archived generations, or the audit draw 1 in 50). `admitted` lists the
@@ -99,7 +105,8 @@ def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, sched
     spec = {"schema": SCHEMA_SPEC, "run_id": run_id, "provenance": provenance, "world": world, "profile": profile, "schedule": schedule,
             "g0": g0, "g1": g1, "N": N, "E": E, "archive": archive, "thresholds": thresholds, "spread": spread, "seed": seed,
             "probe_worlds": probe_worlds or [], "planted": planted or [], "anchor_interval": ANCHOR_INTERVAL, "log_scores": log_scores,
-            "freeze_policy": freeze_policy, "admitted": admitted or ["unexpected_transfer", "detector_disagreement", "classifier_failure"]}
+            "freeze_policy": freeze_policy, "admitted": admitted or ["unexpected_transfer", "detector_disagreement", "classifier_failure"],
+            "world_options": world_options or {}, "nominate": nominate or {}}
     spec["spec_hash"] = _h({k: v for k, v in spec.items() if k != "spec_hash"})
     return spec
 
@@ -144,6 +151,9 @@ def run_segment(spec: dict, ck: dict) -> dict:
     thresholds, spread = spec["thresholds"], spec["spread"]
     planted = {p["generation"]: p for p in spec.get("planted", [])}
     persist_count: Dict[str, int] = dict(ck.get("persist_count", {}))
+    wopts = spec.get("world_options", {}) or {}
+    shared_carry: Optional[dict] = ck.get("shared_state") if wopts.get("persist_shared") else None
+    nominate = spec.get("nominate", {}) or {}; nominate_gens = set(nominate.get("generations", [])); nominate_k = int(nominate.get("top_k", 1))
 
     def anchor(reason: str):
         nonlocal prev_anchor, seg_rows
@@ -154,6 +164,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
              "row_schema": "proteus.behavior_fingerprint.v1+archaeon.c6.world_ext.v1", "row_bytes_max": 1024, "producer": "archaeon.segment", "prev_segment_hash": prev_anchor, "reason": reason}
         anchors.append(a); prev_anchor = a["segment_hash"]; seg_rows = []
 
+    shared: Optional[dict] = None; composed = False
     for g in range(spec["g0"], spec["g1"]):
         pr = pressure_at(spec["schedule"], g)
         if not pressure_history or pressure_history[-1]["label"] != pr["label"]:
@@ -185,7 +196,13 @@ def run_segment(spec: dict, ck: dict) -> dict:
             else:
                 params_g = spec["world"]["params"]
             world_g = ComposedWorld(params_g)
-            shared: Optional[dict] = {} if "coupling" in world_g.features else None
+            if "coupling" in world_g.features:
+                if wopts.get("persist_shared"):
+                    shared = shared if isinstance(shared, dict) else (shared_carry if isinstance(shared_carry, dict) else {})
+                else:
+                    shared = {}
+            else:
+                shared = None
             eps = None; asks = None
         else:
             eps = episodes_for(world, spec["seed"], "train", g * 100003 + spec["seed"], E)
@@ -195,7 +212,13 @@ def run_segment(spec: dict, ck: dict) -> dict:
         rs = seed_from("wse.eval", spec["seed"], g, spec["run_id"])
         scored = []; pairs_now: Dict[str, Any] = {}; subjects: Dict[str, D.Subject] = {}
         endo = {"pool_depletion": 0.0, "signals": 0, "objects_changed": 0}
-        for org in pop:
+        order = list(range(len(pop)))
+        if wopts.get("eval_order") == "seeded_shuffle":
+            orng = SplitMix64(seed_from("c6.eval_order", spec["seed"], g))
+            for i in range(len(order) - 1, 0, -1):
+                j = orng.randbelow(i + 1); order[i], order[j] = order[j], order[i]
+        for oi in order:
+            org = pop[oi]
             if composed:
                 pools_before = list(shared["pools"]) if (shared is not None and "pools" in shared) else None
                 ev = evaluate_world(org["manifest"], world_g, spec["seed"] * 1000003 + g, E, rng_seed=rs, shared=shared)
@@ -258,6 +281,13 @@ def run_segment(spec: dict, ck: dict) -> dict:
                     # EVENT_RECORD is the event itself plus the archived neighbourhood rows: always kept
                 else:
                     freezes.append(_freeze(ev_rec, s, history, records, pop, world, pressure_history, rows, spec))
+        if g in nominate_gens:
+            for f_, org_, ev_ in scored[:nominate_k]:
+                s_ = subjects[org_["organism_id"]]
+                vs_ = D.run_all(s_, ctx)
+                ev_rec = S.event(spec["run_id"], s_.organism_id, g, vs_, "T2"); ev_rec["nominated"] = True
+                events.append(ev_rec); gen_fired.append(ev_rec); firings.add(g)
+                fz_ = _freeze(ev_rec, s_, history, records, pop, world, pressure_history, rows, spec); fz_["nominated"] = True; freezes.append(fz_)
         if gen_fired:
             anchor("escalation")
         # ---- observation per archived generation
@@ -301,6 +331,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
                 break
     history = {k: v for k, v in history.items() if k in keep}
     ck_out = {"schema": SCHEMA_CKPT, "run_id": spec["run_id"], "generation": spec["g1"], "eval_ordinal": eval_ord, "rng_state": rng.state, "population": pop,
+              "shared_state": (shared if (wopts.get("persist_shared") and composed) else None),
               "records": {k: v for k, v in records.items() if k in keep or k in {o["organism_id"] for o in pop}}, "lineage_pairs": {k: pairs_prev[k] for k in pairs_prev},
               "library": library[-256:], "prev_anchor_hash": prev_anchor, "history": history, "persist_count": {k: v for k, v in persist_count.items() if k in keep or v >= 2}}
     ck_out["digest"] = _h({k: v for k, v in ck_out.items() if k != "digest"})
