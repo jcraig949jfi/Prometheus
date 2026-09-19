@@ -252,12 +252,12 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
     for pname in cfg["search"].get("parts_donors", []):
         from . import parts_c2
         donors.append((pname, parts_c2.program(pname)))
-    take_f = open(os.path.join(out, "takeovers.jsonl"), "w", encoding="ascii", newline="\n")
     out = os.path.join(out_root or os.path.join("crius", "runs"), run_id)
     os.makedirs(out, exist_ok=True)
     meta = receipts.run_meta(cfg, config_path)
     meta.update({"run_id": run_id, "arm": arm, "iterations": iterations, "search_seed": seed, "mu": mu, "lambda": lam})
     receipts.write_json(os.path.join(out, "RUN_META.json"), meta)
+    take_f = open(os.path.join(out, "takeovers.jsonl"), "w", encoding="ascii", newline="\n")
     rng = random.Random("search:%s:%d" % (arm, seed))
     cand_f = open(os.path.join(out, "candidates.jsonl"), "w", encoding="ascii", newline="\n")
     iter_f = open(os.path.join(out, "iterations.jsonl"), "w", encoding="ascii", newline="\n")
