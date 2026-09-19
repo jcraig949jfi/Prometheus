@@ -154,6 +154,9 @@ def run_segment(spec: dict, ck: dict) -> dict:
     wopts = spec.get("world_options", {}) or {}
     shared_carry: Optional[dict] = ck.get("shared_state") if wopts.get("persist_shared") else None
     nominate = spec.get("nominate", {}) or {}; nominate_gens = set(nominate.get("generations", [])); nominate_k = int(nominate.get("top_k", 1))
+    nominate_window = int(nominate.get("window", 0)); nominate_population = bool(nominate.get("population", False))
+    capture_gens = {g_ + d_ for g_ in nominate_gens for d_ in range(-nominate_window, nominate_window + 1)} if nominate_population else set()
+    population_captures: List[dict] = []
 
     def anchor(reason: str):
         nonlocal prev_anchor, seg_rows
@@ -217,15 +220,23 @@ def run_segment(spec: dict, ck: dict) -> dict:
             orng = SplitMix64(seed_from("c6.eval_order", spec["seed"], g))
             for i in range(len(order) - 1, 0, -1):
                 j = orng.randbelow(i + 1); order[i], order[j] = order[j], order[i]
+        capture = g in capture_gens
+        cap_rows: List[dict] = []
         for oi in order:
             org = pop[oi]
             if composed:
                 pools_before = list(shared["pools"]) if (shared is not None and "pools" in shared) else None
+                shared_before = json.loads(json.dumps({k: v for k, v in (shared or {}).items()}, default=str)) if capture and shared is not None else None
                 ev = evaluate_world(org["manifest"], world_g, spec["seed"] * 1000003 + g, E, rng_seed=rs, shared=shared)
                 a = ev["_answers"]; asks = ev["_asks_per_episode"]
                 if pools_before is not None and shared.get("pools"):
                     endo["pool_depletion"] += max(0.0, sum(pools_before) - sum(shared["pools"]))
                 endo["signals"] += ev["world"]["signals"]; endo["objects_changed"] += ev["world"]["objects_changed"]
+                if capture:
+                    cap_rows.append({"slot": oi, "eval_position": len(cap_rows), "organism_id": org["organism_id"], "parent_ids": records.get(org["organism_id"], {}).get("parent_ids"),
+                                     "origins": org.get("origins"), "reward": ev["reward"], "shared_before": shared_before,
+                                     "shared_after": json.loads(json.dumps({k: v for k, v in (shared or {}).items()}, default=str)) if shared is not None else None,
+                                     "world": {k: ev["world"][k] for k in ("action_hist", "resources_touched", "objects_changed", "signals", "died_episodes")}})
                 if reward_scale != 1.0:
                     ev["reward"] = min(1.0, ev["reward"] * reward_scale)
             else:
@@ -246,6 +257,11 @@ def run_segment(spec: dict, ck: dict) -> dict:
             if pid and pid in history:
                 hp = history[pid]; parent_subject = D.Subject(pid, hp["manifest"], hp["pair"], None, hp["generation"])
             subjects[org["organism_id"]] = D.Subject(org["organism_id"], org["manifest"], (t0, ext), parent_subject, g, meta={"reward": ev["reward_per_ask"] if not composed else ev["reward"]})
+        if capture:
+            population_captures.append({"schema": "archaeon.c6.population_capture.v1", "generation": g, "eval_order": list(order), "eval_order_mode": wopts.get("eval_order", "population"),
+                                        "population_ids": [o["organism_id"] for o in pop], "rows": cap_rows, "pressure": pr["label"], "endogenous": dict(endo),
+                                        "manifests_digest": _h([o["manifest"] for o in pop])})
+            firings.add(g)                                     # dense archive around the capture window
         scored.sort(key=lambda z: -z[0])
         if composed and shared is not None and (endo["pool_depletion"] > 0 or endo["signals"] or endo["objects_changed"]):
             pressure_history.append({"generation": g, "kind": "ENDOGENOUS_PRESSURE", "label": "population_effect", "params": {k: round(v, 4) if isinstance(v, float) else v for k, v in endo.items()}})
@@ -337,6 +353,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
     ck_out["digest"] = _h({k: v for k, v in ck_out.items() if k != "digest"})
     out = {"schema": "archaeon.c6.segment_out.v1", "spec_hash": spec["spec_hash"], "checkpoint_in": ck["digest"], "checkpoint_out": ck_out, "rows": rows, "anchors": anchors,
            "observations": observations, "events": events, "freezes": freezes, "pressure_history": pressure_history, "lineage_delta": lineage_delta,
+           "population_captures": population_captures,
            "evaluations": eval_ord - ck["eval_ordinal"], "wall_s": round(time.time() - t_start, 1), "score_log": score_log}
     out["out_digest"] = _h({k: v for k, v in out.items() if k not in ("wall_s", "out_digest", "score_log")})
     return out

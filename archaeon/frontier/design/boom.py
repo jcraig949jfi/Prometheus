@@ -56,6 +56,8 @@ def emit(reg, q, priority=None):
     params = json.loads(json.dumps(_BW["params"])); params["coupling"] = {"on": False}
     items.append((base_spec(experiment_id="%s/C_no_coupling" % FAMILY, world={"kind": "c6.composed.v1", "params": params}, seed=WORLD_SEED + 1), "C_no_coupling"))
     items.append((base_spec(experiment_id="%s/D_persist_shared" % FAMILY, seed=WORLD_SEED + 1, world_options={"persist_shared": True}), "D_persist_shared"))
+    items.append((base_spec(experiment_id="%s/F_popcapture_s1" % FAMILY, seed=WORLD_SEED + 1, world_options={"eval_order": "population"},
+                            nominate={"generations": SPIKE_GENS, "top_k": 32, "window": 2, "population": True}, measurements=["population_shift", "max_spike"]), "F_popcapture"))
     for N in (8, 128):
         items.append((base_spec(experiment_id="%s/E_N%d" % (FAMILY, N), seed=WORLD_SEED + 1, population={"source": "c4_parents", "seed": 1, "N": N}, budget_evaluations=N * 600), "E_N"))
     ids = queue_specs(reg, q, lid, items, "EXPLOITATION", pr, "design.boom: order vs population effect")

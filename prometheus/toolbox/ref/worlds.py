@@ -50,8 +50,20 @@ class IntegerWorld:
     kind = "world.integer.v1"
     capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.snapshot.v1", "ext.legal_actions.v1",
                               "ext.multiplayer.v1", "ext.intervention.world_params.v1", "ext.cost.v1",
-                              "ext.replay.bit.v1", "ext.reference.v1"})
+                              "ext.replay.bit.v1", "ext.reference.v1", "ext.world.mutable_params.v1"})
     replay_class = "BIT"
+    MUTABLE = ("regime_period", "stoch_rate", "act_cost", "step_cost", "yield_amt", "action_delay")   # changeable at a tick boundary
+
+    def set_params(self, **changes) -> None:
+        """ext.world.mutable_params.v1: apply at a tick boundary; the trace covers the change through its effects and
+        the TASK_CHANGE event names each changed parameter index."""
+        bad = sorted(set(changes) - set(self.MUTABLE))
+        if bad:
+            raise ValueError("world.integer.v1: params %s are not runtime-mutable (mutable: %s)" % (bad, list(self.MUTABLE)))
+        t = self._state["tick"] if self._state else 0
+        for k, v in changes.items():
+            self.p[k] = v
+            self._events.append((t, EVENT_ID["TASK_CHANGE"], -1, self.MUTABLE.index(k), int(v)))
 
     def __init__(self, **params):
         unknown = sorted(set(params) - set(DEFAULTS))

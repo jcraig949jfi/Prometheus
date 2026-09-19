@@ -31,6 +31,8 @@ EXTENSIONS = {
     "ext.intervention.observation_delay.v1": "kernel-applied observation delay wrapper",
     "ext.intervention.observation_permute.v1": "kernel-applied seeded channel permutation",
     "ext.intervention.world_params.v1": "world accepts parameter overrides at construction",
+    "ext.intervention.schedule.v1":   "kernel applies scheduled world_params changes at tick boundaries (needs ext.world.mutable_params.v1)",
+    "ext.world.mutable_params.v1":    "world.set_params(**changes) at a tick boundary for its runtime-mutable params; emits TASK_CHANGE",
     "ext.workspace.kv.v1":        "substrate exposes workspace.read/write to the player",
     "ext.workspace.stream.v1":    "substrate exposes append/read on a stream",
     "ext.workspace.graph.v1":     "substrate exposes link/neighbours",

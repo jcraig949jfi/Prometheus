@@ -38,7 +38,10 @@ class ReplayControl:
         rc = primary.get("replay_class")
         if rc == "BIT":
             eq = primary["trace_hashes"] == arm["trace_hashes"]
-            return _met(eq, {"class": rc, "equal": eq})
+            ps = {k: v["series_hash"] for k, v in (primary.get("series") or {}).items()}
+            as_ = {k: v["series_hash"] for k, v in (arm.get("series") or {}).items()}
+            seq = ps == as_
+            return _met(eq and seq, {"class": rc, "equal": eq, "series_equal": seq})
         return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "semantic replay needs a declared tolerance; none in Phase 1"}}
 
 
@@ -97,51 +100,54 @@ class PositiveControl:
         return _met(acts > 0 and differs, {"arm_actions_total": acts, "trace_differs_from_primary": differs})
 
 
-class ShamControl:
-    kind = "sham"
+def _coverage(primary: dict, arm: dict) -> list:
+    return list(arm.get("provenance", {}).get("transformed_players", []))
 
-    def manifest(self) -> dict:
-        return {"kind": "control.sham.v1", "mechanism": "statemachine table rows permuted; shape and parameter count preserved"}
+
+def _indeterminate_if_uncovered(arm: dict, detail: dict) -> dict | None:
+    cov = _coverage(None, arm)
+    if not cov:
+        return {"outcome": "INDETERMINATE", "detail": dict(detail, transformed_players=[], note="control could not act on any player (no transform accepts these representations)")}
+    return None
+
+
+class _TransformControl:
+    """A control whose arm applies one registered Transform to every player it accepts (C5, 2026-09-19):
+    the arm's provenance records `transformed_players`; an arm that transformed nobody is INDETERMINATE."""
+    transform = ""
 
     def arm(self, exp, rng_seed: int):
-        e = copy.deepcopy(exp); s = stream("sham", rng_seed)
-        for p in e.players:
-            if p["representation"] == "statemachine.v1":
-                table = p["payload"]["table"]
-                flat = [cell for row in table for cell in row]
-                for i in range(len(flat) - 1, 0, -1):
-                    j = s.below(i + 1); flat[i], flat[j] = flat[j], flat[i]
-                nb = p["payload"]["n_buckets"]
-                p["payload"]["table"] = [flat[i * nb:(i + 1) * nb] for i in range(p["payload"]["n_states"])]
-                p["meta"] = dict(p.get("meta", {}), control="sham")
-        e.provenance = dict(e.provenance, control="sham")
+        from prometheus.toolbox.ref.transforms import transform_players
+        from prometheus.toolbox.registry import default_registry
+        e = copy.deepcopy(exp)
+        e.players, done = transform_players(default_registry(), self.transform, exp.players, rng_seed)
+        e.provenance = dict(e.provenance, control=self.kind, transformed_players=done)
         return e
+
+
+class ShamControl(_TransformControl):
+    kind = "sham"
+    transform = "transform.shuffle.v1"
+
+    def manifest(self) -> dict:
+        return {"kind": "control.sham.v1", "transform": self.transform, "mechanism": "structure destroyed, cost preserved"}
 
     def expectation(self, primary: dict, arm: dict) -> dict:
         a = primary["accounting"].get("params"); b = arm["accounting"].get("params")
-        return _met(a == b, {"primary_params": a, "arm_params": b})
+        detail = {"primary_params": a, "arm_params": b, "transformed_players": _coverage(primary, arm)}
+        return _indeterminate_if_uncovered(arm, detail) or _met(a == b, detail)
 
 
-class ScratchControl:
+class ScratchControl(_TransformControl):
     kind = "scratch"
+    transform = "transform.fresh.v1"
 
     def manifest(self) -> dict:
-        return {"kind": "control.scratch.v1"}
-
-    def arm(self, exp, rng_seed: int):
-        e = copy.deepcopy(exp)
-        new = []
-        for i, p in enumerate(exp.players):
-            if p["representation"] == "statemachine.v1":
-                pl = p["payload"]
-                new.append(P.random_statemachine(rng_seed * 1009 + i, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], meta={"control": "scratch"}).manifest())
-            else:
-                new.append(p)
-        e.players = new; e.provenance = dict(e.provenance, control="scratch")
-        return e
+        return {"kind": "control.scratch.v1", "transform": self.transform}
 
     def expectation(self, primary: dict, arm: dict) -> dict:
-        return _met(arm["status"] == "COMPLETED", {"arm_status": arm["status"]})
+        detail = {"arm_status": arm["status"], "transformed_players": _coverage(primary, arm)}
+        return _indeterminate_if_uncovered(arm, detail) or _met(arm["status"] == "COMPLETED", detail)
 
 
 class PermutationControl:

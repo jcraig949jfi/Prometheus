@@ -66,15 +66,20 @@ class InProcessStateDevice:
     kind = "state.inprocess.v1"
     capabilities = frozenset({"ext.state.ttl.v1", "ext.state.stream.v1", "ext.events.v1", "ext.snapshot.v1", "ext.cost.v1", "ext.reference.v1"})
 
-    def __init__(self, max_keys: int = 4096, default_maxlen: int = 1024):
-        self.max_keys = max_keys; self.default_maxlen = default_maxlen
+    def __init__(self, max_keys: int = 4096, default_maxlen: int = 1024, max_events: int = 65536):
+        self.max_keys = max_keys; self.default_maxlen = default_maxlen; self.max_events = max_events
         self._tick = 0
         self._kv: Dict[str, dict] = {}       # key -> {"v": value, "scope", "exp": tick|None}
         self._h: Dict[str, dict] = {}        # key -> {"f": {field: value}, "scope", "exp"}
         self._s: Dict[str, dict] = {}        # stream -> {"r": [(id, record)], "next": int, "scope", "maxlen"}
         self._z: Dict[str, dict] = {}        # key -> {"m": {member: score}, "scope"}
         self._ev: List[Event] = []
-        self._c = {"reads": 0, "writes": 0, "deletes": 0, "expired": 0, "refused": 0, "stream_ops": 0, "ranked_ops": 0, "discarded": 0}
+        self._c = {"reads": 0, "writes": 0, "deletes": 0, "expired": 0, "refused": 0, "stream_ops": 0, "ranked_ops": 0, "discarded": 0, "events_dropped": 0}
+
+    def _emit(self, ev: Event) -> None:
+        self._ev.append(ev)
+        if len(self._ev) > self.max_events:                      # C24b: bounded, oldest dropped, counted
+            del self._ev[0]; self._c["events_dropped"] += 1
 
     # ------------------------------------------------------------------ clock and scopes
     def advance(self, tick: int) -> None:
@@ -82,7 +87,7 @@ class InProcessStateDevice:
         for store in (self._kv, self._h, self._s, self._z):
             for k in [k for k, e in store.items() if e.get("exp") is not None and e["exp"] <= tick]:
                 del store[k]; self._c["expired"] += 1
-                self._ev.append((tick, EVENT_ID["TASK_CHANGE"], -1, _key_id(k), -2))   # -2 = expired by ttl
+                self._emit((tick, EVENT_ID["STATE_EXPIRE"], -1, _key_id(k), 0))
 
     def end_scope(self, scope: str) -> int:
         if scope not in SCOPES:
@@ -93,7 +98,7 @@ class InProcessStateDevice:
             for k in [k for k, e in store.items() if order[e["scope"]] <= order[scope] and e["scope"] != "persistent"]:
                 del store[k]; n += 1
         self._c["discarded"] += n
-        self._ev.append((self._tick, EVENT_ID["TASK_CHANGE"], -1, order[scope], -n))
+        self._emit((self._tick, EVENT_ID["STATE_DISCARD"], -1, order[scope], n))
         return n
 
     def _exp(self, ttl: Optional[int]) -> Optional[int]:
@@ -103,7 +108,7 @@ class InProcessStateDevice:
         if key in store or sum(len(s) for s in (self._kv, self._h, self._s, self._z)) < self.max_keys:
             return True
         self._c["refused"] += 1
-        self._ev.append((self._tick, EVENT_ID["RESOURCE_CHANGE"], player, _key_id(key), -1))
+        self._emit((self._tick, EVENT_ID["RESOURCE_CHANGE"], player, _key_id(key), -1))
         return False
 
     # ------------------------------------------------------------------ kv
@@ -113,11 +118,11 @@ class InProcessStateDevice:
         if not self._room(self._kv, key, player):
             return
         self._kv[key] = {"v": value, "scope": scope, "exp": self._exp(ttl)}
-        self._c["writes"] += 1; self._ev.append((self._tick, EVENT_ID["STATE_WRITE"], player, _key_id(key), value if isinstance(value, int) else len(value)))
+        self._c["writes"] += 1; self._emit((self._tick, EVENT_ID["STATE_WRITE"], player, _key_id(key), value if isinstance(value, int) else len(value)))
 
     def get(self, key, *, player=-1):
         self._c["reads"] += 1; e = self._kv.get(key)
-        self._ev.append((self._tick, EVENT_ID["STATE_READ"], player, _key_id(key), 1 if e else 0))
+        self._emit((self._tick, EVENT_ID["STATE_READ"], player, _key_id(key), 1 if e else 0))
         return None if e is None else e["v"]
 
     def delete(self, key, *, player=-1) -> bool:
@@ -131,7 +136,7 @@ class InProcessStateDevice:
                 return
             self._h[key] = {"f": {}, "scope": scope, "exp": self._exp(ttl)}
         self._h[key]["f"][field] = value; self._c["writes"] += 1
-        self._ev.append((self._tick, EVENT_ID["STATE_WRITE"], player, _key_id(key + "/" + field), value if isinstance(value, int) else len(value)))
+        self._emit((self._tick, EVENT_ID["STATE_WRITE"], player, _key_id(key + "/" + field), value if isinstance(value, int) else len(value)))
 
     def hget(self, key, field, *, player=-1):
         self._c["reads"] += 1; e = self._h.get(key)
@@ -147,7 +152,7 @@ class InProcessStateDevice:
         s["r"].append((rid, tuple(int(x) for x in record)))
         if len(s["r"]) > s["maxlen"]:
             s["r"].pop(0); self._c["discarded"] += 1
-        self._c["stream_ops"] += 1; self._ev.append((self._tick, EVENT_ID["MESSAGE"], player, _key_id(stream), rid))
+        self._c["stream_ops"] += 1; self._emit((self._tick, EVENT_ID["MESSAGE"], player, _key_id(stream), rid))
         return rid
 
     def read(self, stream, since=0, *, player=-1):
@@ -231,7 +236,7 @@ class RedisStateDevice:
         self._tick = tick
         for k in [k for k, m in self._meta.items() if m.get("exp") is not None and m["exp"] <= tick]:
             self.r.delete(self._k(k)); del self._meta[k]; self._c["expired"] += 1
-            self._ev.append((tick, EVENT_ID["TASK_CHANGE"], -1, _key_id(k), -2))
+            self._ev.append((tick, EVENT_ID["STATE_EXPIRE"], -1, _key_id(k), 0))
 
     def end_scope(self, scope: str) -> int:
         order = {"ephemeral": 0, "episode": 1, "lifetime": 2, "persistent": 3}
@@ -241,7 +246,7 @@ class RedisStateDevice:
             for k in ks:
                 del self._meta[k]
         self._c["discarded"] += len(ks)
-        self._ev.append((self._tick, EVENT_ID["TASK_CHANGE"], -1, order[scope], -len(ks)))
+        self._ev.append((self._tick, EVENT_ID["STATE_DISCARD"], -1, order[scope], len(ks)))
         return len(ks)
 
     def _room(self, key, player) -> bool:

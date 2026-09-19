@@ -151,6 +151,7 @@ def execute(spec: dict, thr: dict, frozen: dict, caps: Dict[str, bool]) -> dict:
         if spec["params"].get("measurements"):
             from archaeon.frontier.design import measurement as MEAS
             m_all = MEAS.measure(out, frozen["spread"]); meas = {k: v for k, v in m_all.items() if k in spec["params"]["measurements"]}
+            meas["authority"] = "NONE"                                # CALIBRATION_EPOCH-002 rulers: discovery instruments; never branching/priority/freeze/selection
         rec = {"chunk": c, "g0": g0, "g1": g1, "status": "DONE", "spec_hash": seg["spec_hash"], "out_digest": out["out_digest"], "checkpoint_out": out["checkpoint_out"]["digest"], "measurements": meas,
                "evaluations": out["evaluations"], "events": len(out["events"]), "freezes": len(out["freezes"]), "anchors": len(out["anchors"]), "wall_s": out["wall_s"],
                "fired": _count(out, "fired"), "unable": _count(out, "unable"), "path": _rel(path)}
@@ -209,6 +210,31 @@ def pursue_table() -> dict:
         return {}
 
 
+def _mult(entry) -> float:
+    """A multiplier applies only while LIVE and within its evaluation expiry; a bare number (legacy) is treated as expired."""
+    if not isinstance(entry, dict):
+        return 1.0
+    if entry.get("state") != "LIVE" or entry.get("spent_evaluations", 0) >= entry.get("expires_evaluations", 0):
+        return 1.0
+    return float(entry.get("multiplier", 1.0))
+
+
+def charge_pursuit(lineage_id: str, family: str, evaluations: int) -> None:
+    """Charge a finished run to the multipliers that steered it; expire them when spent; record it."""
+    if not PURSUE.exists():
+        return
+    pt = json.loads(PURSUE.read_text(encoding="utf-8")); changed = False
+    for key, table in (("lineages", lineage_id), ("families", family)):
+        e = pt.get(key, {}).get(table)
+        if isinstance(e, dict) and e.get("state") == "LIVE":
+            e["spent_evaluations"] = e.get("spent_evaluations", 0) + evaluations; changed = True
+            if e["spent_evaluations"] >= e.get("expires_evaluations", 0):
+                e["state"] = "EXPIRED"; e["expired_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                pt.setdefault("history", []).append({"expired": table, "at": e["expired_at"], "spent": e["spent_evaluations"]})
+    if changed:
+        PURSUE.write_text(json.dumps(pt, indent=1) + "\n", encoding="utf-8", newline="\n")
+
+
 def choose_pool(q: Queues, shares: Dict[str, float], spent: Dict[str, int]) -> Optional[str]:
     tot = max(1, sum(spent.values())); best, gap = None, -1.0
     for pool in ("EXPLORATION", "EXPLOITATION", "AUDIT", "REVISIT"):
@@ -238,7 +264,7 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
     if pt:
         pend = q.pending(pool)
         def _w(it):
-            m = pt.get("lineages", {}).get(it["lineage_id"], 1.0) * pt.get("families", {}).get(it["transformation_id"].split("/")[0].split(".")[0], 1.0)
+            m = _mult(pt.get("lineages", {}).get(it["lineage_id"])) * _mult(pt.get("families", {}).get(it["transformation_id"].split("/")[0].split(".")[0]))
             return -(it["priority"] * m)
         pend.sort(key=_w)
         if pend:
@@ -293,7 +319,42 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
             q.push(t["pool"], lineage_id=lid, transformation_id=t["id"], priority=item["priority"] - 0.1, lane=t["spec"]["provenance"]["lane"] if t["trigger"].startswith("control") else "EVOLUTION_GENERATED",
                    budget_evaluations=t["budget_evaluations"], note="branch: " + t["trigger"])
     q.set_state(pool, item["item_id"], "DONE"); spent[pool] = spent.get(pool, 0) + receipt["evaluations"]
+    charge_pursuit(lid, spec["family_id"].split(".")[0], receipt["evaluations"])
+    run_due_readouts(reg)
     return {"status": "RAN", "pool": pool, "lineage": lid, "transformation": tid, "evaluations": receipt["evaluations"], "chunks": len(receipt["chunks"]), "fired": fired, "descendants": [t["id"] for t in new]}
+
+
+READOUTS = HERE / "design" / "readouts.json"     # [{"id", "module", "lineage", "condition": {"family", "done_min"}, "state": "PENDING"|"DONE", ...}]
+
+
+def run_due_readouts(reg: Registry) -> None:
+    """A readout is a durable object: when its condition holds (N receipts DONE in the family) the scheduler runs the module and
+    writes the result into the lineage as an OBSERVATION with the file reference. Whoever is alive later finds it in state."""
+    if not READOUTS.exists():
+        return
+    rs = json.loads(READOUTS.read_text(encoding="utf-8")); changed = False
+    for r in rs:
+        if r.get("state") != "PENDING":
+            continue
+        fam = r["condition"]["family"]; done = 0
+        for rp in (RUNS / fam.split(".")[0]).glob("*/RECEIPT.json") if (RUNS / fam.split(".")[0]).exists() else []:
+            try:
+                if json.loads(rp.read_text(encoding="utf-8")).get("status") == "DONE":
+                    done += 1
+            except Exception:                                        # noqa: BLE001
+                pass
+        if done >= r["condition"]["done_min"]:
+            import importlib, io, contextlib
+            mod = importlib.import_module("archaeon.frontier.design." + r["module"])
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = mod.main()
+            out = buf.getvalue()
+            path = out.strip().splitlines()[-1].replace("written ", "") if "written" in out else None
+            reg.observe(r["lineage"], "readout %s ran (condition: %d/%d %s receipts DONE); result file %s" % (r["module"], done, r["condition"]["done_min"], fam, path), ref={"readout": path, "module": r["module"]})
+            r["state"] = "DONE"; r["ran_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); r["result"] = path; r["rc"] = rc; changed = True
+    if changed:
+        READOUTS.write_text(json.dumps(rs, indent=1) + "\n", encoding="utf-8", newline="\n")
 
 
 def run(wall_hours: float, max_items: int, reg=None, q=None) -> int:

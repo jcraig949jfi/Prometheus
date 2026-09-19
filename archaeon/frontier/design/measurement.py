@@ -1,4 +1,5 @@
-"""MEASUREMENT MUTATION (CALIBRATION_EPOCH-002): two population-level rulers added beside the eleven, unvalidated, run on
+"""MEASUREMENT MUTATION (CALIBRATION_EPOCH-002; AUTHORITY = "NONE" until Harmonia calibrates these against synthetic nulls,
+forced positives, evaluation-order artefacts and population-size effects -- they may nominate investigations, never select): two population-level rulers added beside the eleven, unvalidated, run on
 every archived generation from the segment observations and the T0 rows, and written into the receipts by the digest.
 Nothing existing moves.
 
@@ -18,6 +19,7 @@ from typing import Dict, List
 
 from archaeon.campaign6.observatory.fingerprint import numeric_vector
 
+AUTHORITY = "NONE"
 BAND = 1 / 16
 
 

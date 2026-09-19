@@ -28,6 +28,7 @@ from typing import Any, Dict, FrozenSet, List, Optional, Protocol, Tuple, runtim
 EVENT_KINDS: Tuple[str, ...] = (
     "STATE_READ", "STATE_WRITE", "ACTION", "MESSAGE", "TRANSFER", "RESOURCE_CHANGE", "CONTACT",
     "ARTIFACT_CREATE", "ARTIFACT_INVOKE", "SNAPSHOT", "BRANCH", "TASK_CHANGE", "ABSORBED", "YIELD",
+    "STATE_EXPIRE", "STATE_DISCARD",          # C23: appended (ids stable); state-device lifetimes are not task changes
 )
 EVENT_ID: Dict[str, int] = {k: i for i, k in enumerate(EVENT_KINDS)}
 Event = Tuple[int, int, int, int, int]
@@ -126,8 +127,14 @@ class Observer(Protocol):
     def begin(self, ctx: dict) -> None: ...
     def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None: ...
     def on_events(self, events: List[Event]) -> None: ...
+    # Delivery order per tick t: on_events(events of t) THEN on_tick(t, observations before t, actions at t).
+    # A record made in on_tick(t) therefore describes the world after step t. (Fixed C1 2026-09-19; the
+    # opposite order left the terminal absorption out of the last record and disagreed with the world.)
     def measure(self) -> Dict[str, Any]: ...
     def describe(self) -> List[int]: ...
+    # An observer that DECLARES a series (class attribute `series = True`, echoed in manifest()["series"])
+    # also provides series_episode() -> List[List[int]]: the integer records of the episode just finished.
+    # The executor collects them per episode into the receipt (series.py); see the U3 ruling.
 
 
 @runtime_checkable

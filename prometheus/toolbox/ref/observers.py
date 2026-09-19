@@ -42,7 +42,7 @@ class TraceObserver:
 
     def on_events(self, events: List[Event]) -> None:
         for (_, kind, pid, _, val) in events:
-            name = EVENT_KINDS[kind]
+            name = EVENT_KINDS[kind] if 0 <= kind < len(EVENT_KINDS) else "UNKNOWN_%d" % kind     # C17: retain, never crash or drop
             self._by_kind[name] = self._by_kind.get(name, 0) + 1
             if kind == EVENT_ID["YIELD"]:
                 self._yield[pid] = self._yield.get(pid, 0) + val
@@ -59,14 +59,23 @@ class TraceObserver:
 
 
 class DescriptorObserver(TraceObserver):
+    """[abstain_rate_bucket 0-8, action_magnitude_bucket 0-7, yield_bucket 0-7]. The scales are PARAMETERS
+    (C27: with the defaults the magnitude and yield buckets saturated at 7 on the integer world, collapsing a
+    MAP-Elites archive to 4 cells); a designer calibrates them to the world's ranges."""
     kind = "observer.descriptor.v1"
-    version = "1"
+    version = "2"
+
+    def __init__(self, action_scale: int = 1, yield_scale: int = 8):
+        super().__init__(); self.action_scale = max(1, int(action_scale)); self.yield_scale = max(1, int(yield_scale))
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "action_scale": self.action_scale, "yield_scale": self.yield_scale}
 
     def describe(self) -> List[int]:
         t = max(1, self._ticks); n = max(1, self._n_players)
         abst = sum(self._abstain.values()) * 8 // (t * n)
-        mag = min(7, sum(self._actions.values()) // (t * n))
-        yb = min(7, sum(self._yield.values()) // 8)
+        mag = min(7, sum(self._actions.values()) // (t * n * self.action_scale))
+        yb = min(7, sum(self._yield.values()) // self.yield_scale)
         return [abst, mag, yb]
 
     def measure(self) -> Dict[str, Any]:
@@ -103,3 +112,80 @@ class SurvivalObjective:
         s = receipt.get("science", {}).get("world_summary", {})
         alive = s.get("alive", []); ticks = s.get("ticks", 0)
         return {"value": ticks * sum(1 for a in alive if a), "components": {"ticks": ticks, "alive": alive}}
+
+
+# ------------------------------------------------------------------------------------------ series (U3)
+LAST_MIRROR = None      # test hook: the last StateDevice a SeriesObserver mirrored into (so a test can destroy it)
+
+
+class SeriesObserver(TraceObserver):
+    """observer.series.v1: per tick [tick, actions_sum, yield_cumulative, alive_count] for the current episode.
+    Declares `series`; `enabled=False` records a DISABLED series (distinct from EMPTY). `mirror_device`
+    names a StateDevice kind to mirror records into during the run -- the mirror is a cache, never the copy
+    of record (U3)."""
+    kind = "observer.series.v1"
+    version = "1"
+    series = True
+
+    def __init__(self, enabled: bool = True, mirror_device: str | None = None):
+        super().__init__()
+        self.enabled = bool(enabled); self.mirror_device = mirror_device
+        self._series: List[List[int]] = []
+        self._alive = 0
+        self._dev = None
+        if mirror_device == "inprocess":
+            from prometheus.toolbox import state as ST
+            global LAST_MIRROR
+            self._dev = ST.InProcessStateDevice(); LAST_MIRROR = self._dev
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "series": True, "enabled": self.enabled, "mirror_device": self.mirror_device}
+
+    def begin(self, ctx: dict) -> None:
+        super().begin(ctx); self._series = []; self._alive = self._n_players; self._ep_yield = 0   # per-EPISODE counters (C21)
+        if self._dev is not None:
+            self._dev.end_scope("episode")
+
+    def on_events(self, events: List[Event]) -> None:
+        super().on_events(events)
+        for (_, kind, _, _, val) in events:
+            if kind == EVENT_ID["ABSORBED"]:
+                self._alive -= 1
+            elif kind == EVENT_ID["YIELD"]:
+                self._ep_yield += val
+
+    def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None:
+        super().on_tick(tick, observations, actions)
+        if not self.enabled:
+            return
+        rec = [tick, sum(sum(a) for a in actions.values()), self._ep_yield, self._alive]     # col 2: yield within THIS episode
+        self._series.append(rec)
+        if self._dev is not None:
+            self._dev.advance(tick); self._dev.append("series", rec, scope="persistent")
+
+    def series_episode(self) -> List[List[int]]:
+        return list(self._series)
+
+
+class SeriesGainObjective:
+    """objective.series_gain.v1 (C13): yield reached in the LAST episode minus yield reached in the FIRST, read
+    from observer.series.v1's records (column 2 = cumulative yield). The experience-to-competence shape.
+    None -- never a fabricated 0 -- when the series is missing or disabled."""
+    kind = "objective.series_gain.v1"
+    version = "1"
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "reads": "observer.series.v1"}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        s = (receipt.get("series") or {}).get("observer.series.v1")
+        if s is None:
+            return {"value": None, "components": {"reason": "SERIES_MISSING"}}
+        if s["status"] == "DISABLED":
+            return {"value": None, "components": {"reason": "SERIES_DISABLED"}}
+        eps = (receipt.get("_series_episodes") or {}).get("observer.series.v1") or s.get("inline")
+        if not eps or not eps[0] or not eps[-1]:
+            return {"value": None, "components": {"reason": "SERIES_EMPTY", "episodes": len(eps or [])}}
+        first, last = eps[0][-1][2], eps[-1][-1][2]
+        return {"value": last - first, "components": {"first_episode_yield": first, "last_episode_yield": last, "episodes": len(eps),
+                                                      "per_episode_yield": [ep[-1][2] if ep else None for ep in eps]}}

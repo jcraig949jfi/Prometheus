@@ -87,3 +87,16 @@ OPEN (owners): sidecar locator format (Vivarium); the graph profile's
 evaluate/descend/answers triple (Proteus); Axis W world kinds (Archaeon,
 next); ENDOGENOUS pressure sources (Axis W/P, next).
 +=====================================================================+
+
+## Population capture (operator protection, 2026-09-19)
+
+`nominate` accepts `window` (int, default 0) and `population` (bool, default false). When `population` is true, every
+generation in `[g - window, g + window]` around each nominated generation is CAPTURED and archived densely: the
+population ordering (`population_ids`), the evaluation order actually used (`eval_order`, `eval_order_mode`), and per
+evaluation the slot, position, organism id, parent ids, origins, reward, the shared world state BEFORE and AFTER that
+evaluation (`shared_before`, `shared_after`: pools, objects, signals as carried), the episode world digest
+(action_hist, resources_touched, objects_changed, signals, died_episodes), plus the generation's ENDOGENOUS writes and
+pressure label. Output key: `population_captures` (schema `archaeon.c6.population_capture.v1`). The capture changes no
+number the segment computes (verified: out_digest identical with and without capture is NOT claimed; determinism of the
+captured run is). The primary statistic of a pursuit stays the preregistered one; the capture is what a later reader
+needs to reconstruct the event without the primary statistic.

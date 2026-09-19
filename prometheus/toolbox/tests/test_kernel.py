@@ -263,3 +263,19 @@ def test_json_schemas_agree_with_the_code():
     from prometheus.toolbox.registry import SLOTS, STATES
     assert set(cap_schema["$defs"]["registryRow"]["properties"]["slot"]["enum"]) == set(SLOTS)
     assert set(cap_schema["$defs"]["registryRow"]["properties"]["state"]["enum"]) == set(STATES)
+
+
+# ------------------------------------------------------------------------------------------ EXP-001 as a frozen fixture
+def test_exp001_committed_receipts_are_a_semantic_fixture(tmp_path):
+    """The committed EXP-001 receipts pin the integer world's and the wrappers' semantics: a fresh run of the
+    same IR must reproduce every primary trace hash and series-free objective value. Drift = a semantic change
+    that must be versioned, not absorbed (overnight directive s2: EXP-001 is a regression fixture)."""
+    committed = pathlib.Path(__file__).resolve().parents[1] / "examples" / "receipts" / "exp_001.jsonl"
+    old = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
+           for r in read_all(committed) if r["arm"] == "primary"}
+    assert len(old) == 12
+    e = build_exp001(); e.controls = []
+    rep = execute(e.compile("local", REG).job, tmp_path / "fresh.jsonl", REG); assert rep.n_failed == 0
+    new = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
+           for r in read_all(tmp_path / "fresh.jsonl") if r["arm"] == "primary"}
+    assert new == old

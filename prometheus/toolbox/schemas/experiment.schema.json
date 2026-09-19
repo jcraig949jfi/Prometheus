@@ -19,9 +19,9 @@
     "transforms": {"type": "array", "items": {"$ref": "#/$defs/ref"}},
     "selector": {"oneOf": [{"$ref": "#/$defs/ref"}, {"type": "null"}]},
     "sweep": {"type": "object", "additionalProperties": {"type": "array", "minItems": 1},
-              "description": "dotted path -> values; roots: world, substrate, interventions, budget, seed_policy, objective; cartesian product"},
-    "seed_policy": {"type": "object", "required": ["base", "n_seeds"], "properties": {"base": {"type": "integer"}, "n_seeds": {"type": "integer", "minimum": 1}}},
-    "budget": {"type": "object", "required": ["episodes", "horizon"], "properties": {"episodes": {"type": "integer", "minimum": 1}, "horizon": {"type": "integer", "minimum": 1}, "evaluations": {"type": "integer"}, "wall_s": {"type": "number"}}},
+              "description": "dotted path -> values; roots: world, substrate, interventions, budget, seed_policy, objective, players; cartesian product"},
+    "seed_policy": {"type": "object", "required": ["base", "n_seeds"], "properties": {"base": {"type": "integer"}, "n_seeds": {"type": "integer", "minimum": 1}, "holdout_seeds": {"type": "integer", "minimum": 0, "description": "seeds base+n_seeds .. base+n_seeds+holdout_seeds-1 run tagged split=holdout"}}},
+    "budget": {"type": "object", "required": ["episodes", "horizon"], "properties": {"episodes": {"type": "integer", "minimum": 1}, "horizon": {"type": "integer", "minimum": 0}, "series_max_records": {"type": "integer", "minimum": 0}, "evaluations": {"type": "integer"}, "wall_s": {"type": "number"}}},
     "required_capabilities": {"type": "array", "items": {"$ref": "#/$defs/capability"}},
     "provenance": {"type": "object", "description": "designer seat, lane, note, sweep_point, parent; never a verdict"}
   },

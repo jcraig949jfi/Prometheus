@@ -102,10 +102,45 @@ class ReceiptWriter:
 
 
 def read_all(path) -> List[dict]:
+    """STRICT read: every line must be a valid receipt; any defect raises ReceiptError naming the line (C10)."""
     out = []
     with open(path, encoding="utf-8") as f:
-        for line in f:
+        for n, line in enumerate(f, 1):
             line = line.strip()
-            if line:
-                out.append(validate(json.loads(line)))
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                raise ReceiptError("line %d: TRUNCATED_OR_MALFORMED_JSON" % n)
+            try:
+                out.append(validate(rec))
+            except ReceiptError as exc:
+                raise ReceiptError("line %d: %s" % (n, exc))
     return out
+
+
+def scan(path) -> dict:
+    """FORENSIC read: never raises; counts valid receipts and names every defect by line
+    (truncation / malformed JSON, receipt_id mismatch = edited after writing, schema defects, duplicates)."""
+    valid = 0; defects = []; ids = []; seen = set(); lines = 0
+    with open(path, encoding="utf-8") as f:
+        for n, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
+            lines += 1
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                defects.append({"line": n, "defect": "TRUNCATED_OR_MALFORMED_JSON"}); continue
+            try:
+                validate(rec)
+            except ReceiptError as exc:
+                msg = str(exc)
+                defects.append({"line": n, "defect": ("RECEIPT_ID_MISMATCH" if "receipt_id" in msg else "SCHEMA:" + msg)}); continue
+            rid = rec["receipt_id"]
+            if rid in seen:
+                defects.append({"line": n, "defect": "DUPLICATE_RECEIPT_ID", "receipt_id": rid}); continue   # a copy is not a second run
+            seen.add(rid); ids.append(rid); valid += 1
+    return {"path": str(path), "lines": lines, "valid": valid, "defects": defects, "receipt_ids": ids}
