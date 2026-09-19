@@ -931,3 +931,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   substrate carries no workspace traffic (refusals counted as ws_refused); every penalty key an objective charged
   exists in the accounting or is named in unknown_penalty_keys. No violation; guard >= 100 receipts.
 - suite now 914 passed, 6 skipped.
+
+## C132 (08:39Z) the observation wrappers' laws as a property over random worlds (post-closing)
+- 28 random worlds (integer / grid flat / pendulum), random delay in {1,2,5} and permutation seed: the wrapped
+  observation at tick t is the raw observation at max(0, t-d); the permutation is a bijection applied
+  identically every tick (recovered from a tick with distinct channel values); step results and traces equal the
+  unwrapped world's. No defect. Suite 944 passed / 6 skipped.
