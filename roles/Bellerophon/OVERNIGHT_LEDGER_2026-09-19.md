@@ -846,3 +846,10 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - mutants M70-M72 CAUGHT (M72 by admission itself: every reference component); ledger 71/71. Suite 326 / 6.
 - the C1 lesson in another form: a state that lives in the kernel (not in the world) is still state that a
   checkpoint must carry. The honest list gains nothing; the checkpoint contract gains a sentence.
+
+## C120 (07:47Z) the checkpoint invariant as a property over random compositions
+- 120 fuzz IRs: an episode checkpointed at a random tick and resumed in fresh objects must emit the same actions
+  and world summary as the uninterrupted episode. 19 compositions reach the path (14 integer, 5 grid; the rest
+  refused at lowering, horizon < 2, ended before the tick, or the fuzz's known schedule-on-n_regs designer error);
+  a coverage guard refuses fewer than 15. All 19 agree after C119. No new defect.
+- suite 447 passed, 6 skipped.

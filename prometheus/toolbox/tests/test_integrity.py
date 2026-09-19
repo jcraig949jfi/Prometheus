@@ -262,3 +262,50 @@ def test_checkpoint_carries_the_kernel_wrappers_state(wrappers, schedule):
     assert first["actions"] + rest["actions"] == full["actions"], (wrappers, schedule)
     assert obs3[0].measure()["events_by_kind"] == obs[0].measure()["events_by_kind"]
     assert w3.summary() == w.summary()
+
+
+# C120: the checkpoint invariant as a PROPERTY over random compositions (C119 found two holes with four hand cases):
+# for any valid IR whose world can snapshot, an episode checkpointed at a random tick and resumed in FRESH objects
+# emits the same actions and the same world summary as the uninterrupted episode.
+_CKPT_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(200, 320)))
+def test_checkpoint_resume_property_over_random_compositions(seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, _prepare, run_episode, resume_episode
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    spec = [s for s in low.job.runs if s.arm == "primary"][0]
+    if "ext.snapshot.v1" not in REG.get(spec.experiment.world["kind"]).capabilities or spec.experiment.budget["horizon"] < 2:
+        return
+    def fresh():
+        c = _prepare(spec, REG)
+        return c["world"], c["instances"], c["observers"], (c["all_subs"] if len(c["all_subs"]) > 1 else c["sub"])
+    horizon = spec.experiment.budget["horizon"]; k = random.Random(seed).randrange(1, horizon)
+    w, inst, obs, sub = fresh()
+    try:
+        full = run_episode(w, inst, obs, seed=spec.seed * 1000, horizon=horizon, substrate=sub, record_actions=True)
+    except ValueError as exc:                                      # the fuzz's known designer error (a schedule on a non-mutable param) is a FAILED run, not this property's subject
+        assert "not runtime-mutable" in str(exc); return
+    if full["ticks"] <= k:
+        return                                                     # the episode ended before the checkpoint tick: nothing to resume
+    _CKPT_COVERAGE["exercised"] += 1
+    w2, inst2, obs2, sub2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=spec.seed * 1000, horizon=horizon, substrate=sub2, checkpoint_at=k, record_actions=True)
+    assert first["checkpoint"] is not None and first["ticks"] == k
+    w3, inst3, obs3, sub3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=horizon, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (seed, k, spec.experiment.world["kind"], spec.experiment.substrate["kind"], [p["representation"] for p in spec.experiment.players])
+    assert rest["summary"] == full["summary"], (seed, k)
+
+
+def test_the_checkpoint_property_was_actually_exercised():
+    """Coverage guard (C120): with 40 seeds only 6 compositions reached the checkpoint path (the rest refused at
+    lowering or ended before the tick). 120 seeds must give at least 15, or the property is decoration."""
+    assert _CKPT_COVERAGE["exercised"] >= 15, _CKPT_COVERAGE
