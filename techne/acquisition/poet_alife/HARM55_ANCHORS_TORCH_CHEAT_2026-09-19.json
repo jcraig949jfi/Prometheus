@@ -1,0 +1,175 @@
+{
+ "schema": "techne.harm55.anchors/1",
+ "identity": {
+  "path": "torch",
+  "scorer": "techne107_asal_observer.py Observer (openai `clip` ViT-B/32) + numpy open_endedness_score -- the ORIGINAL observer of the search",
+  "torch": "2.14.0+cpu",
+  "weights_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+  "port_sha256_lf": "66294e74dc294d19688b7d16b00a449683656779b492bd0a3e67edf145948f09",
+  "host": "GANDALF",
+  "cpu": "Intel64 Family 6 Model 26 Stepping 4, GenuineIntel",
+  "python": "3.11.9",
+  "mode": "rgb224-dir (anchors fed directly; no preprocessing beyond CLIP mean/std)",
+  "anchors_dir": "C:\\Users\\Gandalf\\AppData\\Local\\Temp\\harm55\\anchors",
+  "anchors_manifest_sha256_lf": "3c39ed16b281f145d32ef6b536f4770e1b3a1cc4b9f6331d8f8dba515c1b92f3",
+  "written_utc": "2026-09-19T10:07:57Z",
+  "seconds": 31.1,
+  "n_scored": 16,
+  "n_hash_verified": 16
+ },
+ "rows": {
+  "CHEAT": {
+   "score_torch": 0.8749995827674866,
+   "expected_torch": 0.8749995827674866,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "3b3e1a649ba725dcf4354ff43f9244a1792f6a7d4790962a18a58b9306cdf592",
+   "n_frames": 8,
+   "d_clip_torch": 1.1920928955078125e-07
+  },
+  "CYCLE2": {
+   "score_torch": 0.8546890020370483,
+   "expected_torch": 0.8546890020370483,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "344a8b30ef2c756098ba2037932d69c019afa6d0f9ce5412b89888a05abf7e1e",
+   "n_frames": 8,
+   "d_clip_torch": 0.16248732805252075
+  },
+  "DRIFT_SYN": {
+   "score_torch": 0.8729726076126099,
+   "expected_torch": 0.8729726076126099,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "4451114a27f334c2296f7aa9b42ad118845a0dcb2027772fdc5b7d84013a988b",
+   "n_frames": 8,
+   "d_clip_torch": 0.002433734280722482
+  },
+  "GARBAGE_seed0": {
+   "score_torch": 0.8303285837173462,
+   "expected_torch": 0.8303285837173462,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "a50dcfb305391484759dca778cfeb2d690f0b600e63e498b24d0a493ec393f73",
+   "n_frames": 8,
+   "d_clip_torch": 0.06452688149043492
+  },
+  "GARBAGE_seed1": {
+   "score_torch": 0.8093664646148682,
+   "expected_torch": 0.8093664646148682,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "8d6c1a8f941e1ed2baf1a3eea7a688ce13f7b2c481764f796a6765e230e09e3b",
+   "n_frames": 8,
+   "d_clip_torch": 0.09962015492575509
+  },
+  "GARBAGE_seed2": {
+   "score_torch": 0.8147590160369873,
+   "expected_torch": 0.8147590160369873,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "8d373eb3ee5432777127bc2949930fe3c5900e5eceeb53fdd72b9b4f04850812",
+   "n_frames": 8,
+   "d_clip_torch": 0.0801416380064828
+  },
+  "GARBAGE_seed3": {
+   "score_torch": 0.8214395642280579,
+   "expected_torch": 0.8214395642280579,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "59d677a3e7fb346ec1ee49389aad699c093c4c309130029528019812e4d682bb",
+   "n_frames": 8,
+   "d_clip_torch": 0.07062821728842598
+  },
+  "GARBAGE_seed4": {
+   "score_torch": 0.8075382709503174,
+   "expected_torch": 0.8075382709503174,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "afc59d8aa5d7e3028d8f07f1894e7b40f72a6e0eff50096a8967676fae5135f9",
+   "n_frames": 8,
+   "d_clip_torch": 0.08388489484786987
+  },
+  "HUECYCLE": {
+   "score_torch": 0.8369166254997253,
+   "expected_torch": 0.8369166254997253,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "d56c803e5e2166bd0d669baed06a66399d3a52f063dc8cedfddbd6f0144f0586",
+   "n_frames": 8,
+   "d_clip_torch": 0.04501099245888846
+  },
+  "LENIA": {
+   "score_torch": 0.8472459316253662,
+   "expected_torch": 0.8472459316253662,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "44adb86bbb8d6f63b97ff343d254f60774c194b98dd11449e48cd12f1cba23f0",
+   "n_frames": 8,
+   "d_clip_torch": 0.03832137584686279
+  },
+  "NOISE_seed0": {
+   "score_torch": 0.8678450584411621,
+   "expected_torch": 0.8678450584411621,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "0804b0171038d7062d663034dee1727b5181b6a5ad56400b9cc5d63648414aa1",
+   "n_frames": 8,
+   "d_clip_torch": 0.012270620891026087
+  },
+  "NOISE_seed1": {
+   "score_torch": 0.8660649657249451,
+   "expected_torch": 0.8660649657249451,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "445e5cbed3d8a65021dbaf6cea627adc891dbc1009f35eca08f841cfcbc3a0ae",
+   "n_frames": 8,
+   "d_clip_torch": 0.019797401768820628
+  },
+  "NOISE_seed2": {
+   "score_torch": 0.8666183352470398,
+   "expected_torch": 0.8666183352470398,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "96072d4a89d6a04cbd754b3f57fb31e0ed42cb88b2145947f94b2a1d146a03ba",
+   "n_frames": 8,
+   "d_clip_torch": 0.01050574438912528
+  },
+  "NOISE_seed3": {
+   "score_torch": 0.8684800267219543,
+   "expected_torch": 0.8684800267219543,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "41dc5171b1b288aca73d9eda29640166118fc51218fdc4cc8336824932a71f8c",
+   "n_frames": 8,
+   "d_clip_torch": 0.01106212820325579
+  },
+  "NOISE_seed4": {
+   "score_torch": 0.8624337911605835,
+   "expected_torch": 0.8624337911605835,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "3996963e3bd6923bd655d0ccf3eb11bafdb8553fd5dc9b76dc3cdd1d0f15801d",
+   "n_frames": 8,
+   "d_clip_torch": 0.032921739986964633
+  },
+  "STATIC": {
+   "score_torch": 0.8749996423721313,
+   "expected_torch": 0.8749996423721313,
+   "abs_diff_vs_expected_torch": 0.0,
+   "sha256": "a7b5f5acb5cebe71f5b6544cae754299ff2d84fbed82ff71ee84216b1355530a",
+   "n_frames": 8,
+   "d_clip_torch": 5.960464477539063e-08
+  }
+ },
+ "scores": {
+  "CHEAT": 0.8749995827674866,
+  "CYCLE2": 0.8546890020370483,
+  "DRIFT_SYN": 0.8729726076126099,
+  "GARBAGE_seed0": 0.8303285837173462,
+  "GARBAGE_seed1": 0.8093664646148682,
+  "GARBAGE_seed2": 0.8147590160369873,
+  "GARBAGE_seed3": 0.8214395642280579,
+  "GARBAGE_seed4": 0.8075382709503174,
+  "HUECYCLE": 0.8369166254997253,
+  "LENIA": 0.8472459316253662,
+  "NOISE_seed0": 0.8678450584411621,
+  "NOISE_seed1": 0.8660649657249451,
+  "NOISE_seed2": 0.8666183352470398,
+  "NOISE_seed3": 0.8684800267219543,
+  "NOISE_seed4": 0.8624337911605835,
+  "STATIC": 0.8749996423721313
+ },
+ "cheat_torch_rescore": {
+  "tolerance": 1e-06,
+  "n_compared": 16,
+  "max_abs_diff": 0.0,
+  "pass": true,
+  "mismatched": []
+ }
+}

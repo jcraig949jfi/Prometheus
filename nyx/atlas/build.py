@@ -112,25 +112,31 @@ def build() -> dict:
                     pass
         lat.sort()
         median_lat = (lat[len(lat)//2] if len(lat) % 2 else (lat[len(lat)//2 - 1] + lat[len(lat)//2]) / 2) if lat else None
-        mech_isolated = [q for q in active if q.get("mechanism_isolated")]
+        # Operator directive 2026-09-19b s2: A MECHANISM IS NOT A PACKET. Mechanism counts come from the MECHANISM
+        # LEDGER (nyx/atlas/gates/MECHANISMS.json, schema nyx.mechanism_ledger/1) and are over UNIQUE mechanism_ids --
+        # never packets, never supported clauses. One mechanism may accumulate many packets; one packet may carry
+        # several predictions about one mechanism; neither multiplies the count. Packet-level counts stay packet-level.
+        from nyx.atlas import mechanisms as _mech
+        mech_counts = _mech.counts(_mech.load())
         dm["scoreboard"] = {
-            "schema": "nyx.scoreboard/2 (operator directive 2026-09-19 s9; supersedes /1 row-counting)",
+            "schema": "nyx.scoreboard/3 (operator directives 2026-09-19 s9 + 2026-09-19b s2; mechanism counts are unique mechanism_ids)",
+            # -- packet level: evidence-bearing experiments
             "packets_issued": len(packets),
             "packets_adjudicated": sum(1 for q in active if q.get("adjudicated")),
             "predictions_tested": _s(active, "predictions_tested"),
             "predictions_falsified": _s(active, "predictions_falsified"),
             "cuts_technically_supported": sum(1 for q in active if q.get("cut_supported")),
-            "mechanisms_isolated": len(mech_isolated),
-            "observer_stable_mechanisms": sum(1 for q in mech_isolated if q.get("observer_stable") == "YES"),
-            "successful_independent_transplants": sum(1 for q in mech_isolated if q.get("transplant") == "SUPPORTED"),
+            # -- mechanism level: persistent identities (from the mechanism ledger, unique ids)
+            **mech_counts,
+            # -- open objects and flow
             "unresolved_anomalies": len([a for a in g.get("unresolved_anomalies", []) if a.get("status") == "OPEN"]),
-            "mechanisms_that_survived_transplant": sum(1 for q in mech_isolated if q.get("transplant") == "SUPPORTED"),
             "median_cut_to_verdict_days": median_lat,
             "open_packets_by_lane": lane_open, "cap_per_lane": 3,
             "over_cap_lanes": {k: v for k, v in lane_open.items() if v > 3},
-            "note": ("a prediction falsified with recoverable mechanism information is productive output, not a failure (s8); "
-                     "predictions_tested/falsified count interventions across ACTIVE (non-superseded) investigations; "
-                     "the highest-value count is mechanisms_that_survived_transplant. The organ atlas above is the reservoir."),
+            "note": ("a prediction falsified with recoverable mechanism information is productive output, not a failure; "
+                     "predictions_* count interventions across ACTIVE (non-superseded) packets, while mechanisms_* count "
+                     "UNIQUE mechanism_ids in the mechanism ledger. The headline is mechanisms_that_survived_transplant. "
+                     "The organ atlas above is the reservoir."),
         }
     _dump("DEPTH_MAP", dm)
     return dm

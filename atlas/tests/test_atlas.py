@@ -29,6 +29,13 @@ def test_status_class_is_conservative():
     assert classify.status_class(None) == "UNKNOWN"
 
 
+def test_science_class_reads_capitalised_verdicts_only():
+    assert classify.science_class("components WEAK POSITIVE at n=3; exaptation of failed residue")[0] == "WEAK_POSITIVE"
+    assert classify.science_class("chimera synergy NEGATIVE (assay capable)") == ("NEGATIVE", "MEDIUM")
+    assert classify.science_class("A WEAK POSITIVE, B NEGATIVE")[1] == "LOW"      # mixed reading
+    assert classify.science_class("the run failed twice") == ("UNKNOWN", "LOW")    # prose is not a verdict
+
+
 def test_host_from_tag_and_text():
     assert classify.host_from_tag("m2-411504ab") == "M2"
     assert classify.host_from_tag("gandalf-6cd1348b") == "M3"
@@ -57,6 +64,10 @@ def test_validity_is_conservative():
     assert C.validity_from("INSTRUMENT_INVALID") == "INSTRUMENT_FAILURE"
     assert C.validity_from("WEAK_POSITIVE") == "UNKNOWN"   # a disposition is not a validity claim
     assert C.validity_from(None) == "UNKNOWN"
+
+
+def test_non_finite_numbers_survive_as_strings():
+    assert db._finite({"a": float("nan"), "b": [1.0, float("inf")], "c": "x"}) == {"a": "NaN", "b": [1.0, "Infinity"], "c": "x"}
 
 
 def test_timestamps_never_guessed():
@@ -198,3 +209,76 @@ def test_cheat_prune_spares_other_hosts(conn):
         left = {r[0] for r in cur.fetchall()}
         cur.execute("ROLLBACK TO SAVEPOINT p")
     assert left == {tag + "m2"}    # M1's stale row pruned, M2's row untouched
+
+
+# ------------------------------------------------------------------ two seats, one index
+
+def test_harvester_hosts_keep_git_collectors_on_one_host():
+    hh = db.registry()["harvester_hosts"]
+    for name in ("commits", "archaeon_campaigns", "frontier", "npe", "vivarium", "pew"):
+        assert hh[name] == ["M1"], name
+    assert set(hh["local_files"]) >= {"M1", "M2"}
+
+
+def test_cli_refuses_a_git_collector_on_m2(monkeypatch, capsys):
+    from atlas import __main__ as cli
+    monkeypatch.setattr(db, "this_host", lambda: "M2")
+    import atlas.harvest.commits as commits
+    monkeypatch.setattr(commits, "run", lambda a: pytest.fail("commits ran on M2"))
+    cli.main(["harvest", "commits"])
+    assert "SKIPPED on M2" in capsys.readouterr().out
+
+
+def test_every_pass_names_its_seat(conn):
+    assert one(conn, "SELECT count(*) FROM atlas.harvest_run WHERE seat IS NULL") == 0
+
+
+def test_cheat_write_lock_blocks_a_second_writer(conn):
+    """Cheat control for rule 8: while one session holds the write lock, a
+    second session (another seat) must be refused it."""
+    other = db.connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SAVEPOINT lk")
+            cur.execute("SELECT pg_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+            with other.cursor() as c2:
+                c2.execute("SELECT pg_try_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+                got = c2.fetchone()[0]
+            other.rollback()
+        conn.rollback()   # releases the xact lock
+        with other.cursor() as c2:
+            c2.execute("SELECT pg_try_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+            got_after = c2.fetchone()[0]
+        other.rollback()
+    finally:
+        other.close()
+    assert got is False and got_after is True
+
+
+def test_loss_tracking_flags_a_vanished_file(tmp_path, monkeypatch):
+    """ATLAS-27 cheat control: a file indexed on one pass and deleted before
+    the next must come back present=false -- checked without touching the DB."""
+    from atlas.harvest import local_files as lf
+    f = tmp_path / "run.log"
+    f.write_text("x")
+    b = C.Batch("local_files", "t", "Atlas")
+    b.host = "M1"
+    rows = [("file://M1/" + str(f).replace("\\", "/"), str(f).replace("\\", "/"), "log", True)]
+
+    class Cur:
+        def execute(self, *a): pass
+        def fetchall(self): return rows
+        def __enter__(self): return self
+        def __exit__(self, *a): pass
+
+    class Conn:
+        def cursor(self): return Cur()
+        def close(self): pass
+    monkeypatch.setattr(db, "connect", lambda: Conn())
+    root = [{"root": str(tmp_path)}]
+    lf._loss_check(b, "M1", root)
+    assert not b.t["source"]                 # still there: nothing to flag
+    f.unlink()
+    lf._loss_check(b, "M1", root)
+    assert b.t["source"][rows[0][0]]["present"] is False
+    assert any(x["name"] == "file.missing" for x in b.facts.values())

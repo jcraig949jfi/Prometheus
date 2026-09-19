@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-19T07:40Z",
- "n": 170,
+ "built": "2026-09-19T10:08Z",
+ "n": 171,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -2075,6 +2075,23 @@
    "cheat_control": "an organism given the kettle's parameters must compute Ku and Pu exactly; the tuner with the steadiness check removed must return biased gains on the noisy kettle; the tuner on a first-order process without delay must FAIL within 20 peaks: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: relay auto-tuning (Astrom & Hagglund 1984) as a hobby brewing controller (Hirschmann 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "poet-original-2019::P.an_open_ended_environment_generator_must_keep_producing_challenges_its_agents_can_just_barely_learn_while_bounded_compute_forces_it_to_discard_environments_and_a_never_pruned_memory_keeps_penalising_the_regions_it_discarded",
+   "source_fossil": "poet-original-2019",
+   "source_evidence": "vault:poet-original-2019/upstream/tree/poet_distributed/novelty.py:18-62; vault:poet-original-2019/upstream/tree/poet_distributed/poet_algo.py:264-268, 287-305, 343-352",
+   "condition": "a population of environments is co-evolved with a population of agents under a fixed niche budget; candidates are ordered by novelty against an archive that is never pruned and admitted only if a transferred agent scores inside a fixed two-sided band; when the budget is exceeded the oldest active environments are deleted",
+   "resource_or_constraint": "max_num_envs concurrent niches; a fixed evaluation budget per adjustment step",
+   "failure_condition": "for the open-endedness claim: the process stalls because the admissible band, measured against a rising competence, and the deflating novelty estimator together stop admitting anything new",
+   "world_punishes": "discarding environments by age while continuing to score novelty against them forever",
+   "world_rewards": "generating environments that are different in the five descriptor numbers AND solvable-but-not-solved by some current agent",
+   "observable_consequence": "the admitted-environment rate over run time; the novelty score of admitted candidates as a function of archive size; whether the deleted regions continue to suppress candidates near them",
+   "vacuity_condition": "an environment space too small for the descriptor to separate, or a capacity never reached",
+   "trivial_shortcuts": "mutating only the dominant unnormalised features (roughness, pit gaps) to score novelty cheaply while leaving the stump features -- and the actual difficulty -- untouched",
+   "cheat_control": "a candidate that differs ONLY in stump_height must score lower novelty than an equally-sized difference in ground_roughness if the unnormalised-dominance reading is right; and an archive of fewer than k members must yield the whole-archive mean rather than a k-nearest mean",
+   "cost_class": "cluster-scale for the full algorithm; the novelty organ alone is milliseconds",
+   "purpose_separated_from_pressure": "PURPOSE: paired open-ended environment/agent co-evolution (Uber AI 2019)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

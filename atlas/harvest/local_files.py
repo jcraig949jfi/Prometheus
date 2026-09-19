@@ -17,6 +17,18 @@ Modes
                  perturbation/experiment id found in the path.
 A root that does not exist is recorded as not visible, never as absent
 evidence of a run.
+
+Storage roles (registry "storage_role"; "role" is the source-link role): primary (the engine instance's own store --
+the only role that sets engine_instance.storage_root), copy, backup. A
+LIVE primary that must not be opened may declare "engine_instance" and
+"basis"; the collector then records it without reading it. Every root seen
+is kept under engine_instance.extract "storage:<path>" with its role.
+
+LOSS TRACKING (ATLAS-27): every pass re-checks this host's FS sources
+under its roots; a file no longer on disk gets present=false and one
+'file.missing' fact dated by the pass that noticed; a file that returns
+gets present=true. Rows are never deleted, and another host's rows are
+never checked from here.
 """
 from __future__ import annotations
 
@@ -30,7 +42,7 @@ import time
 from atlas import db
 from atlas.harvest import common as C
 
-VERSION = "local_files/2"
+VERSION = "local_files/4"
 IDLE_S = 900
 SMALL = 5_000_000
 
@@ -86,8 +98,47 @@ def run(args) -> dict:
             _dirs(b, host, root, eng, r, by_native)
         elif mode == "run_logs":
             _logs(b, host, root, eng, r, by_native)
+    for r in roots:
+        if r.get("engine_instance") and os.path.exists(r["root"]):
+            _declared_instance(b, host, r)
+    _loss_check(b, host, roots)
     with db.harvest("local_files", VERSION, source_ref="{} roots on {}".format(len(roots), host)) as h:
         return b.flush(h)
+
+
+def _declared_instance(b, host, r):
+    role = r.get("storage_role", "primary")
+    root = r["root"].replace("\\", "/")
+    row = {"engine_instance_key": r["engine_instance"], "engine_id": r.get("engine"), "native_id": r["engine_instance"],
+           "host_id": host, "basis": "declared in atlas/registry.json local_roots: {}".format(r.get("basis", "no basis given")),
+           "extract": {"storage:" + root: {"role": role, "declared": True}}}
+    if role == "primary":
+        row["storage_root"] = root
+    b.engine_instance(**row)
+
+
+def _loss_check(b, host, roots):
+    """Files this host indexed before and that are gone now -> present=false."""
+    prefixes = [r["root"].replace("\\", "/").rstrip("/") for r in roots]
+    conn = db.connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""SELECT uri, local_path, kind, present FROM atlas.source
+                           WHERE host_id = %s AND visibility = %s AND local_path IS NOT NULL""", (host, "FS:" + host))
+            rows = cur.fetchall()
+    finally:
+        conn.close()
+    today = dt.datetime.now(dt.timezone.utc).date().isoformat()
+    for uri, path, kind, present in rows:
+        if uri in b.t["source"] or not any(path.startswith(p) for p in prefixes):
+            continue
+        exists = os.path.exists(path.rstrip("/") if path.endswith("/") else path)
+        if not exists and present is not False:
+            b.other_source(uri, kind, "FS:" + host, host_id=host, present=False)
+            b.fact("RAN", "telemetry_availability", "source", uri, "file.missing", "not on disk at pass {}".format(today),
+                   uri, "", author="ATLAS_DERIVED", stated_at=dt.datetime.now(dt.timezone.utc).isoformat())
+        elif exists and present is False:
+            b.other_source(uri, kind, "FS:" + host, host_id=host, present=True)
 
 
 def _file_source(b, host, path, kind="file", hash_ok=True, **extra):
@@ -135,12 +186,17 @@ def _ledgers(b, host, root, eng, r, now):
                 continue
             ei = meta.get("engine_instance_id")
             if ei:
+                role = r.get("storage_role", "primary")
+                if os.path.normcase(os.path.abspath(dirpath)) != os.path.normcase(os.path.abspath(root)):
+                    role = "backup" if "backup" in dirpath.replace("\\", "/").lower() else "copy"   # only the root itself is primary
                 b.engine_instance(engine_instance_key=ei, engine_id=eng, native_id=ei, host_id=host,
-                                  schema_version=meta.get("schema_version"), storage_root=dirpath.replace("\\", "/"),
+                                  schema_version=meta.get("schema_version"),
+                                  storage_root=dirpath.replace("\\", "/") if role == "primary" else None,
                                   first_seen_at=_iso(rng[0]) if rng and rng[0] else None,
                                   last_seen_at=_iso(rng[1]) if rng and rng[1] else None,
                                   basis="ledger meta table in {} (read-only, immutable)".format(path),
-                                  extract={"ledger:" + path.replace("\\", "/"): {"counts": counts, "experiments_by_client": dict(by_client)}})
+                                  extract={"ledger:" + path.replace("\\", "/"): {"counts": counts, "experiments_by_client": dict(by_client),
+                                                                                  "role": role}})
                 b.link(uri, "engine_instance", ei, "ledger")
                 for k, v in counts.items():
                     b.fact("RAN", "metric_summary", "engine_instance", ei, "ledger.count." + k, v, uri, k,

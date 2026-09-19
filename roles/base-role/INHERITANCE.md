@@ -11,10 +11,12 @@ Every role below carries the banner on its primary document(s):
 | Bellerophon | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter in force: the WORLDS KERNEL directive of the same day, verbatim in roles/Bellerophon/prompts/2026-09-18_worlds_kernel/ (kernel package prometheus/toolbox/); self-service row per Archaeon ruling #39) |
 | Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
 | Atlas | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M1; charter ADOPTED 2026-09-19 with addendum, verbatim in roles/Atlas/prompts/2026-09-19_charter/ and _charter_addendum/; self-service row per Archaeon ruling #39) |
+| Atlas-M2 | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; a NEW SEAT, brother of Atlas, not an Atlas instance under D-24; charter PENDING the operator's instructions; self-service row per Archaeon ruling #39) |
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
 | Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
+| Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; charter ADOPTED the same day (pressure engineering / primordial soup sandbox), verbatim in roles/Ares/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Ares/superseded/; self-service row per Archaeon ruling #39) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
@@ -74,10 +76,12 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Bellerophon | RESPONSIBILITIES.md |
 | Atalanta | RESPONSIBILITIES.md |
 | Atlas | RESPONSIBILITIES.md |
+| Atlas-M2 | RESPONSIBILITIES.md |
 | Alethelia | RESPONSIBILITIES.md |
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
 | Arachne | RESPONSIBILITIES.md |
+| Ares | RESPONSIBILITIES.md |
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
 | Clymene | RESPONSIBILITIES.md |

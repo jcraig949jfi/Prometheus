@@ -1,24 +1,24 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-19T07:40Z",
- "fossils_available": 122,
- "fossils_inspected": 121,
- "fossils_decomposed": 117,
+ "built": "2026-09-19T10:08Z",
+ "fossils_available": 123,
+ "fossils_inspected": 122,
+ "fossils_decomposed": 118,
  "fossils_ORGAN0": 4,
  "fossils_blocked": 0,
  "by_cut_state": {
   "DEEP": 45,
-  "COARSE": 72,
+  "COARSE": 73,
   "ORGAN0": 4,
   "NOT_CUT": 1
  },
- "candidate_fragments": 539,
- "accepted_organs": 475,
+ "candidate_fragments": 542,
+ "accepted_organs": 478,
  "candidate_organs": 64,
- "rejected_cuts": 352,
+ "rejected_cuts": 355,
  "max_depth_distribution": {
   "0": 4,
-  "1": 104,
+  "1": 105,
   "2": 10,
   "3": 3
  },
@@ -26,7 +26,7 @@
   "0": 4,
   "1": 4,
   "2": 21,
-  "3": 31,
+  "3": 32,
   "4": 15,
   "5": 10,
   "6": 10,
@@ -40,7 +40,7 @@
   "15": 1
  },
  "evidence_grades": {
-  "SOURCE_READ": 532,
+  "SOURCE_READ": 535,
   "METADATA": 4,
   "EXECUTED": 1,
   "INTERVENED": 2
@@ -48,24 +48,24 @@
  "runnable_organs": "UNKNOWN (no organ has been run in isolation; 1 fossil-level ablation exists)",
  "intervention_tested_organs": 3,
  "fingerprinted_organs": 0,
- "pressures": 170,
- "composition_edges": 649,
- "ancestry_edges": 241,
+ "pressures": 171,
+ "composition_edges": 651,
+ "ancestry_edges": 244,
  "artifact_hashes_sha256_16": {
-  "FOSSIL_ANATOMY": "1414d1610df426a2",
-  "ORGAN_CATALOG": "769c031eb719b52d",
-  "REJECTED_CUTS": "dc3cdc07a2f885fa",
-  "PRESSURE_CATALOG": "60b62a8950de5a05",
-  "ANCESTRY_GRAPH": "1f4e4c5ca4c3c050",
-  "COMPOSITION_GRAPH": "5c5ee387685b3940",
-  "BEHAVIORAL_FINGERPRINTS": "f541fcfe6089f73a",
-  "RECURRENCE_CANDIDATES": "1f0b8eec85628b8b",
-  "BLIND_CUT_COMPARISON": "f8465d1b09dcb431",
-  "ATLAS_COVERAGE": "81bb09eceaa9cf32",
-  "UNEXPLAINED_RESIDUE": "890f84f253881a7c"
+  "FOSSIL_ANATOMY": "9d4e1fd3d9f396d8",
+  "ORGAN_CATALOG": "c666fd8b0f11f099",
+  "REJECTED_CUTS": "a988a448439fc321",
+  "PRESSURE_CATALOG": "13f16721fbe3d27e",
+  "ANCESTRY_GRAPH": "9ba7965ed1ccfc86",
+  "COMPOSITION_GRAPH": "3756254516f68ee2",
+  "BEHAVIORAL_FINGERPRINTS": "edb25073e69e3ca7",
+  "RECURRENCE_CANDIDATES": "083a8f7a4f985057",
+  "BLIND_CUT_COMPARISON": "3dc007707fce2acb",
+  "ATLAS_COVERAGE": "a24da5eaf82eaa33",
+  "UNEXPLAINED_RESIDUE": "edd08190df8801e5"
  },
  "gates": {
-  "cuts_created": 121,
+  "cuts_created": 122,
   "cuts_returned_with_verdict": 3,
   "handoffs_open": 13,
   "handoffs_open_max_age_ticks": 3,
@@ -74,21 +74,27 @@
   "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"
  },
  "scoreboard": {
-  "schema": "nyx.scoreboard/2 (operator directive 2026-09-19 s9; supersedes /1 row-counting)",
-  "packets_issued": 3,
+  "schema": "nyx.scoreboard/3 (operator directives 2026-09-19 s9 + 2026-09-19b s2; mechanism counts are unique mechanism_ids)",
+  "packets_issued": 4,
   "packets_adjudicated": 2,
   "predictions_tested": 7,
   "predictions_falsified": 2,
   "cuts_technically_supported": 2,
-  "mechanisms_isolated": 2,
+  "mechanisms_registered": 6,
+  "mechanisms_isolated": 6,
+  "mechanisms_evidence_supported": 2,
+  "mechanisms_falsified": 0,
   "observer_stable_mechanisms": 0,
+  "observer_dependence_unresolved": 2,
   "successful_independent_transplants": 0,
-  "unresolved_anomalies": 1,
   "mechanisms_that_survived_transplant": 0,
+  "unresolved_anomalies": 1,
   "median_cut_to_verdict_days": 0,
-  "open_packets_by_lane": {},
+  "open_packets_by_lane": {
+   "m3-native-python": 1
+  },
   "cap_per_lane": 3,
   "over_cap_lanes": {},
-  "note": "a prediction falsified with recoverable mechanism information is productive output, not a failure (s8); predictions_tested/falsified count interventions across ACTIVE (non-superseded) investigations; the highest-value count is mechanisms_that_survived_transplant. The organ atlas above is the reservoir."
+  "note": "a prediction falsified with recoverable mechanism information is productive output, not a failure; predictions_* count interventions across ACTIVE (non-superseded) packets, while mechanisms_* count UNIQUE mechanism_ids in the mechanism ledger. The headline is mechanisms_that_survived_transplant. The organ atlas above is the reservoir."
  }
 }

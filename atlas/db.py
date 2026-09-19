@@ -41,6 +41,17 @@ def this_host() -> Optional[str]:
     return None
 
 
+def seat() -> str:
+    """The seat running this process: env ATLAS_SEAT (Atlas-M2 sets it on
+    M2); default 'Atlas'. Recorded on every harvest_run (migration 006)."""
+    return os.environ.get("ATLAS_SEAT", "Atlas")
+
+
+# Advisory locks: the two seats share one index, so migrations, flushes and
+# comb passes are serialized across hosts (keys are fixed 64-bit ints).
+LOCK_MIGRATE, LOCK_WRITE, LOCK_COMB = 7_146_001, 7_146_002, 7_146_003
+
+
 def instance_tag() -> str:
     from comms.api import instance_tag as tag
     return tag()
@@ -57,6 +68,18 @@ def migrate(conn) -> List[str]:
     recorded hash differs from the file is a refusal (migrations are never
     edited after they run)."""
     applied = []
+    with conn.cursor() as cur:
+        cur.execute("SELECT pg_advisory_lock(%s)", (LOCK_MIGRATE,))
+    conn.commit()
+    try:
+        return _migrate(conn, applied)
+    finally:
+        with conn.cursor() as cur:
+            cur.execute("SELECT pg_advisory_unlock(%s)", (LOCK_MIGRATE,))
+        conn.commit()
+
+
+def _migrate(conn, applied) -> List[str]:
     with conn.cursor() as cur:
         cur.execute("CREATE SCHEMA IF NOT EXISTS atlas")
         cur.execute("""CREATE TABLE IF NOT EXISTS atlas.schema_migrations (
@@ -97,10 +120,10 @@ class Harvest:
         self.counts: Dict[str, int] = {}
         with conn.cursor() as cur:
             cur.execute("""INSERT INTO atlas.harvest_run
-                (harvester, harvester_version, atlas_sha, host_id, instance_tag, source_ref, source_sha, notes)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING harvest_id""",
+                (harvester, harvester_version, atlas_sha, host_id, instance_tag, source_ref, source_sha, notes, seat)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING harvest_id""",
                         (harvester, version, gitsrc.head_sha(), this_host(), instance_tag(),
-                         source_ref, source_sha, notes))
+                         source_ref, source_sha, notes, seat()))
             self.id = cur.fetchone()[0]
         conn.commit()
 
@@ -182,7 +205,7 @@ def upsert(cur, table: str, rows: Sequence[Dict[str, Any]], keys: Sequence[str],
         for c in cols:
             x = r[c]
             if types[c] == "jsonb":
-                x = Json(x) if x is not None else None
+                x = Json(_finite(x)) if x is not None else None
             elif types[c].startswith("timestamp"):
                 x = _ts(x)
             v.append(x)
@@ -212,6 +235,20 @@ def upsert(cur, table: str, rows: Sequence[Dict[str, Any]], keys: Sequence[str],
         return {tuple(r[:-1]) if len(keys) > 1 else r[0]: r[-1] for r in res}
     execute_values(cur, sql, vals, page_size=500)
     return len(vals)
+
+
+def _finite(x):
+    """jsonb rejects NaN/Infinity, which Python's json reader accepts (NPE
+    results carry them). Keep the information: non-finite floats become the
+    strings 'NaN', 'Infinity', '-Infinity'."""
+    import math
+    if isinstance(x, float) and not math.isfinite(x):
+        return "NaN" if math.isnan(x) else ("Infinity" if x > 0 else "-Infinity")
+    if isinstance(x, dict):
+        return {k: _finite(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_finite(v) for v in x]
+    return x
 
 
 def _ts(x):

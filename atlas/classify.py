@@ -154,3 +154,33 @@ def scalar(v) -> Tuple[Optional[str], Optional[float]]:
 
 def ids_in(values: Iterable[str]) -> List[str]:
     return sorted({x for v in values if v for p in ID_PATTERNS for x in p.findall(v)})
+
+
+_SCIENCE_WORDS = [("WEAK_POSITIVE", r"\bWEAK[ _]POSITIVE\b"), ("NEGATIVE", r"\b(?:CAPABLE_)?NEGATIVE\b"),
+                  ("POSITIVE", r"\bPOSITIVE\b"), ("NULL", r"\bNULL\b"), ("INCONCLUSIVE", r"\bINCONCLUSIVE\b"),
+                  ("INVALID", r"\bINVALID\b")]
+
+
+def science_class(text: Optional[str]) -> Tuple[str, str]:
+    """Class of a prose verdict ('Science: components WEAK POSITIVE ...').
+    Only CAPITALISED verdict words count (prose like 'failed residue' is not
+    a verdict); lowercase 'weak positive' is a fallback. Returns (class,
+    confidence): several different verdicts in one clause -> first one,
+    confidence LOW (mixed reading, left to the reader)."""
+    if not text:
+        return "UNKNOWN", "LOW"
+    found = []
+    for name, pat in _SCIENCE_WORDS:
+        for m in re.finditer(pat, text):
+            found.append((m.start(), name))
+    found.sort()
+    names = []
+    for _pos, n in found:
+        if n not in names and not (n == "POSITIVE" and "WEAK_POSITIVE" in names):
+            names.append(n)
+    if not names:
+        low = text.lower()
+        if "weak positive" in low:
+            return "WEAK_POSITIVE", "LOW"
+        return "UNKNOWN", "LOW"
+    return names[0], ("MEDIUM" if len(names) == 1 else "LOW")

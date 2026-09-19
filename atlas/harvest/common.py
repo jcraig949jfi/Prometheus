@@ -218,6 +218,8 @@ class Batch:
     # flush -----------------------------------------------------------------
     def flush(self, h) -> Dict[str, int]:
         cur = h.conn.cursor()
+        # one writer at a time across seats/hosts; released at each commit, re-taken for the prune/rollup step
+        cur.execute("SELECT pg_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
         order = [("engine_instance", "engine_instance_key", ("host_id", "source_hash")),
                  ("campaign", "campaign_key", ()), ("experiment", "experiment_key", ("engine_id",)),
                  ("attempt", "attempt_key", ("host_id", "engine_instance_key", "commit_sha", "started_at")),
@@ -266,6 +268,7 @@ class Batch:
         h.count("entity_commit", db.upsert(cur, "atlas.entity_commit", crow,
                                            ["entity_type", "entity_key", "sha", "basis"], h.id))
         h.conn.commit()
+        cur.execute("SELECT pg_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
         prune(cur, h)
         rollup(cur)
         h.conn.commit()

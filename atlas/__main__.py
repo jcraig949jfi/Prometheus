@@ -29,6 +29,7 @@ def main(argv=None) -> int:
     hp.add_argument("--fetch", action="store_true", help="git fetch origin first (refs/remotes only)")
     hp.add_argument("--npe-ref", default=None, help="ref holding primordial/ and the CW01 campaign")
     hp.add_argument("--ref", default="origin/main", help="ref for main-line sources")
+    hp.add_argument("--force", action="store_true", help="run a harvester on a host registry.json does not list for it")
     sub.add_parser("comb")
     rp = sub.add_parser("report")
     rp.add_argument("--out", default=None)
@@ -51,8 +52,14 @@ def main(argv=None) -> int:
         if a.fetch:
             gitsrc.fetch()
         names = ORDER if a.name == "all" else [a.name]
+        allowed = db.registry().get("harvester_hosts", {})
+        here = db.this_host()
         rc = 0
         for n in names:
+            if n in allowed and here not in allowed[n] and not a.force:
+                print("{:<20} SKIPPED on {} (registry harvester_hosts: {}; one host keeps its derived rows "
+                      "consistent -- roles/Atlas/SIBLINGS.md)".format(n, here, allowed[n]))
+                continue
             mod = importlib.import_module("atlas.harvest." + n)
             try:
                 counts = mod.run(a)

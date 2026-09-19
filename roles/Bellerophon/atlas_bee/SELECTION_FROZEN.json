@@ -1,0 +1,105 @@
+{
+  "schema": "bellerophon.atlas_bee.selection.v1",
+  "frozen_utc": "2026-09-19T12:42:52Z",
+  "frozen_before_any_bee_run": true,
+  "atlas_index": "schema atlas on M1 prometheus_fire, read-only SELECTs 2026-09-19 12:40-13:00Z; Atlas seat PARKED (roles/Atlas/STATUS.md); counts: sfe 57 / npe 249 / archaeon.frontier 349 / vivarium 1242 experiments",
+  "selection_rule": "one per directive slot; the scientific question must be stateable without its executor; prefer settled classes (POSITIVE/NULL/NEGATIVE/INCONCLUSIVE with a stated reason); two engines represented; no experiment chosen because it is easy",
+  "experiments": [
+    {
+      "slot": 1, "role": "established positive result",
+      "atlas_experiment_key": "nestor.graphworld/r1:E10-linear-closed-vs-open-128-seeds",
+      "engine": "npe", "atlas_class": "POSITIVE", "reported_disposition": "PASS",
+      "question_verbatim": "Linear closed-loop brain (lane C C4 + E codebook, lane B B6b fused rollout) vs open-loop E4b QD, both on 128 train seeds, 102,400 genomes per condition, w4/w1/w3, 4 run seeds, top-16 on E6's 64 held-out seeds. Posted bar: closed > open held-out by one-sided Mann-Whitney U p<0.05 in >=2/3 worlds (attainable min p=0.014); oracles on run seed 0. Predicted: w4 and w1 hold, w3 does not.",
+      "question_executor_free": "In an Encounter-family world, do CLOSED-LOOP organisms (action conditioned on observation) generalise to held-out world seeds better than OPEN-LOOP organisms (a fixed action sequence) evolved under the same search budget on the same training seeds?",
+      "original_outcome": "PASS: closed > open held-out in >= 2/3 worlds; per-world primary: w1 p=0.443 (closed median 61.4 vs open 60.5, NOT significant), w3 closed median 105.58 (significant), w4 significant per the posted bar; train medians closed 149.99/61.56/104.75 vs open 115.98/54.34/98.74 (w1/w3/w4). Context: E6 (8 train seeds) FAILED 0/3 -- the effect needed 128 train seeds.",
+      "evidence_pointers": [
+        {"uri": "git:primordial/ledger/rows/E/E10-linear-closed-vs-open-128-seeds.jsonl", "visibility": "GIT_REMOTE", "role": "rows", "commit_sha": "7940ec1e584b8e7a64cd0bd8ab218040a69d980e", "blob_sha": "f3114ea1f3c10eb2ba2abd1a5d45698900d9fa1d"},
+        {"uri": "file://M1/C:/Users/jcrai/lab/pm-data/E/E10-linear-closed-vs-open-128-seeds/", "visibility": "FS:M1", "role": "telemetry"},
+        {"atlas_attempt_key": "nestor.graphworld/r1:E10-linear-closed-vs-open-128-seeds#r01", "of_record": true, "host": "M1", "commit_sha": "7940ec1e584b8e7a64cd0bd8ab218040a69d980e"},
+        {"atlas_experiment_key": "nestor.graphworld/r1:E6-heldout-seed-generalisation", "role": "parent evidence (FAILED at 8 train seeds)", "blob_sha": "22f56f3a3a78569504f931c85eca6bd4d360d6ea"}
+      ],
+      "why_this_one": "a clean POSITIVE on the same world family BEE wraps (wforge Encounter, lane B's world genomes 1/3/4 are wforge de_novo seeds; BEE instantiates genome_seed 1/3/4 as W780eb99446eddb5e / Wa81e901394ab365d / W7ceccf2d3c9ff4a5); the closed-vs-open contrast is native to BEE (statemachine vs an open-loop sequence player); held-out seeds are a first-class BEE split"
+    },
+    {
+      "slot": 2, "role": "established null / failed hypothesis",
+      "atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e05",
+      "engine": "npe", "atlas_class": "NULL", "reported_disposition": "NULL",
+      "title": "Mixture of marginally useful organisms (composition-economics-v1)",
+      "question_executor_free": "Does a MIXTURE of marginally useful components beat the best single component SUPERADDITIVELY -- mixture value above the additive prediction measured by solo transplant, with every carried member load-bearing (its targeted removal costs more than it is worth alone) -- and does the superadditivity clear a sham-vs-sham null?",
+      "original_outcome": "NULL: mixtures beat the best single component 4/4 and the composition law benefits the best more than the worst 4/4, but superadditivity clears its measured null in only 2/4 replicates and every member is load-bearing in only 2/4 (the same two replicates fail both: the drawn world, not noise; r03/r04 measurably SUB-additive); ancestor-relative +42.5%; superadditivity mean +9.05%; independent replication over 12 replicates: m3_interaction 11/12",
+      "evidence_pointers": [
+        {"atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e05", "facts": "atlas.fact subject_key=... (headline.*, tests.*, world.measurements.*, world.arms.*, world.interventions_post_hoc.M1..M4)", "conclusion": "atlas.conclusion author=Nestor disposition=NULL"},
+        {"uri": "git:roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e05/", "visibility": "GIT_LOCAL:M1", "note": "the campaign directory lives on Nestor's M1-local branch; NOT readable from M2 -- everything used here came through Atlas facts"}
+      ],
+      "why_this_one": "a null with rich telemetry and a sharp measurement law (superadditivity on information, additive prediction by SOLO TRANSPLANT, ablation vs random-removal sham); BEE's multi-player worlds with a shared yield window and per-player accounting can pose the composition question natively, and BEE's yield split among winners makes the direction of any effect genuinely open"
+    },
+    {
+      "slot": 3, "role": "persistent state / memory matters",
+      "atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e01",
+      "engine": "npe", "atlas_class": "POSITIVE", "reported_disposition": "COMPLETE",
+      "title": "Workspace emergence under necessity (necessity-economics-v1)",
+      "question_executor_free": "When the world makes retained state NECESSARY (work items exceed one step and recur), do evolved organisms come to USE persistent workspace state, beat a matched non-retaining control, and DEPEND on the retained state (erasing it between steps costs performance against a cost-matched sham that rewrites the same contents)?",
+      "original_outcome": "POSITIVE, replicated: treatment beats the matched non-retaining control 5/5; the evolved population uses the mechanism (8.68 re-entries/episode); erasing retained state costs -10.2% mean (weakest -8.8%) vs a cost-matched sham 5/5; ancestor-relative +9.7%; the physics survives a backend swap (mem vs redis, identical metric vectors 6/6). Built-in negative control: at recurrence 0 retention is pure cost.",
+      "evidence_pointers": [
+        {"atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e01", "facts": "headline.*, world.arms.{treatment,control_no_retention,control_no_recurrence}, world.interventions_post_hoc.I1_erase (sham: rewrite with own contents), world.measurements.*", "conclusion": "atlas.conclusion author=Nestor disposition=COMPLETE"},
+        {"uri": "git:roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e01/", "visibility": "GIT_LOCAL:M1", "note": "not readable from M2; used through Atlas facts only"}
+      ],
+      "why_this_one": "the memory question in its cleanest form; BEE has the exact machinery as first-class objects: kv workspace scopes (lifetime vs ttl=1 = erase between steps at equal write cost), the ablation control, per-op memory charge in the objective, and the U3 series to see re-entries; the recurrence control needs one small executor addition (episode seeds that recur)"
+    },
+    {
+      "slot": 4, "role": "transfer / reuse / recombination / inherited artifact",
+      "atlas_experiment_key": "archaeon.campaign/cmp3:C3-SFE-10",
+      "engine": "sfe", "atlas_class": "NEGATIVE", "reported_disposition": "CAPABLE_NEGATIVE",
+      "title": "import takeover / dose ecology",
+      "question_verbatim": "When mature W0-general solvers or matched permuted controls are injected at generation 0 into a fresh W1_d4 population (N=200) at doses [0, 1, 4, 32], without the offspring cap and with caps [0.25, 0.05], when does the import take over (share >= 0.9), do resident lineages survive, and is the takeover driven by the material's competence or by the injection mechanics?",
+      "question_executor_free": "When organisms evolved elsewhere are injected into a fresh population at small doses, does their lineage take over the population, and is the takeover driven by their COMPETENCE (mature material) or by the INJECTION MECHANICS (a permuted, incompetent control of equal length and composition takes over just as well)?",
+      "original_outcome": "CAPABLE_NEGATIVE for 'capability drives takeover': mature and permuted-control material take over equally (11/12 or 12/12 at every dose incl. dose 1, no cap: control_d1_nocap takeover 11/12 median gen 8; mature likewise); the no-import arm never takes over; only the offspring cap moves the clock (cap slows takeover: median gen 5 vs 3). Battery: control_takeover_at_mid_dose_below_half FAILED (value 1.0), mature_takeover_monotone_in_dose passed, cap_slows_takeover passed.",
+      "evidence_pointers": [
+        {"uri": "git:archaeon/campaign3/C3-SFE-10/PREREG.json", "visibility": "GIT_REMOTE", "role": "prereg", "prereg_digest": "sha256:b0e6bf1656baae95787929c6e0ce041780038743258711322235ec59b418c096"},
+        {"uri": "git:archaeon/campaign3/C3-SFE-10/RECEIPT.json", "visibility": "GIT_REMOTE", "role": "receipt", "note": "attempt of record a04; 228 records; summary per arm"},
+        {"uri": "git:archaeon/campaign3/C3-SFE-10/rows.json", "visibility": "GIT_REMOTE", "role": "rows", "note": "228 rows: takeover, takeover_gen, import_share_final, elite_origins, ..."},
+        {"uri": "git:archaeon/campaign3/C3-SFE-10/RECORD.md", "visibility": "GIT_REMOTE", "role": "record"}
+      ],
+      "why_this_one": "an inherited-artifact question whose control (the SAME instruction blocks permuted) is exactly BEE's shuffle transform; injection into generation 0 and lineage-origin tracking through meta inheritance are one small addition to BEE's search layer; the offspring cap is NOT in BEE and will be classified honestly"
+    },
+    {
+      "slot": 5, "role": "environmental / regime change or adaptation",
+      "atlas_experiment_key": "archaeon.campaign/cmp2:C2-SFE-06",
+      "engine": "sfe", "atlas_class": "WEAK_POSITIVE", "reported_disposition": "WEAK_POSITIVE",
+      "title": "retention economics on a rung ladder",
+      "question_verbatim": "When the selective pressure climbs a delay ladder (W0 -> d1 -> d2 -> d4, 25 generations per rung), at what revisit share p of earlier rungs in the training battery is rung-0 competence retained to the end, and what does retention cost on the top rung?",
+      "question_executor_free": "When selection climbs a ladder of increasingly delayed environments (delay 0 -> 1 -> 2 -> 4, a fixed number of generations per rung), is competence on the first rung FORGOTTEN by the end, at what revisit share p of earlier rungs in the evaluation battery is it retained, and what does retention cost on the top rung?",
+      "original_outcome": "WEAK_POSITIVE (n=6): forgetting cliff at p=0 (final_r0 mean 0.222; retention_r0 [0.04,0.75,1.0,0.0,0.5,0.5]); p=0.1 retains (final_r0 mean 0.674, retention 5/6 = 1.0); p=0.25 mean 0.701; p=0.5 final_r0 1.0 in 6/6 with top-rung mean 0.681 (cost small). Parent of C3-SFE-03 (p=0.1, n=12: 11/12 delay-general, ladder reaches d4 that direct search reaches 1/14).",
+      "evidence_pointers": [
+        {"uri": "git:archaeon/campaign2/C2-SFE-06/PREREG.json", "visibility": "GIT_REMOTE", "role": "prereg", "commit_sha": "e7a2330391c7bdb59e91a54916a7fbbdb4ff5161", "blob_sha": "1be809ff90d4bfc70f1660204ad01f5b5fdb9233", "prereg_digest": "sha256:d08ad16428043955fb3b302075b6aee1676e262da9ea74f2e7e15b14eccfbd3a"},
+        {"uri": "git:archaeon/campaign2/C2-SFE-06/RECEIPT.json", "visibility": "GIT_REMOTE", "role": "receipt", "blob_sha": "fc15936020f005f780c7d40a71047b404f60516d"},
+        {"uri": "git:archaeon/campaign2/C2-SFE-06/rows.json", "visibility": "GIT_REMOTE", "role": "rows", "note": "24 rows: arm x seed, final_r0..r3, peak_r0, retention_r0, fell_r0_at, matrix"},
+        {"uri": "pg://prometheus_fire/ew.campaign_observations?campaign_id=cmp2&harness_id=C2-SFE-06", "visibility": "PG:M1", "role": "pew"},
+        {"atlas_experiment_key": "archaeon.campaign/cmp3:C3-SFE-03", "role": "child (powered replication at p=0.1)", "prereg_digest": "sha256:b5cde64455ce496be5479e10a30c7145d20571f46d7c10d4323f488f50361e6c"}
+      ],
+      "why_this_one": "regime change as a LADDER with a retention economics question; BEE's integer world has action_delay as a world parameter (0/1/2/4 map directly), so the rungs are the same physical dimension; the revisit-share battery is the one search-layer addition the ladder needs"
+    },
+    {
+      "slot": 6, "role": "deliberately difficult: assumptions may not fit BEE",
+      "atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e07",
+      "engine": "npe", "atlas_class": "INCONCLUSIVE", "reported_disposition": "INCONCLUSIVE",
+      "title": "Computational weather / brain damage",
+      "question_executor_free": "Under 'computational weather' (damage applied to an organism's internal state during its lifetime, against a cost-matched sham), do evolved lineages become less dependent on state, and can the world even be QUALIFIED: does damage measurably fire on intact organisms (P1), is the sham inert (P2), is damage non-lethal (P3), are weather and sham separable (P4), is the organism blind to the arm (P5)?",
+      "original_outcome": "INCONCLUSIVE, not NULL: the pre-QUALIFY gate refused the world twice (P1 damage does not fire; P4 not separable); the one permitted correction (lifetimes_per_eval 2->8) did not admit it; no lineage was evolved under weather. P1 attainable only at damage fraction >= 0.44; accumulator AURC 0.956; 5/5 known-broken fixtures refused (gate credibility). Organism: a 464-parameter linear recurrent net.",
+      "evidence_pointers": [
+        {"atlas_experiment_key": "nestor.cw01/cw01-2026-09-17:cw01-e07", "facts": "headline.P1..P5, headline.reason, headline.not_null_because, world.arms [STATIC, WEATHER, SHAMWEATHER]"},
+        {"uri": "git:roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e07/PREREGISTRATION.md", "visibility": "GIT_LOCAL:M1", "commit_sha": "397dad9a2ee715f4eb385b212fd85bac579db74f", "blob_sha": "9265b23a6b26741128c43ee74677b6594e2aaf9f", "note": "not readable from M2"},
+        {"uri": "git:roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e07/GATE_E07.json", "visibility": "GIT_LOCAL:M1", "role": "gate telemetry"}
+      ],
+      "why_this_one": "BEE has NO in-life intervention on a player's hidden state (interventions act on the world; transforms act on genomes between generations); the only state BEE can damage during a life is RETAINED WORKSPACE state through the StateDevice; whether e07's gate predicates can even be posed on that is the difficult question, and a structured refusal is a legitimate outcome"
+    }
+  ],
+  "not_selected_and_why": [
+    {"key": "archaeon.campaign/cmp2:C2-SFE-01", "why": "transports failure EPISODES (world-side training material) -- BEE has no episode-transport concept; would be UNREPRESENTABLE at the door rather than a scientific transplant"},
+    {"key": "archaeon.campaign/cmp3:C3-SFE-02", "why": "needs the W2_K2 two-stream ask/answer world; BEE has no ask/answer world family"},
+    {"key": "archaeon.campaign/cmp4:C4-08", "why": "representable (mutation load x single-edit loss census) but the transfer/regime/memory slots were better served; a natural seventh"},
+    {"key": "nestor.cw01/cw01-2026-09-17:cw01-e02", "why": "the ratchet question needs a foundation that is useless alone and required later; BEE's worlds do not model staged affordances"},
+    {"key": "vivarium.queue/*", "why": "queue status only in Atlas (no question text)"},
+    {"key": "archaeon.frontier/*", "why": "PLANNED/UNKNOWN classes; no settled outcome to compare against"}
+  ]
+}

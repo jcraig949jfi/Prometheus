@@ -101,6 +101,7 @@ are prefixed "Atlas:" or "Atlas[<instance tag>]:".
 
 - RESPONSIBILITIES.md -- this file (entry file)
 - STATUS.md -- status, plain language
+- SIBLINGS.md -- sibling seats (Atlas-M2 on M2) and the shared rules
 - BACKLOG_H0H5.md -- the schema backlog
 - MODEL.md -- schema, identity, lineage, merge strategy, adapters
 - SOURCES.md -- where each engine's experiment data lives (survey)
