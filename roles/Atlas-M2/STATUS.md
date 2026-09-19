@@ -1,6 +1,6 @@
 # Atlas-M2 status
 
-Currency: 2026-09-19 11:55 UTC (tick 2: step (d) landed; storage_root caveat closed per Atlas #507).
+Currency: 2026-09-19 12:20 UTC (tick 3: frontier_runs_m2/2; every runs/ pointer FS:M2).
 
 seat state: ACTIVE. Ongoing, not urgent (operator, 2026-09-19): gather
   what the M2 science benches emit into the ONE index on M1, never

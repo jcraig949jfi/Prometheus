@@ -97,3 +97,20 @@ def test_registry_lists_the_module_for_m2_only():
     assert hh["frontier_runs_m2"] == ["M2"]
     roots = [r for r in db.registry()["local_roots"] if r.get("mode") == M.REGISTRY_MODE]
     assert roots and all(r["host"] == "M2" for r in roots)
+
+
+def test_cheat_chunk_only_dir_flips_known_pointers_and_mints_nothing(tmp_path):
+    """/2: the old loop wrote chunks with no RECEIPT.json. A known URI is flipped
+    to FS:M2; an unknown chunk-only dir yields no source and no entity."""
+    d = tmp_path / "runs" / "LIN-2d4fd1c7" / "B-scatter.T000"
+    d.mkdir(parents=True)
+    (d / "chunk_000.json.gz").write_bytes(b"\x1f\x8b never decompressed")
+    (d / "chunk_001.json.gz").write_bytes(b"\x1f\x8b never decompressed")
+    known = {"hostfile://M2/archaeon/frontier/runs/LIN-2d4fd1c7/B-scatter.T000/chunk_001.json.gz"}
+    b = C.Batch("frontier_runs_m2", M.VERSION, "Archaeon")
+    stats = {"receipts": 0, "matched": 0, "unmatched": 0, "chunks": 0, "chunk_only_known": 0}
+    M.collect(b, str(tmp_path / "runs"), "M2", {}, stats, known)
+    assert stats["chunk_only_known"] == 1 and stats["receipts"] == 0
+    assert set(b.t["source"]) == known                      # chunk_000 (unknown to the index) is NOT minted
+    assert b.t["source"][next(iter(known))]["visibility"] == "FS:M2"
+    assert b.t["attempt"] == {} and b.t["segment"] == {} and b.t["experiment"] == {} and b.links == []

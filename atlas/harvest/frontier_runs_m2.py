@@ -23,6 +23,12 @@ RUNNING) is linked to its EXPERIMENT -- the receipt's own declared
 experiment_id, which is the native id Atlas keys experiments by -- and
 carries a fact saying so. It never gets a guessed attempt.
 
+/2: a spec dir with chunk files and NO RECEIPT.json (the old loop's shape,
+e.g. runs/LIN-2d4fd1c7/B-scatter.T000/) flips a chunk pointer to FS:M2
+ONLY if the index already holds that URI (Atlas linked it from the RUN
+event). Nothing is minted for a chunk-only dir the index does not know:
+no receipt means no declared experiment_id, so no entity.
+
 Non-interference: os.stat, os.listdir, one json.load per RECEIPT.json
 (3-4 KB), sha256 of files <= SMALL bytes. Chunk archives are never
 decompressed. Nothing is opened for writing, locked or signalled.
@@ -38,7 +44,7 @@ import re
 from atlas import db
 from atlas.harvest import common as C
 
-VERSION = "frontier_runs_m2/1"
+VERSION = "frontier_runs_m2/2"
 PROGRAM = "archaeon.frontier"
 CKEY = C.campaign_key(PROGRAM, "deep-frontier")
 REL = "archaeon/frontier/runs"          # the path prefix Atlas's pointers use
@@ -70,6 +76,12 @@ def _linked(cur) -> dict:
     return dict(cur.fetchall())
 
 
+def _known(cur, host) -> set:
+    """every hostfile pointer under runs/ the index already holds for this host (any visibility)."""
+    cur.execute("SELECT uri FROM atlas.source WHERE uri LIKE %s", ("hostfile://" + host + "/" + REL + "/%",))
+    return {r[0] for r in cur.fetchall()}
+
+
 def run(args) -> dict:
     host = db.this_host()
     roots = [r for r in db.registry().get("local_roots", [])
@@ -79,14 +91,15 @@ def run(args) -> dict:
     try:
         with conn.cursor() as cur:
             linked = _linked(cur)
+            known = _known(cur, host)
     finally:
         conn.close()
-    stats = {"receipts": 0, "matched": 0, "unmatched": 0, "chunks": 0, "roots_missing": 0}
+    stats = {"receipts": 0, "matched": 0, "unmatched": 0, "chunks": 0, "chunk_only_known": 0, "roots_missing": 0}
     for r in roots:
         if not os.path.isdir(r["root"]):
             stats["roots_missing"] += 1
             continue
-        collect(b, r["root"], host, linked, stats)
+        collect(b, r["root"], host, linked, stats, known)
     with db.harvest("frontier_runs_m2", VERSION,
                     source_ref="{} receipts / {} matched / {} unmatched on {}".format(
                         stats["receipts"], stats["matched"], stats["unmatched"], host)) as h:
@@ -95,10 +108,13 @@ def run(args) -> dict:
     return counts
 
 
-def collect(b, root: str, host: str, linked: dict, stats: dict = None) -> None:
+def collect(b, root: str, host: str, linked: dict, stats: dict = None, known: set = frozenset()) -> None:
     """Pure over the tree: reads receipts under root, writes into the batch.
-    linked maps Atlas's receipt path -> attempt key; nothing else names an attempt."""
-    stats = stats if stats is not None else {"receipts": 0, "matched": 0, "unmatched": 0, "chunks": 0}
+    linked maps Atlas's receipt path -> attempt key; nothing else names an
+    attempt. known is the set of runs/ pointer URIs the index already holds;
+    only those may be flipped for a chunk-only dir."""
+    stats = stats if stats is not None else {"receipts": 0, "matched": 0, "unmatched": 0, "chunks": 0,
+                                             "chunk_only_known": 0}
     for fam in sorted(os.listdir(root)):
         fdir = os.path.join(root, fam)
         if not os.path.isdir(fdir):
@@ -107,6 +123,7 @@ def collect(b, root: str, host: str, linked: dict, stats: dict = None) -> None:
             sdir = os.path.join(fdir, spec)
             rpath = os.path.join(sdir, "RECEIPT.json")
             if not os.path.isfile(rpath):
+                _chunk_only(b, sdir, fam, spec, host, known, stats)
                 continue
             try:
                 with open(rpath, "r", encoding="utf-8") as f:
@@ -195,3 +212,14 @@ def _chunks(b, akey, rec, sdir, fam, spec, host, u, stats):
         if os.path.isfile(cfile):
             cu = _file_source(b, host, cfile, "{}/{}/{}/{}.json.gz".format(REL, fam, spec, nid))
             b.link(cu, "segment", sk, "rows")
+
+
+def _chunk_only(b, sdir, fam, spec, host, known, stats):
+    """No receipt: flip only the chunk pointers the index already holds; mint nothing."""
+    for f in sorted(os.listdir(sdir)):
+        if not re.fullmatch(r"chunk_\d{3}\.json\.gz", f):
+            continue
+        rel = "{}/{}/{}/{}".format(REL, fam, spec, f)
+        if "hostfile://{}/{}".format(host, rel) in known:
+            _file_source(b, host, os.path.join(sdir, f), rel)
+            stats["chunk_only_known"] = stats.get("chunk_only_known", 0) + 1

@@ -21,8 +21,8 @@ ATLAS INDEX REPORT -- generated from atlas.* on the M1 store
    unresolved: experiments classed UNKNOWN          603
    unresolved: identity collisions                  30
    unresolved: facts UNRESOLVED/CONTRADICTORY       60
-   machine-local-only sources (GIT_LOCAL/FS)        1821
-   referenced, not visible from M1 (EXPECTED)       6048
+   machine-local-only sources (GIT_LOCAL/FS)        1823
+   referenced, not visible from M1 (EXPECTED)       6046
    git commits seen only on a local branch          48
    signals OPEN (weak-signal layer)                 192
 
@@ -56,40 +56,42 @@ ATLAS INDEX REPORT -- generated from atlas.* on the M1 store
    vivarium.queue/* (28 families)                  1242  queue status only
 
 4. COVERAGE (last successful pass per harvester and host)
-   M1   archaeon_campaigns   archaeon_campaigns/3     2026-09-19 07:32:05
    M1   archaeon_campaigns   archaeon_campaigns/2     2026-09-19 06:28:55
+   M1   archaeon_campaigns   archaeon_campaigns/3     2026-09-19 07:32:05
    M1   archaeon_campaigns   archaeon_campaigns/1     2026-09-19 03:36:59
-   M2   comb                 comb/2                   2026-09-19 07:35:37
    M1   comb                 comb/1                   2026-09-19 03:31:16
+   M2   comb                 comb/2                   2026-09-19 08:10:11
    M1   comb                 comb/2                   2026-09-19 07:34:32
-   M1   commits              commits/2                2026-09-19 07:32:02
    M1   commits              commits/1                2026-09-19 03:11:16
+   M1   commits              commits/2                2026-09-19 07:32:02
    M1   frontier             frontier/3               2026-09-19 07:32:05
-   M1   frontier             frontier/1               2026-09-19 03:22:31
    M1   frontier             frontier/2               2026-09-19 03:33:19
+   M1   frontier             frontier/1               2026-09-19 03:22:31
    M2   frontier_runs_m2     frontier_runs_m2/1       2026-09-19 07:35:24
-   M2   local_files          local_files/2            2026-09-19 06:58:50
+   M2   frontier_runs_m2     frontier_runs_m2/2       2026-09-19 08:10:10
+   M1   local_files          local_files/4            2026-09-19 07:34:15
    M1   local_files          local_files/2            2026-09-19 07:32:11
+   M2   local_files          local_files/4            2026-09-19 07:37:41
    M1   local_files          local_files/3            2026-09-19 07:33:20
    M1   local_files          local_files/1            2026-09-19 03:29:30
-   M1   local_files          local_files/4            2026-09-19 07:34:15
-   M1   npe                  npe/2                    2026-09-19 03:26:06
+   M2   local_files          local_files/2            2026-09-19 06:58:50
    M1   npe                  npe/4                    2026-09-19 07:32:28
-   M1   npe                  npe/1                    2026-09-19 03:25:11
    M1   npe                  npe/3                    2026-09-19 03:37:03
+   M1   npe                  npe/2                    2026-09-19 03:26:06
+   M1   npe                  npe/1                    2026-09-19 03:25:11
    M1   pew                  pew/1                    2026-09-19 07:32:09
+   M1   reference            reference/1              2026-09-19 03:10:33
    M2   reference            reference/2              2026-09-19 06:58:47
    M1   reference            reference/2              2026-09-19 07:31:45
-   M1   reference            reference/1              2026-09-19 03:10:33
-   M1   vivarium             vivarium/2               2026-09-19 07:32:09
    M1   vivarium             vivarium/1               2026-09-19 03:27:29
+   M1   vivarium             vivarium/2               2026-09-19 07:32:09
    Locality of sources:
-     EXPECTED:M2              5952
+     EXPECTED:M2              5950
      PG:M1                    2739
      GIT_REMOTE               1866
      GIT_LOCAL:M1             824
      FS:M1                    695
-     FS:M2                    302
+     FS:M2                    304
      EXPECTED:?               96
 
 5. IDENTITY COLLISIONS AND CONFLICTS (recorded, never auto-merged)
@@ -227,7 +229,7 @@ ATLAS INDEX REPORT -- generated from atlas.* on the M1 store
      - declares 2 control fact(s): battery, prereg.positive_control
      - declares 2 control fact(s): battery, prereg.positive_control
    R12-evidence-not-visible-here            DATA_GAP                   2
-     - 5952 sources are referenced but not visible from any inspected host (engine_ledger,file); an Atlas instance on M2 can fill them
+     - 5950 sources are referenced but not visible from any inspected host (engine_ledger); an Atlas instance on M2 can fill them
      - 96 sources are referenced but not visible from any inspected host (engine_ledger); an Atlas instance on ? can fill them
    R13-recurring-measurement-names          RECURRING_MEASUREMENT      1
      - "effect" is measured under 2 engines / 5 campaigns (8 full names)
