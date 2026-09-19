@@ -210,8 +210,8 @@
       ],
       "owner_seats": [],
       "home_host": "M1",
-      "status": "LIVE",
-      "notes": "observed 2026-09-19 by Atlas[m1-1c645957]: two foundry_service.py processes (pids 7988, 8176) running from F:/SerendipityD/var/deploy; stat-only coverage"
+      "status": "IGNORED",
+      "notes": "observed 2026-09-19 by Atlas[m1-1c645957]: two foundry_service.py processes from F:/SerendipityD/var/deploy. Operator 2026-09-19: 'may have been repurposed to something else if it's still active. Ignore it for now.' No collector reads it; rows from the one stat pass are kept as history."
     }
   ],
   "local_roots": [
@@ -239,15 +239,6 @@
       "mode": "stat",
       "engine": "sfe",
       "role": "log"
-    },
-    {
-      "host": "M1",
-      "root": "F:/SerendipityD/var",
-      "mode": "stat",
-      "engine": "serendipity.foundry.d",
-      "no_hash": true,
-      "max_files": 300,
-      "note": "LIVE service tree: stat only"
     },
     {
       "host": "M1",
