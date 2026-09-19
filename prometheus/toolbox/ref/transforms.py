@@ -139,7 +139,11 @@ def transform_players(registry, kind: str, players: list, rng_seed: int) -> tupl
     t = registry.make(kind); out = []; done = []
     for i, p in enumerate(players):
         if "player." + p["representation"] in t.accepts:
-            out.append(t.apply(p, rng_seed * 1009 + i).manifest()); done.append(i)
+            m = t.apply(p, rng_seed * 1009 + i).manifest()
+            for k in ("substrate",):                      # C35: keys the PlayerSpec does not model travel with the player
+                if k in p:
+                    m[k] = p[k]
+            out.append(m); done.append(i)
         else:
             out.append(p)
     return out, done

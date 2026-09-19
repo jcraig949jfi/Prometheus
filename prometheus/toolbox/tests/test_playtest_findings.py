@@ -154,3 +154,25 @@ def test_rewrite_system_player_runs_and_is_admitted_and_controllable(tmp_path):
              controls=[ref("control.sham.v1"), ref("control.scratch.v1"), ref("control.replay.v1")])
     rep = execute(lower(e, REG).job, tmp_path / "rw.jsonl", REG)
     assert rep.n_failed == 0 and rep.controls["sham"]["details"][0]["detail"]["transformed_players"] == [0, 1] and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C35 (playtest E rows): the sham arm's players all ran on the FLAT substrate although the primary's players
+# carried per-player substrate overrides -- transforms rebuilt the manifest from a PlayerSpec and dropped the
+# `substrate` key, so the control was not machine-matched (a cost-matching lie by omission).
+def test_transforms_preserve_per_player_substrate_overrides(tmp_path):
+    from prometheus.toolbox.ref.transforms import transform_players
+    players = [dict(random_statemachine_v2(1).manifest(), substrate=ref("substrate.kv.v1", scope="lifetime")), random_statemachine(2).manifest()]
+    out, done = transform_players(REG, "transform.shuffle.v1", players, 5)
+    assert done == [0, 1] and out[0]["substrate"] == ref("substrate.kv.v1", scope="lifetime") and "substrate" not in out[1]
+    e = _exp(players=players, world=ref("world.integer.v1", world_seed=2, n_players=2), controls=[ref("control.sham.v1")])
+    execute(lower(e, REG).job, tmp_path / "s.jsonl", REG)
+    sham = [r for r in read_all(tmp_path / "s.jsonl") if r["arm"] == "sham"][0]
+    assert sham["components"]["player_substrates"] == ["substrate.kv.v1", "substrate.flat.v1"]
+
+
+def test_substrate_science_says_no_reads_instead_of_false_carry_over(tmp_path):
+    from prometheus.toolbox.ref.players import random_rewrite_system
+    e = _exp(players=[random_rewrite_system(3).manifest()], substrate=ref("substrate.stream.v1", scope="lifetime"), budget={"episodes": 2, "horizon": 6})
+    execute(lower(e, REG).job, tmp_path / "n.jsonl", REG)
+    sci = [r for r in read_all(tmp_path / "n.jsonl") if r["arm"] == "primary"][0]["science"]["substrate"]
+    assert sci["carry_over"] is None and sci["reason"] == "no workspace reads"

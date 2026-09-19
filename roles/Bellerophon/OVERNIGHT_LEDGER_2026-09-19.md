@@ -238,3 +238,14 @@ C34 | T+1:22 | one machine per experiment not assumed: a player entry may carry 
   lifecycle hooks, merges events, records components.player_substrates and accounting.by_substrate.
   Negotiation checks a player's requires against ITS machine. RED (2 tests) -> the same table on kv vs flat
   diverges inside one world; an override that cannot run the player is refused at lowering. Suite 152.
+C35 | T+1:33 | fuzzer extended with tonight's features (rewrite players, per-player substrates, schedules incl.
+  a non-mutable param, holdout seeds, players/substrate sweeps, series objective): 41 in suite; 400 seeds out
+  of suite: 259 OK, 95 BLOCKED, 9 TARGET_UNSUPPORTED, 37 invalid, 0 crashes, 0 unexplained FAILED.
+  PLAYTEST E (playtests/pt_e_everything.py): three machines in one world (kv-lifetime state machine, stream
+  rewrite system, flat Proteus tape), delay + schedule, population sweep, holdout, series-gain objective, six
+  controls, INTERRUPTED after 20 runs, RESUMED (64 more), then replay_file over the resumed file: 84/84
+  compared, 0 divergent, kernel hash equal. ROWS: the sham arm's player_substrates read [flat, flat, flat]
+  while the primary's were [kv, stream, flat] -- transforms rebuilt manifests from PlayerSpec and DROPPED the
+  per-player substrate override: the "cost-matched" sham ran on different machines. RED; fixed (keys the
+  PlayerSpec does not model travel with the player). Also: a stream substrate whose player never reads
+  reported carry_over=False; now None with reason "no workspace reads". Suite 154 passed 6 skipped.

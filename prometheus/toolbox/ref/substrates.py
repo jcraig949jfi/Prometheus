@@ -205,6 +205,9 @@ class _WorkspaceSubstrate:
         return tot
 
     def science(self) -> dict:
+        reads = sum(int(inst.cost().get("ws_reads", 0)) for inst in self._instances)
+        if reads == 0:
+            return {"carry_over": None, "reason": "no workspace reads", "first_tick_reads_with_value": 0}   # C35: not a False
         return {"carry_over": self._first_read_hits > 0, "first_tick_reads_with_value": self._first_read_hits}
 
     def manifest(self) -> dict:

@@ -13,7 +13,7 @@ from prometheus.toolbox.ir import Experiment, IRError, ref
 from prometheus.toolbox.registry import default_registry
 from prometheus.toolbox.backends.local import execute, lower, run_episode
 from prometheus.toolbox.receipt import read_all
-from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, constant_player, random_proteus_player, proteus_available
+from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, constant_player, random_proteus_player, proteus_available, random_rewrite_system
 from prometheus.toolbox.ref.worlds import IntegerWorld
 from prometheus.toolbox.contracts import EVENT_KINDS
 
@@ -23,14 +23,18 @@ REG = default_registry()
 def random_experiment(seed: int) -> Experiment:
     rnd = random.Random(seed)
     n_players = rnd.choice([1, 1, 2, 3])
-    reps = ["sm1", "sm2", "const"] + (["proteus"] if proteus_available() else [])
+    reps = ["sm1", "sm2", "const", "rewrite"] + (["proteus"] if proteus_available() else [])
     players = []
     for i in range(n_players):
         r = rnd.choice(reps)
-        players.append({"sm1": lambda: random_statemachine(rnd.randrange(10**6), rnd.choice([2, 4, 6]), rnd.choice([4, 8, 16]), rnd.choice([1, 2, 3])),
-                        "sm2": lambda: random_statemachine_v2(rnd.randrange(10**6), rnd.choice([2, 4]), rnd.choice([4, 8]), rnd.choice([1, 2])),
-                        "const": lambda: constant_player([rnd.randrange(8) for _ in range(rnd.choice([1, 2, 3]))]),
-                        "proteus": lambda: random_proteus_player(rnd.randrange(10**6))}[r]().manifest())
+        m = {"sm1": lambda: random_statemachine(rnd.randrange(10**6), rnd.choice([2, 4, 6]), rnd.choice([4, 8, 16]), rnd.choice([1, 2, 3])),
+             "sm2": lambda: random_statemachine_v2(rnd.randrange(10**6), rnd.choice([2, 4]), rnd.choice([4, 8]), rnd.choice([1, 2])),
+             "const": lambda: constant_player([rnd.randrange(8) for _ in range(rnd.choice([1, 2, 3]))]),
+             "rewrite": lambda: random_rewrite_system(rnd.randrange(10**6), rnd.choice([1, 4, 8]), rnd.choice([2, 8]), rnd.choice([2, 6, 12])),
+             "proteus": lambda: random_proteus_player(rnd.randrange(10**6))}[r]().manifest()
+        if rnd.random() < 0.25:                                                        # C34: per-player substrate override
+            m = dict(m, substrate=rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime", ttl=rnd.choice([None, 2])), ref("substrate.stream.v1", lag=rnd.choice([1, 3]))]))
+        players.append(m)
     world = ref("world.integer.v1", n_regs=rnd.choice([3, 6, 9]), n_players=n_players, act_width=rnd.choice([1, 2, 3]), act_range=rnd.choice([2, 8, 16]),
                 n_ops=rnd.choice([0, 2, 5]), regime_period=rnd.choice([0, 0, 3, 7]), stoch_rate=rnd.choice([0, 0, 2, 9]), action_delay=rnd.choice([0, 1, 4]),
                 world_seed=rnd.randrange(1000), start_charge=rnd.choice([1, 8, 64, 100000]), step_cost=rnd.choice([0, 1, 5]), yield_amt=rnd.choice([0, 4, 40]),
@@ -39,12 +43,20 @@ def random_experiment(seed: int) -> Experiment:
                             ref("substrate.stream.v1", scope=rnd.choice(["episode", "lifetime"]), lag=rnd.choice([1, 2, 9]), maxlen=rnd.choice([1, 8]))])
     interventions = []
     for _ in range(rnd.choice([0, 1, 2, 3])):
-        interventions.append({"name": "iv", "world_params": rnd.choice([{}, {"regime_period": rnd.choice([0, 2])}, {"stoch_rate": rnd.choice([0, 3])}]),
-                              "wrappers": rnd.choice([{}, {"observation_delay": rnd.choice([0, 1, 5, 40])}, {"observation_permute": rnd.randrange(100)}])})
+        iv = {"name": "iv", "world_params": rnd.choice([{}, {"regime_period": rnd.choice([0, 2])}, {"stoch_rate": rnd.choice([0, 3])}]),
+              "wrappers": rnd.choice([{}, {"observation_delay": rnd.choice([0, 1, 5, 40])}, {"observation_permute": rnd.randrange(100)}])}
+        if rnd.random() < 0.3:                                                         # C19: schedules, sometimes with a non-mutable param
+            iv["schedule"] = [{"tick": rnd.randrange(0, 8), "world_params": rnd.choice([{"act_cost": rnd.randrange(0, 4)}, {"yield_amt": 0}, {"n_regs": 3}])}]
+        interventions.append(iv)
     controls = rnd.sample(["control.replay.v1", "control.cheat.v1", "control.negative.v1", "control.positive.v1", "control.sham.v1", "control.scratch.v1", "control.permutation.v1"], rnd.choice([0, 1, 3]))
     observers = rnd.sample(["observer.trace.v1", "observer.descriptor.v1", "observer.series.v1"], rnd.choice([0, 1, 3]))
-    sweep = rnd.choice([{}, {"world.params.world_seed": [1, 2]}, {"budget.horizon": [0, 3]}, {"interventions.0.wrappers.observation_delay": [0, 2]} if interventions else {}])
+    sweep = rnd.choice([{}, {"world.params.world_seed": [1, 2]}, {"budget.horizon": [0, 3]}, {"interventions.0.wrappers.observation_delay": [0, 2]} if interventions else {},
+                        {"players": [players, players[:1]]}, {"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1")]}])
     budget = {"episodes": rnd.choice([1, 2, 4]), "horizon": rnd.choice([0, 1, 5, 30])}
+    objective = rnd.choice([None, ref("objective.yield_net.v1", penalties={"ops": 0.1}), ref("objective.survival.v1"), ref("objective.series_gain.v1")])
+    seed_policy = {"base": rnd.randrange(10**4), "n_seeds": rnd.choice([1, 2])}
+    if rnd.random() < 0.3:
+        seed_policy["holdout_seeds"] = rnd.choice([0, 1, 2])
     if rnd.random() < 0.3:
         budget["series_max_records"] = rnd.choice([0, 1, 10])
     # adversarial knobs: each must end in a clean refusal (BLOCKED / TARGET_UNSUPPORTED / IRError), never a crash
@@ -57,9 +69,8 @@ def random_experiment(seed: int) -> Experiment:
     if rnd.random() < 0.1:
         budget["horizon"] = -1
     return Experiment(family="fuzz%d" % seed, world=world, substrate=substrate, players=players, interventions=interventions,
-                      objective=rnd.choice([None, ref("objective.yield_net.v1", penalties={"ops": 0.1}), ref("objective.survival.v1")]),
-                      observers=[ref(o) for o in observers], controls=[ref(c) for c in controls], sweep=sweep,
-                      seed_policy={"base": rnd.randrange(10**4), "n_seeds": rnd.choice([1, 2])}, budget=budget)
+                      objective=objective, observers=[ref(o) for o in observers], controls=[ref(c) for c in controls], sweep=sweep,
+                      seed_policy=seed_policy, budget=budget)
 
 
 @pytest.mark.parametrize("seed", list(range(40)))
@@ -78,7 +89,8 @@ def test_random_composition_lowers_or_refuses_and_never_raises(tmp_path, seed):
     rep = execute(low.job, tmp_path / "f.jsonl", REG)
     rs = read_all(tmp_path / "f.jsonl")
     failed = [r for r in rs if r["status"] == "FAILED"]
-    assert not failed, "seed %d: %s" % (seed, [(r["arm"], r.get("error")) for r in failed][:3])
+    # the ONLY permitted failure is a schedule naming a non-mutable param (a designer error the kernel reports per run)
+    assert all("not runtime-mutable" in (r.get("error") or "") for r in failed), "seed %d: %s" % (seed, [(r["arm"], r.get("error")) for r in failed][:3])
     assert len(rs) == rep.n_runs + 1
 
 
