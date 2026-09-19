@@ -329,3 +329,10 @@ C46/C47 | T+3:00 | cross-process and CROSS-PLATFORM replay evidence: tests/repla
   tree: 87/87 hashes IDENTICAL (science/CROSS_PLATFORM_REPLAY_2026-09-19.json). The BIT replay class is now
   evidenced across OS + interpreter, including the float-state c6 wrap. A standing test runs the WSL probe
   when wsl is reachable (skips with the reason otherwise).
+CLOCK CORRECTION (03:59Z): the T+ stamps from C24 onward were estimated and overstate elapsed time (C46/C47 says
+  T+3:00; the commit clock says 03:59Z = T+1:10). The authoritative clock is the commit timestamps; from here
+  on T+ is taken from `date -u`.
+C48 | 04:01Z (T+1:12) | two observers of ONE kind with different params (two descriptor scales; a series enabled
+  and one disabled) collided on the receipt's kind-keyed maps -- the second silently overwrote the first
+  (found by asking what a designer who calibrates descriptors would write). RED; repeated kinds are keyed
+  kind#<index> in observations and series; series.verify uses the same keying. Suite 174 passed 6 skipped.

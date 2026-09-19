@@ -71,7 +71,13 @@ def build(episodes: Optional[List[List[List[int]]]], *, enabled: bool, replay_cl
 
 
 def declared_series_observers(receipt: dict) -> List[str]:
-    return [o["kind"] for o in receipt.get("components", {}).get("observers", []) if o.get("series")]
+    """Series keys as the executor wrote them: an observer kind, or kind#<index> for a repeated kind (C48)."""
+    seen: Dict[str, int] = {}; keys = []
+    for i, o in enumerate(receipt.get("components", {}).get("observers", [])):
+        key = o["kind"] if o["kind"] not in seen else "%s#%d" % (o["kind"], i); seen[o["kind"]] = i
+        if o.get("series"):
+            keys.append(key)
+    return keys
 
 
 def verify(receipt: dict, base_dir) -> Dict[str, str]:

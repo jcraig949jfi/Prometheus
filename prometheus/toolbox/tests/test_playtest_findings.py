@@ -301,3 +301,17 @@ def test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed():
     assert w._state["charge"][1] == c2
     w._state["pos"] = [0, 2]
     assert w.observe(0)[4] == 0                                    # alone now
+
+
+# C48: two observers of the SAME kind with different params (two descriptor scales, two series bounds) collided
+# on the receipt's kind-keyed maps -- the second silently overwrote the first. Duplicate kinds are keyed kind#i.
+def test_two_observers_of_one_kind_are_both_recorded(tmp_path):
+    e = _exp(observers=[ref("observer.descriptor.v1", action_scale=1, yield_scale=8), ref("observer.descriptor.v1", action_scale=4, yield_scale=64),
+                        ref("observer.series.v1"), ref("observer.series.v1", enabled=False)],
+             world=ref("world.integer.v1", world_seed=2, start_charge=100000, step_cost=0), budget={"episodes": 1, "horizon": 20})
+    execute(lower(e, REG).job, tmp_path / "dup.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "dup.jsonl") if x["arm"] == "primary"][0]
+    obs = r["science"]["observations"]
+    assert "observer.descriptor.v1" in obs and "observer.descriptor.v1#1" in obs and obs["observer.descriptor.v1"]["descriptor"] != obs["observer.descriptor.v1#1"]["descriptor"]
+    assert r["series"]["observer.series.v1"]["status"] == "PRESENT" and r["series"]["observer.series.v1#3"]["status"] == "DISABLED"
+    assert [o["kind"] for o in r["components"]["observers"]] == ["observer.descriptor.v1", "observer.descriptor.v1", "observer.series.v1", "observer.series.v1"]

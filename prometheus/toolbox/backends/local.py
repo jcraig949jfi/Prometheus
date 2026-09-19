@@ -320,15 +320,19 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     from prometheus.toolbox.ref.players import probe_silent
     fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst)} for pid, inst in instances.items()}   # spec identity, on the FRESH instance
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
+    # C48: receipts key observers by kind; a repeated kind gets kind#<index> so nothing overwrites anything
+    seen_kinds: Dict[str, int] = {}; obs_keys: List[str] = []
+    for i, ob in enumerate(observers):
+        obs_keys.append(ob.kind if ob.kind not in seen_kinds else "%s#%d" % (ob.kind, i)); seen_kinds[ob.kind] = i
     hashes: List[str] = []; ticks_total = 0; events_total = 0; summaries = []
-    series_obs = [ob for ob in observers if getattr(ob, "series", False)]
-    collected = {ob.kind: [] for ob in series_obs}
+    series_obs = [(k, ob) for k, ob in zip(obs_keys, observers) if getattr(ob, "series", False)]
+    collected = {k: [] for k, _ in series_obs}
     for ep in range(exp.budget["episodes"]):
         r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=all_subs if len(all_subs) > 1 else sub, episode=ep,
                         keep_world=exp.budget.get("world_state") == "lifetime")
         hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
-        for ob in series_obs:
-            collected[ob.kind].append(ob.series_episode())
+        for k, ob in series_obs:
+            collected[k].append(ob.series_episode())
     wall = time.perf_counter() - t0; cpu = time.process_time() - c0
     acc = {}
     for so in all_subs:
@@ -338,7 +342,7 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
         acc["by_substrate"] = {so.kind: so.accounting() for so in all_subs}
     acc.update(world.accounting() if hasattr(world, "accounting") else {"world_steps": ticks_total})
     acc["wall_s"] = round(wall, 6); acc["cpu_s"] = round(cpu, 6)
-    science = {"observations": {ob.kind: ob.measure() for ob in observers}, "world_summary": summaries[-1] if summaries else {},
+    science = {"observations": {k: ob.measure() for k, ob in zip(obs_keys, observers)}, "world_summary": summaries[-1] if summaries else {},
                "player_fingerprints": fingerprints}
     for so in all_subs:
         if hasattr(so, "science"):
@@ -361,9 +365,9 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     }
     if series_obs:
         rc = receipt["replay_class"]
-        receipt["series"] = {ob.kind: SER.build(collected[ob.kind], enabled=getattr(ob, "enabled", True), replay_class=rc,
-                                                max_records=exp.budget.get("series_max_records"), max_inline=SER.DEFAULT_MAX_INLINE,
-                                                receipt_dir=receipt_dir) for ob in series_obs}
+        receipt["series"] = {k: SER.build(collected[k], enabled=getattr(ob, "enabled", True), replay_class=rc,
+                                          max_records=exp.budget.get("series_max_records"), max_inline=SER.DEFAULT_MAX_INLINE,
+                                          receipt_dir=receipt_dir) for k, ob in series_obs}
     if exp.objective:
         obj = registry.make(exp.objective["kind"], **exp.objective.get("params", {}))
         # an objective may read the SERIES (C13): the recovered episodes are handed over on a transient key that
