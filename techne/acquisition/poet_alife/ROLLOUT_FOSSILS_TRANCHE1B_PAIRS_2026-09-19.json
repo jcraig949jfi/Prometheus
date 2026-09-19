@@ -1,0 +1,89 @@
+{
+ "note": "tranche 1b: the two PAIR types of directive 6 s3, computable from the original observer alone (behaviour = frame-based observables); selected by harm55_tranche2_select.py rules P1/P2 run against the original column",
+ "pairs": {
+  "P1_nearest_behaviour_far_metric": [
+   {
+    "a": "S0_34",
+    "b": "S0_76",
+    "behav_dist": 0.02612984026852122,
+    "score_gap": 0.022284507751464844
+   },
+   {
+    "a": "S0_34",
+    "b": "S0_75",
+    "behav_dist": 0.08913239133906048,
+    "score_gap": 0.022411823272705078
+   },
+   {
+    "a": "S2_120",
+    "b": "S2_46",
+    "behav_dist": 0.10774791549252302,
+    "score_gap": 0.021271228790283203
+   },
+   {
+    "a": "S2_175",
+    "b": "S2_193",
+    "behav_dist": 0.16616038178636688,
+    "score_gap": 0.025295138359069824
+   },
+   {
+    "a": "S0_39",
+    "b": "S0_94",
+    "behav_dist": 0.16928854124575285,
+    "score_gap": 0.021192550659179688
+   }
+  ],
+  "P2_nearest_metric_far_behaviour": [
+   {
+    "a": "S0_141",
+    "b": "S0_5",
+    "behav_dist": 6.36858148872535,
+    "score_gap": 0.00014150142669677734
+   },
+   {
+    "a": "S0_1",
+    "b": "S0_176",
+    "behav_dist": 6.316743938770673,
+    "score_gap": 0.0012360811233520508
+   },
+   {
+    "a": "S0_141",
+    "b": "S0_261",
+    "behav_dist": 5.865670932008294,
+    "score_gap": 0.0019440054893493652
+   },
+   {
+    "a": "S0_10",
+    "b": "S0_170",
+    "behav_dist": 5.8615305570862,
+    "score_gap": 0.00047457218170166016
+   },
+   {
+    "a": "S0_157",
+    "b": "S0_2",
+    "behav_dist": 5.419037180522972,
+    "score_gap": 0.0017279386520385742
+   }
+  ]
+ },
+ "selection": {
+  "S0_34": "nearest behavioural pair with sharply different metric values (with S0_76; behav dist 0.026 sd, score gap 0.0223; original observer)",
+  "S0_76": "nearest behavioural pair with sharply different metric values (with S0_34; behav dist 0.026 sd, score gap 0.0223; original observer)",
+  "S0_75": "nearest behavioural pair with sharply different metric values (with S0_34; behav dist 0.089 sd, score gap 0.0224; original observer)",
+  "S2_120": "nearest behavioural pair with sharply different metric values (with S2_46; behav dist 0.108 sd, score gap 0.0213; original observer)",
+  "S2_46": "nearest behavioural pair with sharply different metric values (with S2_120; behav dist 0.108 sd, score gap 0.0213; original observer)",
+  "S2_175": "nearest behavioural pair with sharply different metric values (with S2_193; behav dist 0.166 sd, score gap 0.0253; original observer)",
+  "S2_193": "nearest behavioural pair with sharply different metric values (with S2_175; behav dist 0.166 sd, score gap 0.0253; original observer)",
+  "S0_39": "nearest behavioural pair with sharply different metric values (with S0_94; behav dist 0.169 sd, score gap 0.0212; original observer)",
+  "S0_94": "nearest behavioural pair with sharply different metric values (with S0_39; behav dist 0.169 sd, score gap 0.0212; original observer)",
+  "S0_141": "nearest metric-score pair with sharply different behaviours (with S0_5; score gap 0.0001, behav dist 6.369 sd; original observer)",
+  "S0_5": "nearest metric-score pair with sharply different behaviours (with S0_141; score gap 0.0001, behav dist 6.369 sd; original observer)",
+  "S0_1": "nearest metric-score pair with sharply different behaviours (with S0_176; score gap 0.0012, behav dist 6.317 sd; original observer)",
+  "S0_176": "nearest metric-score pair with sharply different behaviours (with S0_1; score gap 0.0012, behav dist 6.317 sd; original observer)",
+  "S0_261": "nearest metric-score pair with sharply different behaviours (with S0_141; score gap 0.0019, behav dist 5.866 sd; original observer)",
+  "S0_10": "nearest metric-score pair with sharply different behaviours (with S0_170; score gap 0.0005, behav dist 5.862 sd; original observer)",
+  "S0_170": "nearest metric-score pair with sharply different behaviours (with S0_10; score gap 0.0005, behav dist 5.862 sd; original observer)",
+  "S0_157": "nearest metric-score pair with sharply different behaviours (with S0_2; score gap 0.0017, behav dist 5.419 sd; original observer)",
+  "S0_2": "nearest metric-score pair with sharply different behaviours (with S0_157; score gap 0.0017, behav dist 5.419 sd; original observer)"
+ }
+}

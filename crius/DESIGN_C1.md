@@ -213,3 +213,20 @@ retired the C0 action-script fossil, whose immediates were wrap-around
 aliases (38/50 -> 3/50).
 Search plan: arms random, seeded, recombination x search seeds 1, 2, 3;
 300 iterations; mu 8 lambda 24; one rotating stream per iteration.
+
+## 11. C1b (D1 isolation) and closure of the frozen C1 family (2026-09-19)
+
+Operator GO: roles/Crius/prompts/2026-09-19_c1b_go/. Calibration rule and
+vector: crius/calibrate_c1b.py, crius/runs/calibration_c1b/ (budgets
+{1: 2000, 2: 50, 3: 50, 4: 50}; config bbf684cd638167f2). Gate A-H PASS on
+c1b (crius/runs/gate_c1b/). Nine runs: no reproducible ACCUMULATED >
+FRESH, no invoked block, no ancestral gradient toward state; winners are
+compressed counter enumerators; one preserved exploit (record-id clock
+with stream-dependent sign); two runs drifted below the seed under
+single-stream selection. DECISION (per the GO's rule): the frozen C1
+family (c1.json, c1b.json; world 7c53db874324b532, generator
+624728b00fdd3f2f) is CLOSED as evidence that the instruction-level
+substrate and these operators make RELAY's independently valuable
+procedure channel evolutionarily inaccessible. Next: CRIUS-25 / D2,
+preregistered in crius/DESIGN_C2.md before code. Packet:
+roles/Crius/REVIEW_PACKET_C1B_2026-09-19.md.

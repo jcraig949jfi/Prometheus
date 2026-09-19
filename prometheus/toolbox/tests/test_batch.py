@@ -449,3 +449,30 @@ def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path
 
 def test_the_wall_budget_property_was_actually_exercised():
     assert _WALL_COVERAGE["exercised"] >= 15, _WALL_COVERAGE
+
+
+# ------------------------------------------------------------------------------------------ TASK_CHANGE at the finishing tick (C150)
+def test_a_scheduled_change_reaches_an_env_that_finished_on_that_step():
+    """C112's defect was caught by the random property at fuzz seed 107; widening the generator (C140) moved the
+    seeds and mutant M65 SURVIVED the final ledger. A deterministic reproducer: an env whose players all die on
+    step t receives the TASK_CHANGE a schedule fires after that step -- exactly as the reference world appends it
+    whatever its state -- and the executor drains it in the finishing tick."""
+    from prometheus.toolbox.ref.worlds_integer_batch import IntegerWorldBatch
+    from prometheus.toolbox.contracts import EVENT_ID
+    p = dict(world_seed=4, n_players=1, horizon=20, start_charge=3, step_cost=1, act_cost=0, yield_amt=0)
+    ref_w = IntegerWorld(**p); ref_w.reset(1)
+    done = False; t = 0
+    while not done:
+        done = ref_w.step({0: [0, 0]}); t += 1
+    ref_w.set_params(step_cost=2)                                  # the schedule fires after the finishing step
+    ref_kinds = [e[1] for e in ref_w.events()]
+    assert EVENT_ID["TASK_CHANGE"] in ref_kinds and done and t == 3
+    w = IntegerWorldBatch(n_envs=2, **dict(p)); w.reset_batch([1, 1])
+    w.p["start_charge"] = 3
+    fin = [False, False]
+    for _ in range(t):
+        d = w.step_batch([{0: [0, 0]}, {0: [0, 0]}]); fin = [a or b for a, b in zip(fin, d)]
+    assert fin == [True, True]
+    w.set_params(step_cost=2)
+    for i, evs in enumerate(w.events_batch()):
+        assert EVENT_ID["TASK_CHANGE"] in [e[1] for e in evs], i
