@@ -245,3 +245,21 @@ def test_eligibility_count_is_reported_and_max_runs_refuses_before_dispatch():
     e2 = _exp(sweep={"world.params.world_seed": [1, 2]}, controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 3})
     low2 = lower(e2, REG)
     assert low2.ok and low2.job.as_dict()["n_runs"] == 12 and low2.as_dict()["job"]["eligibility"] == {"points": 2, "arms": 2, "seeds": 3, "runs": 12}
+
+
+# C84: an experiment with NO players (a pure dynamical system observed -- a CA, a driven pendulum without a
+# driver) was refused by the IR ("players empty and no selector"). A world that declares n_players=0 runs
+# with zero players; observers, series, replay and cheat all apply. "A player is a conventional agent"
+# has a stronger negation than "a rewrite system": no player at all.
+def test_zero_player_experiment_runs_and_replays(tmp_path):
+    e = Experiment(family="no_players", world=ref("world.integer.v1", world_seed=3, n_players=0, stoch_rate=3), substrate=ref("substrate.flat.v1"), players=[],
+                   observers=[ref("observer.trace.v1"), ref("observer.series.v1")], controls=[ref("control.replay.v1"), ref("control.cheat.v1")],
+                   seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 12})
+    assert e.validate() == []
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "np.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "np.jsonl") if x["arm"] == "primary"][0]
+    assert r["engineering"]["ticks"] == 24 and r["series"]["observer.series.v1"]["n_records"] == 24 and r["components"]["players"] == []
+    e2 = Experiment(family="no_players_bad", world=ref("world.integer.v1", world_seed=3, n_players=1), substrate=ref("substrate.flat.v1"), players=[])
+    assert lower(e2, REG).status == "TARGET_UNSUPPORTED"      # a world that expects a player and gets none is a mismatch, not a zero-player world

@@ -104,8 +104,8 @@ class Experiment:
                 bad.append(name)
         if self.objective is not None and not self.objective.get("kind"):
             bad.append("objective.kind")
-        if not self.players and self.selector is None:
-            bad.append("players empty and no selector: nothing would run")
+        # C84: players may be EMPTY -- a world observed with no player is a legitimate experiment; the world must
+        # declare n_players=0 or lowering refuses the mismatch (C52). Nothing here assumes an agent exists.
         for i, p in enumerate(self.players):
             if not isinstance(p, dict) or "representation" not in p or "payload" not in p:
                 bad.append("players[%d] is not a PlayerSpec manifest" % i)

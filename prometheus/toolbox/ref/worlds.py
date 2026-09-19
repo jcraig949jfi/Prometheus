@@ -169,7 +169,7 @@ class IntegerWorld:
         self._trace.update(json.dumps([t, st["regs"], st["charge"], st["alive"]]).encode())
         st["tick"] = t + 1
         self._steps += 1
-        return st["tick"] >= p["horizon"] or not any(st["alive"])
+        return st["tick"] >= p["horizon"] or (self.n_players > 0 and not any(st["alive"]))     # C84: a zero-player world runs to its horizon
 
     def trace_hash(self) -> str:
         return self._trace.hexdigest()

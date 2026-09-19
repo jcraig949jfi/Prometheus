@@ -99,7 +99,7 @@ def test_ir_validates_digests_and_refuses_run():
     d = Experiment.from_dict(json.loads(json.dumps(e.to_dict())))
     assert d.digest() == e.digest()
     bad = Experiment(family="x/y", world={}, substrate={"kind": "substrate.flat.v1"})
-    assert len(bad.validate()) >= 3
+    assert len(bad.validate()) >= 2      # C84: "players empty" is no longer a defect
     with pytest.raises(IRError):
         bad.compile("local", REG)
 

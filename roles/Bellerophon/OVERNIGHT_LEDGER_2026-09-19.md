@@ -470,3 +470,8 @@ C78 | 04:56Z | replay_file over a file whose embedded IR names a component that 
 C79 | 04:56Z | resume=True against a receipts file of a DIFFERENT experiment silently interleaved two
   experiments into one chained file. RED; a resume must name the same experiment or is refused with both
   ids (append=True remains the explicit way to add another execution). Suite 199.
+C84 | 04:59Z | ZERO-PLAYER experiments: the IR refused players=[] ("nothing would run"); a world observed with
+  no player (a pure dynamical system) is a legitimate experiment. players may be empty; the world must
+  declare n_players=0 (C52 refuses the mismatch); the integer world runs to its horizon with no player;
+  observers, series, replay and cheat apply. The strongest negation of "a player is a conventional agent".
+  One old assertion (validate() >= 3 defects on a broken IR) adjusted. Suite 200 passed 6 skipped.
