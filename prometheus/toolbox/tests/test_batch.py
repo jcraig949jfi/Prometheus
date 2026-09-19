@@ -412,3 +412,32 @@ def test_a_crash_between_two_receipts_of_one_batch_resumes_to_a_clean_result(tmp
     assert len(rows) == 7 and all(rows[s]["trace_hashes"] == crow[s]["trace_hashes"] and rows[s]["science"] == crow[s]["science"] for s in crow)
     # the two kept receipts still say batch_size 4 (their batch); the resume regroups the 5 remaining runs as 4 + 1
     assert sorted(r["execution"]["batch_size"] for r in rows.values()) == [1, 4, 4, 4, 4, 4, 4]
+
+
+# ------------------------------------------------------------------------------------------ wall budget (C145)
+@pytest.mark.parametrize("seed", list(range(1800, 1830)))
+def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path, seed):
+    """A tiny wall budget stops the job BETWEEN runs (or batches): every written receipt is complete, the summary
+    names the reason and the count not started, and resume=True finishes to exactly the unbudgeted rows -- on the
+    scalar path and the batched one."""
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok or len(low.job.runs) < 3:
+        return
+    batch = 3 if seed % 2 else 0
+    eb = Experiment.from_dict(e.to_dict()); eb.budget = dict(eb.budget, batch=batch, wall_s=1e-9)
+    rep = execute(lower(eb, REG).job, tmp_path / "w.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "w.jsonl") if r["arm"] != "SUMMARY"]; summ = [r for r in read_all(tmp_path / "w.jsonl") if r["arm"] == "SUMMARY"][0]
+    assert rep.runs_not_started > 0 and summ["engineering"]["stopped_reason"] == "WALL_BUDGET_EXHAUSTED" and summ["engineering"]["runs_not_started"] == rep.runs_not_started
+    assert len(rows) + rep.runs_not_started == len(low.job.runs) and all(r["status"] in ("COMPLETED", "FAILED") for r in rows) and not rep.valid
+    ec = Experiment.from_dict(e.to_dict()); ec.budget = dict(ec.budget, batch=batch)
+    rep2 = execute(lower(ec, REG).job, tmp_path / "w.jsonl", REG, resume=True)
+    assert rep2.runs_not_started == 0 and rep2.resumed_runs == len(rows)
+    clean = execute(lower(ec, REG).job, tmp_path / "c.jsonl", REG)
+    key = lambda r: (r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"])
+    A = {key(r): r for r in read_all(tmp_path / "w.jsonl") if r["arm"] != "SUMMARY"}; B = {key(r): r for r in read_all(tmp_path / "c.jsonl") if r["arm"] != "SUMMARY"}
+    assert set(A) == set(B) and all(A[k]["trace_hashes"] == B[k]["trace_hashes"] and A[k]["status"] == B[k]["status"] for k in B), seed

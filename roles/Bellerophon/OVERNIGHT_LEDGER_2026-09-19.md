@@ -1028,3 +1028,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   Windows / 3.14.4 / numpy: same 361 runs (221 batched), 0 / 0. science/CROSS_PLATFORM_FULL_2026-09-19.json.
 - reading: the committed science of the whole night reproduces byte-for-byte on a second OS and interpreter,
   not just the 87 hand fixtures of the earlier probe.
+
+## C145 (09:17Z) wall budget + resume as a property on both paths
+- 30 random IRs (those with >= 3 runs) under a 1 ns wall budget, scalar and batched alternately: the job stops
+  between runs/batches with the reason and the not-started count in the summary; every written receipt is
+  complete; resume=True finishes with resumed_runs == the receipts kept and 0 not started; the final rows equal
+  an unbudgeted run's on trace hashes and status. No defect.
