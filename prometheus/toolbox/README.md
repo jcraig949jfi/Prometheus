@@ -1,6 +1,7 @@
 # prometheus.toolbox -- the Prometheus Worlds Kernel
 
-Design of record: roles/Bellerophon/WORLDS_KERNEL_DESIGN_v0.3.md (v0.2 = Phase 1/2 record; the overnight
+Design of record: roles/Bellerophon/WORLDS_KERNEL_DESIGN_v0.4.md (v0.3 = first half of the overnight loop, v0.2 =
+Phase 1/2 record; the overnight
 ledger roles/Bellerophon/OVERNIGHT_LEDGER_2026-09-19.md records every cycle that changed this package).
 Owner: Bellerophon (contracts, IR, capability model, device boundaries, adapters, reference implementations,
 admission, lowering, conformance tests). Designers (Archaeon, Crius, Nestor, ...) own what to run; this
@@ -20,10 +21,18 @@ transport:
                objective=ref("objective.series_gain.v1"), observers=[ref("observer.series.v1", per_player=True)],
                controls=[ref("control.replay.v1"), ref("control.cheat.v1"), ref("control.ablation.v1")],
                sweep={"world": [A, B], "players": [popA, popB]}, seed_policy={"base": 1, "n_seeds": 3, "holdout_seeds": 2},
-               budget={"episodes": 3, "horizon": 40, "world_state": "lifetime"})
+               budget={"episodes": 3, "horizon": 40, "world_state": "lifetime", "batch": 8})   # batch = execution policy, not science
     low = exp.compile("local")            # Lowering(status OK | BLOCKED_MISSING_CAPABILITY | TARGET_UNSUPPORTED, reasons)
     execute(low.job, "receipts.jsonl")    # one file = one execution; resume=True continues an interrupted job
-    replay_file("receipts.jsonl", "replay.jsonl")   # re-executes the IR embedded in the summary; divergences are data
+    replay_file("receipts.jsonl", "replay.jsonl")   # re-executes the IR embedded in the summary on the SCALAR path; divergences are data
+
+Objectives may be vectors (objective.multi.v1 = named components; objective.survival_per_player.v1 reads the
+per-player series); a selector then takes rank="component" or is selector.pareto.v1 (by_cell=True for a front
+per descriptor cell). Search above the kernel: evolve(template, selector, generations, workdir, seed,
+compact=True) -- rows carry player_hash + the receipt they came from; player_of(row, workdir) fetches a
+manifest. A world may return structured observations (nested JSON of ints) -- players flatten(); permute is
+refused for them. Every instrument in this package has a test where it says NO:
+roles/Bellerophon/science/POWER_REGISTER_2026-09-19.md.
 
 Layout
 
