@@ -138,14 +138,23 @@ def test_exp001_runs_end_to_end_with_all_controls_met(tmp_path):
 
 
 def test_failed_control_is_a_result_not_a_halt(tmp_path):
-    """wforge does not accept the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the
-    report says invalid. Nothing raises."""
-    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
-        pytest.skip("wforge not importable")
-    e = build_exp001(); e.world = ref("world.wforge.encounter.v0", genome_seed=1); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
+    """A world that REFUSES the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the report says
+    invalid, nothing raises. (Until C71 wforge was that world; its wrapper now implements the cheat, so a
+    fork-registered refusing world plays the part.)"""
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class NoCheat(IntegerWorld):
+        kind = "world.nocheat.test"
+
+        def __init__(self, **params):
+            if "_cheat_skip_dynamics" in params:
+                raise TypeError("this engine has no cheat mechanism")
+            super().__init__(**params)
+    R = REG.fork(); R.register(ComponentRecord("world.nocheat.test", "world", NoCheat, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    e = build_exp001(); e.world = ref("world.nocheat.test", world_seed=1, n_players=2); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
     e.interventions = []; e.controls = [ref("control.replay.v1"), ref("control.cheat.v1")]; e.required_capabilities = frozenset({"ext.replay.bit.v1"})
-    low = e.compile("local", REG); assert low.ok, low.reasons
-    rep = execute(low.job, tmp_path / "w.jsonl", REG)
+    low = e.compile("local", R); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "w.jsonl", R)
     assert rep.n_completed >= 2 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "INDETERMINATE" and not rep.valid
 
 

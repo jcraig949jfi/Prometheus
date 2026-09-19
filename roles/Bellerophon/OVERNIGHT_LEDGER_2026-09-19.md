@@ -437,3 +437,13 @@ C70 | 04:48Z | admission's REFERENCE-AGREEMENT check had never met a real second
   DESIGN NOTE: world.integer.v1 with world_seed 0 is an action-blind world (targets overwritten) -- a
   property of that seed's structure, recorded, not "fixed": a world may be action-blind; the instrument
   must know when it is.
+C71 | 04:47Z | wrapped engines (wforge, c6) had no cheat mechanism, so control.cheat.v1 could only be
+  INDETERMINATE on them. The WRAPPER now implements the kernel cheat at its own level (the engine is never
+  stepped; only the clock moves): both wraps pass admission's controls check with trace_changed=True and the
+  cheat control applies to wforge with MET. The old test that documented wforge's lack of a cheat is
+  replaced by a fork-registered refusing world (same property, honest fixture). In writing the test C52
+  refused my 1-player IR against a 2-slot wforge world -- the guard working as designed.
+C72 | 04:47Z | "execution is synchronous": TURN-TAKING is expressible inside the one loop -- a world hands a
+  player an ActionSpace of width 0 on ticks it may not act; every reference representation and observer
+  survives width-0 spaces (test: round-robin over three representations incl. per-player series). Not an
+  assumption removal (the loop is still lock-step), a demonstrated expression. Suite 189 passed 6 skipped.

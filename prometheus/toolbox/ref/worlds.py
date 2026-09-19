@@ -209,7 +209,7 @@ class WforgeEncounterWorld:
     capabilities = frozenset({"core.world.v1", "ext.legal_actions.v1", "ext.multiplayer.v1", "ext.cost.v1", "ext.replay.bit.v1"})
     replay_class = "BIT"
 
-    def __init__(self, genome_seed: int = 0, grammar_version: str = "v0"):
+    def __init__(self, genome_seed: int = 0, grammar_version: str = "v0", _cheat_skip_dynamics: bool = False):
         W, G = _wforge()
         self._W = W
         self.genome = G.de_novo(grammar_version, genome_seed)
@@ -217,9 +217,10 @@ class WforgeEncounterWorld:
         self.n_players = self.mech.n_slots
         self._enc = None
         self._steps = 0
+        self._cheat = bool(_cheat_skip_dynamics)     # C71: the WRAPPER's cheat -- the engine is never stepped
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "world_id": self.genome.world_id, "mechanics_hash": self.mech.manifest_hash()}
+        return {"kind": self.kind, "world_id": self.genome.world_id, "mechanics_hash": self.mech.manifest_hash(), "wrapper_cheat": self._cheat}
 
     def reset(self, seed: int) -> None:
         self._enc = self._W.Encounter(self.mech, self.genome.world_id, seed); self._steps = 0
@@ -233,6 +234,9 @@ class WforgeEncounterWorld:
     def step(self, actions: Dict[int, List[int]]) -> bool:
         acts = [list(actions.get(i, [0] * self.mech.act_width)) for i in range(self.n_players)]
         self._steps += 1
+        if self._cheat:
+            self._enc.tick += 1                            # time passes, nothing happens: the engine is frozen
+            return self._enc.tick >= self.mech.horizon
         return self._enc.step(acts)
 
     def trace_hash(self) -> str:
@@ -268,8 +272,9 @@ class C6ComposedWorld:
     replay_class = "SEMANTIC"
     Q = 1_000_000
 
-    def __init__(self, seed: int | None = None, bin: int | None = None, params: dict | None = None, ticks: int = 24):
+    def __init__(self, seed: int | None = None, bin: int | None = None, params: dict | None = None, ticks: int = 24, _cheat_skip_dynamics: bool = False):
         G6, R6 = _c6()
+        self._cheat = bool(_cheat_skip_dynamics)     # C71: wrapper-level cheat
         if params is None:
             rec = G6.sample_world(int(seed or 0), bin_target=bin, ticks=ticks); params = rec["params"]; self.record = rec
         else:
@@ -278,7 +283,7 @@ class C6ComposedWorld:
         self.n_players = 1; self._st = None; self._events: List[Event] = []; self._steps = 0; self._last_reward = 0.0; self._seed = 0
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "world_id": self.w.world_id(), "features": list(self.w.features), "params": self.params, "float_state": True, "quantum": 1.0 / self.Q}
+        return {"kind": self.kind, "world_id": self.w.world_id(), "features": list(self.w.features), "params": self.params, "float_state": True, "quantum": 1.0 / self.Q, "wrapper_cheat": self._cheat}
 
     def reset(self, seed: int) -> None:
         self._seed = seed; self._st = self.w.reset(seed, 0, None); self._trace = hashlib.sha256(); self._events = []; self._last_reward = 0.0
@@ -294,7 +299,10 @@ class C6ComposedWorld:
         outputs = [[int(x) & 0xFFFFFFFF] for x in a[:self.w.K]]
         self._events.append((t, EVENT_ID["ACTION"], 0, 0, sum(1 for x in a if x)))
         before_cells = list(st["cells"]); was_alive = st["alive"]
-        self.w.act(st, outputs)
+        if self._cheat:
+            st["tick"] += 1                                # frozen engine: only the clock moves
+        else:
+            self.w.act(st, outputs)
         gain = st["reward"] - self._last_reward
         if gain > 0:
             self._events.append((t, EVENT_ID["YIELD"], 0, 0, int(gain * self.Q)))

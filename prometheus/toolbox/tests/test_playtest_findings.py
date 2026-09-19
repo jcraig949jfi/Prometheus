@@ -358,3 +358,41 @@ def test_semantic_world_declares_quantum_and_replay_control_compares_quantised_t
         for _ in range(10):
             wx.step({0: [3, 5]})
     assert w1.trace_hash() != w2.trace_hash()
+
+
+# C71: wrapped engines had no cheat mechanism (wforge: "note", never a cheat arm). The WRAPPER now implements the
+# kernel cheat at its own level: _cheat_skip_dynamics freezes the engine (no step), so control.cheat.v1 applies
+# to every wrap without editing the engine. Skipped where wforge is absent.
+def test_wrapper_level_cheat_makes_the_cheat_control_apply_to_wforge(tmp_path):
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    n = REG.make("world.wforge.encounter.v0", genome_seed=1).n_players
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), players=[random_statemachine(i).manifest() for i in range(n)],
+             controls=[ref("control.cheat.v1"), ref("control.replay.v1")], interventions=[])
+    rep = execute(lower(e, REG).job, tmp_path / "wf.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["cheat"]["outcome"] == "MET" and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C72 (directive s8 "execution is synchronous"): turn-taking / asynchronous action is EXPRESSIBLE inside the one
+# loop: a world hands a player an ActionSpace of width 0 on ticks it may not act. The kernel, every reference
+# representation and the observers must survive width-0 action spaces (players return []).
+def test_width_zero_action_space_expresses_turn_taking(tmp_path):
+    from prometheus.toolbox.ref.worlds import IntegerWorld
+    from prometheus.toolbox.contracts import ActionSpace
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class RoundRobin(IntegerWorld):
+        kind = "world.roundrobin.test"
+
+        def legal_actions(self, pid):
+            return ActionSpace(self.p["act_width"], self.p["act_range"]) if (self._state["tick"] % self.n_players) == pid else ActionSpace(0, self.p["act_range"])
+    R = REG.fork(); R.register(ComponentRecord("world.roundrobin.test", "world", RoundRobin, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    from prometheus.toolbox.ref.players import random_statemachine_v2, random_rewrite_system, constant_player
+    e = _exp(world=ref("world.roundrobin.test", world_seed=2, n_players=3, start_charge=100000, step_cost=0),
+             players=[random_statemachine(1).manifest(), random_statemachine_v2(2).manifest(), random_rewrite_system(3).manifest()],
+             observers=[ref("observer.trace.v1"), ref("observer.series.v1", per_player=True)], controls=[ref("control.replay.v1")], budget={"episodes": 1, "horizon": 12})
+    rep = execute(lower(e, R).job, tmp_path / "rr.jsonl", R); assert rep.n_failed == 0 and rep.valid
+    r = [x for x in read_all(tmp_path / "rr.jsonl") if x["arm"] == "primary"][0]
+    acts = r["science"]["observations"]["observer.trace.v1"]["actions_by_player"]
+    # each player acted on a third of the ticks: its ACTION events count 12 (every tick is recorded) but magnitudes only on its turns
+    assert all(int(v) >= 0 for v in acts.values()) and r["engineering"]["ticks"] == 12
