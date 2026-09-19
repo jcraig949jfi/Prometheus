@@ -135,7 +135,7 @@ def run_gate(cfg: dict, config_path: str, out_dir: str, positive: str = "PROCEDU
         W[wname] = {"pass": all(per_seed[s][wname]["pass"] for s in per_seed), "per_seed": {s: per_seed[s][wname] for s in per_seed}}
     W["C"] = {"pass": c_pass, "evidence": "crius/tests/test_c1_integrity.py micro-tests and clock fixture"}
     all_pass = all(W[k]["pass"] for k in "ABCDEFGH")
-    out = {"meta": meta, "witnesses": W, "all_pass": all_pass, "elapsed_s": round(time.time() - t0, 1)}
+    out = {"meta": meta, "witnesses": W, "all_pass": all_pass, "positive_control": positive, "elapsed_s": round(time.time() - t0, 1)}
     receipts.write_json(os.path.join(out_dir, "GATE.json"), out)
     lines = ["PRE-SEARCH GATE  campaign=%s positive_control=%s config_hash=%s world=%s generator=%s code=%s" % (
         cfg.get("campaign"), positive, meta["config_hash"], meta["world_fingerprint"], meta["partitions_fingerprint"], meta["code_commit"][:9]),
