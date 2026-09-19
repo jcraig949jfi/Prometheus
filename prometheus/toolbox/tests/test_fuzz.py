@@ -141,3 +141,48 @@ def test_ir_round_trips_through_json_with_a_stable_digest(seed):
     assert e3.digest() == e.digest()
     e4 = Experiment.from_dict(d); e4.budget = dict(e4.budget, horizon=e4.budget["horizon"] + 1)
     assert e4.digest() != e.digest()
+
+
+# C128: two IR laws as properties. Sweeps: the number of points is the product of the axis sizes, every point sets
+# exactly the swept paths and nothing else, the swept value is READ BACK from the point's IR at its dotted path, and
+# points have distinct digests unless two axes' values coincide. Negotiation: BLOCKED implies a non-empty missing
+# set that nobody provides; OK implies every implied requirement is provided.
+def _get(d, path):
+    cur = d
+    for part in path.split("."):
+        cur = cur[int(part)] if isinstance(cur, list) else cur[part]
+    return cur
+
+
+@pytest.mark.parametrize("seed", list(range(800, 880)))
+def test_sweep_and_negotiation_laws(seed):
+    from prometheus.toolbox import capabilities as C
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    pts = e.sweep_points()
+    expected = 1
+    for vals in e.sweep.values():
+        expected *= len(vals)
+    assert len(pts) == expected and all(set(p) == set(e.sweep) for p in pts)
+    base = e.to_dict()
+    for p in pts:
+        d = e.at_point(p).to_dict()
+        for path, v in p.items():
+            assert _get(d, path) == v, (seed, path)
+        # a point's IR records its parent and the point in provenance and carries no sweep of its own; everything else is untouched
+        assert d["sweep"] == {} and d["provenance"]["parent"] == e.experiment_id() and d["provenance"]["sweep_point"] == p
+        untouched = {k: v for k, v in d.items() if k not in ("sweep", "provenance", "id") and not any(path.split(".")[0] == k for path in p)}
+        assert untouched == {k: v for k, v in base.items() if k in untouched}, seed
+    digests = [e.at_point(p).digest() for p in pts]
+    if len(pts) > 1 and all(len(set(json.dumps(v, sort_keys=True) for v in vals)) == len(vals) for vals in e.sweep.values()):
+        assert len(set(digests)) == len(pts), seed
+    low = e.compile("local", REG)
+    provided = REG.provided_capabilities(e.world["kind"], e.substrate["kind"]) | set(REG.make(e.substrate["kind"], **e.substrate.get("params", {})).capabilities) \
+        | {"core.player.v1", "core.experiment.v1", "core.receipt.v1", "ext.intervention.observation_delay.v1", "ext.intervention.observation_permute.v1", "ext.intervention.schedule.v1"}
+    if low.status == "BLOCKED_MISSING_CAPABILITY":
+        missing = set(low.negotiation["missing"])
+        assert missing and not (missing & provided) and missing <= set(e.derived_requirements()), (seed, missing)
+    elif low.status == "OK":
+        req = set(e.derived_requirements()) - {c for pl in e.players if pl.get("substrate") for c in pl.get("requires", ())}
+        assert req <= provided, (seed, req - provided)

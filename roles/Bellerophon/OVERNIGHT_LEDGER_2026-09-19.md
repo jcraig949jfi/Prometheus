@@ -904,3 +904,11 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   genuine break (an edit of the receipt_id field itself) is still a break. The hand-written C44 tests had
   looked only at the first defect. Mutant M75 (the old behaviour) CAUGHT.
 - suite 709 passed / 6 skipped, 35 s (the four properties added ~180 items tonight).
+
+## C128 (08:23Z) IR laws as properties: sweeps and negotiation
+- 80 random IRs: sweep points = product of axis sizes; each point's IR reads the swept value back at its dotted
+  path, records parent + point in provenance, carries no sweep of its own, and leaves everything else untouched;
+  points with distinct axis values have distinct digests (65 multi-point IRs). Negotiation: BLOCKED (28) implies a
+  non-empty missing set nobody provides and drawn from the implied requirements; OK (34) implies every implied
+  requirement is provided. No defect; my first "untouched" check forgot that a point IR records its provenance.
+- suite 789 passed / 6 skipped.
