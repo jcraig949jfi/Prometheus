@@ -48,3 +48,14 @@ M1 or M2 from M3, so Techne cannot place the job remotely). One person on one AV
 No regeneration of trajectories; no change to seeds, sampling, frame timing or preprocessing; no
 edit to foundation_models/clip.py or asal_metrics.py in the body; no "fixing" of a frame that fails
 its hash (report it and stop).
+
+## 4b. Native ANCHORS (operator directive 6 s1; Harmonia #489) -- run right after step 4
+The 16 control anchors (GARBAGE seeds 0-4, NOISE seeds 0-4, LENIA, STATIC, CYCLE2, HUECYCLE, DRIFT_SYN
++ CHEAT) are float32 (8,224,224,3) arrays on the transfer branch origin/harm55-frames-transfer under
+transfer/harm55_anchors/ with MANIFEST_anchors.json (sha256 + the torch values). They are fed DIRECTLY
+to the observer (no grey->RGB step), exactly as TECHNE-107 fed them:
+    git show origin/harm55-frames-transfer:transfer/harm55_anchors/<name>.npy > anchors/<name>.npy   (x17 + the manifest)
+    python techne/scripts/harm55_flax_score.py --path flax --rgb224-dir anchors --out techne/acquisition/poet_alife/HARM55_ANCHORS_FLAX_NATIVE_<date>.json
+Cheat first (must pass before the Flax numbers are read): the same command with --path torch reproduces
+MANIFEST_anchors.json to 1e-6 (on M3: 16/16 hash-verified, max |diff| 0.0 --
+HARM55_ANCHORS_TORCH_CHEAT_2026-09-19.json).

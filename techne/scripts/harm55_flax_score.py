@@ -134,7 +134,10 @@ def main():
     ap.add_argument("--manifest", default=str(DEFAULT_MANIFEST)); ap.add_argument("--frames-dir", default=None)
     ap.add_argument("--rows", default=str(DEFAULT_ROWS)); ap.add_argument("--thresholds", default=str(DEFAULT_THRESHOLDS))
     ap.add_argument("--band", type=float, default=BAND); ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--rgb224-dir", default=None, help="ANCHOR mode (Harmonia #489, operator addendum): a directory of <name>.npy float32 (8,224,224,3) in [0,1] fed DIRECTLY to the observer (no grey->RGB step); scores keyed by file stem; MANIFEST_anchors.json beside them is re-hashed and its expected torch values compared when present")
     a = ap.parse_args()
+    if a.rgb224_dir:
+        return score_rgb224_dir(a)
     man = json.loads(pathlib.Path(a.manifest).read_text(encoding="utf-8"))
     frames_dir = pathlib.Path(a.frames_dir or man["dest"])
     th = json.loads(pathlib.Path(a.thresholds).read_text(encoding="utf-8"))
@@ -237,6 +240,61 @@ def main():
     for name, d in disc.items():
         print("band %-13s in_band %3d pairs %5d discordant %4d" % (name, d["n_in_band"], d["n_pairs"], d["n_discordant"]))
     print("F changed classes:", questions["F_classifications_observer_dependent"]["n_changed"])
+    print("wrote", a.out)
+
+
+def score_rgb224_dir(a) -> None:
+    """Anchor mode: the seven-arm control set (GARBAGE seeds 0-4, NOISE seeds 0-4, LENIA, STATIC, CYCLE2, HUECYCLE,
+    DRIFT_SYN, CHEAT) as float32 224 RGB arrays, fed directly to the observer exactly as TECHNE-107 fed them. In
+    --path torch this is the CHEAT: every value must reproduce the TECHNE-107 receipt / MANIFEST_anchors.json to
+    1e-6. In --path flax it is the native-anchor column (VIEW 2)."""
+    d = pathlib.Path(a.rgb224_dir)
+    files = sorted(d.glob("*.npy"))
+    if not files:
+        raise SystemExit("no .npy in %s" % d)
+    manp = d / "MANIFEST_anchors.json"
+    man = json.loads(manp.read_text(encoding="utf-8")) if manp.exists() else {}
+    entries = man.get("arms") or man.get("anchors") or man.get("files") or {}    # Harmonia MANIFEST_anchors.json uses "arms"
+    ident, embed, score = (flax_observer if a.path == "flax" else torch_observer)()
+    ident.update({"host": platform.node(), "cpu": platform.processor(), "python": platform.python_version(), "mode": "rgb224-dir (anchors fed directly; no preprocessing beyond CLIP mean/std)",
+                  "anchors_dir": str(d), "anchors_manifest_sha256_lf": (hashlib.sha256(manp.read_bytes().replace(b"\r\n", b"\n")).hexdigest() if manp.exists() else None),
+                  "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
+    scores, rows, verified, mism = {}, {}, 0, []
+    t0 = time.time()
+    for f in files:
+        name = f.stem
+        b = f.read_bytes(); h = hashlib.sha256(b).hexdigest()
+        exp = entries.get(name) if isinstance(entries, dict) else None
+        exp_sha = (exp or {}).get("sha256") if isinstance(exp, dict) else None
+        if exp_sha and exp_sha != h:
+            raise SystemExit("ANCHOR HASH MISMATCH for %s: %s != manifest %s -- stopping" % (name, h, exp_sha))
+        verified += bool(exp_sha)
+        arr = np.load(f)
+        if arr.ndim != 4 or arr.shape[1:] != (224, 224, 3):
+            raise SystemExit("anchor %s has shape %s, expected (T,224,224,3)" % (name, arr.shape))
+        z = embed(arr.astype(np.float64))
+        s_ = score(z)
+        scores[name] = s_
+        exp_score = None
+        if isinstance(exp, dict):
+            exp_score = next((exp[k] for k in ("score_torch_rescored_here", "score_torch_fixture", "score_torch", "expected_torch", "score") if exp.get(k) is not None), None)
+        elif isinstance(exp, (int, float)):
+            exp_score = float(exp)
+        rows[name] = {"score_%s" % a.path: s_, "expected_torch": exp_score, "abs_diff_vs_expected_torch": (abs(s_ - exp_score) if exp_score is not None else None),
+                      "sha256": h, "n_frames": int(arr.shape[0]), "d_clip_%s" % a.path: d_clip_of(z)}
+        if exp_score is not None and a.path == "torch" and abs(s_ - exp_score) > 1e-6:
+            mism.append(name)
+    ident["seconds"] = round(time.time() - t0, 1); ident["n_scored"] = len(scores); ident["n_hash_verified"] = verified
+    out = {"schema": "techne.harm55.anchors/1", "identity": ident, "rows": rows, "scores": scores}
+    if a.path == "torch":
+        out["cheat_torch_rescore"] = {"tolerance": 1e-6, "n_compared": sum(1 for r in rows.values() if r["expected_torch"] is not None),
+                                      "max_abs_diff": max([r["abs_diff_vs_expected_torch"] for r in rows.values() if r["abs_diff_vs_expected_torch"] is not None] or [None]),
+                                      "pass": not mism, "mismatched": mism}
+    pathlib.Path(a.out).write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    for k in sorted(scores, key=scores.get):
+        print("%-16s %.6f%s" % (k, scores[k], ("  (expected torch %.6f)" % rows[k]["expected_torch"]) if rows[k]["expected_torch"] is not None else ""))
+    if a.path == "torch":
+        print("cheat torch re-score:", out["cheat_torch_rescore"])
     print("wrote", a.out)
 
 
