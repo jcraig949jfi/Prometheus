@@ -1,7 +1,7 @@
 # Crius status
 
-Currency: 2026-09-19 (C0 CLOSED by ruling; C1 preregistered, gated,
-run, reported; instance m2-8d43bbf9).
+Currency: 2026-09-19 (C0 CLOSED; C1 + C1b run and reported; frozen C1
+family CLOSED per the GO's decision rule; instance m2-8d43bbf9).
 
 seat state: ACTIVE. Lane: crius/ (isolated sandbox, charter Campaign 0).
 what it asserts: PRESENT (booted in comms 2026-09-19T01:34Z), ACTIVE
@@ -28,6 +28,11 @@ Campaign 1 verdict (2026-09-19): gate A-H PASS; positive control passes
   the full s13 checklist 3/3 incl. executable-component reuse; search
   (9 runs, 3 arms) found stride-counter random walkers (27-32/50 sealed)
   with zero acquired-state effect. Packet: REVIEW_PACKET_C1_2026-09-19.md.
-next executable action: C1b (budgets calibrated against RANDOM's chain
-  solve rate; everything else frozen) if the operator wants it; else the
-  substrate/operator decision CRIUS-25 (XL).
+C1b verdict (2026-09-19): walkers suppressed (RANDOM < 5 pct on chains);
+  no reproducible ACC > FRESH, no invoked block, no ancestral gradient;
+  compressed enumerators + one stream-sign-flipping record-id clock.
+  Packet: REVIEW_PACKET_C1B_2026-09-19.md. Frozen C1 family CLOSED.
+next executable action: crius/DESIGN_C2.md (CRIUS-25 / D2 substrate and
+  operator campaign) preregistered before any code: typed blocks with a
+  1-instruction argument port and invocation; two streams per iteration;
+  PARTS-recombinability diagnostic arm kept out of the main population.
