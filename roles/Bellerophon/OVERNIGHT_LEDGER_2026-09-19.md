@@ -208,3 +208,12 @@ C29 | T+1:00 | interrupted jobs resume from the receipts file (directive s8: one
   FOUND BY THE TEST: primary receipts at a sweep point carried the POINT experiment's id while control-arm
   receipts carried the parent's -- one job, two ids. Every receipt of a job now carries the job's id
   (experiment_digest keeps the point). Suite 141 passed 6 skipped.
+C28 | T+1:05 | admission for EVERY slot (directive s19): admit(kind) dispatches by slot -- observer (protocol,
+  serialisable measure/describe/manifest, DETERMINISM over two identical synthetic runs, series shape),
+  substrate (protocol, every DECLARED representation demonstrably instantiates/acts/snapshots, refuses unmet
+  requires, integer accounting), control (arm() yields a VALID Experiment; expectation() returns a typed
+  outcome on synthetic receipts), representation / objective / transform / selector smoke; admit_all().
+  RED: module functions absent. Tests: every reference row ADMITTED on M2; a set-valued observer refused on
+  "serialisable"; an os.urandom observer on "determinism"; a substrate claiming a representation nobody can
+  make on "representations"; a control emitting an invalid IR on "arm"; an unknown kind on "registry" (no
+  exception). Suite 147 passed 6 skipped.
