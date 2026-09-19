@@ -332,6 +332,13 @@
       "engine": "vivarium",
       "role": "other",
       "_note": "pinned consumer worktree var/ (conformance_cache.json)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "frontier_receipts",
+      "engine": "archaeon.frontier",
+      "_note": "Atlas-M2's frontier_runs_m2 collector: RECEIPT.json + chunk files -> the attempts/segments Atlas's frontier harvester keyed from RUN events (identity via the linked pointer only; see the module docstring). Same root as the dir_summary row above; the two modes write different things."
     }
   ],
   "harvester_hosts": {
@@ -361,6 +368,9 @@
       "M1",
       "M2"
     ],
-    "_note": "which hosts may run each harvester (roles/Atlas/SIBLINGS.md rule 6). A seat adding a harvester adds its row."
+    "_note": "which hosts may run each harvester (roles/Atlas/SIBLINGS.md rule 6). A seat adding a harvester adds its row.",
+    "frontier_runs_m2": [
+      "M2"
+    ]
   }
 }
