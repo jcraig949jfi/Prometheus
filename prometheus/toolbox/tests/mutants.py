@@ -104,6 +104,8 @@ MUTANTS = [
     # seventeenth wave (C121): committed receipts as fixtures
     ("M73", "ref/worlds.py", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 97))", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 98))", "a one-constant semantic change to the reference world (the committed receipts must diverge)"),
     ("M74", "ref/worlds_grid.py", "\"cells_nonzero\": sum(1 for c in st[\"cells\"] if c), \"pools\": list(st[\"pools\"])}", "\"cells_nonzero\": 0, \"pools\": list(st[\"pools\"])}", "grid summary lies about non-zero cells"),
+    # eighteenth wave (C127): forensic scan property
+    ("M75", "receipt.py", "                if isinstance(rec, dict) and isinstance(rec.get(\"receipt_id\"), str):\n                    chain.append(rec[\"receipt_id\"])", "                pass", "an edited receipt is reported twice (edit + a chain break on the next line)"),
 ]
 
 

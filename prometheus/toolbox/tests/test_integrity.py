@@ -309,3 +309,51 @@ def test_the_checkpoint_property_was_actually_exercised():
     """Coverage guard (C120): with 40 seeds only 6 compositions reached the checkpoint path (the rest refused at
     lowering or ended before the tick). 120 seeds must give at least 15, or the property is decoration."""
     assert _CKPT_COVERAGE["exercised"] >= 15, _CKPT_COVERAGE
+
+
+# C127: the forensic scan as a PROPERTY over random receipts files: a fresh file scans clean; one edited byte in a
+# random line is named on that line (and read_all refuses the file); one deleted middle line breaks the chain at the
+# next line; a duplicated line is a duplicate. The defect vocabulary must hold for every composition, not the
+# hand-written fixture only.
+_SCAN_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(700, 760)))
+def test_forensic_scan_property_over_random_receipts_files(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    p = tmp_path / "r.jsonl"; lines = p.read_text(encoding="utf-8").splitlines()
+    if len(lines) < 4:
+        return
+    _SCAN_COVERAGE["exercised"] += 1
+    sc = R.scan(p); assert sc["defects"] == [] and sc["valid"] == len(lines) and sc["lines"] == len(lines)
+    rnd = random.Random(seed)
+    # 1. one byte edited inside the JSON body of a random line
+    i = rnd.randrange(len(lines)); line = lines[i]; j = line.index('"seed":')
+    edited = line[:j] + '"seed_": ' + line[j + len('"seed":'):]
+    p.write_text("\n".join(lines[:i] + [edited] + lines[i + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["line"] for d in sc["defects"]] == [i + 1] and sc["defects"][0]["defect"].startswith(("RECEIPT_ID_MISMATCH", "SCHEMA:")), (seed, sc["defects"])
+    with pytest.raises(R.ReceiptError):
+        R.read_all(p)
+    # 2. one middle line deleted: the chain breaks exactly at the next line
+    k = rnd.randrange(1, len(lines) - 1)
+    p.write_text("\n".join(lines[:k] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(k + 1, "CHAIN_BREAK")], (seed, k, sc["defects"])
+    # 3. one line duplicated
+    p.write_text("\n".join(lines[:k + 1] + [lines[k]] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["defect"] for d in sc["defects"]][:1] == ["DUPLICATE_RECEIPT_ID"] and sc["defects"][0]["line"] == k + 2, (seed, sc["defects"][:2])
+    # 4. truncated last line
+    p.write_text("\n".join(lines[:-1]) + "\n" + lines[-1][: len(lines[-1]) // 2], encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(len(lines), "TRUNCATED_OR_MALFORMED_JSON")]
+
+
+def test_the_scan_property_was_actually_exercised():
+    assert _SCAN_COVERAGE["exercised"] >= 12, _SCAN_COVERAGE

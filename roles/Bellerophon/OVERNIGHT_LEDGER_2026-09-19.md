@@ -893,3 +893,14 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   an artifact reads MISSING_ARTIFACT. 49 compositions exercised, 16 artifact series, 68 bounded; guard >= 10 /
   >= 3. All agree. (First version exercised 6: only the fuzz's own series observers -- the guard again.)
 - suite 648 passed / 6 skipped, 34 s.
+
+## C127 (08:21Z) the forensic scan as a property over random receipts files
+- 60 random IRs -> receipts files (26 with >= 4 lines exercised): a fresh file scans clean; one edited byte in a
+  random line is named on that line and read_all refuses the file; one deleted middle line breaks the chain at
+  the next line; a duplicated line is a DUPLICATE; a truncated last line is TRUNCATED.
+- defect found by the property: an EDITED line was reported twice -- the edit, then a CHAIN_BREAK on the line
+  after it, because the invalid record was dropped from the chain anchor. The next line's prev points at what
+  the writer PUT in the edited line, so the claimed receipt_id now anchors the chain: one defect per edit; a
+  genuine break (an edit of the receipt_id field itself) is still a break. The hand-written C44 tests had
+  looked only at the first defect. Mutant M75 (the old behaviour) CAUGHT.
+- suite 709 passed / 6 skipped, 35 s (the four properties added ~180 items tonight).
