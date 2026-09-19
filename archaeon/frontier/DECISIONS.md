@@ -195,3 +195,24 @@ Implemented as state and code:
 Boundary as stated by the operator and adopted: Scientist designs/nominates/interprets; Scheduler executes and
 branches only on evidence controls; Receipts hold all the numbers; Harmonia admits instruments and rulers.
 Scheduler restarted on the new code at 2026-09-19T02:57Z (session e); the in-flight P-boom run resumes from its receipt.
+
+## DF-015 (2026-09-19T07:22Z) P-boom readout 1; hidden seed in the segment; v2 arms on shared streams
+
+Readout 1 ran itself (readouts.json P-boom.readout.1, 8/8 DONE at 07:17Z; OBSERVATION written by the scheduler). Spike rate per
+100 archived generations: A_baseline 0.17/2.83/5.67, B_shuffle 1.67/3.00/3.33, C_no_coupling see readout, F_popcapture 5.17.
+The within-arm spread dwarfs the between-arm difference; no order reading.
+
+INSTRUMENT DEFECT (found because A_s1 and F_s1 were 'identical' by design and differed from generation 1): segment.py derived
+the c6.segment, wse.eval and c6.plant streams from run_id = experiment_id as well as the seed. Every experiment_id was a hidden
+seed; no two arms of any family ever shared a stream. Reproduced exactly from the receipts (nomination removed, only run_id
+differing -> different trajectories). Fix: world_options.stream_key, used in place of run_id when present; default unchanged so
+every existing receipt still replays byte-for-byte. Verified: same key + different run_id -> identical observations at N=32 E=8;
+capture on/off on the same key -> identical observations (forensic capture is a pure observer); seeded_shuffle on the same key
+differs (the treatment is real). The v1 arms remain valid as independent-stream data.
+
+Consequences: (a) the 'one thing changes per arm' claim in boom.py v1 is withdrawn; (b) 13 K_ arms queued (A/B/C/D x 3 seeds on
+stream keys P-boom.stream.s1..3, plus K_F_popcapture_s1) at priority 3.5 x 4; readout.2 registered on the K_ prefix (done_min 13);
+(c) any earlier same-seed contrast in this program that relied on the segment (C6 G6-0 rehearsal controls, scheduler seed
+controls) compared independent streams, which is what a seed control is meant to do, so those stand; (d) the scheduler was
+restarted on the patched segment (session f); a second scheduler briefly ran concurrently (07:20:21-07:20:51Z) because the first
+kill missed; the overlapping item (W-artifacts w50053_reset) is being re-executed from its receipt by session f only.

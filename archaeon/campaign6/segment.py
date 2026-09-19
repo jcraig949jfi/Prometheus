@@ -94,6 +94,7 @@ def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, sched
               world_options: Optional[dict] = None, nominate: Optional[dict] = None) -> dict:
     """world_options (Archaeon's measurement/world mutations, all recorded in the spec hash):
          eval_order: "population" (default; elites first) | "seeded_shuffle" (a seeded permutation per generation)
+         stream_key: None (default: run_id) | str -- arms sharing a stream_key and a seed share every random stream
          persist_shared: False (default; coupling state resets each generation) | True (shared pools/cells/signal carried in the
                          checkpoint across generations -- niche construction across generations)
        nominate: {"generations": [g, ...], "top_k": k} -> the top-k organisms of those generations get FULL freezes (forensic nomination)."""
@@ -111,11 +112,18 @@ def make_spec(*, run_id: str, provenance: dict, world: dict, profile: str, sched
     return spec
 
 
+def _stream_key(spec: dict) -> str:
+    """The key every random stream is derived from beside the seed. Default: the run_id (historical behaviour; every
+    experiment_id is then a hidden seed). world_options.stream_key makes arms that differ only in a treatment share
+    their mutation / episode / plant streams -- 'same seed' becomes true (found 2026-09-19: P-boom A_s1 vs F_s1)."""
+    return (spec.get("world_options") or {}).get("stream_key") or spec["run_id"]
+
+
 def initial_checkpoint(spec: dict, init_manifests: List[dict]) -> dict:
     pop = []
     for m in init_manifests:
         org = SUB.organism_record_for(dict(m), None, 0); org["origins"] = ["start"]; pop.append(org)
-    rng = SplitMix64(seed_from("c6.segment", spec["run_id"], spec["seed"]))
+    rng = SplitMix64(seed_from("c6.segment", _stream_key(spec), spec["seed"]))
     ck = {"schema": SCHEMA_CKPT, "run_id": spec["run_id"], "generation": spec["g0"], "eval_ordinal": 0, "rng_state": rng.state,
           "population": pop, "records": {}, "lineage_pairs": {}, "library": [], "prev_anchor_hash": None, "history": {}}
     ck["digest"] = _h({k: v for k, v in ck.items() if k != "digest"})
@@ -185,7 +193,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [victim["organism_id"]], "generation": g, "operators": [{"operator": "planted_foreign"}]}
             pop[planted[g].get("index", 0)] = org; planted_now.add(org["organism_id"])
         if g in planted and planted[g]["kind"] == "inject_randomized":
-            prng = SplitMix64(seed_from("c6.plant", spec["run_id"], g)); victim = pop[planted[g].get("index", 0)]
+            prng = SplitMix64(seed_from("c6.plant", _stream_key(spec), g)); victim = pop[planted[g].get("index", 0)]
             m = json.loads(json.dumps(victim["manifest"])); m["genome"] = [prng.next_u32() for _ in m["genome"]]
             org = SUB.organism_record_for(m, victim["lineage_id"], g); org["origins"] = list(victim.get("origins", [])) + ["planted"]
             records[org["organism_id"]] = {"organism_id": org["organism_id"], "parent_ids": [victim["organism_id"]], "generation": g, "operators": [{"operator": "planted_randomize"}]}
@@ -212,7 +220,7 @@ def run_segment(spec: dict, ck: dict) -> dict:
             asks = [e.n_asks() for e in eps]
         for e_ in exo_events:
             pressure_history.append({"generation": g, "kind": e_["kind"], "label": e_["label"], "params": {"target": e_["target"], "before": e_["before"], "after": e_["after"]}})
-        rs = seed_from("wse.eval", spec["seed"], g, spec["run_id"])
+        rs = seed_from("wse.eval", spec["seed"], g, _stream_key(spec))
         scored = []; pairs_now: Dict[str, Any] = {}; subjects: Dict[str, D.Subject] = {}
         endo = {"pool_depletion": 0.0, "signals": 0, "objects_changed": 0}
         order = list(range(len(pop)))

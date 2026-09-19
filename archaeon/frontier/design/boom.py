@@ -61,4 +61,16 @@ def emit(reg, q, priority=None):
     for N in (8, 128):
         items.append((base_spec(experiment_id="%s/E_N%d" % (FAMILY, N), seed=WORLD_SEED + 1, population={"source": "c4_parents", "seed": 1, "N": N}, budget_evaluations=N * 600), "E_N"))
     ids = queue_specs(reg, q, lid, items, "EXPLOITATION", pr, "design.boom: order vs population effect")
+    # v2 (2026-09-19): the same-seed premise of v1 was false (run_id was folded into every stream). Arms sharing a seed now
+    # share world_options.stream_key, so one thing changes per arm. Old runs stay as independent-stream data.
+    items2 = []
+    for seed in (1, 2, 3):
+        key = "P-boom.stream.s%d" % seed
+        items2.append((base_spec(experiment_id="%s/K_A_baseline_s%d" % (FAMILY, seed), seed=WORLD_SEED + seed, world_options={"eval_order": "population", "stream_key": key}, measurements=["population_shift", "max_spike"]), "K_A_baseline"))
+        items2.append((base_spec(experiment_id="%s/K_B_shuffle_s%d" % (FAMILY, seed), seed=WORLD_SEED + seed, world_options={"eval_order": "seeded_shuffle", "stream_key": key}, measurements=["population_shift", "max_spike"]), "K_B_shuffle"))
+        items2.append((base_spec(experiment_id="%s/K_C_no_coupling_s%d" % (FAMILY, seed), world={"kind": "c6.composed.v1", "params": params}, seed=WORLD_SEED + seed, world_options={"stream_key": key}, measurements=["population_shift", "max_spike"]), "K_C_no_coupling"))
+        items2.append((base_spec(experiment_id="%s/K_D_persist_s%d" % (FAMILY, seed), seed=WORLD_SEED + seed, world_options={"persist_shared": True, "stream_key": key}, measurements=["population_shift", "max_spike"]), "K_D_persist"))
+    items2.append((base_spec(experiment_id="%s/K_F_popcapture_s1" % FAMILY, seed=WORLD_SEED + 1, world_options={"eval_order": "population", "stream_key": "P-boom.stream.s1"},
+                             nominate={"generations": SPIKE_GENS, "top_k": 32, "window": 2, "population": True}, measurements=["population_shift", "max_spike"]), "K_F_popcapture"))
+    ids += queue_specs(reg, q, lid, items2, "EXPLOITATION", pr + 0.5, "design.boom v2: shared streams (stream_key) -- one thing changes per arm")
     return {"lineage": lid, "queued": ids}
