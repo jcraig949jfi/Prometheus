@@ -51,15 +51,15 @@ A decision is needed on rung C (section 9).
 
 2. PARTS DIAGNOSTIC (gate streams 301-310; controls only; s5)
 
-  part          len dist   fit  solv  cost |  dFit   sign dSolv dCost | tpFit tpDFit
+part        len dist   fit  solv  cost |  dFit   sign dSolv dCost | tpFit tpDFit
   ENUMERATE_VM   39   - 21.720 21.3  9843 |    -     -     -     -  |
   P_BASE         19   0 21.924 21.5  9378 |    -     -     -     -  |
   P_CAL          35  18 21.924 21.5  9390 | -0.000 0/10   0.0   +13 |   (rung A)
-  P_REC          25   7 21.923 21.5  9485 | -0.001 0/10   0.0  +108 | 21.92 -0.001
-  P_INV          37  20 21.922 21.5  9592 | -0.002 0/10   0.0  +214 | 23.16 +1.238
-  P_REC_INV      43  26 23.060 22.6  4976 | +1.138 7/10  +1.1 -4616 | 23.07 -0.094
-  P_PLAN         58  41 21.867 21.5 16376 | -0.057 0/10   0.0 +6998 | 38.67 +16.74
-  P_REC_INV_PLAN 64  47 37.841 37.4  7277 | +15.97 10/10 +15.9 -9098 | 38.66 -0.000
+P_REC          25   7 21.923 21.5  9485 | -0.001 0/10   0.0  +108 | 21.92 -0.001
+P_INV          37  20 21.922 21.5  9592 | -0.002 0/10   0.0  +214 | 23.16 +1.238
+P_REC_INV      43  26 23.060 22.6  4976 | +1.138 7/10  +1.1 -4616 | 23.07 -0.094
+P_PLAN         58  41 21.867 21.5 16376 | -0.057 0/10   0.0 +6998 | 38.67 +16.74
+P_REC_INV_PLAN 64 47 37.841 37.4  7277 | +15.97 10/10 +15.9 -9098 | 38.66 -0.000
   (tp columns from rung C, typed donor P_REC_INV_PLAN)
   dist = edit distance from P_BASE; dFit = part minus its immediate ancestor
   (P_REC_INV vs P_INV; P_REC_INV_PLAN vs P_PLAN) on the same paired streams;
@@ -89,7 +89,7 @@ A decision is needed on rung C (section 9).
 4. SEARCH READOUT (crius/runs/C2_SUMMARY.md; per-run REPORT.md, LINEAGE.md)
 
   rung A (9 runs)  fitA (fitF if different)   sucA          blk invk
-   random  s1/s2/s3   7.2 (6.2) / 9.2 (8.6) / 3.5   7.0/9.0/3.3  32/54/0  849/0/0
+  random  s1/s2/s3   7.2 (6.2) / 9.2 (8.6) / 3.5   7.0/9.0/3.3  32/54/0  849/0/0
    seeded  s1/s2/s3  22.8 / 22.1 / 21.8            22.3/21.7/21.3  0     0
    recomb  s1/s2/s3  21.8 / 20.1 / 20.1            21.3/19.7/19.7  0     0
   rung B (9 runs)
