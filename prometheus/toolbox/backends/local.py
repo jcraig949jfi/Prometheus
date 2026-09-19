@@ -739,10 +739,12 @@ def _valid_receipts(path) -> List[dict]:
 
 
 # ---------------------------------------------------------------------------------------------- replay (C32)
-def replay_file(receipts_path, out_path, registry=None) -> dict:
+def replay_file(receipts_path, out_path, registry=None, batch: Optional[int] = 0) -> dict:
     """Re-execute the IR embedded in a receipts file's SUMMARY and compare every run's scientific record
     (trace hashes, series hashes, objective value) with the recorded one. Divergences are DATA; a kernel hash
-    difference is information beside them. Raises only if the file has no replayable summary."""
+    difference is information beside them. Raises only if the file has no replayable summary.
+    C99: the replay runs on the SCALAR path by default whatever the original's budget.batch was (an independent
+    path is the point of a replay); batch=None keeps the recorded policy, batch=k forces one."""
     from prometheus.toolbox.registry import default_registry
     from prometheus.toolbox.receipt import read_all
     registry = registry or default_registry()
@@ -751,6 +753,9 @@ def replay_file(receipts_path, out_path, registry=None) -> dict:
     if not summ:
         raise ValueError("%s has no SUMMARY receipt carrying an experiment; nothing to replay" % receipts_path)
     exp = Experiment.from_dict(summ[-1]["experiment"])
+    recorded_batch = exp.budget.get("batch")
+    if batch is not None:
+        exp.budget = dict(exp.budget, batch=int(batch))
     low = lower(exp, registry)
     if not low.ok:
         return {"status": low.status, "reasons": low.reasons, "runs_compared": 0, "divergent": [], "kernel_hash_equal": None}
@@ -770,5 +775,7 @@ def replay_file(receipts_path, out_path, registry=None) -> dict:
             if get(o) != get(n):
                 divergent.append({"key": k, "field": field_name, "recorded": get(o), "replayed": get(n)}); break
     return {"status": "OK", "runs_compared": compared, "divergent": divergent, "replay_path": str(out_path),
+            "recorded_batch": recorded_batch, "replayed_batch": exp.budget.get("batch"),
+            "recorded_batched_runs": sum(1 for r in old if r["arm"] != "SUMMARY" and (r.get("execution") or {}).get("batched")),
             "kernel_hash_equal": summ[-1]["build"]["kernel_hash"] == new[-1]["build"]["kernel_hash"],
             "recorded_kernel_hash": summ[-1]["build"]["kernel_hash"], "replay_kernel_hash": new[-1]["build"]["kernel_hash"]}

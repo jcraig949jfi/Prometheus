@@ -46,11 +46,11 @@ def main(root: str = "prometheus/toolbox/playtests/receipts/pt_e") -> dict:
     low = exp.compile("local"); assert low.ok, low.reasons
     real = L.run_one; calls = {"n": 0}
 
-    def interrupt(spec, registry, receipt_dir=None):
+    def interrupt(spec, registry, receipt_dir=None, **kw):
         calls["n"] += 1
         if calls["n"] == 21:
             raise KeyboardInterrupt("simulated interruption after 20 runs")
-        return real(spec, registry, receipt_dir)
+        return real(spec, registry, receipt_dir, **kw)
     L.run_one = interrupt
     try:
         try:

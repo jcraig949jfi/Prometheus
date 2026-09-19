@@ -634,3 +634,19 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   tests/test_power_register.py refuses a register that cites a test that does not exist (first version cited a
   test name from memory that was wrong -- caught by its own check).
 - suite 301 passed / 6 skipped.
+
+## C99 (05:57Z) replay across paths; every playtest regenerated; science byte-stable
+- replay_file() re-executed the embedded IR INCLUDING budget.batch, so a replay of a batched file was a second
+  batched run, not an independent path. Now the replay takes the scalar path by default (batch=None keeps the
+  recorded policy on request) and reports recorded_batch / replayed_batch / recorded_batched_runs. Test: a
+  batched file replays 21/21 with 0 divergent through the scalar path; mutant M60 (replay keeps the recorded
+  policy) CAUGHT. Ledger 59/59.
+- pt_e re-run read valid=False with 84 FAILED receipts: its run_one double (a playtest, not a test) had the old
+  signature -- the C92c class again ("TypeError: unexpected keyword argument 'execution'" as 84 honest FAILED
+  rows). Fixed (**kw). Lesson: every double of a kernel function is a contract; grep found no others.
+- all playtests and both examples regenerated under tonight's kernel (EXP-001 96 runs, EXP-002 432, pt_a 96,
+  pt_c 80, pt_d 2x48 elites, pt_e 84 + replay 84/84, pt_g 50, pt_h 2x40): every control MET with power (0
+  INDETERMINATE anywhere), 0 failed. Trace hashes AND objective values equal the committed receipts run for run
+  on all 838 comparable runs (exp_001/exp_002/pt_a/pt_c/pt_e/pt_g): the night's changes moved no science.
+- EXP-001/pt_a/pt_c refused to overwrite their receipts files until deleted (C22 working as designed).
+- suite 302 passed / 6 skipped.

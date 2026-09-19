@@ -289,3 +289,18 @@ def test_the_random_property_actually_exercised_the_batch_path():
     """Coverage guard (C93): 40 random IRs must have produced BATCHED runs, or the property above proved nothing."""
     assert _COVERAGE["BATCHED"] >= 10, dict(_COVERAGE)
     assert _COVERAGE["WRAPPERS_NOT_BATCHED"] > 0 and _COVERAGE["NO_BATCH_IMPLEMENTATION"] > 0, dict(_COVERAGE)
+
+
+# ------------------------------------------------------------------------------------------ replay across paths (C99)
+def test_replay_of_a_batched_file_runs_the_scalar_path_and_agrees(tmp_path):
+    from prometheus.toolbox.backends.local import replay_file
+    exp = _exp()
+    _, batched = _run(exp, 4, tmp_path, "b.jsonl")
+    assert all(r["execution"]["batched"] for r in batched.values())
+    out = replay_file(tmp_path / "b.jsonl", tmp_path / "replay.jsonl")
+    assert out["status"] == "OK" and out["runs_compared"] == 21 and out["divergent"] == []
+    assert out["recorded_batch"] == 4 and out["replayed_batch"] == 0 and out["recorded_batched_runs"] == 21
+    rows = [r for r in read_all(tmp_path / "replay.jsonl") if r["arm"] != "SUMMARY"]
+    assert rows and all(r["execution"]["batched"] is False for r in rows)
+    out2 = replay_file(tmp_path / "b.jsonl", tmp_path / "replay_same.jsonl", batch=None)      # the recorded policy, on request
+    assert out2["replayed_batch"] == 4 and out2["divergent"] == []

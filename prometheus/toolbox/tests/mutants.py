@@ -81,6 +81,8 @@ MUTANTS = [
     ("M57", "ref/controls.py", "        if same:                                                   # C97: a \"fresh\" player with the primary's genome is not fresh", "        if False:", "scratch accepts a fresh player with the primary's genome"),
     ("M58", "ref/controls.py", "        if eq:                                                     # C97: a permutation that changed nothing (one-element observations) tested nothing", "        if False:", "permutation reads MET when it changed nothing"),
     ("M59", "backends/local.py", "    if \"registry\" in params or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()):", "    if False:", "control arms built against the process-global registry"),
+    # tenth wave (C99): replay across paths
+    ("M60", "backends/local.py", "    if batch is not None:\n        exp.budget = dict(exp.budget, batch=int(batch))", "    if False:\n        exp.budget = dict(exp.budget, batch=int(batch))", "replay re-runs the recorded batch policy instead of the scalar path"),
 ]
 
 
