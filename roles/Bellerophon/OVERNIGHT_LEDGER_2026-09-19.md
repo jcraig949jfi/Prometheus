@@ -622,3 +622,15 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - EXP-002 re-run under powered controls: 432 runs, 5/5 controls MET 72/72 each, 0 INDETERMINATE (wall 1.3 s):
   every sham/scratch arm changed behaviour, so the MET now means something. Receipts regenerated.
 - mutants wave 9 M55-M59 5/5 CAUGHT; honest ledger 58/58. Suite 293 passed / 6 skipped. Census 40/40.
+
+## C98 (05:50Z) admission power + the POWER REGISTER
+- the same audit for admit_world's nine named checks: provenance, capabilities, extensions, replay and controls
+  had never been seen to fail. tests/test_admission_power.py builds one component per check that MUST fail it
+  (no author / UNSPECIFIED licence / bad route; malformed id; events() returning a string; restore() that does
+  nothing; a BIT world that drifts; a cheat-blind world; a 3-char trace hash). All seven passed first time: the
+  checks HAD power, it just had never been demonstrated. No kernel change.
+- science/POWER_REGISTER_2026-09-19.md: every kernel instrument, the way it says NO, and the test that shows it
+  (32 rows, 3 honest "never says NO" entries: performance receipt, descriptive observers, the census as a count).
+  tests/test_power_register.py refuses a register that cites a test that does not exist (first version cited a
+  test name from memory that was wrong -- caught by its own check).
+- suite 301 passed / 6 skipped.
