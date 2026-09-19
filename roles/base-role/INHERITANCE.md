@@ -9,6 +9,7 @@ Every role below carries the banner on its primary document(s):
 | Agora | RESPONSIBILITIES.md (already; rewritten 2026-09-14 on the seat's adoption pass, April body preserved at roles/Agora/superseded/, April queue classified in ARCHAEOLOGY_2026-09-14.md; identity decision AGORA-01 pending; self-service row per Archaeon ruling #39) |
 | Aphrodite | RESPONSIBILITIES.md (created 2026-09-17 on the seat's creation pass on M4; charter ADOPTED 2026-09-18, APHRODITE-08, verbatim in roles/Aphrodite/prompts/2026-09-18_charter/; self-service row per Archaeon ruling #39) |
 | Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
+| Atlas | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M1; new seat, charter pending; self-service row per Archaeon ruling #39) |
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
@@ -69,6 +70,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Agora | RESPONSIBILITIES.md |
 | Aphrodite | RESPONSIBILITIES.md |
 | Atalanta | RESPONSIBILITIES.md |
+| Atlas | RESPONSIBILITIES.md |
 | Alethelia | RESPONSIBILITIES.md |
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
