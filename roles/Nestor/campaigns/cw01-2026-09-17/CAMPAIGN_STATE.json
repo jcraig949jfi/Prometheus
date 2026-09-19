@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-19 07:38:05",
+ "updated_local": "2026-09-19 08:55:43",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "PRIORITY LOOP (operator directive 2026-09-18): revisit / perturb / stasis / reactivate over the whole history; nothing scientific is killed; see loop/LOOP_RULES.md",
  "phase_model": [
@@ -428,7 +428,7 @@
  ],
  "active": {
   "mode": "priority_loop",
-  "cycle": "CYCLE7_2026-09-19",
+  "cycle": "CYCLE8_2026-09-19",
   "phase": "APPENDED",
   "next": "next cycle: RECONCILE the whole pool with this cycle's evidence, re-score, re-diversify, freeze a new ten"
  },
@@ -560,7 +560,7 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 5,
-  "defects_logged": 89,
+  "defects_logged": 92,
   "science_defects": 28,
   "defects_per_experiment": {
    "arch4": 3,
@@ -578,7 +578,9 @@
    "loop3": 5,
    "loop4": 3,
    "loop5": 1,
-   "loop6": 1
+   "loop6": 1,
+   "loop7": 1,
+   "loop8": 2
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -854,6 +856,42 @@
    "material": 194,
    "in_stasis": 6,
    "report": "loop/CYCLE_REPORT_CYCLE7_2026-09-19.md"
+  },
+  "CYCLE8_2026-09-19": {
+   "pool": 39,
+   "candidates": 26,
+   "frozen_ten": [
+    "P-J02",
+    "P-J01",
+    "P-J08",
+    "P-J09",
+    "P-J07",
+    "P-J03",
+    "P-J06",
+    "P-A02",
+    "P-C05",
+    "P-D08"
+   ],
+   "dispositions": {
+    "P-J02": "material=True",
+    "P-J01": {
+     "A": "NOT_CROSSED",
+     "B": "NOT_CROSSED",
+     "C": "NOT_CROSSED"
+    },
+    "P-J08": "material=False",
+    "P-J09": "material=False",
+    "P-J07": "material=True",
+    "P-J03": "material=True",
+    "P-J06": "material=True",
+    "P-A02": "material=False",
+    "P-C05": "material=True",
+    "P-D08": "material=False"
+   },
+   "evidence_events": 336,
+   "material": 216,
+   "in_stasis": 8,
+   "report": "loop/CYCLE_REPORT_CYCLE8_2026-09-19.md"
   }
  }
 }

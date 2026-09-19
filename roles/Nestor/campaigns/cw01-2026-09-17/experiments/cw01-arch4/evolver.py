@@ -69,11 +69,12 @@ def fitness(ind, eps, arm, rng):
     return ev
 
 
-def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, archive_gens=(), label="nestor.evolver", mate_rate=0.0, persist_lock=None, on_generation=None, mutator=None):
+def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, archive_gens=(), label="nestor.evolver", mate_rate=0.0, persist_lock=None, on_generation=None, mutator=None, k_t=None):
     """arm: select | drift (uniform parent) | ndrift (uniform parent, child kept only inside the band of its
     parent's reward - competence retained without a fitness ordering) | weather | sham.
     env: selection world; ep_transform(eps, g) may rewrite the generation's episodes (idle ticks);
     price: fitness = reward - price * n_instr for the tournament; archive_gens: snapshot generations."""
+    kt = k_t or K_T
     rng = A.SplitMix64(A.seed_from(label, A.LOOP_SEED, seed))      # arm-independent: arms share every draw (CW01-D083)
     pop = [dict(x) for x in init]
     hist, archive = [], {}
@@ -98,13 +99,13 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
                      "n_ancestors": len({x["anc"] for x in pop})})
         kids = []
         for i in range(N_):
-            cand = [int(rng.next_u32() % N_) for _ in range(K_T)]        # drawn in every arm
+            cand = [int(rng.next_u32() % N_) for _ in range(kt)]          # drawn in every arm
             if arm in ("drift", "ndrift"):
                 pi = cand[0]
             else:
                 pi = max(cand, key=lambda c: fit[c])
             parent = pop[pi]
-            child = None
+            child, rec = None, None
             u_mate = rng.unit()                                            # drawn in every arm
             mcand = [int(rng.next_u32() % N_) for _ in range(K_T)]           # mate tournament, drawn always
             if mate_rate > 0 and u_mate < mate_rate:
@@ -128,7 +129,8 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
                 rc = A.evaluate(child, eps, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]
                 if abs(rc - evs[pi]["reward_per_ask"]) > A.C1.BAND:
                     child = json.loads(json.dumps(parent["m"]))
-            kids.append({"m": child, "anc": parent["anc"], "anc_parent": parent.get("anc_parent"), "anc_stratum": parent.get("anc_stratum"), "anc_walker": parent.get("anc_walker")})
+            kids.append({"m": child, "anc": parent["anc"], "anc_parent": parent.get("anc_parent"), "anc_stratum": parent.get("anc_stratum"), "anc_walker": parent.get("anc_walker"),
+                         "pid": pi, "op": (rec.get("operator") if isinstance(rec, dict) else "copy")})
         pop = kids
     fixed = A.episodes(env)
     final = [dict(x, reward=A.evaluate(x["m"], fixed, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]) for x in pop]

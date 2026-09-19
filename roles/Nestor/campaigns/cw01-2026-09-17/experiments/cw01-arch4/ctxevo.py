@@ -28,7 +28,7 @@ def held_reward(m, sets):
 
 def run_world(world, seed, G=120, control=None, init=None, top=16, label="nestor.ctx", **kw):
     """Evolve in `world`; return tops ranked by held-out reward (genomes kept) and the run history."""
-    evo_kw = {k: kw.pop(k) for k in list(kw) if k in ("mate_rate", "persist_lock", "on_generation", "mutator", "archive_gens")}
+    evo_kw = {k: kw.pop(k) for k in list(kw) if k in ("mate_rate", "persist_lock", "on_generation", "mutator", "archive_gens", "k_t")}
     if init is None:
         init, _ = EV.init_population()
     r = EV.run("select", seed, init, G_=G, env="W0", ep_transform=transform(world, seed, control, **kw), label="%s|%s|%s" % (label, world, control or "plain"), **evo_kw)
@@ -37,7 +37,7 @@ def run_world(world, seed, G=120, control=None, init=None, top=16, label="nestor
     scored.sort(key=lambda x: -x["held"])
     return {"world": world, "seed": seed, "control": control, "kw": kw, "G": G, "history": [h["reward_mean"] for h in r["history"]], "len_final": r["history"][-1]["len_mean"],
             "pw_final": r["history"][-1]["persistent_words"], "persist_final": r["history"][-1]["persist"], "tops": [{"m": x["m"], "held": x["held"], "per_set": x["per_set"], "anc": x["anc"]} for x in scored[:top]],
-            "pop_held_mean": float(np.mean([x["held"] for x in scored]))}
+            "pop_held_mean": float(np.mean([x["held"] for x in scored])), "final_pop": [{"m": x["m"], "anc": x["anc"]} for x in r["final"]]}
 
 
 def crossed(run, world=None):

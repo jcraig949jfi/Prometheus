@@ -32,40 +32,48 @@ CUE = 8                       # the NOISE word kind: never referenced by any wor
 VMAX = 16
 
 
-def f_regime(r, v):
-    return v if r == 0 else (VMAX - 1 - v)
+def f_regime(r, v, xor=VMAX - 1, transform=None):
+    """regime 0: v; regime 1: v XOR xor (xor 15 == 15 - v on 4 bits: the original world; xor 1: the successor).
+    transform (string) overrides xor: 'xor:C' -> v ^ C; 'add:C' -> (v + C) mod 16 (novel transforms, cycle 8)."""
+    if r == 0:
+        return v
+    if transform:
+        kind, c = transform.split(":")
+        c = int(c)
+        return (v + c) % VMAX if kind == "add" else (v ^ c)
+    return v ^ xor
 
 
 def _rng(world, seed, index):
     return A.SplitMix64(A.seed_from("nestor.ctx", A.LOOP_SEED, world, seed, index))
 
 
-def episodes_A(seed, index, n=16):
+def episodes_A(seed, index, n=16, xor=VMAX - 1, transform=None):
     rng = _rng("A", seed, index)
     out = []
     for _ in range(n):
         tag, v, r = 1 + rng.randbelow(60000), rng.randbelow(VMAX), rng.randbelow(2)
-        out.append(Episode(ticks=[[K_PUT, tag, v], [K_ASK, tag, r]], expected={1: f_regime(r, v)}, intervention_tick=1, meta={"regime": [r], "cue": [r], "v": [v]}))
+        out.append(Episode(ticks=[[K_PUT, tag, v], [K_ASK, tag, r]], expected={1: f_regime(r, v, xor, transform)}, intervention_tick=1, meta={"regime": [r], "cue": [r], "v": [v]}))
     return out
 
 
-def episodes_B(seed, index, n=16, control=None):
+def episodes_B(seed, index, n=16, control=None, xor=VMAX - 1, transform=None):
     rng = _rng("B", seed, index)
     out = []
     for _ in range(n):
         tag, v, r = 1 + rng.randbelow(60000), rng.randbelow(VMAX), rng.randbelow(2)
         c = r if control != "destroyed" else rng.randbelow(2)
         if control == "shuffled":
-            ticks, exp = [[K_PUT, tag, v], [K_ASK, tag], [CUE, 1, c]], {1: f_regime(r, v)}
+            ticks, exp = [[K_PUT, tag, v], [K_ASK, tag], [CUE, 1, c]], {1: f_regime(r, v, xor, transform)}
         elif control == "nocue":
-            ticks, exp = [[K_PUT, tag, v], [K_ASK, tag]], {1: f_regime(r, v)}
+            ticks, exp = [[K_PUT, tag, v], [K_ASK, tag]], {1: f_regime(r, v, xor, transform)}
         else:
-            ticks, exp = [[CUE, 1, c], [K_PUT, tag, v], [K_ASK, tag]], {2: f_regime(r, v)}
+            ticks, exp = [[CUE, 1, c], [K_PUT, tag, v], [K_ASK, tag]], {2: f_regime(r, v, xor, transform)}
         out.append(Episode(ticks=ticks, expected=exp, intervention_tick=1, meta={"regime": [r], "cue": [c], "v": [v]}))
     return out
 
 
-def episodes_C(seed, index, trials=16, block=4, p_cue=0.7, control=None, phase=None):
+def episodes_C(seed, index, trials=16, block=4, p_cue=0.7, control=None, phase=None, xor=VMAX - 1, transform=None):
     rng = _rng("C", seed, index)
     r = rng.randbelow(2)
     off = rng.randbelow(block) if phase is None else phase
@@ -78,9 +86,9 @@ def episodes_C(seed, index, trials=16, block=4, p_cue=0.7, control=None, phase=N
         ticks.append([CUE, 1, c])
         ticks.append([K_PUT, tag, v])
         ticks.append([K_ASK, tag])
-        expected[len(ticks) - 1] = f_regime(r, v)
+        expected[len(ticks) - 1] = f_regime(r, v, xor, transform)
         regimes.append(r); cues.append(c); vs.append(v)
-    return [Episode(ticks=ticks, expected=expected, intervention_tick=1, meta={"regime": regimes, "cue": cues, "v": vs, "block": block, "p_cue": p_cue})]
+    return [Episode(ticks=ticks, expected=expected, intervention_tick=1, meta={"regime": regimes, "cue": cues, "v": vs, "block": block, "p_cue": p_cue, "xor": xor, "transform": transform})]
 
 
 def make(world, seed, index, control=None, **kw):

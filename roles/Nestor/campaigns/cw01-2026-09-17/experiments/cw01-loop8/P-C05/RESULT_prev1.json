@@ -1,0 +1,6719 @@
+{
+ "perturbation_id": "P-C05",
+ "parent": "T-ARCH4/M1",
+ "summary": {
+  "n_parents": 47,
+  "opcode_loss": 0.4654255319148936,
+  "operand_loss": 0.2047872340425532,
+  "opcode_disp": 0.4239527925531915,
+  "operand_disp": 0.1607380319148936,
+  "opcode_held_delta": -0.20611702127659576,
+  "operand_held_delta": -0.08543882978723404,
+  "paired_loss_diff": {
+   "mean_diff": 0.26063829787234044,
+   "p05": -0.0851063829787234,
+   "p95": 0.09042553191489362,
+   "n": 47,
+   "above_p95": true,
+   "below_p05": false
+  },
+  "by_stratum": {
+   "delay_general": {
+    "opcode_loss": 0.4659090909090909,
+    "operand_loss": 0.22727272727272727
+   },
+   "gen0_random": {
+    "opcode_loss": 1.0,
+    "operand_loss": 1.0
+   },
+   "shelf": {
+    "opcode_loss": 0.3684210526315789,
+    "operand_loss": 0.14473684210526316
+   },
+   "w0_solver": {
+    "opcode_loss": 0.5166666666666667,
+    "operand_loss": 0.15833333333333333
+   }
+  }
+ },
+ "rows": [
+  {
+   "organism_id": "f3e6be57273d03024350dc56e0cbff895ea0413e6a524a47ab7464e2849dadb8",
+   "stratum": "gen0_random",
+   "n_instr": 14,
+   "r0": 0.0,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 1.0,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": 0.0,
+   "operand_loss": 1.0,
+   "operand_disp": 0.125,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "1ff53cd908b686b241e4bfaff80495ceb1b8578ee7609a03f690bf70b0e9a184",
+   "stratum": "gen0_random",
+   "n_instr": 4,
+   "r0": 0.03125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 1.0,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.046875,
+   "operand_loss": 1.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "006def47e4388e22ce0627b9d561df1988f4d85700c8e0f04b7da837db84ea87",
+   "stratum": "w0_solver",
+   "n_instr": 11,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": 0.0,
+   "operand_loss": 0.125,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "8bb78421788947753626fe70d88dccf3ab2ea1f7ea205c2873505e666fcce849",
+   "stratum": "w0_solver",
+   "n_instr": 14,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.2421875,
+   "opcode_held_delta": 0.03125,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "6c6c5528c8b98ac7d4889b9dd3f08ff53aa39e82e796440da98f8229e7af7d72",
+   "stratum": "w0_solver",
+   "n_instr": 12,
+   "r0": 0.1875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.36328125,
+   "opcode_held_delta": 0.046875,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "f2e31f891a3dd31504003d28f83016fb58f84e41e5f394504c6ee8d1df54824d",
+   "stratum": "w0_solver",
+   "n_instr": 15,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.5,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.24609375,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.375,
+   "operand_disp": 0.30859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "0882e099d4730cb776f9be90a03868438615823444dbae8922f1ed9783de0eb5",
+   "stratum": "w0_solver",
+   "n_instr": 7,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.2421875,
+   "opcode_held_delta": 0.03125,
+   "operand_loss": 0.125,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "caecdabf9e7b805029c09ad96ab332cb0988d2601e688e573966fc5668a707c6",
+   "stratum": "w0_solver",
+   "n_instr": 25,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.4921875,
+   "opcode_held_delta": 0.03125,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "122f14dce797b0812f0b60915172502087bbda14ed247e7debf0b51cb19cd1c0",
+   "stratum": "w0_solver",
+   "n_instr": 8,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.0625
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.234375,
+   "opcode_held_delta": 0.0390625,
+   "operand_loss": 0.125,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "c694909fe0489a5864a43c2de6fe961bb57cb6f30612348df9cb3ea053525782",
+   "stratum": "w0_solver",
+   "n_instr": 3,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.0625
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 1.0,
+   "opcode_disp": 0.859375,
+   "opcode_held_delta": 0.0390625,
+   "operand_loss": 0.125,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "a048bd0bdfac6efdb0304b899df55b56ddb91f60fb918c8ce33f9980d604de42",
+   "stratum": "w0_solver",
+   "n_instr": 3,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    }
+   ],
+   "opcode_loss": 0.875,
+   "opcode_disp": 0.609375,
+   "opcode_held_delta": 0.0625,
+   "operand_loss": 0.75,
+   "operand_disp": 0.3515625,
+   "operand_held_delta": 0.078125
+  },
+  {
+   "organism_id": "961f64ab25fabeb41c706347e33823519a87c5d342f1bfe1558239ee7e809d9a",
+   "stratum": "w0_solver",
+   "n_instr": 18,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.5,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.125
+    }
+   ],
+   "opcode_loss": 0.75,
+   "opcode_disp": 0.67578125,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.25,
+   "operand_disp": 0.18359375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "bbc41e4384c51b02d448b63b6a4652494b995d31f8600ec5cd5378b5fa8ea576",
+   "stratum": "w0_solver",
+   "n_instr": 19,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.5,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.421875,
+   "opcode_held_delta": 0.0625,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0625,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "141f50207717c00f8813e416af855e07eaaa78e87ed37aa965e0c49e71a3c902",
+   "stratum": "w0_solver",
+   "n_instr": 16,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0625
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D7",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": 1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.5,
+   "opcode_disp": 0.5546875,
+   "opcode_held_delta": 0.1484375,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "df4c9604b7ed59a8331d79e9e4e03790463e61ee07e8561e7946fcae801fb343",
+   "stratum": "w0_solver",
+   "n_instr": 13,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.0,
+   "opcode_disp": 0.0,
+   "opcode_held_delta": 0.0,
+   "operand_loss": 0.125,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "4514db2db160f031c5aca13f2fb44e3c65a93b2ac63193000b6ac35d65a9dea6",
+   "stratum": "w0_solver",
+   "n_instr": 10,
+   "r0": 0.21875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.46875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.55859375,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "b8e8b55b6c200e90605eca2f694afa2f0509e40efc3d9306b62c9b67e5f51c5f",
+   "stratum": "w0_solver",
+   "n_instr": 21,
+   "r0": 0.1875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.62109375,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.125,
+   "operand_disp": 0.12109375,
+   "operand_held_delta": 0.015625
+  },
+  {
+   "organism_id": "31bad7ac58c69d5aa8903db22d825b80ad6421ebfb27ce0865299808cc531e09",
+   "stratum": "delay_general",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.875,
+   "opcode_disp": 0.875,
+   "opcode_held_delta": -0.8125,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.234375
+  },
+  {
+   "organism_id": "8a1db1b9c9b19f57de6876be75491f8d3e4fa05df988b462b247ceff8db4bb4f",
+   "stratum": "delay_general",
+   "n_instr": 8,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.9375
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.9375
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.625,
+   "opcode_held_delta": -0.59375,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": -0.109375
+  },
+  {
+   "organism_id": "81123f799f787c180182ae96993d319a69cc7e7ac122b74a2b2c7d48e709c5a5",
+   "stratum": "delay_general",
+   "n_instr": 27,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -0.875
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.34375,
+   "operand_loss": 0.5,
+   "operand_disp": 0.62109375,
+   "operand_held_delta": -0.546875
+  },
+  {
+   "organism_id": "1b4d0e1d61123761a90feb52ba4bbc7ad489f32b0712eabd413d785aea7441bd",
+   "stratum": "delay_general",
+   "n_instr": 15,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.6015625,
+   "opcode_held_delta": -0.578125,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": -0.109375
+  },
+  {
+   "organism_id": "a84349c03a7d6e92eae37b043d54b6d05c2ba8c0c33d211b5bd86bec7b740665",
+   "stratum": "delay_general",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": -0.25,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": -0.109375
+  },
+  {
+   "organism_id": "58e2af658ee17e2b2415d137fd002142879eb2d07d3d221830ff8ab64ee47357",
+   "stratum": "delay_general",
+   "n_instr": 27,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.125,
+     "held_delta": -0.0625
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.5,
+     "held_delta": -0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.125,
+     "held_delta": -0.0625
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.875,
+     "held_delta": -0.625
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.453125,
+   "opcode_held_delta": -0.359375,
+   "operand_loss": 0.375,
+   "operand_disp": 0.375,
+   "operand_held_delta": -0.328125
+  },
+  {
+   "organism_id": "6925205a46b17aac01cee66e23189d0bdebeb0b0e3f46bc6a9dfd09141922d49",
+   "stratum": "delay_general",
+   "n_instr": 24,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.49609375,
+   "opcode_held_delta": -0.484375,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.21875
+  },
+  {
+   "organism_id": "265c5fa2c69b1ad5664bb244c904d939c7a606c8e8b28bef8505a43c436835d7",
+   "stratum": "delay_general",
+   "n_instr": 14,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.375,
+   "operand_loss": 0.0,
+   "operand_disp": 0.12109375,
+   "operand_held_delta": -0.125
+  },
+  {
+   "organism_id": "613de3bb22cf0f5eac21cb6b4c2f35bcdbf9126426d97cba0850b88de2246cae",
+   "stratum": "delay_general",
+   "n_instr": 19,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": -0.25,
+   "operand_loss": 0.375,
+   "operand_disp": 0.375,
+   "operand_held_delta": -0.359375
+  },
+  {
+   "organism_id": "81467a7f416a56f7e0d5255a5098fc9194fc86748d21bcdf8e49e29a52969e4b",
+   "stratum": "delay_general",
+   "n_instr": 12,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.6171875,
+   "opcode_held_delta": -0.625,
+   "operand_loss": 0.25,
+   "operand_disp": 0.37109375,
+   "operand_held_delta": -0.375
+  },
+  {
+   "organism_id": "a9d174013004e12ab5a11a4f0d3bab23bea78c1ca348ca0cbc24198d769f27f7",
+   "stratum": "delay_general",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.625,
+   "opcode_disp": 0.625,
+   "opcode_held_delta": -0.59375,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.21875
+  },
+  {
+   "organism_id": "98c6f3230b9dfc426722e3e02f63937f538ac55529420d08f560018fff033a69",
+   "stratum": "shelf",
+   "n_instr": 8,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.875,
+   "opcode_disp": 0.875,
+   "opcode_held_delta": -0.8125,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.21875
+  },
+  {
+   "organism_id": "648b29a816734afb3508a47792fbd30c0fdadd08ccf2565dd59deff7c3b9f7b6",
+   "stratum": "shelf",
+   "n_instr": 14,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.75,
+   "opcode_disp": 0.75,
+   "opcode_held_delta": -0.609375,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.203125
+  },
+  {
+   "organism_id": "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42",
+   "stratum": "shelf",
+   "n_instr": 40,
+   "r0": 0.6875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.375,
+   "operand_loss": 0.25,
+   "operand_disp": 0.24609375,
+   "operand_held_delta": -0.234375
+  },
+  {
+   "organism_id": "fe8bc0ab9b16242421c88ef33868295a43675b7f80df34f1767cfd090854c46e",
+   "stratum": "shelf",
+   "n_instr": 34,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": -0.25,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.25
+  },
+  {
+   "organism_id": "d6585313ccd6798fee24da2b1bfce5b5e9b2fcd983cc4c3d376ceaf356fd7f19",
+   "stratum": "shelf",
+   "n_instr": 32,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.49609375,
+   "opcode_held_delta": -0.390625,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "52556341a2ef6822aa22315d170ef909260f898e119e4fffd648eb68889c383f",
+   "stratum": "shelf",
+   "n_instr": 43,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.359375,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": -0.109375
+  },
+  {
+   "organism_id": "fed787d8f2b87f4c4dd2c876945f17b4c897b154ed43f496ef62b3a4a68873ed",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 0.90625,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    }
+   ],
+   "opcode_loss": 0.5,
+   "opcode_disp": 0.48046875,
+   "opcode_held_delta": 0.046875,
+   "operand_loss": 0.5,
+   "operand_disp": 0.4765625,
+   "operand_held_delta": 0.0625
+  },
+  {
+   "organism_id": "06c1c76b945dbe319362698be50750212dd000e8bddc2e4e8feac2759ff91e88",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.46875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.46875,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.42578125,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.0,
+   "operand_disp": 0.05859375,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "4f07604a5652a7a1547331a21618bf129def9c1ea87f6374647bd3633a3abe51",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D4",
+     "loss": 0,
+     "disp": 0.96875,
+     "held_delta": -1.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.49609375,
+   "opcode_held_delta": -0.484375,
+   "operand_loss": 0.125,
+   "operand_disp": 0.24609375,
+   "operand_held_delta": -0.234375
+  },
+  {
+   "organism_id": "4f2fa74583f8f467694461b984e42d7ffea20bbc5cfc8522de5e17c69a626b11",
+   "stratum": "shelf",
+   "n_instr": 46,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.9375,
+     "held_delta": 1.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.3671875,
+   "opcode_held_delta": 0.015625,
+   "operand_loss": 0.125,
+   "operand_disp": 0.234375,
+   "operand_held_delta": 0.140625
+  },
+  {
+   "organism_id": "2809ce8eb7a7c1f40c2970ac2d50a6ba2b8b8b9d3b74a96c92b5fc3cf1746249",
+   "stratum": "shelf",
+   "n_instr": 34,
+   "r0": 0.6875,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.96875,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.125,
+   "opcode_disp": 0.12109375,
+   "opcode_held_delta": -0.109375,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "985f44e5b1f3948c6f1ebb545cbc6e107d984a0667264aeb7cd54fff7f8c3c5d",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 0.9375,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": 0.0,
+   "operand_loss": 0.25,
+   "operand_disp": 0.234375,
+   "operand_held_delta": 0.03125
+  },
+  {
+   "organism_id": "02463fae1e29fe1ff2ce6a704ea76255af58ab255046ea06f891d9f84a57bcf9",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.5,
+   "opcode_disp": 0.5,
+   "opcode_held_delta": -0.390625,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "6b0b3c727d2f197f8627ed044b42cddd726e7cb8de84df35645ee555743ca21e",
+   "stratum": "shelf",
+   "n_instr": 28,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    }
+   ],
+   "opcode_loss": 0.125,
+   "opcode_disp": 0.125,
+   "opcode_held_delta": -0.09375,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.203125
+  },
+  {
+   "organism_id": "5bddd5928aff4b193df420fbc8919e2abc63a5c365b7fd02ac51bfabbe4dbfa3",
+   "stratum": "shelf",
+   "n_instr": 10,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.8125
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.3203125,
+   "operand_loss": 0.25,
+   "operand_disp": 0.25,
+   "operand_held_delta": -0.1875
+  },
+  {
+   "organism_id": "b5a8466b2eef1a71a88d089bc57c5d2609dea6bafe5fff9027a2b3340ba285a6",
+   "stratum": "shelf",
+   "n_instr": 32,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.125,
+   "opcode_disp": 0.125,
+   "opcode_held_delta": -0.09375,
+   "operand_loss": 0.125,
+   "operand_disp": 0.125,
+   "operand_held_delta": -0.09375
+  },
+  {
+   "organism_id": "2aab8a3e4007c537c5a18e0722fb59ca25a568599ba04f699062bf383760e323",
+   "stratum": "shelf",
+   "n_instr": 32,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": -0.21875,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "2e3e074cd6ffefdb3ecaa39c6ac13a877acb005e194dfd868d9639d21ad8c30e",
+   "stratum": "shelf",
+   "n_instr": 26,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.125
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.25,
+   "opcode_disp": 0.25,
+   "opcode_held_delta": -0.203125,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  },
+  {
+   "organism_id": "25e9a462c760fb0e2b953cadc2d77a7edb1b74fb8d6d3b93ebc5a7e827f6ddf9",
+   "stratum": "shelf",
+   "n_instr": 16,
+   "r0": 0.53125,
+   "rows": [
+    {
+     "kind": "opcode",
+     "draw": 1,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 4,
+     "D": "D2",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.75
+    },
+    {
+     "kind": "opcode",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 6,
+     "D": "D3",
+     "loss": 1,
+     "disp": 1.0,
+     "held_delta": -0.875
+    },
+    {
+     "kind": "opcode",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "opcode",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 1,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 2,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 3,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 4,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 5,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 6,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 7,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    },
+    {
+     "kind": "operand",
+     "draw": 8,
+     "D": "D5",
+     "loss": 0,
+     "disp": 0.0,
+     "held_delta": 0.0
+    }
+   ],
+   "opcode_loss": 0.375,
+   "opcode_disp": 0.375,
+   "opcode_held_delta": -0.296875,
+   "operand_loss": 0.0,
+   "operand_disp": 0.0,
+   "operand_held_delta": 0.0
+  }
+ ],
+ "material": false,
+ "elapsed_s": 4.7,
+ "prereg_sha256": "6929e4c0c9227c59316f7add9cbf792e915e98c79537d25f3a1786aa6476c49e",
+ "ts": "2026-09-19 08:46:01"
+}
