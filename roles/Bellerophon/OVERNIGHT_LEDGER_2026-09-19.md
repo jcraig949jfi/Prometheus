@@ -1014,3 +1014,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   survival v1/v2, series_gain) and a series observer on 60%: every law recomputes from the same receipt's
   observations, accounting, world summary and series; unknown penalty keys are named; series_gain is None with
   a SERIES_ reason when there is no series. No defect.
+
+## C143 (09:14Z) lowering laws as a property
+- 60 random IRs (about half lower OK): runs = points x arms x seeds; every run names the job; arm names unique;
+  one experiment digest per (arm, point); the replay arm's digest equals the primary's and every other arm's
+  differs; every (seed, split) follows the seed policy; the negotiation's required set is covered by provided
+  plus uncatalogued. No defect.

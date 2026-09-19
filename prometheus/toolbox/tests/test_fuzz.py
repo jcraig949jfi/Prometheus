@@ -192,3 +192,35 @@ def test_sweep_and_negotiation_laws(seed):
     elif low.status == "OK":
         req = set(e.derived_requirements()) - {c for pl in e.players if pl.get("substrate") for c in pl.get("requires", ())}
         assert req <= provided, (seed, req - provided)
+
+
+# C143: lowering laws as a property: n runs = points x arms x seeds; every RunSpec names the job; arm names are
+# unique; the replay arm's experiment IS the primary's (same digest, since a replay re-runs the same thing) and
+# every other arm's differs; splits follow the seed policy; the negotiation records what was provided.
+@pytest.mark.parametrize("seed", list(range(1700, 1760)))
+def test_lowering_laws(seed):
+    from prometheus.toolbox.backends.local import lower, seeds_for
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        assert low.reasons and low.job is None
+        return
+    job = low.job; pts = e.sweep_points(); seeds = seeds_for(e); arms = ["primary"] + [REG.make(c["kind"], **c.get("params", {})).kind for c in e.controls]
+    assert len(job.runs) == len(pts) * len(arms) * len(seeds), seed
+    assert len(set(arms)) == len(arms) and {r.arm for r in job.runs} == set(arms)
+    assert all(r.job_id == job.experiment_id for r in job.runs)
+    for r in job.runs:
+        assert (r.seed, r.split) in seeds
+    by_arm = {}
+    for r in job.runs:
+        by_arm.setdefault((r.arm, json.dumps(r.sweep_point, sort_keys=True)), set()).add(r.experiment.digest())
+    assert all(len(v) == 1 for v in by_arm.values())                            # one experiment per (arm, point)
+    for (arm, pt), dg in by_arm.items():
+        prim = by_arm[("primary", pt)]
+        if arm == "replay":
+            assert dg == prim, seed
+        elif arm != "primary":
+            assert dg != prim, (seed, arm)
+    assert set(low.negotiation["required"]) <= set(low.negotiation["provided"]) | set(low.negotiation.get("uncatalogued", []))
