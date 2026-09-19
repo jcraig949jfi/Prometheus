@@ -67,25 +67,33 @@ def elites_by_cell(rows: List[dict]) -> Dict[tuple, List[dict]]:
 
 
 # ------------------------------------------------------------------------------------------ selectors
+def _gen0(registry, representation: str, rng_seed: int, n: int) -> List[PlayerSpec]:
+    """C73: generation 0 comes from the REGISTERED generator of the chosen representation (the registry row's
+    factory takes a seed), so a selector evolves any representation without subclassing."""
+    gen = registry.get(representation).factory
+    return [gen(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n)]
+
+
 class TruncationSelector:
     kind = "selector.truncation.v1"
 
-    def __init__(self, keep: int = 3, n: int = 6, mutation: str = "transform.point_mutation.v1"):
-        self.keep = keep; self.n = n; self.mutation = mutation
+    def __init__(self, keep: int = 3, n: int = 6, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1"):
+        self.keep = keep; self.n = n; self.mutation = mutation; self.representation = representation
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "keep": self.keep, "n": self.n, "mutation": self.mutation}
+        return {"kind": self.kind, "keep": self.keep, "n": self.n, "mutation": self.mutation, "representation": self.representation}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
         reg = default_registry(); t = reg.make(self.mutation); s = stream("truncation", rng_seed)
         elites = sorted((r for r in archive_rows if r["kind"] == "elite" and r["objective"] is not None), key=lambda r: (-r["objective"], r["fingerprint"]))[:self.keep]
         if not elites:
-            return [random_statemachine(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n)]
+            return _gen0(reg, self.representation, rng_seed, n)
         out: List[PlayerSpec] = []
         for i in range(n):
             parent = elites[s.below(len(elites))]["player"]
-            out.append(t.apply(parent, rng_seed * 977 + i))
+            tt = t if "player." + parent["representation"] in t.accepts else reg.make("transform.shuffle.v1")   # a representation the mutation cannot touch gets a structure-preserving fallback
+            out.append(tt.apply(parent, rng_seed * 977 + i))
         return out
 
     def ingest(self, receipts: List[dict]) -> List[dict]:
@@ -95,19 +103,24 @@ class TruncationSelector:
 class MapElitesSelector(TruncationSelector):
     kind = "selector.map_elites.v1"
 
-    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1"):
-        super().__init__(keep=0, n=n, mutation=mutation)
+    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1"):
+        super().__init__(keep=0, n=n, mutation=mutation, representation=representation)
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "n": self.n, "mutation": self.mutation}
+        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
-        reg = default_registry(); t = reg.make(self.mutation); s = stream("map_elites", rng_seed)
+        reg = default_registry(); s = stream("map_elites", rng_seed)
         cells = list(elites_by_cell(archive_rows).values())
         if not cells:
-            return [random_statemachine(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n)]
-        return [t.apply(cells[s.below(len(cells))][0]["player"], rng_seed * 977 + i) for i in range(n)]
+            return _gen0(reg, self.representation, rng_seed, n)
+        out = []
+        for i in range(n):
+            parent = cells[s.below(len(cells))][0]["player"]
+            t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
+            out.append(t.apply(parent, rng_seed * 977 + i))
+        return out
 
 
 def _rows_from_receipts(receipts: List[dict]) -> List[dict]:

@@ -20,22 +20,13 @@ def template(sub) -> Experiment:
                       observers=[ref("observer.descriptor.v1", action_scale=2, yield_scale=40)], seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 32})
 
 
-class V2Selector(SR.MapElitesSelector):
-    """gen-0 proposals as statemachine.v2 (the reference selector seeds v1); everything else inherited."""
-    def propose(self, rows, rng_seed, n):
-        if not any(r["kind"] == "elite" for r in rows):
-            return [random_statemachine_v2(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n)]
-        return super().propose(rows, rng_seed, n)
-
-
 def main(root: str = "prometheus/toolbox/playtests/receipts/pt_d") -> dict:
-    from prometheus.toolbox.registry import default_registry, ComponentRecord
-    reg = default_registry().fork()                      # C62: a playtest's own components never enter the default registry
-    reg.register(ComponentRecord("selector.map_elites_v2.playtest", "selector", V2Selector, frozenset(), route="write", provenance={"author": "Bellerophon", "playtest": "D"}, license="repository"))
+    from prometheus.toolbox.registry import default_registry
+    reg = default_registry().fork()                      # C62: a playtest's own components never enter the default registry (C73: no subclass needed any more)
     out = {}
     for name, sub in (("flat", ref("substrate.flat.v1")), ("kv", ref("substrate.kv.v1", scope="lifetime"))):
         wd = pathlib.Path(root) / name; shutil.rmtree(wd, ignore_errors=True)
-        res = SR.evolve(template(sub), ref("selector.map_elites_v2.playtest", n=8), generations=6, workdir=wd, seed=21, registry=reg)
+        res = SR.evolve(template(sub), ref("selector.map_elites.v1", n=8, representation="statemachine.v2"), generations=6, workdir=wd, seed=21, registry=reg)
         rows = SR.committed_rows(SR.load_rows(wd / "archive.jsonl")); cells = SR.elites_by_cell(rows)
         best = max((r["objective"] for r in rows if r["objective"] is not None), default=None)
         out[name] = {"elites": len(rows), "cells": len(cells), "best": best, "gens": res["generations_done"],

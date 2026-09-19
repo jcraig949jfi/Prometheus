@@ -101,3 +101,12 @@ def test_wall_budget_inside_a_generation_leaves_it_uncommitted(tmp_path):
     t2 = template()
     out2 = SR.evolve(t2, ref("selector.truncation.v1", keep=2, n=4), generations=2, workdir=tmp_path / "wb", seed=3)
     assert out2["generations_done"] == 2 and [r["gen"] for r in SR.load_rows(tmp_path / "wb" / "archive.jsonl") if r["kind"] == "GEN_DONE"] == [0, 1]
+
+
+# C73: playtest D had to SUBCLASS the selector to evolve statemachine.v2 (gen-0 proposals were hard-wired to v1).
+# Selectors take `representation`; gen-0 draws from that representation's registered generator.
+def test_selectors_evolve_any_registered_representation(tmp_path):
+    for rep in ("statemachine.v2", "statemachine.v3", "rewrite.v1"):
+        out = SR.evolve(template(), ref("selector.map_elites.v1", n=4, representation=rep), generations=2, workdir=tmp_path / rep, seed=2)
+        rows = SR.committed_rows(SR.load_rows(tmp_path / rep / "archive.jsonl"))
+        assert out["generations_done"] == 2 and rows and all(r["player"]["representation"] == rep for r in rows), rep

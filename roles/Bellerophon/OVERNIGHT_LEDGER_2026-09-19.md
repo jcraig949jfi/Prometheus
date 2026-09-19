@@ -447,3 +447,7 @@ C72 | 04:47Z | "execution is synchronous": TURN-TAKING is expressible inside the
   player an ActionSpace of width 0 on ticks it may not act; every reference representation and observer
   survives width-0 spaces (test: round-robin over three representations incl. per-player series). Not an
   assumption removal (the loop is still lock-step), a demonstrated expression. Suite 189 passed 6 skipped.
+C73 | 04:49Z | playtest D had to SUBCLASS the selector to evolve statemachine.v2 (gen-0 hard-wired to v1).
+  Selectors take `representation`; generation 0 comes from that representation's REGISTERED generator; a
+  representation the mutation operator cannot touch gets the structure-preserving shuffle as fallback.
+  Tested for v2, v3 and the rewrite system; playtest D's subclass deleted (same results). Suite 190.
