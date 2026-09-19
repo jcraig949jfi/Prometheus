@@ -180,13 +180,17 @@ class IntegerWorld:
         return out
 
     def snapshot(self) -> bytes:
-        return json.dumps({"state": self._state, "trace": self._trace.hexdigest(), "steps": self._steps}, sort_keys=True).encode()
+        # C119: the runtime-mutable params ARE state (a schedule changed step_cost at tick 4; a resumed world had the
+        # original back). A world that declares ext.snapshot.v1 and ext.world.mutable_params.v1 carries them.
+        return json.dumps({"state": self._state, "trace": self._trace.hexdigest(), "steps": self._steps,
+                           "params": {k: self.p[k] for k in self.MUTABLE}}, sort_keys=True).encode()
 
     def restore(self, snapshot: bytes) -> None:
         # The trace object cannot be resumed from a digest, so a restored world's trace hash covers only ticks
         # after the restore and is prefixed by the snapshot's digest. Receipts mark this (replay class PARTIAL).
         d = json.loads(snapshot.decode())
         self._state = d["state"]
+        self.p.update(d.get("params", {}))
         self._trace = hashlib.sha256(("restored:" + d["trace"]).encode())
         self._events = []
 

@@ -97,6 +97,10 @@ MUTANTS = [
     # fifteenth wave (C115): compact archives
     ("M68", "search.py", "    if not path.exists():\n        raise FileNotFoundError(\"compact archive row names %s which is not present\" % path)", "    if not path.exists():\n        from prometheus.toolbox.ref.players import random_statemachine; return random_statemachine(1).manifest()", "a compact row whose file is gone gets a silent fresh player"),
     ("M69", "search.py", "        r[\"_file\"] = path.name                                   # C115: rows may point here instead of embedding the player", "        r[\"_file\"] = \"gen_000_a0.jsonl\"", "compact rows all point at generation 0's file"),
+    # sixteenth wave (C119): checkpoints carry wrapper state and mutable params
+    ("M70", "backends/local.py", "        self._buf = {int(k): v for k, v in d[\"buf\"].items()}; self._perms = None        # permutations are re-derived from their seeds", "        self._buf = {}; self._perms = None", "a resumed delay wrapper starts with empty buffers"),
+    ("M71", "backends/local.py", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"])); self._t = int(d[\"t\"]); self._i = int(d[\"i\"])", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"]))", "a resumed schedule fires its past entries again"),
+    ("M72", "ref/worlds.py", "        self.p.update(d.get(\"params\", {}))\n        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "a restored integer world forgets its runtime-mutable params"),
 ]
 
 

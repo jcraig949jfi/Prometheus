@@ -125,10 +125,10 @@ class GridWorld:
         return out
 
     def snapshot(self) -> bytes:
-        return json.dumps({"state": self._state, "trace": self._trace.hexdigest()}, sort_keys=True).encode()
+        return json.dumps({"state": self._state, "trace": self._trace.hexdigest(), "params": {k: self.p[k] for k in self.MUTABLE}}, sort_keys=True).encode()   # C119
 
     def restore(self, snapshot: bytes) -> None:
-        d = json.loads(snapshot.decode()); self._state = d["state"]; self._trace = hashlib.sha256(("restored:" + d["trace"]).encode()); self._events = []
+        d = json.loads(snapshot.decode()); self._state = d["state"]; self.p.update(d.get("params", {})); self._trace = hashlib.sha256(("restored:" + d["trace"]).encode()); self._events = []
 
     def accounting(self) -> Dict[str, int]:
         return {"world_steps": self._steps}

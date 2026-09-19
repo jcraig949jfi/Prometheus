@@ -235,3 +235,30 @@ def test_host_block_is_computed_once_per_process_and_still_complete():
     a = host_block(); t0 = time.perf_counter(); b = [host_block() for _ in range(200)]; dt = time.perf_counter() - t0
     assert all(x == a for x in b) and set(a) == {"platform", "python", "machine"} and all(a.values())
     assert dt < 0.05, "200 host blocks took %.3f s: not cached" % dt
+
+
+# C119: the checkpoint snapshotted the WORLD through the wrappers' __getattr__ -- but not the wrappers: a delay
+# buffer and a schedule's own tick count restarted from zero on resume (observations repeated; the schedule fired
+# again). The kernel's own interventions must survive a checkpoint like everything else.
+@pytest.mark.parametrize("wrappers,schedule", [({"observation_delay": 3}, None), ({"observation_permute": 5}, None), ({}, [{"tick": 4, "world_params": {"step_cost": 3}}]),
+                                               ({"observation_delay": 2, "observation_permute": 1}, [{"tick": 2, "world_params": {"yield_amt": 2}}, {"tick": 14, "world_params": {"step_cost": 0}}])])
+def test_checkpoint_carries_the_kernel_wrappers_state(wrappers, schedule):
+    from prometheus.toolbox.backends.local import run_episode, resume_episode, build_world
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    iv = {"name": "w", "world_params": {}, "wrappers": wrappers}
+    if schedule:
+        iv["schedule"] = schedule
+    e = Experiment(family="ckptw", world=ref("world.integer.v1", world_seed=4, start_charge=100000, step_cost=1, obs_regs=4), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(3, n_states=6, n_buckets=12).manifest()], interventions=[iv], budget={"episodes": 1, "horizon": 24})
+    def fresh():
+        w = build_world(e, REG); sub = REG.make("substrate.kv.v1", scope="lifetime")
+        return w, sub, {0: sub.instantiate(random_statemachine_v2(3, n_states=6, n_buckets=12), 1)}, [REG.make("observer.trace.v1")]
+    w, sub, inst, obs = fresh()
+    full = run_episode(w, inst, obs, seed=7, horizon=24, substrate=sub, record_actions=True)
+    w2, sub2, inst2, obs2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=7, horizon=24, substrate=sub2, checkpoint_at=9, record_actions=True)
+    w3, sub3, inst3, obs3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=24, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (wrappers, schedule)
+    assert obs3[0].measure()["events_by_kind"] == obs[0].measure()["events_by_kind"]
+    assert w3.summary() == w.summary()
