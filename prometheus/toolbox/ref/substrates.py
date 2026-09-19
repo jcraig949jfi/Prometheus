@@ -241,6 +241,19 @@ class _WorkspaceSubstrate:
         self._t += 1; self._tick_in_episode = t + 1
         self.dev.advance(self._t)
 
+    # C135: the substrate's OWN clock is state. A checkpoint that carried only the device restarted this counter at
+    # 0 in the fresh substrate, so the first tick after a resume advanced the device BACKWARDS (ttl expiries fired
+    # at the wrong ticks; a kv ttl=2 player diverged from the uninterrupted run). Snapshot = clock + device.
+    def snapshot(self) -> bytes:
+        import json
+        return json.dumps({"t": self._t, "episode": self._episode, "tick_in_episode": self._tick_in_episode, "first_read_hits": self._first_read_hits,
+                           "dev": self.dev.snapshot().hex()}).encode()
+
+    def restore(self, snap: bytes) -> None:
+        import json
+        d = json.loads(snap.decode()); self._t = d["t"]; self._episode = d["episode"]; self._tick_in_episode = d["tick_in_episode"]
+        self._first_read_hits = d["first_read_hits"]; self.dev.restore(bytes.fromhex(d["dev"]))
+
     def events(self):
         return self.dev.events()
 

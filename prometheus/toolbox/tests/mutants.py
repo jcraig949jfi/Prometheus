@@ -108,6 +108,9 @@ MUTANTS = [
     ("M75", "receipt.py", "                if isinstance(rec, dict) and isinstance(rec.get(\"receipt_id\"), str):\n                    chain.append(rec[\"receipt_id\"])", "                pass", "an edited receipt is reported twice (edit + a chain break on the next line)"),
     # nineteenth wave (C133): point mutation always changes one cell
     ("M76", "ref/transforms.py", "            cur = cell[2] + 1; cell[2] = (cur + 1 + s.below(pl[\"mem_range\"])) % (pl[\"mem_range\"] + 1) - 1", "            cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl[\"mem_range\"])", "a v2 point mutation may return the parent unchanged"),
+    # twentieth wave (C135): the substrate's clock in the checkpoint
+    ("M77", "backends/local.py", "          \"substrates\": [so.snapshot().hex() if hasattr(so, \"snapshot\") else (so.dev.snapshot().hex() if hasattr(so, \"dev\") else None) for so in subs],   # C135: the substrate's clock too", "          \"substrates\": [so.dev.snapshot().hex() if hasattr(so, \"dev\") else None for so in subs],", "checkpoint carries the device but not the substrate's clock"),
+    ("M78", "ref/substrates.py", "        d = json.loads(snap.decode()); self._t = d[\"t\"]; self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "        d = json.loads(snap.decode()); self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "a restored substrate's clock restarts at zero"),
 ]
 
 

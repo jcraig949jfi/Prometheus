@@ -957,3 +957,17 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   runner now merges --only rows into the existing file by id. Restored the 74-row ledger from the previous
   commit and merged M76: 75 mutants, 75 CAUGHT. A science file that an instrument can silently truncate is the
   C95 lesson in file form.
+
+## C135 (08:49Z) the player contract as a property; the substrate's clock was not in the checkpoint (post-closing)
+- 60 random specs x random substrates x flat/structured observations: act() shape and range; probe fingerprint
+  stable across instances; cost() non-negative; snapshot/restore mid-run in FRESH objects reproduces the rest of
+  the action sequence. Two fixture errors first (a second instance on the used substrate is pid 1, a resumed
+  instance pid 2 -- the kernel resumes on fresh substrates), then a real one: statemachine.v2 on kv ttl=2 diverged
+  after restore.
+- defect: _WorkspaceSubstrate.tick() advances the device by the substrate's OWN cumulative counter (_t += 1;
+  dev.advance(_t)); a checkpoint carried the device only, so a fresh substrate's first tick after a resume moved
+  the device's clock BACKWARDS (8 -> 1) and ttl expiries fired ticks late. Substrates now snapshot/restore their
+  clock (_t, episode, tick-in-episode, first-read hits) together with the device; make_checkpoint/resume_episode
+  use it. Mutants M77/M78 CAUGHT; ledger 77/77 (merged). Suite 1045 passed / 6 skipped.
+- the C119 sentence again: state that lives in the kernel's own objects (wrappers, substrates) is state a
+  checkpoint must carry. Three such holes tonight (wrappers, mutable params, substrate clock).

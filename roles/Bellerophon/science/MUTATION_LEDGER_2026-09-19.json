@@ -673,5 +673,23 @@
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_point_mutation_never_returns_the_parent",
   "suite_tail": "1 failed, 652 passed, 1 skipped, 1 deselected in 12.23s",
   "seconds": 12.7
+ },
+ {
+  "id": "M77",
+  "file": "backends/local.py",
+  "what": "checkpoint carries the device but not the substrate's clock",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run",
+  "suite_tail": "1 failed, 358 passed, 1 deselected in 8.86s",
+  "seconds": 9.2
+ },
+ {
+  "id": "M78",
+  "file": "ref/substrates.py",
+  "what": "a restored substrate's clock restarts at zero",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_kernel.py::test_player_contract_over_random_specs[1328]",
+  "suite_tail": "1 failed, 603 passed, 1 skipped, 1 deselected in 9.74s",
+  "seconds": 10.1
  }
 ]
