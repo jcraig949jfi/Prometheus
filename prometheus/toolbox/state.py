@@ -82,7 +82,7 @@ class InProcessStateDevice:
         for store in (self._kv, self._h, self._s, self._z):
             for k in [k for k, e in store.items() if e.get("exp") is not None and e["exp"] <= tick]:
                 del store[k]; self._c["expired"] += 1
-                self._ev.append((tick, EVENT_ID["TASK_CHANGE"], -1, _key_id(k), -2))   # -2 = expired by ttl
+                self._ev.append((tick, EVENT_ID["STATE_EXPIRE"], -1, _key_id(k), 0))
 
     def end_scope(self, scope: str) -> int:
         if scope not in SCOPES:
@@ -93,7 +93,7 @@ class InProcessStateDevice:
             for k in [k for k, e in store.items() if order[e["scope"]] <= order[scope] and e["scope"] != "persistent"]:
                 del store[k]; n += 1
         self._c["discarded"] += n
-        self._ev.append((self._tick, EVENT_ID["TASK_CHANGE"], -1, order[scope], -n))
+        self._ev.append((self._tick, EVENT_ID["STATE_DISCARD"], -1, order[scope], n))
         return n
 
     def _exp(self, ttl: Optional[int]) -> Optional[int]:
@@ -231,7 +231,7 @@ class RedisStateDevice:
         self._tick = tick
         for k in [k for k, m in self._meta.items() if m.get("exp") is not None and m["exp"] <= tick]:
             self.r.delete(self._k(k)); del self._meta[k]; self._c["expired"] += 1
-            self._ev.append((tick, EVENT_ID["TASK_CHANGE"], -1, _key_id(k), -2))
+            self._ev.append((tick, EVENT_ID["STATE_EXPIRE"], -1, _key_id(k), 0))
 
     def end_scope(self, scope: str) -> int:
         order = {"ephemeral": 0, "episode": 1, "lifetime": 2, "persistent": 3}
@@ -241,7 +241,7 @@ class RedisStateDevice:
             for k in ks:
                 del self._meta[k]
         self._c["discarded"] += len(ks)
-        self._ev.append((self._tick, EVENT_ID["TASK_CHANGE"], -1, order[scope], -len(ks)))
+        self._ev.append((self._tick, EVENT_ID["STATE_DISCARD"], -1, order[scope], len(ks)))
         return len(ks)
 
     def _room(self, key, player) -> bool:

@@ -28,6 +28,7 @@ from typing import Any, Dict, FrozenSet, List, Optional, Protocol, Tuple, runtim
 EVENT_KINDS: Tuple[str, ...] = (
     "STATE_READ", "STATE_WRITE", "ACTION", "MESSAGE", "TRANSFER", "RESOURCE_CHANGE", "CONTACT",
     "ARTIFACT_CREATE", "ARTIFACT_INVOKE", "SNAPSHOT", "BRANCH", "TASK_CHANGE", "ABSORBED", "YIELD",
+    "STATE_EXPIRE", "STATE_DISCARD",          # C23: appended (ids stable); state-device lifetimes are not task changes
 )
 EVENT_ID: Dict[str, int] = {k: i for i, k in enumerate(EVENT_KINDS)}
 Event = Tuple[int, int, int, int, int]

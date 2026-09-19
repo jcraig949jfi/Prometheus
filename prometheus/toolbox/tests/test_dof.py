@@ -112,3 +112,17 @@ def test_schedule_refuses_non_mutable_params_as_a_failed_run_not_a_halt(tmp_path
     e = _exp(interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"n_regs": 99}}]}], budget={"episodes": 1, "horizon": 4})
     rep = execute(lower(e, REG).job, tmp_path / "bad.jsonl", REG)
     assert rep.n_failed == 1 and "not runtime-mutable" in read_all(tmp_path / "bad.jsonl")[0]["error"]
+
+
+# C23 (playtest C rows): TASK_CHANGE counts exceeded the schedule because the StateDevice reused the TASK_CHANGE
+# kind for key expiry and scope discards -- two meanings under one event id. Expiry/discard get their own kinds.
+def test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind(tmp_path):
+    sched = {"name": "s", "schedule": [{"tick": 2, "world_params": {"act_cost": 3}}, {"tick": 4, "world_params": {"yield_amt": 1, "step_cost": 0}}]}
+    e = _exp(interventions=[sched], substrate=ref("substrate.kv.v1", scope="lifetime", ttl=1), players=[random_statemachine_v2(3).manifest()],
+             observers=[ref("observer.trace.v1")], budget={"episodes": 2, "horizon": 6})
+    execute(lower(e, REG).job, tmp_path / "tc.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "tc.jsonl") if x["arm"] == "primary"][0]
+    ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
+    assert ev.get("TASK_CHANGE") == 2 * 3                     # 3 parameter changes per episode x 2 episodes
+    assert ev.get("STATE_EXPIRE", 0) == r["accounting"]["ws_expired"] > 0
+    assert ev.get("STATE_DISCARD", 0) >= 1                    # the episode-scope end at the second episode

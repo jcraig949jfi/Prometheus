@@ -157,3 +157,11 @@ C21 | T+0:30 | cause: the series' yield column was cumulative over the RUN (Seri
   per-episode yield counter. Playtest C re-run: per-episode yields now vary (see rows). Suite 106.
   LESSON (ledger): an invariant that holds for both the right and the wrong implementation is not a test of
   the difference; the playtest row that looked "too regular" was the signal.
+C22 | T+0:33 | while re-checking C21 the rows STILL read [84, 84, 84]: I was reading a receipts file that
+  execute() had APPENDED a second run to -- two executions interleaved as one file, stale rows analysed as
+  fresh. RED: executing twice to one path must raise unless append=True. Fix in execute(). Suite 107.
+C23 | T+0:35 | fresh playtest C rows: TASK_CHANGE counts (13, 10, 9, 7) exceeded what the schedule could
+  produce (6, 6, 6, 3): the StateDevice reused TASK_CHANGE for key expiry and scope discards -- one event id,
+  two meanings. RED (TASK_CHANGE == 3 params x 2 episodes; STATE_EXPIRE == ws_expired; STATE_DISCARD >= 1);
+  fix: STATE_EXPIRE / STATE_DISCARD appended to EVENT_KINDS (ids stable). Suite 108. Playtest C re-run: per
+  seed TASK_CHANGE now matches the schedule and expiries are their own kind (rows below in the receipt file).

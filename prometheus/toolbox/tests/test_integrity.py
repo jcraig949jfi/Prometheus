@@ -49,3 +49,17 @@ def test_duplicate_receipt_ids_are_reported(tmp_path):
 def test_scan_of_a_clean_file_has_no_defects(tmp_path):
     p = _write(tmp_path)
     assert R.scan(p) == {"path": str(p), "lines": 4, "valid": 4, "defects": [], "receipt_ids": R.scan(p)["receipt_ids"]}
+
+
+# C22 (playtest C re-run): execute() APPENDED a second run to an existing receipts file, so a reader saw two
+# executions interleaved as one and I analysed stale rows as fresh ones. A receipts path is one execution
+# unless the caller says otherwise.
+def test_execute_refuses_to_append_to_an_existing_receipts_file_unless_asked(tmp_path):
+    p = _write(tmp_path)
+    e = Experiment(family="integ", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 8})
+    with pytest.raises(FileExistsError):
+        execute(lower(e, REG).job, p, REG)
+    assert R.scan(p)["valid"] == 4                              # untouched
+    execute(lower(e, REG).job, p, REG, append=True)
+    assert R.scan(p)["valid"] == 6 and R.scan(p)["defects"] == []

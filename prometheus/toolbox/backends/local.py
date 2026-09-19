@@ -291,9 +291,15 @@ class ExecutionReport:
         return self.__dict__
 
 
-def execute(job: LocalJob, out_path, registry=None) -> ExecutionReport:
+def execute(job: LocalJob, out_path, registry=None, append: bool = False) -> ExecutionReport:
+    """One receipts file is ONE execution (C22): an existing non-empty file is refused unless append=True
+    (resumption is explicit, never accidental)."""
+    import pathlib
     from prometheus.toolbox.registry import default_registry
     registry = registry or default_registry()
+    op = pathlib.Path(out_path)
+    if op.exists() and op.stat().st_size > 0 and not append:
+        raise FileExistsError("%s already holds receipts; pass append=True to add a second execution to it" % op)
     w = ReceiptWriter(out_path)
     by_key: Dict[str, Dict[Any, dict]] = {}
     n_fail = 0
