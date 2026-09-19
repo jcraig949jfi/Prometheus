@@ -3,7 +3,8 @@
 Currency: 2026-09-19 (C0 CLOSED; C1 + C1b run and reported; frozen C1
 family CLOSED per the GO's decision rule; instance m2-8d43bbf9).
 
-seat state: ACTIVE. Lane: crius/ (isolated sandbox, charter Campaign 0).
+seat state: PARKED 2026-09-19T13:00Z (operator); resume at the C2 rung-C
+  gate decision (CRIUS-33). Lane: crius/ (isolated sandbox).
 what it asserts: PRESENT (booted in comms 2026-09-19T01:34Z), ACTIVE
   (charter pass), PRODUCTIVE (sandbox + 11 tests + baseline receipts +
   searches on disk), VALID = per the s13 checklist in each REPORT.md,
