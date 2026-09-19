@@ -1,0 +1,45 @@
+{
+ "perturbation_id": "P-G10",
+ "parent": "T-X16",
+ "claim_type": "economics-deformation",
+ "prices": {
+  "none": [
+   0.0,
+   0.0
+  ],
+  "units_only": [
+   0.01,
+   0.0
+  ],
+  "registers_only": [
+   0.0,
+   0.01
+  ],
+  "both": [
+   0.01,
+   0.01
+  ]
+ },
+ "damage": [
+  "none",
+  "tape",
+  "tree"
+ ],
+ "rate": 0.6,
+ "ids": [
+  "cw01-loop5-PG10-0",
+  "cw01-loop5-PG10-1",
+  "cw01-loop5-PG10-2"
+ ],
+ "generations": 160,
+ "f0": 0.1,
+ "price_assumptions": "per_item_attempted unchanged (.002); the structural and register components are varied",
+ "readouts": "pruning signature (tree-damaged minus tape-damaged final TREE) and TREE dominance (none arm final TREE from .1) per price component",
+ "reading": "the component whose presence flips the signature's sign is named; REGISTER_ACCOUNTING if registers_only carries the .01 sign and units_only does not; STRUCTURAL_PRICE if units_only carries it; BOTH_NEEDED; NEITHER",
+ "material_rule": "the signature or TREE dominance differs between components by >= .2 (3 ids)",
+ "continuation": [
+  "register price dose"
+ ],
+ "written": "2026-09-19 03:20:19",
+ "prereg_sha256": "75ff2c44e0548972f87513c6fcc67abbd6a2e0136c662c0964d5163d280704c3"
+}

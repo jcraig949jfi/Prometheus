@@ -86,10 +86,15 @@ def main(tag, prefix=None, slots=None):
         per_family[c["family"]] = per_family.get(c["family"], 0) + 1
         why[c["id"]] = reason
 
+    executed = {d["id"] for d in raw if d.get("amend") and d.get("executed_in")}
+
     def fits(c):
+        # a candidate that cannot run without another candidate's RESULT (`requires`) is admitted only
+        # when every requirement is already chosen or executed (D080 standing rule; cycle 5)
         return (per_parent.get(c["parent"], 0) < MAX_PER_PARENT
                 and per_family.get(c["family"], 0) < MAX_PER_FAMILY
-                and c["id"] not in why)
+                and c["id"] not in why
+                and all((r in why) or (r in executed) for r in (c.get("requires") or [])))
 
     # 0. deformation slots: one per deformation family (A/B/C...) so a material deformation found
     #    in one cycle cannot disappear into global scoring in the next

@@ -22,6 +22,18 @@ def load(p):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
 
 
+_PF02_KEYS = None
+
+
+def KEYS_IDX(name, rows):
+    """Index of a P-F02 vector key (keys recorded in the P-F02 PREREG)."""
+    global _PF02_KEYS
+    if _PF02_KEYS is None:
+        pre = load(EXP / "cw01-arch4" / "P-F02" / "PREREG.json") or {}
+        _PF02_KEYS = pre.get("vector_keys") or []
+    return _PF02_KEYS.index(name)
+
+
 def main():
     pe01 = load(EXP / "cw01-arch4" / "P-E01" / "rows.json") or []
     pe02 = load(EXP / "cw01-arch4" / "P-E02" / "rows.json") or []
@@ -61,6 +73,20 @@ def main():
         {"id": "SPEC-M1-SELECTION", "node": "T-ARCH4/M1", "substrate": "Proteus evolver (evolver.py)", "phenomenon": "damage robustness of selected tops vs their own ancestors and a competent neutral-drift control",
          "ruler": "P-D01 loss paired by ancestor", "expected_effect": "see P-F06 RESULT.json 'reading' and seeds_holding", "location": "experiments/cw01-arch4/P-E03, P-F06",
          "use": ["post-freeze comparison case: selection vs inheritance vs drift"]},
+    ]
+    pf02 = load(EXP / "cw01-arch4" / "P-F02" / "rows.json") or []
+    specimens += [
+        {"id": "SPEC-R01-FALSE-COORDINATE", "node": "T-R01 / T-X15", "substrate": "Proteus TT programs", "phenomenon": "RULER-INDUCED FALSE COORDINATE: any damage ruler that fixes a COUNT (fixed k, contiguous window, rounded fraction) manufactures 'length protects' and 'selected tops are robust'; three fraction-fixing rulers (Bernoulli, reached-only, disable) show neither",
+         "ruler": "scatter.py (qualified in P-G01) vs run_PD01.damage (fixed-count) and exact-count / contiguous variants (P-G08)", "expected_effect": "length slope -.107 / -.143 and set effect -.19 / -.18 under count-fixing rulers; +.04 / +.01 under Bernoulli", "location": "experiments/cw01-arch4/P-G08 (rows.json), P-G01, P-G02",
+         "use": ["observatory adversarial specimen: a measurement that creates the coordinate it reports", "positive control for ruler-provenance checks"]},
+        {"id": "SPEC-X16-PRICE-SIGN", "node": "T-X16", "substrate": "world_e06", "phenomenon": "SIGN REVERSAL BY PRICE: the pruning signature is +.25 at per-unit price .01 and -.32 at price 0 (P-F04); the sign follows the per-unit structural component, not the register component (P-G10)",
+         "ruler": "final TREE share (tree-damaged minus tape-damaged)", "expected_effect": "sign flips with the structural price", "location": "experiments/cw01-loop4/P-F04, cw01-loop5/P-G10", "use": ["observatory adversarial specimen: an intervention whose sign is set by the economics", "post-freeze comparison case"]},
+        {"id": "SPEC-X15-ENTANGLED", "node": "T-X15", "substrate": "Proteus TT programs", "phenomenon": "INTERVENTION / FUNCTION ENTANGLEMENT: reducing state persistence below q=1 destroys function in 112/121 programs (reward .71 -> .43 at q=.75); no function-preserving dose exists below .75; where it exists, damage loss is unchanged",
+         "ruler": "P-G03 eval_q (graded persistence) with the scattered ruler", "expected_effect": "eligible doses {1.0: 121, .75: 9, <=.5: 0}", "location": "experiments/cw01-arch4/P-G03 (rows.json)", "use": ["observatory specimen: a probe that becomes UNABLE outside its valid domain", "positive control for function-preservation checks"]},
+        {"id": "SPEC-X17-GEOMETRIES", "node": "T-X17 / T-X19 / T-X20", "substrate": "Proteus TT programs", "phenomenon": "LINEAGE-CARRIED TEMPORAL GEOMETRIES: six stable response shapes including start-anchored (T-X19, delay_general lineage) and periodic / parity (T-X20); heritable along neutral walks",
+         "ruler": "P-F02 30-construction census", "expected_effect": "cluster centroids in RESULT.json", "location": "experiments/cw01-arch4/P-F02 (rows.json: vectors per program with lineage)", "use": ["Nyx recognition specimens (five non-immune geometries with genomes)", "post-freeze comparison: does a detector separate the shapes"],
+         "representative_ids": {"start_anchored": [r["pid"] for r in pf02 if r["vector"][KEYS_IDX("W0D2.before_first_put.n1", pf02)] >= 0.5 and r["vector"][KEYS_IDX("W0D1.before_first_ask.n1", pf02)] < 0.1][:6] if pf02 else [],
+                                "periodic": [r["pid"] for r in pf02 if abs(r["vector"][KEYS_IDX("W0D1.order_ne", pf02)] - r["vector"][KEYS_IDX("W0D1.order_en", pf02)]) >= 0.3][:6] if pf02 else []}},
     ]
     doc = {"written": time.strftime("%Y-%m-%d %H:%M:%S"), "campaign": "cw01-2026-09-17", "scope": "software-only artificial life / algorithm search; nothing biological",
            "rule": "public phenomena with known mechanisms and locations: usable as positive controls, recognition specimens, adversarial examples and post-freeze comparison cases; NOT hidden fixtures; NOT for detector threshold tuning after thresholds freeze; Campaign 6 machinery untouched",

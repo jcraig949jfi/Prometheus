@@ -1,0 +1,53 @@
+{
+ "perturbation_id": "P-G03",
+ "parent": "T-X15",
+ "requires": [
+  "P-G01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "causal-separation",
+ "intervention": {
+  "family": "graded persistence",
+  "geometry": "per tick boundary",
+  "sampling_law": "Bernoulli(1-q) clear of tape and registers",
+  "normalisation": "loss vs the dose's own baseline",
+  "denominator": "4 draws",
+  "price_assumptions": "none",
+  "viability_floor": 0.1875,
+  "alters_baseline_function": "checked per dose: eligible only inside the band of q=1 and above the floor",
+  "qualification": "q=1 must reproduce evaluate() exactly (harness check)"
+ },
+ "damage_ruler": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "doses": [
+  1.0,
+  0.75,
+  0.5,
+  0.25,
+  0.0
+ ],
+ "f": 0.1,
+ "draws": 4,
+ "readings": {
+  "STATE_CAUSAL": "among programs with >= 2 eligible doses, paired loss(lowest eligible q) - loss(q=1) outside its sign-flip band",
+  "STATE_ENTANGLED_WITH_FUNCTION": "fewer than 8 programs keep function at any q < 1",
+  "STATE_CORRELATED": "persistent words correlate with loss at q=1 (Spearman clears band) but the dose contrast is inside its band",
+  "NO_RESIDUAL_STATE_EFFECT": "dose contrast inside band and no correlation"
+ },
+ "material_rule": "reading is STATE_CAUSAL, or the harness check fails (recorded), or STATE_ENTANGLED is itself the finding",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:18:43",
+ "prereg_sha256": "5a02a6c386bf285119cc3c7b6e859dfaac2554fd644287100d7231335fd4766d"
+}

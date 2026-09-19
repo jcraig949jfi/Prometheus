@@ -1,5 +1,5 @@
 {
- "written": "2026-09-19 02:57:37",
+ "written": "2026-09-19 03:27:15",
  "campaign": "cw01-2026-09-17",
  "scope": "software-only artificial life / algorithm search; nothing biological",
  "rule": "public phenomena with known mechanisms and locations: usable as positive controls, recognition specimens, adversarial examples and post-freeze comparison cases; NOT hidden fixtures; NOT for detector threshold tuning after thresholds freeze; Campaign 6 machinery untouched",
@@ -788,6 +788,76 @@
    "use": [
     "post-freeze comparison case: selection vs inheritance vs drift"
    ]
+  },
+  {
+   "id": "SPEC-R01-FALSE-COORDINATE",
+   "node": "T-R01 / T-X15",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "RULER-INDUCED FALSE COORDINATE: any damage ruler that fixes a COUNT (fixed k, contiguous window, rounded fraction) manufactures 'length protects' and 'selected tops are robust'; three fraction-fixing rulers (Bernoulli, reached-only, disable) show neither",
+   "ruler": "scatter.py (qualified in P-G01) vs run_PD01.damage (fixed-count) and exact-count / contiguous variants (P-G08)",
+   "expected_effect": "length slope -.107 / -.143 and set effect -.19 / -.18 under count-fixing rulers; +.04 / +.01 under Bernoulli",
+   "location": "experiments/cw01-arch4/P-G08 (rows.json), P-G01, P-G02",
+   "use": [
+    "observatory adversarial specimen: a measurement that creates the coordinate it reports",
+    "positive control for ruler-provenance checks"
+   ]
+  },
+  {
+   "id": "SPEC-X16-PRICE-SIGN",
+   "node": "T-X16",
+   "substrate": "world_e06",
+   "phenomenon": "SIGN REVERSAL BY PRICE: the pruning signature is +.25 at per-unit price .01 and -.32 at price 0 (P-F04); the sign follows the per-unit structural component, not the register component (P-G10)",
+   "ruler": "final TREE share (tree-damaged minus tape-damaged)",
+   "expected_effect": "sign flips with the structural price",
+   "location": "experiments/cw01-loop4/P-F04, cw01-loop5/P-G10",
+   "use": [
+    "observatory adversarial specimen: an intervention whose sign is set by the economics",
+    "post-freeze comparison case"
+   ]
+  },
+  {
+   "id": "SPEC-X15-ENTANGLED",
+   "node": "T-X15",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "INTERVENTION / FUNCTION ENTANGLEMENT: reducing state persistence below q=1 destroys function in 112/121 programs (reward .71 -> .43 at q=.75); no function-preserving dose exists below .75; where it exists, damage loss is unchanged",
+   "ruler": "P-G03 eval_q (graded persistence) with the scattered ruler",
+   "expected_effect": "eligible doses {1.0: 121, .75: 9, <=.5: 0}",
+   "location": "experiments/cw01-arch4/P-G03 (rows.json)",
+   "use": [
+    "observatory specimen: a probe that becomes UNABLE outside its valid domain",
+    "positive control for function-preservation checks"
+   ]
+  },
+  {
+   "id": "SPEC-X17-GEOMETRIES",
+   "node": "T-X17 / T-X19 / T-X20",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "LINEAGE-CARRIED TEMPORAL GEOMETRIES: six stable response shapes including start-anchored (T-X19, delay_general lineage) and periodic / parity (T-X20); heritable along neutral walks",
+   "ruler": "P-F02 30-construction census",
+   "expected_effect": "cluster centroids in RESULT.json",
+   "location": "experiments/cw01-arch4/P-F02 (rows.json: vectors per program with lineage)",
+   "use": [
+    "Nyx recognition specimens (five non-immune geometries with genomes)",
+    "post-freeze comparison: does a detector separate the shapes"
+   ],
+   "representative_ids": {
+    "start_anchored": [
+     "8a1db1b9c9b19f57de6876be75491f8d3e4fa05df988b462b247ceff8db4bb4f",
+     "a84349c03a7d6e92eae37b043d54b6d05c2ba8c0c33d211b5bd86bec7b740665",
+     "265c5fa2c69b1ad5664bb244c904d939c7a606c8e8b28bef8505a43c436835d7",
+     "613de3bb22cf0f5eac21cb6b4c2f35bcdbf9126426d97cba0850b88de2246cae",
+     "81467a7f416a56f7e0d5255a5098fc9194fc86748d21bcdf8e49e29a52969e4b",
+     "a9d174013004e12ab5a11a4f0d3bab23bea78c1ca348ca0cbc24198d769f27f7"
+    ],
+    "periodic": [
+     "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42",
+     "06c1c76b945dbe319362698be50750212dd000e8bddc2e4e8feac2759ff91e88",
+     "2809ce8eb7a7c1f40c2970ac2d50a6ba2b8b8b9d3b74a96c92b5fc3cf1746249",
+     "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42/w1d4",
+     "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42/w1d8",
+     "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42/w1d16"
+    ]
+   }
   }
  ],
  "n_transplant_lineages": 12
