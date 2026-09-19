@@ -75,3 +75,16 @@ def test_map_elites_selector_keeps_one_elite_per_descriptor_cell(tmp_path):
     rows = [r for r in SR.load_rows(tmp_path / "me" / "archive.jsonl") if r["kind"] == "elite"]
     cells = SR.elites_by_cell(rows)
     assert cells and all(len(v) == 1 for v in cells.values()) and out["generations_done"] == 3
+
+
+# C27 (playtest D rows): a row's descriptor came from the FIRST seed only while its objective was the mean over
+# seeds -- a cell key that contradicted its own objective. Descriptors aggregate element-wise (floor(mean+0.5))
+# and every seed's descriptor is kept on the row.
+def test_row_descriptor_aggregates_over_seeds_and_keeps_each_seed():
+    fake = []
+    for seed, desc, obj in ((1, [0, 7, 0], 0.0), (2, [0, 7, 7], 320.0)):
+        fake.append({"arm": "primary", "sweep_point": {"players": [{"x": 1}]}, "science": {"observations": {"observer.descriptor.v1": {"descriptor": desc}},
+                     "player_fingerprints": {"0": {"hash": "abc", "silent": False}}, "objective": {"value": obj}}, "receipt_id": "r%d" % seed, "seed": seed,
+                     "_player_manifest": {"x": 1}})
+    rows = SR._rows_from_receipts(fake)
+    assert len(rows) == 1 and rows[0]["descriptor"] == [0, 7, 4] and rows[0]["descriptors"] == [[0, 7, 0], [0, 7, 7]] and rows[0]["objective"] == 160.0

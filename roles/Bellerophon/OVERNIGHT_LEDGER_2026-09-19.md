@@ -190,3 +190,13 @@ C26 | T+0:50 | search ABOVE the kernel (directive s18): prometheus/toolbox/searc
   player (objective = mean over seeds, receipt ids listed). Suite 139 passed 6 skipped.
   DECISION: the kernel knows nothing about search; nothing in the IR/executor/receipts changed. Reopen if a
   selector needs per-receipt access beyond receipt ids (then rows carry a receipts path, not receipt copies).
+C27 | T+0:55 | PLAYTEST D (playtests/pt_d_search_memory.py): MAP-Elites above the kernel, 6 gens x 8 x 2 seeds,
+  flat vs kv-lifetime, statemachine.v2, regime-switching world. First run: archive collapsed to 4-5 cells;
+  the best cell (0,7,0) carried objective 160 while its yield bucket said 0.
+  TWO FINDINGS: (a) a row's descriptor came from the FIRST seed while its objective was the mean over seeds
+  -- a cell key contradicting its own objective. RED (fake receipts: [0,7,0]+[0,7,7] must give [0,7,4] and
+  keep both); rows now aggregate descriptors element-wise and keep every seed's. (b) descriptor buckets
+  saturated at 7 (magnitude, yield) on this world: observer.descriptor.v1 -> version 2 with action_scale /
+  yield_scale params (a designer calibrates; the kernel cannot know a world's ranges). With scales (2, 40):
+  flat 12 cells, kv 16 cells, best 160 / 159.3. No claim about memory; the composition works.
+  Suite 140 passed 6 skipped.

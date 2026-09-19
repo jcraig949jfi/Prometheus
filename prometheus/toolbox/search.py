@@ -121,12 +121,16 @@ def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
         key = json.dumps(r["sweep_point"], sort_keys=True)
         desc = (r["science"].get("observations", {}).get("observer.descriptor.v1") or {}).get("descriptor", [])
         row = by.setdefault(key, {"kind": "elite", "player": r["_player_manifest"], "fingerprint": r["science"]["player_fingerprints"]["0"]["hash"],
-                                  "descriptor": desc, "objectives": [], "receipt_ids": [], "seeds": []})
-        row["objectives"].append((r["science"].get("objective") or {}).get("value")); row["receipt_ids"].append(r["receipt_id"]); row["seeds"].append(r["seed"])
+                                  "descriptors": [], "objectives": [], "receipt_ids": [], "seeds": []})
+        row["descriptors"].append(list(desc)); row["objectives"].append((r["science"].get("objective") or {}).get("value"))
+        row["receipt_ids"].append(r["receipt_id"]); row["seeds"].append(r["seed"])
     rows = []
     for row in by.values():
         vals = row.pop("objectives")
         row["objective"] = None if any(v is None for v in vals) or not vals else sum(vals) / len(vals)
+        ds = [d for d in row["descriptors"] if d]
+        # C27: the cell key is the element-wise floor(mean + 0.5) over seeds, never one seed's descriptor
+        row["descriptor"] = [int(sum(d[i] for d in ds) / len(ds) + 0.5) for i in range(len(ds[0]))] if ds else []
         rows.append(row)
     return rows
 

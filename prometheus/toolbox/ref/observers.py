@@ -59,14 +59,23 @@ class TraceObserver:
 
 
 class DescriptorObserver(TraceObserver):
+    """[abstain_rate_bucket 0-8, action_magnitude_bucket 0-7, yield_bucket 0-7]. The scales are PARAMETERS
+    (C27: with the defaults the magnitude and yield buckets saturated at 7 on the integer world, collapsing a
+    MAP-Elites archive to 4 cells); a designer calibrates them to the world's ranges."""
     kind = "observer.descriptor.v1"
-    version = "1"
+    version = "2"
+
+    def __init__(self, action_scale: int = 1, yield_scale: int = 8):
+        super().__init__(); self.action_scale = max(1, int(action_scale)); self.yield_scale = max(1, int(yield_scale))
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "action_scale": self.action_scale, "yield_scale": self.yield_scale}
 
     def describe(self) -> List[int]:
         t = max(1, self._ticks); n = max(1, self._n_players)
         abst = sum(self._abstain.values()) * 8 // (t * n)
-        mag = min(7, sum(self._actions.values()) // (t * n))
-        yb = min(7, sum(self._yield.values()) // 8)
+        mag = min(7, sum(self._actions.values()) // (t * n * self.action_scale))
+        yb = min(7, sum(self._yield.values()) // self.yield_scale)
         return [abst, mag, yb]
 
     def measure(self) -> Dict[str, Any]:
