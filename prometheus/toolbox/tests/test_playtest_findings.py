@@ -315,3 +315,20 @@ def test_two_observers_of_one_kind_are_both_recorded(tmp_path):
     assert "observer.descriptor.v1" in obs and "observer.descriptor.v1#1" in obs and obs["observer.descriptor.v1"]["descriptor"] != obs["observer.descriptor.v1#1"]["descriptor"]
     assert r["series"]["observer.series.v1"]["status"] == "PRESENT" and r["series"]["observer.series.v1#3"]["status"] == "DISABLED"
     assert [o["kind"] for o in r["components"]["observers"]] == ["observer.descriptor.v1", "observer.descriptor.v1", "observer.series.v1", "observer.series.v1"]
+
+
+# C49: an objective penalty naming an accounting key that never exists (a typo: ws_read for ws_reads) silently
+# penalised nothing -- a false zero that looked like "memory is free". Unknown penalty keys are reported.
+def test_objective_reports_penalty_keys_that_never_appear(tmp_path):
+    e = _exp(objective=ref("objective.yield_net.v1", penalties={"ws_read": 1.0, "ops": 0.01}), substrate=ref("substrate.kv.v1"), players=[random_statemachine_v2(1).manifest()])
+    execute(lower(e, REG).job, tmp_path / "pen.jsonl", REG)
+    obj = [x for x in read_all(tmp_path / "pen.jsonl") if x["arm"] == "primary"][0]["science"]["objective"]
+    assert obj["components"]["unknown_penalty_keys"] == ["ws_read"] and obj["components"]["penalties"]["ops"] > 0
+
+
+# C52: a world declared for 3 players given 2 player specs ran with a silent phantom third player that never
+# acted (and could still win survival). The player count must match at lowering.
+def test_player_count_must_match_the_world_at_lowering():
+    e = _exp(world=ref("world.integer.v1", world_seed=2, n_players=3), players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()])
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("n_players" in r and "2" in r and "3" in r for r in low.reasons)

@@ -105,9 +105,11 @@ def lower(exp: Experiment, registry) -> Lowering:
     for point in exp.sweep_points():
         base = exp.at_point(point)
         try:                                                      # C38: a construction error is reported ONCE, here, not per run
-            build_world(base, registry)
+            w0 = build_world(base, registry)
         except Exception as exc:                                  # noqa: BLE001
             return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world cannot be constructed at sweep point %s: %s: %s" % (json.dumps(point, sort_keys=True, default=str), type(exc).__name__, str(exc)[:200])], negotiation=neg.as_dict())
+        if base.players and getattr(w0, "n_players", len(base.players)) != len(base.players):       # C52: no phantom players
+            return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world declares n_players=%d but %d players are given at sweep point %s" % (w0.n_players, len(base.players), json.dumps(point, sort_keys=True, default=str))], negotiation=neg.as_dict())
         arms = [("primary", base)] + [(ctrl.kind, ctrl.arm(base, exp.seed_policy["base"] * 7919 + 1)) for _, ctrl in controls]
         for arm, aexp in arms:
             for s, split in seeds_for(exp):

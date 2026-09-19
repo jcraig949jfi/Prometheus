@@ -336,3 +336,8 @@ C48 | 04:01Z (T+1:12) | two observers of ONE kind with different params (two des
   and one disabled) collided on the receipt's kind-keyed maps -- the second silently overwrote the first
   (found by asking what a designer who calibrates descriptors would write). RED; repeated kinds are keyed
   kind#<index> in observations and series; series.verify uses the same keying. Suite 174 passed 6 skipped.
+C49 | 04:03Z | an objective penalty on a key that never appears in accounting (a typo) silently cost nothing --
+  "memory is free" as a false zero. Reported as components.unknown_penalty_keys. RED -> GREEN.
+C52 | 04:03Z | a world declared for 3 players given 2 specs ran with a silent PHANTOM third player (never acted,
+  could still "win" survival). Lowering now refuses a player-count mismatch naming both numbers and the sweep
+  point. Suite 176 passed 6 skipped.

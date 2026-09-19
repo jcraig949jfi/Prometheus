@@ -112,7 +112,8 @@ class YieldNetObjective:
         for obs in sci.get("observations", {}).values():
             y = max(y, int(obs.get("yield_total", 0)))
         pen = {k: w * float(acc.get(k, 0)) for k, w in self.penalties.items()}
-        return {"value": y - sum(pen.values()), "components": {"yield_total": y, "penalties": pen}}
+        unknown = sorted(k for k in self.penalties if k not in acc)      # C49: a penalty on a key that never appears is reported, never a silent zero
+        return {"value": y - sum(pen.values()), "components": {"yield_total": y, "penalties": pen, "unknown_penalty_keys": unknown}}
 
 
 class SurvivalObjective:
