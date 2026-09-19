@@ -8,7 +8,7 @@ Authority: THINGS OBSERVED WORKING (a test or a committed receipt behind every l
 half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
 
 --------------------------------------------------------------------------
-1. WHAT RUNS (observed since v0.3, cycles C91-C102)
+1. WHAT RUNS (observed since v0.3, cycles C91-C122)
 --------------------------------------------------------------------------
 
   batched execution      budget.batch = k (EXECUTION POLICY, outside the scientific digest with wall_s and max_runs)
@@ -47,7 +47,21 @@ half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
   mutation ledger        honest since C95 (the anchor test is deselected inside mutant runs); 62 mutants, 62 CAUGHT
                          by BEHAVIOUR tests, real first failures recorded
   soak                   search above the kernel for 20 wall minutes in one process (science/SOAK_SEARCH_*.json):
-                         per-generation wall, traced memory, file scan, marker order, elite movement
+                         per-generation wall, traced memory, file scan, marker order, elite movement; 799 + 518
+                         generations, no kernel leak (tracemalloc diff), files clean, markers in order
+  per-player survival    objective.survival_per_player.v1 reads the per-player series columns p{i}_alive BY NAME
+  compact archives       evolve(compact=True): rows carry player_hash + source {file, receipt_id}; player_of() on
+                         demand; 983 -> 338 B/row on disk, 9.5 -> 1.6 KB/row in memory; identical rows either way
+  pareto selectors       selector.pareto.v1 (needs_scalar=False), global front or by_cell (front within each
+                         descriptor cell); 90-generation comparison recorded as data, not a verdict
+  wrappers on batch      delay / permute / schedule on the batch face; EXP-001 batches; property coverage
+                         156/164 BATCHED; env independence shown metamorphically (permute / replace / abandon)
+  checkpoints            carry the kernel wrappers' state and every world's runtime-mutable params (C119, two
+                         defects); property over 120 random IRs with a coverage guard (19 exercised)
+  fixtures               all 38 committed receipts files replay with 0 divergence in the suite (6 s); a
+                         one-constant world change fails 27 of them
+  mutation runner        bytecode-safe (PYTHONDONTWRITEBYTECODE + purge): a same-size mutant restored within the
+                         same second left a stale .pyc that failed 47 tests on an unmutated tree (C122)
 
 --------------------------------------------------------------------------
 2. WHAT A DOCUMENT SAID WOULD WORK AND WAS OBSERVED NOT TO
@@ -72,7 +86,7 @@ half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
     in 0.75 s with 28 of 202 runs batched: real but thin; guarded now.
 
 --------------------------------------------------------------------------
-3. DEFECTS THE ROWS (AND THE INSTRUMENTS) FOUND, C91-C102
+3. DEFECTS THE ROWS (AND THE INSTRUMENTS) FOUND, C91-C122
 --------------------------------------------------------------------------
   C92  the reference's stochastic kick evaluates its RIGHT side first (value = draw 2, index = draw 3); the
        numpy re-implementation had to state what integer_alt reproduced by copying the expression
@@ -87,6 +101,13 @@ half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
        as sham MET and scratch MET; _TransformControl looked up transforms in the process-global registry
   C100 statemachine.v3 read list(obs) -- the keys of a dict -- in two places (found by the fuzz, not by the test
        written for the feature)
+  C107 host_block() ran a WMI query per receipt (17% of a search generation); cached like build_block (C56)
+  C112 the batch world told only ACTIVE envs about a scheduled param change; the reference appends TASK_CHANGE
+       whatever its state and the executor drains an env's events in the tick it finishes (fuzz seed 107)
+  C119 checkpoints carried neither the kernel wrappers' state (delay buffers, schedule position) nor any world's
+       runtime-mutable params; admission now demonstrates the latter
+  C122 the mutation runner left a stale .pyc for a same-size mutant (a false RED of 47 tests; could have been a
+       false verdict on any same-size mutant)
 
 --------------------------------------------------------------------------
 4. ASSUMPTIONS STILL PRESENT (honest list, updated)

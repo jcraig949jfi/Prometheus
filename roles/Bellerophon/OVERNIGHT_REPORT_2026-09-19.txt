@@ -155,3 +155,84 @@ Representative receipt ids (current committed files):
   mutants: roles/Bellerophon/science/MUTATION_LEDGER_2026-09-19.json (37/37 CAUGHT)
   x-plat:  roles/Bellerophon/science/CROSS_PLATFORM_REPLAY_2026-09-19.json
 ================================================================================
+
+================================================================================
+ADDENDUM -- END OF WINDOW (written 08:11Z (T+5:21); the 04:52Z report above is kept as written)
+================================================================================
+The loop continued from C78 to C122 after the report above (C78-C90 before 04:52Z are in it; C91-C122 are new). The 18 items are restated only where
+the second half changed them; the ledger's entries C78-C122 and its decisions register are the record.
+
+1. STARTING COMMIT     e17eb94c4 (unchanged)
+2. ENDING COMMIT       617251ba8 (plus the docs commit that carries this addendum) on bellerophon/overnight-tdd-2026-09-19 == origin/main (verified ancestor)
+                       116 commits since e17eb94c4
+3. TREE STATE          clean (playtests/receipts/soak/ deleted after its result file was written)
+4. CYCLES ATTEMPTED    122 numbered cycles (C1-C122) + 1 incident (unchanged), 2 clock corrections; the
+                       mutation ledger produced its first honest SURVIVED (M66, then caught) at C114
+5. TESTS ADDED         195 test functions (from 23 at the start; 131 at the 04:52Z report) test functions; 492 collected items
+6. FINAL TEST COUNTS   kernel suite + base-role: 486 passed, 6 skipped (Redis x6), 27 s
+                       mutation ledger: 73 mutants, 73 CAUGHT -- HONEST since C95 (the anchor test is
+                       deselected inside mutant runs; 18 of the earlier 46 rows had been "caught" by it)
+                       and BYTECODE-SAFE since C122 (a same-size mutant left a stale .pyc); 8 min per run
+                       fuzz: 300 seeds out of suite on BOTH paths: 156 OK / 49 UNSUPPORTED / 73 BLOCKED /
+                       22 invalid; 1141 runs each path, 836 batched, 0 crashes, 0 divergences; in the suite:
+                       40-IR batched==scalar property and a 120-IR checkpoint property, both coverage-guarded
+                       cross-platform: WSL Linux py3.12 probe back (it had gone silent at C92 -- numpy)
+                       census: 42 components, 42 ADMITTED on M2
+7. PLAYTESTS EXECUTED  all of the above regenerated under the final kernel + pt_h (vector objective, 2 x 40
+                       elites) + a 20-minute search SOAK (799 + 518 generations, one process)
+                       Science byte-stable: 838 comparable runs (exp_001/002, pt_a/c/e/g) reproduce the
+                       committed trace hashes and objective values exactly.
+8. DEFECTS DISCOVERED (second half; each with a permanent reproducer)
+   C92  the reference's stochastic kick reads its RIGHT side first (value = draw 2, index = draw 3)
+   C92b a module-level numpy import broke the WHOLE registry on a host without numpy (WSL): 7 skips not 6
+   C92c/C99 stale run_one doubles (3 tests, 1 playtest) became FAILED receipts and "DID NOT RAISE"
+   C94  vector objectives vanished from split summaries; would have crashed a search generation
+   C95  the mutation ledger could not say SURVIVED (anchor test inside the run)
+   C96  survival.v1 is a step function (every elite life=0); 11 distinct players behind one fingerprint
+   C97  seven of eight controls had never said NOT_MET; sham's check was a tautology; scratch/permutation
+        checked a status the executor had already handled; _TransformControl used the global registry
+   C100 statemachine.v3 read the KEYS of a structured observation (fuzz found it, my test did not)
+   C107 host_block() ran a WMI query per receipt (17% of a search generation)
+   C112 the batch world told only ACTIVE envs about a scheduled change (TASK_CHANGE lost at the finishing tick)
+   C119 checkpoints carried neither the kernel wrappers' state nor any world's runtime-mutable params
+   C122 the mutation runner left a stale .pyc for a same-size mutant (47 tests failed on a clean tree)
+9. FALSE GREENS DISCOVERED (second half)
+   C93  batched==scalar property green in 0.75 s with 28/202 runs batched (guarded now)
+   C95  18 of 46 mutation rows "caught" by a test that fails for every mutant
+   C97  test_transforms_cover_proteus_players_too asserted sham MET / scratch MET over three EQUAL traces
+   C98  five admission checks had never been seen to fail (they could; now shown)
+   C92b a silent SKIP hid a broken registry on the second platform
+   C122 a false RED: 47 failures from the runner's stale bytecode, not from the kernel
+10. ABSTRACTIONS CHANGED OR DISCARDED (second half)
+   changed: Objective value shape (number | named components | None); Control.arm may take registry=;
+            receipts carry execution{} and spec_hash; budget.batch as execution policy; replay path;
+            observations opaque (structured) with flatten() for players; ComponentRecord.admission_params
+   discarded: "batched world = throughput" (section 2 of design v0.4); "fingerprint = identity";
+            "a control that ran is a control that measured" (INDETERMINATE when it could not)
+   kept:    five core ids unchanged; no LLM/approver/ruling on any path; kernel judges nothing scientific
+11. NEW CAPABILITIES DEMONSTRATED   batched execution equal to scalar (hand + random + artifacts + search +
+   SFE executor + wrappers + EXP-001/EXP-002 + crash-mid-batch resume + env independence); vector objectives
+   with rank-or-refuse, Pareto and Pareto-per-cell selectors, per-player survival from the series;
+   structured observations; control power; admission power; the POWER REGISTER (35 rows) with its citation
+   check; steady-state search as n=1; compact archives; two soaks; checkpoints that carry wrapper state and
+   mutable params; all 38 committed receipts files as replay fixtures
+12. EXP-002 STATUS      regenerated under powered controls: 432 runs, 5/5 MET 72/72 each, 0 INDETERMINATE
+13. U3 STATUS           unchanged; batched receipts carry identical series (inline and artifact)
+14. REDIS ACCEPTANCE    NOT REACHED (unchanged; no server on M2)
+15. SFE / NPE BRIDGES   SFE executor passes the new IR fields through; NPE unchanged (D-BELL-2)
+16. UNRESOLVED FAILURES none open. Soak findings: no kernel leak; drift attributed to the soak's own instruments; host_block per receipt found and fixed; a pure Pareto front stalls (selector property, recorded)
+17. MAJOR ARCHITECTURAL DISCOVERIES (second half)
+   g. INSTRUMENT POWER is the night's theme: three instruments (mutation ledger, controls, reference
+      agreement earlier) were green because they could not be red. The register makes "can say NO" a
+      maintained property with a test.
+   h. U1 batching is bounded by the CONTRACT, not the state: a BIT world must emit the reference's per-env
+      text and tuples; the vectorisable part of every reference world is < 30% of a tick. Throughput needs a
+      columnar contract family under aggregate agreement -- a design decision for a day, recorded, not taken.
+   i. the fuzz found what feature tests missed twice; the property tests need coverage guards or they are
+      green by vacuity.
+18. NEXT THREE PRESSURES (revised)
+   1. a columnar-contract world family (array trace, columnar events) admitted by SEMANTIC/aggregate agreement
+      -- the only route to batching that pays; Box2D would be its first native member
+   2. Redis acceptance on M1 (unchanged) and the NPE worker once primordial/ lands
+   3. a Crius experiment in the IR with a VECTOR objective and structured observations (both now exist)
+================================================================================
