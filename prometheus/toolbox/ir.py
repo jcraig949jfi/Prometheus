@@ -104,8 +104,10 @@ class Experiment:
         if not isinstance(sp.get("base"), int) or not isinstance(sp.get("n_seeds"), int) or sp["n_seeds"] < 1:
             bad.append("seed_policy needs int base and n_seeds >= 1")
         b = self.budget
-        if not isinstance(b.get("episodes"), int) or b["episodes"] < 1 or not isinstance(b.get("horizon"), int) or b["horizon"] < 1:
-            bad.append("budget needs int episodes >= 1 and horizon >= 1")
+        if not isinstance(b.get("episodes"), int) or b["episodes"] < 1 or not isinstance(b.get("horizon"), int) or b["horizon"] < 0:
+            bad.append("budget needs int episodes >= 1 and horizon >= 0")
+        if "series_max_records" in b and (not isinstance(b["series_max_records"], int) or b["series_max_records"] < 0):
+            bad.append("budget.series_max_records must be a non-negative int when present")
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)

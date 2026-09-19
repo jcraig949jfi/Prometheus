@@ -26,6 +26,7 @@ from prometheus.toolbox import capabilities as C
 from prometheus.toolbox.contracts import ActionSpace, PlayerSpec, component_manifest_hash
 from prometheus.toolbox.ir import Experiment, Lowering
 from prometheus.toolbox.receipt import ReceiptWriter
+from prometheus.toolbox import series as SER
 from prometheus.toolbox.ref.worlds import stream
 
 
@@ -161,14 +162,18 @@ def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: in
         evs = world.events() if has_events else []
         n_events += len(evs)
         for ob in observers:
-            ob.on_tick(ticks, observations, actions)
+            # ORDER IS A CONTRACT (C1, 2026-09-19): the events of tick t are delivered BEFORE on_tick(t), so a
+            # series record for tick t reflects the world AFTER step t (absorptions, yields of that tick included).
             if evs:
                 ob.on_events(evs)
+            ob.on_tick(ticks, observations, actions)
         ticks += 1
     return {"trace_hash": world.trace_hash(), "ticks": ticks, "events": n_events, "summary": world.summary() if hasattr(world, "summary") else {}}
 
 
-def run_one(spec: RunSpec, registry) -> dict:
+def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
+    import pathlib
+    receipt_dir = pathlib.Path(receipt_dir) if receipt_dir is not None else pathlib.Path(".")
     exp = spec.experiment
     started = datetime.now(timezone.utc).isoformat(); t0 = time.perf_counter(); c0 = time.process_time()
     world = build_world(exp, registry)
@@ -178,9 +183,13 @@ def run_one(spec: RunSpec, registry) -> dict:
     fingerprints = {str(pid): inst.fingerprint() for pid, inst in instances.items()}   # spec identity: taken on the FRESH instance
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
     hashes: List[str] = []; ticks_total = 0; events_total = 0; summaries = []
+    series_obs = [ob for ob in observers if getattr(ob, "series", False)]
+    collected = {ob.kind: [] for ob in series_obs}
     for ep in range(exp.budget["episodes"]):
         r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"])
         hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
+        for ob in series_obs:
+            collected[ob.kind].append(ob.series_episode())
     wall = time.perf_counter() - t0; cpu = time.process_time() - c0
     acc = dict(sub.accounting()); acc.update(world.accounting() if hasattr(world, "accounting") else {"world_steps": ticks_total})
     acc["wall_s"] = round(wall, 6); acc["cpu_s"] = round(cpu, 6)
@@ -200,6 +209,11 @@ def run_one(spec: RunSpec, registry) -> dict:
         "science": science, "accounting": acc, "provenance": exp.provenance,
         "started_utc": started, "finished_utc": datetime.now(timezone.utc).isoformat(),
     }
+    if series_obs:
+        rc = receipt["replay_class"]
+        receipt["series"] = {ob.kind: SER.build(collected[ob.kind], enabled=getattr(ob, "enabled", True), replay_class=rc,
+                                                max_records=exp.budget.get("series_max_records"), max_inline=SER.DEFAULT_MAX_INLINE,
+                                                receipt_dir=receipt_dir) for ob in series_obs}
     if exp.objective:
         obj = registry.make(exp.objective["kind"], **exp.objective.get("params", {}))
         receipt["science"]["objective"] = dict(obj.evaluate(receipt), kind=obj.kind, version=obj.version)
@@ -229,7 +243,7 @@ def execute(job: LocalJob, out_path, registry=None) -> ExecutionReport:
     try:
         for spec in job.runs:
             try:
-                r = run_one(spec, registry)
+                r = run_one(spec, registry, receipt_dir=w.path.parent)
             except Exception as exc:                                    # noqa: BLE001  a failed run is a receipt, never a halt
                 n_fail += 1
                 r = {"experiment_id": job.experiment_id, "experiment_digest": spec.experiment.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point,

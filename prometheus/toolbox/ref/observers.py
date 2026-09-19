@@ -103,3 +103,54 @@ class SurvivalObjective:
         s = receipt.get("science", {}).get("world_summary", {})
         alive = s.get("alive", []); ticks = s.get("ticks", 0)
         return {"value": ticks * sum(1 for a in alive if a), "components": {"ticks": ticks, "alive": alive}}
+
+
+# ------------------------------------------------------------------------------------------ series (U3)
+LAST_MIRROR = None      # test hook: the last StateDevice a SeriesObserver mirrored into (so a test can destroy it)
+
+
+class SeriesObserver(TraceObserver):
+    """observer.series.v1: per tick [tick, actions_sum, yield_cumulative, alive_count] for the current episode.
+    Declares `series`; `enabled=False` records a DISABLED series (distinct from EMPTY). `mirror_device`
+    names a StateDevice kind to mirror records into during the run -- the mirror is a cache, never the copy
+    of record (U3)."""
+    kind = "observer.series.v1"
+    version = "1"
+    series = True
+
+    def __init__(self, enabled: bool = True, mirror_device: str | None = None):
+        super().__init__()
+        self.enabled = bool(enabled); self.mirror_device = mirror_device
+        self._series: List[List[int]] = []
+        self._alive = 0
+        self._dev = None
+        if mirror_device == "inprocess":
+            from prometheus.toolbox import state as ST
+            global LAST_MIRROR
+            self._dev = ST.InProcessStateDevice(); LAST_MIRROR = self._dev
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "series": True, "enabled": self.enabled, "mirror_device": self.mirror_device}
+
+    def begin(self, ctx: dict) -> None:
+        super().begin(ctx); self._series = []; self._alive = self._n_players
+        if self._dev is not None:
+            self._dev.end_scope("episode")
+
+    def on_events(self, events: List[Event]) -> None:
+        super().on_events(events)
+        for (_, kind, _, _, _) in events:
+            if kind == EVENT_ID["ABSORBED"]:
+                self._alive -= 1
+
+    def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None:
+        super().on_tick(tick, observations, actions)
+        if not self.enabled:
+            return
+        rec = [tick, sum(sum(a) for a in actions.values()), sum(self._yield.values()), self._alive]
+        self._series.append(rec)
+        if self._dev is not None:
+            self._dev.advance(tick); self._dev.append("series", rec, scope="persistent")
+
+    def series_episode(self) -> List[List[int]]:
+        return list(self._series)

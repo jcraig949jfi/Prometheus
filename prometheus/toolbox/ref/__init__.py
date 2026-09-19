@@ -34,6 +34,7 @@ def install(reg: Registry) -> Registry:
                                  admission={} if P.proteus_available() else {"failed": "proteus.foundry.vm not importable"}))
     reg.register(ComponentRecord("observer.trace.v1", "observer", O.TraceObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("observer.descriptor.v1", "observer", O.DescriptorObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("observer.series.v1", "observer", O.SeriesObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.yield_net.v1", "objective", O.YieldNetObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     for kind, cls in Cn.ALL.items():

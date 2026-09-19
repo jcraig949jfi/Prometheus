@@ -38,7 +38,10 @@ class ReplayControl:
         rc = primary.get("replay_class")
         if rc == "BIT":
             eq = primary["trace_hashes"] == arm["trace_hashes"]
-            return _met(eq, {"class": rc, "equal": eq})
+            ps = {k: v["series_hash"] for k, v in (primary.get("series") or {}).items()}
+            as_ = {k: v["series_hash"] for k, v in (arm.get("series") or {}).items()}
+            seq = ps == as_
+            return _met(eq and seq, {"class": rc, "equal": eq, "series_equal": seq})
         return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "semantic replay needs a declared tolerance; none in Phase 1"}}
 
 
