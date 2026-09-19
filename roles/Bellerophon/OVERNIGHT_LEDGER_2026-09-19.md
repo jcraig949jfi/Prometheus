@@ -650,3 +650,22 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   on all 838 comparable runs (exp_001/exp_002/pt_a/pt_c/pt_e/pt_g): the night's changes moved no science.
 - EXP-001/pt_a/pt_c refused to overwrite their receipts files until deleted (C22 working as designed).
 - suite 302 passed / 6 skipped.
+
+## C100 (06:06Z) observations are not flat: ext.observation.structured.v1, flatten(), permute refused with reason
+- the design's honest list still said "observations are int lists". RED: tests/test_structured_observations.py
+  (5) -- no flatten in contracts; grid had no obs_mode; permute not refused.
+- built: contracts.flatten() (int | list | dict with SORTED keys, depth first; TypeError on anything else -- a player
+  must not guess); ext.observation.structured.v1 catalogued; world.grid.v1 obs_mode="structured" returns the same
+  six facts NAMED ({node,pool,cells,foreign,others,charge}) with an identical trace (encoding is not state) and
+  declares the capability per instance; statemachine v1/v2/v3, rewrite and Proteus read observations through
+  flatten(); ObservationWrapper delay is opaque (a delayed dict is still a dict); observation_permute is REFUSED at
+  lowering for a structured world (also when a control -- permutation -- would add it), with the reason: nothing
+  is flattened on a designer's behalf.
+- the fuzz (obs_mode added to its grid branch) found what my own test had missed: statemachine.v3 read list(obs)
+  -- the KEYS of a dict -- in two places (fold and the invoke argument) after v1/v2 were fixed. TypeError as a
+  FAILED receipt on seeds 20 and 29. Fixed; the player test now lists every representation. Note for the record:
+  mutant M61 (fold without flatten) was caught by the FUZZ before the dedicated test -- the instrument that finds
+  what the author did not think to test.
+- mutants wave 11 M61-M63 3/3 CAUGHT; ledger 62/62. Suite 307 passed / 6 skipped. Census 40/40.
+- still assumed after tonight: actions are int lists (ActionSpace width x range); continuous actions are declared
+  (ext.continuous_actions.v1, fixed-point interchange) and not exercised.

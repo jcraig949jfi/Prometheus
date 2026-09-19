@@ -40,7 +40,8 @@ def random_experiment(seed: int) -> Experiment:
         world = ref("world.pendulum.v1", n_players=n_players, quantum=rnd.choice([1e-6, 1e-3]), start_charge=rnd.choice([2, 30, 1000]), step_cost=rnd.choice([0, 1]), world_seed=rnd.randrange(100))
     elif rnd.random() < 0.3:                                                           # C42: the grid world too
         world = ref("world.grid.v1", n_nodes=rnd.choice([2, 5, 9]), n_players=n_players, act_range=rnd.choice([3, 8]), start_charge=rnd.choice([1, 20, 1000]),
-                    step_cost=rnd.choice([0, 1]), regen_every=rnd.choice([0, 1, 4]), pool_max=rnd.choice([0, 3]), world_seed=rnd.randrange(1000))
+                    step_cost=rnd.choice([0, 1]), regen_every=rnd.choice([0, 1, 4]), pool_max=rnd.choice([0, 3]), world_seed=rnd.randrange(1000),
+                    obs_mode=rnd.choice(["flat", "structured"]))                                       # C100
     else:
         world = ref("world.integer.v1", n_regs=rnd.choice([3, 6, 9]), n_players=n_players, act_width=rnd.choice([1, 2, 3]), act_range=rnd.choice([2, 8, 16]),
                     n_ops=rnd.choice([0, 2, 5]), regime_period=rnd.choice([0, 0, 3, 7]), stoch_rate=rnd.choice([0, 0, 2, 9]), action_delay=rnd.choice([0, 1, 4]),

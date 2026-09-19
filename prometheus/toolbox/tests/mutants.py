@@ -83,6 +83,10 @@ MUTANTS = [
     ("M59", "backends/local.py", "    if \"registry\" in params or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()):", "    if False:", "control arms built against the process-global registry"),
     # tenth wave (C99): replay across paths
     ("M60", "backends/local.py", "    if batch is not None:\n        exp.budget = dict(exp.budget, batch=int(batch))", "    if False:\n        exp.budget = dict(exp.budget, batch=int(batch))", "replay re-runs the recorded batch policy instead of the scalar path"),
+    # eleventh wave (C100): structured observations
+    ("M61", "ref/players.py", "    for i, v in enumerate(flatten(obs)):                              # C100: structured observations fold through the canonical vector", "    for i, v in enumerate(obs):", "statemachines fold a structured observation as-is (keys, not values)"),
+    ("M62", "backends/local.py", "            if permutes or ctrl_permutes:", "            if False:", "permute silently applied to a structured observation"),
+    ("M63", "ref/worlds_grid.py", "        if self.p[\"obs_mode\"] == \"structured\":                    # C100: the same facts, named; the trace is the state and does not change", "        if False:", "grid obs_mode=structured returns the flat vector"),
 ]
 
 

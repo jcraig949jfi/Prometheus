@@ -19,7 +19,7 @@ from prometheus.toolbox.contracts import ActionSpace, EVENT_ID, Event
 from prometheus.toolbox.ref.worlds import stream, M
 
 DEFAULTS = dict(n_nodes=8, n_players=2, horizon=64, act_range=8, start_charge=40, step_cost=1, move_cost=1, harvest_gain=6,
-                pool_max=3, regen_every=4, write_cost=2, read_gain=5, world_seed=0, _cheat_skip_dynamics=False)
+                pool_max=3, regen_every=4, write_cost=2, read_gain=5, world_seed=0, _cheat_skip_dynamics=False, obs_mode="flat")
 
 
 class GridWorld:
@@ -35,6 +35,10 @@ class GridWorld:
         if unknown:
             raise ValueError("world.grid.v1: unknown params %s" % unknown)
         self.p = dict(DEFAULTS, **params); self.n_players = self.p["n_players"]
+        if self.p["obs_mode"] not in ("flat", "structured"):
+            raise ValueError("world.grid.v1: obs_mode must be 'flat' or 'structured'")
+        if self.p["obs_mode"] == "structured":                    # C100: the capability is declared per INSTANCE, on the manifest and the row
+            self.capabilities = self.capabilities | {"ext.observation.structured.v1"}
         self._state = None; self._events: List[Event] = []; self._steps = 0
 
     def manifest(self) -> dict:
@@ -58,10 +62,13 @@ class GridWorld:
                        "alive": [True] * self.n_players, "pools": pools, "cells": cells, "owner": owner, "seed": seed}
         self._trace = hashlib.sha256(); self._events = []
 
-    def observe(self, pid: int) -> List[int]:
+    def observe(self, pid: int):
         st = self._state; n = st["pos"][pid]
         others = sum(1 for q in range(self.n_players) if q != pid and st["alive"][q] and st["pos"][q] == n)
-        return [n, st["pools"][n], st["cells"][n], 1 if st["owner"][n] not in (-1, pid) else 0, others, min(15, max(0, st["charge"][pid]) // 4)]
+        flat = [n, st["pools"][n], st["cells"][n], 1 if st["owner"][n] not in (-1, pid) else 0, others, min(15, max(0, st["charge"][pid]) // 4)]
+        if self.p["obs_mode"] == "structured":                    # C100: the same facts, named; the trace is the state and does not change
+            return {"node": flat[0], "pool": flat[1], "cells": flat[2], "foreign": flat[3], "others": flat[4], "charge": flat[5]}
+        return flat
 
     def legal_actions(self, pid: int) -> ActionSpace:
         return ActionSpace(3, self.p["act_range"])

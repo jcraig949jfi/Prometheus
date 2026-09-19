@@ -128,6 +128,12 @@ def lower(exp: Experiment, registry) -> Lowering:
             w0 = build_world(base, registry)
         except Exception as exc:                                  # noqa: BLE001
             return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world cannot be constructed at sweep point %s: %s: %s" % (json.dumps(point, sort_keys=True, default=str), type(exc).__name__, str(exc)[:200])], negotiation=neg.as_dict())
+        if "ext.observation.structured.v1" in getattr(w0, "capabilities", ()):                      # C100: permute needs a flat vector; nothing is flattened silently
+            _, _, permutes, _ = _world_params(base, registry, base.world["kind"])
+            ctrl_permutes = [k for k, c in controls if "observation_permute" in json.dumps(c.manifest())]
+            if permutes or ctrl_permutes:
+                return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["observation_permute is not defined for a structured observation (world %s declares ext.observation.structured.v1)%s"
+                                                                              % (base.world["kind"], "; requested by controls %s" % ctrl_permutes if ctrl_permutes else "")], negotiation=neg.as_dict())
         if getattr(w0, "n_players", len(base.players)) != len(base.players):                        # C52/C84: no phantom players, zero allowed when the world says zero
             return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world declares n_players=%d but %d players are given at sweep point %s" % (w0.n_players, len(base.players), json.dumps(point, sort_keys=True, default=str))], negotiation=neg.as_dict())
         arms = [("primary", base)] + [(ctrl.kind, call_arm(ctrl, base, exp.seed_policy["base"] * 7919 + 1, registry)) for _, ctrl in controls]

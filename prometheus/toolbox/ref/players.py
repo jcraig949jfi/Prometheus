@@ -14,13 +14,13 @@ import hashlib
 import json
 from typing import Dict, List
 
-from prometheus.toolbox.contracts import ActionSpace, PlayerSpec
+from prometheus.toolbox.contracts import ActionSpace, PlayerSpec, flatten
 from prometheus.toolbox.ref.worlds import stream
 
 
-def fold(obs: List[int]) -> int:
+def fold(obs) -> int:
     h = 0
-    for i, v in enumerate(obs):
+    for i, v in enumerate(flatten(obs)):                              # C100: structured observations fold through the canonical vector
         h = (h * 31 + (v + 1) * (i + 1)) & 0xFFFFFFFF
     return h
 
@@ -119,7 +119,7 @@ class ProteusTapeInstance:
         self._ticks = 0
 
     def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
-        outs, status = self.player.run_tick(self.state, [list(obs)], 1, self.rng, meter=self.meter)
+        outs, status = self.player.run_tick(self.state, [flatten(obs)], 1, self.rng, meter=self.meter)
         self._ticks += 1
         words = outs[0] if outs and outs[0] else []
         return [w % legal.range for w in words[:legal.width]] + [0] * max(0, legal.width - len(words))
@@ -195,7 +195,7 @@ class StateMachineV2Instance:
     def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
         self._c["reads"] += len(obs)
         mem = self.ws.read()
-        nxt, acts, mw = self.table[self.state][fold(list(obs) + [0 if mem is None else int(mem)]) % self.n_buckets]
+        nxt, acts, mw = self.table[self.state][fold(flatten(obs) + [0 if mem is None else int(mem)]) % self.n_buckets]
         self.state = nxt
         if mw >= 0:
             self.ws.write(int(mw))
@@ -237,8 +237,9 @@ class RewriteInstance:
         self._c = {"transitions": 0, "reads": 0, "writes": 0, "ops": 0, "rewrites": 0}
 
     def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
+        obs = flatten(obs)                                                # C100
         self._c["reads"] += len(obs)
-        for i, v in enumerate(list(obs)[:self.inject]):
+        for i, v in enumerate(obs[:self.inject]):
             self.tape[i] = v % self.alphabet
         t = self.tape; i = 0
         while i < len(t) - 1:
@@ -288,14 +289,14 @@ class StateMachineV3Instance(StateMachineV2Instance):
     def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
         self._c["reads"] += len(obs)
         mem = self.ws.read(); m = 0 if mem is None else int(mem)
-        nxt, acts, op, arg = self.table[self.state][fold(list(obs) + [m]) % self.n_buckets]
+        nxt, acts, op, arg = self.table[self.state][fold(flatten(obs) + [m]) % self.n_buckets]     # C100
         self.state = nxt
         if op == 1:
             self.ws.write(int(arg))
         elif op == 2:
             self.ws.create([m % self.mem_range, int(arg), self.mem_range])
         elif op == 3:
-            out = self.ws.invoke(int(arg), fold(list(obs)) % self.mem_range)
+            out = self.ws.invoke(int(arg), fold(obs) % self.mem_range)
             if out is not None:
                 self.ws.write(int(out) % self.mem_range)
         self._c["transitions"] += 1; self._c["ops"] += 1
