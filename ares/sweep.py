@@ -42,8 +42,12 @@ def _path(name):
 
 
 def _save(name, obj):
-    with open(_path(name), "w") as f:
+    """Atomic: a killed process never leaves a truncated result file that
+    a resumed sweep would skip as done."""
+    tmp = _path(name) + ".tmp"
+    with open(tmp, "w") as f:
         json.dump(obj, f)
+    os.replace(tmp, _path(name))
 
 
 def _load(name):
