@@ -29,6 +29,13 @@ def test_status_class_is_conservative():
     assert classify.status_class(None) == "UNKNOWN"
 
 
+def test_science_class_reads_capitalised_verdicts_only():
+    assert classify.science_class("components WEAK POSITIVE at n=3; exaptation of failed residue")[0] == "WEAK_POSITIVE"
+    assert classify.science_class("chimera synergy NEGATIVE (assay capable)") == ("NEGATIVE", "MEDIUM")
+    assert classify.science_class("A WEAK POSITIVE, B NEGATIVE")[1] == "LOW"      # mixed reading
+    assert classify.science_class("the run failed twice") == ("UNKNOWN", "LOW")    # prose is not a verdict
+
+
 def test_host_from_tag_and_text():
     assert classify.host_from_tag("m2-411504ab") == "M2"
     assert classify.host_from_tag("gandalf-6cd1348b") == "M3"

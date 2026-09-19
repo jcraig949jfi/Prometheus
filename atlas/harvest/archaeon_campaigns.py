@@ -18,7 +18,7 @@ from typing import Any, Dict, Optional
 from atlas import classify, db, gitsrc
 from atlas.harvest import common as C
 
-VERSION = "archaeon_campaigns/1"
+VERSION = "archaeon_campaigns/3"
 PROGRAM = "archaeon.campaign"
 ROLE_BY_NAME = [
     (r"^PREREG\.json$", "prereg"), (r"^PREREG\.md$", "prereg"), (r"^DESIGN\.md$", "design"),
@@ -158,21 +158,30 @@ def _experiment(b, cat, ref, ckey, ekey, sub, flist, src, touching, pending):
     dc = receipt.get("disposition_candidate") if isinstance(receipt.get("disposition_candidate"), dict) else {}
     disp = dc.get("disposition") or receipt.get("disposition") or receipt.get("verdict")
     worlds = sorted((receipt.get("worlds") or {}).keys()) if isinstance(receipt.get("worlds"), dict) else []
+    rec = _record_disposition(cat, flist)
+    cls_basis = disp
+    if not disp and rec:  # campaign 1 receipts carry no disposition; RECORD.md does (verbatim)
+        disp = rec["word"]
+        cls_basis = rec["science"] or rec["word"]
     slot = re.search(r"(\d+)$", sub)
     kind = "rehearsal" if "REH" in sub or sub.startswith("G6") else "experiment"
     budget = prereg.get("budget")
     b.experiment(
         experiment_key=ekey, campaign_key=ckey, engine_id="sfe", native_id=sub,
         slot=int(slot.group(1)) if slot and kind == "experiment" else None, kind=kind,
-        title=C.trunc(prereg.get("title"), 500), question=C.trunc(prereg.get("question")),
+        title=C.trunc(prereg.get("title") or (rec or {}).get("title"), 500), question=C.trunc(prereg.get("question")),
         purpose=receipt.get("purpose"), driver_seat="Archaeon",
         world_family=", ".join(worlds) or None, search_family=None,
         seeds=[str(receipt["campaign_seed"])] if receipt.get("campaign_seed") else [],
         budget_summary=C.trunc(_short(budget), 500) if budget else None,
-        reported_disposition=disp, reported_conclusion=C.trunc(dc.get("reason"), 1000),
-        atlas_class=classify.status_class(disp),
-        atlas_class_confidence="HIGH" if disp and classify.status_class(disp) != "UNKNOWN" else "LOW",
-        atlas_class_method="status_class/1 on reported disposition",
+        reported_disposition=disp, reported_conclusion=C.trunc(dc.get("reason") or (rec or {}).get("text"), 1000),
+        atlas_class=(classify.science_class(rec["science"])[0] if rec and cls_basis is rec.get("science") and rec["science"]
+                     else classify.status_class(cls_basis)),
+        atlas_class_confidence=(classify.science_class(rec["science"])[1] if rec and cls_basis is rec.get("science") and rec["science"]
+                                else ("HIGH" if dc.get("disposition") else "MEDIUM")
+                                if cls_basis and classify.status_class(cls_basis) != "UNKNOWN" else "LOW"),
+        atlas_class_method="status_class/1 on " + ("receipt disposition" if dc.get("disposition") or receipt.get("disposition")
+                                                   else "science_class/1 on RECORD.md DISPOSITION 'Science:' clause" if rec else "reported disposition"),
         validity_state=C.validity_from(disp, " ".join(map(str, receipt.get("errors") or []))[:2000] if receipt.get("errors") else None),
         prereg_digest=prereg.get("prereg_digest") or receipt.get("prereg_digest"),
         design_digest=prereg.get("design_digest"),
@@ -217,6 +226,8 @@ def _experiment(b, cat, ref, ckey, ekey, sub, flist, src, touching, pending):
                      if dc else None, ru, "disposition_candidate", stated_at=receipt.get("finished_at"))
         for d in receipt.get("decisions") or []:
             b.fact("CONCLUDED", "campaign_decision", "experiment", ekey, "decision", d, ru, "decisions")
+    if rec and "RECORD.md" in uris:  # the record's own DISPOSITION paragraph, verbatim, with its line
+        b.conclusion("experiment", ekey, rec["word"], rec["text"], uris["RECORD.md"], "line {}".format(rec["line"]))
     if "READOUT.md" in uris:  # the human readout is a conclusion held by pointer
         b.conclusion("experiment", ekey, None, "[READOUT.md] see source", uris["READOUT.md"], "READOUT.md")
     ad = docs.get("addendum.json")
@@ -371,3 +382,29 @@ def _supersession(b, text, uri, native_to_key):
            confidence="HIGH", detail=C.trunc(" ".join(m1.group(1).split()), 600), uri=uri)
     b.conclusion("experiment", ok, "SUPERSEDED_INTERPRETATION", " ".join(m1.group(1).split()), uri, "WHAT IS SUPERSEDED",
                  status="SUPERSEDED_INTERPRETATION")
+
+
+def _record_disposition(cat, flist):
+    """The 'DISPOSITION: <WORD> ...' paragraph that closes a directive-IV
+    RECORD.md (up to the next blank line), with its line number. The
+    'Science:' clause, when present, is the scientific reading; the word
+    before it (COMPLETE, INCONCLUSIVE, ...) is the execution/assay state."""
+    blob = next((b for p, b, _z in flist if p.endswith("/RECORD.md") and "/attempts/" not in p), None)
+    text = cat.text(blob) if blob else None
+    if not text:
+        return None
+    lines = text.splitlines()
+    title = lines[0].lstrip("# ").strip() if lines else None
+    for i, line in enumerate(lines):
+        m = re.match(r"^DISPOSITION:\s*([A-Z_]+)", line)
+        if m:
+            para = []
+            for j in range(i, len(lines)):
+                if not lines[j].strip():
+                    break
+                para.append(lines[j].strip())
+            full = " ".join(para)
+            sci = re.search(r"Science:\s*(.*)", full)
+            return {"word": m.group(1), "text": full, "line": i + 1, "title": title,
+                    "science": sci.group(1)[:400] if sci else None}
+    return None

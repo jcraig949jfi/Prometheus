@@ -5,12 +5,14 @@ Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
 Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
 engine row marked IGNORED, its local root removed from the registry).
+Closed 2026-09-19: ATLAS-06 -- archaeon_campaigns/3 reads every RECORD.md DISPOSITION
+paragraph as a verbatim conclusion (line pointer); cmp1 now 10/10 classed via
+classify.science_class (capitalised verdict words only; mixed -> LOW).
 Closed 2026-09-19: ATLAS-21 -- AtlasIndexLoop registered in MONITORS.md
 (bound 6 non-productive ticks, accountable Atlas-M2) before launch; tick in loop/TICK.md.
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
 ATLAS-05 | Write a git adapter for archaeon/wse/ledgers (wse-survey-v01, ssf-c1..3) so the 4 PEW-only campaigns get receipts, attempts and facts | TOOLS | beta | S | none | archaeon.wse/* experiments with n_attempts > 0 and source links to git
-ATLAS-06 | Extract Campaign 1 verdicts from SFE-0N/RECORD.md (receipts carry none) as conclusions by pointer with the verbatim line | TOOLS | beta | S | none | 10 cmp1 conclusions; cmp1 atlas_class no longer all UNKNOWN
 ATLAS-07 | Add an NPE QD-cells collector (primordial/ledger/qd/cells.jsonl, draws.jsonl, world_set_r8.json) as world x pressure x representation descriptors | TOOLS | beta | M | none | facts of kind world_descriptor/pressure_descriptor on graphworld experiments; R10 recomputed
 ATLAS-08 | Harvest the remaining local nestor/* branches (r2..r8 lanes, e05-replica, arch4-loop) and record which commits exist only there | TOOLS | beta | S | none | git_commit rows with seen_on_host=M1 per branch; source rows GIT_LOCAL:M1
 ATLAS-09 | Map pm-data epoch-logs (527 epochs-<hash> dirs) to rounds/epochs via ROUND_rN.json and epoch_log.jsonl | TOOLS | beta | M | none | file:// sources linked to graphworld campaigns instead of the engine
