@@ -8,6 +8,7 @@ Every role below carries the banner on its primary document(s):
 |---|---|
 | Agora | RESPONSIBILITIES.md (already; rewritten 2026-09-14 on the seat's adoption pass, April body preserved at roles/Agora/superseded/, April queue classified in ARCHAEOLOGY_2026-09-14.md; identity decision AGORA-01 pending; self-service row per Archaeon ruling #39) |
 | Aphrodite | RESPONSIBILITIES.md (created 2026-09-17 on the seat's creation pass on M4; charter ADOPTED 2026-09-18, APHRODITE-08, verbatim in roles/Aphrodite/prompts/2026-09-18_charter/; self-service row per Archaeon ruling #39) |
+| Aether | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; new seat, charter PENDING the operator's discussion; self-service row per Archaeon ruling #39) |
 | Bellerophon | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter in force: the WORLDS KERNEL directive of the same day, verbatim in roles/Bellerophon/prompts/2026-09-18_worlds_kernel/ (kernel package prometheus/toolbox/); self-service row per Archaeon ruling #39) |
 | Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
 | Atlas | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M1; charter ADOPTED 2026-09-19 with addendum, verbatim in roles/Atlas/prompts/2026-09-19_charter/ and _charter_addendum/; self-service row per Archaeon ruling #39) |
@@ -73,6 +74,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 |---|---|
 | Agora | RESPONSIBILITIES.md |
 | Aphrodite | RESPONSIBILITIES.md |
+| Aether | RESPONSIBILITIES.md |
 | Bellerophon | RESPONSIBILITIES.md |
 | Atalanta | RESPONSIBILITIES.md |
 | Atlas | RESPONSIBILITIES.md |
