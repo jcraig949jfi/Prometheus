@@ -44,3 +44,39 @@ C2 | T+0:06 | EXP-001 becomes a regression fixture (directive s2)
        hashes and objective values, not kernel_hash); receipts are regenerated once at window end.
   NEXT: playtest A -- an experiment alien to EXP-001 (mixed representations, regime switch, stochastic kick,
        three players, permuted observations, world sweep) to find expressivity gaps.
+C3 | T+0:07 | PLAYTEST A (playtests/pt_a_alien_mix.py): 3 players of 3 representations (state machine, constant,
+  Proteus tape) in a non-stationary integer world (regime switch, stochastic kick), delay + permute
+  interventions, sweep over world_seed x regime_period, 7 controls, 3 observers, survival objective.
+  96 runs, 0 failed, every control "MET". Rows inspected -> three surprises:
+    S1 the permutation CONTROL's wrapper REPLACED the designer's own permutation (dict keyed by name; last
+       writer wins) -- a semantic leak between a control and the conditions it was supposed to leave alone.
+    S2 sham/scratch acted only on statemachine.v1; on the constant and Proteus players they did nothing and
+       reported MET (cost-matched trivially). A control that cannot act must not claim it did.
+    S3 the Proteus player never acted (actions 0) and "won" survival; its fingerprint equalled the constant-
+       zero player's. Not a wrapper bug: 11/60 random Proteus genomes emit anything in 32 ticks (measured).
+  DECISION: S1 -> C4; S2 -> C5 (Transform slot); S3 -> silence made visible (C5b).
+C4 | T+0:08 | wrappers compose (S1)
+  RED: tests/test_playtest_findings.py two tests: manifest wrappers int not list; arm lost the 4242 permute.
+  CHANGE: ObservationWrapper takes a LIST of permute seeds applied in intervention order; delays add; the
+    manifest records every seed. GREEN: 34 passed. Metamorphic check inside the test: a double permutation
+    is a permutation of the same multiset and differs from each single one.
+C5 | T+0:09 | Transform slot + control coverage (S2), silent players (S3), probe disturbance (found while fixing)
+  RED: 4 tests: sham/scratch on constant -> expected INDETERMINATE (got MET); coverage list; Proteus sham;
+    registry rows for transforms.
+  CHANGE: ref/transforms.py: transform.shuffle.v1 (sham; statemachine table cells / Proteus genome words,
+    cost preserved), transform.fresh.v1 (scratch), transform.relabel.v1 (behaviour-preserving relabel, for
+    metamorphic tests), each with `accepts`; controls sham/scratch now apply the registered transform to every
+    accepted player and record provenance.transformed_players; no player transformed -> INDETERMINATE.
+  FOUND WHILE FIXING (C5b): every silent player shares one fingerprint, and 49/60 random Proteus players are
+    silent on the probe. player_fingerprints is now {"hash", "silent"}; a test pins that silent players are
+    flagged. The sham test uses a non-silent Proteus seed (17) found by probing seeds 1..200.
+  FOUND WHILE FIXING (C5c): the Proteus instance's snapshot() omitted the rng stream and the meter, so the
+    fingerprint probe ADVANCED the player's random stream and inflated its cost -- "the probe never disturbs
+    the run" was false. RED test (probe twice; cost and later actions must equal an unprobed twin), fix:
+    snapshot/restore cover rng + meter. GREEN: 40 passed 1 skipped.
+  PLAYTEST A re-run after C4/C5: 96 runs, 0 failed; sham now INDETERMINATE? see line below.
+  PLAYTEST A after C4/C5: 96 runs, 0 failed; sham transformed players [0, 2] (state machine + Proteus; the
+    constant player correctly untouched) -> MET with coverage recorded; player 2 flagged silent=True.
+  COMMIT: (this entry's commit hash below).
+  NEXT: playtest B -- state at scopes / substrate variation pressure (does EXP-002 need substrate.kv.v1 or can
+    the StateDevice be reached through the existing contracts?).

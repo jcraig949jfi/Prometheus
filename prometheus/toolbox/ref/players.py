@@ -136,10 +136,16 @@ class ProteusTapeInstance:
         return fingerprint_by_probe(self)
 
     def snapshot(self) -> bytes:
-        return json.dumps({"state": self.state, "ticks": self._ticks}).encode()
+        # COMPLETE state (C5c, 2026-09-19): tape/regs/ip, the tick count, the rng stream AND the meter -- a probe
+        # that restores less than this disturbs the run it claims not to touch.
+        m = self.meter
+        meter = {k: (dict(getattr(m, k)) if k == "by_category" else getattr(m, k)) for k in m.__slots__}
+        return json.dumps({"state": self.state, "ticks": self._ticks, "rng": self.rng.state, "meter": meter}).encode()
 
     def restore(self, snapshot: bytes) -> None:
-        d = json.loads(snapshot.decode()); self.state = d["state"]; self._ticks = d["ticks"]
+        d = json.loads(snapshot.decode()); self.state = d["state"]; self._ticks = d["ticks"]; self.rng.state = d["rng"]
+        for k, v in d["meter"].items():
+            setattr(self.meter, k, dict(v) if k == "by_category" else v)
 
 
 # ------------------------------------------------------------------------------------------ fingerprint
@@ -154,3 +160,12 @@ def fingerprint_by_probe(inst) -> str:
         h.update(bytes(inst.act(obs, ActionSpace(2, 8))))
     inst.restore(snap)
     return h.hexdigest()[:16]
+
+
+SILENT_FINGERPRINT = hashlib.sha256(b"".join(bytes([0, 0]) for _ in PROBE)).hexdigest()[:16]
+
+
+def probe_silent(inst) -> bool:
+    """True when the player emitted only zero actions on the whole probe (C5b, 2026-09-19: 49/60 random Proteus
+    players are silent, and every silent player shares ONE fingerprint -- silence must be visible, not a hash)."""
+    return fingerprint_by_probe(inst) == SILENT_FINGERPRINT

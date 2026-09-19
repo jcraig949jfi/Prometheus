@@ -1,0 +1,105 @@
+"""Reference transforms (directive s17; built in C5 after playtest A showed controls silently skipping players
+they did not understand). A Transform declares the object kinds it ACCEPTS ("player.<representation>") and
+apply(obj, seed) returns a new object of the same kind. Controls look transforms up by representation and
+record which players they could transform; a control that transformed nothing reports INDETERMINATE.
+
+  transform.shuffle.v1   structure-destroying, cost-preserving (the SHAM): statemachine.v1 table cells
+                         permuted with shape kept; proteus.tape.v0 genome words permuted with length kept;
+                         constant.v1 NOT accepted (there is no structure to destroy).
+  transform.fresh.v1     the SCRATCH: a new random player of the same representation and shape from a new seed.
+  transform.relabel.v1   statemachine.v1: states renumbered by a seeded permutation (behaviour-preserving:
+                         the fingerprint must not change) -- the metamorphic transform.
+"""
+from __future__ import annotations
+
+import copy
+from typing import Any
+
+from prometheus.toolbox.contracts import PlayerSpec
+from prometheus.toolbox.ref import players as P
+from prometheus.toolbox.ref.worlds import stream
+
+
+def _shuffle(lst: list, s) -> list:
+    out = list(lst)
+    for i in range(len(out) - 1, 0, -1):
+        j = s.below(i + 1); out[i], out[j] = out[j], out[i]
+    return out
+
+
+def _spec(p: dict | PlayerSpec) -> PlayerSpec:
+    if isinstance(p, PlayerSpec):
+        return p
+    return PlayerSpec(p["representation"], copy.deepcopy(p["payload"]), dict(p.get("initial_state", {})), frozenset(p.get("requires", ())), dict(p.get("meta", {})))
+
+
+class ShuffleTransform:
+    kind = "transform.shuffle.v1"
+    accepts = frozenset({"player.statemachine.v1", "player.proteus.tape.v0"})
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "accepts": sorted(self.accepts)}
+
+    def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
+        spec = _spec(obj); s = stream("shuffle", rng_seed, spec.representation)
+        pl = copy.deepcopy(spec.payload)
+        if spec.representation == "statemachine.v1":
+            flat = _shuffle([cell for row in pl["table"] for cell in row], s); nb = pl["n_buckets"]
+            pl["table"] = [flat[i * nb:(i + 1) * nb] for i in range(pl["n_states"])]
+        elif spec.representation == "proteus.tape.v0":
+            pl["manifest"] = dict(pl["manifest"], genome=_shuffle(list(pl["manifest"]["genome"]), s))
+        else:
+            raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
+        return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))
+
+
+class FreshTransform:
+    kind = "transform.fresh.v1"
+    accepts = frozenset({"player.statemachine.v1", "player.proteus.tape.v0"})
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "accepts": sorted(self.accepts)}
+
+    def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
+        spec = _spec(obj)
+        if spec.representation == "statemachine.v1":
+            pl = spec.payload
+            return P.random_statemachine(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], meta={"transform": self.kind})
+        if spec.representation == "proteus.tape.v0":
+            return P.random_proteus_player(rng_seed, meta={"transform": self.kind})
+        raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
+
+
+class RelabelTransform:
+    kind = "transform.relabel.v1"
+    accepts = frozenset({"player.statemachine.v1"})
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "accepts": sorted(self.accepts)}
+
+    def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
+        spec = _spec(obj)
+        if spec.representation != "statemachine.v1":
+            raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
+        pl = copy.deepcopy(spec.payload); n = pl["n_states"]; s = stream("relabel", rng_seed)
+        perm = _shuffle(list(range(n)), s)                  # old state i -> new label perm[i]
+        table = [None] * n
+        for i, row in enumerate(pl["table"]):
+            table[perm[i]] = [[perm[nxt], list(acts)] for nxt, acts in row]
+        pl["table"] = table
+        init = dict(spec.initial_state); init["state"] = perm[int(init.get("state", 0))]
+        return PlayerSpec(spec.representation, pl, init, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))
+
+
+ALL = {"transform.shuffle.v1": ShuffleTransform, "transform.fresh.v1": FreshTransform, "transform.relabel.v1": RelabelTransform}
+
+
+def transform_players(registry, kind: str, players: list, rng_seed: int) -> tuple:
+    """Apply a registered transform to every player it accepts. -> (new player manifests, transformed indices)."""
+    t = registry.make(kind); out = []; done = []
+    for i, p in enumerate(players):
+        if "player." + p["representation"] in t.accepts:
+            out.append(t.apply(p, rng_seed * 1009 + i).manifest()); done.append(i)
+        else:
+            out.append(p)
+    return out, done

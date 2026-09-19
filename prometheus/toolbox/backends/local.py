@@ -95,30 +95,37 @@ def lower(exp: Experiment, registry) -> Lowering:
 
 # ---------------------------------------------------------------------------------------------- wrappers
 class ObservationWrapper:
-    """observation_delay: observe the state from d ticks ago (the first observation is repeated until d are buffered).
-    observation_permute: a seeded permutation of observation channels, fixed for the episode."""
+    """Kernel-applied observation wrappers, COMPOSED in intervention order (C4, 2026-09-19: a dict keyed by
+    wrapper name let a control silently replace the designer's own permutation).
+    observation_delay: the delays ADD; observe the state from d ticks ago (the first observation is repeated
+    until d are buffered).  observation_permute: one seeded channel permutation per seed, applied in order;
+    all seeds are recorded in the manifest."""
 
-    def __init__(self, world, delay: int = 0, permute_seed: Optional[int] = None):
-        self.w = world; self.delay = int(delay); self.permute_seed = permute_seed
+    def __init__(self, world, delay: int = 0, permute_seeds: Optional[List[int]] = None):
+        self.w = world; self.delay = int(delay); self.permute_seeds = list(permute_seeds or [])
         self._buf: Dict[int, List[List[int]]] = {}
-        self._perm: Optional[List[int]] = None
+        self._perms: Optional[List[List[int]]] = None
         self.kind = world.kind; self.capabilities = world.capabilities; self.n_players = world.n_players
 
     def manifest(self) -> dict:
-        return dict(self.w.manifest(), wrappers={"observation_delay": self.delay, "observation_permute": self.permute_seed})
+        return dict(self.w.manifest(), wrappers={"observation_delay": self.delay, "observation_permute": list(self.permute_seeds)})
 
     def reset(self, seed: int) -> None:
-        self.w.reset(seed); self._buf = {}; self._perm = None
+        self.w.reset(seed); self._buf = {}; self._perms = None
+
+    def _perm(self, seed: int, n: int) -> List[int]:
+        s = stream("permute", seed); perm = list(range(n))
+        for i in range(n - 1, 0, -1):
+            j = s.below(i + 1); perm[i], perm[j] = perm[j], perm[i]
+        return perm
 
     def observe(self, pid: int) -> List[int]:
         obs = self.w.observe(pid)
-        if self.permute_seed is not None:
-            if self._perm is None:
-                s = stream("permute", self.permute_seed); n = len(obs); perm = list(range(n))
-                for i in range(n - 1, 0, -1):
-                    j = s.below(i + 1); perm[i], perm[j] = perm[j], perm[i]
-                self._perm = perm
-            obs = [obs[i] for i in self._perm]
+        if self.permute_seeds:
+            if self._perms is None:
+                self._perms = [self._perm(sd, len(obs)) for sd in self.permute_seeds]
+            for perm in self._perms:
+                obs = [obs[i] for i in perm]
         if self.delay:
             buf = self._buf.setdefault(pid, [])
             buf.append(obs)
@@ -133,18 +140,18 @@ class ObservationWrapper:
 
 def build_world(exp: Experiment, registry):
     params = dict(exp.world.get("params", {}))
-    delay = 0; permute = None
+    delay = 0; permutes: List[int] = []
     for iv in exp.interventions:
         params.update(iv.get("world_params", {}))
         wr = iv.get("wrappers", {})
         delay += int(wr.get("observation_delay", 0))
         if "observation_permute" in wr:
-            permute = int(wr["observation_permute"])
+            permutes.append(int(wr["observation_permute"]))
     if "ext.intervention.world_params.v1" in registry.get(exp.world["kind"]).capabilities:
         params.setdefault("horizon", exp.budget["horizon"])     # a world without parameter overrides keeps its own horizon; the loop caps at budget.horizon anyway
     world = registry.make(exp.world["kind"], **params)
-    if delay or permute is not None:
-        world = ObservationWrapper(world, delay, permute)
+    if delay or permutes:
+        world = ObservationWrapper(world, delay, permutes)
     return world
 
 
@@ -180,7 +187,8 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     sub = registry.make(exp.substrate["kind"], **exp.substrate.get("params", {}))
     specs = [PlayerSpec(p["representation"], p["payload"], p.get("initial_state", {}), frozenset(p.get("requires", ())), p.get("meta", {})) for p in exp.players]
     instances = {pid: sub.instantiate(ps, spec.seed * 31 + pid) for pid, ps in enumerate(specs)}
-    fingerprints = {str(pid): inst.fingerprint() for pid, inst in instances.items()}   # spec identity: taken on the FRESH instance
+    from prometheus.toolbox.ref.players import probe_silent
+    fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst)} for pid, inst in instances.items()}   # spec identity, on the FRESH instance
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
     hashes: List[str] = []; ticks_total = 0; events_total = 0; summaries = []
     series_obs = [ob for ob in observers if getattr(ob, "series", False)]

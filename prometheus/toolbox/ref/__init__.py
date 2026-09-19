@@ -39,4 +39,7 @@ def install(reg: Registry) -> Registry:
     reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     for kind, cls in Cn.ALL.items():
         reg.register(ComponentRecord(kind, "control", cls, frozenset(), route="write", provenance=PROV, license="repository"))
+    from prometheus.toolbox.ref import transforms as T
+    for kind, cls in T.ALL.items():
+        reg.register(ComponentRecord(kind, "transform", cls, frozenset(), route="write", provenance=PROV, license="repository"))
     return reg
