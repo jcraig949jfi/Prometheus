@@ -1,0 +1,114 @@
+"""One task's interaction surface: what a Player can observe and do, and what is metered.
+
+TaskRun exposes only the public task fields. Actions are integers: values in
+[0, NUM_OPS) apply a hidden operation (one interaction); NUM_OPS returns the
+object to the task start (no interaction, DESIGN_C0 C6). Compute is charged
+through charge(); the task ends on success, on an exhausted interaction or
+step budget, or when the Player halts.
+"""
+
+from __future__ import annotations
+
+from . import world
+
+
+class TaskOver(Exception):
+    """Raised by TaskRun when the task has ended; Players must stop."""
+
+
+class TaskRun:
+    def __init__(self, task, task_index: int, step_budget: int = None, post_success_steps: int = 200):
+        self.task = task
+        self.post_success_steps = post_success_steps
+        self.grace_left = 0
+        self.task_index = task_index
+        self.start = task.start
+        self.target = task.target
+        self.interaction_budget = task.interaction_budget
+        self.step_budget = task.step_budget if step_budget is None else step_budget
+        self.current = task.start
+        self.previous = task.start
+        self.interactions = 0
+        self.steps = 0
+        self.success = False
+        self.over = False
+        self.halted = False
+        self.end_reason = None
+        self.starting_performance = world.performance(task.start, task.target)
+        self.best_performance = self.starting_performance
+        self.last_action = -1
+        self.trajectory = []  # (action, resulting object) for the replay hash
+        self.n_resets = 0
+
+    # ------------------------------------------------------------ observation
+    def observation(self) -> dict:
+        return {
+            "current": self.current,
+            "target": self.target,
+            "interactions_left": self.interaction_budget - self.interactions,
+            "num_ops": world.NUM_OPS,
+            "task_index": self.task_index,
+            "steps_left": self.step_budget - self.steps,
+            "last_delta": tuple((c - p) % world.B for c, p in zip(self.current, self.previous)),
+            "last_action": self.last_action,
+        }
+
+    # ------------------------------------------------------------ actions
+    def act(self, value: int):
+        if self.over:
+            raise TaskOver()
+        if self.success:
+            # any action after success ends the task; the grace is for bookkeeping only
+            self._end("post_success_action")
+        v = int(value) % (world.NUM_OPS + 1)
+        if v == world.RESET_ACTION:
+            self.previous = self.current
+            self.current = self.start
+            self.last_action = v
+            self.n_resets += 1
+            self.trajectory.append((v, self.current))
+            return self.current
+        if self.interactions >= self.interaction_budget:
+            self._end("interaction_budget")
+        self.previous = self.current
+        self.current = world.apply_op(v, self.current)
+        self.interactions += 1
+        self.last_action = v
+        self.trajectory.append((v, self.current))
+        p = world.performance(self.current, self.target)
+        if p > self.best_performance:
+            self.best_performance = p
+        if self.current == self.target:
+            self.success = True
+            self.end_reason = "success"
+            self.grace_left = self.post_success_steps
+            return self.current
+        if self.interactions >= self.interaction_budget:
+            self._end("interaction_budget")
+        return self.current
+
+    def charge(self, units: int = 1):
+        """Meter compute. Ends the task when the step budget is exhausted."""
+        if self.over:
+            raise TaskOver()
+        self.steps += units
+        if self.success:
+            self.grace_left -= units
+            if self.grace_left <= 0:
+                self._end("success")
+        if self.steps >= self.step_budget:
+            self._end("step_budget")
+
+    def halt(self):
+        self.halted = True
+        self._end("halt")
+
+    def _end(self, reason: str):
+        if not self.over:
+            self.over = True
+            if not self.success:
+                self.end_reason = reason
+        raise TaskOver()
+
+    def final_performance(self) -> float:
+        return world.performance(self.current, self.target)
