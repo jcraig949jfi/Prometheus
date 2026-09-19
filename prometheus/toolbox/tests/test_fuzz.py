@@ -13,7 +13,7 @@ from prometheus.toolbox.ir import Experiment, IRError, ref
 from prometheus.toolbox.registry import default_registry
 from prometheus.toolbox.backends.local import execute, lower, run_episode
 from prometheus.toolbox.receipt import read_all
-from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, constant_player, random_proteus_player, proteus_available, random_rewrite_system
+from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, random_statemachine_v3, constant_player, random_proteus_player, proteus_available, random_rewrite_system
 from prometheus.toolbox.ref.worlds import IntegerWorld
 from prometheus.toolbox.contracts import EVENT_KINDS
 
@@ -23,19 +23,22 @@ REG = default_registry()
 def random_experiment(seed: int) -> Experiment:
     rnd = random.Random(seed)
     n_players = rnd.choice([1, 1, 2, 3])
-    reps = ["sm1", "sm2", "const", "rewrite"] + (["proteus"] if proteus_available() else [])
+    reps = ["sm1", "sm2", "sm3", "const", "rewrite"] + (["proteus"] if proteus_available() else [])
     players = []
     for i in range(n_players):
         r = rnd.choice(reps)
         m = {"sm1": lambda: random_statemachine(rnd.randrange(10**6), rnd.choice([2, 4, 6]), rnd.choice([4, 8, 16]), rnd.choice([1, 2, 3])),
              "sm2": lambda: random_statemachine_v2(rnd.randrange(10**6), rnd.choice([2, 4]), rnd.choice([4, 8]), rnd.choice([1, 2])),
+             "sm3": lambda: random_statemachine_v3(rnd.randrange(10**6), rnd.choice([2, 4]), rnd.choice([4, 8]), rnd.choice([1, 2]), 8, rnd.choice([1, 16])),
              "const": lambda: constant_player([rnd.randrange(8) for _ in range(rnd.choice([1, 2, 3]))]),
              "rewrite": lambda: random_rewrite_system(rnd.randrange(10**6), rnd.choice([1, 4, 8]), rnd.choice([2, 8]), rnd.choice([2, 6, 12])),
              "proteus": lambda: random_proteus_player(rnd.randrange(10**6))}[r]().manifest()
         if rnd.random() < 0.25:                                                        # C34: per-player substrate override
             m = dict(m, substrate=rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime", ttl=rnd.choice([None, 2])), ref("substrate.stream.v1", lag=rnd.choice([1, 3]))]))
         players.append(m)
-    if rnd.random() < 0.3:                                                             # C42: the grid world too
+    if rnd.random() < 0.15:                                                            # C63: the SEMANTIC pendulum too
+        world = ref("world.pendulum.v1", n_players=n_players, quantum=rnd.choice([1e-6, 1e-3]), start_charge=rnd.choice([2, 30, 1000]), step_cost=rnd.choice([0, 1]), world_seed=rnd.randrange(100))
+    elif rnd.random() < 0.3:                                                           # C42: the grid world too
         world = ref("world.grid.v1", n_nodes=rnd.choice([2, 5, 9]), n_players=n_players, act_range=rnd.choice([3, 8]), start_charge=rnd.choice([1, 20, 1000]),
                     step_cost=rnd.choice([0, 1]), regen_every=rnd.choice([0, 1, 4]), pool_max=rnd.choice([0, 3]), world_seed=rnd.randrange(1000))
     else:
@@ -44,7 +47,9 @@ def random_experiment(seed: int) -> Experiment:
                     world_seed=rnd.randrange(1000), start_charge=rnd.choice([1, 8, 64, 100000]), step_cost=rnd.choice([0, 1, 5]), yield_amt=rnd.choice([0, 4, 40]),
                     obs_regs=rnd.choice([1, 4, 9]))
     substrate = rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope=rnd.choice(["episode", "lifetime", "persistent"]), ttl=rnd.choice([None, 1, 3]), max_keys=rnd.choice([0, 1, 100])),
-                            ref("substrate.stream.v1", scope=rnd.choice(["episode", "lifetime"]), lag=rnd.choice([1, 2, 9]), maxlen=rnd.choice([1, 8]))])
+                            ref("substrate.stream.v1", scope=rnd.choice(["episode", "lifetime"]), lag=rnd.choice([1, 2, 9]), maxlen=rnd.choice([1, 8])),
+                            ref("substrate.mailbox.v1", scope=rnd.choice(["episode", "lifetime"]), capacity=rnd.choice([1, 4, 32])),
+                            ref("substrate.artifact.v1", scope=rnd.choice(["episode", "lifetime"]), ttl=rnd.choice([None, 2]), max_keys=rnd.choice([0, 2, 100]))])
     interventions = []
     for _ in range(rnd.choice([0, 1, 2, 3])):
         iv = {"name": "iv", "world_params": rnd.choice([{}, {"step_cost": rnd.choice([0, 2])}]),
@@ -52,7 +57,7 @@ def random_experiment(seed: int) -> Experiment:
         if rnd.random() < 0.3:                                                         # C19: schedules, sometimes with a non-mutable param
             iv["schedule"] = [{"tick": rnd.randrange(0, 8), "world_params": rnd.choice([{"step_cost": rnd.randrange(0, 4)}, {"n_regs": 3}])}]
         interventions.append(iv)
-    controls = rnd.sample(["control.replay.v1", "control.cheat.v1", "control.negative.v1", "control.positive.v1", "control.sham.v1", "control.scratch.v1", "control.permutation.v1"], rnd.choice([0, 1, 3]))
+    controls = rnd.sample(["control.replay.v1", "control.cheat.v1", "control.negative.v1", "control.positive.v1", "control.sham.v1", "control.scratch.v1", "control.permutation.v1", "control.ablation.v1"], rnd.choice([0, 1, 3]))
     observers = rnd.sample(["observer.trace.v1", "observer.descriptor.v1", "observer.series.v1"], rnd.choice([0, 1, 3]))
     sweep = rnd.choice([{}, {"world.params.world_seed": [1, 2]}, {"budget.horizon": [0, 3]}, {"interventions.0.wrappers.observation_delay": [0, 2]} if interventions else {},
                         {"players": [players, players[:1]]}, {"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1")]}])

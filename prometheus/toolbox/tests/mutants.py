@@ -24,7 +24,7 @@ MUTANTS = [
     ("M07", "receipt.py", "if r[\"receipt_id\"] != receipt_id(r):\n        raise ReceiptError(\"receipt_id does not match content\")", "pass", "edited receipts validate"),
     ("M08", "capabilities.py", "missing = frozenset(c for c in req if c not in prov)", "missing = frozenset()", "negotiation never blocks"),
     ("M09", "state.py", "def _exp(self, ttl: Optional[int]) -> Optional[int]:\n        return None if ttl is None else self._tick + int(ttl)", "def _exp(self, ttl: Optional[int]) -> Optional[int]:\n        return None", "ttl never expires"),
-    ("M10", "ref/substrates.py", "self._c[\"ws_refused\"] += 1\n\n    def cost(self):\n        return dict(self._c)\n\n    def snapshot(self) -> bytes:\n        import json\n        return json.dumps(self._c).encode()", "pass\n\n    def cost(self):\n        return dict(self._c)\n\n    def snapshot(self) -> bytes:\n        import json\n        return json.dumps(self._c).encode()", "flat substrate hides refused writes"),
+    ("M10", "ref/substrates.py", "    def write(self, value: int) -> None:\n        self._c[\"ws_refused\"] += 1\n\n    def create(self, program):\n        self._c[\"ws_refused\"] += 1; return None", "    def write(self, value: int) -> None:\n        pass\n\n    def create(self, program):\n        self._c[\"ws_refused\"] += 1; return None", "flat substrate hides refused writes"),
     ("M11", "backends/local.py", "if evs:\n                ob.on_events(evs)\n            ob.on_tick(ticks, observations, actions)", "ob.on_tick(ticks, observations, actions)\n            if evs:\n                ob.on_events(evs)", "observer delivery order reverted (pre-consequence records)"),
     ("M12", "backends/local.py", "delay += int(wr.get(\"observation_delay\", 0))", "delay = int(wr.get(\"observation_delay\", 0))", "delays replace instead of adding"),
     ("M13", "ref/players.py", "self.state = nxt\n        if mw >= 0:\n            self.ws.write(int(mw))", "self.state = nxt\n        if False:\n            self.ws.write(int(mw))", "v2 players never write memory"),
@@ -50,6 +50,11 @@ MUTANTS = [
     ("M32", "receipt.py", "        r = dict(r); r[\"prev_receipt_id\"] = self.prev", "        r = dict(r); r[\"prev_receipt_id\"] = None", "receipt chain never links"),
     ("M33", "ref/observers.py", "                rec += [sum(actions.get(pid, [])), self._ep_yield_by.get(pid, 0), 1 if self._alive_by.get(pid, False) else 0]", "                rec += [0, 0, 1]", "per-player series columns are zeros"),
     ("M34", "ref/observers.py", "        c = cols.index(\"yield_cum\")                              # C53: by NAME, never by habit", "        c = 2", "objective reads column 2 by habit"),
+    # fourth wave (C66): artifacts, pendulum quantum, ablation coverage
+    ("M35", "ref/substrates.py", "            if rid - 1 == aid:", "            if True:", "invoke ignores the artifact id (runs the first program)"),
+    ("M36", "ref/worlds_pendulum.py", "        return int(round(x / self.p[\"quantum\"]))", "        return int(round(x / 1e-6))", "pendulum ignores the declared quantum"),
+    ("M37", "ref/controls.py", "        e.players = [{k: v for k, v in p.items() if k != \"substrate\"} for p in e.players]", "        e.players = list(e.players)", "ablation leaves per-player workspaces in place"),
+    ("M38", "ref/substrates.py", "        self._c[\"ws_invocations_failed\"] += 1\n        return None", "        return None", "failed invocations uncounted"),
 ]
 
 

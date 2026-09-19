@@ -198,3 +198,15 @@ def test_ablation_control_removes_workspaces_and_reports(tmp_path):
     e2 = _exp(substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()], controls=[ref("control.ablation.v1")])
     rep2 = execute(lower(e2, REG).job, tmp_path / "ab2.jsonl", REG)
     assert rep2.controls["ablation"]["outcome"] == "INDETERMINATE"
+
+
+# C66 (mutation wave 4 survivor M37): the ablation control's tests used the EXPERIMENT substrate only; an
+# ablation that left PER-PLAYER overrides in place survived. Ablation must strip every override too.
+def test_ablation_strips_per_player_substrate_overrides(tmp_path):
+    p_mem = dict(random_statemachine_v2(11).manifest(), substrate=ref("substrate.kv.v1", scope="lifetime"))
+    e = _exp(substrate=ref("substrate.flat.v1"), players=[p_mem], controls=[ref("control.ablation.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0))
+    rep = execute(lower(e, REG).job, tmp_path / "abo.jsonl", REG)
+    assert rep.controls["ablation"]["outcome"] == "MET"
+    arm = [r for r in read_all(tmp_path / "abo.jsonl") if r["arm"] == "ablation"][0]
+    assert arm["components"]["player_substrates"] == ["substrate.flat.v1"] and arm["accounting"].get("ws_writes", 0) == 0 and arm["accounting"].get("ws_refused", 0) > 0

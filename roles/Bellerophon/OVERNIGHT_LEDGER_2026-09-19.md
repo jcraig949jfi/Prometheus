@@ -401,3 +401,10 @@ C65 | 04:31Z | EXECUTABLE ARTIFACTS (Crius s29's last missing concept): ext.work
   executable artifacts, lifetime reset, task sequence, transplant, ablation, scramble, held-out
   qualification, experience-to-competence. Whether Crius's ACTUAL experiment fits is the falsifier still
   to run when Crius publishes one (nothing forced tonight).
+C66 | 04:34Z | fuzzer draws v3 players, mailbox/artifact substrates, the SEMANTIC pendulum, the ablation control
+  (300 seeds: 156 OK, 82 BLOCKED, 28 TARGET_UNSUPPORTED -- all player-count mismatches from the population
+  sweep, i.e. C52 doing its job -- 34 invalid, 0 crashes). Mutation wave 4 (M35-M38): 3 CAUGHT, 1 SURVIVED --
+  the ablation control's tests never used a PER-PLAYER override, so an ablation that stripped only the
+  experiment substrate passed. Test added; killed. M10's anchor re-pointed after C65 moved the code
+  (a NOT_APPLICABLE mutant is a silent hole, now closed). Ledger: 37/37 CAUGHT. Suite 184 passed 6 skipped.
+  CORRECTION to C65's count: 36 components are registered and admitted (not 34).
