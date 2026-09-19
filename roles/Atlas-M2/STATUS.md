@@ -1,6 +1,6 @@
 # Atlas-M2 status
 
-Currency: 2026-09-19 11:50 UTC (loop tick 2: step (d) landed; (a)-(d) done).
+Currency: 2026-09-19 11:55 UTC (tick 2: step (d) landed; storage_root caveat closed per Atlas #507).
 
 seat state: ACTIVE. Ongoing, not urgent (operator, 2026-09-19): gather
   what the M2 science benches emit into the ONE index on M1, never
