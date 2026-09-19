@@ -182,3 +182,28 @@ def test_mutation_opset_per_rung(c2a, c2b, c2c):
     assert "PINVOKE" not in a and "PINVOKE" in b and "PSIM" not in b and "PSIM" in c
     assert "PSTEP" not in b and "PSTEP" not in c   # written only by PREC_END
     assert set(a) < set(b) < set(c)
+
+
+# ---------------------------------------------------------------- substrate object survives organism tampering
+
+
+def test_calibration_object_survives_tampering(c2b, stream):
+    task = stream[0]
+    # set slot 0 of the calibration block (id 0 after the first action) to an int, patch a procedure, delete
+    # the calibration block, then keep acting and invoking: nothing may raise, and calibration resumes
+    src = "\n".join([
+        "ACTI 3",                     # creates the calibration object (id 0)
+        "CONST R1, 0", "CONST R2, 0", "CONST R3, 7",
+        "BLK_STATE_SET R1, R2, R3",   # slot 0 <- 7 (an int where a 12-tuple lives)
+        "ACTI 4",                     # calibration update must re-initialise the table, not crash
+        "PREC_BEGIN", "ACTI 5", "PREC_END R4",
+        "CONST R5, 1", "BLK_STATE_SET R4, R5, R3",   # tamper with the procedure's state too
+        "BLK_DELETE R1",              # delete the calibration object
+        "ACTI 6",                     # recreated on the next action
+        "CONST R6, 2", "PINVOKE R4, R6",
+        "HALT"])
+    r, bs = _run(src, task, c2b)
+    assert r["end_reason"] in ("halt", "success")
+    cal = [b for b in bs.blocks.values() if b.origin == "calibration"]
+    assert len(cal) == 1 and isinstance(cal[0].local_state[0], tuple) and len(cal[0].local_state[0]) == 12
+    assert cal[0].local_state[0][6] == task.perm[6]          # recalibrated after recreation
