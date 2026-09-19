@@ -912,3 +912,11 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   non-empty missing set nobody provides and drawn from the implied requirements; OK (34) implies every implied
   requirement is provided. No defect; my first "untouched" check forgot that a point IR records its provenance.
 - suite 789 passed / 6 skipped.
+
+## C129 (08:24Z) the controls' vocabulary as a property over random IRs
+- 60 random IRs with controls: 103 (primary, arm) pairs across all 8 control kinds; outcomes MET 15 / NOT_MET 6 /
+  INDETERMINATE 11 at the job level -- the controls say NO on random compositions too, not only on the built
+  cases. Laws checked per pair: vocabulary; INDETERMINATE carries a note/reason; sham/scratch MET => trace
+  changed, scratch MET => every transformed genome changed; replay MET on BIT => traces equal; cheat MET =>
+  trace changed; valid == (0 failed, 0 unstarted, every control MET). No defect.
+- suite 850 passed / 6 skipped.
