@@ -534,6 +534,43 @@ def run_batch(specs: List[RunSpec], registry, batch_kind: str, receipt_dir=None)
     return out
 
 
+def objective_shape(v) -> str:
+    """scalar | vector (dict of numbers/None) | none | UNSUPPORTED (C94: the kernel assumes no singular reward)."""
+    if v is None:
+        return "none"
+    if isinstance(v, bool):
+        return "UNSUPPORTED"
+    if isinstance(v, (int, float)):
+        return "scalar"
+    if isinstance(v, dict) and v and all(isinstance(k, str) and (x is None or (isinstance(x, (int, float)) and not isinstance(x, bool))) for k, x in v.items()):
+        return "vector"
+    return "UNSUPPORTED"
+
+
+def summarise_objectives(values: list) -> dict:
+    """-> objective_shape, objective_n, objective_mean (number | {component: mean|None} | None), objective_unsupported.
+    Mixed shapes are reported as MIXED with the counts; nothing is averaged across shapes."""
+    shapes = [objective_shape(v) for v in values]
+    counts = {s: shapes.count(s) for s in sorted(set(shapes))}
+    present = {s for s in counts if s != "none"}
+    out = {"objective_n": 0, "objective_mean": None, "objective_unsupported": counts.get("UNSUPPORTED", 0), "objective_shape_counts": counts}
+    if not present:
+        out["objective_shape"] = "none"; return out
+    if len(present) > 1:
+        out["objective_shape"] = "MIXED"; return out
+    shape = present.pop(); out["objective_shape"] = shape
+    if shape == "scalar":
+        vals = [v for v in values if objective_shape(v) == "scalar"]
+        out["objective_n"] = len(vals); out["objective_mean"] = sum(vals) / len(vals)
+    elif shape == "vector":
+        vals = [v for v in values if objective_shape(v) == "vector"]
+        keys = sorted(set().union(*(set(v) for v in vals)))
+        out["objective_n"] = len(vals)
+        out["objective_mean"] = {k: (sum(v[k] for v in vals if v.get(k) is not None) / sum(1 for v in vals if v.get(k) is not None)) if any(v.get(k) is not None for v in vals) else None for k in keys}
+        out["objective_component_n"] = {k: sum(1 for v in vals if v.get(k) is not None) for k in keys}
+    return out
+
+
 @dataclass
 class ExecutionReport:
     experiment_id: str
@@ -649,12 +686,10 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
         for r in by_key.get("primary", {}).values():
             sp = splits.setdefault(r.get("split", "train"), {"n": 0, "objective_values": []})
             sp["n"] += 1
-            v = (r.get("science", {}).get("objective") or {}).get("value")
-            if isinstance(v, (int, float)):
-                sp["objective_values"].append(v)
+            if r["status"] == "COMPLETED":
+                sp["objective_values"].append((r.get("science", {}).get("objective") or {}).get("value"))
         for sp in splits.values():
-            vals = sp.pop("objective_values")
-            sp["objective_n"] = len(vals); sp["objective_mean"] = (sum(vals) / len(vals)) if vals else None
+            sp.update(summarise_objectives(sp.pop("objective_values")))          # C94: shape-aware, never a silent drop
         summary = {"experiment_id": job.experiment_id, "arm": "SUMMARY", "sweep_point": {}, "seed": -1, "status": "COMPLETED",
                    "experiment_digest": job.runs[0].experiment.digest() if job.runs else "", "components": {"world": {}, "substrate": {}},
                    "capabilities": job.negotiation or {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0,

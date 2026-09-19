@@ -116,6 +116,30 @@ class YieldNetObjective:
         return {"value": y - sum(pen.values()), "components": {"yield_total": y, "penalties": pen, "unknown_penalty_keys": unknown}}
 
 
+class MultiObjective:
+    """objective.multi.v1 (C94): NAMED COMPONENTS, each an ordinary objective ref; value is {name: number|None}. The
+    kernel assumes nothing scalar: split summaries report per-component means, search rows carry the dict and a
+    selector ranks by a named component or refuses."""
+    kind = "objective.multi.v1"
+    version = "1"
+
+    def __init__(self, components: Dict[str, dict] | None = None):
+        if not components or not isinstance(components, dict):
+            raise ValueError("objective.multi.v1 needs components={name: objective ref, ...}")
+        self.components = {k: dict(v) for k, v in components.items()}
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "components": self.components}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        from prometheus.toolbox.registry import default_registry
+        reg = default_registry(); value = {}; parts = {}
+        for name, r in self.components.items():
+            obj = reg.make(r["kind"], **r.get("params", {}))
+            res = obj.evaluate(receipt); value[name] = res.get("value"); parts[name] = dict(res, kind=obj.kind, version=getattr(obj, "version", None))
+        return {"value": value, "components": parts}
+
+
 class SurvivalObjective:
     kind = "objective.survival.v1"
     version = "1"

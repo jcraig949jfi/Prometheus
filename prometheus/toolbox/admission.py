@@ -233,7 +233,7 @@ def admit_observer(kind: str, registry) -> "AdmissionResult":
     row = registry.get(kind)
     try:
         from prometheus.toolbox.contracts import Observer
-        obs = [row.factory(), row.factory()]
+        obs = [row.factory(**row.admission_params), row.factory(**row.admission_params)]
         conf = all(isinstance(o, Observer) for o in obs)
         _synthetic_run(registry, [obs[0]]); _synthetic_run(registry, [obs[1]])
         m0, m1 = obs[0].measure(), obs[1].measure()
@@ -267,7 +267,7 @@ def admit_substrate(kind: str, registry) -> "AdmissionResult":
     try:
         from prometheus.toolbox.contracts import Substrate, PlayerInstance, ActionSpace, PlayerSpec
         from prometheus.toolbox.ref import players as P
-        sub = row.factory()
+        sub = row.factory(**row.admission_params)
         res.checks["conformance"] = {"ok": isinstance(sub, Substrate)}
         if not isinstance(sub, Substrate):
             res.failed.append("conformance")
@@ -307,7 +307,7 @@ def admit_control(kind: str, registry) -> "AdmissionResult":
     try:
         from prometheus.toolbox.contracts import Control
         from prometheus.toolbox.ir import Experiment, ref
-        ctrl = row.factory()
+        ctrl = row.factory(**row.admission_params)
         res.checks["conformance"] = {"ok": isinstance(ctrl, Control)}
         if not isinstance(ctrl, Control):
             res.failed.append("conformance")
@@ -343,20 +343,20 @@ def admit_simple(kind: str, registry) -> "AdmissionResult":
             if not ok:
                 res.failed.append("spec")
         elif row.slot == "objective":
-            obj = row.factory(); out = obj.evaluate({"science": {"observations": {}}, "accounting": {}, "series": {}})
+            obj = row.factory(**row.admission_params); out = obj.evaluate({"science": {"observations": {}}, "accounting": {}, "series": {}})
             ok = isinstance(out, dict) and "value" in out and "components" in out and _serialisable(out) and _serialisable(obj.manifest())
             res.checks["evaluate"] = {"ok": ok}
             if not ok:
                 res.failed.append("evaluate")
         elif row.slot == "transform":
-            t = row.factory(); ok = isinstance(t.accepts, frozenset) and _serialisable(t.manifest())
+            t = row.factory(**row.admission_params); ok = isinstance(t.accepts, frozenset) and _serialisable(t.manifest())
             if "player.statemachine.v1" in t.accepts:
                 out = t.apply(_det_spec(0), 9); ok = ok and out.representation == "statemachine.v1" and _serialisable(out.manifest())
             res.checks["apply"] = {"ok": ok}
             if not ok:
                 res.failed.append("apply")
         elif row.slot == "selector":
-            sel = row.factory(); props = sel.propose([], 1, 3)
+            sel = row.factory(**row.admission_params); props = sel.propose([], 1, 3)
             ok = len(props) == 3 and all(_serialisable(p.manifest()) for p in props) and _serialisable(sel.manifest())
             res.checks["propose"] = {"ok": ok}
             if not ok:

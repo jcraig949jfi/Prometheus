@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 import pathlib
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from prometheus.toolbox.contracts import PlayerSpec
 from prometheus.toolbox.ir import Experiment
@@ -55,13 +55,31 @@ def committed_rows(rows: List[dict]) -> List[dict]:
     return out
 
 
-def elites_by_cell(rows: List[dict]) -> Dict[tuple, List[dict]]:
+class SelectorNeedsScalar(ValueError):
+    """C94: a rank-based selector met a vector objective without (or with an unknown) `rank`. Raised BEFORE any
+    generation is written, with the component keys named, so the designer can say rank=<key>."""
+
+
+def scalar_objective(row: dict, rank: Optional[str] = None):
+    """The number a selector ranks by: the row's objective if scalar, its `rank` component if a vector; None if
+    absent. A vector without a usable rank raises SelectorNeedsScalar (the keys are in the message)."""
+    v = row.get("objective")
+    if v is None or isinstance(v, (int, float)):
+        return v
+    if isinstance(v, dict):
+        if rank is None or rank not in v:
+            raise SelectorNeedsScalar("objective is a vector with components %s; the selector needs rank=<one of them> (got rank=%r)" % (sorted(v), rank))
+        return v[rank]
+    raise SelectorNeedsScalar("objective value of unsupported shape %s; a selector needs a number or a named component" % type(v).__name__)
+
+
+def elites_by_cell(rows: List[dict], rank: Optional[str] = None) -> Dict[tuple, List[dict]]:
     cells: Dict[tuple, List[dict]] = {}
     for r in rows:
         if r["kind"] != "elite":
             continue
-        key = tuple(r["descriptor"]); cur = cells.get(key)
-        if cur is None or (r["objective"] is not None and (cur[0]["objective"] is None or r["objective"] > cur[0]["objective"])):
+        key = tuple(r["descriptor"]); cur = cells.get(key); v = scalar_objective(r, rank)
+        if cur is None or (v is not None and (scalar_objective(cur[0], rank) is None or v > scalar_objective(cur[0], rank))):
             cells[key] = [r]
     return cells
 
@@ -77,16 +95,17 @@ def _gen0(registry, representation: str, rng_seed: int, n: int) -> List[PlayerSp
 class TruncationSelector:
     kind = "selector.truncation.v1"
 
-    def __init__(self, keep: int = 3, n: int = 6, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1"):
-        self.keep = keep; self.n = n; self.mutation = mutation; self.representation = representation
+    def __init__(self, keep: int = 3, n: int = 6, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", rank: Optional[str] = None):
+        self.keep = keep; self.n = n; self.mutation = mutation; self.representation = representation; self.rank = rank
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "keep": self.keep, "n": self.n, "mutation": self.mutation, "representation": self.representation}
+        return {"kind": self.kind, "keep": self.keep, "n": self.n, "mutation": self.mutation, "representation": self.representation, "rank": self.rank}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
         reg = default_registry(); t = reg.make(self.mutation); s = stream("truncation", rng_seed)
-        elites = sorted((r for r in archive_rows if r["kind"] == "elite" and r["objective"] is not None), key=lambda r: (-r["objective"], r["fingerprint"]))[:self.keep]
+        ranked = [(scalar_objective(r, self.rank), r) for r in archive_rows if r["kind"] == "elite"]
+        elites = [r for _, r in sorted(((v, r) for v, r in ranked if v is not None), key=lambda x: (-x[0], x[1]["fingerprint"]))][:self.keep]
         if not elites:
             return _gen0(reg, self.representation, rng_seed, n)
         out: List[PlayerSpec] = []
@@ -103,16 +122,16 @@ class TruncationSelector:
 class MapElitesSelector(TruncationSelector):
     kind = "selector.map_elites.v1"
 
-    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1"):
-        super().__init__(keep=0, n=n, mutation=mutation, representation=representation)
+    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", rank: Optional[str] = None):
+        super().__init__(keep=0, n=n, mutation=mutation, representation=representation, rank=rank)
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation}
+        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "rank": self.rank}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
         reg = default_registry(); s = stream("map_elites", rng_seed)
-        cells = list(elites_by_cell(archive_rows).values())
+        cells = list(elites_by_cell(archive_rows, self.rank).values())
         if not cells:
             return _gen0(reg, self.representation, rng_seed, n)
         out = []
@@ -121,6 +140,18 @@ class MapElitesSelector(TruncationSelector):
             t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
             out.append(t.apply(parent, rng_seed * 977 + i))
         return out
+
+
+def _mean_objective(vals: list):
+    """Mean over seeds of scalar values, or per-component mean of vector values; None if any seed had none (or a
+    component was None in any seed), or the shapes disagree."""
+    if not vals or any(v is None for v in vals):
+        return None
+    if all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in vals):
+        return sum(vals) / len(vals)
+    if all(isinstance(v, dict) for v in vals) and len({tuple(sorted(v)) for v in vals}) == 1:
+        return {k: (None if any(v[k] is None for v in vals) else sum(v[k] for v in vals) / len(vals)) for k in vals[0]}
+    return None
 
 
 def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
@@ -140,7 +171,7 @@ def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
     rows = []
     for row in by.values():
         vals = row.pop("objectives")
-        row["objective"] = None if any(v is None for v in vals) or not vals else sum(vals) / len(vals)
+        row["objective"] = _mean_objective(vals)                     # C94: number, {component: mean} or None
         ds = [d for d in row["descriptors"] if d]
         # C27: the cell key is the element-wise floor(mean + 0.5) over seeds, never one seed's descriptor
         row["descriptor"] = [int(sum(d[i] for d in ds) / len(ds) + 0.5) for i in range(len(ds[0]))] if ds else []
@@ -200,6 +231,8 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
     if len(committed) != sum(1 for r in rows if r["kind"] == "elite") - _abandoned_count(rows):
         # trailing rows with no marker: an interrupted generation. Mark them abandoned so no reader trusts them.
         _append(archive, {"kind": "GEN_ABANDONED", "gen": start, "reason": "rows without a GEN_DONE marker at resume"})
+    for r in committed:                                            # C94: a selector that cannot rank the archive refuses before any write
+        scalar_objective(r, getattr(sel, "rank", None))
     for gen in range(start, generations):
         players = sel.propose(committed, seed * 7919 + gen, sel.n)
         try:
@@ -207,6 +240,8 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
         except GenerationIncomplete as exc:                      # C69: an incomplete generation is never committed
             return {"generations_done": gen, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": exc.reason, "detail": str(exc)}
         new_rows = [dict(r, gen=gen) for r in sel.ingest(receipts)]
+        for r in new_rows:                                          # C94: refuse with the keys named BEFORE the generation is written
+            scalar_objective(r, getattr(sel, "rank", None))
         for r in new_rows:
             _append(archive, r)
         _append(archive, {"kind": "GEN_DONE", "gen": gen, "n": len(new_rows), "selector": sel.manifest()})

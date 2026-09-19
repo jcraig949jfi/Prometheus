@@ -7,6 +7,7 @@ executor falls back to the scalar path and the receipt says why (execution.batch
 """
 from __future__ import annotations
 
+import collections
 import json
 import pathlib
 import tempfile
@@ -242,3 +243,49 @@ def test_absent_machinery_row_keeps_its_reason_across_repeated_admission():
         res = admit("world.integer_batch.v1", R)
         assert res.state == "UNAVAILABLE" and res.checks["registry"]["note"] == "absent machinery" and res.checks["registry"]["reason"].startswith("import")
     assert R.batch_implementation("world.integer.v1") is None
+
+
+# ------------------------------------------------------------------------------------------ property over random IRs (C93)
+_COVERAGE = collections.Counter()          # how the 40 random IRs were executed; the guard below refuses a vacuous green
+
+
+@pytest.mark.parametrize("seed", list(range(100, 140)))
+def test_batched_execution_equals_scalar_execution_for_random_experiments(tmp_path, seed):
+    """For any valid IR the scalar and the batched path must agree run for run on every science field, whatever the
+    executor decided about batching (the reason is on the receipt). Failures may differ only in their timing fields."""
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = e.compile("local", REG)
+    if not low.ok:
+        return
+    eb = Experiment.from_dict(e.to_dict()); eb.budget = dict(eb.budget, batch=3)
+    lb = eb.compile("local", REG); assert lb.ok and lb.job.experiment_id == low.job.experiment_id
+    execute(low.job, tmp_path / "s.jsonl", REG); execute(lb.job, tmp_path / "b.jsonl", REG)
+    S = {(r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): r for r in read_all(tmp_path / "s.jsonl") if r["arm"] != "SUMMARY"}
+    B = {(r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): r for r in read_all(tmp_path / "b.jsonl") if r["arm"] != "SUMMARY"}
+    assert set(S) == set(B)
+    for b in B.values():
+        _COVERAGE[b["execution"]["reason"]] += 1
+    for k, r in S.items():
+        b = B[k]
+        assert b["status"] == r["status"], k
+        if r["status"] != "COMPLETED":
+            assert b["error"] == r["error"], k
+            continue
+        for f in SCIENCE_FIELDS:
+            assert b[f] == r[f], (seed, k, f)
+        assert _strip(b["accounting"]) == _strip(r["accounting"]), (seed, k)
+        assert {kk: v["series_hash"] for kk, v in (b.get("series") or {}).items()} == {kk: v["series_hash"] for kk, v in (r.get("series") or {}).items()}, (seed, k)
+    sums = {r["experiment_id"]: r for r in read_all(tmp_path / "s.jsonl") if r["arm"] == "SUMMARY"}
+    sumb = {r["experiment_id"]: r for r in read_all(tmp_path / "b.jsonl") if r["arm"] == "SUMMARY"}
+    assert list(sums) == list(sumb)
+    for k in sums:
+        assert sums[k]["science"] == sumb[k]["science"], (seed, "controls/splits")
+
+
+def test_the_random_property_actually_exercised_the_batch_path():
+    """Coverage guard (C93): 40 random IRs must have produced BATCHED runs, or the property above proved nothing."""
+    assert _COVERAGE["BATCHED"] >= 10, dict(_COVERAGE)
+    assert _COVERAGE["WRAPPERS_NOT_BATCHED"] > 0 and _COVERAGE["NO_BATCH_IMPLEMENTATION"] > 0, dict(_COVERAGE)

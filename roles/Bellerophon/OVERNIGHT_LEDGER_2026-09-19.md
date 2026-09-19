@@ -537,3 +537,41 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   Alternatives: (a) columnar-contract world family (new family, SEMANTIC agreement on aggregates) -- a design
   question for the day, not a night; (b) numba-jit the scalar step (would speed the reference, changes nothing
   about batching). Reopen when a world whose step dominates the tick exists (Box2D, c6 composed at scale).
+
+## C93 (05:30Z) property: batched == scalar for random IRs, with a coverage guard
+- 40 fuzz IRs (seeds 100-139) executed both ways; every science field, series hash, accounting-minus-wall and the
+  SUMMARY's controls/splits equal run for run; failures equal on error text. First version was green in 0.75 s --
+  checked the rows: 24 seeds executed, 202 runs, only 28 BATCHED (128 WRAPPERS_NOT_BATCHED, 46 NO_BATCH_IMPL).
+  Real but thin coverage; a guard test now refuses the property as vacuous unless >= 10 runs were BATCHED and both
+  fallback reasons occurred. (Making wrappers batchable would widen coverage; not pursued -- C92 verdict.)
+
+## C94 (05:30Z) objectives are not scalar: shapes in splits, vector rows, rank or refuse
+- the "singular rewards" assumption (directive s10) was live in two places: execute()'s split summary kept only
+  int/float values (a vector objective vanished: objective_n=0 with every receipt valued), and search's
+  _rows_from_receipts did sum(vals)/len(vals) (a dict value would have CRASHED a generation after its receipts).
+- RED: tests/test_objective_shapes.py (5) failed for the intended reasons (no objective.multi.v1; no objective_shape;
+  selectors reject rank=; no SelectorNeedsScalar).
+- built: objective.multi.v1 (named components, each an ordinary objective ref; value {name: number|None});
+  objective_shape()/summarise_objectives() in the executor: scalar | vector | none | UNSUPPORTED | MIXED with counts,
+  per-component means and per-component n, never a silent drop (a string-valued objective reads UNSUPPORTED x3);
+  search rows carry the dict (per-component mean over seeds; None if any seed lacks it); selectors take rank=<name>;
+  scalar_objective() raises SelectorNeedsScalar with the keys named; evolve() checks the resumed archive AND each
+  ingested generation BEFORE writing it (no half-written generation, no GEN_DONE) -- the receipts of the refused
+  generation still exist, the rows are never appended.
+- admission needed a general mechanism: ComponentRecord.admission_params (a component with no valid default is
+  constructed with those at admission; every factory() call in admission uses them; exposed in rows()).
+- observed (rows): 3-component vector objective on 3 train + 1 holdout seeds; per-component means equal the mean
+  of the rows; truncation with rank="life" evolves 2 generations; without rank the refusal names life/yield/rank.
+- census 39/39 ADMITTED.
+
+## C95 (05:30Z) FALSE GREEN IN THE INSTRUMENT: the mutation ledger's anchor test caught every mutant
+- while running wave 7, M48-M50 read CAUGHT with first failure test_integrity::test_every_mutant_anchor_still_exists
+  -- which fails for ANY applied mutant (its anchor is, by construction, gone). Since C87 that test made the ledger
+  unable to produce a SURVIVED row for any mutant whose real test runs after test_integrity alphabetically. The
+  committed ledger had 18 of 46 rows with the anchor test as first failure (M02 M05 M12 M14 M15 M16 M17 M21 M23
+  M25 M28 M29 M31 M33 M34 M35 M36 M38); each had been caught by a real test in an earlier wave, so no survivor was
+  hidden -- but a REGRESSION of any of those tests would have been invisible since C87.
+- fix: the runner deselects the anchor test; only tests of behaviour may catch a mutant. Honest re-run: 50/50
+  CAUGHT, 0 rows with the anchor test as first failure. The ledger JSON now carries real first failures for all 50.
+- lesson (for the report): a check that runs INSIDE the instrument it checks can only ever say yes. Same shape as
+  C70 (agreement without power): the instrument had no power to say SURVIVED.

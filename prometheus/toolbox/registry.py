@@ -28,11 +28,12 @@ class ComponentRecord:
     native_deps: tuple = ()
     state: str = "PROVISIONAL"
     admission: Dict[str, Any] = field(default_factory=dict)    # last admission result, by host
+    admission_params: Dict[str, Any] = field(default_factory=dict)   # C94: constructor params admission uses (a component with no valid default)
 
     def row(self) -> dict:
         return {"kind": self.kind, "slot": self.slot, "capabilities": sorted(self.capabilities), "requires": sorted(self.requires),
                 "reference_of": self.reference_of, "implements": self.implements, "route": self.route, "provenance": self.provenance, "license": self.license,
-                "native_deps": list(self.native_deps), "state": self.state}
+                "native_deps": list(self.native_deps), "state": self.state, "admission_params": self.admission_params}
 
 
 class Registry:

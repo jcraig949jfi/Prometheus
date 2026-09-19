@@ -66,12 +66,21 @@ MUTANTS = [
     ("M45", "backends/local.py", "                        if evs:\n                            ob.on_events(evs)                                   # same ORDER contract as _loop (C1)\n                        ob.on_tick(ticks, obs_env[i], acts[i])", "                        ob.on_tick(ticks, obs_env[i], acts[i])\n                        if evs:\n                            ob.on_events(evs)", "batch path delivers observer events after the tick"),
     ("M46", "registry.py", "            if r.state == \"ADMITTED\":\n                return k", "            return k", "an UNAVAILABLE batch world is chosen"),
     ("M47", "backends/local.py", "                if pending and (group_of(pending[0]) != group_of(spec) or len(pending) >= int(spec.experiment.budget[\"batch\"])):", "                if pending and len(pending) >= int(spec.experiment.budget[\"batch\"]):", "runs of different arms batched behind one world"),
+    # seventh wave (C94): objective shapes
+    ("M48", "backends/local.py", "    if isinstance(v, dict) and v and all(isinstance(k, str) and (x is None or (isinstance(x, (int, float)) and not isinstance(x, bool))) for k, x in v.items()):\n        return \"vector\"", "    if False:\n        return \"vector\"", "vector objectives summarised as UNSUPPORTED"),
+    ("M49", "search.py", "    if all(isinstance(v, dict) for v in vals) and len({tuple(sorted(v)) for v in vals}) == 1:", "    if False:", "search rows drop vector objectives (None)"),
+    ("M50", "search.py", "        for r in new_rows:                                          # C94: refuse with the keys named BEFORE the generation is written\n            scalar_objective(r, getattr(sel, \"rank\", None))\n", "", "an unrankable generation is committed before the refusal"),
+    ("M51", "admission.py", "            obj = row.factory(**row.admission_params); out = obj.evaluate(", "            obj = row.factory(); out = obj.evaluate(", "admission ignores a component's admission params"),
 ]
 
 
 def run_suite() -> tuple:
     t0 = time.time()
-    r = subprocess.run([sys.executable, "-m", "pytest", "prometheus/toolbox/tests", "-q", "-x", "-p", "no:cacheprovider", "--ignore=prometheus/toolbox/tests/mutants.py"],
+    # C95: the anchor-drift test (C87) fails for EVERY applied mutant -- with it in the run a mutant no real test
+    # catches still reads CAUGHT (18 of 46 rows had it as their first failure). It is deselected here; only tests
+    # of BEHAVIOUR may catch a mutant.
+    r = subprocess.run([sys.executable, "-m", "pytest", "prometheus/toolbox/tests", "-q", "-x", "-p", "no:cacheprovider", "--ignore=prometheus/toolbox/tests/mutants.py",
+                        "--deselect", "prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists"],
                        cwd=str(ROOT), capture_output=True, text=True, timeout=900)
     last = [l for l in r.stdout.splitlines() if l.strip()][-1:] or [""]
     failed = [l for l in r.stdout.splitlines() if l.startswith("FAILED")]
