@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-19 03:27:14",
+ "updated_local": "2026-09-19 06:09:06",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "PRIORITY LOOP (operator directive 2026-09-18): revisit / perturb / stasis / reactivate over the whole history; nothing scientific is killed; see loop/LOOP_RULES.md",
  "phase_model": [
@@ -428,7 +428,7 @@
  ],
  "active": {
   "mode": "priority_loop",
-  "cycle": "CYCLE5_2026-09-19",
+  "cycle": "CYCLE6_2026-09-19",
   "phase": "APPENDED",
   "next": "next cycle: RECONCILE the whole pool with this cycle's evidence, re-score, re-diversify, freeze a new ten"
  },
@@ -560,7 +560,7 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 5,
-  "defects_logged": 88,
+  "defects_logged": 89,
   "science_defects": 28,
   "defects_per_experiment": {
    "arch4": 3,
@@ -577,7 +577,8 @@
    "loop2": 3,
    "loop3": 5,
    "loop4": 3,
-   "loop5": 1
+   "loop5": 1,
+   "loop6": 1
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -783,6 +784,38 @@
    "material": 135,
    "in_stasis": 6,
    "report": "loop/CYCLE_REPORT_CYCLE5_2026-09-19.md"
+  },
+  "CYCLE6_2026-09-19": {
+   "pool": 39,
+   "candidates": 28,
+   "frozen_ten": [
+    "P-G11",
+    "P-H03",
+    "P-H02",
+    "P-H10",
+    "P-H09",
+    "P-H07",
+    "P-H04",
+    "P-H01",
+    "P-G04",
+    "P-H08"
+   ],
+   "dispositions": {
+    "P-G11": "BREAKS: i1e16|reward: start_anchored#0 keeps 0.00; i1e16|reward: ask_time#2 keeps 0.00; i1e16|reward: periodic#4 keeps 0.00; i1e16|answered: start_anchored#0 keeps 0.00; i1e16|answered: schedule#1 keeps 0.00; i1e16|answered: ask_time#2 keeps 0.00; i1e16|answered: periodic#4 keeps 0.24; i1e16|answered: ask_time#5 keeps 0.00; i1e16|outdist: periodic#4 keeps 0.47; i2e16|reward: start_anchored#0 keeps 0.00; i2e16|reward: ask_time#2 keeps 0.00; i2e16|reward: periodic#4 keeps 0.00",
+    "P-H03": "material=True",
+    "P-H02": "material=False",
+    "P-H10": "MIXED",
+    "P-H09": "material=True",
+    "P-H07": "material=False",
+    "P-H04": "material=False",
+    "P-H01": "material=True",
+    "P-G04": "material=True",
+    "P-H08": "NEUTRALITY_PRESERVES"
+   },
+   "evidence_events": 252,
+   "material": 171,
+   "in_stasis": 6,
+   "report": "loop/CYCLE_REPORT_CYCLE6_2026-09-19.md"
   }
  }
 }

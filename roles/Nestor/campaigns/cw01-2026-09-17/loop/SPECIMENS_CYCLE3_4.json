@@ -1,5 +1,5 @@
 {
- "written": "2026-09-19 03:27:15",
+ "written": "2026-09-19 06:09:07",
  "campaign": "cw01-2026-09-17",
  "scope": "software-only artificial life / algorithm search; nothing biological",
  "rule": "public phenomena with known mechanisms and locations: usable as positive controls, recognition specimens, adversarial examples and post-freeze comparison cases; NOT hidden fixtures; NOT for detector threshold tuning after thresholds freeze; Campaign 6 machinery untouched",
@@ -858,6 +858,46 @@
      "1a402532dae73ae850c20e8ee705c68f69e719d205c69083ebfc71969cd01f42/w1d16"
     ]
    }
+  },
+  {
+   "id": "SPEC-X17-PREFIX-DOMINANCE",
+   "node": "T-X17 / T-X20",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "RECOMBINATION DOMINANCE: the temporal geometry of a spliced child is that of the PREFIX donor (135/135 one-point splices) or the host (155/157 insertions); across shapes periodic > schedule > start-anchored ~ ask-time; composition 1.6 percent, no new shapes",
+   "ruler": "P-F02 curve set on children; naming rule in P-H02",
+   "expected_effect": "DOMINATE is the modal outcome across shapes; INTERFERE within a shape",
+   "location": "experiments/cw01-arch4/P-H02 (rows.json with child genomes)",
+   "use": [
+    "Nyx recognition specimens: parent pairs and their dominated children",
+    "observatory: a composition test that reveals an entry-point organ"
+   ]
+  },
+  {
+   "id": "SPEC-W1-INVARIANCE-ATTRACTOR",
+   "node": "T-ARCH4/W1 / T-X17",
+   "substrate": "Proteus evolver on W0 with lifetime-nonstationary delays",
+   "phenomenon": "TEMPORAL INVARIANCE AS THE ATTRACTOR: any delay variability within a lifetime (phase switch, moving window, alternating, or a stationary delay) evolves IMMUNE tops that solve delays 0/1/2 including an unseen delay (.77 after phase-switch training); stationary-0 leaves ask-time-bound tops; a length price collapses them back to ask-time (d1 .06)",
+   "ruler": "reward on held-out d0/d1/d2 sets; P-F02 curves of the tops",
+   "expected_effect": "see P-H03 RESULT.json table",
+   "location": "experiments/cw01-arch4/P-H03 (tops.json with genomes per regime)",
+   "use": [
+    "positive control: a pressure that produces generalisation to an unseen condition",
+    "post-freeze comparison: invariance vs switching"
+   ],
+   "n_tops": 192
+  },
+  {
+   "id": "SPEC-X19-SPAN-FAILURE",
+   "node": "T-X19 / T-ARCH4/M1",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "CONTEXT-BOUND ORGAN: the geometry-necessary instructions (1-3) are a subset of the reward-necessary ones and transfer neither geometry nor competence when inserted into naive hosts (0/330); a sham span matched the 'geometry transfer' figure (D088)",
+   "ruler": "per-instruction disable probes; span insertion; P-F02 curves",
+   "expected_effect": "competence transfer 0",
+   "location": "experiments/cw01-arch4/P-H04 (rows.json)",
+   "use": [
+    "observatory adversarial specimen: a transfer criterion satisfied by a null host",
+    "negative control for organ-transfer claims"
+   ]
   }
  ],
  "n_transplant_lineages": 12

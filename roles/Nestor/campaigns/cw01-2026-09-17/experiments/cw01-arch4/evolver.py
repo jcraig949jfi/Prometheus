@@ -79,7 +79,8 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
         if ep_transform is not None:
             eps = ep_transform(eps, g)
         evs = [fitness(ind, eps, arm, rng) for ind in pop]
-        fit = np.array([e["reward_per_ask"] - price * CM.n_instr(ind["m"]) for e, ind in zip(evs, pop)])
+        pr = price(g) if callable(price) else price                 # a price may be a schedule over generations
+        fit = np.array([e["reward_per_ask"] - pr * CM.n_instr(ind["m"]) for e, ind in zip(evs, pop)])
         if g in archive_gens:
             archive[g] = [dict(x, reward=float(e["reward_per_ask"])) for x, e in zip(pop, evs)]
         hist.append({"gen": g, "reward_mean": float(fit.mean()), "reward_max": float(fit.max()),
@@ -115,7 +116,7 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
         pop = kids
     fixed = A.episodes(env)
     final = [dict(x, reward=A.evaluate(x["m"], fixed, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]) for x in pop]
-    return {"arm": arm, "seed": seed, "env": env, "price": price, "history": hist, "final": final, "archive": archive}
+    return {"arm": arm, "seed": seed, "env": env, "price": (price if not callable(price) else "schedule"), "history": hist, "final": final, "archive": archive}
 
 
 ASSAY_CELLS = [("delete", 2, 1), ("delete", 4, 1), ("delete", 4, 4), ("operand", 4, 1), ("opcode", 4, 1)]
