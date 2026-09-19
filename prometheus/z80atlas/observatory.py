@@ -76,7 +76,7 @@ def high_value_flags(runs_by_family: Dict[str, List[Dict]], vec_of: Dict[str, Di
     flags = []
     def solved(rs):
         return any((r["summary"].get("solvers_tail") or 0) >= 1 for r in rs)
-    fam_ids = list(runs_by_family)
+    fam_ids = [f for f in runs_by_family if f in vec_of]
     by_vec = {json.dumps(vec_of[f], sort_keys=True): f for f in fam_ids}
     for f in fam_ids:
         v = vec_of[f]; rs = runs_by_family[f]

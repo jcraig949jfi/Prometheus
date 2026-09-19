@@ -69,7 +69,16 @@ class Campaign:
         if resume and self.runs_path.exists():
             for line in self.runs_path.read_text(encoding="utf-8").splitlines():
                 if line.strip():
-                    self._index(json.loads(line))
+                    rec = json.loads(line)
+                    if rec["family"] not in self.s["families"]:          # appended after the last checkpoint: rebuild the family row
+                        self.s["families"][rec["family"]] = {"vec": rec["vec"], "kind": rec["kind"], "runs": [], "scores": [], "allocated": 0,
+                                                             "retired": False, "promoted": False, "parents": rec.get("parents", []), "created_utc": _utc()}
+                    fam = self.s["families"][rec["family"]]
+                    if rec["id"] not in fam["runs"]:
+                        fam["runs"].append(rec["id"]); fam["scores"].append(rec["score"])
+                    self._index(rec)
+            if self.runs:
+                self.s["next_run_no"] = max(self.s["next_run_no"], max(int(r["id"][1:]) for r in self.runs) + 1)
         self.s.pop("runs", None)
         self._batches = 0
 
