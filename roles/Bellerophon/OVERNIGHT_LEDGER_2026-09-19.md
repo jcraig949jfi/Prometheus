@@ -1008,3 +1008,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 ## C141 (08:59Z) build.kernel_hash names the kernel and only the kernel (post-closing)
 - a one-byte change to a kernel module changes the hash (refresh=True); a change to a test file does not; the
   file count is stable; receipts of one process share host and build. (Files restored in finally; tree clean.)
+
+## C142 (09:13Z) the reference objectives' laws as a property (after the closing numbers)
+- 40 random IRs with a four-component objective (yield_net with a random penalty key incl. an unknown one,
+  survival v1/v2, series_gain) and a series observer on 60%: every law recomputes from the same receipt's
+  observations, accounting, world summary and series; unknown penalty keys are named; series_gain is None with
+  a SERIES_ reason when there is no series. No defect.
