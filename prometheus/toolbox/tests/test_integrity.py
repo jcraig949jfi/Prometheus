@@ -217,3 +217,11 @@ def test_replay_of_a_file_with_an_unavailable_component_is_a_data_outcome(tmp_pa
     from prometheus.toolbox.backends.local import replay_file
     out = replay_file(p, tmp_path / "rp.jsonl", R2)
     assert out["status"] == "TARGET_UNSUPPORTED" and out["runs_compared"] == 0 and any("UNAVAILABLE" in r for r in out["reasons"])
+
+
+# C87: a mutant whose anchor text has drifted is a silent hole in the mutation ledger (M10 went NOT_APPLICABLE
+# after C65 without anyone noticing until a full run). Every mutant's anchor must exist in the current tree.
+def test_every_mutant_anchor_still_exists():
+    from prometheus.toolbox.tests import mutants as MU
+    missing = [(mid, rel) for mid, rel, old, new, what in MU.MUTANTS if old not in (MU.ROOT / MU.TB / rel).read_text(encoding="utf-8")]
+    assert missing == [], "mutant anchors drifted: %s" % missing

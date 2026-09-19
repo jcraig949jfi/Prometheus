@@ -479,3 +479,5 @@ C85 | 05:00Z | the zero-player defect class in every home-written world: `not an
   ended the episode at tick 1 (integer_alt, grid, pendulum all did it; C84 had fixed only the reference).
   Parametrised RED over the four worlds accepting n_players=0; all fixed; all still ADMITTED (the alt still
   agrees with the reference: the same fix on both sides). Suite 204 passed 6 skipped.
+C87 | 05:01Z | the mutation ledger can rot silently (an anchor drifts -> NOT_APPLICABLE -> a hole). A standing
+  test asserts every mutant's anchor exists in the current tree. Suite 205.
