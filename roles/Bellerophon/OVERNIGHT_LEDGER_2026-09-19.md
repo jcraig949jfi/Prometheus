@@ -996,3 +996,11 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   skipping the stream store is an equivalent mutant: streams carry no expiry). Re-anchored on end_scope: CAUGHT.
   A survivor that is an equivalent mutant is the runner telling the truth; the note stays in the ledger row.
 - ledger 80 mutants, 80 CAUGHT (merged). Suite 1155 passed / 6 skipped.
+
+## C140 (08:58Z) the wrapped engines enter the fuzz generator (post-closing)
+- wforge Encounter (6%) and c6 composed (6%) join the random IR generator when importable: over 300 seeds 16
+  wforge IRs (all BLOCKED: the fuzz's implied requirements exceed what the wrap declares -- the refusal path
+  exercised) and 5 c6 IRs (2 OK executed both paths, 3 TARGET_UNSUPPORTED). Every property test now sees them.
+- the shifted seeds exposed a test-side bug in my C112 error normalisation: str.replace("", kind) on a non-batched
+  FAILED receipt interleaved the world kind between every character. Fixed (replace only when the batch world is
+  named). Suite 1155 passed / 6 skipped.

@@ -36,7 +36,13 @@ def random_experiment(seed: int) -> Experiment:
         if rnd.random() < 0.25:                                                        # C34: per-player substrate override
             m = dict(m, substrate=rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime", ttl=rnd.choice([None, 2])), ref("substrate.stream.v1", lag=rnd.choice([1, 3]))]))
         players.append(m)
-    if rnd.random() < 0.15:                                                            # C63: the SEMANTIC pendulum too
+    wrapped = rnd.random()
+    if wrapped < 0.06 and REG.get("world.wforge.encounter.v0").state != "UNAVAILABLE":   # C140: the WRAPPED engines too, when importable
+        n_players = REG.make("world.wforge.encounter.v0").n_players; players = players[:n_players] + [players[0]] * (n_players - len(players))
+        world = ref("world.wforge.encounter.v0", genome_seed=rnd.randrange(50))
+    elif wrapped < 0.12 and REG.get("world.c6.composed.v1").state != "UNAVAILABLE":
+        players = players[:1]; world = ref("world.c6.composed.v1", seed=rnd.randrange(50), ticks=rnd.choice([8, 24]))
+    elif rnd.random() < 0.15:                                                          # C63: the SEMANTIC pendulum too
         world = ref("world.pendulum.v1", n_players=n_players, quantum=rnd.choice([1e-6, 1e-3]), start_charge=rnd.choice([2, 30, 1000]), step_cost=rnd.choice([0, 1]), world_seed=rnd.randrange(100))
     elif rnd.random() < 0.3:                                                           # C42: the grid world too
         world = ref("world.grid.v1", n_nodes=rnd.choice([2, 5, 9]), n_players=n_players, act_range=rnd.choice([3, 8]), start_charge=rnd.choice([1, 20, 1000]),

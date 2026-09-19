@@ -278,7 +278,8 @@ def test_batched_execution_equals_scalar_execution_for_random_experiments(tmp_pa
         b = B[k]
         assert b["status"] == r["status"], k
         if r["status"] != "COMPLETED":
-            norm = b["error"].replace(b["execution"].get("world") or "", r["components"]["world"]["kind"])       # the batch world names itself in its errors
+            bw = b["execution"].get("world")
+            norm = b["error"].replace(bw, r["components"]["world"]["kind"]) if bw else b["error"]     # the batch world names itself in its errors (C140: never replace "")
             assert norm == r["error"], (k, b["error"], r["error"])
             continue
         for f in SCIENCE_FIELDS:
