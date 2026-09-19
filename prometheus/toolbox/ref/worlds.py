@@ -241,3 +241,79 @@ class WforgeEncounterWorld:
     def summary(self) -> dict:
         o = self._enc.outcome()
         return {"ticks": o["ticks"], "charge": [s["final_charge"] for s in o["per_slot"]], "alive": [s["alive"] for s in o["per_slot"]]}
+
+
+# ---------------------------------------------------------------------------------------------- campaign-6 ComposedWorld (WRAP, C39)
+def _c6():
+    from archaeon.campaign6.worlds import generator as G6
+    from archaeon.campaign6.worlds import runtime as R6
+    return G6, R6
+
+
+class C6ComposedWorld:
+    """Archaeon's campaign-6 ComposedWorld behind the kernel World contract (archaeon/ untouched). One organism,
+    channel observations flattened to one word list, actions = one 32-bit word per output channel, FLOAT pools
+    quantised (x1e6) for the trace and the events. Python float arithmetic here is +,*,min,max on doubles --
+    deterministic across CPython builds -- so the declared replay class is BIT, with float_state=True in the
+    manifest so a reader can decide to demand SEMANTIC evidence across hosts."""
+    kind = "world.c6.composed.v1"
+    capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.legal_actions.v1", "ext.cost.v1", "ext.replay.bit.v1"})
+    replay_class = "BIT"
+    Q = 1_000_000
+
+    def __init__(self, seed: int | None = None, bin: int | None = None, params: dict | None = None, ticks: int = 24):
+        G6, R6 = _c6()
+        if params is None:
+            rec = G6.sample_world(int(seed or 0), bin_target=bin, ticks=ticks); params = rec["params"]; self.record = rec
+        else:
+            self.record = None
+        self.w = R6.ComposedWorld(params); self.params = params
+        self.n_players = 1; self._st = None; self._events: List[Event] = []; self._steps = 0; self._last_reward = 0.0; self._seed = 0
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "world_id": self.w.world_id(), "features": list(self.w.features), "params": self.params, "float_state": True, "quantum": self.Q}
+
+    def reset(self, seed: int) -> None:
+        self._seed = seed; self._st = self.w.reset(seed, 0, None); self._trace = hashlib.sha256(); self._events = []; self._last_reward = 0.0
+
+    def observe(self, player_id: int) -> List[int]:
+        return [int(x) & 0xFFFFFFFF for ch in self.w.observe(self._st) for x in ch]
+
+    def legal_actions(self, player_id: int) -> ActionSpace:
+        return ActionSpace(self.w.K, 1 << 32)
+
+    def step(self, actions: Dict[int, List[int]]) -> bool:
+        st = self._st; t = st["tick"]; a = list(actions.get(0, []))
+        outputs = [[int(x) & 0xFFFFFFFF] for x in a[:self.w.K]]
+        self._events.append((t, EVENT_ID["ACTION"], 0, 0, sum(1 for x in a if x)))
+        before_cells = list(st["cells"]); was_alive = st["alive"]
+        self.w.act(st, outputs)
+        gain = st["reward"] - self._last_reward
+        if gain > 0:
+            self._events.append((t, EVENT_ID["YIELD"], 0, 0, int(gain * self.Q)))
+        elif gain < 0:
+            self._events.append((t, EVENT_ID["RESOURCE_CHANGE"], 0, 0, int(gain * self.Q)))
+        self._last_reward = st["reward"]
+        for j, (b, c) in enumerate(zip(before_cells, st["cells"])):
+            if b != c:
+                self._events.append((t, EVENT_ID["STATE_WRITE"], 0, j, c))
+        if was_alive and not st["alive"]:
+            self._events.append((t, EVENT_ID["ABSORBED"], 0, 0, 0))
+        q = [t, st["pos"], int(st["reward"] * self.Q), [int(p * self.Q) for p in st["pools"]], list(st["cells"]), st["alive"], st["signal"][0]]
+        self._trace.update(json.dumps(q).encode())
+        self._steps += 1
+        return self.w.done(st)
+
+    def trace_hash(self) -> str:
+        return self._trace.hexdigest()
+
+    def events(self) -> List[Event]:
+        out, self._events = self._events, []
+        return out
+
+    def accounting(self) -> Dict[str, int]:
+        return {"world_steps": self._steps}
+
+    def summary(self) -> dict:
+        st = self._st
+        return {"ticks": st["tick"], "charge": [int(st["reward"] * self.Q)], "alive": [bool(st["alive"])], "features": list(self.w.features)}

@@ -22,6 +22,14 @@ def install(reg: Registry) -> Registry:
         reg.register(ComponentRecord("world.wforge.encounter.v0", "world", W.WforgeEncounterWorld, frozenset(), route="wrap",
                                      provenance=dict(PROV, source="SerendipityFoundry/worldfoundry/wforge/world.py"), state="UNAVAILABLE",
                                      admission={"failed": "import: %s" % str(exc)[:120]}))
+    try:
+        W._c6()
+        reg.register(ComponentRecord("world.c6.composed.v1", "world", W.C6ComposedWorld, W.C6ComposedWorld.capabilities, route="wrap",
+                                     provenance=dict(PROV, source="archaeon/campaign6/worlds/runtime.py", owner="Archaeon"), license="repository"))
+    except Exception as exc:                                    # noqa: BLE001
+        reg.register(ComponentRecord("world.c6.composed.v1", "world", W.C6ComposedWorld, frozenset(), route="wrap",
+                                     provenance=dict(PROV, source="archaeon/campaign6/worlds/runtime.py"), state="UNAVAILABLE",
+                                     admission={"failed": "import: %s" % str(exc)[:120]}))
     reg.register(ComponentRecord("substrate.flat.v1", "substrate", S.FlatInProcessSubstrate, S.FlatInProcessSubstrate.capabilities,
                                  reference_of="substrate.flat", route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
     reg.register(ComponentRecord("substrate.kv.v1", "substrate", S.KVSubstrate, S.KVSubstrate.capabilities, route="write",

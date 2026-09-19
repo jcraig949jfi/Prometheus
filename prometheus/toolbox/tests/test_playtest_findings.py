@@ -237,3 +237,26 @@ def test_sweep_point_construction_error_names_the_point_at_lowering():
     e = _exp(sweep={"world.params.n_regs": [4, 0]})
     low = lower(e, REG)
     assert low.status == "TARGET_UNSUPPORTED" and any("n_regs" in r and "0" in r for r in low.reasons)
+
+
+# C39: WRAP a second existing runtime with a different shape -- Archaeon's campaign-6 ComposedWorld (explicit
+# state dict, channel observations, one organism, FLOAT pools). The kernel contract must absorb it without an
+# edit to archaeon/: quantised trace, events derived from reward deltas, ADMITTED, runs with a state machine AND
+# a Proteus tape, and it is the world kind the SFE frontier can express (M2 of the F1 mismatch list).
+def test_c6_composed_world_wraps_admits_and_runs_with_mixed_players(tmp_path):
+    from prometheus.toolbox.admission import admit
+    from prometheus.toolbox.ref.players import random_proteus_player, proteus_available
+    kind = "world.c6.composed.v1"
+    if not REG.has(kind) or REG.get(kind).state == "UNAVAILABLE":
+        pytest.skip("archaeon.campaign6 not importable")
+    r = admit(kind, REG); assert r.state == "ADMITTED", r.failed
+    w = REG.make(kind, seed=3, bin=6)
+    assert w.n_players == 1 and w.manifest()["float_state"] is True and w.replay_class == "BIT"
+    players = [random_proteus_player(17).manifest() if proteus_available() else random_statemachine(1).manifest()]
+    e = _exp(world=ref(kind, seed=3, bin=6), players=players, observers=[ref("observer.trace.v1")], seed_policy={"base": 1, "n_seeds": 2},
+             budget={"episodes": 2, "horizon": 24}, controls=[ref("control.replay.v1"), ref("control.negative.v1")])
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "c6.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
+    prim = [x for x in read_all(tmp_path / "c6.jsonl") if x["arm"] == "primary"]
+    assert len({tuple(x["trace_hashes"]) for x in prim}) == 2 and all(x["engineering"]["ticks"] > 0 for x in prim)

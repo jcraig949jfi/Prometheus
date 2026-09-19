@@ -269,3 +269,14 @@ C37 | T+1:55 | mid-EPISODE checkpoint/resume (directive s8): make_checkpoint (wo
   snapshot/restore (TraceObserver family). Suite 158 passed 6 skipped.
   NOT wired into execute() yet: run-level resume (C29) covers interruption between runs; this covers inside
   a run and is exposed as library calls for a future long-episode executor. Recorded as the next slice.
+C38 | T+1:58 | designer ergonomics: a typo in a world param (n_player) surfaced as 96 identical FAILED receipts.
+  RED; lowering now constructs the world once per sweep point and reports a construction error ONCE as
+  TARGET_UNSUPPORTED naming the point. Throughput row recorded (science/THROUGHPUT_2026-09-19.json): 81k
+  steps/s one player, 38k three players, two observers, pure Python, M2.
+C39 | T+2:03 | WRAP a second existing runtime of a different shape: Archaeon's campaign-6 ComposedWorld (explicit
+  state dict, channel observations, one organism, FLOAT pools) as world.c6.composed.v1 -- archaeon/ untouched.
+  Quantised trace (x1e6), events from reward deltas / cell writes / death, manifest float_state=True, replay
+  BIT (doubles under +,*,min,max are deterministic across CPython builds; a reader may demand SEMANTIC
+  evidence across hosts). ADMITTED (88k steps/s probe; no cheat mechanism -> noted). Runs with a Proteus tape
+  under replay + negative controls; 2 seeds -> 2 traces. SFE lowering of a c6-world kernel experiment now
+  fails on M1/M3/M4/M5 only -- M2 (world kind) is resolvable. Suite 161 passed 6 skipped.
