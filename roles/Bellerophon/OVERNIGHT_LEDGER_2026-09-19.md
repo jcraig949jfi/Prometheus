@@ -300,3 +300,9 @@ C41 | T+2:20 | second home-written world, Ludus-shaped (directive s30): world.gr
   OBSERVATION (design, s13): players already communicate THROUGH the world -- stigmergy via objects -- with
   no message bus; a bus is one more world/substrate door, not a kernel concept. Recorded, not built.
   Suite 164 passed 6 skipped.
+C42 | T+2:30 | fuzzer now also draws the grid world and lifetime world state (41 in suite; 300 more seeds: 197
+  OK, 68 BLOCKED, 10 TARGET_UNSUPPORTED, 25 invalid, 0 crashes). Mutation wave 2 (M21-M28) over the night's
+  later modules: 5 CAUGHT, 2 SURVIVED -- both on the grid world (tools never consumed; neighbours hidden):
+  the playtest had only checked that events OCCURRED. A scripted unit test (write -> read pays and consumes
+  -> second read pays nothing; neighbours seen) kills both. Full ledger rerun: 27/27 CAUGHT.
+  Suite 165 passed 6 skipped.

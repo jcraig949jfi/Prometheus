@@ -35,6 +35,14 @@ MUTANTS = [
     ("M18", "admission.py", "det = ser and m0 == m1 and obs[0].describe() == obs[1].describe()", "det = True", "observer admission ignores non-determinism"),
     ("M19", "backends/local.py", "if op.exists() and op.stat().st_size > 0:\n        if resume:", "if False:\n        if resume:", "receipts files silently appended"),
     ("M20", "ir.py", "json.dumps(self.to_dict(), allow_nan=False)", "pass", "non-data IR accepted"),
+    # second wave (C42): tonight's later modules
+    ("M21", "ref/worlds_grid.py", "st[\"cells\"][n] = 0; st[\"owner\"][n] = -1", "pass", "grid tools are never consumed"),
+    ("M22", "ref/worlds.py", "if keep and self._state is not None:", "if False:", "world lifetime state silently ignored"),
+    ("M23", "search.py", "elif k == \"GEN_ABANDONED\":\n            buf = []", "elif False:\n            buf = []", "abandoned rows committed"),
+    ("M24", "backends/local.py", "self._t += 1\n        self._apply()", "self._apply()", "schedule wrapper never advances"),
+    ("M25", "state.py", "if len(self._ev) > self.max_events:", "if False:", "event buffer unbounded again"),
+    ("M27", "backends/local.py", "\"pre_checkpoint_trace\": world.trace_hash()}", "\"pre_checkpoint_trace\": \"\"}", "checkpoint forgets the pre-checkpoint hash"),
+    ("M28", "ref/worlds_grid.py", "others = sum(1 for q in range(self.n_players) if q != pid and st[\"alive\"][q] and st[\"pos\"][q] == n)", "others = 0", "grid observation hides neighbours"),
 ]
 
 

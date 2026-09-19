@@ -281,3 +281,23 @@ def test_grid_world_is_admitted_and_exercises_objects_contact_and_lifetime_state
             ev[k] = ev.get(k, 0) + v
     assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and ev.get("CONTACT", 0) > 0 and ev.get("YIELD", 0) > 0, ev
     assert any(x["science"]["world_summary"]["cells_nonzero"] > 0 for x in prim)
+
+
+# C42 (mutation wave 2 survivors M21/M28): the grid playtest only checked that events OCCURRED. Two wrong
+# implementations survived: tools never consumed; neighbours hidden from the observation. Scripted unit checks.
+def test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed():
+    from prometheus.toolbox.ref.worlds_grid import GridWorld
+    w = GridWorld(n_nodes=4, n_players=2, world_seed=1, start_charge=50, step_cost=0, move_cost=0, read_gain=5, write_cost=2)
+    w.reset(1)
+    w._state["pos"] = [0, 0]                                       # both on node 0 (scripted; a test may set the state it needs)
+    assert w.observe(0)[4] == 1 and w.observe(1)[4] == 1           # each sees one neighbour
+    w.step({0: [0, 2, 7], 1: [0, 0, 0]})                           # player 0 WRITES 7
+    assert w.observe(1)[2] == 7 and w.observe(1)[3] == 1           # player 1 sees a cell written by someone else
+    c_before = w._state["charge"][1]
+    w.step({0: [0, 0, 0], 1: [0, 3, 0]})                           # player 1 READS -> paid, tool consumed
+    assert w._state["charge"][1] == c_before + 5 and w._state["cells"][0] == 0 and w._state["owner"][0] == -1
+    c2 = w._state["charge"][1]
+    w.step({0: [0, 0, 0], 1: [0, 3, 0]})                           # a second READ finds nothing
+    assert w._state["charge"][1] == c2
+    w._state["pos"] = [0, 2]
+    assert w.observe(0)[4] == 0                                    # alone now

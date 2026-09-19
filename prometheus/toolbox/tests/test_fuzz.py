@@ -35,24 +35,30 @@ def random_experiment(seed: int) -> Experiment:
         if rnd.random() < 0.25:                                                        # C34: per-player substrate override
             m = dict(m, substrate=rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime", ttl=rnd.choice([None, 2])), ref("substrate.stream.v1", lag=rnd.choice([1, 3]))]))
         players.append(m)
-    world = ref("world.integer.v1", n_regs=rnd.choice([3, 6, 9]), n_players=n_players, act_width=rnd.choice([1, 2, 3]), act_range=rnd.choice([2, 8, 16]),
-                n_ops=rnd.choice([0, 2, 5]), regime_period=rnd.choice([0, 0, 3, 7]), stoch_rate=rnd.choice([0, 0, 2, 9]), action_delay=rnd.choice([0, 1, 4]),
-                world_seed=rnd.randrange(1000), start_charge=rnd.choice([1, 8, 64, 100000]), step_cost=rnd.choice([0, 1, 5]), yield_amt=rnd.choice([0, 4, 40]),
-                obs_regs=rnd.choice([1, 4, 9]))
+    if rnd.random() < 0.3:                                                             # C42: the grid world too
+        world = ref("world.grid.v1", n_nodes=rnd.choice([2, 5, 9]), n_players=n_players, act_range=rnd.choice([3, 8]), start_charge=rnd.choice([1, 20, 1000]),
+                    step_cost=rnd.choice([0, 1]), regen_every=rnd.choice([0, 1, 4]), pool_max=rnd.choice([0, 3]), world_seed=rnd.randrange(1000))
+    else:
+        world = ref("world.integer.v1", n_regs=rnd.choice([3, 6, 9]), n_players=n_players, act_width=rnd.choice([1, 2, 3]), act_range=rnd.choice([2, 8, 16]),
+                    n_ops=rnd.choice([0, 2, 5]), regime_period=rnd.choice([0, 0, 3, 7]), stoch_rate=rnd.choice([0, 0, 2, 9]), action_delay=rnd.choice([0, 1, 4]),
+                    world_seed=rnd.randrange(1000), start_charge=rnd.choice([1, 8, 64, 100000]), step_cost=rnd.choice([0, 1, 5]), yield_amt=rnd.choice([0, 4, 40]),
+                    obs_regs=rnd.choice([1, 4, 9]))
     substrate = rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope=rnd.choice(["episode", "lifetime", "persistent"]), ttl=rnd.choice([None, 1, 3]), max_keys=rnd.choice([0, 1, 100])),
                             ref("substrate.stream.v1", scope=rnd.choice(["episode", "lifetime"]), lag=rnd.choice([1, 2, 9]), maxlen=rnd.choice([1, 8]))])
     interventions = []
     for _ in range(rnd.choice([0, 1, 2, 3])):
-        iv = {"name": "iv", "world_params": rnd.choice([{}, {"regime_period": rnd.choice([0, 2])}, {"stoch_rate": rnd.choice([0, 3])}]),
+        iv = {"name": "iv", "world_params": rnd.choice([{}, {"step_cost": rnd.choice([0, 2])}]),
               "wrappers": rnd.choice([{}, {"observation_delay": rnd.choice([0, 1, 5, 40])}, {"observation_permute": rnd.randrange(100)}])}
         if rnd.random() < 0.3:                                                         # C19: schedules, sometimes with a non-mutable param
-            iv["schedule"] = [{"tick": rnd.randrange(0, 8), "world_params": rnd.choice([{"act_cost": rnd.randrange(0, 4)}, {"yield_amt": 0}, {"n_regs": 3}])}]
+            iv["schedule"] = [{"tick": rnd.randrange(0, 8), "world_params": rnd.choice([{"step_cost": rnd.randrange(0, 4)}, {"n_regs": 3}])}]
         interventions.append(iv)
     controls = rnd.sample(["control.replay.v1", "control.cheat.v1", "control.negative.v1", "control.positive.v1", "control.sham.v1", "control.scratch.v1", "control.permutation.v1"], rnd.choice([0, 1, 3]))
     observers = rnd.sample(["observer.trace.v1", "observer.descriptor.v1", "observer.series.v1"], rnd.choice([0, 1, 3]))
     sweep = rnd.choice([{}, {"world.params.world_seed": [1, 2]}, {"budget.horizon": [0, 3]}, {"interventions.0.wrappers.observation_delay": [0, 2]} if interventions else {},
                         {"players": [players, players[:1]]}, {"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1")]}])
     budget = {"episodes": rnd.choice([1, 2, 4]), "horizon": rnd.choice([0, 1, 5, 30])}
+    if rnd.random() < 0.3:
+        budget["world_state"] = "lifetime"
     objective = rnd.choice([None, ref("objective.yield_net.v1", penalties={"ops": 0.1}), ref("objective.survival.v1"), ref("objective.series_gain.v1")])
     seed_policy = {"base": rnd.randrange(10**4), "n_seeds": rnd.choice([1, 2])}
     if rnd.random() < 0.3:
