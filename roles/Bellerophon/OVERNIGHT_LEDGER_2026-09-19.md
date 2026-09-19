@@ -925,3 +925,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - all 42 components admitted in three shuffled orders on fresh forks: identical state and failed list to
   admit_all's; admitting one twice gives the same result. (Admission of a reference world is ~2 ms: the
   performance probe runs to the world's own horizon, not 5000 ticks -- noted, the receipt says so.)
+
+## C131 (08:26Z) accounting laws as a property over random receipts
+- 196 COMPLETED receipts from 60 random IRs: every counter non-negative numeric; world_steps == ticks; a flat
+  substrate carries no workspace traffic (refusals counted as ws_refused); every penalty key an objective charged
+  exists in the accounting or is named in unknown_penalty_keys. No violation; guard >= 100 receipts.
+- suite now 914 passed, 6 skipped.

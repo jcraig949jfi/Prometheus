@@ -205,3 +205,43 @@ def test_artifact_substrate_lets_players_create_and_invoke_programs(tmp_path):
     r = _primary(tmp_path / "art.jsonl"); ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
     assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and "ext.workspace.executable.v1" in r["capabilities"]["substrate"]
     assert r["accounting"]["ws_invocations"] > 0
+
+
+# C131: accounting laws as a PROPERTY over random receipts: every counter is a non-negative number; world_steps is
+# the run's ticks; a flat substrate (with no per-player override) carries no workspace traffic -- refused writes are
+# counted as ws_refused, never as ws_writes; a receipt's counters are the same object the objective penalises.
+_ACC_COVERAGE = {"receipts": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(1000, 1060)))
+def test_accounting_laws_over_random_receipts(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    from prometheus.toolbox.receipt import read_all
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    for r in read_all(tmp_path / "r.jsonl"):
+        if r["arm"] == "SUMMARY" or r["status"] != "COMPLETED":
+            continue
+        _ACC_COVERAGE["receipts"] += 1
+        a = r["accounting"]
+        for k, v in a.items():
+            if k != "by_substrate":
+                assert isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0, (seed, k, v)
+        assert a["world_steps"] == r["engineering"]["ticks"], seed
+        if r["components"]["substrate"]["kind"] == "substrate.flat.v1" and set(r["components"]["player_substrates"]) == {"substrate.flat.v1"}:
+            assert a.get("ws_writes", 0) == 0 and a.get("ws_reads", 0) == 0, (seed, a)
+        obj = r["science"].get("objective") or {}
+        pen = (obj.get("components") or {}).get("penalties")
+        if isinstance(pen, dict):
+            for k in pen:
+                assert k in a or k in ((obj.get("components") or {}).get("unknown_penalty_keys") or []), (seed, k)
+
+
+def test_the_accounting_property_was_actually_exercised():
+    assert _ACC_COVERAGE["receipts"] >= 100, _ACC_COVERAGE
