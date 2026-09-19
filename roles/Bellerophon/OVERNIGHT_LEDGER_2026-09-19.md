@@ -321,3 +321,5 @@ C44 | T+2:50 | forensic gap found by asking "what edit does scan() NOT see?": de
   chain). Receipts now CHAIN within a file (prev_receipt_id); read_all raises CHAIN_BREAK naming the line,
   scan() reports it, a writer on an existing file continues from the last valid receipt. Schema updated
   (prev_receipt_id, split, series, experiment documented). Suite 171 passed 6 skipped.
+C45 | T+2:53 | ergonomics: the IR accepts PlayerSpec / Intervention OBJECTS in its constructor and stores their
+  manifests (a designer's natural text no longer fails with "not a PlayerSpec manifest"). Suite 172.

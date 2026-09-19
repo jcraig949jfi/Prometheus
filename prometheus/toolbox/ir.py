@@ -61,6 +61,12 @@ class Experiment:
     id: Optional[str] = None
     schema: str = SCHEMA
 
+    def __post_init__(self):
+        # C45: the IR is data; component OBJECTS a designer naturally writes are converted to their manifests here
+        self.players = [p.manifest() if hasattr(p, "manifest") and not isinstance(p, dict) else p for p in self.players]
+        self.interventions = [iv.manifest() if hasattr(iv, "manifest") and not isinstance(iv, dict) else iv for iv in self.interventions]
+        self.required_capabilities = frozenset(self.required_capabilities)
+
     # ---------------------------------------------------------------- identity
     def to_dict(self) -> dict:
         d = asdict(self)

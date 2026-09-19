@@ -153,3 +153,16 @@ def test_world_lifetime_state_on_a_world_without_it_is_blocked():
         pytest.skip("wforge not importable")
     low = lower(e, REG)
     assert low.status == "BLOCKED_MISSING_CAPABILITY" and "ext.world.lifetime_state.v1" in low.negotiation["missing"]
+
+
+# C45 (ergonomics): a designer hands the IR PlayerSpec and Intervention OBJECTS (the natural thing to write); the
+# IR is data, so it converts them at construction instead of failing later with "not a PlayerSpec manifest".
+def test_ir_accepts_component_objects_and_stores_their_manifests():
+    from prometheus.toolbox.contracts import Intervention
+    e = Experiment(family="ergo", world=ref("world.integer.v1"), substrate=ref("substrate.flat.v1"),
+                   players=[random_statemachine(1), constant_player([1, 2]).manifest()],
+                   interventions=[Intervention("lag", wrappers={"observation_delay": 2}), {"name": "raw", "world_params": {"act_cost": 2}}])
+    assert e.validate() == []
+    assert e.players[0]["representation"] == "statemachine.v1" and isinstance(e.players[0], dict)
+    assert e.interventions[0] == {"name": "lag", "world_params": {}, "wrappers": {"observation_delay": 2}}
+    assert json.dumps(e.to_dict())
