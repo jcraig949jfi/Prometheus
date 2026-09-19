@@ -30,7 +30,7 @@ def main() -> int:
         r = json.loads(Path(rp).read_text(encoding="utf-8"))
         if r.get("status") != "DONE":
             continue
-        eid = r["experiment_id"]; arm = eid.split("/")[1].split("_s")[0]
+        eid = r["experiment_id"]; arm = eid.split("/")[1]; arm = arm[:-3] if arm[-3:-1] == "_s" and arm[-1].isdigit() else arm
         obs = []; shifts = []; nominated = 0; scopes = defaultdict(int)
         for c in r["chunks"]:
             p = Path(rp).parent / ("chunk_%03d.json.gz" % c["chunk"])
