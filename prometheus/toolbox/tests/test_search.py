@@ -88,3 +88,16 @@ def test_row_descriptor_aggregates_over_seeds_and_keeps_each_seed():
                      "_player_manifest": {"x": 1}})
     rows = SR._rows_from_receipts(fake)
     assert len(rows) == 1 and rows[0]["descriptor"] == [0, 7, 4] and rows[0]["descriptors"] == [[0, 7, 0], [0, 7, 7]] and rows[0]["objective"] == 160.0
+
+
+# C69: a wall budget that stops a generation midway must NOT let that generation be committed with fewer rows
+# than proposals; evolve stops without a marker and reports why; the next call reruns the generation.
+def test_wall_budget_inside_a_generation_leaves_it_uncommitted(tmp_path):
+    t = template(); t.budget = dict(t.budget, wall_s=0.0)
+    out = SR.evolve(t, ref("selector.truncation.v1", keep=2, n=4), generations=3, workdir=tmp_path / "wb", seed=3)
+    assert out["generations_done"] == 0 and out["stopped"] == "WALL_BUDGET_EXHAUSTED"
+    rows = SR.load_rows(tmp_path / "wb" / "archive.jsonl")
+    assert not any(r["kind"] == "GEN_DONE" for r in rows)
+    t2 = template()
+    out2 = SR.evolve(t2, ref("selector.truncation.v1", keep=2, n=4), generations=2, workdir=tmp_path / "wb", seed=3)
+    assert out2["generations_done"] == 2 and [r["gen"] for r in SR.load_rows(tmp_path / "wb" / "archive.jsonl") if r["kind"] == "GEN_DONE"] == [0, 1]

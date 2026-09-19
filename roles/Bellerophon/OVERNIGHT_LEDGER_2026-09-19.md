@@ -420,3 +420,7 @@ C68 | 04:39Z | budget.wall_s was accepted by the IR and silently IGNORED by the 
   reason, ExecutionReport.valid is False, and resume=True finishes the job later. Found while writing the
   test: changing wall_s changed the experiment digest, so a resumed job could not find its own runs --
   wall_s is EXECUTION policy, now excluded from the scientific digest (like provenance). Suite 185.
+C69 | 04:41Z | interaction of C68 with search: a wall budget cutting a generation short would have let evolve()
+  COMMIT a generation with fewer rows than proposals (GEN_DONE over a partial population). RED (wall_s 0 ->
+  no marker may be written; the next call reruns). Fix: an incomplete generation raises GenerationIncomplete
+  inside the driver, which returns {"stopped": "WALL_BUDGET_EXHAUSTED"} without a marker. Suite 186.

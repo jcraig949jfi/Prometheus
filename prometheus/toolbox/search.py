@@ -160,11 +160,18 @@ def _run_generation(template: Experiment, players: List[PlayerSpec], gen: int, s
         attempt += 1                                             # a crashed attempt's file stays as evidence
     path = workdir / ("gen_%03d_a%d.jsonl" % (gen, attempt))
     rep = execute(e.compile("local", registry).job, path, registry)
+    if rep.runs_not_started:
+        raise GenerationIncomplete("generation %d stopped by the wall budget: %d runs not started" % (gen, rep.runs_not_started), "WALL_BUDGET_EXHAUSTED")
     receipts = read_all(path)
     for r in receipts:
         if r["arm"] == "primary":
             r["_player_manifest"] = r["sweep_point"]["players"][0]
     return receipts
+
+
+class GenerationIncomplete(RuntimeError):
+    def __init__(self, msg, reason):
+        super().__init__(msg); self.reason = reason
 
 
 def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, seed: int, registry=None) -> dict:
@@ -182,10 +189,13 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
         _append(archive, {"kind": "GEN_ABANDONED", "gen": start, "reason": "rows without a GEN_DONE marker at resume"})
     for gen in range(start, generations):
         players = sel.propose(committed, seed * 7919 + gen, sel.n)
-        receipts = _run_generation(template, players, gen, seed, workdir, registry)
+        try:
+            receipts = _run_generation(template, players, gen, seed, workdir, registry)
+        except GenerationIncomplete as exc:                      # C69: an incomplete generation is never committed
+            return {"generations_done": gen, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": exc.reason, "detail": str(exc)}
         new_rows = [dict(r, gen=gen) for r in sel.ingest(receipts)]
         for r in new_rows:
             _append(archive, r)
         _append(archive, {"kind": "GEN_DONE", "gen": gen, "n": len(new_rows), "selector": sel.manifest()})
         committed += new_rows
-    return {"generations_done": generations, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed)}
+    return {"generations_done": generations, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": None}
