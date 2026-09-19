@@ -177,3 +177,53 @@ def test_series_records_self_describe_their_columns_and_per_player_layout_works(
     assert obj["components"]["column"] == "yield_cum" and obj["value"] == eps[-1][-1][2] - eps[0][-1][2]
     r0 = run(exp(), tmp_path / "default.jsonl")
     assert r0["series"]["observer.series.v1"]["columns"] == ["tick", "actions_sum", "yield_cum", "alive"]
+
+
+# C61 (mutation wave 3 survivors M31/M34): no test had a series whose declared columns disagreed with its records,
+# nor one whose yield_cum column was NOT at index 2 -- so "read column 2 by habit" and "never flag a layout
+# mismatch" both survived. Two observers built for the purpose kill them.
+def test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position(tmp_path):
+    from prometheus.toolbox.ref.observers import SeriesObserver
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class Reordered(SeriesObserver):                              # yield_cum FIRST after tick
+        kind = "observer.series.v1"
+
+        def series_columns(self):
+            return ["tick", "yield_cum", "actions_sum", "alive"]
+
+        def on_tick(self, tick, observations, actions):
+            super().on_tick(tick, observations, actions)
+            if self.enabled:
+                r = self._series[-1]; self._series[-1] = [r[0], r[2], r[1], r[3]]
+
+    class Lying(SeriesObserver):                                  # declares 3 columns, emits 4
+        kind = "observer.series.v1"
+
+        def series_columns(self):
+            return ["tick", "actions_sum", "yield_cum"]
+    R = REG.fork()
+    R.register(ComponentRecord("observer.series.v1", "observer", Reordered, frozenset({"ext.events.v1"}), route="write", provenance={"author": "test"}, license="repository"))
+    # a fixture where the yield difference and the actions difference DISAGREE (otherwise "column 2 by habit" passes by luck)
+    found = False
+    for ws in range(5, 40):
+        e = exp(objective=ref("objective.series_gain.v1"), budget={"episodes": 2, "horizon": 12}, players=[random_statemachine(ws).manifest()],
+                world=ref("world.integer.v1", world_seed=ws, start_charge=100000, step_cost=0, yield_width=40000, stoch_rate=3))
+        low = e.compile("local", R); execute(low.job, tmp_path / ("re%d.jsonl" % ws), R)
+        r = [x for x in R_read(tmp_path / ("re%d.jsonl" % ws)) if x["arm"] == "primary"][0]
+        eps = S.recover(r, tmp_path)["observer.series.v1"]
+        ydiff = eps[-1][-1][1] - eps[0][-1][1]; adiff = eps[-1][-1][2] - eps[0][-1][2]
+        if ydiff != adiff:
+            found = True; break
+    assert found, "no fixture separated the two columns"
+    assert r["series"]["observer.series.v1"]["columns"][1] == "yield_cum"
+    assert r["science"]["objective"]["value"] == ydiff and r["science"]["objective"]["value"] != adiff
+    R2 = REG.fork()
+    R2.register(ComponentRecord("observer.series.v1", "observer", Lying, frozenset({"ext.events.v1"}), route="write", provenance={"author": "test"}, license="repository"))
+    execute(exp(budget={"episodes": 1, "horizon": 6}).compile("local", R2).job, tmp_path / "ly.jsonl", R2)
+    r2 = [x for x in R_read(tmp_path / "ly.jsonl") if x["arm"] == "primary"][0]
+    assert r2["series"]["observer.series.v1"]["status"] == "CORRUPT_LAYOUT" and "3 columns" in r2["series"]["observer.series.v1"]["layout_defect"]
+    assert S.verify(r2, tmp_path)["observer.series.v1"] == "CORRUPT"
+
+
+from prometheus.toolbox.receipt import read_all as R_read

@@ -365,3 +365,15 @@ C58 | 04:11Z | TRANSFER (NPE Clause B shape: evolved in A, judged in B against s
 C59 | 04:11Z | control.ablation.v1 as a control OBJECT (directive s16 list): every player's workspace removed
   (substrate and overrides -> flat); expectation = arm ran with zero workspace traffic while the primary had
   some; INDETERMINATE when there was nothing to ablate. ADMITTED. Suite 180 passed 6 skipped.
+C60 | 04:15Z | PLAYTEST G (playtests/pt_g_transfer_comms.py): three memory players sharing a MAILBOX in the grid
+  world, TRANSFERRED across two worlds (world sweep), sham / scratch / ablation / replay, per-player series,
+  series-gain objective, holdout. 50 runs, 0 failed, 4/4 controls MET (10/10 pairs). ROWS: ~900 MESSAGE
+  events per arm; the ablation arm has 0 workspace ops and a different objective; per-player columns sum
+  to the aggregates (35 = 10+12+13; 198 = 42+36+120; alive 3); transfer arms pair per world. No anomaly.
+C61 | 04:20Z | mutation wave 3 (M29-M34: mailbox echo, ablation-with-nothing MET, layout mismatch unflagged,
+  chain never links, per-player columns zero, objective reads column 2 by habit): 4 CAUGHT, 2 SURVIVED (M31
+  layout mismatch; M34 habit). Tests added with observers built to disagree with habit (yield_cum at index 1;
+  a 3-column declaration on 4-wide records). M34 STILL survived the first version: the fixture's yield
+  difference happened to equal its actions difference -- the test was green for the wrong reason; the
+  fixture now searches world seeds until the two columns disagree and asserts both. Ledger: 33/33 CAUGHT.
+  Suite 181 passed 6 skipped.

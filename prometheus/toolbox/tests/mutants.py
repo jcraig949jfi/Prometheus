@@ -43,6 +43,13 @@ MUTANTS = [
     ("M25", "state.py", "if len(self._ev) > self.max_events:", "if False:", "event buffer unbounded again"),
     ("M27", "backends/local.py", "\"pre_checkpoint_trace\": world.trace_hash()}", "\"pre_checkpoint_trace\": \"\"}", "checkpoint forgets the pre-checkpoint hash"),
     ("M28", "ref/worlds_grid.py", "others = sum(1 for q in range(self.n_players) if q != pid and st[\"alive\"][q] and st[\"pos\"][q] == n)", "others = 0", "grid observation hides neighbours"),
+    # third wave (C61): mailbox, ablation, series columns, chain, per-player columns
+    ("M29", "ref/substrates.py", "            if rec[0] != self.player:\n                v = rec[1]; break", "            v = rec[1]; break", "mailbox echoes a player its own messages"),
+    ("M30", "ref/controls.py", "        if p == 0:\n            return {\"outcome\": \"INDETERMINATE\"", "        if False:\n            return {\"outcome\": \"INDETERMINATE\"", "ablation claims MET with nothing to ablate"),
+    ("M31", "series.py", "    if columns and width and len(columns) != width:", "    if False:", "series layout mismatch not flagged"),
+    ("M32", "receipt.py", "        r = dict(r); r[\"prev_receipt_id\"] = self.prev", "        r = dict(r); r[\"prev_receipt_id\"] = None", "receipt chain never links"),
+    ("M33", "ref/observers.py", "                rec += [sum(actions.get(pid, [])), self._ep_yield_by.get(pid, 0), 1 if self._alive_by.get(pid, False) else 0]", "                rec += [0, 0, 1]", "per-player series columns are zeros"),
+    ("M34", "ref/observers.py", "        c = cols.index(\"yield_cum\")                              # C53: by NAME, never by habit", "        c = 2", "objective reads column 2 by habit"),
 ]
 
 
