@@ -63,3 +63,34 @@ def test_execute_refuses_to_append_to_an_existing_receipts_file_unless_asked(tmp
     assert R.scan(p)["valid"] == 4                              # untouched
     execute(lower(e, REG).job, p, REG, append=True)
     assert R.scan(p)["valid"] == 6 and R.scan(p)["defects"] == []
+
+
+# C29: "one experiment implies one uninterrupted computation" is not assumed: a job interrupted after k runs
+# resumes into the same receipts file, skips the runs already on disk, and ends with the same scientific record
+# (trace hashes, objectives, control outcomes) as an uninterrupted job.
+def test_interrupted_job_resumes_from_the_receipts_file(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = Experiment(family="resume", world=ref("world.integer.v1", world_seed=2), substrate=ref("substrate.flat.v1"), players=[random_statemachine(2).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 3}, budget={"episodes": 1, "horizon": 8}, controls=[ref("control.replay.v1"), ref("control.cheat.v1")],
+                   objective=ref("objective.survival.v1"), sweep={"world.params.world_seed": [2, 3]})
+    job = lower(e, REG).job; assert len(job.runs) == 18
+    calls = {"n": 0}; real = L.run_one
+
+    def flaky(spec, registry, receipt_dir=None):
+        calls["n"] += 1
+        if calls["n"] == 7:
+            raise KeyboardInterrupt("simulated interruption")
+        return real(spec, registry, receipt_dir)
+    monkeypatch.setattr(L, "run_one", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        execute(job, tmp_path / "j.jsonl", REG)
+    assert R.scan(tmp_path / "j.jsonl")["valid"] == 6
+    monkeypatch.setattr(L, "run_one", real)
+    rep = execute(job, tmp_path / "j.jsonl", REG, resume=True)
+    assert rep.n_runs == 18 and rep.resumed_runs == 6 and rep.n_failed == 0
+    rs = R.read_all(tmp_path / "j.jsonl"); assert len(rs) == 19 and R.scan(tmp_path / "j.jsonl")["defects"] == []
+    clean = execute(lower(e, REG).job, tmp_path / "clean.jsonl", REG)
+    key = lambda r: (r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"])
+    a = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in rs if r["arm"] not in ("SUMMARY",)}
+    b = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in R.read_all(tmp_path / "clean.jsonl") if r["arm"] != "SUMMARY"}
+    assert a == b and rep.controls == clean.controls

@@ -200,3 +200,11 @@ C27 | T+0:55 | PLAYTEST D (playtests/pt_d_search_memory.py): MAP-Elites above th
   yield_scale params (a designer calibrates; the kernel cannot know a world's ranges). With scales (2, 40):
   flat 12 cells, kv 16 cells, best 160 / 159.3. No claim about memory; the composition works.
   Suite 140 passed 6 skipped.
+C29 | T+1:00 | interrupted jobs resume from the receipts file (directive s8: one experiment != one uninterrupted
+  computation). RED: execute(..., resume=True) absent. CHANGE: runs already on disk for this job (keyed by
+  arm, sweep point, seed; valid lines only -- a truncated tail is redone) are kept and skipped; the summary
+  and control expectations cover old + new; ExecutionReport.resumed_runs. Test: interrupt after 6 of 18 runs,
+  resume, record == uninterrupted (trace hashes, objectives, control outcomes).
+  FOUND BY THE TEST: primary receipts at a sweep point carried the POINT experiment's id while control-arm
+  receipts carried the parent's -- one job, two ids. Every receipt of a job now carries the job's id
+  (experiment_digest keeps the point). Suite 141 passed 6 skipped.

@@ -17,6 +17,7 @@ Kernel-applied wrappers (interventions.wrappers): observation_delay, observation
 """
 from __future__ import annotations
 
+import json
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -38,6 +39,7 @@ class RunSpec:
     seed: int
     experiment: Experiment     # the arm's experiment at this sweep point
     split: str = "train"       # "train" | "holdout" (C14: seed_policy.holdout_seeds)
+    job_id: str = ""           # the JOB's experiment id (C29: every receipt of one job carries one id; the point's digest is experiment_digest)
 
     def key(self):
         import json
@@ -94,7 +96,7 @@ def lower(exp: Experiment, registry) -> Lowering:
         arms = [("primary", base)] + [(ctrl.kind, ctrl.arm(base, exp.seed_policy["base"] * 7919 + 1)) for _, ctrl in controls]
         for arm, aexp in arms:
             for s, split in seeds_for(exp):
-                job.runs.append(RunSpec(arm, point, s, aexp, split))
+                job.runs.append(RunSpec(arm, point, s, aexp, split, eid))
     return Lowering("local", "OK", eid, job=job, negotiation=neg.as_dict())
 
 
@@ -249,7 +251,7 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     if hasattr(sub, "science"):
         science["substrate"] = sub.science()
     receipt = {
-        "experiment_id": exp.experiment_id() if spec.arm == "primary" else exp.provenance.get("parent", exp.experiment_id()),
+        "experiment_id": spec.job_id or exp.experiment_id(),
         "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "COMPLETED",
         "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()), "manifest": world.manifest()},
                        "substrate": {"kind": sub.kind, "manifest_hash": component_manifest_hash(sub.manifest())},
@@ -286,25 +288,41 @@ class ExecutionReport:
     n_failed: int
     controls: Dict[str, dict]
     valid: bool
+    resumed_runs: int = 0
 
     def as_dict(self) -> dict:
         return self.__dict__
 
 
-def execute(job: LocalJob, out_path, registry=None, append: bool = False) -> ExecutionReport:
+def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume: bool = False) -> ExecutionReport:
     """One receipts file is ONE execution (C22): an existing non-empty file is refused unless append=True
-    (resumption is explicit, never accidental)."""
+    (a second execution added on purpose) or resume=True (C29: the SAME job continuing -- runs already on
+    disk for this experiment, keyed by (arm, sweep_point, seed), are kept and skipped; a partial last line
+    is a defect the forensic scan reports, and that run is redone)."""
     import pathlib
     from prometheus.toolbox.registry import default_registry
+    from prometheus.toolbox.receipt import scan
     registry = registry or default_registry()
     op = pathlib.Path(out_path)
-    if op.exists() and op.stat().st_size > 0 and not append:
-        raise FileExistsError("%s already holds receipts; pass append=True to add a second execution to it" % op)
+    done: Dict[str, Dict[Any, dict]] = {}
+    if op.exists() and op.stat().st_size > 0:
+        if resume:
+            for r in _valid_receipts(op):
+                if r["experiment_id"] == job.experiment_id and r["arm"] != "SUMMARY":
+                    done.setdefault(r["arm"], {})[(json.dumps(r["sweep_point"], sort_keys=True, separators=(",", ":"), default=str), r["seed"])] = r
+        elif not append:
+            raise FileExistsError("%s already holds receipts; pass append=True (second execution) or resume=True (continue this job)" % op)
     w = ReceiptWriter(out_path)
     by_key: Dict[str, Dict[Any, dict]] = {}
-    n_fail = 0
+    n_fail = 0; n_resumed = 0
     try:
         for spec in job.runs:
+            prior = done.get(spec.arm, {}).get(spec.key())
+            if prior is not None:
+                by_key.setdefault(spec.arm, {})[spec.key()] = prior; n_resumed += 1
+                if prior["status"] == "FAILED":
+                    n_fail += 1
+                continue
             try:
                 r = run_one(spec, registry, receipt_dir=w.path.parent)
             except Exception as exc:                                    # noqa: BLE001  a failed run is a receipt, never a halt
@@ -349,4 +367,20 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False) -> Exe
     finally:
         w.close()
     valid = n_fail == 0 and all(c["outcome"] == "MET" for c in controls.values())
-    return ExecutionReport(job.experiment_id, str(w.path), len(job.runs), len(job.runs) - n_fail, n_fail, controls, valid)
+    return ExecutionReport(job.experiment_id, str(w.path), len(job.runs), len(job.runs) - n_fail, n_fail, controls, valid, n_resumed)
+
+
+def _valid_receipts(path) -> List[dict]:
+    """Receipts a resume may trust: valid lines only (a truncated tail is skipped, not trusted)."""
+    from prometheus.toolbox.receipt import validate, ReceiptError
+    out = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                out.append(validate(json.loads(line)))
+            except (ValueError, ReceiptError):
+                continue
+    return out
