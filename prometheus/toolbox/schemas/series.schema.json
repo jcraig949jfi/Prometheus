@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus.toolbox.series.v1",
+  "title": "SeriesRecord (per observer kind inside receipt.series)",
+  "description": "Per-episode observation series as durable receipt data (U3 ruling). Written statuses come from the executor; MISSING / MISSING_ARTIFACT / CORRUPT are found by series.verify() and never written. Records are lists of ints; `columns` names every position (self-describing, C53).",
+  "type": "object",
+  "required": ["status", "encoding", "record_width", "n_episodes", "n_records", "n_records_dropped", "bound", "series_hash", "replay_class", "columns"],
+  "properties": {
+    "status": {"enum": ["PRESENT", "EMPTY", "DISABLED", "BOUND_EXCEEDED", "CORRUPT_LAYOUT"]},
+    "encoding": {"const": "int_records_v1"},
+    "record_width": {"type": "integer", "minimum": 0},
+    "n_episodes": {"type": "integer", "minimum": 0},
+    "n_records": {"type": "integer", "minimum": 0},
+    "n_records_dropped": {"type": "integer", "minimum": 0},
+    "bound": {"type": "object", "required": ["max_records", "max_inline_records"], "properties": {"max_records": {"type": ["integer", "null"]}, "max_inline_records": {"type": "integer"}}},
+    "series_hash": {"type": "string", "minLength": 64, "maxLength": 64},
+    "replay_class": {"enum": ["BIT", "SEMANTIC", "PARTIAL", "NONDETERMINISTIC", "NOT_RUN"]},
+    "columns": {"type": "array", "items": {"type": "string"}},
+    "layout_defect": {"type": "string"},
+    "inline": {"type": "array", "items": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}}}},
+    "artifact": {"type": "object", "required": ["path", "sha256", "bytes"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string"}, "bytes": {"type": "integer"}}}
+  },
+  "oneOf": [{"required": ["inline"]}, {"required": ["artifact"]}, {"properties": {"status": {"enum": ["DISABLED", "EMPTY"]}}}]
+}

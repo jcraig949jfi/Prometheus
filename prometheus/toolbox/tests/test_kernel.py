@@ -289,3 +289,13 @@ def test_exp001_committed_receipts_are_a_semantic_fixture(tmp_path):
     new = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
            for r in read_all(tmp_path / "fresh.jsonl") if r["arm"] == "primary"}
     assert new == old
+
+
+def test_series_schema_agrees_with_the_code_and_the_public_surface_imports():
+    import prometheus.toolbox as T
+    for name in T.__all__:
+        assert getattr(T, name) is not None
+    root = pathlib.Path(__file__).resolve().parents[1] / "schemas"
+    sch = json.loads((root / "series.schema.json").read_text(encoding="utf-8"))
+    from prometheus.toolbox import series as S
+    assert set(sch["properties"]["status"]["enum"]) >= set(S.WRITTEN_STATUSES) and sch["properties"]["encoding"]["const"] == S.ENCODING

@@ -481,3 +481,6 @@ C85 | 05:00Z | the zero-player defect class in every home-written world: `not an
   agrees with the reference: the same fix on both sides). Suite 204 passed 6 skipped.
 C87 | 05:01Z | the mutation ledger can rot silently (an anchor drifts -> NOT_APPLICABLE -> a hole). A standing
   test asserts every mutant's anchor exists in the current tree. Suite 205.
+C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-artifact) tied to the code by a
+  test; a designer-facing package surface (`from prometheus.toolbox import Experiment, ref, execute,
+  replay_file, scan, read_all, evolve, admit, census`); importing runs nothing. Suite 206 passed 6 skipped.
