@@ -188,6 +188,71 @@ class ObservationWrapper:
         return getattr(self.w, name)
 
 
+class BatchObservationWrapper:
+    """C111: the observation wrappers on the BATCH face -- the same composition (delays add, permutations compose in
+    order) with one delay buffer per (player, env). A finished env keeps being observed (harmlessly) so buffers
+    advance exactly as the scalar wrapper's would have while the env ran. Schedules stay scalar-path only."""
+
+    def __init__(self, world, delay: int = 0, permute_seeds: Optional[List[int]] = None):
+        self.w = world; self.delay = int(delay); self.permute_seeds = list(permute_seeds or []); self._buf = {}; self._perms = None
+        self.kind = world.kind; self.capabilities = world.capabilities; self.n_players = world.n_players; self.n_envs = world.n_envs
+
+    def manifest(self) -> dict:
+        return dict(self.w.manifest(), wrappers={"observation_delay": self.delay, "observation_permute": list(self.permute_seeds)})
+
+    def reset_batch(self, seeds, keep: bool = False) -> None:
+        self.w.reset_batch(seeds, keep=keep); self._buf = {}; self._perms = None
+
+    def observe_batch(self, pid: int):
+        out = []
+        for i, obs in enumerate(self.w.observe_batch(pid)):
+            if self.permute_seeds:
+                if self._perms is None:
+                    self._perms = [ObservationWrapper._perm(self, sd, len(obs)) for sd in self.permute_seeds]
+                for perm in self._perms:
+                    obs = [obs[j] for j in perm]
+            if self.delay:
+                buf = self._buf.setdefault((pid, i), [])
+                buf.append(obs)
+                if len(buf) > self.delay + 1:
+                    buf.pop(0)
+                obs = buf[0] if len(buf) <= self.delay else buf[-1 - self.delay]
+            out.append(obs)
+        return out
+
+    def __getattr__(self, name):
+        return getattr(self.w, name)
+
+
+class BatchScheduleWrapper:
+    """C112: ext.intervention.schedule.v1 on the batch face -- one tick count for the lockstep batch; set_params on
+    the batch world reaches every active env at the same boundary, as the scalar wrapper does for its one world."""
+
+    def __init__(self, world, schedule: List[dict]):
+        self.w = world; self.schedule = sorted(schedule, key=lambda s: int(s["tick"])); self._i = 0; self._t = 0
+        self.kind = world.kind; self.capabilities = world.capabilities; self.n_players = world.n_players; self.n_envs = world.n_envs
+
+    def manifest(self) -> dict:
+        return dict(self.w.manifest(), schedule=self.schedule)
+
+    def reset_batch(self, seeds, keep: bool = False) -> None:
+        self.w.reset_batch(seeds, keep=keep); self._i = 0; self._t = 0
+        self._apply()
+
+    def _apply(self) -> None:
+        while self._i < len(self.schedule) and int(self.schedule[self._i]["tick"]) <= self._t:
+            self.w.set_params(**self.schedule[self._i]["world_params"]); self._i += 1
+
+    def step_batch(self, actions):
+        done = self.w.step_batch(actions)
+        self._t += 1
+        self._apply()
+        return done
+
+    def __getattr__(self, name):
+        return getattr(self.w, name)
+
+
 class ScheduleWrapper:
     """ext.intervention.schedule.v1 (C19): applies world_params changes at tick boundaries (before the step of the
     named tick) through the world's set_params; changes are recorded in the manifest; replay is unaffected."""
@@ -444,11 +509,11 @@ def batch_plan(exp: Experiment, registry) -> tuple:
     if n < 2:
         return None, "BATCH_NOT_REQUESTED"
     _, delay, permutes, schedule = _world_params(exp, registry, exp.world["kind"])
-    if delay or permutes or schedule:
-        return None, "WRAPPERS_NOT_BATCHED"                    # kernel wrappers are per-world objects; the batch face has no wrapper yet
     bk = registry.batch_implementation(exp.world["kind"])
     if bk is None:
         return None, "NO_BATCH_IMPLEMENTATION"
+    if schedule and "ext.world.mutable_params.v1" not in registry.get(bk).capabilities:
+        return None, "SCHEDULE_NOT_BATCHED"                    # C112: a schedule needs set_params on the batch world
     return bk, "BATCHED"
 
 
@@ -468,9 +533,13 @@ def run_batch(specs: List[RunSpec], registry, batch_kind: str, receipt_dir=None)
     (actions None), never a halt of the batch; a failure shared by every env (world construction) fails them all."""
     exp = specs[0].experiment; n = len(specs)
     execution = {"batched": True, "batch_size": n, "reason": "BATCHED", "world": batch_kind, "requested_world": exp.world["kind"]}
-    params, _, _, _ = _world_params(exp, registry, batch_kind)
+    params, delay, permutes, schedule = _world_params(exp, registry, batch_kind)
     try:
         world = registry.make(batch_kind, n_envs=n, **params)
+        if schedule:
+            world = BatchScheduleWrapper(world, schedule)                       # C112
+        if delay or permutes:
+            world = BatchObservationWrapper(world, delay, permutes)             # C111
     except Exception as exc:                                                    # noqa: BLE001
         return [_failed_receipt(sp, exc, execution) for sp in specs]
     ctxs: List[Any] = []; errors: Dict[int, BaseException] = {}

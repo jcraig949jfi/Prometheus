@@ -148,8 +148,14 @@ def test_batch_falls_back_and_says_why():
     with tempfile.TemporaryDirectory() as td:
         _, rows = _run(_exp(world_kind="world.grid.v1", n_seeds=3), 4, td, "grid.jsonl")
         assert {r["execution"]["reason"] for r in rows.values()} == {"NO_BATCH_IMPLEMENTATION"} and all(not r["execution"]["batched"] for r in rows.values())
-        _, rows = _run(_exp(n_seeds=3, wrappers={"observation_delay": 1}), 4, td, "wrapped.jsonl")
-        assert {r["execution"]["reason"] for r in rows.values()} == {"WRAPPERS_NOT_BATCHED"}
+        e = _exp(n_seeds=3); e.interventions[0]["schedule"] = [{"tick": 3, "world_params": {"step_cost": 2}}]
+        _, rows = _run(e, 4, td, "scheduled.jsonl")
+        assert {r["execution"]["reason"] for r in rows.values()} == {"BATCHED"}                          # C112: schedules batch on a world with set_params
+        from prometheus.toolbox.backends.local import batch_plan
+        R = REG.fork(); row = R.get("world.integer_batch.v1"); row.capabilities = row.capabilities - {"ext.world.mutable_params.v1"}
+        e.budget = dict(e.budget, batch=4); assert batch_plan(e, R) == (None, "SCHEDULE_NOT_BATCHED")
+        _, rows = _run(_exp(n_seeds=3, wrappers={"observation_delay": 1}), 4, td, "wrapped.jsonl")       # C111: delay/permute batch now
+        assert {r["execution"]["reason"] for r in rows.values()} == {"BATCHED"}
         _, rows = _run(_exp(n_seeds=3), 1, td, "one.jsonl")
         assert {r["execution"]["reason"] for r in rows.values()} == {"BATCH_NOT_REQUESTED"}
 
@@ -272,7 +278,8 @@ def test_batched_execution_equals_scalar_execution_for_random_experiments(tmp_pa
         b = B[k]
         assert b["status"] == r["status"], k
         if r["status"] != "COMPLETED":
-            assert b["error"] == r["error"], k
+            norm = b["error"].replace(b["execution"].get("world") or "", r["components"]["world"]["kind"])       # the batch world names itself in its errors
+            assert norm == r["error"], (k, b["error"], r["error"])
             continue
         for f in SCIENCE_FIELDS:
             assert b[f] == r[f], (seed, k, f)
@@ -288,7 +295,7 @@ def test_batched_execution_equals_scalar_execution_for_random_experiments(tmp_pa
 def test_the_random_property_actually_exercised_the_batch_path():
     """Coverage guard (C93): 40 random IRs must have produced BATCHED runs, or the property above proved nothing."""
     assert _COVERAGE["BATCHED"] >= 10, dict(_COVERAGE)
-    assert _COVERAGE["WRAPPERS_NOT_BATCHED"] > 0 and _COVERAGE["NO_BATCH_IMPLEMENTATION"] > 0, dict(_COVERAGE)
+    assert _COVERAGE["NO_BATCH_IMPLEMENTATION"] > 0 and _COVERAGE["BATCHED"] > _COVERAGE["NO_BATCH_IMPLEMENTATION"], dict(_COVERAGE)
 
 
 # ------------------------------------------------------------------------------------------ replay across paths (C99)
@@ -335,3 +342,16 @@ def test_series_artifacts_agree_across_paths(tmp_path):
         s, b = S[k]["series"]["observer.series.v1"], B[k]["series"]["observer.series.v1"]
         assert s["status"] == b["status"] == "PRESENT" and "artifact" in s and s["series_hash"] == b["series_hash"] and s["artifact"] == b["artifact"], k
     assert (tmp_path / "artifacts").exists() and len(list((tmp_path / "artifacts").glob("series_*.json"))) >= 1
+
+
+def test_delay_and_permute_wrappers_agree_across_paths_including_exp001(tmp_path):
+    """C111: EXP-001 (the delay sweep) could not batch before; now its 96 runs batch and equal the scalar path."""
+    from prometheus.toolbox.examples.exp_001_delay_sweep import build
+    for name, wrappers in (("delay", {"observation_delay": 2}), ("permute", {"observation_permute": 7}), ("both", {"observation_delay": 1, "observation_permute": 3})):
+        _, S = _run(_exp(n_seeds=3, wrappers=wrappers), 0, tmp_path, name + "_s.jsonl"); _, B = _run(_exp(n_seeds=3, wrappers=wrappers), 4, tmp_path, name + "_b.jsonl")
+        assert all(B[k]["execution"]["batched"] for k in B) and all(S[k]["trace_hashes"] == B[k]["trace_hashes"] and S[k]["science"] == B[k]["science"] for k in S), name
+    e = build(); _, S = _run(e, 0, tmp_path, "e1s.jsonl"); _, B = _run(e, 6, tmp_path, "e1b.jsonl")
+    assert len(S) == 96 and sum(1 for k in B if B[k]["execution"]["batched"]) == 96
+    assert all(S[k]["trace_hashes"] == B[k]["trace_hashes"] and S[k]["science"] == B[k]["science"] for k in S)
+    # the manifest names the wrappers on the batched receipt too
+    assert any(B[k]["components"]["world"]["manifest"].get("wrappers", {}).get("observation_delay") for k in B)

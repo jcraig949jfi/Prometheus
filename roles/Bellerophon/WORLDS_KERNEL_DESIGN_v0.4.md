@@ -15,7 +15,7 @@ half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
                          groups consecutive same-(arm, sweep point, digest) runs behind one ext.batch.v1 world;
                          every science field of a batched receipt equals the scalar path's run for run (18 hand
                          cases + 40 random IRs with a coverage guard); fallback with the reason on every receipt
-                         (BATCH_NOT_REQUESTED / WRAPPERS_NOT_BATCHED / NO_BATCH_IMPLEMENTATION); one failing env is
+                         (BATCH_NOT_REQUESTED / SCHEDULE_NOT_BATCHED / NO_BATCH_IMPLEMENTATION); one failing env is
                          one FAILED receipt; resume and wall budget work between batches; replay_file takes the
                          scalar path by default (an independent path is the point of a replay); search composes
                          (same archive rows on both paths)
@@ -102,7 +102,7 @@ half, THINGS OBSERVED NOT WORKING that a document had said would (section 2).
   batched worlds: modelled and proven equal; NOT faster for a per-env-contract world (section 2)
   generations: the search layer commits per generation; a steady state is n=1 per generation (an expression,
     not a removal)
-  kernel wrappers (delay / permute / schedule) are scalar-path only (WRAPPERS_NOT_BATCHED)
+  kernel wrappers: REMOVED as an assumption (C111-C112: delay / permute / schedule on the batch face; EXP-001 batches)
 
 --------------------------------------------------------------------------
 5. STATUS OF THE NAMED ITEMS

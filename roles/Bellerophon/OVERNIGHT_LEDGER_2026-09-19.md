@@ -758,3 +758,19 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - mutant M64 (reads the episode length) CAUGHT; ledger 63/63. Suite 313 / 6 skipped. Census 41/41.
 - the three survival objectives now say different things on purpose: v1 = step (alive at the end x ticks),
   v2 = episode length, per_player = each player's own ticks. A designer picks by name; nothing is default.
+
+## C111-C112 (07:00Z) the kernel's own interventions on the batch face
+- C111 BatchObservationWrapper: delays add, permutations compose in intervention order, ONE delay buffer per
+  (player, env); manifest names the wrappers on the batched receipt. EXP-001 (the delay sweep, 96 runs) batches
+  now and equals the scalar path run for run; delay / permute / both on the probe IR equal too.
+- C112 BatchScheduleWrapper + set_params on world.integer_batch.v1 (ext.world.mutable_params.v1, same MUTABLE
+  list and indices as the reference; every env in lockstep). batch_plan refuses a schedule only when the batch
+  world lacks set_params (SCHEDULE_NOT_BATCHED, shown via a forked row).
+- defect found by the random property (seed 107): TASK_CHANGE count differed by one per episode that ended at
+  the scheduled tick -- the batch world told only ACTIVE envs about the change, while the reference world
+  appends the event whatever its state and the executor drains an env's events in the tick it finishes. Every
+  env is told now; mutant M65 pins it. A second wrong-by-one-tick finding of the night (C1 was the first).
+- the batch path's error text names the batch world; the property normalises the kind name for FAILED runs.
+- random-property coverage: 156 BATCHED / 8 NO_BATCH_IMPLEMENTATION of 164 runs (was 28 / 202 at C93).
+- mutants M43 re-anchored, M65 new; honest ledger 64/64. Suite 314 passed / 6 skipped.
+- honest list update: kernel wrappers are no longer scalar-path only.

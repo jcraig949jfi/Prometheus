@@ -36,9 +36,26 @@ def _xs_next(s: np.ndarray) -> np.ndarray:
 class IntegerWorldBatch:
     kind = "world.integer_batch.v1"
     capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.snapshot.v1", "ext.legal_actions.v1", "ext.multiplayer.v1",
-                              "ext.intervention.world_params.v1", "ext.cost.v1", "ext.replay.bit.v1", "ext.world.lifetime_state.v1", "ext.batch.v1"})
+                              "ext.intervention.world_params.v1", "ext.cost.v1", "ext.replay.bit.v1", "ext.world.lifetime_state.v1", "ext.batch.v1",
+                              "ext.world.mutable_params.v1"})
     replay_class = "BIT"
     ACT_MUL = 97
+    MUTABLE = ("regime_period", "stoch_rate", "act_cost", "step_cost", "yield_amt", "action_delay")   # same list, same indices as the reference
+
+    def set_params(self, **changes) -> None:
+        """ext.world.mutable_params.v1 on the batch face (C112): every env takes the change at the same tick boundary
+        (envs are in lockstep) and records the reference's TASK_CHANGE event."""
+        bad = sorted(set(changes) - set(self.MUTABLE))
+        if bad:
+            raise ValueError("%s: params %s are not runtime-mutable (mutable: %s)" % (self.kind, bad, list(self.MUTABLE)))
+        for k, v in changes.items():
+            self.p[k] = v
+            for i in range(self.n_envs):
+                # EVERY env records the change, finished ones too: the reference world appends TASK_CHANGE whatever its
+                # state, and the executor drains an env's events in the tick it finishes (fuzz seed 107: an env that
+                # ended at the scheduled tick lost its TASK_CHANGE when only active envs were told)
+                t = int(self.t[i]) if self.regs is not None else 0
+                self.ev[i].append((t, EVENT_ID["TASK_CHANGE"], -1, self.MUTABLE.index(k), int(v)))
 
     def __init__(self, n_envs: int = 1, **params):
         unknown = sorted(set(params) - set(DEFAULTS))

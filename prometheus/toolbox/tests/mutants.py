@@ -61,7 +61,7 @@ MUTANTS = [
     ("M41", "backends/local.py", "    if max_runs is not None and n_runs > int(max_runs):", "    if False:", "max_runs never refuses"),
     # sixth wave (C92): the batch path
     ("M42", "admission.py", "        res.failed.append(\"registry\"); return res                                  # the row keeps its import reason for the next asker", "        res.failed.append(\"registry\"); row.admission = dict(row.admission, **res.as_dict()); return res", "absent-machinery row loses its import reason on re-admission (then constructs)"),
-    ("M43", "backends/local.py", "    if delay or permutes or schedule:\n        return None, \"WRAPPERS_NOT_BATCHED\"", "    if False:\n        return None, \"WRAPPERS_NOT_BATCHED\"", "kernel wrappers silently dropped on the batch path"),
+    ("M43", "backends/local.py", "    if schedule and \"ext.world.mutable_params.v1\" not in registry.get(bk).capabilities:\n        return None, \"SCHEDULE_NOT_BATCHED\"", "    if False:\n        return None, \"SCHEDULE_NOT_BATCHED\"", "schedules run on a batch world that cannot take them"),
     ("M44", "ref/worlds_integer_batch.py", "        for i in range(n):\n            if actions[i] is None:\n                act[i] = False", "        pass", "an abandoned env is stepped with None actions"),
     ("M45", "backends/local.py", "                        if evs:\n                            ob.on_events(evs)                                   # same ORDER contract as _loop (C1)\n                        ob.on_tick(ticks, obs_env[i], acts[i])", "                        ob.on_tick(ticks, obs_env[i], acts[i])\n                        if evs:\n                            ob.on_events(evs)", "batch path delivers observer events after the tick"),
     ("M46", "registry.py", "            if r.state == \"ADMITTED\":\n                return k", "            return k", "an UNAVAILABLE batch world is chosen"),
@@ -89,6 +89,8 @@ MUTANTS = [
     ("M63", "ref/worlds_grid.py", "        if self.p[\"obs_mode\"] == \"structured\":                    # C100: the same facts, named; the trace is the state and does not change", "        if False:", "grid obs_mode=structured returns the flat vector"),
     # twelfth wave (C110): per-player survival from the series
     ("M64", "ref/observers.py", "            value[c[:-len(\"_alive\")]] = sum(1 for rec in last if rec[i])", "            value[c[:-len(\"_alive\")]] = len(last)", "per-player survival reads the episode length, not the player's alive column"),
+    # thirteenth wave (C111-C112): wrappers on the batch face
+    ("M65", "ref/worlds_integer_batch.py", "            for i in range(self.n_envs):\n                # EVERY env records the change, finished ones too", "            for i in [j for j in range(self.n_envs) if self.regs is None or self.active[j]]:\n                # EVERY env records the change, finished ones too", "TASK_CHANGE skipped for an env finishing at the scheduled tick (fuzz seed 107)"),
 ]
 
 
