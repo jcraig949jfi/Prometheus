@@ -133,21 +133,23 @@ class SeriesObserver(TraceObserver):
         return {"kind": self.kind, "version": self.version, "series": True, "enabled": self.enabled, "mirror_device": self.mirror_device}
 
     def begin(self, ctx: dict) -> None:
-        super().begin(ctx); self._series = []; self._alive = self._n_players
+        super().begin(ctx); self._series = []; self._alive = self._n_players; self._ep_yield = 0   # per-EPISODE counters (C21)
         if self._dev is not None:
             self._dev.end_scope("episode")
 
     def on_events(self, events: List[Event]) -> None:
         super().on_events(events)
-        for (_, kind, _, _, _) in events:
+        for (_, kind, _, _, val) in events:
             if kind == EVENT_ID["ABSORBED"]:
                 self._alive -= 1
+            elif kind == EVENT_ID["YIELD"]:
+                self._ep_yield += val
 
     def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None:
         super().on_tick(tick, observations, actions)
         if not self.enabled:
             return
-        rec = [tick, sum(sum(a) for a in actions.values()), sum(self._yield.values()), self._alive]
+        rec = [tick, sum(sum(a) for a in actions.values()), self._ep_yield, self._alive]     # col 2: yield within THIS episode
         self._series.append(rec)
         if self._dev is not None:
             self._dev.advance(tick); self._dev.append("series", rec, scope="persistent")

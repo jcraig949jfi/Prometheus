@@ -144,3 +144,15 @@ def test_series_records_satisfy_observer_invariants_over_many_seeds(tmp_path):
         assert eps[-1][0][3] - eps[-1][-1][3] <= absorbed
         n_absorptions_seen = max(n_absorptions_seen, absorbed)
     assert n_checked == 18 and n_absorptions_seen > 0, "fixture must exercise absorption or the alive column is untested"
+
+
+# C21 (playtest C rows): the series' yield column was cumulative over the RUN, not the episode (TraceObserver's
+# counters are run totals and SeriesObserver inherited them), so every episode "ended" at the same yield and
+# objective.series_gain.v1 was identically 0 -- a false zero that no per-episode-monotone test could see.
+def test_series_yield_column_is_per_episode_not_per_run(tmp_path):
+    e = exp(budget={"episodes": 3, "horizon": 20}, world=ref("world.integer.v1", world_seed=5, start_charge=100000, step_cost=0, yield_amt=8, yield_width=40000))
+    r = run(e, tmp_path / "pe.jsonl")
+    eps = S.recover(r, tmp_path)["observer.series.v1"]
+    tot = r["science"]["observations"]["observer.series.v1"]["yield_total"]
+    assert tot > 0 and all(ep[0][2] <= 8 for ep in eps), "an episode must start near zero yield"
+    assert sum(ep[-1][2] for ep in eps) == tot, "per-episode final yields must add up to the run total"

@@ -80,3 +80,35 @@ def test_series_gain_objective_works_when_the_series_is_artifact_backed(tmp_path
     r = [x for x in read_all(tmp_path / "big.jsonl") if x["arm"] == "primary"][0]
     assert "artifact" in r["series"]["observer.series.v1"] and r["science"]["objective"]["value"] is not None
     assert r["science"]["objective"]["components"]["episodes"] == 3 and "_series_episodes" not in r
+
+
+# C19: "worlds are stationary" is not assumed (directive s8): an Intervention may carry a SCHEDULE of parameter
+# changes applied at tick boundaries by the kernel; the world declares ext.world.mutable_params.v1 and emits
+# TASK_CHANGE. Same designer text, no world rewrite.
+def test_schedule_intervention_changes_conditions_mid_episode_and_is_recorded(tmp_path):
+    sched = {"name": "task_switch", "world_params": {}, "wrappers": {}, "schedule": [{"tick": 4, "world_params": {"act_cost": 5}}, {"tick": 7, "world_params": {"yield_amt": 0}}]}
+    e = _exp(interventions=[sched], observers=[ref("observer.trace.v1")], controls=[ref("control.replay.v1")], budget={"episodes": 1, "horizon": 12})
+    assert "ext.intervention.schedule.v1" in e.derived_requirements()
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "s.jsonl", REG); assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "s.jsonl") if x["arm"] == "primary"][0]
+    assert r["science"]["observations"]["observer.trace.v1"]["events_by_kind"].get("TASK_CHANGE") == 2
+    assert r["components"]["world"]["manifest"]["schedule"] == sched["schedule"]
+    e0 = _exp(observers=[ref("observer.trace.v1")], budget={"episodes": 1, "horizon": 12})
+    execute(lower(e0, REG).job, tmp_path / "s0.jsonl", REG)
+    r0 = [x for x in read_all(tmp_path / "s0.jsonl") if x["arm"] == "primary"][0]
+    assert r0["trace_hashes"] != r["trace_hashes"]
+
+
+def test_schedule_on_a_world_without_mutable_params_is_blocked_locally():
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"act_cost": 2}}]}])
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    low = lower(e, REG)
+    assert low.status == "BLOCKED_MISSING_CAPABILITY" and "ext.world.mutable_params.v1" in low.negotiation["missing"]
+
+
+def test_schedule_refuses_non_mutable_params_as_a_failed_run_not_a_halt(tmp_path):
+    e = _exp(interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"n_regs": 99}}]}], budget={"episodes": 1, "horizon": 4})
+    rep = execute(lower(e, REG).job, tmp_path / "bad.jsonl", REG)
+    assert rep.n_failed == 1 and "not runtime-mutable" in read_all(tmp_path / "bad.jsonl")[0]["error"]

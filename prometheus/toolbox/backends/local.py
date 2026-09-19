@@ -76,7 +76,7 @@ def lower(exp: Experiment, registry) -> Lowering:
         return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=reasons)
     provided = registry.provided_capabilities(exp.world["kind"], exp.substrate["kind"]) | {"core.player.v1", "core.experiment.v1", "core.receipt.v1"}
     # kernel-applied wrappers are capabilities the KERNEL provides
-    provided |= {"ext.intervention.observation_delay.v1", "ext.intervention.observation_permute.v1"}
+    provided |= {"ext.intervention.observation_delay.v1", "ext.intervention.observation_permute.v1", "ext.intervention.schedule.v1"}
     sub = registry.make(exp.substrate["kind"], **exp.substrate.get("params", {}))
     provided |= set(sub.capabilities)
     for p in exp.players:
@@ -143,18 +143,51 @@ class ObservationWrapper:
         return getattr(self.w, name)
 
 
+class ScheduleWrapper:
+    """ext.intervention.schedule.v1 (C19): applies world_params changes at tick boundaries (before the step of the
+    named tick) through the world's set_params; changes are recorded in the manifest; replay is unaffected."""
+
+    def __init__(self, world, schedule: List[dict]):
+        self.w = world; self.schedule = sorted(schedule, key=lambda s: int(s["tick"])); self._i = 0; self._t = 0
+        self.kind = world.kind; self.capabilities = world.capabilities; self.n_players = world.n_players
+
+    def manifest(self) -> dict:
+        return dict(self.w.manifest(), schedule=self.schedule)
+
+    def reset(self, seed: int) -> None:
+        self.w.reset(seed); self._i = 0; self._t = 0
+        self._apply()
+
+    def _apply(self) -> None:
+        # the wrapper keeps its own tick count: it never reads the world's internals
+        while self._i < len(self.schedule) and int(self.schedule[self._i]["tick"]) <= self._t:
+            self.w.set_params(**self.schedule[self._i]["world_params"]); self._i += 1
+
+    def step(self, actions):
+        done = self.w.step(actions)
+        self._t += 1
+        self._apply()
+        return done
+
+    def __getattr__(self, name):
+        return getattr(self.w, name)
+
+
 def build_world(exp: Experiment, registry):
     params = dict(exp.world.get("params", {}))
-    delay = 0; permutes: List[int] = []
+    delay = 0; permutes: List[int] = []; schedule: List[dict] = []
     for iv in exp.interventions:
         params.update(iv.get("world_params", {}))
         wr = iv.get("wrappers", {})
         delay += int(wr.get("observation_delay", 0))
         if "observation_permute" in wr:
             permutes.append(int(wr["observation_permute"]))
+        schedule += list(iv.get("schedule") or [])
     if "ext.intervention.world_params.v1" in registry.get(exp.world["kind"]).capabilities:
         params.setdefault("horizon", exp.budget["horizon"])     # a world without parameter overrides keeps its own horizon; the loop caps at budget.horizon anyway
     world = registry.make(exp.world["kind"], **params)
+    if schedule:
+        world = ScheduleWrapper(world, schedule)
     if delay or permutes:
         world = ObservationWrapper(world, delay, permutes)
     return world

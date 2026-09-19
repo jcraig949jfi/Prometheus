@@ -140,3 +140,20 @@ C14 | T+0:24 | held-out split as receipt data: seed_policy.holdout_seeds -> cont
   split="holdout"; SUMMARY carries per-split n / objective_n / objective_mean; controls pair within split.
   Decision: the kernel TAGS and AGGREGATES; whether a holdout result "qualifies" is the designer's reading
   (kernel never adjudicates). Suite 102 passed 1 skipped.
+C19 | T+0:27 | non-stationary worlds: Intervention.schedule (list of {tick, world_params}) applied by a kernel
+  ScheduleWrapper at tick boundaries through world.set_params (ext.world.mutable_params.v1; integer world
+  exposes six runtime-mutable params, emits one TASK_CHANGE per changed param, refuses others as a FAILED run).
+  RED 3 tests (schedule changes the trace + is recorded; a world without mutable params -> BLOCKED locally;
+  a non-mutable param -> FAILED receipt not a halt). Refactor while GREEN: the wrapper counted ticks itself
+  instead of reading the world's private state. Suite 105.
+C20 | T+0:29 | PLAYTEST C (playtests/pt_c_changing_tasks.py): 2 memory players on kv lifetime ttl=6, two task
+  schedules, two populations, 2 train + 2 holdout seeds, series-gain objective. 80 runs, 0 failed, 4/4
+  controls MET. ROWS: per-episode yields read [84, 84, 84] and [0, 0, 0] for every run; objective 0.0
+  everywhere; holdout mean 0.0 -- a FALSE ZERO.
+C21 | T+0:30 | cause: the series' yield column was cumulative over the RUN (SeriesObserver inherited
+  TraceObserver's run-total counters), so every episode ended at the same number and series_gain = 0
+  identically. The C1 invariant test (monotone within episode) could not see it. RED: per-episode final
+  yields must sum to the run total and an episode must start near zero. Fix: SeriesObserver keeps its own
+  per-episode yield counter. Playtest C re-run: per-episode yields now vary (see rows). Suite 106.
+  LESSON (ledger): an invariant that holds for both the right and the wrong implementation is not a test of
+  the difference; the playtest row that looked "too regular" was the signal.

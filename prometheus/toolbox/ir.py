@@ -139,6 +139,8 @@ class Experiment:
                 req.add("ext.intervention.world_params.v1")
             for k in (iv.get("wrappers") or {}):
                 req.add("ext.intervention.%s.v1" % k)
+            if iv.get("schedule"):
+                req.add("ext.intervention.schedule.v1"); req.add("ext.world.mutable_params.v1")
         for p in self.players:
             req |= set(p.get("requires", ()))
         if len(self.players) > 1:
