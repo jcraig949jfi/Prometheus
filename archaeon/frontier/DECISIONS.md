@@ -216,3 +216,20 @@ stream keys P-boom.stream.s1..3, plus K_F_popcapture_s1) at priority 3.5 x 4; re
 controls) compared independent streams, which is what a seed control is meant to do, so those stand; (d) the scheduler was
 restarted on the patched segment (session f); a second scheduler briefly ran concurrently (07:20:21-07:20:51Z) because the first
 kill missed; the overlapping item (W-artifacts w50053_reset) is being re-executed from its receipt by session f only.
+
+## DF-016 (2026-09-19T14:22Z) Z80 x Atlas campaign built and launched; both schedulers moved under Task Scheduler
+
+Operator: "There should be enough tokens with opus 5 to build and schedule. Go forth". Built archaeon/z80atlas/ (vm, tasks,
+engine, grammar, scheduler, packet; CAMPAIGN_CONTRACT.md) as Archaeon's build of the NESTOR 72-hour directive: no LLM in the
+loop, frozen grammar (digest 63ffdeca16db3333 in campaign/GRAMMAR_FROZEN.json), mechanical promotion, matched controls,
+late-stage verification with transplants, ASCII packet at the end. Positive controls (6/6 PASS at full budget, 14:18-14:19Z):
+replicator replicates (z80, vmcopy), external reproduction evolves CONST_incremental (z80, vmcopy), seeded endogenous
+replication invades (z80, vmcopy). Campaign clock started 2026-09-19T14:18:03Z; ends 2026-09-22T14:18Z.
+Handed over to Windows Task Scheduler (task Z80Atlas -> run_campaign.bat -> --resume until CAMPAIGN_DONE.json) at
+14:19:33Z; one positive-control verdict (the sixth) lives only in scheduler.log and RUNS.jsonl because the hand-over kill
+preceded the state save. Deep Frontier scheduler likewise moved under task DeepFrontier (run_frontier.bat, 8 h walls,
+restarts). Neither process is a child of an LLM session any more.
+Design notes: neighbour dependence (competence collapses with a zeroed neighbour) is recorded as interaction data with
+frozen specimens, not as an exploit; ANSWER_BEFORE_READ crossings require solving fresh forced-read cases; inputs are fresh
+per (run, epoch, cell); Nestor tape/tree organisms BLOCKED_MISSING_CAPABILITY (not importable here).
+Token rule for the run: zero sessions during the 72 h; check-ins read campaign/STATUS.json (<= 2 KB) only.
