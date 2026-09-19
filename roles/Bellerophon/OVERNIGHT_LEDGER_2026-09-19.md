@@ -876,3 +876,12 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - RedisStateDevice now takes its URL (credential included) from PK_REDIS_URL when set; with it pointing at M1 the
   five model-based tests skip with "AuthenticationError: Authentication required" -- the day a credential is
   handed to the environment, the acceptance run is one command. Suite unchanged (486 passed / 6 skipped).
+
+## C125 (08:17Z) the search layer's invariants as a property over random templates
+- 40 random IRs turned into search templates (one player slot, an objective, horizon >= 6; a random selector among
+  truncation / map_elites with rank / pareto / pareto by_cell): three generations in one process, resumed as
+  1 + 2, and as a compact archive must give identical rows. 28 templates exercised (22 integer, 5 grid, 1
+  pendulum; 3 with vector objectives), guard >= 12. All agree. First version guarded at 5 exercised because the
+  fuzz's horizons of 0/1 and missing objectives starved it -- a property that mostly returns early is the C93
+  false green in another form; the guard caught it.
+- suite 527 passed / 6 skipped (the properties grew the suite by 40 items each).

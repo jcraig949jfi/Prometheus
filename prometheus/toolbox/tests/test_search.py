@@ -180,3 +180,51 @@ def test_compact_archive_evolves_identically_and_fetches_players_on_demand(tmp_p
     (tmp_path / "compact" / ce[0]["source"]["file"]).unlink()
     with pytest.raises(FileNotFoundError):
         SR.player_of(ce[0], tmp_path / "compact")
+
+
+# C125: the search layer's invariants as a PROPERTY over random templates and selectors: one process vs resumed
+# (1 + 2 generations) vs compact archive must give identical rows; a vector objective gets a rank (or pareto);
+# a template the kernel refuses is skipped, never a crash.
+_SEARCH_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(400, 440)))
+def test_search_invariants_over_random_templates(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower
+    rnd = random.Random(seed)
+    t = random_experiment(seed)
+    if t.validate():
+        return
+    # a random IR made into a search TEMPLATE: one player slot, an objective, a horizon the search can see
+    t.players = []; t.sweep = {}; t.controls = []; t.interventions = [iv for iv in t.interventions if "schedule" not in iv]
+    t.world["params"]["n_players"] = 1
+    t.objective = t.objective or ref("objective.yield_net.v1"); t.budget = dict(t.budget, horizon=max(int(t.budget["horizon"]), 6))
+    if "observer.descriptor.v1" not in [o["kind"] for o in t.observers]:
+        t.observers = list(t.observers) + [ref("observer.descriptor.v1")]
+    rep = rnd.choice(["statemachine.v1", "statemachine.v2"])
+    probe = Experiment.from_dict(t.to_dict()); probe.players = [random_statemachine(1).manifest() if rep == "statemachine.v1" else __import__("prometheus.toolbox.ref.players", fromlist=["x"]).random_statemachine_v2(1).manifest()]
+    if not lower(probe, REG).ok:
+        return
+    vector = t.objective["kind"] == "objective.multi.v1"
+    if vector:
+        comp = rnd.choice(sorted(t.objective["params"]["components"]))
+        sel = rnd.choice([ref("selector.truncation.v1", keep=2, n=3, representation=rep, rank=comp), ref("selector.map_elites.v1", n=3, representation=rep, rank=comp),
+                          ref("selector.pareto.v1", n=3, representation=rep), ref("selector.pareto.v1", n=3, representation=rep, by_cell=True)])
+    else:
+        sel = rnd.choice([ref("selector.truncation.v1", keep=2, n=3, representation=rep), ref("selector.map_elites.v1", n=3, representation=rep), ref("selector.pareto.v1", n=3, representation=rep)])
+    key = lambda rows: [(r["gen"], r["player_hash"], r["objective"], tuple(r["descriptor"])) for r in rows if r["kind"] == "elite"]
+    one = SR.evolve(t, sel, generations=3, workdir=tmp_path / "one", seed=seed)
+    if one["stopped"]:
+        return
+    _SEARCH_COVERAGE["exercised"] += 1
+    SR.evolve(t, sel, generations=1, workdir=tmp_path / "two", seed=seed); SR.evolve(t, sel, generations=3, workdir=tmp_path / "two", seed=seed)
+    SR.evolve(t, sel, generations=3, workdir=tmp_path / "compact", seed=seed, compact=True)
+    a, b, c = (SR.load_rows(tmp_path / d / "archive.jsonl") for d in ("one", "two", "compact"))
+    assert key(a) == key(b) == key(c) and len(key(a)) == 9, (seed, sel)
+    assert all("player" not in r for r in c if r["kind"] == "elite")
+
+
+def test_the_search_property_was_actually_exercised():
+    assert _SEARCH_COVERAGE["exercised"] >= 12, _SEARCH_COVERAGE
