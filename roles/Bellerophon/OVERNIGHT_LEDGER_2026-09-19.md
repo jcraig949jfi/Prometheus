@@ -981,3 +981,8 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   capacity; flat refuses and counts every write. All agree. No defect. (Constant players hold no door: the
   test drives the doors themselves, as a v2/v3 player's .ws would.)
 - suite 1085 passed / 6 skipped.
+
+## C138 (08:52Z) the descriptor is a function of the trace measures (property)
+- 40 random IRs with random scales: the descriptor observer's three buckets recompute exactly from the same
+  receipt's trace observer (abstain*8 // (ticks*players); actions // (ticks*players*action_scale) capped 7;
+  yield // yield_scale capped 7), and its other measures equal the trace observer's. No defect.

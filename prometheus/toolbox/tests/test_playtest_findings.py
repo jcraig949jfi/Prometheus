@@ -447,3 +447,30 @@ def test_point_mutation_never_returns_the_parent():
             diff = sum(1 for a, b in zip(spec.payload["table"], out.payload["table"]) for x, y in zip(a, b) if x != y)
             assert diff == 1, (seed, spec.representation, spec.payload["n_states"]); n += 1
     assert n == 600
+
+
+# C138: the descriptor is a FUNCTION of the trace measures (a property over random receipts): abstain bucket =
+# abstentions*8 // (ticks*players) in 0..8, magnitude bucket = actions_total // (ticks*players*action_scale) capped
+# at 7, yield bucket = yield_total // yield_scale capped at 7 -- recomputed from the same receipt's trace observer.
+@pytest.mark.parametrize("seed", list(range(1500, 1540)))
+def test_descriptor_is_a_function_of_the_trace_measures(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    rnd = random.Random(seed)
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    a_s, y_s = rnd.choice([1, 2, 5]), rnd.choice([1, 8, 40])
+    e.observers = [ref("observer.trace.v1"), ref("observer.descriptor.v1", action_scale=a_s, yield_scale=y_s)]
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    for r in read_all(tmp_path / "r.jsonl"):
+        if r["arm"] == "SUMMARY" or r["status"] != "COMPLETED":
+            continue
+        tr = r["science"]["observations"]["observer.trace.v1"]; de = r["science"]["observations"]["observer.descriptor.v1"]
+        n = len(r["components"]["players"]); t = max(1, tr["ticks"]); nn = max(1, n)
+        exp = [sum(tr["abstain_by_player"].values()) * 8 // (t * nn), min(7, tr["actions_total"] // (t * nn * a_s)), min(7, tr["yield_total"] // y_s)]
+        assert de["descriptor"] == exp, (seed, de["descriptor"], exp, tr)
+        assert {k: v for k, v in de.items() if k != "descriptor"} == tr                  # the descriptor observer IS the trace observer plus the descriptor
