@@ -853,3 +853,17 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   refused at lowering, horizon < 2, ended before the tick, or the fuzz's known schedule-on-n_regs designer error);
   a coverage guard refuses fewer than 15. All 19 agree after C119. No new defect.
 - suite 447 passed, 6 skipped.
+
+## C121-C122 (08:01Z) every committed receipts file is a fixture; the mutation runner's stale-bytecode hole
+- C121 tests/test_replay_committed.py: replay_file() over all 38 committed receipts files (examples, playtests,
+  search generation files; archive.jsonl are rows, excluded) asserting 0 divergent runs; a guard names the big
+  four. 6 s. Power shown by hand: a one-constant change to the reference world (x*97 -> x*98, mutant M73) fails 27
+  of 39. Register rows added (fixtures, checkpoint, mutable-params-in-snapshot).
+- C122 FALSE RED that exposed a hole in the mutation runner: after the M73 run the suite failed 47 tests on an
+  UNMUTATED tree. Cause: a mutant of the same byte length, restored within the same mtime second, leaves a .pyc
+  compiled from the MUTATED source that Python's timestamp+size check accepts for the restored file. Until now a
+  same-size mutant could also have run the suite against stale ORIGINAL bytecode and read SURVIVED/CAUGHT for the
+  wrong reason (no such row is known; the first failures recorded were all real tests). Fix: mutant subprocesses
+  run with PYTHONDONTWRITEBYTECODE=1 and the runner purges prometheus/toolbox __pycache__ before the first mutant
+  and after every restore. M73 re-run leaves 0 pycache dirs and a green tree (486 passed / 6 skipped).
+- lesson for the register: the instrument that mutates source must also own the interpreter's cache of it.

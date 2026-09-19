@@ -101,17 +101,31 @@ MUTANTS = [
     ("M70", "backends/local.py", "        self._buf = {int(k): v for k, v in d[\"buf\"].items()}; self._perms = None        # permutations are re-derived from their seeds", "        self._buf = {}; self._perms = None", "a resumed delay wrapper starts with empty buffers"),
     ("M71", "backends/local.py", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"])); self._t = int(d[\"t\"]); self._i = int(d[\"i\"])", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"]))", "a resumed schedule fires its past entries again"),
     ("M72", "ref/worlds.py", "        self.p.update(d.get(\"params\", {}))\n        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "a restored integer world forgets its runtime-mutable params"),
+    # seventeenth wave (C121): committed receipts as fixtures
+    ("M73", "ref/worlds.py", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 97))", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 98))", "a one-constant semantic change to the reference world (the committed receipts must diverge)"),
+    ("M74", "ref/worlds_grid.py", "\"cells_nonzero\": sum(1 for c in st[\"cells\"] if c), \"pools\": list(st[\"pools\"])}", "\"cells_nonzero\": 0, \"pools\": list(st[\"pools\"])}", "grid summary lies about non-zero cells"),
 ]
 
 
+def _purge_bytecode() -> None:
+    """C122: a mutant of the SAME byte length restored within the same mtime second left a .pyc compiled from the
+    mutated source that Python's timestamp+size check accepted for the restored file -- the suite then failed on an
+    unmutated tree (27 replay fixtures diverged on a stale x*98). Mutant runs write no bytecode and purge what exists."""
+    import shutil
+    for d in (ROOT / TB).rglob("__pycache__"):
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def run_suite() -> tuple:
+    import os
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
     t0 = time.time()
     # C95: the anchor-drift test (C87) fails for EVERY applied mutant -- with it in the run a mutant no real test
     # catches still reads CAUGHT (18 of 46 rows had it as their first failure). It is deselected here; only tests
     # of BEHAVIOUR may catch a mutant.
     r = subprocess.run([sys.executable, "-m", "pytest", "prometheus/toolbox/tests", "-q", "-x", "-p", "no:cacheprovider", "--ignore=prometheus/toolbox/tests/mutants.py",
                         "--deselect", "prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists"],
-                       cwd=str(ROOT), capture_output=True, text=True, timeout=900)
+                       cwd=str(ROOT), capture_output=True, text=True, timeout=900, env=env)
     last = [l for l in r.stdout.splitlines() if l.strip()][-1:] or [""]
     failed = [l for l in r.stdout.splitlines() if l.startswith("FAILED")]
     return r.returncode, last[0], (failed[0][:140] if failed else ""), round(time.time() - t0, 1)
@@ -122,6 +136,7 @@ def main(argv):
     if "--only" in argv:
         only = argv[argv.index("--only") + 1].split(",")
     ledger = []
+    _purge_bytecode()
     for mid, rel, old, new, what in MUTANTS:
         if only and mid not in only:
             continue
@@ -132,7 +147,7 @@ def main(argv):
             p.write_text(src.replace(old, new, 1), encoding="utf-8", newline="\n")
             rc, tail, first_fail, secs = run_suite()
         finally:
-            p.write_text(src, encoding="utf-8", newline="\n")
+            p.write_text(src, encoding="utf-8", newline="\n"); _purge_bytecode()
         assert p.read_text(encoding="utf-8") == src
         ledger.append({"id": mid, "file": rel, "what": what, "result": "CAUGHT" if rc != 0 else "SURVIVED", "first_failure": first_fail, "suite_tail": tail, "seconds": secs})
         print(json.dumps(ledger[-1]))
