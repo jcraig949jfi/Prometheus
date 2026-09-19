@@ -197,3 +197,23 @@ def test_wall_budget_stops_between_runs_and_resume_finishes(tmp_path, monkeypatc
     e2 = Experiment.from_dict(dict(e.to_dict(), budget={"episodes": 1, "horizon": 8, "wall_s": 60.0}))
     rep2 = execute(lower(e2, REG).job, tmp_path / "w.jsonl", REG, resume=True)
     assert rep2.resumed_runs == 1 and rep2.runs_not_started == 0 and rep2.n_completed == 6 and R.scan(tmp_path / "w.jsonl")["defects"] == []
+
+
+# C79: resume=True against a receipts file of a DIFFERENT experiment silently ran a second experiment into it
+# (chain intact, two experiments interleaved). A resume must name the same experiment or be refused.
+def test_resume_into_another_experiments_file_is_refused(tmp_path):
+    p = _write(tmp_path)
+    other = Experiment(family="other", world=ref("world.integer.v1", world_seed=9), substrate=ref("substrate.flat.v1"), players=[random_statemachine(3).manifest()],
+                       seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 4})
+    with pytest.raises(ValueError):
+        execute(lower(other, REG).job, p, REG, resume=True)
+    assert R.scan(p)["valid"] == 4                               # untouched
+
+
+# C78: replaying a file whose embedded IR names a component that is now UNAVAILABLE is a DATA outcome.
+def test_replay_of_a_file_with_an_unavailable_component_is_a_data_outcome(tmp_path):
+    p = _write(tmp_path)
+    R2 = REG.fork(); R2.get("world.integer.v1").state = "UNAVAILABLE"; R2.get("world.integer.v1").admission = {"failed": "test: retired"}
+    from prometheus.toolbox.backends.local import replay_file
+    out = replay_file(p, tmp_path / "rp.jsonl", R2)
+    assert out["status"] == "TARGET_UNSUPPORTED" and out["runs_compared"] == 0 and any("UNAVAILABLE" in r for r in out["reasons"])

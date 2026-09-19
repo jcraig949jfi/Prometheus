@@ -415,9 +415,14 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
     done: Dict[str, Dict[Any, dict]] = {}
     if op.exists() and op.stat().st_size > 0:
         if resume:
+            prior_ids = set()
             for r in _valid_receipts(op):
+                prior_ids.add(r["experiment_id"])
                 if r["experiment_id"] == job.experiment_id and r["arm"] != "SUMMARY":
                     done.setdefault(r["arm"], {})[(json.dumps(r["sweep_point"], sort_keys=True, separators=(",", ":"), default=str), r["seed"])] = r
+            if prior_ids and job.experiment_id not in prior_ids:          # C79: a resume names the SAME experiment or is refused
+                raise ValueError("%s holds receipts of %s, not of %s; resume=True must name the same experiment (use append=True to add another on purpose)"
+                                 % (op, sorted(prior_ids), job.experiment_id))
         elif not append:
             raise FileExistsError("%s already holds receipts; pass append=True (second execution) or resume=True (continue this job)" % op)
     w = ReceiptWriter(out_path)

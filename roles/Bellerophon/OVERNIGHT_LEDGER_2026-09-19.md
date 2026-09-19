@@ -462,3 +462,11 @@ C77 | 04:50Z | sweeps explode silently. The ELIGIBILITY COUNT (points x arms x s
   Lowering's job description, and a declared budget.max_runs refuses the job BEFORE any run, naming the
   arithmetic (300 runs = 50 points x 2 arms x 3 seeds > 100). max_runs, like wall_s, is execution policy
   and outside the scientific digest. Suite 197 passed 6 skipped.
+REPORT | 04:54Z (T+2:04) | OVERNIGHT_REPORT_2026-09-19.txt written after the strongest regression (208 passed
+  6 skipped; 37/37 mutants; 300-seed fuzz 0 crashes) and pushed (c57a31188). The loop continues below; the
+  report's numbers are as of that commit.
+C78 | 04:56Z | replay_file over a file whose embedded IR names a component that is now UNAVAILABLE: a DATA
+  outcome (status TARGET_UNSUPPORTED, reasons), never an exception. Test added (already the behaviour).
+C79 | 04:56Z | resume=True against a receipts file of a DIFFERENT experiment silently interleaved two
+  experiments into one chained file. RED; a resume must name the same experiment or is refused with both
+  ids (append=True remains the explicit way to add another execution). Suite 199.
