@@ -44,6 +44,10 @@ def install(reg: Registry) -> Registry:
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
     reg.register(ComponentRecord("substrate.mailbox.v1", "substrate", S.MailboxSubstrate, S.MailboxSubstrate.capabilities, route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("substrate.artifact.v1", "substrate", S.ArtifactSubstrate, S.ArtifactSubstrate.capabilities, route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("statemachine.v3", "representation", P.random_statemachine_v3, frozenset({"core.player.v1"}), route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("rewrite.v1", "representation", P.random_rewrite_system, frozenset({"core.player.v1"}), route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("statemachine.v2", "representation", P.random_statemachine_v2, frozenset({"core.player.v1"}), route="write",

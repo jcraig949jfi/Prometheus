@@ -182,3 +182,26 @@ def test_mailbox_substrate_turns_the_memory_slot_into_a_channel(tmp_path):
                 players=[random_statemachine_v2(11).manifest(), random_statemachine_v2(12).manifest()], budget={"episodes": 2, "horizon": 20})
     execute(lower(e_kv, REG).job, tmp_path / "kv.jsonl", REG)
     assert _primary(tmp_path / "kv.jsonl")["trace_hashes"] != r["trace_hashes"], "a channel must be able to change behaviour vs private memory"
+
+
+# C65 (Crius s29: EXECUTABLE ARTIFACTS): a substrate door on which a player CREATES a small program in the
+# workspace and INVOKES it later (its own, or another player's: artifacts are shared and addressable). The
+# representation statemachine.v3 adds two ops (create, invoke) to v2; on a substrate without the door the ops
+# are refused and counted, like memory on flat.
+def test_artifact_substrate_lets_players_create_and_invoke_programs(tmp_path):
+    from prometheus.toolbox.ref.players import random_statemachine_v3
+    from prometheus.toolbox.contracts import ActionSpace
+    sub = REG.make("substrate.artifact.v1", scope="lifetime")
+    a = sub.instantiate(random_statemachine_v3(21), 1); b = sub.instantiate(random_statemachine_v3(22), 2)
+    aid = a.ws.create([3, 1, 16]); assert aid == 0 and b.ws.invoke(aid, 5) == (3 * 5 + 1) % 16 and a.ws.invoke(99, 5) is None
+    acc = sub.accounting(); assert acc["ws_artifacts_created"] == 1 and acc["ws_invocations"] == 2 and acc["ws_invocations_failed"] == 1
+    flat = REG.make("substrate.flat.v1").instantiate(random_statemachine_v3(21), 1)
+    obs = [[(t * 97) % 65536, t, 1, 2, 3] for t in range(40)]
+    flat_acts = [flat.act(o, ActionSpace(2, 8)) for o in obs]; assert flat.cost()["ws_refused"] > 0
+    e = _exp(ref("substrate.artifact.v1", scope="lifetime"), world=ref("world.integer.v1", world_seed=4, n_players=2, start_charge=100000, step_cost=0),
+             players=[random_statemachine_v3(21).manifest(), random_statemachine_v3(22).manifest()], observers=[ref("observer.trace.v1")],
+             controls=[ref("control.replay.v1"), ref("control.ablation.v1")], budget={"episodes": 2, "horizon": 30})
+    rep = execute(lower(e, REG).job, tmp_path / "art.jsonl", REG); assert rep.n_failed == 0 and rep.valid, rep.controls
+    r = _primary(tmp_path / "art.jsonl"); ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
+    assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and "ext.workspace.executable.v1" in r["capabilities"]["substrate"]
+    assert r["accounting"]["ws_invocations"] > 0

@@ -267,3 +267,39 @@ class RewriteInstance:
 
     def restore(self, snapshot: bytes) -> None:
         d = json.loads(snapshot.decode()); self.tape = d["tape"]; self._c = d["c"]
+
+
+# ------------------------------------------------------------------------------------------ statemachine.v3 (C65)
+def random_statemachine_v3(seed: int, n_states: int = 4, n_buckets: int = 8, width: int = 2, act_range: int = 8, mem_range: int = 16,
+                           meta: dict | None = None) -> PlayerSpec:
+    """v2 plus EXECUTABLE ARTIFACTS: a cell is [next_state, [acts], op, arg] with op in {0 none, 1 write mem := arg,
+    2 create artifact [mem, arg, mem_range] (an affine program), 3 invoke artifact arg -> mem := program(fold(obs))}.
+    Prefers ext.workspace.executable.v1 (and kv); requires nothing: elsewhere the ops are refused and counted."""
+    s = stream("statemachine.v3", seed)
+    table = [[[s.below(n_states), [s.below(act_range) for _ in range(width)], s.below(4), s.below(mem_range)] for _ in range(n_buckets)] for _ in range(n_states)]
+    return PlayerSpec("statemachine.v3", {"n_states": n_states, "n_buckets": n_buckets, "width": width, "act_range": act_range, "mem_range": mem_range, "table": table},
+                      {"state": 0}, frozenset(), dict(meta or {}, seed=seed, generator="random_statemachine_v3"))
+
+
+class StateMachineV3Instance(StateMachineV2Instance):
+    def __init__(self, spec: PlayerSpec, workspace):
+        super().__init__(spec, workspace); self.mem_range = spec.payload["mem_range"]
+
+    def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
+        self._c["reads"] += len(obs)
+        mem = self.ws.read(); m = 0 if mem is None else int(mem)
+        nxt, acts, op, arg = self.table[self.state][fold(list(obs) + [m]) % self.n_buckets]
+        self.state = nxt
+        if op == 1:
+            self.ws.write(int(arg))
+        elif op == 2:
+            self.ws.create([m % self.mem_range, int(arg), self.mem_range])
+        elif op == 3:
+            out = self.ws.invoke(int(arg), fold(list(obs)) % self.mem_range)
+            if out is not None:
+                self.ws.write(int(out) % self.mem_range)
+        self._c["transitions"] += 1; self._c["ops"] += 1
+        return [a % legal.range for a in acts[:legal.width]] + [0] * max(0, legal.width - len(acts))
+
+    def cost(self) -> Dict[str, int]:
+        return dict(self._c, params=sum(len(b[1]) + 3 for row in self.table for b in row), state_bytes=4, **self.ws.cost())

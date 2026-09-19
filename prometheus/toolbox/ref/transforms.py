@@ -33,12 +33,12 @@ def _spec(p: dict | PlayerSpec) -> PlayerSpec:
     return PlayerSpec(p["representation"], copy.deepcopy(p["payload"]), dict(p.get("initial_state", {})), frozenset(p.get("requires", ())), dict(p.get("meta", {})))
 
 
-SM = ("statemachine.v1", "statemachine.v2")
+SM = ("statemachine.v1", "statemachine.v2", "statemachine.v3")
 
 
 class ShuffleTransform:
     kind = "transform.shuffle.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0", "player.rewrite.v1"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -61,13 +61,16 @@ class ShuffleTransform:
 
 class FreshTransform:
     kind = "transform.fresh.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0", "player.rewrite.v1"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
 
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj)
+        if spec.representation == "statemachine.v3":
+            pl = spec.payload
+            return P.random_statemachine_v3(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
         if spec.representation == "statemachine.v1":
             pl = spec.payload
             return P.random_statemachine(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], meta={"transform": self.kind})
@@ -84,7 +87,7 @@ class FreshTransform:
 
 class RelabelTransform:
     kind = "transform.relabel.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -105,9 +108,9 @@ class RelabelTransform:
 
 class PointMutationTransform:
     """transform.point_mutation.v1 (C26): change exactly ONE table cell of a state machine (next state, one action
-    value, or -- for v2 -- the memory write). The search operator; shape and cost preserved."""
+    value, or -- for v2/v3 -- the memory write / op argument). The search operator; shape and cost preserved."""
     kind = "transform.point_mutation.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -118,13 +121,18 @@ class PointMutationTransform:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
         i = s.below(pl["n_states"]); j = s.below(pl["n_buckets"]); cell = pl["table"][i][j]
-        field = s.below(3 if spec.representation == "statemachine.v2" else 2)
+        field = s.below(2 if spec.representation == "statemachine.v1" else 3)
         if field == 0:
             cell[0] = (cell[0] + 1 + s.below(max(1, pl["n_states"] - 1))) % pl["n_states"]
         elif field == 1:
             k = s.below(len(cell[1])); cell[1][k] = (cell[1][k] + 1 + s.below(max(1, pl["act_range"] - 1))) % pl["act_range"]
-        else:
+        elif spec.representation == "statemachine.v2":
             cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl["mem_range"])
+        else:
+            if s.below(2) == 0:
+                cell[2] = s.below(4)                        # the op
+            else:
+                cell[3] = s.below(pl["mem_range"])          # its argument
         parent_fp = spec.meta.get("fingerprint")
         return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires,
                           dict(spec.meta, transform=self.kind, transform_seed=rng_seed, parent=parent_fp))

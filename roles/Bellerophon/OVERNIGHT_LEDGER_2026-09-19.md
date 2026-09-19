@@ -391,3 +391,13 @@ C64 | 04:26Z | consequence of C63: the c6 wrap (float pools, +,*,min,max only) h
   3/3 cross-platform agreement; after a libm world was shown to differ at a fine quantum, every float world
   now declares the honest class -- SEMANTIC with the quantum it actually hashes at (1e-6). The trace is
   unchanged; the CLAIM is now exactly what the trace tests. Suite 182.
+C65 | 04:31Z | EXECUTABLE ARTIFACTS (Crius s29's last missing concept): ext.workspace.executable.v1 as a door --
+  substrate.artifact.v1 grants create(program) / invoke(id, x) on a SHARED addressable shelf (affine programs
+  [a, b, m] as ints on the device; a missing id is a counted failed invocation, never an exception); events
+  ARTIFACT_CREATE / ARTIFACT_INVOKE; statemachine.v3 = v2 + two ops (create from memory, invoke into memory),
+  refused-and-counted on other substrates. Transforms/admission cover v3. RED -> GREEN; ablation and replay
+  controls MET on an artifact experiment. 34 components, 34 ADMITTED. Suite 183 passed 6 skipped.
+  Crius checklist (s29) now has an expression for every item: persistent workspace, structured state,
+  executable artifacts, lifetime reset, task sequence, transplant, ablation, scramble, held-out
+  qualification, experience-to-competence. Whether Crius's ACTUAL experiment fits is the falsifier still
+  to run when Crius publishes one (nothing forced tonight).
