@@ -351,7 +351,7 @@ C54 | 04:11Z | communication (directive s13) as one more substrate door, not a k
   value from ANOTHER player (no echo); ext.message_bus.v1 declared; MESSAGE events reach observers; the same
   statemachine.v2 representation runs unchanged (its memory slot becomes a channel); a channel changes
   behaviour vs private memory (trace differs from kv). ADMITTED. Suite 178 passed 6 skipped.
-C56 | 04:14Z | profiling EXP-002 (432 runs): the per-receipt kernel build hash re-hashed every kernel file on
+C56 | 04:08Z | profiling EXP-002 (432 runs): the per-receipt kernel build hash re-hashed every kernel file on
   every write (433 rglob+read passes = 1.4 of 4.3 profiled seconds). Cached once per process (refresh=True
   recomputes); playtests/ excluded from the hash. EXP-002 wall 2.15 s -> 1.25 s; suite 26 s -> 17 s.
   Not a correctness change: the hash value is unchanged for a given tree.
