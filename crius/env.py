@@ -30,6 +30,7 @@ class TaskRun:
         self.previous = task.start
         self.interactions = 0
         self.steps = 0
+        self.store_units = 0
         self.success = False
         self.over = False
         self.halted = False
@@ -48,7 +49,7 @@ class TaskRun:
             "interactions_left": self.interaction_budget - self.interactions,
             "num_ops": world.NUM_OPS,
             "task_index": self.task_index,
-            "steps_left": self.step_budget - self.steps,
+            "steps_left": self.step_budget - self.steps - self.store_units,
             "last_delta": tuple((c - p) % world.B for c, p in zip(self.current, self.previous)),
             "last_action": self.last_action,
         }
@@ -97,6 +98,14 @@ class TaskRun:
             if self.grace_left <= 0:
                 self._end("success")
         if self.steps >= self.step_budget:
+            self._end("step_budget")
+
+    def charge_store(self, units: int):
+        """Meter workspace/block cost units against the step budget without counting them as VM steps."""
+        if self.over:
+            raise TaskOver()
+        self.store_units += units
+        if self.steps + self.store_units >= self.step_budget:
             self._end("step_budget")
 
     def halt(self):

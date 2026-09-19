@@ -59,6 +59,7 @@ class Workspace:
         self.cost = 0
         self.failed_writes = 0
         self.writes = 0
+        self._bytes = 0
 
     @classmethod
     def empty(cls, cfg: dict = None) -> "Workspace":
@@ -69,14 +70,18 @@ class Workspace:
 
     # ------------------------------------------------------------ accounting
     def bytes_used(self) -> int:
+        return self._bytes
+
+    def recount(self) -> int:
         n = sum(value_size(v) for v in self.cells.values())
         n += sum(sum(value_size(v) for v in s) for s in self.streams.values())
         n += sum(sum(value_size(v) for v in r.values()) for r in self.records.values())
         n += sum(len(ls) for ls in self.links.values())
+        self._bytes = n
         return n
 
     def _fits(self, extra: int) -> bool:
-        return self.bytes_used() + extra <= self.capacity
+        return self._bytes + extra <= self.capacity
 
     def clear(self):
         self.__init__(self.n_cells, self.capacity)
@@ -105,6 +110,7 @@ class Workspace:
         self.next_record = snap["next_record"]
         self.alloc_ptr = snap["alloc_ptr"]
         self.allocations = snap["allocations"]
+        self.recount()
 
     def structure(self) -> dict:
         """Shape without contents, for histories."""
@@ -135,15 +141,16 @@ class Workspace:
             self.failed_writes += 1
             return False
         self.cells[addr] = value
+        self._bytes += value_size(value) - old
         self.writes += 1
         return True
 
     def find(self, value) -> int:
         """Address of the first cell equal to value, or -1. Charges one unit per cell scanned."""
         scanned = 0
-        for addr in sorted(self.cells):
+        for addr, v in self.cells.items():
             scanned += 1
-            if self.cells[addr] == value:
+            if v == value:
                 self.cost += scanned * COSTS["find_per_cell"]
                 return addr
         self.cost += max(1, scanned) * COSTS["find_per_cell"]
@@ -157,6 +164,7 @@ class Workspace:
             return False
         sid = int(stream_id)
         self.streams.setdefault(sid, []).append(value)
+        self._bytes += value_size(value)
         self.writes += 1
         return True
 
@@ -184,6 +192,7 @@ class Workspace:
         rid = self.next_record
         self.next_record += 1
         self.records[rid] = {int(k): v for k, v in fields.items() if is_value(v)}
+        self._bytes += sum(value_size(v) for v in self.records[rid].values())
         self.writes += 1
         return rid
 
@@ -206,6 +215,7 @@ class Workspace:
             self.failed_writes += 1
             return False
         r[f] = value
+        self._bytes += value_size(value) - old
         self.writes += 1
         return True
 
@@ -216,6 +226,7 @@ class Workspace:
             self.failed_writes += 1
             return False
         self.links.setdefault(int(source), []).append((int(label), int(target)))
+        self._bytes += 1
         self.writes += 1
         return True
 
@@ -250,7 +261,9 @@ class Workspace:
         if size is None:
             return False
         for a in range(base, base + size):
-            self.cells.pop(a, None)
+            v = self.cells.pop(a, None)
+            if v is not None:
+                self._bytes -= value_size(v)
         return True
 
     # ------------------------------------------------------------ scramble

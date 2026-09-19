@@ -35,7 +35,12 @@ def lifetime_metrics(results: list, cfg: dict) -> dict:
     cap = cfg["workspace"]["capacity_bytes"]
     n = max(1, len(results))
     competence = sum(max(0.0, r["final_performance"] - r["starting_performance"]) for r in results)
-    experience = sum(r["interactions_used"] / float(r["interaction_budget"]) for r in results)
+    if cfg["costs"].get("unsolved_charged_full_budget", False):
+        # EXPLORATORY variant (configs/c0x.json, post hoc, see DESIGN_C0.md addendum): a task the Player
+        # did not solve is charged its whole interaction budget as experience, so abstention is not free.
+        experience = sum(1.0 if not r["success"] else r["interactions_used"] / float(r["interaction_budget"]) for r in results)
+    else:
+        experience = sum(r["interactions_used"] / float(r["interaction_budget"]) for r in results)
     compute = sum((r["vm_steps_used"] + r["ws_cost_units"]) / float(r["step_budget"]) for r in results)
     retained = sum((r["workspace_bytes"] + r["artifact_bytes"]) / float(cap) for r in results) / n
     efficiency = competence / (1.0 + experience + compute + retained)

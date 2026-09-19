@@ -77,6 +77,7 @@ OPSPEC = {
 }
 OPNAMES = list(OPSPEC)
 OP = {name: i for i, name in enumerate(OPNAMES)}
+_FIRST_STORE_OP = OP["WS_READ"]
 INPUT_FIELDS = ("current", "target", "interactions_left", "num_ops", "task_index",
                 "steps_left", "last_delta", "current_block", "last_action")
 IMM_RANGE = (-20, 20)
@@ -249,6 +250,14 @@ def _execute(code, st: VMState, block_id: int):
         env.charge(1)
         st.instr_count += 1
         name = OPNAMES[opc]
+        if opc >= _FIRST_STORE_OP:
+            # workspace and block operations: their cost units count against the step budget too
+            cost0 = ws.cost + blocks.cost
+            _store_op(name, a, b, c, st, block_id)
+            extra = ws.cost + blocks.cost - cost0
+            if extra > 0:
+                env.charge_store(extra)
+            continue
         if name == "CONST":
             regs[a] = _wrap(b)
         elif name == "MOV":
@@ -310,76 +319,86 @@ def _execute(code, st: VMState, block_id: int):
             if st.recording is not None:
                 st.recording.append((OP["ACTI"], a % (world.NUM_OPS + 1), 0, 0))
             env.act(a)
-        elif name == "WS_READ":
-            regs[a] = ws.read(to_int(regs[b]))
-        elif name == "WS_WRITE":
-            ws.write(to_int(regs[a]), regs[b])
-        elif name == "WS_APPEND":
-            ws.append(to_int(regs[a]), regs[b])
-        elif name == "WS_SREAD":
-            regs[a] = ws.read_stream(to_int(regs[b]), to_int(regs[c]))
-        elif name == "WS_SLEN":
-            regs[a] = ws.stream_len(to_int(regs[b]))
-        elif name == "WS_REC_NEW":
-            regs[a] = ws.create_record()
-        elif name == "WS_REC_GET":
-            regs[a] = ws.get_field(to_int(regs[b]), to_int(regs[c]))
-        elif name == "WS_REC_SET":
-            ws.set_field(to_int(regs[a]), to_int(regs[b]), regs[c])
-        elif name == "WS_LINK":
-            ws.create_link(to_int(regs[a]), to_int(regs[b]), to_int(regs[c]))
-        elif name == "WS_LINKS":
-            regs[a] = len(ws.links_from(to_int(regs[b])))
-        elif name == "WS_LINK_GET":
-            regs[a] = ws.link_get(to_int(regs[b]), to_int(regs[c]))
-        elif name == "WS_ALLOC":
-            regs[a] = ws.allocate(to_int(regs[b]))
-        elif name == "WS_FREE":
-            ws.free(to_int(regs[a]))
-        elif name == "WS_FIND":
-            regs[a] = ws.find(regs[b])
-        elif name == "BLK_NEW":
-            regs[a] = blocks.create()
-        elif name == "BLK_APPEND":
-            ins = regs[b]
-            if isinstance(ins, tuple) and len(ins) == 4:
-                blocks.append(to_int(regs[a]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
-            else:
-                blocks.cost += 1
-        elif name == "BLK_PATCH":
-            ins = regs[c]
-            if isinstance(ins, tuple) and len(ins) == 4:
-                blocks.patch(to_int(regs[a]), to_int(regs[b]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
-            else:
-                blocks.cost += 1
-        elif name == "BLK_COPY":
-            regs[a] = blocks.copy(to_int(regs[b]))
-        elif name == "BLK_COMPOSE":
-            regs[a] = blocks.compose(to_int(regs[b]), to_int(regs[c]))
-        elif name == "BLK_DELETE":
-            blocks.delete(to_int(regs[a]))
-        elif name == "BLK_INVOKE":
-            invoke_block(to_int(regs[a]), st, from_block=block_id)
-        elif name == "BLK_LEN":
-            regs[a] = blocks.length(to_int(regs[b]))
-        elif name == "BLK_COUNT":
-            regs[a] = blocks.count()
-        elif name == "BLK_STATE_GET":
-            regs[a] = blocks.state_get(to_int(regs[b]), to_int(regs[c]))
-        elif name == "BLK_STATE_SET":
-            blocks.state_set(to_int(regs[a]), to_int(regs[b]), regs[c])
-        elif name == "BLK_REC_BEGIN":
-            if st.recording is None:
-                st.recording = []
-        elif name == "BLK_REC_END":
-            if st.recording is None:
-                regs[a] = -1
-            else:
-                rec = st.recording
-                st.recording = None
-                regs[a] = blocks.create(rec, origin="record")
         else:
             raise RuntimeError("unknown opcode %r" % (opc,))
+
+
+def _store_op(name, a, b, c, st, block_id):
+    regs = st.regs
+    ws = st.ws
+    blocks = st.blocks
+    if False:
+        pass
+    elif name == "WS_READ":
+        regs[a] = ws.read(to_int(regs[b]))
+    elif name == "WS_WRITE":
+        ws.write(to_int(regs[a]), regs[b])
+    elif name == "WS_APPEND":
+        ws.append(to_int(regs[a]), regs[b])
+    elif name == "WS_SREAD":
+        regs[a] = ws.read_stream(to_int(regs[b]), to_int(regs[c]))
+    elif name == "WS_SLEN":
+        regs[a] = ws.stream_len(to_int(regs[b]))
+    elif name == "WS_REC_NEW":
+        regs[a] = ws.create_record()
+    elif name == "WS_REC_GET":
+        regs[a] = ws.get_field(to_int(regs[b]), to_int(regs[c]))
+    elif name == "WS_REC_SET":
+        ws.set_field(to_int(regs[a]), to_int(regs[b]), regs[c])
+    elif name == "WS_LINK":
+        ws.create_link(to_int(regs[a]), to_int(regs[b]), to_int(regs[c]))
+    elif name == "WS_LINKS":
+        regs[a] = len(ws.links_from(to_int(regs[b])))
+    elif name == "WS_LINK_GET":
+        regs[a] = ws.link_get(to_int(regs[b]), to_int(regs[c]))
+    elif name == "WS_ALLOC":
+        regs[a] = ws.allocate(to_int(regs[b]))
+    elif name == "WS_FREE":
+        ws.free(to_int(regs[a]))
+    elif name == "WS_FIND":
+        regs[a] = ws.find(regs[b])
+    elif name == "BLK_NEW":
+        regs[a] = blocks.create()
+    elif name == "BLK_APPEND":
+        ins = regs[b]
+        if isinstance(ins, tuple) and len(ins) == 4:
+            blocks.append(to_int(regs[a]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
+        else:
+            blocks.cost += 1
+    elif name == "BLK_PATCH":
+        ins = regs[c]
+        if isinstance(ins, tuple) and len(ins) == 4:
+            blocks.patch(to_int(regs[a]), to_int(regs[b]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
+        else:
+            blocks.cost += 1
+    elif name == "BLK_COPY":
+        regs[a] = blocks.copy(to_int(regs[b]))
+    elif name == "BLK_COMPOSE":
+        regs[a] = blocks.compose(to_int(regs[b]), to_int(regs[c]))
+    elif name == "BLK_DELETE":
+        blocks.delete(to_int(regs[a]))
+    elif name == "BLK_INVOKE":
+        invoke_block(to_int(regs[a]), st, from_block=block_id)
+    elif name == "BLK_LEN":
+        regs[a] = blocks.length(to_int(regs[b]))
+    elif name == "BLK_COUNT":
+        regs[a] = blocks.count()
+    elif name == "BLK_STATE_GET":
+        regs[a] = blocks.state_get(to_int(regs[b]), to_int(regs[c]))
+    elif name == "BLK_STATE_SET":
+        blocks.state_set(to_int(regs[a]), to_int(regs[b]), regs[c])
+    elif name == "BLK_REC_BEGIN":
+        if st.recording is None:
+            st.recording = []
+    elif name == "BLK_REC_END":
+        if st.recording is None:
+            regs[a] = -1
+        else:
+            rec = st.recording
+            st.recording = None
+            regs[a] = blocks.create(rec, origin="record")
+    else:
+        raise RuntimeError("unknown store opcode %r" % (name,))
 
 
 # ---------------------------------------------------------------- the ARM-S seed
