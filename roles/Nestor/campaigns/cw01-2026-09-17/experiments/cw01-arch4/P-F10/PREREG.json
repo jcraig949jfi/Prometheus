@@ -1,0 +1,44 @@
+{
+ "perturbation_id": "P-F10",
+ "parent": "T-X16",
+ "co_parents": [
+  "T-ARCH4/M1",
+  "T-X13",
+  "T-X05"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-cross",
+ "evolver": {
+  "N": 96,
+  "G": 60,
+  "env": "W2_K2",
+  "lambdas": [
+   0.0,
+   0.0078125,
+   0.03125
+  ],
+  "seeds": [
+   1,
+   2
+  ],
+  "weather": "p=.5, 2 instructions on the evaluated copy"
+ },
+ "arms": "select (weather off) and weather at every lambda; sham at lambda 0 must equal select (harness)",
+ "readouts": "final-population reward (fixed W2_K2 episodes), length, persistent words; top-32 damage loss; weather - select at each lambda with relabel over the pooled top-32 (2 seeds)",
+ "predictions": {
+  "CROSS_SUBSTRATE_PRUNING": "weather's effect on reward rises with lambda (cost at 0, neutral or beneficial at 1/32) as the damaged substrate gained in e06 under a price",
+  "NOT_PORTABLE": "weather's effect does not depend on lambda",
+  "REVERSED": "weather hurts more under a price"
+ },
+ "material_rule": "the weather - select reward or length contrast changes sign or clears its band differently across lambdas",
+ "continuation": [
+  "price on persistent words",
+  "tax x weather dose"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 02:38:17",
+ "prereg_sha256": "7b79feea9c0b2b96a3f7612978237234ba42079091f308daf499d3fef406b738"
+}

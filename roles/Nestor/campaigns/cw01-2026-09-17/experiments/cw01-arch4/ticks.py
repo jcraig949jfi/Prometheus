@@ -67,6 +67,58 @@ def w0_variants(eps):
     return out
 
 
+def idle_variants(eps):
+    """Generic input-less (EMPTY) tick constructions for any streams-topology episode set:
+    between_puts (before the 2nd PUT), before_first_ask, before_second_ask (when 2 asks), before_first_put."""
+    out = {"base": [], "between_puts": [], "before_first_ask": [], "before_second_ask": [], "before_first_put": []}
+    for ep in eps:
+        puts, asks = put_ticks(ep), ask_ticks(ep)
+        out["base"].append(clone(ep))
+        out["between_puts"].append(insert(ep, puts[1], [[]]) if len(puts) > 1 else clone(ep))
+        out["before_first_ask"].append(insert(ep, asks[0], [[]]))
+        out["before_second_ask"].append(insert(ep, asks[1], [[]]) if len(asks) > 1 else clone(ep))
+        out["before_first_put"].append(insert(ep, puts[0], [[]]))
+    return out
+
+
+W0D2 = A.WorldSpec("W0_D2", D=2, value_bits=4)
+VECTOR_KEYS = ["W0D1.before_ask", "W0D2.between_puts", "W0D2.before_ask", "W0D2.before_first_put", "K2.between_puts", "K2.before_first_ask", "K2.before_second_ask"]
+
+
+def _worlds():
+    return {"W0D1": A.episodes("W0"), "W0D2": A.episodes_for(W0D2, A.CAMPAIGN_SEED, "train", 1, A.C1.E), "K2": A.episodes("W2_K2")}
+
+
+_CACHE = {}
+
+
+def response_vector(m):
+    """The RAW temporal response geometry of a program: 7 self-displacements (T-X17). Components on a
+    world where the program gives no answer are NaN (immunity by silence is not immunity)."""
+    if "W" not in _CACHE:
+        w = _worlds()
+        _CACHE["W"] = w
+        _CACHE["V"] = {k: idle_variants(v) for k, v in w.items()}
+    V = _CACHE["V"]
+    vec, answered = {}, {}
+    for wk, cons in (("W0D1", [("before_first_ask", "before_ask")]), ("W0D2", [("between_puts", "between_puts"), ("before_first_ask", "before_ask"), ("before_first_put", "before_first_put")]),
+                     ("K2", [("between_puts", "between_puts"), ("before_first_ask", "before_first_ask"), ("before_second_ask", "before_second_ask")])):
+        a0 = A.C1.answers(m, V[wk]["base"])
+        ans = any(x is not None for x in a0)
+        answered[wk] = ans
+        for con, name in cons:
+            if not ans:
+                vec["%s.%s" % (wk, name)] = float("nan")
+                continue
+            a1 = A.C1.answers(m, V[wk][con])
+            if wk == "K2" and name in ("before_first_ask", "before_second_ask"):
+                pos = 0 if name == "before_first_ask" else 1
+                vec["%s.%s" % (wk, name)] = A.C1.displacement(a1[pos::2], a0[pos::2])
+            else:
+                vec["%s.%s" % (wk, name)] = A.C1.displacement(a1, a0)
+    return {"vector": [vec[k] for k in VECTOR_KEYS], "answered": answered}
+
+
 def k2_variants(eps):
     """Two-stream (W2_K2) constructions: per-tag timing live by construction.
     tag1 = the tag of the FIRST PUT; tag2 = the second. Returns {name: [episodes]} plus per-episode

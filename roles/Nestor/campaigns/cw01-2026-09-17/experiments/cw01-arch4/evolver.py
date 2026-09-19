@@ -66,14 +66,22 @@ def fitness(ind, eps, arm, rng):
     return ev
 
 
-def run(arm, seed, init, G_=G, N_=N):
-    rng = A.SplitMix64(A.seed_from("nestor.evolver", A.LOOP_SEED, seed))      # arm-independent: arms share every draw (CW01-D083)
+def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, archive_gens=(), label="nestor.evolver"):
+    """arm: select | drift (uniform parent) | ndrift (uniform parent, child kept only inside the band of its
+    parent's reward - competence retained without a fitness ordering) | weather | sham.
+    env: selection world; ep_transform(eps, g) may rewrite the generation's episodes (idle ticks);
+    price: fitness = reward - price * n_instr for the tournament; archive_gens: snapshot generations."""
+    rng = A.SplitMix64(A.seed_from(label, A.LOOP_SEED, seed))      # arm-independent: arms share every draw (CW01-D083)
     pop = [dict(x) for x in init]
-    hist = []
+    hist, archive = [], {}
     for g in range(G_):
-        eps = gen_eps(g)
+        eps = A.episodes_for(A.ENVS[env], A.CAMPAIGN_SEED, "train", 1000 + g, A.C1.E)
+        if ep_transform is not None:
+            eps = ep_transform(eps, g)
         evs = [fitness(ind, eps, arm, rng) for ind in pop]
-        fit = np.array([e["reward_per_ask"] for e in evs])
+        fit = np.array([e["reward_per_ask"] - price * CM.n_instr(ind["m"]) for e, ind in zip(evs, pop)])
+        if g in archive_gens:
+            archive[g] = [dict(x, reward=float(e["reward_per_ask"])) for x, e in zip(pop, evs)]
         hist.append({"gen": g, "reward_mean": float(fit.mean()), "reward_max": float(fit.max()),
                      "len_mean": float(np.mean([CM.n_instr(x["m"]) for x in pop])),
                      "persist": {k: sum(1 for x in pop if x["m"]["persist"] == k) / len(pop) for k in ("none", "regs", "tape", "all")},
@@ -85,7 +93,7 @@ def run(arm, seed, init, G_=G, N_=N):
         kids = []
         for i in range(N_):
             cand = [int(rng.next_u32() % N_) for _ in range(K_T)]        # drawn in every arm
-            if arm == "drift":
+            if arm in ("drift", "ndrift"):
                 pi = cand[0]
             else:
                 pi = max(cand, key=lambda c: fit[c])
@@ -99,11 +107,15 @@ def run(arm, seed, init, G_=G, N_=N):
                     continue
             if child is None:
                 child = json.loads(json.dumps(parent["m"]))
-            kids.append({"m": child, "anc": parent["anc"], "anc_parent": parent["anc_parent"], "anc_stratum": parent["anc_stratum"], "anc_walker": parent["anc_walker"]})
+            if arm == "ndrift":                                            # neutral-band acceptance relative to the PARENT
+                rc = A.evaluate(child, eps, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]
+                if abs(rc - evs[pi]["reward_per_ask"]) > A.C1.BAND:
+                    child = json.loads(json.dumps(parent["m"]))
+            kids.append({"m": child, "anc": parent["anc"], "anc_parent": parent.get("anc_parent"), "anc_stratum": parent.get("anc_stratum"), "anc_walker": parent.get("anc_walker")})
         pop = kids
-    fixed = A.episodes(ENV)
+    fixed = A.episodes(env)
     final = [dict(x, reward=A.evaluate(x["m"], fixed, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]) for x in pop]
-    return {"arm": arm, "seed": seed, "history": hist, "final": final}
+    return {"arm": arm, "seed": seed, "env": env, "price": price, "history": hist, "final": final, "archive": archive}
 
 
 ASSAY_CELLS = [("delete", 2, 1), ("delete", 4, 1), ("delete", 4, 4), ("operand", 4, 1), ("opcode", 4, 1)]
