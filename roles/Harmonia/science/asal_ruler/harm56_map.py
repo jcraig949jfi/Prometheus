@@ -125,7 +125,51 @@ def main():
     all_lost = all(r["state_mean"] == "LOST_CROSSING" for r in table if r["cross_mean_torch"]) if any(r["cross_mean_torch"] for r in table) else None
     res["verdicts"] = {"A": vA, "B": vB, "C": vC, "phenomenon_disappears_under_native_observer": all_lost,
                        "replication_authorised": (not all_lost) and all(v in ("OBSERVER_STABLE", "OBSERVER_DEPENDENT") for v in (vA, vB, vC)) and (controls["C-SELF"]["pass"] is not False) and (controls["C-STATIC"]["pass"] is not False)}
+    # ---- AMENDMENT_A: VIEW 2 (native anchors) and the A/B/C disposition. VIEW 1 above is untouched.
+    anc = fx.get("anchors", {})  # {"GARBAGE_seed0": s, ..., "LENIA": s, "STATIC": s, "NOISE_seed0": ..., "CHEAT": ...}
+    g = [anc[f"GARBAGE_seed{i}"] for i in range(5) if f"GARBAGE_seed{i}" in anc]
+    view2 = {"available": len(g) == 5 and "LENIA" in anc and "STATIC" in anc}
+    if view2["available"]:
+        gm, gs = float(np.mean(g)), float(np.std(g)); orb = float(anc["LENIA"]); stc = float(anc["STATIC"])
+        nz = [anc[f"NOISE_seed{i}"] for i in range(5) if f"NOISE_seed{i}" in anc]
+        view2.update({"native_garbage_mean": gm, "native_garbage_sd": gs, "native_orbium": orb, "native_static": stc, "native_noise_mean": float(np.mean(nz)) if nz else None,
+                      "scale_check_static_0.875": abs(stc - 0.875) < 1e-3, "controls_coherent": (abs(stc - 0.875) < 1e-3) and (gm < orb) and ((float(np.mean(nz)) > gm) if nz else True),
+                      "torch_anchors": {"garbage_mean": THRESH["mean"], "orbium": 0.847246, "static": 0.875}})
+        for r in table:
+            r["view2_sd_units_from_native_garbage"] = (r["score_flax"] - gm) / gs if gs > 0 else None
+            r["view2_cross_native_mean"] = bool(r["score_flax"] < gm); r["view2_cross_native_2sd"] = bool(r["score_flax"] < gm - 2 * gs)
+            r["view2_below_native_orbium"] = bool(r["score_flax"] < orb)
+        view2["map_native_mean"] = {}
+        for r in table:
+            s = state(r["cross_mean_torch"], r["view2_cross_native_mean"]); r["view2_state_mean"] = s; view2["map_native_mean"][s] = view2["map_native_mean"].get(s, 0) + 1
+        def surv(keys):
+            ks = [k for k in keys if k in by and by[k]["cross_mean_torch"]]
+            return {"n": len(ks), "view1_survive": sum(1 for k in ks if by[k]["cross_mean_flax"]), "view2_survive": sum(1 for k in ks if by[k]["view2_cross_native_mean"])}
+        subsets = {"catalogue": surv(CATALOGUE_CROSSERS), "genuine": surv([r["key"] for r in gen]), "deep": surv(TORCH_BOTTOM10)}
+        view2["subset_survival"] = subsets
+        def frac(d, v): return (d[v] / d["n"]) if d["n"] else None
+        A_ok = all((frac(d, "view1_survive") or 0) >= 0.5 and (frac(d, "view2_survive") or 0) >= 0.5 for d in subsets.values() if d["n"])
+        C_ok = all((frac(d, "view2_survive") or 0) < 0.1 for d in subsets.values() if d["n"]) and view2["controls_coherent"]
+        # B: a probe subset whose flip rate exceeds the population flip rate by >= 3x with n >= 5, under either view
+        pop_flip1 = sum(1 for r in table if r["state_mean"] in ("LOST_CROSSING", "GAINED_CROSSING")) / len(table)
+        pop_flip2 = sum(1 for r in table if r["view2_state_mean"] in ("LOST_CROSSING", "GAINED_CROSSING")) / len(table)
+        B_hits = []
+        for name, ks in (("GENUINE", [r["key"] for r in gen]), ("METRIC_EXPLOIT", [r["key"] for r in mex]), ("UNCLASSIFIED", [r["key"] for r in table if r["class_torch"] == "UNCLASSIFIED"]),
+                         ("IC-CAT", [r["key"] for r in table if r["ic"].startswith("IC-CAT")]), ("IC-ORB", [r["key"] for r in table if r["ic"] == "IC-ORB"]), ("IC-BLOB", [r["key"] for r in table if r["ic"] == "IC-BLOB"]),
+                         ("gn=2", [r["key"] for r in table if r["params"]["gn"] == 2]), ("S0", [r["key"] for r in table if r["stage"] == "S0"]), ("S2", [r["key"] for r in table if r["stage"] == "S2"])):
+            if len(ks) < 5: continue
+            f1 = sum(1 for k in ks if by[k]["state_mean"] in ("LOST_CROSSING", "GAINED_CROSSING")) / len(ks); f2 = sum(1 for k in ks if by[k]["view2_state_mean"] in ("LOST_CROSSING", "GAINED_CROSSING")) / len(ks)
+            if (pop_flip1 > 0 and f1 >= 3 * pop_flip1) or (pop_flip2 > 0 and f2 >= 3 * pop_flip2): B_hits.append({"subset": name, "n": len(ks), "flip_view1": f1, "flip_view2": f2, "pop_view1": pop_flip1, "pop_view2": pop_flip2})
+        disposition = "C_RECONSTRUCTION_SPECIFIC" if C_ok else ("B_STRUCTURED_OBSERVER_DEPENDENCE" if B_hits else ("A_OBSERVER_STABLE" if A_ok else "UNRESOLVED"))
+        if not view2["controls_coherent"]: disposition = "UNRESOLVED (native controls incoherent: the native path is the object)"
+        view2.update({"B_hits": B_hits, "disposition": disposition})
+    else:
+        view2["disposition"] = "UNRESOLVED (native anchors absent: VIEW 2 not computable)"
+    res["view2_native_anchors"] = view2; res["disposition_ABC"] = view2["disposition"]
+    with open(os.path.join(a.out, "harm56_table.jsonl"), "w", encoding="utf-8", newline="\n") as fh:
+        for row in table: fh.write(json.dumps(row) + "\n")
     json.dump(res, open(os.path.join(a.out, "harm56_map.json"), "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True, default=float)
+    print("VIEW2", {k: v for k, v in view2.items() if k not in ("map_native_mean",)} if view2["available"] else view2)
     print(json.dumps({k: res[k] for k in ("n", "controls", "map", "classification", "verdicts")}, indent=1, default=float))
     print("A", res["A_catalogue_life_still_crosses"]["torch_crossers_status"]); print("B S2_135", res["B_genuine_still_crosses"]["S2_135"]); print("E order", res["E_ordering_of_regions"]["order_torch"], "->", res["E_ordering_of_regions"]["order_flax"])
 

@@ -157,7 +157,7 @@ def read_all(path) -> List[dict]:
 def scan(path) -> dict:
     """FORENSIC read: never raises; counts valid receipts and names every defect by line
     (truncation / malformed JSON, receipt_id mismatch = edited after writing, schema defects, duplicates)."""
-    valid = 0; defects = []; ids = []; seen = set(); lines = 0
+    valid = 0; defects = []; ids = []; chain = []; seen = set(); lines = 0     # ids = VALID receipts; chain = what each line claimed
     with open(path, encoding="utf-8") as f:
         for n, line in enumerate(f, 1):
             line = line.strip()
@@ -172,11 +172,17 @@ def scan(path) -> dict:
                 validate(rec)
             except ReceiptError as exc:
                 msg = str(exc)
-                defects.append({"line": n, "defect": ("RECEIPT_ID_MISMATCH" if "receipt_id" in msg else "SCHEMA:" + msg)}); continue
+                defects.append({"line": n, "defect": ("RECEIPT_ID_MISMATCH" if "receipt_id" in msg else "SCHEMA:" + msg)})
+                # C127: the invalid line's CLAIMED receipt_id still anchors the chain for the next line -- an edited
+                # record is ONE defect on ONE line, not an edit plus a break on the line after it (the property over
+                # random files found every edit reported twice)
+                if isinstance(rec, dict) and isinstance(rec.get("receipt_id"), str):
+                    chain.append(rec["receipt_id"])
+                continue
             rid = rec["receipt_id"]
             if rid in seen:
                 defects.append({"line": n, "defect": "DUPLICATE_RECEIPT_ID", "receipt_id": rid}); continue   # a copy is not a second run
-            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (ids[-1] if ids else None):
-                defects.append({"line": n, "defect": "CHAIN_BREAK", "expected_prev": ids[-1] if ids else None, "found_prev": rec["prev_receipt_id"]})
-            seen.add(rid); ids.append(rid); valid += 1
+            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (chain[-1] if chain else None):
+                defects.append({"line": n, "defect": "CHAIN_BREAK", "expected_prev": chain[-1] if chain else None, "found_prev": rec["prev_receipt_id"]})
+            seen.add(rid); ids.append(rid); chain.append(rid); valid += 1
     return {"path": str(path), "lines": lines, "valid": valid, "defects": defects, "receipt_ids": ids}

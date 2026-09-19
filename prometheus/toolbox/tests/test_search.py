@@ -83,7 +83,7 @@ def test_map_elites_selector_keeps_one_elite_per_descriptor_cell(tmp_path):
 def test_row_descriptor_aggregates_over_seeds_and_keeps_each_seed():
     fake = []
     for seed, desc, obj in ((1, [0, 7, 0], 0.0), (2, [0, 7, 7], 320.0)):
-        fake.append({"arm": "primary", "sweep_point": {"players": [{"x": 1}]}, "science": {"observations": {"observer.descriptor.v1": {"descriptor": desc}},
+        fake.append({"arm": "primary", "status": "COMPLETED", "sweep_point": {"players": [{"x": 1}]}, "science": {"observations": {"observer.descriptor.v1": {"descriptor": desc}},
                      "player_fingerprints": {"0": {"hash": "abc", "silent": False}}, "objective": {"value": obj}}, "receipt_id": "r%d" % seed, "seed": seed,
                      "_player_manifest": {"x": 1}})
     rows = SR._rows_from_receipts(fake)
@@ -180,3 +180,107 @@ def test_compact_archive_evolves_identically_and_fetches_players_on_demand(tmp_p
     (tmp_path / "compact" / ce[0]["source"]["file"]).unlink()
     with pytest.raises(FileNotFoundError):
         SR.player_of(ce[0], tmp_path / "compact")
+
+
+# C125: the search layer's invariants as a PROPERTY over random templates and selectors: one process vs resumed
+# (1 + 2 generations) vs compact archive must give identical rows; a vector objective gets a rank (or pareto);
+# a template the kernel refuses is skipped, never a crash.
+_SEARCH_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(400, 440)))
+def test_search_invariants_over_random_templates(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower
+    rnd = random.Random(seed)
+    t = random_experiment(seed)
+    if t.validate():
+        return
+    # a random IR made into a search TEMPLATE: one player slot, an objective, a horizon the search can see
+    t.players = []; t.sweep = {}; t.controls = []; t.interventions = [iv for iv in t.interventions if "schedule" not in iv]
+    t.world["params"]["n_players"] = 1
+    t.objective = t.objective or ref("objective.yield_net.v1"); t.budget = dict(t.budget, horizon=max(int(t.budget["horizon"]), 6))
+    if "observer.descriptor.v1" not in [o["kind"] for o in t.observers]:
+        t.observers = list(t.observers) + [ref("observer.descriptor.v1")]
+    rep = rnd.choice(["statemachine.v1", "statemachine.v2"])
+    probe = Experiment.from_dict(t.to_dict()); probe.players = [random_statemachine(1).manifest() if rep == "statemachine.v1" else __import__("prometheus.toolbox.ref.players", fromlist=["x"]).random_statemachine_v2(1).manifest()]
+    if not lower(probe, REG).ok:
+        return
+    vector = t.objective["kind"] == "objective.multi.v1"
+    if vector:
+        comp = rnd.choice(sorted(t.objective["params"]["components"]))
+        sel = rnd.choice([ref("selector.truncation.v1", keep=2, n=3, representation=rep, rank=comp), ref("selector.map_elites.v1", n=3, representation=rep, rank=comp),
+                          ref("selector.pareto.v1", n=3, representation=rep), ref("selector.pareto.v1", n=3, representation=rep, by_cell=True)])
+    else:
+        sel = rnd.choice([ref("selector.truncation.v1", keep=2, n=3, representation=rep), ref("selector.map_elites.v1", n=3, representation=rep), ref("selector.pareto.v1", n=3, representation=rep)])
+    key = lambda rows: [(r["gen"], r["player_hash"], r["objective"], tuple(r["descriptor"])) for r in rows if r["kind"] == "elite"]
+    one = SR.evolve(t, sel, generations=3, workdir=tmp_path / "one", seed=seed)
+    if one["stopped"]:
+        return
+    _SEARCH_COVERAGE["exercised"] += 1
+    SR.evolve(t, sel, generations=1, workdir=tmp_path / "two", seed=seed); SR.evolve(t, sel, generations=3, workdir=tmp_path / "two", seed=seed)
+    SR.evolve(t, sel, generations=3, workdir=tmp_path / "compact", seed=seed, compact=True)
+    a, b, c = (SR.load_rows(tmp_path / d / "archive.jsonl") for d in ("one", "two", "compact"))
+    assert key(a) == key(b) == key(c) and len(key(a)) == 9, (seed, sel)
+    assert all("player" not in r for r in c if r["kind"] == "elite")
+
+
+def test_the_search_property_was_actually_exercised():
+    assert _SEARCH_COVERAGE["exercised"] >= 12, _SEARCH_COVERAGE
+
+
+# C148: a FAILED run inside a generation. Before: KeyError in row ingestion after the receipts were written -> no
+# GEN_DONE -> abandoned and re-run on the next resume, forever. Now the row carries the failure (objective None,
+# failed_seeds, errors) and the generation commits; selectors ignore the row through its None objective. Also:
+# selectors resolved generators/transforms in the PROCESS-GLOBAL registry (C97b's hole in the search layer).
+def test_a_failing_player_becomes_a_failed_row_and_the_generation_commits(tmp_path):
+    from prometheus.toolbox.registry import ComponentRecord
+    from prometheus.toolbox.ref.substrates import KVSubstrate
+    from prometheus.toolbox.contracts import PlayerSpec
+    failed = {"arm": "primary", "status": "FAILED", "sweep_point": {"players": [{"representation": "x", "payload": {}}]}, "science": {}, "receipt_id": "abc", "seed": 1,
+              "_player_manifest": {"representation": "x", "payload": {}}, "_file": "gen_000_a0.jsonl", "error": "RuntimeError: boom"}
+    rows = SR._rows_from_receipts([failed])
+    assert len(rows) == 1 and rows[0]["objective"] is None and rows[0]["failed_seeds"] == [1] and "boom" in rows[0]["errors"][0] and rows[0]["player_hash"]
+
+    class Bomb:
+        kind = "bomb"; version = 1
+        def __init__(self, seed): self.seed = seed; self.n = 0
+        def act(self, obs, space):
+            self.n += 1
+            if self.seed % 2 == 0 and self.n == 3:
+                raise RuntimeError("bomb %d" % self.seed)
+            return [1] * space.width
+        def adapt(self, *a, **k): pass
+        def cost(self): return {}
+        def fingerprint(self): return "bomb%d" % self.seed
+        def snapshot(self): return b""
+        def restore(self, b): pass
+
+    def gen_bomb(seed, meta=None):
+        return PlayerSpec("bomb.v1", {"seed": seed}, {}, frozenset(), dict(meta or {}, seed=seed))
+
+    class KVWithBombs(KVSubstrate):
+        kind = "substrate.kv_bombs.v1"; representations = KVSubstrate.representations | {"bomb.v1"}
+        def instantiate(self, spec, seed):
+            return Bomb(spec.payload["seed"]) if spec.representation == "bomb.v1" else KVSubstrate.instantiate(self, spec, seed)
+    R = REG.fork()
+    R.register(ComponentRecord("bomb.v1", "representation", gen_bomb, frozenset({"core.player.v1"}), route="write", provenance={"author": "test"}, license="repository"))
+    R.register(ComponentRecord("substrate.kv_bombs.v1", "substrate", KVWithBombs, KVSubstrate.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    t = template(); t.substrate = ref("substrate.kv_bombs.v1"); t.seed_policy = {"base": 1, "n_seeds": 1}
+    out = SR.evolve(t, ref("selector.truncation.v1", keep=2, n=4, representation="bomb.v1", mutation="transform.shuffle.v1"), generations=2, workdir=tmp_path / "b", seed=2, registry=R)
+    assert out["generations_done"] == 2
+    rows = SR.load_rows(tmp_path / "b" / "archive.jsonl")
+    assert [r["gen"] for r in rows if r["kind"] == "GEN_DONE"] == [0, 1] and not [r for r in rows if r["kind"] == "GEN_ABANDONED"]
+    elites = [r for r in rows if r["kind"] == "elite"]
+    assert elites and any(r["failed_seeds"] for r in elites) and any(not r["failed_seeds"] for r in elites)
+    assert all((r["objective"] is None) == bool(r["failed_seeds"]) for r in elites)
+
+
+# C149: a template whose lowering is refused (a required capability nobody provides) crashed evolve with an
+# AttributeError on a None job. Now: a stopped search carrying the lowering status and reasons, nothing written.
+def test_a_refused_lowering_stops_the_search_with_the_reasons(tmp_path):
+    t = template(); t.required_capabilities = frozenset({"ext.physics2d.v1"})
+    out = SR.evolve(t, ref("selector.truncation.v1", n=3), generations=2, workdir=tmp_path / "r", seed=1)
+    assert out["generations_done"] == 0 and out["stopped"] == "BLOCKED_MISSING_CAPABILITY" and "ext.physics2d.v1" in out["detail"]
+    assert not (tmp_path / "r" / "archive.jsonl").exists() or not [r for r in SR.load_rows(tmp_path / "r" / "archive.jsonl") if r["kind"] == "elite"]

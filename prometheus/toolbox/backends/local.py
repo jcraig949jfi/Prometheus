@@ -383,7 +383,7 @@ def make_checkpoint(world, instances, observers, subs, ticks: int, n_events: int
         raise ValueError("world %s has no ext.snapshot.v1: it cannot be checkpointed mid-episode" % world.kind)
     ck = {"tick": ticks, "n_events": n_events, "seed": seed, "episode": episode, "world": world.snapshot().hex(),
           "instances": {str(pid): inst.snapshot().hex() for pid, inst in instances.items()},
-          "substrates": [so.dev.snapshot().hex() if hasattr(so, "dev") else None for so in subs],
+          "substrates": [so.snapshot().hex() if hasattr(so, "snapshot") else (so.dev.snapshot().hex() if hasattr(so, "dev") else None) for so in subs],   # C135: the substrate's clock too
           "observers": [ob.snapshot().hex() if hasattr(ob, "snapshot") else None for ob in observers],
           "pre_checkpoint_trace": world.trace_hash()}
     return ck
@@ -402,7 +402,9 @@ def resume_episode(checkpoint: dict, world, instances: Dict[int, Any], observers
     for pid, inst in instances.items():
         inst.restore(bytes.fromhex(checkpoint["instances"][str(pid)]))
     for so, snap in zip(subs, checkpoint["substrates"]):
-        if snap is not None and hasattr(so, "dev"):
+        if snap is not None and hasattr(so, "restore"):
+            so.restore(bytes.fromhex(snap))
+        elif snap is not None and hasattr(so, "dev"):
             so.dev.restore(bytes.fromhex(snap))
     for ob, snap in zip(observers, checkpoint["observers"]):
         if snap is not None and hasattr(ob, "restore"):

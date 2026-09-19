@@ -173,3 +173,42 @@ def test_fronts_by_cell_and_the_by_cell_pareto_selector(tmp_path):
     assert out["generations_done"] == 4
     done = [r for r in SR.load_rows(tmp_path / "pc" / "archive.jsonl") if r["kind"] == "GEN_DONE"][-1]["selector"]
     assert done["by_cell"] is True and done["cells"] >= 1 and done["front_size"] >= done["cells"]
+
+
+# C142: the reference objectives' LAWS as a property over random receipts: yield_net = max observer yield_total -
+# sum(penalties) with unknown keys named; survival.v1 = ticks x alive count; survival.v2 = ticks; series_gain =
+# last - first episode yield_cum (None with a reason when there is no series); multi = its components' values.
+@pytest.mark.parametrize("seed", list(range(1600, 1640)))
+def test_objective_laws_over_random_receipts(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    rnd = random.Random(seed)
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    pen = {rnd.choice(["ops", "ws_writes", "nope_%d" % seed]): 0.25}
+    e.objective = ref("objective.multi.v1", components={"net": ref("objective.yield_net.v1", penalties=pen), "s1": ref("objective.survival.v1"), "s2": ref("objective.survival.v2"), "gain": ref("objective.series_gain.v1")})
+    e.observers = [o for o in e.observers if o["kind"] != "observer.series.v1"] + ([ref("observer.series.v1")] if rnd.random() < 0.6 else [])
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    for r in read_all(tmp_path / "r.jsonl"):
+        if r["arm"] == "SUMMARY" or r["status"] != "COMPLETED":
+            continue
+        obj = r["science"]["objective"]; v = obj["value"]; comp = obj["components"]; acc = r["accounting"]; ws = r["science"]["world_summary"]
+        y = max([int(o.get("yield_total", 0)) for o in r["science"]["observations"].values()] + [0])
+        k = next(iter(pen)); charge = 0.25 * float(acc.get(k, 0))
+        assert v["net"] == pytest.approx(y - charge) and comp["net"]["components"]["yield_total"] == y
+        assert (k in acc) == (k not in comp["net"]["components"]["unknown_penalty_keys"]), (seed, k)
+        alive = ws.get("alive", []); ticks = ws.get("ticks", 0)
+        assert v["s1"] == ticks * sum(1 for a in alive if a) and v["s2"] == ticks
+        if "series" in r and r["series"]["observer.series.v1"]["status"] == "PRESENT":
+            eps = r["series"]["observer.series.v1"].get("inline")
+            if eps and eps[0] and eps[-1]:
+                cols = r["series"]["observer.series.v1"]["columns"]; c = cols.index("yield_cum")
+                assert v["gain"] == eps[-1][-1][c] - eps[0][-1][c], seed
+        else:
+            assert v["gain"] is None and comp["gain"]["components"]["reason"].startswith("SERIES_"), seed
+        for name in ("net", "s1", "s2", "gain"):
+            assert comp[name]["value"] == v[name]

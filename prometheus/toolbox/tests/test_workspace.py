@@ -205,3 +205,89 @@ def test_artifact_substrate_lets_players_create_and_invoke_programs(tmp_path):
     r = _primary(tmp_path / "art.jsonl"); ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
     assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and "ext.workspace.executable.v1" in r["capabilities"]["substrate"]
     assert r["accounting"]["ws_invocations"] > 0
+
+
+# C131: accounting laws as a PROPERTY over random receipts: every counter is a non-negative number; world_steps is
+# the run's ticks; a flat substrate (with no per-player override) carries no workspace traffic -- refused writes are
+# counted as ws_refused, never as ws_writes; a receipt's counters are the same object the objective penalises.
+_ACC_COVERAGE = {"receipts": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(1000, 1060)))
+def test_accounting_laws_over_random_receipts(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    from prometheus.toolbox.receipt import read_all
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    for r in read_all(tmp_path / "r.jsonl"):
+        if r["arm"] == "SUMMARY" or r["status"] != "COMPLETED":
+            continue
+        _ACC_COVERAGE["receipts"] += 1
+        a = r["accounting"]
+        for k, v in a.items():
+            if k != "by_substrate":
+                assert isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0, (seed, k, v)
+        assert a["world_steps"] == r["engineering"]["ticks"], seed
+        if r["components"]["substrate"]["kind"] == "substrate.flat.v1" and set(r["components"]["player_substrates"]) == {"substrate.flat.v1"}:
+            assert a.get("ws_writes", 0) == 0 and a.get("ws_reads", 0) == 0, (seed, a)
+        obj = r["science"].get("objective") or {}
+        pen = (obj.get("components") or {}).get("penalties")
+        if isinstance(pen, dict):
+            for k in pen:
+                assert k in a or k in ((obj.get("components") or {}).get("unknown_penalty_keys") or []), (seed, k)
+
+
+def test_the_accounting_property_was_actually_exercised():
+    assert _ACC_COVERAGE["receipts"] >= 100, _ACC_COVERAGE
+
+
+# C137: the DOORS' semantics as a property against tiny models: kv read = last write within ttl ticks (else None);
+# stream read = the value appended `lag` appends ago (None until that many, last `maxlen` kept); mailbox read = the
+# newest message from ANOTHER player within the last `capacity` (never one's own); flat refuses and counts.
+@pytest.mark.parametrize("seed", list(range(1400, 1440)))
+def test_door_semantics_against_models(seed):
+    import random
+    from prometheus.toolbox.ref.players import constant_player
+    rnd = random.Random(seed)
+    ttl = rnd.choice([None, 1, 3]); lag = rnd.choice([1, 2, 4]); maxlen = rnd.choice([2, 8]); cap = rnd.choice([1, 3])
+    kv = REG.make("substrate.kv.v1", scope="episode", ttl=ttl); st = REG.make("substrate.stream.v1", lag=lag, maxlen=maxlen); mb = REG.make("substrate.mailbox.v1", capacity=cap)
+    fl = REG.make("substrate.flat.v1")
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    class D:                                                       # the doors themselves (what a v2/v3 player holds as .ws)
+        def __init__(self, ws): self.ws = ws
+    kvi = D(kv._door(0)); sti = D(st._door(0)); mbi = [D(mb._door(i)) for i in range(2)]; fli = fl.instantiate(random_statemachine_v2(1), 1)
+    for so in (kv, st, mb, fl):
+        if hasattr(so, "episode_begin"):
+            so.episode_begin(0, 1)
+    kv_last = None; kv_at = None; st_log = []; mb_log = []
+    for t in range(40):
+        # kv: write at random ticks; the model expires a value ttl ticks after its write
+        if rnd.random() < 0.5:
+            v = rnd.randrange(100); kvi.ws.write(v); kv_last, kv_at = v, t
+        exp_kv = kv_last if kv_last is not None and (ttl is None or t - kv_at < ttl) else None
+        assert kvi.ws.read() == exp_kv, (seed, t, "kv", kvi.ws.read(), exp_kv)
+        # stream
+        if rnd.random() < 0.6:
+            v = rnd.randrange(100); sti.ws.write(v); st_log.append(v); st_log = st_log[-maxlen:]
+        exp_st = st_log[-lag] if len(st_log) >= lag else None
+        assert sti.ws.read() == exp_st, (seed, t, "stream", sti.ws.read(), exp_st)
+        # mailbox: two players; each reads the newest message NOT its own among the last `cap` kept
+        who = rnd.randrange(2)
+        if rnd.random() < 0.6:
+            v = rnd.randrange(100); mbi[who].ws.write(v); mb_log.append((who, v)); mb_log = mb_log[-cap:]
+        for pid in range(2):
+            others = [v for w, v in mb_log if w != pid]
+            exp_mb = others[-1] if others else None
+            assert mbi[pid].ws.read() == exp_mb, (seed, t, "mailbox", pid, mbi[pid].ws.read(), exp_mb, mb_log)
+        # flat
+        fli.ws.write(1); assert fli.ws.read() is None
+        for so in (kv, st, mb, fl):
+            if hasattr(so, "tick"):
+                so.tick(t)
+    assert fl.accounting()["ws_refused"] == 40 and fl.accounting().get("ws_writes", 0) == 0

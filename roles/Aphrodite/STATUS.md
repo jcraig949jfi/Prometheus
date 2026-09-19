@@ -1,6 +1,6 @@
 # Aphrodite status
 
-Currency: 2026-09-18 (charter adopted; monitor and Campaign 0 approved).
+Currency: 2026-09-19 (Campaign 1 preregistered around transplantation).
 
 seat state: ACTIVE on its charter (APHRODITE-08 APPROVED 2026-09-18).
 what it asserts: PRESENT (comms), ACTIVE, PRODUCTIVE (library and tier-1
@@ -32,6 +32,8 @@ benchmark: bundle FROZEN (manifest f9d187ede, canonical 732dbedf...); run
   via run_frozen.py; harness 618d810b... unchanged; executors Nestor
   (M1, #471) and Archaeon (M2, #472); models Qwen3-8B, Gemma 3 4B, opt.
   Llama 3.2 3B. Budget frozen: target 14 days, ceiling 30 days.
+Campaign 1: PREREGISTERED (design frozen 2026-09-19, transplant assay);
+  execution NOT authorised; gates in PREREG s10.
 next executable action: wait for receipts; then economics.py and the
   packet's economics and substrate sections only. Contracts (#452-#454)
   answered as they arrive. Items needing no new authority:

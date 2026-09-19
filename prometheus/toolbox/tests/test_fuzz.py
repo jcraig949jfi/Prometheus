@@ -36,7 +36,13 @@ def random_experiment(seed: int) -> Experiment:
         if rnd.random() < 0.25:                                                        # C34: per-player substrate override
             m = dict(m, substrate=rnd.choice([ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime", ttl=rnd.choice([None, 2])), ref("substrate.stream.v1", lag=rnd.choice([1, 3]))]))
         players.append(m)
-    if rnd.random() < 0.15:                                                            # C63: the SEMANTIC pendulum too
+    wrapped = rnd.random()
+    if wrapped < 0.06 and REG.get("world.wforge.encounter.v0").state != "UNAVAILABLE":   # C140: the WRAPPED engines too, when importable
+        n_players = REG.make("world.wforge.encounter.v0").n_players; players = players[:n_players] + [players[0]] * (n_players - len(players))
+        world = ref("world.wforge.encounter.v0", genome_seed=rnd.randrange(50))
+    elif wrapped < 0.12 and REG.get("world.c6.composed.v1").state != "UNAVAILABLE":
+        players = players[:1]; world = ref("world.c6.composed.v1", seed=rnd.randrange(50), ticks=rnd.choice([8, 24]))
+    elif rnd.random() < 0.15:                                                          # C63: the SEMANTIC pendulum too
         world = ref("world.pendulum.v1", n_players=n_players, quantum=rnd.choice([1e-6, 1e-3]), start_charge=rnd.choice([2, 30, 1000]), step_cost=rnd.choice([0, 1]), world_seed=rnd.randrange(100))
     elif rnd.random() < 0.3:                                                           # C42: the grid world too
         world = ref("world.grid.v1", n_nodes=rnd.choice([2, 5, 9]), n_players=n_players, act_range=rnd.choice([3, 8]), start_charge=rnd.choice([1, 20, 1000]),
@@ -141,3 +147,80 @@ def test_ir_round_trips_through_json_with_a_stable_digest(seed):
     assert e3.digest() == e.digest()
     e4 = Experiment.from_dict(d); e4.budget = dict(e4.budget, horizon=e4.budget["horizon"] + 1)
     assert e4.digest() != e.digest()
+
+
+# C128: two IR laws as properties. Sweeps: the number of points is the product of the axis sizes, every point sets
+# exactly the swept paths and nothing else, the swept value is READ BACK from the point's IR at its dotted path, and
+# points have distinct digests unless two axes' values coincide. Negotiation: BLOCKED implies a non-empty missing
+# set that nobody provides; OK implies every implied requirement is provided.
+def _get(d, path):
+    cur = d
+    for part in path.split("."):
+        cur = cur[int(part)] if isinstance(cur, list) else cur[part]
+    return cur
+
+
+@pytest.mark.parametrize("seed", list(range(800, 880)))
+def test_sweep_and_negotiation_laws(seed):
+    from prometheus.toolbox import capabilities as C
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    pts = e.sweep_points()
+    expected = 1
+    for vals in e.sweep.values():
+        expected *= len(vals)
+    assert len(pts) == expected and all(set(p) == set(e.sweep) for p in pts)
+    base = e.to_dict()
+    for p in pts:
+        d = e.at_point(p).to_dict()
+        for path, v in p.items():
+            assert _get(d, path) == v, (seed, path)
+        # a point's IR records its parent and the point in provenance and carries no sweep of its own; everything else is untouched
+        assert d["sweep"] == {} and d["provenance"]["parent"] == e.experiment_id() and d["provenance"]["sweep_point"] == p
+        untouched = {k: v for k, v in d.items() if k not in ("sweep", "provenance", "id") and not any(path.split(".")[0] == k for path in p)}
+        assert untouched == {k: v for k, v in base.items() if k in untouched}, seed
+    digests = [e.at_point(p).digest() for p in pts]
+    if len(pts) > 1 and all(len(set(json.dumps(v, sort_keys=True) for v in vals)) == len(vals) for vals in e.sweep.values()):
+        assert len(set(digests)) == len(pts), seed
+    low = e.compile("local", REG)
+    provided = REG.provided_capabilities(e.world["kind"], e.substrate["kind"]) | set(REG.make(e.substrate["kind"], **e.substrate.get("params", {})).capabilities) \
+        | {"core.player.v1", "core.experiment.v1", "core.receipt.v1", "ext.intervention.observation_delay.v1", "ext.intervention.observation_permute.v1", "ext.intervention.schedule.v1"}
+    if low.status == "BLOCKED_MISSING_CAPABILITY":
+        missing = set(low.negotiation["missing"])
+        assert missing and not (missing & provided) and missing <= set(e.derived_requirements()), (seed, missing)
+    elif low.status == "OK":
+        req = set(e.derived_requirements()) - {c for pl in e.players if pl.get("substrate") for c in pl.get("requires", ())}
+        assert req <= provided, (seed, req - provided)
+
+
+# C143: lowering laws as a property: n runs = points x arms x seeds; every RunSpec names the job; arm names are
+# unique; the replay arm's experiment IS the primary's (same digest, since a replay re-runs the same thing) and
+# every other arm's differs; splits follow the seed policy; the negotiation records what was provided.
+@pytest.mark.parametrize("seed", list(range(1700, 1760)))
+def test_lowering_laws(seed):
+    from prometheus.toolbox.backends.local import lower, seeds_for
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        assert low.reasons and low.job is None
+        return
+    job = low.job; pts = e.sweep_points(); seeds = seeds_for(e); arms = ["primary"] + [REG.make(c["kind"], **c.get("params", {})).kind for c in e.controls]
+    assert len(job.runs) == len(pts) * len(arms) * len(seeds), seed
+    assert len(set(arms)) == len(arms) and {r.arm for r in job.runs} == set(arms)
+    assert all(r.job_id == job.experiment_id for r in job.runs)
+    for r in job.runs:
+        assert (r.seed, r.split) in seeds
+    by_arm = {}
+    for r in job.runs:
+        by_arm.setdefault((r.arm, json.dumps(r.sweep_point, sort_keys=True)), set()).add(r.experiment.digest())
+    assert all(len(v) == 1 for v in by_arm.values())                            # one experiment per (arm, point)
+    for (arm, pt), dg in by_arm.items():
+        prim = by_arm[("primary", pt)]
+        if arm == "replay":
+            assert dg == prim, seed
+        elif arm != "primary":
+            assert dg != prim, (seed, arm)
+    assert set(low.negotiation["required"]) <= set(low.negotiation["provided"]) | set(low.negotiation.get("uncatalogued", []))

@@ -5,6 +5,7 @@ NOT_MET or INDETERMINATE, and asserts that it does -- and that a well-formed run
 from __future__ import annotations
 
 import itertools
+import json
 import pathlib
 
 import pytest
@@ -125,3 +126,49 @@ def test_ablation_says_not_met_when_the_ablated_arm_still_uses_a_workspace(tmp_p
     assert rep.controls["ablation"]["outcome"] == "NOT_MET" and rep.controls["ablation"]["details"][0]["detail"]["arm_ws_ops"] > 0
     rep = _run(_exp(["control.ablation.v1"], players=[v2], substrate=ref("substrate.kv.v1")), tmp_path, "a1.jsonl")
     assert rep.controls["ablation"]["outcome"] == "MET"
+
+
+# C129: the controls' vocabulary as a PROPERTY over random IRs: every outcome is MET / NOT_MET / INDETERMINATE; an
+# INDETERMINATE pair carries a note or a missing/failed run; a sham or scratch MET pair has a changed trace and
+# scratch a changed genome; a replay MET pair on a BIT world has equal traces; the job's valid flag is exactly
+# "no failed, none unstarted, every control MET".
+_CTRL_COVERAGE = {"pairs": 0, "kinds": set()}
+
+
+@pytest.mark.parametrize("seed", list(range(900, 960)))
+def test_control_vocabulary_over_random_compositions(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    e = random_experiment(seed)
+    if e.validate() or not e.controls:
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = {(r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): r for r in read_all(tmp_path / "r.jsonl") if r["arm"] != "SUMMARY"}
+    assert rep.valid == (rep.n_failed == 0 and rep.runs_not_started == 0 and all(c["outcome"] == "MET" for c in rep.controls.values()))
+    for arm, c in rep.controls.items():
+        assert c["outcome"] in ("MET", "NOT_MET", "INDETERMINATE") and c["pairs"] == c["met"] + c["not_met"] + c["indeterminate"]
+        _CTRL_COVERAGE["kinds"].add(arm)
+        prim = {k: r for k, r in rows.items() if k[0] == "primary"}
+        for k, p in prim.items():
+            a = rows.get((arm, k[1], k[2]))
+            if a is None or a["status"] != "COMPLETED" or p["status"] != "COMPLETED":
+                continue
+            _CTRL_COVERAGE["pairs"] += 1
+            ctrl = REG.make("control.%s.v1" % arm); o = ctrl.expectation(p, a)
+            assert o["outcome"] in ("MET", "NOT_MET", "INDETERMINATE"), (seed, arm, o)
+            if o["outcome"] == "INDETERMINATE":
+                assert isinstance(o["detail"], dict) and ("note" in o["detail"] or "reason" in o["detail"]), (seed, arm, o)
+            if arm in ("sham", "scratch") and o["outcome"] == "MET":
+                assert p["trace_hashes"] != a["trace_hashes"], (seed, arm)
+            if arm == "scratch" and o["outcome"] == "MET":
+                assert all(p["science"]["player_fingerprints"][str(i)]["spec_hash"] != a["science"]["player_fingerprints"][str(i)]["spec_hash"] for i in o["detail"]["transformed_players"])
+            if arm == "replay" and o["outcome"] == "MET" and p["replay_class"] == "BIT":
+                assert p["trace_hashes"] == a["trace_hashes"]
+            if arm == "cheat" and o["outcome"] == "MET":
+                assert p["trace_hashes"] != a["trace_hashes"]
+
+
+def test_the_control_property_was_actually_exercised():
+    assert _CTRL_COVERAGE["pairs"] >= 30 and len(_CTRL_COVERAGE["kinds"]) >= 6, {"pairs": _CTRL_COVERAGE["pairs"], "kinds": sorted(_CTRL_COVERAGE["kinds"])}

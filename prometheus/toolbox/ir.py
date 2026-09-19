@@ -130,6 +130,11 @@ class Experiment:
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)
+            elif len({json.dumps(v, sort_keys=True, default=str) for v in vals}) != len(vals):
+                # C146: two identical values on one axis make two RunSpecs with the SAME key: the executor ran the point
+                # twice and a resume counted one receipt as two prior runs (fuzz seed 1839, players=[pop, pop[:1]] with
+                # a single player). A duplicate value is a designer error, refused with the axis named.
+                bad.append("sweep[%s] has duplicate values (every point must be distinct)" % path)
             if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective", "players"):
                 bad.append("sweep[%s]: axis root not sweepable" % path)
         for c in self.required_capabilities:

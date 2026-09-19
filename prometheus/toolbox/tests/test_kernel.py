@@ -305,3 +305,52 @@ def test_series_schema_agrees_with_the_code_and_the_public_surface_imports():
     sch = json.loads((root / "series.schema.json").read_text(encoding="utf-8"))
     from prometheus.toolbox import series as S
     assert set(sch["properties"]["status"]["enum"]) >= set(S.WRITTEN_STATUSES) and sch["properties"]["encoding"]["const"] == S.ENCODING
+
+
+# C135: the player contract as a PROPERTY over random specs and substrates: act() returns a list of ints of the
+# legal width in the legal range on flat AND structured observations; snapshot/restore mid-run reproduces the
+# rest of the action sequence in a FRESH instance (with the workspace device restored too); cost() is
+# non-negative ints; the probe fingerprint is stable across instances of one spec.
+@pytest.mark.parametrize("seed", list(range(1300, 1360)))
+def test_player_contract_over_random_specs(seed):
+    import random
+    from prometheus.toolbox.ref.players import random_statemachine_v2, random_statemachine_v3, random_rewrite_system, random_proteus_player
+    rnd = random.Random(seed)
+    gens = [lambda: random_statemachine(seed, rnd.choice([1, 3, 6]), rnd.choice([2, 8]), rnd.choice([1, 2, 3]), rnd.choice([2, 8])),
+            lambda: random_statemachine_v2(seed, rnd.choice([1, 4]), rnd.choice([4, 8]), rnd.choice([1, 2]), mem_range=rnd.choice([2, 16])),
+            lambda: random_statemachine_v3(seed, rnd.choice([1, 4]), rnd.choice([4, 8]), rnd.choice([1, 2]), 8, rnd.choice([1, 16])),
+            lambda: random_rewrite_system(seed, rnd.choice([1, 4]), rnd.choice([2, 8]), rnd.choice([2, 12])),
+            lambda: constant_player([rnd.randrange(8) for _ in range(rnd.choice([1, 2, 3]))])] + ([lambda: random_proteus_player(seed)] if proteus_available() else [])
+    spec = rnd.choice(gens)()
+    sub_ref = rnd.choice([("substrate.flat.v1", {}), ("substrate.kv.v1", {"scope": "episode", "ttl": rnd.choice([None, 2])}), ("substrate.stream.v1", {"lag": rnd.choice([1, 3])}),
+                          ("substrate.mailbox.v1", {"capacity": 3}), ("substrate.artifact.v1", {})])
+    sub = REG.make(sub_ref[0], **sub_ref[1])
+    if spec.representation not in sub.representations:
+        return
+    space = ActionSpace(rnd.choice([1, 2, 3]), rnd.choice([2, 8, 16]))
+    obs_seq = [rnd.choice([[rnd.randrange(65536) for _ in range(5)], {"a": rnd.randrange(9), "b": [rnd.randrange(9), rnd.randrange(9)]}]) for _ in range(16)]
+    a = sub.instantiate(spec, 7); b = REG.make(sub_ref[0], **sub_ref[1]).instantiate(spec, 7)      # a second instance on its OWN substrate (pid 0 on both)
+    assert a.fingerprint() == b.fingerprint()
+    acts = []
+    for t, o in enumerate(obs_seq):
+        if t == 8:
+            snap = a.snapshot(); dev_snap = sub.snapshot() if hasattr(sub, "snapshot") else None
+        x = a.act(o, space)
+        assert isinstance(x, list) and len(x) == space.width and all(isinstance(v, int) and 0 <= v < space.range for v in x), (seed, spec.representation, x)
+        acts.append(x)
+        if hasattr(sub, "tick"):
+            sub.tick(t)
+    # resume in FRESH objects, as resume_episode does: a fresh substrate (so the player is pid 0 again -- a first
+    # version instantiated on the used substrate and got pid 2, whose stream is not player 0's), its device restored,
+    # then the instance restored
+    sub2 = REG.make(sub_ref[0], **sub_ref[1]); c = sub2.instantiate(spec, 7)
+    if dev_snap is not None:
+        sub2.restore(dev_snap)                                     # C135: the substrate (its clock AND its device), as resume_episode does
+    c.restore(snap)
+    rest = []
+    for t, o in enumerate(obs_seq[8:], start=8):
+        rest.append(c.act(o, space))
+        if hasattr(sub2, "tick"):
+            sub2.tick(t)
+    assert rest == acts[8:], (seed, spec.representation, sub.kind)
+    cost = a.cost(); assert all(isinstance(v, int) and v >= 0 for v in cost.values()), (seed, cost)

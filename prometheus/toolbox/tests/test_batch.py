@@ -278,7 +278,8 @@ def test_batched_execution_equals_scalar_execution_for_random_experiments(tmp_pa
         b = B[k]
         assert b["status"] == r["status"], k
         if r["status"] != "COMPLETED":
-            norm = b["error"].replace(b["execution"].get("world") or "", r["components"]["world"]["kind"])       # the batch world names itself in its errors
+            bw = b["execution"].get("world")
+            norm = b["error"].replace(bw, r["components"]["world"]["kind"]) if bw else b["error"]     # the batch world names itself in its errors (C140: never replace "")
             assert norm == r["error"], (k, b["error"], r["error"])
             continue
         for f in SCIENCE_FIELDS:
@@ -411,3 +412,67 @@ def test_a_crash_between_two_receipts_of_one_batch_resumes_to_a_clean_result(tmp
     assert len(rows) == 7 and all(rows[s]["trace_hashes"] == crow[s]["trace_hashes"] and rows[s]["science"] == crow[s]["science"] for s in crow)
     # the two kept receipts still say batch_size 4 (their batch); the resume regroups the 5 remaining runs as 4 + 1
     assert sorted(r["execution"]["batch_size"] for r in rows.values()) == [1, 4, 4, 4, 4, 4, 4]
+
+
+# ------------------------------------------------------------------------------------------ wall budget (C145)
+_WALL_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(1800, 1900)))
+def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path, seed):
+    """A tiny wall budget stops the job BETWEEN runs (or batches): every written receipt is complete, the summary
+    names the reason and the count not started, and resume=True finishes to exactly the unbudgeted rows -- on the
+    scalar path and the batched one."""
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok or len(low.job.runs) < 3:
+        return
+    _WALL_COVERAGE["exercised"] += 1
+    batch = 3 if seed % 2 else 0
+    eb = Experiment.from_dict(e.to_dict()); eb.budget = dict(eb.budget, batch=batch, wall_s=1e-9)
+    rep = execute(lower(eb, REG).job, tmp_path / "w.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "w.jsonl") if r["arm"] != "SUMMARY"]; summ = [r for r in read_all(tmp_path / "w.jsonl") if r["arm"] == "SUMMARY"][0]
+    assert rep.runs_not_started > 0 and summ["engineering"]["stopped_reason"] == "WALL_BUDGET_EXHAUSTED" and summ["engineering"]["runs_not_started"] == rep.runs_not_started
+    assert len(rows) + rep.runs_not_started == len(low.job.runs) and all(r["status"] in ("COMPLETED", "FAILED") for r in rows) and not rep.valid
+    ec = Experiment.from_dict(e.to_dict()); ec.budget = dict(ec.budget, batch=batch)
+    rep2 = execute(lower(ec, REG).job, tmp_path / "w.jsonl", REG, resume=True)
+    assert rep2.runs_not_started == 0 and rep2.resumed_runs == len(rows)
+    clean = execute(lower(ec, REG).job, tmp_path / "c.jsonl", REG)
+    key = lambda r: (r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"])
+    A = {key(r): r for r in read_all(tmp_path / "w.jsonl") if r["arm"] != "SUMMARY"}; B = {key(r): r for r in read_all(tmp_path / "c.jsonl") if r["arm"] != "SUMMARY"}
+    assert set(A) == set(B) and all(A[k]["trace_hashes"] == B[k]["trace_hashes"] and A[k]["status"] == B[k]["status"] for k in B), seed
+
+
+def test_the_wall_budget_property_was_actually_exercised():
+    assert _WALL_COVERAGE["exercised"] >= 15, _WALL_COVERAGE
+
+
+# ------------------------------------------------------------------------------------------ TASK_CHANGE at the finishing tick (C150)
+def test_a_scheduled_change_reaches_an_env_that_finished_on_that_step():
+    """C112's defect was caught by the random property at fuzz seed 107; widening the generator (C140) moved the
+    seeds and mutant M65 SURVIVED the final ledger. A deterministic reproducer: an env whose players all die on
+    step t receives the TASK_CHANGE a schedule fires after that step -- exactly as the reference world appends it
+    whatever its state -- and the executor drains it in the finishing tick."""
+    from prometheus.toolbox.ref.worlds_integer_batch import IntegerWorldBatch
+    from prometheus.toolbox.contracts import EVENT_ID
+    p = dict(world_seed=4, n_players=1, horizon=20, start_charge=3, step_cost=1, act_cost=0, yield_amt=0)
+    ref_w = IntegerWorld(**p); ref_w.reset(1)
+    done = False; t = 0
+    while not done:
+        done = ref_w.step({0: [0, 0]}); t += 1
+    ref_w.set_params(step_cost=2)                                  # the schedule fires after the finishing step
+    ref_kinds = [e[1] for e in ref_w.events()]
+    assert EVENT_ID["TASK_CHANGE"] in ref_kinds and done and t == 3
+    w = IntegerWorldBatch(n_envs=2, **dict(p)); w.reset_batch([1, 1])
+    w.p["start_charge"] = 3
+    fin = [False, False]
+    for _ in range(t):
+        d = w.step_batch([{0: [0, 0]}, {0: [0, 0]}]); fin = [a or b for a, b in zip(fin, d)]
+    assert fin == [True, True]
+    w.set_params(step_cost=2)
+    for i, evs in enumerate(w.events_batch()):
+        assert EVENT_ID["TASK_CHANGE"] in [e[1] for e in evs], i
