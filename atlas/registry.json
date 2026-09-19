@@ -266,6 +266,72 @@
       "mode": "stat",
       "engine": "archaeon.frontier",
       "role": "log"
+    },
+    {
+      "host": "M2",
+      "root": "C:/Prometheus-data/sfe",
+      "mode": "stat",
+      "engine": "sfe",
+      "role": "log",
+      "no_hash": true,
+      "pattern": "^(?!m2\\.(key|crt)$).*",
+      "max_files": 400,
+      "_note": "LIVE SFE data dir (engine eng_906356f7 runs here; ledger moved to C: NVMe 2026-09-17). Stat-only by Atlas-M2 rule: the live ledger is never opened, not even ro/immutable (roles/Atlas-M2/RESPONSIBILITIES.md s3, AM2-12). Credential files excluded by pattern; blobs/ excluded by the collector."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "_note": "pre-2026-09-17 SFE ledger location on M2 (HDD); idle since 2026-09-17T23:12Z. Collector's idle rule (IDLE_S=900) governs whether it is read."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe-scratch",
+      "mode": "dir_summary",
+      "engine": "sfe",
+      "depth": 0,
+      "_note": "scratch outputs (*.out), 271 files / 165 MB on 2026-09-19; one pointer."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "dir_summary",
+      "engine": "archaeon.frontier",
+      "depth": 2,
+      "_note": "git-ignored receipt tree of the Deep Frontier / Campaign 6 benches (runs/<family>/<spec>/RECEIPT.json + chunk_*.gz); Atlas #500: authoritative on M2. One pointer per spec dir here; receipts themselves are read by frontier_runs_m2 (Atlas-M2's module)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/logs",
+      "mode": "stat",
+      "engine": "archaeon.frontier",
+      "role": "log",
+      "_note": "scheduler/loop logs of the frontier benches; small files."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/archaeon",
+      "mode": "stat",
+      "engine": "archaeon.campaign",
+      "role": "log",
+      "_note": "Campaign 1 SFE-0N run logs (cmp1-sfe0N.log/.err); idle since 2026-09-17."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/vivarium",
+      "mode": "dir_summary",
+      "engine": "vivarium",
+      "depth": 1,
+      "_note": "Vivarium M2 consumer data root: var/ (LIVE, deadman/deliverer state every 5 min), window/, backups/. Summaries only; nothing in var/ is opened."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/var",
+      "mode": "stat",
+      "engine": "vivarium",
+      "role": "other",
+      "_note": "pinned consumer worktree var/ (conformance_cache.json)."
     }
   ],
   "harvester_hosts": {

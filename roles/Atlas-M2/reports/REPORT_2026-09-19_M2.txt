@@ -1,0 +1,228 @@
+ATLAS INDEX REPORT -- generated from atlas.* on the M1 store
+==============================================================================
+
+1. COUNTS
+   engines (registered / with experiments)          11 / 4
+   hosts registered                                 4
+   engine instances                                 136
+   campaigns / programs                             48
+   experiments                                      1897
+   attempts                                         1592
+   execution segments                               3225
+   ideas (scientific-lineage nodes)                 53
+   source pointers                                  12142
+   structured facts (RAN/OBSERVED/CONCLUDED)        20565 (8237 / 10991 / 1337)
+   conclusions (verbatim / by pointer)              462
+   edges (all typed relations)                      1055
+     of which lineage (EXECUTION+SCIENTIFIC)        834
+   defects                                          217
+   git commits classified                           5143
+   unresolved: dangling edge endpoints              3
+   unresolved: experiments classed UNKNOWN          572
+   unresolved: identity collisions                  30
+   unresolved: facts UNRESOLVED/CONTRADICTORY       60
+   machine-local-only sources (GIT_LOCAL/FS)        1548
+   referenced, not visible from M1 (EXPECTED)       6069
+   git commits seen only on a local branch          47
+   signals OPEN (weak-signal layer)                 190
+
+2. BY ENGINE (experiments / attempts / hosts seen on attempts)
+   vivarium                 1242 exp   1254 att   hosts ?,M1,M2
+   archaeon.frontier         349 exp     22 att   hosts ?,M2
+   npe                       249 exp    223 att   hosts ?,M1
+   sfe                        57 exp     93 att   hosts ?,M2
+
+3. BY CAMPAIGN / PROGRAM (experiments, reported classes)
+   archaeon.campaign/cmp1                       10  INCONCLUSIVE,NEGATIVE,POSITI
+   archaeon.campaign/cmp2                       11  NEGATIVE,UNKNOWN,WEAK_POSITI
+   archaeon.campaign/cmp3                       10  NEGATIVE,WEAK_POSITIVE
+   archaeon.campaign/cmp4                       11  INCONCLUSIVE,INVALID,NEGATIV
+   archaeon.campaign/cmp5                       10  INCONCLUSIVE,WEAK_POSITIVE
+   archaeon.campaign/cmp6                        1  UNKNOWN
+   archaeon.frontier/deep-frontier             349  PLANNED,UNKNOWN
+   archaeon.wse/ssf-c1                           1  UNKNOWN
+   archaeon.wse/ssf-c2                           1  UNKNOWN
+   archaeon.wse/ssf-c3                           1  UNKNOWN
+   archaeon.wse/wse-survey-v01                   1  UNKNOWN
+   nestor.cw01/cw01-2026-09-17                  91  INCONCLUSIVE,INVALID,NEGATIV
+   nestor.graphworld/r1                         59  FAILED,INCONCLUSIVE,NEGATIVE
+   nestor.graphworld/r2                         34  FAILED,INCONCLUSIVE,POSITIVE
+   nestor.graphworld/r4                          8  FAILED,INCONCLUSIVE,POSITIVE
+   nestor.graphworld/r5                          7  FAILED,INCONCLUSIVE,NULL,POS
+   nestor.graphworld/r6                         17  FAILED,INCONCLUSIVE,NULL,POS
+   nestor.graphworld/r7                         26  FAILED,INCONCLUSIVE,NULL,POS
+   nestor.graphworld/r8                          4  INCONCLUSIVE,POSITIVE
+   nestor.graphworld/unassigned                  3  INCONCLUSIVE,POSITIVE
+   vivarium.queue/* (28 families)                  1242  queue status only
+
+4. COVERAGE (last successful pass per harvester and host)
+   M1   archaeon_campaigns   archaeon_campaigns/3     2026-09-19 06:29:21
+   M1   archaeon_campaigns   archaeon_campaigns/1     2026-09-19 03:36:59
+   M1   archaeon_campaigns   archaeon_campaigns/2     2026-09-19 06:28:55
+   M1   comb                 comb/2                   2026-09-19 06:29:56
+   M1   comb                 comb/1                   2026-09-19 03:31:16
+   M2   comb                 comb/2                   2026-09-19 06:59:21
+   M1   commits              commits/2                2026-09-19 03:36:57
+   M1   commits              commits/1                2026-09-19 03:11:16
+   M1   frontier             frontier/1               2026-09-19 03:22:31
+   M1   frontier             frontier/2               2026-09-19 03:33:19
+   M1   frontier             frontier/3               2026-09-19 03:36:59
+   M1   local_files          local_files/2            2026-09-19 06:22:13
+   M2   local_files          local_files/2            2026-09-19 06:58:50
+   M1   local_files          local_files/1            2026-09-19 03:29:30
+   M1   npe                  npe/3                    2026-09-19 03:37:03
+   M1   npe                  npe/2                    2026-09-19 03:26:06
+   M1   npe                  npe/1                    2026-09-19 03:25:11
+   M1   npe                  npe/4                    2026-09-19 03:38:03
+   M1   pew                  pew/1                    2026-09-19 03:37:03
+   M2   reference            reference/2              2026-09-19 06:58:47
+   M1   reference            reference/2              2026-09-19 06:21:04
+   M1   reference            reference/1              2026-09-19 03:10:33
+   M1   vivarium             vivarium/2               2026-09-19 03:37:03
+   M1   vivarium             vivarium/1               2026-09-19 03:27:29
+   Locality of sources:
+     EXPECTED:M2              5973
+     PG:M1                    2739
+     GIT_REMOTE               1786
+     GIT_LOCAL:M1             727
+     FS:M1                    684
+     FS:M2                    137
+     EXPECTED:?               96
+
+5. IDENTITY COLLISIONS AND CONFLICTS (recorded, never auto-merged)
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-01 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-02 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-03 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-04 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-05 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-06 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-07 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-08 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-09 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp3:C3-SFE-10 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-01 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-02 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-03 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-04 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-05 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-06 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-07 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-08 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-09 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp4:C4-10 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp5:C5-01 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp5:C5-02 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp5:C5-03 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp5:C5-04 | [{"value": "cmp2"}]
+   fact.CONTRADICTORY | archaeon.campaign/cmp5:C5-05 | [{"value": "cmp2"}]
+
+6. EXAMPLE CROSS-EXPERIMENT QUERIES (live output)
+   -- Every descendant of Campaign 4's damage census (C4-01), across engines
+   SELECT depth, ent_type, ent_key, via FROM atlas.descendants('experiment','archaeon.campaign/cmp4:C4-01') ORDER BY depth, ent_key LIMIT 12
+     1 | experiment | archaeon.campaign/cmp4:C4-02 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp4:C4-03 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp4:C4-04 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp4:C4-05 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp4:C4-08 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp4:C4-10 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp5:C5-03 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp5:C5-04 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.campaign/cmp5:C5-05 | DESCENDANT_OF/DECLARED_PARENT
+     1 | experiment | archaeon.frontier/deep-frontier:C4-cliff.T1 | DEFORMATION_OF/ORGANISM_DEFORMATION
+     1 | experiment | archaeon.frontier/deep-frontier:C4-cliff.T2 | DEFORMATION_OF/UNKNOWN
+     1 | experiment | archaeon.frontier/deep-frontier:C4-cliff.T3 | DEFORMATION_OF/ORGANISM_DEFORMATION
+
+   -- Scientific edges that cross engines (NPE <-> SFE <-> Vivarium)
+   SELECT summary FROM atlas.signal WHERE rule_id='R09-cross-engine-lineage' ORDER BY summary LIMIT 8
+     archaeon.campaign/cmp4:C4-REH-1 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4 (sfe -> npe)
+     archaeon.campaign/cmp5 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-01 --SUPERSEDES/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/cw01-2026-09-17:P-C09 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-01 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4/S1 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-02 --SUPERSEDES/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/cw01-2026-09-17:P-C11 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-02 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4/D1 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-03 --SUPERSEDES/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/cw01-2026-09-17:P-C01 (sfe -> npe)
+     archaeon.campaign/cmp5:C5-05 --SUPERSEDES/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/cw01-2026-09-17:P-C01 (sfe -> npe)
+
+   -- Experiments whose conclusion changed across attempts
+   SELECT subject_key, summary FROM atlas.signal WHERE rule_id='R04-conclusion-changed-across-attempts' ORDER BY subject_key LIMIT 6
+     archaeon.campaign/cmp2:C2-SFE-01 | attempts disagree: a01=POSITIVE_CONTROL_FAILED, a02=CAPABLE_NEGATIVE
+     archaeon.campaign/cmp2:C2-SFE-02 | attempts disagree: a01=INTERVENTION_NOT_APPLIED, a02=CAPABLE_NEGATIVE, a03=POSITIVE_CONTROL_FAILED, a04=POSITIVE_CO
+     archaeon.campaign/cmp2:C2-SFE-03 | attempts disagree: a01=TARGET_UNREACHABLE, a02=CAPABLE_NEGATIVE
+     archaeon.campaign/cmp2:C2-SFE-05 | attempts disagree: a01=STREAM_BELOW_THRESHOLD, a02=CAPABLE_NEGATIVE
+     archaeon.campaign/cmp2:C2-SFE-06 | attempts disagree: a01=POSITIVE_CONTROL_FAILED, a02=WEAK_POSITIVE
+     archaeon.campaign/cmp2:C2-SFE-07 | attempts disagree: a01=TARGET_UNREACHABLE, a02=WEAK_POSITIVE
+
+   -- Interpretations superseded or still open, with the verbatim text
+   SELECT subject_key, status, left(text_verbatim, 110) FROM atlas.conclusion WHERE status IN ('SUPERSEDED_INTERPRETATION','UNRESOLVED') ORDER BY 1
+     archaeon.campaign/cmp4:C4-07 | SUPERSEDED_INTERPRETATION | C4-07's mechanism READING that single-edit robustness is "neutrality + length" understood a
+     archaeon.frontier/LIN-6071e54d | UNRESOLVED | Graph populations show two orders of magnitude fewer firings at thresholds calibrated on v0 counts; whet
+     archaeon.frontier/LIN-ffc7ae5d | UNRESOLVED | The 'flat elite' of Campaign 5 may be a compute/population-size artefact: at N=200 the population max on
+
+   -- Which host / engine instance executed what (attempts)
+   SELECT e.engine_id, a.host_id, coalesce(a.engine_instance_key,'-') ei, count(*) FROM atlas.attempt a JOIN atlas.experiment e USING (experiment_key) GROUP BY 1,2...
+     vivarium | M1 | eng_8a37a5d305969034d488c43e | 594
+     vivarium | None | - | 493
+     npe | M1 | - | 65
+     vivarium | M2 | - | 65
+     sfe | M2 | eng_906356f7fb1da180131f9290 | 52
+     vivarium | M1 | - | 47
+     sfe | M2 | - | 40
+     vivarium | M2 | eng_906356f7fb1da180131f9290 | 39
+     archaeon.frontier | M2 | - | 22
+     vivarium | None | eng_8a37a5d305969034d488c43e | 16
+
+   -- Where the evidence for one experiment lives (C5-03)
+   SELECT l.role, s.visibility, s.uri FROM atlas.source_link l JOIN atlas.source s USING (source_id) WHERE l.entity_key='archaeon.campaign/cmp5:C5-03' ORDER BY 1 L...
+     design | GIT_REMOTE | git:archaeon/campaign5/C5-03/DESIGN.md
+     pew | PG:M1 | pg://prometheus_fire/ew.campaign_observations?campaign_id=cmp5&harness_id=C5-03
+     prereg | GIT_REMOTE | git:archaeon/campaign5/C5-03/PREREG.md
+     prereg | GIT_REMOTE | git:archaeon/campaign5/C5-03/PREREG.json
+     readout | GIT_REMOTE | git:archaeon/campaign5/C5-03/READOUT.md
+     receipt | GIT_REMOTE | git:archaeon/campaign5/C5-03/RECEIPT.json
+     record | GIT_REMOTE | git:archaeon/campaign5/C5-03/RECORD.md
+     registry | GIT_REMOTE | git:archaeon/campaign5/C5-03/ATTEMPTS.json
+     rows | GIT_REMOTE | git:archaeon/campaign5/C5-03/rows.json
+
+7. WEAK-SIGNAL SCAN (atlas.signal, OPEN, by rule)
+   R01-weak-disposition                     WEAK_SIGNAL                19
+     - C2-SFE-06 reported WEAK_POSITIVE (claim ceiling / reason: weak; not for propagation)
+     - C2-SFE-07 reported WEAK_POSITIVE (claim ceiling / reason: weak; not for propagation)
+     - C2-SFE-09 reported WEAK_POSITIVE (claim ceiling / reason: weak; not for propagation)
+   R02-repeated-weak-effect                 REPEATED_WEAK_EFFECT       1
+     - measured "effect" recurs in 11 weak/inconclusive experiments across 4 campaigns and 1 engines
+   R03-sign-reversal                        SIGN_REVERSAL              1
+     - "effect" is positive in 18 subjects and negative in 7 (range -0.2941 .. 75.0000)
+   R04-conclusion-changed-across-attempts   CONCLUSION_CHANGED         17
+     - attempts disagree: a01=CAPABLE_NEGATIVE, a02=POSITIVE_CONTROL_FAILED, a03=CAPABLE_NEGATIVE, a04=CAPABLE_NEGATIVE, a05=WEAK_POSITIVE
+     - attempts disagree: a01=ENGINE_FAILURE, a02=WEAK_POSITIVE
+     - attempts disagree: a01=INSTRUMENT_FAILURE, a02=INSTRUMENT_FAILURE, a03=CAPABLE_NEGATIVE
+   R05-superseded-interpretation            CONCLUSION_CHANGED         1
+     - interpretation superseded: C4-07's mechanism READING that single-edit robustness is "neutrality + length" understood as dead (statically unreachable) 
+   R06-null-with-rich-telemetry             NULL_WITH_TELEMETRY        33
+     - C2-SFE-01 is NEGATIVE but carries 51 observed measurements
+     - C2-SFE-02 is NEGATIVE but carries 68 observed measurements
+     - C2-SFE-03 is NEGATIVE but carries 79 observed measurements
+   R07-unresolved-interpretation            UNRESOLVED_QUESTION        2
+     - open interpretation (PROVISIONAL): Graph populations show two orders of magnitude fewer firings at thresholds calibrated on v0 counts; whether this is
+     - open interpretation (PROVISIONAL): The 'flat elite' of Campaign 5 may be a compute/population-size artefact: at N=200 the population max on W3_K3 exce
+   R08-open-defects-by-class                INSTRUMENT_FAILURE_CLUSTER 18
+     - 12 defects of class "MACHINE_FIX" (12 open) across 1 campaigns
+     - 13 defects of class "MISSING_TELEMETRY" (12 open) across 4 campaigns
+     - 20 defects of class "BUG" (17 open) across 5 campaigns
+   R09-cross-engine-lineage                 CROSS_ENGINE_LINEAGE       21
+     - archaeon.campaign/cmp4:C4-REH-1 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4 (sfe -> npe)
+     - archaeon.campaign/cmp5 --TESTS/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/T-ARCH4 (sfe -> npe)
+     - archaeon.campaign/cmp5:C5-01 --SUPERSEDES/CROSS_SUBSTRATE_TRANSPLANT--> nestor.cw01/cw01-2026-09-17:P-C09 (sfe -> npe)
+   R10-world-organism-visited-once          VISITED_ONCE               34
+     - world "activation-economics-v1" x organism "{"_shape": "per affordance a: bias b_a plus a weight vector w_a over the 4 obser" appears once in the inde
+     - world "any" x organism "any" appears once in the index
+     - world "archaeon.wse.worlds W0 / W2_K2" x organism "Proteus TT programs" appears once in the index
+   R11-calibration-specimens                CALIBRATION_SPECIMEN       40
+     - declares 2 control fact(s): battery, prereg.positive_control
+     - declares 2 control fact(s): battery, prereg.positive_control
+     - declares 2 control fact(s): battery, prereg.positive_control
+   R12-evidence-not-visible-here            DATA_GAP                   2
+     - 5973 sources are referenced but not visible from any inspected host (engine_ledger,file); an Atlas instance on M2 can fill them
+     - 96 sources are referenced but not visible from any inspected host (engine_ledger); an Atlas instance on ? can fill them
+   R13-recurring-measurement-names          RECURRING_MEASUREMENT      1
+     - "effect" is measured under 2 engines / 5 campaigns (8 full names)
