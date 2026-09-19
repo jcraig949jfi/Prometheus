@@ -176,3 +176,49 @@ def test_substrate_science_says_no_reads_instead_of_false_carry_over(tmp_path):
     execute(lower(e, REG).job, tmp_path / "n.jsonl", REG)
     sci = [r for r in read_all(tmp_path / "n.jsonl") if r["arm"] == "primary"][0]["science"]["substrate"]
     assert sci["carry_over"] is None and sci["reason"] == "no workspace reads"
+
+
+# C36 (mutation ledger survivors): no test ever asserted a NOT_MET control outcome, a forgotten failed run on
+# resume, or a committed view accepting another generation's rows. Three mutants survived the suite; these
+# tests kill them.
+def test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid(tmp_path):
+    from prometheus.toolbox.ref.worlds import IntegerWorld
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class CheatBlind(IntegerWorld):
+        kind = "world.cheatblind.test"
+
+        def __init__(self, **params):
+            params.pop("_cheat_skip_dynamics", None); super().__init__(**params)     # accepts the flag, ignores it
+    REG.register(ComponentRecord("world.cheatblind.test", "world", CheatBlind, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    e = _exp(world=ref("world.cheatblind.test", world_seed=2), controls=[ref("control.cheat.v1"), ref("control.replay.v1")])
+    rep = execute(lower(e, REG).job, tmp_path / "cb.jsonl", REG)
+    assert rep.controls["cheat"]["outcome"] == "NOT_MET" and rep.controls["cheat"]["not_met"] == 1
+    assert rep.controls["replay"]["outcome"] == "MET" and rep.valid is False
+
+
+def test_resume_counts_failed_runs_that_happened_before_the_interruption(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = _exp(interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"n_regs": 5}}]}], seed_policy={"base": 1, "n_seeds": 3})   # every run FAILS (non-mutable param)
+    job = lower(e, REG).job
+    real = L.run_one; calls = {"n": 0}
+
+    def flaky(spec, registry, receipt_dir=None):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise KeyboardInterrupt()
+        return real(spec, registry, receipt_dir)
+    monkeypatch.setattr(L, "run_one", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        execute(job, tmp_path / "rf.jsonl", REG)
+    monkeypatch.setattr(L, "run_one", real)
+    rep = execute(job, tmp_path / "rf.jsonl", REG, resume=True)
+    assert rep.resumed_runs == 2 and rep.n_failed == 3 and rep.n_completed == 0 and rep.valid is False
+
+
+def test_committed_view_rejects_rows_of_another_generation_before_a_marker():
+    from prometheus.toolbox import search as SR
+    rows = [{"kind": "elite", "gen": 1, "fingerprint": "x", "objective": 1.0, "descriptor": [0]},      # written out of order
+            {"kind": "elite", "gen": 0, "fingerprint": "y", "objective": 2.0, "descriptor": [0]},
+            {"kind": "GEN_DONE", "gen": 0}]
+    assert [r["fingerprint"] for r in SR.committed_rows(rows)] == ["y"]

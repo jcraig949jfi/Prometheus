@@ -1,0 +1,182 @@
+[
+ {
+  "id": "M01",
+  "file": "backends/local.py",
+  "what": "executor runs one episode whatever the budget says",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_series_gain_objective_reads_the_series_and_refuses_to_fabricate",
+  "suite_tail": "1 failed, 8 passed in 0.27s",
+  "seconds": 0.7
+ },
+ {
+  "id": "M02",
+  "file": "ref/controls.py",
+  "what": "every control expectation reads MET",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid",
+  "suite_tail": "1 failed, 100 passed, 1 skipped in 5.04s",
+  "seconds": 5.5
+ },
+ {
+  "id": "M03",
+  "file": "ref/worlds.py",
+  "what": "trace hash ignores charge and survival",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_schedule_intervention_changes_conditions_mid_episode_and_is_recorded",
+  "suite_tail": "1 failed, 11 passed in 0.34s",
+  "seconds": 0.7
+ },
+ {
+  "id": "M04",
+  "file": "ref/worlds.py",
+  "what": "players act beyond their charge",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_kernel.py::test_exp001_committed_receipts_are_a_semantic_fixture",
+  "suite_tail": "1 failed, 86 passed, 1 skipped in 4.76s",
+  "seconds": 5.1
+ },
+ {
+  "id": "M05",
+  "file": "series.py",
+  "what": "declared series bound never applied",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_declared_bound_is_deterministic_and_reported_not_silent",
+  "suite_tail": "1 failed, 114 passed, 1 skipped in 7.29s",
+  "seconds": 7.6
+ },
+ {
+  "id": "M06",
+  "file": "series.py",
+  "what": "inline series keeps only the first episode",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_series_gain_objective_reads_the_series_and_refuses_to_fabricate",
+  "suite_tail": "1 failed, 8 passed in 0.23s",
+  "seconds": 0.6
+ },
+ {
+  "id": "M07",
+  "file": "receipt.py",
+  "what": "edited receipts validate",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_edited_record_in_the_middle_is_named_by_line",
+  "suite_tail": "1 failed, 57 passed in 1.95s",
+  "seconds": 2.3
+ },
+ {
+  "id": "M08",
+  "file": "capabilities.py",
+  "what": "negotiation never blocks",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_schedule_on_a_world_without_mutable_params_is_blocked_locally",
+  "suite_tail": "1 failed, 12 passed in 0.40s",
+  "seconds": 0.8
+ },
+ {
+  "id": "M09",
+  "file": "state.py",
+  "what": "ttl never expires",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
+  "suite_tail": "1 failed, 14 passed in 0.32s",
+  "seconds": 0.6
+ },
+ {
+  "id": "M10",
+  "file": "ref/substrates.py",
+  "what": "flat substrate hides refused writes",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_v2_player_runs_memoryless_on_flat_and_with_memory_on_kv",
+  "suite_tail": "1 failed, 145 passed, 6 skipped in 16.56s",
+  "seconds": 17.0
+ },
+ {
+  "id": "M11",
+  "file": "backends/local.py",
+  "what": "observer delivery order reverted (pre-consequence records)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_records_satisfy_observer_invariants_over_many_seeds",
+  "suite_tail": "1 failed, 116 passed, 1 skipped in 5.89s",
+  "seconds": 6.3
+ },
+ {
+  "id": "M12",
+  "file": "backends/local.py",
+  "what": "delays replace instead of adding",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_same_kind_wrappers_compose_and_are_all_recorded",
+  "suite_tail": "1 failed, 87 passed, 1 skipped in 4.99s",
+  "seconds": 5.4
+ },
+ {
+  "id": "M13",
+  "file": "ref/players.py",
+  "what": "v2 players never write memory",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
+  "suite_tail": "1 failed, 14 passed in 0.41s",
+  "seconds": 0.8
+ },
+ {
+  "id": "M14",
+  "file": "ref/transforms.py",
+  "what": "transforms drop per-player substrates again",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_transforms_preserve_per_player_substrate_overrides",
+  "suite_tail": "1 failed, 98 passed, 1 skipped in 4.99s",
+  "seconds": 5.4
+ },
+ {
+  "id": "M15",
+  "file": "backends/local.py",
+  "what": "resume forgets prior failed runs",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_resume_counts_failed_runs_that_happened_before_the_interruption",
+  "suite_tail": "1 failed, 101 passed, 1 skipped in 5.05s",
+  "seconds": 5.5
+ },
+ {
+  "id": "M16",
+  "file": "search.py",
+  "what": "committed view accepts rows of another generation",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_committed_view_rejects_rows_of_another_generation_before_a_marker",
+  "suite_tail": "1 failed, 102 passed, 1 skipped in 5.08s",
+  "seconds": 5.5
+ },
+ {
+  "id": "M17",
+  "file": "ref/observers.py",
+  "what": "series yield column frozen at zero",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_yield_column_is_per_episode_not_per_run",
+  "suite_tail": "1 failed, 117 passed, 1 skipped in 6.26s",
+  "seconds": 6.7
+ },
+ {
+  "id": "M18",
+  "file": "admission.py",
+  "what": "observer admission ignores non-determinism",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_admission.py::test_nondeterministic_observer_is_refused",
+  "suite_tail": "1 failed, 2 passed in 0.13s",
+  "seconds": 0.5
+ },
+ {
+  "id": "M19",
+  "file": "backends/local.py",
+  "what": "receipts files silently appended",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_execute_refuses_to_append_to_an_existing_receipts_file_unless_asked",
+  "suite_tail": "1 failed, 60 passed in 2.12s",
+  "seconds": 2.5
+ },
+ {
+  "id": "M20",
+  "file": "ir.py",
+  "what": "non-data IR accepted",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_ir_refuses_values_that_cannot_be_recorded",
+  "suite_tail": "1 failed, 62 passed in 2.21s",
+  "seconds": 2.6
+ }
+]

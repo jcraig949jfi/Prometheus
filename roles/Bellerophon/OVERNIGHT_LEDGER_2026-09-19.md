@@ -249,3 +249,14 @@ C35 | T+1:33 | fuzzer extended with tonight's features (rewrite players, per-pla
   per-player substrate override: the "cost-matched" sham ran on different machines. RED; fixed (keys the
   PlayerSpec does not model travel with the player). Also: a stream substrate whose player never reads
   reported carry_over=False; now None with reason "no workspace reads". Suite 154 passed 6 skipped.
+C36 | T+1:45 | MUTATION LEDGER (tests/mutants.py; roles/Bellerophon/science/MUTATION_LEDGER_2026-09-19.json):
+  20 plausible wrong implementations applied one at a time (one episode regardless of budget; every control
+  MET; trace hash blind to charge; acting beyond charge; series bound ignored; inline series truncated to one
+  episode; edited receipts validating; negotiation never blocking; ttl never expiring; refused writes hidden;
+  observer delivery order reverted; delays replacing; v2 never writing; substrate override dropped; resume
+  forgetting failed runs; committed view accepting foreign rows; series yield frozen; admission ignoring
+  non-determinism; receipts silently appended; non-data IR accepted). First pass: 17 CAUGHT, 3 SURVIVED
+  (M02 every-control-MET, M15 resume-forgets-failed, M16 foreign rows) = three false-green risks. Three tests
+  added (a cheat-blind world -> cheat NOT_MET and job invalid; a job whose runs FAIL, interrupted and resumed,
+  must count the earlier failures; out-of-order rows before a marker are not committed). Second pass: 20/20
+  CAUGHT. Suite 157 passed 6 skipped. The tree is byte-identical after every mutant (asserted).
