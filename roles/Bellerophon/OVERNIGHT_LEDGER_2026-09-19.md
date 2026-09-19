@@ -733,3 +733,19 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - design note (not built): archive rows carry the full player manifest; a 100k-row archive would need ~1 GB to
   resume from. Rows should carry player_hash + receipt id and fetch manifests on demand.
 - soak receipts deleted after the result file was written (science/SOAK_SEARCH_2026-09-19.json keeps per-gen rows).
+
+## C108-C109 (06:35Z) playtest I (the late surface together on the grid); fuzz widened
+- pt_i (playtests/pt_i_structured_grid.py, receipts under playtests/receipts/pt_i): grid structured observations +
+  vector objective + per-player series + mailbox + batch requested + MAP-Elites by each component. Rows: 6 runs,
+  0 failed, replay/sham MET 2/2 with power; every receipt says NO_BATCH_IMPLEMENTATION (grid has none);
+  objective_shape vector, per-player columns p0_*/p1_* present; permutation control REFUSED at lowering for the
+  structured world with the reason naming the control, MET 2/2 on the flat twin; search 24/24 distinct players,
+  15 cells under both ranks, no None rows. No kernel defect.
+- two designer-facing observations from the rows: (1) the mailbox door counts sends as ws_writes and overflow as
+  ws_discarded (50 of 57 at capacity 4) -- my penalty on ws_appends charged nothing; the receipt shows the real
+  keys; (2) survival.v2 is EPISODE-level (30 = horizon while player 1 died at charge 0): per-player survival needs
+  the per-player series alive columns (an objective reading p{i}_alive by name; not built).
+- fuzz generator widened: grid obs_mode, per-player series (40%), survival.v2, objective.multi.v1. Out-of-suite
+  300 seeds on BOTH paths: 22 invalid, 156 OK, 49 TARGET_UNSUPPORTED, 73 BLOCKED; 1141 runs each path, 221
+  batched, 0 crashes, 0 unexplained FAILED, 0 path divergences (science/THROUGHPUT json).
+- suite 312 passed, 6 skipped in 19.61s.

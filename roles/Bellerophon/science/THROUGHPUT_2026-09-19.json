@@ -17,5 +17,19 @@
    "steps_per_s": 38128,
    "observers": 2
   }
- ]
+ ],
+ "fuzz_300_both_paths_C109": {
+  "when_utc": "2026-09-19T06:34:58.593398+00:00",
+  "seeds": 300,
+  "invalid": 22,
+  "OK": 156,
+  "TARGET_UNSUPPORTED": 49,
+  "BLOCKED_MISSING_CAPABILITY": 73,
+  "runs_executed_each_path": 1141,
+  "batched_runs": 221,
+  "crashes": 0,
+  "unexplained_failed": 0,
+  "path_divergences": 0,
+  "generator": "widened C100/C109: grid obs_mode, per-player series, survival.v2, objective.multi.v1"
+ }
 }

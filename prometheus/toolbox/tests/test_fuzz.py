@@ -60,12 +60,14 @@ def random_experiment(seed: int) -> Experiment:
         interventions.append(iv)
     controls = rnd.sample(["control.replay.v1", "control.cheat.v1", "control.negative.v1", "control.positive.v1", "control.sham.v1", "control.scratch.v1", "control.permutation.v1", "control.ablation.v1"], rnd.choice([0, 1, 3]))
     observers = rnd.sample(["observer.trace.v1", "observer.descriptor.v1", "observer.series.v1"], rnd.choice([0, 1, 3]))
+    per_player = rnd.random() < 0.4                                                   # C109: per-player series layout too
     sweep = rnd.choice([{}, {"world.params.world_seed": [1, 2]}, {"budget.horizon": [0, 3]}, {"interventions.0.wrappers.observation_delay": [0, 2]} if interventions else {},
                         {"players": [players, players[:1]]}, {"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1")]}])
     budget = {"episodes": rnd.choice([1, 2, 4]), "horizon": rnd.choice([0, 1, 5, 30])}
     if rnd.random() < 0.3:
         budget["world_state"] = "lifetime"
-    objective = rnd.choice([None, ref("objective.yield_net.v1", penalties={"ops": 0.1}), ref("objective.survival.v1"), ref("objective.series_gain.v1")])
+    objective = rnd.choice([None, ref("objective.yield_net.v1", penalties={"ops": 0.1}), ref("objective.survival.v1"), ref("objective.series_gain.v1"),
+                            ref("objective.survival.v2"), ref("objective.multi.v1", components={"a": ref("objective.yield_net.v1"), "b": ref("objective.series_gain.v1")})])   # C109
     seed_policy = {"base": rnd.randrange(10**4), "n_seeds": rnd.choice([1, 2])}
     if rnd.random() < 0.3:
         seed_policy["holdout_seeds"] = rnd.choice([0, 1, 2])
@@ -81,7 +83,7 @@ def random_experiment(seed: int) -> Experiment:
     if rnd.random() < 0.1:
         budget["horizon"] = -1
     return Experiment(family="fuzz%d" % seed, world=world, substrate=substrate, players=players, interventions=interventions,
-                      objective=objective, observers=[ref(o) for o in observers], controls=[ref(c) for c in controls], sweep=sweep,
+                      objective=objective, observers=[ref(o, per_player=True) if (o == "observer.series.v1" and per_player) else ref(o) for o in observers], controls=[ref(c) for c in controls], sweep=sweep,
                       seed_policy=seed_policy, budget=budget)
 
 
