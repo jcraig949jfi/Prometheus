@@ -290,3 +290,13 @@ INCIDENT (self-inflicted, T+2:08): I ran `git stash; git stash pop` as a careles
   into this worktree with conflicts. Recovered with `git checkout HEAD -- <3 files>` + `git reset`; the
   stash entry is intact (pop keeps it on conflict); no commit carried the foreign changes (verified by
   `git status` before committing). Rule for this seat: never stash in a linked worktree. Calibration row added.
+C41 | T+2:20 | second home-written world, Ludus-shaped (directive s30): world.grid.v1 -- ring of nodes, 2+
+  players, contested regenerating pools, persistent OBJECTS (a WRITE builds a cell; a READ by another player
+  consumes it as a tool: ARTIFACT_CREATE / ARTIFACT_INVOKE events), partial observability (own node only),
+  CONTACT, lifetime state, six runtime-mutable economics, cheat mechanism. 170 lines, no kernel change.
+  ADMITTED. PLAYTEST F (3 memory players on kv-lifetime, sweep regen_every x read_gain, lifetime world state,
+  cheat/negative/positive): 64 runs, 0 failed, controls MET; rows show objects built and consumed across
+  players (ARTIFACT_INVOKE 20-25 per run), contacts, per-episode yields varying, cells persisting.
+  OBSERVATION (design, s13): players already communicate THROUGH the world -- stigmergy via objects -- with
+  no message bus; a bus is one more world/substrate door, not a kernel concept. Recorded, not built.
+  Suite 164 passed 6 skipped.

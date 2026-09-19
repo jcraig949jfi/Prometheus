@@ -30,6 +30,9 @@ def install(reg: Registry) -> Registry:
         reg.register(ComponentRecord("world.c6.composed.v1", "world", W.C6ComposedWorld, frozenset(), route="wrap",
                                      provenance=dict(PROV, source="archaeon/campaign6/worlds/runtime.py"), state="UNAVAILABLE",
                                      admission={"failed": "import: %s" % str(exc)[:120]}))
+    from prometheus.toolbox.ref.worlds_grid import GridWorld
+    reg.register(ComponentRecord("world.grid.v1", "world", GridWorld, GridWorld.capabilities, reference_of="world.grid", route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_grid.py"), license="repository"))
     reg.register(ComponentRecord("substrate.flat.v1", "substrate", S.FlatInProcessSubstrate, S.FlatInProcessSubstrate.capabilities,
                                  reference_of="substrate.flat", route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
     reg.register(ComponentRecord("substrate.kv.v1", "substrate", S.KVSubstrate, S.KVSubstrate.capabilities, route="write",

@@ -260,3 +260,24 @@ def test_c6_composed_world_wraps_admits_and_runs_with_mixed_players(tmp_path):
     assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
     prim = [x for x in read_all(tmp_path / "c6.jsonl") if x["arm"] == "primary"]
     assert len({tuple(x["trace_hashes"]) for x in prim}) == 2 and all(x["engineering"]["ticks"] > 0 for x in prim)
+
+
+# C41: a second home-written world, Ludus-shaped (directive s30): ring of nodes, multiple players, persistent
+# objects/tools, contested regenerating resources, partial observability, construction, contact, lifetime state.
+# Nothing in the kernel changes; the questions are whether the contracts suffice and what the rows show.
+def test_grid_world_is_admitted_and_exercises_objects_contact_and_lifetime_state(tmp_path):
+    from prometheus.toolbox.admission import admit
+    r = admit("world.grid.v1", REG); assert r.state == "ADMITTED", r.failed
+    e = _exp(world=ref("world.grid.v1", n_players=3, world_seed=5, start_charge=60), players=[random_statemachine(i, width=3).manifest() for i in (1, 2, 3)],
+             observers=[ref("observer.trace.v1"), ref("observer.series.v1")], controls=[ref("control.replay.v1"), ref("control.cheat.v1"), ref("control.sham.v1")],
+             seed_policy={"base": 1, "n_seeds": 4}, budget={"episodes": 3, "horizon": 40, "world_state": "lifetime"})
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "grid.jsonl", REG)
+    assert rep.n_failed == 0 and rep.valid, rep.controls
+    prim = [x for x in read_all(tmp_path / "grid.jsonl") if x["arm"] == "primary"]
+    ev = {}
+    for x in prim:
+        for k, v in x["science"]["observations"]["observer.trace.v1"]["events_by_kind"].items():
+            ev[k] = ev.get(k, 0) + v
+    assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and ev.get("CONTACT", 0) > 0 and ev.get("YIELD", 0) > 0, ev
+    assert any(x["science"]["world_summary"]["cells_nonzero"] > 0 for x in prim)
