@@ -103,7 +103,7 @@ class IntegerWorldAlt:
         st = self.st
         self.h.update(json.dumps([st["t"], st["r"], st["c"], st["a"]]).encode())
         st["t"] += 1; self.steps += 1
-        return st["t"] >= self.p["horizon"] or not any(st["a"])
+        return st["t"] >= self.p["horizon"] or (self.n_players > 0 and not any(st["a"]))     # C85
 
     def trace_hash(self) -> str:
         return self.h.hexdigest()

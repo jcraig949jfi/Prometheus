@@ -108,7 +108,7 @@ class GridWorld:
                 st["alive"][pid] = False; ev.append((t, EVENT_ID["ABSORBED"], pid, st["pos"][pid], st["charge"][pid]))
         self._trace.update(json.dumps([t, st["pos"], st["charge"], st["alive"], st["pools"], st["cells"], st["owner"]]).encode())
         st["tick"] = t + 1; self._steps += 1
-        return st["tick"] >= p["horizon"] or not any(st["alive"])
+        return st["tick"] >= p["horizon"] or (self.n_players > 0 and not any(st["alive"]))   # C85
 
     def trace_hash(self) -> str:
         return self._trace.hexdigest()

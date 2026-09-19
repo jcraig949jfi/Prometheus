@@ -83,7 +83,7 @@ class PendulumWorld:
         q = [t, [self._q(x) for x in st["theta"]], [self._q(x) for x in st["omega"]], st["charge"], st["alive"]]
         self._trace.update(json.dumps(q).encode())
         st["tick"] = t + 1; self._steps += 1
-        return st["tick"] >= p["horizon"] or not any(st["alive"])
+        return st["tick"] >= p["horizon"] or (self.n_players > 0 and not any(st["alive"]))   # C85
 
     def trace_hash(self) -> str:
         return self._trace.hexdigest()

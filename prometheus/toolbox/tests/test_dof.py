@@ -263,3 +263,15 @@ def test_zero_player_experiment_runs_and_replays(tmp_path):
     assert r["engineering"]["ticks"] == 24 and r["series"]["observer.series.v1"]["n_records"] == 24 and r["components"]["players"] == []
     e2 = Experiment(family="no_players_bad", world=ref("world.integer.v1", world_seed=3, n_players=1), substrate=ref("substrate.flat.v1"), players=[])
     assert lower(e2, REG).status == "TARGET_UNSUPPORTED"      # a world that expects a player and gets none is a mismatch, not a zero-player world
+
+
+# C85: the same zero-player defect class in every home-written world -- `not any(alive)` on an empty list ends
+# the episode at tick 1. Every world that accepts n_players=0 must run to its horizon.
+@_pt.mark.parametrize("kind", ["world.integer.v1", "world.integer_alt.v1", "world.grid.v1", "world.pendulum.v1"])
+def test_every_world_that_accepts_zero_players_runs_to_its_horizon(tmp_path, kind):
+    e = Experiment(family="zp", world=ref(kind, n_players=0, world_seed=2), substrate=ref("substrate.flat.v1"), players=[],
+                   observers=[ref("observer.trace.v1")], controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 9})
+    low = lower(e, REG); assert low.ok, (kind, low.reasons)
+    rep = execute(low.job, tmp_path / (kind + ".jsonl"), REG); assert rep.n_failed == 0 and rep.valid
+    r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
+    assert r["engineering"]["ticks"] == 9, (kind, r["engineering"])

@@ -475,3 +475,7 @@ C84 | 04:59Z | ZERO-PLAYER experiments: the IR refused players=[] ("nothing woul
   declare n_players=0 (C52 refuses the mismatch); the integer world runs to its horizon with no player;
   observers, series, replay and cheat apply. The strongest negation of "a player is a conventional agent".
   One old assertion (validate() >= 3 defects on a broken IR) adjusted. Suite 200 passed 6 skipped.
+C85 | 05:00Z | the zero-player defect class in every home-written world: `not any(alive)` on an empty list
+  ended the episode at tick 1 (integer_alt, grid, pendulum all did it; C84 had fixed only the reference).
+  Parametrised RED over the four worlds accepting n_players=0; all fixed; all still ADMITTED (the alt still
+  agrees with the reference: the same fix on both sides). Suite 204 passed 6 skipped.
