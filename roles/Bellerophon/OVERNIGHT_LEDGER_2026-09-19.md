@@ -217,3 +217,13 @@ C28 | T+1:05 | admission for EVERY slot (directive s19): admit(kind) dispatches 
   "serialisable"; an os.urandom observer on "determinism"; a substrate claiming a representation nobody can
   make on "representations"; a control emitting an invalid IR on "arm"; an unknown kind on "registry" (no
   exception). Suite 147 passed 6 skipped.
+C30 | T+1:12 | an IR is pure data: validate() refuses callables, sets, NaN ("not serialisable as JSON") instead of
+  letting a receipt writer crash later. RED then GREEN.
+C32 | T+1:13 | REPLAY FROM THE RECEIPTS FILE ALONE: the SUMMARY receipt now embeds the job's full IR;
+  backends.local.replay_file(receipts, out) re-executes it and compares every run's trace hashes, series
+  hashes and objective with the record -- divergences are DATA per run, the kernel-hash difference is
+  information beside them. Test: a clean file replays with 0 divergent; the IR tampered inside the summary
+  (world_seed 99) replays with 2/2 divergent on trace_hashes, no exception. Suite 149 passed 6 skipped.
+  NOTE: receipt_id covers the embedded IR, so tampering with it is also visible to scan() unless the id is
+  recomputed (as the test deliberately did) -- a forger must rewrite the id, which the forensic scan of an
+  UNMODIFIED copy would expose by comparison. Two copies is the defence; recorded, not built.

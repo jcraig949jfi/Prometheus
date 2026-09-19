@@ -94,3 +94,30 @@ def test_interrupted_job_resumes_from_the_receipts_file(tmp_path, monkeypatch):
     a = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in rs if r["arm"] not in ("SUMMARY",)}
     b = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in R.read_all(tmp_path / "clean.jsonl") if r["arm"] != "SUMMARY"}
     assert a == b and rep.controls == clean.controls
+
+
+# C30: an IR must be pure data -- a lambda, a set or a NaN smuggled into params is a validation defect, not a
+# later crash inside a receipt writer.
+def test_ir_refuses_values_that_cannot_be_recorded():
+    e = Experiment(family="ser", world=ref("world.integer.v1", world_seed=1, hook=lambda x: x), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()])
+    assert any("serialisable" in d for d in e.validate())
+    e2 = Experiment(family="ser", world=ref("world.integer.v1", world_seed=float("nan")), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()])
+    assert any("serialisable" in d for d in e2.validate())
+
+
+# C32: the SUMMARY receipt carries the full IR, so a receipts file ALONE can be replayed; replay reports
+# per-run divergences as data (never an exception) and the kernel hash difference as information.
+def test_receipts_file_alone_replays_and_divergence_is_reported_not_raised(tmp_path):
+    p = _write(tmp_path, n_seeds=2)
+    from prometheus.toolbox.backends.local import replay_file
+    rep = replay_file(p, tmp_path / "replay.jsonl", REG)
+    assert rep["runs_compared"] == 2 and rep["divergent"] == [] and rep["kernel_hash_equal"] is True
+    # perturb the recorded world semantics through the IR embedded in the summary: replay must DIVERGE, not raise
+    import json as J
+    lines = p.read_text(encoding="utf-8").splitlines()
+    summ = J.loads(lines[-1]); summ["experiment"]["world"]["params"]["world_seed"] = 99
+    from prometheus.toolbox.receipt import receipt_id
+    summ["receipt_id"] = receipt_id(summ); lines[-1] = J.dumps(summ, sort_keys=True, separators=(",", ":"))
+    p2 = tmp_path / "tampered.jsonl"; p2.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    rep2 = replay_file(p2, tmp_path / "replay2.jsonl", REG)
+    assert rep2["runs_compared"] == 2 and len(rep2["divergent"]) == 2 and rep2["divergent"][0]["field"] == "trace_hashes"

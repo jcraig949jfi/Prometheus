@@ -52,6 +52,7 @@ class LocalJob:
     runs: List[RunSpec] = field(default_factory=list)
     negotiation: Optional[dict] = None
     registry_rows: List[dict] = field(default_factory=list)
+    experiment: Optional[Experiment] = None       # the job's IR (C32: embedded in the SUMMARY receipt)
 
     def as_dict(self) -> dict:
         return {"experiment_id": self.experiment_id, "n_runs": len(self.runs),
@@ -90,7 +91,7 @@ def lower(exp: Experiment, registry) -> Lowering:
     if reasons:
         return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=reasons, negotiation=neg.as_dict())
     controls = [(c["kind"], registry.make(c["kind"], **c.get("params", {}))) for c in exp.controls]
-    job = LocalJob(eid, negotiation=neg.as_dict(), registry_rows=[registry.get(k).row() for k in sorted(set(exp.component_kinds()))])
+    job = LocalJob(eid, negotiation=neg.as_dict(), registry_rows=[registry.get(k).row() for k in sorted(set(exp.component_kinds()))], experiment=exp)
     for point in exp.sweep_points():
         base = exp.at_point(point)
         arms = [("primary", base)] + [(ctrl.kind, ctrl.arm(base, exp.seed_policy["base"] * 7919 + 1)) for _, ctrl in controls]
@@ -362,6 +363,7 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
                    "experiment_digest": job.runs[0].experiment.digest() if job.runs else "", "components": {"world": {}, "substrate": {}},
                    "capabilities": job.negotiation or {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0,
                    "engineering": {"n_runs": len(job.runs), "n_failed": n_fail}, "science": {"controls": controls, "splits": splits}, "accounting": {},
+                   "experiment": job.experiment.to_dict() if job.experiment is not None else None,      # C32: the receipts file alone can be replayed
                    "registry_rows": job.registry_rows, "started_utc": datetime.now(timezone.utc).isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat()}
         w.write(summary)
     finally:
@@ -384,3 +386,39 @@ def _valid_receipts(path) -> List[dict]:
             except (ValueError, ReceiptError):
                 continue
     return out
+
+
+# ---------------------------------------------------------------------------------------------- replay (C32)
+def replay_file(receipts_path, out_path, registry=None) -> dict:
+    """Re-execute the IR embedded in a receipts file's SUMMARY and compare every run's scientific record
+    (trace hashes, series hashes, objective value) with the recorded one. Divergences are DATA; a kernel hash
+    difference is information beside them. Raises only if the file has no replayable summary."""
+    from prometheus.toolbox.registry import default_registry
+    from prometheus.toolbox.receipt import read_all
+    registry = registry or default_registry()
+    old = read_all(receipts_path)
+    summ = [r for r in old if r["arm"] == "SUMMARY" and r.get("experiment")]
+    if not summ:
+        raise ValueError("%s has no SUMMARY receipt carrying an experiment; nothing to replay" % receipts_path)
+    exp = Experiment.from_dict(summ[-1]["experiment"])
+    low = lower(exp, registry)
+    if not low.ok:
+        return {"status": low.status, "reasons": low.reasons, "runs_compared": 0, "divergent": [], "kernel_hash_equal": None}
+    rep = execute(low.job, out_path, registry)
+    new = read_all(out_path)
+    key = lambda r: (r["arm"], json.dumps(r["sweep_point"], sort_keys=True, separators=(",", ":"), default=str), r["seed"])
+    old_by = {key(r): r for r in old if r["arm"] != "SUMMARY"}; new_by = {key(r): r for r in new if r["arm"] != "SUMMARY"}
+    divergent = []; compared = 0
+    for k, o in old_by.items():
+        n = new_by.get(k)
+        if n is None:
+            divergent.append({"key": k, "field": "missing_in_replay"}); continue
+        compared += 1
+        for field_name, get in (("trace_hashes", lambda r: r["trace_hashes"]),
+                                ("series_hashes", lambda r: {kk: v["series_hash"] for kk, v in (r.get("series") or {}).items()}),
+                                ("objective", lambda r: (r["science"].get("objective") or {}).get("value"))):
+            if get(o) != get(n):
+                divergent.append({"key": k, "field": field_name, "recorded": get(o), "replayed": get(n)}); break
+    return {"status": "OK", "runs_compared": compared, "divergent": divergent, "replay_path": str(out_path),
+            "kernel_hash_equal": summ[-1]["build"]["kernel_hash"] == new[-1]["build"]["kernel_hash"],
+            "recorded_kernel_hash": summ[-1]["build"]["kernel_hash"], "replay_kernel_hash": new[-1]["build"]["kernel_hash"]}

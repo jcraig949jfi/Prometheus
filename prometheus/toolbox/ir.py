@@ -118,6 +118,10 @@ class Experiment:
         for c in self.required_capabilities:
             if not C.well_formed(c):
                 bad.append("required_capabilities: malformed %r" % c)
+        try:                                                      # C30: an IR is pure data or it is not an IR
+            json.dumps(self.to_dict(), allow_nan=False)
+        except (TypeError, ValueError) as exc:
+            bad.append("not serialisable as JSON (%s): an IR carries data only, never objects, callables or NaN" % str(exc)[:60])
         return bad
 
     # ---------------------------------------------------------------- requirements
