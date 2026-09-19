@@ -1,0 +1,111 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 3187,
+  "sha256": "ca7f6e09c33214f5c1edf5967dd562bfbf49c4094be030714db8587575fd8737"
+ },
+ "prereg": {
+  "adaptation_id": "a2",
+  "budgets": {
+   "K": 3,
+   "horizon": 26,
+   "search": {
+    "generations": 8,
+    "n": 16
+   }
+  },
+  "controls": [
+   "solo transplant (additive prediction)",
+   "inert-member ablation (load-bearing test)"
+  ],
+  "decision_criteria": {
+   "PHENOMENON_CHANGED": "ratio > 1.1 (superadditive) or < 0.9 (subadditive/interference) -- BEE shows a mixture effect e05 did not",
+   "PHENOMENON_PRESERVED": "ratio ~1 (mixture additive: null, as e05)"
+  },
+  "manifest": {
+   "adaptation_id": "a2",
+   "counts": {
+    "ANALOGOUS": 5,
+    "IDENTICAL": 1,
+    "MODIFIED": 0,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 0
+   },
+   "entries": [
+    {
+     "aspect": "mixture",
+     "bee": "K elites in world.integer.v1(n_players=K)",
+     "reason": "the integer world shares registers and the yield window across players, so a mixture interacts (writes the shared state, splits the yield) rather than merely co-existing",
+     "relation": "ANALOGOUS",
+     "source": "a mixture of organisms sharing a world"
+    },
+    {
+     "aspect": "solo transplant / additive prediction",
+     "bee": "each elite in a 1-player world; additive prediction = sum of solo charges",
+     "reason": "the additive baseline is the sum of the members' solo charges",
+     "relation": "IDENTICAL",
+     "source": "each member alone; predicted mixture = sum of solos"
+    },
+    {
+     "aspect": "superadditivity",
+     "bee": "mixture total charge / sum of solo charges",
+     "reason": "ratio > 1 is superadditive, ~1 additive (null), < 1 subadditive (interference)",
+     "relation": "ANALOGOUS",
+     "source": "mixture beats the sum of solos"
+    },
+    {
+     "aspect": "load-bearing members / ablation",
+     "bee": "replace one member with an inert constant player; measure the mixture's total-charge drop",
+     "reason": "an inert member is the ablation; the drop is that member's contribution",
+     "relation": "ANALOGOUS",
+     "source": "remove a member, measure the drop"
+    },
+    {
+     "aspect": "organisms",
+     "bee": "top-K elites of a 1-player search on the world",
+     "reason": "matured by BEE's own search; distinct members",
+     "relation": "ANALOGOUS",
+     "source": "the source's mixture members"
+    },
+    {
+     "aspect": "objective",
+     "bee": "total charge summed over the mixture's slots (world_summary)",
+     "reason": "performance is the resource the mixture accumulates",
+     "relation": "ANALOGOUS",
+     "source": "the source's performance metric"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no conclusion",
+     "relation": "OMITTED",
+     "source": "e05's disposition (NULL)"
+    }
+   ],
+   "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e05"
+  },
+  "objective": "total charge summed over slots (world_summary)",
+  "observations": [
+   "solo charge per member",
+   "mixture total charge",
+   "superadditivity ratio = mixture / sum(solos)",
+   "ablation drop per member (member replaced by an inert constant)"
+  ],
+  "organisms": "top-3 elites of a 1-player statemachine.v1 search",
+  "question": "Is a mixture of K organisms SUPERADDITIVE (mixture total charge > sum of the members' solo charges), or additive (null, as e05)? Which members are load-bearing under ablation?",
+  "seeds": {
+   "eval": {
+    "base": 4000,
+    "n_seeds": 16
+   },
+   "train": {
+    "base": 1,
+    "n_seeds": 6
+   }
+  },
+  "source_disposition": "NULL",
+  "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e05",
+  "stopping_rules": "fixed budget; a ratio ~1 is the NULL result e05 reported, not a failure",
+  "world": "world.integer.v1({'world_seed': 8, 'start_charge': 30, 'yield_amt': 12, 'yield_width': 16384}), n_players=1 (solo) and 3 (mixture)"
+ }
+}
