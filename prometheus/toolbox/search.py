@@ -170,28 +170,45 @@ def pareto_front(rows: List[dict], components: Optional[List[str]] = None) -> Li
     return front
 
 
+def fronts_by_cell(rows: List[dict], components: Optional[List[str]] = None) -> Dict[tuple, List[dict]]:
+    """C117: the non-dominated set WITHIN each descriptor cell (MAP-Elites' diversity with Pareto's vector ranking;
+    soak 2 showed a single global front collapsing to 2-3 rows and stalling for 390 generations)."""
+    cells: Dict[tuple, List[dict]] = {}
+    for r in rows:
+        if r.get("kind") == "elite":
+            cells.setdefault(tuple(r["descriptor"]), []).append(r)
+    return {k: pareto_front(v, components) for k, v in cells.items() if pareto_front(v, components)}
+
+
 class ParetoSelector(TruncationSelector):
     """selector.pareto.v1 (C114): parents are the archive's non-dominated set over the vector objective's components
     (or the named subset); no rank needed (needs_scalar=False). Generation 0 from the representation's generator."""
     kind = "selector.pareto.v1"
     needs_scalar = False
 
-    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", components: Optional[List[str]] = None):
+    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", components: Optional[List[str]] = None,
+                 by_cell: bool = False):
         super().__init__(keep=0, n=n, mutation=mutation, representation=representation, rank=None)
-        self.components = list(components) if components else None; self._front_size = None
+        self.components = list(components) if components else None; self._front_size = None; self.by_cell = bool(by_cell); self._cells = None
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "components": self.components, "front_size": self._front_size}
+        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "components": self.components,
+                "by_cell": self.by_cell, "front_size": self._front_size, "cells": self._cells}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
         reg = default_registry(); s = stream("pareto", rng_seed)
-        front = pareto_front(archive_rows, self.components); self._front_size = len(front)
-        if not front:
+        if self.by_cell:                                            # C117: a cell first, then a front member of that cell
+            fronts = list(fronts_by_cell(archive_rows, self.components).values()); self._cells = len(fronts); self._front_size = sum(len(f) for f in fronts)
+            pick = (lambda: fronts[s.below(len(fronts))]) if fronts else None
+        else:
+            front = pareto_front(archive_rows, self.components); self._front_size = len(front); self._cells = None
+            pick = (lambda: front) if front else None
+        if pick is None:
             return _gen0(reg, self.representation, rng_seed, n)
         out = []
         for i in range(n):
-            parent = player_of(front[s.below(len(front))], getattr(self, "workdir", None))
+            f = pick(); parent = player_of(f[s.below(len(f))], getattr(self, "workdir", None))
             t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
             out.append(t.apply(parent, rng_seed * 977 + i))
         return out

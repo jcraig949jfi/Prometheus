@@ -815,3 +815,13 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   a pure Pareto parent set has no diversity pressure; pt_d's MAP-Elites kept 46 cells alive. Recorded, not fixed
   (a Pareto-per-cell selector would be the composition; a design choice for a day).
 - soak receipts deleted; science/SOAK_SEARCH_PARETO_COMPACT_2026-09-19.json keeps the per-gen rows.
+
+## C117 (07:35Z) Pareto per cell (the composition soak 2 pointed at)
+- fronts_by_cell(rows) and selector.pareto.v1 by_cell=True: a cell first, then a non-dominated member of it; the
+  GEN_DONE manifest records cells and total front size. Test: c dominated within its cell by d, b kept by its
+  cell where the global front would drop it.
+- 90 generations on the soak template, one seed, compact + batched (11 s each): global front -> 13 cells, front
+  3, best net 99.7 first reached at gen 58; by_cell -> 31 cells, 5 on the global front, best net 74.8 at gen 27.
+  Diversity up, peak down in this window. n=1 seed, 90 generations: DATA, not a verdict on either selector.
+- comms: Bellerophon queue synced 07:33Z -- 0 new, 0 queued, no tasks. Other seats active on origin/main
+  (Harmonia gandalf, archaeon/frontier); merged twice, suite green on the merged tree each time.
