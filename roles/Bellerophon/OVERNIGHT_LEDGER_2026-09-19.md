@@ -691,3 +691,45 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - design v0.4 written (WORLDS_KERNEL_DESIGN_v0.4.md): section 2 "what a document said would work and was
   observed not to" is new. README updated (40 components, power register, execution policy).
 - suite 311 passed / 6 skipped.
+
+## Decisions register, second half (directive s12: decision / alternatives / evidence / reopen condition)
+- D-C92 keep the batch path after its throughput premise failed. Alternatives: (a) delete it (less surface);
+  (b) build a columnar-contract world family tonight. Evidence: receipts equal run for run across 18 hand + 40
+  random IRs; 0.7x world-only, 0.93x end to end. Reopen: a world whose step dominates its tick (Box2D, c6 at
+  scale) or a columnar contract admitted by aggregate agreement.
+- D-C94 a rank-based selector REFUSES a vector objective without rank= (SelectorNeedsScalar, keys named) rather
+  than auto-scalarising (sum / first component / weighted). Alternatives: default to the first component; a
+  weights parameter. Evidence: an auto-chosen scalar is a hidden objective; pt_h shows rank changes 3/7 cells.
+  Reopen: a Pareto selector (rank=None meaning non-dominated) -- an explicit selector kind, not a default.
+- D-C97 "no behaviour change" is INDETERMINATE for sham/scratch/permutation, not NOT_MET. Alternatives: NOT_MET
+  (stricter; would mark valid=False for a run-silent primary). Evidence: the control did not fail, it could not
+  measure; the Proteus-17 case is a property of the primary, reported in the detail. Reopen: if designers start
+  reading INDETERMINATE as "fine" -- then the executor's valid flag should count INDETERMINATE against a control.
+- D-C97b the negative control without an objective is INDETERMINATE, not NOT_MET. Alternatives: refuse at
+  lowering (a negative control requires an objective). Evidence: the abstainer arm still yields a trace worth
+  keeping. Reopen: if lowering-time refusal proves cleaner for other objective-dependent controls.
+- D-C99 replay_file takes the scalar path by default. Alternatives: replay the recorded policy. Evidence: an
+  independent path is the point of a replay; batch=None keeps the recorded policy on request.
+- D-C100 observation_permute is REFUSED for structured observations rather than applied to flatten(obs) (which
+  would change the type the players see) or applied per top-level list leaf. Alternatives as stated. Evidence: a
+  hidden flatten in the permutation arm makes the arm a different experiment. Reopen: a structured permutation
+  (permute keys / permute within each leaf) as its own wrapper kind, declared and tested.
+- D-C96 the probe fingerprint stays in receipts as "hash" (behavioural class) beside spec_hash rather than being
+  replaced. Alternatives: replace it; strengthen the probe (more observations). Evidence: the class IS
+  information (14 classes over 40 players); a stronger probe is a different instrument. Reopen: when a consumer
+  needs a stronger behavioural class -- then a probe with declared power (C70 style).
+
+## C107 (06:32Z) soak result and what it was actually measuring
+- 20 wall minutes, 799 generations, 7191 rows, 6.7 MB archive: every generation file scans clean, markers in
+  order, nothing abandoned, elites move (best net 24.9 -> 99.8; 5 -> 46 cells). No halt.
+- the soak's two "drift" numbers were mostly the soak's own instruments (instrument error is not evidence):
+  traced memory +83 KB/gen is the soak holding the growing archive in its locals (9 KB per row in memory vs
+  0.93 KB on disk) -- a tracemalloc diff across 30 further evolve() calls shows NO kernel growth; wall drift
+  0.82 -> 1.41 s is the per-iteration reload (load_rows 0.12 s at 7k rows, linear) plus tracemalloc's own cost.
+  A resumed generation at 7k rows costs 0.44 s without tracemalloc.
+- real finding from the profile: host_block() ran platform.platform() -- a WMI query on Windows -- once per
+  RECEIPT: 77 ms of a 443 ms generation (17%). Same class as C56 (build hash per receipt). Cached per process;
+  test asserts 200 calls < 50 ms and the block still complete.
+- design note (not built): archive rows carry the full player manifest; a 100k-row archive would need ~1 GB to
+  resume from. Rows should carry player_hash + receipt id and fetch manifests on demand.
+- soak receipts deleted after the result file was written (science/SOAK_SEARCH_2026-09-19.json keeps per-gen rows).

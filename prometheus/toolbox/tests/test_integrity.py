@@ -225,3 +225,13 @@ def test_every_mutant_anchor_still_exists():
     from prometheus.toolbox.tests import mutants as MU
     missing = [(mid, rel) for mid, rel, old, new, what in MU.MUTANTS if old not in (MU.ROOT / MU.TB / rel).read_text(encoding="utf-8")]
     assert missing == [], "mutant anchors drifted: %s" % missing
+
+
+# C107 (soak profile): host_block() ran platform.platform() -- a WMI query on Windows -- once per receipt, 17% of a
+# search generation. Like build_block (C56) it is computed once per process; a receipt still carries it in full.
+def test_host_block_is_computed_once_per_process_and_still_complete():
+    import time
+    from prometheus.toolbox.receipt import host_block
+    a = host_block(); t0 = time.perf_counter(); b = [host_block() for _ in range(200)]; dt = time.perf_counter() - t0
+    assert all(x == a for x in b) and set(a) == {"platform", "python", "machine"} and all(a.values())
+    assert dt < 0.05, "200 host blocks took %.3f s: not cached" % dt

@@ -31,8 +31,15 @@ def _h(obj, n=16) -> str:
     return hashlib.sha256(json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str).encode()).hexdigest()[:n]
 
 
+_HOST_CACHE: Dict[str, Any] = {}
+
+
 def host_block() -> dict:
-    return {"platform": platform.platform(), "python": sys.version.split()[0], "machine": platform.node()}
+    """Computed once per process (C107: platform.platform() runs a WMI query on Windows, 2.3 ms per receipt --
+    17% of a search generation in the soak's profile; the host does not change under a running process)."""
+    if not _HOST_CACHE:
+        _HOST_CACHE.update({"platform": platform.platform(), "python": sys.version.split()[0], "machine": platform.node()})
+    return dict(_HOST_CACHE)
 
 
 _BUILD_CACHE: Dict[str, Any] = {}
