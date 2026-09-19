@@ -166,6 +166,34 @@ class PermutationControl:
         return _met(arm["status"] == "COMPLETED", {"trace_equal_to_primary": primary["trace_hashes"] == arm["trace_hashes"]})
 
 
+class AblationControl:
+    """control.ablation.v1 (C59): remove every player's WORKSPACE -- the experiment's substrate and every per-player
+    override become substrate.flat.v1 (players keep their tables; refused writes are counted). Expectation: the
+    arm ran with zero workspace traffic while the primary had some; INDETERMINATE when the primary had none
+    (nothing to ablate)."""
+    kind = "ablation"
+
+    def manifest(self) -> dict:
+        return {"kind": "control.ablation.v1", "ablates": "workspace", "mechanism": "substrate -> substrate.flat.v1 for every player"}
+
+    def arm(self, exp, rng_seed: int):
+        e = copy.deepcopy(exp)
+        e.substrate = {"kind": "substrate.flat.v1", "params": {}}
+        e.players = [{k: v for k, v in p.items() if k != "substrate"} for p in e.players]
+        e.provenance = dict(e.provenance, control="ablation", ablated="workspace")
+        return e
+
+    def expectation(self, primary: dict, arm: dict) -> dict:
+        def ws_ops(r):
+            a = r.get("accounting", {})
+            return int(a.get("ws_reads", 0)) + int(a.get("ws_writes", 0)) + int(a.get("ws_appends", 0))
+        p, a = ws_ops(primary), ws_ops(arm)
+        detail = {"primary_ws_ops": p, "arm_ws_ops": a}
+        if p == 0:
+            return {"outcome": "INDETERMINATE", "detail": dict(detail, note="the primary used no workspace: nothing to ablate")}
+        return _met(a == 0 and arm["status"] == "COMPLETED", detail)
+
+
 ALL = {"control.replay.v1": ReplayControl, "control.cheat.v1": CheatControl, "control.negative.v1": NegativeControl,
        "control.positive.v1": PositiveControl, "control.sham.v1": ShamControl, "control.scratch.v1": ScratchControl,
-       "control.permutation.v1": PermutationControl}
+       "control.permutation.v1": PermutationControl, "control.ablation.v1": AblationControl}

@@ -359,3 +359,9 @@ C62 | 04:12Z | test hygiene that was a real fragility: tests registered test-onl
   bad observer, a cheat-blind world) into the PROCESS-GLOBAL default registry; the admission census only
   passed because of file ordering. Registry.fork() added; every registering test and playtest D use a fork;
   the census asserts registry purity (every row authored by Bellerophon). Suite green in two orders.
+C58 | 04:11Z | TRANSFER (NPE Clause B shape: evolved in A, judged in B against scratch and sham) verified to need
+  NO new abstraction: a sweep over `world` with sham + scratch controls gives the 3 arms per world, paired.
+  Directive s4 honoured: the v0.1 "transfer" verb is not built because the composition already exists.
+C59 | 04:11Z | control.ablation.v1 as a control OBJECT (directive s16 list): every player's workspace removed
+  (substrate and overrides -> flat); expectation = arm ran with zero workspace traffic while the primary had
+  some; INDETERMINATE when there was nothing to ablate. ADMITTED. Suite 180 passed 6 skipped.

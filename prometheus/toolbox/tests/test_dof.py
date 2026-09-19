@@ -166,3 +166,35 @@ def test_ir_accepts_component_objects_and_stores_their_manifests():
     assert e.players[0]["representation"] == "statemachine.v1" and isinstance(e.players[0], dict)
     assert e.interventions[0] == {"name": "lag", "world_params": {}, "wrappers": {"observation_delay": 2}}
     assert json.dumps(e.to_dict())
+
+
+# C58: TRANSFER (NPE Clause B shape: candidate evolved in world A judged in world B against scratch AND sham arms)
+# needs NO new abstraction: it is a sweep over `world` with sham + scratch controls. Verified rather than built.
+def test_transfer_is_a_world_sweep_with_sham_and_scratch_arms(tmp_path):
+    A = ref("world.integer.v1", world_seed=1, start_charge=60); B = ref("world.integer.v1", world_seed=2, start_charge=60, regime_period=4)
+    e = _exp(world=A, players=[random_statemachine(7).manifest()], sweep={"world": [A, B]}, controls=[ref("control.sham.v1"), ref("control.scratch.v1")],
+             objective=ref("objective.survival.v1"), seed_policy={"base": 1, "n_seeds": 2})
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 12
+    rep = execute(low.job, tmp_path / "tr.jsonl", REG); assert rep.n_failed == 0
+    rs = read_all(tmp_path / "tr.jsonl")
+    by = {}
+    for r in rs:
+        if r["arm"] != "SUMMARY":
+            by.setdefault(r["sweep_point"]["world"]["params"]["world_seed"], {}).setdefault(r["arm"], []).append(r["science"]["objective"]["value"])
+    assert set(by) == {1, 2} and all(set(v) == {"primary", "sham", "scratch"} for v in by.values())
+    assert rep.controls["sham"]["pairs"] == 4 and rep.controls["scratch"]["pairs"] == 4
+
+
+# C59: ablation as a control OBJECT: control.ablation.v1 removes every player's workspace (forces the flat
+# substrate, keeping per-player overrides visible as ablated); expectation = the arm ran with zero workspace
+# traffic while the primary had some (otherwise INDETERMINATE: nothing to ablate).
+def test_ablation_control_removes_workspaces_and_reports(tmp_path):
+    e = _exp(substrate=ref("substrate.kv.v1", scope="lifetime"), players=[random_statemachine_v2(1).manifest()], controls=[ref("control.ablation.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0))
+    rep = execute(lower(e, REG).job, tmp_path / "ab.jsonl", REG)
+    assert rep.controls["ablation"]["outcome"] == "MET" and rep.controls["ablation"]["details"][0]["detail"]["arm_ws_ops"] == 0
+    arm = [r for r in read_all(tmp_path / "ab.jsonl") if r["arm"] == "ablation"][0]
+    assert arm["components"]["substrate"]["kind"] == "substrate.flat.v1" and arm["provenance"]["ablated"] == "workspace"
+    e2 = _exp(substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()], controls=[ref("control.ablation.v1")])
+    rep2 = execute(lower(e2, REG).job, tmp_path / "ab2.jsonl", REG)
+    assert rep2.controls["ablation"]["outcome"] == "INDETERMINATE"
