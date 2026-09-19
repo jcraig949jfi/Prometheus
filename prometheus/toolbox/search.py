@@ -110,13 +110,13 @@ class TruncationSelector:
             return _gen0(reg, self.representation, rng_seed, n)
         out: List[PlayerSpec] = []
         for i in range(n):
-            parent = elites[s.below(len(elites))]["player"]
+            parent = player_of(elites[s.below(len(elites))], getattr(self, "workdir", None))
             tt = t if "player." + parent["representation"] in t.accepts else reg.make("transform.shuffle.v1")   # a representation the mutation cannot touch gets a structure-preserving fallback
             out.append(tt.apply(parent, rng_seed * 977 + i))
         return out
 
     def ingest(self, receipts: List[dict]) -> List[dict]:
-        return _rows_from_receipts(receipts)
+        return _rows_from_receipts(receipts, compact=getattr(self, "compact", False))
 
 
 class MapElitesSelector(TruncationSelector):
@@ -136,7 +136,7 @@ class MapElitesSelector(TruncationSelector):
             return _gen0(reg, self.representation, rng_seed, n)
         out = []
         for i in range(n):
-            parent = cells[s.below(len(cells))][0]["player"]
+            parent = player_of(cells[s.below(len(cells))][0], getattr(self, "workdir", None))
             t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
             out.append(t.apply(parent, rng_seed * 977 + i))
         return out
@@ -191,7 +191,7 @@ class ParetoSelector(TruncationSelector):
             return _gen0(reg, self.representation, rng_seed, n)
         out = []
         for i in range(n):
-            parent = front[s.below(len(front))]["player"]
+            parent = player_of(front[s.below(len(front))], getattr(self, "workdir", None))
             t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
             out.append(t.apply(parent, rng_seed * 977 + i))
         return out
@@ -209,7 +209,25 @@ def _mean_objective(vals: list):
     return None
 
 
-def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
+def player_of(row: dict, workdir=None) -> dict:
+    """C115: the player manifest of an elite row -- embedded (full archive) or fetched from the generation file the
+    row names (compact archive): the receipt's sweep point IS the player. A missing file or receipt is an error,
+    never a silent substitute."""
+    if row.get("player") is not None:
+        return row["player"]
+    src = row.get("source")
+    if not src or workdir is None:
+        raise ValueError("compact archive row has no player and no source file (or no workdir to resolve it)")
+    path = pathlib.Path(workdir) / src["file"]
+    if not path.exists():
+        raise FileNotFoundError("compact archive row names %s which is not present" % path)
+    for r in read_all(path):
+        if r.get("receipt_id") == src["receipt_id"]:
+            return r["sweep_point"]["players"][0]
+    raise ValueError("receipt %s not found in %s" % (src["receipt_id"], path))
+
+
+def _rows_from_receipts(receipts: List[dict], compact: bool = False) -> List[dict]:
     """One elite row per PLAYER (a sweep point), aggregating its seeds: objective = mean over seeds (None if any
     seed had none), descriptor = the first seed's, receipt ids and seeds listed. (C26b: one row per receipt made
     a player with two seeds look like two elites.)"""
@@ -220,8 +238,9 @@ def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
         key = json.dumps(r["sweep_point"], sort_keys=True)
         desc = (r["science"].get("observations", {}).get("observer.descriptor.v1") or {}).get("descriptor", [])
         fp = r["science"]["player_fingerprints"]["0"]
-        row = by.setdefault(key, {"kind": "elite", "player": r["_player_manifest"], "fingerprint": fp["hash"],
+        row = by.setdefault(key, {"kind": "elite", "player": None if compact else r["_player_manifest"], "fingerprint": fp["hash"],
                                   "player_hash": fp.get("spec_hash") or component_manifest_hash(r["_player_manifest"]),      # C96: identity, not behavioural class
+                                  "source": {"file": r.get("_file"), "receipt_id": r["receipt_id"]},                          # C115: where the manifest lives
                                   "descriptors": [], "objectives": [], "receipt_ids": [], "seeds": []})
         row["descriptors"].append(list(desc)); row["objectives"].append((r["science"].get("objective") or {}).get("value"))
         row["receipt_ids"].append(r["receipt_id"]); row["seeds"].append(r["seed"])
@@ -232,6 +251,8 @@ def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
         ds = [d for d in row["descriptors"] if d]
         # C27: the cell key is the element-wise floor(mean + 0.5) over seeds, never one seed's descriptor
         row["descriptor"] = [int(sum(d[i] for d in ds) / len(ds) + 0.5) for i in range(len(ds[0]))] if ds else []
+        if compact:
+            row.pop("player", None)
         rows.append(row)
     return rows
 
@@ -265,6 +286,7 @@ def _run_generation(template: Experiment, players: List[PlayerSpec], gen: int, s
         raise GenerationIncomplete("generation %d stopped by the wall budget: %d runs not started" % (gen, rep.runs_not_started), "WALL_BUDGET_EXHAUSTED")
     receipts = read_all(path)
     for r in receipts:
+        r["_file"] = path.name                                   # C115: rows may point here instead of embedding the player
         if r["arm"] == "primary":
             r["_player_manifest"] = r["sweep_point"]["players"][0]
     return receipts
@@ -275,11 +297,14 @@ class GenerationIncomplete(RuntimeError):
         super().__init__(msg); self.reason = reason
 
 
-def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, seed: int, registry=None) -> dict:
+def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, seed: int, registry=None, compact: bool = False) -> dict:
+    """compact=True (C115): archive rows carry player_hash + source (generation file, receipt id) instead of the
+    player manifest; selectors fetch parents on demand through player_of()."""
     from prometheus.toolbox.registry import default_registry
     registry = registry or default_registry()
     sel = registry.make(selector_ref["kind"], **selector_ref.get("params", {}))
     workdir = pathlib.Path(workdir); workdir.mkdir(parents=True, exist_ok=True)
+    sel.workdir = workdir; sel.compact = compact
     archive = workdir / ARCHIVE
     rows = load_rows(archive)
     done = [r["gen"] for r in rows if r["kind"] == "GEN_DONE"]

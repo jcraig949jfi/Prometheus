@@ -792,3 +792,13 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   First SURVIVED of the night since C95 made survival possible; ledger 66/66 after. M50 re-anchored (the
   needs_scalar guard changed its line).
 - suite 316 passed / 6 skipped. Census 42/42.
+
+## C115 (07:18Z) compact archives: rows by reference
+- evolve(..., compact=True): elite rows carry player_hash + source {file, receipt_id} instead of the manifest;
+  player_of(row, workdir) fetches it from the generation file (the receipt's sweep point IS the player); every
+  selector fetches parents on demand; a missing file or receipt is an error, never a silent fresh player (M68).
+  Rows always carry source now (full archives too).
+- measured on the pt_h template (36 rows): 983 -> 338 bytes per row on disk, 9.5 -> 1.6 KB per row in memory.
+  A 100k-row archive resumes from ~160 MB instead of ~1 GB.
+- full and compact runs give identical rows over 3 + 2 resumed generations. M68/M69 CAUGHT; ledger 68/68.
+  Suite 317 passed / 6 skipped.

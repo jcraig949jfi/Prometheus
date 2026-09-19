@@ -152,3 +152,31 @@ def test_steady_state_search_is_one_proposal_per_commit_and_resumes_anywhere(tmp
     a = SR.load_rows(tmp_path / "one" / "archive.jsonl"); b = SR.load_rows(tmp_path / "three" / "archive.jsonl")
     assert _rows_key(a) == _rows_key(b) and len(_rows_key(a)) == 10
     assert [r["n"] for r in a if r["kind"] == "GEN_DONE"] == [1] * 10          # one evaluation per committed unit
+
+
+# C115 (soak design note): archive rows carried the full player manifest (~0.9 KB on disk, ~9 KB in memory each); a
+# 100k-row archive would need ~1 GB to resume from. A COMPACT archive keeps identity (player_hash), the receipt ids
+# and the generation FILE the player came from; the manifest is fetched on demand from that file's receipt
+# (its sweep point IS the player). Same search, same rows, smaller archive.
+def test_compact_archive_evolves_identically_and_fetches_players_on_demand(tmp_path):
+    sel = ref("selector.map_elites.v1", n=6)
+    full = SR.evolve(template(), sel, generations=3, workdir=tmp_path / "full", seed=11)
+    comp = SR.evolve(template(), sel, generations=3, workdir=tmp_path / "compact", seed=11, compact=True)
+    assert full["generations_done"] == comp["generations_done"] == 3
+    fr = SR.load_rows(tmp_path / "full" / "archive.jsonl"); cr = SR.load_rows(tmp_path / "compact" / "archive.jsonl")
+    key = lambda rows: [(r["gen"], r["player_hash"], r["objective"], tuple(r["descriptor"])) for r in rows if r["kind"] == "elite"]
+    assert key(fr) == key(cr) and len(key(cr)) == 18
+    assert all("player" not in r for r in cr if r["kind"] == "elite") and all(r["source"]["file"].startswith("gen_") for r in cr if r["kind"] == "elite")
+    assert (tmp_path / "compact" / "archive.jsonl").stat().st_size < 0.4 * (tmp_path / "full" / "archive.jsonl").stat().st_size
+    fe = [r for r in fr if r["kind"] == "elite"]; ce = [r for r in cr if r["kind"] == "elite"]
+    for a, b in zip(fe, ce):
+        assert SR.player_of(b, tmp_path / "compact") == a["player"] == SR.player_of(a, tmp_path / "full")
+    # resume from the compact archive: the selector fetches parents on demand and the rows continue identically
+    more_full = SR.evolve(template(), sel, generations=5, workdir=tmp_path / "full", seed=11)
+    more_comp = SR.evolve(template(), sel, generations=5, workdir=tmp_path / "compact", seed=11, compact=True)
+    assert more_full["resumed_from_gen"] == more_comp["resumed_from_gen"] == 3
+    assert key(SR.load_rows(tmp_path / "full" / "archive.jsonl")) == key(SR.load_rows(tmp_path / "compact" / "archive.jsonl"))
+    # a compact row whose file is gone is an honest error, not a silent fresh player
+    (tmp_path / "compact" / ce[0]["source"]["file"]).unlink()
+    with pytest.raises(FileNotFoundError):
+        SR.player_of(ce[0], tmp_path / "compact")

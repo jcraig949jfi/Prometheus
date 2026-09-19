@@ -94,6 +94,9 @@ MUTANTS = [
     # fourteenth wave (C114): pareto selector
     ("M66", "search.py", "        dominated = any(all(a >= b for a, b in zip(w, v)) and any(a > b for a, b in zip(w, v)) for _, w in cand)", "        dominated = any(all(a > b for a, b in zip(w, v)) for _, w in cand)", "pareto front keeps rows dominated on all-but-one component"),
     ("M67", "search.py", "    needs_scalar = getattr(sel, \"needs_scalar\", True)", "    needs_scalar = True", "evolve refuses a vector archive even for a selector that needs no rank"),
+    # fifteenth wave (C115): compact archives
+    ("M68", "search.py", "    if not path.exists():\n        raise FileNotFoundError(\"compact archive row names %s which is not present\" % path)", "    if not path.exists():\n        from prometheus.toolbox.ref.players import random_statemachine; return random_statemachine(1).manifest()", "a compact row whose file is gone gets a silent fresh player"),
+    ("M69", "search.py", "        r[\"_file\"] = path.name                                   # C115: rows may point here instead of embedding the player", "        r[\"_file\"] = \"gen_000_a0.jsonl\"", "compact rows all point at generation 0's file"),
 ]
 
 
