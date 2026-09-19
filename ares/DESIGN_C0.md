@@ -166,3 +166,21 @@ is a single threshold node on the cue channel, pressure engineering
 has (so far) only produced reflexes and the report says so.
 
 ## ADDENDA (dated, appended only)
+
+ADDENDUM 1 (2026-09-19 12:50 UTC, written after the first 18 cells
+had run, before any dissection). The W2 shuffled floor "60.0 (cannot
+exceed)" in s3 is WRONG: W2 windows persist ~2 steps (p_off 0.5) and
+the last-reward channel (ch2) shows +60 on the step after a paying
+risky action, so the policy "risky iff last reward was +60" exploits
+window persistence with no cue. Observed: shuffled champions 75.34 and
+80.34 (seeds 1, 3), 60.00 (seed 2). Consequences: (a) the W2 present-vs-
+shuffled comparison in rule (ii) is still valid (p_risky_window -
+p_risky_nowindow is computed against the TRUE window, and the shuffled
+reflex can only fire on the second step of a window), but the shuffled
+cell is no longer a "no structure" control; it is a "structure only
+via reward feedback" control. (b) The same leak exists in principle in
+W1 (danger persists ~3 steps; a catastrophe shows on ch2 as a large
+negative) and is weaker there because catastrophes are rare and
+abstaining after one is cheap. Recorded in roles/Ares/calibration/
+LEDGER.md. No threshold is moved; the report labels the W2 shuffled
+cell accordingly.
