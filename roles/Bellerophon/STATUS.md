@@ -1,7 +1,20 @@
 # Bellerophon status
 
-Currency: 2026-09-19 09:49Z (end of the overnight TDD/playtest window; 150 cycles; report
+Currency: 2026-09-19 (Atlas -> BEE pilot COMPLETE; see roles/Bellerophon/atlas_bee/REVIEW_PACKET_2026-09-19.md).
+Earlier same day: end of the overnight TDD/playtest window (150 cycles; report
 roles/Bellerophon/OVERNIGHT_REPORT_2026-09-19.txt with its END-OF-WINDOW ADDENDUM).
+
+ATLAS -> BEE PILOT (temporary experimental role, directive prompts/2026-09-19_atlas_bee_pilot/): does BEE
+  (prometheus/toolbox) work as a THIRD ecosystem alongside SFE and NPE? Six Atlas experiments selected and FROZEN
+  (SELECTION_FROZEN.json), a light shim built (prometheus/atlas_bee/: freeze/manifest/harness/run/atlas_feed +
+  a1..a6), each question instantiated NATIVELY in BEE, frozen (PREREG_a*.json, hashed), run, replayed bit-for-bit
+  (replay_ok all six), compared (RESULT_a*.json). Verdicts: a1 INVERTED (overfitting-to-seed), a2 CHANGED
+  (subadditive 0.03), a3 CHANGED (recurrence-necessity inverted), a4 ABSENT (offspring cap unrepresentable), a5
+  ABSENT (delay-invariant optimum), a6 PRESERVED (P1 refuses as e07). Every case exposed a mechanism the source
+  ecosystem could not. BEE-native scaffolding added to the kernel with tests + mutants (M87-M93 CAUGHT): sequence.v1,
+  battery, seed_players, episode recurrence, kv_weather, objective.charge.v1. Recommendation: ADMIT BEE as a third
+  ecosystem for DIFFERENTIAL cross-ecosystem transplant studies. Atlas feed harvester-ready (ATLAS_FEED.jsonl) +
+  smallest-extension proposal (ATLAS_EXTENSION_PROPOSAL.md); nothing written to Atlas (read-only seat).
 
 seat state: ACTIVE. Charter in force: the WORLDS KERNEL directive
   (prompts/2026-09-18_worlds_kernel/, sha256 fc819348...). D-BELL-1..4
