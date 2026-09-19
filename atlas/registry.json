@@ -219,19 +219,25 @@
       "host": "M1",
       "root": "D:/Prometheus-data/sfe",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "SFEngine task data dir on M1 since 2026-09-12 (MONITORS.md SFEngine row); idle since 2026-09-15",
+      "storage_role": "primary"
     },
     {
       "host": "M1",
       "root": "D:/Prometheus-data/c9",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "c9 burst-stall test copy (as-deployed snapshot)",
+      "storage_role": "copy"
     },
     {
       "host": "M1",
       "root": "F:/Prometheus/SerendipityFoundry/SerendipityFoundryEngine/var",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "the F: copy is the rollback copy (MONITORS.md SFEngine row)",
+      "storage_role": "copy"
     },
     {
       "host": "M1",
