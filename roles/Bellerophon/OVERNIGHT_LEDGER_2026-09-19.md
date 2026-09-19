@@ -484,3 +484,12 @@ C87 | 05:01Z | the mutation ledger can rot silently (an anchor drifts -> NOT_APP
 C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-artifact) tied to the code by a
   test; a designer-facing package surface (`from prometheus.toolbox import Experiment, ref, execute,
   replay_file, scan, read_all, evolve, admit, census`); importing runs nothing. Suite 206 passed 6 skipped.
+
+## C91 (05:03Z) IR round-trip property; mutation wave 5
+- test: 20-seed property test_ir_round_trips_through_json_with_a_stable_digest (test_fuzz.py): to_dict -> json -> from_dict is
+  identity on to_dict() and digest(); id/provenance/wall_s/max_runs do not move the digest; horizon does. RED check: with the
+  digest exclusion list emptied the wall_s assertion fails (confirmed by hand, not committed). GREEN: 20/20.
+- mutants M39 (resume into another experiment's file), M40 (zero-player world ends at tick 1), M41 (max_runs never refuses):
+  3/3 CAUGHT on first run; full ledger 40/40 CAUGHT (the --only run had overwritten the JSON with 3 rows; the full run restores).
+- suite 226 passed / 6 skipped (kernel + base-role) 17.8 s.
+- decision: no new kernel code this cycle; the cycle is pure ratchet. Alternatives: none needed.

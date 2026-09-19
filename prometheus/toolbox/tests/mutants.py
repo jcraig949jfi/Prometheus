@@ -55,6 +55,10 @@ MUTANTS = [
     ("M36", "ref/worlds_pendulum.py", "        return int(round(x / self.p[\"quantum\"]))", "        return int(round(x / 1e-6))", "pendulum ignores the declared quantum"),
     ("M37", "ref/controls.py", "        e.players = [{k: v for k, v in p.items() if k != \"substrate\"} for p in e.players]", "        e.players = list(e.players)", "ablation leaves per-player workspaces in place"),
     ("M38", "ref/substrates.py", "        self._c[\"ws_invocations_failed\"] += 1\n        return None", "        return None", "failed invocations uncounted"),
+    # fifth wave (C91): resume identity, zero players, eligibility
+    ("M39", "backends/local.py", "            if prior_ids and job.experiment_id not in prior_ids:", "            if False:", "resume into another experiment's file allowed"),
+    ("M40", "ref/worlds.py", "or (self.n_players > 0 and not any(st[\"alive\"]))     # C84", "or not any(st[\"alive\"])", "zero-player world ends at tick 1"),
+    ("M41", "backends/local.py", "    if max_runs is not None and n_runs > int(max_runs):", "    if False:", "max_runs never refuses"),
 ]
 
 

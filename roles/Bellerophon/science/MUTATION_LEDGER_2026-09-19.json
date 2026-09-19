@@ -5,17 +5,17 @@
   "what": "executor runs one episode whatever the budget says",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_series_gain_objective_reads_the_series_and_refuses_to_fabricate",
-  "suite_tail": "1 failed, 14 passed in 3.44s",
-  "seconds": 3.7
+  "suite_tail": "1 failed, 14 passed in 3.36s",
+  "seconds": 3.6
  },
  {
   "id": "M02",
   "file": "ref/controls.py",
   "what": "every control expectation reads MET",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid",
-  "suite_tail": "1 failed, 123 passed, 1 skipped in 4.08s",
-  "seconds": 4.4
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.84s",
+  "seconds": 2.1
  },
  {
   "id": "M03",
@@ -40,9 +40,9 @@
   "file": "series.py",
   "what": "declared series bound never applied",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_declared_bound_is_deterministic_and_reported_not_silent",
-  "suite_tail": "1 failed, 150 passed, 1 skipped in 4.74s",
-  "seconds": 5.0
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.92s",
+  "seconds": 2.2
  },
  {
   "id": "M06",
@@ -59,8 +59,8 @@
   "what": "edited receipts validate",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_edited_record_in_the_middle_is_named_by_line",
-  "suite_tail": "1 failed, 76 passed in 2.33s",
-  "seconds": 2.6
+  "suite_tail": "1 failed, 101 passed in 1.71s",
+  "seconds": 2.0
  },
  {
   "id": "M08",
@@ -68,8 +68,8 @@
   "what": "negotiation never blocks",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_bridges.py::test_bad_payload_is_a_failed_result_not_an_exception",
-  "suite_tail": "1 failed, 8 passed in 0.19s",
-  "seconds": 0.5
+  "suite_tail": "1 failed, 8 passed in 0.18s",
+  "seconds": 0.4
  },
  {
   "id": "M09",
@@ -77,7 +77,7 @@
   "what": "ttl never expires",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
-  "suite_tail": "1 failed, 20 passed in 1.41s",
+  "suite_tail": "1 failed, 20 passed in 1.37s",
   "seconds": 1.6
  },
  {
@@ -86,7 +86,7 @@
   "what": "flat substrate hides refused writes",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_strips_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 26 passed in 1.42s",
+  "suite_tail": "1 failed, 26 passed in 1.43s",
   "seconds": 1.7
  },
  {
@@ -94,18 +94,18 @@
   "file": "backends/local.py",
   "what": "observer delivery order reverted (pre-consequence records)",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_records_satisfy_observer_invariants_over_many_seeds",
-  "suite_tail": "1 failed, 152 passed, 1 skipped in 4.63s",
-  "seconds": 4.9
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.81s",
+  "seconds": 2.0
  },
  {
   "id": "M12",
   "file": "backends/local.py",
   "what": "delays replace instead of adding",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_same_kind_wrappers_compose_and_are_all_recorded",
-  "suite_tail": "1 failed, 110 passed, 1 skipped in 3.98s",
-  "seconds": 4.2
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.82s",
+  "seconds": 2.1
  },
  {
   "id": "M13",
@@ -113,44 +113,44 @@
   "what": "v2 players never write memory",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
-  "suite_tail": "1 failed, 20 passed in 1.46s",
-  "seconds": 1.7
+  "suite_tail": "1 failed, 20 passed in 1.31s",
+  "seconds": 1.6
  },
  {
   "id": "M14",
   "file": "ref/transforms.py",
   "what": "transforms drop per-player substrates again",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_transforms_preserve_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 121 passed, 1 skipped in 4.04s",
-  "seconds": 4.3
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.79s",
+  "seconds": 2.1
  },
  {
   "id": "M15",
   "file": "backends/local.py",
   "what": "resume forgets prior failed runs",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_resume_counts_failed_runs_that_happened_before_the_interruption",
-  "suite_tail": "1 failed, 124 passed, 1 skipped in 4.04s",
-  "seconds": 4.3
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.85s",
+  "seconds": 2.1
  },
  {
   "id": "M16",
   "file": "search.py",
   "what": "committed view accepts rows of another generation",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_committed_view_rejects_rows_of_another_generation_before_a_marker",
-  "suite_tail": "1 failed, 125 passed, 1 skipped in 4.01s",
-  "seconds": 4.3
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.80s",
+  "seconds": 2.0
  },
  {
   "id": "M17",
   "file": "ref/observers.py",
   "what": "series yield column frozen at zero",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_yield_column_is_per_episode_not_per_run",
-  "suite_tail": "1 failed, 153 passed, 1 skipped in 4.59s",
-  "seconds": 4.9
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.82s",
+  "seconds": 2.1
  },
  {
   "id": "M18",
@@ -158,7 +158,7 @@
   "what": "observer admission ignores non-determinism",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_admission.py::test_nondeterministic_observer_is_refused",
-  "suite_tail": "1 failed, 2 passed in 0.12s",
+  "suite_tail": "1 failed, 2 passed in 0.13s",
   "seconds": 0.4
  },
  {
@@ -167,8 +167,8 @@
   "what": "receipts files silently appended",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_execute_refuses_to_append_to_an_existing_receipts_file_unless_asked",
-  "suite_tail": "1 failed, 79 passed in 1.72s",
-  "seconds": 2.0
+  "suite_tail": "1 failed, 104 passed in 1.83s",
+  "seconds": 2.1
  },
  {
   "id": "M20",
@@ -176,7 +176,7 @@
   "what": "non-data IR accepted",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_ir_refuses_values_that_cannot_be_recorded",
-  "suite_tail": "1 failed, 81 passed in 1.82s",
+  "suite_tail": "1 failed, 106 passed in 1.80s",
   "seconds": 2.1
  },
  {
@@ -184,9 +184,9 @@
   "file": "ref/worlds_grid.py",
   "what": "grid tools are never consumed",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed",
-  "suite_tail": "1 failed, 130 passed, 1 skipped in 4.16s",
-  "seconds": 4.5
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.85s",
+  "seconds": 2.1
  },
  {
   "id": "M22",
@@ -194,7 +194,7 @@
   "what": "world lifetime state silently ignored",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_world_lifetime_state_carries_registers_across_episodes",
-  "suite_tail": "1 failed, 21 passed in 1.41s",
+  "suite_tail": "1 failed, 21 passed in 1.45s",
   "seconds": 1.7
  },
  {
@@ -202,9 +202,9 @@
   "file": "search.py",
   "what": "abandoned rows committed",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_generation_interrupted_after_some_rows_is_abandoned_and_rerun",
-  "suite_tail": "1 failed, 139 passed, 1 skipped in 4.34s",
-  "seconds": 4.6
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.84s",
+  "seconds": 2.1
  },
  {
   "id": "M24",
@@ -212,7 +212,7 @@
   "what": "schedule wrapper never advances",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_schedule_intervention_changes_conditions_mid_episode_and_is_recorded",
-  "suite_tail": "1 failed, 17 passed in 1.42s",
+  "suite_tail": "1 failed, 17 passed in 1.39s",
   "seconds": 1.7
  },
  {
@@ -220,9 +220,9 @@
   "file": "state.py",
   "what": "event buffer unbounded again",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_state_model.py::test_device_event_buffer_is_bounded_and_drops_are_counted",
-  "suite_tail": "1 failed, 182 passed, 6 skipped in 14.78s",
-  "seconds": 15.0
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.86s",
+  "seconds": 2.1
  },
  {
   "id": "M27",
@@ -230,26 +230,26 @@
   "what": "checkpoint forgets the pre-checkpoint hash",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run",
-  "suite_tail": "1 failed, 83 passed in 1.77s",
-  "seconds": 2.0
+  "suite_tail": "1 failed, 108 passed in 1.83s",
+  "seconds": 2.1
  },
  {
   "id": "M28",
   "file": "ref/worlds_grid.py",
   "what": "grid observation hides neighbours",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed",
-  "suite_tail": "1 failed, 130 passed, 1 skipped in 4.12s",
-  "seconds": 4.4
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.87s",
+  "seconds": 2.1
  },
  {
   "id": "M29",
   "file": "ref/substrates.py",
   "what": "mailbox echoes a player its own messages",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_mailbox_substrate_turns_the_memory_slot_into_a_channel",
-  "suite_tail": "1 failed, 195 passed, 6 skipped in 14.78s",
-  "seconds": 15.1
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.87s",
+  "seconds": 2.1
  },
  {
   "id": "M30",
@@ -257,7 +257,7 @@
   "what": "ablation claims MET with nothing to ablate",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_control_removes_workspaces_and_reports",
-  "suite_tail": "1 failed, 25 passed in 1.42s",
+  "suite_tail": "1 failed, 25 passed in 1.41s",
   "seconds": 1.7
  },
  {
@@ -265,9 +265,9 @@
   "file": "series.py",
   "what": "series layout mismatch not flagged",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position",
-  "suite_tail": "1 failed, 155 passed, 1 skipped in 4.62s",
-  "seconds": 4.9
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.89s",
+  "seconds": 2.1
  },
  {
   "id": "M32",
@@ -275,7 +275,7 @@
   "what": "receipt chain never links",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_bridges.py::test_kernel_payload_runs_and_reports_repro_in_sfe_vocabulary",
-  "suite_tail": "1 failed, 7 passed in 0.20s",
+  "suite_tail": "1 failed, 7 passed in 0.21s",
   "seconds": 0.5
  },
  {
@@ -283,36 +283,36 @@
   "file": "ref/observers.py",
   "what": "per-player series columns are zeros",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_records_self_describe_their_columns_and_per_player_layout_works",
-  "suite_tail": "1 failed, 154 passed, 1 skipped in 4.53s",
-  "seconds": 4.8
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.89s",
+  "seconds": 2.1
  },
  {
   "id": "M34",
   "file": "ref/observers.py",
   "what": "objective reads column 2 by habit",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position",
-  "suite_tail": "1 failed, 155 passed, 1 skipped in 4.50s",
-  "seconds": 4.8
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.84s",
+  "seconds": 2.1
  },
  {
   "id": "M35",
   "file": "ref/substrates.py",
   "what": "invoke ignores the artifact id (runs the first program)",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_artifact_substrate_lets_players_create_and_invoke_programs",
-  "suite_tail": "1 failed, 196 passed, 6 skipped in 14.84s",
-  "seconds": 15.1
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.84s",
+  "seconds": 2.1
  },
  {
   "id": "M36",
   "file": "ref/worlds_pendulum.py",
   "what": "pendulum ignores the declared quantum",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_semantic_world_declares_quantum_and_replay_control_compares_quantised_traces",
-  "suite_tail": "1 failed, 134 passed, 1 skipped in 4.14s",
-  "seconds": 4.4
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.88s",
+  "seconds": 2.1
  },
  {
   "id": "M37",
@@ -320,7 +320,7 @@
   "what": "ablation leaves per-player workspaces in place",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_strips_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 26 passed in 1.42s",
+  "suite_tail": "1 failed, 26 passed in 1.39s",
   "seconds": 1.7
  },
  {
@@ -328,8 +328,35 @@
   "file": "ref/substrates.py",
   "what": "failed invocations uncounted",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_artifact_substrate_lets_players_create_and_invoke_programs",
-  "suite_tail": "1 failed, 196 passed, 6 skipped in 14.80s",
-  "seconds": 15.1
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists",
+  "suite_tail": "1 failed, 114 passed in 1.87s",
+  "seconds": 2.1
+ },
+ {
+  "id": "M39",
+  "file": "backends/local.py",
+  "what": "resume into another experiment's file allowed",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_resume_into_another_experiments_file_is_refused",
+  "suite_tail": "1 failed, 112 passed in 1.89s",
+  "seconds": 2.2
+ },
+ {
+  "id": "M40",
+  "file": "ref/worlds.py",
+  "what": "zero-player world ends at tick 1",
+  "result": "CAUGHT",
+  "first_failure": "",
+  "suite_tail": "1 error in 0.08s",
+  "seconds": 0.3
+ },
+ {
+  "id": "M41",
+  "file": "backends/local.py",
+  "what": "max_runs never refuses",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_eligibility_count_is_reported_and_max_runs_refuses_before_dispatch",
+  "suite_tail": "1 failed, 33 passed in 1.60s",
+  "seconds": 1.8
  }
 ]

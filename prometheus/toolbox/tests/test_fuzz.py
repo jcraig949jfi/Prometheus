@@ -123,3 +123,18 @@ def test_uncatalogued_event_kinds_are_retained_by_observers():
     r = run_episode(w, {0: inst}, obs, seed=1, horizon=5)
     m = obs[0].measure()
     assert m["events_by_kind"].get("UNKNOWN_99") == 5 and r["events"] >= 5
+
+
+# C91: serialisation round trip + digest stability over the fuzzed compositions: to_dict -> JSON -> from_dict
+# must reproduce the IR exactly and its digest; the digest must ignore provenance, id and execution policy.
+@pytest.mark.parametrize("seed", list(range(40, 60)))
+def test_ir_round_trips_through_json_with_a_stable_digest(seed):
+    e = random_experiment(seed)
+    d = json.loads(json.dumps(e.to_dict()))
+    e2 = Experiment.from_dict(d)
+    assert e2.to_dict() == e.to_dict() and e2.digest() == e.digest()
+    e3 = Experiment.from_dict(dict(d, provenance={"x": 1}, id="custom"))
+    e3.budget = dict(e3.budget, wall_s=1.5, max_runs=10)
+    assert e3.digest() == e.digest()
+    e4 = Experiment.from_dict(d); e4.budget = dict(e4.budget, horizon=e4.budget["horizon"] + 1)
+    assert e4.digest() != e.digest()
