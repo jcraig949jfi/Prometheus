@@ -71,3 +71,22 @@ def test_control_whose_arm_is_invalid_is_refused():
 def test_unknown_kind_is_a_registry_failure_not_an_exception():
     r = admit("world.nope.v1", REG)
     assert r.state == "UNAVAILABLE" and r.failed == ["registry"]
+
+
+# C70: the "reference agreement" admission check had never run against a real second implementation -- the
+# family was derived from the kind string, so a second implementation could only be named like a new version.
+# A row now declares `implements` (the reference family it claims to reproduce); admission compares traces
+# with the reference over the probe seeds; a subtly different implementation is UNAVAILABLE on "reference".
+def test_second_implementation_is_checked_against_the_reference_and_a_wrong_one_is_refused():
+    from prometheus.toolbox.ref.worlds import IntegerWorld
+    from prometheus.toolbox.ref.worlds_integer_alt import IntegerWorldAlt
+
+    class Wrong(IntegerWorldAlt):                 # same code path, one constant off: actions land x*98 instead of x*97
+        kind = "world.integer_wrong.v1"
+        ACT_MUL = 98
+    R = REG.fork()
+    R.register(ComponentRecord("world.integer_alt.v1", "world", IntegerWorldAlt, IntegerWorldAlt.capabilities, implements="world.integer", route="write", provenance={"author": "test"}, license="repository"))
+    R.register(ComponentRecord("world.integer_wrong.v1", "world", Wrong, IntegerWorldAlt.capabilities, implements="world.integer", route="write", provenance={"author": "test"}, license="repository"))
+    ok = admit("world.integer_alt.v1", R); bad = admit("world.integer_wrong.v1", R)
+    assert ok.state == "ADMITTED" and ok.checks["reference"]["reference"] == "world.integer.v1" and ok.checks["reference"]["ok"] is True
+    assert bad.state == "UNAVAILABLE" and "reference" in bad.failed and bad.checks["reference"]["ok"] is False

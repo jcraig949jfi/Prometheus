@@ -21,6 +21,7 @@ class ComponentRecord:
     capabilities: FrozenSet[str] = frozenset()      # provided
     requires: FrozenSet[str] = frozenset()          # needed from other slots (e.g. a representation needs workspace.kv)
     reference_of: Optional[str] = None              # this is the reference implementation of <kind family>
+    implements: Optional[str] = None                # C70: the reference family this implementation claims to reproduce (admission compares traces)
     route: str = "write"                            # write | wrap | bind | chop
     provenance: Dict[str, Any] = field(default_factory=dict)   # author seat, fossil/organ id, source path
     license: str = "UNSPECIFIED"
@@ -30,7 +31,7 @@ class ComponentRecord:
 
     def row(self) -> dict:
         return {"kind": self.kind, "slot": self.slot, "capabilities": sorted(self.capabilities), "requires": sorted(self.requires),
-                "reference_of": self.reference_of, "route": self.route, "provenance": self.provenance, "license": self.license,
+                "reference_of": self.reference_of, "implements": self.implements, "route": self.route, "provenance": self.provenance, "license": self.license,
                 "native_deps": list(self.native_deps), "state": self.state}
 
 

@@ -30,6 +30,9 @@ def install(reg: Registry) -> Registry:
         reg.register(ComponentRecord("world.c6.composed.v1", "world", W.C6ComposedWorld, frozenset(), route="wrap",
                                      provenance=dict(PROV, source="archaeon/campaign6/worlds/runtime.py"), state="UNAVAILABLE",
                                      admission={"failed": "import: %s" % str(exc)[:120]}))
+    from prometheus.toolbox.ref.worlds_integer_alt import IntegerWorldAlt
+    reg.register(ComponentRecord("world.integer_alt.v1", "world", IntegerWorldAlt, IntegerWorldAlt.capabilities, implements="world.integer", route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_integer_alt.py"), license="repository"))
     from prometheus.toolbox.ref.worlds_pendulum import PendulumWorld
     reg.register(ComponentRecord("world.pendulum.v1", "world", PendulumWorld, PendulumWorld.capabilities, reference_of="world.pendulum", route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_pendulum.py"), license="repository"))

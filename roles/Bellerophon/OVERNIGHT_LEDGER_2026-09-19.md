@@ -424,3 +424,16 @@ C69 | 04:41Z | interaction of C68 with search: a wall budget cutting a generatio
   COMMIT a generation with fewer rows than proposals (GEN_DONE over a partial population). RED (wall_s 0 ->
   no marker may be written; the next call reruns). Fix: an incomplete generation raises GenerationIncomplete
   inside the driver, which returns {"stopped": "WALL_BUDGET_EXHAUSTED"} without a marker. Suite 186.
+C70 | 04:48Z | admission's REFERENCE-AGREEMENT check had never met a real second implementation (families were
+  derived from the kind string; a second implementation could only be named as a new version). Rows now
+  declare `implements`; world.integer_alt.v1 -- a second implementation of the integer world written
+  differently on purpose (phase methods, tick-keyed queue, tuple tables; 172k steps/s vs 155k) -- is
+  ADMITTED against world.integer.v1. A deliberately WRONG twin (action multiplier 98 for 97) was ALSO
+  admitted at first: on the default probe (world_seed 0) the reference's linear ops overwrite every action
+  target within the tick, so actions are invisible in the trace and agreement proved nothing (a probe
+  without POWER). Fix: the reference check runs over several world seeds (asked of the world, not guessed)
+  and asserts that the reference is action-sensitive on the probe; agreement without power is a failed
+  check. The wrong twin is now UNAVAILABLE on "reference"; 37/37 components admitted. Suite 187.
+  DESIGN NOTE: world.integer.v1 with world_seed 0 is an action-blind world (targets overwritten) -- a
+  property of that seed's structure, recorded, not "fixed": a world may be action-blind; the instrument
+  must know when it is.

@@ -54,6 +54,14 @@ def _episode(world, seed: int, horizon: int, actions_fn) -> str:
     return world.trace_hash()
 
 
+def _accepts(factory, params: dict) -> bool:
+    """Does the factory construct with these params? (The world's own refusal is the only source of truth.)"""
+    try:
+        factory(**params); return True
+    except Exception:
+        return False
+
+
 def _det_actions(pid: int, obs: List[int], legal: ActionSpace) -> List[int]:
     return [(sum(obs) + pid + i) % legal.range for i in range(legal.width)]
 
@@ -122,13 +130,22 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
     if row.reference_of:
         checks["reference"] = {"ok": True, "is_reference": True, "family": row.reference_of}
     else:
-        fam = kind.rsplit(".", 1)[0]
+        fam = row.implements or kind.rsplit(".", 1)[0]          # C70: a row names the family it implements; the kind string is only a fallback
         refs = [r for r in registry.rows("world") if r.get("reference_of") == fam]
         if refs:
-            wr = registry.make(refs[0]["kind"], **params); wc = row.factory(**params)
-            agree = all(_episode(wr, s, horizon, _det_actions) == _episode(wc, s, horizon, _det_actions) for s in seeds)
-            checks["reference"] = {"ok": agree, "reference": refs[0]["kind"]}
-            if not agree:
+            # C70b: the probe must have POWER -- on at least one probe world the reference's trace must depend on the
+            # actions, or agreement proves nothing (found: world_seed 0 overwrote every action target within the tick,
+            # so a wrong action multiplier agreed with the reference on every seed)
+            variants = [dict(params)] + [dict(params, world_seed=ws) for ws in (11, 23, 47) if _accepts(row.factory, dict(params, world_seed=ws))]
+            zero = lambda pid, obs, legal: [0] * legal.width
+            power = any(_episode(registry.make(refs[0]["kind"], **v), s, horizon, _det_actions) != _episode(registry.make(refs[0]["kind"], **v), s, horizon, zero)
+                        for v in variants for s in seeds)
+            agree = all(_episode(registry.make(refs[0]["kind"], **v), s, horizon, _det_actions) == _episode(row.factory(**v), s, horizon, _det_actions)
+                        for v in variants for s in seeds)
+            checks["reference"] = {"ok": agree and power, "reference": refs[0]["kind"], "probe_variants": len(variants), "probe_has_power": power}
+            if not power:
+                checks["reference"]["note"] = "the reference is action-blind on every probe: agreement is not evidence"
+            if not (agree and power):
                 res.failed.append("reference")
         else:
             checks["reference"] = {"ok": True, "note": "no reference registered for family %s; this component stands alone" % fam}
