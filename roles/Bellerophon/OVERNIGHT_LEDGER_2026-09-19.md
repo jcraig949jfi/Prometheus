@@ -950,3 +950,10 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - honest ledger at work again: mutant M76 (the old v2 branch) SURVIVED the 40-seed property (no seed hit a v2
   no-op); a dedicated 600-case test now catches it. Ledger 75 mutants.
 - suite 985 passed, 6 skipped.
+
+## C134 (08:45Z) the ledger file: a --only run must merge, never replace (post-closing)
+- C133's commit carried a MUTATION_LEDGER json of ONE row: a --only run rewrote the whole file (the same slip
+  noted at C91 and worked around by re-running the full ledger before each commit -- until it was not). The
+  runner now merges --only rows into the existing file by id. Restored the 74-row ledger from the previous
+  commit and merged M76: 75 mutants, 75 CAUGHT. A science file that an instrument can silently truncate is the
+  C95 lesson in file form.

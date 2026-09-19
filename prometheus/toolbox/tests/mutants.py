@@ -157,7 +157,14 @@ def main(argv):
         print(json.dumps(ledger[-1]))
     out = ROOT / "roles/Bellerophon/science/MUTATION_LEDGER_2026-09-19.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(ledger, indent=1), encoding="utf-8", newline="\n")
+    if only and out.exists():                                     # C134: a --only run MERGES its rows; it never replaces the full ledger
+        prior = {r["id"]: r for r in json.loads(out.read_text(encoding="utf-8"))}
+        for r in ledger:
+            prior[r["id"]] = r
+        ledger_out = sorted(prior.values(), key=lambda r: int(r["id"][1:]))
+    else:
+        ledger_out = ledger
+    out.write_text(json.dumps(ledger_out, indent=1), encoding="utf-8", newline="\n")
     print("survivors:", [m["id"] for m in ledger if m["result"] == "SURVIVED"])
     return ledger
 
