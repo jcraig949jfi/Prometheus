@@ -46,16 +46,21 @@ Layout
     backends/sfe.py   lowering to archaeon.frontier specs (partial; mismatches classified)
     backends/sfe_executor.py  a kernel Executor for the SFE RUNTIME's worker loop (kind kernel.run_ir)
     backends/npe.py   BusJob against the pinned NPE envelope (UNAVAILABLE_INTERFACE until primordial/ lands)
-    ref/              reference components (36, all admitted on M2): worlds integer / grid / pendulum (SEMANTIC)
-                      / wforge (wrap) / c6 composed (wrap); representations statemachine v1/v2/v3, constant,
+    ref/              reference components (40, all admitted on M2): worlds integer / integer_alt / integer_batch
+                      (numpy, ext.batch.v1) / grid (flat or structured observations) / pendulum (SEMANTIC) /
+                      wforge (wrap) / c6 composed (wrap); representations statemachine v1/v2/v3, constant,
                       rewrite, proteus tape (wrap); substrates flat / kv / stream / mailbox / artifact;
-                      observers trace / descriptor / series; objectives; 8 controls; 4 transforms; 2 selectors
+                      observers trace / descriptor / series; objectives yield_net / survival v1,v2 / series_gain /
+                      multi (named components); 8 controls (each with a test where it says NO -- see
+                      roles/Bellerophon/science/POWER_REGISTER_2026-09-19.md); 4 transforms; 2 selectors (rank=)
     schemas/          JSON Schema for the IR, the receipt and the capability model (tied to the code by a test)
     examples/ playtests/   experiments with their committed receipts (replayable from the file alone)
     tests/            conformance, series, workspace, DOF, integrity, fuzz, state model, search, admission,
                       bridges, cross-platform, playtest findings (smallest reproducers, kept permanently)
 
-Rules the code enforces: integer observations / actions / events; a missing capability or an unavailable
+Rules the code enforces: integer actions / events, observations as nested JSON of ints (opaque to the kernel;
+players flatten(); permute only for flat ones); execution policy (budget.batch, wall_s, max_runs) outside the
+scientific digest, batched receipts equal scalar receipts run for run; a missing capability or an unavailable
 component blocks one experiment only; a failed run is a receipt; controls are objects with mechanical
 expectations (INDETERMINATE when they could not act); Redis is never the sole copy of anything scientific;
 one receipts file = one execution unless resume / append is explicit; SEMANTIC worlds declare their quantum

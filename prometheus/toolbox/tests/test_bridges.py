@@ -46,3 +46,17 @@ def test_frontier_mismatches_are_classified():
     reasons = mismatches(_exp())
     assert reasons and set(CLASSIFICATION.values()) <= {"kernel_defect", "adapter_defect", "target_runtime_limitation", "target_schema_limitation", "unsupported_semantic", "unknown_interface_unavailable"}
     assert CLASSIFICATION["M1"] == "target_schema_limitation" and CLASSIFICATION["M2"] == "target_schema_limitation"
+
+
+def test_execution_policy_and_vector_objectives_pass_through_the_sfe_executor(tmp_path):
+    """C103: the night's IR additions (budget.batch policy, objective.multi.v1) ride through kernel.run_ir unchanged."""
+    from prometheus.toolbox.receipt import read_all
+    e = _exp(); e.budget = dict(e.budget, batch=4)
+    r = SX.run_payload({"experiment": e.to_dict()}, seed_root=42, workdir=tmp_path / "b")
+    assert r["status"] == "COMPLETED" and r["valid"] and r["reproducibility"] == "BIT_DETERMINISTIC"
+    rows = [x for p in (tmp_path / "b").rglob("*.jsonl") for x in read_all(p) if x["arm"] != "SUMMARY"]
+    assert rows and all(x["execution"]["batched"] for x in rows)
+    e2 = _exp(); e2.objective = ref("objective.multi.v1", components={"a": ref("objective.survival.v2"), "b": ref("objective.yield_net.v1")})
+    r2 = SX.run_payload({"experiment": e2.to_dict()}, seed_root=42, workdir=tmp_path / "v")
+    sp = r2["summary"]["science"]["splits"]["train"]
+    assert r2["status"] == "COMPLETED" and sp["objective_shape"] == "vector" and set(sp["objective_mean"]) == {"a", "b"}

@@ -137,3 +137,18 @@ def test_rows_carry_spec_identity_and_behavioural_class_separately(tmp_path):
     prim = [r for r in receipts if r["arm"] == "primary"][0]
     assert prim["science"]["player_fingerprints"]["0"]["spec_hash"] == prim["components"]["players"][0]["manifest_hash"]
     assert set(prim["science"]["player_fingerprints"]["0"]) == {"hash", "silent", "spec_hash"}
+
+
+# C104: "evolution must use generations" -- a STEADY STATE is the same machinery with one proposal per commit:
+# every evaluation is its own committed unit, resumable at any point, and the archive reads the same whether the
+# ten evaluations ran in one process or in three. An expression, not a new mechanism (like turn-taking, C72).
+def test_steady_state_search_is_one_proposal_per_commit_and_resumes_anywhere(tmp_path):
+    sel = ref("selector.truncation.v1", keep=2, n=1)
+    one = SR.evolve(template(), sel, generations=10, workdir=tmp_path / "one", seed=4)
+    assert one["generations_done"] == 10
+    for stop in (3, 7, 10):
+        r = SR.evolve(template(), sel, generations=stop, workdir=tmp_path / "three", seed=4)
+        assert r["generations_done"] == stop
+    a = SR.load_rows(tmp_path / "one" / "archive.jsonl"); b = SR.load_rows(tmp_path / "three" / "archive.jsonl")
+    assert _rows_key(a) == _rows_key(b) and len(_rows_key(a)) == 10
+    assert [r["n"] for r in a if r["kind"] == "GEN_DONE"] == [1] * 10          # one evaluation per committed unit

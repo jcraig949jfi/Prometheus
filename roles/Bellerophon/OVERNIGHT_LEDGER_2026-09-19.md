@@ -667,5 +667,27 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   mutant M61 (fold without flatten) was caught by the FUZZ before the dedicated test -- the instrument that finds
   what the author did not think to test.
 - mutants wave 11 M61-M63 3/3 CAUGHT; ledger 62/62. Suite 307 passed / 6 skipped. Census 40/40.
-- still assumed after tonight: actions are int lists (ActionSpace width x range); continuous actions are declared
-  (ext.continuous_actions.v1, fixed-point interchange) and not exercised.
+- still assumed after tonight: actions are int lists (ActionSpace width x range) -- by contract: continuous actions
+  travel as fixed-point ints (ext.continuous_actions.v1; the pendulum's act_scale), an encoding rule the fuzz and
+  admission already exercise. (Corrected from a first draft that said 'not exercised'.)
+
+## C101-C106 (06:12Z) composition checks while the soak runs
+- C101 search above the batched kernel: evolve() with budget.batch=8 reaches the SAME archive rows (gen, player_hash,
+  objective, descriptor) as batch=0 over 3 generations x 6, and the generation files show execution.batched.
+- C102 soak launched 06:08Z: search for 20 wall minutes in one process (playtests/soak_search.py); per-generation
+  wall, traced memory, scan of the last file, marker order, elite movement; result written from Python to
+  science/SOAK_SEARCH_2026-09-19.json (a shell redirect is never used for a background job). Findings below.
+- C103 the SFE runtime executor passes budget.batch and objective.multi.v1 through unchanged (4/4 batched runs,
+  vector split summary) -- test in test_bridges.
+- C104 "evolution must use generations": a steady state is n=1 per commit; ten evaluations in one process and in
+  three resumptions (3, 7, 10) give identical rows; GEN_DONE n=1 x 10. An expression, not a new mechanism.
+- C105 receipt schema documents execution{}, engineering.batch, spec_hash, objective value shapes, split; the
+  schema-code test checks every execution.reason the code emits is in the enum.
+- C106 series ARTIFACTS agree across paths (800 records -> content-addressed file; equal sha256 both ways); the
+  random property never crosses the 512-record boundary.
+- C104b profile addendum (science/BATCH_THROUGHPUT json): world.step share of execute() wall -- integer 13%, grid
+  26%, pendulum 29%, c6 composed 16%: no reference world's step dominates; vectorising the world alone is bounded
+  below 1.4x everywhere tonight.
+- design v0.4 written (WORLDS_KERNEL_DESIGN_v0.4.md): section 2 "what a document said would work and was
+  observed not to" is new. README updated (40 components, power register, execution policy).
+- suite 311 passed / 6 skipped.

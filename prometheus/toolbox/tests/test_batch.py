@@ -304,3 +304,34 @@ def test_replay_of_a_batched_file_runs_the_scalar_path_and_agrees(tmp_path):
     assert rows and all(r["execution"]["batched"] is False for r in rows)
     out2 = replay_file(tmp_path / "b.jsonl", tmp_path / "replay_same.jsonl", batch=None)      # the recorded policy, on request
     assert out2["replayed_batch"] == 4 and out2["divergent"] == []
+
+
+# ------------------------------------------------------------------------------------------ search above a batched kernel (C101)
+def test_evolve_reaches_the_same_archive_on_the_batched_and_the_scalar_path(tmp_path):
+    from prometheus.toolbox import search as SR
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+
+    def template(batch):
+        return Experiment(family="batch_search", world=ref("world.integer.v1", world_seed=19, n_regs=6, start_charge=40, yield_amt=10, regime_period=6),
+                          substrate=ref("substrate.kv.v1", scope="lifetime"), players=[random_statemachine_v2(1).manifest()],
+                          objective=ref("objective.yield_net.v1", penalties={"ws_writes": 0.02}), observers=[ref("observer.descriptor.v1", action_scale=2, yield_scale=40)],
+                          seed_policy={"base": 1, "n_seeds": 3}, budget={"episodes": 2, "horizon": 32, "batch": batch})
+    sel = ref("selector.map_elites.v1", n=6, representation="statemachine.v2")
+    a = SR.evolve(template(0), sel, generations=3, workdir=tmp_path / "scalar", seed=5)
+    b = SR.evolve(template(8), sel, generations=3, workdir=tmp_path / "batched", seed=5)
+    assert a["generations_done"] == b["generations_done"] == 3
+    key = lambda rows: [(r["gen"], r["player_hash"], r["objective"], tuple(r["descriptor"])) for r in rows if r["kind"] == "elite"]
+    ra = SR.load_rows(tmp_path / "scalar" / "archive.jsonl"); rb = SR.load_rows(tmp_path / "batched" / "archive.jsonl")
+    assert key(ra) == key(rb) and len(key(ra)) == 18
+    gen_b = read_all(sorted((tmp_path / "batched").glob("gen_*_a*.jsonl"))[0])
+    assert all(r["execution"]["batched"] for r in gen_b if r["arm"] != "SUMMARY")            # the batch path really ran under the search
+
+
+def test_series_artifacts_agree_across_paths(tmp_path):
+    """C106: the random property never crosses the inline/artifact boundary (<= 120 records); this does (800)."""
+    exp = _exp(n_seeds=2, start_charge=100000); exp.budget = dict(exp.budget, episodes=4, horizon=200); exp.controls = []
+    _, S = _run(exp, 0, tmp_path, "s.jsonl"); _, B = _run(exp, 4, tmp_path, "b.jsonl")
+    for k in S:
+        s, b = S[k]["series"]["observer.series.v1"], B[k]["series"]["observer.series.v1"]
+        assert s["status"] == b["status"] == "PRESENT" and "artifact" in s and s["series_hash"] == b["series_hash"] and s["artifact"] == b["artifact"], k
+    assert (tmp_path / "artifacts").exists() and len(list((tmp_path / "artifacts").glob("series_*.json"))) >= 1

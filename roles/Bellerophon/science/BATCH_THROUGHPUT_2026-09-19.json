@@ -83,5 +83,25 @@
   "json.dumps(trace)": 7.6,
   "loop+rest": 25.5
  },
- "verdict": "FALSIFIED for this world: 0.7x world-only at every batch size, 0.93-0.94x end to end on long-lived runs, 1.3-1.8x on short-lived runs (setup amortisation, not stepping). The vectorised transition was never the cost; the per-env contract (events, JSON trace text, pending queue) and the players are. Batching pays only when the CONTRACT is batchable (columnar events, array trace) and players/observers batch too -- that is a different world family under SEMANTIC/aggregate agreement, not BIT trace equality."
+ "verdict": "FALSIFIED for this world: 0.7x world-only at every batch size, 0.93-0.94x end to end on long-lived runs, 1.3-1.8x on short-lived runs (setup amortisation, not stepping). The vectorised transition was never the cost; the per-env contract (events, JSON trace text, pending queue) and the players are. Batching pays only when the CONTRACT is batchable (columnar events, array trace) and players/observers batch too -- that is a different world family under SEMANTIC/aggregate agreement, not BIT trace equality.",
+ "world_step_share_of_execute_pct_C104": {
+  "note": "cProfile share of execute() wall (4 seeds x 1 episode, flat substrate, statemachine.v1 players, trace observer); receipts/JSON included in the denominator",
+  "integer(300 ticks)": {
+   "world.step": 13.0,
+   "players.act": 9.7
+  },
+  "grid(300)": {
+   "world.step": 25.7,
+   "players.act": 33.7
+  },
+  "pendulum(300)": {
+   "world.step": 29.3,
+   "players.act": 28.6
+  },
+  "c6.composed(100)": {
+   "world.step": 16.2,
+   "players.act": 19.3
+  },
+  "reading": "no reference world's step exceeds ~30% of a run's wall; vectorising the world alone is bounded below 1.4x everywhere tonight (Amdahl)"
+ }
 }

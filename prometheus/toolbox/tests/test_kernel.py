@@ -265,6 +265,12 @@ def test_json_schemas_agree_with_the_code():
     rec_schema = json.loads((root / "receipt.schema.json").read_text(encoding="utf-8"))
     from prometheus.toolbox.receipt import REQUIRED, STATUSES
     assert set(rec_schema["required"]) == set(REQUIRED) and set(rec_schema["properties"]["status"]["enum"]) == set(STATUSES)
+    from prometheus.toolbox.backends.local import SCALAR_EXECUTION, batch_plan
+    from prometheus.toolbox.registry import default_registry as _dr
+    reasons = {SCALAR_EXECUTION["reason"], "BATCHED"}
+    e = build_exp001(); e.budget = dict(e.budget, batch=4); reasons.add(batch_plan(e, _dr())[1])
+    e2 = build_exp001(); e2.interventions = []; e2.budget = dict(e2.budget, batch=4); reasons.add(batch_plan(e2, _dr())[1])
+    assert reasons <= set(rec_schema["properties"]["execution"]["properties"]["reason"]["enum"])          # C105: the schema names every reason the code emits
     cap_schema = json.loads((root / "capability.schema.json").read_text(encoding="utf-8"))
     pat = re.compile(cap_schema["$defs"]["capabilityId"]["pattern"])
     for cid in list(C.CORE) + list(C.EXTENSIONS):
