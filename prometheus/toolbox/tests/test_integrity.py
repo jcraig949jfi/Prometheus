@@ -363,3 +363,30 @@ def test_forensic_scan_property_over_random_receipts_files(tmp_path, seed):
 
 def test_the_scan_property_was_actually_exercised():
     assert _SCAN_COVERAGE["exercised"] >= 12, _SCAN_COVERAGE
+
+
+# C141: a receipt names the kernel that produced it -- build.kernel_hash covers every kernel module and none of the
+# tests/examples/playtests: a one-byte change to a kernel file changes the hash (refresh=True), a change to a test
+# file does not; receipts of one process share host and build.
+def test_kernel_hash_names_the_kernel_and_only_the_kernel(tmp_path):
+    from prometheus.toolbox.receipt import build_block
+    import pathlib as _pl
+    root = _pl.Path(__file__).resolve().parents[1]
+    base = build_block(refresh=True); assert base["n_files"] >= 20 and len(base["kernel_hash"]) == 16
+    target = root / "series.py"; src = target.read_text(encoding="utf-8")
+    try:
+        target.write_text(src + "\n# touched\n", encoding="utf-8", newline="\n")
+        changed = build_block(refresh=True)
+    finally:
+        target.write_text(src, encoding="utf-8", newline="\n")
+    assert changed["kernel_hash"] != base["kernel_hash"] and changed["n_files"] == base["n_files"]
+    tfile = root / "tests" / "test_kernel.py"; tsrc = tfile.read_text(encoding="utf-8")
+    try:
+        tfile.write_text(tsrc + "\n# touched\n", encoding="utf-8", newline="\n")
+        same = build_block(refresh=True)
+    finally:
+        tfile.write_text(tsrc, encoding="utf-8", newline="\n")
+    assert same["kernel_hash"] == base["kernel_hash"]
+    assert build_block(refresh=True) == base
+    rs = R.read_all(_write(tmp_path))
+    assert len({r["build"]["kernel_hash"] for r in rs}) == 1 and len({json.dumps(r["host"], sort_keys=True) for r in rs}) == 1

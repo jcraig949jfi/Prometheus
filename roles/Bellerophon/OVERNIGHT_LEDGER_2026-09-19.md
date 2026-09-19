@@ -1004,3 +1004,7 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - the shifted seeds exposed a test-side bug in my C112 error normalisation: str.replace("", kind) on a non-batched
   FAILED receipt interleaved the world kind between every character. Fixed (replace only when the batch world is
   named). Suite 1155 passed / 6 skipped.
+
+## C141 (08:59Z) build.kernel_hash names the kernel and only the kernel (post-closing)
+- a one-byte change to a kernel module changes the hash (refresh=True); a change to a test file does not; the
+  file count is stable; receipts of one process share host and build. (Files restored in finally; tree clean.)
