@@ -181,3 +181,19 @@ def test_resumed_job_continues_the_chain(tmp_path, monkeypatch):
     monkeypatch.setattr(L, "run_one", real)
     execute(job, tmp_path / "c.jsonl", REG, resume=True)
     assert R.scan(tmp_path / "c.jsonl")["defects"] == [] and len(R.read_all(tmp_path / "c.jsonl")) == 5
+
+
+# C68: budget.wall_s was accepted by the IR and silently ignored by the executor. A wall budget now stops the job
+# between runs; the summary names how many runs were not started; resume=True finishes them later.
+def test_wall_budget_stops_between_runs_and_resume_finishes(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = Experiment(family="wall", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 6}, budget={"episodes": 1, "horizon": 8, "wall_s": 0.0})
+    job = lower(e, REG).job
+    rep = execute(job, tmp_path / "w.jsonl", REG)
+    assert rep.n_runs == 6 and rep.runs_not_started == 5 and rep.n_completed == 1 and rep.valid is False
+    rs = R.read_all(tmp_path / "w.jsonl")
+    assert rs[-1]["engineering"]["runs_not_started"] == 5 and rs[-1]["engineering"]["stopped_reason"] == "WALL_BUDGET_EXHAUSTED"
+    e2 = Experiment.from_dict(dict(e.to_dict(), budget={"episodes": 1, "horizon": 8, "wall_s": 60.0}))
+    rep2 = execute(lower(e2, REG).job, tmp_path / "w.jsonl", REG, resume=True)
+    assert rep2.resumed_runs == 1 and rep2.runs_not_started == 0 and rep2.n_completed == 6 and R.scan(tmp_path / "w.jsonl")["defects"] == []

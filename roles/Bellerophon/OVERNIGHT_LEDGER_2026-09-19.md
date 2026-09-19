@@ -415,3 +415,8 @@ C67 | 04:36Z | forensic pass over every committed receipts file: scan() clean on
   replayed from its file alone -> every committed example/playtest receipts file REGENERATED with the
   current kernel (chained, IR-embedded); exp_002 now replays 432/432 from its file. Fixture test still
   green: EXP-001's trace hashes are unchanged since the first commit of the night.
+C68 | 04:39Z | budget.wall_s was accepted by the IR and silently IGNORED by the executor (a false promise). Now a
+  wall budget stops the job BETWEEN runs (never mid-run), the summary names runs_not_started and the stop
+  reason, ExecutionReport.valid is False, and resume=True finishes the job later. Found while writing the
+  test: changing wall_s changed the experiment digest, so a resumed job could not find its own runs --
+  wall_s is EXECUTION policy, now excluded from the scientific digest (like provenance). Suite 185.

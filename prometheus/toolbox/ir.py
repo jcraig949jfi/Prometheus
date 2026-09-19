@@ -80,7 +80,10 @@ class Experiment:
         return cls(**d)
 
     def digest(self) -> str:
+        """Content identity of the SCIENTIFIC definition: id, provenance and the wall budget (execution policy,
+        C68: a job stopped by its wall clock and finished later is the same experiment) are excluded."""
         d = self.to_dict(); d.pop("id", None); d.pop("provenance", None)
+        d["budget"] = {k: v for k, v in d.get("budget", {}).items() if k != "wall_s"}
         return _h(d)
 
     def experiment_id(self) -> str:

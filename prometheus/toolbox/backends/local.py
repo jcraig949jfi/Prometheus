@@ -390,6 +390,7 @@ class ExecutionReport:
     controls: Dict[str, dict]
     valid: bool
     resumed_runs: int = 0
+    runs_not_started: int = 0      # C68: stopped by budget.wall_s; resume=True finishes them
 
     def as_dict(self) -> dict:
         return self.__dict__
@@ -415,9 +416,15 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
             raise FileExistsError("%s already holds receipts; pass append=True (second execution) or resume=True (continue this job)" % op)
     w = ReceiptWriter(out_path)
     by_key: Dict[str, Dict[Any, dict]] = {}
-    n_fail = 0; n_resumed = 0
+    n_fail = 0; n_resumed = 0; not_started = 0; stopped_reason = None
+    wall_budget = (job.experiment.budget.get("wall_s") if job.experiment is not None else None)
+    t_start = time.perf_counter()
     try:
         for spec in job.runs:
+            if stopped_reason is not None:
+                not_started += 1; continue
+            if wall_budget is not None and (time.perf_counter() - t_start) > float(wall_budget) and by_key:
+                stopped_reason = "WALL_BUDGET_EXHAUSTED"; not_started += 1; continue          # C68: stop BETWEEN runs, never mid-run
             prior = done.get(spec.arm, {}).get(spec.key())
             if prior is not None:
                 by_key.setdefault(spec.arm, {})[spec.key()] = prior; n_resumed += 1
@@ -462,14 +469,16 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
         summary = {"experiment_id": job.experiment_id, "arm": "SUMMARY", "sweep_point": {}, "seed": -1, "status": "COMPLETED",
                    "experiment_digest": job.runs[0].experiment.digest() if job.runs else "", "components": {"world": {}, "substrate": {}},
                    "capabilities": job.negotiation or {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0,
-                   "engineering": {"n_runs": len(job.runs), "n_failed": n_fail}, "science": {"controls": controls, "splits": splits}, "accounting": {},
+                   "engineering": {"n_runs": len(job.runs), "n_failed": n_fail, "runs_not_started": not_started, "stopped_reason": stopped_reason,
+                                   "wall_s": round(time.perf_counter() - t_start, 3), "wall_budget_s": wall_budget},
+                   "science": {"controls": controls, "splits": splits}, "accounting": {},
                    "experiment": job.experiment.to_dict() if job.experiment is not None else None,      # C32: the receipts file alone can be replayed
                    "registry_rows": job.registry_rows, "started_utc": datetime.now(timezone.utc).isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat()}
         w.write(summary)
     finally:
         w.close()
-    valid = n_fail == 0 and all(c["outcome"] == "MET" for c in controls.values())
-    return ExecutionReport(job.experiment_id, str(w.path), len(job.runs), len(job.runs) - n_fail, n_fail, controls, valid, n_resumed)
+    valid = n_fail == 0 and not_started == 0 and all(c["outcome"] == "MET" for c in controls.values())
+    return ExecutionReport(job.experiment_id, str(w.path), len(job.runs), len(job.runs) - n_fail - not_started, n_fail, controls, valid, n_resumed, not_started)
 
 
 def _valid_receipts(path) -> List[dict]:
