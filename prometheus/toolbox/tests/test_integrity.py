@@ -235,3 +235,158 @@ def test_host_block_is_computed_once_per_process_and_still_complete():
     a = host_block(); t0 = time.perf_counter(); b = [host_block() for _ in range(200)]; dt = time.perf_counter() - t0
     assert all(x == a for x in b) and set(a) == {"platform", "python", "machine"} and all(a.values())
     assert dt < 0.05, "200 host blocks took %.3f s: not cached" % dt
+
+
+# C119: the checkpoint snapshotted the WORLD through the wrappers' __getattr__ -- but not the wrappers: a delay
+# buffer and a schedule's own tick count restarted from zero on resume (observations repeated; the schedule fired
+# again). The kernel's own interventions must survive a checkpoint like everything else.
+@pytest.mark.parametrize("wrappers,schedule", [({"observation_delay": 3}, None), ({"observation_permute": 5}, None), ({}, [{"tick": 4, "world_params": {"step_cost": 3}}]),
+                                               ({"observation_delay": 2, "observation_permute": 1}, [{"tick": 2, "world_params": {"yield_amt": 2}}, {"tick": 14, "world_params": {"step_cost": 0}}])])
+def test_checkpoint_carries_the_kernel_wrappers_state(wrappers, schedule):
+    from prometheus.toolbox.backends.local import run_episode, resume_episode, build_world
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    iv = {"name": "w", "world_params": {}, "wrappers": wrappers}
+    if schedule:
+        iv["schedule"] = schedule
+    e = Experiment(family="ckptw", world=ref("world.integer.v1", world_seed=4, start_charge=100000, step_cost=1, obs_regs=4), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(3, n_states=6, n_buckets=12).manifest()], interventions=[iv], budget={"episodes": 1, "horizon": 24})
+    def fresh():
+        w = build_world(e, REG); sub = REG.make("substrate.kv.v1", scope="lifetime")
+        return w, sub, {0: sub.instantiate(random_statemachine_v2(3, n_states=6, n_buckets=12), 1)}, [REG.make("observer.trace.v1")]
+    w, sub, inst, obs = fresh()
+    full = run_episode(w, inst, obs, seed=7, horizon=24, substrate=sub, record_actions=True)
+    w2, sub2, inst2, obs2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=7, horizon=24, substrate=sub2, checkpoint_at=9, record_actions=True)
+    w3, sub3, inst3, obs3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=24, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (wrappers, schedule)
+    assert obs3[0].measure()["events_by_kind"] == obs[0].measure()["events_by_kind"]
+    assert w3.summary() == w.summary()
+
+
+# C120: the checkpoint invariant as a PROPERTY over random compositions (C119 found two holes with four hand cases):
+# for any valid IR whose world can snapshot, an episode checkpointed at a random tick and resumed in FRESH objects
+# emits the same actions and the same world summary as the uninterrupted episode.
+_CKPT_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(200, 320)))
+def test_checkpoint_resume_property_over_random_compositions(seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, _prepare, run_episode, resume_episode
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    spec = [s for s in low.job.runs if s.arm == "primary"][0]
+    if "ext.snapshot.v1" not in REG.get(spec.experiment.world["kind"]).capabilities or spec.experiment.budget["horizon"] < 2:
+        return
+    def fresh():
+        c = _prepare(spec, REG)
+        return c["world"], c["instances"], c["observers"], (c["all_subs"] if len(c["all_subs"]) > 1 else c["sub"])
+    horizon = spec.experiment.budget["horizon"]; k = random.Random(seed).randrange(1, horizon)
+    w, inst, obs, sub = fresh()
+    try:
+        full = run_episode(w, inst, obs, seed=spec.seed * 1000, horizon=horizon, substrate=sub, record_actions=True)
+    except ValueError as exc:                                      # the fuzz's known designer error (a schedule on a non-mutable param) is a FAILED run, not this property's subject
+        assert "not runtime-mutable" in str(exc); return
+    if full["ticks"] <= k:
+        return                                                     # the episode ended before the checkpoint tick: nothing to resume
+    _CKPT_COVERAGE["exercised"] += 1
+    w2, inst2, obs2, sub2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=spec.seed * 1000, horizon=horizon, substrate=sub2, checkpoint_at=k, record_actions=True)
+    assert first["checkpoint"] is not None and first["ticks"] == k
+    w3, inst3, obs3, sub3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=horizon, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (seed, k, spec.experiment.world["kind"], spec.experiment.substrate["kind"], [p["representation"] for p in spec.experiment.players])
+    assert rest["summary"] == full["summary"], (seed, k)
+    # C136: every observer's measure and series survive the checkpoint too (the resumed observers were restored from
+    # their snapshots and then fed the rest of the episode)
+    for o_full, o_res in zip(obs, obs3):
+        assert o_res.measure() == o_full.measure(), (seed, k, o_full.kind)
+        if getattr(o_full, "series", False):
+            assert o_res.series_episode() == o_full.series_episode(), (seed, k)
+
+
+def test_the_checkpoint_property_was_actually_exercised():
+    """Coverage guard (C120): with 40 seeds only 6 compositions reached the checkpoint path (the rest refused at
+    lowering or ended before the tick). 120 seeds must give at least 15, or the property is decoration."""
+    assert _CKPT_COVERAGE["exercised"] >= 15, _CKPT_COVERAGE
+
+
+# C127: the forensic scan as a PROPERTY over random receipts files: a fresh file scans clean; one edited byte in a
+# random line is named on that line (and read_all refuses the file); one deleted middle line breaks the chain at the
+# next line; a duplicated line is a duplicate. The defect vocabulary must hold for every composition, not the
+# hand-written fixture only.
+_SCAN_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(700, 760)))
+def test_forensic_scan_property_over_random_receipts_files(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    p = tmp_path / "r.jsonl"; lines = p.read_text(encoding="utf-8").splitlines()
+    if len(lines) < 4:
+        return
+    _SCAN_COVERAGE["exercised"] += 1
+    sc = R.scan(p); assert sc["defects"] == [] and sc["valid"] == len(lines) and sc["lines"] == len(lines)
+    rnd = random.Random(seed)
+    # 1. one byte edited inside the JSON body of a random line
+    i = rnd.randrange(len(lines)); line = lines[i]; j = line.index('"seed":')
+    edited = line[:j] + '"seed_": ' + line[j + len('"seed":'):]
+    p.write_text("\n".join(lines[:i] + [edited] + lines[i + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["line"] for d in sc["defects"]] == [i + 1] and sc["defects"][0]["defect"].startswith(("RECEIPT_ID_MISMATCH", "SCHEMA:")), (seed, sc["defects"])
+    with pytest.raises(R.ReceiptError):
+        R.read_all(p)
+    # 2. one middle line deleted: the chain breaks exactly at the next line
+    k = rnd.randrange(1, len(lines) - 1)
+    p.write_text("\n".join(lines[:k] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(k + 1, "CHAIN_BREAK")], (seed, k, sc["defects"])
+    # 3. one line duplicated
+    p.write_text("\n".join(lines[:k + 1] + [lines[k]] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["defect"] for d in sc["defects"]][:1] == ["DUPLICATE_RECEIPT_ID"] and sc["defects"][0]["line"] == k + 2, (seed, sc["defects"][:2])
+    # 4. truncated last line
+    p.write_text("\n".join(lines[:-1]) + "\n" + lines[-1][: len(lines[-1]) // 2], encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(len(lines), "TRUNCATED_OR_MALFORMED_JSON")]
+
+
+def test_the_scan_property_was_actually_exercised():
+    assert _SCAN_COVERAGE["exercised"] >= 12, _SCAN_COVERAGE
+
+
+# C141: a receipt names the kernel that produced it -- build.kernel_hash covers every kernel module and none of the
+# tests/examples/playtests: a one-byte change to a kernel file changes the hash (refresh=True), a change to a test
+# file does not; receipts of one process share host and build.
+def test_kernel_hash_names_the_kernel_and_only_the_kernel(tmp_path):
+    from prometheus.toolbox.receipt import build_block
+    import pathlib as _pl
+    root = _pl.Path(__file__).resolve().parents[1]
+    base = build_block(refresh=True); assert base["n_files"] >= 20 and len(base["kernel_hash"]) == 16
+    target = root / "series.py"; src = target.read_text(encoding="utf-8")
+    try:
+        target.write_text(src + "\n# touched\n", encoding="utf-8", newline="\n")
+        changed = build_block(refresh=True)
+    finally:
+        target.write_text(src, encoding="utf-8", newline="\n")
+    assert changed["kernel_hash"] != base["kernel_hash"] and changed["n_files"] == base["n_files"]
+    tfile = root / "tests" / "test_kernel.py"; tsrc = tfile.read_text(encoding="utf-8")
+    try:
+        tfile.write_text(tsrc + "\n# touched\n", encoding="utf-8", newline="\n")
+        same = build_block(refresh=True)
+    finally:
+        tfile.write_text(tsrc, encoding="utf-8", newline="\n")
+    assert same["kernel_hash"] == base["kernel_hash"]
+    assert build_block(refresh=True) == base
+    rs = R.read_all(_write(tmp_path))
+    assert len({r["build"]["kernel_hash"] for r in rs}) == 1 and len({json.dumps(r["host"], sort_keys=True) for r in rs}) == 1

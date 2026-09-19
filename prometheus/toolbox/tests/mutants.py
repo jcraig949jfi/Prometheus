@@ -97,17 +97,54 @@ MUTANTS = [
     # fifteenth wave (C115): compact archives
     ("M68", "search.py", "    if not path.exists():\n        raise FileNotFoundError(\"compact archive row names %s which is not present\" % path)", "    if not path.exists():\n        from prometheus.toolbox.ref.players import random_statemachine; return random_statemachine(1).manifest()", "a compact row whose file is gone gets a silent fresh player"),
     ("M69", "search.py", "        r[\"_file\"] = path.name                                   # C115: rows may point here instead of embedding the player", "        r[\"_file\"] = \"gen_000_a0.jsonl\"", "compact rows all point at generation 0's file"),
+    # sixteenth wave (C119): checkpoints carry wrapper state and mutable params
+    ("M70", "backends/local.py", "        self._buf = {int(k): v for k, v in d[\"buf\"].items()}; self._perms = None        # permutations are re-derived from their seeds", "        self._buf = {}; self._perms = None", "a resumed delay wrapper starts with empty buffers"),
+    ("M71", "backends/local.py", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"])); self._t = int(d[\"t\"]); self._i = int(d[\"i\"])", "        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d[\"inner\"]))", "a resumed schedule fires its past entries again"),
+    ("M72", "ref/worlds.py", "        self.p.update(d.get(\"params\", {}))\n        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "        self._trace = hashlib.sha256((\"restored:\" + d[\"trace\"]).encode())", "a restored integer world forgets its runtime-mutable params"),
+    # seventeenth wave (C121): committed receipts as fixtures
+    ("M73", "ref/worlds.py", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 97))", "                        st[\"pending\"].append((t + p[\"action_delay\"], pid, self.act_targets[i], x * 98))", "a one-constant semantic change to the reference world (the committed receipts must diverge)"),
+    ("M74", "ref/worlds_grid.py", "\"cells_nonzero\": sum(1 for c in st[\"cells\"] if c), \"pools\": list(st[\"pools\"])}", "\"cells_nonzero\": 0, \"pools\": list(st[\"pools\"])}", "grid summary lies about non-zero cells"),
+    # eighteenth wave (C127): forensic scan property
+    ("M75", "receipt.py", "                if isinstance(rec, dict) and isinstance(rec.get(\"receipt_id\"), str):\n                    chain.append(rec[\"receipt_id\"])", "                pass", "an edited receipt is reported twice (edit + a chain break on the next line)"),
+    # nineteenth wave (C133): point mutation always changes one cell
+    ("M76", "ref/transforms.py", "            cur = cell[2] + 1; cell[2] = (cur + 1 + s.below(pl[\"mem_range\"])) % (pl[\"mem_range\"] + 1) - 1", "            cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl[\"mem_range\"])", "a v2 point mutation may return the parent unchanged"),
+    # twentieth wave (C135): the substrate's clock in the checkpoint
+    ("M77", "backends/local.py", "          \"substrates\": [so.snapshot().hex() if hasattr(so, \"snapshot\") else (so.dev.snapshot().hex() if hasattr(so, \"dev\") else None) for so in subs],   # C135: the substrate's clock too", "          \"substrates\": [so.dev.snapshot().hex() if hasattr(so, \"dev\") else None for so in subs],", "checkpoint carries the device but not the substrate's clock"),
+    ("M78", "ref/substrates.py", "        d = json.loads(snap.decode()); self._t = d[\"t\"]; self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "        d = json.loads(snap.decode()); self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "a restored substrate's clock restarts at zero"),
+    # twenty-first wave (C139): streams in the state model
+    ("M79", "state.py", "        if len(s[\"r\"]) > s[\"maxlen\"]:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "        if False:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "streams grow past maxlen"),
+    ("M80", "state.py", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._s, self._z):", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._z):", "end_scope leaves streams alive (anchor: end_scope, not advance -- the first anchor hit an equivalent mutant)"),
+    ("M81", "state.py", "        self._s = {k: dict(e, r=[(rid, tuple(rec)) for rid, rec in e[\"r\"]]) for k, e in d[\"s\"].items()}", "        self._s = {}", "a restored device forgets its streams"),
+    # twenty-second wave (C146): duplicate sweep values
+    ("M82", "ir.py", "            elif len({json.dumps(v, sort_keys=True, default=str) for v in vals}) != len(vals):", "            elif False:", "duplicate sweep values accepted (a point runs twice; resume double-counts)"),
+    # twenty-third wave (C148): failed rows, generator fallback, registry-scoped selectors
+    ("M83", "search.py", "        fp = (r[\"science\"].get(\"player_fingerprints\") or {}).get(\"0\") or {}", "        fp = r[\"science\"][\"player_fingerprints\"][\"0\"]", "a FAILED run crashes row ingestion (generation never commits)"),
+    ("M84", "search.py", "    gen = reg.get(parent[\"representation\"]).factory\n    return gen(seed, meta={\"fallback\": \"generator\", \"parent_representation\": parent[\"representation\"]})", "    return reg.make(\"transform.shuffle.v1\").apply(parent, seed)", "a representation no transform accepts crashes propose"),
+    ("M85", "search.py", "    sel.workdir = workdir; sel.compact = compact; sel.registry = registry           # C148: selectors resolve generators and transforms here", "    sel.workdir = workdir; sel.compact = compact", "selectors use the process-global registry"),
+    # twenty-fourth wave (C149): refused lowering inside a search
+    ("M86", "search.py", "    if not low.ok:                                             # C149: a refused lowering is a stopped search with the reasons, never an AttributeError\n        raise GenerationIncomplete(\"generation %d refused at lowering (%s): %s\" % (gen, low.status, \"; \".join(low.reasons)[:300]), low.status)", "    pass", "a refused lowering crashes the search"),
 ]
 
 
+def _purge_bytecode() -> None:
+    """C122: a mutant of the SAME byte length restored within the same mtime second left a .pyc compiled from the
+    mutated source that Python's timestamp+size check accepted for the restored file -- the suite then failed on an
+    unmutated tree (27 replay fixtures diverged on a stale x*98). Mutant runs write no bytecode and purge what exists."""
+    import shutil
+    for d in (ROOT / TB).rglob("__pycache__"):
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def run_suite() -> tuple:
+    import os
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
     t0 = time.time()
     # C95: the anchor-drift test (C87) fails for EVERY applied mutant -- with it in the run a mutant no real test
     # catches still reads CAUGHT (18 of 46 rows had it as their first failure). It is deselected here; only tests
     # of BEHAVIOUR may catch a mutant.
     r = subprocess.run([sys.executable, "-m", "pytest", "prometheus/toolbox/tests", "-q", "-x", "-p", "no:cacheprovider", "--ignore=prometheus/toolbox/tests/mutants.py",
                         "--deselect", "prometheus/toolbox/tests/test_integrity.py::test_every_mutant_anchor_still_exists"],
-                       cwd=str(ROOT), capture_output=True, text=True, timeout=900)
+                       cwd=str(ROOT), capture_output=True, text=True, timeout=900, env=env)
     last = [l for l in r.stdout.splitlines() if l.strip()][-1:] or [""]
     failed = [l for l in r.stdout.splitlines() if l.startswith("FAILED")]
     return r.returncode, last[0], (failed[0][:140] if failed else ""), round(time.time() - t0, 1)
@@ -118,6 +155,7 @@ def main(argv):
     if "--only" in argv:
         only = argv[argv.index("--only") + 1].split(",")
     ledger = []
+    _purge_bytecode()
     for mid, rel, old, new, what in MUTANTS:
         if only and mid not in only:
             continue
@@ -128,13 +166,20 @@ def main(argv):
             p.write_text(src.replace(old, new, 1), encoding="utf-8", newline="\n")
             rc, tail, first_fail, secs = run_suite()
         finally:
-            p.write_text(src, encoding="utf-8", newline="\n")
+            p.write_text(src, encoding="utf-8", newline="\n"); _purge_bytecode()
         assert p.read_text(encoding="utf-8") == src
         ledger.append({"id": mid, "file": rel, "what": what, "result": "CAUGHT" if rc != 0 else "SURVIVED", "first_failure": first_fail, "suite_tail": tail, "seconds": secs})
         print(json.dumps(ledger[-1]))
     out = ROOT / "roles/Bellerophon/science/MUTATION_LEDGER_2026-09-19.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(ledger, indent=1), encoding="utf-8", newline="\n")
+    if only and out.exists():                                     # C134: a --only run MERGES its rows; it never replaces the full ledger
+        prior = {r["id"]: r for r in json.loads(out.read_text(encoding="utf-8"))}
+        for r in ledger:
+            prior[r["id"]] = r
+        ledger_out = sorted(prior.values(), key=lambda r: int(r["id"][1:]))
+    else:
+        ledger_out = ledger
+    out.write_text(json.dumps(ledger_out, indent=1), encoding="utf-8", newline="\n")
     print("survivors:", [m["id"] for m in ledger if m["result"] == "SURVIVED"])
     return ledger
 

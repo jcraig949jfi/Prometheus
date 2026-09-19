@@ -114,6 +114,12 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
         w.restore(snap); o1 = w.observe(0); w.reset(seeds[0]); o2 = w.observe(0)
         if not isinstance(snap, (bytes, bytearray)) or o1 != o2:
             ext_fail.append("ext.snapshot.v1")
+    if "ext.snapshot.v1" in row.capabilities and "ext.world.mutable_params.v1" in row.capabilities and getattr(w, "MUTABLE", None):
+        # C119: runtime-mutable params are state; a snapshot taken after set_params must restore the changed value
+        k = list(w.MUTABLE)[0]; w.reset(seeds[0]); before = w.p[k]; w.set_params(**{k: (before or 0) + 1}); snap = w.snapshot()
+        w2 = row.factory(**params); w2.reset(seeds[0]); w2.restore(snap)
+        if w2.p.get(k) != (before or 0) + 1:
+            ext_fail.append("ext.world.mutable_params.v1 (params not carried by ext.snapshot.v1)")
     checks["extensions"] = {"ok": not ext_fail, "undemonstrable": ext_fail}
     if ext_fail:
         res.failed.append("extensions")

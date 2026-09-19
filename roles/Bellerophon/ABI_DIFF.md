@@ -70,3 +70,8 @@ exists today (prometheus/toolbox/ref/) or an estimate marked ~.
 - ComponentRecord.admission_params (C94); Registry.batch_implementation(kind, admit_on_demand=True) (C92).
 - objective.multi.v1, objective.survival.v2, world.integer_batch.v1 registered; selectors take rank=; search rows
   carry player_hash; search.SelectorNeedsScalar.
+- C133 (post-closing): transform.point_mutation.v1 SEMANTIC FIX, same kind name: the v2/v3 memory branches could
+  draw the current value again (4% of mutations were no-ops; a one-state machine's next-state field could never
+  change). Every branch now steps away from the current value. Archives written before this carry the players
+  they carry (rows are data); a resumed pre-fix search will propose different children from this point on.
+  Not versioned as v2 because the old behaviour was a defect of the operator's stated contract ("one cell changes").

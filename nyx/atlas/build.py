@@ -90,15 +90,15 @@ def build() -> dict:
                        "handoffs_open": len(open_rows), "handoffs_open_max_age_ticks": max(ages) if ages else 0,
                        "returns_received": len(g.get("returns_received", [])), "escalations": len(g.get("escalations", [])),
                        "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"}
-        # Operator directive 2026-09-18 (refinery, s6): the scoreboard is verdicts, not cuts. Prediction packets are the issued
-        # objects; a Harmonia typed return on one is a verdict. Latency is issue-tick to verdict-tick. The cap is 3 open packets
-        # per Harmonia execution lane (M3-native is the only lane today). Atlas counts stay above as a reservoir, not the output.
-        VERDICT_KINDS = ("CUT", "NYX_PREDICTION_PACKET")
-        rr = g.get("returns_received", [])
-        pkt_returns = [r for r in rr if r.get("kind") in VERDICT_KINDS]
-        def _has(sub):
-            return sum(1 for r in pkt_returns if sub in str(r.get("return_type", "")).upper())
+        # Operator directive 2026-09-19 (ASAL pipeline direction, s9): STOP counting supported/failed packet ROWS as if each were an
+        # independent discovery. A packet holds boundary checks, predictions, controls and domain qualifications -- evidence components
+        # of ONE investigation. Count investigations and their yields instead, keyed off structured fields on the packets_issued rows.
+        # A mechanism == a packet for now (one mechanism per packet); mechanism_isolated is a supported boundary that names a mechanism.
+        # The highest-value count is MECHANISMS THAT SURVIVED TRANSPLANT (transplant == "SUPPORTED"), not the number of supported clauses.
         packets = g.get("packets_issued", [])
+        active = [q for q in packets if not q.get("superseded_by")]          # superseded investigations do not re-count
+        def _s(seq, key):
+            return sum(int(q.get(key, 0) or 0) for q in seq)
         open_pkts = [q for q in packets if not q.get("verdict_tick")]
         lane_open = {}
         for q in open_pkts:
@@ -112,17 +112,25 @@ def build() -> dict:
                     pass
         lat.sort()
         median_lat = (lat[len(lat)//2] if len(lat) % 2 else (lat[len(lat)//2 - 1] + lat[len(lat)//2]) / 2) if lat else None
+        mech_isolated = [q for q in active if q.get("mechanism_isolated")]
         dm["scoreboard"] = {
-            "schema": "nyx.scoreboard/1 (operator refinery directive 2026-09-18 s6)",
+            "schema": "nyx.scoreboard/2 (operator directive 2026-09-19 s9; supersedes /1 row-counting)",
             "packets_issued": len(packets),
-            "verdicts_returned": len(pkt_returns),
-            "supported": _has("SUPPORTED"), "failed": _has("FAILED"),
-            "indeterminate": _has("INDETERMINATE"), "interface_insufficient": _has("INTERFACE") + _has("INSTRUMENT_INSUFFICIENT"),
-            "mechanisms_accepted_downstream": len(g.get("downstream_accepted", [])),
+            "packets_adjudicated": sum(1 for q in active if q.get("adjudicated")),
+            "predictions_tested": _s(active, "predictions_tested"),
+            "predictions_falsified": _s(active, "predictions_falsified"),
+            "cuts_technically_supported": sum(1 for q in active if q.get("cut_supported")),
+            "mechanisms_isolated": len(mech_isolated),
+            "observer_stable_mechanisms": sum(1 for q in mech_isolated if q.get("observer_stable") == "YES"),
+            "successful_independent_transplants": sum(1 for q in mech_isolated if q.get("transplant") == "SUPPORTED"),
+            "unresolved_anomalies": len([a for a in g.get("unresolved_anomalies", []) if a.get("status") == "OPEN"]),
+            "mechanisms_that_survived_transplant": sum(1 for q in mech_isolated if q.get("transplant") == "SUPPORTED"),
             "median_cut_to_verdict_days": median_lat,
             "open_packets_by_lane": lane_open, "cap_per_lane": 3,
             "over_cap_lanes": {k: v for k, v in lane_open.items() if v > 3},
-            "note": "verdicts are the output; the organ atlas above is the reservoir. packets_issued is populated from gates LEDGER packets_issued rows once packets are frozen; before any packet is frozen this reads the frozen prediction files' returns.",
+            "note": ("a prediction falsified with recoverable mechanism information is productive output, not a failure (s8); "
+                     "predictions_tested/falsified count interventions across ACTIVE (non-superseded) investigations; "
+                     "the highest-value count is mechanisms_that_survived_transplant. The organ atlas above is the reservoir."),
         }
     _dump("DEPTH_MAP", dm)
     return dm
