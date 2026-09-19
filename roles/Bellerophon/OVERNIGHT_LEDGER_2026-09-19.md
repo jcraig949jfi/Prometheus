@@ -885,3 +885,11 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   fuzz's horizons of 0/1 and missing objectives starved it -- a property that mostly returns early is the C93
   false green in another form; the guard caught it.
 - suite 527 passed / 6 skipped (the properties grew the suite by 40 items each).
+
+## C126 (08:19Z) the series contract as a property over random IRs
+- 120 random IRs each given a series observer (per-player on odd seeds; every third pushed past the inline
+  boundary): every written series verifies as its written status; recovered episodes match n_episodes,
+  n_records and the run's ticks, every record its declared width; a declared bound drops and says so; deleting
+  an artifact reads MISSING_ARTIFACT. 49 compositions exercised, 16 artifact series, 68 bounded; guard >= 10 /
+  >= 3. All agree. (First version exercised 6: only the fuzz's own series observers -- the guard again.)
+- suite 648 passed / 6 skipped, 34 s.
