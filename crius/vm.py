@@ -79,17 +79,46 @@ OPNAMES = list(OPSPEC)
 OP = {name: i for i, name in enumerate(OPNAMES)}
 _FIRST_STORE_OP = OP["WS_READ"]
 INPUT_FIELDS = ("current", "target", "interactions_left", "num_ops", "task_index",
-                "steps_left", "last_delta", "current_block", "last_action")
+                "steps_left", "last_delta", "current_block", "last_action", "status")
+
+
+class Fail:
+    """Tagged failure sentinel (DESIGN_C1 s4). Poisons arithmetic, never acts, never stored."""
+    __slots__ = ("code",)
+
+    def __init__(self, code: int = 1):
+        self.code = code
+
+    def __eq__(self, other):
+        return isinstance(other, Fail) and other.code == self.code
+
+    def __hash__(self):
+        return hash(("Fail", self.code))
+
+    def __repr__(self):
+        return "FAIL(%d)" % self.code
+
+
+FAIL = Fail(1)
 IMM_RANGE = (-20, 20)
 
 
 # ---------------------------------------------------------------- values
 
 
-def to_int(v) -> int:
+def to_int(v):
+    """Int view of a value; None for the FAIL sentinel (callers treat None as invalid)."""
+    if isinstance(v, Fail):
+        return None
     if isinstance(v, tuple):
         return int(v[0]) if v else 0
     return int(v)
+
+
+def _ti(v) -> int:
+    """Int view for addressing: FAIL addresses nothing useful; map to -1."""
+    i = to_int(v)
+    return -1 if i is None else i
 
 
 def _wrap(i: int) -> int:
@@ -97,6 +126,8 @@ def _wrap(i: int) -> int:
 
 
 def _arith(fn, x, y):
+    if isinstance(x, Fail) or isinstance(y, Fail):
+        return FAIL
     if isinstance(x, tuple) or isinstance(y, tuple):
         if not isinstance(x, tuple):
             x = (x,) * len(y)
@@ -115,6 +146,8 @@ def _mod(p, q):
 
 
 def is_zero(v) -> bool:
+    if isinstance(v, Fail):
+        return False
     if isinstance(v, tuple):
         return all(e == 0 for e in v)
     return v == 0
@@ -196,7 +229,7 @@ def disassemble(program) -> str:
 
 
 class VMState:
-    __slots__ = ("regs", "ws", "blocks", "env", "recording", "depth", "instr_count")
+    __slots__ = ("regs", "ws", "blocks", "env", "recording", "depth", "instr_count", "trace")
 
     def __init__(self, env, ws, blocks):
         self.regs = [0] * NREG
@@ -206,6 +239,7 @@ class VMState:
         self.recording = None
         self.depth = 0
         self.instr_count = 0
+        self.trace = {}  # opcode name -> executions this task (store ops, ACT, INPUT); for post-hoc recovery
 
 
 def run_program(program, env, ws, blocks) -> VMState:
@@ -230,10 +264,16 @@ def invoke_block(block_id: int, st: VMState, from_block: int = -1) -> bool:
         return False
     st.blocks.note_invocation(b.block_id, from_block)
     st.depth += 1
+    entry = tuple(st.regs[:4])
+    t0 = len(st.env.trajectory)
+    was_success = st.env.success
     try:
         _execute(b.instructions, st, block_id=b.block_id)
     finally:
         st.depth -= 1
+        if st.env.success and not was_success:
+            st.env.success_in_block = True  # the solving action was emitted inside an invoked block
+        st.blocks.log_invocation(b.block_id, entry, [a for a, _ in st.env.trajectory[t0:]])
     return True
 
 
@@ -250,6 +290,8 @@ def _execute(code, st: VMState, block_id: int):
         env.charge(1)
         st.instr_count += 1
         name = OPNAMES[opc]
+        if opc >= _FIRST_STORE_OP or name in ("ACT", "ACTI", "INPUT", "BLK_INVOKE"):
+            st.trace[name] = st.trace.get(name, 0) + 1
         if opc >= _FIRST_STORE_OP:
             # workspace and block operations: their cost units count against the step budget too
             cost0 = ws.cost + blocks.cost
@@ -276,17 +318,23 @@ def _execute(code, st: VMState, block_id: int):
             regs[a] = 1 if regs[b] == regs[c] else 0
         elif name == "LT":
             x, y = regs[b], regs[c]
-            if isinstance(x, tuple) != isinstance(y, tuple):
-                x, y = to_int(x), to_int(y)
-            regs[a] = 1 if x < y else 0
+            if isinstance(x, Fail) or isinstance(y, Fail):
+                regs[a] = 0
+            else:
+                if isinstance(x, tuple) != isinstance(y, tuple):
+                    x, y = to_int(x), to_int(y)
+                regs[a] = 1 if x < y else 0
         elif name == "NOT":
             regs[a] = 1 if is_zero(regs[b]) else 0
         elif name == "VGET":
             v = regs[b]
-            regs[a] = v[to_int(regs[c]) % len(v)] if isinstance(v, tuple) and v else to_int(v)
+            if isinstance(v, Fail) or isinstance(regs[c], Fail):
+                regs[a] = FAIL
+            else:
+                regs[a] = v[to_int(regs[c]) % len(v)] if isinstance(v, tuple) and v else to_int(v)
         elif name == "VSET":
             v = regs[a]
-            if isinstance(v, tuple) and v:
+            if isinstance(v, tuple) and v and not isinstance(regs[b], Fail) and not isinstance(regs[c], Fail):
                 i = to_int(regs[b]) % len(v)
                 regs[a] = v[:i] + (_wrap(to_int(regs[c])),) + v[i + 1 :]
         elif name == "VLEN":
@@ -308,19 +356,34 @@ def _execute(code, st: VMState, block_id: int):
             f = b % len(INPUT_FIELDS)
             if f == 7:
                 regs[a] = block_id
+            elif f == 9:
+                regs[a] = env.status
             else:
                 regs[a] = env.observation()[INPUT_FIELDS[f]]
         elif name == "ACT":
             v = to_int(regs[a])
-            if st.recording is not None:
-                st.recording.append((OP["ACTI"], v % (world.NUM_OPS + 1), 0, 0))
+            if v is not None and env.valid_action(v) and st.recording is not None:
+                st.recording.append((OP["ACTI"], v, 0, 0))
             env.act(v)
         elif name == "ACTI":
-            if st.recording is not None:
-                st.recording.append((OP["ACTI"], a % (world.NUM_OPS + 1), 0, 0))
+            if env.valid_action(a) and st.recording is not None:
+                st.recording.append((OP["ACTI"], a, 0, 0))
             env.act(a)
         else:
             raise RuntimeError("unknown opcode %r" % (opc,))
+
+
+def _fail(st, result):
+    """Map a store's negative id to the FAIL sentinel and set the status channel."""
+    if isinstance(result, int) and result < 0:
+        st.env.status = 1
+        return FAIL
+    return result
+
+
+def _status(st, ok: bool):
+    if not ok:
+        st.env.status = 1
 
 
 def _store_op(name, a, b, c, st, block_id):
@@ -330,73 +393,74 @@ def _store_op(name, a, b, c, st, block_id):
     if False:
         pass
     elif name == "WS_READ":
-        regs[a] = ws.read(to_int(regs[b]))
+        regs[a] = ws.read(_ti(regs[b]))
     elif name == "WS_WRITE":
-        ws.write(to_int(regs[a]), regs[b])
+        _status(st, ws.write(_ti(regs[a]), regs[b]))
     elif name == "WS_APPEND":
-        ws.append(to_int(regs[a]), regs[b])
+        _status(st, ws.append(_ti(regs[a]), regs[b]))
     elif name == "WS_SREAD":
-        regs[a] = ws.read_stream(to_int(regs[b]), to_int(regs[c]))
+        regs[a] = ws.read_stream(_ti(regs[b]), _ti(regs[c]))
     elif name == "WS_SLEN":
-        regs[a] = ws.stream_len(to_int(regs[b]))
+        regs[a] = ws.stream_len(_ti(regs[b]))
     elif name == "WS_REC_NEW":
-        regs[a] = ws.create_record()
+        regs[a] = _fail(st, ws.create_record())
     elif name == "WS_REC_GET":
-        regs[a] = ws.get_field(to_int(regs[b]), to_int(regs[c]))
+        regs[a] = ws.get_field(_ti(regs[b]), _ti(regs[c]))
     elif name == "WS_REC_SET":
-        ws.set_field(to_int(regs[a]), to_int(regs[b]), regs[c])
+        _status(st, ws.set_field(_ti(regs[a]), _ti(regs[b]), regs[c]))
     elif name == "WS_LINK":
-        ws.create_link(to_int(regs[a]), to_int(regs[b]), to_int(regs[c]))
+        ws.create_link(_ti(regs[a]), _ti(regs[b]), _ti(regs[c]))
     elif name == "WS_LINKS":
-        regs[a] = len(ws.links_from(to_int(regs[b])))
+        regs[a] = len(ws.links_from(_ti(regs[b])))
     elif name == "WS_LINK_GET":
-        regs[a] = ws.link_get(to_int(regs[b]), to_int(regs[c]))
+        regs[a] = ws.link_get(_ti(regs[b]), _ti(regs[c]))
     elif name == "WS_ALLOC":
-        regs[a] = ws.allocate(to_int(regs[b]))
+        regs[a] = _fail(st, ws.allocate(_ti(regs[b])))
     elif name == "WS_FREE":
-        ws.free(to_int(regs[a]))
+        ws.free(_ti(regs[a]))
     elif name == "WS_FIND":
         regs[a] = ws.find(regs[b])
     elif name == "BLK_NEW":
-        regs[a] = blocks.create()
+        regs[a] = _fail(st, blocks.create())
     elif name == "BLK_APPEND":
         ins = regs[b]
         if isinstance(ins, tuple) and len(ins) == 4:
-            blocks.append(to_int(regs[a]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
+            blocks.append(_ti(regs[a]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
         else:
             blocks.cost += 1
     elif name == "BLK_PATCH":
         ins = regs[c]
         if isinstance(ins, tuple) and len(ins) == 4:
-            blocks.patch(to_int(regs[a]), to_int(regs[b]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
+            blocks.patch(_ti(regs[a]), _ti(regs[b]), (ins[0] % len(OPNAMES), ins[1], ins[2], ins[3]))
         else:
             blocks.cost += 1
     elif name == "BLK_COPY":
-        regs[a] = blocks.copy(to_int(regs[b]))
+        regs[a] = _fail(st, blocks.copy(_ti(regs[b])))
     elif name == "BLK_COMPOSE":
-        regs[a] = blocks.compose(to_int(regs[b]), to_int(regs[c]))
+        regs[a] = _fail(st, blocks.compose(_ti(regs[b]), _ti(regs[c])))
     elif name == "BLK_DELETE":
-        blocks.delete(to_int(regs[a]))
+        blocks.delete(_ti(regs[a]))
     elif name == "BLK_INVOKE":
-        invoke_block(to_int(regs[a]), st, from_block=block_id)
+        invoke_block(_ti(regs[a]), st, from_block=block_id)
     elif name == "BLK_LEN":
-        regs[a] = blocks.length(to_int(regs[b]))
+        regs[a] = blocks.length(_ti(regs[b]))
     elif name == "BLK_COUNT":
         regs[a] = blocks.count()
     elif name == "BLK_STATE_GET":
-        regs[a] = blocks.state_get(to_int(regs[b]), to_int(regs[c]))
+        regs[a] = blocks.state_get(_ti(regs[b]), _ti(regs[c]))
     elif name == "BLK_STATE_SET":
-        blocks.state_set(to_int(regs[a]), to_int(regs[b]), regs[c])
+        blocks.state_set(_ti(regs[a]), _ti(regs[b]), regs[c])
     elif name == "BLK_REC_BEGIN":
         if st.recording is None:
             st.recording = []
     elif name == "BLK_REC_END":
         if st.recording is None:
-            regs[a] = -1
+            regs[a] = FAIL
+            st.env.status = 1
         else:
             rec = st.recording
             st.recording = None
-            regs[a] = blocks.create(rec, origin="record")
+            regs[a] = _fail(st, blocks.create(rec, origin="record"))
     else:
         raise RuntimeError("unknown store opcode %r" % (name,))
 

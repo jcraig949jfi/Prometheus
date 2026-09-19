@@ -13,7 +13,7 @@ import os
 import subprocess
 import time
 
-from . import tasks as tasks_mod, world
+from . import streams, tasks as tasks_mod
 
 
 def load_config(path: str) -> dict:
@@ -48,18 +48,22 @@ def code_dirty() -> bool:
 
 
 def run_meta(cfg: dict, config_path: str) -> dict:
-    parts = tasks_mod.build_partitions(cfg)
-    return {
+    fp = streams.fingerprints(cfg)
+    meta = {
         "code_commit": code_commit(),
         "code_dirty_crius": code_dirty(),
         "config_path": config_path,
         "config_hash": config_hash(cfg),
         "config": cfg,
-        "world_fingerprint": world.world_fingerprint(),
-        "partitions_fingerprint": tasks_mod.partitions_fingerprint(parts),
-        "partition_sizes": {k: len(v) for k, v in parts.items()},
+        "world_id": streams.world_id(cfg),
+        "world_fingerprint": fp["world_fingerprint"],
+        "partitions_fingerprint": fp["partitions_fingerprint"],
         "created_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
+    if streams.world_id(cfg) == "c0":
+        parts = tasks_mod.build_partitions(cfg)
+        meta["partition_sizes"] = {k: len(v) for k, v in parts.items()}
+    return meta
 
 
 def _jsonable(o):
@@ -158,8 +162,8 @@ def one_line(name: str, seed: int, bat: dict, dt: float) -> str:
     r = bat["WORKSPACE_RESET"]["metrics"]
     s = bat["WORKSPACE_SCRAMBLED"]["metrics"]
     le = a["late_early_ratio_by_depth"]
-    return ("%-13s seed %d  eff A=%.3f F=%.3f R=%.3f S=%.3f  succ A=%d F=%d  inter A=%d F=%d  "
+    return ("%-13s seed %d  fit A=%.3f F=%.3f R=%.3f S=%.3f  succ A=%d F=%d  inter A=%d F=%d  "
             "late/early d2=%s d3=%s  reuse_gain=%.1f  blocks=%d  %.1fs" % (
-                name, seed, a["C0_EFFICIENCY"], f["C0_EFFICIENCY"], r["C0_EFFICIENCY"], s["C0_EFFICIENCY"],
+                name, seed, a["fitness"], f["fitness"], r["fitness"], s["fitness"],
                 a["successes"], f["successes"], a["interactions_total"], f["interactions_total"],
                 le.get("2"), le.get("3"), sum(bat["reuse_gain"]), a["blocks_created_total"], dt))

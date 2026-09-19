@@ -22,7 +22,7 @@ import random
 import time
 from multiprocessing import Pool
 
-from . import evaluate, receipts, tasks as tasks_mod, vm
+from . import evaluate, receipts, streams, tasks as tasks_mod, vm
 from .player import VMPlayer
 
 MUTATIONS = ("replace", "arg", "const", "insert", "delete", "swap", "duplicate")
@@ -153,17 +153,31 @@ _WORKER = {}
 
 def _init_worker(cfg: dict):
     _WORKER["cfg"] = cfg
-    _WORKER["tasks"] = {s: tasks_mod.make_lifetime(cfg, s, "search") for s in cfg["seeds"]["search"]}
+    _WORKER["tasks"] = {s: streams.lifetime(cfg, s, "search") for s in cfg["seeds"]["search"]}
 
 
-def evaluate_program(prog_json: list) -> dict:
+def _set_streams(seeds):
+    """Rotating streams: (re)build the worker's task streams for these seeds."""
     cfg = _WORKER["cfg"]
+    _WORKER["tasks"] = {s: streams.lifetime(cfg, s, "search") for s in seeds}
+
+
+def evaluate_program(payload) -> dict:
+    prog_json, seeds = payload
+    cfg = _WORKER["cfg"]
+    if set(seeds) != set(_WORKER["tasks"]):
+        _set_streams(seeds)
     player = VMPlayer(vm.program_from_json(prog_json))
     per_seed = {}
     for seed, tasks in _WORKER["tasks"].items():
         life = evaluate.run_lifetime(player, tasks, cfg, "ACCUMULATED", seed=seed)
         m = life["metrics"]
         per_seed[str(seed)] = {
+            "fitness": m["fitness"],
+            "C1_FITNESS": m["C1_FITNESS"],
+            "charged_cost_total": m["charged_cost_total"],
+            "invalid_actions_total": m["invalid_actions_total"],
+            "store_trace": _sum_traces(life["task_results"]),
             "C0_EFFICIENCY": m["C0_EFFICIENCY"],
             "competence_gained": m["competence_gained"],
             "experience": m["experience"],
@@ -181,15 +195,38 @@ def evaluate_program(prog_json: list) -> dict:
             "adaptation_curve": m["adaptation_curve"],
             "replay_hash": life["replay_hash"],
         }
-    fit = sum(v["C0_EFFICIENCY"] for v in per_seed.values()) / len(per_seed)
-    return {"fitness": round(fit, 5), "per_seed": per_seed, "length": len(prog_json)}
+    fit = sum(v["fitness"] for v in per_seed.values()) / len(per_seed)
+    return {"fitness": round(fit, 5), "per_seed": per_seed, "length": len(prog_json), "stream_seeds": list(seeds)}
 
 
-def _eval_many(pool, progs):
-    payload = [vm.program_to_json(p) for p in progs]
+def _sum_traces(task_results):
+    out = {}
+    for r in task_results:
+        for k, v in r.get("store_trace", {}).items():
+            out[k] = out.get(k, 0) + v
+    return out
+
+
+def _eval_many(pool, progs, seeds):
+    payload = [(vm.program_to_json(p), list(seeds)) for p in progs]
     if pool is None:
         return [evaluate_program(p) for p in payload]
     return pool.map(evaluate_program, payload, chunksize=1)
+
+
+def splice(child: list, donor: list, rng: random.Random, cfg: dict) -> tuple:
+    """Generic segment splice (DESIGN_C1 s5): copy a contiguous segment of the donor into the child."""
+    maxlen = cfg["vm"]["max_program_len"]
+    if not donor or len(child) >= maxlen:
+        return child, "splice:none"
+    lo, hi = cfg["search"].get("splice_len", [1, 8])
+    ln = rng.randint(lo, min(hi, len(donor), maxlen - len(child)))
+    a = rng.randrange(len(donor) - ln + 1)
+    seg = donor[a : a + ln]
+    i = rng.randrange(len(child) + 1)
+    out = _shift_targets(child, i, ln)
+    out[i:i] = seg
+    return out, "splice@%d<-donor[%d:%d]" % (i, a, a + ln)
 
 
 # ---------------------------------------------------------------- the loop
@@ -213,7 +250,9 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
         cand_f.flush()
 
     # initial population
-    if arm == "seeded":
+    rotate = cfg.get("streams", {}).get("rotate", False)
+    seeds_for = lambda it: ([streams.search_stream_seed(cfg, it, seed)] if rotate else list(cfg["seeds"]["search"]))
+    if arm in ("seeded", "recombination"):
         seedprog = vm.enumerate_program()
         init = [(seedprog, None, "seed:ENUMERATE_VM")]
         while len(init) < mu:
@@ -227,7 +266,7 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
     if pool is None:
         _init_worker(cfg)
     t0 = time.time()
-    evals = _eval_many(pool, [p for p, _, _ in init])
+    evals = _eval_many(pool, [p for p, _, _ in init], seeds_for(0))
     population = []
     for (prog, parent, mod), ev in zip(init, evals):
         cid = vm.program_hash(prog)
@@ -244,12 +283,21 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
         while len(children) < lam:
             _, _, pcid, pprog, _ = rng.choice(population)
             child, mod = make_child(pprog, rng, cfg)
+            if arm == "recombination" and rng.random() < cfg["search"].get("splice_fraction", 0.3):
+                _, _, dcid, dprog, _ = rng.choice(population)
+                child, m2 = splice(child, dprog, rng, cfg)
+                mod = mod + "+" + m2 + ":" + dcid
             ccid = vm.program_hash(child)
             if ccid in seen or not child:
                 continue
             seen.add(ccid)
             children.append((child, pcid, mod, ccid))
-        evals = _eval_many(pool, [c[0] for c in children])
+        cur_seeds = seeds_for(it)
+        if rotate:
+            # common random numbers within the comparison: parents are re-evaluated on this iteration's stream
+            pevals = _eval_many(pool, [p[3] for p in population], cur_seeds)
+            population = [(ev["fitness"], p[1], p[2], p[3], {**p[4], "reeval": ev}) for p, ev in zip(population, pevals)]
+        evals = _eval_many(pool, [c[0] for c in children], cur_seeds)
         for (child, pcid, mod, ccid), ev in zip(children, evals):
             rec = {"candidate_id": ccid, "parent_id": pcid, "modification": mod, "iteration": it,
                    "program": vm.program_to_json(child), **ev}
@@ -290,7 +338,7 @@ def main(argv=None):
     ap.add_argument("--config", required=True)
     ap.add_argument("--iterations", type=int, default=150)
     ap.add_argument("--seed", type=int, default=1)
-    ap.add_argument("--arm", choices=("random", "seeded"), default="seeded")
+    ap.add_argument("--arm", choices=("random", "seeded", "recombination"), default="seeded")
     ap.add_argument("--workers", type=int, default=1)
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--mu", type=int, default=None)

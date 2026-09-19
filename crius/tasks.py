@@ -30,6 +30,8 @@ class TaskSpec:
     depth: int
     stage: str
     family: str
+    world_id: str = "c0"
+    perm: tuple = ()
 
     def public(self) -> dict:
         return {

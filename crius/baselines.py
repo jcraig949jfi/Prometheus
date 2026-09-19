@@ -339,26 +339,33 @@ ALL_NAMES = ("RANDOM", "HEURISTIC", "ENUMERATE", "ENUMERATE_VM", "CACHE_REUSE", 
 
 
 def main(argv=None):
-    from . import receipts, tasks as tasks_mod
+    from . import receipts, streams
     from .evaluate import full_battery
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
     ap.add_argument("--out", default=None)
     ap.add_argument("--seeds", type=int, nargs="*", default=None)
-    ap.add_argument("--suite", default="search")
-    ap.add_argument("--names", nargs="*", default=list(ALL_NAMES))
+    ap.add_argument("--suite", default=None)
+    ap.add_argument("--names", nargs="*", default=None)
     args = ap.parse_args(argv)
     cfg = receipts.load_config(args.config)
-    seeds = args.seeds or cfg["seeds"]["search"]
+    c1 = streams.world_id(cfg) == "c1"
+    if c1:
+        from . import baselines_c1
+    names = args.names or (list(baselines_c1.ALL_NAMES) if c1 else list(ALL_NAMES))
+    maker = baselines_c1.make_baseline if c1 else make_baseline
+    if args.suite is None:
+        args.suite = "gate" if c1 else "search"
+    seeds = args.seeds or (cfg["seeds"]["gate"] if c1 else cfg["seeds"]["search"])
     out = args.out or os.path.join("crius", "runs", "baselines_%s" % time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()))
     os.makedirs(out, exist_ok=True)
     meta = receipts.run_meta(cfg, args.config)
     rows = []
-    for name in args.names:
+    for name in names:
         for seed in seeds:
-            player = make_baseline(name)
-            tasks = tasks_mod.make_lifetime(cfg, seed, args.suite)
+            player = maker(name)
+            tasks = streams.lifetime(cfg, seed, args.suite)
             t0 = time.time()
             bat = full_battery(player, tasks, cfg, seed=seed)
             dt = time.time() - t0
