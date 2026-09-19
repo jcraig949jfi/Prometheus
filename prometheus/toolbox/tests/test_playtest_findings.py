@@ -133,3 +133,24 @@ def test_sweep_over_component_refs_pairs_control_arms_and_never_halts(tmp_path):
     low = lower(e, REG); assert low.ok and len(low.job.runs) == 4
     rep = execute(low.job, tmp_path / "r.jsonl", REG)
     assert rep.n_failed == 0 and rep.controls["replay"]["pairs"] == 2 and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C33 (directive s8: "a player is a conventional agent" is not assumed): a REWRITE SYSTEM as a player. Its
+# "policy" is a set of token rewrite rules applied to its own tape; actions are read off the tape; observations
+# are injected as tokens. Nothing in the world, substrate, controls or admission knows what it is.
+from prometheus.toolbox.ref.players import random_rewrite_system
+
+
+def test_rewrite_system_player_runs_and_is_admitted_and_controllable(tmp_path):
+    from prometheus.toolbox.admission import admit
+    from prometheus.toolbox.contracts import ActionSpace
+    spec = random_rewrite_system(5, n_rules=6, alphabet=8, tape_len=12)
+    assert spec.representation == "rewrite.v1"
+    inst = REG.make("substrate.flat.v1").instantiate(spec, 1)
+    acts = [inst.act([t, 1, 2], ActionSpace(2, 8)) for t in range(30)]
+    assert len(set(map(tuple, acts))) > 1 and inst.cost()["rewrites"] > 0
+    assert admit("rewrite.v1", REG).state == "ADMITTED"
+    e = _exp(players=[spec.manifest(), random_statemachine(1).manifest()], world=ref("world.integer.v1", world_seed=2, n_players=2),
+             controls=[ref("control.sham.v1"), ref("control.scratch.v1"), ref("control.replay.v1")])
+    rep = execute(lower(e, REG).job, tmp_path / "rw.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["sham"]["details"][0]["detail"]["transformed_players"] == [0, 1] and rep.controls["replay"]["outcome"] == "MET"

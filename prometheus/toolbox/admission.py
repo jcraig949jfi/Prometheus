@@ -250,7 +250,7 @@ def admit_substrate(kind: str, registry) -> "AdmissionResult":
         if not isinstance(sub, Substrate):
             res.failed.append("conformance")
         makers = {"statemachine.v1": lambda: P.random_statemachine(7), "statemachine.v2": lambda: P.random_statemachine_v2(7), "constant.v1": lambda: P.constant_player([1, 2]),
-                  "proteus.tape.v0": (lambda: P.random_proteus_player(17)) if P.proteus_available() else None}
+                  "rewrite.v1": lambda: P.random_rewrite_system(7), "proteus.tape.v0": (lambda: P.random_proteus_player(17)) if P.proteus_available() else None}
         bad_reps = []
         for rep in sorted(sub.representations):
             mk = makers.get(rep)

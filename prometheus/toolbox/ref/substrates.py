@@ -26,7 +26,7 @@ class FlatInProcessSubstrate:
     capabilities = frozenset({"core.substrate.v1", "ext.cost.v1", "ext.reference.v1"})
 
     def __init__(self):
-        reps = {"statemachine.v1", "statemachine.v2", "constant.v1"}
+        reps = {"statemachine.v1", "statemachine.v2", "constant.v1", "rewrite.v1"}
         if P.proteus_available():
             reps.add("proteus.tape.v0")
         self.representations = frozenset(reps)
@@ -47,6 +47,8 @@ class FlatInProcessSubstrate:
             inst = P.StateMachineV2Instance(spec, NoWorkspace())          # memoryless here: writes refused and counted
         elif spec.representation == "constant.v1":
             inst = P.ConstantInstance(spec)
+        elif spec.representation == "rewrite.v1":
+            inst = P.RewriteInstance(spec)
         else:
             inst = P.ProteusTapeInstance(spec, seed)
         self._instances.append(inst)
@@ -147,7 +149,7 @@ class _WorkspaceSubstrate:
     """Shared machinery for substrates that grant a workspace backed by one InProcessStateDevice.
     Lifecycle hooks (ext.substrate.lifecycle.v1): episode_begin(ep, seed) ends the episode scope; tick(t)
     advances the device's logical clock (one clock across episodes so lifetime ttls are continuous)."""
-    representations = frozenset({"statemachine.v2", "statemachine.v1", "constant.v1"} | ({"proteus.tape.v0"} if P.proteus_available() else set()))
+    representations = frozenset({"statemachine.v2", "statemachine.v1", "constant.v1", "rewrite.v1"} | ({"proteus.tape.v0"} if P.proteus_available() else set()))
 
     def __init__(self, max_keys: int):
         self.dev = ST.InProcessStateDevice(max_keys=max_keys)
@@ -171,6 +173,8 @@ class _WorkspaceSubstrate:
             inst = P.StateMachineInstance(spec)
         elif spec.representation == "constant.v1":
             inst = P.ConstantInstance(spec)
+        elif spec.representation == "rewrite.v1":
+            inst = P.RewriteInstance(spec)
         else:
             inst = P.ProteusTapeInstance(spec, seed)
         self._instances.append(inst)

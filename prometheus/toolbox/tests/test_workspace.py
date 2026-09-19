@@ -133,3 +133,29 @@ def test_stream_lifetime_scope_reports_carry_over(tmp_path):
     e2 = _exp(ref("substrate.stream.v1", scope="episode", lag=1), budget={"episodes": 2, "horizon": 12})
     execute(lower(e2, REG).job, tmp_path / "st2.jsonl", REG)
     assert _primary(tmp_path / "st2.jsonl")["science"]["substrate"]["carry_over"] is False
+
+
+# C34 (directive s8: "state is flat" / one machine per experiment are not assumed): players in ONE world may run
+# on DIFFERENT substrates. A player entry may carry its own substrate ref; the experiment's substrate is the
+# default. Accounting and the receipt name every substrate used.
+def test_players_may_run_on_different_substrates_in_one_world(tmp_path):
+    p_mem = dict(random_statemachine_v2(11).manifest(), substrate=ref("substrate.kv.v1", scope="lifetime"))
+    p_flat = random_statemachine_v2(11).manifest()                                   # same table, default (flat) substrate
+    e = _exp(ref("substrate.flat.v1"), world=ref("world.integer.v1", world_seed=4, n_players=2, start_charge=100000, step_cost=0), players=[p_mem, p_flat],
+             observers=[ref("observer.trace.v1")], budget={"episodes": 2, "horizon": 16})
+    assert e.validate() == []
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "het.jsonl", REG); assert rep.n_failed == 0
+    r = _primary(tmp_path / "het.jsonl")
+    subs = r["components"]["player_substrates"]
+    assert subs == ["substrate.kv.v1", "substrate.flat.v1"]
+    acts = r["science"]["observations"]["observer.trace.v1"]["actions_by_player"]
+    assert acts["0"] != acts["1"], "identical tables on different machines must be able to diverge"
+    assert r["accounting"]["by_substrate"]["substrate.kv.v1"]["ws_writes"] > 0 and r["accounting"]["by_substrate"]["substrate.flat.v1"]["ws_refused"] > 0
+
+
+def test_player_substrate_override_that_cannot_run_the_player_is_refused_at_lowering():
+    p = dict(random_statemachine_v2(11).manifest(), requires=["ext.workspace.kv.v1"], substrate=ref("substrate.flat.v1"))
+    e = _exp(ref("substrate.kv.v1"), players=[p])
+    low = lower(e, REG)
+    assert low.status in ("BLOCKED_MISSING_CAPABILITY", "TARGET_UNSUPPORTED") and low.reasons

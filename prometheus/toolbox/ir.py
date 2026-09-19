@@ -100,6 +100,8 @@ class Experiment:
         for i, p in enumerate(self.players):
             if not isinstance(p, dict) or "representation" not in p or "payload" not in p:
                 bad.append("players[%d] is not a PlayerSpec manifest" % i)
+            elif "substrate" in p and not (isinstance(p["substrate"], dict) and p["substrate"].get("kind")):
+                bad.append("players[%d].substrate must be a component ref when present" % i)
         sp = self.seed_policy
         if not isinstance(sp.get("base"), int) or not isinstance(sp.get("n_seeds"), int) or sp["n_seeds"] < 1:
             bad.append("seed_policy needs int base and n_seeds >= 1")

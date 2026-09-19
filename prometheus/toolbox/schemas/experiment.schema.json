@@ -30,7 +30,8 @@
     "ref": {"type": "object", "required": ["kind"], "properties": {"kind": {"type": "string"}, "params": {"type": "object"}}},
     "playerSpec": {"type": "object", "required": ["representation", "payload"],
                    "properties": {"representation": {"type": "string"}, "payload": {"type": "object"}, "initial_state": {"type": "object"},
-                                  "requires": {"type": "array", "items": {"$ref": "#/$defs/capability"}}, "meta": {"type": "object"}}},
+                                  "requires": {"type": "array", "items": {"$ref": "#/$defs/capability"}}, "meta": {"type": "object"},
+                                  "substrate": {"$ref": "#/$defs/ref", "description": "optional per-player substrate; the experiment's substrate is the default (C34)"}}},
     "intervention": {"type": "object", "required": ["name"],
                      "properties": {"name": {"type": "string"}, "world_params": {"type": "object"}, "wrappers": {"type": "object", "description": "kernel wrappers keyed by name: observation_delay, observation_permute"}}}
   }

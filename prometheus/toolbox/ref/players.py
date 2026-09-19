@@ -216,3 +216,54 @@ class StateMachineV2Instance:
 
     def restore(self, snapshot: bytes) -> None:
         d = json.loads(snapshot.decode()); self.state = d["state"]; self._c = d["c"]; self.ws.restore(bytes.fromhex(d["ws"]))
+
+
+# ------------------------------------------------------------------------------------------ rewrite.v1 (C33)
+def random_rewrite_system(seed: int, n_rules: int = 6, alphabet: int = 8, tape_len: int = 12, meta: dict | None = None) -> PlayerSpec:
+    """A token REWRITE SYSTEM as a player (not an agent): rules [a, b] -> [c, d] over an integer alphabet, applied
+    left-to-right once per tick to the player's own tape after the observation's first tokens are injected at
+    the tape head; the action is the tape's last `width` tokens. Structure = rules + tape; cost = rewrites."""
+    s = stream("rewrite", seed)
+    rules = [[[s.below(alphabet), s.below(alphabet)], [s.below(alphabet), s.below(alphabet)]] for _ in range(n_rules)]
+    tape = [s.below(alphabet) for _ in range(tape_len)]
+    return PlayerSpec("rewrite.v1", {"alphabet": alphabet, "rules": rules, "tape": tape, "inject": 2},
+                      {}, frozenset(), dict(meta or {}, seed=seed, generator="random_rewrite_system"))
+
+
+class RewriteInstance:
+    def __init__(self, spec: PlayerSpec):
+        p = spec.payload
+        self.alphabet = p["alphabet"]; self.rules = [(tuple(l), tuple(r)) for l, r in p["rules"]]; self.tape = list(p["tape"]); self.inject = p["inject"]
+        self._c = {"transitions": 0, "reads": 0, "writes": 0, "ops": 0, "rewrites": 0}
+
+    def act(self, obs: List[int], legal: ActionSpace) -> List[int]:
+        self._c["reads"] += len(obs)
+        for i, v in enumerate(list(obs)[:self.inject]):
+            self.tape[i] = v % self.alphabet
+        t = self.tape; i = 0
+        while i < len(t) - 1:
+            for lhs, rhs in self.rules:
+                if (t[i], t[i + 1]) == lhs:
+                    t[i], t[i + 1] = rhs; self._c["rewrites"] += 1; self._c["writes"] += 2
+                    break
+            i += 1
+            self._c["ops"] += 1
+        self._c["transitions"] += 1
+        acts = t[-legal.width:]
+        self.tape = t[1:] + t[:1]                      # the tape is a shift register: injected tokens flow toward the action end
+        return [a % legal.range for a in acts] + [0] * max(0, legal.width - len(acts))
+
+    def adapt(self, signal: List[int]) -> None:
+        return None
+
+    def cost(self) -> Dict[str, int]:
+        return dict(self._c, params=4 * len(self.rules) + len(self.tape), state_bytes=len(self.tape))
+
+    def fingerprint(self) -> str:
+        return fingerprint_by_probe(self)
+
+    def snapshot(self) -> bytes:
+        return json.dumps({"tape": self.tape, "c": self._c}).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.tape = d["tape"]; self._c = d["c"]

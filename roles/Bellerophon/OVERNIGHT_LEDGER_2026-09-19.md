@@ -227,3 +227,14 @@ C32 | T+1:13 | REPLAY FROM THE RECEIPTS FILE ALONE: the SUMMARY receipt now embe
   NOTE: receipt_id covers the embedded IR, so tampering with it is also visible to scan() unless the id is
   recomputed (as the test deliberately did) -- a forger must rewrite the id, which the forensic scan of an
   UNMODIFIED copy would expose by comparison. Two copies is the defence; recorded, not built.
+C33 | T+1:18 | "a player is a conventional agent" not assumed: rewrite.v1 -- a token rewrite system as a player
+  (rules over an integer alphabet applied to its own tape each tick, observations injected at the head, the
+  tape a shift register, actions read from the tail). RED (representation absent) -> instantiates on every
+  substrate, ADMITTED, sham/scratch transforms accept it, runs beside a state machine in one world with
+  replay MET. First cut produced constant actions (tail never reached by the injected tokens): the shift
+  register fixed it; the test's "actions vary" assertion caught it. Suite 150.
+C34 | T+1:22 | one machine per experiment not assumed: a player entry may carry its own substrate ref (the
+  experiment's substrate is the default). Executor instantiates per player, drives every substrate's
+  lifecycle hooks, merges events, records components.player_substrates and accounting.by_substrate.
+  Negotiation checks a player's requires against ITS machine. RED (2 tests) -> the same table on kv vs flat
+  diverges inside one world; an override that cannot run the player is refused at lowering. Suite 152.

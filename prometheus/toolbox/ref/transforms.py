@@ -38,7 +38,7 @@ SM = ("statemachine.v1", "statemachine.v2")
 
 class ShuffleTransform:
     kind = "transform.shuffle.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -51,6 +51,9 @@ class ShuffleTransform:
             pl["table"] = [flat[i * nb:(i + 1) * nb] for i in range(pl["n_states"])]
         elif spec.representation == "proteus.tape.v0":
             pl["manifest"] = dict(pl["manifest"], genome=_shuffle(list(pl["manifest"]["genome"]), s))
+        elif spec.representation == "rewrite.v1":
+            flat = _shuffle([x for rule in pl["rules"] for side in rule for x in side], s)
+            pl["rules"] = [[flat[i:i + 2], flat[i + 2:i + 4]] for i in range(0, len(flat), 4)]; pl["tape"] = _shuffle(list(pl["tape"]), s)
         else:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))
@@ -58,7 +61,7 @@ class ShuffleTransform:
 
 class FreshTransform:
     kind = "transform.fresh.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -73,6 +76,9 @@ class FreshTransform:
             return P.random_statemachine_v2(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
         if spec.representation == "proteus.tape.v0":
             return P.random_proteus_player(rng_seed, meta={"transform": self.kind})
+        if spec.representation == "rewrite.v1":
+            pl = spec.payload
+            return P.random_rewrite_system(rng_seed, len(pl["rules"]), pl["alphabet"], len(pl["tape"]), meta={"transform": self.kind})
         raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
 
 

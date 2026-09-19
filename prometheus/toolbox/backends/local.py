@@ -82,10 +82,20 @@ def lower(exp: Experiment, registry) -> Lowering:
     provided |= {"ext.intervention.observation_delay.v1", "ext.intervention.observation_permute.v1", "ext.intervention.schedule.v1"}
     sub = registry.make(exp.substrate["kind"], **exp.substrate.get("params", {}))
     provided |= set(sub.capabilities)
-    for p in exp.players:
-        if p["representation"] not in sub.representations:
-            reasons.append("substrate %s cannot instantiate representation %r" % (sub.kind, p["representation"]))
-    neg = C.negotiate(exp.derived_requirements(), provided)
+    for i, p in enumerate(exp.players):
+        # C34: a player may name its own substrate; its requirements are negotiated against THAT machine
+        psub = sub
+        if p.get("substrate"):
+            if not registry.has(p["substrate"]["kind"]):
+                reasons.append("players[%d].substrate %r is not registered" % (i, p["substrate"]["kind"])); continue
+            psub = registry.make(p["substrate"]["kind"], **p["substrate"].get("params", {}))
+        if p["representation"] not in psub.representations:
+            reasons.append("substrate %s cannot instantiate representation %r (players[%d])" % (psub.kind, p["representation"], i))
+        unmet = set(p.get("requires", ())) - set(psub.capabilities)
+        if unmet:
+            reasons.append("players[%d] requires %s which its substrate %s does not offer" % (i, sorted(unmet), psub.kind))
+    req = set(exp.derived_requirements()) - {c for p in exp.players if p.get("substrate") for c in p.get("requires", ())}
+    neg = C.negotiate(req, provided)
     if not neg.ok:
         return Lowering("local", "BLOCKED_MISSING_CAPABILITY", eid, reasons=["missing: %s" % sorted(neg.missing)] + reasons, negotiation=neg.as_dict())
     if reasons:
@@ -199,20 +209,25 @@ def build_world(exp: Experiment, registry):
 # ---------------------------------------------------------------------------------------------- episode loop
 def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int, substrate=None, episode: int = 0) -> dict:
     world.reset(seed)
-    if substrate is not None and hasattr(substrate, "episode_begin"):
-        substrate.episode_begin(episode, seed)                      # ext.substrate.lifecycle.v1
+    subs = substrate if isinstance(substrate, list) else ([substrate] if substrate is not None else [])
+    for so in subs:
+        if hasattr(so, "episode_begin"):
+            so.episode_begin(episode, seed)                          # ext.substrate.lifecycle.v1
     for ob in observers:
         ob.begin({"n_players": world.n_players, "seed": seed})
     has_events = "ext.events.v1" in world.capabilities
-    sub_events = substrate is not None and hasattr(substrate, "events")
+    ev_subs = [so for so in subs if hasattr(so, "events")]
     n_events = 0; ticks = 0; done = False
     while not done and ticks < horizon:
         observations = {pid: world.observe(pid) for pid in instances}
         actions = {pid: instances[pid].act(observations[pid], world.legal_actions(pid)) for pid in instances}
         done = world.step(actions)
-        if substrate is not None and hasattr(substrate, "tick"):
-            substrate.tick(ticks)
-        evs = (world.events() if has_events else []) + (substrate.events() if sub_events else [])
+        for so in subs:
+            if hasattr(so, "tick"):
+                so.tick(ticks)
+        evs = (world.events() if has_events else [])
+        for so in ev_subs:
+            evs += so.events()
         n_events += len(evs)
         for ob in observers:
             # ORDER IS A CONTRACT (C1, 2026-09-19): the events of tick t are delivered BEFORE on_tick(t), so a
@@ -232,7 +247,18 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     world = build_world(exp, registry)
     sub = registry.make(exp.substrate["kind"], **exp.substrate.get("params", {}))
     specs = [PlayerSpec(p["representation"], p["payload"], p.get("initial_state", {}), frozenset(p.get("requires", ())), p.get("meta", {})) for p in exp.players]
-    instances = {pid: sub.instantiate(ps, spec.seed * 31 + pid) for pid, ps in enumerate(specs)}
+    # C34: per-player substrates; one object per distinct override ref, the experiment's substrate as default
+    subs_by_pid: Dict[int, Any] = {}; sub_objs: Dict[str, Any] = {json.dumps(exp.substrate, sort_keys=True): sub}
+    for pid, p in enumerate(exp.players):
+        if p.get("substrate"):
+            k = json.dumps(p["substrate"], sort_keys=True)
+            if k not in sub_objs:
+                sub_objs[k] = registry.make(p["substrate"]["kind"], **p["substrate"].get("params", {}))
+            subs_by_pid[pid] = sub_objs[k]
+        else:
+            subs_by_pid[pid] = sub
+    instances = {pid: subs_by_pid[pid].instantiate(ps, spec.seed * 31 + pid) for pid, ps in enumerate(specs)}
+    all_subs = list(sub_objs.values())
     from prometheus.toolbox.ref.players import probe_silent
     fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst)} for pid, inst in instances.items()}   # spec identity, on the FRESH instance
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
@@ -240,22 +266,30 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     series_obs = [ob for ob in observers if getattr(ob, "series", False)]
     collected = {ob.kind: [] for ob in series_obs}
     for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=sub, episode=ep)
+        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=all_subs if len(all_subs) > 1 else sub, episode=ep)
         hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
         for ob in series_obs:
             collected[ob.kind].append(ob.series_episode())
     wall = time.perf_counter() - t0; cpu = time.process_time() - c0
-    acc = dict(sub.accounting()); acc.update(world.accounting() if hasattr(world, "accounting") else {"world_steps": ticks_total})
+    acc = {}
+    for so in all_subs:
+        for k, v in so.accounting().items():
+            acc[k] = acc.get(k, 0) + int(v)
+    if len(all_subs) > 1:
+        acc["by_substrate"] = {so.kind: so.accounting() for so in all_subs}
+    acc.update(world.accounting() if hasattr(world, "accounting") else {"world_steps": ticks_total})
     acc["wall_s"] = round(wall, 6); acc["cpu_s"] = round(cpu, 6)
     science = {"observations": {ob.kind: ob.measure() for ob in observers}, "world_summary": summaries[-1] if summaries else {},
                "player_fingerprints": fingerprints}
-    if hasattr(sub, "science"):
-        science["substrate"] = sub.science()
+    for so in all_subs:
+        if hasattr(so, "science"):
+            science.setdefault("substrate", {}).update(so.science() if len(all_subs) == 1 else {so.kind: so.science()})
     receipt = {
         "experiment_id": spec.job_id or exp.experiment_id(),
         "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "COMPLETED",
         "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()), "manifest": world.manifest()},
                        "substrate": {"kind": sub.kind, "manifest_hash": component_manifest_hash(sub.manifest())},
+                       "player_substrates": [subs_by_pid[pid].kind for pid in range(len(specs))],
                        "players": [{"representation": p.representation, "manifest_hash": component_manifest_hash(p.manifest()), "meta": p.meta} for p in specs],
                        "observers": [ob.manifest() for ob in observers],
                        "interventions": exp.interventions},
