@@ -29,6 +29,7 @@ COSTS = {
 
 STATE_SLOTS = 8
 INSTR_BYTES = 4
+LOG_CAP = 20000   # telemetry lists (events, edges, invocation log) keep at most this many entries; overflow is counted
 
 
 class ExecutableBlock:
@@ -67,6 +68,7 @@ class BlockStore:
         self.task_invocations = {}  # block_id -> invocations during the current task
         self.edges = []           # (kind, from_id, to_id, task_index): copy/compose/invoked_from
         self.invocation_log = []  # {task, block, entry: R0..R3, actions: emitted action ids}; capped
+        self.dropped = {"events": 0, "edges": 0, "invocation_log": 0}
 
     @classmethod
     def empty(cls, cfg: dict = None) -> "BlockStore":
@@ -106,12 +108,22 @@ class BlockStore:
             "blocks": len(self.blocks),
             "instructions": sum(len(b.instructions) for b in self.blocks.values()),
             "bytes": self.bytes_used(),
+            "log_dropped": dict(self.dropped),
         }
 
     def _event(self, kind: str, block_id: int, **extra):
+        if len(self.events) >= LOG_CAP:
+            self.dropped["events"] += 1
+            return
         e = {"task": self.current_task, "kind": kind, "block_id": block_id}
         e.update(extra)
         self.events.append(e)
+
+    def _edge(self, kind: str, a: int, b: int):
+        if len(self.edges) >= LOG_CAP:
+            self.dropped["edges"] += 1
+            return
+        self.edges.append((kind, a, b, self.current_task))
 
     # ------------------------------------------------------------ construction
     def create(self, instructions=None, origin: str = "new") -> int:
@@ -152,7 +164,7 @@ class BlockStore:
         nid = self.create(src.instructions, origin="copy")
         if nid >= 0:
             self.blocks[nid].local_state = list(src.local_state)
-            self.edges.append(("copy", src.block_id, nid, self.current_task))
+            self._edge("copy", src.block_id, nid)
         return nid
 
     def compose(self, a: int, b: int) -> int:
@@ -163,8 +175,8 @@ class BlockStore:
         self.cost += COSTS["compose_per_instr"] * max(1, len(ba.instructions) + len(bb.instructions))
         nid = self.create(ba.instructions + bb.instructions, origin="compose")
         if nid >= 0:
-            self.edges.append(("compose", ba.block_id, nid, self.current_task))
-            self.edges.append(("compose", bb.block_id, nid, self.current_task))
+            self._edge("compose", ba.block_id, nid)
+            self._edge("compose", bb.block_id, nid)
         return nid
 
     def delete(self, block_id: int) -> bool:
@@ -203,7 +215,10 @@ class BlockStore:
         return True
 
     def log_invocation(self, block_id: int, entry_regs, actions):
-        if len(self.invocation_log) < 5000:
+        if len(self.invocation_log) >= 5000:
+            self.dropped["invocation_log"] += 1
+            return
+        if True:
             self.invocation_log.append({"task": self.current_task, "block": block_id,
                                         "entry": [list(r) if isinstance(r, tuple) else (r if isinstance(r, int) else str(r)) for r in entry_regs],
                                         "actions": list(actions)})
@@ -213,7 +228,7 @@ class BlockStore:
         self.invocations[block_id] = self.invocations.get(block_id, 0) + 1
         self.task_invocations[block_id] = self.task_invocations.get(block_id, 0) + 1
         if from_block >= 0:
-            self.edges.append(("invoked_from", from_block, block_id, self.current_task))
+            self._edge("invoked_from", from_block, block_id)
 
     # ------------------------------------------------------------ scramble
     def scramble(self, rng: random.Random):
