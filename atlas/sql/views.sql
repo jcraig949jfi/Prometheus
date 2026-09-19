@@ -22,10 +22,13 @@ SELECT g.*,
                   WHEN 'attempt' THEN NOT EXISTS (SELECT 1 FROM atlas.attempt x WHERE x.attempt_key=g.dst_key)
                   WHEN 'idea' THEN NOT EXISTS (SELECT 1 FROM atlas.idea x WHERE x.idea_key=g.dst_key)
                   WHEN 'defect' THEN NOT EXISTS (SELECT 1 FROM atlas.defect x WHERE x.defect_key=g.dst_key)
+                  WHEN 'ecosystem' THEN NOT EXISTS (SELECT 1 FROM atlas.ecosystem x WHERE x.ecosystem_id=g.dst_key)
+                  WHEN 'campaign' THEN NOT EXISTS (SELECT 1 FROM atlas.campaign x WHERE x.campaign_key=g.dst_key)
                   ELSE false END AS dst_missing,
   CASE g.src_type WHEN 'experiment' THEN NOT EXISTS (SELECT 1 FROM atlas.experiment x WHERE x.experiment_key=g.src_key)
                   WHEN 'attempt' THEN NOT EXISTS (SELECT 1 FROM atlas.attempt x WHERE x.attempt_key=g.src_key)
                   WHEN 'idea' THEN NOT EXISTS (SELECT 1 FROM atlas.idea x WHERE x.idea_key=g.src_key)
+                  WHEN 'ecosystem' THEN NOT EXISTS (SELECT 1 FROM atlas.ecosystem x WHERE x.ecosystem_id=g.src_key)
                   ELSE false END AS src_missing
 FROM atlas.edge g;
 
@@ -56,32 +59,37 @@ FROM atlas.fact f LEFT JOIN atlas.experiment e ON f.subject_type='experiment' AN
 WHERE f.layer='OBSERVED'
 GROUP BY f.name, f.kind;
 
--- Every descendant of an entity through scientific and execution edges, with depth and path.
-CREATE OR REPLACE FUNCTION atlas.descendants(p_type text, p_key text, p_max int DEFAULT 12)
-RETURNS TABLE(depth int, ent_type text, ent_key text, via text, path text[]) LANGUAGE sql STABLE AS $$
-  WITH RECURSIVE walk(depth, ent_type, ent_key, via, path) AS (
-      SELECT 0, p_type, p_key, NULL::text, ARRAY[p_type || ':' || p_key]
-    UNION ALL
-      SELECT w.depth + 1, g.src_type, g.src_key, g.relation || '/' || g.reason,
-             w.path || (g.src_type || ':' || g.src_key)
+-- Every descendant / ancestor of an entity through scientific and execution edges:
+-- one row per entity at its SHORTEST depth, with the relation that first reached it.
+-- (UNION over (type, key) keeps the walk linear in the graph; a per-path walk
+-- repeats an entity once per path and explodes as lineages multiply.)
+DROP FUNCTION IF EXISTS atlas.descendants(text, text, int);
+DROP FUNCTION IF EXISTS atlas.ancestors(text, text, int);
+
+CREATE FUNCTION atlas.descendants(p_type text, p_key text, p_max int DEFAULT 12)
+RETURNS TABLE(depth int, ent_type text, ent_key text, via text) LANGUAGE sql STABLE AS $$
+  WITH RECURSIVE walk(depth, ent_type, ent_key, via) AS (
+      SELECT 0, p_type, p_key, NULL::text
+    UNION
+      SELECT w.depth + 1, g.src_type, g.src_key, g.relation || '/' || g.reason
       FROM walk w JOIN atlas.edge g ON g.dst_type = w.ent_type AND g.dst_key = w.ent_key
-      WHERE w.depth < p_max AND g.relation <> 'AFFECTED_BY'
-        AND NOT (g.src_type || ':' || g.src_key) = ANY (w.path)
+      WHERE w.depth < p_max AND g.relation NOT IN ('AFFECTED_BY', 'ANALOGUE_OF', 'RELATED_TO')
   )
-  SELECT * FROM walk WHERE depth > 0;
+  SELECT DISTINCT ON (ent_type, ent_key) depth, ent_type, ent_key, via
+  FROM walk WHERE depth > 0 AND NOT (ent_type = p_type AND ent_key = p_key)
+  ORDER BY ent_type, ent_key, depth;
 $$;
 
--- Every ancestor (the reverse walk).
-CREATE OR REPLACE FUNCTION atlas.ancestors(p_type text, p_key text, p_max int DEFAULT 12)
-RETURNS TABLE(depth int, ent_type text, ent_key text, via text, path text[]) LANGUAGE sql STABLE AS $$
-  WITH RECURSIVE walk(depth, ent_type, ent_key, via, path) AS (
-      SELECT 0, p_type, p_key, NULL::text, ARRAY[p_type || ':' || p_key]
-    UNION ALL
-      SELECT w.depth + 1, g.dst_type, g.dst_key, g.relation || '/' || g.reason,
-             w.path || (g.dst_type || ':' || g.dst_key)
+CREATE FUNCTION atlas.ancestors(p_type text, p_key text, p_max int DEFAULT 12)
+RETURNS TABLE(depth int, ent_type text, ent_key text, via text) LANGUAGE sql STABLE AS $$
+  WITH RECURSIVE walk(depth, ent_type, ent_key, via) AS (
+      SELECT 0, p_type, p_key, NULL::text
+    UNION
+      SELECT w.depth + 1, g.dst_type, g.dst_key, g.relation || '/' || g.reason
       FROM walk w JOIN atlas.edge g ON g.src_type = w.ent_type AND g.src_key = w.ent_key
-      WHERE w.depth < p_max AND g.relation <> 'AFFECTED_BY'
-        AND NOT (g.dst_type || ':' || g.dst_key) = ANY (w.path)
+      WHERE w.depth < p_max AND g.relation NOT IN ('AFFECTED_BY', 'ANALOGUE_OF', 'RELATED_TO')
   )
-  SELECT * FROM walk WHERE depth > 0;
+  SELECT DISTINCT ON (ent_type, ent_key) depth, ent_type, ent_key, via
+  FROM walk WHERE depth > 0 AND NOT (ent_type = p_type AND ent_key = p_key)
+  ORDER BY ent_type, ent_key, depth;
 $$;
