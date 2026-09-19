@@ -156,3 +156,20 @@ def test_pareto_selector_evolves_a_vector_archive_without_a_rank(tmp_path):
     front = SR.pareto_front(rows); assert 1 <= len(front) <= 12
     done = [r for r in SR.load_rows(tmp_path / "p" / "archive.jsonl") if r["kind"] == "GEN_DONE"]
     assert done[-1]["selector"]["kind"] == "selector.pareto.v1" and done[-1]["selector"].get("front_size") is not None
+
+
+# C117 (soak 2): one global Pareto front collapsed to 2-3 rows and stalled for 390 generations. by_cell=True keeps the
+# non-dominated set WITHIN each descriptor cell: MAP-Elites' diversity with the vector ranking.
+def test_fronts_by_cell_and_the_by_cell_pareto_selector(tmp_path):
+    rows = [{"kind": "elite", "fingerprint": "a", "descriptor": [0, 1], "objective": {"x": 1, "y": 9}}, {"kind": "elite", "fingerprint": "b", "descriptor": [0, 1], "objective": {"x": 2, "y": 2}},
+            {"kind": "elite", "fingerprint": "c", "descriptor": [3, 3], "objective": {"x": 0, "y": 0}}, {"kind": "elite", "fingerprint": "d", "descriptor": [3, 3], "objective": {"x": 5, "y": 5}},
+            {"kind": "elite", "fingerprint": "e", "descriptor": [7, 7], "objective": None}]
+    fc = SR.fronts_by_cell(rows)
+    assert {k: sorted(r["fingerprint"] for r in v) for k, v in fc.items()} == {(0, 1): ["a", "b"], (3, 3): ["d"]}       # c dominated within its cell; e has no value
+    assert sorted(r["fingerprint"] for r in SR.pareto_front(rows)) == ["a", "d"]                                           # the global front would drop b
+    t = _exp(ref("objective.multi.v1", components={"yield": ref("objective.yield_net.v1"), "life": ref("objective.survival.v2")}), n_seeds=2, n_players=1)
+    t.players = []; t.seed_policy = {"base": 1, "n_seeds": 2}
+    out = SR.evolve(t, ref("selector.pareto.v1", n=6, by_cell=True), generations=4, workdir=tmp_path / "pc", seed=3)
+    assert out["generations_done"] == 4
+    done = [r for r in SR.load_rows(tmp_path / "pc" / "archive.jsonl") if r["kind"] == "GEN_DONE"][-1]["selector"]
+    assert done["by_cell"] is True and done["cells"] >= 1 and done["front_size"] >= done["cells"]

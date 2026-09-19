@@ -98,6 +98,13 @@ A9  MISSING ANCESTRY METADATA IS PREFERABLE TO UNVERIFIED ANCESTRY METADATA
     cannot verify a parent id records it as UNVERIFIED, never as a parent.
     Set on: ancestry ruler curves D4 vs D5 (a696a5335).
 
+A10 SCOREBOARD CATEGORIES (operator directive 2026-09-19 s9). Rulings and
+    returns of this seat count: packets issued / adjudicated, predictions
+    tested / falsified, cuts technically supported, mechanisms isolated,
+    observer-stable mechanisms, successful independent transplants,
+    unresolved anomalies -- never "supported clauses". A packet's rows are
+    evidence components of one investigation.
+
 Engineering hygiene (ranked behind A4/A5): large run artifacts (trajectories,
 frames) go to a content-addressed store with hashes in git, not into git.
 

@@ -802,3 +802,32 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   A 100k-row archive resumes from ~160 MB instead of ~1 GB.
 - full and compact runs give identical rows over 3 + 2 resumed generations. M68/M69 CAUGHT; ledger 68/68.
   Suite 317 passed / 6 skipped.
+
+## C116 (07:31Z) env independence (metamorphic) and the second soak (pareto + compact + batch)
+- metamorphic test on the batch world: permuting the env order permutes the traces; replacing the OTHER envs'
+  seeds and actions leaves an env's trace unchanged; abandoning a neighbour changes nothing -- three parameter
+  sets incl. regime/stoch/delay and a 2-player dying config. (The fixture first abandoned an env after it had
+  already died -- a fixture error read as a failure; abandon moved to tick 1.)
+- soak 2: 12 wall minutes, selector.pareto.v1, compact archive, budget.batch=4: 518 generations, 4662 rows,
+  archive 1.59 MB (340 B/row vs 935 full), files clean, markers in order, no halt; traced growth 21 KB/gen (the
+  soak's own locals, as in C107). Observation about the SELECTOR, not the kernel: the front collapsed to 2-3 rows
+  by gen ~130 (life saturates at the horizon, net at 99.7) and best_net never moved again in 390 generations --
+  a pure Pareto parent set has no diversity pressure; pt_d's MAP-Elites kept 46 cells alive. Recorded, not fixed
+  (a Pareto-per-cell selector would be the composition; a design choice for a day).
+- soak receipts deleted; science/SOAK_SEARCH_PARETO_COMPACT_2026-09-19.json keeps the per-gen rows.
+
+## C117 (07:35Z) Pareto per cell (the composition soak 2 pointed at)
+- fronts_by_cell(rows) and selector.pareto.v1 by_cell=True: a cell first, then a non-dominated member of it; the
+  GEN_DONE manifest records cells and total front size. Test: c dominated within its cell by d, b kept by its
+  cell where the global front would drop it.
+- 90 generations on the soak template, one seed, compact + batched (11 s each): global front -> 13 cells, front
+  3, best net 99.7 first reached at gen 58; by_cell -> 31 cells, 5 on the global front, best net 74.8 at gen 27.
+  Diversity up, peak down in this window. n=1 seed, 90 generations: DATA, not a verdict on either selector.
+- comms: Bellerophon queue synced 07:33Z -- 0 new, 0 queued, no tasks. Other seats active on origin/main
+  (Harmonia gandalf, archaeon/frontier); merged twice, suite green on the merged tree each time.
+
+## C118 (07:36Z) crash between two receipts of one batch
+- a batch's receipts are written one by one after it ran; a KeyboardInterrupt after 2 of 4 leaves 2 valid rows
+  (scan clean, nothing partial); resume=True keeps them (resumed_runs 2), regroups the 5 remaining runs (4 + 1;
+  the kept receipts still say batch_size 4) and the final file equals a clean run on every science field. No
+  kernel change; the expectation I first wrote for the regrouping was wrong, the behaviour was right.
