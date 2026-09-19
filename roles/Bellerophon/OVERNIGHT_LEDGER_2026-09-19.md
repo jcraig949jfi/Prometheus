@@ -971,3 +971,13 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   use it. Mutants M77/M78 CAUGHT; ledger 77/77 (merged). Suite 1045 passed / 6 skipped.
 - the C119 sentence again: state that lives in the kernel's own objects (wrappers, substrates) is state a
   checkpoint must carry. Three such holes tonight (wrappers, mutable params, substrate clock).
+
+## C136-C137 (08:51Z) observers survive the checkpoint (property strengthened); door semantics against models
+- C136: the checkpoint property now also asserts every observer's measure and series episode after a resume
+  equal the uninterrupted run's (19 compositions). Agree.
+- C137: 40 random parameterisations (kv ttl None/1/3; stream lag 1/2/4, maxlen 2/8; mailbox capacity 1/3) driven
+  40 ticks against tiny models: kv read = last write within ttl ticks; stream read = the value appended lag
+  appends ago among the last maxlen; mailbox read = the newest message from ANOTHER player among the last
+  capacity; flat refuses and counts every write. All agree. No defect. (Constant players hold no door: the
+  test drives the doors themselves, as a v2/v3 player's .ws would.)
+- suite 1085 passed / 6 skipped.

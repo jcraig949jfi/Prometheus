@@ -303,6 +303,12 @@ def test_checkpoint_resume_property_over_random_compositions(seed):
     rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=horizon, substrate=sub3, record_actions=True)
     assert first["actions"] + rest["actions"] == full["actions"], (seed, k, spec.experiment.world["kind"], spec.experiment.substrate["kind"], [p["representation"] for p in spec.experiment.players])
     assert rest["summary"] == full["summary"], (seed, k)
+    # C136: every observer's measure and series survive the checkpoint too (the resumed observers were restored from
+    # their snapshots and then fed the rest of the episode)
+    for o_full, o_res in zip(obs, obs3):
+        assert o_res.measure() == o_full.measure(), (seed, k, o_full.kind)
+        if getattr(o_full, "series", False):
+            assert o_res.series_episode() == o_full.series_episode(), (seed, k)
 
 
 def test_the_checkpoint_property_was_actually_exercised():
