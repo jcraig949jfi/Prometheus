@@ -1,16 +1,16 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "organs": 537,
+ "built": "2026-09-19T07:40Z",
+ "organs": 539,
  "dims": {
   "input_topology": {
-   "read": 535,
+   "read": 537,
    "measured": 0,
    "unmeasured": 2,
    "values": {
     "SCALAR": 93,
     "EVENT": 87,
-    "SEQUENCE": 93,
+    "SEQUENCE": 95,
     "MIXED": 10,
     "VECTOR": 93,
     "GRAPH": 18,
@@ -22,16 +22,16 @@
    "vocabulary_unused": []
   },
   "output_topology": {
-   "read": 535,
+   "read": 537,
    "measured": 0,
    "unmeasured": 2,
    "values": {
-    "SCALAR": 97,
+    "SCALAR": 98,
     "EVENT": 59,
+    "SET": 51,
     "SEQUENCE": 89,
     "DECISION": 69,
     "MIXED": 10,
-    "SET": 50,
     "VECTOR": 93,
     "TREE": 12,
     "GRAPH": 6,
@@ -41,13 +41,13 @@
    "vocabulary_unused": []
   },
   "state_amount": {
-   "read": 516,
+   "read": 518,
    "measured": 0,
    "unmeasured": 21,
    "values": {
     "CONSTANT": 220,
-    "NONE": 118,
-    "LINEAR_IN_INPUT": 144,
+    "NONE": 119,
+    "LINEAR_IN_INPUT": 145,
     "LOG": 8,
     "SUPERLINEAR": 17,
     "UNBOUNDED": 9
@@ -57,7 +57,7 @@
   "state_persistence": {
    "read": 152,
    "measured": 0,
-   "unmeasured": 385,
+   "unmeasured": 387,
    "values": {
     "PER_EPISODE": 46,
     "PERSISTENT": 71,
@@ -71,7 +71,7 @@
   "feedback": {
    "read": 58,
    "measured": 0,
-   "unmeasured": 479,
+   "unmeasured": 481,
    "values": {
     "CLOSED_LOOP": 43,
     "DELAYED_CLOSED_LOOP": 13,
@@ -83,7 +83,7 @@
   "memory": {
    "read": 127,
    "measured": 0,
-   "unmeasured": 410,
+   "unmeasured": 412,
    "values": {
     "SUMMARY_STATISTIC": 34,
     "LAST_VALUE": 33,
@@ -95,12 +95,12 @@
    "vocabulary_unused": []
   },
   "stochasticity": {
-   "read": 357,
+   "read": 359,
    "measured": 0,
    "unmeasured": 180,
    "values": {
-    "DETERMINISTIC": 282,
-    "SEEDED_RANDOM": 50,
+    "DETERMINISTIC": 283,
+    "SEEDED_RANDOM": 51,
     "ENVIRONMENT_RANDOM": 25
    },
    "vocabulary_unused": [
@@ -108,12 +108,12 @@
    ]
   },
   "update_topology": {
-   "read": 267,
+   "read": 268,
    "measured": 0,
-   "unmeasured": 270,
+   "unmeasured": 271,
    "values": {
     "EVENT_DRIVEN": 72,
-    "SWEEP": 81,
+    "SWEEP": 82,
     "SINGLE_STEP": 37,
     "PRIORITY": 16,
     "RECURSIVE": 47,
@@ -124,7 +124,7 @@
   "order_sensitivity": {
    "read": 45,
    "measured": 0,
-   "unmeasured": 492,
+   "unmeasured": 494,
    "values": {
     "SENSITIVE": 37,
     "INVARIANT": 7,
@@ -135,7 +135,7 @@
   "resource_dependence": {
    "read": 54,
    "measured": 0,
-   "unmeasured": 483,
+   "unmeasured": 485,
    "values": {
     "TIME": 11,
     "SHARED_RESOURCE": 4,
@@ -150,7 +150,7 @@
   "failure_mode": {
    "read": 67,
    "measured": 0,
-   "unmeasured": 470,
+   "unmeasured": 472,
    "values": {
     "NONE_KNOWN": 10,
     "DEGRADES": 13,
@@ -166,7 +166,7 @@
   "recovery": {
    "read": 60,
    "measured": 0,
-   "unmeasured": 477,
+   "unmeasured": 479,
    "values": {
     "SELF_RESETS": 11,
     "RETRIES": 9,
@@ -180,7 +180,7 @@
   "adaptation": {
    "read": 31,
    "measured": 0,
-   "unmeasured": 506,
+   "unmeasured": 508,
    "values": {
     "STRUCTURE": 6,
     "PARAMETER": 21,
@@ -192,7 +192,7 @@
   "competition": {
    "read": 48,
    "measured": 0,
-   "unmeasured": 489,
+   "unmeasured": 491,
    "values": {
     "CONTENDS": 17,
     "ARBITRATES": 26,
@@ -205,7 +205,7 @@
   "cooperation": {
    "read": 19,
    "measured": 0,
-   "unmeasured": 518,
+   "unmeasured": 520,
    "values": {
     "AGREES": 8,
     "COORDINATES": 7,
@@ -218,7 +218,7 @@
   "hidden_state": {
    "read": 23,
    "measured": 0,
-   "unmeasured": 514,
+   "unmeasured": 516,
    "values": {
     "ESTIMATES": 18,
     "IGNORES": 1,
@@ -229,11 +229,11 @@
    ]
   },
   "uncertainty": {
-   "read": 25,
+   "read": 26,
    "measured": 0,
-   "unmeasured": 512,
+   "unmeasured": 513,
    "values": {
-    "POINT": 15,
+    "POINT": 16,
     "SAMPLE": 4,
     "INTERVAL": 2,
     "DISTRIBUTION": 4
@@ -243,12 +243,12 @@
    ]
   },
   "representation_sensitivity": {
-   "read": 51,
+   "read": 52,
    "measured": 0,
-   "unmeasured": 486,
+   "unmeasured": 487,
    "values": {
-    "INVARIANT": 5,
-    "SENSITIVE": 46
+    "SENSITIVE": 47,
+    "INVARIANT": 5
    },
    "vocabulary_unused": [
     "UNKNOWN_BY_READ"
@@ -257,7 +257,7 @@
   "temporal_horizon": {
    "read": 41,
    "measured": 0,
-   "unmeasured": 496,
+   "unmeasured": 498,
    "values": {
     "EPISODE": 8,
     "WINDOW": 14,

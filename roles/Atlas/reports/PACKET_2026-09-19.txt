@@ -1,0 +1,218 @@
+================================================================================
+REVIEW PACKET -- ATLAS FIRST PASS
+Experiment index for SFE, NPE and the engines around them
+================================================================================
+Prepared:      2026-09-19   first populated pass, M1 only
+Location:      atlas/ (code), atlas/sql/001-005 (schema), roles/Atlas/
+Store:         prometheus_fire on M1, schema atlas (Atlas is sole writer)
+Artifacts:     roles/Atlas/MODEL.md, SOURCES.md,
+               reports/REPORT_2026-09-19.txt, prompts/2026-09-19_m2_instance/
+Base SHA:      74b09076d (origin/main at charter); branch atlas/charter-*
+Headline:      1,897 experiments / 1,592 attempts across 4 executing
+               engines, 11,994 evidence pointers, 834 lineage edges;
+               21 scientific edges cross engines
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+A two-tier relational history of the experiments the Prometheus engines
+ran, built only by rerunnable read-only collectors. Tier 1 is the
+manifest (engine, host, engine instance, campaign, experiment, attempt).
+Tier 2 holds segments, facts, verbatim conclusions, typed edges, ideas,
+defects and first-class source pointers. WHAT RAN, WHAT WAS OBSERVED and
+WHAT SOMEONE CONCLUDED are separate tables. Atlas's own readings are
+labelled ATLAS_DERIVED, with the rule and version that produced them.
+
+--------------------------------------------------------------------------------
+2. METHOD
+--------------------------------------------------------------------------------
+Eight versioned collectors, all idempotent. Each run records the host,
+harvester and version that wrote it in a harvest_run row.
+
+  commits/2             all remote + local refs since 2026-08-25
+  archaeon_campaigns/1  archaeon/campaign1..6 (SFE)
+  frontier/3            archaeon/frontier (DEEP FRONTIER scheduler)
+  npe/4                 M1-LOCAL branch nestor/sidequest-graphworld
+                        (rounds r1..r8, CW01 + loop)
+  vivarium/2            viv.research_experiment_queue, execution_attempt
+  pew/1                 ew.campaign_observations (pointers only)
+  local_files/2         M1 SFE ledgers (idle, read-only, immutable),
+                        logs, pm-data, CW01 run logs
+  comb/2                13 surfacing rules -> atlas.signal
+
+Identity is built from native ids, never from filenames. A native id
+seen under two keys is recorded as a collision, never merged. The merge
+rule never erases data: scalars coalesce, arrays union, and a watched
+field that disagrees is written to field_conflict. Pruning removes only
+derived rows that the same harvester wrote on the same host.
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS
+--------------------------------------------------------------------------------
+engine > campaign > experiment > attempt > segment.
+A new attempt means the same spec was re-executed; a changed spec means a
+descendant experiment. Edges have a basis of DECLARED, INFERRED or
+ATLAS_DERIVED, and a reason drawn from the vocab (BUG_FIX ... UNKNOWN).
+Source visibility is one of GIT_REMOTE, GIT_LOCAL:M1, FS:M1, PG:M1 or
+EXPECTED:<host>. EXPECTED means "referenced but not seen from here"; it
+never means "did not happen".
+
+--------------------------------------------------------------------------------
+4. PRIMARY RESULT (counts, 2026-09-19)
+--------------------------------------------------------------------------------
+  Item                                         Count
+  ------------------------------------------   ------
+  engines registered / with experiments         11/4
+  campaigns / programs                             48
+  experiments                                    1897
+  attempts                                       1592
+  execution segments                             3225
+  ideas (scientific-lineage nodes)                 53
+  source pointers                               11994
+  facts RAN / OBSERVED / CONCLUDED   5859/10991/1337
+  conclusions (verbatim or pointer)               402
+  edges / of which lineage                   1055/834
+  defects                                         217
+  unresolved: dangling edge endpoints               3
+  unresolved: experiments classed UNKNOWN         582
+  unresolved: identity collisions                  30
+  machine-local-only sources                     1400
+  referenced, not visible from M1 (EXPECTED)     6069
+  commits seen only on an M1-local branch          47
+  open signals                                    182
+
+  Engine              Exp    Att   Hosts on attempts
+  -----------------   ----   ----  -----------------
+  vivarium            1242   1254  M1 641, M2 104, ? 509
+  archaeon.frontier    349     22  M2 (inferred)
+  npe                  249    223  M1
+  sfe                   57     93  M2 (receipt paths)
+
+--------------------------------------------------------------------------------
+5. WHAT NO SINGLE ENGINE OR CAMPAIGN CAN SEE BY ITSELF
+--------------------------------------------------------------------------------
+a. The SFE and the NPE share one scientific lineage. NPE ideas T-ARCH4
+   and T-ARCH5 originate in Archaeon Campaigns 4/5. Campaign 5
+   experiments C5-01/02/03/05 are declared as superseding NPE loop
+   perturbations P-C01/C02/C09/C11. P-E03 continues C4-08. C4-REH-1 and
+   Campaign 5 are cited as evidence for NPE trajectories. Neither
+   engine's files show the whole chain.
+b. Campaign 4's damage census (C4-01) has descendants in three
+   programs: C4 and C5 on the SFE, frontier transformations C4-cliff.T1/
+   T3 (declared ORGANISM_DEFORMATION onto graph organisms), and a
+   frontier lineage idea. Query: atlas.descendants('experiment',
+   'archaeon.campaign/cmp4:C4-01').
+c. The dormant M1 SFE ledger (engine instance eng_8a37..., schema 8,
+   2026-09-01..11) holds 66,958 engine experiments: vivarium 63,403,
+   harmonia-m2 3,068. Membership shows that 610 Vivarium attempts ran
+   against that M1 instance. No git receipt says so.
+d. C4-07's mechanism reading ("robustness = dead code") is marked as a
+   SUPERSEDED_INTERPRETATION, superseded by C5-08. C4-07's execution and
+   numbers stay valid and are kept.
+e. 17 SFE/NPE experiments changed disposition across attempts. For
+   example, several C2 experiments went from POSITIVE_CONTROL_FAILED to
+   WEAK_POSITIVE or CAPABLE_NEGATIVE after repairs. Only the attempt
+   history shows that.
+f. Defect classes recur across campaigns: RECOVERY 28 (3 campaigns),
+   LANDSCAPE 21 (3), BUG 20 (5), MISSING_TELEMETRY 13 (4),
+   ASSAY_STATE 9 (4).
+g. Two frontier interpretations are still PROVISIONAL:
+   - Campaign 5's "flat elite" may be a compute/population artefact.
+   - The graph firing-rate mismatch.
+h. A live, previously uncatalogued service is running on M1:
+   F:/SerendipityD foundry_service.py (pids 7988 and 8176). It is
+   registered as engine serendipity.foundry.d and covered stat-only.
+
+--------------------------------------------------------------------------------
+6. FIRST WEAK-SIGNAL SCAN (surfaced, not directives)
+--------------------------------------------------------------------------------
+  Rule                                     Kind                      Open
+  ---------------------------------------  ------------------------  ----
+  R01 weak disposition                     WEAK_SIGNAL                 13
+  R02 repeated weak effect                 REPEATED_WEAK_EFFECT         1
+  R03 sign reversal                        SIGN_REVERSAL                1
+  R04 conclusion changed across attempts   CONCLUSION_CHANGED          17
+  R05 superseded interpretation            CONCLUSION_CHANGED           1
+  R06 null with rich telemetry             NULL_WITH_TELEMETRY         31
+  R07 unresolved interpretation            UNRESOLVED_QUESTION          2
+  R08 defect classes >= 3                  INSTRUMENT_FAILURE_CLUSTER  18
+  R09 cross-engine lineage                 CROSS_ENGINE_LINEAGE        21
+  R10 world x organism seen once           VISITED_ONCE                34
+  R11 historical controls                  CALIBRATION_SPECIMEN        40
+  R12 evidence not visible from M1         DATA_GAP                     2
+  R13 measurement across engines           RECURRING_MEASUREMENT        1
+The measured "effect" is positive in 18 subjects and negative in 7, and
+recurs in 11 weak/inconclusive experiments across 4 campaigns. That is
+the one sign-reversal candidate the first pass supports.
+
+--------------------------------------------------------------------------------
+7. CONTROLS
+--------------------------------------------------------------------------------
+atlas/tests/test_atlas.py: 16 passed. Every index write in the tests is
+rolled back.
+  POSITIVE: C5-03 has declared parents C4-01 and C4-03; C5-08 SUPERSEDES
+    C4-07 with both kept; at least one NPE -> SFE lineage edge exists;
+    every fact has evidence.
+  NEGATIVE: no filename identity; no prose-minted keys; no self edges.
+  CHEAT: an injected WEAK_POSITIVE experiment is surfaced by R01. A
+    merge never erases a host and does record the conflict. Pruning
+    removes M1's stale row and spares M2's.
+Six of my own identity errors were caught and fixed in versioned passes.
+They are listed in calibration/LEDGER.md: prose superseded_by, foreign
+EVIDENCE ids, frontier family edges, R02 schema noise, an uncommitted
+delete, and R16 read as a round.
+
+--------------------------------------------------------------------------------
+8. KNOWN LIMITATIONS
+--------------------------------------------------------------------------------
+- M1 only. 6,069 pointers wait for the M2 instance (frontier runs/, the
+  M2 SFE ledger). EXPECTED is not absence.
+- atlas_class is a word map over reported dispositions. Vivarium classes
+  are queue states, not science. 582 experiments are UNKNOWN; cmp1
+  receipts carry no disposition (ATLAS-06).
+- Not yet harvested: Harmonia rulers, Bellerophon, Herakles, Proteus,
+  Ludus, archaeon/wse git ledgers, NPE QD cells, pm-data epoch mapping,
+  and the other local nestor/* branches.
+- 133 NPE engine instances are synthetic, one per code sha (ATLAS-13).
+- Rerun reasons are mostly UNKNOWN. Atlas does not invent a reason
+  (ATLAS-19).
+- Rules have no eligibility counts yet (ATLAS-18). "Nothing fired" and
+  "nothing could fire" are not yet distinguishable.
+- The NPE ref is a moving local branch. Counts grew during the pass
+  (238 -> 249 CW01+rounds experiments).
+
+--------------------------------------------------------------------------------
+9. REPRODUCTION
+--------------------------------------------------------------------------------
+From a linked worktree (the canonical checkout is refused):
+  python -m atlas migrate
+  python -m atlas harvest all
+  python -m atlas comb
+  python -m atlas report --out /tmp/r.txt
+  python -m pytest -q atlas/tests
+Spot checks:
+  SELECT * FROM atlas.descendants('experiment',
+    'archaeon.campaign/cmp4:C4-01');
+  SELECT summary FROM atlas.signal
+    WHERE rule_id='R09-cross-engine-lineage';
+
+--------------------------------------------------------------------------------
+10. VERDICT / DECISION
+--------------------------------------------------------------------------------
+  SCHEMA MIGRATED (001-005) ....................... yes
+  COLLECTORS REPEATABLE + IDEMPOTENT .............. yes (full rerun)
+  SFE + NPE INDEXED FROM GIT ...................... yes
+  M1 MACHINE EVIDENCE ATTACHED .................... yes
+  M2 MACHINE EVIDENCE ............................. NO (prompt ready)
+  ENGINES DISTURBED ............................... none observed
+Operator decisions open:
+  - start the M2 instance (ATLAS-04).
+  - may Atlas ask seats for receipt fields such as hostname (ATLAS-26)?
+  - is F:/SerendipityD expected to be running (ATLAS-24)?
+What would falsify this: an M2 pass that contradicts M1-derived hosts,
+or a seat showing a declared edge Atlas recorded is wrong.
+Reviewer's bottom line: are the 21 cross-engine edges real lineage, or
+artefacts of id-matching in prose fields?
+================================================================================
+END OF PACKET
+================================================================================

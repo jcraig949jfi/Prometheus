@@ -1,0 +1,8 @@
+# Manifest for 2026-09-19_asal_pipeline_direction
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- CLAIM_CURRENT_RESOLUTION.md  sha256:928f155a0bc0161182d26852ccf79e3ee40aaaffe27fa9c7f453c352bf176b79
+- OPERATOR_DIRECTIVE_verbatim.md  sha256:4fcb1077f6aaa7f369caed2828a826051bbee2909fb09b76d9b1d18f5823aff9
+- PLAN_behavioral_cuts_after_replication.md  sha256:dc41abff13935649aa0f12fe54af275d82888050c85b2358267ff0d375706ecf
+- TO_ALL_relay_and_nyx_disposition.md  sha256:957f50f46feffa1e6f8b1ff68488728bcb530ee2b4d34331600b5728996205c1
