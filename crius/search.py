@@ -309,8 +309,8 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
             _, _, pcid, pprog, _ = rng.choice(population)
             child, mod = make_child(pprog, rng, cfg)
             if arm == "recombination" and rng.random() < cfg["search"].get("splice_fraction", 0.3):
-                pool = [(p[2], p[3]) for p in population] + [("PART:" + n, prog) for n, prog in donors]
-                dcid, dprog = rng.choice(pool)
+                dpool = [(p[2], p[3]) for p in population] + [("PART:" + n, prog) for n, prog in donors]
+                dcid, dprog = rng.choice(dpool)
                 child, m2 = splice(child, dprog, rng, cfg)
                 mod = mod + "+" + m2 + ":" + dcid
             ccid = vm.program_hash(child)
