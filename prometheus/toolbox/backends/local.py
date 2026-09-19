@@ -207,20 +207,17 @@ def build_world(exp: Experiment, registry):
 
 
 # ---------------------------------------------------------------------------------------------- episode loop
-def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int, substrate=None, episode: int = 0) -> dict:
-    world.reset(seed)
-    subs = substrate if isinstance(substrate, list) else ([substrate] if substrate is not None else [])
-    for so in subs:
-        if hasattr(so, "episode_begin"):
-            so.episode_begin(episode, seed)                          # ext.substrate.lifecycle.v1
-    for ob in observers:
-        ob.begin({"n_players": world.n_players, "seed": seed})
+def _loop(world, instances, observers, subs, horizon, ticks, n_events, checkpoint_at=None, record_actions=False, seed=None, episode=0):
     has_events = "ext.events.v1" in world.capabilities
     ev_subs = [so for so in subs if hasattr(so, "events")]
-    n_events = 0; ticks = 0; done = False
+    done = False; acts_log = []; checkpoint = None
     while not done and ticks < horizon:
+        if checkpoint_at is not None and ticks == checkpoint_at:
+            checkpoint = make_checkpoint(world, instances, observers, subs, ticks, n_events, seed, episode); break
         observations = {pid: world.observe(pid) for pid in instances}
         actions = {pid: instances[pid].act(observations[pid], world.legal_actions(pid)) for pid in instances}
+        if record_actions:
+            acts_log.append({pid: list(a) for pid, a in actions.items()})
         done = world.step(actions)
         for so in subs:
             if hasattr(so, "tick"):
@@ -236,7 +233,61 @@ def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: in
                 ob.on_events(evs)
             ob.on_tick(ticks, observations, actions)
         ticks += 1
-    return {"trace_hash": world.trace_hash(), "ticks": ticks, "events": n_events, "summary": world.summary() if hasattr(world, "summary") else {}}
+    out = {"trace_hash": world.trace_hash(), "ticks": ticks, "events": n_events, "summary": world.summary() if hasattr(world, "summary") else {},
+           "checkpoint": checkpoint}
+    if record_actions:
+        out["actions"] = acts_log
+    return out
+
+
+def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int, substrate=None, episode: int = 0,
+                checkpoint_at: Optional[int] = None, record_actions: bool = False) -> dict:
+    world.reset(seed)
+    subs = substrate if isinstance(substrate, list) else ([substrate] if substrate is not None else [])
+    for so in subs:
+        if hasattr(so, "episode_begin"):
+            so.episode_begin(episode, seed)                          # ext.substrate.lifecycle.v1
+    for ob in observers:
+        ob.begin({"n_players": world.n_players, "seed": seed})
+    return _loop(world, instances, observers, subs, horizon, 0, 0, checkpoint_at, record_actions, seed, episode)
+
+
+# ---------------------------------------------------------------------------------------------- checkpoint (C37)
+def make_checkpoint(world, instances, observers, subs, ticks: int, n_events: int, seed, episode) -> dict:
+    """A mid-episode checkpoint: world snapshot (ext.snapshot.v1 required), every player instance's snapshot,
+    every substrate's device snapshot, the observers' snapshots where they have one, the tick, and the trace
+    hash SO FAR. Resuming from it is honest: the resumed trace is PARTIAL and names this hash."""
+    if "ext.snapshot.v1" not in world.capabilities:
+        raise ValueError("world %s has no ext.snapshot.v1: it cannot be checkpointed mid-episode" % world.kind)
+    ck = {"tick": ticks, "n_events": n_events, "seed": seed, "episode": episode, "world": world.snapshot().hex(),
+          "instances": {str(pid): inst.snapshot().hex() for pid, inst in instances.items()},
+          "substrates": [so.dev.snapshot().hex() if hasattr(so, "dev") else None for so in subs],
+          "observers": [ob.snapshot().hex() if hasattr(ob, "snapshot") else None for ob in observers],
+          "pre_checkpoint_trace": world.trace_hash()}
+    return ck
+
+
+def resume_episode(checkpoint: dict, world, instances: Dict[int, Any], observers: List[Any], horizon: int, substrate=None, record_actions: bool = False) -> dict:
+    """Continue an episode from a checkpoint in FRESH objects (same kinds and params as the originals)."""
+    subs = substrate if isinstance(substrate, list) else ([substrate] if substrate is not None else [])
+    world.reset(checkpoint["seed"])
+    for so in subs:
+        if hasattr(so, "episode_begin"):
+            so.episode_begin(checkpoint["episode"], checkpoint["seed"])
+    for ob in observers:
+        ob.begin({"n_players": world.n_players, "seed": checkpoint["seed"]})
+    world.restore(bytes.fromhex(checkpoint["world"]))
+    for pid, inst in instances.items():
+        inst.restore(bytes.fromhex(checkpoint["instances"][str(pid)]))
+    for so, snap in zip(subs, checkpoint["substrates"]):
+        if snap is not None and hasattr(so, "dev"):
+            so.dev.restore(bytes.fromhex(snap))
+    for ob, snap in zip(observers, checkpoint["observers"]):
+        if snap is not None and hasattr(ob, "restore"):
+            ob.restore(bytes.fromhex(snap))
+    out = _loop(world, instances, observers, subs, horizon, checkpoint["tick"], checkpoint["n_events"], None, record_actions, checkpoint["seed"], checkpoint["episode"])
+    out.update({"replay_class": "PARTIAL", "checkpoint_tick": checkpoint["tick"], "pre_checkpoint_trace": checkpoint["pre_checkpoint_trace"]})
+    return out
 
 
 def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:

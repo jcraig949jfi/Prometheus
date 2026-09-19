@@ -260,3 +260,12 @@ C36 | T+1:45 | MUTATION LEDGER (tests/mutants.py; roles/Bellerophon/science/MUTA
   added (a cheat-blind world -> cheat NOT_MET and job invalid; a job whose runs FAIL, interrupted and resumed,
   must count the earlier failures; out-of-order rows before a marker are not committed). Second pass: 20/20
   CAUGHT. Suite 157 passed 6 skipped. The tree is byte-identical after every mutant (asserted).
+C37 | T+1:55 | mid-EPISODE checkpoint/resume (directive s8): make_checkpoint (world snapshot, every instance
+  snapshot, substrate device snapshots, observer snapshots, tick, events so far, the trace hash SO FAR) and
+  resume_episode in FRESH objects. RED: functions absent. Test: checkpoint at tick 10 of 24 on a kv-lifetime
+  substrate; resumed actions ticks 10..23 == uninterrupted; the resumed observer's series and measures equal
+  the uninterrupted run's for the WHOLE episode; replay_class PARTIAL with checkpoint_tick and the
+  pre-checkpoint hash named (a hash cannot be resumed from a digest: honesty, not a defect). Observers gained
+  snapshot/restore (TraceObserver family). Suite 158 passed 6 skipped.
+  NOT wired into execute() yet: run-level resume (C29) covers interruption between runs; this covers inside
+  a run and is exposed as library calls for a future long-episode executor. Recorded as the next slice.

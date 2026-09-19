@@ -57,6 +57,20 @@ class TraceObserver:
     def describe(self) -> List[int]:
         return []
 
+    # C37: observers that can be checkpointed expose snapshot/restore of their counters
+    def snapshot(self) -> bytes:
+        import json
+        return json.dumps({"k": self._by_kind, "y": self._yield, "a": self._actions, "ab": self._abstain, "t": self._ticks, "n": self._n_players,
+                           "ep": getattr(self, "_ep_yield", 0), "al": getattr(self, "_alive", 0), "s": getattr(self, "_series", [])}).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        import json
+        d = json.loads(snapshot.decode())
+        self._by_kind = d["k"]; self._yield = {int(k): v for k, v in d["y"].items()}; self._actions = {int(k): v for k, v in d["a"].items()}
+        self._abstain = {int(k): v for k, v in d["ab"].items()}; self._ticks = d["t"]; self._n_players = d["n"]
+        if hasattr(self, "_series"):
+            self._ep_yield = d["ep"]; self._alive = d["al"]; self._series = [list(r) for r in d["s"]]
+
 
 class DescriptorObserver(TraceObserver):
     """[abstain_rate_bucket 0-8, action_magnitude_bucket 0-7, yield_bucket 0-7]. The scales are PARAMETERS

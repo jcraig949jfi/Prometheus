@@ -121,3 +121,29 @@ def test_receipts_file_alone_replays_and_divergence_is_reported_not_raised(tmp_p
     p2 = tmp_path / "tampered.jsonl"; p2.write_text("\n".join(lines) + "\n", encoding="utf-8")
     rep2 = replay_file(p2, tmp_path / "replay2.jsonl", REG)
     assert rep2["runs_compared"] == 2 and len(rep2["divergent"]) == 2 and rep2["divergent"][0]["field"] == "trace_hashes"
+
+
+# C37 (directive s8: one episode != one uninterrupted computation): an episode can be CHECKPOINTED at a tick
+# (world + every player instance + observers that can snapshot) and RESUMED, in a fresh set of objects, to the
+# same observations and actions as the uninterrupted run. The resumed trace hash is honestly PARTIAL (a hash
+# cannot be resumed from a digest), so the checkpoint carries the pre-checkpoint hash and the record says so.
+def test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run():
+    from prometheus.toolbox.backends.local import run_episode, resume_episode, build_world
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    e = Experiment(family="ckpt", world=ref("world.integer.v1", world_seed=4, start_charge=100000, step_cost=0), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(3).manifest()], budget={"episodes": 1, "horizon": 24})
+    def fresh():
+        w = build_world(e, REG); sub = REG.make("substrate.kv.v1", scope="lifetime")
+        inst = {0: sub.instantiate(random_statemachine_v2(3), 1)}
+        return w, sub, inst, [REG.make("observer.trace.v1"), REG.make("observer.series.v1")]
+    w, sub, inst, obs = fresh()
+    full = run_episode(w, inst, obs, seed=7, horizon=24, substrate=sub, record_actions=True)
+    w2, sub2, inst2, obs2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=7, horizon=24, substrate=sub2, checkpoint_at=10, record_actions=True)
+    assert first["checkpoint"] is not None and first["ticks"] == 10
+    w3, sub3, inst3, obs3 = fresh()                                                   # fresh objects: nothing shared with w2
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=24, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"]
+    assert rest["replay_class"] == "PARTIAL" and rest["checkpoint_tick"] == 10 and rest["pre_checkpoint_trace"] == first["trace_hash"]
+    assert obs3[1].series_episode() == obs[1].series_episode() and len(obs3[1].series_episode()) == 24   # the whole episode's series survives the checkpoint
+    assert obs3[0].measure() == obs[0].measure()
