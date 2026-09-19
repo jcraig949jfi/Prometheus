@@ -336,10 +336,11 @@ def run_due_readouts(reg: Registry) -> None:
     for r in rs:
         if r.get("state") != "PENDING":
             continue
-        fam = r["condition"]["family"]; done = 0
+        fam = r["condition"]["family"]; done = 0; prefixes = r["condition"].get("ids_prefix")
         for rp in (RUNS / fam.split(".")[0]).glob("*/RECEIPT.json") if (RUNS / fam.split(".")[0]).exists() else []:
             try:
-                if json.loads(rp.read_text(encoding="utf-8")).get("status") == "DONE":
+                rc_ = json.loads(rp.read_text(encoding="utf-8"))
+                if rc_.get("status") == "DONE" and (not prefixes or any(rc_["experiment_id"].split("/")[1].startswith(p) for p in prefixes)):
                     done += 1
             except Exception:                                        # noqa: BLE001
                 pass

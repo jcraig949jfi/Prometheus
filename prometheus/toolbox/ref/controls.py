@@ -42,7 +42,14 @@ class ReplayControl:
             as_ = {k: v["series_hash"] for k, v in (arm.get("series") or {}).items()}
             seq = ps == as_
             return _met(eq and seq, {"class": rc, "equal": eq, "series_equal": seq})
-        return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "semantic replay needs a declared tolerance; none in Phase 1"}}
+        if rc == "SEMANTIC":
+            # C63: a SEMANTIC world hashes state quantised at the quantum it DECLARED before the run; equal hashes = agreement at that tolerance
+            q = (primary.get("components", {}).get("world", {}).get("manifest") or {}).get("quantum")
+            if q is None:
+                return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "SEMANTIC world declares no quantum: no tolerance was fixed before the run"}}
+            eq = primary["trace_hashes"] == arm["trace_hashes"]
+            return _met(eq, {"class": rc, "quantum": q, "equal_at_quantum": eq})
+        return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "replay is only defined for BIT and SEMANTIC (with a declared quantum)"}}
 
 
 class CheatControl:
@@ -77,8 +84,10 @@ class NegativeControl:
     def expectation(self, primary: dict, arm: dict) -> dict:
         obs = arm["science"].get("observations", {})
         acts = sum(int(o.get("actions_total", 0)) for o in obs.values())
-        has_obj = "objective" in arm["science"]
-        return _met(acts == 0 and has_obj, {"arm_actions_total": acts, "objective_recorded": has_obj})
+        has_obj = "objective" in arm["science"] and "objective" in primary["science"]
+        if not has_obj:                                            # C97: an abstainer with nothing to compare against is not a failed control
+            return {"outcome": "INDETERMINATE", "detail": {"arm_actions_total": acts, "objective_recorded": False, "note": "no objective in the experiment: nothing to compare the abstainer against"}}
+        return _met(acts == 0, {"arm_actions_total": acts, "objective_recorded": True})
 
 
 class PositiveControl:
@@ -116,11 +125,11 @@ class _TransformControl:
     the arm's provenance records `transformed_players`; an arm that transformed nobody is INDETERMINATE."""
     transform = ""
 
-    def arm(self, exp, rng_seed: int):
+    def arm(self, exp, rng_seed: int, registry=None):
         from prometheus.toolbox.ref.transforms import transform_players
         from prometheus.toolbox.registry import default_registry
-        e = copy.deepcopy(exp)
-        e.players, done = transform_players(default_registry(), self.transform, exp.players, rng_seed)
+        e = copy.deepcopy(exp)                                     # C97: the transform comes from the kernel's registry, not the process-global one
+        e.players, done = transform_players(registry or default_registry(), self.transform, exp.players, rng_seed)
         e.provenance = dict(e.provenance, control=self.kind, transformed_players=done)
         return e
 
@@ -134,8 +143,14 @@ class ShamControl(_TransformControl):
 
     def expectation(self, primary: dict, arm: dict) -> dict:
         a = primary["accounting"].get("params"); b = arm["accounting"].get("params")
-        detail = {"primary_params": a, "arm_params": b, "transformed_players": _coverage(primary, arm)}
-        return _indeterminate_if_uncovered(arm, detail) or _met(a == b, detail)
+        differs = primary["trace_hashes"] != arm["trace_hashes"]
+        detail = {"primary_params": a, "arm_params": b, "transformed_players": _coverage(primary, arm), "trace_differs_from_primary": differs}
+        unc = _indeterminate_if_uncovered(arm, detail)
+        if unc:
+            return unc
+        if not differs:                                            # C97: a shuffle that changed no behaviour tested nothing
+            return {"outcome": "INDETERMINATE", "detail": dict(detail, note="shuffle changed no behaviour: the sham arm's trace equals the primary's")}
+        return _met(a == b, detail)
 
 
 class ScratchControl(_TransformControl):
@@ -146,8 +161,19 @@ class ScratchControl(_TransformControl):
         return {"kind": "control.scratch.v1", "transform": self.transform}
 
     def expectation(self, primary: dict, arm: dict) -> dict:
-        detail = {"arm_status": arm["status"], "transformed_players": _coverage(primary, arm)}
-        return _indeterminate_if_uncovered(arm, detail) or _met(arm["status"] == "COMPLETED", detail)
+        cov = _coverage(primary, arm)
+        pf = primary["science"].get("player_fingerprints", {}); af = arm["science"].get("player_fingerprints", {})
+        same = [pid for pid in cov if (pf.get(str(pid)) or {}).get("spec_hash") is not None and (pf.get(str(pid)) or {}).get("spec_hash") == (af.get(str(pid)) or {}).get("spec_hash")]
+        differs = primary["trace_hashes"] != arm["trace_hashes"]
+        detail = {"arm_status": arm["status"], "transformed_players": cov, "players_with_unchanged_genome": same, "trace_differs_from_primary": differs}
+        unc = _indeterminate_if_uncovered(arm, detail)
+        if unc:
+            return unc
+        if same:                                                   # C97: a "fresh" player with the primary's genome is not fresh
+            return _met(False, detail)
+        if not differs:
+            return {"outcome": "INDETERMINATE", "detail": dict(detail, note="fresh players changed no behaviour: the scratch arm's trace equals the primary's")}
+        return _met(arm["status"] == "COMPLETED", detail)
 
 
 class PermutationControl:
@@ -163,9 +189,40 @@ class PermutationControl:
         return e
 
     def expectation(self, primary: dict, arm: dict) -> dict:
-        return _met(arm["status"] == "COMPLETED", {"trace_equal_to_primary": primary["trace_hashes"] == arm["trace_hashes"]})
+        eq = primary["trace_hashes"] == arm["trace_hashes"]
+        if eq:                                                     # C97: a permutation that changed nothing (one-element observations) tested nothing
+            return {"outcome": "INDETERMINATE", "detail": {"trace_equal_to_primary": True, "note": "permuting the observation changed no behaviour"}}
+        return _met(arm["status"] == "COMPLETED", {"trace_equal_to_primary": False})
+
+
+class AblationControl:
+    """control.ablation.v1 (C59): remove every player's WORKSPACE -- the experiment's substrate and every per-player
+    override become substrate.flat.v1 (players keep their tables; refused writes are counted). Expectation: the
+    arm ran with zero workspace traffic while the primary had some; INDETERMINATE when the primary had none
+    (nothing to ablate)."""
+    kind = "ablation"
+
+    def manifest(self) -> dict:
+        return {"kind": "control.ablation.v1", "ablates": "workspace", "mechanism": "substrate -> substrate.flat.v1 for every player"}
+
+    def arm(self, exp, rng_seed: int):
+        e = copy.deepcopy(exp)
+        e.substrate = {"kind": "substrate.flat.v1", "params": {}}
+        e.players = [{k: v for k, v in p.items() if k != "substrate"} for p in e.players]
+        e.provenance = dict(e.provenance, control="ablation", ablated="workspace")
+        return e
+
+    def expectation(self, primary: dict, arm: dict) -> dict:
+        def ws_ops(r):
+            a = r.get("accounting", {})
+            return int(a.get("ws_reads", 0)) + int(a.get("ws_writes", 0)) + int(a.get("ws_appends", 0))
+        p, a = ws_ops(primary), ws_ops(arm)
+        detail = {"primary_ws_ops": p, "arm_ws_ops": a}
+        if p == 0:
+            return {"outcome": "INDETERMINATE", "detail": dict(detail, note="the primary used no workspace: nothing to ablate")}
+        return _met(a == 0 and arm["status"] == "COMPLETED", detail)
 
 
 ALL = {"control.replay.v1": ReplayControl, "control.cheat.v1": CheatControl, "control.negative.v1": NegativeControl,
        "control.positive.v1": PositiveControl, "control.sham.v1": ShamControl, "control.scratch.v1": ScratchControl,
-       "control.permutation.v1": PermutationControl}
+       "control.permutation.v1": PermutationControl, "control.ablation.v1": AblationControl}

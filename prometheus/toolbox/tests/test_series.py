@@ -156,3 +156,127 @@ def test_series_yield_column_is_per_episode_not_per_run(tmp_path):
     tot = r["science"]["observations"]["observer.series.v1"]["yield_total"]
     assert tot > 0 and all(ep[0][2] <= 8 for ep in eps), "an episode must start near zero yield"
     assert sum(ep[-1][2] for ep in eps) == tot, "per-episode final yields must add up to the run total"
+
+
+# C53: series records were positional integers whose meaning lived only in a docstring; an objective read "column
+# 2" by habit. Records now SELF-DESCRIBE (the SeriesRecord carries `columns` from the observer), a per-player
+# layout exists, and the series objective reads columns by NAME.
+def test_series_records_self_describe_their_columns_and_per_player_layout_works(tmp_path):
+    e = exp(observers=[ref("observer.series.v1", per_player=True)], world=ref("world.integer.v1", world_seed=5, n_players=2, start_charge=40),
+            players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()], budget={"episodes": 2, "horizon": 12},
+            objective=ref("objective.series_gain.v1"))
+    r = run(e, tmp_path / "pp.jsonl")
+    s = r["series"]["observer.series.v1"]
+    assert s["columns"] == ["tick", "actions_sum", "yield_cum", "alive", "p0_actions", "p0_yield_cum", "p0_alive", "p1_actions", "p1_yield_cum", "p1_alive"]
+    assert s["record_width"] == 10
+    eps = S.recover(r, tmp_path)["observer.series.v1"]
+    for ep in eps:
+        for rec in ep:
+            assert rec[1] == rec[4] + rec[7] and rec[2] == rec[5] + rec[8] and rec[3] == rec[6] + rec[9]
+    obj = r["science"]["objective"]
+    assert obj["components"]["column"] == "yield_cum" and obj["value"] == eps[-1][-1][2] - eps[0][-1][2]
+    r0 = run(exp(), tmp_path / "default.jsonl")
+    assert r0["series"]["observer.series.v1"]["columns"] == ["tick", "actions_sum", "yield_cum", "alive"]
+
+
+# C61 (mutation wave 3 survivors M31/M34): no test had a series whose declared columns disagreed with its records,
+# nor one whose yield_cum column was NOT at index 2 -- so "read column 2 by habit" and "never flag a layout
+# mismatch" both survived. Two observers built for the purpose kill them.
+def test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position(tmp_path):
+    from prometheus.toolbox.ref.observers import SeriesObserver
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class Reordered(SeriesObserver):                              # yield_cum FIRST after tick
+        kind = "observer.series.v1"
+
+        def series_columns(self):
+            return ["tick", "yield_cum", "actions_sum", "alive"]
+
+        def on_tick(self, tick, observations, actions):
+            super().on_tick(tick, observations, actions)
+            if self.enabled:
+                r = self._series[-1]; self._series[-1] = [r[0], r[2], r[1], r[3]]
+
+    class Lying(SeriesObserver):                                  # declares 3 columns, emits 4
+        kind = "observer.series.v1"
+
+        def series_columns(self):
+            return ["tick", "actions_sum", "yield_cum"]
+    R = REG.fork()
+    R.register(ComponentRecord("observer.series.v1", "observer", Reordered, frozenset({"ext.events.v1"}), route="write", provenance={"author": "test"}, license="repository"))
+    # a fixture where the yield difference and the actions difference DISAGREE (otherwise "column 2 by habit" passes by luck)
+    found = False
+    for ws in range(5, 40):
+        e = exp(objective=ref("objective.series_gain.v1"), budget={"episodes": 2, "horizon": 12}, players=[random_statemachine(ws).manifest()],
+                world=ref("world.integer.v1", world_seed=ws, start_charge=100000, step_cost=0, yield_width=40000, stoch_rate=3))
+        low = e.compile("local", R); execute(low.job, tmp_path / ("re%d.jsonl" % ws), R)
+        r = [x for x in R_read(tmp_path / ("re%d.jsonl" % ws)) if x["arm"] == "primary"][0]
+        eps = S.recover(r, tmp_path)["observer.series.v1"]
+        ydiff = eps[-1][-1][1] - eps[0][-1][1]; adiff = eps[-1][-1][2] - eps[0][-1][2]
+        if ydiff != adiff:
+            found = True; break
+    assert found, "no fixture separated the two columns"
+    assert r["series"]["observer.series.v1"]["columns"][1] == "yield_cum"
+    assert r["science"]["objective"]["value"] == ydiff and r["science"]["objective"]["value"] != adiff
+    R2 = REG.fork()
+    R2.register(ComponentRecord("observer.series.v1", "observer", Lying, frozenset({"ext.events.v1"}), route="write", provenance={"author": "test"}, license="repository"))
+    execute(exp(budget={"episodes": 1, "horizon": 6}).compile("local", R2).job, tmp_path / "ly.jsonl", R2)
+    r2 = [x for x in R_read(tmp_path / "ly.jsonl") if x["arm"] == "primary"][0]
+    assert r2["series"]["observer.series.v1"]["status"] == "CORRUPT_LAYOUT" and "3 columns" in r2["series"]["observer.series.v1"]["layout_defect"]
+    assert S.verify(r2, tmp_path)["observer.series.v1"] == "CORRUPT"
+
+
+from prometheus.toolbox.receipt import read_all as R_read
+
+
+# C126: the series contract as a PROPERTY over random IRs that carry the series observer: every written series
+# verifies as its written status; recovered episodes match the receipt's counts and the run's ticks; the bound is
+# honoured when declared; destroying an artifact is seen (MISSING_ARTIFACT), never silently read as empty.
+_SERIES_COVERAGE = {"exercised": 0, "artifact": 0, "bounded": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(500, 620)))
+def test_series_contract_over_random_compositions(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    from prometheus.toolbox.receipt import read_all
+    from prometheus.toolbox import series as SER
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    if not any(o["kind"] == "observer.series.v1" for o in e.observers):      # the property is about the series: give every composition one
+        e.observers = list(e.observers) + [ref("observer.series.v1", per_player=bool(seed % 2))]
+    e.budget = dict(e.budget, horizon=max(int(e.budget["horizon"]), 3))
+    if seed % 3 == 0:                                              # push some past the inline boundary
+        e.budget = dict(e.budget, episodes=4, horizon=200)
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] != "SUMMARY" and r["status"] == "COMPLETED"]
+    if not rows:
+        return
+    _SERIES_COVERAGE["exercised"] += 1
+    for r in rows:
+        v = SER.verify(r, tmp_path)
+        for kind, st in v.items():
+            assert st == r["series"][kind]["status"], (seed, kind, st)
+        eps = SER.recover(r, tmp_path)
+        for kind, s in r["series"].items():
+            if s["status"] == "PRESENT":
+                assert len(eps[kind]) == s["n_episodes"] and sum(len(ep) for ep in eps[kind]) == s["n_records"] == r["engineering"]["ticks"]
+                assert all(len(rec) == s["record_width"] for ep in eps[kind] for rec in ep)
+                if "artifact" in s:
+                    _SERIES_COVERAGE["artifact"] += 1
+            if s["status"] == "BOUND_EXCEEDED":
+                _SERIES_COVERAGE["bounded"] += 1
+                assert s["n_records_dropped"] > 0 and s["bound"]["max_records"] is not None
+    # power: remove one artifact, verify must say so
+    art = [(r, k, s) for r in rows for k, s in r["series"].items() if "artifact" in s]
+    if art:
+        r, k, s = art[0]; (tmp_path / s["artifact"]["path"]).unlink()
+        assert SER.verify(r, tmp_path)[k] == "MISSING_ARTIFACT"
+
+
+def test_the_series_property_was_actually_exercised():
+    assert _SERIES_COVERAGE["exercised"] >= 10 and _SERIES_COVERAGE["artifact"] >= 3, _SERIES_COVERAGE

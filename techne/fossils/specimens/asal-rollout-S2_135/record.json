@@ -1,0 +1,191 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "asal-rollout-S2_135",
+  "canonical_name": "ASAL legitimate-search rollout S2_135 (Harmonia run_2026-09-18, stage S2 index 135)",
+  "aliases": [
+    "S2_135",
+    "IC IC-CAT:3G3an"
+  ],
+  "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+  "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+  ],
+  "era": "2026-09-18",
+  "version": "run_2026-09-18/search key S2_135; frames128 manifest b3694507a2d7",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "file",
+        "source_path": "C:\\Prometheus-vault\\harmonia\\asal_001_frames128\\S2_135.npy",
+        "filename": "S2_135.npy",
+        "sha256": "b3694507a2d7ce5b09b90fef097e0ce3c5d15f9cfdfad2d5f828b8203ea707df",
+        "bytes": 131200
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "run": "roles/Harmonia/science/asal_ruler/out/run_2026-09-18/search",
+    "rows_jsonl_sha256_lf": "c467e2b9b4219f89739777152b7d5d2a09e05866aeefc7e7b42e05d8820fa1b2",
+    "frames128_manifest_sha256_lf": "d7b521c8d5e6d538cee321388807384f0cbca6120f704da52150e7df3d4bde22",
+    "regenerated_by": "roles/Harmonia/science/asal_ruler/regen_frames128.py (controls C-TOP20, C-TRAJ64 pass)",
+    "port_sha256": "bbc43b781118e39e6f25688b2fad30521d8706d0446e927e68557e974eaa1a8c"
+  },
+  "hashes": {
+    "tree_sha256": "a951cd8fcdaf97e619a46a0c4661c3ba79d9be84e717718c32435f0e8c2e1286",
+    "n_files": 1,
+    "bytes": 131200,
+    "artifacts": [
+      {
+        "filename": "S2_135.npy",
+        "sha256": "b3694507a2d7ce5b09b90fef097e0ce3c5d15f9cfdfad2d5f828b8203ea707df",
+        "commit": null
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\asal-rollout-S2_135",
+    "hash_list": "techne/fossils/specimens/asal-rollout-S2_135/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+    "status": "internal data",
+    "evidence": "produced by this programme's instruments"
+  },
+  "acquisition_date": "2026-09-19",
+  "language": [
+    "numpy uint8 array"
+  ],
+  "build_system": "none",
+  "compiler_or_interpreter": "n/a",
+  "dependencies": [],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "<key>.npy: (8,128,128) uint8 greyscale frames at steps 0,32,...,224"
+  ],
+  "example": {
+    "command": "python -c \"import numpy as np; a=np.load('S2_135.npy'); print(a.shape, a.dtype)\"",
+    "input": "the frame file",
+    "output": "(8, 128, 128) uint8"
+  },
+  "environment": {
+    "runner": "native"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "roles/Harmonia/science/asal_ruler/PREREG_ASAL_LEGIT_SEARCH_2026-09-18.md",
+    "techne/acquisition/poet_alife/TECHNE107_RESULTS_2026-09-17.md"
+  ],
+  "human_capability_summary": {
+    "built_to": "n/a (a preserved rollout)",
+    "pressure": "n/a",
+    "success_means": "n/a"
+  },
+  "known_human_problem_solved": "n/a",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "target": "lenia-chan-2019",
+      "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+      "relation": "derived_from",
+      "target": "asal-sakana-2024",
+      "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "numpy"
+    ],
+    "host_class": "any"
+  },
+  "rollout": {
+    "stage": "S2",
+    "idx": "135",
+    "ic": "IC-CAT:3G3an",
+    "seed": 20260918,
+    "params": {
+      "R": 18,
+      "T": 10,
+      "b": "1,1,1",
+      "m": 0.2643948013285336,
+      "s": 0.035672014394110406,
+      "kn": 1,
+      "gn": 1
+    },
+    "alive": true,
+    "class_original": "GENUINE_DYNAMICAL_NOVELTY",
+    "score_original": 0.7933099269866943,
+    "coh": 0.7994426797289381,
+    "d_pix": 0.12458252994296086,
+    "d_clip_original": 0.09713613986968994,
+    "mass_cv": 0.3922340350953924,
+    "disp": 3.4701663258796436,
+    "mass": [
+      730.7294117647059,
+      602.0706290605274,
+      318.21382721727434,
+      308.0605557876093,
+      311.81840486260717,
+      310.24298590255876,
+      309.2334362692309,
+      311.8464299402641,
+      310.45894029765515
+    ]
+  },
+  "preservation_reason": "genuine organism with very low score (GENUINE_DYNAMICAL_NOVELTY below garbage_mean under the original observer)",
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-19T07:46:43Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

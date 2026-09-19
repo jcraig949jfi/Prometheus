@@ -33,12 +33,12 @@ def _spec(p: dict | PlayerSpec) -> PlayerSpec:
     return PlayerSpec(p["representation"], copy.deepcopy(p["payload"]), dict(p.get("initial_state", {})), frozenset(p.get("requires", ())), dict(p.get("meta", {})))
 
 
-SM = ("statemachine.v1", "statemachine.v2")
+SM = ("statemachine.v1", "statemachine.v2", "statemachine.v3")
 
 
 class ShuffleTransform:
     kind = "transform.shuffle.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -51,6 +51,9 @@ class ShuffleTransform:
             pl["table"] = [flat[i * nb:(i + 1) * nb] for i in range(pl["n_states"])]
         elif spec.representation == "proteus.tape.v0":
             pl["manifest"] = dict(pl["manifest"], genome=_shuffle(list(pl["manifest"]["genome"]), s))
+        elif spec.representation == "rewrite.v1":
+            flat = _shuffle([x for rule in pl["rules"] for side in rule for x in side], s)
+            pl["rules"] = [[flat[i:i + 2], flat[i + 2:i + 4]] for i in range(0, len(flat), 4)]; pl["tape"] = _shuffle(list(pl["tape"]), s)
         else:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))
@@ -58,13 +61,16 @@ class ShuffleTransform:
 
 class FreshTransform:
     kind = "transform.fresh.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
 
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj)
+        if spec.representation == "statemachine.v3":
+            pl = spec.payload
+            return P.random_statemachine_v3(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
         if spec.representation == "statemachine.v1":
             pl = spec.payload
             return P.random_statemachine(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], meta={"transform": self.kind})
@@ -73,12 +79,15 @@ class FreshTransform:
             return P.random_statemachine_v2(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
         if spec.representation == "proteus.tape.v0":
             return P.random_proteus_player(rng_seed, meta={"transform": self.kind})
+        if spec.representation == "rewrite.v1":
+            pl = spec.payload
+            return P.random_rewrite_system(rng_seed, len(pl["rules"]), pl["alphabet"], len(pl["tape"]), meta={"transform": self.kind})
         raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
 
 
 class RelabelTransform:
     kind = "transform.relabel.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -99,9 +108,9 @@ class RelabelTransform:
 
 class PointMutationTransform:
     """transform.point_mutation.v1 (C26): change exactly ONE table cell of a state machine (next state, one action
-    value, or -- for v2 -- the memory write). The search operator; shape and cost preserved."""
+    value, or -- for v2/v3 -- the memory write / op argument). The search operator; shape and cost preserved."""
     kind = "transform.point_mutation.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -112,13 +121,25 @@ class PointMutationTransform:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
         i = s.below(pl["n_states"]); j = s.below(pl["n_buckets"]); cell = pl["table"][i][j]
-        field = s.below(3 if spec.representation == "statemachine.v2" else 2)
+        field = s.below(2 if spec.representation == "statemachine.v1" else 3)
+        # C133: a POINT mutation changes exactly one cell -- always. The v2/v3 memory branches drew a fresh value
+        # that could equal the old one (a proposal identical to its parent: a wasted evaluation and a duplicate
+        # player_hash in the archive; the property over random players found it); a one-state machine cannot
+        # change its next-state field. Every branch now steps AWAY from the current value.
+        if field == 0 and pl["n_states"] < 2:
+            field = 1
         if field == 0:
             cell[0] = (cell[0] + 1 + s.below(max(1, pl["n_states"] - 1))) % pl["n_states"]
         elif field == 1:
             k = s.below(len(cell[1])); cell[1][k] = (cell[1][k] + 1 + s.below(max(1, pl["act_range"] - 1))) % pl["act_range"]
+        elif spec.representation == "statemachine.v2":
+            # values live in {-1} U [0, mem_range): step to a different one
+            cur = cell[2] + 1; cell[2] = (cur + 1 + s.below(pl["mem_range"])) % (pl["mem_range"] + 1) - 1
         else:
-            cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl["mem_range"])
+            if s.below(2) == 0:
+                cell[2] = (cell[2] + 1 + s.below(3)) % 4                              # the op, a different one
+            else:
+                cell[3] = (cell[3] + 1 + s.below(max(1, pl["mem_range"] - 1))) % pl["mem_range"]   # its argument, a different one
         parent_fp = spec.meta.get("fingerprint")
         return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires,
                           dict(spec.meta, transform=self.kind, transform_seed=rng_seed, parent=parent_fp))
@@ -133,7 +154,11 @@ def transform_players(registry, kind: str, players: list, rng_seed: int) -> tupl
     t = registry.make(kind); out = []; done = []
     for i, p in enumerate(players):
         if "player." + p["representation"] in t.accepts:
-            out.append(t.apply(p, rng_seed * 1009 + i).manifest()); done.append(i)
+            m = t.apply(p, rng_seed * 1009 + i).manifest()
+            for k in ("substrate",):                      # C35: keys the PlayerSpec does not model travel with the player
+                if k in p:
+                    m[k] = p[k]
+            out.append(m); done.append(i)
         else:
             out.append(p)
     return out, done

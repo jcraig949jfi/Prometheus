@@ -42,11 +42,13 @@ def series_hash(episodes) -> str:
 
 
 def build(episodes: Optional[List[List[List[int]]]], *, enabled: bool, replay_class: str, max_records: Optional[int],
-          max_inline: int, receipt_dir: pathlib.Path) -> dict:
-    """Build the SeriesRecord for one observer over one run. Writes the artifact file when needed."""
+          max_inline: int, receipt_dir: pathlib.Path, columns: Optional[List[str]] = None) -> dict:
+    """Build the SeriesRecord for one observer over one run. Writes the artifact file when needed. `columns`
+    (C53) names every position of a record, from the observer, so a reader never guesses a layout."""
     if not enabled:
         return {"status": "DISABLED", "encoding": ENCODING, "record_width": 0, "n_episodes": 0, "n_records": 0, "n_records_dropped": 0,
-                "bound": {"max_records": max_records, "max_inline_records": max_inline}, "series_hash": series_hash([]), "replay_class": replay_class}
+                "bound": {"max_records": max_records, "max_inline_records": max_inline}, "series_hash": series_hash([]), "replay_class": replay_class,
+                "columns": list(columns or [])}
     episodes = [[list(int(x) for x in rec) for rec in ep] for ep in (episodes or [])]
     total = sum(len(ep) for ep in episodes); dropped = 0
     if max_records is not None and total > max_records:
@@ -57,7 +59,10 @@ def build(episodes: Optional[List[List[List[int]]]], *, enabled: bool, replay_cl
     width = max((len(rec) for ep in episodes for rec in ep), default=0)
     rec = {"status": "BOUND_EXCEEDED" if dropped else ("PRESENT" if total else "EMPTY"), "encoding": ENCODING, "record_width": width,
            "n_episodes": len(episodes), "n_records": total, "n_records_dropped": dropped,
-           "bound": {"max_records": max_records, "max_inline_records": max_inline}, "series_hash": series_hash(episodes), "replay_class": replay_class}
+           "bound": {"max_records": max_records, "max_inline_records": max_inline}, "series_hash": series_hash(episodes), "replay_class": replay_class,
+           "columns": list(columns or [])}
+    if columns and width and len(columns) != width:
+        rec["status"] = "CORRUPT_LAYOUT"; rec["layout_defect"] = "observer declared %d columns but records have width %d" % (len(columns), width)
     if total <= max_inline:
         rec["inline"] = episodes
     else:
@@ -71,7 +76,13 @@ def build(episodes: Optional[List[List[List[int]]]], *, enabled: bool, replay_cl
 
 
 def declared_series_observers(receipt: dict) -> List[str]:
-    return [o["kind"] for o in receipt.get("components", {}).get("observers", []) if o.get("series")]
+    """Series keys as the executor wrote them: an observer kind, or kind#<index> for a repeated kind (C48)."""
+    seen: Dict[str, int] = {}; keys = []
+    for i, o in enumerate(receipt.get("components", {}).get("observers", [])):
+        key = o["kind"] if o["kind"] not in seen else "%s#%d" % (o["kind"], i); seen[o["kind"]] = i
+        if o.get("series"):
+            keys.append(key)
+    return keys
 
 
 def verify(receipt: dict, base_dir) -> Dict[str, str]:

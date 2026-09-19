@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 169,
+ "built": "2026-09-19T07:40Z",
+ "n": 170,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -18,6 +18,23 @@
    "cheat_control": "an organism given the plant model (an exact inverse) must track with zero overshoot at zero derivative kick; the textbook PID must overshoot after saturation; derivative-on-error must spike on the step: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: embedded feedback control (Beauregard 2011-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "asal-sakana-2024::P.an_open_ended_search_scored_only_by_an_observer_s_embedding_of_a_few_sampled_frames_must_be_shown_either_to_reward_genuine_dynamical_novelty_or_to_be_crossable_by_drift_producing_configurations_within_the_legitimate_substrate",
+   "source_fossil": "asal-sakana-2024",
+   "source_evidence": "asal_metrics.py:52-64; rollout.py:78-95; TECHNE-107 (E1); Harmonia's PREREG_ASAL_LEGIT_SEARCH_2026-09-18",
+   "condition": "an organism searches a substrate's parameters to minimise the ASAL open-endedness score (mean max-cosine-to-earlier-frame over 8 sampled frames); the score cannot see the dynamics between samples or anything the observer's embedding discards; the question is whether a legitimate (ALIVE) configuration can reach a score at or below what scene-level garbage achieves",
+   "resource_or_constraint": "a fixed rollout-and-embed budget; the substrate's real parameter envelope",
+   "failure_condition": "for the metric-as-novelty claim: a legitimate ALIVE rollout crossing below the garbage score by drift rather than by any property one would call novelty",
+   "world_punishes": "trusting an observer-embedding score as a novelty measure without a substrate-side control",
+   "world_rewards": "a search that finds embedding-dissimilar frame sequences, alive or not",
+   "observable_consequence": "the minimum ALIVE score reached by a preregistered search over the Lenia catalogue and its parameter envelope, versus the garbage score (0.8167) and versus the catalogue with no search; and the class (genuine / metric-exploit / observer-exploit) of the best crosser",
+   "vacuity_condition": "a substrate too small to produce embedding drift",
+   "trivial_shortcuts": "free images not tied to any substrate (Harmonia's C-POS-SEARCH control, which is exactly the shortcut the legitimate-search question excludes)",
+   "cheat_control": "feeding fixed garbage frames scores the fixed value regardless of the Lenia parameters (the score depends only on the frames); a free-image search must reach below the garbage score (the channel works); a blank world must score the (T-1)/T ceiling and be NOT_ALIVE: Harmonia's fixture shows all three",
+   "cost_class": "GPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automated open-ended ALife search (SakanaAI 2024)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

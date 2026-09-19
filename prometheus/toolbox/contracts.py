@@ -33,6 +33,34 @@ EVENT_KINDS: Tuple[str, ...] = (
 EVENT_ID: Dict[str, int] = {k: i for i, k in enumerate(EVENT_KINDS)}
 Event = Tuple[int, int, int, int, int]
 
+# C100: an observation is int | list of observations | dict of str -> observation (nested JSON of ints). The
+# canonical form is a flat int list; a world that returns anything else declares ext.observation.structured.v1
+# and the kernel carries it as OPAQUE data (delivered, delayed, hashed, recorded as given). Players that need a
+# vector read it through flatten(); the kernel never flattens on their behalf.
+Observation = Any
+
+
+def flatten(obs: Any) -> List[int]:
+    """Canonical vector of a structured observation: ints in order, lists depth first, dict keys SORTED. Total on
+    the observation grammar, TypeError on anything else (floats, strings, None) -- a player must not guess."""
+    if isinstance(obs, bool):
+        raise TypeError("observation leaves are ints, not bool")
+    if isinstance(obs, int):
+        return [obs]
+    if isinstance(obs, (list, tuple)):
+        out: List[int] = []
+        for x in obs:
+            out += flatten(x)
+        return out
+    if isinstance(obs, dict):
+        out = []
+        for k in sorted(obs):
+            if not isinstance(k, str):
+                raise TypeError("observation keys are strings")
+            out += flatten(obs[k])
+        return out
+    raise TypeError("not an observation: %s" % type(obs).__name__)
+
 REPLAY_CLASSES = ("BIT", "SEMANTIC", "PARTIAL", "NONDETERMINISTIC")
 
 
@@ -151,7 +179,7 @@ class Control(Protocol):
     kind: str                     # positive | negative | sham | scratch | permutation | compute_matched | storage_matched | replay | ablation | transplant | cheat
 
     def manifest(self) -> dict: ...
-    def arm(self, experiment: Any, rng_seed: int) -> Any: ...
+    def arm(self, experiment: Any, rng_seed: int) -> Any: ...          # may also accept registry= (C97): the kernel passes its registry when the signature admits it
     def expectation(self, primary: dict, arm: dict) -> dict: ...   # {"outcome": "MET"|"NOT_MET"|"INDETERMINATE", "detail": ...}
 
 

@@ -40,7 +40,8 @@ Swarm toys S1-S4: FROZEN (operator 2026-09-18). A new toy only if it answers a c
 APHRODITE-39 | Update ONLY the measured-economics and substrate-selection sections of packet v2 from the receipts (operator 2026-09-18) and return it for review | ENGINE | 1.0 | S | APHRODITE-37 | packet v2 s6 and s5-model updated + economics.json committed
 APHRODITE-40 | Review the Archaeon / Harmonia / Vivarium contracts against the measurement needs when they arrive | ENGINE | 1.0 | S | Archaeon, Harmonia, Vivarium | reply per contract
 APHRODITE-37 | Receive the frozen-harness benchmark receipts from Nestor (M1, #471) and Archaeon (M2, #472) and validate them with economics.py | TOOLS | 1.0 | M | Nestor, Archaeon (executors named by the operator) | measured tokens/s per GPU replacing the ASSUMED values in the design packet
-APHRODITE-38 | Campaign 1 preregistration with estimand, delta, substrate, L, budget frozen | EVIDENCE | 1.0 | XL | operator decisions in CAMPAIGN1_DESIGN_PACKET s2-s6 | prereg committed; execution still needs its own go
+APHRODITE-38 | Campaign 1 execution (transplant preregistration frozen 2026-09-19) | EVIDENCE | 1.0 | XL | gates in PREREG_C1 s10 + operator authorisation | --
+APHRODITE-41 | Qualification of the exploratory C1 endpoints (cross-lineage, regime-shift, artifact search) IF the operator wants any promoted to confirmatory | EVIDENCE | program | M | operator decision | a 0D prereg + results
 
 CLOSED (with the commit that closed them):
 

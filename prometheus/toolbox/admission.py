@@ -54,6 +54,14 @@ def _episode(world, seed: int, horizon: int, actions_fn) -> str:
     return world.trace_hash()
 
 
+def _accepts(factory, params: dict) -> bool:
+    """Does the factory construct with these params? (The world's own refusal is the only source of truth.)"""
+    try:
+        factory(**params); return True
+    except Exception:
+        return False
+
+
 def _det_actions(pid: int, obs: List[int], legal: ActionSpace) -> List[int]:
     return [(sum(obs) + pid + i) % legal.range for i in range(legal.width)]
 
@@ -66,6 +74,9 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
     if not registry.has(kind):
         res.failed.append("registry"); checks["registry"] = {"ok": False}; return res
     row = registry.get(kind)
+    if row.state == "UNAVAILABLE" and str(row.admission.get("failed", "")).startswith("import"):     # C92b: same rule as every other slot
+        checks["registry"] = {"ok": False, "note": "absent machinery", "reason": row.admission.get("failed")}
+        res.failed.append("registry"); return res                                  # the row keeps its import reason for the next asker
     checks["registry"] = {"ok": True}
     # 6 provenance
     prov_ok = bool(row.provenance.get("author")) and row.license != "UNSPECIFIED" and row.route in ("write", "wrap", "bind", "chop")
@@ -103,15 +114,23 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
         w.restore(snap); o1 = w.observe(0); w.reset(seeds[0]); o2 = w.observe(0)
         if not isinstance(snap, (bytes, bytearray)) or o1 != o2:
             ext_fail.append("ext.snapshot.v1")
+    if "ext.snapshot.v1" in row.capabilities and "ext.world.mutable_params.v1" in row.capabilities and getattr(w, "MUTABLE", None):
+        # C119: runtime-mutable params are state; a snapshot taken after set_params must restore the changed value
+        k = list(w.MUTABLE)[0]; w.reset(seeds[0]); before = w.p[k]; w.set_params(**{k: (before or 0) + 1}); snap = w.snapshot()
+        w2 = row.factory(**params); w2.reset(seeds[0]); w2.restore(snap)
+        if w2.p.get(k) != (before or 0) + 1:
+            ext_fail.append("ext.world.mutable_params.v1 (params not carried by ext.snapshot.v1)")
     checks["extensions"] = {"ok": not ext_fail, "undemonstrable": ext_fail}
     if ext_fail:
         res.failed.append("extensions")
     # 2 replay
     rc = getattr(w, "replay_class", "NONDETERMINISTIC")
-    if rc == "BIT":
+    if rc in ("BIT", "SEMANTIC"):
         w1 = row.factory(**params); w2 = row.factory(**params)
         eq = all(_episode(w1, s, horizon, _det_actions) == _episode(w2, s, horizon, _det_actions) for s in seeds)
-        checks["replay"] = {"ok": eq, "class": "BIT", "seeds": list(seeds)}
+        checks["replay"] = {"ok": eq, "class": rc, "seeds": list(seeds), "quantum": w.manifest().get("quantum") if rc == "SEMANTIC" else None}
+        if rc == "SEMANTIC" and w.manifest().get("quantum") is None:
+            eq = False; checks["replay"]["note"] = "SEMANTIC without a declared quantum"
         if not eq:
             res.failed.append("replay")
     else:
@@ -120,13 +139,22 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
     if row.reference_of:
         checks["reference"] = {"ok": True, "is_reference": True, "family": row.reference_of}
     else:
-        fam = kind.rsplit(".", 1)[0]
+        fam = row.implements or kind.rsplit(".", 1)[0]          # C70: a row names the family it implements; the kind string is only a fallback
         refs = [r for r in registry.rows("world") if r.get("reference_of") == fam]
         if refs:
-            wr = registry.make(refs[0]["kind"], **params); wc = row.factory(**params)
-            agree = all(_episode(wr, s, horizon, _det_actions) == _episode(wc, s, horizon, _det_actions) for s in seeds)
-            checks["reference"] = {"ok": agree, "reference": refs[0]["kind"]}
-            if not agree:
+            # C70b: the probe must have POWER -- on at least one probe world the reference's trace must depend on the
+            # actions, or agreement proves nothing (found: world_seed 0 overwrote every action target within the tick,
+            # so a wrong action multiplier agreed with the reference on every seed)
+            variants = [dict(params)] + [dict(params, world_seed=ws) for ws in (11, 23, 47) if _accepts(row.factory, dict(params, world_seed=ws))]
+            zero = lambda pid, obs, legal: [0] * legal.width
+            power = any(_episode(registry.make(refs[0]["kind"], **v), s, horizon, _det_actions) != _episode(registry.make(refs[0]["kind"], **v), s, horizon, zero)
+                        for v in variants for s in seeds)
+            agree = all(_episode(registry.make(refs[0]["kind"], **v), s, horizon, _det_actions) == _episode(row.factory(**v), s, horizon, _det_actions)
+                        for v in variants for s in seeds)
+            checks["reference"] = {"ok": agree and power, "reference": refs[0]["kind"], "probe_variants": len(variants), "probe_has_power": power}
+            if not power:
+                checks["reference"]["note"] = "the reference is action-blind on every probe: agreement is not evidence"
+            if not (agree and power):
                 res.failed.append("reference")
         else:
             checks["reference"] = {"ok": True, "note": "no reference registered for family %s; this component stands alone" % fam}
@@ -211,7 +239,7 @@ def admit_observer(kind: str, registry) -> "AdmissionResult":
     row = registry.get(kind)
     try:
         from prometheus.toolbox.contracts import Observer
-        obs = [row.factory(), row.factory()]
+        obs = [row.factory(**row.admission_params), row.factory(**row.admission_params)]
         conf = all(isinstance(o, Observer) for o in obs)
         _synthetic_run(registry, [obs[0]]); _synthetic_run(registry, [obs[1]])
         m0, m1 = obs[0].measure(), obs[1].measure()
@@ -245,12 +273,12 @@ def admit_substrate(kind: str, registry) -> "AdmissionResult":
     try:
         from prometheus.toolbox.contracts import Substrate, PlayerInstance, ActionSpace, PlayerSpec
         from prometheus.toolbox.ref import players as P
-        sub = row.factory()
+        sub = row.factory(**row.admission_params)
         res.checks["conformance"] = {"ok": isinstance(sub, Substrate)}
         if not isinstance(sub, Substrate):
             res.failed.append("conformance")
-        makers = {"statemachine.v1": lambda: P.random_statemachine(7), "statemachine.v2": lambda: P.random_statemachine_v2(7), "constant.v1": lambda: P.constant_player([1, 2]),
-                  "proteus.tape.v0": (lambda: P.random_proteus_player(17)) if P.proteus_available() else None}
+        makers = {"statemachine.v1": lambda: P.random_statemachine(7), "statemachine.v2": lambda: P.random_statemachine_v2(7), "statemachine.v3": lambda: P.random_statemachine_v3(7), "constant.v1": lambda: P.constant_player([1, 2]),
+                  "rewrite.v1": lambda: P.random_rewrite_system(7), "proteus.tape.v0": (lambda: P.random_proteus_player(17)) if P.proteus_available() else None}
         bad_reps = []
         for rep in sorted(sub.representations):
             mk = makers.get(rep)
@@ -285,13 +313,14 @@ def admit_control(kind: str, registry) -> "AdmissionResult":
     try:
         from prometheus.toolbox.contracts import Control
         from prometheus.toolbox.ir import Experiment, ref
-        ctrl = row.factory()
+        ctrl = row.factory(**row.admission_params)
         res.checks["conformance"] = {"ok": isinstance(ctrl, Control)}
         if not isinstance(ctrl, Control):
             res.failed.append("conformance")
         e = Experiment(family="admit", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[_det_spec(0).manifest()],
                        budget={"episodes": 1, "horizon": 4})
-        arm = ctrl.arm(e, 1)
+        from prometheus.toolbox.backends.local import call_arm
+        arm = call_arm(ctrl, e, 1, registry)
         ok = isinstance(arm, Experiment) and arm.validate() == [] and _serialisable(arm.to_dict())
         res.checks["arm"] = {"ok": ok, "defects": arm.validate() if isinstance(arm, Experiment) else "not an Experiment"}
         if not ok:
@@ -321,20 +350,20 @@ def admit_simple(kind: str, registry) -> "AdmissionResult":
             if not ok:
                 res.failed.append("spec")
         elif row.slot == "objective":
-            obj = row.factory(); out = obj.evaluate({"science": {"observations": {}}, "accounting": {}, "series": {}})
+            obj = row.factory(**row.admission_params); out = obj.evaluate({"science": {"observations": {}}, "accounting": {}, "series": {}})
             ok = isinstance(out, dict) and "value" in out and "components" in out and _serialisable(out) and _serialisable(obj.manifest())
             res.checks["evaluate"] = {"ok": ok}
             if not ok:
                 res.failed.append("evaluate")
         elif row.slot == "transform":
-            t = row.factory(); ok = isinstance(t.accepts, frozenset) and _serialisable(t.manifest())
+            t = row.factory(**row.admission_params); ok = isinstance(t.accepts, frozenset) and _serialisable(t.manifest())
             if "player.statemachine.v1" in t.accepts:
                 out = t.apply(_det_spec(0), 9); ok = ok and out.representation == "statemachine.v1" and _serialisable(out.manifest())
             res.checks["apply"] = {"ok": ok}
             if not ok:
                 res.failed.append("apply")
         elif row.slot == "selector":
-            sel = row.factory(); props = sel.propose([], 1, 3)
+            sel = row.factory(**row.admission_params); props = sel.propose([], 1, 3)
             ok = len(props) == 3 and all(_serialisable(p.manifest()) for p in props) and _serialisable(sel.manifest())
             res.checks["propose"] = {"ok": ok}
             if not ok:

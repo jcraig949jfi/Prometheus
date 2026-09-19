@@ -30,6 +30,17 @@ CONTROL_MAP = {"control.replay.v1": {"kind": "replay_A", "spec_delta": {}},
                "control.scratch.v1": {"kind": "initialization", "spec_delta": {"organism.population.seed": "+1"}}}
 SELECTOR_KIND = "selector.frontier.segment.v1"     # the IR's name for "let the frontier's segment loop evolve the population"
 
+# Classification of every mismatch (overnight directive s10), kept beside the reasons that report them:
+#   M1 evolution segment vs experiment-on-players     target-schema: the frontier spec has no fixed-player mode
+#   M2 world kinds                                     target-schema: WORLD_KINDS is a closed list (world.c6.composed.v1 lowers since C39)
+#   M3 objective fixed by the segment evaluator        target-runtime: the reward is computed inside archaeon's evaluator
+#   M4 observation = frozen detectors                  target-runtime: detectors are frozen by campaign 6, by design
+#   M5 controls as spec deltas                         target-schema: only seed/initialization/budget/replay deltas exist
+#   M6 kernel wrappers (delay/permute/schedule)        unsupported semantic on the frontier side (no observation wrappers)
+# None is a kernel defect: the SFE RUNTIME runs a kernel IR through backends/sfe_executor.py unchanged.
+CLASSIFICATION = {"M1": "target_schema_limitation", "M2": "target_schema_limitation", "M3": "target_runtime_limitation",
+                  "M4": "target_runtime_limitation", "M5": "target_schema_limitation", "M6": "unsupported_semantic"}
+
 
 def mismatches(exp: Experiment) -> List[str]:
     out: List[str] = []

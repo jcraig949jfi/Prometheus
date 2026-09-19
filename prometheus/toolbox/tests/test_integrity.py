@@ -76,11 +76,11 @@ def test_interrupted_job_resumes_from_the_receipts_file(tmp_path, monkeypatch):
     job = lower(e, REG).job; assert len(job.runs) == 18
     calls = {"n": 0}; real = L.run_one
 
-    def flaky(spec, registry, receipt_dir=None):
+    def flaky(spec, registry, receipt_dir=None, **kw):
         calls["n"] += 1
         if calls["n"] == 7:
             raise KeyboardInterrupt("simulated interruption")
-        return real(spec, registry, receipt_dir)
+        return real(spec, registry, receipt_dir, **kw)
     monkeypatch.setattr(L, "run_one", flaky)
     with pytest.raises(KeyboardInterrupt):
         execute(job, tmp_path / "j.jsonl", REG)
@@ -94,3 +94,299 @@ def test_interrupted_job_resumes_from_the_receipts_file(tmp_path, monkeypatch):
     a = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in rs if r["arm"] not in ("SUMMARY",)}
     b = {key(r): (r["trace_hashes"], r["science"].get("objective", {}).get("value")) for r in R.read_all(tmp_path / "clean.jsonl") if r["arm"] != "SUMMARY"}
     assert a == b and rep.controls == clean.controls
+
+
+# C30: an IR must be pure data -- a lambda, a set or a NaN smuggled into params is a validation defect, not a
+# later crash inside a receipt writer.
+def test_ir_refuses_values_that_cannot_be_recorded():
+    e = Experiment(family="ser", world=ref("world.integer.v1", world_seed=1, hook=lambda x: x), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()])
+    assert any("serialisable" in d for d in e.validate())
+    e2 = Experiment(family="ser", world=ref("world.integer.v1", world_seed=float("nan")), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()])
+    assert any("serialisable" in d for d in e2.validate())
+
+
+# C32: the SUMMARY receipt carries the full IR, so a receipts file ALONE can be replayed; replay reports
+# per-run divergences as data (never an exception) and the kernel hash difference as information.
+def test_receipts_file_alone_replays_and_divergence_is_reported_not_raised(tmp_path):
+    p = _write(tmp_path, n_seeds=2)
+    from prometheus.toolbox.backends.local import replay_file
+    rep = replay_file(p, tmp_path / "replay.jsonl", REG)
+    assert rep["runs_compared"] == 2 and rep["divergent"] == [] and rep["kernel_hash_equal"] is True
+    # perturb the recorded world semantics through the IR embedded in the summary: replay must DIVERGE, not raise
+    import json as J
+    lines = p.read_text(encoding="utf-8").splitlines()
+    summ = J.loads(lines[-1]); summ["experiment"]["world"]["params"]["world_seed"] = 99
+    from prometheus.toolbox.receipt import receipt_id
+    summ["receipt_id"] = receipt_id(summ); lines[-1] = J.dumps(summ, sort_keys=True, separators=(",", ":"))
+    p2 = tmp_path / "tampered.jsonl"; p2.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    rep2 = replay_file(p2, tmp_path / "replay2.jsonl", REG)
+    assert rep2["runs_compared"] == 2 and len(rep2["divergent"]) == 2 and rep2["divergent"][0]["field"] == "trace_hashes"
+
+
+# C37 (directive s8: one episode != one uninterrupted computation): an episode can be CHECKPOINTED at a tick
+# (world + every player instance + observers that can snapshot) and RESUMED, in a fresh set of objects, to the
+# same observations and actions as the uninterrupted run. The resumed trace hash is honestly PARTIAL (a hash
+# cannot be resumed from a digest), so the checkpoint carries the pre-checkpoint hash and the record says so.
+def test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run():
+    from prometheus.toolbox.backends.local import run_episode, resume_episode, build_world
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    e = Experiment(family="ckpt", world=ref("world.integer.v1", world_seed=4, start_charge=100000, step_cost=0), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(3).manifest()], budget={"episodes": 1, "horizon": 24})
+    def fresh():
+        w = build_world(e, REG); sub = REG.make("substrate.kv.v1", scope="lifetime")
+        inst = {0: sub.instantiate(random_statemachine_v2(3), 1)}
+        return w, sub, inst, [REG.make("observer.trace.v1"), REG.make("observer.series.v1")]
+    w, sub, inst, obs = fresh()
+    full = run_episode(w, inst, obs, seed=7, horizon=24, substrate=sub, record_actions=True)
+    w2, sub2, inst2, obs2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=7, horizon=24, substrate=sub2, checkpoint_at=10, record_actions=True)
+    assert first["checkpoint"] is not None and first["ticks"] == 10
+    w3, sub3, inst3, obs3 = fresh()                                                   # fresh objects: nothing shared with w2
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=24, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"]
+    assert rest["replay_class"] == "PARTIAL" and rest["checkpoint_tick"] == 10 and rest["pre_checkpoint_trace"] == first["trace_hash"]
+    assert obs3[1].series_episode() == obs[1].series_episode() and len(obs3[1].series_episode()) == 24   # the whole episode's series survives the checkpoint
+    assert obs3[0].measure() == obs[0].measure()
+
+
+# C44: scan() caught edits, duplicates and truncation -- but DELETING a whole middle line left a file every check
+# accepted. Receipts in one file now chain (prev_receipt_id); a missing link is a named defect; a resumed job
+# continues the chain from the last valid receipt.
+def test_deleting_a_middle_receipt_breaks_the_chain_and_is_reported(tmp_path):
+    p = _write(tmp_path); lines = p.read_text(encoding="utf-8").splitlines()
+    rs = R.read_all(p)
+    assert rs[0]["prev_receipt_id"] is None and all(rs[i]["prev_receipt_id"] == rs[i - 1]["receipt_id"] for i in range(1, len(rs)))
+    del lines[1]
+    p.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    scan = R.scan(p)
+    assert scan["valid"] == 3 and any(d["defect"] == "CHAIN_BREAK" and d["line"] == 2 for d in scan["defects"])
+    with pytest.raises(R.ReceiptError):
+        R.read_all(p)
+
+
+def test_resumed_job_continues_the_chain(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = Experiment(family="chain", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 4}, budget={"episodes": 1, "horizon": 4})
+    job = lower(e, REG).job; real = L.run_one; calls = {"n": 0}
+
+    def flaky(spec, registry, receipt_dir=None, **kw):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise KeyboardInterrupt()
+        return real(spec, registry, receipt_dir, **kw)
+    monkeypatch.setattr(L, "run_one", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        execute(job, tmp_path / "c.jsonl", REG)
+    monkeypatch.setattr(L, "run_one", real)
+    execute(job, tmp_path / "c.jsonl", REG, resume=True)
+    assert R.scan(tmp_path / "c.jsonl")["defects"] == [] and len(R.read_all(tmp_path / "c.jsonl")) == 5
+
+
+# C68: budget.wall_s was accepted by the IR and silently ignored by the executor. A wall budget now stops the job
+# between runs; the summary names how many runs were not started; resume=True finishes them later.
+def test_wall_budget_stops_between_runs_and_resume_finishes(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = Experiment(family="wall", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 6}, budget={"episodes": 1, "horizon": 8, "wall_s": 0.0})
+    job = lower(e, REG).job
+    rep = execute(job, tmp_path / "w.jsonl", REG)
+    assert rep.n_runs == 6 and rep.runs_not_started == 5 and rep.n_completed == 1 and rep.valid is False
+    rs = R.read_all(tmp_path / "w.jsonl")
+    assert rs[-1]["engineering"]["runs_not_started"] == 5 and rs[-1]["engineering"]["stopped_reason"] == "WALL_BUDGET_EXHAUSTED"
+    e2 = Experiment.from_dict(dict(e.to_dict(), budget={"episodes": 1, "horizon": 8, "wall_s": 60.0}))
+    rep2 = execute(lower(e2, REG).job, tmp_path / "w.jsonl", REG, resume=True)
+    assert rep2.resumed_runs == 1 and rep2.runs_not_started == 0 and rep2.n_completed == 6 and R.scan(tmp_path / "w.jsonl")["defects"] == []
+
+
+# C79: resume=True against a receipts file of a DIFFERENT experiment silently ran a second experiment into it
+# (chain intact, two experiments interleaved). A resume must name the same experiment or be refused.
+def test_resume_into_another_experiments_file_is_refused(tmp_path):
+    p = _write(tmp_path)
+    other = Experiment(family="other", world=ref("world.integer.v1", world_seed=9), substrate=ref("substrate.flat.v1"), players=[random_statemachine(3).manifest()],
+                       seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 4})
+    with pytest.raises(ValueError):
+        execute(lower(other, REG).job, p, REG, resume=True)
+    assert R.scan(p)["valid"] == 4                               # untouched
+
+
+# C78: replaying a file whose embedded IR names a component that is now UNAVAILABLE is a DATA outcome.
+def test_replay_of_a_file_with_an_unavailable_component_is_a_data_outcome(tmp_path):
+    p = _write(tmp_path)
+    R2 = REG.fork(); R2.get("world.integer.v1").state = "UNAVAILABLE"; R2.get("world.integer.v1").admission = {"failed": "test: retired"}
+    from prometheus.toolbox.backends.local import replay_file
+    out = replay_file(p, tmp_path / "rp.jsonl", R2)
+    assert out["status"] == "TARGET_UNSUPPORTED" and out["runs_compared"] == 0 and any("UNAVAILABLE" in r for r in out["reasons"])
+
+
+# C87: a mutant whose anchor text has drifted is a silent hole in the mutation ledger (M10 went NOT_APPLICABLE
+# after C65 without anyone noticing until a full run). Every mutant's anchor must exist in the current tree.
+def test_every_mutant_anchor_still_exists():
+    from prometheus.toolbox.tests import mutants as MU
+    missing = [(mid, rel) for mid, rel, old, new, what in MU.MUTANTS if old not in (MU.ROOT / MU.TB / rel).read_text(encoding="utf-8")]
+    assert missing == [], "mutant anchors drifted: %s" % missing
+
+
+# C107 (soak profile): host_block() ran platform.platform() -- a WMI query on Windows -- once per receipt, 17% of a
+# search generation. Like build_block (C56) it is computed once per process; a receipt still carries it in full.
+def test_host_block_is_computed_once_per_process_and_still_complete():
+    import time
+    from prometheus.toolbox.receipt import host_block
+    a = host_block(); t0 = time.perf_counter(); b = [host_block() for _ in range(200)]; dt = time.perf_counter() - t0
+    assert all(x == a for x in b) and set(a) == {"platform", "python", "machine"} and all(a.values())
+    assert dt < 0.05, "200 host blocks took %.3f s: not cached" % dt
+
+
+# C119: the checkpoint snapshotted the WORLD through the wrappers' __getattr__ -- but not the wrappers: a delay
+# buffer and a schedule's own tick count restarted from zero on resume (observations repeated; the schedule fired
+# again). The kernel's own interventions must survive a checkpoint like everything else.
+@pytest.mark.parametrize("wrappers,schedule", [({"observation_delay": 3}, None), ({"observation_permute": 5}, None), ({}, [{"tick": 4, "world_params": {"step_cost": 3}}]),
+                                               ({"observation_delay": 2, "observation_permute": 1}, [{"tick": 2, "world_params": {"yield_amt": 2}}, {"tick": 14, "world_params": {"step_cost": 0}}])])
+def test_checkpoint_carries_the_kernel_wrappers_state(wrappers, schedule):
+    from prometheus.toolbox.backends.local import run_episode, resume_episode, build_world
+    from prometheus.toolbox.ref.players import random_statemachine_v2
+    iv = {"name": "w", "world_params": {}, "wrappers": wrappers}
+    if schedule:
+        iv["schedule"] = schedule
+    e = Experiment(family="ckptw", world=ref("world.integer.v1", world_seed=4, start_charge=100000, step_cost=1, obs_regs=4), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(3, n_states=6, n_buckets=12).manifest()], interventions=[iv], budget={"episodes": 1, "horizon": 24})
+    def fresh():
+        w = build_world(e, REG); sub = REG.make("substrate.kv.v1", scope="lifetime")
+        return w, sub, {0: sub.instantiate(random_statemachine_v2(3, n_states=6, n_buckets=12), 1)}, [REG.make("observer.trace.v1")]
+    w, sub, inst, obs = fresh()
+    full = run_episode(w, inst, obs, seed=7, horizon=24, substrate=sub, record_actions=True)
+    w2, sub2, inst2, obs2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=7, horizon=24, substrate=sub2, checkpoint_at=9, record_actions=True)
+    w3, sub3, inst3, obs3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=24, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (wrappers, schedule)
+    assert obs3[0].measure()["events_by_kind"] == obs[0].measure()["events_by_kind"]
+    assert w3.summary() == w.summary()
+
+
+# C120: the checkpoint invariant as a PROPERTY over random compositions (C119 found two holes with four hand cases):
+# for any valid IR whose world can snapshot, an episode checkpointed at a random tick and resumed in FRESH objects
+# emits the same actions and the same world summary as the uninterrupted episode.
+_CKPT_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(200, 320)))
+def test_checkpoint_resume_property_over_random_compositions(seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, _prepare, run_episode, resume_episode
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    spec = [s for s in low.job.runs if s.arm == "primary"][0]
+    if "ext.snapshot.v1" not in REG.get(spec.experiment.world["kind"]).capabilities or spec.experiment.budget["horizon"] < 2:
+        return
+    def fresh():
+        c = _prepare(spec, REG)
+        return c["world"], c["instances"], c["observers"], (c["all_subs"] if len(c["all_subs"]) > 1 else c["sub"])
+    horizon = spec.experiment.budget["horizon"]; k = random.Random(seed).randrange(1, horizon)
+    w, inst, obs, sub = fresh()
+    try:
+        full = run_episode(w, inst, obs, seed=spec.seed * 1000, horizon=horizon, substrate=sub, record_actions=True)
+    except ValueError as exc:                                      # the fuzz's known designer error (a schedule on a non-mutable param) is a FAILED run, not this property's subject
+        assert "not runtime-mutable" in str(exc); return
+    if full["ticks"] <= k:
+        return                                                     # the episode ended before the checkpoint tick: nothing to resume
+    _CKPT_COVERAGE["exercised"] += 1
+    w2, inst2, obs2, sub2 = fresh()
+    first = run_episode(w2, inst2, obs2, seed=spec.seed * 1000, horizon=horizon, substrate=sub2, checkpoint_at=k, record_actions=True)
+    assert first["checkpoint"] is not None and first["ticks"] == k
+    w3, inst3, obs3, sub3 = fresh()
+    rest = resume_episode(first["checkpoint"], w3, inst3, obs3, horizon=horizon, substrate=sub3, record_actions=True)
+    assert first["actions"] + rest["actions"] == full["actions"], (seed, k, spec.experiment.world["kind"], spec.experiment.substrate["kind"], [p["representation"] for p in spec.experiment.players])
+    assert rest["summary"] == full["summary"], (seed, k)
+    # C136: every observer's measure and series survive the checkpoint too (the resumed observers were restored from
+    # their snapshots and then fed the rest of the episode)
+    for o_full, o_res in zip(obs, obs3):
+        assert o_res.measure() == o_full.measure(), (seed, k, o_full.kind)
+        if getattr(o_full, "series", False):
+            assert o_res.series_episode() == o_full.series_episode(), (seed, k)
+
+
+def test_the_checkpoint_property_was_actually_exercised():
+    """Coverage guard (C120): with 40 seeds only 6 compositions reached the checkpoint path (the rest refused at
+    lowering or ended before the tick). 120 seeds must give at least 15, or the property is decoration."""
+    assert _CKPT_COVERAGE["exercised"] >= 15, _CKPT_COVERAGE
+
+
+# C127: the forensic scan as a PROPERTY over random receipts files: a fresh file scans clean; one edited byte in a
+# random line is named on that line (and read_all refuses the file); one deleted middle line breaks the chain at the
+# next line; a duplicated line is a duplicate. The defect vocabulary must hold for every composition, not the
+# hand-written fixture only.
+_SCAN_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(700, 760)))
+def test_forensic_scan_property_over_random_receipts_files(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    p = tmp_path / "r.jsonl"; lines = p.read_text(encoding="utf-8").splitlines()
+    if len(lines) < 4:
+        return
+    _SCAN_COVERAGE["exercised"] += 1
+    sc = R.scan(p); assert sc["defects"] == [] and sc["valid"] == len(lines) and sc["lines"] == len(lines)
+    rnd = random.Random(seed)
+    # 1. one byte edited inside the JSON body of a random line
+    i = rnd.randrange(len(lines)); line = lines[i]; j = line.index('"seed":')
+    edited = line[:j] + '"seed_": ' + line[j + len('"seed":'):]
+    p.write_text("\n".join(lines[:i] + [edited] + lines[i + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["line"] for d in sc["defects"]] == [i + 1] and sc["defects"][0]["defect"].startswith(("RECEIPT_ID_MISMATCH", "SCHEMA:")), (seed, sc["defects"])
+    with pytest.raises(R.ReceiptError):
+        R.read_all(p)
+    # 2. one middle line deleted: the chain breaks exactly at the next line
+    k = rnd.randrange(1, len(lines) - 1)
+    p.write_text("\n".join(lines[:k] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(k + 1, "CHAIN_BREAK")], (seed, k, sc["defects"])
+    # 3. one line duplicated
+    p.write_text("\n".join(lines[:k + 1] + [lines[k]] + lines[k + 1:]) + "\n", encoding="utf-8")
+    sc = R.scan(p); assert [d["defect"] for d in sc["defects"]][:1] == ["DUPLICATE_RECEIPT_ID"] and sc["defects"][0]["line"] == k + 2, (seed, sc["defects"][:2])
+    # 4. truncated last line
+    p.write_text("\n".join(lines[:-1]) + "\n" + lines[-1][: len(lines[-1]) // 2], encoding="utf-8")
+    sc = R.scan(p); assert [(d["line"], d["defect"]) for d in sc["defects"]] == [(len(lines), "TRUNCATED_OR_MALFORMED_JSON")]
+
+
+def test_the_scan_property_was_actually_exercised():
+    assert _SCAN_COVERAGE["exercised"] >= 12, _SCAN_COVERAGE
+
+
+# C141: a receipt names the kernel that produced it -- build.kernel_hash covers every kernel module and none of the
+# tests/examples/playtests: a one-byte change to a kernel file changes the hash (refresh=True), a change to a test
+# file does not; receipts of one process share host and build.
+def test_kernel_hash_names_the_kernel_and_only_the_kernel(tmp_path):
+    from prometheus.toolbox.receipt import build_block
+    import pathlib as _pl
+    root = _pl.Path(__file__).resolve().parents[1]
+    base = build_block(refresh=True); assert base["n_files"] >= 20 and len(base["kernel_hash"]) == 16
+    target = root / "series.py"; src = target.read_text(encoding="utf-8")
+    try:
+        target.write_text(src + "\n# touched\n", encoding="utf-8", newline="\n")
+        changed = build_block(refresh=True)
+    finally:
+        target.write_text(src, encoding="utf-8", newline="\n")
+    assert changed["kernel_hash"] != base["kernel_hash"] and changed["n_files"] == base["n_files"]
+    tfile = root / "tests" / "test_kernel.py"; tsrc = tfile.read_text(encoding="utf-8")
+    try:
+        tfile.write_text(tsrc + "\n# touched\n", encoding="utf-8", newline="\n")
+        same = build_block(refresh=True)
+    finally:
+        tfile.write_text(tsrc, encoding="utf-8", newline="\n")
+    assert same["kernel_hash"] == base["kernel_hash"]
+    assert build_block(refresh=True) == base
+    rs = R.read_all(_write(tmp_path))
+    assert len({r["build"]["kernel_hash"] for r in rs}) == 1 and len({json.dumps(r["host"], sort_keys=True) for r in rs}) == 1

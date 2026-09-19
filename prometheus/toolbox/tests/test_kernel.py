@@ -99,7 +99,7 @@ def test_ir_validates_digests_and_refuses_run():
     d = Experiment.from_dict(json.loads(json.dumps(e.to_dict())))
     assert d.digest() == e.digest()
     bad = Experiment(family="x/y", world={}, substrate={"kind": "substrate.flat.v1"})
-    assert len(bad.validate()) >= 3
+    assert len(bad.validate()) >= 2      # C84: "players empty" is no longer a defect
     with pytest.raises(IRError):
         bad.compile("local", REG)
 
@@ -138,14 +138,23 @@ def test_exp001_runs_end_to_end_with_all_controls_met(tmp_path):
 
 
 def test_failed_control_is_a_result_not_a_halt(tmp_path):
-    """wforge does not accept the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the
-    report says invalid. Nothing raises."""
-    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
-        pytest.skip("wforge not importable")
-    e = build_exp001(); e.world = ref("world.wforge.encounter.v0", genome_seed=1); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
+    """A world that REFUSES the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the report says
+    invalid, nothing raises. (Until C71 wforge was that world; its wrapper now implements the cheat, so a
+    fork-registered refusing world plays the part.)"""
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class NoCheat(IntegerWorld):
+        kind = "world.nocheat.test"
+
+        def __init__(self, **params):
+            if "_cheat_skip_dynamics" in params:
+                raise TypeError("this engine has no cheat mechanism")
+            super().__init__(**params)
+    R = REG.fork(); R.register(ComponentRecord("world.nocheat.test", "world", NoCheat, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    e = build_exp001(); e.world = ref("world.nocheat.test", world_seed=1, n_players=2); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
     e.interventions = []; e.controls = [ref("control.replay.v1"), ref("control.cheat.v1")]; e.required_capabilities = frozenset({"ext.replay.bit.v1"})
-    low = e.compile("local", REG); assert low.ok, low.reasons
-    rep = execute(low.job, tmp_path / "w.jsonl", REG)
+    low = e.compile("local", R); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "w.jsonl", R)
     assert rep.n_completed >= 2 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "INDETERMINATE" and not rep.valid
 
 
@@ -173,12 +182,13 @@ def test_admission_admits_reference_and_marks_broken_impl_unavailable():
             import os
             return os.urandom(8).hex()             # not replayable
     from prometheus.toolbox.registry import ComponentRecord
-    REG.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
-    b = admit_world("world.broken.v1", REG)
+    R = REG.fork(); R.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    b = admit_world("world.broken.v1", R)
     assert b.state == "UNAVAILABLE" and "replay" in b.failed
     e = build_exp001(); e.world = ref("world.broken.v1")
-    assert e.compile("local", REG).status == "TARGET_UNSUPPORTED"
-    assert build_exp001().compile("local", REG).ok           # unrelated experiments unaffected
+    assert e.compile("local", R).status == "TARGET_UNSUPPORTED"
+    assert build_exp001().compile("local", R).ok           # unrelated experiments unaffected
+    assert not REG.has("world.broken.v1")                    # C62: the default registry never saw the test component
 
 
 # ------------------------------------------------------------------------------------------ lowering (F1)
@@ -255,6 +265,12 @@ def test_json_schemas_agree_with_the_code():
     rec_schema = json.loads((root / "receipt.schema.json").read_text(encoding="utf-8"))
     from prometheus.toolbox.receipt import REQUIRED, STATUSES
     assert set(rec_schema["required"]) == set(REQUIRED) and set(rec_schema["properties"]["status"]["enum"]) == set(STATUSES)
+    from prometheus.toolbox.backends.local import SCALAR_EXECUTION, batch_plan
+    from prometheus.toolbox.registry import default_registry as _dr
+    reasons = {SCALAR_EXECUTION["reason"], "BATCHED"}
+    e = build_exp001(); e.budget = dict(e.budget, batch=4); reasons.add(batch_plan(e, _dr())[1])
+    e2 = build_exp001(); e2.interventions = []; e2.budget = dict(e2.budget, batch=4); reasons.add(batch_plan(e2, _dr())[1])
+    assert reasons <= set(rec_schema["properties"]["execution"]["properties"]["reason"]["enum"])          # C105: the schema names every reason the code emits
     cap_schema = json.loads((root / "capability.schema.json").read_text(encoding="utf-8"))
     pat = re.compile(cap_schema["$defs"]["capabilityId"]["pattern"])
     for cid in list(C.CORE) + list(C.EXTENSIONS):
@@ -279,3 +295,62 @@ def test_exp001_committed_receipts_are_a_semantic_fixture(tmp_path):
     new = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
            for r in read_all(tmp_path / "fresh.jsonl") if r["arm"] == "primary"}
     assert new == old
+
+
+def test_series_schema_agrees_with_the_code_and_the_public_surface_imports():
+    import prometheus.toolbox as T
+    for name in T.__all__:
+        assert getattr(T, name) is not None
+    root = pathlib.Path(__file__).resolve().parents[1] / "schemas"
+    sch = json.loads((root / "series.schema.json").read_text(encoding="utf-8"))
+    from prometheus.toolbox import series as S
+    assert set(sch["properties"]["status"]["enum"]) >= set(S.WRITTEN_STATUSES) and sch["properties"]["encoding"]["const"] == S.ENCODING
+
+
+# C135: the player contract as a PROPERTY over random specs and substrates: act() returns a list of ints of the
+# legal width in the legal range on flat AND structured observations; snapshot/restore mid-run reproduces the
+# rest of the action sequence in a FRESH instance (with the workspace device restored too); cost() is
+# non-negative ints; the probe fingerprint is stable across instances of one spec.
+@pytest.mark.parametrize("seed", list(range(1300, 1360)))
+def test_player_contract_over_random_specs(seed):
+    import random
+    from prometheus.toolbox.ref.players import random_statemachine_v2, random_statemachine_v3, random_rewrite_system, random_proteus_player
+    rnd = random.Random(seed)
+    gens = [lambda: random_statemachine(seed, rnd.choice([1, 3, 6]), rnd.choice([2, 8]), rnd.choice([1, 2, 3]), rnd.choice([2, 8])),
+            lambda: random_statemachine_v2(seed, rnd.choice([1, 4]), rnd.choice([4, 8]), rnd.choice([1, 2]), mem_range=rnd.choice([2, 16])),
+            lambda: random_statemachine_v3(seed, rnd.choice([1, 4]), rnd.choice([4, 8]), rnd.choice([1, 2]), 8, rnd.choice([1, 16])),
+            lambda: random_rewrite_system(seed, rnd.choice([1, 4]), rnd.choice([2, 8]), rnd.choice([2, 12])),
+            lambda: constant_player([rnd.randrange(8) for _ in range(rnd.choice([1, 2, 3]))])] + ([lambda: random_proteus_player(seed)] if proteus_available() else [])
+    spec = rnd.choice(gens)()
+    sub_ref = rnd.choice([("substrate.flat.v1", {}), ("substrate.kv.v1", {"scope": "episode", "ttl": rnd.choice([None, 2])}), ("substrate.stream.v1", {"lag": rnd.choice([1, 3])}),
+                          ("substrate.mailbox.v1", {"capacity": 3}), ("substrate.artifact.v1", {})])
+    sub = REG.make(sub_ref[0], **sub_ref[1])
+    if spec.representation not in sub.representations:
+        return
+    space = ActionSpace(rnd.choice([1, 2, 3]), rnd.choice([2, 8, 16]))
+    obs_seq = [rnd.choice([[rnd.randrange(65536) for _ in range(5)], {"a": rnd.randrange(9), "b": [rnd.randrange(9), rnd.randrange(9)]}]) for _ in range(16)]
+    a = sub.instantiate(spec, 7); b = REG.make(sub_ref[0], **sub_ref[1]).instantiate(spec, 7)      # a second instance on its OWN substrate (pid 0 on both)
+    assert a.fingerprint() == b.fingerprint()
+    acts = []
+    for t, o in enumerate(obs_seq):
+        if t == 8:
+            snap = a.snapshot(); dev_snap = sub.snapshot() if hasattr(sub, "snapshot") else None
+        x = a.act(o, space)
+        assert isinstance(x, list) and len(x) == space.width and all(isinstance(v, int) and 0 <= v < space.range for v in x), (seed, spec.representation, x)
+        acts.append(x)
+        if hasattr(sub, "tick"):
+            sub.tick(t)
+    # resume in FRESH objects, as resume_episode does: a fresh substrate (so the player is pid 0 again -- a first
+    # version instantiated on the used substrate and got pid 2, whose stream is not player 0's), its device restored,
+    # then the instance restored
+    sub2 = REG.make(sub_ref[0], **sub_ref[1]); c = sub2.instantiate(spec, 7)
+    if dev_snap is not None:
+        sub2.restore(dev_snap)                                     # C135: the substrate (its clock AND its device), as resume_episode does
+    c.restore(snap)
+    rest = []
+    for t, o in enumerate(obs_seq[8:], start=8):
+        rest.append(c.act(o, space))
+        if hasattr(sub2, "tick"):
+            sub2.tick(t)
+    assert rest == acts[8:], (seed, spec.representation, sub.kind)
+    cost = a.cost(); assert all(isinstance(v, int) and v >= 0 for v in cost.values()), (seed, cost)

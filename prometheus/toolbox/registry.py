@@ -21,17 +21,19 @@ class ComponentRecord:
     capabilities: FrozenSet[str] = frozenset()      # provided
     requires: FrozenSet[str] = frozenset()          # needed from other slots (e.g. a representation needs workspace.kv)
     reference_of: Optional[str] = None              # this is the reference implementation of <kind family>
+    implements: Optional[str] = None                # C70: the reference family this implementation claims to reproduce (admission compares traces)
     route: str = "write"                            # write | wrap | bind | chop
     provenance: Dict[str, Any] = field(default_factory=dict)   # author seat, fossil/organ id, source path
     license: str = "UNSPECIFIED"
     native_deps: tuple = ()
     state: str = "PROVISIONAL"
     admission: Dict[str, Any] = field(default_factory=dict)    # last admission result, by host
+    admission_params: Dict[str, Any] = field(default_factory=dict)   # C94: constructor params admission uses (a component with no valid default)
 
     def row(self) -> dict:
         return {"kind": self.kind, "slot": self.slot, "capabilities": sorted(self.capabilities), "requires": sorted(self.requires),
-                "reference_of": self.reference_of, "route": self.route, "provenance": self.provenance, "license": self.license,
-                "native_deps": list(self.native_deps), "state": self.state}
+                "reference_of": self.reference_of, "implements": self.implements, "route": self.route, "provenance": self.provenance, "license": self.license,
+                "native_deps": list(self.native_deps), "state": self.state, "admission_params": self.admission_params}
 
 
 class Registry:
@@ -65,6 +67,31 @@ class Registry:
     def kinds(self, slot: str) -> list:
         return sorted(k for k, r in self._rows.items() if r.slot == slot)
 
+    def fork(self) -> "Registry":
+        """An independent copy (C62): tests and experiments that register their own components must never mutate the
+        process-global default registry -- a test-only UNAVAILABLE row leaked into the admission census by ordering."""
+        import copy
+        r = Registry(); r._rows = {k: copy.copy(v) for k, v in self._rows.items()}
+        return r
+
+    def batch_implementation(self, kind: str, admit_on_demand: bool = True) -> Optional[str]:
+        """C92: the ADMITTED ext.batch.v1 world that implements the same reference family as `kind` (or `kind` itself
+        if it is batched), else None. UNAVAILABLE and PROVISIONAL rows are never chosen: a batch path runs only
+        behind a world whose trace agreed with the reference on this host."""
+        rec = self.get(kind)
+        fam = rec.reference_of or rec.implements
+        cands = [kind] if "ext.batch.v1" in rec.capabilities else []
+        cands += [k for k, r in sorted(self._rows.items()) if k != kind and r.slot == "world" and "ext.batch.v1" in r.capabilities
+                  and fam is not None and (r.implements == fam or r.reference_of == fam)]
+        for k in cands:
+            r = self._rows[k]
+            if r.state == "PROVISIONAL" and admit_on_demand:            # admission runs on first use on this host, recorded on the row
+                from prometheus.toolbox.admission import admit
+                admit(k, self)
+            if r.state == "ADMITTED":
+                return k
+        return None
+
     def provided_capabilities(self, *kinds: str) -> FrozenSet[str]:
         out = set()
         for k in kinds:
@@ -90,3 +117,23 @@ def default_registry() -> Registry:
         _DEFAULT = Registry()
         install(_DEFAULT)
     return _DEFAULT
+
+
+def census(registry=None) -> dict:
+    """The kernel's component census as data (C75): every row with its admission state on THIS host, for receipts
+    and reports. `python -m prometheus.toolbox.registry` prints it."""
+    from prometheus.toolbox.admission import admit_all
+    import platform, sys
+    from datetime import datetime, timezone
+    registry = registry or default_registry()
+    res = admit_all(registry)
+    return {"when_utc": datetime.now(timezone.utc).isoformat(), "host": platform.node(), "python": sys.version.split()[0],
+            "n_components": len(res), "admitted": sum(1 for r in res.values() if r.state == "ADMITTED"),
+            "by_slot": {slot: sorted(k for k in registry.kinds(slot)) for slot in SLOTS if registry.kinds(slot)},
+            "components": {k: {"slot": registry.get(k).slot, "state": r.state, "failed": r.failed, "route": registry.get(k).route,
+                               "implements": registry.get(k).implements, "reference_of": registry.get(k).reference_of} for k, r in sorted(res.items())}}
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(census(), indent=1))
