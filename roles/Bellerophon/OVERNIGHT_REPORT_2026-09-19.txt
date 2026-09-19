@@ -249,3 +249,15 @@ one command the day a credential is placed in the environment; still NOT REACHED
 addendum stands. Origin/main moved under other seats during the window (Harmonia, archaeon, Techne, Nyx,
 Atlas); merged three times, suite green on each merged tree.
 --------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+CLOSING NUMBERS (09:12Z, T+6:22). Cycles C123-C141 after the 08:38Z note were PROPERTY tests over random
+IRs, each with a coverage guard, and the defects they found: C127 (forensic scan double-reported an edit),
+C133 (point_mutation was a no-op 4% of the time; semantic fix, same kind, ABI_DIFF), C135 (the substrate's
+own clock was not in the checkpoint: ttl expiries fired late after a resume), plus C134 (the mutation ledger
+file could be truncated by a --only run) and C140 (a test-side normalisation bug). ENDING COMMIT 424d4532f
++ this commit (136 commits since e17eb94c4); CYCLES 141; TESTS 215 functions, suite 1156 passed / 6 skipped
+(35 s); MUTATION LEDGER 80/80 CAUGHT, bytecode-safe, merge-safe, 11 min (two mutants SURVIVED first and were
+then caught: M66 by a stronger test, M80 by re-anchoring past an equivalent mutant); census 42/42; fuzz
+generator now includes the wrapped engines. The addendum's items 12-18 stand; item 6's counts are these.
+--------------------------------------------------------------------------------
