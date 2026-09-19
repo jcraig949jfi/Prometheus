@@ -727,5 +727,32 @@
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_wall_budget_stops_between_runs_and_resume_finishes_identically[1839]",
   "suite_tail": "1 failed, 117 passed, 1 deselected in 3.50s",
   "seconds": 3.9
+ },
+ {
+  "id": "M83",
+  "file": "search.py",
+  "what": "a FAILED run crashes row ingestion (generation never commits)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_failing_player_becomes_a_failed_row_and_the_generation_commits",
+  "suite_tail": "1 failed, 1107 passed, 1 skipped, 1 deselected in 22.13s",
+  "seconds": 22.5
+ },
+ {
+  "id": "M84",
+  "file": "search.py",
+  "what": "a representation no transform accepts crashes propose",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_failing_player_becomes_a_failed_row_and_the_generation_commits",
+  "suite_tail": "1 failed, 1107 passed, 1 skipped, 1 deselected in 23.44s",
+  "seconds": 23.8
+ },
+ {
+  "id": "M85",
+  "file": "search.py",
+  "what": "selectors use the process-global registry",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_failing_player_becomes_a_failed_row_and_the_generation_commits",
+  "suite_tail": "1 failed, 1107 passed, 1 skipped, 1 deselected in 22.68s",
+  "seconds": 23.2
  }
 ]

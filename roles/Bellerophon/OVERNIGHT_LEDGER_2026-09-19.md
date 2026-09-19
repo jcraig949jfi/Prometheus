@@ -1048,3 +1048,18 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - 60 random jobs: the summary's splits count exactly the primary receipts of each split; each split's seeds are
   the seed policy's; holdout exists iff holdout_seeds > 0; objective_n <= n; scalar means recompute from the
   rows. No defect.
+
+## C148 (09:25Z) a failing player inside a search generation: three defects in one test
+- (1) a FAILED run has no science; _rows_from_receipts raised KeyError AFTER the generation's receipts were
+  written -> no GEN_DONE -> abandoned on the next resume and re-run -> the same player fails -> forever. Rows now
+  carry the failure (objective None, failed_seeds, errors, identity from the manifest) and the generation
+  COMMITS; a rank ignores the row through its None objective.
+- (2) selectors resolved generators and transforms in the PROCESS-GLOBAL registry (evolve's registry= was used
+  only to run the generation): a representation registered on a fork could not be searched. evolve() now hands
+  the selector its registry (C97b's hole, search-layer edition).
+- (3) a representation NO transform accepts (the fallback shuffle does not accept it either) raised TypeError
+  inside propose. _child(): mutation -> shuffle -> the representation's registered GENERATOR (meta says
+  fallback=generator), never an exception in a generation.
+- test drives all three with a bomb representation on a forked registry: two generations commit, no
+  GEN_ABANDONED, rows with failed_seeds and rows without. Mutants M83-M85 CAUGHT; ledger 84/84 (merged). Suite
+  1419 passed / 6 skipped. A synthetic fixture in an older test lacked a status field and was corrected.

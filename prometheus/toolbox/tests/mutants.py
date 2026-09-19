@@ -117,6 +117,10 @@ MUTANTS = [
     ("M81", "state.py", "        self._s = {k: dict(e, r=[(rid, tuple(rec)) for rid, rec in e[\"r\"]]) for k, e in d[\"s\"].items()}", "        self._s = {}", "a restored device forgets its streams"),
     # twenty-second wave (C146): duplicate sweep values
     ("M82", "ir.py", "            elif len({json.dumps(v, sort_keys=True, default=str) for v in vals}) != len(vals):", "            elif False:", "duplicate sweep values accepted (a point runs twice; resume double-counts)"),
+    # twenty-third wave (C148): failed rows, generator fallback, registry-scoped selectors
+    ("M83", "search.py", "        fp = (r[\"science\"].get(\"player_fingerprints\") or {}).get(\"0\") or {}", "        fp = r[\"science\"][\"player_fingerprints\"][\"0\"]", "a FAILED run crashes row ingestion (generation never commits)"),
+    ("M84", "search.py", "    gen = reg.get(parent[\"representation\"]).factory\n    return gen(seed, meta={\"fallback\": \"generator\", \"parent_representation\": parent[\"representation\"]})", "    return reg.make(\"transform.shuffle.v1\").apply(parent, seed)", "a representation no transform accepts crashes propose"),
+    ("M85", "search.py", "    sel.workdir = workdir; sel.compact = compact; sel.registry = registry           # C148: selectors resolve generators and transforms here", "    sel.workdir = workdir; sel.compact = compact", "selectors use the process-global registry"),
 ]
 
 
