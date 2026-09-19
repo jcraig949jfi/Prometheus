@@ -236,3 +236,16 @@ the second half changed them; the ledger's entries C78-C122 and its decisions re
    2. Redis acceptance on M1 (unchanged) and the NPE worker once primordial/ lands
    3. a Crius experiment in the IR with a VECTOR objective and structured observations (both now exist)
 ================================================================================
+
+--------------------------------------------------------------------------------
+POST-ADDENDUM NOTE (08:38Z, T+5:48). The loop continued after the 08:11Z addendum (C123-C131; ledger).
+Numbers that changed: ENDING COMMIT a23087714 + this note's commit (126 commits since e17eb94c4);
+CYCLES 131; TESTS 207 functions, suite 914 passed / 6 skipped (36 s: seven new PROPERTY tests over
+random IRs, each with a coverage guard, added ~420 items); MUTATION LEDGER 74/74 CAUGHT, bytecode-safe,
+10 min; one more defect (C127: an edited receipt was reported twice by the forensic scan -- one defect per
+edit now; M75). REDIS (item 14): M1's server answers on 192.168.1.202:6379 but requires authentication and
+no Redis credential is exposed through keys.py; RedisStateDevice now reads PK_REDIS_URL -- acceptance is
+one command the day a credential is placed in the environment; still NOT REACHED. Everything else in the
+addendum stands. Origin/main moved under other seats during the window (Harmonia, archaeon, Techne, Nyx,
+Atlas); merged three times, suite green on each merged tree.
+--------------------------------------------------------------------------------

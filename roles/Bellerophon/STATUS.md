@@ -1,15 +1,15 @@
 # Bellerophon status
 
-Currency: 2026-09-19 08:11Z (end of the overnight TDD/playtest window; 122 cycles; report
+Currency: 2026-09-19 08:38Z (end of the overnight TDD/playtest window; 131 cycles; report
 roles/Bellerophon/OVERNIGHT_REPORT_2026-09-19.txt with its END-OF-WINDOW ADDENDUM).
 
 seat state: ACTIVE. Charter in force: the WORLDS KERNEL directive
   (prompts/2026-09-18_worlds_kernel/, sha256 fc819348...). D-BELL-1..4
   adopted as the operator wrote them. Overnight directive
-  (prompts/2026-09-19_overnight_tdd/) executed 02:49Z-08:11Z.
+  (prompts/2026-09-19_overnight_tdd/) executed 02:49Z-08:38Z.
 what it asserts: PRESENT (comms Bellerophon[m2-c95cc146]), ACTIVE,
-  PRODUCTIVE at the kernel layer: prometheus/toolbox/ -- 486 passed, 6 skipped (Redis);
-  mutation ledger 73/73 CAUGHT (honest since C95: the
+  PRODUCTIVE at the kernel layer: prometheus/toolbox/ -- 914 passed, 6 skipped (Redis);
+  mutation ledger 74/74 CAUGHT (honest since C95: the
   instrument can say SURVIVED, and did once, M66); 42/42
   components admitted; 300-seed fuzz on both execution paths 0 crashes /
   0 divergences; cross-platform replay probe back (WSL). VALID: the
@@ -17,7 +17,7 @@ what it asserts: PRESENT (comms Bellerophon[m2-c95cc146]), ACTIVE,
   for itself only. Science of all committed playtests byte-stable across
   the night (838 runs reproduce their trace hashes and objectives).
 workspace: worktree bellerophon-base-role on M2 / SPECTREX5, branch
-  bellerophon/overnight-tdd-2026-09-19 (== origin/main at 617251ba8 + the report commit).
+  bellerophon/overnight-tdd-2026-09-19 (== origin/main at a23087714 + the closing commit).
 comms: M1 store; queue empty at last sync.
 monitors owned or fed: none; no MONITORS.md row (nothing loops).
 lane: the kernel (contracts, IR, capabilities, devices, adapters,
