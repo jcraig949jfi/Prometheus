@@ -73,7 +73,7 @@ def main(tag, prefix=None, slots=None):
     for c in cands:
         c["score"] = score(c)
         c["parent_state"] = states.get(c["parent"], "UNKNOWN")
-        c["awkward"] = bool(c.get("anti_gravity") or c["parent_state"] == "TEMPORAL_STASIS")
+        c["awkward"] = bool(c.get("anti_gravity") or str(c["parent_state"]).startswith("TEMPORAL_STASIS"))   # scoped labels too (D079)
     # a candidate whose parent is in (scoped) stasis is eligible ONLY if it states how it escapes the boundary
     cands = [c for c in cands if not (str(c["parent_state"]).startswith("TEMPORAL_STASIS") and not c.get("escapes_stasis"))]
     ranked = sorted(cands, key=lambda c: (-c["score"], c["id"]))

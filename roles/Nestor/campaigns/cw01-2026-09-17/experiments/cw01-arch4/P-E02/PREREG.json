@@ -1,0 +1,29 @@
+{
+ "perturbation_id": "P-E02",
+ "parent": "T-X12",
+ "deformation": "B",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-switch-probe",
+ "ruler": "per-tag self-displacement on W2_K2 constructions; one-stream control on W0_heldout",
+ "variants": [
+  "between_puts",
+  "between_puts_x2",
+  "before_first_ask",
+  "before_second_ask"
+ ],
+ "harness_check": "before_second_ask must leave the FIRST ask's answers unchanged (displacement 0 on 'first_ask'); a violation voids the run",
+ "cross_tag_interference": "displacement of tag2's answers under between_puts (tag2's timing relative to its own PUT unchanged)",
+ "programs": "shelf parents, C4-08 ordinary top-32 seed 1, w0_solver parents",
+ "material_rule": "cross-tag displacement (tag2 under between_puts) mean >= .05 in any set, OR paired sign-flip of (tag1 - tag2 under between_puts) outside its band, OR (before_first_ask - one-stream noise1) outside its band",
+ "continuation": [
+  "K=3",
+  "tick between the PUTs of the SAME tag (D=2)",
+  "programs evolved under W2 with inserted ticks"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:20:49",
+ "prereg_sha256": "6c3c34b6470440ea93e1d3a4b846b20719fe61584d09daa36b61df968f8135a7"
+}
