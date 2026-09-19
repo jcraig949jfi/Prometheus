@@ -99,7 +99,7 @@ def test_ir_validates_digests_and_refuses_run():
     d = Experiment.from_dict(json.loads(json.dumps(e.to_dict())))
     assert d.digest() == e.digest()
     bad = Experiment(family="x/y", world={}, substrate={"kind": "substrate.flat.v1"})
-    assert len(bad.validate()) >= 3
+    assert len(bad.validate()) >= 2      # C84: "players empty" is no longer a defect
     with pytest.raises(IRError):
         bad.compile("local", REG)
 
@@ -138,14 +138,23 @@ def test_exp001_runs_end_to_end_with_all_controls_met(tmp_path):
 
 
 def test_failed_control_is_a_result_not_a_halt(tmp_path):
-    """wforge does not accept the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the
-    report says invalid. Nothing raises."""
-    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
-        pytest.skip("wforge not importable")
-    e = build_exp001(); e.world = ref("world.wforge.encounter.v0", genome_seed=1); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
+    """A world that REFUSES the kernel cheat parameter: the cheat arm FAILS, the primary still runs, the report says
+    invalid, nothing raises. (Until C71 wforge was that world; its wrapper now implements the cheat, so a
+    fork-registered refusing world plays the part.)"""
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class NoCheat(IntegerWorld):
+        kind = "world.nocheat.test"
+
+        def __init__(self, **params):
+            if "_cheat_skip_dynamics" in params:
+                raise TypeError("this engine has no cheat mechanism")
+            super().__init__(**params)
+    R = REG.fork(); R.register(ComponentRecord("world.nocheat.test", "world", NoCheat, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    e = build_exp001(); e.world = ref("world.nocheat.test", world_seed=1, n_players=2); e.sweep = {}; e.seed_policy = {"base": 1, "n_seeds": 1}
     e.interventions = []; e.controls = [ref("control.replay.v1"), ref("control.cheat.v1")]; e.required_capabilities = frozenset({"ext.replay.bit.v1"})
-    low = e.compile("local", REG); assert low.ok, low.reasons
-    rep = execute(low.job, tmp_path / "w.jsonl", REG)
+    low = e.compile("local", R); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "w.jsonl", R)
     assert rep.n_completed >= 2 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "INDETERMINATE" and not rep.valid
 
 
@@ -173,12 +182,13 @@ def test_admission_admits_reference_and_marks_broken_impl_unavailable():
             import os
             return os.urandom(8).hex()             # not replayable
     from prometheus.toolbox.registry import ComponentRecord
-    REG.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
-    b = admit_world("world.broken.v1", REG)
+    R = REG.fork(); R.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    b = admit_world("world.broken.v1", R)
     assert b.state == "UNAVAILABLE" and "replay" in b.failed
     e = build_exp001(); e.world = ref("world.broken.v1")
-    assert e.compile("local", REG).status == "TARGET_UNSUPPORTED"
-    assert build_exp001().compile("local", REG).ok           # unrelated experiments unaffected
+    assert e.compile("local", R).status == "TARGET_UNSUPPORTED"
+    assert build_exp001().compile("local", R).ok           # unrelated experiments unaffected
+    assert not REG.has("world.broken.v1")                    # C62: the default registry never saw the test component
 
 
 # ------------------------------------------------------------------------------------------ lowering (F1)
@@ -255,6 +265,12 @@ def test_json_schemas_agree_with_the_code():
     rec_schema = json.loads((root / "receipt.schema.json").read_text(encoding="utf-8"))
     from prometheus.toolbox.receipt import REQUIRED, STATUSES
     assert set(rec_schema["required"]) == set(REQUIRED) and set(rec_schema["properties"]["status"]["enum"]) == set(STATUSES)
+    from prometheus.toolbox.backends.local import SCALAR_EXECUTION, batch_plan
+    from prometheus.toolbox.registry import default_registry as _dr
+    reasons = {SCALAR_EXECUTION["reason"], "BATCHED"}
+    e = build_exp001(); e.budget = dict(e.budget, batch=4); reasons.add(batch_plan(e, _dr())[1])
+    e2 = build_exp001(); e2.interventions = []; e2.budget = dict(e2.budget, batch=4); reasons.add(batch_plan(e2, _dr())[1])
+    assert reasons <= set(rec_schema["properties"]["execution"]["properties"]["reason"]["enum"])          # C105: the schema names every reason the code emits
     cap_schema = json.loads((root / "capability.schema.json").read_text(encoding="utf-8"))
     pat = re.compile(cap_schema["$defs"]["capabilityId"]["pattern"])
     for cid in list(C.CORE) + list(C.EXTENSIONS):
@@ -263,3 +279,29 @@ def test_json_schemas_agree_with_the_code():
     from prometheus.toolbox.registry import SLOTS, STATES
     assert set(cap_schema["$defs"]["registryRow"]["properties"]["slot"]["enum"]) == set(SLOTS)
     assert set(cap_schema["$defs"]["registryRow"]["properties"]["state"]["enum"]) == set(STATES)
+
+
+# ------------------------------------------------------------------------------------------ EXP-001 as a frozen fixture
+def test_exp001_committed_receipts_are_a_semantic_fixture(tmp_path):
+    """The committed EXP-001 receipts pin the integer world's and the wrappers' semantics: a fresh run of the
+    same IR must reproduce every primary trace hash and series-free objective value. Drift = a semantic change
+    that must be versioned, not absorbed (overnight directive s2: EXP-001 is a regression fixture)."""
+    committed = pathlib.Path(__file__).resolve().parents[1] / "examples" / "receipts" / "exp_001.jsonl"
+    old = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
+           for r in read_all(committed) if r["arm"] == "primary"}
+    assert len(old) == 12
+    e = build_exp001(); e.controls = []
+    rep = execute(e.compile("local", REG).job, tmp_path / "fresh.jsonl", REG); assert rep.n_failed == 0
+    new = {(json.dumps(r["sweep_point"], sort_keys=True), r["seed"]): (r["trace_hashes"], r["science"]["objective"]["value"])
+           for r in read_all(tmp_path / "fresh.jsonl") if r["arm"] == "primary"}
+    assert new == old
+
+
+def test_series_schema_agrees_with_the_code_and_the_public_surface_imports():
+    import prometheus.toolbox as T
+    for name in T.__all__:
+        assert getattr(T, name) is not None
+    root = pathlib.Path(__file__).resolve().parents[1] / "schemas"
+    sch = json.loads((root / "series.schema.json").read_text(encoding="utf-8"))
+    from prometheus.toolbox import series as S
+    assert set(sch["properties"]["status"]["enum"]) >= set(S.WRITTEN_STATUSES) and sch["properties"]["encoding"]["const"] == S.ENCODING

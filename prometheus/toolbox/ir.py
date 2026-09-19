@@ -61,6 +61,12 @@ class Experiment:
     id: Optional[str] = None
     schema: str = SCHEMA
 
+    def __post_init__(self):
+        # C45: the IR is data; component OBJECTS a designer naturally writes are converted to their manifests here
+        self.players = [p.manifest() if hasattr(p, "manifest") and not isinstance(p, dict) else p for p in self.players]
+        self.interventions = [iv.manifest() if hasattr(iv, "manifest") and not isinstance(iv, dict) else iv for iv in self.interventions]
+        self.required_capabilities = frozenset(self.required_capabilities)
+
     # ---------------------------------------------------------------- identity
     def to_dict(self) -> dict:
         d = asdict(self)
@@ -74,7 +80,10 @@ class Experiment:
         return cls(**d)
 
     def digest(self) -> str:
+        """Content identity of the SCIENTIFIC definition: id, provenance and the wall budget (execution policy,
+        C68: a job stopped by its wall clock and finished later is the same experiment) are excluded."""
         d = self.to_dict(); d.pop("id", None); d.pop("provenance", None)
+        d["budget"] = {k: v for k, v in d.get("budget", {}).items() if k not in ("wall_s", "max_runs", "batch")}     # execution policy, not science (C68, C92)
         return _h(d)
 
     def experiment_id(self) -> str:
@@ -95,25 +104,41 @@ class Experiment:
                 bad.append(name)
         if self.objective is not None and not self.objective.get("kind"):
             bad.append("objective.kind")
-        if not self.players and self.selector is None:
-            bad.append("players empty and no selector: nothing would run")
+        # C84: players may be EMPTY -- a world observed with no player is a legitimate experiment; the world must
+        # declare n_players=0 or lowering refuses the mismatch (C52). Nothing here assumes an agent exists.
         for i, p in enumerate(self.players):
             if not isinstance(p, dict) or "representation" not in p or "payload" not in p:
                 bad.append("players[%d] is not a PlayerSpec manifest" % i)
+            elif "substrate" in p and not (isinstance(p["substrate"], dict) and p["substrate"].get("kind")):
+                bad.append("players[%d].substrate must be a component ref when present" % i)
         sp = self.seed_policy
         if not isinstance(sp.get("base"), int) or not isinstance(sp.get("n_seeds"), int) or sp["n_seeds"] < 1:
             bad.append("seed_policy needs int base and n_seeds >= 1")
+        if "holdout_seeds" in sp and (not isinstance(sp["holdout_seeds"], int) or sp["holdout_seeds"] < 0):
+            bad.append("seed_policy.holdout_seeds must be a non-negative int when present")
         b = self.budget
-        if not isinstance(b.get("episodes"), int) or b["episodes"] < 1 or not isinstance(b.get("horizon"), int) or b["horizon"] < 1:
-            bad.append("budget needs int episodes >= 1 and horizon >= 1")
+        if not isinstance(b.get("episodes"), int) or b["episodes"] < 1 or not isinstance(b.get("horizon"), int) or b["horizon"] < 0:
+            bad.append("budget needs int episodes >= 1 and horizon >= 0")
+        if "series_max_records" in b and (not isinstance(b["series_max_records"], int) or b["series_max_records"] < 0):
+            bad.append("budget.series_max_records must be a non-negative int when present")
+        if b.get("world_state", "episode") not in ("episode", "lifetime"):
+            bad.append("budget.world_state must be 'episode' or 'lifetime'")
+        if "max_runs" in b and (not isinstance(b["max_runs"], int) or b["max_runs"] < 1):
+            bad.append("budget.max_runs must be a positive int when present")
+        if "batch" in b and (not isinstance(b["batch"], int) or isinstance(b["batch"], bool) or b["batch"] < 0):
+            bad.append("budget.batch must be a non-negative int when present (0/1 = scalar execution)")
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)
-            if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective"):
+            if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective", "players"):
                 bad.append("sweep[%s]: axis root not sweepable" % path)
         for c in self.required_capabilities:
             if not C.well_formed(c):
                 bad.append("required_capabilities: malformed %r" % c)
+        try:                                                      # C30: an IR is pure data or it is not an IR
+            json.dumps(self.to_dict(), allow_nan=False)
+        except (TypeError, ValueError) as exc:
+            bad.append("not serialisable as JSON (%s): an IR carries data only, never objects, callables or NaN" % str(exc)[:60])
         return bad
 
     # ---------------------------------------------------------------- requirements
@@ -135,10 +160,14 @@ class Experiment:
                 req.add("ext.intervention.world_params.v1")
             for k in (iv.get("wrappers") or {}):
                 req.add("ext.intervention.%s.v1" % k)
+            if iv.get("schedule"):
+                req.add("ext.intervention.schedule.v1"); req.add("ext.world.mutable_params.v1")
         for p in self.players:
             req |= set(p.get("requires", ()))
         if len(self.players) > 1:
             req.add("ext.multiplayer.v1")
+        if self.budget.get("world_state") == "lifetime":
+            req.add("ext.world.lifetime_state.v1")
         return frozenset(req)
 
     # ---------------------------------------------------------------- sweep expansion

@@ -1,0 +1,157 @@
+================================================================================
+BELLEROPHON -- WORLDS KERNEL OVERNIGHT TDD / PLAYTEST LOOP -- CONSOLIDATED REPORT
+================================================================================
+Directive:  roles/Bellerophon/prompts/2026-09-19_overnight_tdd/ (verbatim, MANIFEST)
+Receipt:    2026-09-19T02:49:43Z          Window end: 10:49:43Z
+This report written at 04:52Z (T+2:02) after the strongest regression; the loop
+continues in the ledger after this point if the window is still open. Numbers
+below are from THIS commit; the ledger's later entries supersede them.
+Ledger:     roles/Bellerophon/OVERNIGHT_LEDGER_2026-09-19.md (append-only, 77 cycles,
+            failed approaches and one incident kept)
+Host:       M2 / SPECTREX5, Windows, CPython 3.14.4 (+ WSL Linux CPython 3.12.3 for
+            the cross-platform probe). No Redis reachable.
+
+1. STARTING COMMIT     e17eb94c4 (origin/main at receipt; clean)
+2. ENDING COMMIT       fc4f07444 on branch bellerophon/overnight-tdd-2026-09-19,
+                       last pushed to origin/main at 756580bef (04:47Z); 64 commits
+3. TREE STATE          clean except roles/Bellerophon/science/MUTATION_LEDGER (this
+                       run's refresh, committed with this report)
+4. CYCLES ATTEMPTED    77 numbered cycles (C1-C77) + one self-inflicted incident
+5. TESTS ADDED         131 test functions (from 23 at the start); 214 collected items
+                       (parametrised fuzz x40, state model x30, every-world x6)
+6. FINAL TEST COUNTS   kernel suite: 197 passed, 6 skipped (Redis x5, none else)
+                       + base-role self-test 11 = 208 passed, 6 skipped, 35 s
+                       mutation ledger: 37 mutants, 37 CAUGHT
+                       fuzz (out of suite): 300 seeds, 169 OK / 76 BLOCKED / 25
+                       TARGET_UNSUPPORTED / 30 invalid, 0 crashes, 0 unexplained FAILED
+7. PLAYTESTS EXECUTED  EXP-001 (fixture), EXP-002 (432 runs), pt_a alien mix, pt_c
+                       changing tasks, pt_d MAP-Elites flat vs kv, pt_e everything +
+                       interruption + forensic replay, pt_f grid rows, pt_g transfer +
+                       mailbox + ablation + per-player series; every-world text (6/6)
+                       Receipts committed under prometheus/toolbox/{examples,playtests}/receipts
+8. DEFECTS DISCOVERED  (all fixed, each with a permanent reproducer)
+   C1  terminal absorption missing from the last series record (observer delivery order)
+   C3  a control silently replaced the designer's permutation (wrappers keyed by name)
+   C3  sham/scratch reported MET on players they never touched
+   C5b every silent player shared one fingerprint; 49/60 random Proteus genomes silent
+   C5c the fingerprint probe advanced the Proteus rng + meter (incomplete snapshot)
+   C8  a dict-valued sweep crashed the executor (process halt from a legal sweep)
+   C9  stream substrate lied carry_over=False (read hook bypassed)
+   C17 an uncatalogued event kind crashed the trace observer
+   C21 series yield column cumulative over the RUN -> objective identically 0
+   C22 execute() appended a second run to an existing receipts file (stale rows read as fresh)
+   C23 StateDevice reused TASK_CHANGE for expiry/discard (task counts inflated)
+   C24b undrained device event buffer unbounded
+   C26b one archive row per receipt: one player looked like two elites
+   C27 row descriptor from the first seed contradicted the mean objective; buckets saturated
+   C29 primary receipts at a sweep point carried a different experiment_id than the arms
+   C35 transforms dropped per-player substrate overrides (sham ran on other machines)
+   C38 a param typo surfaced as 96 identical FAILED receipts (now once, at lowering)
+   C44 deleting a middle receipt was invisible to every check
+   C48 two observers of one kind overwrote each other
+   C49 a typo'd objective penalty cost nothing ("memory is free")
+   C52 a phantom player never acted and could win survival
+   C56 kernel build hash recomputed per receipt (a third of EXP-002's wall)
+   C62 tests mutated the process-global registry (admission census passed by ordering)
+   C68 budget.wall_s accepted and ignored
+   C69 a wall budget could commit a partial generation
+   C70 a wrong second implementation passed reference agreement on an action-blind probe
+   C71 wrapped engines had no cheat mechanism (cheat control always INDETERMINATE)
+9. FALSE GREENS DISCOVERED (tests that passed the wrong code; each now fails it)
+   C1  alive-column invariant admitted a never-decrementing counter
+   C36 mutants M02 (every control MET), M15 (resume forgets failures), M16 (foreign rows)
+   C42 mutants M21 (grid tools never consumed), M28 (neighbours hidden)
+   C61 mutants M31 (layout mismatch unflagged), M34 (column by habit) -- and M34's
+       FIRST replacement test was itself green by luck (yield diff == actions diff)
+   C66 mutant M37 (ablation left per-player overrides)
+   C70 reference agreement without probe power
+10. ABSTRACTIONS CHANGED OR DISCARDED
+   changed: Observer contract (delivery order; series flag; self-describing columns);
+            World (keep=True lifetime state; set_params schedules; wrapper-level cheat);
+            Substrate (workspace DOOR is the only path to a StateDevice; lifecycle hooks;
+            per-player overrides); Intervention (schedule; composing wrappers);
+            Registry (fork(); implements); receipts (chain, split, series, embedded IR)
+   discarded: "transfer" as a grammar verb (a world sweep + sham/scratch already is it, C58);
+            selector subclassing per representation (C73); the assumption that the
+            StateDevice contract would need to change for kv/stream (it did not, C6);
+            BIT as the declared class of any float world (C64)
+   kept:    the five core ids unchanged all night; no LLM, approver or ruling on any path
+11. NEW CAPABILITIES DEMONSTRATED (observed working, not designed)
+   series as receipt data with artifacts, bounds, verify/recover, replay, objective;
+   workspaces kv / stream / mailbox / artifact behind one player representation family
+   (v2 memory, v3 executable artifacts) with flat refusing-and-counting;
+   heterogeneous machines in one world; scheduled task changes; world lifetime state;
+   population and world as sweep axes (transfer); holdout split; per-player series;
+   checkpoint/resume mid-episode; job resume from receipts; wall budget; eligibility
+   count; forensic scan (truncation / edit / duplicate / DELETION); replay from a file
+   alone; search above the kernel with committed/abandoned generations; admission for
+   every slot with probe power and reference agreement; SEMANTIC replay by declared
+   quantum with cross-platform evidence; SFE runtime executor; census as data
+12. EXP-002 STATUS      DONE as a real playtest: 432 runs (6 substrates x 2 regimes x 2
+                        charges x 6 arms x 3 seeds), 0 failed, 5/5 controls MET; all six
+                        substrates give DISTINCT traces at every one of 12 points; flat
+                        refused 818 writes; kv-lifetime carries over; ttl=4 expired 116
+                        keys; memory charged at 0.05/op. Replays 432/432 from its file.
+                        Receipts: prometheus/toolbox/examples/receipts/exp_002.jsonl
+13. U3 STATUS           RESOLVED per the ruling: per-episode series are receipt data
+                        (inline <= 512 records else content-addressed artifact whose hash
+                        the receipt id covers); PRESENT / EMPTY / DISABLED / BOUND_EXCEEDED
+                        written, MISSING / MISSING_ARTIFACT / CORRUPT / CORRUPT_LAYOUT on
+                        verify; self-describing columns; per-player layout; survives device
+                        destruction; replay compares series hashes; objective reads by name
+14. REDIS ACCEPTANCE    NOT REACHED: no server on M2 (Windows, WSL or docker); the Redis
+                        device runs the same 25-seed model-based script as the in-process
+                        reference when a server exists (5 tests skip with the reason). The
+                        in-process device passed the model test with two proven
+                        perturbations (ttl and capacity off-by-one)
+15. SFE / NPE BRIDGES   SFE runtime: a kernel Executor for kind kernel.run_ir tested
+                        against the real sfe.executors classes (nothing in SFE edited).
+                        SFE frontier: TARGET_UNSUPPORTED for a general IR; mismatches
+                        M1-M6 classified (schema / runtime limitations, one unsupported
+                        semantic; none a kernel defect); M2 resolvable via the c6 wrap.
+                        NPE: UNAVAILABLE_INTERFACE (D-BELL-2); BusJob valid against the
+                        pinned envelope; N1 unknown / N2 runtime / N3 adapter-if-wrong
+16. UNRESOLVED FAILURES none open in the suite. Smallest reproducers for everything found
+                        live in tests/test_playtest_findings.py, test_series.py,
+                        test_integrity.py, test_dof.py, test_workspace.py, test_search.py,
+                        test_admission.py; mutants in tests/mutants.py
+17. MAJOR ARCHITECTURAL DISCOVERIES
+   a. the rows, not the summaries, found nearly every defect: a "valid: true" was green
+      for the wrong reason three separate times (C21 series, C22 stale file, C70 blind
+      probe); playtesting was the steering mechanism the directive said it would be
+   b. instrument POWER is a first-class check: agreement (replay, reference) proves
+      nothing on an action-blind probe; admission now asserts power before agreement
+   c. every "new" concept the operator listed (communication, artifacts, transfer,
+      ablation, task change, lifetime state, turn-taking) entered as a substrate DOOR,
+      a control OBJECT, a sweep, or a wrapper -- the five core ids never moved
+   d. SEMANTIC replay is real, not theoretical: a libm world differs across platforms at
+      quantum 1e-13 and agrees at 1e-6; float worlds must declare their quantum
+   e. execution policy (wall_s, max_runs) must live outside the scientific digest or a
+      resumed job cannot find itself
+   f. stashes are repo-global across worktrees (incident, recovered, rule recorded)
+18. NEXT THREE PRESSURES (from the evidence)
+   1. batched worlds (U1): the only path to NPE-class throughput; needs ext.batch.v1
+      with n_envs -> n RunSpecs and a numpy/numba second implementation admitted by
+      reference agreement (the C70 machinery is ready for it)
+   2. Redis acceptance on M1 (one run of tests/test_state_model.py against 6390) and the
+      NPE worker for kernel.run_ir once primordial/ lands -- both blocked on hosts/branches
+   3. a Crius experiment expressed in the IR (every s29 concept now has an expression;
+      the falsifier is Crius's ACTUAL text); and Box2D as the first native SEMANTIC world
+      (the pendulum is the rehearsal: declared quantum, fixed-point actions)
+
+THINGS THE DESIGN DOCUMENT SAID SHOULD WORK vs THINGS OBSERVED WORKING
+  v0.2 said: StateDevice + a kv substrate slice; series in receipts; transform slot;
+  admission for other slots; Redis acceptance; bridge packets. Observed tonight: all
+  but Redis (no server) and the bridge PACKETS (an executor was built instead, tested
+  against sfe/, and the mismatches were classified -- packets to Daedalus/Nestor remain
+  drafts). Everything in section 11 was observed, not designed. Redis, batching, Box2D,
+  compute devices and NPE lowering remain DESIGN, not observation.
+
+Representative receipt ids (current committed files):
+  exp_001 primary: see prometheus/toolbox/examples/receipts/exp_001.jsonl (97 receipts)
+  pt_g:    prometheus/toolbox/playtests/receipts/pt_g/receipts.jsonl (51; replays 50/50)
+  pt_e:    prometheus/toolbox/playtests/receipts/pt_e/receipts.jsonl (85; resumed after 20; replays 84/84)
+  census:  roles/Bellerophon/science/COMPONENT_CENSUS_2026-09-19.json (37/37 ADMITTED)
+  mutants: roles/Bellerophon/science/MUTATION_LEDGER_2026-09-19.json (37/37 CAUGHT)
+  x-plat:  roles/Bellerophon/science/CROSS_PLATFORM_REPLAY_2026-09-19.json
+================================================================================

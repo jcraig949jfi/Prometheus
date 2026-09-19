@@ -99,7 +99,11 @@ def run_task(player: Player, task, task_index: int, ws, blocks, step_budget: int
         "blocks_present": len(blocks.blocks),
         "blocks_present_before": n_blocks0,
         "success": env.success,
+        "success_in_block": env.success_in_block,
         "end_reason": env.end_reason,
         "resets": env.n_resets,
+        "invalid_actions": env.invalid_actions,
+        "status_final": env.status,
+        "store_trace": dict(st.trace),
         "trajectory": env.trajectory,
     }

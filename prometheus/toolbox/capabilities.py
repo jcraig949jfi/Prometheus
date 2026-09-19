@@ -29,8 +29,12 @@ EXTENSIONS = {
     "ext.multiplayer.v1":         "n_players > 1 sharing one world state",
     "ext.continuous_actions.v1":  "float-valued actions (Physics2D); canonical interchange is fixed-point",
     "ext.intervention.observation_delay.v1": "kernel-applied observation delay wrapper",
-    "ext.intervention.observation_permute.v1": "kernel-applied seeded channel permutation",
+    "ext.intervention.observation_permute.v1": "kernel-applied seeded channel permutation (flat observations only)",
+    "ext.observation.structured.v1": "world.observe() may return a nested JSON of ints (dict/list/int); the kernel carries it opaquely, players flatten() (C100)",
     "ext.intervention.world_params.v1": "world accepts parameter overrides at construction",
+    "ext.intervention.schedule.v1":   "kernel applies scheduled world_params changes at tick boundaries (needs ext.world.mutable_params.v1)",
+    "ext.world.mutable_params.v1":    "world.set_params(**changes) at a tick boundary for its runtime-mutable params; emits TASK_CHANGE",
+    "ext.world.lifetime_state.v1":    "world.reset(seed, keep=True) keeps world state across episodes (budget.world_state=lifetime)",
     "ext.workspace.kv.v1":        "substrate exposes workspace.read/write to the player",
     "ext.workspace.stream.v1":    "substrate exposes append/read on a stream",
     "ext.workspace.graph.v1":     "substrate exposes link/neighbours",
@@ -44,6 +48,7 @@ EXTENSIONS = {
     "ext.replay.bit.v1":          "two runs with equal seeds produce equal trace hashes",
     "ext.replay.semantic.v1":     "agreement under a tolerance declared before execution",
     "ext.reference.v1":           "component is the reference implementation of its kind",
+    "ext.batch.v1":               "world simulates n envs in lockstep: reset_batch/observe_batch/step_batch/events_batch/trace_hashes/summaries (C92)",
 }
 
 STATUS_OK = "OK"

@@ -1,0 +1,405 @@
+{
+ "when_utc": "2026-09-19T07:02:45.666848+00:00",
+ "host": "SPECTREX5",
+ "python": "3.14.4",
+ "n_components": 42,
+ "admitted": 42,
+ "by_slot": {
+  "world": [
+   "world.c6.composed.v1",
+   "world.grid.v1",
+   "world.integer.v1",
+   "world.integer_alt.v1",
+   "world.integer_batch.v1",
+   "world.pendulum.v1",
+   "world.wforge.encounter.v0"
+  ],
+  "substrate": [
+   "substrate.artifact.v1",
+   "substrate.flat.v1",
+   "substrate.kv.v1",
+   "substrate.mailbox.v1",
+   "substrate.stream.v1"
+  ],
+  "representation": [
+   "constant.v1",
+   "proteus.tape.v0",
+   "rewrite.v1",
+   "statemachine.v1",
+   "statemachine.v2",
+   "statemachine.v3"
+  ],
+  "observer": [
+   "observer.descriptor.v1",
+   "observer.series.v1",
+   "observer.trace.v1"
+  ],
+  "objective": [
+   "objective.multi.v1",
+   "objective.series_gain.v1",
+   "objective.survival.v1",
+   "objective.survival.v2",
+   "objective.survival_per_player.v1",
+   "objective.yield_net.v1"
+  ],
+  "control": [
+   "control.ablation.v1",
+   "control.cheat.v1",
+   "control.negative.v1",
+   "control.permutation.v1",
+   "control.positive.v1",
+   "control.replay.v1",
+   "control.scratch.v1",
+   "control.sham.v1"
+  ],
+  "transform": [
+   "transform.fresh.v1",
+   "transform.point_mutation.v1",
+   "transform.relabel.v1",
+   "transform.shuffle.v1"
+  ],
+  "selector": [
+   "selector.map_elites.v1",
+   "selector.pareto.v1",
+   "selector.truncation.v1"
+  ]
+ },
+ "components": {
+  "constant.v1": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.ablation.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.cheat.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.negative.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.permutation.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.positive.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.replay.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.scratch.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "control.sham.v1": {
+   "slot": "control",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.multi.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.series_gain.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.survival.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.survival.v2": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.survival_per_player.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.yield_net.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "observer.descriptor.v1": {
+   "slot": "observer",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "observer.series.v1": {
+   "slot": "observer",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "observer.trace.v1": {
+   "slot": "observer",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "proteus.tape.v0": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "wrap",
+   "implements": null,
+   "reference_of": null
+  },
+  "rewrite.v1": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "selector.map_elites.v1": {
+   "slot": "selector",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "selector.pareto.v1": {
+   "slot": "selector",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "selector.truncation.v1": {
+   "slot": "selector",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "statemachine.v1": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": "statemachine"
+  },
+  "statemachine.v2": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "statemachine.v3": {
+   "slot": "representation",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "substrate.artifact.v1": {
+   "slot": "substrate",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "substrate.flat.v1": {
+   "slot": "substrate",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": "substrate.flat"
+  },
+  "substrate.kv.v1": {
+   "slot": "substrate",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "substrate.mailbox.v1": {
+   "slot": "substrate",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "substrate.stream.v1": {
+   "slot": "substrate",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "transform.fresh.v1": {
+   "slot": "transform",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "transform.point_mutation.v1": {
+   "slot": "transform",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "transform.relabel.v1": {
+   "slot": "transform",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "transform.shuffle.v1": {
+   "slot": "transform",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "world.c6.composed.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "wrap",
+   "implements": null,
+   "reference_of": null
+  },
+  "world.grid.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": "world.grid"
+  },
+  "world.integer.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": "world.integer"
+  },
+  "world.integer_alt.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": "world.integer",
+   "reference_of": null
+  },
+  "world.integer_batch.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": "world.integer",
+   "reference_of": null
+  },
+  "world.pendulum.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": "world.pendulum"
+  },
+  "world.wforge.encounter.v0": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "wrap",
+   "implements": null,
+   "reference_of": null
+  }
+ }
+}

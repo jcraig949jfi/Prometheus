@@ -31,19 +31,33 @@ def _h(obj, n=16) -> str:
     return hashlib.sha256(json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str).encode()).hexdigest()[:n]
 
 
+_HOST_CACHE: Dict[str, Any] = {}
+
+
 def host_block() -> dict:
-    return {"platform": platform.platform(), "python": sys.version.split()[0], "machine": platform.node()}
+    """Computed once per process (C107: platform.platform() runs a WMI query on Windows, 2.3 ms per receipt --
+    17% of a search generation in the soak's profile; the host does not change under a running process)."""
+    if not _HOST_CACHE:
+        _HOST_CACHE.update({"platform": platform.platform(), "python": sys.version.split()[0], "machine": platform.node()})
+    return dict(_HOST_CACHE)
 
 
-def build_block() -> dict:
-    """Content hashes of the kernel's own modules, so a receipt names the kernel that produced it."""
+_BUILD_CACHE: Dict[str, Any] = {}
+
+
+def build_block(refresh: bool = False) -> dict:
+    """Content hashes of the kernel's own modules, so a receipt names the kernel that produced it. Computed once
+    per process (C56: recomputed 433 times it was a third of EXP-002's wall time); refresh=True recomputes."""
+    if _BUILD_CACHE and not refresh:
+        return dict(_BUILD_CACHE)
     import pathlib
     root = pathlib.Path(__file__).resolve().parent
-    files = sorted(p for p in root.rglob("*.py") if "tests" not in p.parts and "examples" not in p.parts)
+    files = sorted(p for p in root.rglob("*.py") if "tests" not in p.parts and "examples" not in p.parts and "playtests" not in p.parts)
     h = hashlib.sha256()
     for p in files:
         h.update(p.relative_to(root).as_posix().encode()); h.update(p.read_bytes().replace(b"\r\n", b"\n"))
-    return {"kernel_hash": h.hexdigest()[:16], "n_files": len(files)}
+    _BUILD_CACHE.update({"kernel_hash": h.hexdigest()[:16], "n_files": len(files)})
+    return dict(_BUILD_CACHE)
 
 
 def validate(r: dict) -> dict:
@@ -82,19 +96,36 @@ def finalize(r: dict) -> dict:
 
 
 class ReceiptWriter:
-    """Append-only JSONL, one flush per record (base-role rule: never a shell redirect; the program writes)."""
+    """Append-only JSONL, one flush per record (base-role rule: never a shell redirect; the program writes).
+    Receipts CHAIN (C44): each carries prev_receipt_id = the previous receipt's id in this file (None for the
+    first), so a deleted middle line is detectable; a writer opened on an existing file continues the chain
+    from its last VALID receipt."""
 
     def __init__(self, path):
         import pathlib
         self.path = pathlib.Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.prev = None
+        if self.path.exists() and self.path.stat().st_size > 0:
+            last = None
+            with open(self.path, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        last = validate(json.loads(line))["receipt_id"]
+                    except (ValueError, ReceiptError):
+                        pass
+            self.prev = last
         self._f = open(self.path, "a", encoding="utf-8", newline="\n")
         self.n = 0
 
     def write(self, r: dict) -> dict:
+        r = dict(r); r["prev_receipt_id"] = self.prev
         r = finalize(r)
         self._f.write(json.dumps(r, sort_keys=True, separators=(",", ":"), default=str) + "\n"); self._f.flush()
-        self.n += 1
+        self.n += 1; self.prev = r["receipt_id"]
         return r
 
     def close(self) -> None:
@@ -102,10 +133,50 @@ class ReceiptWriter:
 
 
 def read_all(path) -> List[dict]:
+    """STRICT read: every line must be a valid receipt; any defect raises ReceiptError naming the line (C10)."""
     out = []
     with open(path, encoding="utf-8") as f:
-        for line in f:
+        for n, line in enumerate(f, 1):
             line = line.strip()
-            if line:
-                out.append(validate(json.loads(line)))
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                raise ReceiptError("line %d: TRUNCATED_OR_MALFORMED_JSON" % n)
+            try:
+                rec = validate(rec)
+            except ReceiptError as exc:
+                raise ReceiptError("line %d: %s" % (n, exc))
+            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (out[-1]["receipt_id"] if out else None):
+                raise ReceiptError("line %d: CHAIN_BREAK (prev_receipt_id does not name the previous receipt)" % n)
+            out.append(rec)
     return out
+
+
+def scan(path) -> dict:
+    """FORENSIC read: never raises; counts valid receipts and names every defect by line
+    (truncation / malformed JSON, receipt_id mismatch = edited after writing, schema defects, duplicates)."""
+    valid = 0; defects = []; ids = []; seen = set(); lines = 0
+    with open(path, encoding="utf-8") as f:
+        for n, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
+            lines += 1
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                defects.append({"line": n, "defect": "TRUNCATED_OR_MALFORMED_JSON"}); continue
+            try:
+                validate(rec)
+            except ReceiptError as exc:
+                msg = str(exc)
+                defects.append({"line": n, "defect": ("RECEIPT_ID_MISMATCH" if "receipt_id" in msg else "SCHEMA:" + msg)}); continue
+            rid = rec["receipt_id"]
+            if rid in seen:
+                defects.append({"line": n, "defect": "DUPLICATE_RECEIPT_ID", "receipt_id": rid}); continue   # a copy is not a second run
+            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (ids[-1] if ids else None):
+                defects.append({"line": n, "defect": "CHAIN_BREAK", "expected_prev": ids[-1] if ids else None, "found_prev": rec["prev_receipt_id"]})
+            seen.add(rid); ids.append(rid); valid += 1
+    return {"path": str(path), "lines": lines, "valid": valid, "defects": defects, "receipt_ids": ids}

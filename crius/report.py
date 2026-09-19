@@ -102,7 +102,7 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
         for line in f:
             its.append(json.loads(line))
     best = receipts.read_json(os.path.join(run_dir, "best.json"))
-    P("SEARCH PROGRESS (fitness = C0_EFFICIENCY, mean over search seeds; ACCUMULATED)")
+    P("SEARCH PROGRESS (fitness = %s, mean over search streams; ACCUMULATED)" % ("C1_FITNESS" if meta["config"]["costs"].get("fitness") == "c1" else "C0_EFFICIENCY"))
     P("  iter   best     pop_mean  children_mean  best_len  elapsed_s")
     step = max(1, len(its) // 12)
     for row in its[::step] + ([its[-1]] if its and its[-1] not in its[::step] else []):
@@ -114,8 +114,8 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
     br = best["best"]["receipt"]
     P("BEST PROGRAM %s (len %d, iteration %d, modification %s)" % (best["best"]["candidate_id"], len(best["best"]["program"]), br["iteration"], br["modification"]))
     for seed, ps in br["per_seed"].items():
-        P("  search seed %s: eff %.4f succ %d/50 inter %d steps %d ws_cost %d blocks %d invoked %d ws_bytes %d" % (
-            seed, ps["C0_EFFICIENCY"], ps["successes"], ps["interactions_total"], ps["vm_steps_total"], ps["ws_cost_total"],
+        P("  search seed %s: fit %.4f succ %d/50 inter %d steps %d ws_cost %d blocks %d invoked %d ws_bytes %d" % (
+            seed, ps.get("fitness", ps["C0_EFFICIENCY"]), ps["successes"], ps["interactions_total"], ps["vm_steps_total"], ps["ws_cost_total"],
             ps["blocks_created_total"], ps["artifacts_invoked_total"], ps["workspace_bytes_final"]))
         P("    by stage (mean cost, success rate): %s" % json.dumps(ps["by_stage"], sort_keys=True))
     P("  listing:")
@@ -146,8 +146,8 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
     summ = receipts.read_json(os.path.join(qdir, "SUMMARY.json"))
     rows = summ["rows"]
     by = group_rows(rows)
-    P("QUALIFICATION suite=%s seeds=%s (means over seeds; A=ACCUMULATED F=FRESH R=RESET S=SCRAMBLED)" % (suite, sorted({r["seed"] for r in rows})))
-    P("  %-26s %7s %7s %7s %7s %5s %5s %8s %8s %9s %6s %6s" % ("player", "effA", "effF", "effR", "effS", "sucA", "sucF", "interA", "interF", "reuse_gn", "blk", "invk"))
+    P("QUALIFICATION suite=%s seeds=%s (means over seeds; A=ACCUMULATED F=FRESH R=RESET S=SCRAMBLED; fit = campaign fitness)" % (suite, sorted({r["seed"] for r in rows})))
+    P("  %-26s %7s %7s %7s %7s %5s %5s %8s %8s %9s %6s %6s" % ("player", "fitA", "fitF", "fitR", "fitS", "sucA", "sucF", "interA", "interF", "reuse_gn", "blk", "invk"))
     order = sorted(by, key=lambda k: (-_mean(r["eff"]["ACCUMULATED"] for r in by[k])))
     for label in order:
         rs = by[label]
@@ -230,8 +230,8 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
             r = receipts.read_json(os.path.join(baselines_dir, fn))
             c = r["conditions"]
             P("  %-24s %6.3f %6.3f %6.3f %6.3f  %3d  %6d %6d  %9.1f  %3d" % (
-                fn[:-5], c["ACCUMULATED"]["metrics"]["C0_EFFICIENCY"], c["FRESH"]["metrics"]["C0_EFFICIENCY"],
-                c["WORKSPACE_RESET"]["metrics"]["C0_EFFICIENCY"], c["WORKSPACE_SCRAMBLED"]["metrics"]["C0_EFFICIENCY"],
+                fn[:-5], c["ACCUMULATED"]["metrics"].get("fitness", c["ACCUMULATED"]["metrics"]["C0_EFFICIENCY"]), c["FRESH"]["metrics"].get("fitness", c["FRESH"]["metrics"]["C0_EFFICIENCY"]),
+                c["WORKSPACE_RESET"]["metrics"].get("fitness", c["WORKSPACE_RESET"]["metrics"]["C0_EFFICIENCY"]), c["WORKSPACE_SCRAMBLED"]["metrics"].get("fitness", c["WORKSPACE_SCRAMBLED"]["metrics"]["C0_EFFICIENCY"]),
                 c["ACCUMULATED"]["metrics"]["successes"], c["ACCUMULATED"]["metrics"]["interactions_total"], c["FRESH"]["metrics"]["interactions_total"],
                 sum(r["reuse_gain"]), c["ACCUMULATED"]["metrics"]["blocks_created_total"]))
         P("")
@@ -241,11 +241,17 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
-    ap.add_argument("--suite", default="heldout_v1")
-    ap.add_argument("--baselines", default=os.path.join("crius", "runs", "baselines_c0"))
+    ap.add_argument("--suite", default=None)
+    ap.add_argument("--baselines", default=None)
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
     run_dir = args.run if os.path.isdir(args.run) else os.path.join("crius", "runs", args.run)
+    meta = receipts.read_json(os.path.join(run_dir, "RUN_META.json"))
+    is_c1 = meta["config"].get("world", {}).get("id") == "c1"
+    if args.suite is None:
+        args.suite = "qual" if is_c1 else "heldout_v1"
+    if args.baselines is None:
+        args.baselines = os.path.join("crius", "runs", "baselines_c1" if is_c1 else "baselines_c0")
     text = render(run_dir, args.suite, args.baselines)
     out = args.out or os.path.join(run_dir, "REPORT.md")
     with open(out, "w", encoding="ascii", newline="\n") as f:

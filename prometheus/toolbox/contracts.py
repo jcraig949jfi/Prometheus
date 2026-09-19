@@ -28,9 +28,38 @@ from typing import Any, Dict, FrozenSet, List, Optional, Protocol, Tuple, runtim
 EVENT_KINDS: Tuple[str, ...] = (
     "STATE_READ", "STATE_WRITE", "ACTION", "MESSAGE", "TRANSFER", "RESOURCE_CHANGE", "CONTACT",
     "ARTIFACT_CREATE", "ARTIFACT_INVOKE", "SNAPSHOT", "BRANCH", "TASK_CHANGE", "ABSORBED", "YIELD",
+    "STATE_EXPIRE", "STATE_DISCARD",          # C23: appended (ids stable); state-device lifetimes are not task changes
 )
 EVENT_ID: Dict[str, int] = {k: i for i, k in enumerate(EVENT_KINDS)}
 Event = Tuple[int, int, int, int, int]
+
+# C100: an observation is int | list of observations | dict of str -> observation (nested JSON of ints). The
+# canonical form is a flat int list; a world that returns anything else declares ext.observation.structured.v1
+# and the kernel carries it as OPAQUE data (delivered, delayed, hashed, recorded as given). Players that need a
+# vector read it through flatten(); the kernel never flattens on their behalf.
+Observation = Any
+
+
+def flatten(obs: Any) -> List[int]:
+    """Canonical vector of a structured observation: ints in order, lists depth first, dict keys SORTED. Total on
+    the observation grammar, TypeError on anything else (floats, strings, None) -- a player must not guess."""
+    if isinstance(obs, bool):
+        raise TypeError("observation leaves are ints, not bool")
+    if isinstance(obs, int):
+        return [obs]
+    if isinstance(obs, (list, tuple)):
+        out: List[int] = []
+        for x in obs:
+            out += flatten(x)
+        return out
+    if isinstance(obs, dict):
+        out = []
+        for k in sorted(obs):
+            if not isinstance(k, str):
+                raise TypeError("observation keys are strings")
+            out += flatten(obs[k])
+        return out
+    raise TypeError("not an observation: %s" % type(obs).__name__)
 
 REPLAY_CLASSES = ("BIT", "SEMANTIC", "PARTIAL", "NONDETERMINISTIC")
 
@@ -126,8 +155,14 @@ class Observer(Protocol):
     def begin(self, ctx: dict) -> None: ...
     def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None: ...
     def on_events(self, events: List[Event]) -> None: ...
+    # Delivery order per tick t: on_events(events of t) THEN on_tick(t, observations before t, actions at t).
+    # A record made in on_tick(t) therefore describes the world after step t. (Fixed C1 2026-09-19; the
+    # opposite order left the terminal absorption out of the last record and disagreed with the world.)
     def measure(self) -> Dict[str, Any]: ...
     def describe(self) -> List[int]: ...
+    # An observer that DECLARES a series (class attribute `series = True`, echoed in manifest()["series"])
+    # also provides series_episode() -> List[List[int]]: the integer records of the episode just finished.
+    # The executor collects them per episode into the receipt (series.py); see the U3 ruling.
 
 
 @runtime_checkable
@@ -144,7 +179,7 @@ class Control(Protocol):
     kind: str                     # positive | negative | sham | scratch | permutation | compute_matched | storage_matched | replay | ablation | transplant | cheat
 
     def manifest(self) -> dict: ...
-    def arm(self, experiment: Any, rng_seed: int) -> Any: ...
+    def arm(self, experiment: Any, rng_seed: int) -> Any: ...          # may also accept registry= (C97): the kernel passes its registry when the signature admits it
     def expectation(self, primary: dict, arm: dict) -> dict: ...   # {"outcome": "MET"|"NOT_MET"|"INDETERMINATE", "detail": ...}
 
 
