@@ -402,3 +402,48 @@ def test_width_zero_action_space_expresses_turn_taking(tmp_path):
     acts = r["science"]["observations"]["observer.trace.v1"]["actions_by_player"]
     # each player acted on a third of the ticks: its ACTION events count 12 (every tick is recorded) but magnitudes only on its turns
     assert all(int(v) >= 0 for v in acts.values()) and r["engineering"]["ticks"] == 12
+
+
+# C133: the transforms' laws as a PROPERTY over random players: every transform keeps the representation and
+# returns a manifest the substrate instantiates; relabel preserves behaviour (same probe fingerprint) with a
+# different table; shuffle preserves the multiset of cells and the parameter count; fresh changes the genome;
+# point_mutation changes exactly one cell of a state machine; the same seed gives the same result (determinism).
+@pytest.mark.parametrize("seed", list(range(1200, 1240)))
+def test_transform_laws_over_random_players(seed):
+    import random, json
+    from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, random_statemachine_v3, random_rewrite_system, fingerprint_by_probe
+    from prometheus.toolbox.contracts import component_manifest_hash
+    rnd = random.Random(seed)
+    spec = rnd.choice([random_statemachine(seed, rnd.choice([2, 4, 6]), rnd.choice([4, 8])), random_statemachine_v2(seed, rnd.choice([2, 4]), rnd.choice([4, 8])),
+                       random_statemachine_v3(seed, rnd.choice([2, 4]), rnd.choice([4, 8])), random_rewrite_system(seed, rnd.choice([1, 4]), rnd.choice([2, 8]))])
+    sub = REG.make("substrate.kv.v1")
+    cells = lambda s: sorted(json.dumps(c, sort_keys=True) for row in s.payload["table"] for c in row) if "table" in s.payload else None
+    for kind in ("transform.shuffle.v1", "transform.fresh.v1", "transform.relabel.v1", "transform.point_mutation.v1"):
+        t = REG.make(kind)
+        if "player." + spec.representation not in t.accepts:
+            continue
+        out = t.apply(spec, seed * 7); again = t.apply(spec, seed * 7)
+        assert out.representation == spec.representation and out.manifest() == again.manifest(), (seed, kind)
+        inst = sub.instantiate(out, 1); assert inst.act([1, 2, 3, 4, 5], REG.make("world.integer.v1").legal_actions(0)) is not None
+        if kind == "transform.relabel.v1":
+            assert fingerprint_by_probe(sub.instantiate(out, 1)) == fingerprint_by_probe(sub.instantiate(spec, 1)), (seed, kind)
+        if kind == "transform.shuffle.v1" and cells(spec) is not None:
+            assert cells(out) == cells(spec) and len(cells(out)) == len(cells(spec)), (seed, kind)
+        if kind == "transform.fresh.v1":
+            assert component_manifest_hash(out.manifest()) != component_manifest_hash(spec.manifest()), (seed, kind)
+        if kind == "transform.point_mutation.v1":
+            diff = sum(1 for a, b in zip(spec.payload["table"], out.payload["table"]) for x, y in zip(a, b) if x != y)
+            assert diff == 1, (seed, kind, diff)
+
+
+def test_point_mutation_never_returns_the_parent():
+    """C133: the old v2/v3 memory branches drew a fresh value that could equal the old one -- 4% of mutations were
+    no-ops (16 of 400 measured); mutant M76 survived the 40-seed property because no seed hit a v2 no-op. 600 here."""
+    from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, random_statemachine_v3
+    t = REG.make("transform.point_mutation.v1"); n = 0
+    for seed in range(200):
+        for spec in (random_statemachine(seed, 1 + seed % 3, 4), random_statemachine_v2(seed, 1 + seed % 3, 4, mem_range=2 + seed % 5), random_statemachine_v3(seed, 1 + seed % 3, 4, mem_range=2 + seed % 5)):
+            out = t.apply(spec, seed * 13 + 1)
+            diff = sum(1 for a, b in zip(spec.payload["table"], out.payload["table"]) for x, y in zip(a, b) if x != y)
+            assert diff == 1, (seed, spec.representation, spec.payload["n_states"]); n += 1
+    assert n == 600

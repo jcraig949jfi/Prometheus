@@ -122,17 +122,24 @@ class PointMutationTransform:
         pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
         i = s.below(pl["n_states"]); j = s.below(pl["n_buckets"]); cell = pl["table"][i][j]
         field = s.below(2 if spec.representation == "statemachine.v1" else 3)
+        # C133: a POINT mutation changes exactly one cell -- always. The v2/v3 memory branches drew a fresh value
+        # that could equal the old one (a proposal identical to its parent: a wasted evaluation and a duplicate
+        # player_hash in the archive; the property over random players found it); a one-state machine cannot
+        # change its next-state field. Every branch now steps AWAY from the current value.
+        if field == 0 and pl["n_states"] < 2:
+            field = 1
         if field == 0:
             cell[0] = (cell[0] + 1 + s.below(max(1, pl["n_states"] - 1))) % pl["n_states"]
         elif field == 1:
             k = s.below(len(cell[1])); cell[1][k] = (cell[1][k] + 1 + s.below(max(1, pl["act_range"] - 1))) % pl["act_range"]
         elif spec.representation == "statemachine.v2":
-            cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl["mem_range"])
+            # values live in {-1} U [0, mem_range): step to a different one
+            cur = cell[2] + 1; cell[2] = (cur + 1 + s.below(pl["mem_range"])) % (pl["mem_range"] + 1) - 1
         else:
             if s.below(2) == 0:
-                cell[2] = s.below(4)                        # the op
+                cell[2] = (cell[2] + 1 + s.below(3)) % 4                              # the op, a different one
             else:
-                cell[3] = s.below(pl["mem_range"])          # its argument
+                cell[3] = (cell[3] + 1 + s.below(max(1, pl["mem_range"] - 1))) % pl["mem_range"]   # its argument, a different one
         parent_fp = spec.meta.get("fingerprint")
         return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires,
                           dict(spec.meta, transform=self.kind, transform_seed=rng_seed, parent=parent_fp))

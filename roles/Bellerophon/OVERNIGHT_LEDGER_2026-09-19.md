@@ -937,3 +937,16 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   observation at tick t is the raw observation at max(0, t-d); the permutation is a bijection applied
   identically every tick (recovered from a tick with distinct channel values); step results and traces equal the
   unwrapped world's. No defect. Suite 944 passed / 6 skipped.
+
+## C133 (08:43Z) the transforms' laws as a property; point mutation was a no-op 4% of the time (post-closing)
+- 40 random players (v1/v2/v3/rewrite): every transform keeps the representation, instantiates, is deterministic
+  per seed; relabel preserves the probe fingerprint; shuffle preserves the cell multiset; fresh changes the genome;
+  point_mutation changes exactly one cell. Seed 1227 (a v3 machine) FAILED the last law: the mutation returned the
+  parent unchanged.
+- defect: the v2/v3 memory branches drew a fresh value that could equal the old one; a one-state machine's
+  next-state field could never change. Measured on the old operator: 16 of 400 mutations were no-ops (4%) -- a
+  wasted evaluation and a duplicate player_hash row each time. Every branch now steps AWAY from the current value.
+  Semantic fix under the same kind (ABI_DIFF); pre-fix archives are data and stay valid.
+- honest ledger at work again: mutant M76 (the old v2 branch) SURVIVED the 40-seed property (no seed hit a v2
+  no-op); a dedicated 600-case test now catches it. Ledger 75 mutants.
+- suite 985 passed, 6 skipped.
