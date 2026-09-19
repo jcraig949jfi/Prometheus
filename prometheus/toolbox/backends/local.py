@@ -39,7 +39,8 @@ class RunSpec:
     experiment: Experiment     # the arm's experiment at this sweep point
 
     def key(self):
-        return (tuple(sorted(self.sweep_point.items())), self.seed)
+        import json
+        return (json.dumps(self.sweep_point, sort_keys=True, separators=(",", ":"), default=str), self.seed)   # C8: sweep values may be dicts
 
 
 @dataclass
@@ -156,17 +157,22 @@ def build_world(exp: Experiment, registry):
 
 
 # ---------------------------------------------------------------------------------------------- episode loop
-def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int) -> dict:
+def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int, substrate=None, episode: int = 0) -> dict:
     world.reset(seed)
+    if substrate is not None and hasattr(substrate, "episode_begin"):
+        substrate.episode_begin(episode, seed)                      # ext.substrate.lifecycle.v1
     for ob in observers:
         ob.begin({"n_players": world.n_players, "seed": seed})
     has_events = "ext.events.v1" in world.capabilities
+    sub_events = substrate is not None and hasattr(substrate, "events")
     n_events = 0; ticks = 0; done = False
     while not done and ticks < horizon:
         observations = {pid: world.observe(pid) for pid in instances}
         actions = {pid: instances[pid].act(observations[pid], world.legal_actions(pid)) for pid in instances}
         done = world.step(actions)
-        evs = world.events() if has_events else []
+        if substrate is not None and hasattr(substrate, "tick"):
+            substrate.tick(ticks)
+        evs = (world.events() if has_events else []) + (substrate.events() if sub_events else [])
         n_events += len(evs)
         for ob in observers:
             # ORDER IS A CONTRACT (C1, 2026-09-19): the events of tick t are delivered BEFORE on_tick(t), so a
@@ -194,7 +200,7 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     series_obs = [ob for ob in observers if getattr(ob, "series", False)]
     collected = {ob.kind: [] for ob in series_obs}
     for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"])
+        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=sub, episode=ep)
         hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
         for ob in series_obs:
             collected[ob.kind].append(ob.series_episode())
@@ -203,6 +209,8 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     acc["wall_s"] = round(wall, 6); acc["cpu_s"] = round(cpu, 6)
     science = {"observations": {ob.kind: ob.measure() for ob in observers}, "world_summary": summaries[-1] if summaries else {},
                "player_fingerprints": fingerprints}
+    if hasattr(sub, "science"):
+        science["substrate"] = sub.science()
     receipt = {
         "experiment_id": exp.experiment_id() if spec.arm == "primary" else exp.provenance.get("parent", exp.experiment_id()),
         "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "status": "COMPLETED",

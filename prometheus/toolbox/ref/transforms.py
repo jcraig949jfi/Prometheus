@@ -33,9 +33,12 @@ def _spec(p: dict | PlayerSpec) -> PlayerSpec:
     return PlayerSpec(p["representation"], copy.deepcopy(p["payload"]), dict(p.get("initial_state", {})), frozenset(p.get("requires", ())), dict(p.get("meta", {})))
 
 
+SM = ("statemachine.v1", "statemachine.v2")
+
+
 class ShuffleTransform:
     kind = "transform.shuffle.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -43,7 +46,7 @@ class ShuffleTransform:
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj); s = stream("shuffle", rng_seed, spec.representation)
         pl = copy.deepcopy(spec.payload)
-        if spec.representation == "statemachine.v1":
+        if spec.representation in SM:
             flat = _shuffle([cell for row in pl["table"] for cell in row], s); nb = pl["n_buckets"]
             pl["table"] = [flat[i * nb:(i + 1) * nb] for i in range(pl["n_states"])]
         elif spec.representation == "proteus.tape.v0":
@@ -55,7 +58,7 @@ class ShuffleTransform:
 
 class FreshTransform:
     kind = "transform.fresh.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.proteus.tape.v0"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.proteus.tape.v0"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -65,6 +68,9 @@ class FreshTransform:
         if spec.representation == "statemachine.v1":
             pl = spec.payload
             return P.random_statemachine(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], meta={"transform": self.kind})
+        if spec.representation == "statemachine.v2":
+            pl = spec.payload
+            return P.random_statemachine_v2(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
         if spec.representation == "proteus.tape.v0":
             return P.random_proteus_player(rng_seed, meta={"transform": self.kind})
         raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
@@ -72,20 +78,20 @@ class FreshTransform:
 
 class RelabelTransform:
     kind = "transform.relabel.v1"
-    accepts = frozenset({"player.statemachine.v1"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
 
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj)
-        if spec.representation != "statemachine.v1":
+        if spec.representation not in SM:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         pl = copy.deepcopy(spec.payload); n = pl["n_states"]; s = stream("relabel", rng_seed)
         perm = _shuffle(list(range(n)), s)                  # old state i -> new label perm[i]
         table = [None] * n
         for i, row in enumerate(pl["table"]):
-            table[perm[i]] = [[perm[nxt], list(acts)] for nxt, acts in row]
+            table[perm[i]] = [[perm[cell[0]]] + list(cell[1:]) for cell in row]     # cell = [next, acts] (v1) or [next, acts, mem_write] (v2)
         pl["table"] = table
         init = dict(spec.initial_state); init["state"] = perm[int(init.get("state", 0))]
         return PlayerSpec(spec.representation, pl, init, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))

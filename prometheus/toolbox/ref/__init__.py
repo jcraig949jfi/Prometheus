@@ -24,6 +24,12 @@ def install(reg: Registry) -> Registry:
                                      admission={"failed": "import: %s" % str(exc)[:120]}))
     reg.register(ComponentRecord("substrate.flat.v1", "substrate", S.FlatInProcessSubstrate, S.FlatInProcessSubstrate.capabilities,
                                  reference_of="substrate.flat", route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("substrate.kv.v1", "substrate", S.KVSubstrate, S.KVSubstrate.capabilities, route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("substrate.stream.v1", "substrate", S.StreamSubstrate, S.StreamSubstrate.capabilities, route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("statemachine.v2", "representation", P.random_statemachine_v2, frozenset({"core.player.v1"}), route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("statemachine.v1", "representation", P.random_statemachine, frozenset({"core.player.v1"}), reference_of="statemachine",
                                  route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("constant.v1", "representation", P.constant_player, frozenset({"core.player.v1"}), route="write",

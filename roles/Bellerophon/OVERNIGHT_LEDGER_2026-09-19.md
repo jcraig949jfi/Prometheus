@@ -80,3 +80,32 @@ C5 | T+0:09 | Transform slot + control coverage (S2), silent players (S3), probe
   COMMIT: (this entry's commit hash below).
   NEXT: playtest B -- state at scopes / substrate variation pressure (does EXP-002 need substrate.kv.v1 or can
     the StateDevice be reached through the existing contracts?).
+C6 | T+0:12 | workspace substrates (directive s12 hypothesis, tested before building)
+  RED: tests/test_workspace.py (9 tests) -- collection error (random_statemachine_v2 absent); the contract was
+    written in the test module docstring first: ext.workspace.kv.v1 / .stream.v1 / ext.substrate.lifecycle.v1.
+  CHANGE: statemachine.v2 (one memory slot living in the substrate's workspace; PREFERS memory, requires
+    nothing, runs memoryless on flat with refused writes COUNTED); Workspace doors (NoWorkspace, KVWorkspace,
+    StreamWorkspace) -- the only path from a player to a StateDevice; substrate.kv.v1 (scope, ttl, max_keys)
+    and substrate.stream.v1 (scope, lag, maxlen); executor lifecycle hooks episode_begin/tick; substrate
+    events merged into the observer stream; science["substrate"] block (carry_over).
+  GREEN: 8/9 then 9/9 after the test itself taught me something: with default params kv == stream(lag 1)
+    EXACTLY (read = last write). Encoded as a metamorphic identity; lag 3 differs. Suite 60 (49 kernel +
+    11 base-role).
+  DECISION: the StateDevice contract did NOT need to change (directive s4 said change it if so); what was
+    missing was the DOOR (Workspace) and the lifecycle hooks. Alternative rejected: giving players the
+    device (violates s6 "do not expose Redis as the programming model").
+C7 | T+0:13 | transforms did not accept statemachine.v2 -> sham/scratch would be INDETERMINATE for all of EXP-002.
+  RED: relabel/shuffle/fresh on v2; relabel must preserve the fingerprint (metamorphic). Fixed; 50 passed.
+C8 | T+0:14 | EXP-002 (examples/exp_002_substrate_sweep.py) first run CRASHED the executor: sweeping over whole
+  component refs (dict values) made the run key unhashable -> TypeError, a process halt from a legitimate
+  designer sweep (anti-bureaucracy rule s32 violated by the kernel itself). RED reproducer; fix: JSON key.
+  EXP-002: 432 runs (6 substrates x 2 regimes x 2 charges x 6 arms x 3 seeds), 0 failed, 5/5 controls MET
+  (72/72 pairs each). ROWS: all six substrates give DISTINCT traces at every one of the 12 (seed, regime,
+  charge) points; flat refused 818 writes (visible); kv lifetime carry_over True; kv ttl=4 expired 116
+  keys; memory charged at 0.05/op lowers the objective below flat for these random players (mechanics
+  visible; no scientific claim). Series PRESENT 72/72, inline (<= 512 records).
+C9 | T+0:15 | EXP-002 rows: stream substrates at lifetime scope said carry_over=False (the log DOES survive):
+  StreamWorkspace.read bypassed the substrate's read hook -- the science block lied by omission. RED
+  (lifetime True / episode False), fixed. EXP-002 regenerated: stream lifetime carry_over now True.
+  COMMIT below. NEXT: corrupted/truncated receipt files; fuzzed IR compositions; sweep over players
+  (missing DOF found in C3: "players" is not a sweepable root).

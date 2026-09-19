@@ -107,3 +107,29 @@ def test_fingerprint_probe_does_not_disturb_a_proteus_run():
     cost_before = dict(a.cost()); assert cost_before == b.cost(), "probe changed the meter"
     obs = [[(t * 31) % 65536, t, 2, 3, 4] for t in range(24)]
     assert [a.act(o, ActionSpace(2, 8)) for o in obs] == [b.act(o, ActionSpace(2, 8)) for o in obs], "probe changed the random stream"
+
+
+# C7 (building EXP-002): transforms only accepted statemachine.v1; the v2 representation (3-element cells with a
+# memory write) would have made sham/scratch/relabel INDETERMINATE for the whole substrate playtest.
+from prometheus.toolbox.ref.players import random_statemachine_v2
+
+
+def test_transforms_accept_statemachine_v2_and_relabel_preserves_behaviour():
+    spec = random_statemachine_v2(21)
+    for kind in ("transform.shuffle.v1", "transform.fresh.v1", "transform.relabel.v1"):
+        assert "player.statemachine.v2" in REG.make(kind).accepts, kind
+    rel = REG.make("transform.relabel.v1").apply(spec, 99)
+    sub = REG.make("substrate.kv.v1")
+    a, b = sub.instantiate(spec, 1), sub.instantiate(rel, 1)
+    assert a.fingerprint() == b.fingerprint() and rel.payload["table"] != spec.payload["table"]
+    sh = REG.make("transform.shuffle.v1").apply(spec, 99)
+    assert sorted(str(c) for row in sh.payload["table"] for c in row) == sorted(str(c) for row in spec.payload["table"] for c in row)
+
+
+# C8 (EXP-002): sweeping over whole component refs (dict values) crashed the EXECUTOR (unhashable sweep point
+# used as a dict key) -- a designer's legitimate sweep produced a process-level halt, not a receipt.
+def test_sweep_over_component_refs_pairs_control_arms_and_never_halts(tmp_path):
+    e = _exp(controls=[ref("control.replay.v1")], sweep={"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime")]})
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 4
+    rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["pairs"] == 2 and rep.controls["replay"]["outcome"] == "MET"
