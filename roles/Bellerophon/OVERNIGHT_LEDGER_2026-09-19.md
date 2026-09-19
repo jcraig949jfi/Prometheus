@@ -165,3 +165,13 @@ C23 | T+0:35 | fresh playtest C rows: TASK_CHANGE counts (13, 10, 9, 7) exceeded
   two meanings. RED (TASK_CHANGE == 3 params x 2 episodes; STATE_EXPIRE == ws_expired; STATE_DISCARD >= 1);
   fix: STATE_EXPIRE / STATE_DISCARD appended to EVENT_KINDS (ids stable). Suite 108. Playtest C re-run: per
   seed TASK_CHANGE now matches the schedule and expiries are their own kind (rows below in the receipt file).
+C24 | T+0:40 | model-based property test of the StateDevice contract (tests/test_state_model.py): a 20-line
+  reference model driven by 400 random ops x 25 seeds (put with every scope and ttl in {None,0,1,2,5}, get,
+  advance by 0/1/3, end_scope of every scope, snapshot/restore) must agree with the device on every key after
+  every op and on expired/refused counts. Passed first time -- so DETECTION WAS PROVEN by two perturbations:
+  ttl off-by-one (< for <=): 25/25 fail; capacity off-by-one (<= for <): 17/25 fail. TTL boundary pinned:
+  ttl k put at T is gone from advance(T+k); ttl 0 is gone at the next advance even to the same tick.
+  Redis arm: 5 seeds, SKIPPED here (no server).
+C24b | T+0:42 | the model test's runtime exposed an unbounded device EVENT buffer when nobody drains it.
+  RED: 250 puts with max_events=100 -> 100 kept (newest), events_dropped == 150 in accounting. Fixed for the
+  in-process device (every emit routed through a bounded _emit). Suite 135 passed 6 skipped.
