@@ -429,19 +429,30 @@ def _act(st, v):
         st.prec.append(env.last_primitive)
 
 
+def _is_table(v, n):
+    return isinstance(v, tuple) and len(v) == n and all(isinstance(e, int) and not isinstance(e, bool) for e in v)
+
+
 def _cal_block(st, create: bool):
-    for b in st.blocks.blocks.values():
-        if b.origin == CAL_ORIGIN:
-            return b
-    if not create:
-        return None
+    """The substrate-maintained calibration object. An organism may tamper with it (BLK_STATE_SET,
+    BLK_PATCH, BLK_DELETE are all legal); a corrupted table is re-initialised, a deleted one recreated."""
     from . import world_c1 as w
-    bid = st.blocks.create([], origin=CAL_ORIGIN)
-    if bid < 0:
-        return None
-    b = st.blocks.blocks[bid]
-    b.local_state[0] = tuple([-1] * w.NUM_PRIMITIVES)
-    b.local_state[1] = tuple([-1] * w.NUM_PRIMITIVES)
+    b = None
+    for cand in st.blocks.blocks.values():
+        if cand.origin == CAL_ORIGIN:
+            b = cand
+            break
+    if b is None:
+        if not create:
+            return None
+        bid = st.blocks.create([], origin=CAL_ORIGIN)
+        if bid < 0:
+            return None
+        b = st.blocks.blocks[bid]
+    if not _is_table(b.local_state[0], w.NUM_PRIMITIVES):
+        b.local_state[0] = tuple([-1] * w.NUM_PRIMITIVES)
+    if not _is_table(b.local_state[1], w.NUM_PRIMITIVES):
+        b.local_state[1] = tuple([-1] * w.NUM_PRIMITIVES)
     return b
 
 
@@ -451,7 +462,7 @@ def _calibrate(st, action: int, prim: int):
         return
     fwd = list(b.local_state[0])
     inv = list(b.local_state[1])
-    if 0 <= action < len(fwd) and fwd[action] != prim:
+    if 0 <= action < len(fwd) and 0 <= prim < len(inv) and fwd[action] != prim:
         fwd[action] = prim
         inv[prim] = action
         b.local_state[0] = tuple(fwd)
@@ -466,7 +477,12 @@ def _proc_steps(st, handle):
     b = st.blocks.blocks.get(h)
     if b is None or b.origin != PROC_ORIGIN:
         return None
-    return [(ins[1], ins[2]) for ins in b.instructions if OPNAMES[ins[0]] == "PSTEP"]
+    steps = []
+    for ins in b.instructions:
+        if len(ins) == 4 and isinstance(ins[0], int) and 0 <= ins[0] < len(OPNAMES) and OPNAMES[ins[0]] == "PSTEP" \
+                and isinstance(ins[1], int) and isinstance(ins[2], int):
+            steps.append((ins[1], ins[2]))
+    return steps
 
 
 def _mental(st, steps, arg, x):
@@ -475,7 +491,7 @@ def _mental(st, steps, arg, x):
         return FAIL
     for kind, off in steps:
         x = w.apply_primitive(w.KINDS[kind % len(w.KINDS)], (arg + off) % w.L, x)
-    st.env.charge(len(steps))
+    st.env.charge(max(1, len(steps)))
     return x
 
 
@@ -492,7 +508,7 @@ def _typed_op(name, a, b, c, st, block_id):
         cal = _cal_block(st, create=False)
         prim = (a % len(w.KINDS)) * w.L + (st.parg + b) % w.L
         act_id = cal.local_state[1][prim] if cal is not None else -1
-        if act_id < 0:
+        if not isinstance(act_id, int) or act_id < 0:
             env.status = 1
             return
         _act(st, act_id)
