@@ -22,6 +22,11 @@ def main(tag, expdir="cw01-loop1"):
     rows = []
     for c in ten:
         d = exp / c["id"]
+        if not (d / "RESULT.json").exists():            # a tranche may span experiment directories
+            for alt in (CAMPAIGN / "experiments").glob("cw01-*/" + c["id"]):
+                if (alt / "RESULT.json").exists():
+                    d = alt
+                    break
         rp = d / "RESULT.json"
         res = json.loads(rp.read_text(encoding="utf-8")) if rp.exists() else None
         rows.append({"rank": c["rank"], "id": c["id"], "parent": c["parent"], "type": c["type"],
@@ -36,7 +41,7 @@ def main(tag, expdir="cw01-loop1"):
     for e in st_events:
         state_now[e["trajectory_id"]] = e
     material = [e for e in ev if e.get("material_change")]
-    n_stasis = sum(1 for v in state_now.values() if v["state"] == "TEMPORAL_STASIS")
+    n_stasis = sum(1 for v in state_now.values() if v["state"].startswith("TEMPORAL_STASIS"))   # scoped labels count (D078)
 
     md = ["# CW01 priority loop - cycle report %s" % tag, "",
           "Ten frozen perturbations executed under their own preregistrations (PREREG.json hashed before each run).",

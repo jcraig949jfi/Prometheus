@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-18 12:41:41",
+ "updated_local": "2026-09-18 20:33:34",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "PRIORITY LOOP (operator directive 2026-09-18): revisit / perturb / stasis / reactivate over the whole history; nothing scientific is killed; see loop/LOOP_RULES.md",
  "phase_model": [
@@ -428,7 +428,7 @@
  ],
  "active": {
   "mode": "priority_loop",
-  "cycle": "ARCH4_2026-09-18",
+  "cycle": "CYCLE2_2026-09-18",
   "phase": "APPENDED",
   "next": "next cycle: RECONCILE the whole pool with this cycle's evidence, re-score, re-diversify, freeze a new ten"
  },
@@ -560,20 +560,21 @@
   "null": 2,
   "negative": 0,
   "inconclusive": 5,
-  "defects_logged": 73,
+  "defects_logged": 79,
   "science_defects": 28,
   "defects_per_experiment": {
-   "arch4": 1,
+   "arch4": 3,
    "e01": 17,
    "e02": 11,
    "e03": 3,
    "e04": 5,
    "e05": 16,
-   "e06": 6,
+   "e06": 7,
    "e07": 4,
    "e08": 6,
    "e09": 2,
-   "loop1": 2
+   "loop1": 2,
+   "loop2": 3
   },
   "reusable_components_landed": [
    "lib/seeds.py",
@@ -644,6 +645,38 @@
    "material": 30,
    "in_stasis": 3,
    "report": "loop/CYCLE_REPORT_ARCH4_2026-09-18.md"
+  },
+  "CYCLE2_2026-09-18": {
+   "pool": 31,
+   "candidates": 29,
+   "frozen_ten": [
+    "P-D01",
+    "P-D02",
+    "P-D03",
+    "P-D13",
+    "P-B07",
+    "P-D12",
+    "P-B10",
+    "P-D11",
+    "P-D05",
+    "P-D07"
+   ],
+   "dispositions": {
+    "P-D01": "material=True",
+    "P-D02": "material=False",
+    "P-D03": "material=True",
+    "P-D13": "material=True",
+    "P-B07": "material=False",
+    "P-D12": "material=False",
+    "P-B10": "search limit",
+    "P-D11": "material=False",
+    "P-D05": "NOT_REPLICATED",
+    "P-D07": "RAN (see RESULT.json)"
+   },
+   "evidence_events": 70,
+   "material": 45,
+   "in_stasis": 7,
+   "report": "loop/CYCLE_REPORT_CYCLE2_2026-09-18.md"
   }
  }
 }

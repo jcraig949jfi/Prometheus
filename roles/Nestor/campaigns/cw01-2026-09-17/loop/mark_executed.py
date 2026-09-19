@@ -24,12 +24,10 @@ def main(extra=None):
             if d.get("amend") and d.get("executed_in"):
                 done.add(d["id"])
     ts = time.strftime("%Y-%m-%d %H:%M:%S")
-    tr = dict(TRANCHES)
-    if extra:
-        tr.update(extra)
+    tr = list(TRANCHES.items()) + list(extra or [])      # pairs, not a dict: one tag may span directories (D077)
     added = []
     with PERT.open("a", encoding="utf-8") as fh:
-        for tag, expdir in tr.items():
+        for tag, expdir in tr:
             p = HERE / ("PRIORITY_%s.json" % tag)
             if not p.exists():
                 continue
@@ -46,4 +44,4 @@ def main(extra=None):
 
 
 if __name__ == "__main__":
-    main(dict(a.split("=") for a in sys.argv[1:]) if len(sys.argv) > 1 else None)
+    main([tuple(a.split("=", 1)) for a in sys.argv[1:]] if len(sys.argv) > 1 else None)
