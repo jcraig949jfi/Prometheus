@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 537,
+ "built": "2026-09-19T07:40Z",
+ "n": 539,
  "organs": [
   {
    "organ_id": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
@@ -467,6 +467,252 @@
     },
     "recovery": {
      "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "calc_open_endedness_score (asal_metrics.py:52-64): kernel = z @ z.T; kernel = tril(kernel, k=-1); return kernel.max(axis=-1).mean()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the T frame embeddings z (unit vectors from the foundation model) form a T x T inner-product matrix; the strict lower triangle keeps, for frame t, its similarities to frames 0..t-1 only; the row max is the closest earlier frame; the mean of those maxima is the score, minimised, so a low score means every frame is far in embedding space from all its predecessors; frame 0 contributes 0 (empty row) by construction; the sibling calc_illumination_score does the same across simulations (diagonal set to -inf) to spread a POPULATION rather than a trajectory",
+   "input": "z, a T x D array of frame embeddings",
+   "output": "a scalar (lower = more open-ended)",
+   "state": "none",
+   "update": "per rollout",
+   "assumptions": [
+    "embedding-space dissimilarity between successive frames is a usable proxy for open-ended novelty (ASAL's thesis); the foundation model's geometry is trusted as the arbiter of 'different'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation"
+   ],
+   "fitness_value_in_ancestor": "ALife phenomena searchable by phenotype without hand-authored features; the paper's contribution",
+   "failure_landscape": "by reading, and confirmed by TECHNE-107 (E1): the metric rewards any process that makes embeddings drift, whether or not the underlying system is alive or novel; scene garbage (0.817) and a colour cycle (0.837) beat a living Orbium (0.847) through CLIP; the observer regularises pixel noise (0.866) but not structured garbage; recurrence (a 2-frame cycle) is punished, so the exploit is drift, not mere change",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kumar, Lu, Lange, Tang, Ha et al. 2024 (ASAL); the max-cosine-to-earlier-frame form is asal_metrics.py's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/asal_metrics.py:52-64"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "calc_open_endedness_score (and its illumination sibling)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "rollout_simulation time_sampling branch (rollout.py:78-95): chunk_steps = rollout_steps // K; scan the substrate for rollout_steps; idx_sample = arange(0, rollout_steps, chunk_steps) (or arange(chunk_steps-1, ...) if chunk_ends); render and embed the K sampled states",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the substrate is stepped for the full rollout (256 steps by default), every state kept; then K evenly spaced indices (K=8 in the default score call) select the frames actually rendered, embedded and scored, either from the interval starts (chunk_ends False) or ends; 'final' returns only the last state and 'video' all of them; so the score sees a fixed-length, evenly-spaced sub-sample of the trajectory, and what happens between samples is invisible to the observer",
+   "input": "an initial state, the substrate, K",
+   "output": "K rendered frames and their embeddings",
+   "state": "the rollout's state video",
+   "update": "per rollout",
+   "assumptions": [
+    "K evenly spaced frames summarise the trajectory well enough for the embedding metric; the substrate is deterministic given params and rng"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised"
+   ],
+   "fitness_value_in_ancestor": "one cheap fixed-size summary per candidate for the search to score",
+   "failure_landscape": "by reading: sub-sampling means a trajectory that is dynamically rich between samples but embedding-similar at the sample points scores as non-open-ended, and vice versa; the number and placement of samples is a hidden knob of the metric",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the ASAL rollout API (rollout.py)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/rollout.py:78-95"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the K-interval branch of rollout_simulation",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "adaptation": {
