@@ -42,7 +42,7 @@ class TraceObserver:
 
     def on_events(self, events: List[Event]) -> None:
         for (_, kind, pid, _, val) in events:
-            name = EVENT_KINDS[kind]
+            name = EVENT_KINDS[kind] if 0 <= kind < len(EVENT_KINDS) else "UNKNOWN_%d" % kind     # C17: retain, never crash or drop
             self._by_kind[name] = self._by_kind.get(name, 0) + 1
             if kind == EVENT_ID["YIELD"]:
                 self._yield[pid] = self._yield.get(pid, 0) + val

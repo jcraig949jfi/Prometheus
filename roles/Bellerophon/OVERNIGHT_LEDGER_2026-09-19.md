@@ -109,3 +109,21 @@ C9 | T+0:15 | EXP-002 rows: stream substrates at lifetime scope said carry_over=
   (lifetime True / episode False), fixed. EXP-002 regenerated: stream lifetime carry_over now True.
   COMMIT below. NEXT: corrupted/truncated receipt files; fuzzed IR compositions; sweep over players
   (missing DOF found in C3: "players" is not a sweepable root).
+C10 | T+0:17 | receipt FILE integrity (forensics, not just per-record)
+  RED: tests/test_integrity.py (4): truncated last line, edited middle record, duplicated record, clean scan.
+  CHANGE: receipt.read_all is STRICT (raises naming the line); receipt.scan() is FORENSIC (never raises;
+    counts valid; names every defect by line: TRUNCATED_OR_MALFORMED_JSON, RECEIPT_ID_MISMATCH = edited
+    after writing, SCHEMA:*, DUPLICATE_RECEIPT_ID). Decision: a duplicate is a defect and NOT a valid run
+    (a copy is not a second execution). GREEN 56.
+C11 | T+0:19 | fuzzed compositions (tests/test_fuzz.py): seeded random Experiments from the registry (1-3
+  players of mixed representations, random world params incl. zero ops / zero yield / huge charge, random
+  substrate configs incl. max_keys=0, random interventions incl. delay 40 > horizon, random controls /
+  observers / sweeps incl. horizon 0, series bounds 0). 40 seeds in the suite; 300 run once out of suite:
+  189 OK (0 FAILED receipts), 64 BLOCKED_MISSING_CAPABILITY (adversarial knobs: a required capability
+  nobody grants; an unknown wrapper), 47 invalid IR refused as data (negative horizon; sweep root
+  "players"), 0 crashes. Every refusal carries a reason (asserted).
+  FINDING (not a defect, a DOF): "players" is not a sweepable root -- a population variation must be a
+  separate experiment today. Recorded; next cycle decides.
+C17 | T+0:19 | unexpected events: a world emitting an uncatalogued event kind CRASHED TraceObserver
+  (IndexError on EVENT_KINDS[kind]) -- events would have been normalised away by a crash. RED with a world
+  that emits kind 99; fix: observers retain UNKNOWN_<id>. GREEN 97 passed 1 skipped (fuzz adds 41).
