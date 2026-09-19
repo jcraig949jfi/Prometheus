@@ -332,3 +332,29 @@ def test_player_count_must_match_the_world_at_lowering():
     e = _exp(world=ref("world.integer.v1", world_seed=2, n_players=3), players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()])
     low = lower(e, REG)
     assert low.status == "TARGET_UNSUPPORTED" and any("n_players" in r and "2" in r and "3" in r for r in low.reasons)
+
+
+# C63: SEMANTIC replay was a word in the contract with no operational meaning (the replay control returned
+# INDETERMINATE). Operationalised: a float-state world declares replay_class SEMANTIC and a `quantum`; its trace
+# hashes state QUANTISED at that quantum, declared before any run; replay compares those hashes; the receipt
+# carries the quantum. world.pendulum.v1 (math.sin/cos, libm-dependent) is the reference SEMANTIC world.
+def test_semantic_world_declares_quantum_and_replay_control_compares_quantised_traces(tmp_path):
+    from prometheus.toolbox.admission import admit
+    kind = "world.pendulum.v1"
+    w = REG.make(kind, quantum=1e-6)
+    assert w.replay_class == "SEMANTIC" and w.manifest()["quantum"] == 1e-6 and "ext.replay.semantic.v1" in w.capabilities and "ext.continuous_actions.v1" in w.capabilities
+    assert admit(kind, REG).state == "ADMITTED"
+    e = _exp(world=ref(kind, quantum=1e-6), players=[random_statemachine(3).manifest()], controls=[ref("control.replay.v1"), ref("control.cheat.v1")],
+             observers=[ref("observer.trace.v1")], budget={"episodes": 2, "horizon": 30}, seed_policy={"base": 1, "n_seeds": 2})
+    rep = execute(lower(e, REG).job, tmp_path / "pend.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["replay"]["details"][0]["detail"]["class"] == "SEMANTIC"
+    assert rep.controls["cheat"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "pend.jsonl") if x["arm"] == "primary"][0]
+    assert r["replay_class"] == "SEMANTIC" and r["components"]["world"]["manifest"]["quantum"] == 1e-6
+    # the quantum is a CONDITION: a coarser quantum gives a different (coarser) trace, declared, not widened after the fact
+    w1 = REG.make(kind, quantum=1e-6); w2 = REG.make(kind, quantum=1e-2)
+    for wx in (w1, w2):
+        wx.reset(1)
+        for _ in range(10):
+            wx.step({0: [3, 5]})
+    assert w1.trace_hash() != w2.trace_hash()

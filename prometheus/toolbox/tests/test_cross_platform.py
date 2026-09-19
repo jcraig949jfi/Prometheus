@@ -36,4 +36,11 @@ def test_trace_hashes_agree_across_interpreters_and_platforms():
     assert (other["platform"], other["python"]) != (here["platform"], here["python"])
     for name, fx in here["fixtures"].items():
         assert "error" not in fx, (name, fx)
+        if name.endswith("q1e-13"):
+            # C63 evidence, not an assertion: at a quantum below libm's cross-platform agreement the SEMANTIC world's
+            # traces MAY differ (observed 2/3 seeds differing, Windows py3.14 vs Linux py3.12). Recorded, never widened.
+            continue
         assert other["fixtures"].get(name) == fx, "trace hashes differ across platforms for %s" % name
+    fine = here["fixtures"].get("pendulum_q1e-13", {}); fine_o = other["fixtures"].get("pendulum_q1e-13", {})
+    n_differ = sum(1 for k in fine if fine[k] != fine_o.get(k))
+    print("SEMANTIC evidence: pendulum quantum 1e-13 differs across platforms on %d/%d seeds; quantum 1e-6 agrees on all" % (n_differ, len(fine)))

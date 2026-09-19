@@ -377,3 +377,13 @@ C61 | 04:20Z | mutation wave 3 (M29-M34: mailbox echo, ablation-with-nothing MET
   difference happened to equal its actions difference -- the test was green for the wrong reason; the
   fixture now searches world seeds until the two columns disagree and asserts both. Ledger: 33/33 CAUGHT.
   Suite 181 passed 6 skipped.
+C63 | 04:24Z | SEMANTIC replay was a word with no operational meaning (the replay control answered
+  INDETERMINATE). Operationalised: a SEMANTIC world declares a `quantum` in its manifest BEFORE any run and
+  hashes its state quantised at that quantum; replay compares those hashes and names the quantum; admission
+  runs the replay check for SEMANTIC worlds and refuses one without a quantum. Reference SEMANTIC world
+  world.pendulum.v1 (float state through math.sin/cos = libm-dependent; fixed-point actions,
+  ext.continuous_actions.v1; cheat mechanism). ADMITTED. Coarser quantum = different declared trace.
+  CROSS-PLATFORM EVIDENCE (Windows py3.14 vs WSL Linux py3.12): at quantum 1e-6 the pendulum agrees 3/3
+  seeds; at quantum 1e-13 it DIFFERS on 2/3 seeds -- the quantum is a real tolerance and a BIT claim would be
+  FALSE for this world. Recorded in science/CROSS_PLATFORM_REPLAY_2026-09-19.json and the standing test
+  (the fine quantum is evidence, never an assertion). Suite 182 passed 6 skipped.

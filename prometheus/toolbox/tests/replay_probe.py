@@ -34,6 +34,15 @@ def main() -> dict:
                 out["fixtures"]["c6"] = {str(r["seed"]): r["trace_hashes"] for r in read_all(pathlib.Path(d) / "c6.jsonl") if r["arm"] == "primary"}
         except Exception as exc:                                    # noqa: BLE001
             out["fixtures"]["c6"] = {"error": str(exc)[:200]}
+        # C63: the SEMANTIC reference world at two quanta -- coarse must agree across platforms; fine is evidence about libm
+        from prometheus.toolbox.ir import Experiment, ref
+        from prometheus.toolbox.ref.players import random_statemachine
+        from prometheus.toolbox.registry import default_registry as DR
+        for tag, q in (("pendulum_q1e-6", 1e-6), ("pendulum_q1e-13", 1e-13)):
+            e = Experiment(family=tag, world=ref("world.pendulum.v1", quantum=q, start_charge=100000, step_cost=0), substrate=ref("substrate.flat.v1"),
+                           players=[random_statemachine(4).manifest()], seed_policy={"base": 1, "n_seeds": 3}, budget={"episodes": 2, "horizon": 200})
+            execute(e.compile("local", DR()).job, pathlib.Path(d) / (tag + ".jsonl"), DR())
+            out["fixtures"][tag] = {str(r["seed"]): r["trace_hashes"] for r in read_all(pathlib.Path(d) / (tag + ".jsonl")) if r["arm"] == "primary"}
     print(json.dumps(out, sort_keys=True))
     return out
 

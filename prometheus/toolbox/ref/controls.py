@@ -42,7 +42,14 @@ class ReplayControl:
             as_ = {k: v["series_hash"] for k, v in (arm.get("series") or {}).items()}
             seq = ps == as_
             return _met(eq and seq, {"class": rc, "equal": eq, "series_equal": seq})
-        return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "semantic replay needs a declared tolerance; none in Phase 1"}}
+        if rc == "SEMANTIC":
+            # C63: a SEMANTIC world hashes state quantised at the quantum it DECLARED before the run; equal hashes = agreement at that tolerance
+            q = (primary.get("components", {}).get("world", {}).get("manifest") or {}).get("quantum")
+            if q is None:
+                return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "SEMANTIC world declares no quantum: no tolerance was fixed before the run"}}
+            eq = primary["trace_hashes"] == arm["trace_hashes"]
+            return _met(eq, {"class": rc, "quantum": q, "equal_at_quantum": eq})
+        return {"outcome": "INDETERMINATE", "detail": {"class": rc, "note": "replay is only defined for BIT and SEMANTIC (with a declared quantum)"}}
 
 
 class CheatControl:

@@ -108,10 +108,12 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
         res.failed.append("extensions")
     # 2 replay
     rc = getattr(w, "replay_class", "NONDETERMINISTIC")
-    if rc == "BIT":
+    if rc in ("BIT", "SEMANTIC"):
         w1 = row.factory(**params); w2 = row.factory(**params)
         eq = all(_episode(w1, s, horizon, _det_actions) == _episode(w2, s, horizon, _det_actions) for s in seeds)
-        checks["replay"] = {"ok": eq, "class": "BIT", "seeds": list(seeds)}
+        checks["replay"] = {"ok": eq, "class": rc, "seeds": list(seeds), "quantum": w.manifest().get("quantum") if rc == "SEMANTIC" else None}
+        if rc == "SEMANTIC" and w.manifest().get("quantum") is None:
+            eq = False; checks["replay"]["note"] = "SEMANTIC without a declared quantum"
         if not eq:
             res.failed.append("replay")
     else:
