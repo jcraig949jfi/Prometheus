@@ -123,3 +123,23 @@ draw); everything else is PARTIAL with the EVENT_RECORD always kept. The digest 
 scheduler's receipts through the registry run refs. Neither defect touched replay, ancestry,
 provenance or separation; no global halt was warranted. | scheduler_2026-09-19_a.log; digest
 0038Z. | -- | Threshold table untouched. DETERMINISTIC.
+
+DF-012 | 2026-09-19 02:02 | DIGEST 0159Z (19 runs, 415,776 evaluations) READ; three scheduler-policy defects
+fixed in code and the scheduler restarted with resume: (1) controls spawned controls -- a seed
+control of a seed control eleven deep consumed 11 of 19 runs; descendants now come only from
+depth-0 runs, controls go to AUDIT, persistence (x4 horizon) only when an ADMITTED ruler fired
+goes to EXPLOITATION, adjacent bins to EXPLORATION, descendant priority below the parent's;
+pending depth->=2 chain items DROPPED with the reason; (2) classifier_failure fired on 100% of
+firing subjects because five rulers are STRUCTURALLY unable on every current run (no probe
+worlds, no replay D, no ablation set, no regime change, no persistent state) -- CALIBRATION_
+EPOCH-001 (registry event): structural UNABLEs no longer count toward the >= 3 rule; no
+threshold moved; (3) the old-loop parent B-scatter.T000 and its scheduler descendants ran on
+DIFFERENT worlds (bin 3 vs bin 7 from the same seed record) -- not comparable; the spec is
+re-run as an AUDIT control instead of explained. FIRST OBSERVATIONS RECORDED with PROVISIONAL
+interpretations: C5-flat.T1 (N=200, W3_K3) max .500 > best starting parent .382 in three
+seeds -- confounded by total compute vs C5 (60,000 vs 9,000-36,000) -> equal-compute N family
+(50/100/200/400 x 3 seeds at 60,000 evaluations) queued to EXPLOITATION at top priority;
+graph populations fire two orders of magnitude less than v0 at v0-calibrated thresholds
+(undetermined: churn vs spread); the bin-5 composed world of C4-exapt.T1 is dead for this
+population (reward 0 for 40,000 evaluations). | digests/DIGEST_2026-09-19T0159Z.md; registry
+OBSERVATION/INTERPRETATION events. | -- | DETERMINISTIC (policy), PROVISIONAL (readings).

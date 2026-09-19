@@ -168,24 +168,33 @@ def _count(out: dict, key: str) -> dict:
 
 
 # ---------------------------------------------------------------- branching (code, from the receipt)
-def descendants(spec: dict, receipt: dict) -> List[dict]:
+ADMITTED = ("unexpected_transfer", "lineage_discontinuity", "behavioral_novelty", "environmental_modification", "niche_divergence", "regime_persistence")
+
+
+def descendants(spec: dict, receipt: dict) -> List[Tuple[dict, str, str]]:
+    """(spec, why, pool). Controls come only from a run that is not itself a control or descendant (depth 0), go to AUDIT;
+    persistence (x4 horizon) only when an ADMITTED ruler fired, goes to EXPLOITATION; adjacent bins only from a depth-0
+    composed-world run with classifier failure, EXPLORATION. Runaway chains of controls-of-controls are thereby impossible."""
     fired: Dict[str, int] = {}
     for c in receipt["chunks"]:
         for d, n in c["fired"].items():
             fired[d] = fired.get(d, 0) + n
-    core = {d: n for d, n in fired.items() if d not in ("detector_disagreement", "classifier_failure", "structural_reuse")}
+    depth = spec["experiment_id"].count("/") - spec["family_id"].count("/")
+    if depth > 0:
+        return []
     out = []
-    if core:
+    adm = {d: n for d, n in fired.items() if d in ADMITTED}
+    if adm:
         for ctl in spec["controls"]:
             if ctl["kind"] in ("seed", "initialization") and ctl["spec_delta"]:
-                out.append((SP.apply_delta(spec, ctl["spec_delta"]), "control:" + ctl["kind"]))
-        out.append((SP.apply_delta(spec, {"params.generations": "x4", "budget.evaluations": "x4"}), "persistence"))
+                out.append((SP.apply_delta(spec, ctl["spec_delta"]), "control:" + ctl["kind"], "AUDIT"))
+        out.append((SP.apply_delta(spec, {"params.generations": "x4", "budget.evaluations": "x4"}), "persistence", "EXPLOITATION"))
     if fired.get("classifier_failure", 0) >= 3 and spec["world"]["kind"] == "c6.composed.sample":
         b = spec["world"].get("bin")
         if b is not None:
             for nb in (b - 1, b + 1):
                 if 0 <= nb <= 10:
-                    out.append((SP.apply_delta(spec, {"world.bin": nb}), "adjacent_bin"))
+                    out.append((SP.apply_delta(spec, {"world.bin": nb}), "adjacent_bin", "EXPLORATION"))
     return out
 
 
@@ -248,16 +257,16 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
     reg.observe(lid, "%s: %d chunks, %d evaluations, firings %s" % (tid, len(receipt["chunks"]), receipt["evaluations"], fired), ref={"receipt": receipt["chunks"][-1]["path"] if receipt["chunks"] else None})
     new = []
     seen = {t["id"] for t in reg.get(lid)["transformations"]}
-    for dspec, why in descendants(spec, receipt):
+    for dspec, why, dpool in descendants(spec, receipt):
         did = dspec["experiment_id"]
         if did in seen:
             continue
         seen.add(did)
-        new.append({"id": did, "dims": [why], "from": tid, "to": why, "budget_evaluations": dspec["budget"]["evaluations"], "status": "PENDING", "trigger": why, "spec": dspec})
+        new.append({"id": did, "dims": [why], "from": tid, "to": why, "budget_evaluations": dspec["budget"]["evaluations"], "status": "PENDING", "trigger": why, "spec": dspec, "pool": dpool})
     if new:
         reg.add_transformations(lid, new)
         for t in new:
-            q.push(pool, lineage_id=lid, transformation_id=t["id"], priority=item["priority"] + 0.5, lane=t["spec"]["provenance"]["lane"] if t["trigger"].startswith("control") else "EVOLUTION_GENERATED",
+            q.push(t["pool"], lineage_id=lid, transformation_id=t["id"], priority=item["priority"] - 0.1, lane=t["spec"]["provenance"]["lane"] if t["trigger"].startswith("control") else "EVOLUTION_GENERATED",
                    budget_evaluations=t["budget_evaluations"], note="branch: " + t["trigger"])
     q.set_state(pool, item["item_id"], "DONE"); spent[pool] = spent.get(pool, 0) + receipt["evaluations"]
     return {"status": "RAN", "pool": pool, "lineage": lid, "transformation": tid, "evaluations": receipt["evaluations"], "chunks": len(receipt["chunks"]), "fired": fired, "descendants": [t["id"] for t in new]}
