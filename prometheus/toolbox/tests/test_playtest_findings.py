@@ -74,8 +74,14 @@ def test_transforms_cover_proteus_players_too(tmp_path):
     # share one fingerprint; a silent player's sham is indistinguishable by behaviour, only by genome)
     e = _exp(players=[random_proteus_player(17).manifest()], controls=[ref("control.sham.v1"), ref("control.scratch.v1")])
     low = lower(e, REG); rep = execute(low.job, tmp_path / "r.jsonl", REG)
-    assert rep.controls["sham"]["outcome"] == "MET" and rep.controls["scratch"]["outcome"] == "MET"
-    sham = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] == "sham"][0]; prim = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] == "primary"][0]
+    # C97: this test used to assert MET for both -- a green with no power: the primary, the shuffled and the fresh
+    # Proteus player leave the SAME world trace (probe-non-silent, run-silent), so the controls compared nothing.
+    # With power they say so.
+    rows = {r["arm"]: r for r in read_all(tmp_path / "r.jsonl") if r["arm"] != "SUMMARY"}
+    assert rows["primary"]["trace_hashes"] == rows["sham"]["trace_hashes"] == rows["scratch"]["trace_hashes"]
+    assert rep.controls["sham"]["outcome"] == "INDETERMINATE" and "no behaviour" in rep.controls["sham"]["details"][0]["detail"]["note"]
+    assert rep.controls["scratch"]["outcome"] == "INDETERMINATE" and rep.controls["scratch"]["details"][0]["detail"]["transformed_players"] == [0]
+    sham = rows["sham"]; prim = rows["primary"]
     assert sham["accounting"]["params"] == prim["accounting"]["params"]
     assert prim["science"]["player_fingerprints"]["0"]["silent"] is False
     assert sham["components"]["players"][0]["manifest_hash"] != prim["components"]["players"][0]["manifest_hash"]

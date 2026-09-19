@@ -594,3 +594,31 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   writes gen_NNN_aK.jsonl; an empty list read as "nothing to report" until the rows were looked at. Fixed.
 - mutants wave 8 M52-M54 3/3 CAUGHT; honest full ledger 53/53 (0 anchor-caught). Suite 286 passed / 6 skipped.
   Census 40/40.
+
+## C97 (05:48Z) control POWER audit: seven of eight controls had never been seen to say anything but MET
+- audit (C95's lesson applied to the control slot): grep for a test where each control says NOT_MET -- cheat had
+  one (C38 test); replay, negative, positive, sham, scratch, permutation, ablation had none. Reading the
+  expectations: sham compared parameter COUNTS that the shuffle preserves by construction (tautology); scratch and
+  permutation asserted arm status COMPLETED, which the executor already turns into INDETERMINATE before the
+  expectation runs (they could not say NOT_MET at all); negative said NOT_MET whenever the experiment had no
+  objective (a designer omission read as a failed control).
+- RED: tests/test_control_power.py, one situation per control in which it MUST say NOT_MET or INDETERMINATE, plus
+  the well-formed MET beside it. Failed for the intended reasons (sham/permutation/scratch MET where nothing was
+  compared; negative NOT_MET without an objective; the scratch fixture hit a registry-scoping defect, below).
+- changes (ref/controls.py): negative -> INDETERMINATE when there is no objective (note), MET iff the abstainer
+  emitted 0 actions; sham -> INDETERMINATE when the sham arm's trace equals the primary's ("shuffle changed no
+  behaviour"), MET iff parameter cost preserved AND behaviour changed; scratch -> NOT_MET when any transformed
+  player carries the primary's spec_hash (not fresh), INDETERMINATE when the trace is unchanged, MET otherwise;
+  permutation -> INDETERMINATE when the permuted arm's trace equals the primary's (one-element observations have
+  one permutation); positive and ablation already had power (demonstrated: act_cost=1000 -> positive NOT_MET; a
+  leaky ablation -> NOT_MET); replay NOT_MET demonstrated on a world that declares BIT and drifts.
+- defect C97b (registry scoping, C62 family): _TransformControl.arm looked its transform up in the PROCESS-GLOBAL
+  registry; a control under a forked registry could not find a forked transform. Control.arm may now take
+  registry= (call_arm passes it when the signature admits it; two-argument controls unchanged; ABI_DIFF).
+- consequence found by the suite: test_transforms_cover_proteus_players_too asserted sham MET and scratch MET for
+  Proteus player 17 -- the primary, shuffled and fresh players leave the SAME trace (probe-non-silent, run-silent):
+  the controls had compared nothing and the test had blessed it. Now both read INDETERMINATE with the note and the
+  test asserts the three traces are equal. A second false green found by giving an instrument power.
+- EXP-002 re-run under powered controls: 432 runs, 5/5 controls MET 72/72 each, 0 INDETERMINATE (wall 1.3 s):
+  every sham/scratch arm changed behaviour, so the MET now means something. Receipts regenerated.
+- mutants wave 9 M55-M59 5/5 CAUGHT; honest ledger 58/58. Suite 293 passed / 6 skipped. Census 40/40.

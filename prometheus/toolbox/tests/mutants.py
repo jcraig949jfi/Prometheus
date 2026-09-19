@@ -75,6 +75,12 @@ MUTANTS = [
     ("M52", "backends/local.py", "\"spec_hash\": component_manifest_hash(specs[pid].manifest())}", "\"spec_hash\": inst.fingerprint()}", "spec identity is the behavioural probe hash again"),
     ("M53", "ref/observers.py", "        return {\"value\": ticks, \"components\": {\"ticks\": ticks, \"alive\": alive, \"n_alive\": sum(1 for a in alive if a)}}", "        return {\"value\": ticks * sum(1 for a in alive if a), \"components\": {\"ticks\": ticks, \"alive\": alive, \"n_alive\": sum(1 for a in alive if a)}}", "survival.v2 is the v1 step function"),
     ("M54", "search.py", "\"player_hash\": fp.get(\"spec_hash\") or component_manifest_hash(r[\"_player_manifest\"]),", "\"player_hash\": fp[\"hash\"],", "archive rows key identity by behaviour class"),
+    # ninth wave (C97): control power
+    ("M55", "ref/controls.py", "        if not differs:                                            # C97: a shuffle that changed no behaviour tested nothing", "        if False:", "sham reads MET when the shuffle changed nothing"),
+    ("M56", "ref/controls.py", "        if not has_obj:                                            # C97: an abstainer with nothing to compare against is not a failed control", "        if False:", "negative control without an objective reads MET/NOT_MET instead of INDETERMINATE"),
+    ("M57", "ref/controls.py", "        if same:                                                   # C97: a \"fresh\" player with the primary's genome is not fresh", "        if False:", "scratch accepts a fresh player with the primary's genome"),
+    ("M58", "ref/controls.py", "        if eq:                                                     # C97: a permutation that changed nothing (one-element observations) tested nothing", "        if False:", "permutation reads MET when it changed nothing"),
+    ("M59", "backends/local.py", "    if \"registry\" in params or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()):", "    if False:", "control arms built against the process-global registry"),
 ]
 
 

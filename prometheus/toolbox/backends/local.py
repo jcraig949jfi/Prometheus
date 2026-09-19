@@ -61,6 +61,20 @@ class LocalJob:
                 "eligibility": {"points": points, "arms": len(arms), "seeds": len(seeds), "runs": len(self.runs)}}   # C77: computed before dispatch
 
 
+def call_arm(ctrl, exp: Experiment, rng_seed: int, registry):
+    """C97: a control's arm may need the kernel's registry (a transform control under a forked registry looked the
+    transform up in the process-global one). Passed when the control's signature admits it; the two-argument
+    contract keeps working."""
+    import inspect
+    try:
+        params = inspect.signature(ctrl.arm).parameters
+    except (TypeError, ValueError):
+        params = {}
+    if "registry" in params or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()):
+        return ctrl.arm(exp, rng_seed, registry=registry)
+    return ctrl.arm(exp, rng_seed)
+
+
 def seeds_for(exp: Experiment) -> List[tuple]:
     """-> [(seed, split)]: n_seeds train seeds then holdout_seeds held-out seeds, contiguous from base."""
     sp = exp.seed_policy
@@ -116,7 +130,7 @@ def lower(exp: Experiment, registry) -> Lowering:
             return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world cannot be constructed at sweep point %s: %s: %s" % (json.dumps(point, sort_keys=True, default=str), type(exc).__name__, str(exc)[:200])], negotiation=neg.as_dict())
         if getattr(w0, "n_players", len(base.players)) != len(base.players):                        # C52/C84: no phantom players, zero allowed when the world says zero
             return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["world declares n_players=%d but %d players are given at sweep point %s" % (w0.n_players, len(base.players), json.dumps(point, sort_keys=True, default=str))], negotiation=neg.as_dict())
-        arms = [("primary", base)] + [(ctrl.kind, ctrl.arm(base, exp.seed_policy["base"] * 7919 + 1)) for _, ctrl in controls]
+        arms = [("primary", base)] + [(ctrl.kind, call_arm(ctrl, base, exp.seed_policy["base"] * 7919 + 1, registry)) for _, ctrl in controls]
         for arm, aexp in arms:
             for s, split in seeds_for(exp):
                 job.runs.append(RunSpec(arm, point, s, aexp, split, eid))

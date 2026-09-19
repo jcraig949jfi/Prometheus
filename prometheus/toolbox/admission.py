@@ -313,7 +313,8 @@ def admit_control(kind: str, registry) -> "AdmissionResult":
             res.failed.append("conformance")
         e = Experiment(family="admit", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[_det_spec(0).manifest()],
                        budget={"episodes": 1, "horizon": 4})
-        arm = ctrl.arm(e, 1)
+        from prometheus.toolbox.backends.local import call_arm
+        arm = call_arm(ctrl, e, 1, registry)
         ok = isinstance(arm, Experiment) and arm.validate() == [] and _serialisable(arm.to_dict())
         res.checks["arm"] = {"ok": ok, "defects": arm.validate() if isinstance(arm, Experiment) else "not an Experiment"}
         if not ok:

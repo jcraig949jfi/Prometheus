@@ -56,3 +56,17 @@ exists today (prometheus/toolbox/ref/) or an estimate marked ~.
 3. Frontier specs are not experiments in the kernel's sense; the SFE lowering therefore succeeds only for
    a frontier-shaped IR (selector = segment) and names every other mismatch (tests pass both ways).
 4. NPE's receipt rule (disjoint ledgers) and envelope fields are pinned, not imported (D-BELL-2).
+
+## 2026-09-19 overnight C97 (additive)
+- Control.arm(experiment, rng_seed) may ALSO accept `registry=`; the kernel (lower, admission) passes its registry when
+  the signature admits it (backends/local.py call_arm). Two-argument controls keep working. Reason: a transform
+  control under a forked registry looked its transform up in the process-global one.
+- receipts: science.player_fingerprints[pid] gains `spec_hash` (C96) beside `hash` (behavioural class) and `silent`;
+  every receipt gains `execution` {batched, batch_size, reason, world?, requested_world?} (C92); engineering.batch on
+  batched receipts; SUMMARY splits gain objective_shape / objective_shape_counts / objective_unsupported /
+  objective_component_n (C94). budget.batch is execution policy outside the digest (C92).
+- ext.batch.v1 catalogued (world face: reset_batch / observe_batch / step_batch / events_batch / trace_hashes /
+  summaries / accounting_batch; actions None abandons an env).
+- ComponentRecord.admission_params (C94); Registry.batch_implementation(kind, admit_on_demand=True) (C92).
+- objective.multi.v1, objective.survival.v2, world.integer_batch.v1 registered; selectors take rank=; search rows
+  carry player_hash; search.SelectorNeedsScalar.

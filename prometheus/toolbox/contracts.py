@@ -151,7 +151,7 @@ class Control(Protocol):
     kind: str                     # positive | negative | sham | scratch | permutation | compute_matched | storage_matched | replay | ablation | transplant | cheat
 
     def manifest(self) -> dict: ...
-    def arm(self, experiment: Any, rng_seed: int) -> Any: ...
+    def arm(self, experiment: Any, rng_seed: int) -> Any: ...          # may also accept registry= (C97): the kernel passes its registry when the signature admits it
     def expectation(self, primary: dict, arm: dict) -> dict: ...   # {"outcome": "MET"|"NOT_MET"|"INDETERMINATE", "detail": ...}
 
 

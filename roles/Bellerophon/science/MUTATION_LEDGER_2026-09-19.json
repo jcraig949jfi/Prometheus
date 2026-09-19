@@ -5,17 +5,17 @@
   "what": "executor runs one episode whatever the budget says",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batched_execution_reproduces_the_scalar_receipts_run_for_run",
-  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.52s",
-  "seconds": 0.8
+  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.35s",
+  "seconds": 0.6
  },
  {
   "id": "M02",
   "file": "ref/controls.py",
   "what": "every control expectation reads MET",
   "result": "CAUGHT",
-  "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid",
-  "suite_tail": "1 failed, 210 passed, 1 skipped, 1 deselected in 5.23s",
-  "seconds": 5.5
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_replay_says_not_met_for_a_world_that_lies_about_bit_replay",
+  "suite_tail": "1 failed, 64 passed, 1 deselected in 1.13s",
+  "seconds": 1.4
  },
  {
   "id": "M03",
@@ -41,8 +41,8 @@
   "what": "declared series bound never applied",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_declared_bound_is_deterministic_and_reported_not_silent",
-  "suite_tail": "1 failed, 238 passed, 1 skipped, 1 deselected in 5.80s",
-  "seconds": 6.1
+  "suite_tail": "1 failed, 245 passed, 1 skipped, 1 deselected in 8.39s",
+  "seconds": 8.7
  },
  {
   "id": "M06",
@@ -50,7 +50,7 @@
   "what": "inline series keeps only the first episode",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batched_execution_reproduces_the_scalar_receipts_run_for_run",
-  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.36s",
+  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.35s",
   "seconds": 0.6
  },
  {
@@ -59,8 +59,8 @@
   "what": "edited receipts validate",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_edited_record_in_the_middle_is_named_by_line",
-  "suite_tail": "1 failed, 154 passed, 1 deselected in 2.72s",
-  "seconds": 3.0
+  "suite_tail": "1 failed, 161 passed, 1 deselected in 2.81s",
+  "seconds": 3.1
  },
  {
   "id": "M08",
@@ -68,8 +68,8 @@
   "what": "negotiation never blocks",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_bridges.py::test_bad_payload_is_a_failed_result_not_an_exception",
-  "suite_tail": "1 failed, 61 passed, 1 deselected in 1.57s",
-  "seconds": 1.9
+  "suite_tail": "1 failed, 61 passed, 1 deselected in 1.54s",
+  "seconds": 1.8
  },
  {
   "id": "M09",
@@ -77,8 +77,8 @@
   "what": "ttl never expires",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
-  "suite_tail": "1 failed, 73 passed, 1 deselected in 2.42s",
-  "seconds": 2.7
+  "suite_tail": "1 failed, 80 passed, 1 deselected in 2.50s",
+  "seconds": 2.8
  },
  {
   "id": "M10",
@@ -86,8 +86,8 @@
   "what": "flat substrate hides refused writes",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_strips_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 79 passed, 1 deselected in 2.46s",
-  "seconds": 2.7
+  "suite_tail": "1 failed, 86 passed, 1 deselected in 2.49s",
+  "seconds": 2.8
  },
  {
   "id": "M11",
@@ -95,7 +95,7 @@
   "what": "observer delivery order reverted (pre-consequence records)",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batched_execution_reproduces_the_scalar_receipts_run_for_run",
-  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.37s",
+  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.35s",
   "seconds": 0.6
  },
  {
@@ -104,8 +104,8 @@
   "what": "delays replace instead of adding",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_same_kind_wrappers_compose_and_are_all_recorded",
-  "suite_tail": "1 failed, 197 passed, 1 skipped, 1 deselected in 5.15s",
-  "seconds": 5.4
+  "suite_tail": "1 failed, 204 passed, 1 skipped, 1 deselected in 5.28s",
+  "seconds": 5.6
  },
  {
   "id": "M13",
@@ -113,8 +113,8 @@
   "what": "v2 players never write memory",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind",
-  "suite_tail": "1 failed, 73 passed, 1 deselected in 2.48s",
-  "seconds": 2.8
+  "suite_tail": "1 failed, 80 passed, 1 deselected in 2.40s",
+  "seconds": 2.7
  },
  {
   "id": "M14",
@@ -122,8 +122,8 @@
   "what": "transforms drop per-player substrates again",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_transforms_preserve_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 208 passed, 1 skipped, 1 deselected in 5.46s",
-  "seconds": 5.8
+  "suite_tail": "1 failed, 215 passed, 1 skipped, 1 deselected in 5.37s",
+  "seconds": 5.7
  },
  {
   "id": "M15",
@@ -131,8 +131,8 @@
   "what": "resume forgets prior failed runs",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_resume_counts_failed_runs_that_happened_before_the_interruption",
-  "suite_tail": "1 failed, 211 passed, 1 skipped, 1 deselected in 5.28s",
-  "seconds": 5.6
+  "suite_tail": "1 failed, 218 passed, 1 skipped, 1 deselected in 5.47s",
+  "seconds": 5.8
  },
  {
   "id": "M16",
@@ -140,8 +140,8 @@
   "what": "committed view accepts rows of another generation",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_committed_view_rejects_rows_of_another_generation_before_a_marker",
-  "suite_tail": "1 failed, 212 passed, 1 skipped, 1 deselected in 5.45s",
-  "seconds": 5.7
+  "suite_tail": "1 failed, 219 passed, 1 skipped, 1 deselected in 5.81s",
+  "seconds": 6.1
  },
  {
   "id": "M17",
@@ -149,8 +149,8 @@
   "what": "series yield column frozen at zero",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_yield_column_is_per_episode_not_per_run",
-  "suite_tail": "1 failed, 241 passed, 1 skipped, 1 deselected in 5.77s",
-  "seconds": 6.1
+  "suite_tail": "1 failed, 248 passed, 1 skipped, 1 deselected in 5.90s",
+  "seconds": 6.2
  },
  {
   "id": "M18",
@@ -167,7 +167,7 @@
   "what": "receipts files silently appended",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_interrupted_batched_job_resumes_and_matches_a_clean_run",
-  "suite_tail": "1 failed, 17 passed, 1 deselected in 0.50s",
+  "suite_tail": "1 failed, 17 passed, 1 deselected in 0.53s",
   "seconds": 0.8
  },
  {
@@ -176,7 +176,7 @@
   "what": "non-data IR accepted",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_ir_refuses_values_that_cannot_be_recorded",
-  "suite_tail": "1 failed, 159 passed, 1 deselected in 2.88s",
+  "suite_tail": "1 failed, 166 passed, 1 deselected in 2.95s",
   "seconds": 3.2
  },
  {
@@ -185,8 +185,8 @@
   "what": "grid tools are never consumed",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed",
-  "suite_tail": "1 failed, 217 passed, 1 skipped, 1 deselected in 5.39s",
-  "seconds": 5.7
+  "suite_tail": "1 failed, 224 passed, 1 skipped, 1 deselected in 5.43s",
+  "seconds": 5.8
  },
  {
   "id": "M22",
@@ -194,8 +194,8 @@
   "what": "world lifetime state silently ignored",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_world_lifetime_state_carries_registers_across_episodes",
-  "suite_tail": "1 failed, 74 passed, 1 deselected in 2.36s",
-  "seconds": 2.6
+  "suite_tail": "1 failed, 81 passed, 1 deselected in 2.52s",
+  "seconds": 2.8
  },
  {
   "id": "M23",
@@ -203,7 +203,7 @@
   "what": "abandoned rows committed",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_generation_interrupted_after_some_rows_is_abandoned_and_rerun",
-  "suite_tail": "1 failed, 226 passed, 1 skipped, 1 deselected in 5.56s",
+  "suite_tail": "1 failed, 233 passed, 1 skipped, 1 deselected in 5.63s",
   "seconds": 5.9
  },
  {
@@ -212,8 +212,8 @@
   "what": "schedule wrapper never advances",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_schedule_intervention_changes_conditions_mid_episode_and_is_recorded",
-  "suite_tail": "1 failed, 70 passed, 1 deselected in 2.41s",
-  "seconds": 2.7
+  "suite_tail": "1 failed, 77 passed, 1 deselected in 2.50s",
+  "seconds": 2.8
  },
  {
   "id": "M25",
@@ -221,8 +221,8 @@
   "what": "event buffer unbounded again",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_state_model.py::test_device_event_buffer_is_bounded_and_drops_are_counted",
-  "suite_tail": "1 failed, 270 passed, 6 skipped, 1 deselected in 17.24s",
-  "seconds": 17.5
+  "suite_tail": "1 failed, 277 passed, 6 skipped, 1 deselected in 16.13s",
+  "seconds": 16.4
  },
  {
   "id": "M27",
@@ -230,8 +230,8 @@
   "what": "checkpoint forgets the pre-checkpoint hash",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run",
-  "suite_tail": "1 failed, 161 passed, 1 deselected in 5.40s",
-  "seconds": 5.7
+  "suite_tail": "1 failed, 168 passed, 1 deselected in 5.64s",
+  "seconds": 6.0
  },
  {
   "id": "M28",
@@ -239,8 +239,8 @@
   "what": "grid observation hides neighbours",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed",
-  "suite_tail": "1 failed, 217 passed, 1 skipped, 1 deselected in 5.64s",
-  "seconds": 5.9
+  "suite_tail": "1 failed, 224 passed, 1 skipped, 1 deselected in 5.86s",
+  "seconds": 6.1
  },
  {
   "id": "M29",
@@ -248,8 +248,8 @@
   "what": "mailbox echoes a player its own messages",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_mailbox_substrate_turns_the_memory_slot_into_a_channel",
-  "suite_tail": "1 failed, 283 passed, 6 skipped, 1 deselected in 16.03s",
-  "seconds": 16.4
+  "suite_tail": "1 failed, 290 passed, 6 skipped, 1 deselected in 16.18s",
+  "seconds": 16.5
  },
  {
   "id": "M30",
@@ -257,8 +257,8 @@
   "what": "ablation claims MET with nothing to ablate",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_control_removes_workspaces_and_reports",
-  "suite_tail": "1 failed, 78 passed, 1 deselected in 4.73s",
-  "seconds": 5.0
+  "suite_tail": "1 failed, 85 passed, 1 deselected in 4.81s",
+  "seconds": 5.1
  },
  {
   "id": "M31",
@@ -266,8 +266,8 @@
   "what": "series layout mismatch not flagged",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position",
-  "suite_tail": "1 failed, 243 passed, 1 skipped, 1 deselected in 6.04s",
-  "seconds": 6.3
+  "suite_tail": "1 failed, 250 passed, 1 skipped, 1 deselected in 5.90s",
+  "seconds": 6.2
  },
  {
   "id": "M32",
@@ -284,8 +284,8 @@
   "what": "per-player series columns are zeros",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_series_records_self_describe_their_columns_and_per_player_layout_works",
-  "suite_tail": "1 failed, 242 passed, 1 skipped, 1 deselected in 5.94s",
-  "seconds": 6.3
+  "suite_tail": "1 failed, 249 passed, 1 skipped, 1 deselected in 5.93s",
+  "seconds": 6.2
  },
  {
   "id": "M34",
@@ -293,8 +293,8 @@
   "what": "objective reads column 2 by habit",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_series.py::test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position",
-  "suite_tail": "1 failed, 243 passed, 1 skipped, 1 deselected in 5.83s",
-  "seconds": 6.1
+  "suite_tail": "1 failed, 250 passed, 1 skipped, 1 deselected in 5.87s",
+  "seconds": 6.2
  },
  {
   "id": "M35",
@@ -302,8 +302,8 @@
   "what": "invoke ignores the artifact id (runs the first program)",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_artifact_substrate_lets_players_create_and_invoke_programs",
-  "suite_tail": "1 failed, 284 passed, 6 skipped, 1 deselected in 16.10s",
-  "seconds": 16.4
+  "suite_tail": "1 failed, 291 passed, 6 skipped, 1 deselected in 16.20s",
+  "seconds": 16.5
  },
  {
   "id": "M36",
@@ -311,8 +311,8 @@
   "what": "pendulum ignores the declared quantum",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_playtest_findings.py::test_semantic_world_declares_quantum_and_replay_control_compares_quantised_traces",
-  "suite_tail": "1 failed, 221 passed, 1 skipped, 1 deselected in 7.90s",
-  "seconds": 8.3
+  "suite_tail": "1 failed, 228 passed, 1 skipped, 1 deselected in 8.10s",
+  "seconds": 8.4
  },
  {
   "id": "M37",
@@ -320,8 +320,8 @@
   "what": "ablation leaves per-player workspaces in place",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_ablation_strips_per_player_substrate_overrides",
-  "suite_tail": "1 failed, 79 passed, 1 deselected in 2.46s",
-  "seconds": 2.8
+  "suite_tail": "1 failed, 86 passed, 1 deselected in 2.57s",
+  "seconds": 2.9
  },
  {
   "id": "M38",
@@ -329,7 +329,7 @@
   "what": "failed invocations uncounted",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_workspace.py::test_artifact_substrate_lets_players_create_and_invoke_programs",
-  "suite_tail": "1 failed, 284 passed, 6 skipped, 1 deselected in 16.20s",
+  "suite_tail": "1 failed, 291 passed, 6 skipped, 1 deselected in 16.13s",
   "seconds": 16.5
  },
  {
@@ -338,8 +338,8 @@
   "what": "resume into another experiment's file allowed",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_resume_into_another_experiments_file_is_refused",
-  "suite_tail": "1 failed, 165 passed, 1 deselected in 5.16s",
-  "seconds": 5.5
+  "suite_tail": "1 failed, 172 passed, 1 deselected in 5.34s",
+  "seconds": 5.6
  },
  {
   "id": "M40",
@@ -356,7 +356,7 @@
   "what": "max_runs never refuses",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_dof.py::test_eligibility_count_is_reported_and_max_runs_refuses_before_dispatch",
-  "suite_tail": "1 failed, 86 passed, 1 deselected in 2.59s",
+  "suite_tail": "1 failed, 93 passed, 1 deselected in 2.59s",
   "seconds": 2.9
  },
  {
@@ -365,7 +365,7 @@
   "what": "absent-machinery row loses its import reason on re-admission (then constructs)",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_absent_machinery_row_keeps_its_reason_across_repeated_admission",
-  "suite_tail": "1 failed, 18 passed, 1 deselected in 0.57s",
+  "suite_tail": "1 failed, 18 passed, 1 deselected in 0.58s",
   "seconds": 0.9
  },
  {
@@ -374,7 +374,7 @@
   "what": "kernel wrappers silently dropped on the batch path",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batch_falls_back_and_says_why",
-  "suite_tail": "1 failed, 14 passed, 1 deselected in 0.42s",
+  "suite_tail": "1 failed, 14 passed, 1 deselected in 0.41s",
   "seconds": 0.7
  },
  {
@@ -401,7 +401,7 @@
   "what": "an UNAVAILABLE batch world is chosen",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batch_world_unavailable_on_this_host_falls_back",
-  "suite_tail": "1 failed, 16 passed, 1 deselected in 0.47s",
+  "suite_tail": "1 failed, 16 passed, 1 deselected in 0.45s",
   "seconds": 0.7
  },
  {
@@ -410,7 +410,7 @@
   "what": "runs of different arms batched behind one world",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_batched_execution_reproduces_the_scalar_receipts_run_for_run",
-  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.35s",
+  "suite_tail": "1 failed, 13 passed, 1 deselected in 0.36s",
   "seconds": 0.6
  },
  {
@@ -419,8 +419,8 @@
   "what": "vector objectives summarised as UNSUPPORTED",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_objective_shapes.py::test_multi_objective_values_a_receipt_by_named_components",
-  "suite_tail": "1 failed, 191 passed, 1 skipped, 1 deselected in 5.10s",
-  "seconds": 5.4
+  "suite_tail": "1 failed, 198 passed, 1 skipped, 1 deselected in 5.19s",
+  "seconds": 5.5
  },
  {
   "id": "M49",
@@ -428,7 +428,7 @@
   "what": "search rows drop vector objectives (None)",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_objective_shapes.py::test_search_rows_carry_vector_objectives_and_a_selector_ranks_by_a_named_component",
-  "suite_tail": "1 failed, 194 passed, 1 skipped, 1 deselected in 5.16s",
+  "suite_tail": "1 failed, 201 passed, 1 skipped, 1 deselected in 5.21s",
   "seconds": 5.5
  },
  {
@@ -437,8 +437,8 @@
   "what": "an unrankable generation is committed before the refusal",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_objective_shapes.py::test_a_selector_without_a_rank_refuses_a_vector_objective_with_the_keys_named",
-  "suite_tail": "1 failed, 195 passed, 1 skipped, 1 deselected in 5.12s",
-  "seconds": 5.4
+  "suite_tail": "1 failed, 202 passed, 1 skipped, 1 deselected in 5.26s",
+  "seconds": 5.5
  },
  {
   "id": "M51",
@@ -455,8 +455,8 @@
   "what": "spec identity is the behavioural probe hash again",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_rows_carry_spec_identity_and_behavioural_class_separately",
-  "suite_tail": "1 failed, 231 passed, 1 skipped, 1 deselected in 5.87s",
-  "seconds": 6.2
+  "suite_tail": "1 failed, 238 passed, 1 skipped, 1 deselected in 5.98s",
+  "seconds": 6.3
  },
  {
   "id": "M53",
@@ -464,8 +464,8 @@
   "what": "survival.v2 is the v1 step function",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_objective_shapes.py::test_survival_v2_ranks_a_dying_population_where_v1_reads_zero",
-  "suite_tail": "1 failed, 196 passed, 1 skipped, 1 deselected in 5.14s",
-  "seconds": 5.5
+  "suite_tail": "1 failed, 203 passed, 1 skipped, 1 deselected in 5.25s",
+  "seconds": 5.6
  },
  {
   "id": "M54",
@@ -473,7 +473,52 @@
   "what": "archive rows key identity by behaviour class",
   "result": "CAUGHT",
   "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_rows_carry_spec_identity_and_behavioural_class_separately",
-  "suite_tail": "1 failed, 231 passed, 1 skipped, 1 deselected in 5.72s",
-  "seconds": 6.0
+  "suite_tail": "1 failed, 238 passed, 1 skipped, 1 deselected in 5.84s",
+  "seconds": 6.1
+ },
+ {
+  "id": "M55",
+  "file": "ref/controls.py",
+  "what": "sham reads MET when the shuffle changed nothing",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_sham_is_indeterminate_when_the_shuffle_changed_no_behaviour",
+  "suite_tail": "1 failed, 67 passed, 1 deselected in 1.16s",
+  "seconds": 1.5
+ },
+ {
+  "id": "M56",
+  "file": "ref/controls.py",
+  "what": "negative control without an objective reads MET/NOT_MET instead of INDETERMINATE",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_negative_is_indeterminate_without_an_objective_and_not_met_when_the_abstainer_ac",
+  "suite_tail": "1 failed, 65 passed, 1 deselected in 1.65s",
+  "seconds": 2.0
+ },
+ {
+  "id": "M57",
+  "file": "ref/controls.py",
+  "what": "scratch accepts a fresh player with the primary's genome",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_scratch_says_not_met_when_the_fresh_player_has_the_primary_genome",
+  "suite_tail": "1 failed, 68 passed, 1 deselected in 1.15s",
+  "seconds": 1.4
+ },
+ {
+  "id": "M58",
+  "file": "ref/controls.py",
+  "what": "permutation reads MET when it changed nothing",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_permutation_is_indeterminate_when_it_cannot_change_the_observation",
+  "suite_tail": "1 failed, 69 passed, 1 deselected in 1.17s",
+  "seconds": 1.4
+ },
+ {
+  "id": "M59",
+  "file": "backends/local.py",
+  "what": "control arms built against the process-global registry",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_control_power.py::test_scratch_says_not_met_when_the_fresh_player_has_the_primary_genome",
+  "suite_tail": "1 failed, 68 passed, 1 deselected in 1.20s",
+  "seconds": 1.5
  }
 ]
