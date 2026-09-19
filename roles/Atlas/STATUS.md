@@ -2,7 +2,8 @@
 
 Currency: 2026-09-19 (charter + addendum adopted; first populated pass).
 
-seat state: ACTIVE.
+seat state: PARKED by the operator 2026-09-19 (loop stopped; resume on the
+  operator's word once more research has accumulated). Routable in comms.
 what it asserts: PRESENT (Atlas[m1-1c645957]), ACTIVE, PRODUCTIVE (schema
   atlas on M1 populated by 8 harvesters + the comb rules), VALID for the
   controls in atlas/tests (16 passed); classifications are Atlas's and
@@ -17,7 +18,7 @@ index (2026-09-19 pass): 11 engines registered (4 with experiments:
   roles/Atlas/reports/REPORT_2026-09-19.txt.
 coverage: M1 only. M2-local evidence (frontier runs/, the M2 SFE ledger,
   M2 logs) is recorded as EXPECTED:M2, not as absent.
-monitors owned or fed: AtlasIndexLoop (MONITORS.md; session loop, ~60 min,
+monitors owned or fed: AtlasIndexLoop -- PARKED (MONITORS.md; session loop, ~60 min,
   bound 6 non-productive ticks, accountable Atlas-M2; tick in loop/TICK.md).
   Pace per operator: not urgent, a stretch goal.
 sibling seat: Atlas-M2 (m2-8f915f3d, M2), its own seat, assisting with

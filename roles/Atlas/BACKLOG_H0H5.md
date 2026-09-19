@@ -5,6 +5,10 @@ Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
 Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
 engine row marked IGNORED, its local root removed from the registry).
+Closed 2026-09-19: ATLAS-27 -- local_files/4 loss tracking (present=false + dated
+file.missing fact; flips back on return; host-scoped) and storage_role (primary |
+copy | backup; only the root itself is primary; declared engine_instance for live
+stores); migration 007 reset two M1 storage_roots set by the old rule.
 Closed 2026-09-19: ATLAS-06 -- archaeon_campaigns/3 reads every RECORD.md DISPOSITION
 paragraph as a verbatim conclusion (line pointer); cmp1 now 10/10 classed via
 classify.science_class (capitalised verdict words only; mixed -> LOW).
@@ -13,7 +17,6 @@ Closed 2026-09-19: ATLAS-21 -- AtlasIndexLoop registered in MONITORS.md
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
 ATLAS-05 | Write a git adapter for archaeon/wse/ledgers (wse-survey-v01, ssf-c1..3) so the 4 PEW-only campaigns get receipts, attempts and facts | TOOLS | beta | S | none | archaeon.wse/* experiments with n_attempts > 0 and source links to git
-ATLAS-27 | Make local_files track LOSS: a source under a scanned root that a later pass on the SAME host no longer finds gets present=false with the pass that noticed (never inferred from another host) | TOOLS | beta | S | none | test: a file removed between two passes flips to present=false; rows are never deleted
 ATLAS-28 | Make local_files scale to dense logs: incremental (skip unchanged size+mtime), no hashing of logs or files > 5 MB, and a per-root "granularity" (file | dir_summary | rotating-log family) so a log tree becomes a handful of pointers, not thousands of rows | TOOLS | beta | M | none | pass time and row count on M1 roots before/after; registry rows declare granularity
 ATLAS-29 | Record each log's covered time span (first/last timestamp from a small head/tail read) on source.time_start/time_end, then link logs to attempts on the same host whose run window overlaps (edge basis INFERRED) | TOOLS | beta | M | ATLAS-28 | attempts with log links on M1; same code serves Atlas-M2 on M2
 ATLAS-30 | Add a growth/coverage view: bytes and files per host, root and week, and pointers whose files vanished, so the operator can see what exists and what is at risk before culling | ENGINE | beta | S | ATLAS-27 | atlas.v_local_volume + report section

@@ -205,7 +205,7 @@ def upsert(cur, table: str, rows: Sequence[Dict[str, Any]], keys: Sequence[str],
         for c in cols:
             x = r[c]
             if types[c] == "jsonb":
-                x = Json(x) if x is not None else None
+                x = Json(_finite(x)) if x is not None else None
             elif types[c].startswith("timestamp"):
                 x = _ts(x)
             v.append(x)
@@ -235,6 +235,20 @@ def upsert(cur, table: str, rows: Sequence[Dict[str, Any]], keys: Sequence[str],
         return {tuple(r[:-1]) if len(keys) > 1 else r[0]: r[-1] for r in res}
     execute_values(cur, sql, vals, page_size=500)
     return len(vals)
+
+
+def _finite(x):
+    """jsonb rejects NaN/Infinity, which Python's json reader accepts (NPE
+    results carry them). Keep the information: non-finite floats become the
+    strings 'NaN', 'Infinity', '-Infinity'."""
+    import math
+    if isinstance(x, float) and not math.isfinite(x):
+        return "NaN" if math.isnan(x) else ("Infinity" if x > 0 else "-Infinity")
+    if isinstance(x, dict):
+        return {k: _finite(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_finite(v) for v in x]
+    return x
 
 
 def _ts(x):
