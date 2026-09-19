@@ -1,9 +1,9 @@
 {
- "when_utc": "2026-09-19T06:37:15.340643+00:00",
+ "when_utc": "2026-09-19T07:02:45.666848+00:00",
  "host": "SPECTREX5",
  "python": "3.14.4",
- "n_components": 41,
- "admitted": 41,
+ "n_components": 42,
+ "admitted": 42,
  "by_slot": {
   "world": [
    "world.c6.composed.v1",
@@ -60,6 +60,7 @@
   ],
   "selector": [
    "selector.map_elites.v1",
+   "selector.pareto.v1",
    "selector.truncation.v1"
   ]
  },
@@ -225,6 +226,14 @@
    "reference_of": null
   },
   "selector.map_elites.v1": {
+   "slot": "selector",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "selector.pareto.v1": {
    "slot": "selector",
    "state": "ADMITTED",
    "failed": [],

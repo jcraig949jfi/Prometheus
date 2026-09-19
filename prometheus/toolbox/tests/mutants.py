@@ -69,7 +69,7 @@ MUTANTS = [
     # seventh wave (C94): objective shapes
     ("M48", "backends/local.py", "    if isinstance(v, dict) and v and all(isinstance(k, str) and (x is None or (isinstance(x, (int, float)) and not isinstance(x, bool))) for k, x in v.items()):\n        return \"vector\"", "    if False:\n        return \"vector\"", "vector objectives summarised as UNSUPPORTED"),
     ("M49", "search.py", "    if all(isinstance(v, dict) for v in vals) and len({tuple(sorted(v)) for v in vals}) == 1:", "    if False:", "search rows drop vector objectives (None)"),
-    ("M50", "search.py", "        for r in new_rows:                                          # C94: refuse with the keys named BEFORE the generation is written\n            scalar_objective(r, getattr(sel, \"rank\", None))\n", "", "an unrankable generation is committed before the refusal"),
+    ("M50", "search.py", "        for r in (new_rows if needs_scalar else []):                # C94: refuse with the keys named BEFORE the generation is written\n            scalar_objective(r, getattr(sel, \"rank\", None))\n", "", "an unrankable generation is committed before the refusal"),
     ("M51", "admission.py", "            obj = row.factory(**row.admission_params); out = obj.evaluate(", "            obj = row.factory(); out = obj.evaluate(", "admission ignores a component's admission params"),
     # eighth wave (C96): identity vs behaviour class, survival v2
     ("M52", "backends/local.py", "\"spec_hash\": component_manifest_hash(specs[pid].manifest())}", "\"spec_hash\": inst.fingerprint()}", "spec identity is the behavioural probe hash again"),
@@ -91,6 +91,9 @@ MUTANTS = [
     ("M64", "ref/observers.py", "            value[c[:-len(\"_alive\")]] = sum(1 for rec in last if rec[i])", "            value[c[:-len(\"_alive\")]] = len(last)", "per-player survival reads the episode length, not the player's alive column"),
     # thirteenth wave (C111-C112): wrappers on the batch face
     ("M65", "ref/worlds_integer_batch.py", "            for i in range(self.n_envs):\n                # EVERY env records the change, finished ones too", "            for i in [j for j in range(self.n_envs) if self.regs is None or self.active[j]]:\n                # EVERY env records the change, finished ones too", "TASK_CHANGE skipped for an env finishing at the scheduled tick (fuzz seed 107)"),
+    # fourteenth wave (C114): pareto selector
+    ("M66", "search.py", "        dominated = any(all(a >= b for a, b in zip(w, v)) and any(a > b for a, b in zip(w, v)) for _, w in cand)", "        dominated = any(all(a > b for a, b in zip(w, v)) for _, w in cand)", "pareto front keeps rows dominated on all-but-one component"),
+    ("M67", "search.py", "    needs_scalar = getattr(sel, \"needs_scalar\", True)", "    needs_scalar = True", "evolve refuses a vector archive even for a selector that needs no rank"),
 ]
 
 

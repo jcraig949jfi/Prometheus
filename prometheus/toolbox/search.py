@@ -142,6 +142,61 @@ class MapElitesSelector(TruncationSelector):
         return out
 
 
+def _vector_of(row: dict, components: Optional[List[str]]):
+    v = row.get("objective")
+    if v is None:
+        return None
+    if isinstance(v, (int, float)) and not isinstance(v, bool):
+        return (v,) if not components else None
+    if isinstance(v, dict):
+        keys = components or sorted(v)
+        if any(k not in v or v[k] is None for k in keys):
+            return None
+        return tuple(v[k] for k in keys)
+    return None
+
+
+def pareto_front(rows: List[dict], components: Optional[List[str]] = None) -> List[dict]:
+    """C114: the non-dominated elite rows over the objective's components (every component maximised; a scalar
+    objective is a one-component vector). Rows with no complete value take no part. Ties survive (two rows with
+    equal vectors are both on the front). Order: archive order."""
+    cand = [(r, _vector_of(r, components)) for r in rows if r.get("kind") == "elite"]
+    cand = [(r, v) for r, v in cand if v is not None]
+    front = []
+    for r, v in cand:
+        dominated = any(all(a >= b for a, b in zip(w, v)) and any(a > b for a, b in zip(w, v)) for _, w in cand)
+        if not dominated:
+            front.append(r)
+    return front
+
+
+class ParetoSelector(TruncationSelector):
+    """selector.pareto.v1 (C114): parents are the archive's non-dominated set over the vector objective's components
+    (or the named subset); no rank needed (needs_scalar=False). Generation 0 from the representation's generator."""
+    kind = "selector.pareto.v1"
+    needs_scalar = False
+
+    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", components: Optional[List[str]] = None):
+        super().__init__(keep=0, n=n, mutation=mutation, representation=representation, rank=None)
+        self.components = list(components) if components else None; self._front_size = None
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "components": self.components, "front_size": self._front_size}
+
+    def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
+        from prometheus.toolbox.registry import default_registry
+        reg = default_registry(); s = stream("pareto", rng_seed)
+        front = pareto_front(archive_rows, self.components); self._front_size = len(front)
+        if not front:
+            return _gen0(reg, self.representation, rng_seed, n)
+        out = []
+        for i in range(n):
+            parent = front[s.below(len(front))]["player"]
+            t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
+            out.append(t.apply(parent, rng_seed * 977 + i))
+        return out
+
+
 def _mean_objective(vals: list):
     """Mean over seeds of scalar values, or per-component mean of vector values; None if any seed had none (or a
     component was None in any seed), or the shapes disagree."""
@@ -233,7 +288,8 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
     if len(committed) != sum(1 for r in rows if r["kind"] == "elite") - _abandoned_count(rows):
         # trailing rows with no marker: an interrupted generation. Mark them abandoned so no reader trusts them.
         _append(archive, {"kind": "GEN_ABANDONED", "gen": start, "reason": "rows without a GEN_DONE marker at resume"})
-    for r in committed:                                            # C94: a selector that cannot rank the archive refuses before any write
+    needs_scalar = getattr(sel, "needs_scalar", True)
+    for r in (committed if needs_scalar else []):                  # C94: a selector that cannot rank the archive refuses before any write
         scalar_objective(r, getattr(sel, "rank", None))
     for gen in range(start, generations):
         players = sel.propose(committed, seed * 7919 + gen, sel.n)
@@ -242,7 +298,7 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
         except GenerationIncomplete as exc:                      # C69: an incomplete generation is never committed
             return {"generations_done": gen, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": exc.reason, "detail": str(exc)}
         new_rows = [dict(r, gen=gen) for r in sel.ingest(receipts)]
-        for r in new_rows:                                          # C94: refuse with the keys named BEFORE the generation is written
+        for r in (new_rows if needs_scalar else []):                # C94: refuse with the keys named BEFORE the generation is written
             scalar_objective(r, getattr(sel, "rank", None))
         for r in new_rows:
             _append(archive, r)

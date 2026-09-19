@@ -89,4 +89,5 @@ def install(reg: Registry) -> Registry:
     from prometheus.toolbox import search as SR
     reg.register(ComponentRecord("selector.truncation.v1", "selector", SR.TruncationSelector, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("selector.map_elites.v1", "selector", SR.MapElitesSelector, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("selector.pareto.v1", "selector", SR.ParetoSelector, frozenset(), route="write", provenance=PROV, license="repository"))
     return reg

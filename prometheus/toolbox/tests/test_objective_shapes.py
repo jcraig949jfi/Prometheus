@@ -129,3 +129,30 @@ def test_per_player_survival_reads_the_series_alive_columns_by_name(tmp_path):
     execute(lower(e2, REG).job, tmp_path / "np.jsonl", REG)
     r = [r for r in read_all(tmp_path / "np.jsonl") if r["arm"] == "primary"][0]
     assert r["science"]["objective"]["value"] is None and r["science"]["objective"]["components"]["reason"].startswith("SERIES_HAS_NO_COLUMN")
+
+
+# C114 (D-C94's named reopen): a selector that needs NO rank -- parents are the archive's non-dominated set over the
+# vector's components (each maximised). It declares needs_scalar=False so evolve() does not refuse a vector archive.
+def test_pareto_front_is_the_non_dominated_set():
+    rows = [{"kind": "elite", "fingerprint": "a", "objective": {"x": 1, "y": 9}}, {"kind": "elite", "fingerprint": "b", "objective": {"x": 5, "y": 5}},
+            {"kind": "elite", "fingerprint": "c", "objective": {"x": 9, "y": 1}}, {"kind": "elite", "fingerprint": "d", "objective": {"x": 4, "y": 4}},
+            {"kind": "elite", "fingerprint": "e", "objective": {"x": 5, "y": 5}}, {"kind": "elite", "fingerprint": "f", "objective": None},
+            {"kind": "elite", "fingerprint": "g", "objective": {"x": 2, "y": None}}, {"kind": "GEN_DONE", "gen": 0},
+            {"kind": "elite", "fingerprint": "h", "objective": {"x": 5, "y": 4}}]      # equal on x, worse on y: dominated by b (mutant M66 survived without this row)
+    front = SR.pareto_front(rows)
+    assert sorted(r["fingerprint"] for r in front) == ["a", "b", "c", "e"]           # d dominated by b/e; h by b; f/g have no complete value
+    assert [r["fingerprint"] for r in SR.pareto_front(rows, components=["x"])] == ["c"]
+    scal = [{"kind": "elite", "fingerprint": "s%d" % i, "objective": v} for i, v in enumerate([3, 7, 7, None])]
+    assert sorted(r["fingerprint"] for r in SR.pareto_front(scal)) == ["s1", "s2"]
+
+
+def test_pareto_selector_evolves_a_vector_archive_without_a_rank(tmp_path):
+    t = _exp(ref("objective.multi.v1", components={"yield": ref("objective.yield_net.v1"), "life": ref("objective.survival.v2")}), n_seeds=2, n_players=1)
+    t.players = []; t.seed_policy = {"base": 1, "n_seeds": 2}
+    out = SR.evolve(t, ref("selector.pareto.v1", n=4), generations=3, workdir=tmp_path / "p", seed=3)
+    assert out["generations_done"] == 3
+    rows = SR.committed_rows(SR.load_rows(tmp_path / "p" / "archive.jsonl"))
+    assert len(rows) == 12 and all(isinstance(r["objective"], dict) for r in rows)
+    front = SR.pareto_front(rows); assert 1 <= len(front) <= 12
+    done = [r for r in SR.load_rows(tmp_path / "p" / "archive.jsonl") if r["kind"] == "GEN_DONE"]
+    assert done[-1]["selector"]["kind"] == "selector.pareto.v1" and done[-1]["selector"].get("front_size") is not None

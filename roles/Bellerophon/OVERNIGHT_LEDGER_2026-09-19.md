@@ -774,3 +774,21 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - random-property coverage: 156 BATCHED / 8 NO_BATCH_IMPLEMENTATION of 164 runs (was 28 / 202 at C93).
 - mutants M43 re-anchored, M65 new; honest ledger 64/64. Suite 314 passed / 6 skipped.
 - honest list update: kernel wrappers are no longer scalar-path only.
+
+## C113 (07:00Z) EXP-002 through the batch path against its committed scalar receipts
+- 432/432 runs equal on trace hashes, science and series hashes; 5/5 controls MET; wall 2.27 s (scalar 1.3 s:
+  consistent with C92). Batch size was 3 everywhere: groups are (arm, sweep point) so a batch never exceeds the
+  seed count. Note: points that differ only in SUBSTRATE share a world and could share a batch (the world does
+  not know the substrate) -- a grouping by world-params digest would give 18 per group here. Not done (no
+  throughput to gain, C92).
+
+## C114 (07:10Z) selector.pareto.v1 -- the explicit alternative D-C94 named
+- pareto_front(rows, components=None): non-dominated elite rows over the vector's components (all maximised; a
+  scalar is a one-component vector; rows without a complete value take no part; ties survive). ParetoSelector
+  declares needs_scalar=False so evolve() does not refuse a vector archive; GEN_DONE carries the selector
+  manifest with front_size. RED first (no pareto_front, no selector kind).
+- the honest mutation ledger did its job: M66 (dominance requires strictly-greater on EVERY component) SURVIVED
+  the first front test -- no row in it was dominated with equality on one component. Row h=(5,4) added; CAUGHT.
+  First SURVIVED of the night since C95 made survival possible; ledger 66/66 after. M50 re-anchored (the
+  needs_scalar guard changed its line).
+- suite 316 passed / 6 skipped. Census 42/42.
