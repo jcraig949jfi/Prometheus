@@ -198,7 +198,9 @@ class ScheduleWrapper:
         return getattr(self.w, name)
 
 
-def build_world(exp: Experiment, registry):
+def _world_params(exp: Experiment, registry, kind: str) -> tuple:
+    """-> (params, delay, permutes, schedule): the IR's world params with every intervention's world_params applied,
+    plus the kernel-level wrappers the interventions ask for (C92: shared by the scalar and the batch path)."""
     params = dict(exp.world.get("params", {}))
     delay = 0; permutes: List[int] = []; schedule: List[dict] = []
     for iv in exp.interventions:
@@ -208,8 +210,13 @@ def build_world(exp: Experiment, registry):
         if "observation_permute" in wr:
             permutes.append(int(wr["observation_permute"]))
         schedule += list(iv.get("schedule") or [])
-    if "ext.intervention.world_params.v1" in registry.get(exp.world["kind"]).capabilities:
+    if "ext.intervention.world_params.v1" in registry.get(kind).capabilities:
         params.setdefault("horizon", exp.budget["horizon"])     # a world without parameter overrides keeps its own horizon; the loop caps at budget.horizon anyway
+    return params, delay, permutes, schedule
+
+
+def build_world(exp: Experiment, registry):
+    params, delay, permutes, schedule = _world_params(exp, registry, exp.world["kind"])
     world = registry.make(exp.world["kind"], **params)
     if schedule:
         world = ScheduleWrapper(world, schedule)
@@ -305,15 +312,18 @@ def resume_episode(checkpoint: dict, world, instances: Dict[int, Any], observers
     return out
 
 
-def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
-    import pathlib
-    receipt_dir = pathlib.Path(receipt_dir) if receipt_dir is not None else pathlib.Path(".")
+SCALAR_EXECUTION = {"batched": False, "batch_size": 1, "reason": "BATCH_NOT_REQUESTED"}
+
+
+def _prepare(spec: RunSpec, registry, world=None) -> dict:
+    """Everything a run builds before its first tick (C92: one function for the scalar and the batch path so the
+    two cannot drift): world (unless a shared batch world is handed in), substrates (per player, C34), fresh player
+    instances with their fingerprints, observers keyed by kind (C48), series collectors."""
     exp = spec.experiment
     started = datetime.now(timezone.utc).isoformat(); t0 = time.perf_counter(); c0 = time.process_time()
-    world = build_world(exp, registry)
+    world = build_world(exp, registry) if world is None else world
     sub = registry.make(exp.substrate["kind"], **exp.substrate.get("params", {}))
     specs = [PlayerSpec(p["representation"], p["payload"], p.get("initial_state", {}), frozenset(p.get("requires", ())), p.get("meta", {})) for p in exp.players]
-    # C34: per-player substrates; one object per distinct override ref, the experiment's substrate as default
     subs_by_pid: Dict[int, Any] = {}; sub_objs: Dict[str, Any] = {json.dumps(exp.substrate, sort_keys=True): sub}
     for pid, p in enumerate(exp.players):
         if p.get("substrate"):
@@ -328,62 +338,200 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     from prometheus.toolbox.ref.players import probe_silent
     fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst)} for pid, inst in instances.items()}   # spec identity, on the FRESH instance
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
-    # C48: receipts key observers by kind; a repeated kind gets kind#<index> so nothing overwrites anything
     seen_kinds: Dict[str, int] = {}; obs_keys: List[str] = []
     for i, ob in enumerate(observers):
         obs_keys.append(ob.kind if ob.kind not in seen_kinds else "%s#%d" % (ob.kind, i)); seen_kinds[ob.kind] = i
-    hashes: List[str] = []; ticks_total = 0; events_total = 0; summaries = []
     series_obs = [(k, ob) for k, ob in zip(obs_keys, observers) if getattr(ob, "series", False)]
-    collected = {k: [] for k, _ in series_obs}
-    for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=all_subs if len(all_subs) > 1 else sub, episode=ep,
-                        keep_world=exp.budget.get("world_state") == "lifetime")
-        hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
-        for k, ob in series_obs:
-            collected[k].append(ob.series_episode())
-    wall = time.perf_counter() - t0; cpu = time.process_time() - c0
+    return {"spec": spec, "exp": exp, "started": started, "t0": t0, "c0": c0, "world": world, "sub": sub, "specs": specs, "subs_by_pid": subs_by_pid,
+            "instances": instances, "all_subs": all_subs, "fingerprints": fingerprints, "observers": observers, "obs_keys": obs_keys,
+            "series_obs": series_obs, "collected": {k: [] for k, _ in series_obs},
+            "hashes": [], "ticks_total": 0, "events_total": 0, "summaries": []}
+
+
+def _finish(ctx: dict, registry, receipt_dir, world_manifest: dict, world_accounting: Dict[str, int], replay_class: str, execution: dict) -> dict:
+    """The receipt of a prepared and stepped run."""
+    import pathlib
+    receipt_dir = pathlib.Path(receipt_dir) if receipt_dir is not None else pathlib.Path(".")
+    spec = ctx["spec"]; exp = ctx["exp"]; sub = ctx["sub"]; all_subs = ctx["all_subs"]; observers = ctx["observers"]; obs_keys = ctx["obs_keys"]
+    wall = time.perf_counter() - ctx["t0"]; cpu = time.process_time() - ctx["c0"]
     acc = {}
     for so in all_subs:
         for k, v in so.accounting().items():
             acc[k] = acc.get(k, 0) + int(v)
     if len(all_subs) > 1:
         acc["by_substrate"] = {so.kind: so.accounting() for so in all_subs}
-    acc.update(world.accounting() if hasattr(world, "accounting") else {"world_steps": ticks_total})
+    acc.update(world_accounting)
     acc["wall_s"] = round(wall, 6); acc["cpu_s"] = round(cpu, 6)
+    summaries = ctx["summaries"]; ticks_total = ctx["ticks_total"]
     science = {"observations": {k: ob.measure() for k, ob in zip(obs_keys, observers)}, "world_summary": summaries[-1] if summaries else {},
-               "player_fingerprints": fingerprints}
+               "player_fingerprints": ctx["fingerprints"]}
     for so in all_subs:
         if hasattr(so, "science"):
             science.setdefault("substrate", {}).update(so.science() if len(all_subs) == 1 else {so.kind: so.science()})
     receipt = {
         "experiment_id": spec.job_id or exp.experiment_id(),
         "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "COMPLETED",
-        "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()),
-                                 "manifest": dict(world.manifest(), world_state=exp.budget.get("world_state", "episode"))},
+        "components": {"world": {"kind": world_manifest["kind"], "manifest_hash": component_manifest_hash(world_manifest),
+                                 "manifest": dict(world_manifest, world_state=exp.budget.get("world_state", "episode"))},
                        "substrate": {"kind": sub.kind, "manifest_hash": component_manifest_hash(sub.manifest())},
-                       "player_substrates": [subs_by_pid[pid].kind for pid in range(len(specs))],
-                       "players": [{"representation": p.representation, "manifest_hash": component_manifest_hash(p.manifest()), "meta": p.meta} for p in specs],
+                       "player_substrates": [ctx["subs_by_pid"][pid].kind for pid in range(len(ctx["specs"]))],
+                       "players": [{"representation": p.representation, "manifest_hash": component_manifest_hash(p.manifest()), "meta": p.meta} for p in ctx["specs"]],
                        "observers": [ob.manifest() for ob in observers],
                        "interventions": exp.interventions},
-        "capabilities": {"required": sorted(exp.derived_requirements()), "world": sorted(world.capabilities), "substrate": sorted(sub.capabilities)},
-        "replay_class": getattr(world, "replay_class", "NONDETERMINISTIC"), "trace_hashes": hashes, "events_total": events_total,
-        "engineering": {"wall_s": acc["wall_s"], "cpu_s": acc["cpu_s"], "ticks": ticks_total, "steps_per_s": round(ticks_total / wall, 1) if wall > 0 else None},
+        # capabilities.world names what the IR ASKED for and negotiated against; execution.world names what stepped (C92)
+        "capabilities": {"required": sorted(exp.derived_requirements()), "world": sorted(registry.get(exp.world["kind"]).capabilities), "substrate": sorted(sub.capabilities)},
+        "replay_class": replay_class, "trace_hashes": ctx["hashes"], "events_total": ctx["events_total"],
+        # a batched run's wall clock is the BATCH's (shared by its envs): the per-run rate is unknowable and is written as
+        # None; the batch-level rate is filled in by run_batch (C92: never a divided-up fiction)
+        "engineering": {"wall_s": acc["wall_s"], "cpu_s": acc["cpu_s"], "ticks": ticks_total,
+                        "steps_per_s": (round(ticks_total / wall, 1) if wall > 0 else None) if not execution.get("batched") else None},
+        "execution": dict(execution),
         "science": science, "accounting": acc, "provenance": exp.provenance,
-        "started_utc": started, "finished_utc": datetime.now(timezone.utc).isoformat(),
+        "started_utc": ctx["started"], "finished_utc": datetime.now(timezone.utc).isoformat(),
     }
-    if series_obs:
-        rc = receipt["replay_class"]
-        receipt["series"] = {k: SER.build(collected[k], enabled=getattr(ob, "enabled", True), replay_class=rc,
+    if ctx["series_obs"]:
+        receipt["series"] = {k: SER.build(ctx["collected"][k], enabled=getattr(ob, "enabled", True), replay_class=replay_class,
                                           max_records=exp.budget.get("series_max_records"), max_inline=SER.DEFAULT_MAX_INLINE,
-                                          receipt_dir=receipt_dir, columns=(ob.series_columns() if hasattr(ob, "series_columns") else None)) for k, ob in series_obs}
+                                          receipt_dir=receipt_dir, columns=(ob.series_columns() if hasattr(ob, "series_columns") else None)) for k, ob in ctx["series_obs"]}
     if exp.objective:
         obj = registry.make(exp.objective["kind"], **exp.objective.get("params", {}))
         # an objective may read the SERIES (C13): the recovered episodes are handed over on a transient key that
         # never reaches the written receipt (the receipt keeps the series itself, inline or by artifact)
-        receipt["_series_episodes"] = SER.recover(receipt, receipt_dir) if series_obs else {}
+        receipt["_series_episodes"] = SER.recover(receipt, receipt_dir) if ctx["series_obs"] else {}
         receipt["science"]["objective"] = dict(obj.evaluate(receipt), kind=obj.kind, version=obj.version)
         del receipt["_series_episodes"]
     return receipt
+
+
+def run_one(spec: RunSpec, registry, receipt_dir=None, execution: Optional[dict] = None) -> dict:
+    ctx = _prepare(spec, registry); exp = spec.experiment; world = ctx["world"]
+    for ep in range(exp.budget["episodes"]):
+        r = run_episode(world, ctx["instances"], ctx["observers"], spec.seed * 1000 + ep, exp.budget["horizon"],
+                        substrate=ctx["all_subs"] if len(ctx["all_subs"]) > 1 else ctx["sub"], episode=ep, keep_world=exp.budget.get("world_state") == "lifetime")
+        ctx["hashes"].append(r["trace_hash"]); ctx["ticks_total"] += r["ticks"]; ctx["events_total"] += r["events"]; ctx["summaries"].append(r["summary"])
+        for k, ob in ctx["series_obs"]:
+            ctx["collected"][k].append(ob.series_episode())
+    return _finish(ctx, registry, receipt_dir, world.manifest(), world.accounting() if hasattr(world, "accounting") else {"world_steps": ctx["ticks_total"]},
+                   getattr(world, "replay_class", "NONDETERMINISTIC"), execution or SCALAR_EXECUTION)
+
+
+def batch_plan(exp: Experiment, registry) -> tuple:
+    """-> (batch_kind or None, reason): whether this experiment's runs may be grouped behind one ext.batch.v1 world."""
+    n = int(exp.budget.get("batch") or 0)
+    if n < 2:
+        return None, "BATCH_NOT_REQUESTED"
+    _, delay, permutes, schedule = _world_params(exp, registry, exp.world["kind"])
+    if delay or permutes or schedule:
+        return None, "WRAPPERS_NOT_BATCHED"                    # kernel wrappers are per-world objects; the batch face has no wrapper yet
+    bk = registry.batch_implementation(exp.world["kind"])
+    if bk is None:
+        return None, "NO_BATCH_IMPLEMENTATION"
+    return bk, "BATCHED"
+
+
+def _failed_receipt(spec: RunSpec, exc: BaseException, execution: dict, job_id=None) -> dict:
+    now = datetime.now(timezone.utc).isoformat()
+    return {"experiment_id": job_id or spec.job_id or spec.experiment.experiment_id(), "experiment_digest": spec.experiment.digest(), "arm": spec.arm,
+            "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "FAILED",
+            "components": {"world": {"kind": spec.experiment.world["kind"]}, "substrate": {"kind": spec.experiment.substrate["kind"]}},
+            "capabilities": {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0, "engineering": {}, "execution": dict(execution), "science": {}, "accounting": {},
+            "error": "%s: %s" % (type(exc).__name__, str(exc)[:200]), "started_utc": now, "finished_utc": now}
+
+
+def run_batch(specs: List[RunSpec], registry, batch_kind: str, receipt_dir=None) -> List[dict]:
+    """C92: the runs of `specs` (same arm, sweep point and experiment; different seeds) stepped in lockstep behind one
+    ext.batch.v1 world. Same semantics as run_one, env by env: reset -> [observe all -> act all -> step -> drain
+    events -> observers] x horizon or done, per episode. A failing env is a FAILED receipt and is abandoned
+    (actions None), never a halt of the batch; a failure shared by every env (world construction) fails them all."""
+    exp = specs[0].experiment; n = len(specs)
+    execution = {"batched": True, "batch_size": n, "reason": "BATCHED", "world": batch_kind, "requested_world": exp.world["kind"]}
+    params, _, _, _ = _world_params(exp, registry, batch_kind)
+    try:
+        world = registry.make(batch_kind, n_envs=n, **params)
+    except Exception as exc:                                                    # noqa: BLE001
+        return [_failed_receipt(sp, exc, execution) for sp in specs]
+    ctxs: List[Any] = []; errors: Dict[int, BaseException] = {}
+    for i, sp in enumerate(specs):
+        try:
+            ctxs.append(_prepare(sp, registry, world=world))
+        except Exception as exc:                                                # noqa: BLE001
+            ctxs.append(None); errors[i] = exc
+    live = [c is not None for c in ctxs]
+    has_events = "ext.events.v1" in world.capabilities
+    horizon = exp.budget["horizon"]; keep = exp.budget.get("world_state") == "lifetime"
+    ticks_by_env = [0] * n; events_by_env = [0] * n
+    for ep in range(exp.budget["episodes"]):
+        seeds = [sp.seed * 1000 + ep for sp in specs]
+        world.reset_batch(seeds, keep=keep and ep > 0)
+        for i, c in enumerate(ctxs):
+            if not live[i]:
+                continue
+            try:
+                for so in c["all_subs"]:
+                    if hasattr(so, "episode_begin"):
+                        so.episode_begin(ep, seeds[i])
+                for ob in c["observers"]:
+                    ob.begin({"n_players": world.n_players, "seed": seeds[i]})
+            except Exception as exc:                                            # noqa: BLE001
+                live[i] = False; errors[i] = exc
+        done = [not live[i] for i in range(n)]; ticks = 0; ep_ticks = [0] * n; ep_events = [0] * n
+        while ticks < horizon and not all(done):
+            obs_by_pid = {pid: world.observe_batch(pid) for pid in range(world.n_players)}
+            acts: List[Any] = [None] * n; obs_env: List[Any] = [None] * n
+            for i, c in enumerate(ctxs):
+                if done[i]:
+                    continue
+                try:
+                    observations = {pid: obs_by_pid[pid][i] for pid in c["instances"]}
+                    acts[i] = {pid: c["instances"][pid].act(observations[pid], world.legal_actions(pid)) for pid in c["instances"]}
+                    obs_env[i] = observations
+                except Exception as exc:                                        # noqa: BLE001
+                    live[i] = False; done[i] = True; errors[i] = exc; acts[i] = None
+            step_done = world.step_batch(acts)
+            evs_all = world.events_batch() if has_events else [[] for _ in range(n)]
+            for i, c in enumerate(ctxs):
+                if done[i]:
+                    continue
+                try:
+                    evs = list(evs_all[i])
+                    for so in c["all_subs"]:
+                        if hasattr(so, "tick"):
+                            so.tick(ticks)
+                        if hasattr(so, "events"):
+                            evs += so.events()
+                    ep_events[i] += len(evs)
+                    for ob in c["observers"]:
+                        if evs:
+                            ob.on_events(evs)                                   # same ORDER contract as _loop (C1)
+                        ob.on_tick(ticks, obs_env[i], acts[i])
+                except Exception as exc:                                        # noqa: BLE001
+                    live[i] = False; done[i] = True; errors[i] = exc; continue
+                ep_ticks[i] += 1
+                if step_done[i]:
+                    done[i] = True
+            ticks += 1
+        hashes = world.trace_hashes(); sums = world.summaries()
+        for i, c in enumerate(ctxs):
+            if not live[i]:
+                continue
+            c["hashes"].append(hashes[i]); c["ticks_total"] += ep_ticks[i]; c["events_total"] += ep_events[i]; c["summaries"].append(sums[i])
+            for k, ob in c["series_obs"]:
+                c["collected"][k].append(ob.series_episode())
+    out = []
+    wacc = world.accounting_batch() if hasattr(world, "accounting_batch") else [{"world_steps": c["ticks_total"] if c else 0} for c in ctxs]
+    for i, (sp, c) in enumerate(zip(specs, ctxs)):
+        if not live[i]:
+            out.append(_failed_receipt(sp, errors[i], execution)); continue
+        try:
+            out.append(_finish(c, registry, receipt_dir, world.manifest(), wacc[i], getattr(world, "replay_class", "NONDETERMINISTIC"), execution))
+        except Exception as exc:                                                # noqa: BLE001
+            out.append(_failed_receipt(sp, exc, execution))
+    batch_wall = max((r["engineering"].get("wall_s", 0) for r in out if r["status"] == "COMPLETED"), default=0.0)
+    batch_ticks = sum(r["engineering"].get("ticks", 0) for r in out if r["status"] == "COMPLETED")
+    for r in out:
+        if r["status"] == "COMPLETED":
+            r["engineering"]["batch"] = {"size": n, "wall_s": batch_wall, "ticks_total": batch_ticks, "steps_per_s": round(batch_ticks / batch_wall, 1) if batch_wall > 0 else None}
+    return out
 
 
 @dataclass
@@ -431,27 +579,57 @@ def execute(job: LocalJob, out_path, registry=None, append: bool = False, resume
     wall_budget = (job.experiment.budget.get("wall_s") if job.experiment is not None else None)
     t_start = time.perf_counter()
     try:
+        plans: Dict[str, tuple] = {}
+        pending: List[RunSpec] = []          # C92: consecutive same-group runs waiting for a batch
+
+        def group_of(sp: RunSpec):
+            return (sp.arm, json.dumps(sp.sweep_point, sort_keys=True, separators=(",", ":"), default=str), sp.experiment.digest())
+
+        def flush():
+            nonlocal n_fail
+            if not pending:
+                return
+            bk = plans[pending[0].experiment.digest()][0]
+            try:
+                rs = run_batch(list(pending), registry, bk, receipt_dir=w.path.parent)
+            except Exception as exc:                                    # noqa: BLE001  a failed batch is n FAILED receipts, never a halt
+                rs = [_failed_receipt(sp, exc, {"batched": True, "batch_size": len(pending), "reason": "BATCHED", "world": bk}, job.experiment_id) for sp in pending]
+            for sp, r in zip(pending, rs):
+                r["experiment_id"] = job.experiment_id
+                if r["status"] == "FAILED":
+                    n_fail += 1
+                by_key.setdefault(sp.arm, {})[sp.key()] = w.write(r)
+            pending.clear()
+
         for spec in job.runs:
             if stopped_reason is not None:
                 not_started += 1; continue
-            if wall_budget is not None and (time.perf_counter() - t_start) > float(wall_budget) and by_key:
-                stopped_reason = "WALL_BUDGET_EXHAUSTED"; not_started += 1; continue          # C68: stop BETWEEN runs, never mid-run
+            if wall_budget is not None and (time.perf_counter() - t_start) > float(wall_budget) and (by_key or pending):
+                flush(); stopped_reason = "WALL_BUDGET_EXHAUSTED"; not_started += 1; continue          # C68: stop BETWEEN runs, never mid-run
             prior = done.get(spec.arm, {}).get(spec.key())
             if prior is not None:
+                flush()
                 by_key.setdefault(spec.arm, {})[spec.key()] = prior; n_resumed += 1
                 if prior["status"] == "FAILED":
                     n_fail += 1
                 continue
+            dg = spec.experiment.digest()
+            if dg not in plans:
+                plans[dg] = batch_plan(spec.experiment, registry)
+            bk, reason = plans[dg]
+            if bk is not None:
+                if pending and (group_of(pending[0]) != group_of(spec) or len(pending) >= int(spec.experiment.budget["batch"])):
+                    flush()
+                pending.append(spec); continue
+            flush()
             try:
-                r = run_one(spec, registry, receipt_dir=w.path.parent)
+                r = run_one(spec, registry, receipt_dir=w.path.parent, execution={"batched": False, "batch_size": 1, "reason": reason})
             except Exception as exc:                                    # noqa: BLE001  a failed run is a receipt, never a halt
                 n_fail += 1
-                r = {"experiment_id": job.experiment_id, "experiment_digest": spec.experiment.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point,
-                     "seed": spec.seed, "status": "FAILED", "components": {"world": {"kind": spec.experiment.world["kind"]}, "substrate": {"kind": spec.experiment.substrate["kind"]}},
-                     "capabilities": {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0, "engineering": {}, "science": {}, "accounting": {},
-                     "error": "%s: %s" % (type(exc).__name__, str(exc)[:200]), "started_utc": datetime.now(timezone.utc).isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat()}
+                r = _failed_receipt(spec, exc, {"batched": False, "batch_size": 1, "reason": reason}, job.experiment_id)
             r = w.write(r)
             by_key.setdefault(spec.arm, {})[spec.key()] = r
+        flush()
         controls: Dict[str, dict] = {}
         ctrl_objs = {}
         for c in (job.runs[0].experiment.controls if job.runs else []):

@@ -1,15 +1,16 @@
 {
- "when_utc": "2026-09-19T04:46:10.459552+00:00",
+ "when_utc": "2026-09-19T05:18:26.792399+00:00",
  "host": "SPECTREX5",
  "python": "3.14.4",
- "n_components": 37,
- "admitted": 37,
+ "n_components": 38,
+ "admitted": 38,
  "by_slot": {
   "world": [
    "world.c6.composed.v1",
    "world.grid.v1",
    "world.integer.v1",
    "world.integer_alt.v1",
+   "world.integer_batch.v1",
    "world.pendulum.v1",
    "world.wforge.encounter.v0"
   ],
@@ -333,6 +334,14 @@
    "reference_of": "world.integer"
   },
   "world.integer_alt.v1": {
+   "slot": "world",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": "world.integer",
+   "reference_of": null
+  },
+  "world.integer_batch.v1": {
    "slot": "world",
    "state": "ADMITTED",
    "failed": [],

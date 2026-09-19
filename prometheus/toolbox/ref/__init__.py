@@ -34,6 +34,14 @@ def install(reg: Registry) -> Registry:
     reg.register(ComponentRecord("world.integer_alt.v1", "world", IntegerWorldAlt, IntegerWorldAlt.capabilities, implements="world.integer", route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_integer_alt.py"), license="repository"))
     from prometheus.toolbox.ref.worlds_pendulum import PendulumWorld
+    try:                                                        # C92b: numpy is a native dep; a host without it keeps the row, UNAVAILABLE
+        from prometheus.toolbox.ref.worlds_integer_batch import IntegerWorldBatch
+        reg.register(ComponentRecord("world.integer_batch.v1", "world", IntegerWorldBatch, IntegerWorldBatch.capabilities, implements="world.integer", route="write",
+                                     provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_integer_batch.py"), license="repository", native_deps=("numpy",)))
+    except Exception as exc:                                    # noqa: BLE001
+        reg.register(ComponentRecord("world.integer_batch.v1", "world", lambda **k: (_ for _ in ()).throw(RuntimeError("numpy missing")), frozenset(), route="write",
+                                     provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_integer_batch.py"), license="repository", native_deps=("numpy",),
+                                     state="UNAVAILABLE", admission={"failed": "import: %s" % str(exc)[:120]}))
     reg.register(ComponentRecord("world.pendulum.v1", "world", PendulumWorld, PendulumWorld.capabilities, reference_of="world.pendulum", route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_pendulum.py"), license="repository"))
     from prometheus.toolbox.ref.worlds_grid import GridWorld

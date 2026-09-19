@@ -73,6 +73,24 @@ class Registry:
         r = Registry(); r._rows = {k: copy.copy(v) for k, v in self._rows.items()}
         return r
 
+    def batch_implementation(self, kind: str, admit_on_demand: bool = True) -> Optional[str]:
+        """C92: the ADMITTED ext.batch.v1 world that implements the same reference family as `kind` (or `kind` itself
+        if it is batched), else None. UNAVAILABLE and PROVISIONAL rows are never chosen: a batch path runs only
+        behind a world whose trace agreed with the reference on this host."""
+        rec = self.get(kind)
+        fam = rec.reference_of or rec.implements
+        cands = [kind] if "ext.batch.v1" in rec.capabilities else []
+        cands += [k for k, r in sorted(self._rows.items()) if k != kind and r.slot == "world" and "ext.batch.v1" in r.capabilities
+                  and fam is not None and (r.implements == fam or r.reference_of == fam)]
+        for k in cands:
+            r = self._rows[k]
+            if r.state == "PROVISIONAL" and admit_on_demand:            # admission runs on first use on this host, recorded on the row
+                from prometheus.toolbox.admission import admit
+                admit(k, self)
+            if r.state == "ADMITTED":
+                return k
+        return None
+
     def provided_capabilities(self, *kinds: str) -> FrozenSet[str]:
         out = set()
         for k in kinds:

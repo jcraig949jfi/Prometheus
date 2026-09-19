@@ -493,3 +493,47 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   3/3 CAUGHT on first run; full ledger 40/40 CAUGHT (the --only run had overwritten the JSON with 3 rows; the full run restores).
 - suite 226 passed / 6 skipped (kernel + base-role) 17.8 s.
 - decision: no new kernel code this cycle; the cycle is pure ratchet. Alternatives: none needed.
+
+## C92 (05:19Z) batched execution: ext.batch.v1, world.integer_batch.v1, run_batch; the throughput claim FALSIFIED
+- RED first: tests/test_batch.py (12 tests) failed for the intended reasons: budget.batch moved the digest; no
+  worlds_integer_batch module; receipts had no execution block; grid/wrapped IRs had no fallback reason.
+- built: ext.batch.v1 (catalogued); IntegerWorldBatch (numpy arrays over n envs; scalar face at n_envs=1 so admission
+  drives it through the ordinary contract; implements="world.integer"; ADMITTED by reference agreement, a one-constant
+  Wrong sibling refused); Registry.batch_implementation (admits a PROVISIONAL candidate on first use; never an
+  UNAVAILABLE one); budget.batch as EXECUTION POLICY outside the digest (with wall_s, max_runs); batch_plan with
+  reasons BATCH_NOT_REQUESTED / WRAPPERS_NOT_BATCHED / NO_BATCH_IMPLEMENTATION / BATCHED; run_one split into
+  _prepare/_finish shared with run_batch so the two paths cannot drift; execute() groups consecutive same-(arm,
+  sweep point, digest) runs up to budget.batch, flushes on any boundary, resume and wall budget work between
+  batches; every receipt carries execution{batched, batch_size, reason, world, requested_world}; capabilities.world
+  names what the IR ASKED for, execution.world what stepped; a batched receipt's per-run steps_per_s is None with
+  the batch-level rate in engineering.batch (never a divided-up fiction); one failing env is one FAILED receipt
+  (actions None abandons it inside the world), a shared failure fails them all.
+- observed (rows): batched receipts equal scalar receipts on trace_hashes / events_total / science / series_hash /
+  accounting-minus-wall for all 21 runs of the probe IR (3 arms x 7 seeds, batches of 4+3); bomb test 2 FAILED +
+  4 COMPLETED in one batch of 6; interrupted batched job resumes and equals a clean run.
+- defect found by the batch world: the reference's stochastic kick writes regs[xs.below(n_regs)] = xs.below(M) and
+  Python evaluates the RIGHT side first -- the VALUE is draw 2, the INDEX draw 3. integer_alt reproduced it by
+  copying the expression; the numpy version had to state it. The reference's behaviour is the contract; comment
+  added in the batch world. (Not a change to any world.)
+- defect C92b found by the cross-platform probe: importing numpy at install time broke the WHOLE registry on a host
+  without it (WSL: no numpy) -> test_cross_platform SKIPPED silently (7 skips instead of 6 -- a skip count is a
+  signal). Fix: the row stays, UNAVAILABLE with "import: ...", admit_world applies the same absent-machinery rule
+  as the other slots, and re-admission keeps the reason (first version overwrote it and the SECOND admit would have
+  constructed the world -- caught while writing the test; mutant M42 pins it).
+- defect C92c: three test doubles of run_one had the old signature; the new execution= kwarg made them raise
+  TypeError INSIDE the executor's except -> 18 FAILED receipts and no KeyboardInterrupt ("DID NOT RAISE"). A test
+  double with a stale signature reads as a job that failed every run. Doubles now take **kw.
+- throughput (science/BATCH_THROUGHPUT_2026-09-19.json): world-only 6.0 us/env-tick scalar vs 8.6-32.6 us batched
+  (0.18x at n=1, 0.70x at n>=128: NEVER faster); executor end to end 0.93-0.95x on 500-tick runs, 1.3-1.8x on
+  5-tick runs (setup amortisation). Profile of a scalar tick: world.step 36%, players.act 22%, observers 11%, JSON
+  trace 8%, loop 23%. The vectorised transition (4 ops x 6 regs) was never the cost; the per-env contract (events,
+  JSON trace text, pending queue) and the players are. U1's premise "batched world = NPE-class throughput" is
+  FALSIFIED for BIT worlds whose contract is per-env text: batching pays only if the CONTRACT is batchable
+  (columnar events, array trace) and players/observers batch too, and that is a different world family under
+  SEMANTIC/aggregate agreement, not BIT trace equality. The kernel PATH is proven; the performance claim is not.
+- mutants wave 6 M42-M47 6/6 CAUGHT; full ledger 46/46. Suite 238 passed / 6 skipped (WSL probe back).
+- census refreshed: 38/38 ADMITTED (world.integer_batch.v1 added, native_deps numpy).
+- decision: keep the batch path (correct, tested, honest receipts); do NOT pursue a "fast" batch world tonight.
+  Alternatives: (a) columnar-contract world family (new family, SEMANTIC agreement on aggregates) -- a design
+  question for the day, not a night; (b) numba-jit the scalar step (would speed the reference, changes nothing
+  about batching). Reopen when a world whose step dominates the tick exists (Box2D, c6 composed at scale).

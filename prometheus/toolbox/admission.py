@@ -74,6 +74,9 @@ def admit_world(kind: str, registry, params: dict | None = None, seeds=(1, 2, 3)
     if not registry.has(kind):
         res.failed.append("registry"); checks["registry"] = {"ok": False}; return res
     row = registry.get(kind)
+    if row.state == "UNAVAILABLE" and str(row.admission.get("failed", "")).startswith("import"):     # C92b: same rule as every other slot
+        checks["registry"] = {"ok": False, "note": "absent machinery", "reason": row.admission.get("failed")}
+        res.failed.append("registry"); return res                                  # the row keeps its import reason for the next asker
     checks["registry"] = {"ok": True}
     # 6 provenance
     prov_ok = bool(row.provenance.get("author")) and row.license != "UNSPECIFIED" and row.route in ("write", "wrap", "bind", "chop")

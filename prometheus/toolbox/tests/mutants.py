@@ -59,6 +59,13 @@ MUTANTS = [
     ("M39", "backends/local.py", "            if prior_ids and job.experiment_id not in prior_ids:", "            if False:", "resume into another experiment's file allowed"),
     ("M40", "ref/worlds.py", "or (self.n_players > 0 and not any(st[\"alive\"]))     # C84", "or not any(st[\"alive\"])", "zero-player world ends at tick 1"),
     ("M41", "backends/local.py", "    if max_runs is not None and n_runs > int(max_runs):", "    if False:", "max_runs never refuses"),
+    # sixth wave (C92): the batch path
+    ("M42", "admission.py", "        res.failed.append(\"registry\"); return res                                  # the row keeps its import reason for the next asker", "        res.failed.append(\"registry\"); row.admission = dict(row.admission, **res.as_dict()); return res", "absent-machinery row loses its import reason on re-admission (then constructs)"),
+    ("M43", "backends/local.py", "    if delay or permutes or schedule:\n        return None, \"WRAPPERS_NOT_BATCHED\"", "    if False:\n        return None, \"WRAPPERS_NOT_BATCHED\"", "kernel wrappers silently dropped on the batch path"),
+    ("M44", "ref/worlds_integer_batch.py", "        for i in range(n):\n            if actions[i] is None:\n                act[i] = False", "        pass", "an abandoned env is stepped with None actions"),
+    ("M45", "backends/local.py", "                        if evs:\n                            ob.on_events(evs)                                   # same ORDER contract as _loop (C1)\n                        ob.on_tick(ticks, obs_env[i], acts[i])", "                        ob.on_tick(ticks, obs_env[i], acts[i])\n                        if evs:\n                            ob.on_events(evs)", "batch path delivers observer events after the tick"),
+    ("M46", "registry.py", "            if r.state == \"ADMITTED\":\n                return k", "            return k", "an UNAVAILABLE batch world is chosen"),
+    ("M47", "backends/local.py", "                if pending and (group_of(pending[0]) != group_of(spec) or len(pending) >= int(spec.experiment.budget[\"batch\"])):", "                if pending and len(pending) >= int(spec.experiment.budget[\"batch\"]):", "runs of different arms batched behind one world"),
 ]
 
 

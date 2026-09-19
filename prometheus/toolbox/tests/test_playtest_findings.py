@@ -203,11 +203,11 @@ def test_resume_counts_failed_runs_that_happened_before_the_interruption(tmp_pat
     job = lower(e, REG).job
     real = L.run_one; calls = {"n": 0}
 
-    def flaky(spec, registry, receipt_dir=None):
+    def flaky(spec, registry, receipt_dir=None, **kw):
         calls["n"] += 1
         if calls["n"] == 3:
             raise KeyboardInterrupt()
-        return real(spec, registry, receipt_dir)
+        return real(spec, registry, receipt_dir, **kw)
     monkeypatch.setattr(L, "run_one", flaky)
     with pytest.raises(KeyboardInterrupt):
         execute(job, tmp_path / "rf.jsonl", REG)

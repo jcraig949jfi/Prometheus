@@ -76,11 +76,11 @@ def test_interrupted_job_resumes_from_the_receipts_file(tmp_path, monkeypatch):
     job = lower(e, REG).job; assert len(job.runs) == 18
     calls = {"n": 0}; real = L.run_one
 
-    def flaky(spec, registry, receipt_dir=None):
+    def flaky(spec, registry, receipt_dir=None, **kw):
         calls["n"] += 1
         if calls["n"] == 7:
             raise KeyboardInterrupt("simulated interruption")
-        return real(spec, registry, receipt_dir)
+        return real(spec, registry, receipt_dir, **kw)
     monkeypatch.setattr(L, "run_one", flaky)
     with pytest.raises(KeyboardInterrupt):
         execute(job, tmp_path / "j.jsonl", REG)
@@ -170,11 +170,11 @@ def test_resumed_job_continues_the_chain(tmp_path, monkeypatch):
                    seed_policy={"base": 1, "n_seeds": 4}, budget={"episodes": 1, "horizon": 4})
     job = lower(e, REG).job; real = L.run_one; calls = {"n": 0}
 
-    def flaky(spec, registry, receipt_dir=None):
+    def flaky(spec, registry, receipt_dir=None, **kw):
         calls["n"] += 1
         if calls["n"] == 3:
             raise KeyboardInterrupt()
-        return real(spec, registry, receipt_dir)
+        return real(spec, registry, receipt_dir, **kw)
     monkeypatch.setattr(L, "run_one", flaky)
     with pytest.raises(KeyboardInterrupt):
         execute(job, tmp_path / "c.jsonl", REG)

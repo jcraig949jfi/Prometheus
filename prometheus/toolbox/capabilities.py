@@ -47,6 +47,7 @@ EXTENSIONS = {
     "ext.replay.bit.v1":          "two runs with equal seeds produce equal trace hashes",
     "ext.replay.semantic.v1":     "agreement under a tolerance declared before execution",
     "ext.reference.v1":           "component is the reference implementation of its kind",
+    "ext.batch.v1":               "world simulates n envs in lockstep: reset_batch/observe_batch/step_batch/events_batch/trace_hashes/summaries (C92)",
 }
 
 STATUS_OK = "OK"
