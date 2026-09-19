@@ -48,7 +48,7 @@ def main() -> None:
                 orig = [SEL[r["packet_id"]]["nous"]["composite_score"] for r in rs if r.get("composite_score") is not None]
                 A["N"] = {"calls": len(rs), "parsed": len(comp), "composite": q(comp), "orig_composite_same_packets": q(orig),
                           "novelty_labels": dict(collections.Counter(r.get("novelty_label") for r in rs)),
-                          "seconds": q([r["call"].get("seconds") or 0 for r in rs]), "api_failed": sum(not r["call"].get("ok") for r in rs)}
+                          "seconds": q([(r.get("call") or {}).get("seconds") or 0 for r in rs]), "api_failed": sum(not (r.get("call") or {}).get("ok") for r in rs)}
             else:
                 outc = collections.Counter((r.get("outcome") or "?").split(":")[0] + (":" + r["outcome"].split(":")[1][:28] if r.get("outcome", "").startswith("scrap") else "") for r in rs)
                 sc = [r for r in rs if r.get("score") and "accuracy" in r["score"]]
@@ -66,8 +66,8 @@ def main() -> None:
                             "paired_vs_original": {"n": len(paired), "new_minus_orig_median": round(st.median([a - b for a, b in paired]), 4) if paired else None,
                                                    "new_beats_orig": sum(a > b for a, b in paired)},
                             "lines_median": st.median([r["lines"] for r in sc if r.get("lines")]) if sc else None,
-                            "seconds": q([r["call"].get("seconds") or 0 for r in rs]),
-                            "out_tokens": q([(r["call"].get("usage") or {}).get("out") or 0 for r in rs])}
+                            "seconds": q([(r.get("call") or {}).get("seconds") or 0 for r in rs]),
+                            "out_tokens": q([((r.get("call") or {}).get("usage") or {}).get("out") or 0 for r in rs])}
                 top = sorted(sc, key=lambda r: -r["score"]["accuracy"])[:5]
                 A[stage]["top5"] = [(r["packet_id"], r["score"]["accuracy"], SEL[r["packet_id"]]["key"][:60], r["run"]) for r in top]
         out["arms"][arm] = A

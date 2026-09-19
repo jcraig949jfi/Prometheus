@@ -1,0 +1,259 @@
+I'll implement this directly as a single self-contained Python file: a bounded model checker (exhaustive enumeration under a cap, GA + Metropolis annealing above it), free-energy claim scoring, closed-form solvers for the computation channel, and a prompt-side `_meta_confidence` that caps confidence on Tier-B traps.
+
+```python
+"""ReasoningTool: annealed counterexample search over a bounded state space.
+
+A regex front-end turns the prompt into typed variables + constraints (orderings with
+ties, if/then implications, S-V-O roles, closed-form arithmetic).  A model checker
+enumerates the satisfying set M over the Cartesian product of domains; above a size cap
+a genetic algorithm (block crossover, Metropolis-accepted mutation, T_k = T0 * 0.95^k)
+hunts counterexample states that satisfy the premises but violate the claim.  A claim is
+scored by a free-energy form exp(-E/T) * (1 - k*S): E = fraction of M refuting it,
+S = normalised log-count entropy (specificity).  "Cannot be determined" emerges from
+COUNTING, not keywords: a claim contingent in M (0 < |M and c| < |M|) is underdetermined.
+Closed-form solvers (bat-and-ball, Bayes, modular, fencepost, parity, pigeonhole,
+direction, PEMDAS, rate/work) feed the computation channel.  Parse confidence =
+confident constraints / (confident + ambiguous).  _meta_confidence caps confidence on
+Tier-B traps.  Score = 0.55 structural + 0.30 computation + 0.15 NCD (tiebreaker only).
+"""
+import re, math, zlib, itertools
+import numpy as np
+
+NUM = r'(-?\d+(?:\.\d+)?)'
+ORD = {**{w: 1 for w in 'taller older faster bigger heavier larger greater more higher longer stronger richer later after'.split()},
+       **{w: -1 for w in 'shorter younger slower smaller lighter less lower fewer weaker poorer earlier before'.split()}}
+LOW = set('shortest youngest slowest smallest lightest lowest fewest weakest poorest earliest least cheapest first'.split())
+STOP = set('If The Then Who Which What Is Was Are Does Did Therefore So And But Suppose Given Assume Since Because A An Not No Yes He She It They When Where How Every Each All Some'.split())
+HEDGE = re.compile(r"cannot be determined|can(?:'t| not) be determined|not enough|insufficient|undetermined|unknown|depends|ambiguous|unclear|neither|either could|no way to|(?:not possible|impossible) to (?:tell|know|say)|false dichotomy|presuppos|loaded question|not necessarily|does(?: not|n't) follow|invalid")
+DIRS = ['north', 'east', 'south', 'west']
+DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+WNUM = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10}
+BIG = ('larger', 'bigger', 'greater', 'higher', 'more')
+
+def _ncd(a, b):
+    za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+    return (len(zlib.compress((a + b).encode())) - min(za, zb)) / max(za, zb, 1)
+
+def _n(s): return float(WNUM[s.lower()]) if s.lower() in WNUM else float(s)
+def _nums(s): return [float(x) for x in re.findall(NUM, s)]
+
+class ReasoningTool:
+    CAP = 50000
+
+    def __init__(self): self.trace = []
+
+    def _check(self, doms, cons, claims):
+        """(|M|, |M and claim|) per claim: exhaustive below CAP, else annealed GA falsifier."""
+        n = len(doms); size = int(np.prod([len(d) for d in doms], dtype=np.int64))
+        if size <= self.CAP:
+            M = [s for s in itertools.product(*doms) if all(c(s) for c in cons)]
+            return [(len(M), sum(1 for s in M if cl(s))) for cl in claims]
+        out = []
+        for cl in claims:
+            rng = np.random.default_rng(7); T = 2.0; found = {}
+            pop = [tuple(d[rng.integers(len(d))] for d in doms) for _ in range(200)]
+            fit = lambda s: sum(c(s) for c in cons) - 0.5 * cl(s)   # premises satisfied minus claim satisfied
+            for _ in range(60):
+                new = []
+                for s in pop:
+                    m = list(s); i = int(rng.integers(n)); m[i] = doms[i][rng.integers(len(doms[i]))]
+                    if rng.random() < 0.3: m[i:] = pop[rng.integers(len(pop))][i:]      # block crossover
+                    m = tuple(m); d = fit(m) - fit(s)
+                    s2 = m if d >= 0 or rng.random() < math.exp(d / T) else s          # Metropolis rule
+                    if all(c(s2) for c in cons): found[s2] = bool(cl(s2))
+                    new.append(s2)
+                pop, T = new, T * 0.95
+            out.append((len(found), sum(found.values())))
+        return out
+
+    def _fe(self, nM, nMc):
+        if nM == 0: return 0.5
+        if nMc == 0: return 0.0
+        E = 1.0 - nMc / nM; S = math.log(nMc + 1) / math.log(nM + 1) if nM > 1 else 0.0
+        return min(1.0, math.exp(-E / 0.35) * (1 - 0.3 * S) / 0.7)
+
+    def _ordering(self, text, q):
+        pat = r'\b([A-Z][a-z]+) (?:is |was |ran |came |arrived |happened |occurred |finished |has |earns |runs )?(not )?(?:much |a lot |slightly |a bit |far |\d+ \w+ )?(%s)(?: \w+)?(?: than)? (?:the )?([A-Z][a-z]+)\b' % '|'.join(ORD)
+        rel = [(a, bool(ng), ORD[w], b) for a, ng, w, b in re.findall(pat, text) if a not in STOP and b not in STOP and a != b]
+        if not rel: return None
+        names = sorted({x for r in rel for x in (r[0], r[3])}); ix = {nm: i for i, nm in enumerate(names)}; n = len(names)
+        cons = [(lambda s, a=ix[a], b=ix[b], g=g, ng=ng: (s[a] * g <= s[b] * g) if ng else (s[a] * g > s[b] * g)) for a, ng, g, b in rel]
+        amb = len(re.findall(r'\b(?:he|she|it|they) (?:is|was) (?:\w+er|before|after)\b', text.lower()))
+        doms = [list(range(n))] * n
+        A = {'struct': {}, 'hedge': 0.05, 'conf': len(rel) / (len(rel) + amb), 'exact': True, 'why': ['%d ordering constraints, %d ambiguous pronoun facts, %d names' % (len(rel), amb, n)]}
+        m = re.search(r'\b[Ii]s (%s) (?:\w+ )?(%s)(?: \w+)?(?: than)? (?:the )?(%s)\b' % ('|'.join(names), '|'.join(ORD), '|'.join(names)), q)
+        if m:
+            g = ORD[m.group(2)]; a, b = ix[m.group(1)], ix[m.group(3)]
+            nM, nMc = self._check(doms, cons, [lambda s: s[a] * g > s[b] * g])[0]
+            A['struct'] = {'yes': self._fe(nM, nMc), 'no': self._fe(nM, nM - nMc)}; A['hedge'] = 1.0 if 0 < nMc < nM else 0.05
+            A['why'].append('binary query: |M|=%d, holds in %d' % (nM, nMc)); return A
+        m = re.search(r'\b(\w+est|first|last|most|least)\b', q.lower()); g = -1 if (m and m.group(1) in LOW) else 1
+        res = self._check(doms, cons, [(lambda s, i=i: all(s[i] * g > s[j] * g for j in range(n) if j != i)) for i in range(n)])
+        A['struct'] = {nm.lower(): self._fe(nM, nMc) for nm, (nM, nMc) in zip(names, res)}
+        ent = [nm for nm, (nM, nMc) in zip(names, res) if nM and nMc == nM]
+        A['hedge'] = 0.05 if len(ent) == 1 else 1.0; A['why'].append('|M|=%d; entailed extremal: %s' % (res[0][0], ent or 'none -> underdetermined'))
+        return A
+
+    def _implication(self, text, sents, q, cands):
+        m = re.search(r'\bif (.+?),? then (.+?)(?:[.;!]|$)', text, re.I)
+        if not m: return None
+        PQ = [m.group(1), m.group(2)]
+        tok = lambda x: {re.sub(r'(ing|ed|s)$', '', w) for w in re.findall(r'[a-z]{3,}', re.sub(r"n't", ' not', x.lower()))} - {'the', 'then', 'that', 'therefore', 'not', 'doe', 'did', 'will', 'wa', 'were', 'ha', 'have', 'can', 'conclude', 'follow', 'true', 'fal', 'must'}
+        negf = lambda x: bool(re.search(r"\bnot\b|n't\b|\bnever\b|\bfalse\b", x.lower()))
+        def lit(s):
+            t = tok(s); ov = [len(t & tok(p)) / (len(tok(p)) or 1) for p in PQ]; i = int(ov[1] > ov[0])
+            return (i, negf(s) == negf(PQ[i])) if ov[i] >= 0.5 else None
+        facts = [f for f in (lit(x) for x in sents if m.group(0)[:12] not in x and not re.search(r'\bif\b|\?|therefore|conclude|follow|must|which', x, re.I)) if f]
+        cons = [lambda s: (not s[0]) or s[1]] + [(lambda s, f=f: s[f[0]] == f[1]) for f in facts]; doms = [[0, 1], [0, 1]]
+        res = self._check(doms, cons, [lambda s: s[0], lambda s: s[1]])
+        A = {'struct': {}, 'hedge': 1.0 if any(0 < c < t for t, c in res) else 0.05, 'conf': 0.85 if facts else 0.5, 'exact': True,
+             'why': ['P->Q with %d facts; (|M|,|M and P|),(|M|,|M and Q|) = %s' % (len(facts), res)]}
+        ql = lit(next((x for x in sents if re.search(r'therefore|conclude|follow|must be|so ', x, re.I)), q))
+        for c in cands:
+            yn = re.match(r'\s*(yes|no|valid|invalid|true|false)\b', c.lower()); cl = None if HEDGE.search(c.lower()) else lit(c)
+            if yn and ql: cl = ql if yn.group(1) in ('yes', 'valid', 'true') else (ql[0], not ql[1])
+            if yn and yn.group(1) in ('invalid',) and ql: A['struct'][c.lower()] = A['hedge']; continue
+            if cl: nM, nMc = self._check(doms, cons, [lambda s, cl=cl: s[cl[0]] == cl[1]])[0]; A['struct'][c.lower()] = self._fe(nM, nMc)
+        return A
+
+    def _svo(self, text, q):
+        m = re.search(r'\b([A-Z][a-z]+) (?:was|were|got) (\w+(?:ed|en|t)) by (?:the )?([A-Z][a-z]+)', text)
+        if m and m.group(1) not in STOP: obj, verb, subj = m.groups()
+        else:
+            m = re.search(r'\b([A-Z][a-z]+) (\w+ed|hit|beat|bit|met|saw|paid|owes|chased|hurt|blames|likes|fears) (?:the |a )?([A-Z][a-z]+)\b', text)
+            if not m or m.group(1) in STOP or m.group(3) in STOP: return None
+            subj, verb, obj = m.groups()
+        if not re.search(r'\bwho', q.lower()): return None
+        obj_q = re.search(r'who (?:was|were|got|is) \w+|whom|who did %s\b' % subj.lower(), q.lower())
+        ans, other = (obj, subj) if obj_q else (subj, obj)
+        return {'struct': {ans.lower(): 1.0, other.lower(): 0.0}, 'hedge': 0.05, 'conf': 0.75, 'exact': True, 'why': ['SVO: %s -%s-> %s; queried role = %s' % (subj, verb, obj, 'object' if obj_q else 'subject')]}
+
+    def _direction(self, s):
+        m = re.search(r'fac(?:ing|es|e|ed) (north|south|east|west)', s)
+        if m and 'turn' in s:
+            d = DIRS.index(m.group(1))
+            for t in re.findall(r'turns? (?:to the |to your )?(left|right|around)|(\d+) degrees? (clockwise|counter-?clockwise|to the left|to the right)?', s):
+                d += {'left': -1, 'right': 1, 'around': 2}[t[0]] if t[0] else (int(t[1]) // 90) * (-1 if ('counter' in t[2] or 'left' in t[2]) else 1)
+            return DIRS[d % 4], 0.9
+        legs = re.findall(NUM + r'\s*(?:km|kilometers|miles|meters|m|blocks|feet|units)\s*(north|south|east|west)', s)
+        if len(legs) >= 2 and re.search(r'how far|distance', s):
+            x = sum(float(v) * {'north': 0, 'south': 0, 'east': 1, 'west': -1}[d] for v, d in legs); y = sum(float(v) * {'north': 1, 'south': -1, 'east': 0, 'west': 0}[d] for v, d in legs)
+            return math.hypot(x, y), 0.9
+        return None
+
+    def _compute(self, s, q):
+        m = re.search(r'all but (\w+)', s)
+        if m and 'how many' in q: return _n(m.group(1)), [], 0.9, 'all-but-N: N survive'
+        m = re.search(NUM + r'\s*(?:dollars|cents|euros)?\s*(?:in total|total|altogether|together|combined)', s) or re.search(r'(?:total|together|altogether|combined)[^.]*?\$?' + NUM, s)
+        d = re.search(r'\$?' + NUM + r'\s*(?:dollars|cents|euros)?\s*more than (?:the )?(\w+)', s)
+        if m and d: t, dv = float(m.group(1)), float(d.group(1)); return ((t - dv) / 2 if d.group(2) in q else (t + dv) / 2), [], 0.9, 'bat-and-ball: x + (x + d) = t'
+        m = re.search(r'(\w+) (?:equal )?pieces', s)
+        if m and 'cut' in s and 'how many' in q: return _n(m.group(1)) - 1, [], 0.85, 'fencepost: cuts = pieces - 1'
+        m = re.search(r'every ' + NUM + r'\s*(?:feet|foot|ft|meters|metres|m|yards)\b', s); L = re.search(NUM + r'[\s-]*(?:feet|foot|ft|meters|metres|m|yards)[\s-]*(?:long|fence|road|line|wall)', s)
+        if m and L and re.search(r'post|pole|tree|lamp|light|marker', s): return float(L.group(1)) / float(m.group(1)) + (0 if re.search(r'circular|circle|loop|around', s) else 1), [], 0.85, 'fencepost: L/spacing + 1'
+        m = re.search(r'remainder (?:when|of) ' + NUM + r' (?:is )?divided by ' + NUM, s) or re.search(NUM + r'\s*(?:mod|modulo|%)\s*' + NUM, s)
+        if m: return float(m.group(1)) % float(m.group(2)), [], 0.95, 'modular arithmetic'
+        m = re.search(NUM + r"\s*(?:o'?clock|:00|[ap]\.?m)", s); h = re.search(NUM + r' hours', s)
+        if m and h and re.search(r'time|clock', s): return (float(m.group(1)) + float(h.group(1)) - 1) % 12 + 1, [], 0.8, 'clock arithmetic mod 12'
+        m = re.search(r'\b(%s)\b' % '|'.join(DAYS), s); d = re.search(NUM + r' days', s)
+        if m and d and re.search(r'what day|which day', s): k = int(float(d.group(1))) * (-1 if re.search(r'ago|before|earlier', s) else 1); return DAYS[(DAYS.index(m.group(1)) + k) % 7], [], 0.9, 'day-of-week mod 7'
+        if re.search(r'coin|flip|toss', s) and re.search(r'heads|tails', s) and re.search(r'probab|chance|likely|odds', q): return 0.5, ['50%', '1/2', 'half', 'same', 'equal', 'fifty'], 0.85, 'independent flips: P = 1/2 regardless of history'
+        m = re.search(r'(sum|product) of (\w+) (odd|even) (?:numbers|integers)', s)
+        if m: k = _n(m.group(2)); return ('even' if m.group(1) == 'sum' and (k % 2 == 0 or m.group(3) == 'even') else ('odd' if m.group(1) == 'sum' or m.group(3) == 'odd' else 'even')), [], 0.85, 'parity rule'
+        m = re.search(r'is ([\d\s\+\-\*\(\)]+?) (?:even or odd|odd or even|an even|an odd)', s)
+        if m: return ('even' if eval(m.group(1)) % 2 == 0 else 'odd'), [], 0.9, 'parity by evaluation'
+        m = re.search(r'(\w+) (?:different )?colou?rs', s)
+        if m and re.search(r'guarantee|certain|sure|at least', s) and re.search(r'pair|match|same colou?r', s): return _n(m.group(1)) + 1, [], 0.85, 'pigeonhole: colors + 1'
+        p = re.search(NUM + r'\s*%[^.]*?(?:have|has|prevalence|infected|carry|suffer|of the population)', s)
+        se = re.search(r'(?:sensitivity|detect|correctly identif|true positive|accura)[^.]*?' + NUM + r'\s*%', s) or re.search(NUM + r'\s*%[^.]*?(?:sensitiv|detect|correctly identif|true positive|accura)', s)
+        fp = re.search(r'(?:false positive|falsely|incorrectly|wrongly)[^.]*?' + NUM + r'\s*%', s) or re.search(NUM + r'\s*%[^.]*?(?:false positive|falsely|incorrectly|wrongly)', s)
+        if p and se and re.search(r'probab|chance|likely', q) and (fp or 'accura' in se.group(0)):
+            pv, sv = float(p.group(1)) / 100, float(se.group(1)) / 100; fv = float(fp.group(1)) / 100 if fp else 1 - sv
+            post = pv * sv / (pv * sv + (1 - pv) * fv); return post * 100, ['%.0f%%' % (post * 100), '%.1f%%' % (post * 100)], 0.8, 'Bayes: P(D|+) = %.3f (base rate %.2f)' % (post, pv)
+        m = re.search(r'(?:which|what)(?: number| one| value)? is (larger|bigger|greater|smaller|less|lower|higher|more)', q)
+        if m and len(_nums(q)) >= 2: v = _nums(q); return (max(v) if m.group(1) in BIG else min(v)), [], 0.95, 'numeric comparison of literals'
+        m = re.search(r'is ' + NUM + r' (larger|bigger|greater|smaller|less|lower|higher|more) than ' + NUM, s)
+        if m: a, b = float(m.group(1)), float(m.group(3)); return ('yes' if a != b and (a > b) == (m.group(2) in BIG) else 'no'), [], 0.95, 'numeric comparison'
+        m = re.search(r'(?:what is|calculate|compute|evaluate|equals?)\s*:?\s*([\d\s\.\+\-\*/\(\)x]+?)\s*(?:\?|=|$)', s)
+        if m and re.search(r'\d\s*[\+\-\*/x]\s*[\d\(]', m.group(1)): return float(eval(m.group(1).replace('x', '*'))), [], 0.95, 'PEMDAS evaluation'
+        m = re.search(NUM + r' (\w+) (?:take|takes|need|needs) ' + NUM + r' (\w+) to (?:make|produce|build|complete|paint|dig) ' + NUM, s)
+        w = re.search(r'how (?:long|many \w+) (?:would|will|does|do) (?:it take )?' + NUM + r' \w+ (?:take )?to (?:make|produce|build|complete|paint|dig) ' + NUM, s)
+        if m and w: return float(m.group(3)) * (float(w.group(2)) / float(m.group(5))) * (float(m.group(1)) / float(w.group(1))), [], 0.8, 'rate/work: t * (W2/W1) * (M1/M2)'
+        r = self._direction(s)
+        return (r[0], [], r[1], 'direction composition') if r else None
+
+    def _analyze(self, prompt, cands):
+        self.trace = []; text = re.sub(r'\s+', ' ', prompt.strip())
+        sents = [x.strip() for x in re.split(r'(?<=[.!?;])\s+', text) if x.strip()]; q = next((x for x in reversed(sents) if '?' in x), sents[-1])
+        A = {'struct': {}, 'hedge': 0.05, 'value': None, 'alias': [], 'conf': 0.0, 'exact': False, 'why': []}
+        for r in (self._ordering(text, q), self._implication(text, sents, q, cands), self._svo(text, q)):
+            if r: A.update(r); break
+        try: r = self._compute(text.lower(), q.lower())
+        except Exception: r = None
+        if r: A['value'], A['alias'], cc, why = r; A['conf'] = max(A['conf'], cc); A['exact'] = True; A['why'].append(why)
+        if A['conf'] == 0: A['why'].append('no structural parser matched')
+        return A
+
+    def _comp(self, A, cand):
+        v = A['value']; c = cand.lower()
+        if v is None: return 0.5
+        if isinstance(v, str): return 1.0 if re.search(r'\b%s\b' % v, c) else 0.0
+        if any(a in c for a in A['alias']) and not re.search(r'more likely|less likely|higher|lower|due', c): return 1.0
+        nums = _nums(c.replace(',', ''))
+        if not nums: return 0.2 if HEDGE.search(c) else 0.4
+        return 1.0 if any(abs(x - v) <= 0.02 * abs(v) + 0.011 or (v > 1 and abs(x * 100 - v) <= 0.02 * v + 0.011) for x in nums) else 0.0
+
+    def _struct(self, A, cand):
+        c = cand.lower()
+        if A['struct']:
+            hits = [v for k, v in A['struct'].items() if re.search(r'\b%s\b' % re.escape(k), c)]
+            return max(hits) if hits else (A['hedge'] if HEDGE.search(c) else 0.1)
+        return self._comp(A, cand) if A['value'] is not None else 0.5
+
+    def _meta_confidence(self, prompt):
+        p = re.sub(r'\s+', ' ', prompt.lower()); cap = 1.0
+        checks = [(r"have you (?:stopped|quit|given up|finally)|when did you stop|why (?:did|does|do|has|is|are) [^?]*(?:fail|stop|quit|always|still|cheat|lie|refuse|hate)", 0.2, 'presupposition'),
+                  (r"\b(?:every|each|all)\b[^?]*\b(?:a|an|some)\b[^?]*\b(?:same|different)\b|\bevery\b[^.?]*\bsome\b", 0.25, 'quantifier scope ambiguity'),
+                  (r"\b[a-z]+ (?:told|said to|asked|informed|warned) [a-z]+ (?:that )?(?:he|she|they)\b[^?]*\bwho\b", 0.2, 'pronoun ambiguity'),
+                  (r"of those who (?:succeeded|survived|made it)|(?:successful|surviving) (?:people|companies|entrepreneurs|traders|startups|founders)|(?:all|every) (?:the )?(?:successful|surviving|winners)|dropped out and", 0.25, 'survivorship bias'),
+                  (r"already (?:invested|spent|put in|paid|sunk)|sunk cost|wasted if", 0.25, 'sunk cost framing'),
+                  (r"\b(?:best|worst|favou?rite|most beautiful|greatest|nicest|tastiest|coolest)\b(?! (?:describes|explains|answer|estimate|approximat|represents|fits))", 0.25, 'subjective criterion'),
+                  (r"(?:after|following) (?:an? )?(?:exceptional|record|outstanding|terrible|unusually|worst|best)[^?]*(?:next|following|expect)", 0.3, 'regression to the mean'),
+                  (r"\bvalid\b[^?]*\btrue\b|\btrue\b[^?]*\bvalid\b|sound argument", 0.4, 'validity vs truth')]
+        if re.search(r"\beither\b[^.?]*\bor\b", p) and not re.search(r"n't|\bnot\b", p): checks.append((r"either", 0.25, 'false dichotomy (no disjunct eliminated)'))
+        for pat, v, name in checks:
+            if re.search(pat, p): cap = min(cap, v); self.trace.append('meta: ' + name)
+        return cap
+
+    def evaluate(self, prompt, candidates):
+        A = self._analyze(prompt, candidates); cap = self._meta_confidence(prompt); out = []
+        for c in candidates:
+            st, cp = self._struct(A, c), self._comp(A, c)
+            if cap < 0.5: st = 0.5 * st + 0.5 * (1.0 if HEDGE.search(c.lower()) or re.search(r'\bboth\b|other options|unrelated|independent|no reason', c.lower()) else 0.0)
+            ncd = 1.0 - _ncd(prompt.lower(), c.lower()); score = 0.55 * st + 0.30 * cp + 0.15 * ncd
+            why = '; '.join(A['why'] + [t for t in self.trace if t.startswith('meta')]) + ' | structural=%.2f computation=%.2f ncd=%.2f conf=%.2f' % (st, cp, ncd, A['conf'])
+            out.append({'candidate': c, 'score': round(score, 4), 'reasoning': why})
+        return sorted(out, key=lambda d: -d['score'])
+
+    def confidence(self, prompt, answer):
+        A = self._analyze(prompt, [answer]); cap = self._meta_confidence(prompt)
+        if A['conf'] == 0: return round(min(cap, 0.25), 3)
+        st, cp = self._struct(A, answer), self._comp(A, answer)
+        s = 0.7 * st + 0.3 * cp if (A['struct'] and A['value'] is not None) else st
+        c = 0.1 + 0.85 * s * A['conf']
+        return round(min(c, cap, 0.95 if A['exact'] else 0.85), 3)
+```
+
+**How the pieces map to the spec**
+
+- **Model-checking core** (`_check`): variables = names/propositions, domains = rank values 0..n-1 (ties allowed) or booleans; exhaustive enumeration of `M` while the Cartesian product is ≤ 50 000 states.
+- **GA + thermodynamics** (`_check`, above cap): population 200, block crossover, single-site mutation, Metropolis acceptance with `T_k = 2.0 · 0.95^k`, fitness = premises satisfied − ½·claim satisfied, so the population drifts toward counterexamples; seeded RNG keeps it deterministic.
+- **Free-energy score** (`_fe`): `E` = fraction of `M` refuting the claim, `S` = log-count entropy; entailed → 1.0, refuted → 0.0, contingent → intermediate.
+- **"Cannot be determined" from computation**: in `_ordering` the hedge weight is 1.0 only when no single extremal is entailed (or the binary query is contingent); in `_implication` it's 1.0 only when P or Q is contingent in `M` — this is what makes affirming-the-consequent / denying-the-antecedent resolve to the hedge while modus tollens resolves to `not P`.
+- **Uncertainty propagation**: ordering `conf = confident constraints / (confident + ambiguous pronoun facts)`; implication conf drops to 0.5 when no facts were extracted; `confidence()` multiplies by it.
+- **Standard parsers**: numeric comparison, bat-and-ball, all-but-N, fencepost (cuts and posts, incl. circular), modular/clock/day-of-week, coin independence, parity (rule + evaluation), pigeonhole, modus tollens (via the implication model), transitivity + temporal ordering (shared ordering model), SVO with passive detection, base-rate Bayes, direction composition (turns and displacement), plus PEMDAS and rate/work.
+- **Tier-B `_meta_confidence`**: presupposition, quantifier scope, pronoun ambiguity, false dichotomy (only when no disjunct is eliminated, so disjunctive syllogism stays Tier A), survivorship, sunk cost, subjectivity, regression to mean, validity-vs-truth; it returns a cap that `confidence()` applies, and `evaluate()` shifts structural weight toward hedge candidates when the cap is < 0.5.
+- **Score decomposition**: 0.55 structural / 0.30 computation / 0.15 NCD; when only a numeric solver fired, the structural channel carries the same match (the constraint parse *is* the structure), so NCD never exceeds 15%.
+- `confidence()` returns ≤ 0.25 when no parser matched, never exceeds 0.85 without a definitive computation, and is always capped by the prompt-side meta check.
+
+One honest limitation to flag: the parser recall is the ceiling, exactly as the review predicted — names must be capitalised single tokens, and if/then propositions are matched by stemmed-token overlap (≥ 0.5), so paraphrased conclusions can fall through to the "no parser matched" path (which is the intended low-confidence behaviour rather than a guess).

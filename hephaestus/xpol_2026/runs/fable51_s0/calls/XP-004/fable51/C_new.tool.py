@@ -1,0 +1,230 @@
+import itertools
+import zlib
+
+"""ReasoningTool -- Neural Architecture Search x Pragmatism x Network Science.
+
+Mechanism: the prompt is parsed (regex) into a typed relation multigraph G_p (networkx)
+over atomic terms with edges GT/LT/EQ/IMPLIES/CAUSES/BEFORE plus fact nodes. A tiny NAS
+enumerates subsets of inference rules {transitivity, contrapositive, negation flip,
+modus ponens, numeric literal ordering}; each subset is an "architecture" scored by a
+cheap predictor (edges fired). Pragmatic selection keeps only subsets whose closure of
+G_p is contradiction-free (rules that "work"), preferring the most productive one.
+Candidates are scored by network cascade: support paths into G_p decayed 0.7^len,
+minus 2x contradiction paths, gated on connectivity (dangling claims score 0).
+Primitives (check_transitivity, modus_ponens, dag_traverse, bat_and_ball,
+bayesian_update, modular_arithmetic, all_but_n, parity_check, confidence_from_agreement)
+do the heavy lifting; NCD is a <=10% tiebreaker. confidence() is capped by
+_meta_confidence(), which inspects the QUESTION for presupposition/ambiguity.
+"""
+import re, zlib, itertools
+import networkx as nx
+try:
+    from forge_primitives import (check_transitivity, modus_ponens, dag_traverse, bat_and_ball,
+        bayesian_update, modular_arithmetic, all_but_n, parity_check, confidence_from_agreement)
+except ImportError:  # minimal stand-ins keep the module importable for unit tests
+    def check_transitivity(rels): return True
+    def modus_ponens(prem, facts):
+        f = set(facts); ch = True
+        while ch: ch = False; [(f.add(b), ch := True) for a, b in prem if a in f and b not in f]
+        return sorted(f)
+    def dag_traverse(edges, start):
+        g = nx.DiGraph(edges); return list(nx.descendants(g, start)) if start in g else []
+    def bat_and_ball(t, d): return (t - d) / 2.0
+    def bayesian_update(p, l, fp): return p * l / (p * l + (1 - p) * fp)
+    def modular_arithmetic(a, b, m): return (a + b) % m
+    def all_but_n(t, n): return n
+    def parity_check(ns): return "even" if sum(ns) % 2 == 0 else "odd"
+    def confidence_from_agreement(s): return 1.0 - (max(s) - min(s)) if s else 0.0
+
+GT = {"more", "bigger", "taller", "larger", "older", "faster", "greater", "heavier", "higher", "longer"}
+LT = {"less", "smaller", "shorter", "younger", "slower", "lighter", "fewer", "lower"}
+UNIT = {"g": 0.001, "kg": 1.0, "cm": 0.01, "m": 1.0, "km": 1000.0}
+CMP = r"(\w+)(?: is| are| was| were| runs| costs| weighs)? (not )?(?:much )?(\w+) than (\w+)"
+RULES = ["trans", "contra", "negflip", "mp", "numeric"]
+
+def _num(tok):
+    m = re.match(r"(\d+(?:\.\d+)?)\s*(kg|g|cm|km|m)?$", tok)
+    return float(m.group(1)) * UNIT.get(m.group(2) or "kg", 1.0) if m else None
+
+def _norm(s):
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9.$% ]", " ", s.lower())).strip()
+
+def _extract(text):
+    """Return (edges[(a, rel, b)], facts[str]) from text."""
+    t, E, F = _norm(text), [], []
+    for a, neg, adj, b in re.findall(CMP, t):
+        rel = "GT" if adj in GT else "LT" if adj in LT else None
+        if rel: E.append((a, ("N" if neg else "") + rel, b))
+    for a, b in re.findall(r"(\w+) (?:causes|leads to|results in) (\w+)", t): E.append((a, "CAUSES", b))
+    for a, b in re.findall(r"(\w+) (?:came|comes|is|was|arrived|finished|happened)? ?(?:before|earlier than) (\w+)", t):
+        E.append((a, "BEFORE", b))
+    for a, b in re.findall(r"(\w+) (?:came|comes|is|was|arrived|finished|happened)? ?(?:after|later than) (\w+)", t):
+        E.append((b, "BEFORE", a))
+    for a, b in re.findall(r"(\w+) (?:equals|is the same as|is equal to) (\w+)", t): E.append((a, "EQ", b))
+    for a, b in re.findall(r"if (.+?),? then (.+?)(?:[.;?]|$)", t) + re.findall(r"if ([^,]+?), ([^.;?]+)", t):
+        E.append((a.strip(), "IMPLIES", b.strip()))
+    for s in re.split(r"[.;?]", t):
+        s = s.strip()
+        if s and not s.startswith("if") and " than " not in s: F.append(s)
+    return E, F
+
+class ReasoningTool:
+    def __init__(self):
+        self.decay, self.cache = 0.7, {}
+
+    # ---------- graph closure under a rule subset (the NAS search space) ----------
+    def _close(self, edges, facts, rules):
+        G = nx.MultiDiGraph(); fired = 0
+        for a, r, b in edges: G.add_edge(a, b, rel=r)
+        for a in facts: G.add_node(a, fact=True)
+        if "negflip" in rules:
+            for a, b, d in list(G.edges(data=True)):
+                if d["rel"] in ("NGT", "NLT"): G.add_edge(b, a, rel=d["rel"][1:]); fired += 1
+        if "numeric" in rules:
+            lits = [(n, _num(n)) for n in G.nodes if _num(n) is not None]
+            for (x, vx), (y, vy) in itertools.permutations(lits, 2):
+                if vx > vy: G.add_edge(x, y, rel="GT"); fired += 1
+        if "contra" in rules:
+            for a, b, d in list(G.edges(data=True)):
+                if d["rel"] == "IMPLIES": G.add_edge("not " + b, "not " + a, rel="IMPLIES"); fired += 1
+        if "trans" in rules:
+            for r in ("GT", "LT", "IMPLIES", "CAUSES", "BEFORE", "EQ"):
+                sub = nx.DiGraph([(a, b) for a, b, d in G.edges(data=True) if d["rel"] == r])
+                if sub.number_of_edges() and check_transitivity([(a, r, b) for a, b in sub.edges]) is not False:
+                    for a in sub.nodes:
+                        for b in dag_traverse(list(sub.edges), a):
+                            if not sub.has_edge(a, b): G.add_edge(a, b, rel=r); fired += 1
+        if "mp" in rules:
+            prem = [(a, b) for a, b, d in G.edges(data=True) if d["rel"] == "IMPLIES"]
+            derived = set(modus_ponens(prem, [f for f in G.nodes if G.nodes[f].get("fact")]))
+            for f in derived:
+                if not G.nodes.get(f, {}).get("fact"): G.add_node(f, fact=True); fired += 1
+        return G, fired
+
+    def _contradictions(self, G):
+        n = 0
+        for a, b, d in G.edges(data=True):
+            r = d["rel"]
+            if r in ("GT", "LT", "BEFORE") and any(x["rel"] == r for x in G.get_edge_data(b, a, {}).values()): n += 1
+            if r == "GT" and any(x["rel"] in ("EQ", "LT") for x in G.get_edge_data(a, b, {}).values()): n += 1
+        n += sum(1 for f in G.nodes if G.nodes[f].get("fact") and G.nodes.get("not " + f, {}).get("fact"))
+        return n
+
+    def _select_rules(self, edges, facts):
+        """NAS + pragmatism: best predictor score among contradiction-free rule subsets."""
+        best = (set(), -1)
+        for k in range(len(RULES), 0, -1):
+            for sub in itertools.combinations(RULES, k):
+                G, fired = self._close(edges, facts, set(sub))
+                if self._contradictions(G) == 0 and fired > best[1]: best = (set(sub), fired)
+        return best[0]
+
+    # ---------- network scoring of a candidate's claims ----------
+    def _cascade(self, G, claims, cfacts):
+        s = 0.0; touched = False
+        for a, r, b in claims:
+            if a not in G or b not in G: continue
+            touched = True
+            fwd = nx.DiGraph([(x, y) for x, y, d in G.edges(data=True) if d["rel"] == r.lstrip("N")])
+            try: L = nx.shortest_path_length(fwd, a, b)
+            except (nx.NetworkXNoPath, nx.NodeNotFound): L = None
+            try: R = nx.shortest_path_length(fwd, b, a)
+            except (nx.NetworkXNoPath, nx.NodeNotFound): R = None
+            sup, con = (R, L) if r.startswith("N") else (L, R)
+            if sup is not None: s += self.decay ** sup
+            if con is not None: s -= 2 * self.decay ** con
+        for f in cfacts:
+            if f in G and G.nodes[f].get("fact"): s += 1; touched = True
+            if ("not " + f) in G and G.nodes["not " + f].get("fact"): s -= 2; touched = True
+        return s if touched else 0.0
+
+    # ---------- constructive computation via arithmetic primitives ----------
+    def _compute(self, prompt):
+        t = _norm(prompt); nums = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", t)]
+        try:
+            if "more than" in t and "total" in t and len(nums) >= 2: return bat_and_ball(nums[0], nums[1])
+            if re.search(r"remainder|mod(?:ulo)?\b", t) and len(nums) >= 2: return modular_arithmetic(nums[0], 0, nums[1])
+            if re.search(r"all but (\d+)", t): return all_but_n(nums[0], float(re.search(r"all but (\d+)", t).group(1)))
+            if re.search(r"prevalence|base rate|false positive", t) and len(nums) >= 3:
+                p, l, fp = [x / 100 if x > 1 else x for x in nums[:3]]; return round(bayesian_update(p, l, fp), 3)
+            if re.search(r"odd or even|parity", t): return parity_check([int(x) for x in nums])
+            if re.search(r"(bigger|larger|greater|smaller|less)", t) and len(nums) == 2:
+                return max(nums) if re.search(r"bigger|larger|greater", t) else min(nums)
+        except Exception: return None
+        return None
+
+    def _ncd(self, a, b):
+        c = lambda s: len(zlib.compress(s.encode()))
+        return (c(a + b) - min(c(a), c(b))) / max(c(a), c(b), 1)
+
+    def _meta_confidence(self, prompt):
+        t = _norm(prompt); cap = 1.0
+        if re.search(r"have you (stopped|quit|given up)|why did .* (fail|stop|quit)|still ", t): cap = min(cap, 0.2)
+        if re.search(r"\b(every|each|all) \w+ .* (a|an) \w+", t): cap = min(cap, 0.25)
+        if re.search(r"\w+ (told|asked|said to) \w+ (he|she|they) ", t) and re.search(r"\bwho\b", t): cap = min(cap, 0.2)
+        if re.search(r"\beither\b .* \bor\b", t) and not re.search(r"only|exactly|must", t): cap = min(cap, 0.25)
+        if re.search(r"\b(best|worst|favorite|most beautiful|greatest)\b", t): cap = min(cap, 0.25)
+        if re.search(r"survivor|sunk cost|already (spent|invested)|regress|average again", t): cap = min(cap, 0.25)
+        if re.search(r"valid|sound|strong(er)? argument", t): cap = min(cap, 0.3)
+        return cap
+
+    def evaluate(self, prompt, candidates):
+        E, F = _extract(prompt)
+        rules = self._select_rules(E, F); G, _ = self._close(E, F, rules)
+        comp = self._compute(prompt); out = []
+        for c in candidates:
+            ce, cf = _extract(c); cl = _norm(c)
+            if cl in ("yes", "no", "true", "false"):
+                q = [(a, r, b) for a, r, b in E]; ce, cf = q if q else [], []
+                if cl in ("no", "false"): ce = [(a, ("" if r.startswith("N") else "N") + r.lstrip("N"), b) for a, r, b in ce]
+            struct = self._cascade(G, ce, cf)
+            cn = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", cl)]
+            cs = 0.0
+            if comp is not None:
+                cs = 1.0 if (isinstance(comp, str) and comp in cl) or any(abs(x - comp) < 1e-6 for x in cn if not isinstance(comp, str)) else -0.5
+            ncd = 1.0 - self._ncd(_norm(prompt), cl)
+            score = 0.6 * (0.5 * cs + 0.5 * max(-1.0, min(1.0, struct))) + 0.3 * struct / (1 + abs(struct)) + 0.1 * ncd
+            out.append({"candidate": c, "score": round(score, 4), "reasoning":
+                        "rules=%s cascade=%.2f compute=%s ncd=%.2f" % (sorted(rules), struct, comp, ncd)})
+        return sorted(out, key=lambda d: -d["score"])
+
+    def confidence(self, prompt, answer):
+        cap = self._meta_confidence(prompt)
+        E, F = _extract(prompt); comp = self._compute(prompt)
+        if not E and not F and comp is None: return min(cap, 0.2)
+        r = self.evaluate(prompt, [answer])[0]
+        cl = _norm(answer); cn = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", cl)]
+        if comp is not None:
+            hit = (isinstance(comp, str) and comp in cl) or any(abs(x - comp) < 1e-6 for x in cn if not isinstance(comp, str))
+            return min(cap, 0.9 if hit else 0.1)
+        s = r["score"]
+        agree = confidence_from_agreement([s, 0.3 * (1 if s > 0 else -1) + 0.1])
+        return min(cap, max(0.05, 0.5 + 0.4 * max(-1.0, min(1.0, s)) * (0.5 + 0.5 * agree)))
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate
