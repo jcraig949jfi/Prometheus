@@ -17,8 +17,9 @@ index (2026-09-19 pass): 11 engines registered (4 with experiments:
   roles/Atlas/reports/REPORT_2026-09-19.txt.
 coverage: M1 only. M2-local evidence (frontier runs/, the M2 SFE ledger,
   M2 logs) is recorded as EXPECTED:M2, not as absent.
-monitors owned or fed: none. No loop is scheduled; harvests run on
-  command (ATLAS-21 registers one before any launch).
+monitors owned or fed: AtlasIndexLoop (MONITORS.md; session loop, ~60 min,
+  bound 6 non-productive ticks, accountable Atlas-M2; tick in loop/TICK.md).
+  Pace per operator: not urgent, a stretch goal.
 sibling seat: Atlas-M2 (m2-8f915f3d, M2), its own seat, assisting with
   the M2-resident part of the index on the operator's instructions
   (roles/Atlas/SIBLINGS.md).

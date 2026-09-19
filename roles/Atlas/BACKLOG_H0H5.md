@@ -5,6 +5,8 @@ Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
 Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
 engine row marked IGNORED, its local root removed from the registry).
+Closed 2026-09-19: ATLAS-21 -- AtlasIndexLoop registered in MONITORS.md
+(bound 6 non-productive ticks, accountable Atlas-M2) before launch; tick in loop/TICK.md.
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
 ATLAS-05 | Write a git adapter for archaeon/wse/ledgers (wse-survey-v01, ssf-c1..3) so the 4 PEW-only campaigns get receipts, attempts and facts | TOOLS | beta | S | none | archaeon.wse/* experiments with n_attempts > 0 and source links to git
@@ -23,7 +25,6 @@ ATLAS-17 | Add rule R15 'effects by world / organism family' (a measured effect 
 ATLAS-18 | Compute eligibility counts beside every comb rule (how many subjects COULD fire) so 'nothing fired' and 'nothing could fire' are distinguishable | EVIDENCE | beta | S | none | signal.evidence carries eligible_n; report prints it per rule
 ATLAS-19 | Parse CW01 BOUNDARY/CYCLE reports and Archaeon DECISIONS for rerun reasons (bug fix, ruler repair, more telemetry) onto attempt edges | TOOLS | beta | M | none | fraction of RERUN_OF edges with reason UNKNOWN reported before/after
 ATLAS-20 | Read the frontier digests (EPOCH_*.json) as campaign-level observations and conclusions | TOOLS | beta | S | none | conclusions on archaeon.frontier/deep-frontier with digest pointers
-ATLAS-21 | Register a scheduled harvest loop in roles/base-role/MONITORS.md with bound N non-productive ticks and accountable seat BEFORE launching it | ENGINE | beta | S | operator (cadence) | MONITORS.md row; loop parks itself after N ticks with zero new rows
 ATLAS-22 | Publish the manifest as a read-only view set (atlas.v_manifest etc.) documented for seats; no seat is asked to emit data for Atlas | ENGINE | beta | S | none | roles/Atlas/QUERIES.md with 10 tested queries
 ATLAS-23 | Report the committed cleartext DB credentials in evidence_wiki/config.json to Mnemosyne if not already tracked (seen while wiring the connection; not Atlas's lane) | ENGINE | program | S | none | comms post id or a line citing the existing tracker entry
 ATLAS-25 | Add a per-campaign coverage table (what each adapter extracted vs the files present) so a recomb can target the biggest unextracted shapes first (v_shape_inventory) | TOOLS | beta | S | none | report section listing top 20 unextracted shapes by count
