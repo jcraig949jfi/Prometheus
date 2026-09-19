@@ -16,7 +16,7 @@ Every role below carries the banner on its primary document(s):
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
 | Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
-| Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; new seat, charter PENDING the operator's discussion; self-service row per Archaeon ruling #39) |
+| Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; charter ADOPTED the same day (pressure engineering / primordial soup sandbox), verbatim in roles/Ares/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Ares/superseded/; self-service row per Archaeon ruling #39) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
