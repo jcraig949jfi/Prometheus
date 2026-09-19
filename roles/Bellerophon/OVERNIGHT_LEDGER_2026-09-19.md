@@ -831,3 +831,18 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   (scan clean, nothing partial); resume=True keeps them (resumed_runs 2), regroups the 5 remaining runs (4 + 1;
   the kept receipts still say batch_size 4) and the final file equals a clean run on every science field. No
   kernel change; the expectation I first wrote for the regrouping was wrong, the behaviour was right.
+
+## C119 (07:45Z) checkpoints did not carry the kernel's own wrappers, nor a world's mutable params
+- RED (4 parametrised cases): an episode with a delay / permute / schedule wrapper checkpointed at tick 9 and
+  resumed in fresh objects diverged from the uninterrupted run -- the delay case at the FIRST resumed tick
+  (buffer empty: observations repeated), the schedule case in the world's final charge (99790 vs 99760).
+- two defects: (1) make_checkpoint snapshotted the world THROUGH the wrappers' __getattr__ -- the wrappers'
+  own state (delay buffers; the schedule's tick count and position) was never in the checkpoint;
+  ObservationWrapper and ScheduleWrapper now snapshot/restore themselves around the inner world (permutations
+  re-derived from their seeds). (2) a world's RUNTIME-MUTABLE PARAMS are state and were not in any world's
+  snapshot: after a schedule changed step_cost at tick 4, a resumed world had the original back. integer, grid
+  and integer_batch (scalar face) now carry {MUTABLE params} in their snapshot; admission's extensions check
+  demonstrates it (a world declaring snapshot + mutable_params whose snapshot forgets a change is refused).
+- mutants M70-M72 CAUGHT (M72 by admission itself: every reference component); ledger 71/71. Suite 326 / 6.
+- the C1 lesson in another form: a state that lives in the kernel (not in the world) is still state that a
+  checkpoint must carry. The honest list gains nothing; the checkpoint contract gains a sentence.

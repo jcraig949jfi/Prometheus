@@ -53,7 +53,14 @@ def test_extensions_check_fails_a_declared_but_undemonstrable_extension():
         def restore(self, snapshot):
             pass
     res = admit("world.badsnap.test", _reg("world.badsnap.test", BadSnapshot))
-    assert "extensions" in res.failed and res.checks["extensions"]["undemonstrable"] == ["ext.snapshot.v1"]
+    assert "extensions" in res.failed and res.checks["extensions"]["undemonstrable"][0] == "ext.snapshot.v1"     # (a no-op restore also loses the params, C119)
+
+    class ParamsNotInSnapshot(IntegerWorld):          # C119: declares mutable params + snapshot, but a snapshot forgets a set_params change
+        kind = "world.paramsforgot.test"
+        def snapshot(self):
+            import json as _j; d = _j.loads(super().snapshot().decode()); d.pop("params", None); return _j.dumps(d).encode()
+    res = admit("world.paramsforgot.test", _reg("world.paramsforgot.test", ParamsNotInSnapshot))
+    assert "extensions" in res.failed and any("mutable_params" in x for x in res.checks["extensions"]["undemonstrable"])
 
 
 def test_replay_check_fails_a_world_that_declares_bit_and_drifts():

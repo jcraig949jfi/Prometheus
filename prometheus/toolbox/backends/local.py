@@ -184,6 +184,14 @@ class ObservationWrapper:
             obs = buf[0] if len(buf) <= self.delay else buf[-1 - self.delay]
         return obs
 
+    # C119: a checkpoint must carry the WRAPPER's state too (delay buffers), not only the world's behind it
+    def snapshot(self) -> bytes:
+        return json.dumps({"inner": self.w.snapshot().hex(), "buf": {str(k): v for k, v in self._buf.items()}}, sort_keys=True).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d["inner"]))
+        self._buf = {int(k): v for k, v in d["buf"].items()}; self._perms = None        # permutations are re-derived from their seeds
+
     def __getattr__(self, name):
         return getattr(self.w, name)
 
@@ -278,6 +286,13 @@ class ScheduleWrapper:
         self._t += 1
         self._apply()
         return done
+
+    # C119: the schedule's own tick count and position travel with the checkpoint
+    def snapshot(self) -> bytes:
+        return json.dumps({"inner": self.w.snapshot().hex(), "t": self._t, "i": self._i}, sort_keys=True).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d["inner"])); self._t = int(d["t"]); self._i = int(d["i"])
 
     def __getattr__(self, name):
         return getattr(self.w, name)
