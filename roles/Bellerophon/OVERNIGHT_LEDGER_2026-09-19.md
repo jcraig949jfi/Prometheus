@@ -1069,3 +1069,13 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   AttributeError on a None job. Now a GenerationIncomplete: the search returns stopped=<lowering status> with
   the reasons, nothing written. (A generation whose PLAYERS a substrate cannot instantiate had already been fine:
   lowering refuses only when the template itself is wrong.) Mutant M86 CAUGHT; ledger 85/85.
+
+## C150 (09:49Z) the final ledger found a lost catch: M65 SURVIVED
+- the closing full run: 84/85 -- M65 (TASK_CHANGE skipped for an env finishing at the scheduled tick) SURVIVED.
+  It had been caught at C112 by the random batched==scalar property at fuzz seed 107; widening the generator
+  at C140 (wrapped engines) shifted every seed's composition and the catching case vanished. A property's power
+  is a function of its generator: change the generator, re-check what it caught. Deterministic reproducer added
+  (an env whose players die on step t receives the change fired after that step; the reference world does too).
+  M65 CAUGHT again; ledger 85/85 (merged). Suite 1421 passed / 6 skipped.
+- register lesson (the last of the night): every defect caught only by a random property gets a hand-written
+  reproducer before the property's generator is changed.

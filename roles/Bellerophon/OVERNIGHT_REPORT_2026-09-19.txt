@@ -261,3 +261,16 @@ file could be truncated by a --only run) and C140 (a test-side normalisation bug
 then caught: M66 by a stronger test, M80 by re-anchoring past an equivalent mutant); census 42/42; fuzz
 generator now includes the wrapped engines. The addendum's items 12-18 stand; item 6's counts are these.
 --------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+FINAL TALLY (09:49Z, T+6:58). C142-C150 after the 09:12Z closing numbers: more properties (objective laws,
+lowering laws, split laws, wall budget + resume on both paths, whole-platform replay on WSL Linux 3.12
+without numpy: 38 files / 1296 runs / 0 divergent); four more defects with reproducers and mutants --
+C146 duplicate sweep values (a point ran twice; resume double-counted), C148 a FAILED run crashed row
+ingestion so a generation could never commit + selectors used the process-global registry + an untouchable
+representation crashed propose, C149 a refused lowering crashed evolve. The closing ledger itself found a
+LOST catch (C150: widening the fuzz generator moved the seed that caught M65; a hand reproducer now holds
+it). ENDING COMMIT 8e921fb66 + this commit (147 commits since e17eb94c4); CYCLES 150; TESTS 223 functions,
+suite 1421 passed / 6 skipped (50 s); MUTATION LEDGER 85 mutants / 85 CAUGHT (18 min); census 42/42.
+Redis, NPE, Box2D: unchanged (items 14, 15 and 18 of the addendum).
+--------------------------------------------------------------------------------
