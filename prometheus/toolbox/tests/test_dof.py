@@ -312,3 +312,14 @@ def test_observation_wrapper_laws_over_random_worlds(seed):
         assert a == b and raw.trace_hash() == w.trace_hash(), (seed, t)             # the wrappers never touch the world
         if a:
             break
+
+
+# C146 (fuzz seed 1839 under the wall-budget property): a sweep axis with two IDENTICAL values made two RunSpecs
+# with the same key -- the point ran twice and a resume counted one receipt as two prior runs. Refused at validate().
+def test_duplicate_sweep_values_are_refused_with_the_axis_named():
+    from prometheus.toolbox.examples.exp_001_delay_sweep import build
+    e = build(); e.sweep = {"world.params.world_seed": [1, 2, 1]}
+    d = e.validate(); assert d and any("duplicate" in m and "world.params.world_seed" in m for m in d), d
+    e.sweep = {"world.params.world_seed": [1, 2]}; assert not e.validate()
+    pop = [random_statemachine(1).manifest()]
+    e.sweep = {"players": [pop, list(pop)]}; assert any("duplicate" in m for m in e.validate())

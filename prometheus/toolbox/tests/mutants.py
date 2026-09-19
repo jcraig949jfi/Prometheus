@@ -115,6 +115,8 @@ MUTANTS = [
     ("M79", "state.py", "        if len(s[\"r\"]) > s[\"maxlen\"]:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "        if False:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "streams grow past maxlen"),
     ("M80", "state.py", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._s, self._z):", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._z):", "end_scope leaves streams alive (anchor: end_scope, not advance -- the first anchor hit an equivalent mutant)"),
     ("M81", "state.py", "        self._s = {k: dict(e, r=[(rid, tuple(rec)) for rid, rec in e[\"r\"]]) for k, e in d[\"s\"].items()}", "        self._s = {}", "a restored device forgets its streams"),
+    # twenty-second wave (C146): duplicate sweep values
+    ("M82", "ir.py", "            elif len({json.dumps(v, sort_keys=True, default=str) for v in vals}) != len(vals):", "            elif False:", "duplicate sweep values accepted (a point runs twice; resume double-counts)"),
 ]
 
 

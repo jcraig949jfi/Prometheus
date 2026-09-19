@@ -1034,3 +1034,12 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   between runs/batches with the reason and the not-started count in the summary; every written receipt is
   complete; resume=True finishes with resumed_runs == the receipts kept and 0 not started; the final rows equal
   an unbudgeted run's on trace hashes and status. No defect.
+
+## C146 (09:20Z) duplicate sweep values (found by widening C145's coverage guard)
+- C145's property exercised only 6 of 30 seeds; widened to 100 seeds with a guard (>= 15). Seed 1839 then failed:
+  the budgeted run wrote 1 receipt and the resume counted 2 prior runs. Rows: the fuzz's players sweep
+  [pop, pop[:1]] with ONE player gives two IDENTICAL sweep points -> two RunSpecs with the same key -> the point
+  ran twice in a clean run and one receipt satisfied both on resume.
+- fix: validate() refuses duplicate values on a sweep axis, naming the axis (a designer error, like an unknown
+  param). Test + mutant M82 CAUGHT; ledger 81/81 (merged). Suite 1357 passed / 6 skipped.
+- the guard did its job twice tonight: a thin property is a false green with extra steps.

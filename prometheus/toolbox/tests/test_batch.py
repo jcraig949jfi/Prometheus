@@ -415,7 +415,10 @@ def test_a_crash_between_two_receipts_of_one_batch_resumes_to_a_clean_result(tmp
 
 
 # ------------------------------------------------------------------------------------------ wall budget (C145)
-@pytest.mark.parametrize("seed", list(range(1800, 1830)))
+_WALL_COVERAGE = {"exercised": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(1800, 1900)))
 def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path, seed):
     """A tiny wall budget stops the job BETWEEN runs (or batches): every written receipt is complete, the summary
     names the reason and the count not started, and resume=True finishes to exactly the unbudgeted rows -- on the
@@ -428,6 +431,7 @@ def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path
     low = lower(e, REG)
     if not low.ok or len(low.job.runs) < 3:
         return
+    _WALL_COVERAGE["exercised"] += 1
     batch = 3 if seed % 2 else 0
     eb = Experiment.from_dict(e.to_dict()); eb.budget = dict(eb.budget, batch=batch, wall_s=1e-9)
     rep = execute(lower(eb, REG).job, tmp_path / "w.jsonl", REG)
@@ -441,3 +445,7 @@ def test_wall_budget_stops_between_runs_and_resume_finishes_identically(tmp_path
     key = lambda r: (r["arm"], json.dumps(r["sweep_point"], sort_keys=True), r["seed"])
     A = {key(r): r for r in read_all(tmp_path / "w.jsonl") if r["arm"] != "SUMMARY"}; B = {key(r): r for r in read_all(tmp_path / "c.jsonl") if r["arm"] != "SUMMARY"}
     assert set(A) == set(B) and all(A[k]["trace_hashes"] == B[k]["trace_hashes"] and A[k]["status"] == B[k]["status"] for k in B), seed
+
+
+def test_the_wall_budget_property_was_actually_exercised():
+    assert _WALL_COVERAGE["exercised"] >= 15, _WALL_COVERAGE

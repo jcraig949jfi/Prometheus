@@ -718,5 +718,14 @@
   "first_failure": "FAILED prometheus/toolbox/tests/test_integrity.py::test_checkpoint_resume_property_over_random_compositions[308]",
   "suite_tail": "1 failed, 477 passed, 1 deselected in 6.21s",
   "seconds": 6.5
+ },
+ {
+  "id": "M82",
+  "file": "ir.py",
+  "what": "duplicate sweep values accepted (a point runs twice; resume double-counts)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_batch.py::test_wall_budget_stops_between_runs_and_resume_finishes_identically[1839]",
+  "suite_tail": "1 failed, 117 passed, 1 deselected in 3.50s",
+  "seconds": 3.9
  }
 ]
