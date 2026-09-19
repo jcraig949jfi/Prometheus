@@ -802,3 +802,16 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   A 100k-row archive resumes from ~160 MB instead of ~1 GB.
 - full and compact runs give identical rows over 3 + 2 resumed generations. M68/M69 CAUGHT; ledger 68/68.
   Suite 317 passed / 6 skipped.
+
+## C116 (07:31Z) env independence (metamorphic) and the second soak (pareto + compact + batch)
+- metamorphic test on the batch world: permuting the env order permutes the traces; replacing the OTHER envs'
+  seeds and actions leaves an env's trace unchanged; abandoning a neighbour changes nothing -- three parameter
+  sets incl. regime/stoch/delay and a 2-player dying config. (The fixture first abandoned an env after it had
+  already died -- a fixture error read as a failure; abandon moved to tick 1.)
+- soak 2: 12 wall minutes, selector.pareto.v1, compact archive, budget.batch=4: 518 generations, 4662 rows,
+  archive 1.59 MB (340 B/row vs 935 full), files clean, markers in order, no halt; traced growth 21 KB/gen (the
+  soak's own locals, as in C107). Observation about the SELECTOR, not the kernel: the front collapsed to 2-3 rows
+  by gen ~130 (life saturates at the horizon, net at 99.7) and best_net never moved again in 390 generations --
+  a pure Pareto parent set has no diversity pressure; pt_d's MAP-Elites kept 46 cells alive. Recorded, not fixed
+  (a Pareto-per-cell selector would be the composition; a design choice for a day).
+- soak receipts deleted; science/SOAK_SEARCH_PARETO_COMPACT_2026-09-19.json keeps the per-gen rows.

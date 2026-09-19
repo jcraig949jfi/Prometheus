@@ -355,3 +355,28 @@ def test_delay_and_permute_wrappers_agree_across_paths_including_exp001(tmp_path
     assert all(S[k]["trace_hashes"] == B[k]["trace_hashes"] and S[k]["science"] == B[k]["science"] for k in S)
     # the manifest names the wrappers on the batched receipt too
     assert any(B[k]["components"]["world"]["manifest"].get("wrappers", {}).get("observation_delay") for k in B)
+
+
+# ------------------------------------------------------------------------------------------ env independence (C116, metamorphic)
+@pytest.mark.parametrize("params", [dict(), dict(regime_period=3, stoch_rate=2, action_delay=1), dict(n_players=2, start_charge=5)])
+def test_batch_envs_do_not_leak_into_each_other(params):
+    """An env's trace depends on its own seed and actions only: permuting the env order permutes the traces; replacing
+    the OTHER envs' seeds and actions leaves an env's trace unchanged; an abandoned neighbour changes nothing."""
+    from prometheus.toolbox.ref.worlds_integer_batch import IntegerWorldBatch
+    p = dict(world_seed=5, n_players=1, horizon=25); p.update(params); n = p["n_players"]
+    def run(seeds, acts_by_env, abandon_at=None):
+        w = IntegerWorldBatch(n_envs=len(seeds), **p); w.reset_batch(list(seeds)); done = [False] * len(seeds)
+        for t in range(25):
+            acts = [None if (abandon_at is not None and i == abandon_at[0] and t >= abandon_at[1]) else acts_by_env[i](t) for i in range(len(seeds))]
+            d = w.step_batch(acts); done = [a or b for a, b in zip(done, d)]
+            if all(done):
+                break
+        return w.trace_hashes()
+    A = lambda k: (lambda t: {pid: [(t + k + pid) % 8, (2 * t + k) % 8] for pid in range(n)})
+    base = run([1, 2, 3], [A(0), A(1), A(2)])
+    perm = run([3, 1, 2], [A(2), A(0), A(1)])
+    assert perm == [base[2], base[0], base[1]]
+    other = run([1, 9, 8], [A(0), A(7), A(5)])
+    assert other[0] == base[0] and other[1] != base[1]
+    aband = run([1, 2, 3], [A(0), A(1), A(2)], abandon_at=(1, 1))      # tick 1: before a 5-charge player can have died
+    assert aband[0] == base[0] and aband[2] == base[2] and aband[1] != base[1]
