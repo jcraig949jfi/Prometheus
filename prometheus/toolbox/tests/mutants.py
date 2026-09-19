@@ -123,6 +123,13 @@ MUTANTS = [
     ("M85", "search.py", "    sel.workdir = workdir; sel.compact = compact; sel.registry = registry           # C148: selectors resolve generators and transforms here", "    sel.workdir = workdir; sel.compact = compact", "selectors use the process-global registry"),
     # twenty-fourth wave (C149): refused lowering inside a search
     ("M86", "search.py", "    if not low.ok:                                             # C149: a refused lowering is a stopped search with the reasons, never an AttributeError\n        raise GenerationIncomplete(\"generation %d refused at lowering (%s): %s\" % (gen, low.status, \"; \".join(low.reasons)[:300]), low.status)", "    pass", "a refused lowering crashes the search"),
+    # twenty-fifth wave (atlas-bee S1-S5): the pilot scaffolding
+    ("M87", "ref/players.py", "        a = self.actions[self.t % len(self.actions)] if self.actions else []", "        a = self.actions[0] if self.actions else []", "open-loop sequence player replays only its first action; never advances or wraps"),
+    ("M88", "ref/substrates.py", "        self._c[\"ws_damage\"] += 1", "        pass", "kv weather does the damage but never counts a firing (erase reads zero ws_damage)"),
+    ("M89", "ref/substrates.py", "            self.dev.put(self.key, v, scope=self.scope, ttl=self.ttl, player=self.player); self._c[\"ws_writes\"] += 1", "            self.dev.put(self.key, v, scope=self.scope, ttl=self.ttl, player=self.player)", "the sham rewrite is free: it restores the value but never pays the write it should"),
+    ("M90", "search.py", "                w = sum(weights.values()); row[\"objective\"] = sum(weights[k] * per[k] for k in per) / w", "                w = sum(weights.values()); row[\"objective\"] = sum(per[k] for k in per) / len(per)", "the battery objective is the unweighted mean, ignoring the variant weights"),
+    ("M91", "search.py", "                                  \"origin\": ((r[\"_player_manifest\"].get(\"meta\") or {}).get(\"origin\") or \"resident\"),          # atlas-bee S3", "                                  \"origin\": \"resident\",          # atlas-bee S3", "the archive cannot tell an import lineage from a resident one (every row reads resident)"),
+    ("M92", "backends/local.py", "        ep = ep % max(1, int(pol.get(\"distinct\", 1)))", "        ep = ep", "recurring episode seeds do not cycle; every episode gets a distinct seed after all"),
 ]
 
 

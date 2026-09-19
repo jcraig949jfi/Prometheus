@@ -38,7 +38,7 @@ SM = ("statemachine.v1", "statemachine.v2", "statemachine.v3")
 
 class ShuffleTransform:
     kind = "transform.shuffle.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1", "player.sequence.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
@@ -46,7 +46,9 @@ class ShuffleTransform:
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj); s = stream("shuffle", rng_seed, spec.representation)
         pl = copy.deepcopy(spec.payload)
-        if spec.representation in SM:
+        if spec.representation == "sequence.v1":
+            pl["actions"] = _shuffle([list(a) for a in pl["actions"]], s)          # the ticks permuted; the multiset of action vectors kept
+        elif spec.representation in SM:
             flat = _shuffle([cell for row in pl["table"] for cell in row], s); nb = pl["n_buckets"]
             pl["table"] = [flat[i * nb:(i + 1) * nb] for i in range(pl["n_states"])]
         elif spec.representation == "proteus.tape.v0":
@@ -61,13 +63,16 @@ class ShuffleTransform:
 
 class FreshTransform:
     kind = "transform.fresh.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.proteus.tape.v0", "player.rewrite.v1", "player.sequence.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
 
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj)
+        if spec.representation == "sequence.v1":
+            pl = spec.payload
+            return P.random_sequence(rng_seed, pl["length"], pl["width"], pl["act_range"], meta={"transform": self.kind})
         if spec.representation == "statemachine.v3":
             pl = spec.payload
             return P.random_statemachine_v3(rng_seed, pl["n_states"], pl["n_buckets"], pl["width"], pl["act_range"], pl["mem_range"], meta={"transform": self.kind})
@@ -110,13 +115,18 @@ class PointMutationTransform:
     """transform.point_mutation.v1 (C26): change exactly ONE table cell of a state machine (next state, one action
     value, or -- for v2/v3 -- the memory write / op argument). The search operator; shape and cost preserved."""
     kind = "transform.point_mutation.v1"
-    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3"})
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2", "player.statemachine.v3", "player.sequence.v1"})
 
     def manifest(self) -> dict:
         return {"kind": self.kind, "accepts": sorted(self.accepts)}
 
     def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
         spec = _spec(obj)
+        if spec.representation == "sequence.v1":                 # atlas-bee S1: one action value of one tick steps away
+            pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
+            t = s.below(len(pl["actions"])); k = s.below(len(pl["actions"][t]))
+            pl["actions"][t][k] = (pl["actions"][t][k] + 1 + s.below(max(1, pl["act_range"] - 1))) % pl["act_range"]
+            return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed, parent=spec.meta.get("fingerprint")))
         if spec.representation not in SM:
             raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
         pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
