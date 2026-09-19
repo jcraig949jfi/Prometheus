@@ -11,7 +11,7 @@ import hashlib
 import json
 import random
 
-from . import tasks as tasks_mod
+from . import streams, tasks as tasks_mod
 from .artifacts import BlockStore
 from .player import run_task
 from .workspace import Workspace
@@ -27,8 +27,13 @@ CONDITIONS = (
 
 
 def task_cost(r: dict, cfg: dict) -> float:
+    """Adaptation cost of one task. Under 'unsolved_charged_full_budget' an unsolved task is
+    charged its whole interaction budget (DESIGN_C1 s3)."""
     k = cfg["costs"]["steps_per_interaction"]
-    return r["interactions_used"] + (r["vm_steps_used"] + r["ws_cost_units"]) / float(k)
+    inter = r["interactions_used"]
+    if cfg["costs"].get("unsolved_charged_full_budget", False) and not r["success"]:
+        inter = r["interaction_budget"]
+    return inter + (r["vm_steps_used"] + r["ws_cost_units"]) / float(k)
 
 
 def lifetime_metrics(results: list, cfg: dict) -> dict:
@@ -45,6 +50,11 @@ def lifetime_metrics(results: list, cfg: dict) -> dict:
     retained = sum((r["workspace_bytes"] + r["artifact_bytes"]) / float(cap) for r in results) / n
     efficiency = competence / (1.0 + experience + compute + retained)
     curve = [round(task_cost(r, cfg), 4) for r in results]
+    k = float(cfg["costs"]["steps_per_interaction"])
+    solved = sum(1 for r in results if r["success"])
+    charged = sum(curve)
+    max_cost = sum(r["interaction_budget"] + r["step_budget"] / k for r in results)
+    c1_fitness = solved + 0.5 * (1.0 - min(1.0, charged / max_cost)) if max_cost > 0 else float(solved)
     by_depth = {}
     for r, c in zip(results, curve):
         by_depth.setdefault(r["depth"], []).append(c)
@@ -74,6 +84,11 @@ def lifetime_metrics(results: list, cfg: dict) -> dict:
         "compute": round(compute, 4),
         "retained_state": round(retained, 5),
         "C0_EFFICIENCY": round(efficiency, 5),
+        "C1_FITNESS": round(c1_fitness, 5),
+        "charged_cost_total": round(charged, 3),
+        "max_cost_total": round(max_cost, 3),
+        "fitness": round(c1_fitness if cfg["costs"].get("fitness", "c0") == "c1" else efficiency, 5),
+        "invalid_actions_total": sum(r.get("invalid_actions", 0) for r in results),
         "successes": sum(1 for r in results if r["success"]),
         "tasks": len(results),
         "interactions_total": sum(r["interactions_used"] for r in results),
@@ -150,6 +165,7 @@ def run_lifetime(player, tasks, cfg, condition: str = "ACCUMULATED", seed: int =
             "invocations": {str(k): v for k, v in blocks.invocations.items()},
             "edges": [list(e) for e in blocks.edges],
             "final_blocks": [b.to_dict() for b in blocks.blocks.values()],
+            "invocation_log": list(blocks.invocation_log),
         },
         "reset_points": sorted(points),
     }
@@ -179,6 +195,8 @@ def run_remainder(player, tasks, cfg, start_index: int, ws_snap=None, blocks_sna
         "replay_hash": replay_hash(results),
         "task_results": strip_trajectories(results),
         "artifact_invocations": {str(k): v for k, v in blocks.invocations.items()},
+        "final_blocks": [b.to_dict() for b in blocks.blocks.values()],
+        "invocation_log": list(blocks.invocation_log),
     }
 
 
@@ -207,8 +225,12 @@ def causal_controls(player, tasks, cfg, seed: int = 0) -> dict:
     if snap["blocks"]["blocks"]:
         out["ARTIFACT_ABLATION_ALL"] = run_remainder(
             player, tasks, cfg, snap_i, snap["ws"], {"blocks": {}, "next_id": snap["blocks"]["next_id"]})["metrics"]
-    # F: blocks only into a fresh copy
-    out["ARTIFACT_TRANSPLANT"] = run_remainder(player, tasks, cfg, snap_i, None, snap["blocks"])["metrics"]
+    # F: blocks only into a fresh copy (full record kept: the H witness reads its blocks and log)
+    ft = run_remainder(player, tasks, cfg, snap_i, None, snap["blocks"])
+    out["ARTIFACT_TRANSPLANT"] = ft["metrics"]
+    out["ARTIFACT_TRANSPLANT_detail"] = {"final_blocks": ft["final_blocks"], "invocation_log": ft["invocation_log"],
+                                         "snapshot_blocks": {str(k): v[0] for k, v in snap["blocks"]["blocks"].items()},
+                                         "task_results": ft["task_results"]}
     # G: everything into a fresh copy
     out["FULL_WORKSPACE_TRANSPLANT"] = run_remainder(player, tasks, cfg, snap_i, snap["ws"], snap["blocks"])["metrics"]
     # H: code only

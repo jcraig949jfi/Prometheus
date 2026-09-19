@@ -185,3 +185,31 @@ configs/c1.json (hash in every receipt), world_c1.py (fingerprint),
 generator (tasks_c1.py; fingerprints of a reference stream), fitness,
 qualification protocol (suite "qual", seeds 201-203, battery A-J),
 variation operators, and this file's predictions.
+
+## 10. Addendum at the freeze (2026-09-19, before any search)
+
+Gate run: crius/runs/gate_c1/GATE.md (A-H PASS on gate streams 301-303).
+config_hash of configs/c1.json at the freeze: 32dfb243be9fdec9; world
+7c53db874324b532; generator 624728b00fdd3f2f. Nothing in s1-s5 changed.
+Control fixes made while the gate was failing on the CONTROL, each dated
+here (the world, generator, metric and operators were not touched):
+  F1 template blocks read the LIVE inverse map from the calibration block
+     (state[2] = its id) instead of a copy taken before calibration was
+     complete; ablating the calibration block now breaks every template.
+  F2 a template is recorded only when it explains >= 2 solved single tasks
+     (witness pairs kept in the calibration block's state[4], window 24);
+     a block whose execution contradicts its own description is deleted.
+  F3 the control probes single primitives (12 interactions) before planning,
+     so one-step procedures are learned even when compositions of known
+     templates would also solve the task (seed 303: 41 -> 50/50).
+  Gate proxies fixed: D counts TABLE_MEMO's explicit replay counter (cell
+     255) and PROCEDURE/NOCAL tasks whose solving action was emitted inside
+     an invoked block (TaskResult.success_in_block), not "cheap solves".
+Correction to the C0 packet (F1 mechanism): the C0 clock was BLK_NEW's
+monotonically growing ids exceeding the loop bound R2 = num_ops, not a
+failure value aliasing RESET; see tests/test_c1_integrity.py. The
+integrity change (FAIL sentinel, strict ACT) stands on ruling 5; it also
+retired the C0 action-script fossil, whose immediates were wrap-around
+aliases (38/50 -> 3/50).
+Search plan: arms random, seeded, recombination x search seeds 1, 2, 3;
+300 iterations; mu 8 lambda 24; one rotating stream per iteration.

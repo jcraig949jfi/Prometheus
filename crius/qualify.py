@@ -18,7 +18,7 @@ import random
 import time
 from multiprocessing import Pool
 
-from . import baselines, evaluate, receipts, tasks as tasks_mod, vm
+from . import baselines, baselines_c1, evaluate, receipts, streams, tasks as tasks_mod, vm
 from .player import VMPlayer
 
 _W = {}
@@ -26,8 +26,12 @@ _W = {}
 
 def _init(cfg, suite):
     _W["cfg"] = cfg
-    _W["tasks"] = {s: tasks_mod.make_lifetime(cfg, s, suite) for s in cfg["seeds"]["qualification"]}
+    _W["tasks"] = {s: streams.lifetime(cfg, s, suite) for s in cfg["seeds"]["qualification"]}
     _W["suite"] = suite
+
+
+def _baselines_for(cfg):
+    return baselines_c1 if streams.world_id(cfg) == "c1" else baselines
 
 
 def _job(args):
@@ -36,7 +40,7 @@ def _job(args):
     if spec["kind"] == "vm":
         player = VMPlayer(vm.program_from_json(spec["program"]), name=label)
     else:
-        player = baselines.make_baseline(spec["name"])
+        player = _baselines_for(cfg).make_baseline(spec["name"])
     tasks = _W["tasks"][seed]
     t0 = time.time()
     bat = evaluate.full_battery(player, tasks, cfg, seed=seed)
@@ -90,7 +94,7 @@ def select(run_dir: str, top: int, contemporaries: int, ancestors: int, seed: in
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True, help="run id under crius/runs (or a path)")
-    ap.add_argument("--suite", default="heldout_v1")
+    ap.add_argument("--suite", default=None)
     ap.add_argument("--config", default=None)
     ap.add_argument("--top", type=int, default=3)
     ap.add_argument("--contemporaries", type=int, default=3)
@@ -104,6 +108,8 @@ def main(argv=None):
     config_path = args.config or run_meta["config_path"]
     cfg = receipts.load_config(config_path)
     assert receipts.config_hash(cfg) == run_meta["config_hash"], "config hash differs from the search run's"
+    if args.suite is None:
+        args.suite = streams.qualification_suite(cfg)
     out = os.path.join(run_dir, "qualify_%s" % args.suite)
     os.makedirs(out, exist_ok=True)
     meta = receipts.run_meta(cfg, config_path)
@@ -115,7 +121,7 @@ def main(argv=None):
         for seed in cfg["seeds"]["qualification"]:
             jobs.append((label, spec, seed, r["parent_id"]))
     if not args.no_baselines:
-        for name in baselines.ALL_NAMES:
+        for name in _baselines_for(cfg).ALL_NAMES:
             for seed in cfg["seeds"]["qualification"]:
                 jobs.append((name, {"kind": "python", "name": name, "role": "baseline"}, seed, None))
     _W["meta"] = meta
@@ -175,7 +181,8 @@ def summarize(rec: dict) -> dict:
     return {
         "label": rec["label"], "role": rec["role"], "candidate_hash": rec["candidate_hash"], "seed": rec["seed"],
         "search_iteration": rec.get("search_iteration"), "search_fitness": rec.get("search_fitness"),
-        "eff": {k: m(k)["C0_EFFICIENCY"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},
+        "eff": {k: m(k)["fitness"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},
+        "c0_eff": {k: m(k)["C0_EFFICIENCY"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},
         "successes": {k: m(k)["successes"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},
         "interactions": {k: m(k)["interactions_total"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},
         "mean_cost": {k: m(k)["mean_cost"] for k in ("ACCUMULATED", "FRESH", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED")},

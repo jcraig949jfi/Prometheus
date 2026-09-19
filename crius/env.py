@@ -9,7 +9,7 @@ step budget, or when the Player halts.
 
 from __future__ import annotations
 
-from . import world
+from . import worlds
 
 
 class TaskOver(Exception):
@@ -35,11 +35,17 @@ class TaskRun:
         self.over = False
         self.halted = False
         self.end_reason = None
-        self.starting_performance = world.performance(task.start, task.target)
+        self.starting_performance = worlds.performance(task.start, task.target)
         self.best_performance = self.starting_performance
         self.last_action = -1
         self.trajectory = []  # (action, resulting object) for the replay hash
         self.n_resets = 0
+        self.status = 0
+        self.invalid_actions = 0
+        self.success_in_block = False
+        self.world = worlds.get(getattr(task, "world_id", "c0"))
+        self.num_actions = self.world.num_actions(task)
+        self.reset_action = self.num_actions
 
     # ------------------------------------------------------------ observation
     def observation(self) -> dict:
@@ -47,22 +53,30 @@ class TaskRun:
             "current": self.current,
             "target": self.target,
             "interactions_left": self.interaction_budget - self.interactions,
-            "num_ops": world.NUM_OPS,
+            "num_ops": self.num_actions,
             "task_index": self.task_index,
             "steps_left": self.step_budget - self.steps - self.store_units,
-            "last_delta": tuple((c - p) % world.B for c, p in zip(self.current, self.previous)),
+            "last_delta": tuple((c - p) % self.world.B for c, p in zip(self.current, self.previous)),
             "last_action": self.last_action,
         }
 
     # ------------------------------------------------------------ actions
-    def act(self, value: int):
+    def valid_action(self, value) -> bool:
+        return isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= self.reset_action
+
+    def act(self, value):
         if self.over:
             raise TaskOver()
+        if not self.valid_action(value):
+            # DESIGN_C1 s4: nothing but an in-range int is an action; no aliasing, no reset
+            self.status = 2
+            self.invalid_actions += 1
+            return self.current
         if self.success:
             # any action after success ends the task; the grace is for bookkeeping only
             self._end("post_success_action")
-        v = int(value) % (world.NUM_OPS + 1)
-        if v == world.RESET_ACTION:
+        v = value
+        if v == self.reset_action:
             self.previous = self.current
             self.current = self.start
             self.last_action = v
@@ -72,11 +86,11 @@ class TaskRun:
         if self.interactions >= self.interaction_budget:
             self._end("interaction_budget")
         self.previous = self.current
-        self.current = world.apply_op(v, self.current)
+        self.current = self.world.apply_action(self.task, v, self.current)
         self.interactions += 1
         self.last_action = v
         self.trajectory.append((v, self.current))
-        p = world.performance(self.current, self.target)
+        p = worlds.performance(self.current, self.target)
         if p > self.best_performance:
             self.best_performance = p
         if self.current == self.target:
@@ -120,4 +134,4 @@ class TaskRun:
         raise TaskOver()
 
     def final_performance(self) -> float:
-        return world.performance(self.current, self.target)
+        return worlds.performance(self.current, self.target)

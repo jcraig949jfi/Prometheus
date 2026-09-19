@@ -66,6 +66,7 @@ class BlockStore:
         self.invocations = {}     # block_id -> total invocations
         self.task_invocations = {}  # block_id -> invocations during the current task
         self.edges = []           # (kind, from_id, to_id, task_index): copy/compose/invoked_from
+        self.invocation_log = []  # {task, block, entry: R0..R3, actions: emitted action ids}; capped
 
     @classmethod
     def empty(cls, cfg: dict = None) -> "BlockStore":
@@ -200,6 +201,12 @@ class BlockStore:
             return False
         b.local_state[int(slot) % STATE_SLOTS] = value
         return True
+
+    def log_invocation(self, block_id: int, entry_regs, actions):
+        if len(self.invocation_log) < 5000:
+            self.invocation_log.append({"task": self.current_task, "block": block_id,
+                                        "entry": [list(r) if isinstance(r, tuple) else (r if isinstance(r, int) else str(r)) for r in entry_regs],
+                                        "actions": list(actions)})
 
     def note_invocation(self, block_id: int, from_block: int):
         self.cost += COSTS["invoke"]
