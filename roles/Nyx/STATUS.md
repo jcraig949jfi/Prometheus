@@ -1,6 +1,6 @@
 # Nyx status
 
-Currency: 2026-09-18 ~15:30 UTC (instance gandalf-9e21f277 on M3/GANDALF).
+Currency: 2026-09-19 ~12:30 UTC (instance gandalf-9e21f277 on M3/GANDALF).
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
@@ -13,12 +13,13 @@ comms: Harmonia[gandalf-6cd1348b] booted on M3 at 15:2xZ (R1 open on gzip 003; s
   nothing asked of Nyx); #357 (the particles packet) is in its inbox. The live channel is the Postgres queue at 192.168.1.202:5432 (EW_DB_HOST). The Redis at 192.168.1.202:6379 answers
   but its Agora streams have been dead since 2026-05-20; 192.168.1.176 is unreachable. Nyx and Techne online; Harmonia
   offline since 2026-09-16 13:42Z (messages queue for it).
-what it asserts (atlas, python -m nyx.atlas.build): STAGE A FROZEN (operator directive 2026-09-18 s1) -- census 121; cut 120
-  (COARSE 71, DEEP 45, ORGAN0 4); NOT_CUT 1 (pari-gp-2.17, ORIGIN_UNREACHABLE/SSL from this host); 537 fragments (473 ACCEPTED,
-  64 CANDIDATE); 350 rejected; 169 pressures; 648 composition edges. 121 is a HARD boundary; no new broad census until >=10
+what it asserts (atlas, python -m nyx.atlas.build): STAGE A FROZEN (operator directive 2026-09-18 s1) -- census 121 FROZEN + 1 operator-directed ALife body (asal-sakana-2024, s6) = 122 atlas fossils; cut 121
+  (COARSE 72, DEEP 45, ORGAN0 4); NOT_CUT 1 (pari-gp-2.17, ORIGIN_UNREACHABLE/SSL from this host); 475 accepted organs. 121 is a HARD boundary; no new broad census until >=10
   mechanisms carry Harmonia verdicts. The atlas is now the RESERVOIR; the scoreboard is the output.
-SCOREBOARD (directive s6, python -m nyx.atlas.build .scoreboard): packets_issued 3, verdicts 10, supported 3, failed 2,
-  indeterminate 2, interface_insufficient 0; median cut->verdict 0 d; mechanisms accepted downstream 0; open packets/lane {} (cap 3).
+SCOREBOARD (nyx.scoreboard/2, operator directive 2026-09-19 s9; supersedes /1 row-counting -- investigations, not
+  supported/failed rows): packets_issued 3, packets_adjudicated 2, predictions_tested 7, predictions_falsified 2,
+  cuts_technically_supported 2, mechanisms_isolated 2, observer_stable_mechanisms 0 (pending HARM-55/56),
+  successful_independent_transplants 0, unresolved_anomalies 1, MECHANISMS_THAT_SURVIVED_TRANSPLANT 0 (the headline target).
 pipeline objects: MECH-GZIP-LEVELTABLE-003 (frozen 5dbf46a2..., with Harmonia since 09-16, no return; NOT runnable on M3);
   MECH-PARTICLES-ESSTRIGGER-001 (frozen 5b8d6ae4...; RAN on M3 by Harmonia 2026-09-17: cheat/negative PASS, positive control FAIL
   -> PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE, #363; immutable); MECH-PARTICLES-ESSTRIGGER-002 (frozen 186047db...,
@@ -42,18 +43,22 @@ incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonic
   hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action (operator refinery directive 2026-09-18, roles/Nyx/prompts/2026-09-18_refinery_directive/):
-  DONE this tick -- Stage A frozen at 121; ASAL fast lane delivered end to end (cut + frozen packet c6627d26 -> Harmonia verdict
-  CUT_SUPPORTED, Stage D' assimilated #476; A4-A9 and the pairwise-discordance rule adopted).
-  NEXT, in order:
-  (1) ATLAS HYGIENE -- create atlas fossil skeletons for the 6 ALife bodies (asal-sakana-2024, poet-original-2019, poet-enhanced-2020,
-      avida, lenia-chan-2019, ...) which sit OUTSIDE the frozen 121 census, so their cuts attach into nyx/atlas/fossils and the organs
-      enter the catalog; the ASAL cut currently binds by hash only. Techne's specimen packets (#439) unblock this.
-  (2) POET -- two mechanisms (environment discard / minimal-criterion boundary; PATA-EC recomputation over world x contemporary
-      population, with the basis-population ablation). Bodies landed (poet-original-2019, poet-enhanced-2020, #384).
-  (3) AVIDA save/population/ancestry cut -- the HISTORY_MODE reconstruction benchmark; heed A5 (measure definedness on a 30-organism
-      fixture per degradation before the prereg hash: parent-edge recall undefined for endpoints-only history and some subsampling
-      arms are refused at plan time) and A9 (keep survivors' ancestry; never invent parent ids -- missing beats unverified).
-  Fallback lane: the seven pure-Python packet candidates (sgp4, backoff, emcee, pid-autotune, pybreaker, py-vollib, filterpy).
-  Do NOT ask Harmonia to complete the ASAL 1045 -- that is a new preregistered replication after port extension. No deepening of the
-  COARSE inventory bodies without a named downstream question. Cap: 3 open packets per Harmonia lane (currently 0 open).
+next executable action (operator directive 2026-09-19 "ASAL PIPELINE DIRECTION",
+  roles/Nyx/prompts/2026-09-19_asal_pipeline_direction/): the pipeline moves from "the pipeline works" to "can it extract
+  machinery we did not know to look for". Port-adequacy gate CLOSED (Harmonia #479). Sequence: PORT ADEQUACY -> OBSERVER
+  REPLICATION -> DISCORDANCE -> FULL-DOMAIN REPLICATION -> MECHANISM EXTRACTION -> TRANSPLANT.
+  DONE this tick: directive recorded + relayed (#487); s3 claim held at the 395-domain resolution (CLAIM_CURRENT_RESOLUTION.md);
+  s5 behavioral-cut plan preregistered (PLAN_behavioral_cuts_after_replication.md); s6/s11 asal atlas skeleton created and the
+  two ASAL organs made addressable (grade ORIGINAL_ARTIFACT, hash-match); s9 scoreboard rebuilt to nyx.scoreboard/2 (+ test).
+  NEXT, in the execution order (steps this seat owns):
+  (3) FULL-DOMAIN REPLICATION packet -- author it the moment HARM-56 returns (domain demonstrably executable before the first
+      score: enumerate + instantiate every member, acceptance by class, refuse on unexplained coverage holes, freeze seeds/
+      observer(s)/classification/thresholds, catalogue by stable positional INDEX not code (#479: 63 duplicated codes), prove
+      determinism on a sampled + adversarial subset; score through BOTH observers where feasible). HOLD until HARM-56.
+  (5) BEHAVIORAL CUTS on stable + discordant regions -- after the replication is frozen + executed. Plan is preregistered.
+  (7) NOMINATE one candidate MECHANISM (a dynamical property, not the metric) for Theophrastus transplant.
+  CONCURRENT (run now): POET's two mechanisms (bodies landed) + their atlas skeletons; then the Avida ancestry cut (A5
+  definedness, A9 ancestry); poet/lenia skeletons land with those cuts; tierra/terralingua stay UNSEEDED (they wait).
+  HOLDS: no full-domain packet until HARM-56; no behavioral cuts until the replication runs; no new search objective; no
+  mechanism nomination until the low-score region is cut by behavior; no port-development campaign; no decimal-precision chase.
+  HARM-55 Flax scoring is Techne/Harmonia on an AVX host, not this seat. Open packets/lane {} (cap 3).

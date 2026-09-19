@@ -1,9 +1,9 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 648,
+ "built": "2026-09-19T07:40Z",
+ "n": 649,
  "by_label": {
-  "feeds": 345,
+  "feeds": 346,
   "updates": 69,
   "triggers": 51,
   "competes": 27,
@@ -50,6 +50,14 @@
    "label": "feeds",
    "evidence": "SOURCE_READ",
    "note": "shared accumulator under P_ON_M",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "to": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the K frames the score sees",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
