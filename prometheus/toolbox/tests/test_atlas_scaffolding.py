@@ -152,3 +152,18 @@ def test_kv_weather_damages_retained_state_and_the_sham_only_costs(tmp_path):
                    players=[spec.manifest()], observers=[ref("observer.trace.v1")], controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 20})
     rep = execute(lower(e, REG).job, tmp_path / "w.jsonl", REG)
     assert rep.valid and rep.controls["replay"]["outcome"] == "MET"                                                              # weather is seeded: BIT replay holds
+
+
+# ------------------------------------------------------------------------------------------ objective.charge.v1
+def test_charge_objective_reads_the_best_final_charge(tmp_path):
+    from prometheus.toolbox.admission import admit
+    from prometheus.toolbox.ref.observers import ChargeObjective
+    assert admit("objective.charge.v1", REG.fork()).state == "ADMITTED"
+    o = ChargeObjective()
+    assert o.evaluate({"science": {"world_summary": {"charge": [3, -1, 7], "ticks": 9}}})["value"] == 7    # the BEST slot, not the first
+    assert o.evaluate({"science": {"world_summary": {"charge": [], "ticks": 0}}})["value"] == 0            # no charge: 0, never a crash
+    e = Experiment(family="chg", world=ref("world.integer.v1", world_seed=8, start_charge=20, yield_amt=10), substrate=ref("substrate.flat.v1"), players=[],
+                   objective=ref("objective.charge.v1"), observers=[ref("observer.trace.v1")], seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 1, "horizon": 20})
+    out = SR.evolve(e, ref("selector.truncation.v1", keep=2, n=3), generations=2, workdir=tmp_path / "c", seed=1)
+    rows = [r for r in SR.load_rows(tmp_path / "c" / "archive.jsonl") if r["kind"] == "elite"]
+    assert out["generations_done"] == 2 and rows and all(isinstance(r["objective"], (int, float)) for r in rows)    # a scalar the selector can rank

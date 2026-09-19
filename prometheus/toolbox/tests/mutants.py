@@ -130,6 +130,7 @@ MUTANTS = [
     ("M90", "search.py", "                w = sum(weights.values()); row[\"objective\"] = sum(weights[k] * per[k] for k in per) / w", "                w = sum(weights.values()); row[\"objective\"] = sum(per[k] for k in per) / len(per)", "the battery objective is the unweighted mean, ignoring the variant weights"),
     ("M91", "search.py", "                                  \"origin\": ((r[\"_player_manifest\"].get(\"meta\") or {}).get(\"origin\") or \"resident\"),          # atlas-bee S3", "                                  \"origin\": \"resident\",          # atlas-bee S3", "the archive cannot tell an import lineage from a resident one (every row reads resident)"),
     ("M92", "backends/local.py", "        ep = ep % max(1, int(pol.get(\"distinct\", 1)))", "        ep = ep", "recurring episode seeds do not cycle; every episode gets a distinct seed after all"),
+    ("M93", "ref/observers.py", "        best = max(charge) if charge else 0", "        best = charge[0] if charge else 0", "objective.charge.v1 reads the first slot, not the best final charge"),
 ]
 
 
