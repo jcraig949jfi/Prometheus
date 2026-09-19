@@ -1,0 +1,47 @@
+{
+ "perturbation_id": "P-I03",
+ "parent": "T-X17",
+ "co_parents": [
+  "T-X19",
+  "T-ARCH4/M1"
+ ],
+ "deformation": "P",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "dissection",
+ "donors": {
+  "ask_time": [
+   4,
+   "W0"
+  ],
+  "start_anchored": [
+   4,
+   "W1_d4"
+  ]
+ },
+ "hosts": "P-H04's naive hosts (gen0, immune shelf, immune W2 tops)",
+ "k": [
+  1,
+  2,
+  4,
+  8
+ ],
+ "variants": [
+  "prefix_to_host",
+  "prefix_jmp0_host (JMP into host at 0)",
+  "prefix_jmpmid_host (JMP into host at mid)",
+  "host_prefix_donor_body",
+  "truncation (prefix alone)",
+  "relocated (prefix moved to the end)",
+  "jump_entry (JMP over k NOPs into the donor)"
+ ],
+ "geometry": "distinctive-component test: every donor component >= .5 must be >= .3 in the variant (D088)",
+ "competence": "reward on the donor world >= floor, >= host baseline + band, and >= half the donor's",
+ "reading": "SEQUENCE_CONTENT if truncations keep geometry/competence at small k; ENTRY_ROUTING if relocated/jump_entry lose them; EARLY_STATE if prefix_to_host transfers what truncation alone does not; REACHABILITY if the JMP variants differ from prefix_to_host",
+ "material_rule": "any variant family transfers competence in >= 20 percent of cells, or the reading discriminates two of the four hypotheses",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:20:10",
+ "prereg_sha256": "114839ad6123676ba3793863c8ce26b1cca5228ca3ef29b55070b10a6c3f05cc"
+}

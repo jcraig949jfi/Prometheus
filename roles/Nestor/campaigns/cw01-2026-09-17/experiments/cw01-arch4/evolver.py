@@ -57,16 +57,19 @@ def blind_delete(m, rng, k=2):
     return c
 
 
+WEATHER_P = 0.5
+
+
 def fitness(ind, eps, arm, rng):
     m = ind["m"]
     u = rng.unit()                                  # weather coin: drawn in EVERY arm
     d = blind_delete(m, rng)                        # deletion positions: drawn in EVERY arm
-    target = d if (arm == "weather" and u < 0.5) else m
+    target = d if (arm == "weather" and u < WEATHER_P) else m
     ev = A.evaluate(target, eps, rng_seed=0, reward_mode="per_ask")
     return ev
 
 
-def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, archive_gens=(), label="nestor.evolver"):
+def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, archive_gens=(), label="nestor.evolver", mate_rate=0.0, persist_lock=None, on_generation=None, mutator=None):
     """arm: select | drift (uniform parent) | ndrift (uniform parent, child kept only inside the band of its
     parent's reward - competence retained without a fitness ordering) | weather | sham.
     env: selection world; ep_transform(eps, g) may rewrite the generation's episodes (idle ticks);
@@ -83,6 +86,8 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
         fit = np.array([e["reward_per_ask"] - pr * CM.n_instr(ind["m"]) for e, ind in zip(evs, pop)])
         if g in archive_gens:
             archive[g] = [dict(x, reward=float(e["reward_per_ask"])) for x, e in zip(pop, evs)]
+        if on_generation is not None:
+            on_generation(g, pop, evs)
         hist.append({"gen": g, "reward_mean": float(fit.mean()), "reward_max": float(fit.max()),
                      "len_mean": float(np.mean([CM.n_instr(x["m"]) for x in pop])),
                      "persist": {k: sum(1 for x in pop if x["m"]["persist"] == k) / len(pop) for k in ("none", "regs", "tape", "all")},
@@ -100,14 +105,25 @@ def run(arm, seed, init, G_=G, N_=N, env=ENV, ep_transform=None, price=0.0, arch
                 pi = max(cand, key=lambda c: fit[c])
             parent = pop[pi]
             child = None
-            for _try in range(8):
+            u_mate = rng.unit()                                            # drawn in every arm
+            mcand = [int(rng.next_u32() % N_) for _ in range(K_T)]           # mate tournament, drawn always
+            if mate_rate > 0 and u_mate < mate_rate:
+                mi = max(mcand, key=lambda c: fit[c])
                 try:
-                    child, rec = A.GR.mutate(parent["m"], rng, mate=None, name=None)
-                    break
-                except A.ManifestError:
-                    continue
+                    child, rec = A.GR.mutate(parent["m"], rng, mate=pop[mi]["m"], name="splice")
+                except Exception:      # noqa: BLE001
+                    child = None
+            if child is None:
+                for _try in range(8):
+                    try:
+                        child, rec = (mutator(parent["m"], rng) if mutator is not None else A.GR.mutate(parent["m"], rng, mate=None, name=None))
+                        break
+                    except Exception:      # noqa: BLE001  (ManifestError from either grammar)
+                        continue
             if child is None:
                 child = json.loads(json.dumps(parent["m"]))
+            if persist_lock is not None:                                   # persist policy cannot evolve (or is forced)
+                child["persist"] = parent["m"]["persist"] if persist_lock == "inherit" else persist_lock
             if arm == "ndrift":                                            # neutral-band acceptance relative to the PARENT
                 rc = A.evaluate(child, eps, rng_seed=0, reward_mode="per_ask")["reward_per_ask"]
                 if abs(rc - evs[pi]["reward_per_ask"]) > A.C1.BAND:

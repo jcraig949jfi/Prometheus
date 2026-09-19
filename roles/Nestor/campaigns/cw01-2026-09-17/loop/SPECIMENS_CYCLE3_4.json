@@ -1,5 +1,5 @@
 {
- "written": "2026-09-19 06:09:07",
+ "written": "2026-09-19 07:38:05",
  "campaign": "cw01-2026-09-17",
  "scope": "software-only artificial life / algorithm search; nothing biological",
  "rule": "public phenomena with known mechanisms and locations: usable as positive controls, recognition specimens, adversarial examples and post-freeze comparison cases; NOT hidden fixtures; NOT for detector threshold tuning after thresholds freeze; Campaign 6 machinery untouched",
@@ -897,6 +897,84 @@
    "use": [
     "observatory adversarial specimen: a transfer criterion satisfied by a null host",
     "negative control for organ-transfer claims"
+   ]
+  },
+  {
+   "id": "SPEC-X21-PLATEAU",
+   "node": "T-X21",
+   "substrate": "Proteus evolver in context worlds A / B / C (ctxworlds.py)",
+   "phenomenon": "ZERO-GRADIENT PLATEAU: populations sit on the invariant IDENTITY strategy (.5) while the regime word is already held in a register (accuracy 1.0 as a regime predictor) and never used; overwriting that register changes 0 percent of answers; the cue word perturbs B answers (94 percent) without a correct conditional (58 percent)",
+   "ruler": "P-I02 forensics (cue causality, register transplant, adaptation / anticipation / recovery)",
+   "expected_effect": "held-out reward at the invariant ceiling in every world; register transplant changed 0",
+   "location": "experiments/cw01-arch4/P-I01 (tops.json with genomes), P-I02 (rows.json)",
+   "use": [
+    "observatory adversarial specimen: information present in state without a fitness path to its use",
+    "positive control for 'reads the cue but does not act on it' detectors",
+    "post-freeze comparison with P-J01's successor worlds"
+   ],
+   "representative_ids": [
+    [
+     "A",
+     1,
+     0,
+     13
+    ],
+    [
+     "A",
+     1,
+     1,
+     8
+    ],
+    [
+     "A",
+     1,
+     2,
+     3
+    ],
+    [
+     "A",
+     1,
+     3,
+     13
+    ],
+    [
+     "A",
+     2,
+     0,
+     2
+    ],
+    [
+     "A",
+     2,
+     1,
+     2
+    ]
+   ],
+   "n_tops": 208
+  },
+  {
+   "id": "SPEC-W-SUCCESSOR",
+   "node": "T-X21",
+   "substrate": "ctxworlds successor family (P-J01, constructed, not yet run)",
+   "phenomenon": "SMALLEST SUCCESSOR WORLD: identical pressures with the regime-1 transform reduced to v XOR 1 so the conditional answer is one instruction from the plateau; invariant ceilings unchanged (.5)",
+   "ruler": "same as P-I01",
+   "expected_effect": "to be measured in cycle 8",
+   "location": "loop/SUCCESSOR_WORLDS_CYCLE7.json; loop/PERTURBATIONS.jsonl P-J01",
+   "use": [
+    "post-freeze comparison case: a world change that supplies a fitness path without supplying a mechanism"
+   ]
+  },
+  {
+   "id": "SPEC-X17-NO-INTERFACE",
+   "node": "T-X17",
+   "substrate": "Proteus TT programs",
+   "phenomenon": "THE PREFIX IS NOT A CONTROL INTERFACE: 640 host insertions of donor prefixes transfer competence in 0 percent; ask-time geometry is sequence content run from its own entry (relocating the first 1-4 instructions destroys it); start-anchored is whole-program and position-tolerant",
+   "ruler": "P-I03 variants (prefix_to_host, JMP-rewired, truncation, relocation, jump entry)",
+   "expected_effect": "competence transfer 0; truncation k8 keeps ask-time geometry 1.0",
+   "location": "experiments/cw01-arch4/P-I03 (rows.json)",
+   "use": [
+    "negative control for organ-transfer claims",
+    "observatory: entry routing as a coordinate"
    ]
   }
  ],
