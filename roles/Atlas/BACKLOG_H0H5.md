@@ -3,6 +3,8 @@
 Currency: 2026-09-19 (charter + addendum adopted; first pass landed).
 Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
+Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
+engine row marked IGNORED, its local root removed from the registry).
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
 ATLAS-05 | Write a git adapter for archaeon/wse/ledgers (wse-survey-v01, ssf-c1..3) so the 4 PEW-only campaigns get receipts, attempts and facts | TOOLS | beta | S | none | archaeon.wse/* experiments with n_attempts > 0 and source links to git
@@ -24,6 +26,5 @@ ATLAS-20 | Read the frontier digests (EPOCH_*.json) as campaign-level observatio
 ATLAS-21 | Register a scheduled harvest loop in roles/base-role/MONITORS.md with bound N non-productive ticks and accountable seat BEFORE launching it | ENGINE | beta | S | operator (cadence) | MONITORS.md row; loop parks itself after N ticks with zero new rows
 ATLAS-22 | Publish the manifest as a read-only view set (atlas.v_manifest etc.) documented for seats; no seat is asked to emit data for Atlas | ENGINE | beta | S | none | roles/Atlas/QUERIES.md with 10 tested queries
 ATLAS-23 | Report the committed cleartext DB credentials in evidence_wiki/config.json to Mnemosyne if not already tracked (seen while wiring the connection; not Atlas's lane) | ENGINE | program | S | none | comms post id or a line citing the existing tracker entry
-ATLAS-24 | Record the live F:/SerendipityD foundry_service (pids 7988, 8176 on M1) with its owner and whether it is expected to be running | ENGINE | program | S | operator / Daedalus | engine row serendipity.foundry.d with owner and state confirmed
 ATLAS-25 | Add a per-campaign coverage table (what each adapter extracted vs the files present) so a recomb can target the biggest unextracted shapes first (v_shape_inventory) | TOOLS | beta | S | none | report section listing top 20 unextracted shapes by count
 ATLAS-26 | Decide with the operator whether Atlas may ask driving seats for an interface change (e.g. a hostname field in receipts) | ENGINE | program | XL | NEW: may Atlas request receipt fields (hostname, engine_instance) from Archaeon/Nestor? | decision recorded; until then Atlas infers and labels
