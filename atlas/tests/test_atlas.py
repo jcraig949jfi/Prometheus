@@ -282,3 +282,43 @@ def test_loss_tracking_flags_a_vanished_file(tmp_path, monkeypatch):
     lf._loss_check(b, "M1", root)
     assert b.t["source"][rows[0][0]]["present"] is False
     assert any(x["name"] == "file.missing" for x in b.facts.values())
+
+
+# ------------------------------------------------------------------ catalogue and proposals
+
+def _catalog():
+    import json
+    p = REPO / "roles" / "Atlas" / "catalog" / "ECOSYSTEMS.jsonl"
+    return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+
+def test_catalog_ids_unique_and_links_graded():
+    rows = _catalog()
+    ids = [r["id"] for r in rows]
+    assert len(ids) == len(set(ids))
+    for r in rows:
+        for x in (r.get("papers") or []) + (r.get("code") or []) + (r.get("other_links") or []):
+            assert x.get("url_status") in ("VERIFIED", "SEARCH_RESULT", "UNVERIFIED"), (r["id"], x)
+
+
+def test_catalog_relatives_resolve():
+    rows = _catalog()
+    ids = {r["id"] for r in rows}
+    assert not [(r["id"], x) for r in rows for x in (r.get("relatives") or []) if x not in ids]
+
+
+def test_proposals_parents_resolve_in_index(conn):
+    import json
+    p = REPO / "roles" / "Atlas" / "proposals" / "2026-09-19_cross_ecosystem" / "EXPERIMENTS.jsonl"
+    rows = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert all(r["status"] == "PROPOSED" for r in rows)
+    for r in rows:
+        for c in ("positive", "negative", "cheat"):
+            assert r["controls"].get(c), (r["id"], c)          # base role s2: all three controls declared
+    assert one(conn, """SELECT count(*) FROM atlas.v_edge_dangling
+                        WHERE src_key LIKE 'atlas.proposal/%%' AND dst_missing""") == 0
+
+
+def test_descendants_returns_each_entity_once(conn):
+    assert one(conn, """SELECT count(*) - count(DISTINCT (ent_type, ent_key))
+                        FROM atlas.descendants('experiment','archaeon.campaign/cmp4:C4-01')""") == 0
