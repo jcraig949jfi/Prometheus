@@ -175,3 +175,18 @@ C24 | T+0:40 | model-based property test of the StateDevice contract (tests/test
 C24b | T+0:42 | the model test's runtime exposed an unbounded device EVENT buffer when nobody drains it.
   RED: 250 puts with max_events=100 -> 100 kept (newest), events_dropped == 150 in accounting. Fixed for the
   in-process device (every emit routed through a bounded _emit). Suite 135 passed 6 skipped.
+C26 | T+0:50 | search ABOVE the kernel (directive s18): prometheus/toolbox/search.py -- Selector proposes from
+  archive ROWS (JSONL: elite rows + GEN_DONE markers), the kernel runs each generation as an ordinary
+  Experiment with `players` swept (one player per point), receipts ingested into rows. selector.truncation.v1,
+  selector.map_elites.v1 (one elite per descriptor cell), transform.point_mutation.v1 (exactly one cell).
+  RED: module absent. Tests: 4-gen uninterrupted == 2-gen + resume (row keys identical); a crash landing
+  AFTER a generation's rows but BEFORE its marker -> rows marked GEN_ABANDONED at resume, generation rerun,
+  committed view == clean run; MAP-Elites keeps one elite per cell.
+  DETECTION PROVEN: (a) process-local state in the selector (id(self) as the stream seed) -> resume test
+  fails; (b) trusting uncommitted rows at resume -> abandoned test fails (only after the test was
+  strengthened to crash AFTER rows were appended; the first version crashed before any row and could not
+  see the perturbation -- recorded as a weak test that was fixed).
+  FOUND (C26b): one row per RECEIPT made a player with two seeds look like two elites; rows now aggregate per
+  player (objective = mean over seeds, receipt ids listed). Suite 139 passed 6 skipped.
+  DECISION: the kernel knows nothing about search; nothing in the IR/executor/receipts changed. Reopen if a
+  selector needs per-receipt access beyond receipt ids (then rows carry a receipts path, not receipt copies).

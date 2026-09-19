@@ -97,7 +97,35 @@ class RelabelTransform:
         return PlayerSpec(spec.representation, pl, init, spec.requires, dict(spec.meta, transform=self.kind, transform_seed=rng_seed))
 
 
-ALL = {"transform.shuffle.v1": ShuffleTransform, "transform.fresh.v1": FreshTransform, "transform.relabel.v1": RelabelTransform}
+class PointMutationTransform:
+    """transform.point_mutation.v1 (C26): change exactly ONE table cell of a state machine (next state, one action
+    value, or -- for v2 -- the memory write). The search operator; shape and cost preserved."""
+    kind = "transform.point_mutation.v1"
+    accepts = frozenset({"player.statemachine.v1", "player.statemachine.v2"})
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "accepts": sorted(self.accepts)}
+
+    def apply(self, obj: Any, rng_seed: int) -> PlayerSpec:
+        spec = _spec(obj)
+        if spec.representation not in SM:
+            raise TypeError("%s does not accept %s" % (self.kind, spec.representation))
+        pl = copy.deepcopy(spec.payload); s = stream("point_mutation", rng_seed)
+        i = s.below(pl["n_states"]); j = s.below(pl["n_buckets"]); cell = pl["table"][i][j]
+        field = s.below(3 if spec.representation == "statemachine.v2" else 2)
+        if field == 0:
+            cell[0] = (cell[0] + 1 + s.below(max(1, pl["n_states"] - 1))) % pl["n_states"]
+        elif field == 1:
+            k = s.below(len(cell[1])); cell[1][k] = (cell[1][k] + 1 + s.below(max(1, pl["act_range"] - 1))) % pl["act_range"]
+        else:
+            cell[2] = -1 if cell[2] >= 0 and s.below(4) == 0 else s.below(pl["mem_range"])
+        parent_fp = spec.meta.get("fingerprint")
+        return PlayerSpec(spec.representation, pl, spec.initial_state, spec.requires,
+                          dict(spec.meta, transform=self.kind, transform_seed=rng_seed, parent=parent_fp))
+
+
+ALL = {"transform.shuffle.v1": ShuffleTransform, "transform.fresh.v1": FreshTransform, "transform.relabel.v1": RelabelTransform,
+       "transform.point_mutation.v1": PointMutationTransform}
 
 
 def transform_players(registry, kind: str, players: list, rng_seed: int) -> tuple:

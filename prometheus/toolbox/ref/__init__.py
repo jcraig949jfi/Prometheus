@@ -49,4 +49,7 @@ def install(reg: Registry) -> Registry:
     from prometheus.toolbox.ref import transforms as T
     for kind, cls in T.ALL.items():
         reg.register(ComponentRecord(kind, "transform", cls, frozenset(), route="write", provenance=PROV, license="repository"))
+    from prometheus.toolbox import search as SR
+    reg.register(ComponentRecord("selector.truncation.v1", "selector", SR.TruncationSelector, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("selector.map_elites.v1", "selector", SR.MapElitesSelector, frozenset(), route="write", provenance=PROV, license="repository"))
     return reg
