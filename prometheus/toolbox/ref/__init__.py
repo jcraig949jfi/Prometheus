@@ -77,6 +77,7 @@ def install(reg: Registry) -> Registry:
     reg.register(ComponentRecord("objective.yield_net.v1", "objective", O.YieldNetObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v2", "objective", O.SurvivalTicksObjective, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("objective.survival_per_player.v1", "objective", O.SurvivalPerPlayerObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.multi.v1", "objective", O.MultiObjective, frozenset(), route="write", provenance=PROV, license="repository",
                                  admission_params={"components": {"yield": {"kind": "objective.yield_net.v1", "params": {}}, "life": {"kind": "objective.survival.v1", "params": {}}}}))
     reg.register(ComponentRecord("objective.series_gain.v1", "objective", O.SeriesGainObjective, frozenset(), route="write", provenance=PROV, license="repository"))

@@ -87,6 +87,8 @@ MUTANTS = [
     ("M61", "ref/players.py", "    for i, v in enumerate(flatten(obs)):                              # C100: structured observations fold through the canonical vector", "    for i, v in enumerate(obs):", "statemachines fold a structured observation as-is (keys, not values)"),
     ("M62", "backends/local.py", "            if permutes or ctrl_permutes:", "            if False:", "permute silently applied to a structured observation"),
     ("M63", "ref/worlds_grid.py", "        if self.p[\"obs_mode\"] == \"structured\":                    # C100: the same facts, named; the trace is the state and does not change", "        if False:", "grid obs_mode=structured returns the flat vector"),
+    # twelfth wave (C110): per-player survival from the series
+    ("M64", "ref/observers.py", "            value[c[:-len(\"_alive\")]] = sum(1 for rec in last if rec[i])", "            value[c[:-len(\"_alive\")]] = len(last)", "per-player survival reads the episode length, not the player's alive column"),
 ]
 
 

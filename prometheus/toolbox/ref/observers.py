@@ -236,6 +236,37 @@ class SurvivalTicksObjective:
         return {"value": ticks, "components": {"ticks": ticks, "alive": alive, "n_alive": sum(1 for a in alive if a)}}
 
 
+class SurvivalPerPlayerObjective:
+    """objective.survival_per_player.v1 (C110, playtest I): ticks each player was alive in the LAST episode, read
+    from observer.series.v1's per-player columns p{i}_alive BY NAME -> a vector {p0: n, p1: n, ...}. survival.v2 is
+    episode-level (the horizon while a player died); this is the per-player fact, and it lives in the series.
+    None with the reason when the series is absent, disabled, empty or has no per-player layout."""
+    kind = "objective.survival_per_player.v1"
+    version = "1"
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "reads": "observer.series.v1 per_player columns p{i}_alive"}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        s = (receipt.get("series") or {}).get("observer.series.v1")
+        if s is None:
+            return {"value": None, "components": {"reason": "SERIES_MISSING"}}
+        if s["status"] == "DISABLED":
+            return {"value": None, "components": {"reason": "SERIES_DISABLED"}}
+        eps = (receipt.get("_series_episodes") or {}).get("observer.series.v1") or s.get("inline")
+        if not eps or not eps[-1]:
+            return {"value": None, "components": {"reason": "SERIES_EMPTY", "episodes": len(eps or [])}}
+        cols = s.get("columns") or []
+        alive_cols = [c for c in cols if c.startswith("p") and c.endswith("_alive")]
+        if not alive_cols:
+            return {"value": None, "components": {"reason": "SERIES_HAS_NO_COLUMN:p{i}_alive (observer.series.v1 per_player=True)", "columns": cols}}
+        last = eps[-1]; value = {}
+        for c in alive_cols:
+            i = cols.index(c)
+            value[c[:-len("_alive")]] = sum(1 for rec in last if rec[i])
+        return {"value": value, "components": {"columns": alive_cols, "episode_ticks": len(last), "episodes": len(eps)}}
+
+
 class SeriesGainObjective:
     """objective.series_gain.v1 (C13): yield reached in the LAST episode minus yield reached in the FIRST, read
     from observer.series.v1's records (column 2 = cumulative yield). The experience-to-competence shape.

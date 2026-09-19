@@ -106,3 +106,26 @@ def test_survival_v2_ranks_a_dying_population_where_v1_reads_zero(tmp_path):
     execute(lower(e, REG).job, tmp_path / "s.jsonl", REG)
     r = [r for r in read_all(tmp_path / "s.jsonl") if r["arm"] == "primary"][0]
     assert r["science"]["objective"]["value"] == {"v1": 24, "v2": 24}
+
+
+# C110 (playtest I): survival.v2 is EPISODE-level (the horizon while one player died at tick 9). Per-player survival
+# is in the per-player SERIES (columns p{i}_alive, by name): a vector objective {p0: ticks alive, p1: ...} over the
+# last episode; None with the reason when the series is absent or has no per-player layout.
+def test_per_player_survival_reads_the_series_alive_columns_by_name(tmp_path):
+    e = _exp(ref("objective.survival_per_player.v1"), n_players=2)
+    e.observers = [ref("observer.series.v1", per_player=True)]
+    e.players = [random_statemachine(5).manifest(), constant_player([7, 7]).manifest()]     # the maximal player burns its charge and dies
+    execute(lower(e, REG).job, tmp_path / "pp.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "pp.jsonl") if r["arm"] == "primary"]
+    for r in rows:
+        v = r["science"]["objective"]["value"]; alive = r["science"]["world_summary"]["alive"]; ticks = r["science"]["world_summary"]["ticks"]
+        assert set(v) == {"p0", "p1"} and all(isinstance(x, int) for x in v.values())
+        for pid, a in enumerate(alive):                       # a survivor's value is the episode length; a casualty's is its last alive tick
+            assert (v["p%d" % pid] == ticks) == bool(a) or v["p%d" % pid] < ticks, (pid, a, v, ticks)
+        assert r["science"]["objective"]["components"]["columns"] == ["p0_alive", "p1_alive"]
+    sp = _summary(tmp_path / "pp.jsonl")["science"]["splits"]["train"]
+    assert sp["objective_shape"] == "vector" and set(sp["objective_mean"]) == {"p0", "p1"}
+    e2 = _exp(ref("objective.survival_per_player.v1"), n_players=2); e2.observers = [ref("observer.series.v1")]      # no per-player layout
+    execute(lower(e2, REG).job, tmp_path / "np.jsonl", REG)
+    r = [r for r in read_all(tmp_path / "np.jsonl") if r["arm"] == "primary"][0]
+    assert r["science"]["objective"]["value"] is None and r["science"]["objective"]["components"]["reason"].startswith("SERIES_HAS_NO_COLUMN")

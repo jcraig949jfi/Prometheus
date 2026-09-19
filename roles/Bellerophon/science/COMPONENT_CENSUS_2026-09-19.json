@@ -1,9 +1,9 @@
 {
- "when_utc": "2026-09-19T06:06:17.317778+00:00",
+ "when_utc": "2026-09-19T06:37:15.340643+00:00",
  "host": "SPECTREX5",
  "python": "3.14.4",
- "n_components": 40,
- "admitted": 40,
+ "n_components": 41,
+ "admitted": 41,
  "by_slot": {
   "world": [
    "world.c6.composed.v1",
@@ -39,6 +39,7 @@
    "objective.series_gain.v1",
    "objective.survival.v1",
    "objective.survival.v2",
+   "objective.survival_per_player.v1",
    "objective.yield_net.v1"
   ],
   "control": [
@@ -160,6 +161,14 @@
    "reference_of": null
   },
   "objective.survival.v2": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.survival_per_player.v1": {
    "slot": "objective",
    "state": "ADMITTED",
    "failed": [],

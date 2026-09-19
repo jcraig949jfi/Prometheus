@@ -749,3 +749,12 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   300 seeds on BOTH paths: 22 invalid, 156 OK, 49 TARGET_UNSUPPORTED, 73 BLOCKED; 1141 runs each path, 221
   batched, 0 crashes, 0 unexplained FAILED, 0 path divergences (science/THROUGHPUT json).
 - suite 312 passed, 6 skipped in 19.61s.
+
+## C110 (06:42Z) per-player survival lives in the series
+- objective.survival_per_player.v1: ticks each player was alive in the last episode, read from the per-player
+  series columns p{i}_alive BY NAME -> vector {p0, p1, ...}; None with the reason (SERIES_MISSING / DISABLED /
+  EMPTY / HAS_NO_COLUMN) otherwise. RED first (no such objective; lowering refused); rows: seed 1 p0=6 p1=1 of 7
+  ticks (the maximal constant player burns 14 charge a tick), seed 3 both 24/24 -- consistent with world_summary.
+- mutant M64 (reads the episode length) CAUGHT; ledger 63/63. Suite 313 / 6 skipped. Census 41/41.
+- the three survival objectives now say different things on purpose: v1 = step (alive at the end x ticks),
+  v2 = episode length, per_player = each player's own ticks. A designer picks by name; nothing is default.
