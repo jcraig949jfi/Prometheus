@@ -47,11 +47,17 @@ def checklist(label_rows: list) -> dict:
         return [fn(r) for r in label_rows]
 
     out = {}
-    # 1. adaptation cost declines across a lifetime: reuse_gain on stages C-E > REL of FRESH cost there
+    # 0. competence is not traded for cost (guard added 2026-09-19 after search_c0_seeded_s1's best passed
+    #    criterion 1 by using a full block store as a signal to stop trying: ACC 2/50 vs FRESH 16/50 solved)
+    sa = per_seed(lambda r: r["successes"]["ACCUMULATED"])
+    sf = per_seed(lambda r: r["successes"]["FRESH"])
+    ok0 = [a >= f for a, f in zip(sa, sf)]
+    out["0_competence_kept_ACC_ge_FRESH"] = (sum(ok0), n, "successes ACC %s vs FRESH %s" % (sa, sf))
+    # 1. adaptation cost declines across a lifetime: reuse_gain on stages C-E > REL of FRESH cost there, with 0 held
     g = per_seed(lambda r: sum(r["reuse_gain_by_stage"][s] for s in ("C", "D", "E")))
     fcost = per_seed(lambda r: sum(r["by_stage_fresh"].get(s, 0) * {"C": 12, "D": 10, "E": 8}[s] for s in ("C", "D", "E")))
-    ok = [gi > REL * fi for gi, fi in zip(g, fcost)]
-    out["1_cost_declines_via_accumulation"] = (sum(ok), n, "reuse_gain C-E per seed %s vs 5%% of FRESH cost %s" % ([round(x, 1) for x in g], [round(x, 1) for x in fcost]))
+    ok = [gi > REL * fi and o0 for gi, fi, o0 in zip(g, fcost, ok0)]
+    out["1_cost_declines_via_accumulation"] = (sum(ok), n, "reuse_gain C-E per seed %s vs 5%% of FRESH cost %s (and 0 held)" % ([round(x, 1) for x in g], [round(x, 1) for x in fcost]))
     # 2. reproduces on held-out compositions: criterion 1 holds on >= 2 of the qualification seeds (rows ARE held-out)
     out["2_reproduces_on_heldout"] = (sum(ok), n, "same test, qualification suite; seeds passing = %d/%d" % (sum(ok), n))
     # 3. accumulated state causally contributes: FULL transplant remainder cheaper than CODE_ONLY by > REL
@@ -92,7 +98,7 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
     P("=" * 78)
     # ---- search progress
     its = []
-    with open(os.path.join(run_dir, "iterations.jsonl"), "r", encoding="ascii") as f:
+    with receipts.open_text(os.path.join(run_dir, "iterations.jsonl")) as f:
         for line in f:
             its.append(json.loads(line))
     best = receipts.read_json(os.path.join(run_dir, "best.json"))
@@ -101,7 +107,7 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
     step = max(1, len(its) // 12)
     for row in its[::step] + ([its[-1]] if its and its[-1] not in its[::step] else []):
         P("  %4d  %7.4f  %8.4f  %13.4f  %8d  %9.0f" % (row["iteration"], row["best"], row["mean_pop"], row["children_mean"], row["best_len"], row["elapsed_s"]))
-    n_cands = sum(1 for _ in open(os.path.join(run_dir, "candidates.jsonl"), "r", encoding="ascii"))
+    n_cands = sum(1 for _ in receipts.open_text(os.path.join(run_dir, "candidates.jsonl")))
     P("  candidates evaluated: %d   best_ever %.4f (%s)  wall %.0fs" % (n_cands, best["best"]["fitness"], best["best"]["candidate_id"], best["elapsed_s"]))
     P("")
     # ---- best program
@@ -117,7 +123,7 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
         P("    " + line)
     # ancestry
     cands = {}
-    with open(os.path.join(run_dir, "candidates.jsonl"), "r", encoding="ascii") as f:
+    with receipts.open_text(os.path.join(run_dir, "candidates.jsonl")) as f:
         for line in f:
             r = json.loads(line)
             cands[r["candidate_id"]] = r
@@ -184,7 +190,7 @@ def render(run_dir: str, suite: str, baselines_dir: str) -> str:
         vals = [_mean(r["causal_mean_cost"].get(k) for r in rs) for k in keys]
         P("  %-26s %s %5.1f" % (label[:26], " ".join(_fmt(v, 8, 2) for v in vals), _mean(r["blocks_at_snapshot"] for r in rs)))
     P("")
-    P("CHARTER s13 CHECKLIST (seeds passing / seeds; thresholds: 5 percent relative)")
+    P("CHARTER s13 CHECKLIST (seeds passing / seeds; thresholds: 5 percent relative; guard 0 added 2026-09-19, see report.py)")
     for label in order:
         ck = checklist(by[label])
         P("  %s" % label[:40])

@@ -280,3 +280,42 @@ P5 ARM-S produces descendants whose C0_EFFICIENCY exceeds the seed's,
    on hopeless tasks) rather than acquired state: reuse_gain stays
    ~0 and WORKSPACE_RESET does not hurt them.
 P5 is the prediction this campaign would most like to lose.
+
+## 10. Addendum 2026-09-19: deviations from the frozen design, dated
+
+A1 (before freeze, during implementation) POST-SUCCESS GRACE. A task
+   ended the instant the object matched the target, so a Player could
+   never execute BLK_REC_END after its final action. TaskRun now allows
+   post_success_steps=200 compute units after success; any further
+   action ends the task. Recorded in configs/c0.json before the freeze
+   commit 68cc85ff9.
+A2 (after freeze, before any campaign search) STORE-OP BUDGET CHARGING.
+   Random programs escaped the step bound by looping over WS_FIND
+   (256-cell scans per instruction): the 3-iteration random-arm smoke
+   search did not finish in 600 s. Workspace and block cost units are
+   now charged against the step budget in the VM (TaskRun.charge_store),
+   counted separately from vm_steps so compute = vm_steps + ws_cost is
+   not double counted. Python baselines are not budget-charged for store
+   units (their compute was declared approximate in section 6). Commit
+   f4dae7a66. The metric definition did not change; the reachable
+   programs did (a WS_FIND loop now halts within budget).
+A3 (after freeze; EXPLORATORY) c0x.json. The 3-iteration seeded smoke
+   search produced, as its best, a crippled enumerator that solves only
+   depth-1 tasks and halts on everything else (search fitness 2.50
+   against the seed's 1.62; 20/50 successes; reuse_gain 0). Under the
+   frozen ratio metric, abstaining from expensive tasks beats solving
+   them, and on the held-out suite the same quitter (eff 3.00) outranks
+   CACHE_REUSE (2.97). That is a finding about the metric, reported as
+   the Campaign 0 result. c0x.json is a post-hoc variant that charges an
+   unsolved task its full interaction budget as experience. It is NOT
+   preregistered; its receipts carry campaign "c0x" and its numbers are
+   labelled EXPLORATORY wherever they appear. P4 and P5 are scored on
+   the c0 runs only.
+A4 ADAPTIVE macro planning (before freeze). The first ADAPTIVE only
+   replayed blocks whose key matched exactly (3 invocations per
+   lifetime). It now also plans over stored blocks as macro-operators.
+   Its blocks remain a net cost at depth <= 3 (ablating all of them
+   LOWERS the remainder cost 10.0 -> 7.8 on search seed 101). This is
+   recorded as the missing degree of freedom, not repaired: in this
+   world, once the operation effects are known as data, nothing
+   procedural is left to reuse.

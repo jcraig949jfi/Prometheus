@@ -79,8 +79,18 @@ def write_json(path: str, obj) -> None:
     os.replace(tmp, path)
 
 
+def open_text(path: str):
+    """Open a receipt for reading; a missing plain file falls back to path + '.gz'."""
+    import gzip
+    if not os.path.exists(path) and os.path.exists(path + ".gz"):
+        return gzip.open(path + ".gz", "rt", encoding="ascii")
+    if path.endswith(".gz"):
+        return gzip.open(path, "rt", encoding="ascii")
+    return open(path, "r", encoding="ascii")
+
+
 def read_json(path: str):
-    with open(path, "r", encoding="ascii") as f:
+    with open_text(path) as f:
         return json.load(f)
 
 

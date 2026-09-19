@@ -52,7 +52,7 @@ def _job(args):
 
 def load_candidates(run_dir: str) -> dict:
     out = {}
-    with open(os.path.join(run_dir, "candidates.jsonl"), "r", encoding="ascii") as f:
+    with receipts.open_text(os.path.join(run_dir, "candidates.jsonl")) as f:
         for line in f:
             r = json.loads(line)
             out[r["candidate_id"]] = r
