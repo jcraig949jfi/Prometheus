@@ -68,11 +68,24 @@ def select(run_dir: str, top: int, contemporaries: int, ancestors: int, seed: in
     best = receipts.read_json(os.path.join(run_dir, "best.json"))
     rng = random.Random("qualify:%d" % seed)
     chosen = []
-    # top-N distinct by fitness among all evaluated candidates
-    ranked = sorted(cands.values(), key=lambda r: (-r["fitness"], r["length"], r["candidate_id"]))
-    for r in ranked[:top]:
-        chosen.append(("top%d_%s" % (len(chosen) + 1, r["candidate_id"]), r, "top"))
-    best_rec = cands[best["best"]["candidate_id"]]
+    run_meta = receipts.read_json(os.path.join(run_dir, "RUN_META.json"))
+    rotate = run_meta["config"].get("streams", {}).get("rotate", False)
+    if rotate:
+        # rotating streams: fitness values from different iterations are not comparable (stream luck);
+        # the FINAL population was re-evaluated on one common stream, so rank within it
+        ranked = [cands[p["candidate_id"]] for p in sorted(best["final_population"], key=lambda p: (-p["fitness"], p["length"], p["candidate_id"]))]
+        for r in ranked[:top]:
+            chosen.append(("top%d_%s" % (len(chosen) + 1, r["candidate_id"]), r, "top"))
+        bid = best["best"]["candidate_id"]
+        if bid not in {c[1]["candidate_id"] for c in chosen}:
+            chosen.append(("bestever_%s" % bid, cands[bid], "best_ever_on_its_stream"))
+        best_rec = ranked[0]
+    else:
+        # top-N distinct by fitness among all evaluated candidates
+        ranked = sorted(cands.values(), key=lambda r: (-r["fitness"], r["length"], r["candidate_id"]))
+        for r in ranked[:top]:
+            chosen.append(("top%d_%s" % (len(chosen) + 1, r["candidate_id"]), r, "top"))
+        best_rec = cands[best["best"]["candidate_id"]]
     last_it = max(r["iteration"] for r in cands.values())
     pool = [r for r in cands.values() if r["iteration"] == last_it and r["candidate_id"] not in {c[1]["candidate_id"] for c in chosen}]
     for r in rng.sample(pool, min(contemporaries, len(pool))):

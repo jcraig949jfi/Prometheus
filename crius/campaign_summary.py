@@ -50,7 +50,10 @@ def census(run_dir: str) -> dict:
     }
 
 
-def qual_row(run_dir: str, suite: str = "heldout_v1") -> dict:
+def qual_row(run_dir: str, suite: str = None) -> dict:
+    if suite is None:
+        meta = receipts.read_json(os.path.join(run_dir, "RUN_META.json"))
+        suite = "qual" if meta["config"].get("world", {}).get("id") == "c1" else "heldout_v1"
     p = os.path.join(run_dir, "qualify_%s" % suite, "SUMMARY.json")
     if not os.path.exists(p):
         return {}
