@@ -147,3 +147,37 @@ def test_episode_checkpoint_and_resume_reproduce_the_uninterrupted_run():
     assert rest["replay_class"] == "PARTIAL" and rest["checkpoint_tick"] == 10 and rest["pre_checkpoint_trace"] == first["trace_hash"]
     assert obs3[1].series_episode() == obs[1].series_episode() and len(obs3[1].series_episode()) == 24   # the whole episode's series survives the checkpoint
     assert obs3[0].measure() == obs[0].measure()
+
+
+# C44: scan() caught edits, duplicates and truncation -- but DELETING a whole middle line left a file every check
+# accepted. Receipts in one file now chain (prev_receipt_id); a missing link is a named defect; a resumed job
+# continues the chain from the last valid receipt.
+def test_deleting_a_middle_receipt_breaks_the_chain_and_is_reported(tmp_path):
+    p = _write(tmp_path); lines = p.read_text(encoding="utf-8").splitlines()
+    rs = R.read_all(p)
+    assert rs[0]["prev_receipt_id"] is None and all(rs[i]["prev_receipt_id"] == rs[i - 1]["receipt_id"] for i in range(1, len(rs)))
+    del lines[1]
+    p.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    scan = R.scan(p)
+    assert scan["valid"] == 3 and any(d["defect"] == "CHAIN_BREAK" and d["line"] == 2 for d in scan["defects"])
+    with pytest.raises(R.ReceiptError):
+        R.read_all(p)
+
+
+def test_resumed_job_continues_the_chain(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = Experiment(family="chain", world=ref("world.integer.v1", world_seed=1), substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()],
+                   seed_policy={"base": 1, "n_seeds": 4}, budget={"episodes": 1, "horizon": 4})
+    job = lower(e, REG).job; real = L.run_one; calls = {"n": 0}
+
+    def flaky(spec, registry, receipt_dir=None):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise KeyboardInterrupt()
+        return real(spec, registry, receipt_dir)
+    monkeypatch.setattr(L, "run_one", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        execute(job, tmp_path / "c.jsonl", REG)
+    monkeypatch.setattr(L, "run_one", real)
+    execute(job, tmp_path / "c.jsonl", REG, resume=True)
+    assert R.scan(tmp_path / "c.jsonl")["defects"] == [] and len(R.read_all(tmp_path / "c.jsonl")) == 5

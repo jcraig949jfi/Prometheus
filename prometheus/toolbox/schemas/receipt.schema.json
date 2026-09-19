@@ -8,6 +8,10 @@
   "properties": {
     "schema": {"const": "prometheus.toolbox.receipt.v1"},
     "receipt_id": {"type": "string", "minLength": 24, "maxLength": 24},
+    "prev_receipt_id": {"type": ["string", "null"], "description": "the previous receipt's id in the same file (null for the first): a hash chain per file (C44)"},
+    "split": {"enum": ["train", "holdout"]},
+    "series": {"type": "object", "description": "per observer kind: SeriesRecord (series.py) -- inline episodes or a content-addressed artifact"},
+    "experiment": {"type": ["object", "null"], "description": "SUMMARY only: the job's full IR, so the file alone can be replayed (C32)"},
     "experiment_id": {"type": "string"},
     "experiment_digest": {"type": "string"},
     "arm": {"type": "string", "description": "primary | <control kind> | SUMMARY"},

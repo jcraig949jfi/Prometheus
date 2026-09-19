@@ -316,3 +316,8 @@ C43 | T+2:42 | BRIDGES (directive s10; reached naturally after C39). (a) backend
   target-runtime, M6 unsupported semantic; NONE a kernel defect. NPE: N1 unknown (interface unavailable),
   N2 target-runtime (stage ceilings), N3 adapter-defect-if-wrong (row vocabulary unverified until it lands).
   Suite 169 passed 6 skipped.
+C44 | T+2:50 | forensic gap found by asking "what edit does scan() NOT see?": deleting a whole middle receipt
+  left a file every check accepted. RED (delete line 2 -> must be reported; a resumed job must continue the
+  chain). Receipts now CHAIN within a file (prev_receipt_id); read_all raises CHAIN_BREAK naming the line,
+  scan() reports it, a writer on an existing file continues from the last valid receipt. Schema updated
+  (prev_receipt_id, split, series, experiment documented). Suite 171 passed 6 skipped.

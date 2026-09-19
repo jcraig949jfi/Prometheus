@@ -82,19 +82,36 @@ def finalize(r: dict) -> dict:
 
 
 class ReceiptWriter:
-    """Append-only JSONL, one flush per record (base-role rule: never a shell redirect; the program writes)."""
+    """Append-only JSONL, one flush per record (base-role rule: never a shell redirect; the program writes).
+    Receipts CHAIN (C44): each carries prev_receipt_id = the previous receipt's id in this file (None for the
+    first), so a deleted middle line is detectable; a writer opened on an existing file continues the chain
+    from its last VALID receipt."""
 
     def __init__(self, path):
         import pathlib
         self.path = pathlib.Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.prev = None
+        if self.path.exists() and self.path.stat().st_size > 0:
+            last = None
+            with open(self.path, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        last = validate(json.loads(line))["receipt_id"]
+                    except (ValueError, ReceiptError):
+                        pass
+            self.prev = last
         self._f = open(self.path, "a", encoding="utf-8", newline="\n")
         self.n = 0
 
     def write(self, r: dict) -> dict:
+        r = dict(r); r["prev_receipt_id"] = self.prev
         r = finalize(r)
         self._f.write(json.dumps(r, sort_keys=True, separators=(",", ":"), default=str) + "\n"); self._f.flush()
-        self.n += 1
+        self.n += 1; self.prev = r["receipt_id"]
         return r
 
     def close(self) -> None:
@@ -114,9 +131,12 @@ def read_all(path) -> List[dict]:
             except ValueError:
                 raise ReceiptError("line %d: TRUNCATED_OR_MALFORMED_JSON" % n)
             try:
-                out.append(validate(rec))
+                rec = validate(rec)
             except ReceiptError as exc:
                 raise ReceiptError("line %d: %s" % (n, exc))
+            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (out[-1]["receipt_id"] if out else None):
+                raise ReceiptError("line %d: CHAIN_BREAK (prev_receipt_id does not name the previous receipt)" % n)
+            out.append(rec)
     return out
 
 
@@ -142,5 +162,7 @@ def scan(path) -> dict:
             rid = rec["receipt_id"]
             if rid in seen:
                 defects.append({"line": n, "defect": "DUPLICATE_RECEIPT_ID", "receipt_id": rid}); continue   # a copy is not a second run
+            if "prev_receipt_id" in rec and rec["prev_receipt_id"] != (ids[-1] if ids else None):
+                defects.append({"line": n, "defect": "CHAIN_BREAK", "expected_prev": ids[-1] if ids else None, "found_prev": rec["prev_receipt_id"]})
             seen.add(rid); ids.append(rid); valid += 1
     return {"path": str(path), "lines": lines, "valid": valid, "defects": defects, "receipt_ids": ids}
