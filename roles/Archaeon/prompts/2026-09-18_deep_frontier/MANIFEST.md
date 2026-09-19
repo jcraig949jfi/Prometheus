@@ -4,3 +4,4 @@ sha256 over LF-normalised bytes (equals the git blob for text files); see comms/
 
 - 00_OPERATOR_DIRECTIVE.md  sha256:015365ae669451ec3d2a609494ebbb39d64035d7f4e15bd9e08b4b693ddcdf4e
 - 01_OPERATOR_EXECUTION_DIRECTIVE.md  sha256:b91ddffbd9e388d69863148296e083e960d1193dca3dc84ec084eef1d0010d19
+- 02_OPERATOR_CODE_FIRST_EXECUTION.md  sha256:1d516ccd9d287a45df6c3aabbe6f94cb5cac82bdb7fcd0bd1e2654d58478de1e

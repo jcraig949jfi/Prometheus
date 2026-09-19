@@ -91,3 +91,22 @@ spec knobs (N, E, generations, profile v0/graph/repb_fizzle, composed world by b
 unlabeled/stable schedule); lane MIXED for LLM-named directions realised by procedural samplers.
 Resolution before launch: 76 runnable / 1 FALSIFIER_FAILED / 0 BLOCKED of 77. | build() sweep. |
 -- | Builders may be refined per lineage; the mapping is recorded in each run's provenance.
+
+DF-010 | 2026-09-19 00:03 | CODE-FIRST EXECUTION (operator directive, verbatim 02_OPERATOR_CODE_FIRST_
+EXECUTION.md): experiments are validated specs (specs.py, archaeon.frontier.experiment_spec.v1:
+id, world/world-generator, organism/population, params, seed, budget, controls,
+required_capabilities, telemetry, output schema, checkpoint/replay, provenance); families
+expand by sweep grids; capabilities are probes (capabilities.py) and a missing one yields
+BLOCKED_MISSING_CAPABILITY with no prose; preregistrations are data under suppressions/
+(PROTEUS-46.json covers C4-cliff.T1 only, active while the source file says
+FALSIFIER_FAILED); global halts are assertions (integrity.py: replay A, checkpoint ancestry,
+evidence writes incl. anchor coverage/chain, provenance, observation/interpretation
+separation, append-only registry) that write GLOBAL_HALT.json with invariant + receipt +
+invalidated evidence; the scheduler (scheduler.py) discovers, checks, executes, resumes from
+the last chunk, writes RECEIPT.json first and per chunk, branches descendants as specs
+(controls + persistence + adjacent bins) and advances the queue. Self-test: v0 and graph
+specs ran, suppression blocked the covered one, resume ran only the missing chunk, replay A
+SAME, 5 descendants. Migration attached 82 specs to the existing transformations and added the
+breadth FAMILY (40 world seeds x {v0, graph} x N {16, 64} = 160 specs). The LLM-scheduled
+loop (loop.py) is superseded and stopped; the scheduler runs detached with an 8 h wall.
+| self-test; migrate output. | -- | OPERATOR AUTHORITY on the model; DETERMINISTIC in code.
