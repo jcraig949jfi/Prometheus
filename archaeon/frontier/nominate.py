@@ -52,6 +52,8 @@ def main(argv=None) -> int:
     a1 = sub.add_parser("spec"); a1.add_argument("path"); a1.add_argument("--pool", default="EXPLOITATION"); a1.add_argument("--priority", type=float, default=2.0); a1.add_argument("--lineage", required=True); a1.add_argument("--note", default="")
     a2 = sub.add_parser("design"); a2.add_argument("module"); a2.add_argument("--priority", type=float, default=None)
     a3 = sub.add_parser("pursue"); a3.add_argument("--lineage", default=None); a3.add_argument("--family", default=None); a3.add_argument("--multiplier", type=float, default=2.0); a3.add_argument("--note", default="")
+    a3.add_argument("--cause", required=True, help="receipt / event / digest reference that motivates the multiplier"); a3.add_argument("--author", default="Archaeon[m2-49ee5a4d]")
+    a3.add_argument("--expires-evaluations", type=int, default=200000, help="the multiplier lapses after this many evaluations charged to the target"); a3.add_argument("--reconsider", default="at the family's readout")
     sub.add_parser("status")
     a = ap.parse_args(argv)
     reg = Registry(); q = Queues()
@@ -64,12 +66,14 @@ def main(argv=None) -> int:
         print(json.dumps(out, indent=1, default=str))
     elif a.cmd == "pursue":
         pt = json.loads(PURSUE.read_text(encoding="utf-8")) if PURSUE.exists() else {"lineages": {}, "families": {}, "history": []}
+        entry = {"multiplier": a.multiplier, "cause": a.cause, "author": a.author, "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                 "expires_evaluations": a.expires_evaluations, "spent_evaluations": 0, "reconsider": a.reconsider, "note": a.note, "state": "LIVE"}
         if a.lineage:
-            pt["lineages"][a.lineage] = a.multiplier
+            pt["lineages"][a.lineage] = entry
         if a.family:
-            pt["families"][a.family] = a.multiplier
-        pt["history"].append({"at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "lineage": a.lineage, "family": a.family, "multiplier": a.multiplier, "note": a.note})
-        PURSUE.write_text(json.dumps(pt, indent=1) + "\n", encoding="utf-8", newline="\n"); print(json.dumps(pt["lineages"]), json.dumps(pt["families"]))
+            pt["families"][a.family] = entry
+        pt["history"].append({**entry, "lineage": a.lineage, "family": a.family})
+        PURSUE.write_text(json.dumps(pt, indent=1) + "\n", encoding="utf-8", newline="\n"); print(json.dumps({k: (v["multiplier"] if isinstance(v, dict) else v) for k, v in pt["families"].items()}))
     else:
         print(json.dumps({"registry": reg.summary(), "queues": q.status(), "pursue": json.loads(PURSUE.read_text(encoding="utf-8")) if PURSUE.exists() else {}}, indent=1))
     return 0

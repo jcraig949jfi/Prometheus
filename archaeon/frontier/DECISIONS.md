@@ -161,3 +161,37 @@ persist on/off: niche construction across generations), CALIBRATION_EPOCH-002 (t
 level rulers, population_shift and max_spike, unvalidated, computed into receipts; no
 threshold moved). Pursuit multipliers: P-boom x4, C5-flat x2. | receipts scan 02:0xZ; tests. |
 -- | OPERATOR AUTHORITY on the model; SCIENTIFIC DISCRETION on the designs.
+
+## DF-014 (2026-09-19T02:58Z) Operator protections before the P-boom precedent
+
+Operator (verbatim points, 2026-09-19): unvalidated rulers non-authoritative; archive enough state to reconstruct the
+spike; spike rate is the preregistered primary statistic, not the whole observation space; do not template this
+pursuit; every multiplier change carries provenance; "I will return with that answer" is not part of the contract.
+
+Implemented as state and code:
+1. AUTHORITY. design/measurement.py declares AUTHORITY = "NONE"; every receipt chunk's measurements carry
+   `"authority": "NONE"`; the scheduler never reads measurements (branching = evidence controls only; priority = queue
+   + pursue table). RULER_AUTHORITY event on LIN-f14ab25f names what the rulers may (nominate through design modules)
+   and may not (branch, prioritise, set freeze tier, select) do until Harmonia admits them against synthetic nulls,
+   forced positives, order artefacts and population-size effects. Admission request goes to Harmonia with the readout.
+2. FORENSIC CAPTURE. segment.py `nominate.population` + `window` -> `population_captures` (ordering, evaluation order,
+   parentage, shared state before/after every evaluation, endogenous writes, +-window). Tested deterministic (16 rows
+   per generation, generations 4/5/6 captured for a gen-5 nomination with window 1). Arm F_popcapture_s1 queued in
+   P-boom (window 2, top_k 32 at the four spike generations).
+3. PRIMARY STATISTIC + DENSE TELEMETRY. boom_readout.py computes only the preregistered spike rate; the captures and
+   the dense archive are preserved beside it, unreduced. The readout writes no interpretation.
+4. NO TEMPLATE. The next anomaly gets its own design module; nothing in design/ is imported by another family. The
+   lesson recorded is the loop (anomaly -> executable pursuit module -> controlled descendants -> forensic
+   preservation), not the arms.
+5. PROVENANCE ON MULTIPLIERS. pursue.json entries are records {multiplier, cause, author, at, expires_evaluations,
+   spent_evaluations, reconsider, state}. nominate pursue requires --cause; the scheduler applies a multiplier only
+   while LIVE and unspent, charges every finished run's evaluations to the entries that steered it, and flips them to
+   EXPIRED in the file (history keeps the expiry). A bare number is treated as expired. The two existing multipliers
+   (P-boom x4, C5-flat x2) were rewritten with their causes and expiries.
+6. DURABLE READOUTS. design/readouts.json registers a readout as a queued object {module, lineage, condition
+   {family, done_min}, state}; the scheduler runs it when the condition holds and writes an OBSERVATION with the result
+   file into the lineage. Whoever reads the registry later finds the readout, or its pending condition, in state.
+   P-boom.readout.1 registered (8 DONE receipts -> boom_readout).
+Boundary as stated by the operator and adopted: Scientist designs/nominates/interprets; Scheduler executes and
+branches only on evidence controls; Receipts hold all the numbers; Harmonia admits instruments and rulers.
+Scheduler restarted on the new code at 2026-09-19T02:57Z (session e); the in-flight P-boom run resumes from its receipt.
