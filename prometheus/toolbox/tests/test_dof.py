@@ -210,3 +210,26 @@ def test_ablation_strips_per_player_substrate_overrides(tmp_path):
     assert rep.controls["ablation"]["outcome"] == "MET"
     arm = [r for r in read_all(tmp_path / "abo.jsonl") if r["arm"] == "ablation"][0]
     assert arm["components"]["player_substrates"] == ["substrate.flat.v1"] and arm["accounting"].get("ws_writes", 0) == 0 and arm["accounting"].get("ws_refused", 0) > 0
+
+
+# C76: ONE designer text over EVERY registered world (worlds vary independently of players -- the whole point).
+# The same players, substrate, observers, objective and controls; only the world ref changes. Each world must
+# lower, run, replay MET, and the cheat control must be MET (every world has a cheat mechanism now).
+import pytest as _pt
+
+
+@_pt.mark.parametrize("kind", ["world.integer.v1", "world.integer_alt.v1", "world.grid.v1", "world.pendulum.v1", "world.c6.composed.v1", "world.wforge.encounter.v0"])
+def test_one_experiment_text_runs_on_every_registered_world(tmp_path, kind):
+    if not REG.has(kind) or REG.get(kind).state == "UNAVAILABLE":
+        _pt.skip("%s not on this tree" % kind)
+    probe = REG.make(kind); n = probe.n_players
+    e = Experiment(family="every_world", world=ref(kind), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(100 + i, width=3).manifest() for i in range(n)],
+                   observers=[ref("observer.trace.v1"), ref("observer.series.v1", per_player=True)], objective=ref("objective.series_gain.v1"),
+                   controls=[ref("control.replay.v1"), ref("control.cheat.v1"), ref("control.sham.v1")],
+                   seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 16})
+    low = lower(e, REG); assert low.ok, (kind, low.reasons)
+    rep = execute(low.job, tmp_path / (kind + ".jsonl"), REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "MET" and rep.controls["sham"]["outcome"] == "MET", (kind, rep.controls)
+    r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
+    assert r["series"]["observer.series.v1"]["status"] in ("PRESENT", "EMPTY") and r["replay_class"] in ("BIT", "SEMANTIC")

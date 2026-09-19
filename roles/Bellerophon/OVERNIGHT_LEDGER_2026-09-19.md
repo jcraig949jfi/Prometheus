@@ -451,3 +451,10 @@ C73 | 04:49Z | playtest D had to SUBCLASS the selector to evolve statemachine.v2
   Selectors take `representation`; generation 0 comes from that representation's REGISTERED generator; a
   representation the mutation operator cannot touch gets the structure-preserving shuffle as fallback.
   Tested for v2, v3 and the rewrite system; playtest D's subclass deleted (same results). Suite 190.
+C75 | 04:46Z | component CENSUS as data: `python -m prometheus.toolbox.registry` -> every row with its admission
+  state on this host (science/COMPONENT_CENSUS_2026-09-19.json): 37 components, 37 ADMITTED; 6 worlds, 5
+  substrates, 6 representations, 3 observers, 3 objectives, 8 controls, 4 transforms, 2 selectors.
+C76 | 04:46Z | ONE designer text over EVERY registered world (integer, integer_alt, grid, pendulum, c6 wrap,
+  wforge wrap): same memory players on kv-lifetime, per-player series, series-gain objective, replay /
+  cheat / sham controls -- 6/6 lower, run, replay MET, cheat MET, sham MET. Worlds vary independently of
+  players, demonstrated across every world the kernel has. Suite 196 passed 6 skipped.

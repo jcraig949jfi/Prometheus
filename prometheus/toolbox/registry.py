@@ -98,3 +98,23 @@ def default_registry() -> Registry:
         _DEFAULT = Registry()
         install(_DEFAULT)
     return _DEFAULT
+
+
+def census(registry=None) -> dict:
+    """The kernel's component census as data (C75): every row with its admission state on THIS host, for receipts
+    and reports. `python -m prometheus.toolbox.registry` prints it."""
+    from prometheus.toolbox.admission import admit_all
+    import platform, sys
+    from datetime import datetime, timezone
+    registry = registry or default_registry()
+    res = admit_all(registry)
+    return {"when_utc": datetime.now(timezone.utc).isoformat(), "host": platform.node(), "python": sys.version.split()[0],
+            "n_components": len(res), "admitted": sum(1 for r in res.values() if r.state == "ADMITTED"),
+            "by_slot": {slot: sorted(k for k in registry.kinds(slot)) for slot in SLOTS if registry.kinds(slot)},
+            "components": {k: {"slot": registry.get(k).slot, "state": r.state, "failed": r.failed, "route": registry.get(k).route,
+                               "implements": registry.get(k).implements, "reference_of": registry.get(k).reference_of} for k, r in sorted(res.items())}}
+
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(census(), indent=1))
