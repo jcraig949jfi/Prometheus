@@ -222,3 +222,18 @@ def test_committed_view_rejects_rows_of_another_generation_before_a_marker():
             {"kind": "elite", "gen": 0, "fingerprint": "y", "objective": 2.0, "descriptor": [0]},
             {"kind": "GEN_DONE", "gen": 0}]
     assert [r["fingerprint"] for r in SR.committed_rows(rows)] == ["y"]
+
+
+# C38 (designer ergonomics): a typo in a world parameter was discovered only at execution, once per run x arm x
+# seed (96 identical FAILED receipts for one mistake). Construction errors belong at LOWERING, once, as
+# TARGET_UNSUPPORTED with the world's own message.
+def test_world_construction_error_is_reported_once_at_lowering():
+    e = _exp(world=ref("world.integer.v1", n_player=2), controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 3})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("unknown params ['n_player']" in r for r in low.reasons)
+
+
+def test_sweep_point_construction_error_names_the_point_at_lowering():
+    e = _exp(sweep={"world.params.n_regs": [4, 0]})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("n_regs" in r and "0" in r for r in low.reasons)
