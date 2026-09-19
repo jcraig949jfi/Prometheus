@@ -106,11 +106,13 @@ def capabilities_for(spec: dict) -> List[str]:
 
 def make_spec(*, family_id: str, experiment_id: str | None = None, world: dict, profile: str, population: dict, E: int, generations: int, chunk: int = 250,
               schedule: dict, seed: int, budget_evaluations: int, lane: str, generator: str, controls: list | None = None, suppressions: list | None = None,
-              archive: dict | None = None, freeze_policy: str = "tiered", log_scores: bool = False, note: str = "") -> dict:
+              archive: dict | None = None, freeze_policy: str = "tiered", log_scores: bool = False, note: str = "",
+              world_options: dict | None = None, nominate: dict | None = None, measurements: list | None = None) -> dict:
     from archaeon.campaign6 import schemas as S
     prov = S.provenance(lane, generator, "0.1", seed, {"family_id": family_id, "world": world.get("kind"), "profile": profile, "N": population["N"], "E": E, "generations": generations}, note=note)
     spec = {"schema": SCHEMA, "family_id": family_id, "world": world, "organism": {"profile": profile, "population": population},
-            "params": {"E": E, "generations": generations, "chunk": chunk, "archive": archive or {"dense_until": 64, "neighbourhood": 16}, "freeze_policy": freeze_policy},
+            "params": {"E": E, "generations": generations, "chunk": chunk, "archive": archive or {"dense_until": 64, "neighbourhood": 16}, "freeze_policy": freeze_policy,
+                       "world_options": world_options or {}, "nominate": nominate or {}, "measurements": measurements or []},
             "schedule": schedule, "seed": seed, "budget": {"evaluations": budget_evaluations, "wall_s": 6 * 3600},
             "controls": controls if controls is not None else default_controls(), "required_capabilities": [], "telemetry": {"t0_rows": True, "anchors": True, "detectors": "frozen_candidate", "log_scores": log_scores},
             "output_schema": "archaeon.c6.segment_out.v1", "checkpoint": {"resume": True, "replay_required": "A"}, "provenance": prov, "suppressions": suppressions or []}
