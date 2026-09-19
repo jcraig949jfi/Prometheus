@@ -37,6 +37,7 @@ class RunSpec:
     sweep_point: dict
     seed: int
     experiment: Experiment     # the arm's experiment at this sweep point
+    split: str = "train"       # "train" | "holdout" (C14: seed_policy.holdout_seeds)
 
     def key(self):
         import json
@@ -55,9 +56,12 @@ class LocalJob:
                 "arms": sorted({r.arm for r in self.runs}), "negotiation": self.negotiation}
 
 
-def seeds_for(exp: Experiment) -> List[int]:
+def seeds_for(exp: Experiment) -> List[tuple]:
+    """-> [(seed, split)]: n_seeds train seeds then holdout_seeds held-out seeds, contiguous from base."""
     sp = exp.seed_policy
-    return [sp["base"] + i for i in range(sp["n_seeds"])]
+    out = [(sp["base"] + i, "train") for i in range(sp["n_seeds"])]
+    out += [(sp["base"] + sp["n_seeds"] + i, "holdout") for i in range(int(sp.get("holdout_seeds", 0)))]
+    return out
 
 
 def lower(exp: Experiment, registry) -> Lowering:
@@ -89,8 +93,8 @@ def lower(exp: Experiment, registry) -> Lowering:
         base = exp.at_point(point)
         arms = [("primary", base)] + [(ctrl.kind, ctrl.arm(base, exp.seed_policy["base"] * 7919 + 1)) for _, ctrl in controls]
         for arm, aexp in arms:
-            for s in seeds_for(exp):
-                job.runs.append(RunSpec(arm, point, s, aexp))
+            for s, split in seeds_for(exp):
+                job.runs.append(RunSpec(arm, point, s, aexp, split))
     return Lowering("local", "OK", eid, job=job, negotiation=neg.as_dict())
 
 
@@ -213,7 +217,7 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
         science["substrate"] = sub.science()
     receipt = {
         "experiment_id": exp.experiment_id() if spec.arm == "primary" else exp.provenance.get("parent", exp.experiment_id()),
-        "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "status": "COMPLETED",
+        "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "COMPLETED",
         "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()), "manifest": world.manifest()},
                        "substrate": {"kind": sub.kind, "manifest_hash": component_manifest_hash(sub.manifest())},
                        "players": [{"representation": p.representation, "manifest_hash": component_manifest_hash(p.manifest()), "meta": p.meta} for p in specs],
@@ -232,7 +236,11 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
                                                 receipt_dir=receipt_dir) for ob in series_obs}
     if exp.objective:
         obj = registry.make(exp.objective["kind"], **exp.objective.get("params", {}))
+        # an objective may read the SERIES (C13): the recovered episodes are handed over on a transient key that
+        # never reaches the written receipt (the receipt keeps the series itself, inline or by artifact)
+        receipt["_series_episodes"] = SER.recover(receipt, receipt_dir) if series_obs else {}
         receipt["science"]["objective"] = dict(obj.evaluate(receipt), kind=obj.kind, version=obj.version)
+        del receipt["_series_episodes"]
     return receipt
 
 
@@ -283,10 +291,20 @@ def execute(job: LocalJob, out_path, registry=None) -> ExecutionReport:
             controls[arm] = {"control": ckind, "pairs": len(outcomes), "met": met, "not_met": nm, "indeterminate": len(outcomes) - met - nm,
                              "outcome": "MET" if outcomes and nm == 0 and met == len(outcomes) else ("NOT_MET" if nm else "INDETERMINATE"),
                              "details": outcomes[:8]}
+        splits: Dict[str, dict] = {}
+        for r in by_key.get("primary", {}).values():
+            sp = splits.setdefault(r.get("split", "train"), {"n": 0, "objective_values": []})
+            sp["n"] += 1
+            v = (r.get("science", {}).get("objective") or {}).get("value")
+            if isinstance(v, (int, float)):
+                sp["objective_values"].append(v)
+        for sp in splits.values():
+            vals = sp.pop("objective_values")
+            sp["objective_n"] = len(vals); sp["objective_mean"] = (sum(vals) / len(vals)) if vals else None
         summary = {"experiment_id": job.experiment_id, "arm": "SUMMARY", "sweep_point": {}, "seed": -1, "status": "COMPLETED",
                    "experiment_digest": job.runs[0].experiment.digest() if job.runs else "", "components": {"world": {}, "substrate": {}},
                    "capabilities": job.negotiation or {}, "replay_class": "NOT_RUN", "trace_hashes": [], "events_total": 0,
-                   "engineering": {"n_runs": len(job.runs), "n_failed": n_fail}, "science": {"controls": controls}, "accounting": {},
+                   "engineering": {"n_runs": len(job.runs), "n_failed": n_fail}, "science": {"controls": controls, "splits": splits}, "accounting": {},
                    "registry_rows": job.registry_rows, "started_utc": datetime.now(timezone.utc).isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat()}
         w.write(summary)
     finally:

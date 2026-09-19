@@ -43,6 +43,7 @@ def install(reg: Registry) -> Registry:
     reg.register(ComponentRecord("observer.series.v1", "observer", O.SeriesObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.yield_net.v1", "objective", O.YieldNetObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("objective.series_gain.v1", "objective", O.SeriesGainObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     for kind, cls in Cn.ALL.items():
         reg.register(ComponentRecord(kind, "control", cls, frozenset(), route="write", provenance=PROV, license="repository"))
     from prometheus.toolbox.ref import transforms as T

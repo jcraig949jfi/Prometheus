@@ -154,3 +154,27 @@ class SeriesObserver(TraceObserver):
 
     def series_episode(self) -> List[List[int]]:
         return list(self._series)
+
+
+class SeriesGainObjective:
+    """objective.series_gain.v1 (C13): yield reached in the LAST episode minus yield reached in the FIRST, read
+    from observer.series.v1's records (column 2 = cumulative yield). The experience-to-competence shape.
+    None -- never a fabricated 0 -- when the series is missing or disabled."""
+    kind = "objective.series_gain.v1"
+    version = "1"
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version, "reads": "observer.series.v1"}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        s = (receipt.get("series") or {}).get("observer.series.v1")
+        if s is None:
+            return {"value": None, "components": {"reason": "SERIES_MISSING"}}
+        if s["status"] == "DISABLED":
+            return {"value": None, "components": {"reason": "SERIES_DISABLED"}}
+        eps = (receipt.get("_series_episodes") or {}).get("observer.series.v1") or s.get("inline")
+        if not eps or not eps[0] or not eps[-1]:
+            return {"value": None, "components": {"reason": "SERIES_EMPTY", "episodes": len(eps or [])}}
+        first, last = eps[0][-1][2], eps[-1][-1][2]
+        return {"value": last - first, "components": {"first_episode_yield": first, "last_episode_yield": last, "episodes": len(eps),
+                                                      "per_episode_yield": [ep[-1][2] if ep else None for ep in eps]}}

@@ -127,3 +127,16 @@ C11 | T+0:19 | fuzzed compositions (tests/test_fuzz.py): seeded random Experimen
 C17 | T+0:19 | unexpected events: a world emitting an uncatalogued event kind CRASHED TraceObserver
   (IndexError on EVENT_KINDS[kind]) -- events would have been normalised away by a crash. RED with a world
   that emits kind 99; fix: observers retain UNKNOWN_<id>. GREEN 97 passed 1 skipped (fuzz adds 41).
+C12 | T+0:22 | population as a sweep axis (the DOF C3/C11 found missing)
+  RED: sweep={"players": [A, B, C]} refused by validate. CHANGE: "players" is a sweepable root; "players.1"
+  and "players.0.initial_state.state" already worked through the dotted setter (test kept). Controls pair per
+  population (3 pairs). GREEN.
+C13 | T+0:23 | an objective that READS THE SERIES: objective.series_gain.v1 = last-episode yield - first-episode
+  yield (the experience-to-competence shape). None with reason SERIES_MISSING / SERIES_DISABLED / SERIES_EMPTY,
+  never a fabricated 0. The recovered episodes reach the objective on a transient key that never hits the
+  written receipt. FALSE-GREEN GUARD: a version reading only the inline series returns SERIES_EMPTY on an
+  artifact-backed run; a test pins the artifact case and the perturbation was shown to fail it.
+C14 | T+0:24 | held-out split as receipt data: seed_policy.holdout_seeds -> contiguous seeds tagged
+  split="holdout"; SUMMARY carries per-split n / objective_n / objective_mean; controls pair within split.
+  Decision: the kernel TAGS and AGGREGATES; whether a holdout result "qualifies" is the designer's reading
+  (kernel never adjudicates). Suite 102 passed 1 skipped.

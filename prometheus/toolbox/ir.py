@@ -103,6 +103,8 @@ class Experiment:
         sp = self.seed_policy
         if not isinstance(sp.get("base"), int) or not isinstance(sp.get("n_seeds"), int) or sp["n_seeds"] < 1:
             bad.append("seed_policy needs int base and n_seeds >= 1")
+        if "holdout_seeds" in sp and (not isinstance(sp["holdout_seeds"], int) or sp["holdout_seeds"] < 0):
+            bad.append("seed_policy.holdout_seeds must be a non-negative int when present")
         b = self.budget
         if not isinstance(b.get("episodes"), int) or b["episodes"] < 1 or not isinstance(b.get("horizon"), int) or b["horizon"] < 0:
             bad.append("budget needs int episodes >= 1 and horizon >= 0")
@@ -111,7 +113,7 @@ class Experiment:
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)
-            if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective"):
+            if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective", "players"):
                 bad.append("sweep[%s]: axis root not sweepable" % path)
         for c in self.required_capabilities:
             if not C.well_formed(c):
