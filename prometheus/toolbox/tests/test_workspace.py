@@ -159,3 +159,26 @@ def test_player_substrate_override_that_cannot_run_the_player_is_refused_at_lowe
     e = _exp(ref("substrate.kv.v1"), players=[p])
     low = lower(e, REG)
     assert low.status in ("BLOCKED_MISSING_CAPABILITY", "TARGET_UNSUPPORTED") and low.reasons
+
+
+# C54 (directive s13, design only until now): communication as one more substrate DOOR. substrate.mailbox.v1
+# shares one stream among the players of a world; a player's memory slot becomes a channel: write() posts,
+# read() returns the newest value posted by ANOTHER player. Same statemachine.v2 representation, no world change.
+def test_mailbox_substrate_turns_the_memory_slot_into_a_channel(tmp_path):
+    from prometheus.toolbox.contracts import ActionSpace
+    sub = REG.make("substrate.mailbox.v1", scope="episode", capacity=8)
+    a = sub.instantiate(random_statemachine_v2(11), 1); b = sub.instantiate(random_statemachine_v2(12), 2)
+    a.ws.write(5); assert b.ws.read() == 5 and a.ws.read() is None          # own messages are not echoed
+    b.ws.write(9); assert a.ws.read() == 9 and b.ws.read() == 5
+    assert sub.accounting()["ws_reads"] == 4 and sub.accounting()["ws_writes"] == 2
+    e = _exp(ref("substrate.mailbox.v1"), world=ref("world.integer.v1", world_seed=4, n_players=2, start_charge=100000, step_cost=0),
+             players=[random_statemachine_v2(11).manifest(), random_statemachine_v2(12).manifest()], observers=[ref("observer.trace.v1")],
+             controls=[ref("control.replay.v1")], budget={"episodes": 2, "horizon": 20})
+    rep = execute(lower(e, REG).job, tmp_path / "mb.jsonl", REG); assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
+    r = _primary(tmp_path / "mb.jsonl")
+    ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
+    assert ev.get("MESSAGE", 0) > 0 and "ext.message_bus.v1" in r["capabilities"]["substrate"]
+    e_kv = _exp(ref("substrate.kv.v1"), world=ref("world.integer.v1", world_seed=4, n_players=2, start_charge=100000, step_cost=0),
+                players=[random_statemachine_v2(11).manifest(), random_statemachine_v2(12).manifest()], budget={"episodes": 2, "horizon": 20})
+    execute(lower(e_kv, REG).job, tmp_path / "kv.jsonl", REG)
+    assert _primary(tmp_path / "kv.jsonl")["trace_hashes"] != r["trace_hashes"], "a channel must be able to change behaviour vs private memory"

@@ -236,3 +236,40 @@ class StreamSubstrate(_WorkspaceSubstrate):
 
     def _door(self, pid: int):
         return StreamWorkspace(self.dev, "p%d/log" % pid, self.params["scope"], self.params["lag"], self.params["maxlen"], pid, on_read=self._on_read)
+
+
+class MailboxWorkspace(KVWorkspace):
+    """C54: a door onto a stream SHARED by every player of the substrate. write() posts (player, value); read()
+    returns the newest value posted by another player (None if none). Own messages are never echoed."""
+
+    def __init__(self, device, stream: str, scope: str, capacity: int, player: int, on_read=None):
+        super().__init__(device, stream, scope, None, player, on_read=on_read); self.capacity = capacity
+
+    def read(self):
+        self._c["ws_reads"] += 1
+        recs = self.dev.read(self.key, since=0, player=self.player)
+        v = None
+        for _, rec in reversed(recs):
+            if rec[0] != self.player:
+                v = rec[1]; break
+        if self.on_read is not None:
+            self.on_read(v)
+        return v
+
+    def write(self, value: int) -> None:
+        rid = self.dev.append(self.key, (self.player, int(value)), scope=self.scope, maxlen=self.capacity, player=self.player)
+        if rid < 0:
+            self._c["ws_refused"] += 1
+        else:
+            self._c["ws_writes"] += 1
+
+
+class MailboxSubstrate(_WorkspaceSubstrate):
+    kind = "substrate.mailbox.v1"
+    capabilities = frozenset({"core.substrate.v1", "ext.workspace.stream.v1", "ext.message_bus.v1", "ext.substrate.lifecycle.v1", "ext.events.v1", "ext.cost.v1", "ext.state.stream.v1"})
+
+    def __init__(self, scope: str = "episode", capacity: int = 64, max_keys: int = 4096):
+        super().__init__(max_keys); self.params = {"scope": scope, "capacity": capacity, "max_keys": max_keys}
+
+    def _door(self, pid: int):
+        return MailboxWorkspace(self.dev, "mailbox", self.params["scope"], self.params["capacity"], pid, on_read=self._on_read)

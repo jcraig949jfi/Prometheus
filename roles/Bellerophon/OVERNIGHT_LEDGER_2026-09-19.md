@@ -341,3 +341,13 @@ C49 | 04:03Z | an objective penalty on a key that never appears in accounting (a
 C52 | 04:03Z | a world declared for 3 players given 2 specs ran with a silent PHANTOM third player (never acted,
   could still "win" survival). Lowering now refuses a player-count mismatch naming both numbers and the sweep
   point. Suite 176 passed 6 skipped.
+C53 | 04:08Z (T+1:19) | series records were positional ints whose meaning lived in a docstring and an objective
+  read "column 2" by habit. Records now SELF-DESCRIBE: the SeriesRecord carries `columns` from the observer;
+  a declared/actual width mismatch is CORRUPT_LAYOUT; observer.series.v1(per_player=True) adds three columns
+  per player (the per-player experience curve for Crius-shaped objectives); objective.series_gain.v1 reads
+  yield_cum BY NAME and refuses a series without it. RED -> GREEN; suite 177.
+C54 | 04:11Z | communication (directive s13) as one more substrate door, not a kernel concept:
+  substrate.mailbox.v1 shares one stream among a world's players; write() posts, read() returns the newest
+  value from ANOTHER player (no echo); ext.message_bus.v1 declared; MESSAGE events reach observers; the same
+  statemachine.v2 representation runs unchanged (its memory slot becomes a channel); a channel changes
+  behaviour vs private memory (trace differs from kv). ADMITTED. Suite 178 passed 6 skipped.

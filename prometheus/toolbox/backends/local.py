@@ -369,7 +369,7 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
         rc = receipt["replay_class"]
         receipt["series"] = {k: SER.build(collected[k], enabled=getattr(ob, "enabled", True), replay_class=rc,
                                           max_records=exp.budget.get("series_max_records"), max_inline=SER.DEFAULT_MAX_INLINE,
-                                          receipt_dir=receipt_dir) for k, ob in series_obs}
+                                          receipt_dir=receipt_dir, columns=(ob.series_columns() if hasattr(ob, "series_columns") else None)) for k, ob in series_obs}
     if exp.objective:
         obj = registry.make(exp.objective["kind"], **exp.objective.get("params", {}))
         # an objective may read the SERIES (C13): the recovered episodes are handed over on a transient key that

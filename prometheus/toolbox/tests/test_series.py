@@ -156,3 +156,24 @@ def test_series_yield_column_is_per_episode_not_per_run(tmp_path):
     tot = r["science"]["observations"]["observer.series.v1"]["yield_total"]
     assert tot > 0 and all(ep[0][2] <= 8 for ep in eps), "an episode must start near zero yield"
     assert sum(ep[-1][2] for ep in eps) == tot, "per-episode final yields must add up to the run total"
+
+
+# C53: series records were positional integers whose meaning lived only in a docstring; an objective read "column
+# 2" by habit. Records now SELF-DESCRIBE (the SeriesRecord carries `columns` from the observer), a per-player
+# layout exists, and the series objective reads columns by NAME.
+def test_series_records_self_describe_their_columns_and_per_player_layout_works(tmp_path):
+    e = exp(observers=[ref("observer.series.v1", per_player=True)], world=ref("world.integer.v1", world_seed=5, n_players=2, start_charge=40),
+            players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()], budget={"episodes": 2, "horizon": 12},
+            objective=ref("objective.series_gain.v1"))
+    r = run(e, tmp_path / "pp.jsonl")
+    s = r["series"]["observer.series.v1"]
+    assert s["columns"] == ["tick", "actions_sum", "yield_cum", "alive", "p0_actions", "p0_yield_cum", "p0_alive", "p1_actions", "p1_yield_cum", "p1_alive"]
+    assert s["record_width"] == 10
+    eps = S.recover(r, tmp_path)["observer.series.v1"]
+    for ep in eps:
+        for rec in ep:
+            assert rec[1] == rec[4] + rec[7] and rec[2] == rec[5] + rec[8] and rec[3] == rec[6] + rec[9]
+    obj = r["science"]["objective"]
+    assert obj["components"]["column"] == "yield_cum" and obj["value"] == eps[-1][-1][2] - eps[0][-1][2]
+    r0 = run(exp(), tmp_path / "default.jsonl")
+    assert r0["series"]["observer.series.v1"]["columns"] == ["tick", "actions_sum", "yield_cum", "alive"]

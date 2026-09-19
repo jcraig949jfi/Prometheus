@@ -142,11 +142,11 @@ class SeriesObserver(TraceObserver):
     version = "1"
     series = True
 
-    def __init__(self, enabled: bool = True, mirror_device: str | None = None):
+    def __init__(self, enabled: bool = True, mirror_device: str | None = None, per_player: bool = False):
         super().__init__()
-        self.enabled = bool(enabled); self.mirror_device = mirror_device
+        self.enabled = bool(enabled); self.mirror_device = mirror_device; self.per_player = bool(per_player)
         self._series: List[List[int]] = []
-        self._alive = 0
+        self._alive = 0; self._alive_by: Dict[int, bool] = {}; self._ep_yield_by: Dict[int, int] = {}
         self._dev = None
         if mirror_device == "inprocess":
             from prometheus.toolbox import state as ST
@@ -154,26 +154,39 @@ class SeriesObserver(TraceObserver):
             self._dev = ST.InProcessStateDevice(); LAST_MIRROR = self._dev
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "version": self.version, "series": True, "enabled": self.enabled, "mirror_device": self.mirror_device}
+        return {"kind": self.kind, "version": self.version, "series": True, "enabled": self.enabled, "mirror_device": self.mirror_device,
+                "per_player": self.per_player, "columns": self.series_columns()}
+
+    def series_columns(self) -> List[str]:
+        """C53: records self-describe. Aggregate columns first; with per_player, three columns per player follow."""
+        cols = ["tick", "actions_sum", "yield_cum", "alive"]
+        if self.per_player:
+            for pid in range(self._n_players):
+                cols += ["p%d_actions" % pid, "p%d_yield_cum" % pid, "p%d_alive" % pid]
+        return cols
 
     def begin(self, ctx: dict) -> None:
         super().begin(ctx); self._series = []; self._alive = self._n_players; self._ep_yield = 0   # per-EPISODE counters (C21)
+        self._alive_by = {pid: True for pid in range(self._n_players)}; self._ep_yield_by = {pid: 0 for pid in range(self._n_players)}
         if self._dev is not None:
             self._dev.end_scope("episode")
 
     def on_events(self, events: List[Event]) -> None:
         super().on_events(events)
-        for (_, kind, _, _, val) in events:
+        for (_, kind, pid, _, val) in events:
             if kind == EVENT_ID["ABSORBED"]:
-                self._alive -= 1
+                self._alive -= 1; self._alive_by[pid] = False
             elif kind == EVENT_ID["YIELD"]:
-                self._ep_yield += val
+                self._ep_yield += val; self._ep_yield_by[pid] = self._ep_yield_by.get(pid, 0) + val
 
     def on_tick(self, tick: int, observations: Dict[int, List[int]], actions: Dict[int, List[int]]) -> None:
         super().on_tick(tick, observations, actions)
         if not self.enabled:
             return
         rec = [tick, sum(sum(a) for a in actions.values()), self._ep_yield, self._alive]     # col 2: yield within THIS episode
+        if self.per_player:
+            for pid in range(self._n_players):
+                rec += [sum(actions.get(pid, [])), self._ep_yield_by.get(pid, 0), 1 if self._alive_by.get(pid, False) else 0]
         self._series.append(rec)
         if self._dev is not None:
             self._dev.advance(tick); self._dev.append("series", rec, scope="persistent")
@@ -201,6 +214,10 @@ class SeriesGainObjective:
         eps = (receipt.get("_series_episodes") or {}).get("observer.series.v1") or s.get("inline")
         if not eps or not eps[0] or not eps[-1]:
             return {"value": None, "components": {"reason": "SERIES_EMPTY", "episodes": len(eps or [])}}
-        first, last = eps[0][-1][2], eps[-1][-1][2]
-        return {"value": last - first, "components": {"first_episode_yield": first, "last_episode_yield": last, "episodes": len(eps),
-                                                      "per_episode_yield": [ep[-1][2] if ep else None for ep in eps]}}
+        cols = s.get("columns") or ["tick", "actions_sum", "yield_cum", "alive"]
+        if "yield_cum" not in cols:
+            return {"value": None, "components": {"reason": "SERIES_HAS_NO_COLUMN:yield_cum", "columns": cols}}
+        c = cols.index("yield_cum")                              # C53: by NAME, never by habit
+        first, last = eps[0][-1][c], eps[-1][-1][c]
+        return {"value": last - first, "components": {"column": "yield_cum", "first_episode_yield": first, "last_episode_yield": last, "episodes": len(eps),
+                                                      "per_episode_yield": [ep[-1][c] if ep else None for ep in eps]}}
