@@ -1,0 +1,21 @@
+**1. Emerging computational mechanism**  
+By endowing a contextual multi‑armed bandit with *topological priors* and *neuromodulatory gating*, a “Topologically‑Guided Neuromodulated Bandit” (TGNB) arises. The hypothesis space is represented as a simplicial complex whose Betti numbers and persistent‑homology barcodes are computed on‑the‑fly. Each node (a concrete hypothesis) inherits a *state‑dependent gain* γ that is modulated by simulated neuromodulators (dopamine‑like reward prediction error, serotonin‑like uncertainty signal). The bandit’s policy (e.g., UCB or Thompson sampling) uses γ to stretch or shrink confidence intervals:  
+
+\[
+\text{UCB}_i(t)=\hat\mu_i(t)+\gamma_t\sqrt{\frac{2\ln t}{N_i(t)}}
+\]
+
+where γ_t = f(D_t, S_t) is a nonlinear function of dopamine‑error D_t and serotonin‑uncertainty S_t. The topological embedding supplies a *context vector* c_i (e.g., the persistence‑pair of the hypothesis’s nearest simplex) that is fed to a graph‑neural‑network policy head, allowing the bandit to share statistical strength across topologically adjacent hypotheses.
+
+**2. Advantage for a self‑testing reasoning system**  
+A reasoning agent can treat each conjecture as a node in the complex. Because topological proximity captures logical similarity (shared sub‑structures, “holes” indicating missing lemmas), the neuromodulated UCB automatically allocates more exploration to clusters of high uncertainty while suppressing redundant trials on well‑explored regions. Dopamine‑driven prediction‑error spikes when a hypothesis yields surprising evidence, transiently widening its exploration radius and propagating the gain to neighboring nodes, thus accelerating discovery of related lemmas. The system therefore tests hypotheses in a structured, state‑adaptive manner rather than blind uniform sampling.
+
+**3. Novelty**  
+There is work on *topological data analysis for reinforcement learning* and on *neuromodulated meta‑RL*, and separate studies of *contextual bandits with graph embeddings*. However, a unified architecture that couples persistent‑homology‑derived context, biologically inspired neuromodulatory gain, and classic bandit exploration policies has not been formalized. The TGNB therefore occupies a novel niche, albeit built from existing components.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — the topology‑aware exploration sharply focuses hypothesis testing.  
+Metacognition: 7/10 — neuromodulatory signals provide a principled self‑monitoring loop.  
+Hypothesis generation: 6/10 — the mechanism guides testing but does not itself generate new conjectures.  
+Implementability: 5/10 — requires persistent‑homology pipelines and neuromodulated bandit code; feasible but engineering‑heavy.

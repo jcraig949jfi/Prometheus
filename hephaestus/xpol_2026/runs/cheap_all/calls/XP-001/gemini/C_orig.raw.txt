@@ -1,0 +1,179 @@
+```python
+import re
+import zlib
+import numpy as np
+
+class ReasoningTool:
+    """
+    Entangled Plastic Model Checker (EPMC):
+    Integrates logical model checking, Hebbian synaptic weight plasticity on
+    dynamic proposition graphs, and quantum-inspired belief collapse over candidate
+    states with explicit meta-epistemic calibration.
+    """
+    def __init__(self):
+        self.eta = 0.1
+        self.tau = 0.2
+        self.T = 3
+
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Evaluates the prompt for Tier B judgment traps and ambiguity.
+        Caps confidence when presuppositions, ambiguity, or insufficient info exist.
+        """
+        p = prompt.lower()
+        # Presupposition traps
+        if re.search(r"\b(have you (stopped|quit)|why did .* (fail|stop)|when did .* stop)\b", p):
+            return 0.15
+        # Scope ambiguity ("Every X did a Y" - same Y or different?)
+        if re.search(r"\b(every|each)\b.*\b(a|one)\b", p) and "same" not in p:
+            return 0.20
+        # Pronoun ambiguity
+        if re.search(r"\b(told|said to)\b.*\b(he|she|they)\b", p) and "who" in p:
+            return 0.20
+        # False dichotomy
+        if re.search(r"\beither\b.*\bor\b", p) and not re.search(r"\b(neither|both|other)\b", p):
+            return 0.25
+        # Subjectivity without metric
+        if re.search(r"\b(best|worst|favorite|favourite|preferred)\b", p):
+            return 0.25
+        # Insufficient information / unanswerable
+        if re.search(r"\b(not enough info|cannot be determined|insufficient)\b", p):
+            return 0.25
+        return 0.95
+
+    def _ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance (NCD) tiebreaker."""
+        b1, b2 = s1.encode("utf-8"), s2.encode("utf-8")
+        c1, c2 = len(zlib.compress(b1)), len(zlib.compress(b2))
+        c12 = len(zlib.compress(b1 + b2))
+        return 1.0 - (c12 - min(c1, c2)) / max(c1, c2)
+
+    def _solve_math_logic(self, prompt: str) -> tuple[dict, bool]:
+        """Constructive calculation for Tier A numeric comparisons & expressions."""
+        p = prompt.lower()
+        nums = [float(x) for x in re.findall(r"[-+]?\d*\.?\d+", prompt) if x not in ['.', '+', '-']]
+        if len(nums) >= 2 and any(k in p for k in ["larger", "greater", "smaller", "less", "bigger", "increase", "compare"]):
+            n1, n2 = nums[0], nums[1]
+            if "larger" in p or "greater" in p or "bigger" in p:
+                ans = n1 if n1 > n2 else n2
+            else:
+                ans = n1 if n1 < n2 else n2
+            return {"ans_val": ans, "nums": nums}, True
+        
+        expr_m = re.search(r"(\d+\s*[\+\-\*/]\s*\d+(\s*[\+\-\*/]\s*\d+)?)", prompt)
+        if expr_m and "=" not in prompt:
+            try:
+                res = float(eval(expr_m.group(1)))
+                return {"ans_val": res}, True
+            except Exception:
+                pass
+        return {}, False
+
+    def _extract_props(self, prompt: str, candidates: list[str]) -> list[str]:
+        raw = re.findall(r"\b[a-zA-Z]{3,}\b", prompt + " " + " ".join(candidates))
+        stop_words = {"the", "and", "that", "this", "with", "from", "for", "are", "was"}
+        props = list(set(w.lower() for w in raw if w.lower() not in stop_words))
+        return props[:12]
+
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        meta_c = self._meta_confidence(prompt)
+        math_info, is_math = self._solve_math_logic(prompt)
+        n_cand = len(candidates)
+        if n_cand == 0:
+            return []
+
+        # 1. Structural evaluation (Tier A)
+        math_scores = np.zeros(n_cand)
+        if is_math and "ans_val" in math_info:
+            target = math_info["ans_val"]
+            for i, c in enumerate(candidates):
+                c_nums = [float(x) for x in re.findall(r"[-+]?\d*\.?\d+", c) if x not in ['.', '+', '-']]
+                if any(abs(cn - target) < 1e-5 for cn in c_nums):
+                    math_scores[i] = 1.0
+                elif str(target) in c or str(int(target) if target.is_integer() else target) in c:
+                    math_scores[i] = 0.8
+
+        # 2. Entangled Plastic Model Checker (Hebbian Learning & Model Checking)
+        props = self._extract_props(prompt, candidates)
+        p_len = len(props)
+        if p_len > 0:
+            adj = np.zeros((p_len, p_len), dtype=bool)
+            for i in range(p_len - 1):
+                adj[i, i+1] = True
+            w = adj.astype(float) * 0.5
+
+            # Hebbian plasticity loop
+            for _ in range(self.T):
+                for c in candidates:
+                    c_low = c.lower()
+                    present = np.array([props[i] in c_low for i in range(p_len)])
+                    for i in range(p_len):
+                        for j in range(p_len):
+                            if adj[i, j]:
+                                if present[i] and present[j]:
+                                    w[i, j] += self.eta * (1.0 - w[i, j])
+                                else:
+                                    w[i, j] -= self.eta * w[i, j]
+                w[w < self.tau] = 0.0
+
+            # Model checking sat ratio per candidate
+            sat_ratios = np.zeros(n_cand)
+            for i, c in enumerate(candidates):
+                c_low = c.lower()
+                present = np.array([props[k] in c_low for k in range(p_len)])
+                active_edges = (w > 0)
+                co_active = np.sum(active_edges & np.outer(present, present))
+                total_active = np.sum(active_edges) + 1e-5
+                sat_ratios[i] = co_active / total_active
+        else:
+            sat_ratios = np.ones(n_cand) / n_cand
+
+        # 3. NCD similarity (Tiebreaker <= 15%)
+        ncd_scores = np.array([self._ncd(prompt, c) for c in candidates])
+
+        # 4. Integrated Scoring (Judgment >= 40%, Structural >= 30%, NCD <= 15%)
+        if is_math and np.max(math_scores) > 0:
+            final_scores = 0.75 * math_scores + 0.15 * sat_ratios + 0.10 * ncd_scores
+        else:
+            final_scores = 0.45 * (sat_ratios * meta_c) + 0.40 * sat_ratios + 0.15 * ncd_scores
+
+        total_s = np.sum(final_scores)
+        norm_scores = final_scores / total_s if total_s > 0 else np.ones(n_cand) / n_cand
+
+        results = []
+        for i, c in enumerate(candidates):
+            reasoning = f"EPMC Sat: {sat_ratios[i]:.2f}, Meta Conf: {meta_c:.2f}"
+            if is_math:
+                reasoning += f", Math Match: {math_scores[i]:.2f}"
+            results.append({
+                "candidate": c,
+                "score": float(norm_scores[i]),
+                "reasoning": reasoning
+            })
+
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Returns epistemic confidence score [0, 1].
+        Calculates prompt ambiguity via _meta_confidence and caps bad prompts.
+        """
+        meta_c = self._meta_confidence(prompt)
+        if meta_c <= 0.25:
+            return meta_c
+
+        math_info, is_math = self._solve_math_logic(prompt)
+        if is_math and "ans_val" in math_info:
+            target = math_info["ans_val"]
+            c_nums = [float(x) for x in re.findall(r"[-+]?\d*\.?\d+", answer) if x not in ['.', '+', '-']]
+            if any(abs(cn - target) < 1e-5 for cn in c_nums):
+                return 0.95
+            return 0.10
+
+        evals = self.evaluate(prompt, [answer])
+        if evals:
+            top_score = evals[0]["score"]
+            return float(np.clip(meta_c * top_score * 2.0, 0.1, 0.85))
+        return 0.20
+```

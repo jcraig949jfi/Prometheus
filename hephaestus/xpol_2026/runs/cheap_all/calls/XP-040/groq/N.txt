@@ -1,0 +1,29 @@
+**1. Algorithmic core**  
+The tool builds a *dialectical‐feedback graph* (DFG). Each candidate answer is tokenised into propositional nodes (subject‑predicate‑object triples). Nodes are stored in a Python `list` of `namedtuple('Prop', 'id text polarity')`. Edges encode logical relations extracted by regex (e.g., “if A then B”, “A > B”, “not C”). The DFG is a directed multigraph represented by two `numpy.ndarray` matrices: an adjacency matrix `E` (shape N×N, 1 = thesis→antithesis, –1 = antithesis→thesis) and a weight matrix `W` (confidence scores from lexical cues, scaled 0‑1).  
+
+A *chaotic iteration* updates node scores `s` (size N) using a Lyapunov‑type map:  
+
+```
+s_{t+1} = tanh( α·E·s_t + β·W·x + γ·u )
+```
+
+where `x` is the vector of lexical confidence (negations, comparatives, numeric cues) and `u` is a control input derived from a PID‑style error term `e = target – Σs_t`. The PID controller (`P = Kp*e`, `I = Ki*∫e dt`, `D = Kd*Δe`) nudges the system toward a stable “synthesis” score. Convergence is detected when the largest Lyapunov exponent (computed from successive Jacobians `J_t = α·E + β·diag(x)`) becomes negative, indicating the answer’s logical structure has settled into a consistent attractor. The final synthesis score is the normalized sum of stable node activations; higher values mean the answer exhibits coherent thesis‑antithesis‑synthesis reasoning.
+
+**2. Parsed structural features**  
+- Negation markers (`not`, `no`, `never`) → polarity flag.  
+- Comparative operators (`>`, `<`, `more than`, `less than`).  
+- Conditional clauses (`if…then`, `when`, `unless`).  
+- Numeric values and units (extracted with regex).  
+- Causal verbs (`cause`, `lead to`, `result in`).  
+- Temporal/ordering cues (`first`, `next`, `finally`).  
+
+These are encoded into `x` and edge types in `E`.
+
+**3. Novelty**  
+The exact combination—using a chaotic dynamical system to drive a dialectical graph while closing the loop with a PID feedback controller—is not present in standard NLP evaluation literature. Prior work uses constraint propagation or graph‑based scoring, but they lack the Lyapunov‑based stability check and control‑theoretic error correction, making this a novel algorithmic synthesis.
+
+**4. Ratings**  
+Reasoning: 8/10 — robust logical graph with convergence guarantee.  
+Metacognition: 6/10 — can detect self‑contradiction via instability but lacks self‑explanation.  
+Hypothesis generation: 5/10 — limited to extracting explicit clauses, not creative inference.  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, and fits existing pipelines.

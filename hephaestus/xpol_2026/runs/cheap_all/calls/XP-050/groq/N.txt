@@ -1,0 +1,28 @@
+**Algorithmic design**
+
+The evaluator builds a *typed compositional graph* (TCG) for each answer.  
+1. **Parsing & typing** – A deterministic finite‑state scanner extracts tokens (identifiers, numbers, logical operators, comparatives, conditionals, causal verbs, negation cues). Each token is assigned a *type* from a small hierarchy ( `Prop`, `Num`, `Rel`, `Comp`, `Neg` ) defined in a lightweight type‑theory module. Dependent types allow a `Rel` node to carry the arity and the expected operand types (e.g., `greater_than: Num × Num → Prop`).  
+2. **Composition** – Using Frege‑style compositionality, the parser combines adjacent typed tokens into *expression nodes* via a rule table. The rule table is a numpy‑indexed matrix where rows are left‑hand types, columns right‑hand types, and entries are either a resulting type or `None`. This yields a rooted abstract syntax tree (AST) whose nodes are objects `{type, children, value}`.  
+3. **Phase‑transition scoring** – For each AST we compute an *order parameter* vector `o` (counts of satisfied logical constraints, numeric consistency, and structural completeness). A critical surface is pre‑defined (e.g., `o[0] ≥ 1` and `o[1] / o[2] ≤ τ`). When the vector crosses the surface, the system undergoes a discrete *phase transition*: the answer moves from “incoherent” to “coherent”. The score is the distance of `o` to the critical surface, computed with numpy norms; smaller distance ⇒ higher score.  
+4. **Constraint propagation** – After the AST is built, a forward‑chaining engine (modulo transitivity, modus ponens, arithmetic evaluation) propagates truth values across the graph. Violations increment a penalty counter that feeds back into the order‑parameter vector.
+
+**Parsed structural features**
+
+- Negation cues (`not`, `no`, `never`)  
+- Comparative adjectives (`greater`, `less`, `equal`)  
+- Conditional constructs (`if … then …`, `only if`)  
+- Numeric literals and units  
+- Causal verbs (`cause`, `lead to`, `result in`)  
+- Ordering relations (`first`, `after`, `before`)  
+- Logical connectives (`and`, `or`, `implies`)  
+
+**Novelty assessment**
+
+The exact coupling of a type‑theoretic compositional parser with a phase‑transition‑based scoring surface is not present in prior rule‑based evaluators. Existing work uses either typed abstract syntax trees (e.g., proof assistants) or statistical phase‑transition metaphors, but not both as a deterministic scoring kernel. Hence the combination can be regarded as a novel algorithmic synthesis.
+
+**Ratings**
+
+Reasoning: 8/10 — strong logical depth, limited to formalizable patterns  
+Metacognition: 5/10 — can detect self‑referential statements only via explicit markers  
+Hypothesis generation: 4/10 — does not create new claims, only evaluates given ones  
+Implementability: 9/10 — pure Python + numpy, deterministic, no external services

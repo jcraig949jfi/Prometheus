@@ -1,0 +1,33 @@
+**Algorithm Overview**  
+The tool builds a *spectro‑predictive mental model* that treats a candidate answer as a discrete‑time signal of logical tokens.  
+
+1. **Token‑level representation** – The prompt and each answer are tokenised (whitespace + punctuation) into a list `tokens`. A parallel list `roles` tags each token as *operator* (if it matches a regex for “if, and, or, not, because, therefore, >, <, =, more, less, …”), *entity*, *numeric* or *quantifier*.  
+
+2. **Fourier analysis** – The binary vector `op_vec` (1 where a token is an operator, 0 elsewhere) is transformed with `np.fft.rfft`. The resulting magnitude spectrum `S` captures the *frequency* of logical operators across the text, exposing patterns such as repeated conditionals or chained causality. A reference spectrum `S_ref` is pre‑computed from a small bank of high‑quality exemplar answers.  
+
+3. **Predictive coding loop** – A belief state `B` (a dict mapping each logical role to a probability) predicts the next token class. Starting from the first token, the algorithm generates a *prediction vector* `P_t` (size = number of roles) and compares it to the observed one‑hot encoding `O_t`. The prediction error `e_t = O_t – P_t` is accumulated, and `B` is updated by a simple leaky‑integrator: `B ← B + η·e_t`. After a full pass the total error `E = ∑‖e_t‖²` measures how well the answer conforms to a coherent hierarchical generative model of reasoning.  
+
+4. **Theory‑of‑Mind simulation** – The prompt is interpreted as a *question agent* with an expected belief distribution `B_q` (derived from the prompt’s logical structure using the same predictive coding step). The candidate’s final belief `B_a` is compared to `B_q` via cosine similarity `C = (B_a·B_q)/(‖B_a‖‖B_q‖)`.  
+
+5. **Scoring** – The final score is a weighted combination:  
+`score = w₁·(1 – ‖S – S_ref‖/‖S_ref‖) + w₂·exp(‑α·E) + w₃·C`  
+where `w₁,w₂,w₃` sum to 1 and can be tuned. Higher spectral match, lower prediction error, and higher mental‑state alignment yield a better rating.
+
+**Parsed Structural Features**  
+- Negations (`not`, `never`)  
+- Comparatives & superlatives (`more`, `less`, `greater than`)  
+- Conditionals (`if … then …`, `unless`)  
+- Numeric values and units (captured by regex `\d+(\.\d+)?`)  
+- Causal claims (`because`, `therefore`, `leads to`)  
+- Ordering relations (`first`, `next`, `after`)  
+- Quantifiers (`all`, `some`, `none`, `most`)  
+- Logical connectives (`and`, `or`, `xor`)  
+
+**Novelty Assessment**  
+Spectral analysis of token‑level operator patterns exists in stylometry, and predictive‑coding style error minimisation has been used in cognitive‑model simulations. However, integrating a Fourier‑based frequency check, an iterative prediction‑error loop, and a Theory‑of‑Mind belief‑alignment step into a pure‑numpy scorer for reasoning answers is not documented in the literature. The combination is therefore a novel engineering synthesis, albeit built from known components.
+
+**Ratings**  
+Reasoning: 8/10 — captures logical depth through error minimisation and operator frequency.  
+Metacognition: 7/10 — models the question‑agent’s belief state, enabling perspective taking.  
+Hypothesis generation: 6/10 — can flag missing premises but does not create new arguments.  
+Implementability: 9/10 — relies only on numpy, regex and basic data structures, easy to prototype.

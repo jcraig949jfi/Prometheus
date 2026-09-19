@@ -372,87 +372,91 @@
   },
   "groq": {
    "N": {
-    "calls": 12,
-    "parsed": 12,
+    "calls": 115,
+    "parsed": 114,
     "composite": {
-     "n": 12,
-     "median": 6.665,
-     "mean": 6.665,
-     "max": 7.0,
+     "n": 114,
+     "median": 7.0,
+     "mean": 6.999,
+     "max": 8.0,
      "p25": 6.33,
      "p75": 7.0
     },
     "orig_composite_same_packets": {
-     "n": 12,
-     "median": 6.33,
-     "mean": 6.2475,
-     "max": 6.33,
+     "n": 114,
+     "median": 7.0,
+     "mean": 6.7446,
+     "max": 8.33,
      "p25": 6.33,
-     "p75": 6.33
+     "p75": 7.33
     },
     "novelty_labels": {
-     "novel": 11,
-     "unproductive": 1
+     "novel": 104,
+     "unproductive": 3,
+     "null": 1,
+     "unclear": 7
     },
     "seconds": {
-     "n": 12,
-     "median": 5.05,
-     "mean": 20.3667,
-     "max": 72.6,
+     "n": 115,
+     "median": 5.2,
+     "mean": 23.4,
+     "max": 167.3,
      "p25": 2.6,
-     "p75": 28.0
+     "p75": 26.8
     },
-    "api_failed": 0
+    "api_failed": 1
    },
    "C_new": {
-    "calls": 12,
+    "calls": 115,
     "outcomes": {
-     "scored": 10,
-     "scrap:validation": 2
+     "scored": 13,
+     "scrap:validation": 2,
+     "skipped": 1,
+     "api_call_failed": 99
     },
-    "scored": 10,
+    "scored": 13,
     "accuracy": {
-     "n": 10,
-     "median": 0.3548,
+     "n": 13,
+     "median": 0.3495,
      "mean": 0.3656,
      "max": 0.4086,
      "p25": 0.3387,
      "p75": 0.4086
     },
-    "ge_majority": 3,
+    "ge_majority": 4,
     "ge_045": 0,
     "ge_050": 0,
     "by_tier_median": {
-     "R1": 0.5,
+     "R1": 0.4583,
      "R2": 0.225,
-     "R3": 0.5834,
-     "R4": 0.125,
+     "R3": 0.5278,
+     "R4": 0.1429,
      "R5": 0.375,
      "R6": 0.4286
     },
-    "agree_ncd_median": 0.836,
-    "agree_majority_median": 0.3199,
+    "agree_ncd_median": 0.8065,
+    "agree_majority_median": 0.3172,
     "paired_vs_original": {
      "n": 0,
      "new_minus_orig_median": null,
      "new_beats_orig": 0
     },
-    "lines_median": 298.0,
+    "lines_median": 303,
     "seconds": {
-     "n": 12,
-     "median": 9.4,
-     "mean": 20.0583,
-     "max": 79.2,
-     "p25": 8.4,
-     "p75": 31.3
+     "n": 115,
+     "median": 167.2,
+     "mean": 146.5652,
+     "max": 170.3,
+     "p25": 165.8,
+     "p75": 168.1
     },
     "out_tokens": {
-     "n": 12,
-     "median": 3713.5,
-     "mean": 3748.5833,
+     "n": 115,
+     "median": 0,
+     "mean": 487.1217,
      "max": 4510,
-     "p25": 3448,
-     "p75": 4137
+     "p25": 0,
+     "p75": 0
     },
     "top5": [
      [
@@ -468,6 +472,12 @@
       "cheap_all"
      ],
      [
+      "XP-012",
+      0.4086,
+      "Spectral Analysis + Neuromodulation + Model Checking",
+      "cheap_all"
+     ],
+     [
       "XP-001",
       0.4086,
       "Quantum Mechanics + Neural Plasticity + Model Checking",
@@ -478,64 +488,59 @@
       0.3871,
       "Quantum Mechanics + Neural Plasticity + Model Checking",
       "cheap_all"
-     ],
-     [
-      "XP-003",
-      0.3656,
-      "Topology + Dynamical Systems + Sensitivity Analysis",
-      "cheap_all"
      ]
     ]
    },
    "C_orig": {
-    "calls": 12,
+    "calls": 115,
     "outcomes": {
-     "scrap:validation": 2,
-     "scored": 10
+     "scrap:validation": 3,
+     "scored": 12,
+     "api_call_failed": 100
     },
-    "scored": 10,
+    "scored": 12,
     "accuracy": {
-     "n": 10,
+     "n": 12,
      "median": 0.3387,
-     "mean": 0.3478,
+     "mean": 0.3463,
      "max": 0.414,
-     "p25": 0.3333,
+     "p25": 0.3387,
      "p75": 0.3602
     },
     "ge_majority": 1,
     "ge_045": 0,
     "ge_050": 0,
     "by_tier_median": {
-     "R1": 0.25,
-     "R2": 0.3375,
-     "R3": 0.4167,
-     "R4": 0.2857,
+     "R1": 0.1875,
+     "R2": 0.35,
+     "R3": 0.3611,
+     "R4": 0.3214,
      "R5": 0.375,
      "R6": 0.4286
     },
     "agree_ncd_median": 0.4462,
-    "agree_majority_median": 0.0753,
+    "agree_majority_median": 0.0377,
     "paired_vs_original": {
      "n": 0,
      "new_minus_orig_median": null,
      "new_beats_orig": 0
     },
-    "lines_median": 341.5,
+    "lines_median": 362.0,
     "seconds": {
-     "n": 12,
-     "median": 30.8,
-     "mean": 32.3083,
-     "max": 80.0,
-     "p25": 10.9,
-     "p75": 33.0
+     "n": 115,
+     "median": 167.0,
+     "mean": 151.187,
+     "max": 173.2,
+     "p25": 165.2,
+     "p75": 168.2
     },
     "out_tokens": {
-     "n": 12,
-     "median": 3982.5,
-     "mean": 3898.9167,
-     "max": 4774,
-     "p25": 3505,
-     "p75": 4341
+     "n": 115,
+     "median": 0,
+     "mean": 517.2957,
+     "max": 4955,
+     "p25": 0,
+     "p75": 0
     },
     "top5": [
      [

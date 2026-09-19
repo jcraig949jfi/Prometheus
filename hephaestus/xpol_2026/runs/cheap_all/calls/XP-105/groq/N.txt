@@ -1,0 +1,31 @@
+**1. Algorithmic core**  
+The evaluator builds a *tensor of extracted logical predicates* **P** ∈ ℝ^{N × M × K}.  
+* N = number of sentences in the prompt, *M* = number of distinct relation types (negation, comparison, conditional, numeric, causal, ordering), and *K* = number of argument slots (subject, object, value).  
+Parsing (regex‑based, see 2) fills a sparse binary tensor: P[i, m, k]=1 if sentence *i* contains relation *m* with argument *k*.  
+
+A **CP‑decomposition** (rank‑R) is performed with NumPy’s SVD on each mode‑unfolding to obtain factor matrices **A** (sentence factors), **B** (relation factors) and **C** (argument factors). The low‑rank representation isolates the dominant logical structure of the prompt.
+
+For each candidate answer a parallel tensor **Q** is built and decomposed with the same rank R. The **self‑organized criticality (SOC) score** is computed as the *avalanche distance*:  
+1. Compute element‑wise residual R = |P – Q|.  
+2. Flatten R and sort descending; treat the sorted series as an “avalanche” of errors.  
+3. Fit a power‑law exponent α to the cumulative distribution (using linear regression on log‑log data).  
+4. The SOC‑score = exp(‑|α – α₀|) where α₀≈1.5 is the critical exponent of a well‑balanced logical system.  
+
+The final **reasoning score** = (cosine similarity between A and A′) × (SOC‑score). This combines structural alignment (tensor decomposition) with a criticality‑based error distribution, rewarding answers whose errors are few but not isolated (reflecting coherent reasoning).
+
+**2. Parsed structural features**  
+- Negation cues (“not”, “no”, “never”)  
+- Comparative operators (“greater than”, “≤”, “more … than”)  
+- Conditional clauses (“if … then”, “unless”)  
+- Numeric literals (integers, floats, ratios)  
+- Causal verbs (“cause”, “lead to”, “result in”)  
+- Ordering relations (“first”, “after”, “subsequently”)  
+
+**3. Novelty**  
+The exact combination—using CP‑tensor factorisation to capture logical topology and an SOC‑derived power‑law error metric for scoring—is not present in prior deterministic evaluators. Similar ideas appear separately (tensor‑based semantic parsing, SOC‑inspired anomaly detection), but their integration for reasoning assessment is novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical alignment and error‑distribution insight  
+Metacognition: 6/10 — captures self‑consistency but not reflective awareness  
+Hypothesis generation: 5/10 — limited to pattern matching, no generative step  
+Implementability: 9/10 — pure NumPy, regex, and linear algebra; straightforward to code.

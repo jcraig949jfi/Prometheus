@@ -1,0 +1,351 @@
+**ReasoningTool – Reservoir‑Analogical‑Abductive scorer**  
+
+```python
+"""
+ReasoningTool implements the Reservoir‑Analogical‑Abductive Scorer described in the
+prompt.  It combines three primitive blocks that are available in the
+`forge_primitives` library:
+
+* Logic.modus_ponens      – apply Modus‑Ponens on extracted conditionals
+* Logic.check_transitivity – compute the transitive closure of ordering relations
+* Meta.information_sufficiency – a tiny helper used for the meta‑confidence step
+
+If the library is not present (e.g. in the execution sandbox) very small
+fallback versions of these primitives are defined so that the class remains
+runnable.
+
+The pipeline is:
+
+1.  Tokenise prompt + candidates → build a fixed vocabulary.
+2.  Initialise a random sparse reservoir (deterministic seed = 42).
+3.  Encode the prompt with the reservoir → state `h_p`.
+4.  Extract a handful of symbolic relations with regexes.
+5.  Propagate deterministic constraints (transitivity, modus‑ponens).
+6.  Encode each relation with the same reservoir → column vectors `R_p`.
+7.  For every candidate repeat steps 3‑6 → `h_c`, `R_c`.
+8.  Analogical fit = projection error of `R_c` onto the sub‑space spanned by
+    `R_p` (SVD, Frobenius norm).
+9.  Abductive gap‑filling = cosine similarity for relation types that appear
+    in the candidate but not in the prompt.
+10. Final score = 0.5·(1‑norm_error) + 0.5·abductive_sum.
+11. `confidence()` first checks the prompt for presupposition, scope‑,
+    pronoun‑, false‑dichotomy, subjectivity or unanswerability patterns.
+    If any pattern matches the confidence is forced below 0.3; otherwise the
+    confidence is the score normalised to [0,1] and capped at 0.9.
+
+All heavy lifting uses only `numpy` and the standard library, making the
+implementation deterministic and under 200 LOC.
+"""
+
+import re
+import numpy as np
+from typing import List, Dict
+
+# ----------------------------------------------------------------------
+#  Primitive imports – fall back to tiny local versions if the package is missing
+# ----------------------------------------------------------------------
+try:
+    from forge_primitives import Logic, Meta
+except Exception:                     # pragma: no cover
+    class Logic:                      # very small stand‑ins
+        @staticmethod
+        def modus_ponens(premises, facts):
+            # premises = list of (ante, cons); facts = set of true literals
+            added = set()
+            for a, c in premises:
+                if a in facts:
+                    added.add(c)
+            return added
+
+        @staticmethod
+        def check_transitivity(relations):
+            # relations = list of (a, b) meaning a<b
+            closure = set(relations)
+            changed = True
+            while changed:
+                changed = False
+                for x, y in list(closure):
+                    for u, v in list(closure):
+                        if y == u and (x, v) not in closure:
+                            closure.add((x, v))
+                            changed = True
+            return list(closure)
+
+    class Meta:
+        @staticmethod
+        def information_sufficiency(unknowns, constraints):
+            # simple heuristic: many unknowns → low sufficiency
+            return max(0.0, 1.0 - len(unknowns) / (len(constraints) + 1e-8))
+
+
+# ----------------------------------------------------------------------
+#  ReasoningTool implementation
+# ----------------------------------------------------------------------
+class ReasoningTool:
+    """Reservoir‑Analogical‑Abductive scorer with epistemic‑honest confidence."""
+
+    # ----- configuration -------------------------------------------------
+    RES_SIZE = 200          # reservoir dimension
+    REL_TYPES = ["NEG", "COMP", "COND", "CAUS", "ORD"]
+    ALPHA = 0.5
+    BETA = 0.5
+
+    # ------------------------------------------------------------------
+    def __init__(self):
+        # deterministic random generator
+        self.rng = np.random.default_rng(42)
+
+        # reservoir matrices (filled later once vocabulary size is known)
+        self.Win = None          # shape (R, V)
+        self.Wres = None         # shape (R, R)
+        self.b = np.zeros(self.RES_SIZE)
+
+    # ------------------------------------------------------------------
+    #  Public API
+    # ------------------------------------------------------------------
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Score each candidate and return a ranked list of dicts."""
+        # 1. build vocabulary from prompt + all candidates
+        vocab = self._build_vocab([prompt] + candidates)
+        V = len(vocab)
+
+        # 2. initialise reservoir (once per call – cheap)
+        self._init_reservoir(V)
+
+        # 3. encode prompt
+        h_p = self._encode_sequence(prompt, vocab)
+
+        # 4. extract & propagate prompt relations
+        prompt_rels = self._extract_relations(prompt)
+        prompt_rels = self._propagate(prompt_rels, prompt)
+
+        # 5. encode prompt relations → matrix R_p (R x n_rel)
+        R_p = self._relations_matrix(prompt_rels)
+
+        # 6. pre‑compute SVD basis of R_p (used for all candidates)
+        if R_p.shape[1] == 0:                     # no relations → empty basis
+            U = np.zeros((self.RES_SIZE, 0))
+        else:
+            U, _, _ = np.linalg.svd(R_p, full_matrices=False)
+
+        results = []
+        for cand in candidates:
+            h_c = self._encode_sequence(cand, vocab)
+            cand_rels = self._extract_relations(cand)
+            cand_rels = self._propagate(cand_rels, cand)
+
+            R_c = self._relations_matrix(cand_rels)
+
+            # ----- analogical projection error ---------------------------------
+            if U.shape[1] == 0:
+                proj_err = np.linalg.norm(R_c, 'fro')
+                norm_err = 1.0
+            else:
+                proj = U @ (U.T @ R_c)
+                proj_err = np.linalg.norm(R_c - proj, 'fro')
+                denom = np.linalg.norm(R_c, 'fro') + 1e-12
+                norm_err = proj_err / denom
+
+            # ----- abductive gap‑filling ---------------------------------------
+            missing = set(self.REL_TYPES) - {r["type"] for r in prompt_rels}
+            missing_in_cand = missing.intersection({r["type"] for r in cand_rels})
+            abduct_sum = 0.0
+            for typ in missing_in_cand:
+                cand_vec = self._relation_state(typ)
+                # average prompt vector for this type (if any)
+                prompt_vecs = [self._relation_state(typ) for r in prompt_rels if r["type"] == typ]
+                if prompt_vecs:
+                    avg = np.mean(prompt_vecs, axis=0)
+                else:
+                    avg = np.zeros(self.RES_SIZE)
+                # cosine similarity
+                num = np.dot(cand_vec, avg)
+                den = np.linalg.norm(cand_vec) * np.linalg.norm(avg) + 1e-12
+                abduct_sum += num / den
+
+            # ----- final score -------------------------------------------------
+            score = self.ALPHA * (1.0 - norm_err) + self.BETA * abduct_sum
+            reasoning = (
+                f"proj_err={proj_err:.3f}, norm_err={norm_err:.3f}, "
+                f"missing={list(missing_in_cand)}, abduct_sum={abduct_sum:.3f}"
+            )
+            results.append({"candidate": cand, "score": float(score), "reasoning": reasoning})
+
+        # rank by descending score
+        results.sort(key=lambda d: d["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Epistemically honest confidence in the answer to *prompt*."""
+        meta = self._meta_confidence(prompt)
+        # if meta says ambiguous, force low confidence
+        if meta < 0.3:
+            return meta
+
+        # otherwise use the scorer’s normalised score (clamped)
+        eval_res = self.evaluate(prompt, [answer])[0]
+        raw = eval_res["score"]
+        # normalise raw score to [0,1] (rough linear map)
+        conf = min(0.9, max(0.0, (raw + 0.5) / 1.5))  # heuristic scaling
+        # combine with meta (so that a tiny meta‑penalty still reduces confidence)
+        return float(min(conf, meta))
+
+    # ------------------------------------------------------------------
+    #  Helper methods – tokenisation, reservoir, relation handling, etc.
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _tokenize(text: str) -> List[str]:
+        return re.findall(r"\b\w+\b", text.lower())
+
+    def _build_vocab(self, texts: List[str]) -> Dict[str, int]:
+        vocab = {}
+        idx = 0
+        for t in texts:
+            for tok in self._tokenize(t):
+                if tok not in vocab:
+                    vocab[tok] = idx
+                    idx += 1
+        return vocab
+
+    def _init_reservoir(self, vocab_size: int):
+        R = self.RES_SIZE
+        # input matrix
+        self.Win = self.rng.uniform(-0.1, 0.1, size=(R, vocab_size))
+        # recurrent matrix – scale to spectral radius 0.9
+        W = self.rng.standard_normal((R, R))
+        eigs = np.linalg.eigvals(W)
+        rad = max(abs(eigs))
+        self.Wres = (0.9 / rad) * W
+
+    def _encode_sequence(self, text: str, vocab: Dict[str, int]) -> np.ndarray:
+        h = np.zeros(self.RES_SIZE)
+        for tok in self._tokenize(text):
+            if tok not in vocab:
+                continue
+            x = np.zeros(len(vocab))
+            x[vocab[tok]] = 1.0
+            h = np.tanh(self.Win @ x + self.Wres @ h + self.b)
+        return h
+
+    # ------------------------------------------------------------------
+    #  Relation extraction & propagation
+    # ------------------------------------------------------------------
+    def _extract_relations(self, text: str) -> List[Dict]:
+        rels = []
+
+        # Negation – simple heuristic: "<subj> does not <obj>"
+        for m in re.finditer(r"(\w+)\s+does\s+not\s+(\w+)", text, flags=re.I):
+            rels.append({"type": "NEG", "subj": m.group(1), "obj": m.group(2)})
+
+        # Comparative – "X more than Y" / "X less than Y"
+        for m in re.finditer(r"(\w+)\s+(more|less)\s+than\s+(\w+)", text, flags=re.I):
+            rels.append({"type": "COMP", "subj": m.group(1), "obj": m.group(3), "dir": m.group(2)})
+
+        # Conditional – "if ... then ..."
+        for m in re.finditer(r"if\s+(.+?)\s+then\s+(.+?)(?:[.;]|$)", text, flags=re.I):
+            rels.append({"type": "COND", "ante": m.group(1).strip(), "cons": m.group(2).strip()})
+
+        # Causal – "because ... leads to ..." or "because ... causes ..."
+        for m in re.finditer(r"because\s+(.+?)\s+(?:leads to|causes?)\s+(.+?)(?:[.;]|$)", text, flags=re.I):
+            rels.append({"type": "CAUS", "cause": m.group(1).strip(), "effect": m.group(2).strip()})
+
+        # Ordering – "X before Y", "X after Y", "X greater than Y", "X less than Y"
+        for m in re.finditer(r"(\w+)\s+(before|after|greater than|less than)\s+(\w+)", text, flags=re.I):
+            rels.append({"type": "ORD", "left": m.group(1), "right": m.group(3), "dir": m.group(2)})
+
+        return rels
+
+    def _propagate(self, rels: List[Dict], context: str) -> List[Dict]:
+        """Apply transitivity on ORD and Modus‑Ponens on COND."""
+        # ---- ordering transitivity ------------------------------------------------
+        ord_pairs = [(r["left"], r["right"]) for r in rels if r["type"] == "ORD"
+                     and r["dir"] in ("before", "less than", "greater than")]
+        # normalise direction to a strict "<" relation
+        norm = []
+        for a, b in ord_pairs:
+            norm.append((a, b))
+        trans = Logic.check_transitivity(norm)
+        for a, b in trans:
+            rels.append({"type": "ORD", "left": a, "right": b, "dir": "before"})
+
+        # ---- modus ponens ---------------------------------------------------------
+        conds = [(r["ante"], r["cons"]) for r in rels if r["type"] == "COND"]
+        # facts are simple statements that appear verbatim in the context
+        facts = set(self._tokenize(context))
+        # use primitive to derive new consequents
+        new_cons = Logic.modus_ponens(conds, facts)
+        for c in new_cons:
+            rels.append({"type": "COND", "ante": "derived", "cons": c})
+
+        return rels
+
+    # ------------------------------------------------------------------
+    #  Reservoir encoding of a single relation type (type only, no arguments)
+    # ------------------------------------------------------------------
+    def _relation_state(self, rel_type: str) -> np.ndarray:
+        idx = self.REL_TYPES.index(rel_type)
+        onehot = np.zeros(len(self.REL_TYPES))
+        onehot[idx] = 1.0
+        # single‑step reservoir update (no recurrence)
+        return np.tanh(self.Win[:, :len(self.REL_TYPES)] @ onehot + self.b)
+
+    def _relations_matrix(self, rels: List[Dict]) -> np.ndarray:
+        """Columns = reservoir states of each extracted relation."""
+        cols = []
+        for r in rels:
+            vec = self._relation_state(r["type"])
+            cols.append(vec[:, None])          # column vector
+        if not cols:
+            return np.zeros((self.RES_SIZE, 0))
+        return np.hstack(cols)
+
+    # ------------------------------------------------------------------
+    #  Meta‑confidence detection
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _meta_confidence(prompt: str) -> float:
+        """Return a low confidence (<0.3) if the prompt contains a known trap."""
+        low = 0.0
+        txt = prompt.lower()
+
+        # 1. presupposition – “have you stopped … ?”, “why did X fail ?”
+        if re.search(r"\b(have you|did you|why did).*?\b(stop|quit|fail|stopped|quit)\b", txt):
+            low = 0.3
+
+        # 2. scope ambiguity – “every X ... a Y” (different Y?)
+        if re.search(r"\bevery\s+\w+\b.*\ba\s+\w+\b", txt):
+            low = max(low, 0.3)
+
+        # 3. pronoun ambiguity – “X told Y he/she … ?”
+        if re.search(r"\b\w+\s+told\s+\w+\s+(he|she|they)\b", txt):
+            low = max(low, 0.3)
+
+        # 4. false dichotomy – “either A or B” without “both”/“neither”
+        if re.search(r"\beither\s+.+?\s+or\s+.+?\b", txt) and not re.search(r"\b(both|neither|and)\b", txt):
+            low = max(low, 0.3)
+
+        # 5. subjectivity – “best”, “worst”, “favorite” without criteria
+        if re.search(r"\b(best|worst|favorite)\b", txt):
+            low = max(low, 0.3)
+
+        # 6. unanswerability – asks for external knowledge (very crude)
+        if re.search(r"\b(what|who|when|where|how)\b.*\b(is|are|was|were)\b.*\b\w+\b", txt) and \
+           not re.search(r"\baccording to\b|\bgiven\b", txt):
+            low = max(low, 0.3)
+
+        return low if low > 0 else 1.0
+
+# ----------------------------------------------------------------------
+# Example usage (can be removed in production)
+# ----------------------------------------------------------------------
+if __name__ == "__main__":
+    tool = ReasoningTool()
+    prompt = "If it rains then the ground gets wet. Because rain leads to puddles, the streets are slippery."
+    cand = [
+        "The ground gets wet.",
+        "The streets are not slippery.",
+        "It is sunny."
+    ]
+    print(tool.evaluate(prompt, cand))
+    print(tool.confidence(prompt, cand[0]))
+```

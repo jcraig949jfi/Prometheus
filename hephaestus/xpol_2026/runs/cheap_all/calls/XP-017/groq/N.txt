@@ -1,0 +1,37 @@
+**1. Algorithmic core**  
+The scorer builds a *knowledge graph* \(G=(V,E)\) where each node \(v\in V\) is a proposition extracted from the prompt or a candidate answer (e.g., “A → B”, “C > D”). Edges encode logical relations (implication, equivalence, contradiction). Each proposition is represented as a tuple \((\text{type},\text{tokens},\text{value})\) stored in a NumPy‑structured array for fast vectorised access.  
+
+*Information‑theoretic layer*: For every proposition we compute a Shannon‑entropy estimate of its *information content* using token‑frequency statistics from a domain‑specific corpus (counts stored in a NumPy 1‑D array). The mutual information between two propositions is approximated by the overlap of their token‑vectors (dot product of binary presence vectors).  
+
+*Gauge‑theoretic layer*: A “gauge” is a local transformation that maps a proposition to an equivalent one under a symmetry (e.g., renaming of variables, commutative re‑ordering). We maintain a *connection matrix* \(C\) (NumPy \(n\times n\)) that records permissible gauge moves. Propagating along \(C\) yields gauge‑invariant equivalence classes; scores are summed over each class to avoid double‑counting.  
+
+*Sensitivity‑analysis layer*: For each candidate answer we perturb its extracted propositions (flip a token, alter a numeric value) in a Monte‑Carlo loop (e.g., 200 samples). The variance of the final graph‑score across perturbations is the *sensitivity index* (Sobol‑type) computed with NumPy’s variance functions. A low variance indicates robustness.  
+
+**Scoring logic**:  
+1. Parse prompt \(P\) and answer \(A\) → proposition sets \(V_P, V_A\).  
+2. Compute information scores \(I(v)= -\log p(v)\).  
+3. Apply gauge connections to merge equivalent nodes, yielding reduced sets \(\tilde V_P, \tilde V_A\).  
+4. Evaluate logical consistency by constraint propagation (transitivity, modus ponens) on the combined graph; each violated constraint subtracts a fixed penalty.  
+5. Aggregate:  
+\[
+\text{Score}(A)=\frac{\sum_{v\in\tilde V_A} I(v)}{\sum_{v\in\tilde V_P} I(v)} - \lambda\cdot\text{Penalty} - \mu\cdot\text{Sensitivity}
+\]  
+All operations use only NumPy arrays and the Python standard library.
+
+**2. Parsed structural features**  
+- Negation cues (“not”, “no”, “without”)  
+- Comparative operators (“greater than”, “≤”, “more … than”)  
+- Conditional clauses (“if … then”, “provided that”)  
+- Numeric literals and units (extracted via regex)  
+- Causal verbs (“causes”, “leads to”, “increases”)  
+- Temporal or ordering markers (“first”, “after”)  
+- Logical connectors (“and”, “or”, “implies”)  
+
+**3. Novelty**  
+The exact combination—information‑entropy weighting, gauge‑invariant equivalence reduction, and Monte‑Carlo sensitivity indexing—has not been published as a single reasoning‑evaluation pipeline. Elements appear separately in information‑theoretic scoring, symmetry‑based normalization, and sensitivity analysis, but their integration is novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical consistency check with quantitative weighting  
+Metacognition: 6/10 — captures robustness but lacks self‑reflection modeling  
+Hypothesis generation: 5/10 — can evaluate but does not propose new hypotheses  
+Implementability: 9/10 — pure NumPy/stdlib code, deterministic, easy to deploy

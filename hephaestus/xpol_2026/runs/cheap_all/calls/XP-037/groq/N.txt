@@ -1,0 +1,37 @@
+**Algorithmic core**
+
+The tool builds a *deterministic reasoning automaton* that treats a candidate answer as a finite set of logical propositions extracted from the text. 1) **Parsing phase** uses a handcrafted regex‑driven lexer that tokenises sentences into a directed‑acyclic graph (DAG) of *nodes* (entities, numeric literals, predicates) and *edges* (temporal, causal, comparative, conditional). 2) **Chaos‑control layer** assigns each node a *state vector* \(x_i\in\mathbb{R}^k\) (e.g., embedding of word‑type, polarity, magnitude). The vector dynamics follow a simple discrete‑time map  
+
+\[
+x_i^{(t+1)} = A\,x_i^{(t)} + \sum_{j\in\mathcal{N}(i)} B_{ij}\,x_j^{(t)},
+\]
+
+where \(A\) is a contraction matrix and \(B_{ij}\) encodes the logical relation type (implication, negation, comparison). The Lyapunov exponent of this linear system is analytically zero, guaranteeing convergence but preserving sensitivity to the initial extraction – the “chaos” aspect is limited to detecting tiny parsing differences that amplify through the network.
+
+3) **Optimal‑control scoring** formulates a finite‑horizon cost  
+
+\[
+J = \sum_{t=0}^{T} \bigl\|x_{\text{goal}}-x^{(t)}\bigr\|^2 + \lambda\sum_{i,j}\|B_{ij}\|_F^2,
+\]
+
+where \(x_{\text{goal}}\) encodes the reference answer’s proposition set (pre‑computed from a gold standard). The optimal control problem reduces to a linear‑quadratic regulator (LQR) because the dynamics are linear and the cost quadratic; the closed‑form solution yields a scalar *score* = \(J_{\min}\). Lower scores indicate closer logical alignment.
+
+**Parsed structural features**
+
+- Negation cues (“not”, “no”, “never”) → sign flip in node polarity.  
+- Comparatives & superlatives (“greater than”, “most”) → directed weighted edges with inequality labels.  
+- Conditionals (“if… then”, “provided that”) → control‑flow edges that trigger state updates only when antecedent nodes are satisfied.  
+- Numeric values → scalar attributes attached to nodes, used in arithmetic consistency checks.  
+- Causal claims (“because”, “leads to”) → directed causal edges influencing the transition matrix.  
+- Ordering relations (“first”, “subsequently”) → temporal edges that constrain update order.
+
+**Novelty**
+
+The exact combination—linear‑chaotic‑sensitive parsing feeding an LQR‑based optimal‑control cost—is not present in prior evaluation suites, which typically separate symbolic parsing from statistical scoring. It parallels work on symbolic‑numeric hybrid graders but adds a controlled chaos layer to magnify subtle parsing errors, making it a novel methodological synthesis.
+
+**Ratings**
+
+Reasoning: 8/10 — robust logical propagation with sensitivity to fine‑grained errors.  
+Metacognition: 6/10 — limited self‑assessment; relies on static gold reference.  
+Hypothesis generation: 5/10 — does not propose alternatives, only evaluates alignment.  
+Implementability: 9/10 — pure NumPy, regex, and linear‑algebra; straightforward to code.

@@ -1,0 +1,26 @@
+**Algorithmic core**  
+The scorer builds a *symbolic state graph* G = (V,E) where each vertex v represents an extracted proposition (e.g., “A > B”, “if C then D”). Edges encode logical relations (implication, equivalence, temporal order). From the prompt we generate a *reference model* R by parsing the gold‑standard answer with the same pipeline.  
+
+1. **Kolmogorov‑complexity proxy** – each proposition is encoded as a short integer token (via a deterministic hash of its normalized string). The description length of a candidate answer C is approximated by the sum of log₂ frequencies of its tokens in a large corpus (pre‑computed with numpy arrays). Lower summed length → lower Kolmogorov complexity, rewarding concise yet informative statements.  
+
+2. **Free‑energy‑like objective** – for every vertex v in C we compute a *prediction error* ε(v) = 1 – p(v|R) where p(v|R) is a probability derived from the overlap of C’s edges with R’s edges (edge‑wise Jaccard similarity). The total variational free energy is F = ∑ ε(v)² + λ·L(C) where L(C) is the Kolmogorov proxy and λ balances brevity vs. fit.  
+
+3. **Phase‑transition detection** – as λ varies, the system exhibits a sharp change in the optimal C: below a critical λ* the score is dominated by edge‑matching (high‑precision, low‑recall); above λ* brevity wins (high‑recall, low‑precision). The algorithm locates λ* by binary search on a discretised λ grid, detecting the point where ∂F/∂λ jumps beyond a threshold (computed with numpy’s gradient). The final score is S = exp(–F(λ*)) normalized to [0,1].
+
+**Parsed structural features**  
+- Negation cues (“not”, “no”)  
+- Comparative operators (“>”, “≤”, “more than”)  
+- Conditional clauses (“if … then”)  
+- Numeric literals and units  
+- Causal verbs (“causes”, “leads to”)  
+- Temporal/ordering markers (“before”, “after”)  
+- Logical connectives (and, or, xor)
+
+**Novelty**  
+The exact combination—using a Kolmogorov‑complexity proxy as a description‑length regulariser inside a free‑energy minimisation that is tuned by detecting a phase‑transition in the λ‑trade‑off—is not present in prior evaluation tools. It fuses algorithmic information theory with a variational inference perspective, extending existing constraint‑propagation scorers.
+
+**Ratings**  
+Reasoning: 8/10 — concrete logical graph + error minimisation captures deep structure.  
+Metacognition: 6/10 — self‑tuning λ shows limited self‑awareness but no model of its own reasoning.  
+Hypothesis generation: 5/10 — can suggest alternative parses but lacks generative search.  
+Implementability: 9/10 — pure numpy/std‑lib, deterministic, and fits existing pipeline.

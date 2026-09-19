@@ -1,0 +1,14 @@
+**Computational mechanism**  
+By embedding a hierarchical predictive‑coding network inside an *ergodic sampling engine* and training it with an *information‑theoretic free‑energy loss*, we obtain an **Ergodic Predictive Coding (EPC) controller**. The controller generates a stochastic generative model \(p_\theta(x_{t}|h_{t})\) (e.g., a recurrent VAE or a Predictive State Representation) whose latent state dynamics are constrained to be *measure‑preserving* (e.g., via a volume‑preserving neural ODE or Hamiltonian RNN). Ergodicity guarantees that the time‑average of the surprise \(-\log p_\theta(x_{t}|h_{t})\) converges to its ensemble average, allowing the system to treat a single long trajectory as a faithful sample of the full hypothesis space. The loss combines Shannon entropy regularisation (maximising predictive information) with a KL‑divergence term that penalises deviation from the invariant measure, yielding a variational free‑energy that is both *information‑optimal* and *ergodically stable*.
+
+**Advantage for self‑testing hypotheses**  
+A reasoning system can instantiate each candidate hypothesis as a distinct invariant measure of the latent dynamics. Because ergodicity equates long‑run prediction error with expected error under the hypothesis, the system can evaluate hypotheses online by simply monitoring cumulative surprise. Moreover, mutual‑information maximisation between latent states and observations (the Information‑Bottleneck principle) directs the system toward hypotheses that *explain* the most structure while remaining parsimonious, effectively implementing an intrinsic “hypothesis‑selection” metric without external validation data.
+
+**Novelty**  
+Ergodic control, information‑maximising predictive coding, and variational free‑energy are each active research areas, but a unified EPC architecture that explicitly enforces measure‑preserving latent dynamics to exploit the ergodic theorem for hypothesis testing is not a standard field. Related work includes “ergodic exploration” in reinforcement learning and “predictive information” in neuroscience, yet the specific combination described here remains largely unexplored.
+
+**Ratings**  
+Reasoning: 8/10 — Provides a principled way to equate temporal and statistical evaluation of hypotheses.  
+Metacognition: 7/10 — Enables self‑assessment via surprise convergence, but requires careful invariant‑measure design.  
+Hypothesis generation: 6/10 — Generates hypotheses as latent dynamics; creativity limited by model capacity.  
+Implementability: 5/10 — Needs volume‑preserving neural ODEs, stable variational training, and long‑run simulations, which are non‑trivial but feasible.

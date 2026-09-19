@@ -1,0 +1,39 @@
+**Algorithmic design**  
+The scorer builds a Monte‑Carlo Tree Search (MCTS) over *interpretation states* of a candidate answer.  
+*Data structures*  
+- **Parse graph**: a directed acyclic graph where each node holds a clause extracted by a lightweight regex‑based parser (negation, comparative, conditional, numeric, causal, ordering). Edges encode logical dependencies (e.g., “if A then B”).  
+- **State vector** \(s\) = \([f_1,\dots,f_k]\) counting feature occurrences (negations, numeric magnitudes, causal links).  
+- **Rule ensemble**: a list of inference rules (modus ponens, transitivity, quantitative consistency) each assigned an “energy” \(E_i\) derived from statistical‑mechanics intuition: \(E_i = -\log P_i\), where \(P_i\) is the empirical frequency of the rule in a reference corpus.  
+- **Control weights** \(w\) updated online by an adaptive‑control law (e.g., LMS) to minimise the prediction error of the final score.  
+
+*Operations*  
+1. **Selection** – traverse the parse graph using UCB:  
+   \(\text{UCB}_i = \bar{v}_i + c\sqrt{\frac{\ln N}{n_i}} - \lambda E_i\), where \(\bar{v}_i\) is the average back‑propagated value, \(N\) total visits, \(n_i\) visits of node i, and \(\lambda\) scales the statistical‑mechanics penalty.  
+2. **Expansion** – add a new clause node by applying an unused inference rule to the current partial interpretation.  
+3. **Simulation** – perform a cheap stochastic rollout: randomly apply remaining rules, update the state vector, and compute a provisional *energy* \(Z = \sum_i w_i f_i\).  
+4. **Back‑propagation** – propagate the negative energy (lower energy = higher consistency) up the tree, updating \(\bar{v}\) and the adaptive weights \(w\) via: \(w \leftarrow w + \eta ( \text{target} - Z )\nabla_w Z\).  
+
+*Scoring logic*  
+After a fixed budget of simulations, the root’s value is transformed to a probability‑like score:  
+\(\text{score}= \frac{1}{1+\exp(Z_{\text{root}})}\).  
+Answers that satisfy more high‑probability rules, respect numeric constraints, and exhibit low “energy” receive higher scores.
+
+**Parsed structural features**  
+The regex front‑end extracts:  
+- Negations (“not”, “never”)  
+- Comparatives (“greater than”, “less”, “as…as”)  
+- Conditionals (“if…then”, “unless”)  
+- Numeric values and units  
+- Causal markers (“because”, “leads to”)  
+- Ordering relations (“first”, “subsequently”)  
+- Quantifiers (“all”, “some”, “most”)  
+These tokens populate the parse graph and feature vector.
+
+**Novelty assessment**  
+Individually, MCTS for logical search, statistical‑mechanics‑inspired energy scoring, and adaptive‑control weight tuning exist. Their tight integration into a pure‑numpy reasoning scorer is, to our knowledge, unprecedented, though related ideas appear in probabilistic theorem proving and reinforcement‑learning‑based proof search.
+
+**Ratings**  
+Reasoning: 8/10 — robust logical search with quantitative consistency  
+Metacognition: 7/10 — adaptive weighting mimics self‑assessment of rule reliability  
+Hypothesis generation: 6/10 — can propose novel inference chains but limited by rule set  
+Implementability: 8/10 — pure‑numpy, clear data structures, feasible within standard pipelines

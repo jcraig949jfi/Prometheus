@@ -1,0 +1,40 @@
+**1. Algorithm**
+
+The evaluator builds a *reasoning graph* G = (V,E) where each node v∈V is a parsed atomic claim (predicate, numeric relation, or negation) and each directed edge (u→v) encodes an explicit logical connector extracted from the text (→, ↔, because‑of, if‑then, before/after).  
+*Data structures* – V is stored as a NumPy‑array of strings, E as a sparse adjacency matrix (SciPy‑like CSR built with `numpy`’s `int32` indices). Each node carries a type tag (boolean, comparison, quantitative) and a numeric payload when applicable.
+
+*Topology step* – Compute connected components, detect cycles, and measure graph‑level invariants (e.g., Betti‑0 = number of components, Betti‑1 = number of independent cycles) using depth‑first search on the adjacency matrix. A well‑structured answer should have a single component and few or no cycles (no circular reasoning).
+
+*Property‑based testing step* – For every premise node p, generate a small set of *mutants* by applying domain‑specific transformations (flip a comparison direction, perturb a numeric constant within ±10 %, negate a boolean). Each mutant is a concrete assignment to all variables. The set of assignments forms the test suite T.
+
+*Satisfiability step* – Encode the whole graph as a conjunctive normal form (CNF) clause list: each edge becomes an implication clause, each node’s literal reflects its current assignment. A lightweight DPLL solver written with only `numpy` iterates over T; for each assignment it checks whether the CNF is satisfiable. If unsatisfiable, a conflict clause is recorded; a minimal unsatisfiable core is extracted by iteratively removing literals and re‑solving.
+
+*Scoring logic* –  
+‑ **Topological score** = 1 – (Betti‑1 / |V|).  
+‑ **Coverage score** = |T_pass| / |T| (fraction of mutants that keep the CNF satisfiable).  
+‑ **Core penalty** = |core| / |V|.  
+Final score = 0.4·topology + 0.4·coverage – 0.2·core‑penalty, clipped to [0,1].
+
+**2. Parsed structural features**
+
+The regex‑driven parser extracts:
+- Negations (`not`, `no`, `never`),  
+- Comparatives (`greater than`, `≤`, `more … than`),  
+- Conditionals (`if … then`, `when`, `unless`),  
+- Numeric values (integers, floats, ranges),  
+- Causal claims (`because`, `leads to`, `causes`),  
+- Ordering relations (`before`, `after`, `first/second`),  
+- Logical connectors (`and`, `or`, `implies`, `iff`).
+
+These tokens populate the node type tags and edge labels.
+
+**3. Novelty**
+
+Automated theorem provers already combine SAT solving with graph analysis, and property‑based testing is used in program verification, but a pipeline that (a) treats a natural‑language answer as a topological graph, (b) mutates premises via property‑based testing, and (c) scores using SAT‑derived unsat cores is not present in existing evaluation suites. The design therefore constitutes a novel integration of the three concepts for pure‑algorithmic reasoning assessment.
+
+**4. Ratings**
+
+Reasoning: 8/10 — strong logical coverage, but limited to propositional structure.  
+Metacognition: 6/10 — can detect missing steps via unsat cores but cannot infer intent.  
+Hypothesis generation: 7/10 — systematic mutant creation captures many edge cases.  
+Implementability: 9/10 — relies only on NumPy and standard‑library code; a compact DPLL solver is feasible.

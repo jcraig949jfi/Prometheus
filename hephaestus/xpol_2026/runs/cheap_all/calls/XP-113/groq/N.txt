@@ -1,0 +1,32 @@
+**Algorithmic synthesis**
+
+The tool builds a *finite‑state belief model* of the answer using three layers:
+
+1. **Parsing layer (property‑based extraction).**  
+   Regular‑expression grammars and a tiny tokenizer produce a list of atomic propositions *p* of the form *(subject, relation, object, polarity, value)*. Relations cover the structural features listed in (2). Each proposition becomes a node in a directed multigraph G (V,E).  
+
+2. **Model‑checking layer.**  
+   The specification of the reasoning question is compiled into a set of temporal‑logic‑like constraints *C* (e.g., “if A then B”, “A → ¬B”, “A before B”). Using depth‑first search with state‑memoisation, the engine explores all reachable sub‑graphs of G by applying **modus‑ponens**, **transitivity**, and **numeric comparison** rules. The exploration is exhaustive but bounded because the graph size is limited by the number of extracted propositions (typically < 50).  
+
+3. **Theory‑of‑Mind layer.**  
+   For each explored state, a *belief‑profile* object stores the inferred mental state of the imagined “examiner”: a set of *expected* propositions derived from the question’s hidden model. The profile is updated recursively when a node introduces a *belief* predicate (e.g., “Alice thinks …”). False‑belief detection is performed by checking consistency between the profile and the current state; inconsistencies incur a penalty.
+
+**Scoring logic**  
+After exploration, the tool computes three counters:  
+- *Coverage* – proportion of required propositions from C that appear in any reachable state.  
+- *Consistency* – number of contradictions detected (negative penalty).  
+- *Minimality* – length of the shortest state that satisfies all constraints (shorter = higher score).  
+
+The final score = w₁·coverage − w₂·inconsistency + w₃·(1/minimality), with weights chosen empirically.
+
+**Parsed structural features**  
+The parser extracts: negations (“not”, “never”), comparatives (“greater than”, “as…as”), conditionals (“if…then”, “unless”), numeric values (integers, floats, ranges), causal verbs (“causes”, “leads to”), ordering relations (“before”, “after”, “first”, “next”), and belief verbs (“believes”, “knows”, “assumes”).
+
+**Novelty**  
+The exact combination—using property‑based test generation to create a propositional graph, exhaustive model checking over that graph, and a lightweight Theory‑of‑Mind belief profile—does not appear in the literature. It parallels works on symbolic execution and epistemic model checking, but those treat code or multi‑agent systems, not free‑form answer scoring, making the approach effectively novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical coverage, limited by extraction quality.  
+Metacognition: 7/10 — explicit false‑belief handling, yet shallow belief modeling.  
+Hypothesis generation: 6/10 — property‑based extraction creates many candidates but lacks probabilistic guidance.  
+Implementability: 9/10 — pure Python, numpy, and std‑lib suffice; performance acceptable for typical answer sizes.

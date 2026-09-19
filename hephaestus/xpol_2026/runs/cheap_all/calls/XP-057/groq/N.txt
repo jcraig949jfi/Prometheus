@@ -1,0 +1,41 @@
+**1. Algorithmic core**
+
+The tool builds a *categorical inference graph* G = (V,E) where each vertex v represents a parsed logical proposition (e.g., “X > Y”, “if A then B”). Edges encode *functorial* transformations: a “negation” functor maps a proposition to its logical complement, a “causal‑flow” functor maps a cause node to its effect node, and a “numeric‑scale” functor maps a quantitative claim to a real‑valued vector.  
+
+The answer and the reference solution are each converted into a multiset of proposition objects. For each proposition we store:
+- `type` (equality, inequality, conditional, comparative, causal)
+- `args` (tuple of string identifiers or numeric literals)
+- `weight` (initial prior probability, drawn from a Dirichlet α vector that reflects the expected frequency of each proposition type).
+
+Using **Bayesian updating**, the tool treats the reference set as observed evidence. For every proposition p in the candidate answer we compute a likelihood L(p|ref) as follows:
+- If an exact match exists in the reference, L = 1.0.
+- If a proposition is a logical consequence of a reference proposition (detected by traversing G with transitivity and modus‑ponens rules), L = 0.8.
+- If only a weaker relation holds (e.g., same variables but opposite inequality), L = 0.3.
+- Otherwise L = 0.0.
+
+Posterior weights are updated with the Dirichlet‑multinomial conjugate:  
+`posterior = (prior * L + beta) / (sum(prior * L) + K*beta)`.  
+The final score is the sum of posterior weights normalized to [0,1].
+
+**2. Parsed structural features**
+
+The regex‑based parser extracts:
+- Negations (`not`, `no`, `without`)
+- Comparatives (`greater than`, `≤`, `more … than`)
+- Conditionals (`if … then …`, `=>`)
+- Numeric values (integers, floats, scientific notation)
+- Causal claims (`causes`, `leads to`, `drives`)
+- Ordering relations (temporal or trophic order, e.g., “primary → secondary”)
+
+Each extraction populates a proposition object as described above.
+
+**3. Novelty**
+
+The combination is largely novel. Categorical‑theoretic structuring of logical propositions has been explored in formal semantics, and Bayesian updating of logical match scores appears in probabilistic theorem proving, but integrating them with an ecosystem‑dynamics‑inspired “flow” functor for causal propagation is not present in existing open‑source scoring tools. The approach therefore maps to a new hybrid of symbolic graph reasoning and Bayesian evidence aggregation.
+
+**4. Ratings**
+
+Reasoning: 8/10 — strong logical propagation and probabilistic weighting  
+Metacognition: 6/10 — limited self‑assessment, but Bayesian posteriors give confidence estimates  
+Hypothesis generation: 5/10 — can propose missing links via transitivity but no generative model  
+Implementability: 9/10 — pure NumPy/std‑lib, clear data structures, no external dependencies

@@ -1,0 +1,42 @@
+**Algorithmic design**
+
+The tool builds a *constraint‑driven, variational scorer* that fuses three ideas:
+
+1. **Parsing → feature matrix** – A deterministic regex/finite‑state parser extracts logical primitives from the prompt and each candidate answer:  
+   * predicates (P(x)),* *negations (¬),* *comparatives (>, <, =),* *conditionals (if‑then),* *numeric literals,* *causal verbs (causes, leads to),* and *ordering tokens (first, before, after).*  
+   Each primitive becomes a column in a NumPy `bool` matrix `F_prompt` and `F_candidate` (shape = #primitives × #instances).
+
+2. **Neuromodulatory gain** – A vector `g` of *gain weights* (float32) is derived from a lightweight “neuromodulation” table that maps modality to importance (e.g., `g[negation]=1.5`, `g[comparative]=1.2`, `g[numeric]=1.0`). The table can be hand‑tuned or learned from a small validation set. The weighted feature vectors are `V = g * F_candidate`.
+
+3. **Free‑Energy minimisation** – The expected logical structure is the prompt’s feature matrix `F_prompt`. The scorer computes a *variational free energy* for a candidate:
+   \[
+   \mathcal{F}= \underbrace{\|V - g*F_{prompt}\|_2^2}_{\text{prediction error}} +
+                \underbrace{\lambda \sum_i V_i\log V_i}_{\text{entropy regulariser}} .
+   \]
+   Lower `F` means the answer better satisfies the prompt’s constraints while remaining parsimonious.
+
+4. **Property‑based testing loop** – Using the standard‑library `hypothesis`‑style generator (re‑implemented with `random`), the system creates *mutations* of the prompt’s constraints (e.g., flip a comparative direction, drop a negation, vary a numeric value). For each mutation it recomputes `F` and records the *minimal* mutation that raises `F` above a threshold. This “shrinking” step yields a *robustness score*:
+   \[
+   S = 1 - \frac{\text{max\_failed\_mutation\_size}}{\text{total\_mutations}} .
+   \]
+   The final score is a weighted sum `α·(1‑F_norm) + β·S`, where `F_norm` is `F` normalised to [0,1].
+
+**Parsed structural features**
+
+- Negations and double‑negatives  
+- Comparative operators (`>`, `<`, `≥`, `≤`, `=`)  
+- Conditionals (`if … then …`, `unless`)  
+- Numeric values and units  
+- Causal verbs and “because/therefore” links  
+- Temporal/ordering cues (`first`, `after`, `before`, `subsequently`)
+
+**Novelty assessment**
+
+The exact combination—gain‑modulated feature weighting, a free‑energy‑style error term, and an internal property‑based mutation engine—has not been published as a single scoring engine. It parallels constraint‑propagation evaluators and Bayesian model‑comparison, but the neuromodulatory gain table and hypothesis‑style shrinking are novel integrations.
+
+**Ratings**
+
+Reasoning: 8/10 — strong logical constraint handling, but limited semantic depth.  
+Metacognition: 7/10 — gain modulation mimics self‑regulation, yet relies on static tables.  
+Hypothesis generation: 9/10 — built‑in mutation‑shrink loop provides thorough test case coverage.  
+Implementability: 9/10 — pure NumPy/std‑lib, no external AI services, straightforward to prototype.

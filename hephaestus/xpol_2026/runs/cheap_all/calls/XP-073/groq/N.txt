@@ -1,0 +1,33 @@
+**Algorithmic synthesis**
+
+1. **Architecture search** – Treat a scoring pipeline as a directed‑acyclic graph whose nodes are primitive parsers (regex extractor, token‑type tagger, numeric normaliser, clause generator). A simple NAS loop enumerates candidate graphs by adding, removing or rewiring nodes. Each graph is represented by an adjacency list and a list of node‑type identifiers.
+
+2. **Free‑energy objective** – For a given answer the pipeline produces a *state* S consisting of (a) a set P of propositional literals extracted from the text, (b) a numeric feature vector v (numpy array) and (c) a complexity term c equal to the number of active nodes. A SAT solver (a compact DPLL implementation using only lists and recursion) checks the consistency of P with a reference constraint set C that encodes the expected logical structure of the question (e.g., “if X then Y”, “¬Z”). Let u be the number of unsatisfied clauses. The free‑energy is defined as  
+
+\[
+F = \alpha\,u + \beta\,\|v-\mu\|_2^2 + \gamma\,c,
+\]
+
+where µ is the ideal numeric target and α,β,γ are fixed scalars. Lower F means a better answer.
+
+3. **Scoring** – During evaluation the NAS‑selected graph is fixed. Each candidate answer is run through the graph, the SAT check yields u, the numeric distance is computed with NumPy, and F is calculated. The final score is `score = exp(-F)` (bounded in (0,1]).
+
+**Parsed structural features**
+
+- Negation markers (“not”, “no”, “never”) → literal polarity.  
+- Conditionals (“if … then”, “when”, “unless”) → implication clauses.  
+- Comparatives and superlatives (“greater than”, “at most”) → numeric inequality literals.  
+- Explicit numeric values (integers, fractions, percentages).  
+- Causal verbs (“causes”, “leads to”) → directed edges in the clause graph.  
+- Temporal/ordering cues (“first”, “after”, “subsequently”) → precedence constraints.  
+
+**Novelty assessment**
+
+Component pieces (regex‑based logical extraction, SAT‑based answer validation, NAS for pipeline design) exist independently. Their integration under a free‑energy minimisation objective to automatically discover a high‑performing, constraint‑driven scorer is, to the best of current literature, novel.
+
+**Ratings**
+
+Reasoning: 8/10 — the method explicitly models logical relations and numeric consistency.  
+Metacognition: 6/10 — free‑energy captures model‑complexity trade‑offs but lacks self‑reflective monitoring.  
+Hypothesis generation: 7/10 — NAS explores many pipeline hypotheses, though search is heuristic.  
+Implementability: 7/10 — pure Python/NumPy implementation is feasible; a lightweight DPLL solver suffices.

@@ -1,0 +1,28 @@
+**1. Algorithmic core**  
+The tool implements a *Kalman‑augmented constraint‑propagation evaluator*. Each candidate answer is first tokenised into a list of *propositions* (subject‑predicate‑object triples) stored in a directed graph `G = (V, E)`. Nodes `V` hold proposition objects with fields `{text, type, weight}`; edges `E` encode logical relations (e.g., “if‑then”, “causes”, “greater‑than”). A lightweight *Cognitive‑Load* model assigns an intrinsic load `L_int` to each proposition based on its depth in the graph (nested clauses increase load) and an extraneous load `L_ext` derived from surface‑level features (long sentences, passive voice). The total load `L = L_int + L_ext` is normalised to a variance term `σ²` for the Kalman filter.
+
+The Kalman filter runs over a linearised state vector `x_k = [score, load]ᵀ`. The **prediction step** assumes the answer’s score evolves slowly: `x̂_k|k‑1 = A·x̂_{k‑1}` with `A = [[1,0],[0,1]]`. The **update step** incorporates two observations:  
+* **Logical consistency** – a binary indicator `c ∈ {0,1}` obtained by constraint propagation (e.g., detecting contradictions via transitivity or modus ponens).  
+* **Cognitive‑load penalty** – a continuous value `l = f(L)` where `f` maps higher load to larger negative adjustments.  
+
+Observation matrix `H = [[1,0],[0,1]]`, measurement noise `R = diag(σ_c², σ_l²)` where `σ_c` is set low (high confidence in logical checks) and `σ_l` follows the Kalman‑derived variance from the load model. The posterior `x̂_k` yields a final score = `score – λ·load`, with `λ` tuned on a validation set.
+
+**2. Parsed structural features**  
+The front‑end regex‑based parser extracts:  
+- Negations (`not`, `never`),  
+- Comparatives (`more/less … than`, `greater/lesser`),  
+- Conditionals (`if … then …`, `when`),  
+- Numeric values and units,  
+- Causal markers (`causes`, `leads to`),  
+- Temporal/ordering cues (`first`, `after`, `subsequently`).  
+
+These are encoded as edge labels in `G` and as flags for load calculation.
+
+**3. Novelty**  
+Kalman filtering has been used for confidence aggregation in crowdsourcing, and cognitive‑load estimates appear in educational analytics, but their combination with deterministic constraint propagation to produce a recursive, noise‑aware scoring function is not documented in the literature. The approach therefore represents a novel synthesis rather than a direct mapping to existing systems.
+
+**4. Ratings**  
+Reasoning: 8/10 — robust logical graph + constraint propagation  
+Metacognition: 7/10 — load model captures working‑memory limits but is heuristic  
+Hypothesis generation: 6/10 — can suggest missing premises via propagation but limited  
+Implementability: 9/10 — pure NumPy, regex, and standard‑library structures make it straightforward.

@@ -1,0 +1,14 @@
+**Computational mechanism** – A *Gauge‑Immune Neuromodulated Adaptive Reasoner* (GINAR) combines three layers of control.  
+1. **Gauge layer**: the core reasoning network is built as a gauge‑equivariant graph neural network (e.g., a SO(3)‑equivariant GNN on a fiber‑bundle of logical propositions). Local symmetry enforces that any transformation of the internal representation (renaming of variables, re‑ordering of premises) leaves the inference outcome invariant, much like a connection in a principal bundle.  
+2. **Immune layer**: hypotheses are encoded as “clones” of the base network. An affinity‑maturation process (clonal selection algorithm) mutates weights, expands high‑affinity clones, and prunes low‑affinity ones, yielding a diverse population of candidate proofs that can explore combinatorial spaces far beyond a single gradient descent trajectory.  
+3. **Neuromodulatory layer**: a meta‑controller network emits dopamine‑like reward signals (based on prediction error or logical consistency) that modulate learning rates, gating, and the temperature of the clonal mutation distribution. Serotonin‑like signals bias the system toward exploratory versus exploitative regimes, providing state‑dependent gain control.
+
+**Advantage for self‑testing reasoning** – Gauge invariance guarantees that hypothesis transformations do not create spurious contradictions, allowing the system to test equivalence classes of proofs efficiently. Immune‑style clonal expansion supplies a parallel “population of proofs” that can be evaluated simultaneously, while neuromodulation allocates computational budget to the most promising clones, dramatically reducing the cost of exhaustive hypothesis testing.
+
+**Novelty** – Gauge‑equivariant neural networks, artificial immune systems, and neuromodulated reinforcement learning all exist, but no published framework integrates all three into a single reasoning architecture. The triple‑fusion of local symmetry constraints, clonal‑selection diversity, and meta‑control is, to the best of current literature, novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical consistency via gauge symmetry.  
+Metacognition: 7/10 — neuromodulatory meta‑control provides adaptive self‑monitoring.  
+Hypothesis generation: 9/10 — immune clonal selection yields massive, diverse candidate proofs.  
+Implementability: 5/10 — requires sophisticated geometric deep‑learning tooling and careful calibration of immune‑neuromodulatory dynamics.

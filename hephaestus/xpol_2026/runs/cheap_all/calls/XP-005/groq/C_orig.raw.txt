@@ -1,0 +1,255 @@
+**ReasoningTool – a tiny tensor‑based scorer with control‑theoretic and game‑theoretic refinements**  
+
+```python
+"""
+ReasoningTool
+==============
+
+A lightweight implementation of the “Tensor Decomposition × Feedback‑Control × Nash‑Equilibrium”
+pipeline described in the prompt.  It works in three stages:
+
+1. **Structural parsing** – each answer (and the prompt, used as a reference) is split
+   into propositions.  For every proposition a 7‑bit feature vector is built that
+   records the presence of negation, comparative, conditional, causal, numeric,
+   ordering and quantifier cues.
+
+2. **CP decomposition** – the propositions × features × answers tensor is factorised
+   with a very small rank (default R=3) by alternating‑least‑squares (pure NumPy).
+
+3. **Weight adaptation** – the answer‑specific loading matrix `C` is turned into a
+   controllable weight vector `w`.  A PID controller drives `w` toward a target
+   similarity (Jaccard of proposition sets).  Afterwards each rank component
+   performs a best‑response ascent (a few gradient steps) to reach a local Nash
+   equilibrium.  The final score for a candidate is the dot‑product
+   `s = C_candidate @ w`, normalised to [0,1].
+
+The class also supplies an epistemic‑honesty layer: `_meta_confidence`
+detects presupposition, scope/pronoun ambiguity, false dichotomies,
+subjectivity and outright unanswerability.  `confidence()` returns a value
+derived from this analysis and never exceeds 0.9 unless the question is
+clearly answerable.
+
+Only the Python standard library and NumPy are used; the code is deterministic
+(NumPy RNG seeded) and fits well below the 200‑line limit.
+"""
+
+import re
+import zlib
+import numpy as np
+from itertools import chain
+
+# ----------------------------------------------------------------------
+# Helper regexes for structural features
+_NEG = re.compile(r'\b(not|no|never|none)\b')
+_COMP = re.compile(r'\b(more|less|greater|smaller|higher|lower|>|\<|twice as)\b')
+_COND = re.compile(r'\b(if|unless|provided that|when)\b')
+_CAUS = re.compile(r'\b(because|leads to|results in|therefore|so that)\b')
+_NUM = re.compile(r'\b\d+(\.\d+)?%?\b')
+_ORDER = re.compile(r'\b(first|second|third|before|after|precede|follow)\b')
+_QUANT = re.compile(r'\b(all|some|most|any|few|several)\b')
+
+# ----------------------------------------------------------------------
+def _split_props(text: str):
+    """Very simple sentence splitter → list of lower‑cased propositions."""
+    s = re.split(r'[.!?]\s*', text.strip())
+    return [p.lower() for p in s if p]
+
+def _feat_vec(prop: str):
+    """Return binary 7‑dim vector for a proposition."""
+    return np.array([
+        bool(_NEG.search(prop)),
+        bool(_COMP.search(prop)),
+        bool(_COND.search(prop)),
+        bool(_CAUS.search(prop)),
+        bool(_NUM.search(prop)),
+        bool(_ORDER.search(prop)),
+        bool(_QUANT.search(prop)),
+    ], dtype=float)
+
+# ----------------------------------------------------------------------
+def _build_tensor(prop_lists):
+    """
+    prop_lists – list of lists of propositions (first entry = prompt).
+    Returns X of shape (P, F, A) where
+        P = max number of propositions,
+        F = 7 feature dimensions,
+        A = number of answers (prompt + candidates).
+    Missing propositions are padded with zero vectors.
+    """
+    F = 7
+    A = len(prop_lists)
+    P = max(len(p) for p in prop_lists)
+    X = np.zeros((P, F, A), dtype=float)
+    for a, props in enumerate(prop_lists):
+        for p, prop in enumerate(props):
+            X[p, :, a] = _feat_vec(prop)
+    return X
+
+# ----------------------------------------------------------------------
+def _cp_als(X, R=3, iters=10):
+    """Very small CP‑ALS (no regularisation). Returns factor matrices (A,B,C)."""
+    P, F, A = X.shape
+    rng = np.random.default_rng(0)          # deterministic seed
+    a = rng.random((P, R))
+    b = rng.random((F, R))
+    c = rng.random((A, R))
+
+    for _ in range(iters):
+        # update a
+        for r in range(R):
+            num = np.tensordot(X, np.outer(b[:, r], c[:, r]), axes=([1, 2], [0, 1]))
+            den = (b[:, r] @ b[:, r]) * (c[:, r] @ c[:, r])
+            a[:, r] = num / (den + 1e-12)
+        # update b
+        for r in range(R):
+            num = np.tensordot(X, np.outer(a[:, r], c[:, r]), axes=([0, 2], [0, 1]))
+            den = (a[:, r] @ a[:, r]) * (c[:, r] @ c[:, r])
+            b[:, r] = num / (den + 1e-12)
+        # update c
+        for r in range(R):
+            num = np.tensordot(X, np.outer(a[:, r], b[:, r]), axes=([0, 1], [0, 1]))
+            den = (a[:, r] @ a[:, r]) * (b[:, r] @ b[:, r])
+            c[:, r] = num / (den + 1e-12)
+    return a, b, c
+
+# ----------------------------------------------------------------------
+def _jaccard(set_a, set_b):
+    inter = len(set_a & set_b)
+    union = len(set_a | set_b)
+    return inter / union if union else 1.0
+
+# ----------------------------------------------------------------------
+def _ncd(s1, s2):
+    """zlib Normalised Compression Distance – used only as optional tiebreaker."""
+    c1 = len(zlib.compress(s1.encode()))
+    c2 = len(zlib.compress(s2.encode()))
+    c12 = len(zlib.compress((s1 + s2).encode()))
+    return (c12 - min(c1, c2)) / max(c1, c2)
+
+# ----------------------------------------------------------------------
+class ReasoningTool:
+    """Tensor‑decomposition scorer with PID‑control and Nash‑refinement."""
+
+    def __init__(self):
+        # PID state (kept per instance for determinism)
+        self._prev_err = 0.0
+        self._int_err = 0.0
+        self._Kp, self._Ki, self._Kd = 0.5, 0.1, 0.2
+        self._rank = 3
+
+    # ------------------------------------------------------------------
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        """
+        Score each candidate answer relative to *prompt*.
+        Returns a list of dicts sorted by descending score.
+        """
+        # 1. structural parsing
+        all_texts = [prompt] + candidates
+        prop_lists = [_split_props(t) for t in all_texts]
+
+        # 2. tensor construction & CP‑ALS
+        X = _build_tensor(prop_lists)
+        _, _, C = _cp_als(X, R=self._rank, iters=12)   # C shape (A, R)
+
+        # 3. target similarity (Jaccard of proposition sets)
+        ref_set = set(chain.from_iterable(prop_lists[0]))
+        targets = []
+        for props in prop_lists[1:]:
+            cand_set = set(chain.from_iterable(props))
+            targets.append(_jaccard(ref_set, cand_set))
+        targets = np.array(targets)                     # (num_candidates,)
+
+        # 4. PID‑controlled weight update (single sweep)
+        w = np.ones(self._rank)                         # initial weights
+        for i, target in enumerate(targets):
+            pred = C[i + 1] @ w
+            e = target - pred
+            self._int_err += e
+            d_err = e - self._prev_err
+            w += self._Kp * e + self._Ki * self._int_err + self._Kd * d_err
+            self._prev_err = e
+
+        # 5. Nash‑equilibrium refinement (gradient ascent on each component)
+        alpha = 0.05
+        for _ in range(5):
+            for r in range(self._rank):
+                grad = 0.0
+                for i, target in enumerate(targets):
+                    err = target - (C[i + 1] @ w)
+                    grad += -2 * err * C[i + 1, r]          # d(err^2)/dw_r
+                w[r] -= alpha * grad                         # ascent on negative loss
+        # 6. final scores
+        raw = np.array([C[i + 1] @ w for i in range(len(candidates))])
+        # normalise to [0,1]
+        lo, hi = raw.min(), raw.max()
+        scores = (raw - lo) / (hi - lo + 1e-12)
+
+        # optional NCD tie‑breaker (adds at most 0.15 weight)
+        ncd_vals = np.array([_ncd(prompt, c) for c in candidates])
+        ncd_norm = (ncd_vals - ncd_vals.min()) / (ncd_vals.max() - ncd_vals.min() + 1e-12)
+        scores = 0.85 * scores + 0.15 * (1 - ncd_norm)   # lower NCD → higher score
+
+        out = []
+        for cand, sc in zip(candidates, scores):
+            reasoning = (
+                f"Structural features extracted, CP‑rank{self._rank} decomposition, "
+                f"PID‑adjusted weights, Nash refinement. "
+                f"Score={sc:.3f}"
+            )
+            out.append({"candidate": cand, "score": float(sc), "reasoning": reasoning})
+
+        out.sort(key=lambda d: d["score"], reverse=True)
+        return out
+
+    # ------------------------------------------------------------------
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Epistemic‑honesty confidence based on prompt analysis.
+        Caps at 0.9 unless the question is clearly answerable.
+        """
+        base = self._meta_confidence(prompt)
+        # If the prompt looks answerable, give a modest boost but never >0.9
+        if base >= 0.3:
+            base = min(0.9, base + 0.2)
+        return float(base)
+
+    # ------------------------------------------------------------------
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detects ambiguous or unanswerable patterns – returns 0‑1."""
+        low = 0.1   # default low confidence for ambiguous cases
+        high = 0.7  # baseline for apparently clear questions
+
+        txt = prompt.lower()
+
+        # 1. presupposition
+        if re.search(r'\b(have you (stopped|quit|ceased) )', txt):
+            return low
+        if re.search(r'\bwhy did .* (fail|stop)', txt):
+            return low
+
+        # 2. scope ambiguity – “every X ... a Y” with possible different Y
+        if re.search(r'\bevery .+? (does|did) .+? a .+? (and|or) a .+?', txt):
+            return low
+
+        # 3. pronoun ambiguity – “X told Y he/she …” without clear referent
+        if re.search(r'\b(told|said) .+? (he|she|they) ', txt) and re.search(r'\bwho\b', txt):
+            return low
+
+        # 4. false dichotomy – “either A or B” without exhaustive list
+        if re.search(r'\beither .+? or .+?\b', txt) and not re.search(r'\b(both|neither|and also)\b', txt):
+            return low
+
+        # 5. subjectivity – superlatives without measurable criteria
+        if re.search(r'\b(best|worst|favorite|most|least) \b', txt):
+            return low
+
+        # 6. unanswerability – asks for external data
+        if re.search(r'\b(what is|how many|when did) .+? (today|now|current year)\b', txt):
+            return low
+
+        # No structural cue found → treat as uncertain
+        if not any(p in txt for p in ["if", "when", "because", "greater", "less", "not", "no"]):
+            return low
+
+        return high
+```

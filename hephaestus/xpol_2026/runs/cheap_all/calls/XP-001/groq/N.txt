@@ -1,0 +1,30 @@
+**1. Algorithmic core**  
+The tool builds a *finite‑state transition system* (Model‑Checking) whose states encode a parsed logical skeleton of a candidate answer. Each state stores a tuple `(concept, polarity, value)` where *concept* is a token drawn from a domain‑specific ontology (e.g., “superposition”, “Hebbian”, “temporal‑logic”), *polarity* is {+1, ‑1, 0} for asserted, negated, or uncertain claims, and *value* holds any extracted numeric or probabilistic weight.  
+
+A *quantum‑inspired amplitude* `α ∈ ℂ` is attached to every transition, initialized from a “confidence” derived from neural‑plasticity‑style reinforcement: the more a token has been observed in high‑quality reference answers, the larger its amplitude (|α|² ≈ empirical frequency). When two states are linked by a logical relation (e.g., “if A then B”), the algorithm applies a *unitary update* that entangles their amplitudes:  
+
+```
+[α_A', α_B'] = U * [α_A, α_B]   # U is a 2×2 rotation derived from the strength of the implication
+```
+
+After constructing the full graph, a *measurement* step collapses the system: the probability of each final state is computed as the squared magnitude of its accumulated amplitude. The score for the answer is the sum of probabilities of states that satisfy the specification automaton (the formal answer key expressed in linear‑temporal logic). This yields a deterministic numeric score in [0,1] without any learned model.
+
+**2. Parsed structural features**  
+- Logical operators: *if‑then*, *and*, *or*, *not* (negations).  
+- Temporal relations: *before/after*, *always*, *eventually* (temporal logic).  
+- Comparatives and superlatives (e.g., “greater than”, “most”).  
+- Numeric literals and ranges, including units.  
+- Causal claims (“causes”, “leads to”).  
+- Ordering constraints (transitive chains).  
+- Modality markers (must, may, could).  
+
+Regular‑expression pipelines extract these tokens, map them to ontology entries, and build the transition graph.
+
+**3. Novelty assessment**  
+The combination is not found in prior literature. Model‑checking of textual arguments exists, and reinforcement‑driven weighting of tokens is used in information retrieval, but the explicit use of quantum‑style amplitude entanglement to propagate logical confidence across a model‑checked graph is a new hybrid. It therefore maps only loosely to existing work on probabilistic model checking and quantum‑inspired NLP, offering a distinct algorithmic contribution.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical grounding with probabilistic nuance.  
+Metacognition: 6/10 — limited self‑assessment; relies on external reference frequencies.  
+Hypothesis generation: 7/10 — can propose alternative logical paths via entanglement but lacks creative generation.  
+Implementability: 9/10 — pure NumPy and std‑lib; straightforward state‑graph construction and linear‑algebra ops.

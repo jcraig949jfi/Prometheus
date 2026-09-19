@@ -1,0 +1,26 @@
+**Algorithm description**  
+The tool builds a *Chaotic Swarm Wavelet Scorer* (CSWS).  
+1. **Parsing phase** – a deterministic regex‑based pipeline extracts a binary feature vector **F** for each answer. Each position corresponds to a structural element (negation, comparative, conditional, numeric value, causal claim, ordering relation). The vector length is fixed (e.g., 6 × max‑clauses) and padded with zeros.  
+2. **Wavelet phase** – the 1‑D Haar (or Daubechies‑4) discrete wavelet transform is applied to **F**, producing multi‑resolution coefficients **W**. Low‑frequency coefficients capture global logical structure; high‑frequency coefficients expose local inconsistencies.  
+3. **Swarm phase** – a particle swarm optimisation (PSO) runs on a weight vector **θ** of the same size as **W**. Each particle stores position **θᵢ**, velocity **vᵢ**, and a pheromone‑like quality score **τᵢ**.  
+   * *Chaotic seeding*: a logistic map xₙ₊₁ = r xₙ (1‑xₙ) (r ≈ 3.99) generates a pseudo‑random sequence that perturbs initial velocities, ensuring diverse exploration and avoiding stagnation.  
+   * *Update*: vᵢ ← χ[ vᵢ + c₁·rand₁·(pbestᵢ − θᵢ) + c₂·rand₂·(gbest − θᵢ) ] + γ·chaosₙ, where χ is a constriction factor and γ scales the chaotic term.  
+   * *Fitness*: f(θᵢ) = α·⟨θᵢ, |W|⟩ − β·Σ|Δθᵢ| + τᵢ. The first term rewards alignment of weights with the magnitude of wavelet coefficients (strong logical signals). The second penalises abrupt weight changes (encouraging smooth reasoning). τᵢ accumulates pheromone proportional to repeated successful matches, biasing later particles toward proven patterns.  
+4. **Scoring** – after a fixed number of iterations, gbest’s fitness is normalised to [0, 1] and returned as the answer score.
+
+**Parsed structural features**  
+- Negation markers (¬, “not”, “no”)  
+- Comparative operators (“greater than”, “less than”, “as … as”)  
+- Conditional clauses (“if … then”, “unless”)  
+- Numeric values (integers, decimals, units)  
+- Causal verbs (“causes”, “leads to”, “because”)  
+- Ordering relations (“first”, “next”, “finally”)  
+
+**Novelty**  
+Individual components (regex‑based logical parsing, wavelet multi‑resolution analysis, PSO with chaotic initialization) exist in prior work, but their integration into a deterministic, pure‑numpy scorer for reasoning evaluation is not documented, making the combination effectively novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical‑feature extraction and multi‑scale evaluation  
+Metacognition: 6/10 — indirect, relies on pattern reuse rather than self‑reflection  
+Hypothesis generation: 5/10 — swarm explores weight hypotheses but does not generate new content  
+Implementability: 9/10 — pure‑numpy, regex, and standard‑library code; straightforward to prototype.

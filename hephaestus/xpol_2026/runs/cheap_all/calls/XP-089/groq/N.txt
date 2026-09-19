@@ -1,0 +1,28 @@
+**1. Algorithmic design**  
+The tool builds a **Monte‑Carlo Tree Search (MCTS) evaluator** whose leaf‑to‑root values are adjusted by a **feedback‑control loop** and whose selection policy is shaped by a **mechanism‑design incentive scheme**.
+
+*Data structures*  
+- **TreeNode**: stores the textual fragment (sentence or clause), a list of child nodes, visit count `n`, cumulative score `S`, and a *price* `p` (virtual payment).  
+- **Frontier queue**: priority queue of expandable nodes sorted by a UCB‑like score `Q = (S/n) + c·√(ln(N)/n) + λ·p`.  
+- **Constraint graph**: bipartite map of logical predicates extracted from the text (e.g., “A → B”, “A > B”, “¬C”). Edges carry truth‑value bounds.
+
+*Operations*  
+1. **Parse** the candidate answer with regex‑based extractors (negations, comparatives, conditionals, numerics, causal verbs, ordering cues) and populate the constraint graph.  
+2. **Expansion**: select the highest‑scoring frontier node, create children for each plausible logical extension (e.g., adding a missing premise or correcting a negation).  
+3. **Rollout**: simulate a random walk down the subtree, applying **modus‑ponens** and transitivity on the constraint graph to produce a provisional truth assignment. The rollout returns a binary reward (1 = consistent, 0 = contradiction) plus a numeric penalty proportional to unresolved numeric discrepancies.  
+4. **Back‑propagation**: update `S` and `n` of visited nodes; feed the error `e = target – (S/n)` into a PID‑style controller that tweaks the node’s price `p`. The controller drives the system toward a stable equilibrium where high‑quality logical structures are “paid” more, encouraging their future selection.  
+5. **Mechanism design**: each candidate answer is treated as an agent that reports a set of constraints. The pricing rule is made **incentive‑compatible** (Vickrey–Clarke‑Groves style) so that truthful reporting maximizes the answer’s expected score.
+
+*Scoring logic* – final score = weighted sum of (a) normalized UCB value, (b) PID‑controlled stability margin, and (c) VCG payment, yielding a single numeric rating for the answer.
+
+**2. Parsed structural features**  
+Negations, comparatives (“greater than/less than”), conditionals (“if… then”), numeric values (including units), causal verbs (“causes”, “leads to”), temporal/order markers (“first”, “after”), quantifiers (“all”, “some”), and logical connectors (and, or, not).
+
+**3. Novelty**  
+The exact coupling of MCTS, closed‑loop PID feedback, and VCG‑style incentive pricing for textual reasoning evaluation is not present in prior literature; existing work treats these components separately (e.g., MCTS for proof search, PID for adaptive scoring, mechanism design for crowdsourced labeling). Hence the combination can be considered novel, though each sub‑module draws on established techniques.
+
+**4. Ratings**  
+Reasoning: 8/10 — robust logical propagation and search depth.  
+Metacognition: 7/10 — feedback loop monitors its own error but lacks self‑explanation.  
+Hypothesis generation: 6/10 — rollout creates plausible extensions but limited creativity.  
+Implementability: 9/10 — all components rely on numpy/regex; no external models required.
