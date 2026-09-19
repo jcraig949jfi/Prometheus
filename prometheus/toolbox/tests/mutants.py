@@ -111,6 +111,10 @@ MUTANTS = [
     # twentieth wave (C135): the substrate's clock in the checkpoint
     ("M77", "backends/local.py", "          \"substrates\": [so.snapshot().hex() if hasattr(so, \"snapshot\") else (so.dev.snapshot().hex() if hasattr(so, \"dev\") else None) for so in subs],   # C135: the substrate's clock too", "          \"substrates\": [so.dev.snapshot().hex() if hasattr(so, \"dev\") else None for so in subs],", "checkpoint carries the device but not the substrate's clock"),
     ("M78", "ref/substrates.py", "        d = json.loads(snap.decode()); self._t = d[\"t\"]; self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "        d = json.loads(snap.decode()); self._episode = d[\"episode\"]; self._tick_in_episode = d[\"tick_in_episode\"]", "a restored substrate's clock restarts at zero"),
+    # twenty-first wave (C139): streams in the state model
+    ("M79", "state.py", "        if len(s[\"r\"]) > s[\"maxlen\"]:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "        if False:\n            s[\"r\"].pop(0); self._c[\"discarded\"] += 1", "streams grow past maxlen"),
+    ("M80", "state.py", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._s, self._z):", "        order = {\"ephemeral\": 0, \"episode\": 1, \"lifetime\": 2, \"persistent\": 3}\n        for store in (self._kv, self._h, self._z):", "end_scope leaves streams alive (anchor: end_scope, not advance -- the first anchor hit an equivalent mutant)"),
+    ("M81", "state.py", "        self._s = {k: dict(e, r=[(rid, tuple(rec)) for rid, rec in e[\"r\"]]) for k, e in d[\"s\"].items()}", "        self._s = {}", "a restored device forgets its streams"),
 ]
 
 

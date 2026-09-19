@@ -986,3 +986,13 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - 40 random IRs with random scales: the descriptor observer's three buckets recompute exactly from the same
   receipt's trace observer (abstain*8 // (ticks*players); actions // (ticks*players*action_scale) capped 7;
   yield // yield_scale capped 7), and its other measures equal the trace observer's. No defect.
+
+## C139 (08:56Z) the state model extended to streams (post-closing)
+- StreamModel: streams share the key budget with kv; append keeps the last maxlen (discards counted); read since 0;
+  end_scope drops streams of the scope; snapshot/restore mid-way; 30 seeds x 400 ops agree with the device on
+  every read/get after every op and on refused/discarded/expired totals. No device defect.
+- power: M79 (streams grow past maxlen) and M81 (a restored device forgets its streams) CAUGHT; M80 first
+  SURVIVED -- its anchor text occurs twice in state.py and the runner mutated the FIRST (advance(), where
+  skipping the stream store is an equivalent mutant: streams carry no expiry). Re-anchored on end_scope: CAUGHT.
+  A survivor that is an equivalent mutant is the runner telling the truth; the note stays in the ledger row.
+- ledger 80 mutants, 80 CAUGHT (merged). Suite 1155 passed / 6 skipped.

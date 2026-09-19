@@ -691,5 +691,32 @@
   "first_failure": "FAILED prometheus/toolbox/tests/test_kernel.py::test_player_contract_over_random_specs[1328]",
   "suite_tail": "1 failed, 603 passed, 1 skipped, 1 deselected in 9.74s",
   "seconds": 10.1
+ },
+ {
+  "id": "M79",
+  "file": "state.py",
+  "what": "streams grow past maxlen",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_replay_committed.py::test_committed_receipts_replay_without_divergence[playtests/receipts/pt_i/flat_per",
+  "suite_tail": "1 failed, 782 passed, 1 skipped, 1 deselected in 17.96s",
+  "seconds": 18.4
+ },
+ {
+  "id": "M80",
+  "file": "state.py",
+  "what": "end_scope leaves streams alive (anchor: end_scope, not advance -- the first anchor hit an equivalent mutant)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_replay_committed.py::test_committed_receipts_replay_without_divergence[playtests/receipts/pt_i/flat_per",
+  "suite_tail": "1 failed, 782 passed, 1 skipped, 1 deselected in 17.58s",
+  "seconds": 18.0
+ },
+ {
+  "id": "M81",
+  "file": "state.py",
+  "what": "a restored device forgets its streams",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_kernel.py::test_player_contract_over_random_specs[1305]",
+  "suite_tail": "1 failed, 580 passed, 1 skipped, 1 deselected in 11.40s",
+  "seconds": 11.9
  }
 ]
