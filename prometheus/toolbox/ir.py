@@ -83,7 +83,7 @@ class Experiment:
         """Content identity of the SCIENTIFIC definition: id, provenance and the wall budget (execution policy,
         C68: a job stopped by its wall clock and finished later is the same experiment) are excluded."""
         d = self.to_dict(); d.pop("id", None); d.pop("provenance", None)
-        d["budget"] = {k: v for k, v in d.get("budget", {}).items() if k != "wall_s"}
+        d["budget"] = {k: v for k, v in d.get("budget", {}).items() if k not in ("wall_s", "max_runs")}     # execution policy, not science
         return _h(d)
 
     def experiment_id(self) -> str:
@@ -123,6 +123,8 @@ class Experiment:
             bad.append("budget.series_max_records must be a non-negative int when present")
         if b.get("world_state", "episode") not in ("episode", "lifetime"):
             bad.append("budget.world_state must be 'episode' or 'lifetime'")
+        if "max_runs" in b and (not isinstance(b["max_runs"], int) or b["max_runs"] < 1):
+            bad.append("budget.max_runs must be a positive int when present")
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)

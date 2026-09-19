@@ -55,8 +55,10 @@ class LocalJob:
     experiment: Optional[Experiment] = None       # the job's IR (C32: embedded in the SUMMARY receipt)
 
     def as_dict(self) -> dict:
-        return {"experiment_id": self.experiment_id, "n_runs": len(self.runs),
-                "arms": sorted({r.arm for r in self.runs}), "negotiation": self.negotiation}
+        arms = sorted({r.arm for r in self.runs}); seeds = sorted({r.seed for r in self.runs})
+        points = len({json.dumps(r.sweep_point, sort_keys=True, default=str) for r in self.runs})
+        return {"experiment_id": self.experiment_id, "n_runs": len(self.runs), "arms": arms, "negotiation": self.negotiation,
+                "eligibility": {"points": points, "arms": len(arms), "seeds": len(seeds), "runs": len(self.runs)}}   # C77: computed before dispatch
 
 
 def seeds_for(exp: Experiment) -> List[tuple]:
@@ -101,6 +103,10 @@ def lower(exp: Experiment, registry) -> Lowering:
     if reasons:
         return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=reasons, negotiation=neg.as_dict())
     controls = [(c["kind"], registry.make(c["kind"], **c.get("params", {}))) for c in exp.controls]
+    n_points = len(exp.sweep_points()); n_arms = 1 + len(controls); n_seeds = len(seeds_for(exp)); n_runs = n_points * n_arms * n_seeds
+    max_runs = exp.budget.get("max_runs")
+    if max_runs is not None and n_runs > int(max_runs):          # C77: the ELIGIBILITY COUNT refuses before any run
+        return Lowering("local", "TARGET_UNSUPPORTED", eid, reasons=["%d runs (%d sweep points x %d arms x %d seeds) exceed budget.max_runs=%d" % (n_runs, n_points, n_arms, n_seeds, int(max_runs))], negotiation=neg.as_dict())
     job = LocalJob(eid, negotiation=neg.as_dict(), registry_rows=[registry.get(k).row() for k in sorted(set(exp.component_kinds()))], experiment=exp)
     for point in exp.sweep_points():
         base = exp.at_point(point)

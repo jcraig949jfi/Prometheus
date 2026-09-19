@@ -233,3 +233,15 @@ def test_one_experiment_text_runs_on_every_registered_world(tmp_path, kind):
     assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "MET" and rep.controls["sham"]["outcome"] == "MET", (kind, rep.controls)
     r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
     assert r["series"]["observer.series.v1"]["status"] in ("PRESENT", "EMPTY") and r["replay_class"] in ("BIT", "SEMANTIC")
+
+
+# C77: a sweep explodes silently (10 x 10 x 10 points x arms x seeds). The eligibility count is computed at
+# lowering and a declared budget.max_runs refuses the job BEFORE any run, naming the count.
+def test_eligibility_count_is_reported_and_max_runs_refuses_before_dispatch():
+    e = _exp(sweep={"world.params.world_seed": list(range(10)), "world.params.n_ops": [1, 2, 3, 4, 5]}, controls=[ref("control.replay.v1")],
+             seed_policy={"base": 1, "n_seeds": 3}, budget={"episodes": 1, "horizon": 4, "max_runs": 100})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("300 runs" in r and "max_runs=100" in r for r in low.reasons)
+    e2 = _exp(sweep={"world.params.world_seed": [1, 2]}, controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 3})
+    low2 = lower(e2, REG)
+    assert low2.ok and low2.job.as_dict()["n_runs"] == 12 and low2.as_dict()["job"]["eligibility"] == {"points": 2, "arms": 2, "seeds": 3, "runs": 12}

@@ -458,3 +458,7 @@ C76 | 04:46Z | ONE designer text over EVERY registered world (integer, integer_a
   wforge wrap): same memory players on kv-lifetime, per-player series, series-gain objective, replay /
   cheat / sham controls -- 6/6 lower, run, replay MET, cheat MET, sham MET. Worlds vary independently of
   players, demonstrated across every world the kernel has. Suite 196 passed 6 skipped.
+C77 | 04:50Z | sweeps explode silently. The ELIGIBILITY COUNT (points x arms x seeds) is now part of every
+  Lowering's job description, and a declared budget.max_runs refuses the job BEFORE any run, naming the
+  arithmetic (300 runs = 50 points x 2 arms x 3 seeds > 100). max_runs, like wall_s, is execution policy
+  and outside the scientific digest. Suite 197 passed 6 skipped.
