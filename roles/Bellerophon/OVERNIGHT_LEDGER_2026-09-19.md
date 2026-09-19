@@ -323,3 +323,9 @@ C44 | T+2:50 | forensic gap found by asking "what edit does scan() NOT see?": de
   (prev_receipt_id, split, series, experiment documented). Suite 171 passed 6 skipped.
 C45 | T+2:53 | ergonomics: the IR accepts PlayerSpec / Intervention OBJECTS in its constructor and stores their
   manifests (a designer's natural text no longer fails with "not a PlayerSpec manifest"). Suite 172.
+C46/C47 | T+3:00 | cross-process and CROSS-PLATFORM replay evidence: tests/replay_probe.py recomputes the EXP-001
+  (12 runs), EXP-002 (72 runs, kv/stream substrates) and c6 float-state world (3 runs) primary trace hashes in
+  the current interpreter; run under Windows CPython 3.14.4 and under WSL Linux CPython 3.12.3 from the same
+  tree: 87/87 hashes IDENTICAL (science/CROSS_PLATFORM_REPLAY_2026-09-19.json). The BIT replay class is now
+  evidenced across OS + interpreter, including the float-state c6 wrap. A standing test runs the WSL probe
+  when wsl is reachable (skips with the reason otherwise).
