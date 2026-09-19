@@ -408,3 +408,10 @@ C66 | 04:34Z | fuzzer draws v3 players, mailbox/artifact substrates, the SEMANTI
   experiment substrate passed. Test added; killed. M10's anchor re-pointed after C65 moved the code
   (a NOT_APPLICABLE mutant is a silent hole, now closed). Ledger: 37/37 CAUGHT. Suite 184 passed 6 skipped.
   CORRECTION to C65's count: 36 components are registered and admitted (not 34).
+C67 | 04:36Z | forensic pass over every committed receipts file: scan() clean on all (archive.jsonl files are
+  search ROWS, not receipts -- scan reports their schema mismatch as expected, noted); replay_file over pt_e
+  and pt_g with the CURRENT kernel: 84/84 and 50/50 runs, 0 divergent (kernel hash differs, semantics
+  unchanged since those playtests). exp_002.jsonl predated the summary-embedded IR and could not be
+  replayed from its file alone -> every committed example/playtest receipts file REGENERATED with the
+  current kernel (chained, IR-embedded); exp_002 now replays 432/432 from its file. Fixture test still
+  green: EXP-001's trace hashes are unchanged since the first commit of the night.
