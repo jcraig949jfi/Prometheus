@@ -12,9 +12,20 @@ neither takes over the other's host.
     --------------  ----  ------------------------------------------  -----------------------------
     m1-1c645957     M1    git history (all refs), M1-local evidence,  (seat creator)
                           PEW/viv pointers, comb + report
-    m2-<pending>    M2    M2-local evidence: frontier runs/ + logs,   prompts/2026-09-19_m2_instance/
+    m2-8f915f3d     M2    M2-local evidence: frontier runs/ + logs,   prompts/2026-09-19_m2_instance/
                           the live SFE data dir, Vivarium var/,
                           M2 vault frames, M2-only git refs
+
+## Addressing (observed 2026-09-19 10:17 UTC)
+
+The M2 instance booted in comms as its own SEAT, "Atlas-M2" (instance
+m2-8f915f3d, worktree D:/Prometheus-worktrees/atlas-m2-boot-2026-09-19),
+not as an instance of seat Atlas. Comms addresses seats by roles/* on the
+sender's tree, so Atlas cannot post to Atlas-M2 until roles/Atlas-M2/ is
+on origin/main; Atlas-M2 can post to Atlas now. Message #498 (to seat
+Atlas) did not reach it; the same text is in
+prompts/2026-09-19_to_m2_sibling/MESSAGE.md and is re-sent when the
+roster allows. The rules below apply whichever seat name it keeps.
 
 ## Rules that keep two instances from colliding
 
