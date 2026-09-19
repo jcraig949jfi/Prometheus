@@ -867,3 +867,12 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   run with PYTHONDONTWRITEBYTECODE=1 and the runner purges prometheus/toolbox __pycache__ before the first mutant
   and after every restore. M73 re-run leaves 0 pycache dirs and a green tree (486 passed / 6 skipped).
 - lesson for the register: the instrument that mutates source must also own the interpreter's cache of it.
+
+## C123 (08:15Z) Redis: reachable on M1, not usable -- the reason is now precise
+- checked the window's standing blockers after the addendum: primordial/ is still not on origin/main (D-BELL-2
+  holds); M1's shared Redis ANSWERS on 192.168.1.202:6379 (TCP open) but requires authentication, and no Redis
+  credential is exposed through keys.py (the only sanctioned loader; .env files are never read by this seat).
+  Redis acceptance therefore stays NOT REACHED with a better reason than "no server".
+- RedisStateDevice now takes its URL (credential included) from PK_REDIS_URL when set; with it pointing at M1 the
+  five model-based tests skip with "AuthenticationError: Authentication required" -- the day a credential is
+  handed to the environment, the acceptance run is one command. Suite unchanged (486 passed / 6 skipped).
