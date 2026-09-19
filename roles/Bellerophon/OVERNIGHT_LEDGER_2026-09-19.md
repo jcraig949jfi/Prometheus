@@ -1020,3 +1020,11 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   one experiment digest per (arm, point); the replay arm's digest equals the primary's and every other arm's
   differs; every (seed, split) follows the seed policy; the negotiation's required set is covered by provided
   plus uncatalogued. No defect.
+
+## C144 (09:16Z) the whole committed science on a second platform (no pytest needed)
+- tests/linux_probe.py: a bare-interpreter probe (pytest stubbed if absent) that executes 120 random IRs on both
+  paths and replays every committed receipts file. WSL Linux / CPython 3.12.3 / no numpy: 361 runs, 0 path
+  divergences (all NO_BATCH_IMPLEMENTATION -- no numpy, by design); 38 files, 1296 runs compared, 0 divergent.
+  Windows / 3.14.4 / numpy: same 361 runs (221 batched), 0 / 0. science/CROSS_PLATFORM_FULL_2026-09-19.json.
+- reading: the committed science of the whole night reproduces byte-for-byte on a second OS and interpreter,
+  not just the 87 hand fixtures of the earlier probe.
