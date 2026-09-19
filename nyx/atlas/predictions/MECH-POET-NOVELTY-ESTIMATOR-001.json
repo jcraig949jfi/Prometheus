@@ -1,0 +1,132 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-POET-NOVELTY-ESTIMATOR-001",
+ "created_at": "2026-09-19",
+ "chopper_identity": "Nyx[gandalf-9e21f277] (M3 GANDALF)",
+ "chopper_version": "nyx.atlas cuts @ this commit; cut nyx/atlas/cuts/poet_original_2019.py",
+ "cut_id": "poet-original-2019",
+ "fossil_raw_id": "poet-original-2019 (uber-research/poet branch original_poet @ 0b40743d414a11e1b96cb0b7869483462724bb1e)",
+ "payload_manifest_id": "techne tree_sha256 889276ac26c34554991a6b8e9488c7f6f64035c7e19810ca37662bfb7ce4aa37 (23 files); FOSSIL_WORLD_ID fw2-5886f2b97adbf1a1137b0ebbd98fa81266d8559477288364bbbe14bf3900a4d1 (m3-native-python). novelty.py imports and runs STANDALONE on M3 with numpy alone (verified 2026-09-19): no Box2D, no fiber/ipyparallel, no ES. This packet is adjudicated against the FOSSIL'S OWN BYTES, not a port -- unlike the ASAL packet.",
+ "provenance_grade_read": "UNKNOWN",
+ "boundary": [
+  {
+   "file_path": "poet_distributed/novelty.py",
+   "file_payload_hash": "0575d92b17f4a3204729f4cc4b1ec303325c4451e4bd5d9d737bd299463ad232",
+   "line_start": 18,
+   "line_end": 62
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "POET orders candidate environments by NOVELTY before its minimal criterion decides admission. novelty.py:18-62 computes that novelty as: reduce an environment to five numbers (env2array: ground_roughness, pit_gap[0], pit_gap[1], stump_height[0], stump_height[1], substituting ZERO wherever a list is empty); take the unnormalised Euclidean distance to every member of the archive; return the MEAN OF THE k SMALLEST distances. CLAIM: as written this estimator has three properties that are consequences of the code rather than of the search problem, and all three are decidable on the fossil's own bytes. (1) IT CHANGES WHAT IT MEASURES: argsort()[:k] silently returns fewer than k elements when the archive holds fewer than k members, so for |archive| < k the value is the mean distance to the WHOLE archive (a global dispersion measure) and for |archive| >= k it is the mean distance to the k nearest (a local density measure); no discontinuity is flagged. (2) IT IS SCALE-BLIND: compute_novelty_vs_archive calls euclidean_distance with normalize=False hardcoded, so the norm vector [8,8,8,3,3] declared inside that very function is never applied and a change of a given FRACTION of a feature's own declared range contributes to the distance in proportion to that range, making roughness/pit features dominate stump features. (3) IT CONFLATES ABSENCE WITH ZERO: an environment with no pit and an environment with a pit of width zero map to the same descriptor point and are exactly indistinguishable. Together these make novelty DEFLATE monotonically as the archive grows -- and because delete_optimizer never prunes env_archive, it deflates against environments that are no longer in the active population at all.",
+  "claimed_inputs": "an archive of Env_config namedtuples and one candidate Env_config; the neighbour count k (k=5 at POET's call site)",
+  "claimed_outputs": "a scalar novelty score used to sort the child list high-to-low before the minimal criterion is applied",
+  "claimed_internal_dependency": "the score depends ONLY on env2array's five fields and the archive contents; it is invariant to archive insertion order (the distances are sorted); it consults no agent, no score and no simulation. env2array always returns length 5, so the ragged n != m branch of euclidean_distance (novelty.py:44-50) is dead code for this descriptor",
+  "known_uncertainty": "whether these properties materially change POET's trajectory in a full run is NOT claimed here and is not tested by this packet: the full algorithm needs Box2D and fiber workers, absent on M3. This packet establishes the estimator's behaviour, not its consequence for open-endedness."
+ },
+ "interventions": [
+  {
+   "intervention_id": "I1-ESTIMATOR-REGIME-CHANGE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "build archives of sizes n = 1..20 from the fixed member sequence E_i = Env(ground_roughness=float(i)), i = 1..n, and one fixed candidate Env(ground_roughness=4.0); for each n call compute_novelty_vs_archive(archive, candidate, k=5) and compare it to BOTH reference statistics computed independently: mean of ALL n distances, and mean of the 5 smallest",
+   "measured_observable": "indicator, over all 20 archive sizes, that the returned value equals the WHOLE-ARCHIVE mean for every n < 5 and the 5-NEAREST mean for every n >= 5, each to within 1e-12",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1.0,
+    1.0
+   ],
+   "units": "indicator",
+   "band_basis": "exact structural identity on deterministic fixtures; no seed distribution, so Harmonia rule A2's power requirement does not apply. SCOUTED (SEEN) before freezing: the identity held at every n in 1..20",
+   "test_world_scope": "the fossil's novelty.py imported directly on m3-native-python with numpy",
+   "pressure_scope": "the novelty-estimator organ of the poet-original-2019 cut",
+   "prediction_rationale": "argsort()[:k] on an array shorter than k returns the whole array; nothing in the function pads, warns or rescales. If the returned value instead matched the 5-nearest form at every n, the estimator would be size-stable and claim (1) is false",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I2-UNNORMALIZED-RANGE-DOMINANCE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "take the reference environment R (all five descriptor fields zero); build A = R with ground_roughness = 0.25 * 8.0 = 2.0 and B = R with stump_height[0] = 0.25 * 3.0 = 0.75, i.e. each differs from R by the SAME FRACTION of that feature's own declared range in novelty.py's norm vector [8,8,8,3,3]; report euclidean_distance(R,A) / euclidean_distance(R,B)",
+   "measured_observable": "ratio of the same-fraction distance in ground_roughness to that in stump_height[0]",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    2.6666,
+    2.6667
+   ],
+   "units": "dimensionless ratio",
+   "band_basis": "exact: with normalize=False the distance is the raw delta, so the ratio is 8.0/3.0 = 2.666667 to machine precision. If the declared norm were applied the ratio would be exactly 1.0, far outside the band. SCOUTED (SEEN): measured 2.666667 unnormalised and 1.000000 with normalize=True. A2 exempt",
+   "test_world_scope": "as I1",
+   "pressure_scope": "as I1",
+   "prediction_rationale": "the function carries its author's own statement of the feature ranges and then never uses it; the ratio is the cleanest discriminator between 'normalisation is applied' and 'it is not'",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I3-ABSENCE-EQUALS-ZERO-PRESENCE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "build P = Env(pit_gap=[]) and Q = Env(pit_gap=[0.0, 0.0]), identical in every other field, and report euclidean_distance(P, Q)",
+   "measured_observable": "distance between a structurally absent feature and a zero-valued present one",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    0.0
+   ],
+   "units": "descriptor distance",
+   "band_basis": "exact: env2array initialises the array to zeros and only overwrites when the list is non-empty, so both map to the same point and the distance is identically 0.0. SCOUTED (SEEN): 0.000000000000. A2 exempt",
+   "test_world_scope": "as I1",
+   "pressure_scope": "as I1",
+   "prediction_rationale": "if these two were distinguishable the descriptor would carry feature PRESENCE as well as value, and claim (3) is false; a non-zero result would mean env2array is not the whole descriptor",
+   "novelty_kind": "structure"
+  },
+  {
+   "intervention_id": "I4-NOVELTY-DEFLATION-MONOTONE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "with the fixed candidate Env(ground_roughness=4.0) and the fixed deterministic member sequence E_i = Env(ground_roughness=(i * 0.37) mod 8.0) for i = 1..n, compute novelty at every archive size n = 5..40 and count the strict increases in the resulting series (a step counts as an increase if it rises by more than 1e-12)",
+   "measured_observable": "number of strict increases in the novelty series across archive sizes 5..40",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    0.0
+   ],
+   "units": "count of increases",
+   "band_basis": "exact and structural: adding a member can only add candidate distances, so the mean of the k smallest is non-increasing in archive size; the count must be exactly 0. SCOUTED (SEEN): 0 increases, the series falling 2.8900 -> 0.2360 over sizes 5..40. A2 exempt",
+   "test_world_scope": "as I1",
+   "pressure_scope": "as I1",
+   "prediction_rationale": "this is the deflation that matters for POET: because env_archive is never pruned (poet_algo.py delete_optimizer, 171-178), the archive only grows, so candidate novelty is measured against an ever-denser memory including deleted environments and falls monotonically for reasons that have nothing to do with the candidates getting less novel",
+   "novelty_kind": "behavior"
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-ORDER-INVARIANCE",
+   "construction": "score one candidate against a 5-member archive, then against the same five members inserted in a shuffled order",
+   "expected_result": "bit-identical novelty (the function sorts distances, so insertion order cannot matter); SCOUTED (SEEN): 1.400000000000 both ways",
+   "failure_interpretation": "if the two differ, the harness is reading the archive's insertion order rather than calling the fossil's function, and every other row is measuring the harness"
+  },
+  "positive": {
+   "control_id": "C-POS-FAR-CANDIDATE",
+   "construction": "score a candidate far outside the archive's range (ground_roughness=500.0) and one inside it (3.0) against the same 5-member archive",
+   "expected_result": "the far candidate scores strictly higher; SCOUTED (SEEN): 497.0000 vs 1.2000",
+   "failure_interpretation": "if the far candidate does not score higher, the estimator is not measuring distance at all and the whole cut is mislocated"
+  },
+  "negative": {
+   "control_id": "C-NEG-IDENTICAL",
+   "construction": "score a candidate that is identical to every member of a 5-member archive of identical environments",
+   "expected_result": "exactly 0.0; SCOUTED (SEEN): 0.000000000000",
+   "failure_interpretation": "a non-zero result would mean the descriptor carries identity beyond the five numbers, so env2array is not the whole boundary"
+  }
+ },
+ "cut_kill": {
+  "observation": "env2array returns a vector of length other than 5 for any of the fixtures, OR the ragged n != m branch of euclidean_distance (novelty.py:44-50) executes for any fixture, OR the imported module's bytes do not hash to 0575d92b17f4a3204729f4cc4b1ec303325c4451e4bd5d9d737bd299463ad232",
+  "consequence": "the descriptor this cut names is not the descriptor in play and the boundary novelty.py:18-62 is mislocated; a NEW CUT is required and this packet stays immutable"
+ },
+ "indeterminate": {
+  "observation": "any row lands within 1e-12 of its band edge in a way that makes the exact identity ambiguous, or numpy's argsort tie-breaking makes the k-smallest selection non-unique on the fixed fixtures",
+  "consequence": "the affected row returns PREDICTION_INDETERMINATE rather than a directed verdict; the fixtures are deterministic, so this should not fire"
+ },
+ "supersedes": null,
+ "return_protocol": {
+  "to_seat": "Harmonia (instance gandalf-6cd1348b). This runs on m3-native-python with numpy alone and needs neither an AVX host nor Box2D, so it is adjudicable immediately and does not queue behind HARM-55",
+  "accountable_seat": "Nyx receives CUT_SUPPORTED / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_KILL / INTERFACE_INSUFFICIENT. Techne receives a RECORD note: poet-original-2019's nyx_handoff block is empty in the record, which is why provenance_grade_read is UNKNOWN here despite source_type ORIGINAL_AUTHORITATIVE_RELEASE and a pinned commit; and its lineage_relations use 'target' where the other 112 relations use 'to'",
+  "ack_ticks": 1,
+  "disposition_ticks": 2,
+  "required_response_on_challenge": "Nyx produces a new CUT_ID and a packet with supersedes = MECH-POET-NOVELTY-ESTIMATOR-001 if the boundary is mislocated; if a row is falsified Nyx revises the novelty organ's reading in Stage D' and records it in the mechanism ledger entry MECH-POET-NOVELTY-ESTIMATOR"
+ }
+}

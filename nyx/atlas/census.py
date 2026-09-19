@@ -39,16 +39,26 @@ def _exec_model(rec: dict) -> dict:
     return {"value": "UNKNOWN", "basis": "UNKNOWN"}
 
 
+def _rel_to(r: dict) -> str:
+    """The lineage-relation target. Techne's records use "to" (112 relations) but the 2026-09-19
+    capsule generation writes "target" (46 relations: the ASAL rollout fossils, poet-original-2019,
+    terralingua-data-abundant-exp-1). Accept both on READ so a schema drift cannot break the atlas;
+    the drift itself is reported to Techne rather than silently normalised in the record."""
+    v = r.get("to", r.get("target"))
+    if v is None:
+        raise KeyError(f"lineage relation has neither 'to' nor 'target': {r!r}")
+    return v
+
 def whole_system(rec: dict) -> dict:
     rels = rec.get("lineage_relations", []) or []
     hd = rec.get("historical_disposition") or {}
     cap = rec.get("human_capability_summary") or {}
     obs = rec.get("observability") or {}
-    preds = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") in PRED]
+    preds = [f"{r['relation']}: {_rel_to(r)}" for r in rels if r.get("relation") in PRED]
     # 2026-09-16 (later the same day): Techne replaced the undirected 'superseded' with superseded_by / supersedes and
     # migrated every edge (1bb9965b4). superseded_by X => X is a successor; supersedes X => X is a predecessor (PRED).
-    succs = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "superseded_by"]
-    rivals = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "shares_ancestor_with"]
+    succs = [f"{r['relation']}: {_rel_to(r)}" for r in rels if r.get("relation") == "superseded_by"]
+    rivals = [f"{r['relation']}: {_rel_to(r)}" for r in rels if r.get("relation") == "shares_ancestor_with"]
     disp = hd.get("state") if hd else None
     if disp and disp != "UNKNOWN":
         disp_v = {"value": {"state": disp, "failure_reasons": hd.get("failure_reasons", []), "evidence": hd.get("evidence", [])}, "basis": "TECHNE_RECORD"}
@@ -84,7 +94,7 @@ def fresh(rec: dict) -> dict:
             "cut": {"state": "NOT_CUT", "mode": None, "evidence": [], "inspected_files": [], "date": None, "note": "census only; no source opened"},
             "organs": [], "rejected_cuts": [], "pressures": [],
             "composition_edges": [],
-            "ancestry_edges": [{"from": rec["specimen_id"], "relation": r["relation"], "to": r["to"], "note": r.get("note", ""), "basis": "TECHNE_RECORD"} for r in rec.get("lineage_relations", []) or []],
+            "ancestry_edges": [{"from": rec["specimen_id"], "relation": r["relation"], "to": _rel_to(r), "note": r.get("note", ""), "basis": "TECHNE_RECORD"} for r in rec.get("lineage_relations", []) or []],
             "residue": {"state": "NOT_CHECKED", "unexplained": []}}
 
 

@@ -1,0 +1,176 @@
+{
+ "schema": "nyx.mechanism_ledger/1",
+ "note": "A MECHANISM IS NOT A PACKET (operator directive 2026-09-19b s2). Packets are evidence-bearing experiments; mechanisms are persistent identities that accumulate evidence across packets. The headline count MECHANISMS_THAT_SURVIVED_TRANSPLANT is over unique mechanism_ids.",
+ "mechanisms": [
+  {
+   "mechanism_id": "MECH-ASAL-OE-SCORE",
+   "registered": "2026-09-19",
+   "source_lineage": "SakanaAI ASAL 2024 (Kumar, Lu, Lange, Tang, Ha, Clune et al.), specimen asal-sakana-2024 pin 677ba0ea; the observer descends from CLIP (Radford et al. 2021); the substrate scored here descends from Lenia (Chan 2019)",
+   "minimal_executable_organ": {
+    "cut_id": "asal-sakana-2024",
+    "organ": "open_endedness as the mean over frames of each frame's maximum embedding similarity to any strictly earlier frame, minimised",
+    "boundary": "asal_metrics.py:52-64 (payload sha256 75b7eaa9a751acf7e88c5902621937401ec28ab84199edf11fdb4db0514f5aa4)",
+    "executable_note": "kernel = z @ z.T; kernel = tril(kernel, k=-1); return kernel.max(axis=-1).mean()"
+   },
+   "proposed_behavior": "a detector of sufficiently large embedding novelty of each observed frame relative to ALL earlier sampled frames. It scores the FRAME SEQUENCE in a foundation model's representation, not the underlying dynamics, and by itself does not identify the mechanism that generated the novelty: distinct dynamical regimes (turbulent metric-exploit texture and coherent persistent morphing life) are compressed to the same low score.",
+   "predicted_intervention": "a search restricted to LEGITIMATE (ALIVE) substrate parameters can drive the score below what scene-level garbage achieves through the same observer, by producing embedding drift rather than anything one would call dynamical novelty",
+   "falsifier": "EITHER no ALIVE legitimate configuration crosses below the garbage reference under any observer (the scalar is not exploitable within the substrate) OR the crossings vanish under the fossil's NATIVE Flax/JAX observer while the native control anchors behave coherently (Harmonia disposition C, RECONSTRUCTION_SPECIFIC) -- in which case this mechanism claim stops and the discrepancy is preserved as a fossil rather than rescued.",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-ASAL-LEGIT-SEARCH-001",
+     "freeze": "c6627d26",
+     "ruling": "#441 + operator-tightened #446",
+     "what_it_established": "boundary CUT_SUPPORTED (cut_kill silent; independent metric agrees 5.6e-16); I1/I2 SUPPORTED_BY_WITNESS -- min ALIVE search score 0.7665 < 0.8167 and < 0.7999, existential; I3 SUPPORTED_ON_EXECUTED_SUBSET -- best crosser over the 395 executed is METRIC_EXPLOIT"
+    }
+   ],
+   "counterevidence_packets": [
+    {
+     "packet_id": "MECH-ASAL-LEGIT-SEARCH-001",
+     "intervention": "I0-CATALOGUE-ONLY",
+     "verdict": "PREDICTION_FAILED",
+     "what_it_established": "the raw catalogue DOES cross with no search (min ALIVE catalogue 0.8076 < 0.8167; five catalogued lifeforms). This strengthens the mechanism reading (selection alone suffices) while falsifying the sub-claim. The SAME packet carries evidence and counterevidence -- which is exactly why a mechanism is not a packet."
+    }
+   ],
+   "observer_dependence": "UNKNOWN",
+   "observer_dependence_basis": "HARM-55 native Flax column DEFERRED on execution placement, not science (Techne #488: M3 is a 2008 i7-920 without AVX; M1/M2 expose no remote exec). The original-observer column is bit-identical over all 395 (max |diff| 0.0), so the frames + script ARE the pipeline that produced the search result and the Flax run changes the observer and nothing else. Resolution awaits HARM-56 disposition A/B/C.",
+   "transplant_history": [
+    {
+     "receiving_ecology": "Theophrastus cell (mechanism x Lenia port under fw2-5886f2b9, frozen legitimate search)",
+     "outcome": "OFFERED",
+     "tick": "2026-09-18",
+     "note": "offered in Harmonia #441; not yet accepted by a bench"
+    }
+   ],
+   "current_disposition": "EVIDENCE_SUPPORTED",
+   "open_anomaly": "ANOM-ASAL-MANY-TO-ONE"
+  },
+  {
+   "mechanism_id": "MECH-ASAL-FRAME-SAMPLING",
+   "registered": "2026-09-19",
+   "source_lineage": "SakanaAI ASAL 2024, specimen asal-sakana-2024 pin 677ba0ea (rollout API)",
+   "minimal_executable_organ": {
+    "cut_id": "asal-sakana-2024",
+    "organ": "rollout reduced to K frames by sampling at fixed intervals so the observer sees a short evenly spaced summary of a long simulation",
+    "boundary": "rollout.py:78-95 (payload sha256 59c49d430a2e00d20f5c6ecdb5f649402c598747af105522b3e2269b7a1fd693)",
+    "executable_note": "chunk_steps = rollout_steps // K; idx_sample = arange(0, rollout_steps, chunk_steps); K=8 by default"
+   },
+   "proposed_behavior": "a fixed-size temporal summary: the substrate is stepped the full rollout but only K evenly spaced states are rendered, embedded and scored, so any dynamics BETWEEN samples is invisible to the observer. The number and placement of samples is a hidden knob of the metric.",
+   "predicted_intervention": "changing K, or shifting sample placement (chunk starts vs ends), changes the score of the SAME underlying dynamics; trajectories that are dynamically rich between samples but embedding-similar at sample points score as non-open-ended, and the converse",
+   "falsifier": "if the score is invariant to K and to sample placement across the substrate's reachable trajectories, the sampling is not a load-bearing knob but an implementation detail",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-ASAL-LEGIT-SEARCH-001",
+     "freeze": "c6627d26",
+     "ruling": "#441",
+     "what_it_established": "this organ is inside the frozen packet's BOUNDARY (the 8 sampled frames are exactly what reached the score) and the boundary returned CUT_SUPPORTED; but NO intervention in that packet varied K or placement, so nothing tested this mechanism's own prediction"
+    }
+   ],
+   "counterevidence_packets": [],
+   "observer_dependence": "UNKNOWN",
+   "observer_dependence_basis": "its consequence is only ever measured through an observer; never varied independently",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED"
+  },
+  {
+   "mechanism_id": "MECH-PARTICLES-ESS-TRIGGER",
+   "registered": "2026-09-19",
+   "source_lineage": "particles (Chopin) 0.4, specimen particles-chopin-0.4; sequential Monte Carlo lineage",
+   "minimal_executable_organ": {
+    "cut_id": "particles-chopin-0.4",
+    "organ": "effective-sample-size trigger that fires resampling when weight degeneracy crosses a threshold",
+    "boundary": "core.py:181-183",
+    "executable_note": "runs natively on M3 (pure Python + numpy)"
+   },
+   "proposed_behavior": "a degeneracy detector: it converts the particle weight distribution into a single scalar and fires resampling when that scalar crosses a fixed fraction of the population size",
+   "predicted_intervention": "the trigger's firing rate and the filter's variance respond to N and to the world's informativeness",
+   "falsifier": "if the trigger never fires, or fires at every step, across the operating range, it is not a control point",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-PARTICLES-ESSTRIGGER-002",
+     "freeze": "186047db",
+     "ruling": "#382",
+     "what_it_established": "all controls PASS; CUT_SUPPORTED on the boundary, claims (a)/(b) on worlds W1 and W2"
+    }
+   ],
+   "counterevidence_packets": [
+    {
+     "packet_id": "MECH-PARTICLES-ESSTRIGGER-001",
+     "verdict": "PREDICTION_INDETERMINATE + CHALLENGE",
+     "what_it_established": "the positive-control band was set from a model that did not hold at the operating point; superseded by 002. Counterevidence to the FIRST framing, not to the mechanism."
+    }
+   ],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "no observer/representation in the boundary; the observable is the filter's own statistic",
+   "transplant_history": [],
+   "current_disposition": "EVIDENCE_SUPPORTED",
+   "note": "packet 002's claim (c) (resampling SCHEME ordering) FAILED@50 / INDETERMINATE@400 and was DROPPED, but it belonged to the resampling-scheme organ, NOT to this trigger, so it is not counterevidence here. That mis-attribution is the calibration lesson that a claim belongs to the organ it is about."
+  },
+  {
+   "mechanism_id": "MECH-POET-NOVELTY-ESTIMATOR",
+   "registered": "2026-09-19",
+   "source_lineage": "uber-research/poet branch original_poet @ 0b40743d (Wang, Lehman, Clune, Stanley 2019); novelty search from Lehman & Stanley 2011; superseded in poet-enhanced-2020 by PATA-EC",
+   "minimal_executable_organ": {
+    "cut_id": "poet-original-2019",
+    "organ": "novelty as the mean distance to the k nearest members of an unpruned archive over a five-number hand-built environment descriptor",
+    "boundary": "poet_distributed/novelty.py:18-62 (payload sha256 0575d92b17f4a3204729f4cc4b1ec303325c4451e4bd5d9d737bd299463ad232)",
+    "executable_note": "RUNS STANDALONE ON M3 with numpy alone (verified 2026-09-19): no Box2D, no fiber, no ES. Adjudicable against the fossil's own bytes, not a port."
+   },
+   "proposed_behavior": "the estimator that orders candidate environments before POET's minimal criterion admits them. As written it (1) changes what it measures at archive size k -- whole-archive dispersion below k, local density at and above k -- because argsort()[:k] silently returns fewer than k; (2) is scale-blind, because normalize=False is hardcoded so its own declared norm vector [8,8,8,3,3] is never applied; and (3) conflates a structurally absent feature with a zero-valued present one. Together these deflate novelty monotonically as the never-pruned archive grows.",
+   "predicted_intervention": "on the fossil's own bytes: the size-k regime change is an exact identity; a same-fraction delta in ground_roughness scores 8/3 times a same-fraction delta in stump_height; absence and zero-presence are at distance exactly 0; and the novelty series over growing archives has exactly zero increases",
+   "falsifier": "if the returned value matches the k-nearest form at EVERY archive size (no regime change), or the same-fraction ratio is 1.0 (the declared normalisation is in fact applied), or absence and zero-presence are distinguishable, then the estimator is size-stable, scale-aware or presence-aware and this reading is wrong",
+   "evidence_packets": [
+    {
+     "packet_id": "MECH-POET-NOVELTY-ESTIMATOR-001",
+     "freeze": "291a22ed",
+     "ruling": "ISSUED 2026-09-19, awaiting Harmonia verdict",
+     "what_it_established": "NOTHING YET -- frozen and handed over; four exact rows scouted (SEEN) before freezing"
+    }
+   ],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "no learned representation in the boundary; the descriptor is five hand-written numbers from the fossil",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED"
+  },
+  {
+   "mechanism_id": "MECH-POET-MINIMAL-CRITERION",
+   "registered": "2026-09-19",
+   "source_lineage": "uber-research/poet original_poet @ 0b40743d; minimal-criterion coevolution from Brant & Stanley 2017",
+   "minimal_executable_organ": {
+    "cut_id": "poet-original-2019",
+    "organ": "admission only of environments on which the current agent scores inside a two-sided band",
+    "boundary": "poet_algo.py:264-268 (pass_mc), call sites 296-299 and 330-333",
+    "executable_note": "NOT runnable on M3: the score it gates on comes from an ES rollout needing Box2D and fiber workers"
+   },
+   "proposed_behavior": "a goldilocks filter: an environment is admitted only if an existing agent scores inside [mc_lower, mc_upper] on it -- neither unsolvable nor already solved. Applied twice, first with the parent's parameters and again after a targeted transfer picks the best over the whole population, so admission is relative to current population competence rather than to any absolute property of the environment",
+   "predicted_intervention": "holding the environment fixed and raising population competence moves the same environment from admitted to rejected (it becomes 'already solved'); the admitted-environment rate falls over run time against fixed thresholds",
+   "falsifier": "if admission is invariant to the agent parameters used to evaluate the candidate, the criterion is not population-relative",
+   "evidence_packets": [],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "the observable is the environment's own episode return, not a learned representation",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED"
+  },
+  {
+   "mechanism_id": "MECH-POET-FIFO-DISCARD",
+   "registered": "2026-09-19",
+   "source_lineage": "uber-research/poet original_poet @ 0b40743d; the archive/population split is standard novelty search",
+   "minimal_executable_organ": {
+    "cut_id": "poet-original-2019",
+    "organ": "capacity enforced by deleting the oldest active environments while the novelty archive is never pruned",
+    "boundary": "poet_algo.py:343-352 (remove_oldest) against 151-170 (add_optimizer) and 171-178 (delete_optimizer)",
+    "executable_note": "pure OrderedDict bookkeeping, but it lives in poet_algo.py which imports es.py (fiber); a harness would need to isolate it"
+   },
+   "proposed_behavior": "when the active population exceeds max_num_envs POET deletes the OLDEST environments in insertion order -- not the worst, not the least novel, not the least productive. add_optimizer writes to both env_registry and env_archive; delete_optimizer pops only env_registry. So the active population is a FIFO sliding window while the novelty memory grows forever, and deleted environments keep suppressing the novelty of their own region permanently",
+   "predicted_intervention": "under capacity pressure the retained set is a function of ARRIVAL TIME, not of value: permuting the arrival order of an identical set of environments changes which survive; and the novelty of a candidate near a deleted region stays suppressed after deletion",
+   "falsifier": "if deletion consulted any score, novelty or productivity signal, or if env_archive were pruned alongside env_registry, the asymmetry does not exist",
+   "evidence_packets": [],
+   "counterevidence_packets": [],
+   "observer_dependence": "NOT_APPLICABLE",
+   "observer_dependence_basis": "pure bookkeeping over insertion order; no representation involved",
+   "transplant_history": [],
+   "current_disposition": "PROPOSED"
+  }
+ ]
+}

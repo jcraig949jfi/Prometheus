@@ -455,6 +455,21 @@
    "mechanism_isolated": true,
    "observer_stable": "UNKNOWN",
    "transplant": "OFFERED"
+  },
+  {
+   "packet_id": "MECH-POET-NOVELTY-ESTIMATOR-001",
+   "cut_id": "poet-original-2019",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-09-19",
+   "verdict_tick": null,
+   "adjudicated": false,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": false,
+   "mechanism_isolated": true,
+   "observer_stable": "NOT_APPLICABLE",
+   "transplant": "NONE",
+   "note": "FREEZE 291a22ed. Four EXACT deterministic rows on the fossil's OWN bytes (novelty.py runs standalone on M3 with numpy; no AVX host, no Box2D, so it does not queue behind HARM-55): I1 estimator regime change at archive size k; I2 unnormalised range dominance ratio 8/3; I3 absence == zero-presence at distance 0; I4 zero increases in the novelty series. All scouted SEEN before freezing. This is the 'one POET mechanism through an independent ruling' the 2026-09-19b directive s2 asked for."
   }
  ],
  "unresolved_anomalies": [
