@@ -121,6 +121,8 @@ MUTANTS = [
     ("M83", "search.py", "        fp = (r[\"science\"].get(\"player_fingerprints\") or {}).get(\"0\") or {}", "        fp = r[\"science\"][\"player_fingerprints\"][\"0\"]", "a FAILED run crashes row ingestion (generation never commits)"),
     ("M84", "search.py", "    gen = reg.get(parent[\"representation\"]).factory\n    return gen(seed, meta={\"fallback\": \"generator\", \"parent_representation\": parent[\"representation\"]})", "    return reg.make(\"transform.shuffle.v1\").apply(parent, seed)", "a representation no transform accepts crashes propose"),
     ("M85", "search.py", "    sel.workdir = workdir; sel.compact = compact; sel.registry = registry           # C148: selectors resolve generators and transforms here", "    sel.workdir = workdir; sel.compact = compact", "selectors use the process-global registry"),
+    # twenty-fourth wave (C149): refused lowering inside a search
+    ("M86", "search.py", "    if not low.ok:                                             # C149: a refused lowering is a stopped search with the reasons, never an AttributeError\n        raise GenerationIncomplete(\"generation %d refused at lowering (%s): %s\" % (gen, low.status, \"; \".join(low.reasons)[:300]), low.status)", "    pass", "a refused lowering crashes the search"),
 ]
 
 

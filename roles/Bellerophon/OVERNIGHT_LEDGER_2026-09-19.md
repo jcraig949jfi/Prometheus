@@ -1063,3 +1063,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - test drives all three with a bomb representation on a forked registry: two generations commit, no
   GEN_ABANDONED, rows with failed_seeds and rows without. Mutants M83-M85 CAUGHT; ledger 84/84 (merged). Suite
   1419 passed / 6 skipped. A synthetic fixture in an older test lacked a status field and was corrected.
+
+## C149 (09:27Z) a refused lowering inside a search
+- a template whose lowering is BLOCKED (a required capability nobody provides) crashed evolve() with an
+  AttributeError on a None job. Now a GenerationIncomplete: the search returns stopped=<lowering status> with
+  the reasons, nothing written. (A generation whose PLAYERS a substrate cannot instantiate had already been fine:
+  lowering refuses only when the template itself is wrong.) Mutant M86 CAUGHT; ledger 85/85.

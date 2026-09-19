@@ -315,7 +315,10 @@ def _run_generation(template: Experiment, players: List[PlayerSpec], gen: int, s
     while (workdir / ("gen_%03d_a%d.jsonl" % (gen, attempt))).exists():
         attempt += 1                                             # a crashed attempt's file stays as evidence
     path = workdir / ("gen_%03d_a%d.jsonl" % (gen, attempt))
-    rep = execute(e.compile("local", registry).job, path, registry)
+    low = e.compile("local", registry)
+    if not low.ok:                                             # C149: a refused lowering is a stopped search with the reasons, never an AttributeError
+        raise GenerationIncomplete("generation %d refused at lowering (%s): %s" % (gen, low.status, "; ".join(low.reasons)[:300]), low.status)
+    rep = execute(low.job, path, registry)
     if rep.runs_not_started:
         raise GenerationIncomplete("generation %d stopped by the wall budget: %d runs not started" % (gen, rep.runs_not_started), "WALL_BUDGET_EXHAUSTED")
     receipts = read_all(path)

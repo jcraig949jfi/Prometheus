@@ -275,3 +275,12 @@ def test_a_failing_player_becomes_a_failed_row_and_the_generation_commits(tmp_pa
     elites = [r for r in rows if r["kind"] == "elite"]
     assert elites and any(r["failed_seeds"] for r in elites) and any(not r["failed_seeds"] for r in elites)
     assert all((r["objective"] is None) == bool(r["failed_seeds"]) for r in elites)
+
+
+# C149: a template whose lowering is refused (a required capability nobody provides) crashed evolve with an
+# AttributeError on a None job. Now: a stopped search carrying the lowering status and reasons, nothing written.
+def test_a_refused_lowering_stops_the_search_with_the_reasons(tmp_path):
+    t = template(); t.required_capabilities = frozenset({"ext.physics2d.v1"})
+    out = SR.evolve(t, ref("selector.truncation.v1", n=3), generations=2, workdir=tmp_path / "r", seed=1)
+    assert out["generations_done"] == 0 and out["stopped"] == "BLOCKED_MISSING_CAPABILITY" and "ext.physics2d.v1" in out["detail"]
+    assert not (tmp_path / "r" / "archive.jsonl").exists() or not [r for r in SR.load_rows(tmp_path / "r" / "archive.jsonl") if r["kind"] == "elite"]
