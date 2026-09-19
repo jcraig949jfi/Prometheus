@@ -306,3 +306,13 @@ C42 | T+2:30 | fuzzer now also draws the grid world and lifetime world state (41
   the playtest had only checked that events OCCURRED. A scripted unit test (write -> read pays and consumes
   -> second read pays nothing; neighbours seen) kills both. Full ledger rerun: 27/27 CAUGHT.
   Suite 165 passed 6 skipped.
+C43 | T+2:42 | BRIDGES (directive s10; reached naturally after C39). (a) backends/sfe_executor.py: a kernel
+  Executor for the SFE RUNTIME's own worker loop (kind "kernel.run_ir": payload carries the IR; the kernel
+  executes locally; ExecutorResult = summary + receipts JSONL as an artifact; reproducibility mapped to SFE's
+  four words; SFE's seed_root RECORDED as unused -- the IR's seed_policy governs). sfe/ untouched; the
+  contract is exercised against the real sfe.executors classes (importable on this tree) -- 4 tests: a run,
+  a bad payload as a FAILED result, a missing capability as BLOCKED, the ExecutorResult round trip.
+  (b) every SFE frontier mismatch classified beside the code that reports it: M1/M2/M5 target-schema, M3/M4
+  target-runtime, M6 unsupported semantic; NONE a kernel defect. NPE: N1 unknown (interface unavailable),
+  N2 target-runtime (stage ceilings), N3 adapter-defect-if-wrong (row vocabulary unverified until it lands).
+  Suite 169 passed 6 skipped.

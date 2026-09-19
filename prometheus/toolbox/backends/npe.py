@@ -31,6 +31,11 @@ LISTS = ("required_controls", "required_oracles")
 ROW_STATUSES = ("record", "dev", "aborted", "timeout", "cheat", "control")
 EVIDENCE_CLASSES = ("VERDICT", "OBSERVATION")
 JOB_KEY = "kernel.run_ir"
+# Classification (overnight directive s10): the NPE interface is not on this tree, so every NPE mismatch is
+# "unknown because interface unavailable" except the one that is known from the pinned envelope: the fabric's
+# stage-admission ceilings are execution policy (target-runtime limitation, lives in the envelope, not the IR).
+CLASSIFICATION = {"N1_interface_not_on_main": "unknown_interface_unavailable", "N2_stage_admission_ceilings": "target_runtime_limitation",
+                  "N3_row_vocabulary": "adapter_defect_if_wrong (rows re-emitted as status=record / evidence_class=OBSERVATION; unverified until the interface lands)"}
 PINNED_AT = {"branch": "nestor/sidequest-graphworld-2026-09-14", "sha": "b22a09b19", "file": "primordial/fabric/envelope.py"}
 
 
