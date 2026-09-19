@@ -213,3 +213,33 @@ configs/c2a.json .. c2d.json (hash in every receipt), the substrate
 version string per rung (in the world/VM fingerprint), the PARTS programs
 and their hashes, the paired-stream/takeover protocol, this file's
 predictions. Nothing in section 1 changes at any rung.
+
+## 11. Addendum before the rung freezes (2026-09-19): implementation deviations, dated
+
+A1 POST-SUCCESS ACTIONS ARE IGNORED NO-OPS during the 200-step grace
+   (status 2, counted in TaskResult.post_success_actions) instead of
+   ending the task. Reason: a recording that succeeds at its first or
+   second action could never be closed. Uniform across all rungs (A is
+   re-run under it); no interaction can occur after success either way.
+A2 PROGRAM LENGTH 96 at every C2 rung (was 64): the complete rung-C
+   mechanism in bytecode is 64 instructions and the parts ladder needs
+   room above it. Insert/duplicate/splice are bounded by the same limit
+   for every arm, so no arm is advantaged.
+A3 PARTS ANCESTOR is P_BASE, a 19-instruction single-loop enumerator over
+   every length-3 sequence (success at a prefix counts), not the 39-
+   instruction three-loop ENUMERATE_VM search seed. Both are measured in
+   the diagnostic; the search seed stays ENUMERATE_VM.
+A4 THE PLANNER partials plan to depth 2 and look at the first 8 store
+   objects (a 32 x 4 x 32 x 4 nest burned the step budget with an empty
+   store). Consequence: the rung-C positive control's competence ceiling
+   is singles + chain2 (chain3 needs depth-3 planning), and a lifetime
+   that records > 7 procedures before the useful ones leaves some
+   unreachable. Both are properties of the control, not of the substrate.
+A5 PMATCH on a handle that is not a procedure returns 0 ("no match") with
+   status 1, not FAIL: a FAIL in a branch register made the planner take
+   its "match" branch on an empty store. PSIM on such a handle returns
+   FAIL (poison), as designed.
+A6 PREC_BEGIN while recording RESTARTS the recording (discards the failed
+   attempt) so a procedure holds exactly the successful attempt.
+A7 The C1b record-id clock is fixture F4 (crius/fixtures/); its signature
+   (ACC < FRESH) reproduces under the metadata charge (tests/test_c2.py).

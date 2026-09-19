@@ -103,6 +103,7 @@ def run_task(player: Player, task, task_index: int, ws, blocks, step_budget: int
         "end_reason": env.end_reason,
         "resets": env.n_resets,
         "invalid_actions": env.invalid_actions,
+        "post_success_actions": env.post_success_actions,
         "status_final": env.status,
         "store_trace": dict(st.trace),
         "trajectory": env.trajectory,

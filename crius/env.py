@@ -43,6 +43,8 @@ class TaskRun:
         self.status = 0
         self.invalid_actions = 0
         self.success_in_block = False
+        self.last_primitive = -1   # (kind*L + pos) of the last executed primitive, -1 before any / after reset
+        self.post_success_actions = 0
         self.world = worlds.get(getattr(task, "world_id", "c0"))
         self.num_actions = self.world.num_actions(task)
         self.reset_action = self.num_actions
@@ -58,6 +60,7 @@ class TaskRun:
             "steps_left": self.step_budget - self.steps - self.store_units,
             "last_delta": tuple((c - p) % self.world.B for c, p in zip(self.current, self.previous)),
             "last_action": self.last_action,
+            "last_primitive": self.last_primitive,
         }
 
     # ------------------------------------------------------------ actions
@@ -73,12 +76,16 @@ class TaskRun:
             self.invalid_actions += 1
             return self.current
         if self.success:
-            # any action after success ends the task; the grace is for bookkeeping only
-            self._end("post_success_action")
+            # C2: actions after success are ignored no-ops during the grace (no interaction, no reset), so a
+            # program can close a recording after an early success; the grace still bounds compute.
+            self.post_success_actions += 1
+            self.status = 2
+            return self.current
         v = value
         if v == self.reset_action:
             self.previous = self.current
             self.current = self.start
+            self.last_primitive = -1
             self.last_action = v
             self.n_resets += 1
             self.trajectory.append((v, self.current))
@@ -87,6 +94,8 @@ class TaskRun:
             self._end("interaction_budget")
         self.previous = self.current
         self.current = self.world.apply_action(self.task, v, self.current)
+        prim = getattr(self.world, "primitive_of_action", None)
+        self.last_primitive = prim(self.task, v) if prim else -1
         self.interactions += 1
         self.last_action = v
         self.trajectory.append((v, self.current))

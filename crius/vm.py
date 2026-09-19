@@ -74,12 +74,40 @@ OPSPEC = {
     "BLK_STATE_SET": ("R", "R", "R"),
     "BLK_REC_BEGIN": ("N", "N", "N"),
     "BLK_REC_END": ("R", "N", "N"),
+    # ---- C2 typed procedures (DESIGN_C2 s4). Present in OPNAMES at every rung; executable only when the
+    #      substrate enables them (SUBSTRATE flags); mutation draws from opcode_names(substrate).
+    "PSTEP": ("I", "I", "N"),        # inside a procedure block: primitive (kind, (parg + off) mod L)
+    "PREC_BEGIN": ("N", "N", "N"),
+    "PREC_END": ("R", "N", "N"),
+    "PINVOKE": ("R", "R", "N"),      # procedure handle, argument
+    "PSIM": ("R", "R", "R"),         # r <- procedure(h, a) applied in the head to the object in r
+    "PMATCH": ("R", "R", "R"),       # r <- 1 iff procedure(h, a) applied in the head to current == target
 }
+TYPED_OPS_B = ("PSTEP", "PREC_BEGIN", "PREC_END", "PINVOKE")
+TYPED_OPS_C = ("PSIM", "PMATCH")
+SUBSTRATE = {"typed_procedures": False, "psim": False}
+
+
+def set_substrate(sub: dict) -> None:
+    SUBSTRATE["typed_procedures"] = bool((sub or {}).get("typed_procedures", False))
+    SUBSTRATE["psim"] = bool((sub or {}).get("psim", False))
+
+
+def opcode_names(sub: dict = None) -> list:
+    """The rung's mutable instruction set: base ops, plus typed ops the substrate enables."""
+    sub = sub if sub is not None else SUBSTRATE
+    names = [n for n in OPNAMES if n not in TYPED_OPS_B + TYPED_OPS_C]
+    if sub.get("typed_procedures"):
+        names += [n for n in TYPED_OPS_B if n != "PSTEP"]  # PSTEP is written by PREC_END, not by mutation
+    if sub.get("psim"):
+        names += list(TYPED_OPS_C)
+    return names
 OPNAMES = list(OPSPEC)
 OP = {name: i for i, name in enumerate(OPNAMES)}
 _FIRST_STORE_OP = OP["WS_READ"]
+_TYPED_SET = {OP[n] for n in TYPED_OPS_B + TYPED_OPS_C}
 INPUT_FIELDS = ("current", "target", "interactions_left", "num_ops", "task_index",
-                "steps_left", "last_delta", "current_block", "last_action", "status")
+                "steps_left", "last_delta", "current_block", "last_action", "status", "last_primitive")
 
 
 class Fail:
@@ -168,7 +196,7 @@ def program_from_json(data) -> list:
     return [(OP[i[0]], int(i[1]), int(i[2]), int(i[3])) for i in data]
 
 
-def assemble(text: str) -> list:
+def assemble(text: str, max_len: int = None) -> list:
     """Two-pass assembler: `label:` lines, `OP a, b, c`, `;` comments, R-prefixed regs."""
     lines = []
     labels = {}
@@ -201,7 +229,7 @@ def assemble(text: str) -> list:
             else:
                 vals.append(int(tok))
         program.append((OP[name], vals[0], vals[1], vals[2]))
-    if len(program) > MAX_PROGRAM_LEN:
+    if len(program) > (max_len or MAX_PROGRAM_LEN):
         raise ValueError("program too long: %d" % len(program))
     return program
 
@@ -229,7 +257,7 @@ def disassemble(program) -> str:
 
 
 class VMState:
-    __slots__ = ("regs", "ws", "blocks", "env", "recording", "depth", "instr_count", "trace")
+    __slots__ = ("regs", "ws", "blocks", "env", "recording", "depth", "instr_count", "trace", "prec", "parg")
 
     def __init__(self, env, ws, blocks):
         self.regs = [0] * NREG
@@ -240,6 +268,8 @@ class VMState:
         self.depth = 0
         self.instr_count = 0
         self.trace = {}  # opcode name -> executions this task (store ops, ACT, INPUT); for post-hoc recovery
+        self.prec = None   # list of revealed primitives while PREC recording
+        self.parg = 0      # the argument of the procedure being executed (PINVOKE sets it)
 
 
 def run_program(program, env, ws, blocks) -> VMState:
@@ -292,6 +322,13 @@ def _execute(code, st: VMState, block_id: int):
         name = OPNAMES[opc]
         if opc >= _FIRST_STORE_OP or name in ("ACT", "ACTI", "INPUT", "BLK_INVOKE"):
             st.trace[name] = st.trace.get(name, 0) + 1
+        if opc in _TYPED_SET:
+            cost0 = ws.cost + blocks.cost
+            _typed_op(name, a, b, c, st, block_id)
+            extra = ws.cost + blocks.cost - cost0
+            if extra > 0:
+                env.charge_store(extra)
+            continue
         if opc >= _FIRST_STORE_OP:
             # workspace and block operations: their cost units count against the step budget too
             cost0 = ws.cost + blocks.cost
@@ -358,19 +395,147 @@ def _execute(code, st: VMState, block_id: int):
                 regs[a] = block_id
             elif f == 9:
                 regs[a] = env.status
+            elif f == 10:
+                regs[a] = env.last_primitive
             else:
                 regs[a] = env.observation()[INPUT_FIELDS[f]]
         elif name == "ACT":
             v = to_int(regs[a])
             if v is not None and env.valid_action(v) and st.recording is not None:
                 st.recording.append((OP["ACTI"], v, 0, 0))
-            env.act(v)
+            _act(st, v)
         elif name == "ACTI":
             if env.valid_action(a) and st.recording is not None:
                 st.recording.append((OP["ACTI"], a, 0, 0))
-            env.act(a)
+            _act(st, a)
         else:
             raise RuntimeError("unknown opcode %r" % (opc,))
+
+
+# ---------------------------------------------------------------- typed procedures (C2 rungs B-D)
+
+CAL_ORIGIN = "calibration"
+PROC_ORIGIN = "procedure"
+
+
+def _act(st, v):
+    """Perform an action and, when the substrate keeps a calibration object, record what it did."""
+    env = st.env
+    before = env.interactions
+    env.act(v)
+    if SUBSTRATE["typed_procedures"] and env.interactions > before and env.last_primitive >= 0:
+        _calibrate(st, v, env.last_primitive)
+    if st.prec is not None and env.interactions > before and env.last_primitive >= 0:
+        st.prec.append(env.last_primitive)
+
+
+def _cal_block(st, create: bool):
+    for b in st.blocks.blocks.values():
+        if b.origin == CAL_ORIGIN:
+            return b
+    if not create:
+        return None
+    from . import world_c1 as w
+    bid = st.blocks.create([], origin=CAL_ORIGIN)
+    if bid < 0:
+        return None
+    b = st.blocks.blocks[bid]
+    b.local_state[0] = tuple([-1] * w.NUM_PRIMITIVES)
+    b.local_state[1] = tuple([-1] * w.NUM_PRIMITIVES)
+    return b
+
+
+def _calibrate(st, action: int, prim: int):
+    b = _cal_block(st, create=True)
+    if b is None:
+        return
+    fwd = list(b.local_state[0])
+    inv = list(b.local_state[1])
+    if 0 <= action < len(fwd) and fwd[action] != prim:
+        fwd[action] = prim
+        inv[prim] = action
+        b.local_state[0] = tuple(fwd)
+        b.local_state[1] = tuple(inv)
+        st.blocks.cost += 1
+
+
+def _proc_steps(st, handle):
+    h = to_int(handle)
+    if h is None:
+        return None
+    b = st.blocks.blocks.get(h)
+    if b is None or b.origin != PROC_ORIGIN:
+        return None
+    return [(ins[1], ins[2]) for ins in b.instructions if OPNAMES[ins[0]] == "PSTEP"]
+
+
+def _mental(st, steps, arg, x):
+    from . import world_c1 as w
+    if not isinstance(x, tuple) or len(x) != w.L:
+        return FAIL
+    for kind, off in steps:
+        x = w.apply_primitive(w.KINDS[kind % len(w.KINDS)], (arg + off) % w.L, x)
+    st.env.charge(len(steps))
+    return x
+
+
+def _typed_op(name, a, b, c, st, block_id):
+    env = st.env
+    regs = st.regs
+    from . import world_c1 as w
+    if not SUBSTRATE["typed_procedures"] or (name in TYPED_OPS_C and not SUBSTRATE["psim"]):
+        env.status = 1
+        if OPSPEC[name][0] == "R":
+            regs[a] = FAIL
+        return
+    if name == "PSTEP":
+        cal = _cal_block(st, create=False)
+        prim = (a % len(w.KINDS)) * w.L + (st.parg + b) % w.L
+        act_id = cal.local_state[1][prim] if cal is not None else -1
+        if act_id < 0:
+            env.status = 1
+            return
+        _act(st, act_id)
+    elif name == "PREC_BEGIN":
+        st.prec = []   # (re)start: a PREC_BEGIN while recording discards the recording so far
+    elif name == "PREC_END":
+        if st.prec is None or not st.prec:
+            st.prec = None
+            env.status = 1
+            regs[a] = FAIL
+            return
+        prims = st.prec
+        st.prec = None
+        base = prims[0] % w.L
+        ins = [(OP["PSTEP"], p // w.L, (p % w.L - base) % w.L, 0) for p in prims]
+        bid = st.blocks.create(ins, origin=PROC_ORIGIN)
+        regs[a] = _fail(st, bid)
+    elif name == "PINVOKE":
+        steps = _proc_steps(st, regs[a])
+        arg = to_int(regs[b])
+        if steps is None or arg is None:
+            env.status = 1
+            return
+        saved = st.parg
+        st.parg = arg % w.L
+        try:
+            invoke_block(to_int(regs[a]), st, from_block=block_id)
+        finally:
+            st.parg = saved
+    elif name == "PSIM":
+        steps = _proc_steps(st, regs[b])
+        arg = to_int(regs[c])
+        regs[a] = FAIL if (steps is None or arg is None) else _mental(st, steps, arg % w.L, regs[a])
+        if isinstance(regs[a], Fail):
+            env.status = 1
+    elif name == "PMATCH":
+        steps = _proc_steps(st, regs[b])
+        arg = to_int(regs[c])
+        if steps is None or arg is None:
+            regs[a] = 0        # "no match" for a handle that is not a procedure; status says why
+            env.status = 1
+        else:
+            regs[a] = 1 if _mental(st, steps, arg % w.L, env.current) == env.target else 0
 
 
 def _fail(st, result):

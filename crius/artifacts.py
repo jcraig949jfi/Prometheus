@@ -11,7 +11,7 @@ from __future__ import annotations
 import copy
 import random
 
-from .workspace import is_value, value_size
+from .workspace import OBJECT_METADATA_BYTES, is_value, value_size
 
 COSTS = {
     "new": 3,
@@ -43,7 +43,7 @@ class ExecutableBlock:
         self.origin = origin
 
     def size_bytes(self) -> int:
-        return len(self.instructions) * INSTR_BYTES + sum(value_size(v) for v in self.local_state)
+        return OBJECT_METADATA_BYTES + len(self.instructions) * INSTR_BYTES + sum(value_size(v) for v in self.local_state)
 
     def to_dict(self) -> dict:
         return {
