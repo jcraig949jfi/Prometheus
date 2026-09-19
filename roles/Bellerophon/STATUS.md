@@ -1,25 +1,31 @@
 # Bellerophon status
 
-Currency: 2026-09-18 (evening; role landed, design v0.1 drafted).
+Currency: 2026-09-18 (late; Worlds Kernel Phase 1 built and running, Phase 2 reference built).
 
-seat state: ACTIVE. Role given by the operator (directive 3, verbatim in
-  prompts/2026-09-18_charter/): explorer and designer of the toolbox
-  concept; others build.
-what it asserts: PRESENT (booted in comms as Bellerophon[m2-c95cc146]),
-  ACTIVE (design pass ran), PRODUCTIVE at the design layer only
-  (TOOLBOX_DESIGN_v0.1.md, TOOLBOX_RESEARCH_2026-09-18.md, 24-item
-  backlog); nothing built, nothing admitted; VALID not applicable (no
-  claim about the world has been made).
+seat state: ACTIVE. Charter in force: the WORLDS KERNEL directive
+  (prompts/2026-09-18_worlds_kernel/, sha256 fc819348...). D-BELL-1..4
+  adopted as the operator wrote them.
+what it asserts: PRESENT (comms Bellerophon[m2-c95cc146]), ACTIVE,
+  PRODUCTIVE at the kernel layer: prometheus/toolbox/ (18 kernel files,
+  2,699 lines incl. tests/examples), EXP-001 runs end to end (96 runs,
+  0 failed, 7/7 controls MET), 22 kernel tests pass + 1 skipped (Redis
+  unreachable on M2), base-role self-test 11 passed. VALID: the kernel
+  claims nothing about any world; its receipts are the evidence for
+  itself only.
 workspace: worktree bellerophon-base-role on M2 / SPECTREX5, branch
-  bellerophon/base-role-adopt-2026-09-18, base 8c86cb1e4, merged
-  d4b6487e8 explicitly; first push a181a594c.
-guard: linked worktree (git-dir != git-common-dir).
+  bellerophon/base-role-adopt-2026-09-18 (task branch kept for the day's
+  passes; a fresh task branch per slice from tomorrow).
 comms: M1 store; queue empty at last sync.
-monitors owned or fed: none (design work has no loop); no MONITORS.md row.
-lane: toolbox concept -- contracts, admission spec, experiment grammar,
-  slot catalogue; no runtime code.
-blockers (operator decisions, backlog XL rows): D-BELL-1 package
-  location/name; D-BELL-2 NPE on main; D-BELL-3 native build host;
-  D-BELL-4 release of the drafted Techne/Nyx prompts.
-next executable action: BELL-02, the ABI diff table (read-only, no
-  decision needed), then BELL-04 admission predicate spec.
+monitors owned or fed: none; no MONITORS.md row (nothing loops).
+lane: the kernel (contracts, IR, capabilities, devices, adapters,
+  references, admission, lowering, conformance tests).
+lowering status: local OK (executes); sfe TARGET_UNSUPPORTED for a general
+  IR with six named mismatches (M1-M6, design s6) and OK for a frontier-
+  shaped IR; npe UNAVAILABLE_INTERFACE by D-BELL-2 with a structurally
+  valid BusJob.
+blockers: none for the next slice. Held by decision: Techne/Nyx drafts
+  (D-BELL-4); Box2D (phase order); NPE bridge (D-BELL-2, needs primordial/
+  on main); Redis acceptance (needs M1).
+next executable action: slice 1 of design s14 -- substrate.kv.v1 over
+  the StateDevice + statemachine.v2 with workspace ops + EXP-002 (same
+  players x {flat, kv, stream} substrates).

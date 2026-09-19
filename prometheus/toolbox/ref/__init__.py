@@ -1,0 +1,41 @@
+"""Reference implementations and their registry rows. `install(registry)` registers every reference
+component with its capabilities, route and provenance; rows start PROVISIONAL and become ADMITTED
+only through admission.admit() on a host (the state is per process; the durable record is the
+admission receipt the caller writes).
+"""
+from __future__ import annotations
+
+from prometheus.toolbox.registry import ComponentRecord, Registry
+
+PROV = {"author": "Bellerophon", "design": "roles/Bellerophon/WORLDS_KERNEL_DESIGN_v0.2.md"}
+
+
+def install(reg: Registry) -> Registry:
+    from prometheus.toolbox.ref import worlds as W, substrates as S, observers as O, controls as Cn, players as P
+    reg.register(ComponentRecord("world.integer.v1", "world", W.IntegerWorld, W.IntegerWorld.capabilities, reference_of="world.integer",
+                                 route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/worlds.py"), license="repository"))
+    try:
+        W._wforge()
+        reg.register(ComponentRecord("world.wforge.encounter.v0", "world", W.WforgeEncounterWorld, W.WforgeEncounterWorld.capabilities,
+                                     route="wrap", provenance=dict(PROV, source="SerendipityFoundry/worldfoundry/wforge/world.py", owner="Ludus"), license="repository"))
+    except Exception as exc:                                    # noqa: BLE001  absent machinery is an absent row, recorded
+        reg.register(ComponentRecord("world.wforge.encounter.v0", "world", W.WforgeEncounterWorld, frozenset(), route="wrap",
+                                     provenance=dict(PROV, source="SerendipityFoundry/worldfoundry/wforge/world.py"), state="UNAVAILABLE",
+                                     admission={"failed": "import: %s" % str(exc)[:120]}))
+    reg.register(ComponentRecord("substrate.flat.v1", "substrate", S.FlatInProcessSubstrate, S.FlatInProcessSubstrate.capabilities,
+                                 reference_of="substrate.flat", route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("statemachine.v1", "representation", P.random_statemachine, frozenset({"core.player.v1"}), reference_of="statemachine",
+                                 route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
+    reg.register(ComponentRecord("constant.v1", "representation", P.constant_player, frozenset({"core.player.v1"}), route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
+    reg.register(ComponentRecord("proteus.tape.v0", "representation", P.random_proteus_player, frozenset({"core.player.v1"}), route="wrap",
+                                 provenance=dict(PROV, source="proteus/foundry/vm.py", owner="Proteus"), license="repository",
+                                 state="PROVISIONAL" if P.proteus_available() else "UNAVAILABLE",
+                                 admission={} if P.proteus_available() else {"failed": "proteus.foundry.vm not importable"}))
+    reg.register(ComponentRecord("observer.trace.v1", "observer", O.TraceObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("observer.descriptor.v1", "observer", O.DescriptorObserver, frozenset({"ext.events.v1"}), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("objective.yield_net.v1", "objective", O.YieldNetObjective, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
+    for kind, cls in Cn.ALL.items():
+        reg.register(ComponentRecord(kind, "control", cls, frozenset(), route="write", provenance=PROV, license="repository"))
+    return reg
