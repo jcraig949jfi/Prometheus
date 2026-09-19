@@ -380,3 +380,34 @@ def test_batch_envs_do_not_leak_into_each_other(params):
     assert other[0] == base[0] and other[1] != base[1]
     aband = run([1, 2, 3], [A(0), A(1), A(2)], abandon_at=(1, 1))      # tick 1: before a 5-charge player can have died
     assert aband[0] == base[0] and aband[2] == base[2] and aband[1] != base[1]
+
+
+# ------------------------------------------------------------------------------------------ crash mid-batch (C118)
+def test_a_crash_between_two_receipts_of_one_batch_resumes_to_a_clean_result(tmp_path, monkeypatch):
+    """A batch's receipts are written one by one after the batch ran; a crash after k of them leaves k valid rows
+    (the scan is clean, nothing partial) and resume redoes exactly the missing runs -- the final file equals a
+    clean run on every science field, with the resumed runs' receipts written on the SECOND execution."""
+    from prometheus.toolbox import receipt as RC
+    from prometheus.toolbox.backends import local as L
+    e = _exp(n_seeds=6); e.budget = dict(e.budget, batch=4); e.controls = []
+    job = L.lower(e, REG).job; assert len(job.runs) == 7
+    real = RC.ReceiptWriter.write; calls = {"n": 0}
+
+    def crashing(self, r):
+        calls["n"] += 1
+        if calls["n"] == 3:                                            # after 2 receipts of the first batch of 4
+            raise KeyboardInterrupt("simulated crash mid-batch")
+        return real(self, r)
+    monkeypatch.setattr(RC.ReceiptWriter, "write", crashing)
+    with pytest.raises(KeyboardInterrupt):
+        L.execute(job, tmp_path / "j.jsonl", REG)
+    monkeypatch.setattr(RC.ReceiptWriter, "write", real)
+    sc = RC.scan(tmp_path / "j.jsonl"); assert sc["valid"] == 2 and not sc["defects"], sc
+    rep = L.execute(job, tmp_path / "j.jsonl", REG, resume=True)
+    assert rep.valid and rep.resumed_runs == 2 and rep.n_completed == 7
+    rows = {r["seed"]: r for r in read_all(tmp_path / "j.jsonl") if r["arm"] != "SUMMARY"}
+    clean = L.execute(L.lower(e, REG).job, tmp_path / "clean.jsonl", REG)
+    crow = {r["seed"]: r for r in read_all(tmp_path / "clean.jsonl") if r["arm"] != "SUMMARY"}
+    assert len(rows) == 7 and all(rows[s]["trace_hashes"] == crow[s]["trace_hashes"] and rows[s]["science"] == crow[s]["science"] for s in crow)
+    # the two kept receipts still say batch_size 4 (their batch); the resume regroups the 5 remaining runs as 4 + 1
+    assert sorted(r["execution"]["batch_size"] for r in rows.values()) == [1, 4, 4, 4, 4, 4, 4]

@@ -825,3 +825,9 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   Diversity up, peak down in this window. n=1 seed, 90 generations: DATA, not a verdict on either selector.
 - comms: Bellerophon queue synced 07:33Z -- 0 new, 0 queued, no tasks. Other seats active on origin/main
   (Harmonia gandalf, archaeon/frontier); merged twice, suite green on the merged tree each time.
+
+## C118 (07:36Z) crash between two receipts of one batch
+- a batch's receipts are written one by one after it ran; a KeyboardInterrupt after 2 of 4 leaves 2 valid rows
+  (scan clean, nothing partial); resume=True keeps them (resumed_runs 2), regroups the 5 remaining runs (4 + 1;
+  the kept receipts still say batch_size 4) and the final file equals a clean run on every science field. No
+  kernel change; the expectation I first wrote for the regrouping was wrong, the behaviour was right.
