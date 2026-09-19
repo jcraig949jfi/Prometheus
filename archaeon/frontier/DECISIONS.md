@@ -143,3 +143,21 @@ graph populations fire two orders of magnitude less than v0 at v0-calibrated thr
 (undetermined: churn vs spread); the bin-5 composed world of C4-exapt.T1 is dead for this
 population (reward 0 for 40,000 evaluations). | digests/DIGEST_2026-09-19T0159Z.md; registry
 OBSERVATION/INTERPRETATION events. | -- | DETERMINISTIC (policy), PROVISIONAL (readings).
+
+DF-013 | 2026-09-19 02:19 | SCIENTIFIC AUTHORITY RETURNED TO ARCHAEON (operator, verbatim 03_OPERATOR_SCIENTIFIC_
+AUTHORITY.md). Kept: specs, capabilities, integrity halts, receipts, resume, allocation floors,
+the scheduler as executor. Removed from the scheduler: every scientific choice -- its branching
+is now the two evidence controls only, and only after an admitted ruler fired. Added, authored
+by Archaeon as code the scheduler runs: archaeon/frontier/design/ modules (emit() queues
+validated specs), nominate.py (spec / design / pursue), pursue.json (priority multipliers by
+lineage/family), forensic nominations (top-k FULL freezes at named generations), and two
+measurement/world mutations recorded in the spec hash: world_options.eval_order
+(population | seeded_shuffle) and world_options.persist_shared (shared world state carried
+across generations in the checkpoint). FIRST DESIGNS: P-boom (the boom-bust maximum on the
+coupled world the receipts show: A baseline x3 seeds with nominated freezes at the spike
+generations, B seeded-shuffle x3, C coupling off, D persist_shared, E N=8/128 -- evaluation
+order vs population effect, nothing assumed), W-artifacts (12 procedural coupled worlds x
+persist on/off: niche construction across generations), CALIBRATION_EPOCH-002 (two population-
+level rulers, population_shift and max_spike, unvalidated, computed into receipts; no
+threshold moved). Pursuit multipliers: P-boom x4, C5-flat x2. | receipts scan 02:0xZ; tests. |
+-- | OPERATOR AUTHORITY on the model; SCIENTIFIC DISCRETION on the designs.
