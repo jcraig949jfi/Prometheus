@@ -165,6 +165,7 @@ def run() -> dict:
     out = {}
     with db.harvest("comb", VERSION, source_ref="atlas.* (derived)") as h:
         cur = h.conn.cursor()
+        cur.execute("SELECT pg_advisory_xact_lock(%s)", (db.LOCK_COMB,))
         for rid, ver, kind, sql in RULES:
             cur.execute(sql)
             rows = cur.fetchall()

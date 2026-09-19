@@ -198,3 +198,47 @@ def test_cheat_prune_spares_other_hosts(conn):
         left = {r[0] for r in cur.fetchall()}
         cur.execute("ROLLBACK TO SAVEPOINT p")
     assert left == {tag + "m2"}    # M1's stale row pruned, M2's row untouched
+
+
+# ------------------------------------------------------------------ two seats, one index
+
+def test_harvester_hosts_keep_git_collectors_on_one_host():
+    hh = db.registry()["harvester_hosts"]
+    for name in ("commits", "archaeon_campaigns", "frontier", "npe", "vivarium", "pew"):
+        assert hh[name] == ["M1"], name
+    assert set(hh["local_files"]) >= {"M1", "M2"}
+
+
+def test_cli_refuses_a_git_collector_on_m2(monkeypatch, capsys):
+    from atlas import __main__ as cli
+    monkeypatch.setattr(db, "this_host", lambda: "M2")
+    import atlas.harvest.commits as commits
+    monkeypatch.setattr(commits, "run", lambda a: pytest.fail("commits ran on M2"))
+    cli.main(["harvest", "commits"])
+    assert "SKIPPED on M2" in capsys.readouterr().out
+
+
+def test_every_pass_names_its_seat(conn):
+    assert one(conn, "SELECT count(*) FROM atlas.harvest_run WHERE seat IS NULL") == 0
+
+
+def test_cheat_write_lock_blocks_a_second_writer(conn):
+    """Cheat control for rule 8: while one session holds the write lock, a
+    second session (another seat) must be refused it."""
+    other = db.connect()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SAVEPOINT lk")
+            cur.execute("SELECT pg_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+            with other.cursor() as c2:
+                c2.execute("SELECT pg_try_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+                got = c2.fetchone()[0]
+            other.rollback()
+        conn.rollback()   # releases the xact lock
+        with other.cursor() as c2:
+            c2.execute("SELECT pg_try_advisory_xact_lock(%s)", (db.LOCK_WRITE,))
+            got_after = c2.fetchone()[0]
+        other.rollback()
+    finally:
+        other.close()
+    assert got is False and got_after is True

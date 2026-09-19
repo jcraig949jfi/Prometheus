@@ -86,7 +86,7 @@ so), INFERRED (a named rule; confidence stated) or ATLAS_DERIVED.
   indexed yet is not a parent that does not exist.
 - atlas.descendants(type,key) / atlas.ancestors(type,key) walk the graph.
 
-## 5. Machine merge strategy (for the second Atlas instance on M2)
+## 5. Machine merge strategy (one M1 index, two seats: Atlas on M1, Atlas-M2 on M2)
 
 - Keys are machine-independent, so M2's harvest of the same experiment
   lands on the SAME row and enriches it.
@@ -103,7 +103,10 @@ so), INFERRED (a named rule; confidence stated) or ATLAS_DERIVED.
 - Recomb pruning removes only derived rows (edges/facts/conclusions/links)
   that the SAME harvester wrote on the SAME host and did not re-emit.
   Another host's rows are never pruned (a cheat-control test proves it).
-- An M2 instance adds its own "local_roots" rows (host "M2") to
+- Seats and hosts are coordinated in the database itself (SIBLINGS.md
+  rules 6-8): harvest_run.seat, per-harvester host list, advisory locks on
+  migrate / flush / comb.
+- The M2 seat adds its own "local_roots" rows (host "M2") to
   atlas/registry.json and runs `python -m atlas harvest local_files`
   (plus any M2-only git refs through the git adapters with --ref).
 

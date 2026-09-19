@@ -16,6 +16,12 @@ in comms #499; the correction is in calibration/LEDGER.md.
                                    of the index, on the operator's
                                    instructions to Atlas-M2
 
+ONE INDEX (operator, 2026-09-19): "You should absolutely be building one
+index / set of database tables in the M1 postgres database. Coordination
+would be needed there." Separate seats keep git and messaging apart; the
+atlas.* tables on M1 are shared, and rules 6-8 below enforce the
+coordination in the database itself.
+
 Neither seat directs the other. Atlas-M2 keeps its own journal, STATUS
 and commit prefix under roles/Atlas-M2/.
 
@@ -37,3 +43,14 @@ and commit prefix under roles/Atlas-M2/.
    in comms first. migrate() keys on the file stem.
 5. comb and report read the whole index and are idempotent; either seat
    may run them. Signals a human has moved off OPEN are never touched.
+6. HARVESTER HOSTS. atlas/registry.json "harvester_hosts" lists which
+   hosts may run each harvester; `python -m atlas harvest` skips the rest
+   unless --force. Git- and M1-store-derived harvesters run from M1
+   (Atlas); local_files runs on each host for its own roots; a harvester
+   a seat adds is listed for that seat's host.
+7. SEAT ON EVERY PASS. harvest_run.seat (migration 006) comes from env
+   ATLAS_SEAT (Atlas-M2 sets ATLAS_SEAT=Atlas-M2). atlas.v_writers shows
+   who wrote what, from where, with which extractor.
+8. ADVISORY LOCKS. migrate (7146001), every flush (7146002) and comb
+   (7146003) take a Postgres advisory lock, so the seats never interleave
+   a migration, a write batch or a comb pass.
