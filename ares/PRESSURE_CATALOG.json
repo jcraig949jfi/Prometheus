@@ -1,0 +1,109 @@
+{
+  "currency": "2026-09-19",
+  "seat": "Ares",
+  "notes": "Machine-readable form of ARES_PRESSURE_NOTES.md. status: WORLD (a toy world exists in ares/worlds.py this cycle), PROTOCOL (a sweep-level procedure, not a world), CANDIDATE (no toy yet). Every source in the notes is FROM MEMORY this cycle.",
+  "pressures": [
+    {
+      "id": "P01", "world": "W1", "name": "catastrophic_asymmetry", "status": "WORLD",
+      "definition": "Loss distribution with a rare, weakly cued left tail whose single cost exceeds the sum of ordinary lifetime rewards.",
+      "toy": "Two noisy channels; acting pays +1/-1 on channel A's sign; when a latent danger (leaking into channel B) is on, acting wipes 90% of accumulated reward and costs 5 more. No detector given.",
+      "controls": {"absent": "tail replaced by an ordinary -3 penalty at the same moments", "shuffled": "catastrophes at the same rate but independent of the cued danger"},
+      "expected_effect": "Present champions condition the action rate on channel B and not only on channel A; absent champions ignore B; shuffled champions ignore B.",
+      "falsification": "Present, absent and shuffled champions are structurally indistinguishable and the behavioural gap is explained by the overall action rate alone."
+    },
+    {
+      "id": "P02", "world": "W2", "name": "rare_override", "status": "WORLD",
+      "definition": "A conservative action dominates except in rare cued windows where a normally losing action pays two orders of magnitude more.",
+      "toy": "Safe +1; risky -3 except in ~3% windows (noisy cue) where risky pays +60. Always-risky is strictly worse than always-safe.",
+      "controls": {"absent": "no windows; risky always -3; cue still displayed", "shuffled": "windows occur but the cue is independent of them"},
+      "expected_effect": "Present champions take the risky action mostly inside cued windows (conditional risk); absent are fixed-safe; shuffled are fixed-safe.",
+      "falsification": "Present champions are fixed-safe or fixed-risky by P(risky | cue), or shuffled champions show the same conditional structure."
+    },
+    {
+      "id": "P03", "world": "W3", "name": "nonstationarity_within_lifetime", "status": "WORLD",
+      "definition": "The observation-to-correct-action map flips at unpredictable times inside one lifetime.",
+      "toy": "Act on the sign of a noisy channel; the correct mapping reverses once at a random step in [15,45]; last reward visible as a channel.",
+      "controls": {"absent": "no flip", "shuffled": "mapping redrawn every step (present but unexploitable)"},
+      "expected_effect": "Present champions recover above chance after the flip; recovery length and persistent-state usage differ from absent.",
+      "falsification": "Recovery after the flip is a one-step reflex on the last reward in every champion and persistent-state usage equals the absent control."
+    },
+    {
+      "id": "P04", "world": "W4", "name": "hidden_regime", "status": "WORLD",
+      "definition": "Two regimes with identical per-step observations demand opposite actions; the only evidence is a brief early cue; no reward channel.",
+      "toy": "Regime bit per episode shown on a channel for the first 3 steps then replaced by noise; +1/-1 for the regime's action; 0 for abstain.",
+      "controls": {"absent": "cue shown every step", "shuffled": "early cue independent of the regime"},
+      "expected_effect": "Present champions are above chance late in life; the no-persistent-state ablation destroys that.",
+      "falsification": "Late-life accuracy at chance in every present champion, or the no-persistent-state ablation performs identically."
+    },
+    {
+      "id": "P05", "world": "W5", "name": "delayed_revelation", "status": "WORLD",
+      "definition": "A token early in life determines which action pays at a much later step; the interval carries distractor input on the same channel; no intermediate reward.",
+      "toy": "Token +/-1 at step 2 (timing pulse on another channel); choice at step T-2 pays +50/-50; distractor noise in between.",
+      "controls": {"absent": "token shown at the choice step (delay 0)", "shuffled": "token independent of the paying action"},
+      "expected_effect": "Some present champions exceed chance at the choice step; the mechanism is robust to the distractor.",
+      "falsification": "No present champion exceeds chance at the choice step."
+    },
+    {
+      "id": "P06", "world": "W6", "name": "resource_scarcity", "status": "WORLD",
+      "definition": "The same task under a tight budget of hidden nodes and ticks versus an abundant budget.",
+      "toy": "W3 (changing rules) with 2 hidden nodes and 1 tick per step, versus 12 hidden nodes and 4 ticks.",
+      "controls": {"absent": "abundant budget", "shuffled": "not applicable (scarcity has no cue to decouple); recorded as N/A"},
+      "expected_effect": "Scarce champions carry motifs absent from abundant champions at matched fitness, not just fewer of the same.",
+      "falsification": "Scarce champions are subgraphs of abundant champions with no motif unique to scarcity."
+    },
+    {
+      "id": "P07", "world": "W7", "name": "incompatible_regimes", "status": "WORLD",
+      "definition": "Alternating blocks in which opposite behavioural biases are optimal; no regime bit; evidence only through outcomes.",
+      "toy": "Three options; regime A: paying option rotates every 3 steps (+2 hit, 0 miss); regime B: option 0 pays +1, others -5; blocks of 15; obs = last reward, last action.",
+      "controls": {"absent": "regime B replaced by a copy of A (one regime)", "shuffled": "regime redrawn every step"},
+      "expected_effect": "Present champions show separable ablation profiles (some nodes carry A-competence, others B-competence). MoE-ness is not scored.",
+      "falsification": "No champion shows separable ablation profiles; competence degrades uniformly under every node removal."
+    },
+    {
+      "id": "P08", "world": "W8", "name": "transplantation", "status": "PROTOCOL",
+      "definition": "Subgraphs are periodically cut from one lineage and spliced into another population or world; machinery that only works in its original context is destroyed by the move.",
+      "toy": "Every k generations a random subgraph of the champion of world X is spliced into random members of world Y's population; retention over the next generations is measured.",
+      "controls": {"absent": "no transplant", "shuffled": "random subgraph of equal size and edge count generated fresh, spliced the same way"},
+      "expected_effect": "Evolved subgraphs are retained above the random-subgraph rate on at least one world pair.",
+      "falsification": "Retention of evolved subgraphs equals retention of random subgraphs of equal size."
+    },
+    {
+      "id": "P09", "world": "W9", "name": "ecological_coupling", "status": "WORLD",
+      "definition": "Another evolving population sets part of the payoff surface, which moves as fast as the other side adapts.",
+      "toy": "Matching pennies with two evolving populations; each sees the opponent's last two choices and its own; A wins on match, B on mismatch.",
+      "controls": {"absent": "opponent is an i.i.d. 50/50 policy (static, unexploitable)", "shuffled": "opponent is a fixed periodic pattern (static, exploitable)"},
+      "expected_effect": "Either a Red Queen cycle (detector fires; null for machinery) or coupled champions carry structure absent from the static-opponent champions.",
+      "falsification": "Cycle detector fires and coupled champions carry no structure absent from static-opponent champions."
+    },
+    {
+      "id": "P10", "world": "W10", "name": "developmental_construction", "status": "WORLD",
+      "definition": "The hereditary object is a small set of graph rewrite rules applied for a fixed number of steps; selection acts on the grown organism.",
+      "toy": "Rules (match op -> add child with op, weights, input/output attachment, optional back-edge); grown for 4 steps from one seed node; evaluated on W4 and W3 against direct encoding at equal evaluations.",
+      "controls": {"absent": "direct encoding", "shuffled": "not applicable; recorded as N/A"},
+      "expected_effect": "Developmental encoding reaches the preregistered fitness threshold in fewer generations on at least one world without being tuned to it.",
+      "falsification": "Developmental encoding is no faster on either world, or faster only on the world its rule set was tuned by."
+    },
+    {
+      "id": "P11", "world": "W11", "name": "irreversible_commitment", "status": "WORLD",
+      "definition": "One action locks the organism into an option for the rest of life; a cheap probe reveals noisy evidence; committing early yields more paying steps.",
+      "toy": "Noisy evidence channel; probe -0.1; commit A/B; after commit +2/-2 per step by correctness.",
+      "controls": {"absent": "commitment reversible (choose each step at no cost)", "shuffled": "evidence independent of the truth"},
+      "expected_effect": "Present champions probe for more than one step before committing and their commit accuracy exceeds a one-sample reflex.",
+      "falsification": "Present champions commit on step 1 with the accuracy of the reversible-control champions; hidden-node trajectories show no accumulation."
+    },
+    {
+      "id": "P12", "world": "W12", "name": "dying_lineage", "status": "WORLD",
+      "definition": "An energy store declines each step; the safe action cannot keep up; the risky action has negative expectation and positive variance; fitness is lifetime length.",
+      "toy": "Energy observed; safe +0.6, decay -1.0; risky 30% +6 / 70% -2; death at 0; +1 per step alive.",
+      "controls": {"absent": "safe +1.2 (sustains; risk never rational)", "shuffled": "energy channel replaced by noise (state unobservable)"},
+      "expected_effect": "P(risky | energy) is decreasing in energy for present champions and flat for absent and shuffled.",
+      "falsification": "P(risky | energy) is flat in present champions."
+    },
+    {"id": "P13", "world": null, "name": "sparse_revelation", "status": "CANDIDATE", "definition": "The structure that matters is visible only in rare episodes.", "toy": "deferred; overlaps P05 and P02", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated; must be written before a world is built"},
+    {"id": "P14", "world": null, "name": "inheritance_of_consequences", "status": "CANDIDATE", "definition": "A descendant starts life with its parent's end-of-life state.", "toy": "deferred; needs a decision on inherited plastic state", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated"},
+    {"id": "P15", "world": null, "name": "variable_volatility", "status": "CANDIDATE", "definition": "The rate of environmental change itself changes.", "toy": "a block-length parameter of W3/W7 this cycle", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated"},
+    {"id": "P16", "world": null, "name": "cost_of_sensing", "status": "CANDIDATE", "definition": "Observations cost something; the organism can choose not to look.", "toy": "deferred", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated"},
+    {"id": "P17", "world": null, "name": "fakeable_signals", "status": "CANDIDATE", "definition": "Signals between lineages can be faked; receivers are pressed to discount cheap signals.", "toy": "deferred; two-population toy", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated"},
+    {"id": "P18", "world": null, "name": "seasonal_budget_reset", "status": "CANDIDATE", "definition": "Accumulated reward is periodically zeroed unless converted; pressure toward timing and anticipation.", "toy": "deferred", "controls": {}, "expected_effect": "unknown", "falsification": "not yet stated"}
+  ]
+}
