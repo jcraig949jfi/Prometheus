@@ -508,10 +508,20 @@ def _finish(ctx: dict, registry, receipt_dir, world_manifest: dict, world_accoun
     return receipt
 
 
+def episode_seed(run_seed: int, ep: int, budget: dict) -> int:
+    """atlas-bee S4: budget.episode_seeds = {"kind": "recur", "distinct": k} makes episode seeds CYCLE over k values (the
+    same world draws recur, so retained state can pay); the default is a distinct seed per episode. Science: inside the
+    digest."""
+    pol = budget.get("episode_seeds")
+    if isinstance(pol, dict) and pol.get("kind") == "recur":
+        ep = ep % max(1, int(pol.get("distinct", 1)))
+    return run_seed * 1000 + ep
+
+
 def run_one(spec: RunSpec, registry, receipt_dir=None, execution: Optional[dict] = None) -> dict:
     ctx = _prepare(spec, registry); exp = spec.experiment; world = ctx["world"]
     for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, ctx["instances"], ctx["observers"], spec.seed * 1000 + ep, exp.budget["horizon"],
+        r = run_episode(world, ctx["instances"], ctx["observers"], episode_seed(spec.seed, ep, exp.budget), exp.budget["horizon"],
                         substrate=ctx["all_subs"] if len(ctx["all_subs"]) > 1 else ctx["sub"], episode=ep, keep_world=exp.budget.get("world_state") == "lifetime")
         ctx["hashes"].append(r["trace_hash"]); ctx["ticks_total"] += r["ticks"]; ctx["events_total"] += r["events"]; ctx["summaries"].append(r["summary"])
         for k, ob in ctx["series_obs"]:
@@ -570,7 +580,7 @@ def run_batch(specs: List[RunSpec], registry, batch_kind: str, receipt_dir=None)
     horizon = exp.budget["horizon"]; keep = exp.budget.get("world_state") == "lifetime"
     ticks_by_env = [0] * n; events_by_env = [0] * n
     for ep in range(exp.budget["episodes"]):
-        seeds = [sp.seed * 1000 + ep for sp in specs]
+        seeds = [episode_seed(sp.seed, ep, exp.budget) for sp in specs]
         world.reset_batch(seeds, keep=keep and ep > 0)
         for i, c in enumerate(ctxs):
             if not live[i]:
