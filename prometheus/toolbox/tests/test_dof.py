@@ -126,3 +126,30 @@ def test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind(tm
     assert ev.get("TASK_CHANGE") == 2 * 3                     # 3 parameter changes per episode x 2 episodes
     assert ev.get("STATE_EXPIRE", 0) == r["accounting"]["ws_expired"] > 0
     assert ev.get("STATE_DISCARD", 0) >= 1                    # the episode-scope end at the second episode
+
+
+# C40 (directive s30: persistent objects / long-lived world state; c6's "coupling"): the World contract resets per
+# episode, so a world could never carry state across episodes. A world that declares ext.world.lifetime_state.v1
+# accepts reset(seed, keep=True); the experiment asks for it with budget.world_state="lifetime". Episode 2 then
+# begins where episode 1 ended (registers, pending actions), while charge and survival still reset.
+def test_world_lifetime_state_carries_registers_across_episodes(tmp_path):
+    e = _exp(budget={"episodes": 3, "horizon": 8, "world_state": "lifetime"}, observers=[ref("observer.trace.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0, action_delay=3))
+    assert "ext.world.lifetime_state.v1" in e.derived_requirements()
+    low = lower(e, REG); assert low.ok, low.reasons
+    execute(low.job, tmp_path / "lt.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "lt.jsonl") if x["arm"] == "primary"][0]
+    e0 = _exp(budget={"episodes": 3, "horizon": 8}, observers=[ref("observer.trace.v1")], world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0, action_delay=3))
+    execute(lower(e0, REG).job, tmp_path / "ep.jsonl", REG)
+    r0 = [x for x in read_all(tmp_path / "ep.jsonl") if x["arm"] == "primary"][0]
+    assert r["trace_hashes"][0] == r0["trace_hashes"][0], "episode 0 must be identical with or without persistence"
+    assert r["trace_hashes"][1] != r0["trace_hashes"][1], "episode 1 must differ: the world remembered"
+    assert r["components"]["world"]["manifest"]["world_state"] == "lifetime"
+
+
+def test_world_lifetime_state_on_a_world_without_it_is_blocked():
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), budget={"episodes": 2, "horizon": 8, "world_state": "lifetime"})
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    low = lower(e, REG)
+    assert low.status == "BLOCKED_MISSING_CAPABILITY" and "ext.world.lifetime_state.v1" in low.negotiation["missing"]

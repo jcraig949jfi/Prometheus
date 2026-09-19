@@ -50,7 +50,7 @@ class IntegerWorld:
     kind = "world.integer.v1"
     capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.snapshot.v1", "ext.legal_actions.v1",
                               "ext.multiplayer.v1", "ext.intervention.world_params.v1", "ext.cost.v1",
-                              "ext.replay.bit.v1", "ext.reference.v1", "ext.world.mutable_params.v1"})
+                              "ext.replay.bit.v1", "ext.reference.v1", "ext.world.mutable_params.v1", "ext.world.lifetime_state.v1"})
     replay_class = "BIT"
     MUTABLE = ("regime_period", "stoch_rate", "act_cost", "step_cost", "yield_amt", "action_delay")   # changeable at a tick boundary
 
@@ -90,12 +90,18 @@ class IntegerWorld:
                 "yield": [self.yield_reg, self.yield_lo, self.yield_hi], "obs_regs": self.obs_regs}
 
     # ------------------------------------------------------------ core.world.v1
-    def reset(self, seed: int) -> None:
+    def reset(self, seed: int, keep: bool = False) -> None:
+        """keep=True (ext.world.lifetime_state.v1): registers, pending actions and the stochastic stream carry over
+        from the previous episode; charge, survival and the tick restart. The trace restarts per episode."""
         p = self.p
         s = stream("init", p["world_seed"], seed)
-        self._state = {"tick": 0, "regs": [s.below(M) for _ in range(p["n_regs"])],
-                       "charge": [p["start_charge"]] * self.n_players, "alive": [True] * self.n_players,
-                       "pending": [], "seed": seed, "stoch": stream("stoch", p["world_seed"], seed).s}
+        if keep and self._state is not None:
+            prev = self._state
+            regs = list(prev["regs"]); pending = [(q[0] - prev["tick"], q[1], q[2], q[3]) for q in prev["pending"]]; stoch = prev["stoch"]
+        else:
+            regs = [s.below(M) for _ in range(p["n_regs"])]; pending = []; stoch = stream("stoch", p["world_seed"], seed).s
+        self._state = {"tick": 0, "regs": regs, "charge": [p["start_charge"]] * self.n_players, "alive": [True] * self.n_players,
+                       "pending": pending, "seed": seed, "stoch": stoch}
         self._trace = hashlib.sha256()
         self._events = []                     # _steps is cumulative over the world's lifetime (accounting), never reset here
 

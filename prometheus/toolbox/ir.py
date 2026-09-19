@@ -112,6 +112,8 @@ class Experiment:
             bad.append("budget needs int episodes >= 1 and horizon >= 0")
         if "series_max_records" in b and (not isinstance(b["series_max_records"], int) or b["series_max_records"] < 0):
             bad.append("budget.series_max_records must be a non-negative int when present")
+        if b.get("world_state", "episode") not in ("episode", "lifetime"):
+            bad.append("budget.world_state must be 'episode' or 'lifetime'")
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)
@@ -151,6 +153,8 @@ class Experiment:
             req |= set(p.get("requires", ()))
         if len(self.players) > 1:
             req.add("ext.multiplayer.v1")
+        if self.budget.get("world_state") == "lifetime":
+            req.add("ext.world.lifetime_state.v1")
         return frozenset(req)
 
     # ---------------------------------------------------------------- sweep expansion

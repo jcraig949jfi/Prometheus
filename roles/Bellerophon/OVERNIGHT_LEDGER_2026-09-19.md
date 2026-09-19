@@ -280,3 +280,13 @@ C39 | T+2:03 | WRAP a second existing runtime of a different shape: Archaeon's c
   evidence across hosts). ADMITTED (88k steps/s probe; no cheat mechanism -> noted). Runs with a Proteus tape
   under replay + negative controls; 2 seeds -> 2 traces. SFE lowering of a c6-world kernel experiment now
   fails on M1/M3/M4/M5 only -- M2 (world kind) is resolvable. Suite 161 passed 6 skipped.
+C40 | T+2:10 | world LIFETIME state (directive s30, c6 "coupling"): budget.world_state="lifetime" ->
+  ext.world.lifetime_state.v1 required; the integer world's reset(seed, keep=True) carries registers, pending
+  actions and the stochastic stream across episodes (charge/survival/tick restart); wrappers pass keep
+  through; the receipt's world manifest records world_state. RED (2 tests) -> episode 0 identical with or
+  without persistence, episode 1 differs; a world without the capability is BLOCKED locally. Suite 163.
+INCIDENT (self-inflicted, T+2:08): I ran `git stash; git stash pop` as a careless "is the tree clean" check.
+  Stashes are REPO-GLOBAL across worktrees: the pop applied ANOTHER SEAT's May stash (Icarus/Harmonia files)
+  into this worktree with conflicts. Recovered with `git checkout HEAD -- <3 files>` + `git reset`; the
+  stash entry is intact (pop keeps it on conflict); no commit carried the foreign changes (verified by
+  `git status` before committing). Rule for this seat: never stash in a linked worktree. Calibration row added.

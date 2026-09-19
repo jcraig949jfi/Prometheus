@@ -132,8 +132,8 @@ class ObservationWrapper:
     def manifest(self) -> dict:
         return dict(self.w.manifest(), wrappers={"observation_delay": self.delay, "observation_permute": list(self.permute_seeds)})
 
-    def reset(self, seed: int) -> None:
-        self.w.reset(seed); self._buf = {}; self._perms = None
+    def reset(self, seed: int, keep: bool = False) -> None:
+        (self.w.reset(seed, keep=True) if keep else self.w.reset(seed)); self._buf = {}; self._perms = None
 
     def _perm(self, seed: int, n: int) -> List[int]:
         s = stream("permute", seed); perm = list(range(n))
@@ -171,8 +171,8 @@ class ScheduleWrapper:
     def manifest(self) -> dict:
         return dict(self.w.manifest(), schedule=self.schedule)
 
-    def reset(self, seed: int) -> None:
-        self.w.reset(seed); self._i = 0; self._t = 0
+    def reset(self, seed: int, keep: bool = False) -> None:
+        (self.w.reset(seed, keep=True) if keep else self.w.reset(seed)); self._i = 0; self._t = 0
         self._apply()
 
     def _apply(self) -> None:
@@ -245,8 +245,11 @@ def _loop(world, instances, observers, subs, horizon, ticks, n_events, checkpoin
 
 
 def run_episode(world, instances: Dict[int, Any], observers: List[Any], seed: int, horizon: int, substrate=None, episode: int = 0,
-                checkpoint_at: Optional[int] = None, record_actions: bool = False) -> dict:
-    world.reset(seed)
+                checkpoint_at: Optional[int] = None, record_actions: bool = False, keep_world: bool = False) -> dict:
+    if keep_world and episode > 0:
+        world.reset(seed, keep=True)                              # ext.world.lifetime_state.v1 (C40)
+    else:
+        world.reset(seed)
     subs = substrate if isinstance(substrate, list) else ([substrate] if substrate is not None else [])
     for so in subs:
         if hasattr(so, "episode_begin"):
@@ -321,7 +324,8 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     series_obs = [ob for ob in observers if getattr(ob, "series", False)]
     collected = {ob.kind: [] for ob in series_obs}
     for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=all_subs if len(all_subs) > 1 else sub, episode=ep)
+        r = run_episode(world, instances, observers, spec.seed * 1000 + ep, exp.budget["horizon"], substrate=all_subs if len(all_subs) > 1 else sub, episode=ep,
+                        keep_world=exp.budget.get("world_state") == "lifetime")
         hashes.append(r["trace_hash"]); ticks_total += r["ticks"]; events_total += r["events"]; summaries.append(r["summary"])
         for ob in series_obs:
             collected[ob.kind].append(ob.series_episode())
@@ -342,7 +346,8 @@ def run_one(spec: RunSpec, registry, receipt_dir=None) -> dict:
     receipt = {
         "experiment_id": spec.job_id or exp.experiment_id(),
         "experiment_digest": exp.digest(), "arm": spec.arm, "sweep_point": spec.sweep_point, "seed": spec.seed, "split": spec.split, "status": "COMPLETED",
-        "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()), "manifest": world.manifest()},
+        "components": {"world": {"kind": exp.world["kind"], "manifest_hash": component_manifest_hash(world.manifest()),
+                                 "manifest": dict(world.manifest(), world_state=exp.budget.get("world_state", "episode"))},
                        "substrate": {"kind": sub.kind, "manifest_hash": component_manifest_hash(sub.manifest())},
                        "player_substrates": [subs_by_pid[pid].kind for pid in range(len(specs))],
                        "players": [{"representation": p.representation, "manifest_hash": component_manifest_hash(p.manifest()), "meta": p.meta} for p in specs],
