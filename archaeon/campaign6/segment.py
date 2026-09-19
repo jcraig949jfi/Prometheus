@@ -315,10 +315,12 @@ def _tier(ev_rec: dict, spec: dict, s: D.Subject, g: int, persist_count: Dict[st
     """Deep Frontier s9 tiers. Persistence is counted per lineage (parent chain) across generations; the audit draw is seeded."""
     fired = set(ev_rec["fired"]); admitted = set(spec.get("admitted", []))
     core = fired - {"detector_disagreement", "classifier_failure"}
+    adm = core & admitted
     key = s.parent.organism_id if s.parent else s.organism_id
-    persist_count[key] = persist_count.get(key, 0) + 1
+    if adm:
+        persist_count[key] = persist_count.get(key, 0) + 1          # persistence counts ADMITTED firings along a lineage
     draw = SplitMix64(seed_from("c6.audit_draw", spec["run_id"], g, s.organism_id)).randbelow(50) == 0
-    if (core & admitted) or len(core) >= 2 or persist_count[key] >= 3 or draw:
+    if adm or len(adm) >= 2 or persist_count.get(key, 0) >= 3 or draw:
         return "FULL"
     if core or fired:
         return "PARTIAL"

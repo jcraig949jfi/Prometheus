@@ -25,19 +25,25 @@ HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"
 
 
-def load_chunks(lid: str, tid: str):
-    d = RUNS / lid / tid
-    if not d.exists():
-        return []
+def load_chunks(lid: str, tid: str, run_ref: dict | None = None):
+    dirs = []
+    if run_ref and run_ref.get("receipt"):
+        dirs.append((HERE / run_ref["receipt"]).parent)
+    dirs.append(RUNS / lid / tid)
     out = []
-    for p in sorted(d.glob("chunk_*.json.gz")):
-        with gzip.open(p, "rt", encoding="utf-8") as f:
-            out.append((p, json.load(f)))
+    for d in dirs:
+        if not d.exists():
+            continue
+        for p in sorted(d.glob("chunk_*.json.gz")):
+            with gzip.open(p, "rt", encoding="utf-8") as f:
+                out.append((p, json.load(f)))
+        if out:
+            break
     return out
 
 
-def summarize_run(lid: str, tid: str) -> dict:
-    chunks = load_chunks(lid, tid)
+def summarize_run(lid: str, tid: str, run_ref: dict | None = None) -> dict:
+    chunks = load_chunks(lid, tid, run_ref)
     if not chunks:
         return {}
     fired = Counter(); unable = Counter(); scopes = Counter(); tiers = Counter(); evals = 0; gens = 0
@@ -76,7 +82,7 @@ def main(argv=None) -> int:
     for rec in reg.all():
         for t in rec["transformations"]:
             if t.get("status") == "RUN":
-                s = summarize_run(rec["lineage_id"], t["id"])
+                s = summarize_run(rec["lineage_id"], t["id"], t.get("run_ref"))
                 if s:
                     s.update({"lineage": rec["lineage_id"], "title": rec["title"], "transformation": t["id"], "mode": rec["mode"], "trigger": t.get("trigger")})
                     runs.append(s)

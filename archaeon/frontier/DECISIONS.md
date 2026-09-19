@@ -110,3 +110,16 @@ SAME, 5 descendants. Migration attached 82 specs to the existing transformations
 breadth FAMILY (40 world seeds x {v0, graph} x N {16, 64} = 160 specs). The LLM-scheduled
 loop (loop.py) is superseded and stopped; the scheduler runs detached with an 8 h wall.
 | self-test; migrate output. | -- | OPERATOR AUTHORITY on the model; DETERMINISTIC in code.
+
+DF-011 | 2026-09-19 00:40 | TWO DEFECTS FOUND BY THE FIRST LIVE HOUR, FIXED LOCALLY, SCHEDULER RESTARTED (its
+resume ran only the missing chunks): (1) a graph organism's fingerprint row exceeded Proteus's
+1 KiB cap by 13 bytes (two 64-hex ids on a large row) and the whole experiment errored -> the
+row is kept with 32-hex ids and ext.id_truncated = true; the full ids are in the segment
+records; (2) the tiered freeze policy granted FULL on any non-10/11 firing, so the unvalidated
+structural_reuse ruler (base rate ~.4 on composed worlds) drove 5,853 FULL freezes in one 16,000-
+evaluation run; charter s5 says FULL needs an ADMITTED ruler -> FULL now requires an admitted
+firing (or corroboration among admitted rulers, admitted persistence >= 3, or the 1-in-50 audit
+draw); everything else is PARTIAL with the EVENT_RECORD always kept. The digest now reads the
+scheduler's receipts through the registry run refs. Neither defect touched replay, ancestry,
+provenance or separation; no global halt was warranted. | scheduler_2026-09-19_a.log; digest
+0038Z. | -- | Threshold table untouched. DETERMINISTIC.

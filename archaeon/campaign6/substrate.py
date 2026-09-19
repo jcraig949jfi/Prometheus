@@ -86,7 +86,16 @@ def answers_any(manifest: dict, episodes: List) -> List[Optional[int]]:
 def rows_any(manifest: dict, organism_id: str, parent_id: Optional[str], eval_ordinal: int, lt: int, ev: dict, answers: List[Optional[int]],
              world_features: Optional[List[str]] = None, asks_per_episode: Optional[List[int]] = None) -> Tuple[dict, dict]:
     vals = [a for a in answers if a is not None]
-    t0 = fingerprint_for(manifest, ev["meter"], organism_id=organism_id, parent_id=parent_id, eval_ordinal=eval_ordinal, logical_time=lt, outputs=[vals])
+    id_truncated = False
+    try:
+        t0 = fingerprint_for(manifest, ev["meter"], organism_id=organism_id, parent_id=parent_id, eval_ordinal=eval_ordinal, logical_time=lt, outputs=[vals])
+    except ValueError as exc:
+        if "exceeds" not in str(exc):
+            raise
+        # Proteus's 1 KiB cap: large graph rows plus two 64-hex ids can exceed it by a few bytes; keep the row, shorten the ids
+        # (32 hex each keeps them unique for the campaign) and say so in the extension. The full ids are in the segment records.
+        id_truncated = True
+        t0 = fingerprint_for(manifest, ev["meter"], organism_id=organism_id[:32], parent_id=(parent_id[:32] if parent_id else None), eval_ordinal=eval_ordinal, logical_time=lt, outputs=[vals])
     sub = substrate_of(manifest)
     ext = {"schema": EXT_SCHEMA, "eval": int(eval_ordinal), "organism_id": organism_id, "substrate": sub,
            "action_hist": {"0": len(vals)}, "answered_share": round(len(vals) / max(1, len(answers)), 4), "distinct_answers": len(set(vals)),
@@ -95,7 +104,7 @@ def rows_any(manifest: dict, organism_id: str, parent_id: Optional[str], eval_or
            "survival": [k for k in ("halt", "yield", "budget", "trap") if ev["statuses"].get(k, 0)],
            "tape_writes": round(ev.get("tape_writes_per_episode", 0.0), 3), "occupancy_max": ev.get("tape_occupancy_max", 0), "faults": ev.get("faults", 0), "trapped": bool(ev.get("trapped", False)),
            "len_instr": (len(manifest["genome"]) // 4) if sub == "v0" else len(manifest["nodes"]), "persist": str(manifest.get("persist", manifest.get("persist_state"))),
-           "n_regs": manifest.get("n_regs", manifest.get("state_words", 0)), "genotype_digest": _h(manifest)}
+           "n_regs": manifest.get("n_regs", manifest.get("state_words", 0)), "genotype_digest": _h(manifest), "id_truncated": id_truncated}
     _check_forbidden(ext)
     if len(json.dumps(ext, sort_keys=True, separators=(",", ":")).encode()) > EXT_BYTES_MAX:
         raise ValueError("extension exceeds %d bytes" % EXT_BYTES_MAX)
