@@ -66,6 +66,10 @@ def test_validity_is_conservative():
     assert C.validity_from(None) == "UNKNOWN"
 
 
+def test_non_finite_numbers_survive_as_strings():
+    assert db._finite({"a": float("nan"), "b": [1.0, float("inf")], "c": "x"}) == {"a": "NaN", "b": [1.0, "Infinity"], "c": "x"}
+
+
 def test_timestamps_never_guessed():
     assert db._ts(1789400633).year == 2026
     assert db._ts(1789400633000).year == 2026
@@ -249,3 +253,32 @@ def test_cheat_write_lock_blocks_a_second_writer(conn):
     finally:
         other.close()
     assert got is False and got_after is True
+
+
+def test_loss_tracking_flags_a_vanished_file(tmp_path, monkeypatch):
+    """ATLAS-27 cheat control: a file indexed on one pass and deleted before
+    the next must come back present=false -- checked without touching the DB."""
+    from atlas.harvest import local_files as lf
+    f = tmp_path / "run.log"
+    f.write_text("x")
+    b = C.Batch("local_files", "t", "Atlas")
+    b.host = "M1"
+    rows = [("file://M1/" + str(f).replace("\\", "/"), str(f).replace("\\", "/"), "log", True)]
+
+    class Cur:
+        def execute(self, *a): pass
+        def fetchall(self): return rows
+        def __enter__(self): return self
+        def __exit__(self, *a): pass
+
+    class Conn:
+        def cursor(self): return Cur()
+        def close(self): pass
+    monkeypatch.setattr(db, "connect", lambda: Conn())
+    root = [{"root": str(tmp_path)}]
+    lf._loss_check(b, "M1", root)
+    assert not b.t["source"]                 # still there: nothing to flag
+    f.unlink()
+    lf._loss_check(b, "M1", root)
+    assert b.t["source"][rows[0][0]]["present"] is False
+    assert any(x["name"] == "file.missing" for x in b.facts.values())
