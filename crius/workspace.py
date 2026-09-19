@@ -29,6 +29,9 @@ COSTS = {
     "find_per_cell": 1,
 }
 
+# DESIGN_C2 s2: every store object charges metadata on creation (records, blocks, procedures).
+OBJECT_METADATA_BYTES = 2
+
 
 def value_size(v) -> int:
     if isinstance(v, tuple):
@@ -75,7 +78,7 @@ class Workspace:
     def recount(self) -> int:
         n = sum(value_size(v) for v in self.cells.values())
         n += sum(sum(value_size(v) for v in s) for s in self.streams.values())
-        n += sum(sum(value_size(v) for v in r.values()) for r in self.records.values())
+        n += sum(OBJECT_METADATA_BYTES + sum(value_size(v) for v in r.values()) for r in self.records.values())
         n += sum(len(ls) for ls in self.links.values())
         self._bytes = n
         return n
@@ -186,13 +189,13 @@ class Workspace:
     def create_record(self, fields: dict = None) -> int:
         self.cost += COSTS["rec_new"]
         fields = dict(fields or {})
-        if not self._fits(sum(value_size(v) for v in fields.values())):
+        if not self._fits(OBJECT_METADATA_BYTES + sum(value_size(v) for v in fields.values())):
             self.failed_writes += 1
             return -1
         rid = self.next_record
         self.next_record += 1
         self.records[rid] = {int(k): v for k, v in fields.items() if is_value(v)}
-        self._bytes += sum(value_size(v) for v in self.records[rid].values())
+        self._bytes += OBJECT_METADATA_BYTES + sum(value_size(v) for v in self.records[rid].values())
         self.writes += 1
         return rid
 

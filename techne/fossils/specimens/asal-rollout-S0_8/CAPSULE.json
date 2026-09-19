@@ -1,0 +1,181 @@
+{
+ "schema": "techne.fossil.capsule/1",
+ "specimen_id": "asal-rollout-S0_8",
+ "written_utc": "2026-09-19T09:50:47Z",
+ "written_by": "Techne[gandalf-a04f7c25] techne/fossils/capsule.py",
+ "source_bodies": [
+  {
+   "specimen": "lenia-chan-2019",
+   "role": "substrate reference + catalogue (animals.json)",
+   "commit": "adfc542939266de7f4bb7ebb552e8499701ee107"
+  },
+  {
+   "specimen": "asal-sakana-2024",
+   "role": "the objective (asal_metrics.py:53) the search optimised",
+   "commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7"
+  }
+ ],
+ "lineage": {
+  "stage": "S0",
+  "meaning": "catalogue lifeform with its own params",
+  "relations": [
+   {
+    "relation": "derived_from",
+    "target": "lenia-chan-2019",
+    "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+   },
+   {
+    "relation": "derived_from",
+    "target": "asal-sakana-2024",
+    "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+   }
+  ]
+ },
+ "params": {
+  "R": 13,
+  "T": 10,
+  "b": "1",
+  "m": 0.133,
+  "s": 0.0177,
+  "kn": 1,
+  "gn": 1
+ },
+ "initial_condition": {
+  "ic": "IC-CAT:OG2r",
+  "resolution": "IC-CAT:<code> = FIRST catalogue entry with that code (regen_frames128.py rule); IC-ORB = Orbium; IC-BLOB = the ruler's blob initialiser (asal_ruler.py)"
+ },
+ "seed": null,
+ "frames": {
+  "file": "S0_8.npy",
+  "sha256": "3c488ec5088fce51e4408288680f1aa2730381cce604358d87b8e55d333e0e0f",
+  "bytes": 131200,
+  "shape": [
+   8,
+   128,
+   128
+  ],
+  "dtype": "uint8",
+  "sampling": "steps 0,32,...,224 of 256 (rollout.py time_sampling=(8, False)); uint8(clip(x,0,1)*255) of the 128x128 greyscale world",
+  "vault_location_on_this_host": "C:\\Prometheus\\vault\\fossils\\asal-rollout-S0_8\\upstream\\S0_8.npy",
+  "tree_sha256": "566dbcdfe746772b2d8e681fa9a58707c5191d8c6c8b08e87b6689a4156d0b64"
+ },
+ "replay": {
+  "instrument": "roles/Harmonia/science/asal_ruler/regen_frames128.py -> asal_ruler.py rollout on techne/scripts/techne107_asal_observer.py Lenia2D",
+  "instrument_sha256_lf": "bc65e8f8cd5c7714fde12b3409a93644680c1d5996c7bdf1a03420153e210779",
+  "port_sha256_lf": "66294e74dc294d19688b7d16b00a449683656779b492bd0a3e67edf145948f09",
+  "port_sha256_at_search": "bbc43b781118e39e6f25688b2fad30521d8706d0446e927e68557e974eaa1a8c",
+  "how": "instantiate params + initial_condition on Lenia2D (128 world), step 256 with the recorded seed, sample 8 frames, uint8; the result must hash to frames.sha256 (Harmonia's controls C-TOP20 / C-TRAJ64 established determinism)"
+ },
+ "original_observer": {
+  "score": 0.8156094551086426,
+  "score_from_manifest": 0.8156094551086426,
+  "identity": {
+   "scorer": "techne107_asal_observer.py Observer (openai `clip` ViT-B/32) + numpy open_endedness_score -- the ORIGINAL observer of the search",
+   "torch": "2.14.0+cpu",
+   "weights_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+   "port_sha256_lf": "66294e74dc294d19688b7d16b00a449683656779b492bd0a3e67edf145948f09",
+   "preprocessing": "uint8 grey /255 -> grey_to_rgb bilinear 224 -> CLIP mean/std -> image features -> L2 (the seven-arm fixture's path)"
+  },
+  "crossings": {
+   "catalogue": true,
+   "garbage_mean": true,
+   "garbage_2sd": false
+  },
+  "boundaries": {
+   "catalogue": 0.8472459316253662,
+   "garbage_mean": 0.8167,
+   "garbage_2sd": 0.7999
+  },
+  "d_clip": 0.0747121913092477
+ },
+ "native_observer": {
+  "status": "PENDING",
+  "how_to_obtain": "techne/acquisition/poet_alife/HARM55_RUNBOOK_AVX_HOST.md (harm55_flax_score.py --path flax on an AVX host; HARM-55)",
+  "score": null,
+  "identity": null
+ },
+ "alive": true,
+ "classification": {
+  "class": "UNCLASSIFIED",
+  "procedure": "asal_ruler.py classify() on (coh, d_pix, mass_cv, d_clip) with thresholds.json (Orbium/HUECYCLE-derived), original observer",
+  "observables": {
+   "coh": 0.6265132088126215,
+   "d_pix": 0.047144080202327014,
+   "mass_cv": 0.058867728918801716,
+   "disp": 3.0401296404574643,
+   "d_clip_original": 0.0747121913092477
+  },
+  "class_under_native_observer": "PENDING"
+ },
+ "preservation_reason": "catalogue member crossing one threshold but not another (S0 life below garbage_mean 0.8167 under the original observer)",
+ "provenance": {
+  "experiment": "Harmonia PREREG_ASAL_LEGIT_SEARCH_2026-09-18 (+ AMENDMENT_A), run_2026-09-18/search",
+  "rows_sha256_lf": "c467e2b9b4219f89739777152b7d5d2a09e05866aeefc7e7b42e05d8820fa1b2",
+  "manifest_sha256_lf": "d7b521c8d5e6d538cee321388807384f0cbca6120f704da52150e7df3d4bde22",
+  "harm55_original_column": {
+   "path": "techne/acquisition/poet_alife/HARM55_TORCH_ORIGINAL_2026-09-19.json",
+   "sha256_lf": "d22185aa9479cd26013f8296b7351122ccf4e121ac721854383261adc7c866f2"
+  },
+  "packets": [
+   "techne/fossils/specimens/asal-sakana-2024/FOSSIL_PACKET.json"
+  ],
+  "directives": [
+   "roles/Techne/prompts/2026-09-19_asal_direction/"
+  ]
+ },
+ "relatives": [
+  {
+   "specimen": "asal-rollout-S1_23",
+   "relation": "nearest preserved by original score (|d|=0.0003)"
+  },
+  {
+   "specimen": "asal-rollout-S2_64",
+   "relation": "nearest preserved by original score (|d|=0.0005)"
+  }
+ ],
+ "evidence": [
+  {
+   "what": "frames",
+   "path": "vault body (gitignored); hash list techne/fossils/specimens/asal-rollout-S0_8/UPSTREAM_HASHES.txt",
+   "sha256": "3c488ec5088fce51e4408288680f1aa2730381cce604358d87b8e55d333e0e0f"
+  },
+  {
+   "what": "search row",
+   "path": "roles/Harmonia/science/asal_ruler/out/run_2026-09-18/search/rows.jsonl",
+   "sha256": "c467e2b9b4219f89739777152b7d5d2a09e05866aeefc7e7b42e05d8820fa1b2"
+  },
+  {
+   "what": "frames manifest",
+   "path": "roles/Harmonia/science/asal_ruler/out/run_2026-09-18/frames128_manifest.json",
+   "sha256": "d7b521c8d5e6d538cee321388807384f0cbca6120f704da52150e7df3d4bde22"
+  }
+ ],
+ "observer_internals": {
+  "per_frame_max_similarity_to_earlier": [
+   0.0,
+   0.795684814453125,
+   0.9442742466926575,
+   0.9613997936248779,
+   0.9575434923171997,
+   0.9464743137359619,
+   0.9567374587059021,
+   0.9627613425254822
+  ],
+  "embedding_sha256_per_frame": [
+   "48f2205b85d8839a1cb57e60232e73fe0008587daf7ab5e8345d899147f79213",
+   "e2315fa2a42174dc8624ca7c9f2578eb191d089a20ace5b417ca7ba2fce3a9e5",
+   "6f754c96b5127c7affc8d77d64df7e196afdd93f74b4abb6e63295fe573b1ef8",
+   "25fa6dbbcd4d588264c8c41aee295abfca6c15ff361cbb65a5f5c220c3d061fe",
+   "e33faa00cbf8d07578bdafd8c7c89c9c09d3ff22d8769a7c24379967cc0c970d",
+   "b101cef997ceaaff17e0397b588f41d52a6a75d36b869a7aed92dde0c789219b",
+   "ae1a6d6b0d858e3cdb546bb542c7b2de8b0decd4475399161bcb538c2fdd46a3",
+   "34ce493ff92b885bb05179d0299fe27fa21fb95433ff58958847c413a6b8791d"
+  ],
+  "aggregation": "score = mean of the per-frame values (frame 0 contributes 0)",
+  "status": "PRESENT",
+  "observer": "original",
+  "embeddings_file": "techne/fossils/specimens/asal-rollout-S0_8/observer_internals/original_observer_embeddings.npz",
+  "embeddings_file_sha256": "5f7438bc4e6b44d99ec39cd105870e3d102ee28dafc66866ae4ae51decff5e7c",
+  "score_from_internals": 0.8156094327569008
+ }
+}

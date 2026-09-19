@@ -125,11 +125,20 @@ class Experiment:
             bad.append("budget.world_state must be 'episode' or 'lifetime'")
         if "max_runs" in b and (not isinstance(b["max_runs"], int) or b["max_runs"] < 1):
             bad.append("budget.max_runs must be a positive int when present")
+        if "episode_seeds" in b:
+            pol = b["episode_seeds"]
+            if not isinstance(pol, dict) or pol.get("kind") not in ("distinct", "recur") or (pol.get("kind") == "recur" and (not isinstance(pol.get("distinct"), int) or isinstance(pol.get("distinct"), bool) or pol.get("distinct") < 1)):
+                bad.append("budget.episode_seeds must be {kind: 'distinct'} or {kind: 'recur', distinct: int >= 1}")
         if "batch" in b and (not isinstance(b["batch"], int) or isinstance(b["batch"], bool) or b["batch"] < 0):
             bad.append("budget.batch must be a non-negative int when present (0/1 = scalar execution)")
         for path, vals in self.sweep.items():
             if not isinstance(vals, list) or not vals:
                 bad.append("sweep[%s] must be a non-empty list" % path)
+            elif len({json.dumps(v, sort_keys=True, default=str) for v in vals}) != len(vals):
+                # C146: two identical values on one axis make two RunSpecs with the SAME key: the executor ran the point
+                # twice and a resume counted one receipt as two prior runs (fuzz seed 1839, players=[pop, pop[:1]] with
+                # a single player). A duplicate value is a designer error, refused with the axis named.
+                bad.append("sweep[%s] has duplicate values (every point must be distinct)" % path)
             if path.split(".")[0] not in ("world", "substrate", "interventions", "budget", "seed_policy", "objective", "players"):
                 bad.append("sweep[%s]: axis root not sweepable" % path)
         for c in self.required_capabilities:

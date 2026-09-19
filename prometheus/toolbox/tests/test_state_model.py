@@ -90,3 +90,74 @@ def test_device_event_buffer_is_bounded_and_drops_are_counted():
         d.put("k", i, scope="persistent")
     ev = d.events()
     assert len(ev) == 100 and d.accounting()["events_dropped"] == 150 and ev[-1][4] == 249
+
+
+# C139: the model extended to STREAMS sharing the key budget with kv: append (maxlen keeps the last n, discards
+# counted), read since 0, scope end drops streams too, refusal when the budget is full, snapshot/restore mid-way.
+class StreamModel(Model):
+    def __init__(self, max_keys):
+        super().__init__(max_keys); self.s = {}; self.discarded = 0
+
+    def n_keys(self):
+        return len(self.kv) + len(self.s)
+
+    def put(self, k, v, scope, ttl):
+        if k not in self.kv and self.n_keys() >= self.max_keys:
+            self.refused += 1; return
+        self.kv[k] = {"v": v, "scope": scope, "exp": None if ttl is None else self.tick + ttl}
+
+    def append(self, st, rec, scope, maxlen):
+        if st not in self.s:
+            if self.n_keys() >= self.max_keys:
+                self.refused += 1; return -1
+            self.s[st] = {"r": [], "next": 1, "scope": scope, "maxlen": maxlen}
+        e = self.s[st]; rid = e["next"]; e["next"] += 1; e["r"].append((rid, tuple(rec)))
+        if len(e["r"]) > e["maxlen"]:
+            e["r"].pop(0); self.discarded += 1
+        return rid
+
+    def read(self, st):
+        return list(self.s[st]["r"]) if st in self.s else []
+
+    def end_scope(self, s):
+        n = super().end_scope(s)
+        gone = [k for k, e in self.s.items() if ORDER[e["scope"]] <= ORDER[s] and e["scope"] != "persistent"]
+        for k in gone:
+            del self.s[k]
+        self.discarded += n + len(gone)
+        return n + len(gone)
+
+
+def drive_streams(dev, seed: int, n_ops: int = 400, max_keys: int = 6):
+    rnd = random.Random(seed); m = StreamModel(max_keys); keys = ["k%d" % i for i in range(5)]; streams = ["s%d" % i for i in range(5)]; t = 0
+    for _ in range(n_ops):
+        op = rnd.choice(["put", "append", "append", "read", "get", "advance", "end", "snap"])
+        if op == "put":
+            k = rnd.choice(keys); v = rnd.randrange(100); sc = rnd.choice(list(ORDER)); ttl = rnd.choice([None, 1, 3])
+            dev.put(k, v, scope=sc, ttl=ttl); m.put(k, v, sc, ttl)
+        elif op == "append":
+            st = rnd.choice(streams); rec = (rnd.randrange(100), rnd.randrange(3)); sc = rnd.choice(list(ORDER)); ml = rnd.choice([1, 2, 4])
+            a = dev.append(st, rec, scope=sc, maxlen=ml); b = m.append(st, rec, sc, ml)
+            assert (a < 0) == (b < 0) and (a == b or a < 0), (seed, st, a, b)
+        elif op == "read":
+            st = rnd.choice(streams); assert dev.read(st, since=0) == m.read(st), (seed, st, dev.read(st, since=0), m.read(st))
+        elif op == "get":
+            k = rnd.choice(keys); assert dev.get(k) == m.get(k), (seed, k)
+        elif op == "advance":
+            t += rnd.choice([0, 1, 2]); dev.advance(t); m.advance(t)
+        elif op == "end":
+            s = rnd.choice(list(ORDER)); assert dev.end_scope(s) == m.end_scope(s), (seed, s)
+        else:
+            snap = dev.snapshot(); dev.append("zz", (1,), scope="persistent"); dev.put("zq", 1, scope="persistent"); dev.restore(snap)
+            assert dev.read("zz", since=0) == m.read("zz") and dev.get("zq") == m.get("zq")
+        for st in streams:
+            assert dev.read(st, since=0) == m.read(st), (seed, "after", op, st)
+        for k in keys:
+            assert dev.get(k) == m.get(k), (seed, "after", op, k)
+    a = dev.accounting()
+    assert a["refused"] == m.refused and a["discarded"] == m.discarded and a["expired"] == m.expired, (seed, a, m.refused, m.discarded, m.expired)
+
+
+@pytest.mark.parametrize("seed", range(30))
+def test_inprocess_device_streams_agree_with_the_model(seed):
+    drive_streams(ST.InProcessStateDevice(max_keys=6), seed)

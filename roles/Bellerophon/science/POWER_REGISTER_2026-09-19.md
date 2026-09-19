@@ -40,6 +40,18 @@ checked against the suite by `tests/test_power_register.py` (every named test mu
 | cross-platform replay | assertion; SKIP when no second platform (a skip COUNT is the signal, C92b) | test_cross_platform |
 | IR validate | defect list | test_kernel / test_fuzz (invalid IRs raise IRError at compile) |
 | capability negotiation | BLOCKED_MISSING_CAPABILITY | test_kernel::test_capability_negotiation_is_a_result_not_an_exception |
+| committed receipts as fixtures (38 files) | divergent runs | test_replay_committed::test_committed_receipts_replay_without_divergence ; power shown by hand: a one-constant world change (M73) fails 27 of 39 |
+| checkpoint/resume | action/summary mismatch | test_integrity::test_checkpoint_carries_the_kernel_wrappers_state ; test_checkpoint_resume_property_over_random_compositions (guarded) |
+| admission: mutable params in snapshot | failed=[extensions] | test_admission_power::test_extensions_check_fails_a_declared_but_undemonstrable_extension |
+
+| forensic scan (random files) | one defect per edit / CHAIN_BREAK / DUPLICATE / TRUNCATED | test_integrity::test_forensic_scan_property_over_random_receipts_files (guarded) |
+| series contract (random IRs) | status mismatch / MISSING_ARTIFACT | test_series::test_series_contract_over_random_compositions (guarded) |
+| search invariants (random templates) | row mismatch | test_search::test_search_invariants_over_random_templates (guarded) |
+| IR sweep / negotiation laws | assertion | test_fuzz::test_sweep_and_negotiation_laws |
+| control vocabulary (random IRs) | assertion; NOT_MET/INDETERMINATE occur on random IRs | test_control_power::test_control_vocabulary_over_random_compositions (guarded) |
+| admission order-independence | state/failed mismatch | test_admission_power::test_admission_is_order_independent_and_idempotent |
+| accounting laws (random receipts) | assertion | test_workspace::test_accounting_laws_over_random_receipts (guarded) |
+| mutation runner bytecode safety | stale-pyc false verdicts impossible since C122 | (runner: PYTHONDONTWRITEBYTECODE + purge) |
 
 Known instruments WITHOUT a demonstrated NO (honest list):
 - admission "performance": by design a receipt.

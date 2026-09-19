@@ -15,6 +15,7 @@ from typing import Dict, List
 from prometheus.toolbox.contracts import PlayerSpec, EVENT_ID
 from prometheus.toolbox.ref import players as P
 from prometheus.toolbox import state as ST
+from prometheus.toolbox.ref.worlds import stream as _rng_stream
 
 
 class SubstrateError(ValueError):
@@ -26,7 +27,7 @@ class FlatInProcessSubstrate:
     capabilities = frozenset({"core.substrate.v1", "ext.cost.v1", "ext.reference.v1"})
 
     def __init__(self):
-        reps = {"statemachine.v1", "statemachine.v2", "statemachine.v3", "constant.v1", "rewrite.v1"}
+        reps = {"statemachine.v1", "statemachine.v2", "statemachine.v3", "constant.v1", "rewrite.v1", "sequence.v1"}
         if P.proteus_available():
             reps.add("proteus.tape.v0")
         self.representations = frozenset(reps)
@@ -49,6 +50,8 @@ class FlatInProcessSubstrate:
             inst = P.StateMachineV3Instance(spec, NoWorkspace())
         elif spec.representation == "constant.v1":
             inst = P.ConstantInstance(spec)
+        elif spec.representation == "sequence.v1":
+            inst = P.SequenceInstance(spec)
         elif spec.representation == "rewrite.v1":
             inst = P.RewriteInstance(spec)
         else:
@@ -196,7 +199,7 @@ class _WorkspaceSubstrate:
     """Shared machinery for substrates that grant a workspace backed by one InProcessStateDevice.
     Lifecycle hooks (ext.substrate.lifecycle.v1): episode_begin(ep, seed) ends the episode scope; tick(t)
     advances the device's logical clock (one clock across episodes so lifetime ttls are continuous)."""
-    representations = frozenset({"statemachine.v2", "statemachine.v3", "statemachine.v1", "constant.v1", "rewrite.v1"} | ({"proteus.tape.v0"} if P.proteus_available() else set()))
+    representations = frozenset({"statemachine.v2", "statemachine.v3", "statemachine.v1", "constant.v1", "rewrite.v1", "sequence.v1"} | ({"proteus.tape.v0"} if P.proteus_available() else set()))
 
     def __init__(self, max_keys: int):
         self.dev = ST.InProcessStateDevice(max_keys=max_keys)
@@ -224,6 +227,8 @@ class _WorkspaceSubstrate:
             inst = P.ConstantInstance(spec)
         elif spec.representation == "rewrite.v1":
             inst = P.RewriteInstance(spec)
+        elif spec.representation == "sequence.v1":
+            inst = P.SequenceInstance(spec)
         else:
             inst = P.ProteusTapeInstance(spec, seed)
         self._instances.append(inst)
@@ -240,6 +245,19 @@ class _WorkspaceSubstrate:
     def tick(self, t: int) -> None:
         self._t += 1; self._tick_in_episode = t + 1
         self.dev.advance(self._t)
+
+    # C135: the substrate's OWN clock is state. A checkpoint that carried only the device restarted this counter at
+    # 0 in the fresh substrate, so the first tick after a resume advanced the device BACKWARDS (ttl expiries fired
+    # at the wrong ticks; a kv ttl=2 player diverged from the uninterrupted run). Snapshot = clock + device.
+    def snapshot(self) -> bytes:
+        import json
+        return json.dumps({"t": self._t, "episode": self._episode, "tick_in_episode": self._tick_in_episode, "first_read_hits": self._first_read_hits,
+                           "dev": self.dev.snapshot().hex()}).encode()
+
+    def restore(self, snap: bytes) -> None:
+        import json
+        d = json.loads(snap.decode()); self._t = d["t"]; self._episode = d["episode"]; self._tick_in_episode = d["tick_in_episode"]
+        self._first_read_hits = d["first_read_hits"]; self.dev.restore(bytes.fromhex(d["dev"]))
 
     def events(self):
         return self.dev.events()
@@ -274,6 +292,50 @@ class KVSubstrate(_WorkspaceSubstrate):
 
     def _door(self, pid: int):
         return KVWorkspace(self.dev, "p%d/mem" % pid, self.params["scope"], self.params["ttl"], pid, on_read=self._on_read)
+
+
+class KVWeatherWorkspace(KVWorkspace):
+    """A kv door under computational WEATHER (atlas-bee S5, from NPE cw01-e07): at seeded ticks the retained value is
+    ERASED (mode erase: information lost, no write charged) or SHAM-damaged (mode sham: rewritten with its own
+    contents -- the same write cost, no information lost). ws_damage counts the firings in both modes."""
+
+    def __init__(self, device, key, scope, ttl, player, rate: float, mode: str, weather_seed: int, on_read=None):
+        super().__init__(device, key, scope, ttl, player, on_read=on_read)
+        self.rate = float(rate); self.mode = mode; self.weather_seed = int(weather_seed); self._c["ws_damage"] = 0
+
+    def weather(self, t: int) -> None:
+        if self.mode == "off" or self.rate <= 0:
+            return
+        s = _rng_stream("weather", self.weather_seed, self.player, t)
+        if s.below(1_000_000) >= int(self.rate * 1_000_000):
+            return
+        self._c["ws_damage"] += 1
+        v = self.dev.get(self.key, player=self.player)
+        if self.mode == "erase":
+            if v is not None:
+                self.dev.delete(self.key, player=self.player)
+        elif v is not None:                                   # sham: rewrite the same contents, pay the write
+            self.dev.put(self.key, v, scope=self.scope, ttl=self.ttl, player=self.player); self._c["ws_writes"] += 1
+
+
+class KVWeatherSubstrate(KVSubstrate):
+    kind = "substrate.kv_weather.v1"
+    MODES = ("off", "erase", "sham")
+
+    def __init__(self, scope: str = "episode", ttl=None, max_keys: int = 4096, rate: float = 0.1, mode: str = "erase", weather_seed: int = 0):
+        super().__init__(scope=scope, ttl=ttl, max_keys=max_keys)
+        if mode not in self.MODES or not (0.0 <= float(rate) <= 1.0):
+            raise SubstrateError("weather needs mode in %s and rate in [0, 1]" % (self.MODES,))
+        self.params.update({"rate": float(rate), "mode": mode, "weather_seed": int(weather_seed)}); self._doors = []
+
+    def _door(self, pid: int):
+        d = KVWeatherWorkspace(self.dev, "p%d/mem" % pid, self.params["scope"], self.params["ttl"], pid, self.params["rate"], self.params["mode"], self.params["weather_seed"], on_read=self._on_read)
+        self._doors.append(d); return d
+
+    def tick(self, t: int) -> None:
+        super().tick(t)
+        for d in self._doors:
+            d.weather(self._t)                                  # the substrate's own clock: continuous across episodes
 
 
 class StreamSubstrate(_WorkspaceSubstrate):

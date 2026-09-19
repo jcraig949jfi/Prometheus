@@ -184,6 +184,14 @@ class ObservationWrapper:
             obs = buf[0] if len(buf) <= self.delay else buf[-1 - self.delay]
         return obs
 
+    # C119: a checkpoint must carry the WRAPPER's state too (delay buffers), not only the world's behind it
+    def snapshot(self) -> bytes:
+        return json.dumps({"inner": self.w.snapshot().hex(), "buf": {str(k): v for k, v in self._buf.items()}}, sort_keys=True).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d["inner"]))
+        self._buf = {int(k): v for k, v in d["buf"].items()}; self._perms = None        # permutations are re-derived from their seeds
+
     def __getattr__(self, name):
         return getattr(self.w, name)
 
@@ -279,6 +287,13 @@ class ScheduleWrapper:
         self._apply()
         return done
 
+    # C119: the schedule's own tick count and position travel with the checkpoint
+    def snapshot(self) -> bytes:
+        return json.dumps({"inner": self.w.snapshot().hex(), "t": self._t, "i": self._i}, sort_keys=True).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.w.restore(bytes.fromhex(d["inner"])); self._t = int(d["t"]); self._i = int(d["i"])
+
     def __getattr__(self, name):
         return getattr(self.w, name)
 
@@ -368,7 +383,7 @@ def make_checkpoint(world, instances, observers, subs, ticks: int, n_events: int
         raise ValueError("world %s has no ext.snapshot.v1: it cannot be checkpointed mid-episode" % world.kind)
     ck = {"tick": ticks, "n_events": n_events, "seed": seed, "episode": episode, "world": world.snapshot().hex(),
           "instances": {str(pid): inst.snapshot().hex() for pid, inst in instances.items()},
-          "substrates": [so.dev.snapshot().hex() if hasattr(so, "dev") else None for so in subs],
+          "substrates": [so.snapshot().hex() if hasattr(so, "snapshot") else (so.dev.snapshot().hex() if hasattr(so, "dev") else None) for so in subs],   # C135: the substrate's clock too
           "observers": [ob.snapshot().hex() if hasattr(ob, "snapshot") else None for ob in observers],
           "pre_checkpoint_trace": world.trace_hash()}
     return ck
@@ -387,7 +402,9 @@ def resume_episode(checkpoint: dict, world, instances: Dict[int, Any], observers
     for pid, inst in instances.items():
         inst.restore(bytes.fromhex(checkpoint["instances"][str(pid)]))
     for so, snap in zip(subs, checkpoint["substrates"]):
-        if snap is not None and hasattr(so, "dev"):
+        if snap is not None and hasattr(so, "restore"):
+            so.restore(bytes.fromhex(snap))
+        elif snap is not None and hasattr(so, "dev"):
             so.dev.restore(bytes.fromhex(snap))
     for ob, snap in zip(observers, checkpoint["observers"]):
         if snap is not None and hasattr(ob, "restore"):
@@ -491,10 +508,20 @@ def _finish(ctx: dict, registry, receipt_dir, world_manifest: dict, world_accoun
     return receipt
 
 
+def episode_seed(run_seed: int, ep: int, budget: dict) -> int:
+    """atlas-bee S4: budget.episode_seeds = {"kind": "recur", "distinct": k} makes episode seeds CYCLE over k values (the
+    same world draws recur, so retained state can pay); the default is a distinct seed per episode. Science: inside the
+    digest."""
+    pol = budget.get("episode_seeds")
+    if isinstance(pol, dict) and pol.get("kind") == "recur":
+        ep = ep % max(1, int(pol.get("distinct", 1)))
+    return run_seed * 1000 + ep
+
+
 def run_one(spec: RunSpec, registry, receipt_dir=None, execution: Optional[dict] = None) -> dict:
     ctx = _prepare(spec, registry); exp = spec.experiment; world = ctx["world"]
     for ep in range(exp.budget["episodes"]):
-        r = run_episode(world, ctx["instances"], ctx["observers"], spec.seed * 1000 + ep, exp.budget["horizon"],
+        r = run_episode(world, ctx["instances"], ctx["observers"], episode_seed(spec.seed, ep, exp.budget), exp.budget["horizon"],
                         substrate=ctx["all_subs"] if len(ctx["all_subs"]) > 1 else ctx["sub"], episode=ep, keep_world=exp.budget.get("world_state") == "lifetime")
         ctx["hashes"].append(r["trace_hash"]); ctx["ticks_total"] += r["ticks"]; ctx["events_total"] += r["events"]; ctx["summaries"].append(r["summary"])
         for k, ob in ctx["series_obs"]:
@@ -553,7 +580,7 @@ def run_batch(specs: List[RunSpec], registry, batch_kind: str, receipt_dir=None)
     horizon = exp.budget["horizon"]; keep = exp.budget.get("world_state") == "lifetime"
     ticks_by_env = [0] * n; events_by_env = [0] * n
     for ep in range(exp.budget["episodes"]):
-        seeds = [sp.seed * 1000 + ep for sp in specs]
+        seeds = [episode_seed(sp.seed, ep, exp.budget) for sp in specs]
         world.reset_batch(seeds, keep=keep and ep > 0)
         for i, c in enumerate(ctxs):
             if not live[i]:

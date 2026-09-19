@@ -416,7 +416,15 @@
    "issued_tick": "2026-09-17",
    "verdict_tick": "2026-09-17",
    "superseded_by": "MECH-PARTICLES-ESSTRIGGER-002",
-   "note": "PREDICTION_INDETERMINATE + CHALLENGE on the positive-control band (#363); superseded same tick"
+   "note": "PREDICTION_INDETERMINATE + CHALLENGE on the positive-control band (#363); superseded same tick",
+   "adjudicated": true,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": false,
+   "mechanism_isolated": false,
+   "observer_stable": "NA",
+   "transplant": "NONE",
+   "superseded_note": "predictions re-posed in 002; excluded from active counts"
   },
   {
    "packet_id": "MECH-PARTICLES-ESSTRIGGER-002",
@@ -424,7 +432,14 @@
    "lane": "m3-native-python",
    "issued_tick": "2026-09-17",
    "verdict_tick": "2026-09-18",
-   "note": "CUT_SUPPORTED on the boundary (#382); claim (c) PREDICTION_FAILED@50 / INDETERMINATE@400, dropped from the cut (D')"
+   "note": "CUT_SUPPORTED on the boundary (#382); claim (c) PREDICTION_FAILED@50 / INDETERMINATE@400, dropped from the cut (D')",
+   "adjudicated": true,
+   "predictions_tested": 3,
+   "predictions_falsified": 1,
+   "cut_supported": true,
+   "mechanism_isolated": true,
+   "observer_stable": "NA",
+   "transplant": "NONE"
   },
   {
    "packet_id": "MECH-ASAL-LEGIT-SEARCH-001",
@@ -432,7 +447,45 @@
    "lane": "m3-native-python",
    "issued_tick": "2026-09-18",
    "verdict_tick": "2026-09-18",
-   "note": "FREEZE c6627d26 immutable; verdict #441 + operator-tightened #446. Boundary CUT_SUPPORTED (cut_kill silent). I0-CATALOGUE-ONLY PREDICTION_FAILED (min ALIVE catalogue 0.8076 < 0.8167; 5 catalogued lifeforms cross with no search; margin 0.009 = 1.1 sd, a crossed CONVENTION not a statistical result -- A7 lesson). I1/I2 SUPPORTED_BY_WITNESS (0.7665 < 0.8167 and < 0.7999; existential, 333 ALIVE of 395 executed). I3 SUPPORTED_ON_EXECUTED_SUBSET (best crosser S2_189 METRIC_EXPLOIT over the 395 executed; nothing claimed over the 1045 domain). MECHANISM STRENGTHENED: the scalar admits both exploit turbulence and coherent morphing life below garbage; selection alone suffices, search deepens it. Coverage defect (Harmonia's port): 650/1045 draws refused. Full-domain run deferred to a NEW preregistered replication after port extension (A4). Theophrastus cell OFFERED (score organ x Lenia port x frozen search), not yet accepted."
+   "note": "FREEZE c6627d26 immutable; verdict #441 + operator-tightened #446. Boundary CUT_SUPPORTED (cut_kill silent). I0-CATALOGUE-ONLY PREDICTION_FAILED (min ALIVE catalogue 0.8076 < 0.8167; 5 catalogued lifeforms cross with no search; margin 0.009 = 1.1 sd, a crossed CONVENTION not a statistical result -- A7 lesson). I1/I2 SUPPORTED_BY_WITNESS (0.7665 < 0.8167 and < 0.7999; existential, 333 ALIVE of 395 executed). I3 SUPPORTED_ON_EXECUTED_SUBSET (best crosser S2_189 METRIC_EXPLOIT over the 395 executed; nothing claimed over the 1045 domain). MECHANISM STRENGTHENED: the scalar admits both exploit turbulence and coherent morphing life below garbage; selection alone suffices, search deepens it. Coverage defect (Harmonia's port): 650/1045 draws refused. Full-domain run deferred to a NEW preregistered replication after port extension (A4). Theophrastus cell OFFERED (score organ x Lenia port x frozen search), not yet accepted.",
+   "adjudicated": true,
+   "predictions_tested": 4,
+   "predictions_falsified": 1,
+   "cut_supported": true,
+   "mechanism_isolated": true,
+   "observer_stable": "UNKNOWN",
+   "transplant": "OFFERED"
+  },
+  {
+   "packet_id": "MECH-POET-NOVELTY-ESTIMATOR-001",
+   "cut_id": "poet-original-2019",
+   "lane": "m3-native-python",
+   "issued_tick": "2026-09-19",
+   "verdict_tick": null,
+   "adjudicated": false,
+   "predictions_tested": 0,
+   "predictions_falsified": 0,
+   "cut_supported": false,
+   "mechanism_isolated": true,
+   "observer_stable": "NOT_APPLICABLE",
+   "transplant": "NONE",
+   "note": "FREEZE 291a22ed. Four EXACT deterministic rows on the fossil's OWN bytes (novelty.py runs standalone on M3 with numpy; no AVX host, no Box2D, so it does not queue behind HARM-55): I1 estimator regime change at archive size k; I2 unnormalised range dominance ratio 8/3; I3 absence == zero-presence at distance 0; I4 zero increases in the novelty series. All scouted SEEN before freezing. This is the 'one POET mechanism through an independent ruling' the 2026-09-19b directive s2 asked for."
+  }
+ ],
+ "unresolved_anomalies": [
+  {
+   "id": "ANOM-ASAL-MANY-TO-ONE",
+   "opened": "2026-09-19",
+   "source": "MECH-ASAL-LEGIT-SEARCH-001 Stage D' (#441/#446) + operator directive 2026-09-19 s5/s10",
+   "statement": "the ASAL low-score region (below the scene-garbage reference) contains BOTH turbulent metric-exploit dynamics AND coherent, persistent morphing Lenia life (e.g. S2_135 at 0.7933), and catalogue crossings exist with no search: distinct dynamical regimes are made equivalent by the observer's representation (a many-to-one compression). What dynamical or representational property makes distinct Lenia phenotypes occupy the same low-score region?",
+   "status": "OPEN",
+   "gated_on": [
+    "HARM-55 native Flax observer scores on the 395 corpus",
+    "HARM-56 observer-dependence adjudication",
+    "a new preregistered full-domain replication (s4)",
+    "Nyx behavioral cuts on stable and discordant regions (s5)"
+   ],
+   "note": "do NOT reduce to 'the metric is broken'; the I0 failure is evidence the phenomenon is not a search artifact. This is the object the pipeline is now chasing, not a nuisance."
   }
  ]
 }

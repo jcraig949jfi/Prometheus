@@ -153,6 +153,25 @@ class SurvivalObjective:
         return {"value": ticks * sum(1 for a in alive if a), "components": {"ticks": ticks, "alive": alive}}
 
 
+class ChargeObjective:
+    """objective.charge.v1 (atlas-bee): the resource an organism ends with -- the BEST final charge over the world's
+    slots, read from world_summary["charge"] (the same field survival reads for `alive`). Worlds whose competence
+    shows up as an accumulated resource rather than survival to the horizon (the wforge Encounter wrap, the integer
+    charge economy) become scoreable without inventing a signal: charge is already in every world summary. value is
+    an int; 0 when the world reports no charge."""
+    kind = "objective.charge.v1"
+    version = "1"
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        s = receipt.get("science", {}).get("world_summary", {})
+        charge = list(s.get("charge", []) or [])
+        best = max(charge) if charge else 0
+        return {"value": int(best), "components": {"charge": charge, "best": int(best), "ticks": s.get("ticks", 0)}}
+
+
 # ------------------------------------------------------------------------------------------ series (U3)
 LAST_MIRROR = None      # test hook: the last StateDevice a SeriesObserver mirrored into (so a test can destroy it)
 

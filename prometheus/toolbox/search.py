@@ -85,11 +85,33 @@ def elites_by_cell(rows: List[dict], rank: Optional[str] = None) -> Dict[tuple, 
 
 
 # ------------------------------------------------------------------------------------------ selectors
-def _gen0(registry, representation: str, rng_seed: int, n: int) -> List[PlayerSpec]:
+def _gen0(registry, representation: str, rng_seed: int, n: int, seed_players=None) -> List[PlayerSpec]:
     """C73: generation 0 comes from the REGISTERED generator of the chosen representation (the registry row's
-    factory takes a seed), so a selector evolves any representation without subclassing."""
+    factory takes a seed), so a selector evolves any representation without subclassing. atlas-bee S3: injected
+    seed_players take the first slots of generation 0 (their meta travels with them and their descendants, so the
+    archive can tell an import lineage from a resident one)."""
     gen = registry.get(representation).factory
-    return [gen(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n)]
+    seeds = [_spec_of(p) for p in (seed_players or [])]
+    return seeds + [gen(rng_seed * 131 + i, meta={"gen0": True}) for i in range(n - len(seeds))]
+
+
+def _spec_of(p) -> PlayerSpec:
+    if isinstance(p, PlayerSpec):
+        return p
+    return PlayerSpec(p["representation"], p["payload"], p.get("initial_state", {}), frozenset(p.get("requires", ())), p.get("meta", {}))
+
+
+def _child(reg, mutation: str, parent: dict, seed: int) -> PlayerSpec:
+    """C148: the mutation if it accepts the parent's representation; else the structure-preserving shuffle; else --
+    a representation NO transform can touch -- a fresh player from its registered generator (meta says so),
+    never a TypeError inside a generation."""
+    rep = "player." + parent["representation"]
+    for kind in (mutation, "transform.shuffle.v1"):
+        t = reg.make(kind)
+        if rep in t.accepts:
+            return t.apply(parent, seed)
+    gen = reg.get(parent["representation"]).factory
+    return gen(seed, meta={"fallback": "generator", "parent_representation": parent["representation"]})
 
 
 class TruncationSelector:
@@ -103,20 +125,19 @@ class TruncationSelector:
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
-        reg = default_registry(); t = reg.make(self.mutation); s = stream("truncation", rng_seed)
+        reg = getattr(self, "registry", None) or default_registry(); s = stream("truncation", rng_seed)   # C148: the kernel's registry, not the global one
         ranked = [(scalar_objective(r, self.rank), r) for r in archive_rows if r["kind"] == "elite"]
         elites = [r for _, r in sorted(((v, r) for v, r in ranked if v is not None), key=lambda x: (-x[0], x[1].get("player_hash", ""), x[1]["fingerprint"]))][:self.keep]
         if not elites:
-            return _gen0(reg, self.representation, rng_seed, n)
+            return _gen0(reg, self.representation, rng_seed, n, getattr(self, "seed_players", None))
         out: List[PlayerSpec] = []
         for i in range(n):
             parent = player_of(elites[s.below(len(elites))], getattr(self, "workdir", None))
-            tt = t if "player." + parent["representation"] in t.accepts else reg.make("transform.shuffle.v1")   # a representation the mutation cannot touch gets a structure-preserving fallback
-            out.append(tt.apply(parent, rng_seed * 977 + i))
+            out.append(_child(reg, self.mutation, parent, rng_seed * 977 + i))
         return out
 
     def ingest(self, receipts: List[dict]) -> List[dict]:
-        return _rows_from_receipts(receipts, compact=getattr(self, "compact", False))
+        return _rows_from_receipts(receipts, compact=getattr(self, "compact", False), battery=getattr(self, "battery", None))
 
 
 class MapElitesSelector(TruncationSelector):
@@ -130,15 +151,14 @@ class MapElitesSelector(TruncationSelector):
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
-        reg = default_registry(); s = stream("map_elites", rng_seed)
+        reg = getattr(self, "registry", None) or default_registry(); s = stream("map_elites", rng_seed)
         cells = list(elites_by_cell(archive_rows, self.rank).values())
         if not cells:
-            return _gen0(reg, self.representation, rng_seed, n)
+            return _gen0(reg, self.representation, rng_seed, n, getattr(self, "seed_players", None))
         out = []
         for i in range(n):
             parent = player_of(cells[s.below(len(cells))][0], getattr(self, "workdir", None))
-            t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
-            out.append(t.apply(parent, rng_seed * 977 + i))
+            out.append(_child(reg, self.mutation, parent, rng_seed * 977 + i))
         return out
 
 
@@ -170,30 +190,46 @@ def pareto_front(rows: List[dict], components: Optional[List[str]] = None) -> Li
     return front
 
 
+def fronts_by_cell(rows: List[dict], components: Optional[List[str]] = None) -> Dict[tuple, List[dict]]:
+    """C117: the non-dominated set WITHIN each descriptor cell (MAP-Elites' diversity with Pareto's vector ranking;
+    soak 2 showed a single global front collapsing to 2-3 rows and stalling for 390 generations)."""
+    cells: Dict[tuple, List[dict]] = {}
+    for r in rows:
+        if r.get("kind") == "elite":
+            cells.setdefault(tuple(r["descriptor"]), []).append(r)
+    return {k: pareto_front(v, components) for k, v in cells.items() if pareto_front(v, components)}
+
+
 class ParetoSelector(TruncationSelector):
     """selector.pareto.v1 (C114): parents are the archive's non-dominated set over the vector objective's components
     (or the named subset); no rank needed (needs_scalar=False). Generation 0 from the representation's generator."""
     kind = "selector.pareto.v1"
     needs_scalar = False
 
-    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", components: Optional[List[str]] = None):
+    def __init__(self, n: int = 8, mutation: str = "transform.point_mutation.v1", representation: str = "statemachine.v1", components: Optional[List[str]] = None,
+                 by_cell: bool = False):
         super().__init__(keep=0, n=n, mutation=mutation, representation=representation, rank=None)
-        self.components = list(components) if components else None; self._front_size = None
+        self.components = list(components) if components else None; self._front_size = None; self.by_cell = bool(by_cell); self._cells = None
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "components": self.components, "front_size": self._front_size}
+        return {"kind": self.kind, "n": self.n, "mutation": self.mutation, "representation": self.representation, "components": self.components,
+                "by_cell": self.by_cell, "front_size": self._front_size, "cells": self._cells}
 
     def propose(self, archive_rows: List[dict], rng_seed: int, n: int) -> List[PlayerSpec]:
         from prometheus.toolbox.registry import default_registry
-        reg = default_registry(); s = stream("pareto", rng_seed)
-        front = pareto_front(archive_rows, self.components); self._front_size = len(front)
-        if not front:
-            return _gen0(reg, self.representation, rng_seed, n)
+        reg = getattr(self, "registry", None) or default_registry(); s = stream("pareto", rng_seed)
+        if self.by_cell:                                            # C117: a cell first, then a front member of that cell
+            fronts = list(fronts_by_cell(archive_rows, self.components).values()); self._cells = len(fronts); self._front_size = sum(len(f) for f in fronts)
+            pick = (lambda: fronts[s.below(len(fronts))]) if fronts else None
+        else:
+            front = pareto_front(archive_rows, self.components); self._front_size = len(front); self._cells = None
+            pick = (lambda: front) if front else None
+        if pick is None:
+            return _gen0(reg, self.representation, rng_seed, n, getattr(self, "seed_players", None))
         out = []
         for i in range(n):
-            parent = player_of(front[s.below(len(front))], getattr(self, "workdir", None))
-            t = reg.make(self.mutation) if "player." + parent["representation"] in reg.make(self.mutation).accepts else reg.make("transform.shuffle.v1")
-            out.append(t.apply(parent, rng_seed * 977 + i))
+            f = pick(); parent = player_of(f[s.below(len(f))], getattr(self, "workdir", None))
+            out.append(_child(reg, self.mutation, parent, rng_seed * 977 + i))
         return out
 
 
@@ -227,32 +263,62 @@ def player_of(row: dict, workdir=None) -> dict:
     raise ValueError("receipt %s not found in %s" % (src["receipt_id"], path))
 
 
-def _rows_from_receipts(receipts: List[dict], compact: bool = False) -> List[dict]:
+def _battery_key(variant: dict) -> str:
+    return json.dumps(variant, sort_keys=True)
+
+
+def _rows_from_receipts(receipts: List[dict], compact: bool = False, battery=None) -> List[dict]:
     """One elite row per PLAYER (a sweep point), aggregating its seeds: objective = mean over seeds (None if any
     seed had none), descriptor = the first seed's, receipt ids and seeds listed. (C26b: one row per receipt made
     a player with two seeds look like two elites.)"""
     by: Dict[str, dict] = {}
+    weights = {_battery_key(v["world_params"]): float(v.get("weight", 1.0)) for v in (battery or [])}
     for r in receipts:
         if r["arm"] != "primary":
             continue
-        key = json.dumps(r["sweep_point"], sort_keys=True)
+        # atlas-bee S2: one row per PLAYER; a battery's world variants are aggregated into the row, never split into rows
+        key = json.dumps(r["sweep_point"]["players"] if battery else r["sweep_point"], sort_keys=True)
+        variant = next((_battery_key(v) for k, v in r["sweep_point"].items() if k != "players"), None) if battery else None
         desc = (r["science"].get("observations", {}).get("observer.descriptor.v1") or {}).get("descriptor", [])
-        fp = r["science"]["player_fingerprints"]["0"]
-        row = by.setdefault(key, {"kind": "elite", "player": None if compact else r["_player_manifest"], "fingerprint": fp["hash"],
+        # C148: a FAILED run has no science -- the row still exists (the archive carries the failure: objective None,
+        # the error kept, identity from the manifest) so the generation COMMITS and a failing player is never
+        # proposed again by a rank; before, a KeyError here left the generation without GEN_DONE, to be abandoned
+        # and re-run forever
+        fp = (r["science"].get("player_fingerprints") or {}).get("0") or {}
+        row = by.setdefault(key, {"kind": "elite", "player": None if compact else r["_player_manifest"], "fingerprint": fp.get("hash"),
                                   "player_hash": fp.get("spec_hash") or component_manifest_hash(r["_player_manifest"]),      # C96: identity, not behavioural class
                                   "source": {"file": r.get("_file"), "receipt_id": r["receipt_id"]},                          # C115: where the manifest lives
-                                  "descriptors": [], "objectives": [], "receipt_ids": [], "seeds": []})
-        row["descriptors"].append(list(desc)); row["objectives"].append((r["science"].get("objective") or {}).get("value"))
+                                  "origin": ((r["_player_manifest"].get("meta") or {}).get("origin") or "resident"),          # atlas-bee S3
+                                  "descriptors": [], "objectives": [], "receipt_ids": [], "seeds": [], "failed_seeds": [], "errors": []})
+        if battery:
+            row.setdefault("_by_variant", {}).setdefault(variant, [])
+        if r.get("status") != "COMPLETED":
+            row["failed_seeds"].append(r["seed"]); row["errors"].append(str(r.get("error"))[:160]); row["objectives"].append(None)
+            if battery:
+                row["_by_variant"][variant].append(None)
+        else:
+            row["descriptors"].append(list(desc)); row["objectives"].append((r["science"].get("objective") or {}).get("value"))
+            if battery:
+                row["_by_variant"][variant].append((r["science"].get("objective") or {}).get("value"))
         row["receipt_ids"].append(r["receipt_id"]); row["seeds"].append(r["seed"])
     rows = []
     for row in by.values():
         vals = row.pop("objectives")
-        row["objective"] = _mean_objective(vals)                     # C94: number, {component: mean} or None
+        if battery:
+            byv = row.pop("_by_variant"); per = {k: _mean_objective(v) for k, v in byv.items()}
+            row["objective_by_variant"] = per
+            if all(isinstance(x, (int, float)) for x in per.values()) and set(per) == set(weights):
+                w = sum(weights.values()); row["objective"] = sum(weights[k] * per[k] for k in per) / w
+            else:
+                row["objective"] = None                                  # a variant missing or non-scalar: no weighted mean is honest
+        else:
+            row["objective"] = _mean_objective(vals)                     # C94: number, {component: mean} or None
         ds = [d for d in row["descriptors"] if d]
         # C27: the cell key is the element-wise floor(mean + 0.5) over seeds, never one seed's descriptor
         row["descriptor"] = [int(sum(d[i] for d in ds) / len(ds) + 0.5) for i in range(len(ds[0]))] if ds else []
         if compact:
             row.pop("player", None)
+            row.pop("origin", None)                              # recoverable from the referenced receipt's player meta; kept off the lean row
         rows.append(row)
     return rows
 
@@ -270,18 +336,24 @@ def _abandoned_count(rows: List[dict]) -> int:
 
 
 # ------------------------------------------------------------------------------------------ driver
-def _run_generation(template: Experiment, players: List[PlayerSpec], gen: int, seed: int, workdir: pathlib.Path, registry) -> List[dict]:
+def _run_generation(template: Experiment, players: List[PlayerSpec], gen: int, seed: int, workdir: pathlib.Path, registry, battery=None) -> List[dict]:
     from prometheus.toolbox.backends.local import execute
     e = Experiment.from_dict(template.to_dict())
     e.players = [players[0].manifest()]
     e.sweep = {"players": [[p.manifest()] for p in players]}
+    if battery:                                                  # atlas-bee S2: every proposal on every world variant, weighted in the row
+        e.interventions = list(e.interventions) + [{"name": "battery", "world_params": {}, "wrappers": {}}]
+        e.sweep["interventions.%d.world_params" % (len(e.interventions) - 1)] = [dict(v["world_params"]) for v in battery]
     e.seed_policy = dict(template.seed_policy, base=seed * 100003 + gen * 1009)
     e.provenance = dict(template.provenance, search_gen=gen)
     attempt = 0
     while (workdir / ("gen_%03d_a%d.jsonl" % (gen, attempt))).exists():
         attempt += 1                                             # a crashed attempt's file stays as evidence
     path = workdir / ("gen_%03d_a%d.jsonl" % (gen, attempt))
-    rep = execute(e.compile("local", registry).job, path, registry)
+    low = e.compile("local", registry)
+    if not low.ok:                                             # C149: a refused lowering is a stopped search with the reasons, never an AttributeError
+        raise GenerationIncomplete("generation %d refused at lowering (%s): %s" % (gen, low.status, "; ".join(low.reasons)[:300]), low.status)
+    rep = execute(low.job, path, registry)
     if rep.runs_not_started:
         raise GenerationIncomplete("generation %d stopped by the wall budget: %d runs not started" % (gen, rep.runs_not_started), "WALL_BUDGET_EXHAUSTED")
     receipts = read_all(path)
@@ -297,18 +369,31 @@ class GenerationIncomplete(RuntimeError):
         super().__init__(msg); self.reason = reason
 
 
-def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, seed: int, registry=None, compact: bool = False) -> dict:
+def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, seed: int, registry=None, compact: bool = False,
+           battery=None, seed_players=None) -> dict:
     """compact=True (C115): archive rows carry player_hash + source (generation file, receipt id) instead of the
-    player manifest; selectors fetch parents on demand through player_of()."""
+    player manifest; selectors fetch parents on demand through player_of().
+    battery (atlas-bee S2): [{"world_params": {...}, "weight": w}, ...] -- every proposal is evaluated on every variant
+    and its row objective is the weighted mean (objective_by_variant keeps the parts).
+    seed_players (atlas-bee S3): players injected into generation 0 (at most n); their meta (e.g. origin) travels."""
     from prometheus.toolbox.registry import default_registry
     registry = registry or default_registry()
     sel = registry.make(selector_ref["kind"], **selector_ref.get("params", {}))
     workdir = pathlib.Path(workdir); workdir.mkdir(parents=True, exist_ok=True)
-    sel.workdir = workdir; sel.compact = compact
+    sel.workdir = workdir; sel.compact = compact; sel.registry = registry           # C148: selectors resolve generators and transforms here
+    if battery is not None:
+        if not battery or any(float(v.get("weight", 1.0)) <= 0 or not isinstance(v.get("world_params"), dict) for v in battery):
+            raise ValueError("battery must be a non-empty list of {world_params: dict, weight > 0}")
+        if len({_battery_key(v["world_params"]) for v in battery}) != len(battery):
+            raise ValueError("battery variants must be distinct")
+    if seed_players and len(seed_players) > sel.n:
+        raise ValueError("seed_players (%d) exceed the selector's proposals per generation (%d)" % (len(seed_players), sel.n))
+    sel.battery = battery
     archive = workdir / ARCHIVE
     rows = load_rows(archive)
     done = [r["gen"] for r in rows if r["kind"] == "GEN_DONE"]
     start = (max(done) + 1) if done else 0
+    sel.seed_players = list(seed_players) if (seed_players and start == 0) else None   # atlas-bee S3: generation 0 only
     committed = committed_rows(rows)
     if len(committed) != sum(1 for r in rows if r["kind"] == "elite") - _abandoned_count(rows):
         # trailing rows with no marker: an interrupted generation. Mark them abandoned so no reader trusts them.
@@ -319,7 +404,7 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
     for gen in range(start, generations):
         players = sel.propose(committed, seed * 7919 + gen, sel.n)
         try:
-            receipts = _run_generation(template, players, gen, seed, workdir, registry)
+            receipts = _run_generation(template, players, gen, seed, workdir, registry, battery=battery)
         except GenerationIncomplete as exc:                      # C69: an incomplete generation is never committed
             return {"generations_done": gen, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": exc.reason, "detail": str(exc)}
         new_rows = [dict(r, gen=gen) for r in sel.ingest(receipts)]
@@ -327,6 +412,7 @@ def evolve(template: Experiment, selector_ref: dict, generations: int, workdir, 
             scalar_objective(r, getattr(sel, "rank", None))
         for r in new_rows:
             _append(archive, r)
-        _append(archive, {"kind": "GEN_DONE", "gen": gen, "n": len(new_rows), "selector": sel.manifest()})
+        _append(archive, {"kind": "GEN_DONE", "gen": gen, "n": len(new_rows), "selector": sel.manifest(), "battery": battery,
+                          "seed_players": len(sel.seed_players or []) if gen == 0 else 0})
         committed += new_rows
     return {"generations_done": generations, "resumed_from_gen": start, "archive": str(archive), "elites": len(committed), "stopped": None}

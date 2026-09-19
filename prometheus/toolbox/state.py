@@ -212,8 +212,12 @@ class RedisStateDevice:
     kind = "state.redis.v1"
     capabilities = frozenset({"ext.state.ttl.v1", "ext.state.stream.v1", "ext.events.v1", "ext.snapshot.v1", "ext.cost.v1"})
 
-    def __init__(self, url: str = "redis://127.0.0.1:6379/0", ns: str = "pk", max_keys: int = 4096, default_maxlen: int = 1024):
-        import redis
+    def __init__(self, url: Optional[str] = None, ns: str = "pk", max_keys: int = 4096, default_maxlen: int = 1024):
+        import os, redis
+        # C123: the URL (with any credential) comes from the environment (PK_REDIS_URL), never from a file this code
+        # reads; default is a local server. M1's shared Redis answers on 192.168.1.202:6379 but requires
+        # authentication and no Redis credential is exposed through keys.py, the only sanctioned loader.
+        url = url or os.environ.get("PK_REDIS_URL") or "redis://127.0.0.1:6379/0"
         self.r = redis.Redis.from_url(url, socket_timeout=2, decode_responses=False); self.r.ping()
         self.ns = ns; self.max_keys = max_keys; self.default_maxlen = default_maxlen
         self._tick = 0; self._ev: List[Event] = []

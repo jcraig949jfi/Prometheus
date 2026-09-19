@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 169,
+ "built": "2026-09-19T10:08Z",
+ "n": 171,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -18,6 +18,23 @@
    "cheat_control": "an organism given the plant model (an exact inverse) must track with zero overshoot at zero derivative kick; the textbook PID must overshoot after saturation; derivative-on-error must spike on the step: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: embedded feedback control (Beauregard 2011-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "asal-sakana-2024::P.an_open_ended_search_scored_only_by_an_observer_s_embedding_of_a_few_sampled_frames_must_be_shown_either_to_reward_genuine_dynamical_novelty_or_to_be_crossable_by_drift_producing_configurations_within_the_legitimate_substrate",
+   "source_fossil": "asal-sakana-2024",
+   "source_evidence": "asal_metrics.py:52-64; rollout.py:78-95; TECHNE-107 (E1); Harmonia's PREREG_ASAL_LEGIT_SEARCH_2026-09-18",
+   "condition": "an organism searches a substrate's parameters to minimise the ASAL open-endedness score (mean max-cosine-to-earlier-frame over 8 sampled frames); the score cannot see the dynamics between samples or anything the observer's embedding discards; the question is whether a legitimate (ALIVE) configuration can reach a score at or below what scene-level garbage achieves",
+   "resource_or_constraint": "a fixed rollout-and-embed budget; the substrate's real parameter envelope",
+   "failure_condition": "for the metric-as-novelty claim: a legitimate ALIVE rollout crossing below the garbage score by drift rather than by any property one would call novelty",
+   "world_punishes": "trusting an observer-embedding score as a novelty measure without a substrate-side control",
+   "world_rewards": "a search that finds embedding-dissimilar frame sequences, alive or not",
+   "observable_consequence": "the minimum ALIVE score reached by a preregistered search over the Lenia catalogue and its parameter envelope, versus the garbage score (0.8167) and versus the catalogue with no search; and the class (genuine / metric-exploit / observer-exploit) of the best crosser",
+   "vacuity_condition": "a substrate too small to produce embedding drift",
+   "trivial_shortcuts": "free images not tied to any substrate (Harmonia's C-POS-SEARCH control, which is exactly the shortcut the legitimate-search question excludes)",
+   "cheat_control": "feeding fixed garbage frames scores the fixed value regardless of the Lenia parameters (the score depends only on the frames); a free-image search must reach below the garbage score (the channel works); a blank world must score the (T-1)/T ceiling and be NOT_ALIVE: Harmonia's fixture shows all three",
+   "cost_class": "GPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automated open-ended ALife search (SakanaAI 2024)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2058,6 +2075,23 @@
    "cheat_control": "an organism given the kettle's parameters must compute Ku and Pu exactly; the tuner with the steadiness check removed must return biased gains on the noisy kettle; the tuner on a first-order process without delay must FAIL within 20 peaks: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: relay auto-tuning (Astrom & Hagglund 1984) as a hobby brewing controller (Hirschmann 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "poet-original-2019::P.an_open_ended_environment_generator_must_keep_producing_challenges_its_agents_can_just_barely_learn_while_bounded_compute_forces_it_to_discard_environments_and_a_never_pruned_memory_keeps_penalising_the_regions_it_discarded",
+   "source_fossil": "poet-original-2019",
+   "source_evidence": "vault:poet-original-2019/upstream/tree/poet_distributed/novelty.py:18-62; vault:poet-original-2019/upstream/tree/poet_distributed/poet_algo.py:264-268, 287-305, 343-352",
+   "condition": "a population of environments is co-evolved with a population of agents under a fixed niche budget; candidates are ordered by novelty against an archive that is never pruned and admitted only if a transferred agent scores inside a fixed two-sided band; when the budget is exceeded the oldest active environments are deleted",
+   "resource_or_constraint": "max_num_envs concurrent niches; a fixed evaluation budget per adjustment step",
+   "failure_condition": "for the open-endedness claim: the process stalls because the admissible band, measured against a rising competence, and the deflating novelty estimator together stop admitting anything new",
+   "world_punishes": "discarding environments by age while continuing to score novelty against them forever",
+   "world_rewards": "generating environments that are different in the five descriptor numbers AND solvable-but-not-solved by some current agent",
+   "observable_consequence": "the admitted-environment rate over run time; the novelty score of admitted candidates as a function of archive size; whether the deleted regions continue to suppress candidates near them",
+   "vacuity_condition": "an environment space too small for the descriptor to separate, or a capacity never reached",
+   "trivial_shortcuts": "mutating only the dominant unnormalised features (roughness, pit gaps) to score novelty cheaply while leaving the stump features -- and the actual difficulty -- untouched",
+   "cheat_control": "a candidate that differs ONLY in stump_height must score lower novelty than an equally-sized difference in ground_roughness if the unnormalised-dominance reading is right; and an archive of fewer than k members must yield the whole-archive mean rather than a k-nearest mean",
+   "cost_class": "cluster-scale for the full algorithm; the novelty organ alone is milliseconds",
+   "purpose_separated_from_pressure": "PURPOSE: paired open-ended environment/agent co-evolution (Uber AI 2019)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

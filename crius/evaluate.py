@@ -130,6 +130,8 @@ def run_lifetime(player, tasks, cfg, condition: str = "ACCUMULATED", seed: int =
                  snapshot_index: int = None, keep_trajectories: bool = False) -> dict:
     """Conditions A-D. Returns task results, metrics, histories, replay hash, optional snapshot."""
     assert condition in ("FRESH", "ACCUMULATED", "WORKSPACE_RESET", "WORKSPACE_SCRAMBLED"), condition
+    from . import vm as _vm
+    _vm.set_substrate(cfg.get("substrate", {}))
     ws = Workspace.empty(cfg)
     blocks = BlockStore.empty(cfg)
     rng = random.Random("scramble:%d" % seed)
@@ -177,6 +179,8 @@ def run_lifetime(player, tasks, cfg, condition: str = "ACCUMULATED", seed: int =
 def run_remainder(player, tasks, cfg, start_index: int, ws_snap=None, blocks_snap=None,
                   step_budgets: dict = None, capacity_mult: float = 1.0) -> dict:
     """Run tasks[start_index:] from a given acquired state (controls E-J)."""
+    from . import vm as _vm
+    _vm.set_substrate(cfg.get("substrate", {}))
     ws = Workspace.empty(cfg)
     if capacity_mult != 1.0:
         ws.capacity = int(ws.capacity * capacity_mult)

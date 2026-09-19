@@ -227,3 +227,56 @@ def test_layout_mismatch_is_flagged_and_objective_reads_by_name_not_position(tmp
 
 
 from prometheus.toolbox.receipt import read_all as R_read
+
+
+# C126: the series contract as a PROPERTY over random IRs that carry the series observer: every written series
+# verifies as its written status; recovered episodes match the receipt's counts and the run's ticks; the bound is
+# honoured when declared; destroying an artifact is seen (MISSING_ARTIFACT), never silently read as empty.
+_SERIES_COVERAGE = {"exercised": 0, "artifact": 0, "bounded": 0}
+
+
+@pytest.mark.parametrize("seed", list(range(500, 620)))
+def test_series_contract_over_random_compositions(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import execute, lower
+    from prometheus.toolbox.receipt import read_all
+    from prometheus.toolbox import series as SER
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    if not any(o["kind"] == "observer.series.v1" for o in e.observers):      # the property is about the series: give every composition one
+        e.observers = list(e.observers) + [ref("observer.series.v1", per_player=bool(seed % 2))]
+    e.budget = dict(e.budget, horizon=max(int(e.budget["horizon"]), 3))
+    if seed % 3 == 0:                                              # push some past the inline boundary
+        e.budget = dict(e.budget, episodes=4, horizon=200)
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] != "SUMMARY" and r["status"] == "COMPLETED"]
+    if not rows:
+        return
+    _SERIES_COVERAGE["exercised"] += 1
+    for r in rows:
+        v = SER.verify(r, tmp_path)
+        for kind, st in v.items():
+            assert st == r["series"][kind]["status"], (seed, kind, st)
+        eps = SER.recover(r, tmp_path)
+        for kind, s in r["series"].items():
+            if s["status"] == "PRESENT":
+                assert len(eps[kind]) == s["n_episodes"] and sum(len(ep) for ep in eps[kind]) == s["n_records"] == r["engineering"]["ticks"]
+                assert all(len(rec) == s["record_width"] for ep in eps[kind] for rec in ep)
+                if "artifact" in s:
+                    _SERIES_COVERAGE["artifact"] += 1
+            if s["status"] == "BOUND_EXCEEDED":
+                _SERIES_COVERAGE["bounded"] += 1
+                assert s["n_records_dropped"] > 0 and s["bound"]["max_records"] is not None
+    # power: remove one artifact, verify must say so
+    art = [(r, k, s) for r in rows for k, s in r["series"].items() if "artifact" in s]
+    if art:
+        r, k, s = art[0]; (tmp_path / s["artifact"]["path"]).unlink()
+        assert SER.verify(r, tmp_path)[k] == "MISSING_ARTIFACT"
+
+
+def test_the_series_property_was_actually_exercised():
+    assert _SERIES_COVERAGE["exercised"] >= 10 and _SERIES_COVERAGE["artifact"] >= 3, _SERIES_COVERAGE

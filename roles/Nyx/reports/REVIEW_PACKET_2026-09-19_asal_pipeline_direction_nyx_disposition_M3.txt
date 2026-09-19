@@ -1,0 +1,150 @@
+================================================================================
+REVIEW PACKET -- ASAL pipeline direction, Nyx disposition + scoreboard change
+-- Mechanism Archaeology Pipeline, Nyx (Chop Shop), 2026-09-19
+Commit(s) of record: this commit. Directive verbatim at
+  roles/Nyx/prompts/2026-09-19_asal_pipeline_direction/.
+Author: Nyx[gandalf-9e21f277] (M3/GANDALF)
+Invoked by: standing order (review-packet after substantial work).
+================================================================================
+
+0. WHAT THIS PACKET IS
+   The operator issued a directive moving the ASAL branch from "the
+   pipeline works" to "can it extract machinery we did not know to look
+   for". This packet records what Nyx did in response: held the claim at
+   the right resolution, rebuilt the scoreboard, made the ASAL organs
+   addressable, preregistered the behavioral-cut plan, and relayed the
+   directive. No experiment was run; HARM-55 (the native-observer run) is
+   another seat's step on an AVX host.
+   CONFLICT OF INTEREST: I authored the ASAL cut and packet whose result
+   this directive builds on. The directive itself is the operator's; the
+   scoreboard redesign is mine and is the main thing to review.
+
+1. CONTEXT
+   The first mechanism (the ASAL open-endedness score) reached an
+   independent verdict on 2026-09-18: boundary supported, the raw
+   catalogue crosses the scene-garbage reference without search, and the
+   low-score region holds both exploit turbulence and coherent living
+   Lenia forms. The port-adequacy gate is now closed: Harmonia's extended
+   port accepts 24 of 24 domain classes and reproduces the 395 executed
+   rollouts byte-for-byte against the search's own port.
+
+2. THE QUESTIONS THE DIRECTIVE SETS
+   Near-term: which scientific conclusions survive a change to the fossil's
+   NATIVE observer (ASAL's own Flax/JAX CLIP path)? A changed absolute
+   scale is fine; a changed scientific ORDERING is the event.
+   Deep target: what dynamical or representational property makes distinct
+   Lenia phenotypes occupy the SAME low-score region? That is the
+   observer's many-to-one compression, potentially reusable machinery.
+
+3. WHAT WAS DONE, STEP BY STEP
+   3.1 Recorded the directive verbatim; relayed it with a per-seat
+       execution order and Nyx's disposition (comms #487).
+   3.2 s3 -- held the claim at the executed-395-rollout resolution. Do not
+       promote to "metric broken / CLIP rewards garbage / search alone /
+       whole domain"; do not weaken because I0 failed (the failure is
+       evidence the phenomenon pre-exists the search).
+   3.3 s5 -- preregistered the behavioral-cut plan: 14 candidate probes,
+       two strata (stable + discordant), definitions frozen with code
+       identity before any score is read. Runs only after replication.
+   3.4 s6/s11 -- created the atlas fossil skeleton for asal-sakana-2024
+       (targeted census.fresh, not the blanket run, which would also seed
+       tierra + terralingua that the operator said should wait). Re-ran
+       the cut; fixed an invalid ancestry relation ("original" ->
+       "algorithm_from"); the two organs attached. migrate set grade
+       ORIGINAL_ARTIFACT with both boundary files hash-matching.
+   3.5 s9 -- rebuilt the scoreboard (see section 4) and added a test.
+
+4. RESULTS -- the new scoreboard (nyx.scoreboard/2)
+   Old scheme (/1) counted returns_received ROWS by substring, so one
+   packet's compound verdict inflated supported/failed. My own prior
+   review packet flagged this (question 9.4); the operator answered it in
+   s9: stop counting rows as discoveries. The new scheme reads structured
+   fields on the packets_issued rows and counts investigations + yields:
+
+   count                                | value | source
+   -------------------------------------+-------+---------------------------
+   packets_issued                       |   3   | E3 ledger
+   packets_adjudicated                  |   2   | E3 (001 superseded, excl)
+   predictions_tested                   |   7   | E3 (3 + 4 interventions)
+   predictions_falsified                |   2   | E3 (particles c; ASAL I0)
+   cuts_technically_supported           |   2   | E3
+   mechanisms_isolated                  |   2   | E3
+   observer_stable_mechanisms           |   0   | E3 (pending HARM-55/56)
+   successful_independent_transplants   |   0   | E3
+   unresolved_anomalies                 |   1   | E3 (ANOM-ASAL-MANY-TO-ONE)
+   MECHANISMS_THAT_SURVIVED_TRANSPLANT  |   0   | E3 (the headline target)
+
+   A falsified prediction is productive output, not a failure, so
+   predictions_falsified is reported, never hidden.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   - nyx/atlas/build.py: scoreboard block rewritten to schema /2.
+   - nyx/tests/test_scoreboard.py: new (2 tests; suite 23 -> 25).
+   - nyx/atlas/fossils/asal-sakana-2024.json: new skeleton, then organs
+     attached and provenance populated (ORIGINAL_ARTIFACT).
+   - nyx/atlas/cuts/asal_sakana_2024.py: ancestry relation fixed.
+   - nyx/atlas/gates/LEDGER.json: per-packet scoreboard fields;
+     unresolved_anomalies list opened (ANOM-ASAL-MANY-TO-ONE).
+   - nyx/atlas/out/*: rebuilt (asal organs now in the catalog).
+   - roles/Nyx/prompts/2026-09-19_asal_pipeline_direction/: directive
+     verbatim, CLAIM_CURRENT_RESOLUTION, PLAN_behavioral_cuts, relay,
+     MANIFEST.
+   - roles/Nyx/STATUS.md, roles/Nyx/journal/2026-09-19.md refreshed.
+   - Comms: posted #487. Cost: no compute run by this seat.
+
+6. WHAT THIS DID NOT ESTABLISH (and deliberate holds)
+   - Nothing about the native observer yet; observer_stable_mechanisms is
+     0 by construction until HARM-55/HARM-56.
+   - No full-domain replication packet written; it waits for HARM-56 and
+     must be a NEW preregistration, not a completion of the old 1,045.
+   - No behavioral cuts run; the plan is preregistered but gated on the
+     replication executing.
+   - tierra + terralingua atlas skeletons deliberately NOT created (they
+     wait, per the 2026-09-18 directive).
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   7.1 The ASAL cut carried an invalid ancestry relation ("original"),
+       the same class of error I made in batch4. It blocked the skeleton
+       attach until fixed to "algorithm_from". Cost: one failed run.
+       Lesson already in the calibration ledger; the validator caught it.
+   7.2 census.run() would have seeded tierra + terralingua, violating the
+       "they wait" instruction. Caught before running; used a targeted
+       census.fresh for asal only. A blanket refresh is not a safe default
+       when the census boundary is under an explicit hold.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Techne: Flax scoring for HARM-55 on an AVX host; preserve discordant
+     specimens once HARM-55/56 identify them.
+   - Harmonia: run HARM-55 comparison, then HARM-56 observer-dependence
+     map, then execute the full-domain replication when Nyx freezes it.
+   - Nyx: POET's two mechanisms + skeletons now; Avida ancestry cut;
+     author the replication packet when HARM-56 returns; then behavioral
+     cuts and one mechanism nomination.
+   - Theophrastus: prepare a receiving ecology whose fitness is NOT CLIP
+     score, ready to receive a mechanism.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   9.1 Is "a mechanism == a packet" the right granularity for the new
+       scoreboard, or will a single investigation soon carry several
+       distinct mechanisms that should be counted apart from packets?
+   9.2 FALSIFY: the deep claim is that the low-score region contains
+       several genuinely different dynamical regimes. What single
+       observation would collapse it? Candidate: if the behavioral probe
+       battery finds NO axis separating the low-score population, the
+       region is homogeneous and the object reduces to metric failure --
+       a stop condition, not a discovery.
+   9.3 STOP: the directive says stop the branch if the phenomenon
+       disappears under the native observer or reduces to a preprocessing
+       mismatch. Are HARM-55's six sub-tests (A-F) sufficient to make that
+       call, or is a further control needed before declaring the branch
+       dead or alive?
+
+10. HOW TO REPRODUCE
+   cd <nyx worktree>
+   # (skeleton seeded targeted: census.fresh for asal only, not census.run)
+   python -m nyx.atlas.cuts.asal_sakana_2024   # attaches 2 organs, COARSE
+   python -m nyx.atlas.migrate_v1    # grade ORIGINAL_ARTIFACT, 2 files match
+   python -m nyx.atlas.schema        # 122 files, 0 problems
+   python -m nyx.atlas.build         # .scoreboard is nyx.scoreboard/2
+   python -m pytest -q nyx/tests     # 25 passed
+================================================================================

@@ -802,3 +802,280 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   A 100k-row archive resumes from ~160 MB instead of ~1 GB.
 - full and compact runs give identical rows over 3 + 2 resumed generations. M68/M69 CAUGHT; ledger 68/68.
   Suite 317 passed / 6 skipped.
+
+## C116 (07:31Z) env independence (metamorphic) and the second soak (pareto + compact + batch)
+- metamorphic test on the batch world: permuting the env order permutes the traces; replacing the OTHER envs'
+  seeds and actions leaves an env's trace unchanged; abandoning a neighbour changes nothing -- three parameter
+  sets incl. regime/stoch/delay and a 2-player dying config. (The fixture first abandoned an env after it had
+  already died -- a fixture error read as a failure; abandon moved to tick 1.)
+- soak 2: 12 wall minutes, selector.pareto.v1, compact archive, budget.batch=4: 518 generations, 4662 rows,
+  archive 1.59 MB (340 B/row vs 935 full), files clean, markers in order, no halt; traced growth 21 KB/gen (the
+  soak's own locals, as in C107). Observation about the SELECTOR, not the kernel: the front collapsed to 2-3 rows
+  by gen ~130 (life saturates at the horizon, net at 99.7) and best_net never moved again in 390 generations --
+  a pure Pareto parent set has no diversity pressure; pt_d's MAP-Elites kept 46 cells alive. Recorded, not fixed
+  (a Pareto-per-cell selector would be the composition; a design choice for a day).
+- soak receipts deleted; science/SOAK_SEARCH_PARETO_COMPACT_2026-09-19.json keeps the per-gen rows.
+
+## C117 (07:35Z) Pareto per cell (the composition soak 2 pointed at)
+- fronts_by_cell(rows) and selector.pareto.v1 by_cell=True: a cell first, then a non-dominated member of it; the
+  GEN_DONE manifest records cells and total front size. Test: c dominated within its cell by d, b kept by its
+  cell where the global front would drop it.
+- 90 generations on the soak template, one seed, compact + batched (11 s each): global front -> 13 cells, front
+  3, best net 99.7 first reached at gen 58; by_cell -> 31 cells, 5 on the global front, best net 74.8 at gen 27.
+  Diversity up, peak down in this window. n=1 seed, 90 generations: DATA, not a verdict on either selector.
+- comms: Bellerophon queue synced 07:33Z -- 0 new, 0 queued, no tasks. Other seats active on origin/main
+  (Harmonia gandalf, archaeon/frontier); merged twice, suite green on the merged tree each time.
+
+## C118 (07:36Z) crash between two receipts of one batch
+- a batch's receipts are written one by one after it ran; a KeyboardInterrupt after 2 of 4 leaves 2 valid rows
+  (scan clean, nothing partial); resume=True keeps them (resumed_runs 2), regroups the 5 remaining runs (4 + 1;
+  the kept receipts still say batch_size 4) and the final file equals a clean run on every science field. No
+  kernel change; the expectation I first wrote for the regrouping was wrong, the behaviour was right.
+
+## C119 (07:45Z) checkpoints did not carry the kernel's own wrappers, nor a world's mutable params
+- RED (4 parametrised cases): an episode with a delay / permute / schedule wrapper checkpointed at tick 9 and
+  resumed in fresh objects diverged from the uninterrupted run -- the delay case at the FIRST resumed tick
+  (buffer empty: observations repeated), the schedule case in the world's final charge (99790 vs 99760).
+- two defects: (1) make_checkpoint snapshotted the world THROUGH the wrappers' __getattr__ -- the wrappers'
+  own state (delay buffers; the schedule's tick count and position) was never in the checkpoint;
+  ObservationWrapper and ScheduleWrapper now snapshot/restore themselves around the inner world (permutations
+  re-derived from their seeds). (2) a world's RUNTIME-MUTABLE PARAMS are state and were not in any world's
+  snapshot: after a schedule changed step_cost at tick 4, a resumed world had the original back. integer, grid
+  and integer_batch (scalar face) now carry {MUTABLE params} in their snapshot; admission's extensions check
+  demonstrates it (a world declaring snapshot + mutable_params whose snapshot forgets a change is refused).
+- mutants M70-M72 CAUGHT (M72 by admission itself: every reference component); ledger 71/71. Suite 326 / 6.
+- the C1 lesson in another form: a state that lives in the kernel (not in the world) is still state that a
+  checkpoint must carry. The honest list gains nothing; the checkpoint contract gains a sentence.
+
+## C120 (07:47Z) the checkpoint invariant as a property over random compositions
+- 120 fuzz IRs: an episode checkpointed at a random tick and resumed in fresh objects must emit the same actions
+  and world summary as the uninterrupted episode. 19 compositions reach the path (14 integer, 5 grid; the rest
+  refused at lowering, horizon < 2, ended before the tick, or the fuzz's known schedule-on-n_regs designer error);
+  a coverage guard refuses fewer than 15. All 19 agree after C119. No new defect.
+- suite 447 passed, 6 skipped.
+
+## C121-C122 (08:01Z) every committed receipts file is a fixture; the mutation runner's stale-bytecode hole
+- C121 tests/test_replay_committed.py: replay_file() over all 38 committed receipts files (examples, playtests,
+  search generation files; archive.jsonl are rows, excluded) asserting 0 divergent runs; a guard names the big
+  four. 6 s. Power shown by hand: a one-constant change to the reference world (x*97 -> x*98, mutant M73) fails 27
+  of 39. Register rows added (fixtures, checkpoint, mutable-params-in-snapshot).
+- C122 FALSE RED that exposed a hole in the mutation runner: after the M73 run the suite failed 47 tests on an
+  UNMUTATED tree. Cause: a mutant of the same byte length, restored within the same mtime second, leaves a .pyc
+  compiled from the MUTATED source that Python's timestamp+size check accepts for the restored file. Until now a
+  same-size mutant could also have run the suite against stale ORIGINAL bytecode and read SURVIVED/CAUGHT for the
+  wrong reason (no such row is known; the first failures recorded were all real tests). Fix: mutant subprocesses
+  run with PYTHONDONTWRITEBYTECODE=1 and the runner purges prometheus/toolbox __pycache__ before the first mutant
+  and after every restore. M73 re-run leaves 0 pycache dirs and a green tree (486 passed / 6 skipped).
+- lesson for the register: the instrument that mutates source must also own the interpreter's cache of it.
+
+## C123 (08:15Z) Redis: reachable on M1, not usable -- the reason is now precise
+- checked the window's standing blockers after the addendum: primordial/ is still not on origin/main (D-BELL-2
+  holds); M1's shared Redis ANSWERS on 192.168.1.202:6379 (TCP open) but requires authentication, and no Redis
+  credential is exposed through keys.py (the only sanctioned loader; .env files are never read by this seat).
+  Redis acceptance therefore stays NOT REACHED with a better reason than "no server".
+- RedisStateDevice now takes its URL (credential included) from PK_REDIS_URL when set; with it pointing at M1 the
+  five model-based tests skip with "AuthenticationError: Authentication required" -- the day a credential is
+  handed to the environment, the acceptance run is one command. Suite unchanged (486 passed / 6 skipped).
+
+## C125 (08:17Z) the search layer's invariants as a property over random templates
+- 40 random IRs turned into search templates (one player slot, an objective, horizon >= 6; a random selector among
+  truncation / map_elites with rank / pareto / pareto by_cell): three generations in one process, resumed as
+  1 + 2, and as a compact archive must give identical rows. 28 templates exercised (22 integer, 5 grid, 1
+  pendulum; 3 with vector objectives), guard >= 12. All agree. First version guarded at 5 exercised because the
+  fuzz's horizons of 0/1 and missing objectives starved it -- a property that mostly returns early is the C93
+  false green in another form; the guard caught it.
+- suite 527 passed / 6 skipped (the properties grew the suite by 40 items each).
+
+## C126 (08:19Z) the series contract as a property over random IRs
+- 120 random IRs each given a series observer (per-player on odd seeds; every third pushed past the inline
+  boundary): every written series verifies as its written status; recovered episodes match n_episodes,
+  n_records and the run's ticks, every record its declared width; a declared bound drops and says so; deleting
+  an artifact reads MISSING_ARTIFACT. 49 compositions exercised, 16 artifact series, 68 bounded; guard >= 10 /
+  >= 3. All agree. (First version exercised 6: only the fuzz's own series observers -- the guard again.)
+- suite 648 passed / 6 skipped, 34 s.
+
+## C127 (08:21Z) the forensic scan as a property over random receipts files
+- 60 random IRs -> receipts files (26 with >= 4 lines exercised): a fresh file scans clean; one edited byte in a
+  random line is named on that line and read_all refuses the file; one deleted middle line breaks the chain at
+  the next line; a duplicated line is a DUPLICATE; a truncated last line is TRUNCATED.
+- defect found by the property: an EDITED line was reported twice -- the edit, then a CHAIN_BREAK on the line
+  after it, because the invalid record was dropped from the chain anchor. The next line's prev points at what
+  the writer PUT in the edited line, so the claimed receipt_id now anchors the chain: one defect per edit; a
+  genuine break (an edit of the receipt_id field itself) is still a break. The hand-written C44 tests had
+  looked only at the first defect. Mutant M75 (the old behaviour) CAUGHT.
+- suite 709 passed / 6 skipped, 35 s (the four properties added ~180 items tonight).
+
+## C128 (08:23Z) IR laws as properties: sweeps and negotiation
+- 80 random IRs: sweep points = product of axis sizes; each point's IR reads the swept value back at its dotted
+  path, records parent + point in provenance, carries no sweep of its own, and leaves everything else untouched;
+  points with distinct axis values have distinct digests (65 multi-point IRs). Negotiation: BLOCKED (28) implies a
+  non-empty missing set nobody provides and drawn from the implied requirements; OK (34) implies every implied
+  requirement is provided. No defect; my first "untouched" check forgot that a point IR records its provenance.
+- suite 789 passed / 6 skipped.
+
+## C129 (08:24Z) the controls' vocabulary as a property over random IRs
+- 60 random IRs with controls: 103 (primary, arm) pairs across all 8 control kinds; outcomes MET 15 / NOT_MET 6 /
+  INDETERMINATE 11 at the job level -- the controls say NO on random compositions too, not only on the built
+  cases. Laws checked per pair: vocabulary; INDETERMINATE carries a note/reason; sham/scratch MET => trace
+  changed, scratch MET => every transformed genome changed; replay MET on BIT => traces equal; cheat MET =>
+  trace changed; valid == (0 failed, 0 unstarted, every control MET). No defect.
+- suite 850 passed / 6 skipped.
+
+## C130 (08:25Z) admission is order-independent and idempotent (property)
+- all 42 components admitted in three shuffled orders on fresh forks: identical state and failed list to
+  admit_all's; admitting one twice gives the same result. (Admission of a reference world is ~2 ms: the
+  performance probe runs to the world's own horizon, not 5000 ticks -- noted, the receipt says so.)
+
+## C131 (08:26Z) accounting laws as a property over random receipts
+- 196 COMPLETED receipts from 60 random IRs: every counter non-negative numeric; world_steps == ticks; a flat
+  substrate carries no workspace traffic (refusals counted as ws_refused); every penalty key an objective charged
+  exists in the accounting or is named in unknown_penalty_keys. No violation; guard >= 100 receipts.
+- suite now 914 passed, 6 skipped.
+
+## C132 (08:39Z) the observation wrappers' laws as a property over random worlds (post-closing)
+- 28 random worlds (integer / grid flat / pendulum), random delay in {1,2,5} and permutation seed: the wrapped
+  observation at tick t is the raw observation at max(0, t-d); the permutation is a bijection applied
+  identically every tick (recovered from a tick with distinct channel values); step results and traces equal the
+  unwrapped world's. No defect. Suite 944 passed / 6 skipped.
+
+## C133 (08:43Z) the transforms' laws as a property; point mutation was a no-op 4% of the time (post-closing)
+- 40 random players (v1/v2/v3/rewrite): every transform keeps the representation, instantiates, is deterministic
+  per seed; relabel preserves the probe fingerprint; shuffle preserves the cell multiset; fresh changes the genome;
+  point_mutation changes exactly one cell. Seed 1227 (a v3 machine) FAILED the last law: the mutation returned the
+  parent unchanged.
+- defect: the v2/v3 memory branches drew a fresh value that could equal the old one; a one-state machine's
+  next-state field could never change. Measured on the old operator: 16 of 400 mutations were no-ops (4%) -- a
+  wasted evaluation and a duplicate player_hash row each time. Every branch now steps AWAY from the current value.
+  Semantic fix under the same kind (ABI_DIFF); pre-fix archives are data and stay valid.
+- honest ledger at work again: mutant M76 (the old v2 branch) SURVIVED the 40-seed property (no seed hit a v2
+  no-op); a dedicated 600-case test now catches it. Ledger 75 mutants.
+- suite 985 passed, 6 skipped.
+
+## C134 (08:45Z) the ledger file: a --only run must merge, never replace (post-closing)
+- C133's commit carried a MUTATION_LEDGER json of ONE row: a --only run rewrote the whole file (the same slip
+  noted at C91 and worked around by re-running the full ledger before each commit -- until it was not). The
+  runner now merges --only rows into the existing file by id. Restored the 74-row ledger from the previous
+  commit and merged M76: 75 mutants, 75 CAUGHT. A science file that an instrument can silently truncate is the
+  C95 lesson in file form.
+
+## C135 (08:49Z) the player contract as a property; the substrate's clock was not in the checkpoint (post-closing)
+- 60 random specs x random substrates x flat/structured observations: act() shape and range; probe fingerprint
+  stable across instances; cost() non-negative; snapshot/restore mid-run in FRESH objects reproduces the rest of
+  the action sequence. Two fixture errors first (a second instance on the used substrate is pid 1, a resumed
+  instance pid 2 -- the kernel resumes on fresh substrates), then a real one: statemachine.v2 on kv ttl=2 diverged
+  after restore.
+- defect: _WorkspaceSubstrate.tick() advances the device by the substrate's OWN cumulative counter (_t += 1;
+  dev.advance(_t)); a checkpoint carried the device only, so a fresh substrate's first tick after a resume moved
+  the device's clock BACKWARDS (8 -> 1) and ttl expiries fired ticks late. Substrates now snapshot/restore their
+  clock (_t, episode, tick-in-episode, first-read hits) together with the device; make_checkpoint/resume_episode
+  use it. Mutants M77/M78 CAUGHT; ledger 77/77 (merged). Suite 1045 passed / 6 skipped.
+- the C119 sentence again: state that lives in the kernel's own objects (wrappers, substrates) is state a
+  checkpoint must carry. Three such holes tonight (wrappers, mutable params, substrate clock).
+
+## C136-C137 (08:51Z) observers survive the checkpoint (property strengthened); door semantics against models
+- C136: the checkpoint property now also asserts every observer's measure and series episode after a resume
+  equal the uninterrupted run's (19 compositions). Agree.
+- C137: 40 random parameterisations (kv ttl None/1/3; stream lag 1/2/4, maxlen 2/8; mailbox capacity 1/3) driven
+  40 ticks against tiny models: kv read = last write within ttl ticks; stream read = the value appended lag
+  appends ago among the last maxlen; mailbox read = the newest message from ANOTHER player among the last
+  capacity; flat refuses and counts every write. All agree. No defect. (Constant players hold no door: the
+  test drives the doors themselves, as a v2/v3 player's .ws would.)
+- suite 1085 passed / 6 skipped.
+
+## C138 (08:52Z) the descriptor is a function of the trace measures (property)
+- 40 random IRs with random scales: the descriptor observer's three buckets recompute exactly from the same
+  receipt's trace observer (abstain*8 // (ticks*players); actions // (ticks*players*action_scale) capped 7;
+  yield // yield_scale capped 7), and its other measures equal the trace observer's. No defect.
+
+## C139 (08:56Z) the state model extended to streams (post-closing)
+- StreamModel: streams share the key budget with kv; append keeps the last maxlen (discards counted); read since 0;
+  end_scope drops streams of the scope; snapshot/restore mid-way; 30 seeds x 400 ops agree with the device on
+  every read/get after every op and on refused/discarded/expired totals. No device defect.
+- power: M79 (streams grow past maxlen) and M81 (a restored device forgets its streams) CAUGHT; M80 first
+  SURVIVED -- its anchor text occurs twice in state.py and the runner mutated the FIRST (advance(), where
+  skipping the stream store is an equivalent mutant: streams carry no expiry). Re-anchored on end_scope: CAUGHT.
+  A survivor that is an equivalent mutant is the runner telling the truth; the note stays in the ledger row.
+- ledger 80 mutants, 80 CAUGHT (merged). Suite 1155 passed / 6 skipped.
+
+## C140 (08:58Z) the wrapped engines enter the fuzz generator (post-closing)
+- wforge Encounter (6%) and c6 composed (6%) join the random IR generator when importable: over 300 seeds 16
+  wforge IRs (all BLOCKED: the fuzz's implied requirements exceed what the wrap declares -- the refusal path
+  exercised) and 5 c6 IRs (2 OK executed both paths, 3 TARGET_UNSUPPORTED). Every property test now sees them.
+- the shifted seeds exposed a test-side bug in my C112 error normalisation: str.replace("", kind) on a non-batched
+  FAILED receipt interleaved the world kind between every character. Fixed (replace only when the batch world is
+  named). Suite 1155 passed / 6 skipped.
+
+## C141 (08:59Z) build.kernel_hash names the kernel and only the kernel (post-closing)
+- a one-byte change to a kernel module changes the hash (refresh=True); a change to a test file does not; the
+  file count is stable; receipts of one process share host and build. (Files restored in finally; tree clean.)
+
+## C142 (09:13Z) the reference objectives' laws as a property (after the closing numbers)
+- 40 random IRs with a four-component objective (yield_net with a random penalty key incl. an unknown one,
+  survival v1/v2, series_gain) and a series observer on 60%: every law recomputes from the same receipt's
+  observations, accounting, world summary and series; unknown penalty keys are named; series_gain is None with
+  a SERIES_ reason when there is no series. No defect.
+
+## C143 (09:14Z) lowering laws as a property
+- 60 random IRs (about half lower OK): runs = points x arms x seeds; every run names the job; arm names unique;
+  one experiment digest per (arm, point); the replay arm's digest equals the primary's and every other arm's
+  differs; every (seed, split) follows the seed policy; the negotiation's required set is covered by provided
+  plus uncatalogued. No defect.
+
+## C144 (09:16Z) the whole committed science on a second platform (no pytest needed)
+- tests/linux_probe.py: a bare-interpreter probe (pytest stubbed if absent) that executes 120 random IRs on both
+  paths and replays every committed receipts file. WSL Linux / CPython 3.12.3 / no numpy: 361 runs, 0 path
+  divergences (all NO_BATCH_IMPLEMENTATION -- no numpy, by design); 38 files, 1296 runs compared, 0 divergent.
+  Windows / 3.14.4 / numpy: same 361 runs (221 batched), 0 / 0. science/CROSS_PLATFORM_FULL_2026-09-19.json.
+- reading: the committed science of the whole night reproduces byte-for-byte on a second OS and interpreter,
+  not just the 87 hand fixtures of the earlier probe.
+
+## C145 (09:17Z) wall budget + resume as a property on both paths
+- 30 random IRs (those with >= 3 runs) under a 1 ns wall budget, scalar and batched alternately: the job stops
+  between runs/batches with the reason and the not-started count in the summary; every written receipt is
+  complete; resume=True finishes with resumed_runs == the receipts kept and 0 not started; the final rows equal
+  an unbudgeted run's on trace hashes and status. No defect.
+
+## C146 (09:20Z) duplicate sweep values (found by widening C145's coverage guard)
+- C145's property exercised only 6 of 30 seeds; widened to 100 seeds with a guard (>= 15). Seed 1839 then failed:
+  the budgeted run wrote 1 receipt and the resume counted 2 prior runs. Rows: the fuzz's players sweep
+  [pop, pop[:1]] with ONE player gives two IDENTICAL sweep points -> two RunSpecs with the same key -> the point
+  ran twice in a clean run and one receipt satisfied both on resume.
+- fix: validate() refuses duplicate values on a sweep axis, naming the axis (a designer error, like an unknown
+  param). Test + mutant M82 CAUGHT; ledger 81/81 (merged). Suite 1357 passed / 6 skipped.
+- the guard did its job twice tonight: a thin property is a false green with extra steps.
+
+## C147 (09:21Z) split laws as a property
+- 60 random jobs: the summary's splits count exactly the primary receipts of each split; each split's seeds are
+  the seed policy's; holdout exists iff holdout_seeds > 0; objective_n <= n; scalar means recompute from the
+  rows. No defect.
+
+## C148 (09:25Z) a failing player inside a search generation: three defects in one test
+- (1) a FAILED run has no science; _rows_from_receipts raised KeyError AFTER the generation's receipts were
+  written -> no GEN_DONE -> abandoned on the next resume and re-run -> the same player fails -> forever. Rows now
+  carry the failure (objective None, failed_seeds, errors, identity from the manifest) and the generation
+  COMMITS; a rank ignores the row through its None objective.
+- (2) selectors resolved generators and transforms in the PROCESS-GLOBAL registry (evolve's registry= was used
+  only to run the generation): a representation registered on a fork could not be searched. evolve() now hands
+  the selector its registry (C97b's hole, search-layer edition).
+- (3) a representation NO transform accepts (the fallback shuffle does not accept it either) raised TypeError
+  inside propose. _child(): mutation -> shuffle -> the representation's registered GENERATOR (meta says
+  fallback=generator), never an exception in a generation.
+- test drives all three with a bomb representation on a forked registry: two generations commit, no
+  GEN_ABANDONED, rows with failed_seeds and rows without. Mutants M83-M85 CAUGHT; ledger 84/84 (merged). Suite
+  1419 passed / 6 skipped. A synthetic fixture in an older test lacked a status field and was corrected.
+
+## C149 (09:27Z) a refused lowering inside a search
+- a template whose lowering is BLOCKED (a required capability nobody provides) crashed evolve() with an
+  AttributeError on a None job. Now a GenerationIncomplete: the search returns stopped=<lowering status> with
+  the reasons, nothing written. (A generation whose PLAYERS a substrate cannot instantiate had already been fine:
+  lowering refuses only when the template itself is wrong.) Mutant M86 CAUGHT; ledger 85/85.
+
+## C150 (09:49Z) the final ledger found a lost catch: M65 SURVIVED
+- the closing full run: 84/85 -- M65 (TASK_CHANGE skipped for an env finishing at the scheduled tick) SURVIVED.
+  It had been caught at C112 by the random batched==scalar property at fuzz seed 107; widening the generator
+  at C140 (wrapped engines) shifted every seed's composition and the catching case vanished. A property's power
+  is a function of its generator: change the generator, re-check what it caught. Deterministic reproducer added
+  (an env whose players die on step t receives the change fired after that step; the reference world does too).
+  M65 CAUGHT again; ledger 85/85 (merged). Suite 1421 passed / 6 skipped.
+- register lesson (the last of the night): every defect caught only by a random property gets a hand-written
+  reproducer before the property's generator is changed.

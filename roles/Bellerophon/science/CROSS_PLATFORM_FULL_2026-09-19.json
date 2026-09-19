@@ -1,0 +1,39 @@
+{
+ "when_utc": "2026-09-19T09:15:34.388332+00:00",
+ "cycle": "C144",
+ "tool": "prometheus/toolbox/tests/linux_probe.py (no pytest needed)",
+ "windows": {
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.4",
+  "numpy": true,
+  "fuzz": {
+   "BLOCKED_MISSING_CAPABILITY": 42,
+   "runs": 361,
+   "BATCHED": 221,
+   "NO_BATCH_IMPLEMENTATION": 140,
+   "TARGET_UNSUPPORTED": 11,
+   "invalid": 14
+  },
+  "path_divergences": 0,
+  "committed_files_replayed": 38,
+  "runs_compared": 1296,
+  "divergent_runs": 0
+ },
+ "linux": {
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "numpy": false,
+  "fuzz": {
+   "BLOCKED_MISSING_CAPABILITY": 42,
+   "runs": 361,
+   "NO_BATCH_IMPLEMENTATION": 361,
+   "TARGET_UNSUPPORTED": 11,
+   "invalid": 14
+  },
+  "path_divergences": 0,
+  "committed_files_replayed": 38,
+  "runs_compared": 1296,
+  "divergent_runs": 0
+ },
+ "reading": "the 38 committed receipts files (1296 runs) reproduce their trace hashes, series hashes and objective values on Linux/CPython 3.12 without numpy, and the same 120 random IRs execute identically on both paths there (all scalar: no numpy -> NO_BATCH_IMPLEMENTATION by design)"
+}

@@ -1,14 +1,14 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 240,
+ "built": "2026-09-19T10:08Z",
+ "n": 244,
  "by_relation": {
   "reimplementation_of": 20,
-  "algorithm_from": 100,
+  "algorithm_from": 102,
   "derived_from": 16,
   "historical_version_of": 21,
   "shares_ancestor_with": 49,
-  "superseded_by": 14,
+  "superseded_by": 16,
   "port_of": 4,
   "forked_from": 1,
   "supersedes": 6,
@@ -24,6 +24,13 @@
    "relation": "reimplementation_of",
    "to": "discrete PID with anti-windup and bumpless transfer (Astrom & Hagglund 1995); the accumulator-in-output-space form is the author's",
    "note": "from the record and the author's blog as cited there",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "asal-sakana-2024",
+   "relation": "algorithm_from",
+   "to": "SakanaAI ASAL (Kumar, Lu, Lange, Tang, Ha, Clune et al. 2024); the substrates descend from Lenia (Chan 2019), Boids (Reynolds 1987), particle life; the observer from CLIP (Radford et al. 2021)",
+   "note": "from the record and the source",
    "basis": "SOURCE_READ"
   },
   {
@@ -1249,6 +1256,27 @@
    "relation": "reimplementation_of",
    "to": "Astrom & Hagglund 1984 (relay tuning) and the Ziegler-Nichols family of rules; the author cites Brett Beauregard's Arduino autotune as the source of the structure (the atlas's arduino-pid is the same author's controller)",
    "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "poet-original-2019",
+   "relation": "superseded_by",
+   "to": "poet-enhanced-2020",
+   "note": "same repository, branch master",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "poet-original-2019",
+   "relation": "superseded_by",
+   "to": "poet-enhanced-2020",
+   "note": "Enhanced POET (branch master) replaces the hand-built 5-number descriptor and this novelty estimator with CPPN-generated environments and PATA-EC, and adds ANNECS; from the Techne record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "poet-original-2019",
+   "relation": "algorithm_from",
+   "to": "minimal criterion coevolution (Brant & Stanley 2017); novelty search (Lehman & Stanley 2011)",
+   "note": "from the source and the paper",
    "basis": "SOURCE_READ"
   },
   {

@@ -275,3 +275,79 @@ def test_every_world_that_accepts_zero_players_runs_to_its_horizon(tmp_path, kin
     rep = execute(low.job, tmp_path / (kind + ".jsonl"), REG); assert rep.n_failed == 0 and rep.valid
     r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
     assert r["engineering"]["ticks"] == 9, (kind, r["engineering"])
+
+
+# C132: the kernel wrappers' laws as a PROPERTY over random worlds: with delay d the wrapped observation at tick t is
+# the raw observation at tick max(0, t - d) (the first observation repeated until d are buffered); a permutation is a
+# bijection on channels (sorted values invariant, and applied consistently every tick); the two compose (permute
+# then delay, in intervention order) and neither touches the world's trace.
+@pytest.mark.parametrize("seed", list(range(1100, 1130)))
+def test_observation_wrapper_laws_over_random_worlds(seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import build_world, ObservationWrapper
+    rnd = random.Random(seed)
+    e = random_experiment(seed)
+    if e.validate() or e.world["kind"] not in ("world.integer.v1", "world.grid.v1", "world.pendulum.v1"):
+        return
+    e.interventions = []; e.budget = dict(e.budget, horizon=12)
+    if e.world["kind"] == "world.grid.v1":
+        e.world["params"]["obs_mode"] = "flat"
+    raw = build_world(e, REG); d = rnd.choice([1, 2, 5]); ps = rnd.choice([3, 11])
+    w = ObservationWrapper(build_world(e, REG), delay=d, permute_seeds=[ps])
+    raw.reset(3); w.reset(3); n = raw.n_players
+    acts = {pid: [rnd.randrange(8) for _ in range(raw.legal_actions(pid).width)] for pid in range(n)}
+    raw_obs = []; perm = None
+    for t in range(12):
+        ro = [list(raw.observe(pid)) for pid in range(n)]; wo = [list(w.observe(pid)) for pid in range(n)]
+        raw_obs.append(ro)
+        src = raw_obs[max(0, t - d)]
+        for pid in range(n):
+            assert sorted(wo[pid]) == sorted(src[pid]), (seed, t, pid)              # bijection on channels
+            if perm is None and len(set(src[pid])) == len(src[pid]):
+                perm = [src[pid].index(v) for v in wo[pid]]                           # recover the permutation once, from a tick with distinct values
+            if perm is not None and len(set(src[pid])) == len(src[pid]):
+                assert [src[pid][i] for i in perm] == wo[pid], (seed, t, pid)        # and it is the same permutation every tick
+        a = raw.step(acts); b = w.step(acts)
+        assert a == b and raw.trace_hash() == w.trace_hash(), (seed, t)             # the wrappers never touch the world
+        if a:
+            break
+
+
+# C146 (fuzz seed 1839 under the wall-budget property): a sweep axis with two IDENTICAL values made two RunSpecs
+# with the same key -- the point ran twice and a resume counted one receipt as two prior runs. Refused at validate().
+def test_duplicate_sweep_values_are_refused_with_the_axis_named():
+    from prometheus.toolbox.examples.exp_001_delay_sweep import build
+    e = build(); e.sweep = {"world.params.world_seed": [1, 2, 1]}
+    d = e.validate(); assert d and any("duplicate" in m and "world.params.world_seed" in m for m in d), d
+    e.sweep = {"world.params.world_seed": [1, 2]}; assert not e.validate()
+    pop = [random_statemachine(1).manifest()]
+    e.sweep = {"players": [pop, list(pop)]}; assert any("duplicate" in m for m in e.validate())
+
+
+# C147: split laws as a property: the SUMMARY's splits count exactly the primary receipts of each split; the seeds of
+# a split are the seed policy's; objective_n never exceeds n; a holdout split exists iff holdout_seeds > 0; the
+# per-split mean recomputes from the rows (scalar objectives).
+@pytest.mark.parametrize("seed", list(range(1900, 1960)))
+def test_split_laws_over_random_jobs(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, execute, seeds_for
+    from prometheus.toolbox.receipt import read_all
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = read_all(tmp_path / "r.jsonl"); summ = [r for r in rows if r["arm"] == "SUMMARY"][0]; prim = [r for r in rows if r["arm"] == "primary"]
+    sp = summ["science"]["splits"]; pol = seeds_for(e)
+    assert set(sp) == {s for _, s in pol} == {r["split"] for r in prim}
+    assert ("holdout" in sp) == (int(e.seed_policy.get("holdout_seeds", 0)) > 0)
+    for name, s in sp.items():
+        mine = [r for r in prim if r["split"] == name]
+        assert s["n"] == len(mine) and s["objective_n"] <= s["n"]
+        assert {r["seed"] for r in mine} == {sd for sd, nm in pol if nm == name}
+        if s["objective_shape"] == "scalar":
+            vals = [r["science"]["objective"]["value"] for r in mine if r["status"] == "COMPLETED" and isinstance(r["science"].get("objective", {}).get("value"), (int, float))]
+            assert s["objective_n"] == len(vals) and s["objective_mean"] == pytest.approx(sum(vals) / len(vals))

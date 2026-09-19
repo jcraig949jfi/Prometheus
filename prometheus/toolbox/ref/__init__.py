@@ -49,6 +49,8 @@ def install(reg: Registry) -> Registry:
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/worlds_grid.py"), license="repository"))
     reg.register(ComponentRecord("substrate.flat.v1", "substrate", S.FlatInProcessSubstrate, S.FlatInProcessSubstrate.capabilities,
                                  reference_of="substrate.flat", route="write", provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
+    reg.register(ComponentRecord("substrate.kv_weather.v1", "substrate", S.KVWeatherSubstrate, S.KVSubstrate.capabilities, route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py", note="atlas-bee S5: workspace weather (erase / sham)"), license="repository"))
     reg.register(ComponentRecord("substrate.kv.v1", "substrate", S.KVSubstrate, S.KVSubstrate.capabilities, route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/substrates.py"), license="repository"))
     reg.register(ComponentRecord("substrate.stream.v1", "substrate", S.StreamSubstrate, S.StreamSubstrate.capabilities, route="write",
@@ -61,6 +63,8 @@ def install(reg: Registry) -> Registry:
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("rewrite.v1", "representation", P.random_rewrite_system, frozenset({"core.player.v1"}), route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
+    reg.register(ComponentRecord("sequence.v1", "representation", P.random_sequence, frozenset({"core.player.v1"}), route="write",
+                                 provenance=dict(PROV, source="prometheus/toolbox/ref/players.py", note="atlas-bee S1: open-loop action sequence"), license="repository"))
     reg.register(ComponentRecord("statemachine.v2", "representation", P.random_statemachine_v2, frozenset({"core.player.v1"}), route="write",
                                  provenance=dict(PROV, source="prometheus/toolbox/ref/players.py"), license="repository"))
     reg.register(ComponentRecord("statemachine.v1", "representation", P.random_statemachine, frozenset({"core.player.v1"}), reference_of="statemachine",
@@ -77,6 +81,7 @@ def install(reg: Registry) -> Registry:
     reg.register(ComponentRecord("objective.yield_net.v1", "objective", O.YieldNetObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v1", "objective", O.SurvivalObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival.v2", "objective", O.SurvivalTicksObjective, frozenset(), route="write", provenance=PROV, license="repository"))
+    reg.register(ComponentRecord("objective.charge.v1", "objective", O.ChargeObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.survival_per_player.v1", "objective", O.SurvivalPerPlayerObjective, frozenset(), route="write", provenance=PROV, license="repository"))
     reg.register(ComponentRecord("objective.multi.v1", "objective", O.MultiObjective, frozenset(), route="write", provenance=PROV, license="repository",
                                  admission_params={"components": {"yield": {"kind": "objective.yield_net.v1", "params": {}}, "life": {"kind": "objective.survival.v1", "params": {}}}}))

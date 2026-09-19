@@ -225,10 +225,10 @@ class IntegerWorldBatch:
         self._one()
         st = {"t": int(self.t[0]), "regs": self.regs[0].tolist(), "charge": self.charge[0].tolist(), "alive": self.alive[0].tolist(),
               "pending": [list(q) for q in self.pending[0]], "stoch": int(self.stoch[0]), "seed": self.seeds[0], "active": bool(self.active[0])}
-        return json.dumps({"st": st, "h": self.h[0].hexdigest(), "steps": int(self.steps[0])}, sort_keys=True).encode()
+        return json.dumps({"st": st, "h": self.h[0].hexdigest(), "steps": int(self.steps[0]), "params": {k: self.p[k] for k in self.MUTABLE}}, sort_keys=True).encode()
 
     def restore(self, snapshot: bytes) -> None:
-        self._one(); d = json.loads(snapshot.decode()); st = d["st"]
+        self._one(); d = json.loads(snapshot.decode()); st = d["st"]; self.p.update(d.get("params", {}))
         self.t[0] = st["t"]; self.regs[0] = st["regs"]; self.charge[0] = st["charge"]; self.alive[0] = st["alive"]
         self.pending[0] = [tuple(q) for q in st["pending"]]; self.stoch[0] = _U(st["stoch"]); self.active[0] = st["active"]
         self.h[0] = hashlib.sha256(("restored:" + d["h"]).encode()); self.ev[0] = []

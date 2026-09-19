@@ -1,0 +1,351 @@
+{
+ "adaptation_id": "a6",
+ "comparison": {
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; every arm replays bit-for-bit (weather is seeded)"
+   ],
+   "measurement": [
+    "panel-mean final charge per arm; ws_damage/ws_writes from accounting"
+   ],
+   "representational": [
+    "only the WORKSPACE (a declared door) is damageable; the statemachine's internal `state` register is UNREPRESENTABLE to weather"
+   ],
+   "resource": [
+    "panel=6 organisms, 8 seeds, 2 episodes x 30 ticks"
+   ],
+   "scientific": [
+    "a gate refused (P1_damage_fires): inconclusive as in e07",
+    "gate results: P1_damage_fires=False, P2_uses_state=True, P3_changes_behaviour=True, P4_separable=True, P5_deterministic=True"
+   ]
+  },
+  "gates": {
+   "P1_damage_fires": false,
+   "P2_uses_state": true,
+   "P3_changes_behaviour": true,
+   "P4_separable": true,
+   "P5_deterministic": true
+  },
+  "new_phenomena": [],
+  "panel_means": {
+   "SHAMWEATHER": 10.520833333333334,
+   "STATIC": 10.520833333333334,
+   "WEATHER": 11.729166666666666
+  },
+  "summary": "weather arms (panel-mean charge): STATIC=10.520833333333334 WEATHER=11.729166666666666 SHAMWEATHER=10.520833333333334 -> PHENOMENON_PRESERVED",
+  "verdict": "PHENOMENON_PRESERVED"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 4,
+  "IDENTICAL": 2,
+  "MODIFIED": 0,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 1
+ },
+ "notes": [
+  "statemachine internal `state` register is not damageable: UNREPRESENTABLE per manifest"
+ ],
+ "observed": {
+  "arms": {
+   "SHAMWEATHER": {
+    "mode": "sham",
+    "panel_mean": 10.520833333333334,
+    "per_org": [
+     {
+      "mean": 10.625,
+      "org": 0,
+      "replay": "MET",
+      "ws_damage": 20,
+      "ws_reads": 38,
+      "ws_writes": 58
+     },
+     {
+      "mean": 10.125,
+      "org": 1,
+      "replay": "MET",
+      "ws_damage": 21,
+      "ws_reads": 41,
+      "ws_writes": 62
+     },
+     {
+      "mean": 10.5,
+      "org": 2,
+      "replay": "MET",
+      "ws_damage": 20,
+      "ws_reads": 40,
+      "ws_writes": 60
+     },
+     {
+      "mean": 8.5,
+      "org": 3,
+      "replay": "MET",
+      "ws_damage": 18,
+      "ws_reads": 36,
+      "ws_writes": 54
+     },
+     {
+      "mean": 8.25,
+      "org": 4,
+      "replay": "MET",
+      "ws_damage": 20,
+      "ws_reads": 38,
+      "ws_writes": 58
+     },
+     {
+      "mean": 15.125,
+      "org": 5,
+      "replay": "MET",
+      "ws_damage": 20,
+      "ws_reads": 40,
+      "ws_writes": 60
+     }
+    ]
+   },
+   "STATIC": {
+    "mode": "off",
+    "panel_mean": 10.520833333333334,
+    "per_org": [
+     {
+      "mean": 10.625,
+      "org": 0,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 38,
+      "ws_writes": 38
+     },
+     {
+      "mean": 10.125,
+      "org": 1,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 41,
+      "ws_writes": 41
+     },
+     {
+      "mean": 10.5,
+      "org": 2,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 40,
+      "ws_writes": 40
+     },
+     {
+      "mean": 8.5,
+      "org": 3,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 36,
+      "ws_writes": 36
+     },
+     {
+      "mean": 8.25,
+      "org": 4,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 38,
+      "ws_writes": 38
+     },
+     {
+      "mean": 15.125,
+      "org": 5,
+      "replay": "MET",
+      "ws_damage": 0,
+      "ws_reads": 40,
+      "ws_writes": 40
+     }
+    ]
+   },
+   "WEATHER": {
+    "mode": "erase",
+    "panel_mean": 11.729166666666666,
+    "per_org": [
+     {
+      "mean": 17.25,
+      "org": 0,
+      "replay": "MET",
+      "ws_damage": 19,
+      "ws_reads": 37,
+      "ws_writes": 37
+     },
+     {
+      "mean": 10.875,
+      "org": 1,
+      "replay": "MET",
+      "ws_damage": 18,
+      "ws_reads": 36,
+      "ws_writes": 36
+     },
+     {
+      "mean": 11.5,
+      "org": 2,
+      "replay": "MET",
+      "ws_damage": 18,
+      "ws_reads": 36,
+      "ws_writes": 36
+     },
+     {
+      "mean": 8.125,
+      "org": 3,
+      "replay": "MET",
+      "ws_damage": 20,
+      "ws_reads": 40,
+      "ws_writes": 40
+     },
+     {
+      "mean": 10.25,
+      "org": 4,
+      "replay": "MET",
+      "ws_damage": 18,
+      "ws_reads": 36,
+      "ws_writes": 36
+     },
+     {
+      "mean": 12.375,
+      "org": 5,
+      "replay": "MET",
+      "ws_damage": 18,
+      "ws_reads": 36,
+      "ws_writes": 36
+     }
+    ]
+   }
+  }
+ },
+ "prereg_sha256": "64bda025f81a96cbe7dcf586ed7340da9773e101ca7fd02eea22b02b7305a568",
+ "replay": [
+  {
+   "divergent": [],
+   "file": "off_org0.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "off_org1.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "off_org2.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "off_org3.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "off_org4.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "off_org5.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org0.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org1.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org2.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org3.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org4.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "erase_org5.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org0.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org1.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org2.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org3.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org4.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "sham_org5.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  }
+ ],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "nestor.cw01/cw01-2026-09-17:cw01-e07",
+  "disposition": "INCONCLUSIVE",
+  "original": "arms STATIC/WEATHER/SHAMWEATHER; gate P1..P5 refused (P1 damage does not fire, P4 not separable)"
+ },
+ "utc": "2026-09-19T13:25:08Z",
+ "wall_s": 1.0
+}

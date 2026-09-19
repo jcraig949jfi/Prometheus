@@ -1,11 +1,11 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T21:39Z",
- "n": 350,
+ "built": "2026-09-19T10:08Z",
+ "n": 355,
  "by_reason": {
   "GENERIC_LANGUAGE_MECHANICS": 46,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 113,
-  "OTHER": 140,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 115,
+  "OTHER": 143,
   "BELOW_MEANINGFUL_GRAIN": 16,
   "DUPLICATES_A_CONTROL": 2,
   "EFFECT_FROM_ENVIRONMENT": 18,
@@ -29,6 +29,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "arduino-pid"
+  },
+  {
+   "candidate": "the substrates (Lenia, Boids, particle life, particle Lenia, NCA, Game-of-Life-like), the foundation-model embedding wrappers (CLIP/DINO), the search drivers (asal_search: supervised, open-endedness, illumination), the published .npz datasets, the JAX plumbing",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the substrate parameter domain is defined by Harmonia's ruler independently of the score (directive s2); the search driver is the mechanism a downstream bench would inherit if the metric survives",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "asal-sakana-2024"
+  },
+  {
+   "candidate": "'ASAL' / 'open-ended search' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the observer-metric, the rollout sampling and the search driver are separable; this cut binds the two the operator's question is about",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "asal-sakana-2024"
   },
   {
    "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",
@@ -1997,6 +2013,30 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "pid-autotune-hirschmann"
+  },
+  {
+   "candidate": "the ES optimiser (es.py), its fiber/ipyparallel workers, the Box2D bipedal-walker niches, model.py, the CPPN/reproduce_ops mutation operators, stats and logging",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the agent-side half of the pairing is a standard ES and is not what the operator's question is about; the environment-side selection is",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "poet-original-2019"
+  },
+  {
+   "candidate": "'open-endedness' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the minimal criterion, the capacity discard and the novelty estimator are separable and have different failure modes; POET's open-endedness claim is a property asserted of their composition",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "poet-original-2019"
+  },
+  {
+   "candidate": "the n>m branch of euclidean_distance (novelty.py:44-50)",
+   "reason": "OTHER",
+   "evidence": "vault:poet-original-2019/upstream/tree/poet_distributed/novelty.py:44-50",
+   "note": "DEAD CODE for this descriptor: env2array always returns length 5, so n == m always and the ragged-length branch never executes. A latent generality that never fires; recorded, not cut",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "poet-original-2019"
   },
   {
    "candidate": "the Black-Scholes-Merton pricing and analytical/numerical greeks, the ref_python reference implementations, the helper and exception modules",
