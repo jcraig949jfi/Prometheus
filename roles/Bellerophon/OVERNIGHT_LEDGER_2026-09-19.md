@@ -387,3 +387,7 @@ C63 | 04:24Z | SEMANTIC replay was a word with no operational meaning (the repla
   seeds; at quantum 1e-13 it DIFFERS on 2/3 seeds -- the quantum is a real tolerance and a BIT claim would be
   FALSE for this world. Recorded in science/CROSS_PLATFORM_REPLAY_2026-09-19.json and the standing test
   (the fine quantum is evidence, never an assertion). Suite 182 passed 6 skipped.
+C64 | 04:26Z | consequence of C63: the c6 wrap (float pools, +,*,min,max only) had declared BIT on the strength of
+  3/3 cross-platform agreement; after a libm world was shown to differ at a fine quantum, every float world
+  now declares the honest class -- SEMANTIC with the quantum it actually hashes at (1e-6). The trace is
+  unchanged; the CLAIM is now exactly what the trace tests. Suite 182.

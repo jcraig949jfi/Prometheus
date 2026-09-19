@@ -251,7 +251,7 @@ def test_c6_composed_world_wraps_admits_and_runs_with_mixed_players(tmp_path):
         pytest.skip("archaeon.campaign6 not importable")
     r = admit(kind, REG); assert r.state == "ADMITTED", r.failed
     w = REG.make(kind, seed=3, bin=6)
-    assert w.n_players == 1 and w.manifest()["float_state"] is True and w.replay_class == "BIT"
+    assert w.n_players == 1 and w.manifest()["float_state"] is True and w.replay_class == "SEMANTIC" and w.manifest()["quantum"] == 1e-6   # C64
     players = [random_proteus_player(17).manifest() if proteus_available() else random_statemachine(1).manifest()]
     e = _exp(world=ref(kind, seed=3, bin=6), players=players, observers=[ref("observer.trace.v1")], seed_policy={"base": 1, "n_seeds": 2},
              budget={"episodes": 2, "horizon": 24}, controls=[ref("control.replay.v1"), ref("control.negative.v1")])

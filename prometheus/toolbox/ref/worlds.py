@@ -259,12 +259,13 @@ def _c6():
 class C6ComposedWorld:
     """Archaeon's campaign-6 ComposedWorld behind the kernel World contract (archaeon/ untouched). One organism,
     channel observations flattened to one word list, actions = one 32-bit word per output channel, FLOAT pools
-    quantised (x1e6) for the trace and the events. Python float arithmetic here is +,*,min,max on doubles --
-    deterministic across CPython builds -- so the declared replay class is BIT, with float_state=True in the
-    manifest so a reader can decide to demand SEMANTIC evidence across hosts."""
+    quantised (x1e6) for the trace and the events. Python float arithmetic here is +,*,min,max on doubles and
+    agreed 3/3 across Windows/Linux (C47) -- but after C63 showed a libm world differing at a fine quantum, any
+    float world declares the honest class: SEMANTIC with quantum 1e-6 (C64). The claim is "agreement at the
+    declared quantum", which is what the trace actually tests."""
     kind = "world.c6.composed.v1"
-    capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.legal_actions.v1", "ext.cost.v1", "ext.replay.bit.v1"})
-    replay_class = "BIT"
+    capabilities = frozenset({"core.world.v1", "ext.events.v1", "ext.legal_actions.v1", "ext.cost.v1", "ext.replay.semantic.v1"})
+    replay_class = "SEMANTIC"
     Q = 1_000_000
 
     def __init__(self, seed: int | None = None, bin: int | None = None, params: dict | None = None, ticks: int = 24):
@@ -277,7 +278,7 @@ class C6ComposedWorld:
         self.n_players = 1; self._st = None; self._events: List[Event] = []; self._steps = 0; self._last_reward = 0.0; self._seed = 0
 
     def manifest(self) -> dict:
-        return {"kind": self.kind, "world_id": self.w.world_id(), "features": list(self.w.features), "params": self.params, "float_state": True, "quantum": self.Q}
+        return {"kind": self.kind, "world_id": self.w.world_id(), "features": list(self.w.features), "params": self.params, "float_state": True, "quantum": 1.0 / self.Q}
 
     def reset(self, seed: int) -> None:
         self._seed = seed; self._st = self.w.reset(seed, 0, None); self._trace = hashlib.sha256(); self._events = []; self._last_reward = 0.0
