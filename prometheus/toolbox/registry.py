@@ -65,6 +65,13 @@ class Registry:
     def kinds(self, slot: str) -> list:
         return sorted(k for k, r in self._rows.items() if r.slot == slot)
 
+    def fork(self) -> "Registry":
+        """An independent copy (C62): tests and experiments that register their own components must never mutate the
+        process-global default registry -- a test-only UNAVAILABLE row leaked into the admission census by ordering."""
+        import copy
+        r = Registry(); r._rows = {k: copy.copy(v) for k, v in self._rows.items()}
+        return r
+
     def provided_capabilities(self, *kinds: str) -> FrozenSet[str]:
         out = set()
         for k in kinds:

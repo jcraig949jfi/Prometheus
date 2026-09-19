@@ -16,6 +16,7 @@ REG = default_registry()
 
 
 def test_every_reference_component_is_admitted_on_this_host():
+    assert all(r["provenance"].get("author") == "Bellerophon" for r in REG.rows()), "a test-only or foreign row leaked into the default registry (C62)"
     res = admit_all(REG)
     bad = {k: v.failed for k, v in res.items() if v.state != "ADMITTED" and not k.endswith(".playtest")}
     # components whose machinery is absent on this host are UNAVAILABLE with an import reason, never a kernel failure
@@ -30,8 +31,8 @@ def test_broken_observer_is_refused_with_the_check_named():
 
         def measure(self):
             return {"set": {1, 2}}                        # not JSON-serialisable: a receipt could not carry it
-    REG.register(ComponentRecord("observer.bad.v1", "observer", BadObserver, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
-    r = admit("observer.bad.v1", REG)
+    R = REG.fork(); R.register(ComponentRecord("observer.bad.v1", "observer", BadObserver, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
+    r = admit("observer.bad.v1", R)
     assert r.state == "UNAVAILABLE" and "serialisable" in r.failed
 
 
@@ -42,8 +43,8 @@ def test_nondeterministic_observer_is_refused():
         def measure(self):
             import os
             return {"noise": os.urandom(2).hex()}
-    REG.register(ComponentRecord("observer.jitter.v1", "observer", Jitter, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
-    assert "determinism" in admit("observer.jitter.v1", REG).failed
+    R = REG.fork(); R.register(ComponentRecord("observer.jitter.v1", "observer", Jitter, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
+    assert "determinism" in admit("observer.jitter.v1", R).failed
 
 
 def test_substrate_that_lies_about_representations_is_refused():
@@ -52,8 +53,8 @@ def test_substrate_that_lies_about_representations_is_refused():
 
         def __init__(self):
             super().__init__(); self.representations = frozenset(self.representations | {"rewrite.v9"})
-    REG.register(ComponentRecord("substrate.liar.v1", "substrate", Liar, FlatInProcessSubstrate.capabilities, route="write", provenance={"author": "test"}, license="repository"))
-    r = admit("substrate.liar.v1", REG)
+    R = REG.fork(); R.register(ComponentRecord("substrate.liar.v1", "substrate", Liar, FlatInProcessSubstrate.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    r = admit("substrate.liar.v1", R)
     assert r.state == "UNAVAILABLE" and "representations" in r.failed
 
 
@@ -63,8 +64,8 @@ def test_control_whose_arm_is_invalid_is_refused():
 
         def arm(self, exp, rng_seed):
             e = super().arm(exp, rng_seed); e.family = "a/b"; return e            # invalid IR out of a control
-    REG.register(ComponentRecord("control.bad.v1", "control", BadControl, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
-    assert "arm" in admit("control.bad.v1", REG).failed
+    R = REG.fork(); R.register(ComponentRecord("control.bad.v1", "control", BadControl, frozenset(), route="write", provenance={"author": "test"}, license="repository"))
+    assert "arm" in admit("control.bad.v1", R).failed
 
 
 def test_unknown_kind_is_a_registry_failure_not_an_exception():

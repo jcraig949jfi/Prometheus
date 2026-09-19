@@ -30,13 +30,12 @@ class V2Selector(SR.MapElitesSelector):
 
 def main(root: str = "prometheus/toolbox/playtests/receipts/pt_d") -> dict:
     from prometheus.toolbox.registry import default_registry, ComponentRecord
-    reg = default_registry()
-    if not reg.has("selector.map_elites_v2.playtest"):
-        reg.register(ComponentRecord("selector.map_elites_v2.playtest", "selector", V2Selector, frozenset(), route="write", provenance={"author": "Bellerophon", "playtest": "D"}, license="repository"))
+    reg = default_registry().fork()                      # C62: a playtest's own components never enter the default registry
+    reg.register(ComponentRecord("selector.map_elites_v2.playtest", "selector", V2Selector, frozenset(), route="write", provenance={"author": "Bellerophon", "playtest": "D"}, license="repository"))
     out = {}
     for name, sub in (("flat", ref("substrate.flat.v1")), ("kv", ref("substrate.kv.v1", scope="lifetime"))):
         wd = pathlib.Path(root) / name; shutil.rmtree(wd, ignore_errors=True)
-        res = SR.evolve(template(sub), ref("selector.map_elites_v2.playtest", n=8), generations=6, workdir=wd, seed=21)
+        res = SR.evolve(template(sub), ref("selector.map_elites_v2.playtest", n=8), generations=6, workdir=wd, seed=21, registry=reg)
         rows = SR.committed_rows(SR.load_rows(wd / "archive.jsonl")); cells = SR.elites_by_cell(rows)
         best = max((r["objective"] for r in rows if r["objective"] is not None), default=None)
         out[name] = {"elites": len(rows), "cells": len(cells), "best": best, "gens": res["generations_done"],

@@ -190,9 +190,9 @@ def test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid
 
         def __init__(self, **params):
             params.pop("_cheat_skip_dynamics", None); super().__init__(**params)     # accepts the flag, ignores it
-    REG.register(ComponentRecord("world.cheatblind.test", "world", CheatBlind, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    R = REG.fork(); R.register(ComponentRecord("world.cheatblind.test", "world", CheatBlind, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
     e = _exp(world=ref("world.cheatblind.test", world_seed=2), controls=[ref("control.cheat.v1"), ref("control.replay.v1")])
-    rep = execute(lower(e, REG).job, tmp_path / "cb.jsonl", REG)
+    rep = execute(lower(e, R).job, tmp_path / "cb.jsonl", R)
     assert rep.controls["cheat"]["outcome"] == "NOT_MET" and rep.controls["cheat"]["not_met"] == 1
     assert rep.controls["replay"]["outcome"] == "MET" and rep.valid is False
 

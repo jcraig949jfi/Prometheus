@@ -355,3 +355,7 @@ C56 | 04:08Z | profiling EXP-002 (432 runs): the per-receipt kernel build hash r
   every write (433 rglob+read passes = 1.4 of 4.3 profiled seconds). Cached once per process (refresh=True
   recomputes); playtests/ excluded from the hash. EXP-002 wall 2.15 s -> 1.25 s; suite 26 s -> 17 s.
   Not a correctness change: the hash value is unchanged for a given tree.
+C62 | 04:12Z | test hygiene that was a real fragility: tests registered test-only components (a broken world, a
+  bad observer, a cheat-blind world) into the PROCESS-GLOBAL default registry; the admission census only
+  passed because of file ordering. Registry.fork() added; every registering test and playtest D use a fork;
+  the census asserts registry purity (every row authored by Bellerophon). Suite green in two orders.

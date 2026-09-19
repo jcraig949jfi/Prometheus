@@ -173,12 +173,13 @@ def test_admission_admits_reference_and_marks_broken_impl_unavailable():
             import os
             return os.urandom(8).hex()             # not replayable
     from prometheus.toolbox.registry import ComponentRecord
-    REG.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
-    b = admit_world("world.broken.v1", REG)
+    R = REG.fork(); R.register(ComponentRecord("world.broken.v1", "world", BrokenWorld, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    b = admit_world("world.broken.v1", R)
     assert b.state == "UNAVAILABLE" and "replay" in b.failed
     e = build_exp001(); e.world = ref("world.broken.v1")
-    assert e.compile("local", REG).status == "TARGET_UNSUPPORTED"
-    assert build_exp001().compile("local", REG).ok           # unrelated experiments unaffected
+    assert e.compile("local", R).status == "TARGET_UNSUPPORTED"
+    assert build_exp001().compile("local", R).ok           # unrelated experiments unaffected
+    assert not REG.has("world.broken.v1")                    # C62: the default registry never saw the test component
 
 
 # ------------------------------------------------------------------------------------------ lowering (F1)
