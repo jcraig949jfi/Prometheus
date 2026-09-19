@@ -920,3 +920,8 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   changed, scratch MET => every transformed genome changed; replay MET on BIT => traces equal; cheat MET =>
   trace changed; valid == (0 failed, 0 unstarted, every control MET). No defect.
 - suite 850 passed / 6 skipped.
+
+## C130 (08:25Z) admission is order-independent and idempotent (property)
+- all 42 components admitted in three shuffled orders on fresh forks: identical state and failed list to
+  admit_all's; admitting one twice gives the same result. (Admission of a reference world is ~2 ms: the
+  performance probe runs to the world's own horizon, not 5000 ticks -- noted, the receipt says so.)

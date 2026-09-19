@@ -96,3 +96,22 @@ def test_a_well_formed_world_passes_every_check_by_name():
     res = admit("world.integer.v1", REG.fork())
     assert res.state == "ADMITTED" and res.failed == []
     assert {k for k, v in res.checks.items() if v.get("ok") is True} >= {"registry", "provenance", "capabilities", "conformance", "extensions", "replay", "reference", "controls", "performance"}
+
+
+# C130: admission is ORDER-INDEPENDENT and IDEMPOTENT (C62 found the census passing by ordering): admitting every
+# registered component in three random orders on fresh forks gives the same state and the same failed list for
+# each; admitting one twice gives the same result. Performance receipts (wall) are excluded from the comparison.
+@pytest.mark.parametrize("order_seed", [1, 2, 3])
+def test_admission_is_order_independent_and_idempotent(order_seed):
+    import random
+    from prometheus.toolbox.admission import admit_all
+    kinds = [r["kind"] for r in REG.rows()]
+    rnd = random.Random(order_seed); shuffled = list(kinds); rnd.shuffle(shuffled)
+    R = REG.fork()
+    got = {}
+    for k in shuffled:
+        res = admit(k, R); got[k] = (res.state, tuple(res.failed))
+    ref = {k: (r.state, tuple(r.failed)) for k, r in admit_all(REG.fork()).items()}
+    assert got == ref, {k: (got[k], ref[k]) for k in kinds if got[k] != ref[k]}
+    k = shuffled[0]; a = admit(k, R); b = admit(k, R)
+    assert (a.state, a.failed) == (b.state, b.failed)
