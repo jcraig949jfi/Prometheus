@@ -28,8 +28,10 @@ def _stage_idx(tasks, stages):
     return [i for i, t in enumerate(tasks) if t.stage in stages]
 
 
-def run_gate(cfg: dict, config_path: str, out_dir: str) -> dict:
+def run_gate(cfg: dict, config_path: str, out_dir: str, positive: str = "PROCEDURE_REUSE_C1") -> dict:
     os.makedirs(out_dir, exist_ok=True)
+    from . import vm as _vm
+    _vm.set_substrate(cfg.get("substrate", {}))
     meta = receipts.run_meta(cfg, config_path)
     seeds = cfg["seeds"]["gate"]
     W = {}   # witness -> {"pass": bool, "evidence": ...}
@@ -43,9 +45,9 @@ def run_gate(cfg: dict, config_path: str, out_dir: str) -> dict:
         enum = evaluate.run_lifetime(bl.make_baseline("ENUMERATE_C1"), tasks, cfg, "ACCUMULATED", seed=seed)
         nocal = evaluate.run_lifetime(bl.make_baseline("PROCEDURE_NOCAL_C1"), tasks, cfg, "ACCUMULATED", seed=seed)
         memo = evaluate.full_battery(bl.make_baseline("TABLE_MEMO_C1"), tasks, cfg, seed=seed)
-        proc = evaluate.full_battery(bl.make_baseline("PROCEDURE_REUSE_C1"), tasks, cfg, seed=seed)
-        receipts.write_json(os.path.join(out_dir, "PROCEDURE_REUSE_C1_seed%d.json" % seed),
-                            receipts.battery_receipt(meta, bl.make_baseline("PROCEDURE_REUSE_C1"), tasks, seed, "gate", proc))
+        proc = evaluate.full_battery(bl.make_baseline(positive), tasks, cfg, seed=seed)
+        receipts.write_json(os.path.join(out_dir, "%s_seed%d.json" % (positive, seed)),
+                            receipts.battery_receipt(meta, bl.make_baseline(positive), tasks, seed, "gate", proc))
         receipts.write_json(os.path.join(out_dir, "TABLE_MEMO_C1_seed%d.json" % seed),
                             receipts.battery_receipt(meta, bl.make_baseline("TABLE_MEMO_C1"), tasks, seed, "gate", memo))
         # A: abstention cannot dominate competence
@@ -133,10 +135,10 @@ def run_gate(cfg: dict, config_path: str, out_dir: str) -> dict:
         W[wname] = {"pass": all(per_seed[s][wname]["pass"] for s in per_seed), "per_seed": {s: per_seed[s][wname] for s in per_seed}}
     W["C"] = {"pass": c_pass, "evidence": "crius/tests/test_c1_integrity.py micro-tests and clock fixture"}
     all_pass = all(W[k]["pass"] for k in "ABCDEFGH")
-    out = {"meta": meta, "witnesses": W, "all_pass": all_pass, "elapsed_s": round(time.time() - t0, 1)}
+    out = {"meta": meta, "witnesses": W, "all_pass": all_pass, "positive_control": positive, "elapsed_s": round(time.time() - t0, 1)}
     receipts.write_json(os.path.join(out_dir, "GATE.json"), out)
-    lines = ["C1 PRE-SEARCH GATE  config_hash=%s world=%s generator=%s code=%s" % (
-        meta["config_hash"], meta["world_fingerprint"], meta["partitions_fingerprint"], meta["code_commit"][:9]),
+    lines = ["PRE-SEARCH GATE  campaign=%s positive_control=%s config_hash=%s world=%s generator=%s code=%s" % (
+        cfg.get("campaign"), positive, meta["config_hash"], meta["world_fingerprint"], meta["partitions_fingerprint"], meta["code_commit"][:9]),
         "witness  pass  evidence (per gate seed %s)" % seeds]
     for k in "ABCDEFGH":
         w = W[k]
@@ -153,10 +155,16 @@ def run_gate(cfg: dict, config_path: str, out_dir: str) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default=os.path.join("crius", "configs", "c1.json"))
-    ap.add_argument("--out", default=os.path.join("crius", "runs", "gate_c1"))
+    ap.add_argument("--out", default=None)
+    ap.add_argument("--positive-control", default=None)
     args = ap.parse_args(argv)
     cfg = receipts.load_config(args.config)
-    out = run_gate(cfg, args.config, args.out)
+    positive = args.positive_control
+    if positive is None:
+        from . import parts_c2
+        positive = parts_c2.POSITIVE_CONTROL.get(cfg.get("campaign"), "PROCEDURE_REUSE_C1")
+    out_dir = args.out or os.path.join("crius", "runs", "gate_%s" % cfg.get("campaign", "c1"))
+    out = run_gate(cfg, args.config, out_dir, positive)
     return 0 if out["all_pass"] else 1
 
 
