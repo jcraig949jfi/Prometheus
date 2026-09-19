@@ -35,15 +35,22 @@ def host_block() -> dict:
     return {"platform": platform.platform(), "python": sys.version.split()[0], "machine": platform.node()}
 
 
-def build_block() -> dict:
-    """Content hashes of the kernel's own modules, so a receipt names the kernel that produced it."""
+_BUILD_CACHE: Dict[str, Any] = {}
+
+
+def build_block(refresh: bool = False) -> dict:
+    """Content hashes of the kernel's own modules, so a receipt names the kernel that produced it. Computed once
+    per process (C56: recomputed 433 times it was a third of EXP-002's wall time); refresh=True recomputes."""
+    if _BUILD_CACHE and not refresh:
+        return dict(_BUILD_CACHE)
     import pathlib
     root = pathlib.Path(__file__).resolve().parent
-    files = sorted(p for p in root.rglob("*.py") if "tests" not in p.parts and "examples" not in p.parts)
+    files = sorted(p for p in root.rglob("*.py") if "tests" not in p.parts and "examples" not in p.parts and "playtests" not in p.parts)
     h = hashlib.sha256()
     for p in files:
         h.update(p.relative_to(root).as_posix().encode()); h.update(p.read_bytes().replace(b"\r\n", b"\n"))
-    return {"kernel_hash": h.hexdigest()[:16], "n_files": len(files)}
+    _BUILD_CACHE.update({"kernel_hash": h.hexdigest()[:16], "n_files": len(files)})
+    return dict(_BUILD_CACHE)
 
 
 def validate(r: dict) -> dict:
