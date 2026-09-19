@@ -1,7 +1,7 @@
 # Atlas backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
 Currency: 2026-09-19 (charter + addendum adopted; first pass landed).
-Closed today: ATLAS-01 (charter committed 4e063959f + addendum 0eb0600c0),
+Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
