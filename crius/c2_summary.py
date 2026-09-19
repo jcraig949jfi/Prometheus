@@ -40,11 +40,12 @@ def _census(run_dir):
                 for k, v in p.get("store_trace", {}).items():
                     tr[k] = tr.get(k, 0) + v
             wb = sum(p["workspace_bytes_final"] for p in ps)
-            if blk > 0:
-                create += 1
+            made = tr.get('PREC_END', 0) + tr.get('BLK_NEW', 0) + tr.get('BLK_REC_END', 0) + tr.get('BLK_COPY', 0) + tr.get('BLK_COMPOSE', 0)
+            if made > 0:
+                create += 1   # organism-made objects only: the substrate's calibration object does not count
             if inv > 0:
                 invoked += 1
-            if inv > 0 and blk > 0:
+            if inv > 0 and made > 0:
                 useful += 1   # invoked a store that had something the candidate itself created
             if wb > 0 or blk > 0:
                 keep += 1
@@ -92,7 +93,7 @@ def _qual(run_dir):
         by.setdefault(r["label"], []).append(r)
     repro = 0   # candidates with reuse_gain > 0 on all 3 streams and ACC solved >= FRESH solved on all
     for label, rs in by.items():
-        if len(rs) >= 3 and all(r["reuse_gain_total"] > 0 and r["successes"]["ACCUMULATED"] >= r["successes"]["FRESH"] for r in rs):
+        if len(rs) >= 3 and all(r["reuse_gain_total"] > 0.05 * 50 * r["mean_cost"]["FRESH"] and r["successes"]["ACCUMULATED"] >= r["successes"]["FRESH"] for r in rs):
             repro += 1
     m = lambda k: sum(k(r) for r in top) / max(1, len(top))
     chains = 0
