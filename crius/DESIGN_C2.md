@@ -243,3 +243,28 @@ A6 PREC_BEGIN while recording RESTARTS the recording (discards the failed
    attempt) so a procedure holds exactly the successful attempt.
 A7 The C1b record-id clock is fixture F4 (crius/fixtures/); its signature
    (ACC < FRESH) reproduces under the metadata charge (tests/test_c2.py).
+
+## 12. Addendum after rungs A-B (2026-09-19): outcome, gate C, deviations
+
+Rungs A and B searched (9 runs each, paired streams + takeover check);
+rung C's gate FAILED on witnesses E (1/3 streams, 12 percent of FRESH
+cost vs the 20 percent floor) and H (1/0/1 blocks with >= 3 distinct
+arguments vs the floor of 2) against the strongest 96-instruction bytecode
+control (P_REC_INV_PLAN, depth-2 planning, 8-object window); F and G, the
+ruling's retained causal requirement, PASS at C (ARTIFACT_TRANSPLANT 6/6/6
+vs CODE_ONLY 1/1/0). A widened window (10 objects) did not change E or H
+(crius/runs/gate_c2c_window10) and was reverted. Per s7, rungs C and D
+were NOT searched; the decision is the operator's (packet s9).
+Exploit lineages preserved with probes: E1 block-id gate (A seeded_s2),
+E2 self-recorded script replay (A random_s1), E3 workspace-conditioned
+walk (B random_s1), E4 record-id enumeration shifter (B recomb_s1; six
+qualified members; RECORD_IDS_ONLY synthetic probe reproduces it exactly).
+Instrument corrections, dated: c2_summary counts organism-made objects
+only (the substrate's calibration object made creation trivially true at
+B and gave every acting program reuse_gain +7 under FRESH); the
+reproducibility flag uses the checklist's 5 percent floor; exploit_probe
+gained a synthetic-records arm. Runtime fixes, dated: calibration object
+robust to organism tampering (9c5caf812; test), telemetry lists capped
+(713b2773f). Process error: the driver's gate-skip rule read existence
+instead of the verdict (ledger). Packet:
+roles/Crius/REVIEW_PACKET_C2_2026-09-19.md.

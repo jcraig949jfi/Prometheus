@@ -117,7 +117,7 @@ def rung_block(rung: str) -> str:
         g = receipts.read_json(gp)
         P("  gate: %s (%s)  positive control: %s" % ("PASS" if g["all_pass"] else "FAIL",
           " ".join("%s=%s" % (k, "P" if g["witnesses"][k]["pass"] else "F") for k in "ABCDEFGH"),
-          g.get("positive_control", "PROCEDURE_REUSE_C1 (rung A)")))
+          g.get("positive_control", "(see GATE.md header)")))
     pp = os.path.join(RUNS, "parts_%s" % rung, "PARTS.json")
     if os.path.exists(pp):
         parts = receipts.read_json(pp)["parts"]

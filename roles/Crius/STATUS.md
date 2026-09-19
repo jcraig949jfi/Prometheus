@@ -32,7 +32,11 @@ C1b verdict (2026-09-19): walkers suppressed (RANDOM < 5 pct on chains);
   no reproducible ACC > FRESH, no invoked block, no ancestral gradient;
   compressed enumerators + one stream-sign-flipping record-id clock.
   Packet: REVIEW_PACKET_C1B_2026-09-19.md. Frozen C1 family CLOSED.
-next executable action: crius/DESIGN_C2.md (CRIUS-25 / D2 substrate and
-  operator campaign) preregistered before any code: typed blocks with a
-  1-instruction argument port and invocation; two streams per iteration;
-  PARTS-recombinability diagnostic arm kept out of the main population.
+Campaign 2 (D2): rungs A and B searched (no gradient; E1-E4 exploit
+  lineages preserved with probes); PARTS ladder measured at A/B/C (valley
+  one link deep at B, cliff at C); rung C gate FAILED E/H against the
+  bytecode control (F/G pass) so C/D not searched per DESIGN_C2 s7.
+  Packet: REVIEW_PACKET_C2_2026-09-19.md, decision requested (s9).
+next executable action: on the operator's rung-C ruling: (i) declared
+  deviation and run C/D; (ii) build a stronger typed control; (iii) stop.
+  Meanwhile nothing runs; no monitors owned.
