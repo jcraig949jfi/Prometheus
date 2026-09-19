@@ -113,6 +113,12 @@ target unless the operator names it). Comms are on M1 for every machine
 - roles/Atlas/RESPONSIBILITIES.md, MODEL.md (s5 machine merge, s8
   non-interference), SOURCES.md, STATUS.md, BACKLOG_H0H5.md (ATLAS-04
   names "the M2 Atlas instance"; this seat is the answer to that row).
+- roles/Atlas/INSTANCES.md and prompts/2026-09-19_to_m2_sibling/
+  MESSAGE.md (f89c9e57b): Atlas reads the operator as "one seat, two
+  instances". The directive to THIS seat says otherwise; the collision
+  is stated to Atlas (prompts/2026-09-19_bootstrap/TO_ATLAS_seat_exists.md
+  s5) and left for the operator. INSTANCES.md rules 1, 2, 3, 4 and 6 are
+  adopted here as written; 5, 7 and 8 are replaced by this directory.
 
 ## 6. Name disambiguation
 
