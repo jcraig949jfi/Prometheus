@@ -323,3 +323,31 @@ def test_duplicate_sweep_values_are_refused_with_the_axis_named():
     e.sweep = {"world.params.world_seed": [1, 2]}; assert not e.validate()
     pop = [random_statemachine(1).manifest()]
     e.sweep = {"players": [pop, list(pop)]}; assert any("duplicate" in m for m in e.validate())
+
+
+# C147: split laws as a property: the SUMMARY's splits count exactly the primary receipts of each split; the seeds of
+# a split are the seed policy's; objective_n never exceeds n; a holdout split exists iff holdout_seeds > 0; the
+# per-split mean recomputes from the rows (scalar objectives).
+@pytest.mark.parametrize("seed", list(range(1900, 1960)))
+def test_split_laws_over_random_jobs(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, execute, seeds_for
+    from prometheus.toolbox.receipt import read_all
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = read_all(tmp_path / "r.jsonl"); summ = [r for r in rows if r["arm"] == "SUMMARY"][0]; prim = [r for r in rows if r["arm"] == "primary"]
+    sp = summ["science"]["splits"]; pol = seeds_for(e)
+    assert set(sp) == {s for _, s in pol} == {r["split"] for r in prim}
+    assert ("holdout" in sp) == (int(e.seed_policy.get("holdout_seeds", 0)) > 0)
+    for name, s in sp.items():
+        mine = [r for r in prim if r["split"] == name]
+        assert s["n"] == len(mine) and s["objective_n"] <= s["n"]
+        assert {r["seed"] for r in mine} == {sd for sd, nm in pol if nm == name}
+        if s["objective_shape"] == "scalar":
+            vals = [r["science"]["objective"]["value"] for r in mine if r["status"] == "COMPLETED" and isinstance(r["science"].get("objective", {}).get("value"), (int, float))]
+            assert s["objective_n"] == len(vals) and s["objective_mean"] == pytest.approx(sum(vals) / len(vals))

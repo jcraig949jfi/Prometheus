@@ -1043,3 +1043,8 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
 - fix: validate() refuses duplicate values on a sweep axis, naming the axis (a designer error, like an unknown
   param). Test + mutant M82 CAUGHT; ledger 81/81 (merged). Suite 1357 passed / 6 skipped.
 - the guard did its job twice tonight: a thin property is a false green with extra steps.
+
+## C147 (09:21Z) split laws as a property
+- 60 random jobs: the summary's splits count exactly the primary receipts of each split; each split's seeds are
+  the seed policy's; holdout exists iff holdout_seeds > 0; objective_n <= n; scalar means recompute from the
+  rows. No defect.
