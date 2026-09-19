@@ -219,6 +219,23 @@ class SeriesObserver(TraceObserver):
         return list(self._series)
 
 
+class SurvivalTicksObjective:
+    """objective.survival.v2 (C96, playtest H): v1 (ticks x players alive at the end) is a STEP -- 0 for every player
+    that dies before the horizon, whatever it survived, so it cannot rank a dying population (every elite of pt_h
+    read life=0). v2 values the ticks the last episode lasted: the death tick when everyone died, the horizon
+    otherwise; alive count is a component. v1 stays as it was (its receipts are what they are)."""
+    kind = "objective.survival.v2"
+    version = "2"
+
+    def manifest(self) -> dict:
+        return {"kind": self.kind, "version": self.version}
+
+    def evaluate(self, receipt: dict) -> Dict[str, Any]:
+        s = receipt.get("science", {}).get("world_summary", {})
+        alive = s.get("alive", []); ticks = s.get("ticks", 0)
+        return {"value": ticks, "components": {"ticks": ticks, "alive": alive, "n_alive": sum(1 for a in alive if a)}}
+
+
 class SeriesGainObjective:
     """objective.series_gain.v1 (C13): yield reached in the LAST episode minus yield reached in the FIRST, read
     from observer.series.v1's records (column 2 = cumulative yield). The experience-to-competence shape.

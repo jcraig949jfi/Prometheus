@@ -18,7 +18,7 @@ import json
 import pathlib
 from typing import Any, Dict, List, Optional
 
-from prometheus.toolbox.contracts import PlayerSpec
+from prometheus.toolbox.contracts import PlayerSpec, component_manifest_hash
 from prometheus.toolbox.ir import Experiment
 from prometheus.toolbox.receipt import read_all
 from prometheus.toolbox.ref.players import random_statemachine
@@ -105,7 +105,7 @@ class TruncationSelector:
         from prometheus.toolbox.registry import default_registry
         reg = default_registry(); t = reg.make(self.mutation); s = stream("truncation", rng_seed)
         ranked = [(scalar_objective(r, self.rank), r) for r in archive_rows if r["kind"] == "elite"]
-        elites = [r for _, r in sorted(((v, r) for v, r in ranked if v is not None), key=lambda x: (-x[0], x[1]["fingerprint"]))][:self.keep]
+        elites = [r for _, r in sorted(((v, r) for v, r in ranked if v is not None), key=lambda x: (-x[0], x[1].get("player_hash", ""), x[1]["fingerprint"]))][:self.keep]
         if not elites:
             return _gen0(reg, self.representation, rng_seed, n)
         out: List[PlayerSpec] = []
@@ -164,7 +164,9 @@ def _rows_from_receipts(receipts: List[dict]) -> List[dict]:
             continue
         key = json.dumps(r["sweep_point"], sort_keys=True)
         desc = (r["science"].get("observations", {}).get("observer.descriptor.v1") or {}).get("descriptor", [])
-        row = by.setdefault(key, {"kind": "elite", "player": r["_player_manifest"], "fingerprint": r["science"]["player_fingerprints"]["0"]["hash"],
+        fp = r["science"]["player_fingerprints"]["0"]
+        row = by.setdefault(key, {"kind": "elite", "player": r["_player_manifest"], "fingerprint": fp["hash"],
+                                  "player_hash": fp.get("spec_hash") or component_manifest_hash(r["_player_manifest"]),      # C96: identity, not behavioural class
                                   "descriptors": [], "objectives": [], "receipt_ids": [], "seeds": []})
         row["descriptors"].append(list(desc)); row["objectives"].append((r["science"].get("objective") or {}).get("value"))
         row["receipt_ids"].append(r["receipt_id"]); row["seeds"].append(r["seed"])

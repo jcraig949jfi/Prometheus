@@ -89,3 +89,20 @@ def test_a_selector_without_a_rank_refuses_a_vector_objective_with_the_keys_name
     # nothing half-written: no elite rows committed by a refused generation
     rows = SR.load_rows(tmp_path / "r" / "archive.jsonl") if (tmp_path / "r" / "archive.jsonl").exists() else []
     assert not [r for r in rows if r["kind"] == "GEN_DONE"]
+
+
+# C96 (playtest H): objective.survival.v1 = ticks x players alive at the END is a step function -- 0 for every player
+# that died before the horizon whatever it survived; ranking a dying population by it is ranking by nothing (every
+# elite of pt_h read life=0). v2 values the ticks the last episode lasted (death tick or horizon); v1 is unchanged.
+def test_survival_v2_ranks_a_dying_population_where_v1_reads_zero(tmp_path):
+    e = _exp(ref("objective.multi.v1", components={"v1": ref("objective.survival.v1"), "v2": ref("objective.survival.v2")}), n_players=1)
+    e.world["params"].update(start_charge=6, step_cost=1, yield_amt=0)                 # certain death before horizon 24
+    execute(lower(e, REG).job, tmp_path / "d.jsonl", REG)
+    rows = [r for r in read_all(tmp_path / "d.jsonl") if r["arm"] == "primary"]
+    assert rows and all(not any(r["science"]["world_summary"]["alive"]) for r in rows)
+    assert all(r["science"]["objective"]["value"]["v1"] == 0 for r in rows)
+    assert all(0 < r["science"]["objective"]["value"]["v2"] == r["science"]["world_summary"]["ticks"] < 24 for r in rows)
+    e.world["params"].update(start_charge=1000)                                        # survives: both agree on the horizon
+    execute(lower(e, REG).job, tmp_path / "s.jsonl", REG)
+    r = [r for r in read_all(tmp_path / "s.jsonl") if r["arm"] == "primary"][0]
+    assert r["science"]["objective"]["value"] == {"v1": 24, "v2": 24}

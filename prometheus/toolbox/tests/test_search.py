@@ -110,3 +110,30 @@ def test_selectors_evolve_any_registered_representation(tmp_path):
         out = SR.evolve(template(), ref("selector.map_elites.v1", n=4, representation=rep), generations=2, workdir=tmp_path / rep, seed=2)
         rows = SR.committed_rows(SR.load_rows(tmp_path / rep / "archive.jsonl"))
         assert out["generations_done"] == 2 and rows and all(r["player"]["representation"] == rep for r in rows), rep
+
+
+# C96 (playtest H): 11 DISTINCT players (different tables, different objectives, different descriptor cells) shared one
+# "fingerprint" -- the behavioural probe (16 fixed observations) has little resolving power for a state machine, so
+# rows keyed by it read as 14 elites where there were 40. Identity is the SPEC hash; the probe hash is a behavioural
+# CLASS, kept and named as such.
+def test_rows_carry_spec_identity_and_behavioural_class_separately(tmp_path):
+    from prometheus.toolbox.ref.players import random_statemachine_v2, fingerprint_by_probe
+    from prometheus.toolbox.contracts import component_manifest_hash
+    sub = REG.make("substrate.kv.v1"); base = random_statemachine_v2(1); fp0 = fingerprint_by_probe(sub.instantiate(base, 1))
+    twin = None
+    for s in range(400):                                                   # a point mutation the probe cannot see
+        cand = REG.make("transform.point_mutation.v1").apply(base, s)
+        if cand.payload["table"] != base.payload["table"] and fingerprint_by_probe(sub.instantiate(cand, 1)) == fp0:
+            twin = cand; break
+    assert twin is not None, "no probe-blind mutation in 400 tries: the probe got stronger, revisit this test"
+    t = template(); t.players = []; t.world["params"]["n_players"] = 1
+    t.substrate = ref("substrate.kv.v1")
+    from prometheus.toolbox.search import _run_generation, _rows_from_receipts
+    receipts = _run_generation(t, [base, twin], 0, 5, tmp_path, REG)
+    rows = _rows_from_receipts(receipts)
+    assert len(rows) == 2 and rows[0]["fingerprint"] == rows[1]["fingerprint"] == fp0
+    assert rows[0]["player_hash"] != rows[1]["player_hash"]
+    assert {r["player_hash"] for r in rows} == {component_manifest_hash(base.manifest()), component_manifest_hash(twin.manifest())}
+    prim = [r for r in receipts if r["arm"] == "primary"][0]
+    assert prim["science"]["player_fingerprints"]["0"]["spec_hash"] == prim["components"]["players"][0]["manifest_hash"]
+    assert set(prim["science"]["player_fingerprints"]["0"]) == {"hash", "silent", "spec_hash"}

@@ -336,7 +336,10 @@ def _prepare(spec: RunSpec, registry, world=None) -> dict:
     instances = {pid: subs_by_pid[pid].instantiate(ps, spec.seed * 31 + pid) for pid, ps in enumerate(specs)}
     all_subs = list(sub_objs.values())
     from prometheus.toolbox.ref.players import probe_silent
-    fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst)} for pid, inst in instances.items()}   # spec identity, on the FRESH instance
+    # C96: "hash" is a BEHAVIOURAL CLASS (the probe's 16 observations; distinct machines collide on it); "spec_hash" is the
+    # player's identity (its manifest). Both on the FRESH instance.
+    fingerprints = {str(pid): {"hash": inst.fingerprint(), "silent": probe_silent(inst), "spec_hash": component_manifest_hash(specs[pid].manifest())}
+                    for pid, inst in instances.items()}
     observers = [registry.make(o["kind"], **o.get("params", {})) for o in exp.observers]
     seen_kinds: Dict[str, int] = {}; obs_keys: List[str] = []
     for i, ob in enumerate(observers):

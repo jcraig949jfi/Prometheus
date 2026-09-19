@@ -575,3 +575,22 @@ C89/C90 | 05:03Z | series.schema.json (statuses, encoding, columns, inline-or-ar
   CAUGHT, 0 rows with the anchor test as first failure. The ledger JSON now carries real first failures for all 50.
 - lesson (for the report): a check that runs INSIDE the instrument it checks can only ever say yes. Same shape as
   C70 (agreement without power): the instrument had no power to say SURVIVED.
+
+## C96 (05:39Z) playtest H: vector objective above the kernel -- two findings from the rows
+- playtests/pt_h_multi_objective.py: objective.multi.v1 {net, life}, MAP-Elites rank=net then rank=life, 5 gens x 8
+  x 2 seeds, kv-lifetime, statemachine.v2. Receipts under playtests/receipts/pt_h/{net,life}.
+- finding 1 (rows): EVERY elite read life=0.0. objective.survival.v1 = ticks x players-alive-at-the-end is a STEP:
+  0 for any player that dies before the horizon whatever it survived; ranking a dying population by it ranks by
+  nothing (ties broken by ordering). Added objective.survival.v2 = ticks the last episode lasted (death tick or
+  horizon), alive count as a component; v1 unchanged. Test: certain-death config gives v1=0, 0<v2=ticks<horizon.
+- finding 2 (rows): 14 distinct "fingerprints" over 40 elite rows, and one fingerprint held 11 DIFFERENT players
+  (different tables, objectives 65.6 vs -0.25, descriptors in 4 cells). The fingerprint is the behavioural probe
+  (16 fixed observations) and a point mutation the probe never visits leaves it unchanged (test finds such a twin
+  within 400 mutations) -- it is a behavioural CLASS, not an identity; rows keyed by it under-counted elites ~3x and
+  tie-broke by it. Now receipts carry player_fingerprints[pid] = {hash (class), silent, spec_hash (manifest)} and
+  archive rows carry player_hash (identity) beside fingerprint; truncation tie-breaks by player_hash. Re-run: 40
+  distinct players / 14-15 behaviour classes / 7 cells; rank changes the elite in 3 of 7 cells.
+- first version of the playtest globbed gen_*/receipts.jsonl and reported summary_shapes=[] -- the search workdir
+  writes gen_NNN_aK.jsonl; an empty list read as "nothing to report" until the rows were looked at. Fixed.
+- mutants wave 8 M52-M54 3/3 CAUGHT; honest full ledger 53/53 (0 anchor-caught). Suite 286 passed / 6 skipped.
+  Census 40/40.

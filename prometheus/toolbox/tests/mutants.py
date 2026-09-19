@@ -71,6 +71,10 @@ MUTANTS = [
     ("M49", "search.py", "    if all(isinstance(v, dict) for v in vals) and len({tuple(sorted(v)) for v in vals}) == 1:", "    if False:", "search rows drop vector objectives (None)"),
     ("M50", "search.py", "        for r in new_rows:                                          # C94: refuse with the keys named BEFORE the generation is written\n            scalar_objective(r, getattr(sel, \"rank\", None))\n", "", "an unrankable generation is committed before the refusal"),
     ("M51", "admission.py", "            obj = row.factory(**row.admission_params); out = obj.evaluate(", "            obj = row.factory(); out = obj.evaluate(", "admission ignores a component's admission params"),
+    # eighth wave (C96): identity vs behaviour class, survival v2
+    ("M52", "backends/local.py", "\"spec_hash\": component_manifest_hash(specs[pid].manifest())}", "\"spec_hash\": inst.fingerprint()}", "spec identity is the behavioural probe hash again"),
+    ("M53", "ref/observers.py", "        return {\"value\": ticks, \"components\": {\"ticks\": ticks, \"alive\": alive, \"n_alive\": sum(1 for a in alive if a)}}", "        return {\"value\": ticks * sum(1 for a in alive if a), \"components\": {\"ticks\": ticks, \"alive\": alive, \"n_alive\": sum(1 for a in alive if a)}}", "survival.v2 is the v1 step function"),
+    ("M54", "search.py", "\"player_hash\": fp.get(\"spec_hash\") or component_manifest_hash(r[\"_player_manifest\"]),", "\"player_hash\": fp[\"hash\"],", "archive rows key identity by behaviour class"),
 ]
 
 

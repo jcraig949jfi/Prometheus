@@ -1,9 +1,9 @@
 {
- "when_utc": "2026-09-19T05:29:58.846422+00:00",
+ "when_utc": "2026-09-19T05:38:26.960226+00:00",
  "host": "SPECTREX5",
  "python": "3.14.4",
- "n_components": 39,
- "admitted": 39,
+ "n_components": 40,
+ "admitted": 40,
  "by_slot": {
   "world": [
    "world.c6.composed.v1",
@@ -38,6 +38,7 @@
    "objective.multi.v1",
    "objective.series_gain.v1",
    "objective.survival.v1",
+   "objective.survival.v2",
    "objective.yield_net.v1"
   ],
   "control": [
@@ -151,6 +152,14 @@
    "reference_of": null
   },
   "objective.survival.v1": {
+   "slot": "objective",
+   "state": "ADMITTED",
+   "failed": [],
+   "route": "write",
+   "implements": null,
+   "reference_of": null
+  },
+  "objective.survival.v2": {
    "slot": "objective",
    "state": "ADMITTED",
    "failed": [],
