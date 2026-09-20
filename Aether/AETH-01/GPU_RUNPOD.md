@@ -33,23 +33,38 @@ roughly $10/campaign, optimized for information gained per dollar
   host/device transfer of full lattice bytes only happens at
   checkpoint boundaries or when a world is flagged for the forensic
   tier.
-- **Early termination of absorbing regimes.** DEAD and FROZEN
-  (HABITABILITY.md) are both detectable cheaply from tier-1 counters
-  alone (`activity_density` at or near 0, or `change_rate` at or near 0
-  while `activity_density` is stable) -- a world that has been in
-  either state for a set number of ticks is stopped early and marked,
-  freeing its batch slot for a new world rather than continuing to
-  simulate a lattice that provably cannot change further (a direct
-  compute-cost saving, not merely a convenience).
+- **Early stopping: certified vs. censored (repaired).** **[REPAIRED
+  per ASTRA_REVIEW_01.md S05, ACCEPT, see REPAIR_LEDGER_01.md and
+  HABITABILITY.md's `DEAD_CERTIFIED`/`DEAD_CENSORED`/`FROZEN_CENSORED`
+  labels -- the reviewed draft claimed near-zero activity for a set
+  number of ticks PROVES a world "cannot change further," which is
+  false: a starved writer can be replenished later, a same-value winner
+  can later mutate, and a currently-losing writer can win under a later
+  tick's priority.]** Only the mathematically certified precondition
+  (zero cells anywhere carrying `opcode=WRITE`, AND `REPLENISH_NUMER=0`)
+  is safe to hard-stop on as a proven `DEAD_CERTIFIED` result, freeing
+  its batch slot permanently. Any OTHER near-zero-activity stop is a
+  budget-limited, RIGHT-CENSORED pause (`DEAD_CENSORED`/
+  `FROZEN_CENSORED`): its batch slot may still be freed for compute-cost
+  reasons, but the stopped world's outcome is recorded as CENSORED, not
+  DEAD/FROZEN, and a preregistered random subset of censored worlds must
+  later be resumed to a fixed further horizon (K5, deferred this cycle)
+  before any campaign claims those parameter regions are actually dead.
 - **Forensic capture only when needed.** Rolling forensic buffers
   (OBSERVATORY.md tier 2) are only allocated/computed for worlds that
   survive past the scout tier (below); expensive triggered analysis
   (tier 3, e.g. intervention replays) is never run on-GPU at all in
   AETH-01 -- flagged worlds are checkpointed and their deepen/verify
   analysis is done by re-running the tiny, cheap CPU reference
-  implementation, which is fast enough at this scale (AETH-00B's
-  baseline: ~300K cell-steps/second single-threaded CPU) that a 32x32
-  world for a few thousand ticks costs a fraction of a second.
+  implementation. **[REPAIRED per ASTRA_REVIEW_01.md N01, ACCEPT, see
+  REPAIR_LEDGER_01.md -- corrected arithmetic]** At AETH-00B's baseline
+  (~300K cell-steps/second, single-threaded CPU, pre-AETH-01), a 32x32
+  world for 3,000 ticks costs `32*32*3000/300000 ~= 10.24 seconds`, NOT
+  "a fraction of a second" as the reviewed draft stated -- still cheap
+  per world, but not negligible at the scale of a full sweep (below),
+  and this figure is a pre-AETH-01 ESTIMATE, to be re-measured once an
+  AETH-01 CPU oracle exists (this repair cycle's `production_aeth01.py`)
+  before any budget commitment is made.
 - **Checkpointability.** Every world in a batch can be checkpointed
   independently (REQUIREMENTS.md); a batch need not run to completion
   as one atomic unit, so a killed/interrupted campaign can resume only
@@ -58,13 +73,23 @@ roughly $10/campaign, optimized for information gained per dollar
 ## Scout -> qualify -> deepen -> verify
 
 1. **Scout** (GPU, cheapest tier): large batch, coarse parameter grid,
-   short run length, tier-1 counters only, early termination on
-   absorbing regimes active. Produces the first-pass habitability
-   labels (HABITABILITY.md step 3).
-2. **Qualify** (GPU, moderate tier): re-run only the parameter points
-   with high seed-disagreement or a non-trivial majority label
-   (HABITABILITY.md step 4-5), more seeds, longer run length, tier-1
-   counters plus tier-2 rolling forensic buffers enabled.
+   short run length, tier-1 counters only, `DEAD_CERTIFIED` fast-path
+   active, other near-zero-activity worlds paused as `_CENSORED` (not
+   stopped as proven-dead, HABITABILITY.md/S05 repair). Produces
+   PROVISIONAL first-pass habitability labels only (HABITABILITY.md
+   step 3) -- **[REPAIRED per ASTRA_REVIEW_01.md M06]** STRUCTURED/
+   MOBILE/CHAOTIC/METASTABLE are never CONFIRMED at this tier, since
+   their confirmation requires tier-2/3 data the scout tier does not
+   compute (OBSERVATORY.md M06 repair).
+2. **Qualify** (GPU, moderate tier): re-run the parameter points with
+   high seed-disagreement or a non-trivial PROVISIONAL majority label
+   (HABITABILITY.md step 4-5), PLUS a mandatory preregistered random
+   sample (recommended 5%) of `DEAD_CERTIFIED`/`DEAD_CENSORED`/
+   `FROZEN_CENSORED`/`UNKNOWN` scout results, specifically to measure
+   the scout tier's own false-negative rate (M06 repair) -- more seeds,
+   longer run length, tier-1 counters plus tier-2 rolling forensic
+   buffers enabled. CONFIRMED labels may be assigned only after this
+   tier's data exists.
 3. **Deepen** (CPU, per-flagged-world): the small number of individual
    worlds flagged as STRUCTURED/MOBILE/METASTABLE/BOUNDARY_FORMING/
    CHAOTIC get full forensic replay on CPU: lineage-graph construction

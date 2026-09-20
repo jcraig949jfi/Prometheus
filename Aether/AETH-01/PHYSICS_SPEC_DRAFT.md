@@ -24,18 +24,35 @@ range 0-255, saturating (never wraps).
 
 ## Run parameters (fixed per run; part of replay identity)
 
-    WRITE_COST        uint8   in [0,255]   -- execution cost per WRITE
-    MAINTENANCE_COST  uint8   in [0,255]   -- passive per-tick decay
-    REPLENISH_NUMER   uint32  in [0,2^32]  -- per-cell inflow probability
-                                              numerator, denominator 2^32
-    REPLENISH_AMOUNT  uint8   in [0,255]   -- energy credited on inflow
-    MUT_NUMER         uint32  in [0,2^32]  -- per-write mutation
-                                              probability numerator,
-                                              denominator 2^32
+    WRITE_COST        uint8    in [0,255]     -- execution cost per WRITE
+    MAINTENANCE_COST  uint8    in [0,255]     -- passive per-tick decay
+    REPLENISH_NUMER   u33      in [0,2^32]    -- per-cell inflow probability
+                                                 numerator, denominator 2^32
+    REPLENISH_AMOUNT  uint8    in [0,255]     -- energy credited on inflow
+    MUT_NUMER         u33      in [0,2^32]    -- per-write mutation
+                                                 probability numerator,
+                                                 denominator 2^32
+
+**[REPAIRED per ASTRA_REVIEW_01.md S02(a), see REPAIR_LEDGER_01.md]**
+`REPLENISH_NUMER` and `MUT_NUMER` have legal domain `0..=2^32`
+inclusive -- a 33-bit range, NOT representable in a 32-bit word. They
+must be stored in a machine word wide enough to hold `2^32` exactly
+(a 64-bit unsigned field is the obvious, sufficient choice regardless
+of implementation language; "u33" above names the LOGICAL domain, not
+a literal bit-width requirement). The trigger condition
+`(key >> 32) < NUMER` is unchanged arithmetic and is now exactly
+correct at both ends: `NUMER=0` never triggers, `NUMER=2^32` always
+triggers (probability exactly 1), since `key >> 32` ranges over
+`0..=2^32-1`, strictly less than `2^32` in every case. The originally
+declared `uint32` type could not hold the declared `2^32` endpoint at
+all -- a plain representability error, not a design choice.
 
 All five are explicit scalar configuration, analogous to AETH-00's
 seed: never inferred, never defaulted silently, always logged with a
-run's provenance (REQUIREMENTS.md).
+run's provenance (REQUIREMENTS.md). All five apply UNIFORMLY to the
+entire lattice for the lifetime of a run -- there is no per-zone or
+per-cell parameter map in `aeth01.v1` (see EXPERIMENTS.md regime 7's
+repaired scope, S02(b)).
 
 ## Neighborhood / interaction relation
 
@@ -52,6 +69,20 @@ written is the issuing cell's own payload, subject to mutation below).
 Field 4 has different (conservative-transfer) semantics, specified
 below -- it is a different KIND of field, not a fifth ordinary
 overwrite target, and this is a deliberate, load-bearing asymmetry.
+
+**[REPAIRED per ASTRA_REVIEW_01.md M01, ACCEPT_WITH_QUALIFICATION, see
+REPAIR_LEDGER_01.md]** `arg1 mod 5` is NOT a harmless additive
+extension of AETH-00's `arg1 mod 4`: because no power of two is
+divisible by 5, EVERY single-bit flip of `arg1` changes its target-field
+residue -- AETH-00's "top six bits of `arg1` are mutation-neutral"
+property does not survive this extension at all, for any bit. The
+256-value encoding is also non-uniform across the 5 targets (52 byte
+values select field 0; 51 each select fields 1-4). This is stated here
+as a factual, accepted property of the frozen encoding, not a defect to
+be fixed by re-encoding: changing the selector to restore neutrality
+would itself be an unreviewed physics change trading one hidden prior
+for another (REPAIR_LEDGER_01.md M01). `KILL_GATES_01.md` K2 gives the
+exhaustive 256-value x 8-bit-position adjacency table.
 
 ## Instruction set
 
@@ -134,6 +165,27 @@ Prometheus engine). Mutation NEVER influences which proposal wins
 does not reuse the arbitration `priority` value) and never applies to
 field 4, preserving conservation exactly.
 
+**[REPAIRED per ASTRA_REVIEW_01.md S03, see REPAIR_LEDGER_01.md --
+supersedes the "Representation & accessibility analysis" section
+below's original claims about autonomous/dormant drift.]** Mutation is
+**copy-coupled**: it is an error process attached to a SUCCESSFUL
+incoming WRITE event only, never an autonomous process on stored or
+dormant bytes. Precisely: `Mu` is invoked once per winning proposal
+targeting fields 0-3, and never otherwise. A byte that is never the
+target of a winning WRITE proposal NEVER changes, at ANY `MUT_NUMER`
+value including `MUT_NUMER = 2^32` (probability 1) -- there is no
+process anywhere in this specification that mutates a byte that is not
+being written to. Concretely, from donor payload `p`: with probability
+`1 - MUT_NUMER/2^32` the stored value is exactly `p`; with probability
+`MUT_NUMER/2^32` it is one of `p`'s 8 Hamming-1 neighbors, each with
+conditional probability 1/8 (never `p` itself -- flipping any bit
+always changes the byte). "Dormant machinery survives for free" (true,
+see accessibility analysis below) and "dormant machinery MUTATES for
+free" (false) are two different, non-implied properties; only the
+first is claimed. No background mutation is added to rescue any
+previously stated intuition -- the choice to make mutation copy-coupled
+is stated here as intentional, not repaired away.
+
 ## Replenishment (Rho) -- per cell, independent
 
     r0  = M(seed XOR REPLENISH_DOMAIN_CONST)
@@ -144,34 +196,73 @@ field 4, preserving conservation exactly.
 `REPLENISH_DOMAIN_CONST` is a third frozen 64-bit odd constant, distinct
 from both the arbitration and mutation constants (proposed:
 `0x2545F4914F6CDD1D`). Three independent hash domains (arbitration,
-mutation, replenishment) share the same validated `M` primitive but
-never share input material in a way that would correlate their
-outcomes.
+mutation, replenishment) share the same validated `M` primitive.
+
+**[REPAIRED per ASTRA_REVIEW_01.md M07, ACCEPT_WITH_QUALIFICATION, see
+REPAIR_LEDGER_01.md]** The original claim that the three domains "never
+share input material in a way that would correlate their outcomes" is
+an OVERCLAIM and is withdrawn. What is actually established: (1) for a
+FIXED opportunity (a specific cell, tick, and field), the `Mu` key is
+uniform over its input domain, and its trigger bits (top 32) and
+bit-index bits (bottom 3) are exactly independent by construction of a
+bijective mix -- this positive result is real. (2) Cross-domain,
+cross-tick, or realized-trajectory independence is NOT proven: an exact
+tick offset can be constructed (see ASTRA_REVIEW_01.md M07 derivation)
+that makes the mutation and replenishment chains' internal words
+coincide at matched cells. Whether this is practically exploitable
+within any actual campaign's tick range is an open, unmeasured
+statistical question, not a proven defect -- the hash is NOT redesigned
+in response to this finding (per operator instruction and Astra's own
+"do not redesign the hash" guidance); an AETH-00A-style stratified
+statistical diagnostic, rerun at AETH-01's scale, is required before any
+cross-domain independence is relied upon for a scientific claim.
 
 ## Conserved / accounted quantities
 
-Energy is NOT a strict invariant (there are explicit sources and
-sinks), but every unit's fate is fully accounted every tick:
+**[REPAIRED per ASTRA_REVIEW_01.md S01, ACCEPT, see REPAIR_LEDGER_01.md
+-- this section supersedes the reviewed-design identity, which
+double-subtracted dissipated transfers; proven wrong by a 2-donor
+counterexample there.]**
 
-    TotalEnergy[t+1] = TotalEnergy[t]
-                        + Replenished[t]         (step 7)
-                        - ExecutionCost[t]        (step 5a)
-                        - TransferAttempted[t]    (step 5b, all of it,
-                                                    win or lose)
-                        + TransferCredited[t]     (step 5c winners only;
-                                                    subset of
-                                                    TransferAttempted)
-                        - TransferLost[t]         (step 5c losers;
-                                                    = TransferAttempted
-                                                      - TransferCredited
-                                                      - OverflowSpillage)
-                        - OverflowSpillage[t]     (step 5c saturation)
-                        - MaintenanceDecay[t]     (step 6, floor-limited)
+Energy is NOT a strict invariant (there are explicit sources and
+sinks), but every unit's fate is fully accounted every tick. Let, for a
+given tick and cell: `X` = ExecutionCost (step 5a), `A` =
+TransferAttempted (step 5b, everything debited from a source attempting
+a field-4 proposal, win or lose), `C` = TransferCredited (step 5c,
+winners only, ALREADY net of saturation -- i.e. `C` is the ACCEPTED
+amount, not the winning proposal's raw attempted amount), `D` =
+MaintenanceRemoved (step 6, the ACTUAL floor-limited amount subtracted,
+i.e. `min(MAINTENANCE_COST, energy after step 5)`), and `R` =
+ReplenishAccepted (step 7, the ACTUAL amount credited after saturation
+at 255 -- distinct from the gross `REPLENISH_AMOUNT`, which may be
+partially or fully rejected by saturation). The ONE authoritative
+identity is:
+
+    TotalEnergy[t+1] = TotalEnergy[t] - ExecutionCost[t] - TransferAttempted[t]
+                        + TransferCredited[t] - MaintenanceRemoved[t]
+                        + ReplenishAccepted[t]
+
+`TransferLost[t]` (destroyed losing amounts) and `OverflowSpillage[t]`
+(destroyed winning-but-saturated amounts) remain separately traced,
+forensically important quantities (ADVERSARIAL_ANALYSIS.md #17), but
+they are DERIVED diagnostics, not independent terms in the identity:
+at each (target, field=4) contest, `TransferAttempted = TransferCredited
++ TransferLost + OverflowSpillage` holds by definition of how a contest
+resolves, so subtracting `TransferLost` and `OverflowSpillage`
+SEPARATELY, in addition to the `-TransferAttempted[t] + TransferCredited[t]`
+pair, double-counts them -- this was exactly the reviewed draft's error.
+An equivalent, non-double-counting restatement (useful as a cross-check,
+not a second identity) is
+`TotalEnergy[t+1] = TotalEnergy[t] - X - L - O - D + R`, using only the
+LOST and OVERFLOW amounts and omitting `A`/`C` entirely; the two forms
+are algebraically identical (`A = C + L + O`) and must never be summed
+together.
 
 This equation is a required property-based test target (REQUIREMENTS.md):
 every term is independently observable from the trace (Instrumentation,
 below), so the equation must hold exactly, every tick, every run, with
-zero tolerance (all integer arithmetic).
+zero tolerance (all integer arithmetic). See `KILL_GATES_01.md` K1 for
+6 hand-worked reconciliation cases.
 
 ## Creation / destruction rules
 
@@ -179,9 +270,14 @@ No opcode, arg0, arg1, or payload byte value is ever created from
 nothing except by Mu's explicit single-bit flip (a deliberate,
 accounted exception to AETH-00's "no byte synthesis" limitation -- see
 DECISIONS.md D-AETH01-04). No energy unit is created except by explicit
-Replenish (step 7); no energy unit is destroyed except by explicit
-MaintenanceDecay, TransferLost, or OverflowSpillage. There is no other
-creation/destruction path.
+Replenish (step 7, the ACCEPTED/post-saturation amount). No energy unit
+is destroyed except by explicit **ExecutionCost** (step 5a --
+**[REPAIRED per ASTRA_REVIEW_01.md S01: the reviewed draft's exhaustive
+destruction list omitted execution expenditure entirely, even though
+step 5a unconditionally removes energy with no destination]**),
+MaintenanceDecay (step 6, floor-limited), TransferLost (step 5c losers),
+or OverflowSpillage (step 5c saturation on the winner). There is no
+other creation/destruction path.
 
 ## Boundary conditions
 
@@ -233,20 +329,40 @@ In addition to AETH-00's `proposal_emitted`, `proposal_won`,
 `cell_starved` (a WRITE cell was blocked by insufficient energy),
 `mutation_applied` (Mu triggered, with the bit index flipped),
 `energy_debited` / `energy_credited` / `energy_lost` /
-`energy_overflow_spilled` / `energy_replenished` (one row per
-occurrence, each carrying the exact amount, so the conservation
-equation above can be checked line-by-line against the trace, not just
-against final totals).
+`energy_overflow_spilled` / `energy_decayed` / `energy_replenished`
+(one row per occurrence, each carrying the exact amount, so the
+conservation equation above can be checked line-by-line against the
+trace, not just against final totals). **[REPAIRED per
+ASTRA_REVIEW_01.md S01, ACCEPT, see REPAIR_LEDGER_01.md]** `D`
+(MaintenanceRemoved) requires its own named `energy_decayed` event,
+distinct from `energy_debited` (which is reserved for `X`/`A`, the
+WRITE_COST and transfer-attempt debits) -- the reviewed draft left
+maintenance as "an implied event hidden among debits," which S01
+explicitly named as a defect; this closes that gap.
 
 ## Representation & accessibility analysis (Design Task 3)
 
-**One-step variation.** The finest-grained physical event is a single
-Mu-triggered bit flip inside one already-copied byte -- Hamming
-distance 1, at a rate the experimenter controls (`MUT_NUMER`). This is
-much smoother than a discrete-genome insertion/deletion/point-mutation
-alphabet: any byte value is reachable from any other in at most 8
-one-step events, and most single steps change behavior only slightly
-(payload content) rather than categorically.
+**[REPAIRED per ASTRA_REVIEW_01.md S03, see REPAIR_LEDGER_01.md and
+the "Mutation (Mu)" section above, which is now the authoritative
+description of the mechanism this analysis describes.]**
+
+**One-step variation is copy-coupled, not autonomous.** The
+finest-grained physical event is a single Mu-triggered bit flip inside
+one already-COPIED byte (i.e. one that just won a WRITE contest) --
+Hamming distance 1 from the winning donor's payload, at a rate the
+experimenter controls (`MUT_NUMER`). This is much smoother than a
+discrete-genome insertion/deletion/point-mutation alphabet ALONG A
+REALIZED CHAIN OF COPY EVENTS: if a byte value is repeatedly re-copied
+(by any sequence of winning WRITEs, possibly from different source
+cells at different ticks), it can drift up to 8 Hamming-distance-1
+steps away from its original value per copy event. This is NOT a claim
+that any byte is reachable from any other "in at most 8 one-step
+events" independent of copying activity -- a byte that is never the
+target of a winning WRITE never changes at all, regardless of
+`MUT_NUMER` (see "Mutation (Mu)" above). Reachability is therefore
+gated by the ACCESSIBILITY of copy opportunities (a route, a live
+source, sufficient energy, and contest survival), not by the mutation
+alphabet's smoothness alone.
 
 **Categorical cliffs exist but are narrow, not sheer.** The opcode
 field is an ordinary byte subject to the same copy+Mu process as any
@@ -261,29 +377,36 @@ gives `0x00`, still inert. So "activation" is an approximately
 free -- a directly measurable, testable quantity (a natural
 HABITABILITY.md observable: measured activation rate vs. `MUT_NUMER`).
 
-**Neutral networks are large by construction.** 255 of 256 opcode
-values behave identically (RESERVED_INERT); a dormant cell's opcode
-byte can drift through nearly the entire inert subspace under mutation
-with zero functional consequence -- a large neutral plateau. This
-directly supports "dormant/incomplete machinery surviving": a
-non-WRITE cell pays no WRITE_COST and (if MAINTENANCE_COST=0) no decay
-either, so it can sit inert indefinitely while its non-opcode bytes
-(arg0/arg1/payload) drift neutrally, potentially pre-positioning a
-"latent" configuration that only becomes functional once its opcode
-byte is later flipped to WRITE by chance or by a neighbor's write --
-this is architecturally exactly R6's "dormant machinery survives to
-completion" case, not merely possible but structurally cheap.
+**Neutral networks are large by construction, but require copy traffic
+to explore, same as any other mutation.** 255 of 256 opcode values
+behave identically (RESERVED_INERT). This is a large neutral plateau IF
+and only if the byte in question keeps being re-copied (by winning
+WRITEs) -- a dormant cell's opcode byte that is NEVER targeted by a
+winning WRITE stays exactly where it started, forever, at any
+`MUT_NUMER` (S03 repair, above). What is unconditionally true and
+architecturally cheap is the SURVIVAL half of R6's "dormant machinery
+survives to completion" case: a non-WRITE cell pays no `WRITE_COST` and
+(if `MAINTENANCE_COST=0`) no decay either, so it can sit inert
+indefinitely, unchanged, until a WRITE (its own future activation, or a
+neighbor's write) touches it. The EXPLORATION half (neutral drift while
+dormant) is NOT free -- it requires the dormant byte to be a live
+target of repeated winning writes, which is an accessibility question
+(does a copier route to it, does it survive contest, etc.), not a
+property of the mutation alphabet alone.
 
-**Multi-component cooperative construction is structurally forced, not
-optional.** One WRITE touches exactly one field of one neighbor per
-tick; there is no multi-field or multi-cell atomic write. Any
-coherent multi-byte "mechanism" (a working opcode+arg0+arg1+payload
-tuple that does something specific) necessarily accumulates over
-multiple ticks, frequently from more than one physical source cell --
-partial, incremental construction is the ONLY way anything nontrivial
-can be built, which directly supports Design Task 3's "spatial partial
-construction creates smoother paths" and "multiple components can
-incrementally cooperate."
+**Multi-component cooperative construction is common but not
+structurally forced.** One WRITE touches exactly one field of ONE
+neighbor per tick from a given source; however, a single target cell
+CAN receive up to 4 simultaneous winning writes in one tick, one from
+each of its 4 von Neumann neighbors, each targeting a DIFFERENT field
+(e.g. all 4 non-energy fields updated at once by 4 distinct sources) --
+**[REPAIRED per ASTRA_REVIEW_01.md N02: the reviewed draft's "necessarily
+accumulates over multiple ticks" was an overclaim; multi-source,
+single-tick construction of a complete 4-field tuple is possible]**.
+Sequential, multi-tick, partial construction remains the ONLY way a
+single SOURCE acting alone (one field per tick) can build a multi-byte
+mechanism at one target, and is expected to be the common case, but it
+is not the only structurally possible path.
 
 **Likely accessibility moats introduced by AETH-01 itself:**
 

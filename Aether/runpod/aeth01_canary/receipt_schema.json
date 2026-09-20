@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AETH-01 RunPod canary receipt",
+  "description": "Enforced shape of receipt.json written by run_canary.py. A receipt missing any required field, or with cases_matched != cases_run, is a failed canary regardless of what run_canary.py printed to stdout.",
+  "type": "object",
+  "required": [
+    "semantics_id",
+    "backend",
+    "cases_run",
+    "cases_matched",
+    "gpu_kernel_seconds",
+    "cpu_oracle_seconds",
+    "mismatches"
+  ],
+  "properties": {
+    "semantics_id": {
+      "type": "string",
+      "const": "aeth01.v1"
+    },
+    "backend": {
+      "type": "string",
+      "enum": ["cupy", "numpy_fallback"],
+      "description": "numpy_fallback on an actual GPU pod is itself a finding (CuPy failed to import), not a silent success."
+    },
+    "cases_run": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cases_matched": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "gpu_kernel_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Informational throughput comparison only, not itself a pass/fail gate."
+    },
+    "cpu_oracle_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "mismatches": {
+      "type": "array",
+      "description": "Empty on success. Never silently dropped: each entry is the full CPU/GPU input state that disagreed.",
+      "items": {
+        "type": "object",
+        "required": ["trial", "H", "W", "seed", "tick", "grid"]
+      }
+    }
+  },
+  "additionalProperties": false
+}

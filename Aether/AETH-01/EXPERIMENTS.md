@@ -38,9 +38,18 @@ explicit, seeded, reproducible PRNG stream logged in provenance
 4. **Adversarial inert control (SEEDED).** A hand-authored pattern that
    LOOKS structurally suggestive (e.g., a periodic block of identical
    non-WRITE bytes, or a symmetric static arrangement) but contains no
-   WRITE opcode anywhere, so it is causally inert by construction (it
-   cannot change unless a rare mutation flips its opcode field).
-   Purpose: a required true-negative check -- any detector that reports
+   WRITE opcode anywhere, so it is causally inert by construction.
+   **[REPAIRED per ASTRA_REVIEW_01.md S03: mutation is copy-coupled, not
+   an autonomous per-tick process -- see PHYSICS_SPEC_DRAFT.md "Mutation
+   (Mu)"]** If placed in a wholly `RESERVED_INERT` background, this
+   pattern's bytes cannot change AT ALL, ever, at any `MUT_NUMER`,
+   because mutation only fires on a winning WRITE proposal and none
+   exists anywhere in this configuration -- there is no "rare mutation"
+   path for a fully inert world. If placed in a sparse-soup background
+   instead, it can change ONLY if a background WRITE cell's proposal
+   wins a contest targeting one of this pattern's cells (an ordinary
+   external cause, not a spontaneous internal event). Purpose: a
+   required true-negative check -- any detector that reports
    "construction" or "heredity" activity on this control has a
    confirmed false-positive bug, full stop.
 
@@ -54,21 +63,43 @@ explicit, seeded, reproducible PRNG stream logged in provenance
    DEAD or FROZEN quickly, itself informative (a "how little is needed
    to sustain anything" boundary probe).
 
-7. **Heterogeneous environment.** A single world split into spatial
-   zones with DIFFERENT parameters or initial densities/energy (e.g.
-   one half resource-rich, one half resource-poor, or a density
-   gradient across columns). Purpose: tests whether spatial
-   heterogeneity itself (not present in any of regimes 1-6) creates
-   pressure for structures that exploit a boundary or gradient --
-   directly relevant to R8's "maintaining gradients or boundaries" and
-   to later transplant-style experiments (AETHER_CONCEPT.md).
+7. **Heterogeneous environment.** **[REPAIRED per ASTRA_REVIEW_01.md
+   S02(b), ACCEPT, see REPAIR_LEDGER_01.md -- narrowed scope: the
+   `aeth01.v1` transition law reads exactly five GLOBAL scalar run
+   parameters with no spatial index (PHYSICS_SPEC_DRAFT.md); a runner
+   that varied `WRITE_COST` etc. BY ZONE would silently be executing a
+   different, unspecified physics while claiming the `aeth01.v1` replay
+   tuple.]** A single world, under the SAME five global run parameters
+   for its entire extent, split into spatial zones with DIFFERENT
+   INITIAL BYTE CONTENT ONLY -- e.g. different initial per-cell energy
+   levels or different initial WRITE density by zone (a density or
+   energy GRADIENT across columns is legal; a `WRITE_COST` gradient is
+   NOT). Purpose: tests whether spatial heterogeneity of INITIAL
+   CONDITIONS creates pressure for structures that exploit a boundary or
+   gradient -- directly relevant to R8's "maintaining gradients or
+   boundaries" and to later transplant-style experiments
+   (AETHER_CONCEPT.md). A genuinely spatially-varying LAW (per-zone run
+   parameters) is a DIFFERENT, not-yet-specified physics, requiring its
+   own `semantics_id` and its own replay-tuple extension (a parameter
+   MAP, not five scalars) if ever pursued -- not silently implemented in
+   a runner under the `aeth01.v1` label.
 
-Regimes 3-4 are SEEDED instrument controls. Regimes 1-2, 5-7 are
-SPONTANEOUS-origin regimes (no hand-authored functional pattern is
-placed in them) -- note regime 7's zones may still be entirely
-spontaneous-origin if only the *parameters*, not the initial content,
-are hand-authored; only regimes 3-4 place a hand-designed FUNCTIONAL
-BYTE PATTERN into the world.
+**[REPAIRED per ASTRA_REVIEW_01.md S06, ACCEPT, see REPAIR_LEDGER_01.md
+-- the reviewed draft let regimes 5-7 "wrap" a seeded regime-3/4 pattern
+while ALSO calling regimes 5-7 spontaneous-origin, a direct
+contradiction: a seeded copier with altered energy satisfied both
+descriptions.]** Origin classification (`instrument_class`, below)
+COMPOSES through every overlay: regimes 5-7 are OVERLAYS (resource/
+energy/initial-content heterogeneity choices) applicable on top of
+EITHER a regime-1/2 base (giving `SPONTANEOUS`) OR a regime-3/4 base
+(giving `SEEDED_CONTROL`) -- they carry NO origin label of their own.
+`instrument_class = SEEDED_CONTROL` if ANY hand-authored functional
+byte pattern (regimes 3-4) is present ANYWHERE in the initial lattice
+content, regardless of which overlay is additionally applied.
+`instrument_class = SPONTANEOUS` only if the ENTIRE initial lattice
+content derives exclusively from unstructured generation (regimes 1-2),
+under ANY overlay. There is no configuration in which the same
+initialization is validly labeled both ways.
 
 ## How spontaneous and seeded evidence stay separated
 
@@ -95,20 +126,29 @@ convention:
    trajectory looks -- this must be stated in the header of any report
    that includes a regime-3 result (HEREDITY_REQUIREMENTS.md).
 4. **Automated cross-contamination check, required before any
-   spontaneous-origin claim.** Compute a structural fingerprint
-   (e.g. a hash of the byte-pattern-relative-to-itself, translation/
-   rotation-normalized) of the candidate spontaneous structure and
-   compare it against the fingerprint library of ALL seeded patterns
-   ever used (regimes 3-4 and any future ones). A match is a hard stop
-   -- either a genuine reinvention worth extra scrutiny, or (far more
-   likely at first) a campaign-script bug that leaked a seeded pattern
-   into a nominally spontaneous run. This check runs automatically as
-   part of any claim pipeline, not manually and not optionally.
+   spontaneous-origin claim -- a DIAGNOSTIC trigger, never provenance
+   truth.** Compute a structural fingerprint (e.g. a hash of the
+   byte-pattern-relative-to-itself, translation/rotation-normalized) of
+   the candidate spontaneous structure and compare it against the
+   fingerprint library of ALL seeded patterns ever used (regimes 3-4 and
+   any future ones). A match is a hard stop -- either a genuine
+   reinvention worth extra scrutiny, or (far more likely at first) a
+   campaign-script bug that leaked a seeded pattern into a nominally
+   spontaneous run. **[REPAIRED per ASTRA_REVIEW_01.md S06]** A
+   fingerprint match or non-match NEVER overrides the logged
+   initialization recipe (item 5): the recipe log is the sole
+   provenance truth; the fingerprint check is an investigation trigger
+   that can raise a false alarm (a rare true reinvention) or miss a
+   genuine leak (a perturbed copy evading an exact fingerprint) and must
+   never be substituted for reading the actual logged recipe. This check
+   runs automatically as part of any claim pipeline, not manually and
+   not optionally.
 5. **Campaign configs are versioned artifacts.** The exact byte pattern
    and RNG seed used to generate every regime-1/2/5/6/7 initial state
    is itself logged (not just "random soup, seed=X" in prose) so a
    contamination investigation can always reconstruct exactly what was
-   run.
+   run. This recipe log is authoritative for `instrument_class`; item 4's
+   fingerprint check is secondary to it.
 
 ## What this file deliberately does not do
 

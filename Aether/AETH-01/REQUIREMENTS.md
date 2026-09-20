@@ -8,16 +8,16 @@ Status: DRAFT.
 |---|---|---|
 | R1 no privileged organism ontology | SATISFIED | State is 5 uint8 fields only; no id/fitness/parent fields exist anywhere |
 | R2 no reproduction primitive | SATISFIED | Only WRITE (template) and conservative transfer exist; no BIRTH/COPY_SELF/ALLOC |
-| R3 no externally imposed genome boundary | **TENSION** | Mutation is defined to exclude field 4 (energy) by construction (PHYSICS_SPEC_DRAFT.md accessibility analysis, item 2) -- this partially pre-decides that "instructional" fields, not the resource field, are where heritable variation can live. Not a full violation (heredity could still, in principle, be read from spatial/energy PATTERNS rather than mutable content) but a real, named hidden prior, not swept under the rug |
+| R3 no externally imposed genome boundary | **TENSION** | Mutation is defined to exclude field 4 (energy) by construction (PHYSICS_SPEC_DRAFT.md accessibility analysis, item 2) -- this partially pre-decides that "instructional" fields, not the resource field, are where MUTATIONAL variation can live. **[REPAIRED per ASTRA_REVIEW_01.md B02, ACCEPT, see REPAIR_LEDGER_01.md]** Excluding energy from Mu is NOT by itself proof that resource-handling traits cannot be inherited -- routing, capacity-use, and instruction-mediated resource-control patterns (encoded in fields 0-3) can still vary and be inherited. The MORE restrictive fact is the future observer's own planned categorical exclusion of resource-flow evidence from heredity tiers 2-4, which the S04 repair (HEREDITY_REQUIREMENTS.md) has now removed (resource-mediated evidence is admitted, typed separately from structural-copy evidence). Do not add energy mutation merely to satisfy a misleading symmetry argument |
 | R4 local causality | SATISFIED, with caveat | All interactions are bounded to von Neumann neighbors; the arbitration hash depends on absolute coordinates (a positional tie-break field) but this cannot transmit information between non-adjacent cells -- it biases *which local proposal wins*, it does not let distant cells influence each other directly. Caveat tracked in ADVERSARIAL_ANALYSIS.md #6, #16 |
 | R5 endogenous persistence | **TENSION** | A cell's initial energy allocation is exogenous (chosen at construction, EXPERIMENTS.md), and more initial energy mechanically buys more ticks of possible action -- persistence differences can therefore reflect initial-condition luck, not dynamics, unless controlled for (ADVERSARIAL_ANALYSIS.md #12; ECONOMICS.md's Regime B with ongoing replenishment reduces but does not eliminate this) |
 | R6 endogenous construction | SATISFIED (by design intent) | Physics permits the STRUCTURAL_RESEMBLANCE / CAUSAL_CONSTRUCTION / RECURSIVE_CONSTRUCTION distinction to be made later (HEREDITY_REQUIREMENTS.md); no detector exists yet, which is explicitly allowed by the brief |
 | R7 writable/reconfigurable matter, avoid conventional VM without reason | SATISFIED, with justification | AETH-01 keeps AETH-00's opcode/operand shape rather than inventing a new ontology; the stated compelling reason is continuity with a validated conformance/differential-testing methodology (PHYSICS_CANDIDATES.md, "Selection," reason 1) -- flagged, not hidden, as a VM-adjacent design |
 | R8 cost/scarcity | SATISFIED | ECONOMICS.md: WRITE_COST, MAINTENANCE_COST, conservative lossy transfer |
 | R9 no direct task-reproduction coupling | SATISFIED (vacuously) | No task exists in AETH-01; nothing computes a score of any kind. Not yet tested under an actual task, since none exists |
-| R10 observatory separation | SATISFIED | OBSERVATORY.md reads trace/state only; trace on/off byte-identity is a required regression test (Part 2 below), inherited from AETH-00B's proven pattern |
+| R10 observatory separation | SATISFIED for noninterference; TRUTH/COMPLETENESS NOT YET ESTABLISHED | OBSERVATORY.md reads trace/state only; trace on/off byte-identity (Part 2 below) is a required regression test, correctly inherited from AETH-00B's proven pattern. **[REPAIRED per ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** That test proves only NONINTERFERENCE (enabling the trace never perturbs committed state) -- it does NOT prove the trace's TRUTH or CAUSAL COMPLETENESS (whether each recorded event actually reflects what the transition law did). AETH-00B's own trace fields (e.g. `proposal_emitted`) are computed via a decoding path separate from the one that decides the winner, so a decoding-path bug could pass every existing trace-on/off test while still emitting a false event record. An independent event-ledger cross-check (Part 2, new requirement below) is REQUIRED before any AETH-01 trace is used as scientific evidence (heredity, causal construction, novelty), not merely as a regression fixture |
 | R11 deterministic replay | SATISFIED | All randomness (arbitration, mutation, replenishment) is explicit, domain-separated, and derived only from (seed, tick, coordinates); replay-identity tuple extended (PHYSICS_SPEC_DRAFT.md) |
-| R12 GPU viability | SATISFIED | Selection criterion for choosing this candidate (PHYSICS_CANDIDATES.md); reuses AETH-00's proven gather mapping unchanged in shape |
+| R12 GPU viability | SATISFIED (feasibility argument only; not yet measured) | **[REPAIRED per ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** Candidate 1's per-cell gather shape maps onto AETH-00's proven CPU gather ontology unchanged, which is a strong, low-risk feasibility argument -- but no GPU implementation of ANY AETH candidate exists or has been measured (`Aether/production/aeth00.py` is CPU-only). This status changes to fully SATISFIED only after this repair cycle's RunPod canary actually runs and matches the CPU oracle |
 | R13 tiny worlds meaningful | SATISFIED | HABITABILITY.md scopes the first campaign to H,W in {4,8,16,32} |
 | R14 alien organization possible | **TENSION** | A single active opcode with no compare/branch primitive is a real expressivity ceiling (PHYSICS_SPEC_DRAFT.md accessibility item 4) -- AETH-01 does not FORCE neural/genome/CPU-like organization, but it also cannot express certain conditional strategies at all, which is a different, narrower kind of limitation worth tracking into AETH-02 |
 | R15 failure observable | SATISFIED | HABITABILITY.md's regime labels are explicitly designed around failure modes (DEAD/FROZEN/HOMOGENIZED/EXPLOSIVE), each backed by a measurable signature |
@@ -39,7 +39,26 @@ in a report or a receipt:
   differential testing between them before any production code exists).
 - Property-based testing (Hypothesis-style) over random worlds/params,
   at AETH-00B's scale of rigor (>=100,000 generated cases per
-  qualification pass) once implementation begins.
+  qualification pass) once implementation begins. **[REPAIRED per
+  ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** Each case
+  is a single-tick, small-world transition comparison against the CPU
+  oracle -- this bounds ONE-STEP transition-law correctness, and is not
+  itself a bound on multi-tick campaign-level failures, economic
+  dynamics, or a qualification of any scientific claim made from a
+  trace. State this scope explicitly in the qualification receipt;
+  do not describe the count alone as "the AETH-01 tests."
+- **Independent event-ledger cross-check (NEW, M09).** A second,
+  independently-coded reconstruction pass that reads ONLY the raw
+  before/after lattice state (never the production trace-emission
+  code path, e.g. not `proposal_emitted`) must derive, per tick, each
+  contest's winner/losers/amounts/mutation-fired flag from first
+  principles, and be compared field-by-field against the production
+  trace's own emitted events. Disagreement is an instrumentation
+  defect, never a physics finding. This is the concrete implementation
+  of "trace truth/completeness, not just noninterference" (R10 above)
+  and is REQUIRED before any AETH-01 trace-derived claim is treated as
+  evidence -- it is a precondition for using OBSERVATORY.md's metrics
+  or HEREDITY_REQUIREMENTS.md's tiers, not merely a RunPod gate.
 - Golden vectors for: WRITE_COST starvation boundary, transfer
   win/loss/overflow, maintenance-decay floor, replenishment trigger,
   mutation trigger/bit-index, and the H,W in {1,2} toroidal

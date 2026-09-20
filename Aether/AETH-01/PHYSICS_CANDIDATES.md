@@ -190,8 +190,18 @@ Reasons, in order of weight:
    hash unmodified) lets AETH-01 inherit that trust rather than
    re-earning it on unrelated machinery, at zero extra freedom-to-cheat
    (the extension is additive and small enough to fully specify below).
-2. **GPU viability (R12) is not aspirational, it is proven.** Candidate
-   2 is fundamentally hostile to R12 (exact Gillespie is serial by
+2. **GPU viability (R12) rests on a strong, unmeasured feasibility
+   argument, not proof.** **[REPAIRED per ASTRA_REVIEW_01.md M09,
+   ACCEPT, see REPAIR_LEDGER_01.md -- the reviewed draft called this
+   "not aspirational, it is proven," inconsistent with the fact that
+   the only implementation that exists (`Aether/production/aeth00.py`)
+   is CPU-only, gather-shaped, and its own receipt says so.]** Candidate
+   1's per-cell gather shape maps onto AETH-00's proven CPU gather
+   ontology unchanged, which makes GPU implementation plausible and
+   low-risk -- but R12 remains open until a GPU implementation is
+   actually built and differentially verified (this repair cycle's
+   RunPod canary is the first attempt). Candidate 2 is nonetheless
+   fundamentally more hostile to R12 (exact Gillespie is serial by
    construction; the parallel-friendly approximation reopens R11).
    Candidate 3 is plausible but a substantially larger, riskier
    engineering bet for a first milestone beyond AETH-00.
@@ -222,3 +232,17 @@ trick is worth the R11 cost; mobile-particle systems remain the most
 physically natural home for literal movement and momentum-based
 resource models). Full specifications above are preserved for Astra's
 independent judgment on whether Candidate 1 was the right call.
+
+**[NEW per ASTRA_REVIEW_01.md N04, ACCEPT, see REPAIR_LEDGER_01.md]**
+Candidates 1, 2, and 3 above are NOT equally specified: Candidate 1 has
+a complete formal transition contract (PHYSICS_SPEC_DRAFT.md);
+Candidates 2 and 3 are informative FAMILIES, not complete rival
+universes -- their exact reaction catalogs, rates/event scheduling,
+and collision/binding laws remain open design choices. This asymmetry
+must NOT be read as evidence of Candidates 2/3's scientific
+inferiority, and Candidate 1's typo-level/accounting-level issues
+(fixed in this repair cycle) must not be conflated with the larger,
+unresolved question of which candidate family is the better scientific
+choice. This repair cycle fixes Candidate 1 specifically because it is
+the one already selected for implementation, not because the selection
+question itself has been re-litigated.

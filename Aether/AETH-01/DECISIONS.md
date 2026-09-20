@@ -18,11 +18,16 @@ scientifically inferior.
 Hidden prior introduced: keeps AETH-00's opcode/operand ("small VM")
 ontology rather than a chemistry- or particle-based one; R7's caution
 against recreating a conventional VM is only partially honored.
-Falsifier/reversal: if the habitability sweep (HABITABILITY.md) shows
-this candidate's parameter space is overwhelmingly DEAD/FROZEN/
-HOMOGENIZED with no non-trivial region found after a reasonably
-thorough scout-tier sweep, Candidate 2 or 3 should be built next
-instead of iterating further on Candidate 1's parameters alone.
+Falsifier/reversal: **[TIGHTENED per ASTRA_REVIEW_01.md B03, see
+REPAIR_LEDGER_01.md -- "reasonably thorough" named no finite
+adjudication]** if the full coarse grid specified in HABITABILITY.md
+step 3 (5-7 points/axis, Regime A and B, >=8 seeds/point, including at
+least one odd and one non-power-of-two H/W pair per M04's repair) shows
+`DEAD_CERTIFIED`/`DEAD_CENSORED`/`FROZEN_CENSORED`/`HOMOGENIZED` as the
+majority label at >=90% of grid points with no adjacent-point
+disagreement warranting refinement (HABITABILITY.md step 4), Candidate
+2 or 3 should be built next instead of iterating further on Candidate
+1's parameters alone.
 
 **D-AETH01-02 -- Extend site state from 4 to 5 uint8 fields, adding
 `energy`, rather than a separate resource substrate/layer.**
@@ -35,9 +40,17 @@ Hidden prior: resource capacity is capped at exactly the same 0-255
 range and same physical location as the instruction fields, coupling
 "how much matter can hold" to the same byte-width choice made for
 opcode/payload for engineering convenience, not a physical derivation.
-Falsifier/reversal: if 0-255 proves too coarse to show interesting
-economic dynamics in the habitability sweep, revisit field width
-(e.g. uint16 energy) as a new semantics_id.
+**[REPAIRED per ASTRA_REVIEW_01.md M01, see REPAIR_LEDGER_01.md]** This
+entry described the 5-field extension as purely additive; it is NOT
+additive at the `arg1` field-SELECTOR level -- extending the selector
+from mod-4 to mod-5 destroys AETH-00's single-bit-neutral subspace
+entirely (no power of two is divisible by 5), a real, accepted mutation-
+topology change, not analyzed in the original version of this entry.
+Falsifier/reversal: **[TIGHTENED per B03]** if 0-255 is shown, via K1's
+hand-worked cases or the (deferred) K4 economic gates, to saturate or
+floor in >50% of a preregistered Regime-B parameter sample before any
+non-trivial dynamics are observed, revisit field width (e.g. uint16
+energy) as a new semantics_id.
 
 **D-AETH01-03 -- WRITE costs a fixed `WRITE_COST`, debited
 unconditionally from the source before emission; insufficient energy
@@ -50,9 +63,11 @@ ADVERSARIAL_ANALYSIS.md notes the flat-cost prior explicitly instead).
 Hidden prior: cost is content- and direction-independent -- an
 arbitrary simplification, named in PHYSICS_SPEC_DRAFT.md's
 accessibility analysis (moat #3).
-Falsifier/reversal: if the flat-cost assumption is shown (via the
-habitability sweep) to trivially favor one narrow strategy class to the
-exclusion of all others, a content/direction-sensitive cost model
+Falsifier/reversal: **[TIGHTENED per B03]** if K4's isolated
+pulse-budget cell probe (deferred this cycle) shows >90% of a
+preregistered sample of surviving strategies converge on the identical
+narrow behavior class (e.g. minimal-cost same-value writes) across
+Regime B's parameter range, a content/direction-sensitive cost model
 should be designed as a new semantics_id.
 
 **D-AETH01-04 -- Introduce explicit, reproducible mutation (`Mu`,
@@ -71,7 +86,12 @@ uniformly across all 5 fields including energy -- rejected because a
 interpretation (would break the accounting equation).
 Hidden prior: mutation strictly excludes the resource field, which is
 the R3-tension already named in REQUIREMENTS.md and
-PHYSICS_SPEC_DRAFT.md.
+PHYSICS_SPEC_DRAFT.md. **[REPAIRED per ASTRA_REVIEW_01.md B02]** This is
+NOT, by itself, proof that resource-handling traits cannot be
+inherited: routing/capacity-use patterns encoded in fields 0-3 can
+still vary and be inherited; the MORE restrictive fact was the
+observer's own planned categorical exclusion of resource-flow evidence,
+now removed (HEREDITY_REQUIREMENTS.md S04 repair).
 Falsifier/reversal: if this asymmetry is shown to make resource-handling
 strategies structurally impossible to inherit (as opposed to merely
 indirect), a further semantics revision allowing energy-field variation
@@ -91,10 +111,11 @@ complexity and a new non-integer-friendly rule with no stated
 scientific motivation).
 Hidden prior: contested transfer is maximally punishing (100% loss),
 an arbitrary point on a spectrum of possible partial-loss rules.
-Falsifier/reversal: if scout-tier sweeps show this loss rule makes any
-transfer attempt so risky that transfer is never favored anywhere in
-parameter space (i.e. the mechanism is dynamically inert), a
-partial-loss variant should be tried as a new semantics_id.
+Falsifier/reversal: **[TIGHTENED per B03]** if a preregistered K4 sample
+(deferred this cycle) shows winning transfer proposals occur in <1% of
+opportunities across a swept Regime-B grid (i.e. contests are so risky
+that transfer is essentially never attempted-and-won), a partial-loss
+variant should be tried as a new semantics_id.
 
 **D-AETH01-06 -- Maintenance decay and replenishment are one
 parameterized law; Regimes A/B/C (ECONOMICS.md) are parameter points,

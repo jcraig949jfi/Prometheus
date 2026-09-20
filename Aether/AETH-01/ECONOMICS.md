@@ -67,8 +67,17 @@ as a required comparison baseline, not skipped.
 
 ## The central question: what makes persistent state worth paying for?
 
-Under Regime A, persistent state costs nothing extra beyond what it
-already contains (no decay) -- so persistence is "free" and the
+**[REPAIRED per ASTRA_REVIEW_01.md M02/M03, ACCEPT, see
+REPAIR_LEDGER_01.md -- the framing below must not be read as "memory is
+costly." It is not: the four template bytes (opcode/arg0/arg1/payload)
+persist at ZERO energy cost under EVERY `MAINTENANCE_COST` setting, in
+every regime. No resource payment retains an opcode, operand, payload,
+or inert boundary; starvation never removes stored bytes, only blocks
+future WRITE attempts. What follows is about ENERGY RESERVES, a
+completely separate quantity from stored information.]**
+
+Under Regime A, an energy reserve costs nothing extra beyond what it
+already contains (no decay) -- so holding energy is "free" and the
 question doesn't yet bite. Regime B is where it becomes real:
 
 - **Decay makes hoarding a losing default.** Any cell sitting on energy
@@ -102,9 +111,19 @@ question doesn't yet bite. Regime B is where it becomes real:
   `MAINTENANCE_COST>0`: an ACTIVE cell bleeds `WRITE_COST` every
   attempt while gaining little (few contest wins available), whereas a
   cell that stays RESERVED_INERT still pays `MAINTENANCE_COST` on
-  whatever it holds but never pays `WRITE_COST`, and its opcode byte
-  can drift neutrally (PHYSICS_SPEC_DRAFT.md accessibility analysis)
-  until conditions (or a neighbor) change.
+  whatever energy it holds but never pays `WRITE_COST`, and its stored
+  bytes remain UNCHANGED (not drifting -- **[REPAIRED per
+  ASTRA_REVIEW_01.md S03: mutation is copy-coupled and fires only on a
+  winning WRITE; an untouched dormant byte does not autonomously drift,
+  see PHYSICS_SPEC_DRAFT.md "Mutation (Mu)"]**) until conditions (or a
+  neighbor's WRITE) change.
+- **Concentration/hoarding is a specific, real incentive, not merely a
+  loss (M02/M03 repair).** Because `MAINTENANCE_COST` is charged per
+  occupied energy-bearing SITE (floored at 0), merging two positive
+  reserves into one cell can REDUCE total future maintenance charged
+  across the pair, until the 255 saturation cap or transfer losses
+  dominate -- this favors compact energy concentration under some
+  parameter regions, not a uniform "hoarding always loses" story.
 - **Persistent state (buffering) wins** at intermediate
   `MAINTENANCE_COST`/replenishment ratios where lean gaps between
   inflow events are common enough to matter but not so punishing that

@@ -4,7 +4,16 @@ Status: DRAFT. Physics and observation are separate layers (R10):
 nothing below reads or writes lattice state; it only reads the
 trace/state stream a run already produces, and turning any of it
 on/off must not change a single committed byte (a required regression
-test, REQUIREMENTS.md).
+test, REQUIREMENTS.md). **[REPAIRED per ASTRA_REVIEW_01.md M09, ACCEPT,
+see REPAIR_LEDGER_01.md]** That regression test establishes only
+NONINTERFERENCE, i.e. that enabling observation cannot itself perturb
+the physics -- it does NOT establish that the trace's CONTENT is true
+or causally complete. Every metric below is only as trustworthy as the
+trace rows it reads; REQUIREMENTS.md's independent event-ledger
+cross-check (Part 2) must pass, and REPAIR_LEDGER_01.md's K7 (tiny
+audit of oracle/trace agreement including intentionally suppressed
+events) must be run, before any metric here is used to support a
+scientific claim rather than a debugging observation.
 
 ## Metric catalog
 
@@ -58,8 +67,10 @@ ordinary background activity. / O(boundary length) per tick, cheap. /
 Always-on for a few fixed boundaries; forensic for arbitrary ones.
 
 **Conservation-equation check** -- verifies the exact energy
-accounting identity (PHYSICS_SPEC_DRAFT.md) holds every tick from the
-trace's individual debit/credit/loss/spillage/decay/replenish rows. /
+accounting identity (PHYSICS_SPEC_DRAFT.md, **[REPAIRED per
+ASTRA_REVIEW_01.md S01 -- the single `X/A/C/D/R` identity, not the
+double-counting form the reviewed draft used]**) holds every tick from
+the trace's individual debit/credit/loss/spillage/decay/replenish rows. /
 Does NOT establish anything scientific about the physics (the identity
 is guaranteed BY the transition law) -- a violation means an
 IMPLEMENTATION or INSTRUMENTATION defect, never a physics finding. /
@@ -103,11 +114,17 @@ components frame-to-frame by maximal spatial overlap, and report each
 tracked component's lifetime and identity-continuity. / Does NOT
 establish that a tracked component is "the same thing" in any
 biological sense -- component tracking is a bookkeeping convenience,
-not a claim about individuality (R1). / False positive: two unrelated
-components that happen to overlap spatially at one frame get merged
-into one false lineage by the tracker. / Moderate (connected-components
-labeling each frame, O(H*W) with a union-find). / Rolling forensic
-buffer.
+not a claim about individuality (R1); grouping/centroid/matching choices
+can manufacture apparent individuality purely from the observer's
+scale/window (M08). / False positive: two unrelated components that
+happen to overlap spatially at one frame get merged into one false
+lineage by the tracker. **[REPAIRED per ASTRA_REVIEW_01.md M08]** Any
+centroid/displacement computation MUST be torus-aware (wrap-corrected,
+e.g. via minimum-image convention on each axis) -- a naive Euclidean
+centroid discontinuously jumps at the torus wrap boundary and would
+misreport ordinary stationary components as suddenly "moving." /
+Moderate (connected-components labeling each frame, O(H*W) with a
+union-find). / Rolling forensic buffer.
 
 **Boundary stability** -- whether a detected spatial discontinuity
 (HABITABILITY.md's BOUNDARY_FORMING signature) persists, moves, or
@@ -141,30 +158,55 @@ coarse signal; forensic for full-state confirmation.
 **Lineage-like construction evidence (forensic only)** -- reconstruct,
 from the trace, a provenance graph of "this target field's stored value
 at tick t was contributed by winning source cell X" chains, and look
-for chains consistent with CAUSAL_CONSTRUCTION or
-RECURSIVE_CONSTRUCTION shapes (HEREDITY_REQUIREMENTS.md). / Does NOT by
-itself establish heredity in any inference-worthy sense -- this is raw
-graph reconstruction, evidence gathering, not a verdict. / False
-positive: convergent copying from a shared, unrelated source (two
-targets both repeatedly overwritten by the same distant fast copier)
-produces a lineage-graph shape indistinguishable from true shared
-ancestry without further intervention-based checks. / Expensive (full
-trace replay + graph construction over a window). / Triggered/forensic
-only, always paired with raw trace retention (below).
+for chains consistent with CAUSAL_VALUE_CONSTRUCTION,
+CONSTRUCTED_CAPACITY, or RECURSIVE_CONSTRUCTION shapes
+(HEREDITY_REQUIREMENTS.md, repaired). **[REPAIRED per ASTRA_REVIEW_01.md
+M05, see REPAIR_LEDGER_01.md]** The graph must preserve, per contest:
+ALL contenders (not only the winner), the winning proposal's
+pre-mutation and post-mutation payload, the source's energy/starvation
+status, and whether the write targeted an ENABLING field (opcode/arg0/
+arg1, i.e. the target's own capacity) versus a CONTENT field (payload)
+-- winner-only, content-blind provenance cannot distinguish
+CAUSAL_VALUE_CONSTRUCTION from CONSTRUCTED_CAPACITY at all. / Does NOT
+by itself establish heredity in any inference-worthy sense -- this is
+raw graph reconstruction, evidence gathering, not a verdict; winners-
+only edges also miss enabling, redundant, and initial-scaffold causes.
+/ False positive: convergent copying from a shared, unrelated source
+(two targets both repeatedly overwritten by the same distant fast
+copier) produces a lineage-graph shape indistinguishable from true
+shared ancestry without further intervention-based checks; an arbitrary
+source-bit perturbation causing Hamming divergence is not sufficient
+attribution by itself, since it may destroy routing/energy rather than
+transmitted information -- content-vs-enabling interventions (above)
+and redundancy-aware joint ablation/rescue are required, not a single
+perturbation. / Expensive (full trace replay + graph construction over
+a window). / Triggered/forensic only, always paired with raw trace
+retention (below).
 
 ## Tiered architecture
+
+**[REPAIRED per ASTRA_REVIEW_01.md M06, see REPAIR_LEDGER_01.md -- the
+reviewed draft let STRUCTURED/MOBILE/CHAOTIC promotion decisions depend
+on tier-2/3 data scouts never compute, and verified only PROMOTED
+worlds, leaving false-negative simulator failures unaudited.]**
 
 1. **Cheap always-on counters** (every tick, every run, negligible
    overhead): activity density, state entropy, spatial autocorrelation,
    flux on a small fixed set of boundaries, byte diversity, the
    conservation-equation check, and the coarse periodicity summary
-   signal. These alone drive the habitability sweep (HABITABILITY.md).
+   signal. These alone drive the habitability sweep's PROVISIONAL
+   labels only (HABITABILITY.md) -- a scout run may assign
+   `PROVISIONAL_STRUCTURED`/`PROVISIONAL_MOBILE`/etc. from tier-1 proxies
+   alone, but may NOT assign the CONFIRMED `STRUCTURED`/`MOBILE`/
+   `CHAOTIC` labels, which require tier-2/3 data (below) that does not
+   exist yet at this tier.
 2. **Rolling forensic buffers** (a bounded recent-history window, e.g.
    last N ticks of full trace + full lattice snapshots, continuously
    overwritten unless frozen): local mutual information, persistence
    timers, compressibility samples, component tracking, boundary
    stability, transport tracking. Cheap enough to run on every "deepen"
    tier run (HABITABILITY.md step 5), not on every scout-tier run.
+   CONFIRMED labels may be assigned once this tier's data exists.
 3. **Expensive triggered analysis** (fires only on a predefined
    mechanical trigger -- e.g. a tracked component survives past a
    duration threshold, a boundary persists past a threshold, or a
@@ -175,6 +217,15 @@ only, always paired with raw trace retention (below).
    (never overwritten) before any further analysis -- raw evidence
    around anomalies is preserved first, interpreted second, per
    doctrine item 8 (AETHER_DOCTRINE.md).
+4. **Mandatory negative/rejected-world audit (NEW, M06 repair).** A
+   fixed, preregistered fraction (recommended 5%, never 0%) of
+   scout-tier `DEAD`/`FROZEN`/`UNKNOWN`-labeled worlds is promoted to
+   the qualify tier REGARDLESS of their scout label, specifically to
+   measure the false-negative rate of the scout tier itself (CPU/GPU
+   differential agreement AND a check for any tier-1-invisible
+   activity). Every campaign report states this audit's sample size,
+   denominators, and outcome distribution alongside the promoted-
+   positive results -- "unmeasured" is never reported as "negative."
 
 No metric here is included merely because it "sounds scientific" -- each
 was chosen because it has a stated cost, a stated false-positive mode,

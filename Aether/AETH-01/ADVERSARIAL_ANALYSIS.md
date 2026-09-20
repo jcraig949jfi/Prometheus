@@ -105,21 +105,61 @@ Control: matched-initial-energy comparison (as in #7); persistence
 claims require the SAME starting energy across compared instances.
 
 **13. Toroidal self-aliasing lets a cell "feed itself."** Observation:
-at H<=2 or W<=2, a cell's own opposite neighbors coincide, so an
-energy-transfer proposal can resolve to the source itself, appearing as
-self-sustaining closed-loop metabolism. Boring explanation: it is a
-topological degeneracy of small dimensions (AETHER_SPEC.md's mandatory
-adversarial fixture case), not an evolved strategy. Control: exclude
-H,W in {1,2} from any metabolic-self-sufficiency claim; require the
-same pattern to reproduce at H,W>=3 where self-aliasing cannot occur.
+at H<=2 OR W<=2 **[REPAIRED per ASTRA_REVIEW_01.md B02: dimension 2
+also aliases opposite neighbors to the SAME other cell, not only
+dimension 1]**, a cell's own opposite neighbors coincide (self-targeting
+specifically requires a dimension of exactly 1), so an energy-transfer
+proposal can resolve to the source itself, appearing as self-sustaining
+closed-loop metabolism. Boring explanation: it is a topological
+degeneracy of small dimensions (AETHER_SPEC.md's mandatory adversarial
+fixture case), not an evolved strategy; MORE IMPORTANTLY, a self-transfer
+cannot create energy even in a degenerate torus: an uncontested winning
+self-transfer's debit and credit exactly cancel except for
+`WRITE_COST` (a pure loss), and a losing contested self-transfer can
+only add further dissipation -- with positive `WRITE_COST` and no
+inflow, self-transfer cannot establish self-sustaining metabolism at
+any dimension. Control: verify the corrected ledger identity
+(PHYSICS_SPEC_DRAFT.md, repaired) directly on any suspected
+self-feeding case, rather than a blanket dimension exclusion; ordinary-
+size (H,W>=3) validation remains appropriate for other reasons.
 
-**14. Zero-effect "activity" inflates activity metrics.** Observation:
-`activity_density` looks high. Boring explanation: many of those
-proposals are same-value writes or zero-amount transfers --
-`proposal_won=true` with `stored_bits_changed=false` -- physically
-inert despite being counted as "activity." Control: always report
+**14. Zero-effect "activity" inflates activity metrics -- AND
+zero-amount transfers are not physically inert (corrected).**
+Observation: `activity_density` looks high. Boring explanation: many of
+those proposals are same-value writes or zero-amount transfers --
+`proposal_won=true` with `stored_bits_changed=false` -- inflating
+"activity" counts. **[REPAIRED per ASTRA_REVIEW_01.md M03: the original
+control below called zero-amount transfers "physically inert"; they are
+NOT.]** A zero-amount transfer proposal can still WIN a contest (it is
+an ordinary proposal for arbitration purposes) while an opposing
+proposal offering a large amount LOSES and has its entire attempted
+amount destroyed (per the conservative-transfer rule) -- so a
+zero-`WRITE_COST` zero-amount contestant can persist indefinitely while
+still being able to destroy a genuinely resourced competitor's entire
+offer purely by winning arbitration. Control: always report
 `change_rate` alongside `activity_density`; never characterize a regime
-from the latter alone.
+from the latter alone; additionally, report zero-amount-transfer win
+rate and the energy destroyed by opponents it defeats as its own
+tracked quantity (K4, deferred), never dismissed as inert.
+
+**[NEW, B01 repair]** Controls #1 (unaffected-child-after-perturbation
+does not by itself prove "environment did it" -- the perturbation may
+be too late, miss the causal field, or leave a redundant pathway), #2
+(zero winning-write rows in a short window cannot falsify ANY causal
+claim -- construction may precede the window, or an enabling/resource
+cause need not appear as a structural-copy winner there), #3/#6 (a
+genuinely functioning mechanism CAN depend on its forcing environment;
+survival of phase-randomization/transplant is not a definition of
+genuine organization and failure is not a clean artifact proof -- use
+crossed content/location/forcing controls and limit conclusions to the
+tested dependence), #8/#10 (sustained change and an unsupervised
+boundary detector are not neutral admission criteria for organization
+-- they can exclude quiet functional memory and reproduce a clustering
+prior; they are observables to calibrate, not organism definitions),
+and #19 (below) each need the sharper standard from M05/S04's
+intervention/redundancy requirements and M06's scout/tier-2-metric
+scope fix, per REPAIR_LEDGER_01.md B01. No control is deleted; each is
+narrowed to what it actually establishes.
 
 **15. Correlated starvation from shared low-probability replenishment.**
 Observation: a whole region "goes dormant together," read as a
@@ -144,11 +184,18 @@ population before crediting any "dominance" to behavior.
 
 **17. Energy saturation at 255 mimics evolved resilience.** Observation:
 a cell that received lots of inflow never seems to run out, read as a
-"storage adaptation." Boring explanation: it is simply capped at the
-uint8 ceiling and any further inflow is destroyed as overflow spillage
--- the appearance of inexhaustibility is a numeric artifact. Control:
-check `energy_overflow_spilled` trace rows; a cell frequently at the
-cap with nonzero spillage is not "storing" anything, it is just full.
+"storage adaptation." **[REPAIRED per ASTRA_REVIEW_01.md B02: a
+saturated cell genuinely IS storing 255 units -- saturation is a
+confound for ADAPTIVE-storage claims, not proof of non-storage.]**
+Boring explanation: it is capped at the uint8 ceiling and any further
+inflow beyond the cap is destroyed as overflow spillage, so a
+frequently-saturated cell's APPARENT inexhaustibility may just reflect
+being permanently full, not any acquisition/retention skill. Control:
+check `energy_overflow_spilled` trace rows; compare causal ACQUISITION
+(how the reserve was won), RETENTION (how long it is held before being
+spent/lost), and USABLE reserve (how much is actually available below
+the cap) against matched baselines, rather than treating "at the cap"
+as either "storing nothing" or "storing adaptively" by default.
 
 **18. Drift misread as adaptation.** Observation: opcode/payload
 composition trends in some direction over a run. Boring explanation:
