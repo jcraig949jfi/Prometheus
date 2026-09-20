@@ -1,6 +1,6 @@
 # Aether -- open questions
 
-Currency: 2026-09-20 (4 capture passes). Reorganized by category per the
+Currency: 2026-09-20 (5 capture passes). Reorganized by category per the
 operator's message 3. Questions are never deleted when answered -- marked
 ANSWERED with the date and decision id, kept for the record.
 
@@ -17,6 +17,22 @@ the abstract, answering how the transplant can be designed without
 inspecting an existing engine) and answers/partially answers questions 6,
 8, 9, 10 and 16 for the AETH-00 slice specifically, without reversing any
 earlier constraint.
+
+Contradiction check (2026-09-20, message 5 -- Astra review reconciliation
+-- against messages 1-4): none found; message 5 corrects an AMBIGUITY in
+how message 4's own proposal/collision language could be misread (never
+a stated contradiction, a wording risk in the earlier draft -- see
+AETH-00_REVIEW.md "material changes," item 1), removes an implementation
+commitment (packed-atomic GPU wording) that was already flagged
+non-normative, and further specifies (not reverses) question 6/29's
+arbitration law and question 8/10's transition-function completeness.
+New question 31 opened (arbitration law's supported coordinate range).
+
+Contradiction check (2026-09-20, message 6 -- final freeze pass -- against
+messages 1-5): none found; message 6 resolves questions 27, 28 and 31
+(below) and removes the <4096-per-axis limit rather than revising it,
+which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
+`aeth00.v1` (D-16 through D-19, AETHER_DECISIONS.md).
 
 ## Scientific ontology
 
@@ -49,37 +65,51 @@ earlier constraint.
    2026-09-20: physical state is part of the universe, observatory state
    is outside it; no observatory metadata visible to simulated matter
    (hard candidate constraint).
-6. Conflict resolution rule for synchronous ticks -- CANDIDATE GIVEN
-   2026-09-20: hash-keyed deterministic max-arbitration over (seed,
-   tick, target cell, target field, source cell), recommended in
-   AETHER_SPEC.md AETH-00 and AETH-00_REVIEW.md. NOT frozen: exact hash
-   packing/constants (question 29) still open.
+6. Conflict resolution rule for synchronous ticks -- FROZEN 2026-09-20
+   (D-18, semantics_id `aeth00.v1`): SplitMix64-finalizer-based
+   deterministic max-arbitration over (seed, tick, target cell, target
+   field, source cell), chained construction and constants given in
+   AETHER_SPEC.md, with a proof of unconditional tie-freedom (no
+   coordinate-range caveat -- see question 31).
 7. Resource/decay update semantics: formula and rates not specified.
    Out of scope for AETH-00 (explicitly excluded); open for whichever
    milestone introduces energy/resources.
 8. Instruction set v1 -- PARTIALLY ANSWERED for the AETH-00 slice only
-   2026-09-20: NOP and WRITE (AETHER_SPEC.md). Still open beyond AETH-00:
+   2026-09-20: one active opcode, WRITE (0x01); every other value is
+   RESERVED_INERT (AETHER_SPEC.md; D-16). Still open beyond AETH-00:
    which of the remaining possible affordances (arithmetic/logic, local
    sensing, resource transfer, conditional execution, spatial routing/
    jumping, movement/swap, dormancy) are added next, and whether
    block-copy is ever included as a base op (candidate answer: no, only
    as an experimental physics variant if ever).
-27. Unknown-opcode default (values other than 0x00/0x01): candidate is
-    "behave as NOP" (AETHER_SPEC.md), explicitly FLAGGED by the operator
-    as needing justification before freezing -- risk noted in
-    AETH-00_REVIEW.md (an unrecognized opcode is indistinguishable from
-    intentional inertness).
-28. Minimum lattice dimension: does AETH-00 (or later milestones) require
-    a minimum size to avoid unintentional self/neighbor aliasing under
-    toroidal wrap in ORDINARY (non-adversarial) runs, or is small-lattice
-    aliasing always in scope as a physical fact and only guaranteed
-    correctly handled, never avoided? AETH-00 test 14 covers the
-    adversarial case; this question is about ordinary-run policy.
-29. Exact arbitration hash function: packing of (seed, tick, target_row,
-    target_col, target_field, source_row, source_col) into the mix
-    function's input, and the mix constants themselves, are TBD at
-    freeze (AETHER_SPEC.md candidate names the shape -- a splitmix64-
-    style avalanche mix -- not the exact bytes).
+27. Unknown-opcode default -- RESOLVED 2026-09-20 (D-16, `aeth00.v1`):
+    there is no "unknown opcode" case. 0x01 is WRITE; every other value
+    is RESERVED_INERT (never "becomes NOP" or becomes 0x00), preserved
+    byte-for-byte, emits no proposal, remains writable, never traps.
+    255 inert encodings / 1 active encoding is a property of this
+    conformance specimen's ISA budget only.
+28. Minimum lattice dimension -- RESOLVED 2026-09-20 (D-17, `aeth00.v1`):
+    ordinary (non-adversarial) runs require H>=3 && W>=3, solely to
+    remove immediate-neighbor aliasing; not a scientific-adequacy claim.
+    H=1/H=2/W=1/W=2 remain semantically supported and are mandatory
+    adversarial fixtures (AETHER_TEST_PLAN.md test 14), never rejected.
+29. Exact arbitration hash function -- FROZEN 2026-09-20 (D-18,
+    `aeth00.v1`): the SplitMix64 finalizer chained over (seed, tick,
+    target coords, target field, source coords), full construction and
+    constants in AETHER_SPEC.md, with a proof of unconditional
+    tie-freedom. "Fully specified" vs. "verified against a running
+    implementation" remains a real distinction -- golden-vector tests
+    (AETHER_TEST_PLAN.md test 23) still need to pass once code exists;
+    that is an implementation-verification step, not a freeze blocker
+    (the operator explicitly froze the contract ahead of implementation,
+    per the project's normal TDD order).
+31. Arbitration coordinate-packing range -- RESOLVED 2026-09-20 (D-18):
+    the prior <4096-per-axis limit is REMOVED, not merely revisited.
+    Coordinates are unsigned 32-bit components combined as
+    C(row,col) = (uint64(row)<<32)|uint64(col); valid semantic dimensions
+    are 1 <= H,W <= 2^32-1, matching the transition law's own domain.
+    Actual implementations may impose smaller resource limits, but those
+    are implementation constraints, not part of the transition law.
 
 ## Execution / state
 

@@ -102,6 +102,51 @@ form required several coordinated changes separated from the incumbent
 by a zero-fitness valley, no beneficial local one/two-edit route existed,
 and a seeded viable witness was strongly selectable.
 
+D-16 (2026-09-20, operator). AETH-00 opcode semantics (resolves
+AETHER_OPEN_QUESTIONS.md question 27): 0x01 is the sole active opcode
+(WRITE); every other value (0x00 and 0x02-0xFF, 255 values total) is
+RESERVED_INERT, not "unknown-opcode-as-NOP." 0x00 may be called NOP for
+readability only. RESERVED_INERT values are preserved byte-for-byte,
+emit no proposal, remain writable by neighbors, and never trap.
+Assigning semantics to any RESERVED_INERT byte later requires a new
+semantics_id.
+
+D-17 (2026-09-20, operator). AETH-00 dimension policy (resolves
+AETHER_OPEN_QUESTIONS.md question 28): transition semantics are defined
+for every positive H, W (up to the arbitration law's range, D-18);
+H<=0 or W<=0 is invalid input. Ordinary (non-adversarial) runs require
+H>=3 && W>=3, solely to remove immediate-neighbor aliasing under
+toroidal wrap -- not a claim of scientific adequacy. H=1 and H=2 (and
+W=1, W=2) remain supported by the semantics and are mandatory
+adversarial test cases, never rejected as invalid.
+
+D-18 (2026-09-20, operator). AETH-00 arbitration construction (resolves
+AETHER_OPEN_QUESTIONS.md question 31, supersedes the prior packed
+12/12/2/12/12 candidate and its <4096-per-axis limit): coordinates are
+unsigned 32-bit components combined as C(row,col) = (uint64(row) << 32)
+| uint64(col), valid semantic dimensions 1 <= H,W <= 2^32-1. Priority is
+a five-step SplitMix64-finalizer chain over (seed, tick, target
+coords, target field, source coords) -- exact construction in
+AETHER_SPEC.md. No coordinate tie-break exists in the frozen semantics;
+distinct physical sources always yield distinct priorities by
+construction (proof in AETHER_SPEC.md). Implementations that emit 2+
+proposals from one physical source in one contest are defective, not a
+case the law resolves.
+
+D-19 (2026-09-20, operator). AETH-00 is FROZEN as semantics_id
+`aeth00.v1` (AETHER_SPEC.md). Replay-complete identity is
+(semantics_id, H, W, seed:uint64, tick:uint64, lattice bytes); tick
+starts at 0; a step from tick == 2^64-1 is rejected, never wraps.
+Freezing `aeth00.v1` means: this exact contract (D-16, D-17, D-18, and
+the transition/arbitration text in AETHER_SPEC.md) is never edited in
+place again. Any future change -- including assigning behavior to a
+RESERVED_INERT opcode -- requires a NEW semantics_id and a new decision
+entry here. Per D-19's own scope statement (AETHER_SPEC.md, "Scope"),
+freezing AETH-00 licenses engineering progression only; it does not
+establish suitable primordial physics, scientific neutrality,
+open-endedness, heredity, emergence, evolutionary accessibility, GPU
+correctness, or Runpod qualification.
+
 ## Rejected alternatives
 
 None proposed yet.
