@@ -1,51 +1,98 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "AETH-01 RunPod canary receipt",
-  "description": "Enforced shape of receipt.json written by run_canary.py. A receipt missing any required field, or with cases_matched != cases_run, is a failed canary regardless of what run_canary.py printed to stdout.",
+  "description": "Enforced shape of receipt.json written by run_canary.py. A receipt missing any required field, with status != \"PASS\", or with cases_matched != cases_run, is a failed/incomplete canary regardless of what run_canary.py printed to stdout. `status` is the single authoritative pass/fail signal (run_canary.py's own process exit code is 0 iff status == \"PASS\"); cases_matched == cases_run alone is NOT sufficient, since status can be FAIL_ENVIRONMENT or FAIL_INCOMPLETE with zero cases run.",
   "type": "object",
   "required": [
-    "semantics_id",
-    "backend",
-    "cases_run",
-    "cases_matched",
-    "gpu_kernel_seconds",
-    "cpu_oracle_seconds",
-    "mismatches"
+    "semantics_id", "backend", "status", "cases_run", "cases_matched",
+    "single_tick_trials", "multi_tick_trials", "multi_tick_steps",
+    "rng_seed", "gpu_kernel_seconds", "cpu_oracle_seconds", "mismatches",
+    "started_at_utc", "finished_at_utc", "source_hashes", "cost_context",
+    "python_version", "numpy_version", "cupy_version"
   ],
   "properties": {
-    "semantics_id": {
-      "type": "string",
-      "const": "aeth01.v1"
-    },
+    "semantics_id": { "type": "string", "const": "aeth01.v1" },
     "backend": {
       "type": "string",
       "enum": ["cupy", "numpy_fallback"],
-      "description": "numpy_fallback on an actual GPU pod is itself a finding (CuPy failed to import), not a silent success."
+      "description": "numpy_fallback on an actual GPU pod is itself a finding (CuPy failed to import) and forces status=FAIL_ENVIRONMENT unless AETH01_CANARY_REQUIRE_GPU=0 (local smoke-test only) -- never a silent PASS."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL_MISMATCH", "FAIL_ENVIRONMENT", "FAIL_ERROR", "FAIL_INCOMPLETE"],
+      "description": "Closed vocabulary, the single authoritative verdict. FAIL_INCOMPLETE is the placeholder written before the run starts -- it must never be reinterpreted as a pass; finding it on disk means the run did not reach a verdict (e.g. killed by watchdog.sh)."
     },
     "cases_run": {
-      "type": "integer",
-      "minimum": 1
+      "type": "integer", "minimum": 0,
+      "description": "0 is valid only when status is FAIL_ENVIRONMENT or FAIL_INCOMPLETE (the corpus never ran)."
     },
-    "cases_matched": {
+    "cases_matched": { "type": "integer", "minimum": 0 },
+    "single_tick_trials": {
+      "type": "integer", "minimum": 0,
+      "description": "Preregistered single-tick trial count (TRIALS in run_canary.py)."
+    },
+    "multi_tick_trials": {
+      "type": "integer", "minimum": 0,
+      "description": "Preregistered multi-tick trajectory count (MULTI_TICK_TRIALS)."
+    },
+    "multi_tick_steps": {
+      "type": "integer", "minimum": 0,
+      "description": "Ticks compared per multi-tick trajectory (MULTI_TICK_STEPS); cases_run = single_tick_trials + sum over multi-tick trajectories of (ticks compared up to first divergence, capped at multi_tick_steps)."
+    },
+    "rng_seed": {
       "type": "integer",
-      "minimum": 0
+      "description": "Fixed preregistered seed (RNG_SEED) the trial corpus was drawn from."
     },
     "gpu_kernel_seconds": {
-      "type": "number",
-      "minimum": 0,
+      "type": "number", "minimum": 0,
       "description": "Informational throughput comparison only, not itself a pass/fail gate."
     },
-    "cpu_oracle_seconds": {
-      "type": "number",
-      "minimum": 0
-    },
+    "cpu_oracle_seconds": { "type": "number", "minimum": 0 },
     "mismatches": {
       "type": "array",
-      "description": "Empty on success. Never silently dropped: each entry is the full CPU/GPU input state that disagreed.",
+      "description": "Empty on success. Never silently dropped: each entry is the full CPU/GPU input state that disagreed, including which tick of a multi-tick trajectory it was.",
       "items": {
         "type": "object",
-        "required": ["trial", "H", "W", "seed", "tick", "grid"]
+        "required": ["trial", "tick_index", "H", "W", "seed", "tick", "grid"]
       }
+    },
+    "started_at_utc": {
+      "type": "string",
+      "description": "ISO-8601 UTC timestamp, written before the corpus runs."
+    },
+    "finished_at_utc": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 UTC timestamp of the final verdict; null only in the FAIL_INCOMPLETE placeholder."
+    },
+    "source_hashes": {
+      "type": "object",
+      "description": "sha256 hex digest of each bundled physics/harness source file actually present on the pod, so a reviewer can confirm which revision ran without needing git history there (the image only ever contains a copy, not a checkout).",
+      "required": ["aeth01_cpu_oracle.py", "aeth01_gpu_kernel.py", "run_canary.py"],
+      "properties": {
+        "aeth01_cpu_oracle.py": { "type": ["string", "null"] },
+        "aeth01_gpu_kernel.py": { "type": ["string", "null"] },
+        "run_canary.py": { "type": ["string", "null"] }
+      }
+    },
+    "cost_context": {
+      "type": "object",
+      "description": "Echo of launch_pod.sh's cost-control inputs for this run, if it set them; all null when run standalone (e.g. local smoke test).",
+      "required": ["hourly_rate_usd", "max_dollar_budget_usd", "watchdog_timeout_seconds"],
+      "properties": {
+        "hourly_rate_usd": { "type": ["number", "null"] },
+        "max_dollar_budget_usd": { "type": ["number", "null"] },
+        "watchdog_timeout_seconds": { "type": ["number", "null"] }
+      }
+    },
+    "python_version": { "type": "string" },
+    "numpy_version": { "type": "string" },
+    "cupy_version": {
+      "type": ["string", "null"],
+      "description": "null unless backend == \"cupy\"."
+    },
+    "error": {
+      "type": "string",
+      "description": "Present only when status == FAIL_ERROR: repr() of the unhandled exception."
     }
   },
   "additionalProperties": false

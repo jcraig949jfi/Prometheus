@@ -105,6 +105,41 @@ def test_gpu_matches_cpu_k3_constructed_capacity_fixture():
             w = _assert_cpu_gpu_agree(w, msg=f"K3 capacity a_active={a_active} tick={t}")
 
 
+# --- (2b) K3 closure-patch addendum: CONSTRUCTION + RECURSIVE_CONSTRUCTION --
+
+def test_gpu_matches_cpu_k3_construction_fixture():
+    for a_opcode_active in (True, False):
+        for a_arg0_active in (True, False):
+            a_opcode_op = ok1.WRITE_OPCODE if a_opcode_active else 0x02
+            a_arg0_op = ok1.WRITE_OPCODE if a_arg0_active else 0x02
+            ctrl = (0, 5, 5, 5, 0)
+            a_opcode_cell = (a_opcode_op, 2, 0, ok1.WRITE_OPCODE, 10)
+            a_arg0_cell = (a_arg0_op, 1, 1, 1, 10)
+            b = (0x00, 2, 3, 77, 10)
+            unused = (0, 0, 0, 0, 0)
+            c = (0, 0, 0, 0, 0)
+            f = (0, 0, 0, 0, 0)
+            grid = [[ctrl, a_opcode_cell, unused], [a_arg0_cell, b, c], [unused, f, unused]]
+            w = _world(3, 3, seed=31, write_cost=1, grid=grid)
+            for t in range(3):
+                w = _assert_cpu_gpu_agree(
+                    w, msg=f"K3 construction a_opcode={a_opcode_active} a_arg0={a_arg0_active} tick={t}"
+                )
+
+
+def test_gpu_matches_cpu_k3_recursive_construction_fixture():
+    for a_active in (True, False):
+        a_op = ok1.WRITE_OPCODE if a_active else 0x02
+        a = (a_op, 1, 0, ok1.WRITE_OPCODE, 10)
+        b = (0x00, 1, 0, ok1.WRITE_OPCODE, 10)
+        c = (0x00, 1, 3, 99, 10)
+        d = (0, 0, 0, 0, 0)
+        e = (0, 5, 5, 5, 0)
+        w = _world(1, 5, seed=37, write_cost=1, grid=[[a, b, c, d, e]])
+        for t in range(4):
+            w = _assert_cpu_gpu_agree(w, msg=f"K3 recursive a_active={a_active} tick={t}")
+
+
 # --- (3) explicit H,W in {1,2} self-aliasing dimensions -----------------
 
 def test_gpu_matches_cpu_small_torus_self_aliasing_dimensions():

@@ -5,9 +5,12 @@
 # exited within HARD_TIMEOUT_SECONDS, kills it. This bounds worst-case
 # spend independently of whatever `run_canary.py` itself does (a hang,
 # infinite loop, or CuPy install/import stall must not silently consume
-# the whole $19.93 budget). README.md's cost-control calculation sizes
-# this at 10 minutes, well under the ~17.6 minutes the $3 canary cap
-# buys at the EXAMPLE-ONLY rate quoted there.
+# the whole $19.93 budget). `launch_pod.sh` derives this value from the
+# operator-supplied HOURLY_RATE and MAX_DOLLAR_BUDGET (with a safety
+# factor) and passes it in via AETH01_CANARY_TIMEOUT_SECONDS; the 600s
+# default below only applies if this script is invoked standalone,
+# outside `launch_pod.sh` (e.g. local testing), and is NOT itself a
+# budget calculation -- see README.md's cost-control section for that.
 #
 # Usage: watchdog.sh <command> [args...]
 # A killed run still counts as spend (AETHER_RUNPOD.md) and must be

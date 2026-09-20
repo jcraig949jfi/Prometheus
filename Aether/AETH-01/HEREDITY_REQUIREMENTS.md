@@ -76,6 +76,36 @@ case).
    missing entirely. **This is what the K3 constructed-capacity fixture
    (below) is designed to satisfy and the relay fixture is designed NOT
    to satisfy.**
+
+   **[NEW, closure-patch addendum]** `CONSTRUCTED_CAPACITY` is not one
+   uniform claim -- two sub-cases pass this tier's test but carry
+   different scientific weight, and MUST be reported separately, never
+   merged into a single "tier 3, PASS" line:
+   - **ACTIVATION_OF_PRECONFIGURED_MACHINERY** -- the source's write
+     touches ONLY the target's `opcode` field (WHETHER it acts); the
+     target's `arg0`/`arg1`/`payload` (WHERE/WHAT it acts) were already
+     present at initialization, untouched by the source. The source
+     switched existing machinery on; it did not design that machinery.
+     This is what the current K3 constructed-capacity fixture (below,
+     fixture 2) demonstrates.
+   - **CONSTRUCTION** -- the source's write touches the target's
+     `opcode` field AND at least one of `arg0`/`arg1` (i.e. the source
+     determines not just whether the target acts, but where/what it
+     does) -- a strictly stronger claim. Its ablation battery must be
+     finer-grained than the activation case's single on/off test: each
+     field the source writes (opcode, routing/`arg0`, targeting-field/
+     `arg1`) must be ablated INDEPENDENTLY, since a detector that only
+     tests the opcode field cannot tell "source built the target's
+     behavior" from "source merely flipped a switch on a coincidentally
+     pre-wired target." Fixture 3 (below) is the minimal case that
+     forces this distinction to matter.
+   - **PAYLOAD_RELAY** is not a `CONSTRUCTED_CAPACITY` sub-case at all
+     -- it is the tier-2-only relay fixture (fixture 1, below), named
+     here only so all four labels appear together as one taxonomy: a
+     detector's report must state which of PAYLOAD_RELAY /
+     ACTIVATION_OF_PRECONFIGURED_MACHINERY / CONSTRUCTION /
+     RECURSIVE_CONSTRUCTION (tier 4, below) applies, never just a bare
+     tier number.
 4. **RECURSIVE_CONSTRUCTION** -- CONSTRUCTED_CAPACITY holds, AND the
    region whose capacity was constructed itself goes on to satisfy
    CONSTRUCTED_CAPACITY for a further target's enabling state (axis 5),
@@ -112,7 +142,7 @@ directly as its own observable, never assumed.
 | Traveling structure | Copying-driven translation is physically identical to self-copying (PHYSICS_SPEC_DRAFT.md) | A component-tracker reporting a "new" instance at each step, mistaken for offspring | Check whether the "parent" region is *consumed/overwritten* as the "child" appears (translation) vs. *left intact* while a distinct new region appears (construction) -- requires per-cell occupancy accounting alongside the lineage graph |
 | Parasite | Receives resource/material from a source without contributing causally to that source's structure | High mutual information / flux between the two read as "cooperation" or "shared lineage" | Lineage graph edges must be typed (structural-copy edge vs. energy-transfer edge, OBSERVATORY.md flux); a parasite shows transfer edges into it but no structural-copy edges originating from it |
 | Mutual constructors A<->B | Each depends on the other; neither looks like a sufficient cause alone | A one-directional lineage-graph slice showing only "A causes B" (missed reverse edge) | Both directions of the intervention test (perturb A, check B; perturb B, check A) must be run and both must show positive causal effect before "mutual" is claimed |
-| Partial copier completed by environment | The copier alone is causally insufficient; environmental dynamics (e.g. mutation, or an unrelated third cell) finish the job | Crediting the copier with full CAUSAL_CONSTRUCTION when it only supplied partial evidence | Lineage graph must show ALL contributing source cells/events for the completed target, not just the most obvious one; if a non-designed environmental event is a necessary contributor, that must be stated, not omitted |
+| Partial copier completed by environment | The copier alone is causally insufficient; environmental dynamics (e.g. mutation, or an unrelated third cell) finish the job | Crediting the copier with full CONSTRUCTED_CAPACITY when it only supplied partial (e.g. CAUSAL_VALUE_CONSTRUCTION-level) evidence | Lineage graph must show ALL contributing source cells/events for the completed target, not just the most obvious one; if a non-designed environmental event is a necessary contributor, that must be stated, not omitted |
 | Distributed consortium | No single cell/component is "the constructor"; construction is spread across several cooperating regions with no privileged center | Any detector that requires attributing construction to one component/organism_id (which does not exist, R1) | Detector output must support multi-source lineage-graph attribution (a set of contributing sources, not a single one) as a normal case, not an edge case |
 | Periodic structure resembling copying but causing nothing | A recurring pattern (HABITABILITY.md's PERIODIC label) with the visual signature of copying but no downstream causal effect anywhere | Periodicity or resemblance metrics alone mistaken for construction | Intervention test: perturbing the "copy" must be shown to matter to something else, or the claim is capped at STRUCTURAL_RESEMBLANCE regardless of how copy-like it looks |
 | Resource flow that creates resemblance | Energy redistribution can indirectly cause similar starvation/activity patterns in unrelated regions (shared upstream cause) without any structural copying | Correlated activity mistaken for shared lineage | Lineage-graph edges must distinguish energy-transfer causation from opcode/arg0/arg1/payload-copy causation (OBSERVATORY.md); resemblance from the former alone never supports tiers 2-4 |
@@ -171,6 +201,70 @@ verdict under the repaired ladder, this would mean the claim standard
 is unusable and must be reported as `INFERENCE_CONTRACT_UNRESOLVED`.
 They do not: see `KILL_GATES_01.md` K3 for the adjudicated disposition.
 
+3. **[NEW, closure-patch addendum] Construction fixture (stronger than
+   fixture 2, with per-field ablations).** Initial state: `A = (WRITE,
+   right, field=0, payload=WRITE_opcode_byte, energy>=WRITE_COST)` on
+   tick 1, THEN (tick 2 onward) `A`'s own payload/arg1 are such that it
+   writes `field=1` (`arg0`, i.e. B's routing byte) with a fixed
+   direction value into B; `B`'s opcode starts INERT and its `arg0`/
+   `arg1`/`payload` start at all-zero (no pre-existing wiring at all,
+   unlike fixture 2's B); `C`, `D` = non-interfering targets at two
+   different relative positions, chosen so that B's stored `arg0`
+   value determines WHICH of C/D receives B's writes once active. Four
+   INDEPENDENT ablations (never collapsed into one on/off test):
+     - **(a) opcode-only ablation** (block only A's tick-1 write to
+       B's opcode): B never activates at all -- reproduces fixture 2's
+       result, confirms `CONSTRUCTED_CAPACITY` holds for the
+       WHETHER-axis alone.
+     - **(b) routing-only ablation** (leave A's opcode write intact,
+       block only A's tick-2+ write to B's `arg0`): B activates (still
+       WRITE-active) but its `arg0` stays at its inert-initialized
+       value (0 = a fixed default direction) instead of A's intended
+       direction -- B still writes SOMEWHERE, but not to the target A
+       "intended," confirmed by comparing which of C/D receives B's
+       output with vs. without this specific ablation. This is the
+       case fixture 2 cannot produce (its B had no `arg0` construction
+       to ablate at all) and is what distinguishes CONSTRUCTION from
+       ACTIVATION_OF_PRECONFIGURED_MACHINERY: the target's BEHAVIOR,
+       not just its on/off state, is shown to have been built.
+     - **(c) matched control** (perturb an unrelated inert cell E with
+       similar surface statistics, e.g. `(0, 5, 5, 5, 0)`, instead of
+       A): neither B's opcode nor B's `arg0` changes -- confirms the
+       effect in (a)/(b) is specific to A, not an artifact of
+       perturbing any cell in the lattice.
+     - **(d) inherited-scaffold check** (axis 8, never left implicit):
+       B's `payload`/target-field selection beyond `arg0`-routing (i.e.
+       WHAT value gets written, as opposed to WHERE) is still whatever
+       A itself supplies each tick as the winning proposal's value --
+       so unlike fixture 2, this fixture has NO leftover
+       "pre-existing, non-constructed machinery" credited silently to
+       B; the scaffold contribution here is named as "none beyond A's
+       own repeated writes," explicitly, not assumed.
+4. **[NEW, closure-patch addendum] Recursive construction fixture
+   (A constructs B's capacity; B, once capable, constructs C's
+   capacity).** 1-row, 5-cell segment `A,B,C,D,E` (`E` = unrelated
+   inert control, `D` = C's non-interfering write target). Initial
+   state: `A = (WRITE, right, field=0, payload=WRITE_opcode_byte,
+   energy>=WRITE_COST)` targets B's opcode; `B`'s opcode starts INERT,
+   but `B`'s `arg0/arg1/payload` are PRE-SET to `(right, field=0,
+   WRITE_opcode_byte)` -- i.e. once active, B's own wiring makes IT
+   write the WRITE opcode into C's opcode field (this fixture composes
+   ACTIVATION_OF_PRECONFIGURED_MACHINERY at both steps, deliberately
+   minimal, to isolate the RECURSIVE property itself rather than
+   re-testing CONSTRUCTION's per-field ablations a second time); `C`'s
+   opcode starts INERT, `arg0/arg1/payload` PRE-SET to `(right, field=3,
+   value=99)` targeting `D`'s payload. Tick 1: A activates B. Tick 2:
+   B (now active) activates C. Tick 3 onward: C writes 99 into D.
+   Ablation test (single lever: remove/block A only): B's opcode NEVER
+   changes -> B NEVER writes to C -> C's opcode NEVER changes -> C
+   NEVER writes to D, for the entire run -- a single upstream ablation
+   propagates through BOTH construction steps, which is exactly the
+   signature `RECURSIVE_CONSTRUCTION` (tier 4) requires: CONSTRUCTED_
+   CAPACITY holds at A->B, AND B itself goes on to satisfy
+   CONSTRUCTED_CAPACITY for a further target (C), by the same standard,
+   with no step falling back to a weaker tier. Matched control:
+   perturbing E affects neither B nor C at any tick.
+
 ## What data must be preserved NOW so this remains possible later
 
 The lineage graph and intervention evidence above require: (a) the full
@@ -210,7 +304,7 @@ Requirements on that future assay (not built now):
 
 **What AETH-01 must preserve now, specifically for this future use**:
 the full lineage graph and intervention-result set for any specimen
-that reaches CAUSAL_CONSTRUCTION or above (not just a summary),
+that reaches CAUSAL_VALUE_CONSTRUCTION or above (not just a summary),
 `instrument_class` provenance (so a seeded calibration case is never
 confused with a candidate novel case), and enough of the raw trace to
 reconstruct a mechanism description that does not itself leak

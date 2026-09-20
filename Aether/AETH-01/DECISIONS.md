@@ -209,10 +209,16 @@ contradictory across replicate seeds at every point in this 5-axis
 grid, the axis choice itself (not just the grid resolution) should be
 reconsidered before assuming the physics itself is uninteresting.
 
-**D-AETH01-11 -- Heredity claims are structured into four strictly
-ordered tiers (STRUCTURAL_RESEMBLANCE / CAUSAL_CONSTRUCTION /
-RECURSIVE_CONSTRUCTION / HERITABLE_VARIATION), each requiring
-intervention evidence, not pattern-matching alone.**
+**D-AETH01-11 -- Heredity claims are structured into five strictly
+ordered tiers (STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION /
+CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / HERITABLE_VARIATION),
+each requiring intervention evidence, not pattern-matching alone.
+**[REPAIRED per ASTRA_REVIEW_01.md S04, ACCEPT, see
+REPAIR_LEDGER_01.md]** The originally reviewed four-tier ladder's
+"CAUSAL_CONSTRUCTION" tier conflated value-transport with
+capacity-construction; it is now split into CAUSAL_VALUE_CONSTRUCTION
+(tier 2) and CONSTRUCTED_CAPACITY (tier 3), giving five tiers total
+(HEREDITY_REQUIREMENTS.md).**
 Rationale: directly implements D-11 (AETHER_DECISIONS.md, AETH-00-era)
 and AETHER_DOCTRINE.md's falsification-over-confirmation stance at the
 most consequential possible claim category.

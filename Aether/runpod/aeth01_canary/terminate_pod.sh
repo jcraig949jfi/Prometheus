@@ -1,7 +1,12 @@
 #!/bin/bash
 # AETH-01 RunPod canary -- explicit pod termination.
 #
-# NOT RUN by this repair cycle. Must be run as soon as `run_canary.py`
+# NOT RUN by this repair cycle. `launch_pod.sh` now also terminates the
+# pod itself automatically (a trap firing on any of its own exit paths,
+# including success, failure, and interrupt) -- this script remains as
+# an independent manual fallback: run it if `launch_pod.sh`'s own
+# automatic cleanup ever fails or warns, or any time a pod needs to be
+# terminated outside that flow. Must be run as soon as `run_canary.py`
 # has finished (or the watchdog has killed it) and `receipt.json` has
 # been retrieved -- a pod left running past the canary's completion is
 # pure wasted spend against the $19.93 / $3 caps (AETHER_RUNPOD.md).

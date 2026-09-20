@@ -1,16 +1,18 @@
-# AETH-01 -- KILL_GATES_01: adjudicated outcomes for K1, K2, K3, K6
+# AETH-01 -- KILL_GATES_01: adjudicated outcomes for K1, K2, K3, K6 (+ K4/K5 deterministic halves)
 
-Status: hand-worked adjudication, this repair cycle. Scope per operator
-instruction: K1 (accounting), K2 (mutation/accessibility), K3 (relay vs
-constructed capacity), K6 (provenance composition) only. K4/K5/K7/K8
-are explicitly DEFERRED (see bottom) -- none of them can be adjudicated
-by hand alone; each requires either a running CPU oracle, a completed
-sweep, or a GPU package that do not exist yet in this cycle.
+Status: original hand-worked adjudication (K1, K2, K3, K6) from the
+repair cycle, PLUS -- once the CPU oracle existed -- executable
+confirmation of those same four gates and deterministic (non-
+statistical) existence-proof fixtures for K4 and K5, added in the
+closure-patch cycle (below). K4/K5's statistical/audit halves, K7, and
+K8 remain explicitly DEFERRED (see bottom) -- each still requires
+either a completed sweep or a production trace implementation that do
+not exist yet.
 
-No implementation exists yet. Every number below is a hand-derivation
-against `PHYSICS_SPEC_DRAFT.md`'s repaired transition law and
-`HEREDITY_REQUIREMENTS.md`'s repaired tier ladder, to be used as golden
-vectors once the CPU oracle is built (REQUIREMENTS.md Part 2).
+The K1/K2/K3/K6 sections immediately below retain their original
+hand-derivation text unchanged (now additionally confirmed executable
+by `test_aeth01_kill_gates.py`); the K4/K5 sections further down are
+new this closure-patch cycle.
 
 ## K1 -- accounting identity hand ledger
 
@@ -126,6 +128,41 @@ pre-registered pass condition (identical verdicts would have forced
 the exact case (S04) that broke the reviewed draft. No blocking issue;
 proceed.
 
+**[NEW, closure-patch addendum]** Two further fixtures, executable
+(`test_aeth01_kill_gates.py`, `test_aeth01_gpu_differential.py`, 28
+new cases total, all passing on both CPU oracle and GPU-shaped
+NumPy implementation), strengthen K3 beyond the original relay-vs-
+capacity pair:
+
+- **Construction fixture (fixture 3).** Discriminates
+  `ACTIVATION_OF_PRECONFIGURED_MACHINERY` from `CONSTRUCTION` (the
+  taxonomy split added to `HEREDITY_REQUIREMENTS.md`'s tier 3) via
+  THREE independent ablations on one fixture, not one on/off toggle:
+  (a) opcode-only ablation -- target never activates at all, same
+  signature as the original capacity fixture; (b) routing-only
+  ablation -- target DOES activate (its capacity-to-act was still
+  constructed) but its `arg0` routing byte is never touched, so it
+  writes to the wrong (inert-default) neighbor instead of the intended
+  one -- proving activation and behavioral construction are separable
+  claims, not one bundled fact; (c) matched control -- an unrelated
+  cell's bytes are confirmed untouched in every combination. All three
+  ablations produced exactly the predicted, distinct byte-level
+  outcomes; no ambiguity.
+- **Recursive construction fixture (fixture 4).** A single upstream
+  ablation (removing the one constructor, A) is confirmed to propagate
+  through BOTH construction steps of an A-constructs-B,
+  B-constructs-C chain simultaneously: without A, neither B's nor C's
+  capacity ever changes, at any tick, for the whole run. This is the
+  positive existence proof that `RECURSIVE_CONSTRUCTION` (tier 4) is
+  actually reachable by a concrete fixture under the repaired ladder,
+  not just definable on paper.
+
+**K3 verdict (updated): PASS**, unchanged from the original two-fixture
+adjudication, now with a wider discriminating battery and a taxonomy
+(`PAYLOAD_RELAY` / `ACTIVATION_OF_PRECONFIGURED_MACHINERY` /
+`CONSTRUCTION` / `RECURSIVE_CONSTRUCTION`) that a future detector's
+report must cite by name, never a bare tier number.
+
 ## K6 -- provenance composition round-trip
 
 Applying `EXPERIMENTS.md`'s repaired composition rule (S06) to four
@@ -155,17 +192,82 @@ K1, K2, K3, K6 all PASS with no discrepancy, no contradiction, and no
 unresolved" instruction: **nothing here is unresolved.** The repair
 cycle may proceed to write the repaired freeze candidate contract.
 
-## Deferred gates (explicitly NOT run this cycle)
+## K4 -- cheap deterministic fixtures now run; full statistical characterization still deferred
 
-- **K4** (economic gates: isolated pulse-budget cell, equal-mean rain
-  pair, reserve pooling, zero-amount-vs-large-amount contest) --
-  requires a running simulator (CPU oracle) to observe emergent
-  strategy distributions; cannot be hand-derived from the transition
-  law alone. Referenced as a still-open falsifier by three DECISIONS.md
-  entries (D-AETH01-01, -03, -05); remains open until the oracle exists.
-- **K5** (continued-horizon reactivation audit for DEAD/FROZEN stops) --
-  requires actually running a sweep to a fixed horizon; no sweep exists
-  yet.
+**[NEW, closure-patch addendum]** The CPU oracle now exists
+(`test/reference/oracle_aeth01.py`), so the four K4 fixtures named in
+the original deferral are now run as DETERMINISTIC, seed-fixed
+existence proofs (`test_aeth01_kill_gates.py`, 4 new tests, all
+passing) -- NOT the statistical characterization of emergent strategy
+DISTRIBUTIONS across many seeds/parameter points that K4 ultimately
+requires (that part remains genuinely deferred, below):
+
+1. **Isolated pulse-budget cell.** A single WRITE cell with no
+   replenishment exhausts in exactly `floor(energy0 / (write_cost +
+   maintenance_cost))` emitting ticks, then STAYS starved forever
+   (confirmed for 5 further ticks). Closed-form budget confirmed exact,
+   not approximate.
+2. **Equal-mean bursty pair.** Two replenishment configurations with
+   the identical theoretical mean rate (5/tick: `prob=1.0,amount=5` vs
+   `prob=0.5,amount=10`) produce PROVABLY DIFFERENT realized
+   trajectories at a fixed seed (`[5,10,15,20,25,30]` vs
+   `[0,0,10,10,10,20]` over 6 ticks) -- burstiness is a real, observable
+   degree of freedom that a mean-rate-only report would hide.
+3. **Reserve pooling.** Two distinct, non-contending sources (acting on
+   different ticks, never in the same arbitration contest) both
+   contribute to the same target's energy reserve, and their
+   contributions ADD (`100 + 80 = 180`), confirming the mechanism
+   supports genuine pooling from more than one source, not just a
+   single-source drip.
+4. **Zero-amount vs. large-amount contest.** A bounded seed search
+   (0..199, deterministic, no sampling) finds concrete seeds where a
+   zero-amount proposal beats a 200-amount proposal AND seeds where the
+   large amount wins -- confirming arbitration priority is a pure hash
+   of (seed, tick, coords), never a function of the proposed value, in
+   either direction.
+
+**K4 verdict (partial): the mechanism-level existence claims above are
+CONFIRMED, deterministically, with zero tolerance.** Still deferred:
+the actual DISTRIBUTION of emergent economic strategies across a real
+parameter sweep (referenced as a still-open falsifier by
+DECISIONS.md's D-AETH01-01/-03/-05) -- that requires a running sweep,
+which does not exist yet, and is not something 4 hand-picked fixtures
+can substitute for.
+
+## K5 -- cheap deterministic fixtures now run; full reactivation audit still deferred
+
+**[NEW, closure-patch addendum]** Three K5 existence proofs now run
+against the CPU oracle (`test_aeth01_kill_gates.py`, 3 new tests, all
+passing), each confirming one of GPU_RUNPOD.md's S05-repair claims is
+actually reachable, not just theoretically possible:
+
+1. **Delayed reactivation.** A starved writer (energy below
+   `write_cost`) stays dormant (emits nothing, "looks dead") for at
+   least one full tick, then -- once replenishment crosses the
+   threshold -- resumes emitting, confirmed at a fixed seed/config.
+2. **Same-value-then-mutation.** A fixed donor overwrites the same
+   target with byte value `0` for several consecutive ticks (a naive
+   detector would call this "FROZEN"), then a single-bit Mu mutation
+   fires at a later tick -- confirmed: at least one idle tick preceded
+   the change, and the change itself is a single-bit flip (consistent
+   with K2).
+3. **Later-tick priority flip.** Two proposals with the SAME fixed
+   source/target coordinates, competing every tick, produce BOTH
+   possible winners across a 30-tick scan at a fixed seed -- confirming
+   a currently-losing writer is not permanently excluded, since
+   arbitration priority is tick-dependent, not a static ranking.
+
+**K5 verdict (partial): all three CONFIRMED reachable, deterministically,
+at a fixed seed.** Still deferred: the actual continued-horizon
+reactivation AUDIT over a real sweep's `DEAD_CENSORED`/
+`FROZEN_CENSORED` population (a preregistered random resumed subset,
+GPU_RUNPOD.md) -- that requires an actual sweep to exist first.
+
+## Deferred gates (still NOT run this cycle)
+
+- **K4 / K5 statistical tails** (see above): the DISTRIBUTIONAL /
+  AUDIT halves of K4 and K5 remain deferred; only the deterministic
+  existence-proof halves were run this cycle.
 - **K7** (oracle/trace agreement + scout selection audit, including
   suppressed events) -- requires both an oracle AND a production trace
   implementation to compare against each other; this is exactly the
@@ -176,7 +278,8 @@ cycle may proceed to write the repaired freeze candidate contract.
   running simulator to search a bounded reconfiguration path; cannot be
   hand-derived.
 
-K4/K5/K7/K8 are preconditions for using AETH-01 as scientific evidence,
-not preconditions for this repair cycle's remaining deliverables (the
-repaired freeze candidate, CPU oracle, and RunPod canary). They are
-carried forward explicitly, not silently dropped.
+K4/K5's remaining statistical halves, K7, and K8 are preconditions for
+using AETH-01 as scientific evidence, not preconditions for this
+repair/closure cycle's remaining deliverables (the repaired freeze
+candidate, CPU oracle, and RunPod canary). They are carried forward
+explicitly, not silently dropped.
