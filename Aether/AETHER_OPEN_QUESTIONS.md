@@ -1,6 +1,6 @@
 # Aether -- open questions
 
-Currency: 2026-09-20 (3 capture passes). Reorganized by category per the
+Currency: 2026-09-20 (4 capture passes). Reorganized by category per the
 operator's message 3. Questions are never deleted when answered -- marked
 ANSWERED with the date and decision id, kept for the record.
 
@@ -9,6 +9,14 @@ found; message 3 resolves several previously open questions (noted below)
 and narrows scope, without reversing any prior constraint. One tension
 flagged, not a contradiction: see "First scientific transplant" under
 Scientific ontology.
+
+Contradiction check (2026-09-20, message 4 -- the three rulings plus
+AETH-00 -- against messages 1-3): none found; message 4 resolves question
+3's tension (the transplant's target property is now stated directly, in
+the abstract, answering how the transplant can be designed without
+inspecting an existing engine) and answers/partially answers questions 6,
+8, 9, 10 and 16 for the AETH-00 slice specifically, without reversing any
+earlier constraint.
 
 ## Scientific ontology
 
@@ -19,12 +27,15 @@ Scientific ontology.
 2. Differentiation from BEE/NPE/SFE -- ANSWERED 2026-09-20: those engines
    begin with identifiable organisms/genomes; Aether begins one level
    lower (executable matter, no predefined organism or genome boundary).
-3. First scientific transplant: the "accessibility barrier analogous to
-   one already observed elsewhere in Prometheus" is not named. Open:
-   is reading ABOUT that finding (not the implementation) permitted, or
-   must the transplant experiment be designed from the abstract
-   description in AETHER_CONCEPT.md alone? Flagged as a tension, not yet
-   resolved.
+3. First scientific transplant sourcing -- ANSWERED 2026-09-20 (D-15):
+   the operator stated the target scientific property directly and
+   abstractly (information present, selection pressure present, useful
+   conditional computation inaccessible due to representation topology;
+   incumbent answers before reading the needed information; viable
+   alternative separated from the incumbent by a zero-fitness valley with
+   no local one/two-edit route; a seeded viable witness is strongly
+   selectable). Aether reproduces this property, never any existing
+   engine's implementation, and does not inspect existing engine code.
 
 ## Physics
 
@@ -38,26 +49,48 @@ Scientific ontology.
    2026-09-20: physical state is part of the universe, observatory state
    is outside it; no observatory metadata visible to simulated matter
    (hard candidate constraint).
-6. Conflict resolution rule for synchronous ticks: "propose writes ->
-   deterministic conflict resolution" names a step but not a rule
-   (priority order, seeded tie-break, something else).
+6. Conflict resolution rule for synchronous ticks -- CANDIDATE GIVEN
+   2026-09-20: hash-keyed deterministic max-arbitration over (seed,
+   tick, target cell, target field, source cell), recommended in
+   AETHER_SPEC.md AETH-00 and AETH-00_REVIEW.md. NOT frozen: exact hash
+   packing/constants (question 29) still open.
 7. Resource/decay update semantics: formula and rates not specified.
-8. Instruction set v1: which of the possible affordances (arithmetic/
-   logic, local sensing, local read/write, resource transfer, conditional
-   execution, spatial routing/jumping, movement/swap, dormancy) are
-   actually included in the first substrate, and is block-copy excluded
-   from the base instruction set entirely or deferred as an experimental
-   variant.
+   Out of scope for AETH-00 (explicitly excluded); open for whichever
+   milestone introduces energy/resources.
+8. Instruction set v1 -- PARTIALLY ANSWERED for the AETH-00 slice only
+   2026-09-20: NOP and WRITE (AETHER_SPEC.md). Still open beyond AETH-00:
+   which of the remaining possible affordances (arithmetic/logic, local
+   sensing, resource transfer, conditional execution, spatial routing/
+   jumping, movement/swap, dormancy) are added next, and whether
+   block-copy is ever included as a base op (candidate answer: no, only
+   as an experimental physics variant if ever).
+27. Unknown-opcode default (values other than 0x00/0x01): candidate is
+    "behave as NOP" (AETHER_SPEC.md), explicitly FLAGGED by the operator
+    as needing justification before freezing -- risk noted in
+    AETH-00_REVIEW.md (an unrecognized opcode is indistinguishable from
+    intentional inertness).
+28. Minimum lattice dimension: does AETH-00 (or later milestones) require
+    a minimum size to avoid unintentional self/neighbor aliasing under
+    toroidal wrap in ORDINARY (non-adversarial) runs, or is small-lattice
+    aliasing always in scope as a physical fact and only guaranteed
+    correctly handled, never avoided? AETH-00 test 14 covers the
+    adversarial case; this question is about ordinary-run policy.
+29. Exact arbitration hash function: packing of (seed, tick, target_row,
+    target_col, target_field, source_row, source_col) into the mix
+    function's input, and the mix constants themselves, are TBD at
+    freeze (AETHER_SPEC.md candidate names the shape -- a splitmix64-
+    style avalanche mix -- not the exact bytes).
 
 ## Execution / state
 
-9. "Tiny world" definition: minimal unit of experiment (lattice size,
-   episode length, wall-clock and dollar budget per run) -- still not
-   settled; candidate world (2-D toroidal lattice) given, exact state
-   layout explicitly deferred.
-10. Exact physical-state field layout: which of opcode, operands,
-    registers, energy/resource, execution flags are included, and their
-    bit widths/ranges.
+9. "Tiny world" definition -- PARTIALLY ANSWERED for AETH-00 2026-09-20:
+   state slice is 4 uint8 fields per lattice location (AETHER_SPEC.md);
+   lattice dimensions, episode length and per-run dollar/wall-clock
+   budget for AETH-00 itself still not chosen.
+10. Exact physical-state field layout -- ANSWERED for the AETH-00 SLICE
+    2026-09-20: opcode, arg0, arg1, payload, each uint8 (AETHER_SPEC.md).
+    Still open beyond AETH-00: the permanent Aether v1 layout (energy/
+    resource fields, registers, execution flags all deferred).
 
 ## Heredity / observatory
 
@@ -82,14 +115,24 @@ Scientific ontology.
     rates on known fixtures are required; the six heredity adversarial
     cases are named (AETHER_CONCEPT.md, Causal heredity). Still open: the
     concrete fixture implementations, deferred to pre-code design.
-16. What exactly qualifies the substrate as "trustworthy" -- the gate
-    (D-12) before any broad Runpod scientific campaign is authorized; no
-    criteria defined yet.
+16. What exactly qualifies the substrate as "trustworthy" -- PARTIALLY
+    ANSWERED 2026-09-20: future gate's CATEGORIES named (AETHER_SPEC.md,
+    Substrate qualification philosophy): semantic correctness,
+    deterministic replay, CPU/GPU differential correctness, adversarial
+    observatory correctness, seeded positive/negative controls,
+    provenance integrity, checkpoint/resume integrity, experiment-
+    accounting integrity, measured error bounds. Still open: the actual
+    per-category pass criteria and sample sizes.
 
 ## GPU / performance
 
 17. CPU/GPU differential equivalence tolerance: bit-exact for which state
     components, statistical for which, and what statistical test if any.
+30. GPU mapping validation timing: the candidate per-cell-parallel-eval
+    plus deterministic-arbitration-commit mapping (D-13) is not exercised
+    until a GPU implementation exists (excluded from AETH-00) -- which
+    milestone first builds and differentially tests it against the CPU
+    oracle?
 
 ## Runpod economics
 

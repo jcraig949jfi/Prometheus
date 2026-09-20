@@ -75,6 +75,33 @@ D-12 (2026-09-20, operator). Runpod is used during development for small
 compatibility/performance probes only. No broad scientific campaign runs
 on Runpod until the substrate is qualified trustworthy.
 
+D-13 (2026-09-20, operator). GPU-native means the intended
+high-performance implementation is massively parallel, but GPU execution
+must never define the scientific semantics. Physics has an
+implementation-independent specification and a CPU oracle FIRST; GPU is a
+performance target implementing that same specification, checked by
+differential testing (AETHER_OPEN_QUESTIONS.md question 17). (A candidate
+GPU mapping -- per-cell parallel evaluation/proposal generation followed
+by deterministic parallel arbitration/commit -- is recorded as a
+candidate in AETHER_SPEC.md, not frozen here.)
+
+D-14 (2026-09-20, operator). Executable matter is intentional: at
+Aether's base level, instruction-bearing state IS physical matter. No
+privileged code/data distinction is introduced unless a later experiment
+deliberately adds one as an explicit variant.
+
+D-15 (2026-09-20, operator). The first accessibility transplant
+reproduces a stated SCIENTIFIC PROPERTY, not any existing engine's
+implementation, and is built without inspecting any existing engine's
+code. The property: a system can contain the required information and
+sufficient selection pressure while useful conditional computation
+remains inaccessible because of representation topology. In the observed
+case, an existing behavior produced its answer before reading the
+information required for the better behavior; the viable conditional
+form required several coordinated changes separated from the incumbent
+by a zero-fitness valley, no beneficial local one/two-edit route existed,
+and a seeded viable witness was strongly selectable.
+
 ## Rejected alternatives
 
 None proposed yet.
