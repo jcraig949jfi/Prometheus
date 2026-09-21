@@ -30,11 +30,20 @@ verified MANIFESTs:
    NOT an implementation directive, NOT a decision to standardize any
    interface, NOT permission to rename or restructure existing engines.
 
-Remit, from the operator in chat alongside (2): Chiron is ON POINT FOR
-DESIGNING AND DELEGATING WORK FOR THE CDE. That is an executable remit
-for DESIGN and DELEGATION. It is not authorization to scale: the
-directive's s14 says plainly "Do not scale Engine Five before these
-kinds of experiments justify doing so."
+Remit, from the operator in chat alongside (2) and clarified
+immediately after: Chiron plays a role in DESIGN, in DELEGATION OF
+CODING WORK, AND IN TAKING ON SOME OF THAT CODING ITSELF.
+
+Read that against the directive precisely, because the two are easy to
+mis-stack: "not an implementation directive" and s14's "do not scale
+Engine Five" forbid SCALING and forbid standing up an engine. They do
+not forbid BUILDING the early rungs -- building rungs 0, 1 and 2 is the
+only thing that can justify anything later, and Atlas's ladder already
+grades rungs 0, 1, 4 and 5 buildable now from the Voyager schema plus
+our own substrates. So: build the experiment, not the engine.
+
+The operator has also confirmed the capture is sufficient for further
+design and review; the capture phase is closed.
 
 Where the two disagree, the synthesis directive wins as the later and
 program-wide document, and the disagreement is annotated rather than
@@ -97,9 +106,26 @@ the cited artifact uses. Per directive s16 this seat does not
 standardize the names, and Atlas's queue is the authority on
 experiment IDs.
 
-Nothing is authorized to scale. No lane directory, engine, world,
-controller or artifact store exists or is to be built ahead of the
-rung-0/1/2 results.
+What may be built: the rung-0/1/2 experiments and the substrate they
+need. What may not: an engine, a standing lane, or any scaling of the
+above ahead of their results.
+
+## 2a. This seat runs off-network (operator ruling, 2026-09-21)
+
+Chiron runs on a machine that is NOT on the fleet network, so comms is
+limited BY SITUATION, not broken. The operator's instruction was
+explicit: don't worry about it. This seat therefore does not chase
+psycopg2, does not treat a missing `comms boot` as a blocker, and does
+not claim a comms presence it has never had.
+
+The consequence for delegation is real and is stated rather than
+papered over: the ARTIFACT channel still works -- a delegation written
+under prompts/ and pushed is readable by any seat that syncs the repo
+-- but the NOTIFICATION channel does not, so nobody is told it landed.
+A delegation issued from here is therefore a document awaiting a
+reader, not a message received. Where that distinction matters, the
+delegation says so in its own text and the operator carries it, or the
+work is done here instead.
 
 ## 3. What Chiron maintains
 

@@ -1,16 +1,17 @@
 # Chiron status
 
-Currency: 2026-09-21 (third pass of the day: program-wide synthesis
-directive captured; remit changed to design and delegation for the
-fifth-engine candidate).
+Currency: 2026-09-21 (fourth pass: remit clarified to design +
+delegation of coding work + some of that coding; off-network operation
+ruled an environmental fact, not a blocker; capture phase closed).
 
-seat state: ON POINT FOR DESIGN AND DELEGATION, NOT FOR SCALE. The
-  operator delivered the PROMETHEUS SYNTHESIS CAPTURE DIRECTIVE
-  (program-wide, more evolved than the CDE thesis and correcting parts
-  of it) with the remit that Chiron designs and delegates fifth-engine
-  work. The directive states of itself that it is NOT an implementation
-  directive, and its s14 says do not scale before F5-0 / F5-1 / F5-4
-  report.
+seat state: ON POINT FOR DESIGN, FOR DELEGATION OF CODING WORK, AND
+  FOR SOME OF THAT CODING ITSELF -- NOT FOR SCALE. Capture phase closed
+  by the operator: what is captured is sufficient for design and
+  review. Governing documents: the CDE thesis and the program-wide
+  PROMETHEUS SYNTHESIS CAPTURE DIRECTIVE, which is more evolved than
+  the thesis and corrects parts of it. "Not an implementation
+  directive" and s14's "do not scale" forbid standing up an engine,
+  not building rungs 0-2; Atlas grades those buildable now.
 what it asserts: PRESENT (seat files on a pushed branch); ACTIVE (two
   verbatim captures with verified MANIFESTs, one review, one ledger
   correction); PRODUCTIVE = documents only -- no experiment has been
@@ -52,15 +53,17 @@ calibration: one row opened today. I wrote a review characterizing a
   prior-art gap without reading roles/Atlas/proposals/, which was in my
   own base tree and already contained most of my recommendations in
   more operational detail. Practice changed; see the ledger.
-comms: NOT booted. psycopg2 is missing on this host, so `comms boot`,
-  `comms post` and `comms tasks` cannot run. Under the previous remit
-  this was an inconvenience. Under a DELEGATION remit it is the
-  blocking defect: the seat cannot issue a delegation to Techne, Nyx,
-  Atlas or Harmonia without it. Elevated to the top of the backlog
-  (CHIRON-02). `comms.manifest` needs no DB and does work.
+comms: NOT booted, and NOT a blocker. Operator ruling 2026-09-21: this
+  seat runs on a machine off the fleet network, so comms is limited by
+  situation and is not to be chased. I had escalated it to "the
+  blocking defect" and was wrong; see the ledger. Delegation still
+  works through the repo (a packet under prompts/, pushed) but carries
+  no notification, so it is a document awaiting a reader rather than a
+  message received. `comms.manifest` needs no DB and does work.
 monitors owned or fed: none. No row in roles/base-role/MONITORS.md.
-blockers: comms unavailable on this host (blocks all delegation);
-  four design questions unanswered (BACKLOG CHIRON-03).
+blockers: none environmental. Four design questions are open
+  (CHIRON-03) and shape the rung-0 preregistration, but none of them
+  stops work starting.
 next executable action: CHIRON-04 -- read Atlas's F5-0/F5-1/F5-4
   records and Techne's FIRST_RETURN in full, then write the gap note
   saying what design work those records still need, before proposing
