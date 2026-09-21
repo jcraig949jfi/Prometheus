@@ -194,3 +194,47 @@ foundation model.
 For: none measured.
 Falsifier: RSI-1's substrate-transfer arm shows no transfer.
 Status: OPEN QUESTION stated as a theory so it can fall.
+
+
+## T9. Selection needs TWO things, and the field keeps naming only one
+
+The standard story (and the relayed commentary of 2026-09-21) says the
+bottleneck for RSI is the JUDGE: without rigorous automated
+falsification, evolution optimises for confident hallucination. True,
+and T6 says a version of it.
+
+But selection pressure is a product of two independent factors, and a
+zero in EITHER gives zero:
+
+  SELECTION = (can the judge tell better from worse?)
+            x (is there reachable variance in the population to tell
+               apart?)
+
+The second factor is the one nobody writes about, and this seat now has
+a clean isolation of it. The local engine (2026-09-21) has a PERFECT
+judge: deterministic gold answers, no model-judging-model, no
+hallucination channel. It evolved nothing at all -- 10 of 10 lineages
+byte-identical to the base image -- because the development distribution
+contained only families the base already solved at 1.00. Every candidate
+tied; ties went to the incumbent; nothing moved. A saturated environment
+is as inert as a corrupt judge, and it FAILS SILENTLY: the scores look
+perfect the whole way down.
+
+Practical readings:
+- "Our evaluator is rigorous" is not a sufficient answer to "why is
+  your system not improving", and a flat-at-ceiling score trajectory is
+  the signature of the other failure.
+- HEADROOM is a measurable precondition and should be reported as one:
+  what fraction of the development distribution can the base NOT solve?
+  (Engine v0: 0% of the dev distribution, 25% of the eval distribution
+  -- the mismatch IS the defect.)
+- An RSI result on a saturated environment and an RSI result under a
+  fooled judge produce the same paper-ready null, and they need
+  different fixes. Distinguish them before diagnosing.
+- Hazard in the other direction: giving an evolutionary system headroom
+  is giving it somewhere to go, and T3 says competence and exploitation
+  arrive together, exploitation first. Headroom is not free.
+
+STATUS: the isolation is real but CHEAP -- one apparatus, a code worker,
+a perfect oracle. It shows the second factor can be zero on its own. It
+does not establish the relative size of the two factors anywhere else.
