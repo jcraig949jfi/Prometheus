@@ -40,9 +40,11 @@ including after expiry, and never depends on being able to write another journal
 """
 
 import argparse
+from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
 import hmac
+import importlib.util
 import json
 import math
 import os
@@ -55,6 +57,14 @@ import uuid
 
 
 HERE = Path(__file__).resolve().parent
+if __package__:
+    from . import cleanup_evidence as policy
+else:
+    _policy_spec = importlib.util.spec_from_file_location(
+        "_age_cleanup_evidence", HERE / "cleanup_evidence.py")
+    policy = importlib.util.module_from_spec(_policy_spec)
+    _policy_spec.loader.exec_module(policy)
+
 SOURCES = ("aeth01_cpu_oracle.py", "aeth01_gpu_kernel.py", "run_canary.py")
 CONFIG_KEYS = frozenset({
     "image", "gpu_id", "cloud", "hourly_rate_usd", "canary_budget_usd",
@@ -87,11 +97,10 @@ _ID = re.compile(r"[A-Za-z0-9_-]{1,128}")
 _DIGEST = re.compile(r"[0-9a-f]{64}")
 _IMAGE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._/:+-]*@sha256:[0-9a-f]{64}")
 
-# B1: closed evidence vocabulary. Never invent a value outside these sets and
-# never persist raw provider/exception text -- only these fixed codes.
-_DELETE_RESULTS = frozenset({"NONE", "ACK_204", "NOT_FOUND_404", "HTTP_OTHER", "TRANSPORT_UNKNOWN"})
-_VISIBILITY = frozenset({"UNKNOWN", "NOT_VISIBLE", "VISIBLE"})
-_CONFIDENCE = frozenset({"UNRESOLVED", "CONFIRMED"})
+# Closed provider-status vocabulary: unknown positive visibility is still live,
+# but arbitrary provider text must never reach evidence or diagnostics.
+_POD_STATUSES = frozenset({"CREATED", "PENDING", "PROVISIONING", "STARTING", "RUNNING",
+                          "STOPPING", "STOPPED", "EXITED", "ERROR", "TERMINATED", "UNKNOWN"})
 # B4: closed diagnostic vocabulary. Secret-safe: only allowlisted fields ever
 # reach the journal (stage/outcome/status/pod-status/elapsed/attempt).
 _DIAG_STAGES = frozenset({"AUTH_PREFLIGHT", "CREATE", "GET_STATUS", "LIST_INVENTORY",
@@ -105,9 +114,12 @@ REAPER_ACK_KEYS = frozenset({"version", "manifest_sha256", "armed", "scheduler_i
 
 
 def _new_pod_evidence():
-    return {"delete_attempted": False, "delete_result": "NONE", "last_visibility": "UNKNOWN",
-            "last_status": None, "positive_termination_observed": False,
-            "absence_confirmations": 0, "cleanup_confidence": "UNRESOLVED"}
+    return policy.new_pod()
+
+
+def _pod_status(pod):
+    status = pod.get("status")
+    return status if isinstance(status, str) and status in _POD_STATUSES else None
 
 
 def _classify_transport_error(error):
@@ -527,6 +539,7 @@ class _Lifecycle:
         self.directory, self.plan, self.state = Path(directory), plan, state
         self.provider, self.artifacts, self.clock = provider, artifacts, clock
         self.journal_failed = False
+        self.evidence_failed_ids = set()
         self.last_wall = _timestamp(state["last_wall_utc"])
         self.last_mono = clock.monotonic()
         remaining = max(0, _timestamp(state["deadline_utc"]) - clock.time())
@@ -542,7 +555,7 @@ class _Lifecycle:
         self.state["diagnostics"].append({
             "stage": stage, "outcome": outcome,
             "http_status": http_status if isinstance(http_status, int) else None,
-            "pod_status": pod_status if isinstance(pod_status, str) else None,
+            "pod_status": pod_status if isinstance(pod_status, str) and pod_status in _POD_STATUSES else None,
             "elapsed_seconds": round(max(0.0, self.clock.monotonic() - self.mono_start), 3),
             "attempt": attempt if isinstance(attempt, int) else None,
         })
@@ -576,6 +589,32 @@ class _Lifecycle:
             self.journal_failed = True
             self.state["controller_failed"] = True
 
+    def _record(self, pod_id, kind, *, status=None, result=None):
+        """Keep provider facts durable without making recording a DELETE gate."""
+        try:
+            rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
+            policy.append_pod(rec, kind, policy.utc(self.clock.time()),
+                              status=status, result=result)
+            self._refresh_confidence(pod_id)
+        except (Exception, KeyboardInterrupt):
+            self.journal_failed = True
+            self.state["controller_failed"] = True
+            self.evidence_failed_ids.add(pod_id)
+            self.state["cleanup_status"] = "LOCAL_CLEANUP_UNRESOLVED"
+            if pod_id in self.state["terminated_ids"]:
+                self.state["terminated_ids"].remove(pod_id)
+        self.best_commit()
+
+    def _observe_get(self, pod_id, pod):
+        if pod is None:
+            self._record(pod_id, "MISSING")
+        elif _owned(pod, self.plan) and pod["id"] == pod_id:
+            self._record(pod_id, "OBSERVE", status=_pod_status(pod))
+        else:
+            # A different identity at a known GET target is not mere absence.
+            self.state["ownership_ambiguous"] = True
+            self._record(pod_id, "OWNERSHIP_CONFLICT")
+
     def now(self):
         wall, mono = self.clock.time(), self.clock.monotonic()
         _require(_number(wall) and _number(mono, positive=False)
@@ -606,14 +645,14 @@ class _Lifecycle:
         pod_id = pod["id"]
         if pod_id not in self.state["owned_ids"]:
             self.state["owned_ids"].append(pod_id)
-        self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
         # Ownership remains in memory if the disk fills at this precise point.
         self.state["phase"] = "OWNED"
         # B2: a single successful create response does NOT prove exactly-once
         # allocation. reconciliation_required stays true for the whole run
         # (and is a durable obligation the independent reaper also carries);
         # it is never disarmed by this optimistic path.
-        self.commit()
+        self._record(pod_id, "OBSERVE", status=_pod_status(pod))
+        _require(not self.journal_failed, "JOURNAL_FAILED")
         return pod_id
 
     def save_artifact(self, pod_id, name, raw):
@@ -644,12 +683,15 @@ class _Lifecycle:
                 pod = self.provider.get_pod(pod_id)
             except (Exception, KeyboardInterrupt) as error:
                 self._diag_error("GET_STATUS", error)
+                self._record(pod_id, "UNKNOWN")
                 raise
+            # Retain a late positive even when the following phase guard fails.
+            self._observe_get(pod_id, pod)
             wall, mono = self.guard(work_deadline)
             _require(_owned(pod, self.plan) and pod["id"] == pod_id,
                      "POD_MISSING_OR_OWNERSHIP_CHANGED")
             self.check_rate(pod)
-            status = pod.get("status")
+            status = _pod_status(pod)
             self._diag("GET_STATUS", "SUCCESS",
                        pod_status=status if isinstance(status, str) else None)
             if status in ("EXITED", "ERROR"):
@@ -690,14 +732,7 @@ class _Lifecycle:
             self.clock.sleep(POLL_SECONDS)
 
     def reconcile(self):
-        """B2: run-wide ownership reconciliation, unconditionally attempted.
-
-        A completed scan (even an empty one) is never proof of global
-        absence; it only lets an owned pod's ABSENCE_CONFIRMATIONS counter
-        advance toward the bounded evidence bar in _refresh_confidence.
-        A pod observed VISIBLE and not TERMINATED resets that counter: no
-        finite polling count is allowed to manufacture certainty (B2).
-        """
+        """Retain every exact-owned positive, including on partial page failure."""
         seen = set()
 
         def observe(pod):
@@ -706,24 +741,12 @@ class _Lifecycle:
                 seen.add(pod_id)
                 if pod_id not in self.state["owned_ids"]:
                     self.state["owned_ids"].append(pod_id)
-                rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
-                status = pod.get("status")
-                rec["last_visibility"] = "VISIBLE"
-                rec["last_status"] = status if isinstance(status, str) else None
-                if status == "TERMINATED":
-                    rec["positive_termination_observed"] = True
-                else:
-                    rec["absence_confirmations"] = 0
-                self._refresh_confidence(pod_id)
-            elif isinstance(pod, dict):
-                env = pod.get("env")
-                if (pod.get("name") == self.plan["run_name"]
-                        or isinstance(env, dict) and env.get("AETH01_RUN_ID") == self.plan["run_id"]):
-                    self.state["ownership_ambiguous"] = True
-            if len(self.state["owned_ids"]) > 1:
+                self._record(pod_id, "OBSERVE", status=_pod_status(pod))
+            elif isinstance(pod, dict) and pod.get("id") in self.state["owned_ids"]:
+                seen.add(pod["id"])
                 self.state["ownership_ambiguous"] = True
-            # Preserve only ownership facts, never the raw secret-bearing pod.
-            self.best_commit()
+                self._record(pod["id"], "OWNERSHIP_CONFLICT")
+            # Partial name/run matches at other IDs are unrelated, not ambiguous.
 
         visitor = getattr(self.provider, "visit_pods", None)
         try:
@@ -736,6 +759,9 @@ class _Lifecycle:
                     observe(pod)
         except (Exception, KeyboardInterrupt) as error:
             self._diag_error("LIST_INVENTORY", error)
+            for pod_id in list(self.state["owned_ids"]):
+                self._record(pod_id, "SCAN_FAILED")
+            self.best_commit()
             raise
         self._diag("LIST_INVENTORY", "SUCCESS")
         # This scan fully succeeded: every currently-owned pod that was NOT
@@ -746,34 +772,22 @@ class _Lifecycle:
         for pod_id in list(self.state["owned_ids"]):
             if pod_id in seen:
                 continue
-            rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
-            if rec["delete_result"] == "ACK_204" and rec["last_visibility"] != "VISIBLE":
-                rec["absence_confirmations"] += 1
-            self._refresh_confidence(pod_id)
+            self._record(pod_id, "ABSENT_SCAN")
         self.best_commit()
 
     def _refresh_confidence(self, pod_id):
-        """B1: the only two admissible routes to CONFIRMED cleanup evidence.
-
-        (a) a positive TERMINATED observation for this exact owned pod; or
-        (b) an acknowledged DELETE (ACK_204) corroborated by independent
-            inventory reconciliation: POST_DELETE_ABSENCE_SCANS_REQUIRED
-            fully successful scans that do not see the pod, with no
-            intervening VISIBLE observation. Ambiguous 404s never count on
-            their own, and a later reappearance always demotes back to
-            UNRESOLVED and re-enables recovery (never an irreversible
-            graveyard entry).
-        """
-        rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
-        confirmed = rec["positive_termination_observed"] or (
-            rec["delete_result"] == "ACK_204" and rec["last_visibility"] != "VISIBLE"
-            and rec["absence_confirmations"] >= POST_DELETE_ABSENCE_SCANS_REQUIRED)
-        rec["cleanup_confidence"] = "CONFIRMED" if confirmed else "UNRESOLVED"
+        """Current confidence is replay-derived, never historical termination."""
+        rec = self.state["pod_evidence"][pod_id]
+        derived = policy.validate_pod(rec)
+        confirmed = (derived["cleanup_confidence"] == "CONFIRMED"
+                     and pod_id not in self.evidence_failed_ids)
         if confirmed:
             if pod_id not in self.state["terminated_ids"]:
                 self.state["terminated_ids"].append(pod_id)
-        elif pod_id in self.state["terminated_ids"]:
-            self.state["terminated_ids"].remove(pod_id)
+        else:
+            self.state["cleanup_status"] = "LOCAL_CLEANUP_UNRESOLVED"
+            if pod_id in self.state["terminated_ids"]:
+                self.state["terminated_ids"].remove(pod_id)
 
     def salvage(self, pod_id):
         if self.artifacts is None:
@@ -797,14 +811,19 @@ class _Lifecycle:
         ambiguous 404 alone (official v2 NotFoundError means "not found or
         not accessible to the caller", not solely "no longer exists").
         """
+        rec = self.state["pod_evidence"].get(pod_id, {})
+        last_binding = next((entry["kind"] for entry in reversed(rec.get("history", []))
+                             if entry["kind"] in ("OBSERVE", "OWNERSHIP_CONFLICT")), None)
+        if last_binding == "OWNERSHIP_CONFLICT":
+            # Do not act on a stale identity after positively observing a
+            # different object at this ID. A fresh exact binding is required.
+            return
         if pod_id not in self.state["delete_attempted_ids"]:
             self.state["delete_attempted_ids"].append(pod_id)
-        rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
-        rec["delete_attempted"] = True
-        self.best_commit()
+        self._record(pod_id, "DELETE_ATTEMPT")
         try:
             result = self.provider.terminate_pod(pod_id)
-            result = result if result in ("ACK_204", "NOT_FOUND_404") else "ACK_204"
+            result = result if result in ("ACK_204", "NOT_FOUND_404") else "TRANSPORT_UNKNOWN"
             self._diag("DELETE", result)
         except KeyboardInterrupt:
             result = "TRANSPORT_UNKNOWN"
@@ -812,28 +831,22 @@ class _Lifecycle:
             result, status = _classify_transport_error(error)
             result = "HTTP_OTHER" if result == "SCHEMA_INVALID" else result
             self._diag("DELETE", result, http_status=status)
-        # A later idempotent NOT_FOUND_404 (retry after an earlier real ACK)
-        # must never erase the strongest positive delete evidence already held.
-        if rec["delete_result"] != "ACK_204":
-            rec["delete_result"] = result
-        self.best_commit()
+        self._record(pod_id, "DELETE_RESULT", result=result)
         try:
             pod = self.provider.get_pod(pod_id)
         except (Exception, KeyboardInterrupt) as error:
-            rec["last_visibility"] = "UNKNOWN"
             if not isinstance(error, KeyboardInterrupt):
                 self._diag_error("GET_STATUS", error)
+            self._record(pod_id, "UNKNOWN")
         else:
+            self._observe_get(pod_id, pod)
             if pod is None:
                 # Ambiguous: not found OR not accessible. NOT evidence of
                 # termination by itself; only independent reconciliation
                 # (_refresh_confidence route b) may corroborate it.
-                rec["last_visibility"] = "NOT_VISIBLE"
                 self._diag("GET_STATUS", "SUCCESS")
             elif _owned(pod, self.plan) and pod.get("id") == pod_id:
-                status = pod.get("status")
-                rec["last_visibility"] = "VISIBLE"
-                rec["last_status"] = status if isinstance(status, str) else None
+                status = _pod_status(pod)
                 self._diag("GET_STATUS", "SUCCESS",
                            pod_status=status if isinstance(status, str) else None)
                 if status not in ("EXITED", "TERMINATED"):
@@ -841,18 +854,6 @@ class _Lifecycle:
                         self.check_rate(pod)
                     except ControllerError:
                         self.state["controller_failed"] = True
-                if status == "TERMINATED":
-                    rec["positive_termination_observed"] = True
-                else:
-                    # Still visibly RUNNING/EXITED/etc: any prior absence
-                    # evidence for this pod is stale and must not survive.
-                    rec["absence_confirmations"] = 0
-            else:
-                # A GET returning a DIFFERENT or unowned pod at this ID is an
-                # ownership anomaly, not a disappearance; never silently drop it.
-                rec["last_visibility"] = "VISIBLE"
-                self.state["ownership_ambiguous"] = True
-        self._refresh_confidence(pod_id)
         self.best_commit()
 
     def cleanup(self):
@@ -871,6 +872,13 @@ class _Lifecycle:
                     continue
                 if self.clock.monotonic() >= cleanup_end:
                     break
+                rec = self.state["pod_evidence"].get(pod_id, {})
+                if (pod_id not in self.evidence_failed_ids and rec.get("delete_result") == "ACK_204"
+                        and rec.get("absence_confirmations", 0) > 0):
+                    # Let inventory corroborate a current ACK without an
+                    # unnecessary GET failure erasing its independent witness.
+                    # Every live observation clears this ACK and re-enables DELETE.
+                    continue
                 try:
                     if pod_id not in salvaged:
                         salvaged.add(pod_id)
@@ -886,9 +894,7 @@ class _Lifecycle:
             # proves a create never silently succeeded, B2) -- it stays loud
             # and UNRESOLVED until something is actually found-and-deleted or
             # an operator/reaper otherwise resolves it.
-            return bool(self.state["owned_ids"]) and all(
-                self.state["pod_evidence"].get(pid, {}).get("cleanup_confidence") == "CONFIRMED"
-                for pid in self.state["owned_ids"])
+            return bool(self.state["owned_ids"]) and self._known_owned_confirmed()
 
         # B2: reconciliation is unconditional and run-wide -- it happens even
         # on an apparently clean success, and it is never skipped merely
@@ -926,14 +932,30 @@ class _Lifecycle:
         self.state["phase"] = "DONE"
         self.best_commit()
 
+    def _known_owned_confirmed(self):
+        try:
+            return (not self.evidence_failed_ids and not self.state["ownership_ambiguous"]
+                    and set(self.state["pod_evidence"]) == set(self.state["owned_ids"])
+                    and all(policy.pod_confirmed(rec) for rec in self.state["pod_evidence"].values()))
+        except policy.EvidenceError:
+            return False
+
     def outcome(self):
-        clean = self.state["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+        known_clean = self._known_owned_confirmed()
+        clean = self.state["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED" and known_clean
         success = (clean and self.state["science_verdict"] == "PASS"
                    and not self.state["controller_failed"] and not self.journal_failed)
-        return {"run_id": self.plan["run_id"], "verdict": "PASS" if success else
+        manifest = reaper_manifest_document(self.plan)
+        return deepcopy({"version": 3, "policy_version": 1,
+                "manifest": manifest, "manifest_sha256": _sha(_encode(manifest)),
+                "owned_ids": self.state["owned_ids"],
+                "ownership_ambiguous": self.state["ownership_ambiguous"],
+                "known_owned_cleanup_status": ("KNOWN_OWNED_CLEANUP_CONFIRMED"
+                    if known_clean else "KNOWN_OWNED_CLEANUP_UNRESOLVED"),
+                "run_id": self.plan["run_id"], "verdict": "PASS" if success else
                 ("FAIL" if clean else "CLEANUP_UNRESOLVED"),
                 "science_verdict": self.state["science_verdict"],
-                "cleanup_status": self.state["cleanup_status"],
+                "cleanup_status": "LOCAL_CLEANUP_CONFIRMED" if clean else "LOCAL_CLEANUP_UNRESOLVED",
                 "reconciliation_required": self.state["reconciliation_required"],
                 "pod_evidence": self.state["pod_evidence"],
                 "journal_ok": not self.journal_failed,
@@ -941,8 +963,9 @@ class _Lifecycle:
                 "operational_note": ("LOCAL_CLEANUP_CONFIRMED reflects only this controller's "
                                      "bounded evidence. Run-level OPERATIONAL cleanup additionally "
                                      "requires the independent reaper's REAPER_CLEANUP_CONFIRMED "
-                                     "evidence before billing risk is considered retired; see "
-                                     "independent_reaper.py and combine_operational_cleanup().")}
+                                     "evidence under a bounded observation policy; this does not "
+                                     "prove billing stopped. See "
+                                     "independent_reaper.py and combine_operational_cleanup().")})
 
 
 def run(run_dir, approval, *, execute_paid_run=False, provider=None, artifacts=None,
@@ -970,7 +993,7 @@ def run(run_dir, approval, *, execute_paid_run=False, provider=None, artifacts=N
         _require_reaper_armed(directory, plan, reaper_secret)
         started, mono = clock.time(), clock.monotonic()
         validate_approval(approval, plan, digest, started)
-        state = {"version": 2, "run_id": plan["run_id"], "plan_sha256": digest,
+        state = {"version": 3, "run_id": plan["run_id"], "plan_sha256": digest,
                  "run_name": plan["run_name"], "image": plan["config"]["image"],
                  "phase": "CREATE_INTENT", "started_at_utc": _utc(started),
                  "deadline_utc": _utc(started + plan["config"]["max_lifetime_seconds"]),
@@ -1017,8 +1040,9 @@ def run(run_dir, approval, *, execute_paid_run=False, provider=None, artifacts=N
 def _load_state(directory, plan, digest):
     state = _decode(_read(Path(directory) / "state.json"))
     try:
-        _require(type(state["version"]) is int and state["version"] == 2
-                 and state["run_id"] == plan["run_id"] and state["plan_sha256"] == digest
+        _require(type(state["version"]) is int and state["version"] == 3,
+                 "UNSUPPORTED_STATE_VERSION")
+        _require(state["run_id"] == plan["run_id"] and state["plan_sha256"] == digest
                  and state["run_name"] == plan["run_name"]
                  and state["image"] == plan["config"]["image"],
                  "INVALID_STATE_BINDING")
@@ -1030,8 +1054,9 @@ def _load_state(directory, plan, digest):
             _require(isinstance(state[key], list)
                      and all(isinstance(p, str) and _ID.fullmatch(p) for p in state[key])
                      and len(state[key]) == len(set(state[key])), "INVALID_STATE_OWNERSHIP")
-        _require(set(state["terminated_ids"]) <= set(state["delete_attempted_ids"])
-                 <= set(state["owned_ids"]), "INVALID_STATE_OWNERSHIP")
+        _require(set(state["terminated_ids"]) <= set(state["owned_ids"])
+                 and set(state["delete_attempted_ids"]) <= set(state["owned_ids"]),
+                 "INVALID_STATE_OWNERSHIP")
         for key in ("reconciliation_required", "reconciled", "ownership_ambiguous", "controller_failed"):
             _require(type(state[key]) is bool, "INVALID_STATE")
         _require(type(state["reconciliation_scans_completed"]) is int
@@ -1039,17 +1064,13 @@ def _load_state(directory, plan, digest):
         _require(state["science_verdict"] in ("INCOMPLETE", "FAIL", "PASS")
                  and isinstance(state["artifacts"], dict), "INVALID_STATE")
         evidence = state["pod_evidence"]
-        _require(isinstance(evidence, dict) and set(evidence) <= set(state["owned_ids"]), "INVALID_STATE")
+        _require(isinstance(evidence, dict) and set(evidence) == set(state["owned_ids"]), "INVALID_STATE")
         for pod_id, rec in evidence.items():
-            _require(isinstance(rec, dict) and set(rec) == set(_new_pod_evidence()), "INVALID_STATE")
-            _require(type(rec["delete_attempted"]) is bool
-                     and rec["delete_result"] in _DELETE_RESULTS
-                     and rec["last_visibility"] in _VISIBILITY
-                     and (rec["last_status"] is None or isinstance(rec["last_status"], str))
-                     and type(rec["positive_termination_observed"]) is bool
-                     and type(rec["absence_confirmations"]) is int
-                     and rec["absence_confirmations"] >= 0
-                     and rec["cleanup_confidence"] in _CONFIDENCE, "INVALID_STATE")
+            derived = policy.validate_pod(rec)
+            _require(bool(rec["history"])
+                     and derived["delete_attempted"] == (pod_id in state["delete_attempted_ids"])
+                     and (derived["cleanup_confidence"] == "CONFIRMED") ==
+                         (pod_id in state["terminated_ids"]), "INVALID_STATE_EVIDENCE")
         diagnostics = state["diagnostics"]
         _require(isinstance(diagnostics, list) and len(diagnostics) <= _DIAGNOSTICS_LIMIT, "INVALID_STATE")
         for entry in diagnostics:
@@ -1057,33 +1078,17 @@ def _load_state(directory, plan, digest):
                      {"stage", "outcome", "http_status", "pod_status", "elapsed_seconds", "attempt"},
                      "INVALID_STATE")
             _require(entry["stage"] in _DIAG_STAGES and entry["outcome"] in _DIAG_OUTCOMES, "INVALID_STATE")
-    except (KeyError, TypeError):
+    except (KeyError, TypeError, policy.EvidenceError):
         raise ControllerError("INVALID_STATE") from None
     return state
 
 
-def combine_operational_cleanup(local_outcome, reaper_report):
-    """Section 4 evidence contract: neither this controller nor the
-    independent reaper may unilaterally declare a run's billing risk
-    retired. Call this (an operator/CI step, run after the reaper's own
-    reconciliation window) to merge run()/recover()'s LOCAL_CLEANUP_* outcome
-    with the reaper's REAPER_CLEANUP_* report from independent_reaper.py.
-    """
-    _require(isinstance(local_outcome, dict) and _text(local_outcome.get("run_id"), limit=64),
-             "INVALID_LOCAL_OUTCOME")
-    _require(isinstance(reaper_report, dict) and reaper_report.get("run_id") == local_outcome["run_id"],
-             "REAPER_REPORT_RUN_MISMATCH")
-    local_status = local_outcome.get("cleanup_status")
-    _require(local_status in ("LOCAL_CLEANUP_CONFIRMED", "LOCAL_CLEANUP_UNRESOLVED"),
-             "INVALID_LOCAL_OUTCOME")
-    reaper_status = reaper_report.get("status")
-    _require(reaper_status in ("REAPER_CLEANUP_CONFIRMED", "REAPER_CLEANUP_UNRESOLVED", "REAPER_PENDING"),
-             "INVALID_REAPER_STATUS")
-    confirmed = local_status == "LOCAL_CLEANUP_CONFIRMED" and reaper_status == "REAPER_CLEANUP_CONFIRMED"
-    return {"run_id": local_outcome["run_id"],
-            "operational_cleanup_status":
-                "OPERATIONAL_CLEANUP_CONFIRMED" if confirmed else "OPERATIONAL_CLEANUP_UNRESOLVED",
-            "local_cleanup_status": local_status, "reaper_status": reaper_status}
+def combine_operational_cleanup(local_outcome, reaper_report, *, now=None):
+    """Replay both sources and the independent horizon; labels alone are not proof."""
+    try:
+        return policy.aggregate(local_outcome, reaper_report, now=now)
+    except policy.EvidenceError:
+        raise ControllerError("INVALID_CLEANUP_EVIDENCE") from None
 
 
 def recover(run_dir, *, provider=None, artifacts=None, clock=None):

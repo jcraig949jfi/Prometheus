@@ -81,3 +81,14 @@ def test_linux_payload_files_are_lf_with_checkout_attributes():
         assert glob + " text eol=lf" in attrs
         for path in PACKAGE.glob(glob):
             assert b"\r" not in path.read_bytes(), path.name
+
+
+def test_cleanup_operator_contract_matches_shared_policy_and_restart_requirements():
+    text = (PACKAGE / "README.md").read_text()
+    for phrase in ("CLEANUP_EVIDENCE_MODEL.md", "cleanup_evidence.py",
+                   "Controller state schema 3 and reaper schema 2",
+                   "KNOWN_OWNED_CLEANUP", "RECONCILIATION_WINDOW", "OPERATIONAL_CLEANUP",
+                   "at least 361 healthy scans", "window credit does not",
+                   "Repeated short", "CANNOT accumulate", "NOT that a scheduler is running"):
+        assert phrase in text
+    assert "Evidence accumulates across invocations" not in text

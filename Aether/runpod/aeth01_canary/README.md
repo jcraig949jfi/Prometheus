@@ -30,7 +30,15 @@ per-pod cleanup evidence (`pod_evidence`), artifact hashes, `science_verdict`,
 failure code. Artifacts are saved under `artifacts/<pod_id>/` before normal
 teardown.
 
-### Cleanup evidence contract (B1/B2/B3, ASTRA_CLOSURE_REVIEW_02.md section 4)
+### Cleanup evidence contract (cleanup policy v1; B1/B2/B3)
+
+The current contract is [CLEANUP_EVIDENCE_MODEL.md](../../AETH-01/CLEANUP_EVIDENCE_MODEL.md).
+It supersedes cleanup semantics in earlier review packets, which remain
+historical records. `cleanup_evidence.py` is the shared pure policy; deploy it
+beside both the controller and the independent reaper, with `runpod_api.py`.
+It is not an on-pod image payload. Controller state schema 3 and reaper schema 2
+require replayable append-only histories; legacy states are explicitly refused,
+not promoted. No paid runs require legacy migration at this stage.
 
 `cleanup_status` is `LOCAL_CLEANUP_CONFIRMED` or `LOCAL_CLEANUP_UNRESOLVED` --
 this controller's own bounded evidence ONLY. A pod's cleanup evidence
@@ -44,15 +52,29 @@ pod's evidence is demoted back to `UNRESOLVED` if it later reappears.
 Reconciliation now runs every cleanup round unconditionally, even after an
 apparently clean create; it is never disarmed by an optimistic response.
 
-`LOCAL_CLEANUP_CONFIRMED` is NOT the same as the run's true operational
-cleanup status: `reconciliation_required` stays `true` forever as a durable
-obligation the independent reaper also carries. Use
+Three distinct propositions must not be collapsed:
+
+- `KNOWN_OWNED_CLEANUP`: current evidence for every exact-owned ID. All
+  exact-owned duplicates are retained and cleaned; a partial match is unrelated.
+  A live reappearance invalidates CURRENT termination/ACK/absence evidence,
+  while historical TERMINATED observations and DELETE results are preserved.
+- `RECONCILIATION_WINDOW`: a full healthy, complete, empty-inventory horizon
+  after cutoff, independently observed by the reaper.
+- `OPERATIONAL_CLEANUP`: validated agreement of both reports plus both claims
+  above, under this bounded policy; NOT proof of perpetual absence or billing stop.
+
+`LOCAL_CLEANUP_CONFIRMED` is only local cleanup. `reconciliation_required`
+stays `true` as a durable obligation the independent reaper also carries. Use
 `age_controller.combine_operational_cleanup(local_outcome, reaper_report)`
 (an operator/CI step run after the reaper's own reconciliation window) to
 merge this controller's outcome with `independent_reaper.py`'s
 `REAPER_CLEANUP_CONFIRMED`/`REAPER_CLEANUP_UNRESOLVED`/`REAPER_PENDING`
 report into one `OPERATIONAL_CLEANUP_CONFIRMED`/`_UNRESOLVED` verdict.
-Neither side may unilaterally declare billing risk retired.
+The combiner replays structured histories, verifies matching manifests/digests,
+unions known IDs, and recomputes the horizon; CONFIRMED strings alone are refused.
+The window must start after the controller's last provider evidence and its
+latest sample must be <=60 seconds old at aggregation (never future-dated).
+Neither side nor their agreement proves that provider charges have stopped.
 
 ### Independent reaper (B3)
 
@@ -70,12 +92,34 @@ power, network session, and artifact proxy:
    gate can read it.
 2. `sweep --manifest reaper_manifest.json --out-evidence reaper_evidence.json
    [--ack reaper_ack.json] [--rounds N] [--poll-seconds S]` (reads
-   `RUNPOD_API_KEY`): run repeatedly (cron/systemd timer/job queue) from at
-   or after the plan's cutoff until `reconciliation_horizon_seconds` has
-   elapsed. Evidence accumulates across invocations; "confirmed with zero
-   owned pods ever found" requires the full horizon to have elapsed with a
-   long, unbroken, fully-successful empty-scan streak -- never a handful of
-   scans in one process lifetime.
+   `RUNPOD_API_KEY`): the future independent worker must sustain ONE invocation
+   for a complete healthy `reconciliation_horizon_seconds` after cutoff,
+   whether or not any pods were found. The six-round default is only a short
+   cleanup pass, NOT an operational horizon. For a 3600-second horizon at
+   10-second polling, at least 361 healthy scans are needed in the ideal case;
+   allow bounded headroom for discovery/failure resets and escalate on exhaustion.
+
+Per-pod histories survive restart, but window credit does not. Repeated short
+cron jobs CANNOT accumulate a qualifying horizon. A fully successful empty scan
+starts a new window after failure, any owned discovery (even TERMINATED), a
+gap >60 seconds, or clock discontinuity. Require both UTC and monotonic spans
+>= the horizon, >=6 samples, adjacent gaps <=60 seconds, and adjacent elapsed
+clock deltas agreeing within 2 seconds. A blind hour plus 50 seconds of empty
+scans covers only 50 seconds. UTC alone never earns elapsed observation credit.
+
+The CLI holds a single-writer evidence lock and checkpoints provider evidence
+with atomic fsynced writes. Journal or runtime clock failure prevents confirmation
+without suppressing best-effort deletion of positively owned targets. Malformed
+persisted evidence is refused; do not edit it into success. Missing timestamped
+facts after a broken clock require operator remediation and independent fresh
+evidence, not automatic confidence repair. A known-ID identity conflict blocks
+DELETE until a fresh exact binding is observed and remains an unresolved anomaly.
+
+The HMAC `arm` file proves a bound handoff, NOT that a scheduler is running,
+credentials are usable, a separate host survives failure, or billing has stopped.
+Deployment, controller-host-loss rehearsal, credential/alert/operator-fallback
+proof and provider charge reconciliation remain B3 operational admission gates.
+None is authorized or claimed completed by these offline tests.
 
 See `independent_reaper.py`'s module docstring and
 `Aether/test/test_aeth01_independent_reaper.py` (including a host-offline

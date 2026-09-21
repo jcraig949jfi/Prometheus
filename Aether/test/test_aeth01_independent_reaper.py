@@ -41,16 +41,21 @@ def write_manifest(directory, data=None):
 
 
 class Clock:
-    def __init__(self, start=EPOCH):
+    def __init__(self, start=EPOCH + 1200):
         self.now = start
+        self.mono = 0.0
         self.sleeps = []
 
     def time(self):
         return self.now
 
+    def monotonic(self):
+        return self.mono
+
     def sleep(self, seconds):
         self.sleeps.append(seconds)
         self.now += seconds
+        self.mono += seconds
 
 
 class Provider:
@@ -131,7 +136,13 @@ def _run_sweep(m, provider, state=None, **kwargs):
     state = state or reaper.new_evidence_state(m, digest)
     clock = kwargs.pop("clock", None) or Clock()
     return reaper.sweep(m, digest, provider, state, sleep=clock.sleep,
-                        clock_time=clock.time, **kwargs), clock
+                        clock_time=clock.time, monotonic=clock.monotonic, **kwargs), clock
+
+
+def assert_known_only(state):
+    assert state["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_CONFIRMED"
+    assert state["status"] == "REAPER_PENDING"
+    assert state["reconciliation_window_status"] == "RECONCILIATION_PENDING"
 
 
 def test_sweep_confirms_via_positive_terminated_observation():
@@ -146,7 +157,7 @@ def test_sweep_confirms_via_positive_terminated_observation():
     provider.get_hook = get_hook
 
     state, _ = _run_sweep(m, provider)
-    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert_known_only(state)
     assert state["pod_evidence"]["pod_1"]["cleanup_confidence"] == "CONFIRMED"
     assert state["pod_evidence"]["pod_1"]["positive_termination_observed"] is True
 
@@ -156,9 +167,10 @@ def test_sweep_confirms_via_ack_plus_independent_reconciliation_absence():
     provider = Provider()
     provider._owned_pod("pod_1", m["run_name"], m["run_id"])
     state, clock = _run_sweep(m, provider)
-    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert_known_only(state)
     assert state["pod_evidence"]["pod_1"]["delete_result"] == "ACK_204"
     assert state["pod_evidence"]["pod_1"]["absence_confirmations"] >= reaper.ABSENCE_SCANS_REQUIRED
+    assert len(clock.sleeps) == reaper.DEFAULT_ROUNDS - 1
 
 
 def test_sweep_never_confirms_from_ambiguous_404_alone():
@@ -195,7 +207,7 @@ def test_sweep_late_visible_pod_with_no_returned_create_id_is_found_and_deleted(
     provider.list_hook = list_hook
     state, _ = _run_sweep(m, provider, rounds=8)
     assert "pod_1" in state["owned_ids"]
-    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert_known_only(state)
     assert "pod_1" in provider.deleted
 
 
@@ -229,14 +241,15 @@ def test_sweep_unrelated_pod_is_never_deleted():
     assert state["owned_ids"] == []
 
 
-def test_sweep_ambiguous_duplicate_owned_pods_never_confirms():
+def test_sweep_duplicate_exact_owned_pods_all_clean_without_permanent_ambiguity():
     m = manifest()
     provider = Provider()
     provider._owned_pod("pod_1", m["run_name"], m["run_id"])
     provider._owned_pod("pod_2", m["run_name"], m["run_id"])
-    state, _ = _run_sweep(m, provider, rounds=6)
-    assert state["ownership_ambiguous"] is True
-    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+    state, _ = _run_sweep(m, provider, rounds=362)
+    assert state["ownership_ambiguous"] is False
+    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert set(state["owned_ids"]) == {"pod_1", "pod_2"}
     assert provider.deleted == {"pod_1", "pod_2"}
 
 
@@ -244,16 +257,16 @@ def test_sweep_pagination_failure_keeps_positive_records_and_stays_unresolved():
     m = manifest()
     provider = Provider()
     provider._owned_pod("pod_1", m["run_name"], m["run_id"])
-    seen = []
-
     def list_hook(p):
-        seen.append(1)
-        if len(seen) == 1:
-            raise RuntimeError("offline inventory page failure")
-        return [deepcopy(pod) for pid, pod in p.pods.items() if pid not in p.deleted]
+        yield deepcopy(p.pods["pod_1"])
+        raise RuntimeError("offline inventory page failure")
     provider.list_hook = list_hook
     state, _ = _run_sweep(m, provider, rounds=1)
     assert state["reconciled"] is False
+    assert state["owned_ids"] == ["pod_1"]
+    assert provider.deleted == {"pod_1"}
+    assert state["pod_evidence"]["pod_1"]["absence_confirmations"] == 0
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
 
 
 def test_empty_inventory_requires_full_horizon_before_confirming(tmp_path):
@@ -263,13 +276,15 @@ def test_empty_inventory_requires_full_horizon_before_confirming(tmp_path):
     state = reaper.new_evidence_state(m, digest)
     clock = Clock()
     # First invocation: horizon has not elapsed yet even though every scan is empty.
-    state = reaper.sweep(m, digest, provider, state, rounds=2, sleep=clock.sleep,
-                         clock_time=clock.time)
+    state, _ = _run_sweep(m, provider, state, rounds=2, clock=clock)
     assert state["status"] == "REAPER_PENDING"
     clock.now += 200  # Now past the announced horizon.
     for _ in range(reaper.EMPTY_HORIZON_SCANS_REQUIRED):
-        state = reaper.sweep(m, digest, provider, state, rounds=1, sleep=clock.sleep,
-                             clock_time=clock.time)
+        state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+        assert_known_only(state)
+        assert state["window"]["covered_seconds"] == 0
+        clock.sleep(10)
+    state, _ = _run_sweep(m, provider, state, rounds=11, clock=clock)
     assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
     assert state["owned_ids"] == []
 
@@ -299,6 +314,10 @@ def test_load_or_init_evidence_round_trips_and_rejects_mismatch(tmp_path):
 
 
 def test_cli_arm_then_sweep_round_trip(tmp_path, monkeypatch):
+    clock = Clock()
+    monkeypatch.setattr(reaper._time, "time", clock.time)
+    monkeypatch.setattr(reaper._time, "monotonic", clock.monotonic)
+    monkeypatch.setattr(reaper._time, "sleep", clock.sleep)
     manifest_path = write_manifest(tmp_path)
     ack_path = Path(tmp_path) / "reaper_ack.json"
     monkeypatch.setenv("AGE_REAPER_SHARED_SECRET", SECRET)
@@ -320,10 +339,10 @@ def test_cli_arm_then_sweep_round_trip(tmp_path, monkeypatch):
     evidence_path = Path(tmp_path) / "reaper_evidence.json"
     code = reaper.main(["sweep", "--manifest", str(manifest_path), "--out-evidence",
                        str(evidence_path), "--ack", str(ack_path), "--rounds", "4",
-                       "--poll-seconds", "0"])
+                       "--poll-seconds", "10"])
     assert code == 0
     evidence = json.loads(evidence_path.read_bytes())
-    assert evidence["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert_known_only(evidence)
     assert evidence["ack_scheduler_id"] == "offline-fixture-scheduler"
 
 
@@ -379,11 +398,486 @@ def test_host_offline_rehearsal_reaper_arms_and_later_deletes_without_controller
     digest = reaper._sha(manifest_path.read_bytes())
     state = reaper.load_or_init_evidence(directory / "reaper_evidence.json", m, digest)
     state = reaper.sweep(m, digest, provider, state, rounds=8, sleep=lambda s: None,
-                         clock_time=lambda: EPOCH + 1300, ack=ack)
-    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+                         clock_time=lambda: EPOCH + 1300, monotonic=lambda: 0, ack=ack)
+    assert_known_only(state)
     assert "orphan-pod" in provider.deleted
     raw = json.dumps(state)
     assert SECRET not in raw
+
+
+@pytest.mark.parametrize("rounds", [3, 6])
+def test_a_short_empty_burst_cannot_confirm_hour_horizon(rounds):
+    state, _ = _run_sweep(manifest(), Provider(), rounds=rounds)
+    assert_known_only(state)
+    assert state["window"]["covered_seconds"] == (rounds - 1) * 10
+
+
+@pytest.mark.parametrize("statuses", [
+    ["TERMINATED", "RUNNING"],
+    ["TERMINATED", None, "RUNNING", "TERMINATED"],
+])
+def test_b_current_termination_demotes_and_history_survives(statuses):
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    provider.delete_hook = lambda p, pid: "NOT_FOUND_404"
+    state = None
+    for status in statuses:
+        provider.pods["pod_1"]["status"] = status
+        provider.list_hook = lambda p: [] if status is None else [deepcopy(p.pods["pod_1"])]
+        provider.get_hook = lambda p, pid: None if status is None else deepcopy(p.pods[pid])
+        state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+        rec = state["pod_evidence"]["pod_1"]
+        assert rec["positive_termination_observed"] is True
+        if status == "RUNNING":
+            assert rec["cleanup_confidence"] == "UNRESOLVED"
+            assert rec["absence_confirmations"] == 0
+            assert ("DELETE", "pod_1") in provider.calls
+        elif status == "TERMINATED":
+            assert rec["cleanup_confidence"] == "CONFIRMED"
+        clock.sleep(10)
+
+
+def test_b_ack_absent_absent_then_running_invalidates_old_ack():
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    state, _ = _run_sweep(m, provider, rounds=3, clock=clock)
+    assert_known_only(state)
+    before = deepcopy(state)
+    provider.deleted.clear()
+    provider.delete_hook = lambda p, pid: "NOT_FOUND_404"
+    clock.sleep(10)
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+    rec = state["pod_evidence"]["pod_1"]
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+    assert rec["delete_result"] != "ACK_204"
+    assert rec["absence_confirmations"] == 0
+    assert len(rec["history"]) > len(before["pod_evidence"]["pod_1"]["history"])
+
+
+@pytest.mark.parametrize("status", ["PROVISIONING", "STARTING", "RUNNING", "EXITED", "ERROR", None,
+                                    "UNTRUSTED_STATUS_DO_NOT_JOURNAL"])
+def test_b_every_nonterminated_visibility_clears_confirmation(status):
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"], status="TERMINATED")
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock)
+    clock.sleep(10)
+    provider.pods["pod_1"]["status"] = status
+    provider.delete_hook = lambda p, pid: None
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+    rec = state["pod_evidence"]["pod_1"]
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+    assert rec["positive_termination_observed"] is True
+    assert rec["delete_result"] != "ACK_204"
+    assert "UNTRUSTED_STATUS_DO_NOT_JOURNAL" not in json.dumps(state)
+
+
+@pytest.mark.parametrize("result", [None, True, "", "UNKNOWN", {}, 204])
+def test_b_unknown_delete_result_never_becomes_ack(result):
+    m, provider = manifest(), Provider()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+
+    def delete(p, pid):
+        p.deleted.add(pid)
+        return result
+    provider.delete_hook = delete
+    state, _ = _run_sweep(m, provider, rounds=8)
+    assert state["pod_evidence"]["pod_1"]["delete_result"] != "ACK_204"
+    assert state["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
+
+
+@pytest.mark.parametrize("changed", ["name", "image", "env"])
+def test_b_partial_matches_are_ignored_not_ambiguity(changed):
+    m, provider = manifest(), Provider()
+    provider._owned_pod("not_ours", m["run_name"], m["run_id"])
+    provider.pods["not_ours"][changed] = {} if changed == "env" else "other"
+    state, _ = _run_sweep(m, provider, rounds=61, poll_seconds=60)
+    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert not state["ownership_ambiguous"]
+    assert state["owned_ids"] == []
+    assert provider.deleted == set()
+
+
+def test_b_different_object_at_known_id_is_conflict_not_delete_target():
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"], status="TERMINATED")
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock)
+    provider.pods["pod_1"]["image"] = "different-image"
+    clock.sleep(10)
+    state, _ = _run_sweep(m, provider, state, rounds=6, clock=clock)
+    assert state["ownership_ambiguous"]
+    assert provider.deleted == set()
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+
+
+def test_c1_hour_blind_then_six_empty_scans_covers_only_fifty_seconds(tmp_path):
+    m, provider, clock = manifest(), Provider(), Clock()
+    path = tmp_path / "evidence.json"
+    persist = lambda s: reaper.atomic_write(path, reaper._encode(s))
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock, persist=persist)
+    clock.sleep(3600)
+    state = reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+    state, _ = _run_sweep(m, provider, state, rounds=6, clock=clock, persist=persist)
+    assert_known_only(state)
+    assert state["window"]["covered_seconds"] == 50
+
+
+def test_c1_same_invocation_hour_gap_then_fifty_second_burst_is_not_coverage():
+    class BlindClock(Clock):
+        def sleep(self, seconds):
+            super().sleep(3600 if not self.sleeps else seconds)
+    state, _ = _run_sweep(manifest(), Provider(), rounds=7, clock=BlindClock())
+    assert_known_only(state)
+    assert state["window"]["scan_count"] == 6
+    assert state["window"]["covered_seconds"] == 50
+
+
+@pytest.mark.parametrize("poll", [10, 60])
+def test_c2_healthy_single_invocation_covers_full_hour(poll):
+    state, clock = _run_sweep(manifest(), Provider(), rounds=3600 // poll + 1, poll_seconds=poll)
+    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert state["reconciliation_window_status"] == "RECONCILIATION_COMPLETE"
+    assert state["window"]["covered_seconds"] == 3600
+    assert len(clock.sleeps) == 3600 // poll
+
+
+@pytest.mark.parametrize("failure_at", [1800, 3600])
+def test_c3_failure_interrupts_window_and_latest_failure_cannot_confirm(failure_at):
+    clock, provider = Clock(), Provider()
+
+    def inventory(p):
+        if clock.mono == failure_at:
+            raise RuntimeError("offline inventory unavailable")
+        return []
+    provider.list_hook = inventory
+    state, _ = _run_sweep(manifest(), provider, rounds=361, clock=clock)
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+    assert state["window"]["covered_seconds"] < 1800
+    assert state["window"]["history"]
+    if failure_at == 3600:
+        assert state["reconciled"] is False
+        assert state["window"]["scan_count"] == 0
+
+
+@pytest.mark.parametrize("status", ["RUNNING", "TERMINATED"])
+def test_c4_owned_discovery_at_3500_restarts_even_when_terminated(status):
+    m, clock, provider = manifest(), Clock(), Provider()
+    provider._owned_pod("late", m["run_name"], m["run_id"], status=status)
+    provider.list_hook = lambda p: [deepcopy(p.pods["late"])] if clock.mono == 3500 else []
+    state, _ = _run_sweep(m, provider, rounds=361, clock=clock)
+    assert_known_only(state)
+    assert state["window"]["covered_seconds"] == 90
+    assert state["owned_ids"] == ["late"]
+
+
+def test_c5_partial_page_positive_is_durable_before_process_death(tmp_path):
+    m, clock, provider = manifest(), Clock(), Provider()
+    provider._owned_pod("late", m["run_name"], m["run_id"])
+    path = tmp_path / "evidence.json"
+
+    def inventory(p):
+        yield deepcopy(p.pods["late"])
+        raise SystemExit("offline crash before remaining inventory pages")
+    provider.list_hook = inventory
+    with pytest.raises(SystemExit):
+        _run_sweep(m, provider, rounds=1, clock=clock,
+                   persist=lambda s: reaper.atomic_write(path, reaper._encode(s)))
+    saved = reaper.load_or_init_evidence(path, m, reaper._sha(reaper._encode(m)), now=clock.time())
+    assert saved["owned_ids"] == ["late"]
+    assert saved["pod_evidence"]["late"]["history"]
+    provider.list_hook = lambda p: (_ for _ in ()).throw(RuntimeError("still unavailable"))
+    state, _ = _run_sweep(m, provider, saved, rounds=1, clock=clock)
+    assert provider.deleted == {"late"}
+    assert state["window"]["covered_seconds"] == 0
+
+
+def test_c6_auth_loss_invalidates_old_success_without_losing_known_ids():
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    state, _ = _run_sweep(m, provider, rounds=362, clock=clock)
+    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    old = deepcopy(state)
+    clock.sleep(10)
+    provider.list_hook = lambda p: (_ for _ in ()).throw(PermissionError("denied"))
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+    assert state["owned_ids"] == ["pod_1"]
+    assert state["window"]["scan_count"] == 0
+    assert old["status"] == "REAPER_CLEANUP_CONFIRMED"
+
+
+@pytest.mark.parametrize("phase", ["window", "outage", "ack", "terminated", "reappearance"])
+def test_durable_restart_resets_window_credit_but_keeps_histories(tmp_path, phase):
+    m, provider, clock = manifest(), Provider(), Clock()
+    path = tmp_path / "evidence.json"
+    persist = lambda s: reaper.atomic_write(path, reaper._encode(s))
+    if phase in ("ack", "terminated", "reappearance"):
+        provider._owned_pod("pod_1", m["run_name"], m["run_id"],
+                            status="TERMINATED" if phase != "ack" else "RUNNING")
+    state, _ = _run_sweep(m, provider, rounds=1 if phase == "ack" else 61,
+                          poll_seconds=60, clock=clock, persist=persist)
+    if phase in ("outage", "reappearance"):
+        clock.sleep(10)
+        if phase == "outage":
+            provider.list_hook = lambda p: (_ for _ in ()).throw(RuntimeError("offline"))
+        else:
+            provider.pods["pod_1"]["status"] = "RUNNING"
+            provider.delete_hook = lambda p, pid: "NOT_FOUND_404"
+        state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock, persist=persist)
+    saved = deepcopy(state)
+    clock.sleep(3600)
+    state = reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+    snapshots = []
+
+    def checkpoint(s):
+        persist(s)
+        snapshots.append(s)
+    _run_sweep(m, provider, state, rounds=1, clock=clock, persist=checkpoint)
+    restarted = snapshots[0]
+    assert restarted["window"]["session_id"] != saved["window"]["session_id"]
+    assert restarted["window"]["covered_seconds"] == 0
+    assert restarted["window"]["scan_count"] == 0
+    assert restarted["window"]["history"][:len(saved["window"]["history"])] == saved["window"]["history"]
+    assert restarted["pod_evidence"] == saved["pod_evidence"]
+    assert restarted["status"] != "REAPER_CLEANUP_CONFIRMED"
+    reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
+@pytest.mark.parametrize("wall_delta,mono_delta", [(-20, 10), (120, 10), (120, 120), (10, -20), (13, 10)])
+def test_clock_discontinuity_resets_window(wall_delta, mono_delta):
+    class JumpClock(Clock):
+        def sleep(self, seconds):
+            if len(self.sleeps) == 3:
+                self.now += wall_delta - seconds
+                self.mono += mono_delta - seconds
+            super().sleep(seconds)
+    state, _ = _run_sweep(manifest(), Provider(), rounds=8, clock=JumpClock())
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+    assert state["window"]["covered_seconds"] <= 30
+    assert state["window"]["history"]
+
+
+@pytest.mark.parametrize("bad_time", [float("nan"), float("inf"), "bad", None])
+def test_runtime_bad_clock_never_suppresses_deletion(bad_time):
+    m, provider, clock = manifest(), Provider(), Clock()
+    for pid in ("one", "two"):
+        provider._owned_pod(pid, m["run_name"], m["run_id"])
+
+    def inventory(p):
+        clock.now = bad_time
+        return [deepcopy(pod) for pod in p.pods.values()]
+    provider.list_hook = inventory
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock)
+    assert provider.deleted == {"one", "two"}
+    assert state["journal_ok"] is False
+    assert state["status"] == "REAPER_CLEANUP_UNRESOLVED"
+    assert state["window"]["covered_seconds"] == 0
+
+
+def test_bad_clock_on_live_reappearance_does_not_reuse_old_confirmation():
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"], status="TERMINATED")
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock)
+    prefix = deepcopy(state["pod_evidence"]["pod_1"]["history"])
+    provider.pods["pod_1"]["status"] = "RUNNING"
+
+    def inventory(p):
+        clock.now = float("nan")
+        return [deepcopy(p.pods["pod_1"])]
+    provider.list_hook = inventory
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+    assert provider.deleted == {"pod_1"}
+    assert state["pod_evidence"]["pod_1"]["history"] == prefix
+    assert state["journal_ok"] is False
+    assert state["status"] == "REAPER_CLEANUP_UNRESOLVED"
+
+
+def test_pre_cutoff_scans_never_count():
+    state, _ = _run_sweep(manifest(), Provider(), rounds=10, clock=Clock(start=EPOCH))
+    assert_known_only(state)
+    assert state["window"]["scan_count"] == 0
+
+
+def test_persist_failure_cannot_confirm_but_all_deletes_continue():
+    m, provider = manifest(), Provider()
+    for pid in ("one", "two"):
+        provider._owned_pod(pid, m["run_name"], m["run_id"])
+
+    def broken_disk(state):
+        raise OSError("offline disk failure")
+    state, _ = _run_sweep(m, provider, rounds=63, poll_seconds=60, persist=broken_disk)
+    assert provider.deleted == {"one", "two"}
+    assert state["journal_ok"] is False
+    assert state["status"] != "REAPER_CLEANUP_CONFIRMED"
+
+
+@pytest.mark.parametrize("field,value", [
+    ("version", 1), ("version", 3), ("policy_version", 999), ("journal_ok", "true"),
+    ("owned_ids", ["unknown"]), ("total_rounds_run", -1), ("unexpected", "field"),
+    ("status", "REAPER_CLEANUP_CONFIRMED"), ("manifest_sha256", "0" * 64),
+    ("first_fired_at_utc", "bad"), ("last_fired_at_utc", "9999-01-01T00:00:00+00:00"),
+])
+def test_strict_snapshot_validation_rejects_tampering(tmp_path, field, value):
+    m = manifest()
+    state, clock = _run_sweep(m, Provider(), rounds=2)
+    digest = state["manifest_sha256"]
+    state[field] = value
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, digest, now=clock.time())
+
+
+def test_manifest_copy_is_bound_and_not_aliased(tmp_path):
+    m = manifest()
+    state, clock = _run_sweep(m, Provider(), rounds=1)
+    state["manifest"]["image"] = "different-image"
+    assert m["image"] != "different-image"
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError, match="EVIDENCE_MANIFEST_MISMATCH"):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
+def test_load_rejects_future_pod_history_and_forged_confidence(tmp_path):
+    m, provider = manifest(), Provider()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"], status="TERMINATED")
+    state, clock = _run_sweep(m, provider, rounds=1)
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time() - 1)
+    state["pod_evidence"]["pod_1"]["cleanup_confidence"] = "UNRESOLVED"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
+@pytest.mark.parametrize("field,value", [("covered_seconds", 3600), ("scan_count", 999),
+                                        ("start_utc", "bad"), ("latest_utc", "bad"),
+                                        ("samples", [{}]), ("history", [{}])])
+def test_load_rejects_malformed_window(tmp_path, field, value):
+    m = manifest()
+    state, clock = _run_sweep(m, Provider(), rounds=2)
+    state["window"][field] = value
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
+@pytest.mark.parametrize("flag,value", [("--rounds", "0"), ("--rounds", "-1"),
+    ("--rounds", "10001"), ("--poll-seconds", "0"), ("--poll-seconds", "-1"),
+    ("--poll-seconds", "nan"), ("--poll-seconds", "inf"), ("--poll-seconds", "61")])
+def test_cli_invalid_flags_fail_closed_before_provider(tmp_path, monkeypatch, flag, value):
+    import sys
+    import types
+    shim = types.ModuleType("runpod_api")
+    shim.RunPodAPI = lambda: pytest.fail("invalid flags must not construct a provider")
+    monkeypatch.setitem(sys.modules, "runpod_api", shim)
+    code = reaper.main(["sweep", "--manifest", str(write_manifest(tmp_path)),
+                        "--out-evidence", str(tmp_path / "evidence.json"), flag, value])
+    assert code == 2
+    assert not (tmp_path / "evidence.json").exists()
+
+
+def test_cli_lock_prevents_read_sweep_write_and_releases(tmp_path, monkeypatch):
+    path = tmp_path / "evidence.json"
+    manifest_path = write_manifest(tmp_path)
+    monkeypatch.setattr(reaper, "load_or_init_evidence",
+                        lambda *a, **k: pytest.fail("second writer read evidence"))
+    with reaper.evidence_lock(path):
+        with pytest.raises(reaper.ReaperError, match="EVIDENCE_LOCK_UNAVAILABLE"):
+            with reaper.evidence_lock(path):
+                pytest.fail("second writer acquired lock")
+        assert reaper.main(["sweep", "--manifest", str(manifest_path),
+                            "--out-evidence", str(path)]) == 2
+    with reaper.evidence_lock(path):
+        pass
+
+
+def test_sweep_report_and_persisted_snapshots_are_detached():
+    m, clock = manifest(), Clock()
+    digest = reaper._sha(reaper._encode(m))
+    state = reaper.new_evidence_state(m, digest)
+    snapshots = []
+    report, _ = _run_sweep(m, Provider(), state, rounds=2, clock=clock, persist=snapshots.append)
+    first = deepcopy(snapshots[0])
+    report["window"]["samples"].clear()
+    assert len(state["window"]["samples"]) == 2
+    assert snapshots[0] == first
+
+
+def test_default_monotonic_is_not_derived_from_injected_wall_clock(monkeypatch):
+    m, clock = manifest(), Clock()
+    digest = reaper._sha(reaper._encode(m))
+    state = reaper.new_evidence_state(m, digest)
+    monkeypatch.setattr(reaper._time, "monotonic", lambda: 17.0)
+    report = reaper.sweep(m, digest, Provider(), state, rounds=61, poll_seconds=60,
+                          clock_time=clock.time, sleep=clock.sleep)
+    assert_known_only(report)
+    assert report["window"]["covered_seconds"] == 0
+
+
+@pytest.mark.parametrize("phase", ["DELETE_ATTEMPT", "DELETE_RESULT", "MISSING", "OBSERVE"])
+def test_each_provider_result_is_durable_before_next_interaction(tmp_path, phase):
+    m, clock, provider = manifest(), Clock(), Provider()
+    path = tmp_path / "evidence.json"
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    if phase == "OBSERVE":
+        provider.get_hook = lambda p, pid: dict(p.pods[pid], status="TERMINATED")
+
+    def checkpoint(state):
+        reaper.atomic_write(path, reaper._encode(state))
+        rec = state["pod_evidence"].get("pod_1")
+        if rec and rec["history"][-1]["kind"] == phase:
+            if phase != "OBSERVE" or rec["current_termination_observed"]:
+                raise SystemExit("offline crash after durable observation")
+    with pytest.raises(SystemExit):
+        _run_sweep(m, provider, rounds=1, clock=clock, persist=checkpoint)
+    state = reaper.load_or_init_evidence(path, m, reaper._sha(reaper._encode(m)), now=clock.time())
+    rec = state["pod_evidence"]["pod_1"]
+    assert rec["history"][-1]["kind"] == phase
+    if phase == "DELETE_ATTEMPT":
+        assert provider.deleted == set()
+    elif phase == "DELETE_RESULT":
+        assert rec["delete_result"] == "ACK_204"
+        assert ("GET", "pod_1") not in provider.calls
+    elif phase == "OBSERVE":
+        assert rec["current_termination_observed"]
+
+
+@pytest.mark.parametrize("timestamp", ["bad", "2026-01-01T00:00:00", "9999-01-01T00:00:00+00:00"])
+def test_load_rejects_bad_event_timestamps_even_when_cached_status_matches(tmp_path, timestamp):
+    m, provider = manifest(), Provider()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    state, clock = _run_sweep(m, provider, rounds=1)
+    state["pod_evidence"]["pod_1"]["history"][-1]["at_utc"] = timestamp
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
+def test_future_archived_window_cannot_carry_success_on_restart(tmp_path):
+    m = manifest()
+    state, clock = _run_sweep(m, Provider(), rounds=61, poll_seconds=60)
+    path = tmp_path / "evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    digest = state["manifest_sha256"]
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, digest, now=clock.time() - 120)
+    # When wall time catches up, loading is legitimate, but still grants no
+    # cross-process monotonic credit: the next invocation begins from zero.
+    state = reaper.load_or_init_evidence(path, m, digest, now=clock.time())
+    report, _ = _run_sweep(m, Provider(), state, rounds=1, clock=Clock(start=clock.time()))
+    assert_known_only(report)
+    assert report["window"]["covered_seconds"] == 0
+
+
+@pytest.mark.parametrize("raw", [b'{"version":2,"version":2}', b'{"number":NaN}', b'{"number":Infinity}'])
+def test_json_rejects_duplicate_keys_and_nonfinite_numbers(raw):
+    with pytest.raises(reaper.ReaperError, match="INVALID_JSON"):
+        reaper._decode(raw)
 
 
 if __name__ == "__main__":

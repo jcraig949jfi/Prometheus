@@ -245,6 +245,30 @@ def cleanup(rig):
         return age.recover(rig.directory, provider=rig.provider, clock=rig.clock)
 
 
+def reload_lifecycle(rig):
+    plan, digest = age._load_plan(rig.directory)
+    state = age._load_state(rig.directory, plan, digest)
+    return age._Lifecycle(rig.directory, plan, state, rig.provider, None, rig.clock)
+
+
+@pytest.fixture
+def owned_lifecycle(rig, monkeypatch):
+    # Stop just after the durable create adoption; subsequent interactions are
+    # explicit so every intermediate evidence state can be reloaded from disk.
+    with monkeypatch.context() as context:
+        context.setattr(age._Lifecycle, "monitor", lambda self, pod_id: None)
+        context.setattr(age._Lifecycle, "cleanup", lambda self: None)
+        launch(rig)
+    return reload_lifecycle(rig)
+
+
+def scan_status(rig, lifecycle, status):
+    rig.clock.advance(1)
+    rig.provider.list_hook = lambda p: [dict(deepcopy(p.pods["pod_1"]), status=status)]
+    lifecycle.reconcile()
+    return reload_lifecycle(rig)
+
+
 def test_plan_is_fresh_nonsecret_and_zero_credential_reads_or_network(tmp_path, monkeypatch):
     def forbidden(*args, **kwargs):
         raise AssertionError("network attempted")
@@ -550,13 +574,18 @@ def test_unverified_create_response_is_not_trusted_but_exact_inventory_is(rig, m
     assert read_json(rig.directory / "state.json")["owned_ids"] == ["pod_1"]
 
 
-def test_exact_duplicates_are_all_deleted_but_ambiguity_remains_unresolved(rig):
+def test_exact_duplicates_are_all_cleaned_without_permanent_ambiguity(rig):
     def lost_with_duplicates(provider):
         provider.pods["pod_2"] = dict(deepcopy(provider.pods["pod_1"]), id="pod_2")
         raise RuntimeError("offline lost duplicate response")
     rig.provider.create_hook = lost_with_duplicates
     result = launch(rig)
-    assert result["verdict"] == "CLEANUP_UNRESOLVED"
+    assert result["verdict"] == "FAIL"  # Lost create still cannot award science success.
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+    assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_CONFIRMED"
+    assert result["ownership_ambiguous"] is False
+    assert set(result["owned_ids"]) == {"pod_1", "pod_2"}
+    assert result["reconciliation_required"] is True  # The independent horizon remains.
     assert rig.provider.deleted == {"pod_1", "pod_2"}
     assert rig.provider.create_count == 1
 
@@ -564,6 +593,7 @@ def test_exact_duplicates_are_all_deleted_but_ambiguity_remains_unresolved(rig):
 def test_unrelated_pods_are_never_deleted(rig):
     def add_unrelated(provider):
         for pod_id, changes in (("other_name", {"name": "unrelated"}),
+                                ("similar_name", {"name": provider.pods["pod_1"]["name"] + "-other"}),
                                 ("other_image", {"image": "unrelated"}),
                                 ("other_run", {"env": {"AETH01_RUN_ID": "unrelated"}}),
                                 ("fully_unrelated", {"name": "other", "image": "other", "env": {}})):
@@ -571,7 +601,9 @@ def test_unrelated_pods_are_never_deleted(rig):
         raise RuntimeError("offline lost response")
     rig.provider.create_hook = add_unrelated
     result = launch(rig)
-    assert result["verdict"] == "CLEANUP_UNRESOLVED"
+    assert result["verdict"] == "FAIL"
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+    assert result["ownership_ambiguous"] is False
     assert rig.provider.deleted == {"pod_1"}
     assert set(read_json(rig.directory / "state.json")["owned_ids"]) == {"pod_1"}
 
@@ -629,10 +661,15 @@ def test_cleanup_retries_and_requires_get_confirmation(rig, mode):
         rig.provider.termination_status = "TERMINATED"
     result = launch(rig)
     assert result["verdict"] == "PASS"
-    if mode != "terminated":
-        # B1: a transient failure delays confirmation until an independent
-        # reconciliation scan corroborates absence; it does not block it.
+    if mode == "delete_error":
         assert sum(e[0] == "DELETE" for e in rig.events) >= 2
+    elif mode == "confirmation_error":
+        # A real ACK is corroborated by two complete inventory scans, not by
+        # retrying an already-acknowledged DELETE/failed GET indefinitely.
+        rec = result["pod_evidence"]["pod_1"]
+        assert any(e["kind"] == "UNKNOWN" for e in rec["history"])
+        assert rec["absence_confirmations"] >= 2
+        assert rig.provider.list_count >= 2
 
 
 @pytest.mark.parametrize("mode", ["ineffective_delete", "exited_not_terminated"])
@@ -1141,3 +1178,368 @@ def test_pod_error_and_exited_status_are_journaled_distinctly(rig):
     launch(rig)
     diagnostics = read_json(rig.directory / "state.json")["diagnostics"]
     assert any(d["outcome"] == "POD_ERROR" for d in diagnostics)
+
+
+@pytest.mark.parametrize("status", ["RUNNING", "PROVISIONING", "STARTING", "EXITED", "ERROR",
+                                   "CREATED", "PENDING", "STOPPING", "STOPPED", "UNKNOWN", None,
+                                   "OFFLINE_UNTRUSTED_STATUS_DO_NOT_LOG"])
+def test_terminated_then_live_demotes_and_retries_after_reload(rig, owned_lifecycle, status):
+    lifecycle = scan_status(rig, owned_lifecycle, "TERMINATED")
+    terminated_history = deepcopy(lifecycle.state["pod_evidence"]["pod_1"]["history"])
+    assert lifecycle.state["terminated_ids"] == ["pod_1"]
+    lifecycle = scan_status(rig, lifecycle, status)
+    rec = lifecycle.state["pod_evidence"]["pod_1"]
+    assert rec["history"][:len(terminated_history)] == terminated_history
+    assert rec["positive_termination_observed"] is True
+    assert rec["current_termination_observed"] is False
+    assert rec["contradictory_live_reappearance"] is True
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+    assert rec["delete_result"] != "ACK_204" and rec["absence_confirmations"] == 0
+    assert lifecycle.state["terminated_ids"] == []
+    rig.provider.list_hook = None
+    result = cleanup(rig)
+    assert ("DELETE", "pod_1") in rig.events
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+    assert result["pod_evidence"]["pod_1"]["positive_termination_observed"] is True
+    assert "OFFLINE_UNTRUSTED_STATUS_DO_NOT_LOG" not in (rig.directory / "state.json").read_text()
+
+
+def test_ack_absence_absence_running_requires_fresh_ack_after_reload(rig, owned_lifecycle):
+    owned_lifecycle.terminate("pod_1")
+    lifecycle = reload_lifecycle(rig)
+    assert lifecycle.state["pod_evidence"]["pod_1"]["delete_result"] == "ACK_204"
+    for expected in (1, 2):
+        lifecycle.reconcile()
+        lifecycle = reload_lifecycle(rig)
+        assert lifecycle.state["pod_evidence"]["pod_1"]["absence_confirmations"] == expected
+    assert lifecycle.state["terminated_ids"] == ["pod_1"]
+    old_history = deepcopy(lifecycle.state["pod_evidence"]["pod_1"]["history"])
+    lifecycle = scan_status(rig, lifecycle, "RUNNING")
+    rec = lifecycle.state["pod_evidence"]["pod_1"]
+    assert rec["history"][:len(old_history)] == old_history
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+    assert rec["absence_confirmations"] == 0 and rec["delete_result"] != "ACK_204"
+    rig.provider.list_hook = lambda p: []
+    for _ in range(2):
+        lifecycle.reconcile()
+        lifecycle = reload_lifecycle(rig)
+    assert lifecycle.state["terminated_ids"] == []
+    assert lifecycle.state["pod_evidence"]["pod_1"]["cleanup_confidence"] == "UNRESOLVED"
+    rig.provider.deleted.clear()  # The reappearing pod needs a genuine fresh ACK.
+    lifecycle.terminate("pod_1")
+    lifecycle = reload_lifecycle(rig)
+    for _ in range(2):
+        lifecycle.reconcile()
+        lifecycle = reload_lifecycle(rig)
+    assert lifecycle.state["terminated_ids"] == ["pod_1"]
+    assert sum(e["kind"] == "DELETE_RESULT" and e["result"] == "ACK_204"
+               for e in lifecycle.state["pod_evidence"]["pod_1"]["history"]) == 2
+
+
+def test_terminated_absent_running_terminated_preserves_history_across_reloads(rig, owned_lifecycle):
+    lifecycle = scan_status(rig, owned_lifecycle, "TERMINATED")
+    prefix = deepcopy(lifecycle.state["pod_evidence"]["pod_1"]["history"])
+    rig.provider.list_hook = lambda p: []
+    lifecycle.reconcile()
+    lifecycle = reload_lifecycle(rig)
+    assert lifecycle.state["pod_evidence"]["pod_1"]["current_termination_observed"] is True
+    lifecycle = scan_status(rig, lifecycle, "RUNNING")
+    assert lifecycle.state["terminated_ids"] == []
+    lifecycle = scan_status(rig, lifecycle, "TERMINATED")
+    rec = lifecycle.state["pod_evidence"]["pod_1"]
+    assert rec["history"][:len(prefix)] == prefix
+    assert [e["kind"] for e in rec["history"]][-3:] == ["ABSENT_SCAN", "OBSERVE", "OBSERVE"]
+    assert sum(e["kind"] == "OBSERVE" and e["status"] == "TERMINATED"
+               for e in rec["history"]) == 2
+    assert rec["positive_termination_observed"] is rec["current_termination_observed"] is True
+    assert rec["cleanup_confidence"] == "CONFIRMED"
+    assert cleanup(rig)["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+    assert not any(e[0] == "DELETE" for e in rig.events)
+
+
+@pytest.mark.parametrize("result", [None, "", "unknown", True, {}])
+def test_unknown_delete_return_never_becomes_ack(rig, monkeypatch, result):
+    original = rig.provider.terminate_pod
+    def unknown(pod_id):
+        original(pod_id)
+        return result
+    monkeypatch.setattr(rig.provider, "terminate_pod", unknown)
+    outcome = launch(rig)
+    assert outcome["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    rec = outcome["pod_evidence"]["pod_1"]
+    assert rec["delete_result"] == "TRANSPORT_UNKNOWN"
+    assert rec["absence_confirmations"] == 0
+    assert all(e["result"] == "TRANSPORT_UNKNOWN" for e in rec["history"]
+               if e["kind"] == "DELETE_RESULT")
+    assert reload_lifecycle(rig).state["terminated_ids"] == []
+
+
+def test_repeated_live_get_clears_each_ack_and_complete_scans_still_record_absence(rig, owned_lifecycle):
+    rig.provider.delete_effective = False
+    for _ in range(2):
+        owned_lifecycle.terminate("pod_1")
+        owned_lifecycle = reload_lifecycle(rig)
+        rec = owned_lifecycle.state["pod_evidence"]["pod_1"]
+        assert rec["delete_result"] != "ACK_204"
+        assert rec["cleanup_confidence"] == "UNRESOLVED"
+    rig.provider.list_hook = lambda p: []
+    for _ in range(2):
+        owned_lifecycle.reconcile()
+    rec = reload_lifecycle(rig).state["pod_evidence"]["pod_1"]
+    assert [e["kind"] for e in rec["history"]][-2:] == ["ABSENT_SCAN", "ABSENT_SCAN"]
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+
+
+def test_ack_after_visible_get_can_be_corroborated_by_complete_scans(rig, owned_lifecycle, monkeypatch):
+    # Emulate process death after the durable ACK, before a GET can supply any
+    # new visibility fact. LIST must independently witness complete absence.
+    def stop(pod_id):
+        raise SystemExit(99)
+    monkeypatch.setattr(rig.provider, "get_pod", stop)
+    with pytest.raises(SystemExit):
+        owned_lifecycle.terminate("pod_1")
+    owned_lifecycle = reload_lifecycle(rig)
+    rec = owned_lifecycle.state["pod_evidence"]["pod_1"]
+    assert rec["delete_result"] == "ACK_204" and rec["last_visibility"] == "VISIBLE"
+    for _ in range(2):
+        owned_lifecycle.reconcile()
+    assert reload_lifecycle(rig).state["terminated_ids"] == ["pod_1"]
+
+
+@pytest.mark.parametrize("change", ["wrong_id", "wrong_name", "wrong_image", "wrong_run"])
+def test_get_conflicting_identity_at_known_id_remains_anomaly(rig, change):
+    def conflict(provider, pod_id):
+        pod = deepcopy(provider.pods[pod_id])
+        if change == "wrong_run":
+            pod["env"]["AETH01_RUN_ID"] = "other"
+        else:
+            pod[change.removeprefix("wrong_")] = "other"
+        return pod
+    rig.provider.get_hook = conflict
+    result = launch(rig)
+    assert rig.provider.deleted == {"pod_1"}
+    assert result["ownership_ambiguous"] is True
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    assert any(e["kind"] == "OWNERSHIP_CONFLICT"
+               for e in result["pod_evidence"]["pod_1"]["history"])
+
+
+def test_recovery_does_not_delete_known_id_after_identity_conflict(rig, owned_lifecycle):
+    rig.provider.pods["pod_1"]["image"] = "unrelated-image"
+    owned_lifecycle.reconcile()
+    result = cleanup(rig)
+    assert not rig.provider.deleted
+    assert not any(e[0] == "DELETE" for e in rig.events)
+    assert result["ownership_ambiguous"] is True
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    # A fresh exact binding may resume deletion, but the anomaly stays loud.
+    rig.provider.pods["pod_1"]["image"] = rig.plan["config"]["image"]
+    lifecycle = reload_lifecycle(rig)
+    lifecycle.reconcile()
+    lifecycle.terminate("pod_1")
+    assert rig.provider.deleted == {"pod_1"}
+    assert lifecycle.outcome()["ownership_ambiguous"] is True
+
+
+@pytest.mark.parametrize("version", [1, 2, 4, True])
+def test_recovery_explicitly_refuses_old_or_unknown_state_schema(rig, owned_lifecycle, version):
+    state = read_json(rig.directory / "state.json")
+    state["version"] = version
+    age.atomic_write(rig.directory / "state.json", age._encode(state))
+    before = list(rig.events)
+    with pytest.raises(age.ControllerError, match="UNSUPPORTED_STATE_VERSION"):
+        cleanup(rig)
+    assert rig.events == before
+
+
+@pytest.mark.parametrize("tamper", ["confidence", "no_history", "empty_history", "missing_record",
+                                   "extra_record", "terminated_ids", "attempted_ids"])
+def test_recovery_replays_evidence_and_refuses_missing_or_forged_facts(rig, owned_lifecycle, tamper):
+    state = read_json(rig.directory / "state.json")
+    rec = state["pod_evidence"]["pod_1"]
+    if tamper == "confidence":
+        rec["cleanup_confidence"] = "CONFIRMED"
+        state["terminated_ids"] = ["pod_1"]
+    elif tamper == "no_history":
+        del rec["history"]
+    elif tamper == "empty_history":
+        state["pod_evidence"]["pod_1"] = age.policy.new_pod()
+    elif tamper == "missing_record":
+        state["pod_evidence"].clear()
+    elif tamper == "extra_record":
+        state["pod_evidence"]["other"] = deepcopy(rec)
+    elif tamper == "terminated_ids":
+        state["terminated_ids"] = ["pod_1"]
+    else:
+        state["delete_attempted_ids"] = ["pod_1"]
+    age.atomic_write(rig.directory / "state.json", age._encode(state))
+    before = list(rig.events)
+    with pytest.raises(age.ControllerError, match="INVALID_STATE"):
+        cleanup(rig)
+    assert rig.events == before
+
+
+def test_outcome_is_a_deep_snapshot_bound_to_the_manifest(rig, owned_lifecycle):
+    first = owned_lifecycle.outcome()
+    saved = deepcopy(first)
+    assert first["version"] == 3 and first["policy_version"] == 1
+    assert first["manifest"] == age.reaper_manifest_document(rig.plan)
+    assert first["manifest_sha256"] == age._sha(age._encode(first["manifest"]))
+    owned_lifecycle.terminate("pod_1")
+    assert first == saved
+    first["owned_ids"].clear()
+    first["pod_evidence"]["pod_1"]["history"].clear()
+    first["manifest"]["image"] = "changed"
+    assert owned_lifecycle.state["owned_ids"] == ["pod_1"]
+    assert owned_lifecycle.state["pod_evidence"]["pod_1"]["history"]
+    assert owned_lifecycle.outcome()["manifest"]["image"] == rig.plan["config"]["image"]
+
+
+def test_empty_known_set_is_vacuously_known_clean_but_not_locally_clean(rig):
+    rig.provider.create_error = RuntimeError("offline lost response")
+    rig.provider.list_hook = lambda p: []
+    result = launch(rig)
+    assert result["owned_ids"] == []
+    assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_CONFIRMED"
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    assert result["reconciliation_required"] is True
+
+
+def test_evidence_record_failure_never_suppresses_delete(rig, monkeypatch):
+    def fail(*args, **kwargs):
+        raise age.policy.EvidenceError("OFFLINE_UNTRUSTED_RECORD_FAILURE")
+    monkeypatch.setattr(age.policy, "append_pod", fail)
+    result = launch(rig)
+    assert rig.provider.deleted == {"pod_1"}
+    assert result["journal_ok"] is False
+    assert result["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    assert "OFFLINE_UNTRUSTED_RECORD_FAILURE" not in (rig.directory / "state.json").read_text()
+
+
+@pytest.mark.parametrize("status", ["RUNNING", "TERMINATED"])
+def test_late_get_positive_is_durable_before_phase_guard_refuses(rig, owned_lifecycle, status):
+    def late(provider, pod_id):
+        provider.clock.advance(121)
+        return dict(deepcopy(provider.pods[pod_id]), status=status)
+    rig.provider.get_hook = late
+    with pytest.raises(age.ControllerError, match="LIFECYCLE_TIMEOUT"):
+        owned_lifecycle.monitor("pod_1")
+    rec = reload_lifecycle(rig).state["pod_evidence"]["pod_1"]
+    assert rec["last_status"] == status
+    assert rec["last_positive_at_utc"] == age.policy.utc(rig.clock.time())
+    assert rec["history"][-1]["kind"] == "OBSERVE"
+
+
+def test_partial_scan_failure_is_durable_and_never_adds_absence_witness(rig, owned_lifecycle):
+    def partial(visitor):
+        visitor(dict(deepcopy(rig.provider.pods["pod_1"]), status="TERMINATED"))
+        assert read_json(rig.directory / "state.json")["pod_evidence"]["pod_1"]["last_status"] == "TERMINATED"
+        raise RuntimeError("offline later-page failure")
+    rig.provider.visit_pods = partial
+    with pytest.raises(RuntimeError):
+        owned_lifecycle.reconcile()
+    rec = reload_lifecycle(rig).state["pod_evidence"]["pod_1"]
+    assert [e["kind"] for e in rec["history"]][-2:] == ["OBSERVE", "SCAN_FAILED"]
+    assert rec["absence_confirmations"] == 0
+    assert not owned_lifecycle.state["reconciled"]
+
+
+@pytest.fixture
+def structured_reports(rig):
+    local = launch(rig)
+    manifest = deepcopy(local["manifest"])
+    window = age.policy.new_window("offline-independent-window")
+    start = age._timestamp(manifest["cutoff_utc"])
+    horizon = manifest["reconciliation_horizon_seconds"]
+    for offset in range(0, horizon + 1, 60):
+        age.policy.observe_window(window, age.policy.utc(start + offset), 100.0 + offset,
+                                  complete=True, owned_seen=False, cutoff=manifest["cutoff_utc"])
+    reaper = {"version": 2, "policy_version": 1, "manifest": manifest,
+              "manifest_sha256": age._sha(age._encode(manifest)), "run_id": local["run_id"],
+              "owned_ids": [], "pod_evidence": {}, "ownership_ambiguous": False,
+              "journal_ok": True, "status": "REAPER_CLEANUP_CONFIRMED", "window": window,
+              "known_owned_cleanup_status": "KNOWN_OWNED_CLEANUP_CONFIRMED",
+              "reconciliation_window_status": "RECONCILIATION_COMPLETE"}
+    return local, reaper, start + horizon
+
+
+def test_combine_replays_structured_histories_and_full_independent_window(structured_reports):
+    local, reaper, now = structured_reports
+    original = deepcopy((local, reaper))
+    result = age.combine_operational_cleanup(local, reaper, now=now)
+    assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_CONFIRMED"
+    assert result["reconciliation_window_status"] == "RECONCILIATION_COMPLETE"
+    assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_CONFIRMED"
+    assert (local, reaper) == original
+
+
+def test_combine_refuses_trivial_confirmed_labels_without_facts():
+    local = {"run_id": "offline-run", "cleanup_status": "LOCAL_CLEANUP_CONFIRMED"}
+    reaper = {"run_id": "offline-run", "status": "REAPER_CLEANUP_CONFIRMED"}
+    with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
+        age.combine_operational_cleanup(local, reaper, now=EPOCH)
+
+
+@pytest.mark.parametrize("side,key", [("local", "manifest"), ("local", "manifest_sha256"),
+                                     ("local", "owned_ids"), ("local", "pod_evidence"),
+                                     ("local", "journal_ok"), ("local", "policy_version"),
+                                     ("local", "ownership_ambiguous"), ("local", "cleanup_status"),
+                                     ("reaper", "window"), ("reaper", "status"),
+                                     ("reaper", "pod_evidence"), ("reaper", "manifest")])
+def test_combine_refuses_missing_facts(structured_reports, side, key):
+    local, reaper, now = structured_reports
+    del (local if side == "local" else reaper)[key]
+    with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
+        age.combine_operational_cleanup(local, reaper, now=now)
+
+
+@pytest.mark.parametrize("tamper", ["manifest_digest", "manifest_binding", "cached_confidence", "no_history"])
+def test_combine_refuses_forged_or_unbound_evidence(structured_reports, tamper):
+    local, reaper, now = structured_reports
+    if tamper == "manifest_digest":
+        reaper["manifest_sha256"] = "0" * 64
+    elif tamper == "manifest_binding":
+        reaper["manifest"]["image"] = "registry.example/other@sha256:" + "b" * 64
+        reaper["manifest_sha256"] = age._sha(age._encode(reaper["manifest"]))
+    elif tamper == "cached_confidence":
+        local["pod_evidence"]["pod_1"]["cleanup_confidence"] = "UNRESOLVED"
+    else:
+        del local["pod_evidence"]["pod_1"]["history"]
+    with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
+        age.combine_operational_cleanup(local, reaper, now=now)
+
+
+@pytest.mark.parametrize("case", ["short_window", "stale_window", "newer_live", "reaper_only_live",
+                                  "journal_failure", "local_unresolved", "reaper_unresolved"])
+def test_combine_does_not_trust_confirmed_labels_over_current_facts(structured_reports, case):
+    local, reaper, now = structured_reports
+    if case == "short_window":
+        start = age._timestamp(reaper["manifest"]["cutoff_utc"])
+        reaper["window"] = age.policy.new_window("offline-short-window")
+        for offset in range(0, 21, 4):  # Six scans / 20 seconds is not 3600 seconds.
+            age.policy.observe_window(reaper["window"], age.policy.utc(start + offset),
+                                      100.0 + offset, complete=True, owned_seen=False,
+                                      cutoff=reaper["manifest"]["cutoff_utc"])
+        now = start + 20
+    elif case == "stale_window":
+        now += 61
+    elif case == "newer_live":
+        age.policy.append_pod(local["pod_evidence"]["pod_1"], "OBSERVE",
+                              age.policy.utc(now), status="RUNNING")
+    elif case == "reaper_only_live":
+        reaper["owned_ids"].append("pod_2")
+        reaper["pod_evidence"]["pod_2"] = age.policy.new_pod()
+        age.policy.append_pod(reaper["pod_evidence"]["pod_2"], "OBSERVE",
+                              reaper["manifest"]["cutoff_utc"], status="RUNNING")
+    elif case == "journal_failure":
+        local["journal_ok"] = False
+    elif case == "local_unresolved":
+        local["cleanup_status"] = "LOCAL_CLEANUP_UNRESOLVED"
+    else:
+        reaper["status"] = "REAPER_CLEANUP_UNRESOLVED"
+    result = age.combine_operational_cleanup(local, reaper, now=now)
+    assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_UNRESOLVED"
+    if case in ("short_window", "stale_window", "newer_live", "reaper_only_live"):
+        assert result["reconciliation_window_status"] == "RECONCILIATION_PENDING"
+    if case in ("newer_live", "reaper_only_live"):
+        assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
