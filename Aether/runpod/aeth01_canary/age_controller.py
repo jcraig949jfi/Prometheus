@@ -954,6 +954,8 @@ class _Lifecycle:
                    and not self.state["controller_failed"] and not self.journal_failed)
         manifest = reaper_manifest_document(self.plan)
         return deepcopy({"version": 3, "policy_version": 1,
+                "state_sha256": _sha(_encode(self.state)),
+                "generated_at_utc": policy.utc(self.clock.time()),
                 "manifest": manifest, "manifest_sha256": _sha(_encode(manifest)),
                 "owned_ids": self.state["owned_ids"],
                 "ownership_ambiguous": self.state["ownership_ambiguous"],
@@ -1090,11 +1092,41 @@ def _load_state(directory, plan, digest):
     return state
 
 
-def combine_operational_cleanup(local_outcome, reaper_report, *, now=None):
-    """Replay both sources and the independent horizon; labels alone are not proof."""
+def combine_operational_cleanup(local_outcome, reaper_report, *, run_dir=None, now=None):
+    """Seal against the authoritative original run directory, without provider I/O.
+
+    Run/recover hold this same lock for their entire provider lifecycle. A seal
+    is point-in-time evidence, not permission to reuse a report after recovery.
+    Copies/rollbacks of the authoritative directory are outside this protocol.
+    """
+    _require(run_dir is not None, "AUTHORITATIVE_RUN_DIR_REQUIRED")
     try:
-        return policy.aggregate(local_outcome, reaper_report, now=now)
-    except policy.EvidenceError:
+        with RunLock(run_dir):
+            plan, digest = _load_plan(run_dir)
+            state = _load_state(run_dir, plan, digest)
+            _require(state["phase"] == "DONE", "LOCAL_STATE_NOT_FINAL")
+            sealed_at = Clock().time() if now is None else now
+            seal_time = policy.utc(sealed_at)
+            result = policy.aggregate(local_outcome, reaper_report, now=sealed_at)
+            _require(local_outcome.get("state_sha256") == _sha(_encode(state)),
+                     "STALE_LOCAL_OUTCOME")
+            _require(policy.timestamp(local_outcome.get("generated_at_utc")) <= sealed_at,
+                     "INVALID_CLEANUP_EVIDENCE")
+            # Reconstruct from disk, not from the supplied hash or cached labels.
+            fresh = _Lifecycle(run_dir, plan, state, None, None, Clock()).outcome()
+            _require({k: v for k, v in local_outcome.items() if k != "generated_at_utc"}
+                     == {k: v for k, v in fresh.items() if k != "generated_at_utc"},
+                     "INVALID_CLEANUP_EVIDENCE")
+            result["authoritative_local_state"] = True
+            result["local_seal"] = {"version": 1, "run_id": plan["run_id"],
+                "state_sha256": fresh["state_sha256"], "sealed_at_utc": seal_time,
+                "local_report_sha256": _sha(_encode(local_outcome)),
+                "reaper_report_sha256": _sha(_encode(reaper_report))}
+            result["exit_code"] = (0 if result["operational_cleanup_status"] ==
+                                   "OPERATIONAL_CLEANUP_CONFIRMED" else 2)
+            atomic_write(Path(run_dir) / "cleanup_seal.json", _encode(result))
+            return result
+    except (policy.EvidenceError, KeyError, TypeError, ValueError, OSError):
         raise ControllerError("INVALID_CLEANUP_EVIDENCE") from None
 
 
@@ -1133,6 +1165,10 @@ def main(argv=None):
     launching.add_argument("--execute-paid-run", action="store_true")
     recovering = commands.add_parser("recover")
     recovering.add_argument("--run-dir", required=True)
+    combining = commands.add_parser("combine")
+    combining.add_argument("--run-dir", required=True)
+    combining.add_argument("--local-outcome", required=True)
+    combining.add_argument("--reaper-report", required=True)
     args = parser.parse_args(argv)
     previous_term = signal.signal(signal.SIGTERM, _interrupt)
     try:
@@ -1141,6 +1177,10 @@ def main(argv=None):
         elif args.command == "run":
             _require(args.execute_paid_run, "PAID_EXECUTION_FLAG_REQUIRED")
             outcome = run(args.run_dir, _decode(_read(args.approval)), execute_paid_run=True)
+        elif args.command == "combine":
+            outcome = combine_operational_cleanup(
+                _decode(_read(args.local_outcome, 64 * 1024 * 1024)),
+                _decode(_read(args.reaper_report, 64 * 1024 * 1024)), run_dir=args.run_dir)
         else:
             outcome = recover(args.run_dir)
     except (Exception, KeyboardInterrupt) as error:

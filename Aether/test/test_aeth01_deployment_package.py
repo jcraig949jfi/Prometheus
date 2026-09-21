@@ -92,3 +92,8 @@ def test_cleanup_operator_contract_matches_shared_policy_and_restart_requirement
                    "Repeated short", "CANNOT accumulate", "NOT that a scheduler is running"):
         assert phrase in text
     assert "Evidence accumulates across invocations" not in text
+    for phrase in ("LIST_AND_KNOWN_GET_V1", "GET for every known reaper ID",
+                   "post-window local seal", "run_dir=original_directory",
+                   "authoritative_local_state=False", "Charge-reconciliation completion",
+                   "forced-cleanup start/deadline", "cleanup_aeth01_oracle.py"):
+        assert phrase in text

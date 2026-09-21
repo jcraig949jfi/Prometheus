@@ -145,6 +145,35 @@ def assert_known_only(state):
     assert state["reconciliation_window_status"] == "RECONCILIATION_PENDING"
 
 
+def _seed_ack_confirmed(m, ids=("pod_1",)):
+    """Seed before cutoff; every LIST in the subsequent measured sweep is empty."""
+    provider = Provider()
+    for pid in ids:
+        provider._owned_pod(pid, m["run_name"], m["run_id"])
+    state, _ = _run_sweep(m, provider, rounds=3,
+                          clock=Clock(start=reaper._timestamp(m["cutoff_utc"]) - 30))
+    assert_known_only(state)
+    for rec in state["pod_evidence"].values():
+        assert rec["delete_result"] == "ACK_204"
+        assert rec["absence_confirmations"] == 2
+    provider.calls.clear()
+    provider.list_hook = lambda p: []
+    return state, provider
+
+
+def _assert_every_round_gets(calls, ids):
+    # Small trace oracle, independent of the shared evidence policy.
+    rounds = []
+    for call in calls:
+        if call == "LIST":
+            rounds.append([])
+        elif call[0] == "GET":
+            assert rounds, "GET without this round's LIST"
+            rounds[-1].append(call[1])
+    assert rounds and all(pids == list(ids) for pids in rounds)
+    return len(rounds)
+
+
 def test_sweep_confirms_via_positive_terminated_observation():
     m = manifest()
     provider = Provider()
@@ -565,7 +594,9 @@ def test_c4_owned_discovery_at_3500_restarts_even_when_terminated(status):
     provider.list_hook = lambda p: [deepcopy(p.pods["late"])] if clock.mono == 3500 else []
     state, _ = _run_sweep(m, provider, rounds=361, clock=clock)
     assert_known_only(state)
-    assert state["window"]["covered_seconds"] == 90
+    # TERMINATED remains GET-visible in this fixture: every positive interrupts.
+    assert state["window"]["covered_seconds"] == (90 if status == "RUNNING" else 0)
+    assert provider.calls.count(("GET", "late")) == 11
     assert state["owned_ids"] == ["late"]
 
 
@@ -833,7 +864,9 @@ def test_each_provider_result_is_durable_before_next_interaction(tmp_path, phase
             if phase != "OBSERVE" or rec["current_termination_observed"]:
                 raise SystemExit("offline crash after durable observation")
     with pytest.raises(SystemExit):
-        _run_sweep(m, provider, rounds=1, clock=clock, persist=checkpoint)
+        # With GET before DELETE, the first post-delete MISSING is next round.
+        _run_sweep(m, provider, rounds=2 if phase == "MISSING" else 1,
+                   clock=clock, persist=checkpoint)
     state = reaper.load_or_init_evidence(path, m, reaper._sha(reaper._encode(m)), now=clock.time())
     rec = state["pod_evidence"]["pod_1"]
     assert rec["history"][-1]["kind"] == phase
@@ -841,7 +874,8 @@ def test_each_provider_result_is_durable_before_next_interaction(tmp_path, phase
         assert provider.deleted == set()
     elif phase == "DELETE_RESULT":
         assert rec["delete_result"] == "ACK_204"
-        assert ("GET", "pod_1") not in provider.calls
+        # Binding is checked before DELETE, not after a potentially unsafe delete.
+        assert provider.calls.index(("GET", "pod_1")) < provider.calls.index(("DELETE", "pod_1"))
     elif phase == "OBSERVE":
         assert rec["current_termination_observed"]
 
@@ -874,10 +908,227 @@ def test_future_archived_window_cannot_carry_success_on_restart(tmp_path):
     assert report["window"]["covered_seconds"] == 0
 
 
+@pytest.mark.parametrize("marker", [None, "LIST_ONLY", ""])
+def test_old_inventory_only_snapshots_are_refused(tmp_path, marker):
+    m = manifest()
+    state, clock = _run_sweep(m, Provider(), rounds=1)
+    if marker is None:
+        del state["observation_policy"]
+    else:
+        state["observation_policy"] = marker
+    path = tmp_path / "old-evidence.json"
+    reaper.atomic_write(path, reaper._encode(state))
+    with pytest.raises(reaper.ReaperError):
+        reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+
+
 @pytest.mark.parametrize("raw", [b'{"version":2,"version":2}', b'{"number":NaN}', b'{"number":Infinity}'])
 def test_json_rejects_duplicate_keys_and_nonfinite_numbers(raw):
     with pytest.raises(reaper.ReaperError, match="INVALID_JSON"):
         reaper._decode(raw)
+
+
+def test_n1_empty_list_get_reappearance_at_1800_never_confirms_and_retries_delete():
+    m, clock = manifest(), Clock()
+    state, provider = _seed_ack_confirmed(m)
+    prefix = deepcopy(state["pod_evidence"]["pod_1"]["history"])
+    statuses, deleted_at = [], []
+    provider.get_hook = lambda p, pid: deepcopy(p.pods[pid]) if clock.mono >= 1800 else None
+
+    def delete(p, pid):
+        deleted_at.append(clock.mono)
+        return "ACK_204"
+    provider.delete_hook = delete
+    state, _ = _run_sweep(m, provider, state, rounds=61, poll_seconds=60, clock=clock,
+                          persist=lambda s: statuses.append(s["status"]))
+    assert "REAPER_CLEANUP_CONFIRMED" not in statuses
+    assert state["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
+    assert state["window"]["scan_count"] == 0
+    assert deleted_at == list(range(1800, 3601, 60))
+    assert _assert_every_round_gets(provider.calls, ("pod_1",)) == 61
+    rec = state["pod_evidence"]["pod_1"]
+    assert rec["history"][:len(prefix)] == prefix
+    assert rec["contradictory_live_reappearance"]
+    assert rec["absence_confirmations"] == 0
+
+
+@pytest.mark.parametrize("response", ["TERMINATED", "transport", "auth", "schema", "conflict"])
+@pytest.mark.parametrize("at", [1800, 3600])
+def test_n1_get_anomaly_interrupts_empty_list_window_without_transient_success(response, at):
+    m, clock = manifest(), Clock()
+    ids = ("one", "two")
+    state, provider = _seed_ack_confirmed(m, ids)
+    statuses = []
+
+    def get(p, pid):
+        if pid != "one" or clock.mono != at:
+            return None
+        if response == "transport":
+            raise TimeoutError("offline timeout")
+        if response == "auth":
+            raise PermissionError("offline denied")
+        if response == "schema":
+            error = RuntimeError("offline invalid schema")
+            error.category = "SCHEMA_INVALID"
+            raise error
+        if response == "conflict":
+            return dict(p.pods[pid], image="different-image")
+        return dict(p.pods[pid], status="TERMINATED")
+    provider.get_hook = get
+    state, _ = _run_sweep(m, provider, state, rounds=61, poll_seconds=60, clock=clock,
+                          persist=lambda s: statuses.append(s["status"]))
+    assert "REAPER_CLEANUP_CONFIRMED" not in statuses
+    assert state["window"]["covered_seconds"] < 1800
+    assert _assert_every_round_gets(provider.calls, ids) == 61
+    assert not any(call[0] == "DELETE" for call in provider.calls if isinstance(call, tuple))
+    groups = [state["window"]["samples"]] + [e["samples"] for e in state["window"]["history"]]
+    assert not any(s["at_utc"] == reaper._utc(EPOCH + 1200 + at) for g in groups for s in g)
+    if response == "TERMINATED":
+        assert_known_only(state)
+        assert state["pod_evidence"]["one"]["current_termination_observed"]
+    elif response == "conflict":
+        assert state["ownership_ambiguous"]
+    if at == 3600:
+        assert state["reconciled"] is False
+        assert state["window"]["scan_count"] == 0
+
+
+def test_n1_every_known_get_404_preserves_healthy_progress_but_adds_no_absence_witness():
+    m, clock = manifest(), Clock()
+    ids = ("one", "two")
+    state, provider = _seed_ack_confirmed(m, ids)
+    prefixes = {pid: len(state["pod_evidence"][pid]["history"]) for pid in ids}
+
+    def checkpoint(snapshot):
+        if snapshot["reconciled"]:
+            assert provider.calls[-len(ids):] == [("GET", pid) for pid in ids]
+            assert snapshot["window"]["latest_utc"] == reaper._utc(clock.time())
+        else:
+            assert snapshot["status"] != "REAPER_CLEANUP_CONFIRMED"
+    state, _ = _run_sweep(m, provider, state, rounds=61, poll_seconds=60,
+                          clock=clock, persist=checkpoint)
+    assert _assert_every_round_gets(provider.calls, ids) == 61
+    assert state["status"] == "REAPER_CLEANUP_CONFIRMED"
+    assert state["window"]["scan_count"] == 61
+    assert state["window"]["covered_seconds"] == 3600
+    for pid in ids:
+        rec = state["pod_evidence"][pid]
+        assert rec["absence_confirmations"] == 2 + 61
+        assert [e["kind"] for e in rec["history"][prefixes[pid]:]] == ["ABSENT_SCAN", "MISSING"] * 61
+
+
+def test_n1_get_404_with_failed_list_never_adds_absence():
+    m = manifest()
+    state, provider = _seed_ack_confirmed(m)
+    prefix = len(state["pod_evidence"]["pod_1"]["history"])
+    provider.list_hook = lambda p: (_ for _ in ()).throw(RuntimeError("offline list failure"))
+    state, _ = _run_sweep(m, provider, state, rounds=2)
+    rec = state["pod_evidence"]["pod_1"]
+    assert [e["kind"] for e in rec["history"][prefix:]] == ["SCAN_FAILED", "MISSING"] * 2
+    assert rec["absence_confirmations"] == 0
+    assert not state["reconciled"]
+    assert state["window"]["scan_count"] == 0
+    assert _assert_every_round_gets(provider.calls, ("pod_1",)) == 2
+
+
+def test_n1_crash_before_last_get_cannot_publish_horizon_sample(tmp_path):
+    m, clock = dict(manifest(), reconciliation_horizon_seconds=300), Clock()
+    ids = ("one", "two")
+    state, provider = _seed_ack_confirmed(m, ids)
+    path = tmp_path / "evidence.json"
+    statuses = []
+
+    def get(p, pid):
+        if clock.mono == 300 and pid == "two":
+            raise SystemExit("offline crash before final GET result")
+        return None
+
+    def checkpoint(snapshot):
+        statuses.append(snapshot["status"])
+        reaper.atomic_write(path, reaper._encode(snapshot))
+    provider.get_hook = get
+    with pytest.raises(SystemExit):
+        _run_sweep(m, provider, state, rounds=6, poll_seconds=60, clock=clock, persist=checkpoint)
+    assert "REAPER_CLEANUP_CONFIRMED" not in statuses
+    assert _assert_every_round_gets(provider.calls, ids) == 6
+    saved = reaper.load_or_init_evidence(path, m, state["manifest_sha256"], now=clock.time())
+    assert_known_only(saved)
+    assert saved["reconciled"] is False
+    assert saved["window"]["scan_count"] == 5
+    assert saved["window"]["covered_seconds"] == 240
+    assert saved["pod_evidence"]["one"]["history"][-1]["kind"] == "MISSING"
+    assert saved["pod_evidence"]["one"]["history"][-1]["at_utc"] == reaper._utc(clock.time())
+    assert saved["pod_evidence"]["two"]["history"][-1]["kind"] == "ABSENT_SCAN"
+    provider.get_hook = lambda p, pid: None
+    restarted, _ = _run_sweep(m, provider, saved, rounds=1, clock=clock)
+    assert_known_only(restarted)
+    assert restarted["window"]["covered_seconds"] == 0
+
+
+@pytest.mark.parametrize("changed", ["id", "name", "image", "env"])
+def test_n1_get_conflict_for_unconfirmed_known_id_prevents_delete(changed):
+    m, provider = manifest(), Provider()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"])
+    provider.delete_hook = lambda p, pid: "NOT_FOUND_404"
+    state, _ = _run_sweep(m, provider, rounds=1)
+    assert state["pod_evidence"]["pod_1"]["cleanup_confidence"] == "UNRESOLVED"
+    provider.calls.clear()
+    provider.list_hook = lambda p: []
+    provider.get_hook = lambda p, pid: dict(p.pods[pid], **{changed: {} if changed == "env" else "other"})
+    state, _ = _run_sweep(m, provider, state, rounds=3)
+    assert state["ownership_ambiguous"]
+    assert state["reconciled"] is False
+    assert ("DELETE", "pod_1") not in provider.calls
+    assert _assert_every_round_gets(provider.calls, ("pod_1",)) == 3
+
+
+@pytest.mark.parametrize("initial_status", ["RUNNING", "TERMINATED"])
+def test_n1_fresh_get_live_positive_is_deleted_in_same_round(initial_status):
+    m, provider, clock = manifest(), Provider(), Clock()
+    provider._owned_pod("pod_1", m["run_name"], m["run_id"], status=initial_status)
+    state, _ = _run_sweep(m, provider, rounds=1, clock=clock)
+    prefix = deepcopy(state["pod_evidence"]["pod_1"]["history"])
+    provider.calls.clear()
+    provider.list_hook = lambda p: []
+    provider.get_hook = lambda p, pid: dict(p.pods[pid], status="RUNNING")
+    provider.delete_hook = lambda p, pid: "ACK_204"
+    clock.sleep(10)
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock)
+    assert provider.calls == ["LIST", ("GET", "pod_1"), ("DELETE", "pod_1")]
+    rec = state["pod_evidence"]["pod_1"]
+    assert rec["history"][:len(prefix)] == prefix
+    assert rec["cleanup_confidence"] == "UNRESOLVED"
+    assert rec["absence_confirmations"] == 0
+    assert rec["contradictory_live_reappearance"]
+    assert rec["positive_termination_observed"] is (initial_status == "TERMINATED")
+    assert state["window"]["scan_count"] == 0
+
+
+@pytest.mark.parametrize("failure", ["clock", "disk"])
+def test_n1_get_only_live_positives_still_delete_all_ids_on_evidence_failure(failure):
+    m, clock = manifest(), Clock()
+    ids = ("one", "two")
+    state, provider = _seed_ack_confirmed(m, ids)
+    prefixes = {pid: deepcopy(state["pod_evidence"][pid]["history"]) for pid in ids}
+
+    def get(p, pid):
+        if failure == "clock":
+            clock.now = float("nan")
+        return deepcopy(p.pods[pid])
+
+    def checkpoint(snapshot):
+        if failure == "disk":
+            raise OSError("offline disk failure")
+    provider.get_hook = get
+    state, _ = _run_sweep(m, provider, state, rounds=1, clock=clock, persist=checkpoint)
+    assert _assert_every_round_gets(provider.calls, ids) == 1
+    assert [call for call in provider.calls if isinstance(call, tuple) and call[0] == "DELETE"] == [
+        ("DELETE", pid) for pid in ids]
+    assert state["journal_ok"] is False
+    assert state["status"] == "REAPER_CLEANUP_UNRESOLVED"
+    assert state["window"]["scan_count"] == 0
+    for pid in ids:
+        assert state["pod_evidence"][pid]["history"][:len(prefixes[pid])] == prefixes[pid]
 
 
 if __name__ == "__main__":

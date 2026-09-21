@@ -7,7 +7,7 @@ remains **$0**. The operator-stated $19.93 balance is not live-verified.
 ## Entry points and migration
 
 `age_controller.py` is the stdlib programmatic launch/recovery entry point.
-From this directory, `python age_controller.py --help` lists its three commands:
+From this directory, `python age_controller.py --help` lists its four commands:
 
 - `plan --config CONFIG --run-dir FRESH_DIRECTORY`: zero network and zero
   credential reads. Parent directory must exist. Writes nonsecret `plan.json`
@@ -22,6 +22,11 @@ From this directory, `python age_controller.py --help` lists its three commands:
 - `recover --run-dir DIRECTORY`: cleanup only, never POST; allowed even after
   approval expires. Requires the same durable plan/state directory. Recovery
   returns nonzero even after confirmed cleanup; it never upgrades science.
+- `combine --run-dir ORIGINAL_DIRECTORY --local-outcome LOCAL_JSON
+  --reaper-report REAPER_JSON`: no provider or credential access. After the
+  independent window, hold the controller's existing exclusive run lock,
+  reload authoritative durable state and refuse any stale local snapshot.
+  Atomically writes `cleanup_seal.json`; exit 0 only for operational confirmation.
 
 Run directories are private local operational records, not repository artifacts.
 Do not edit, duplicate, delete or reuse them. `state.json` retains owned IDs,
@@ -39,6 +44,9 @@ beside both the controller and the independent reaper, with `runpod_api.py`.
 It is not an on-pod image payload. Controller state schema 3 and reaper schema 2
 require replayable append-only histories; legacy states are explicitly refused,
 not promoted. No paid runs require legacy migration at this stage.
+Review 03 reaper evidence also requires `observation_policy=LIST_AND_KNOWN_GET_V1`;
+old LIST-only snapshots/reports are refused, not silently credited. Do not add
+that marker by hand to old evidence: generate a fresh dual-endpoint horizon.
 
 `cleanup_status` is `LOCAL_CLEANUP_CONFIRMED` or `LOCAL_CLEANUP_UNRESOLVED` --
 this controller's own bounded evidence ONLY. A pod's cleanup evidence
@@ -65,7 +73,7 @@ Three distinct propositions must not be collapsed:
 
 `LOCAL_CLEANUP_CONFIRMED` is only local cleanup. `reconciliation_required`
 stays `true` as a durable obligation the independent reaper also carries. Use
-`age_controller.combine_operational_cleanup(local_outcome, reaper_report)`
+`age_controller.combine_operational_cleanup(local_outcome, reaper_report, run_dir=original_directory)`
 (an operator/CI step run after the reaper's own reconciliation window) to
 merge this controller's outcome with `independent_reaper.py`'s
 `REAPER_CLEANUP_CONFIRMED`/`REAPER_CLEANUP_UNRESOLVED`/`REAPER_PENDING`
@@ -75,6 +83,26 @@ unions known IDs, and recomputes the horizon; CONFIRMED strings alone are refuse
 The window must start after the controller's last provider evidence and its
 latest sample must be <=60 seconds old at aggregation (never future-dated).
 Neither side nor their agreement proves that provider charges have stopped.
+
+Review 03 uses the **post-window local seal** contract (Option C). The local
+outcome contains `state_sha256` (canonical durable state) and `generated_at_utc`.
+The combiner verifies BOTH the hash and replay-derived report contents against
+the original run directory while holding `RunLock`, which launch and recovery
+hold for their entire provider lifecycle. New durable state B makes old report A
+unusable, even when A's own history looks clean. Missing/unavailable source,
+unfinished state, concurrent recovery, stale hash or failed seal write refuses.
+The seal binds the state, both input reports and sealing UTC; sealing performs
+no provider interactions. Later controller activity requires fresh aggregation
+and, if its evidence overlaps the window, a fresh independent horizon.
+
+Only the original, single authoritative run directory may be used; never copy
+or roll it back to resurrect an old report. B3 must restrict writers to the
+lock-obeying entry points and invoke aggregation on that authoritative host.
+While the host is unavailable the reaper can still delete, but operational
+aggregation must refuse. This is not a distributed authenticated store.
+Saved seals are point-in-time evidence, not reusable standing authorization.
+The pure `cleanup_evidence.aggregate()` evaluator returns
+`authoritative_local_state=False`; it is NOT the operational sealing workflow.
 
 ### Independent reaper (B3)
 
@@ -99,6 +127,16 @@ power, network session, and artifact proxy:
    10-second polling, at least 361 healthy scans are needed in the ideal case;
    allow bounded headroom for discovery/failure resets and escalate on exhaustion.
 
+Each qualifying round needs complete LIST **and GET for every known reaper ID**,
+including previously confirmed IDs. LIST discovers unknown duplicates; GET
+tries to falsify cleanup of known IDs. Empty LIST cannot substitute for GET.
+Any exact-owned GET positive (including TERMINATED) resets the empty window;
+live responses also demote confidence and enable same-round DELETE. GET
+transport/auth/schema failure makes the round non-qualifying; ambiguous GET
+404 is MISSING, never an added absence witness. No qualifying sample is
+published before all required GETs finish. Budget request latency so complete
+rounds remain within the 60-second maximum observation gap.
+
 Per-pod histories survive restart, but window credit does not. Repeated short
 cron jobs CANNOT accumulate a qualifying horizon. A fully successful empty scan
 starts a new window after failure, any owned discovery (even TERMINATED), a
@@ -120,6 +158,19 @@ credentials are usable, a separate host survives failure, or billing has stopped
 Deployment, controller-host-loss rehearsal, credential/alert/operator-fallback
 proof and provider charge reconciliation remain B3 operational admission gates.
 None is authorized or claimed completed by these offline tests.
+
+Timing terms are distinct: `cutoff_utc` / `independent_cutoff_deadline_utc` is
+the **forced-cleanup start/deadline**, not provider-enforced billing cessation.
+The **post-cleanup reconciliation horizon** runs at/after that time; normal
+confirmation is no earlier than cutoff + 3600 seconds, later after resets.
+**Charge-reconciliation completion** is a separate provider/accounting check.
+
+Before R1, the qualification oracle in
+`Aether/test/reference/cleanup_aeth01_oracle.py` independently checks endpoint
+traces and the authoritative current-state hash without importing shared
+production policy. Supply the complete known-ID union and actual endpoint
+trace; it checks necessary invariants, not ownership authentication or billing.
+An omitted probe/ID or stale source fails qualification, never counts as MISSING.
 
 See `independent_reaper.py`'s module docstring and
 `Aether/test/test_aeth01_independent_reaper.py` (including a host-offline

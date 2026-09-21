@@ -272,6 +272,7 @@ def new_evidence_state(manifest, manifest_digest):
              and re.fullmatch(r"[0-9a-f]{64}", manifest_digest), "INVALID_MANIFEST_DIGEST")
     _require(manifest_digest == _sha(_encode(manifest)), "EVIDENCE_MANIFEST_MISMATCH")
     return {"version": 2, "policy_version": POLICY_VERSION,
+            "observation_policy": policy.OBSERVATION_POLICY,
             "manifest": deepcopy(manifest), "run_id": manifest["run_id"],
             "manifest_sha256": manifest_digest, "journal_ok": True,
             "first_fired_at_utc": None, "last_fired_at_utc": None, "total_rounds_run": 0,
@@ -307,6 +308,8 @@ def _validate_evidence(state, manifest, manifest_digest, *, now=None):
         _require(type(state["version"]) is int and state["version"] == 2
                  and type(state["policy_version"]) is int
                  and state["policy_version"] == POLICY_VERSION, "INVALID_EVIDENCE_VERSION")
+        _require(state["observation_policy"] == policy.OBSERVATION_POLICY,
+                 "LEGACY_OBSERVATION_POLICY_UNSUPPORTED")
         _validate_manifest(state["manifest"])
         _require(state["run_id"] == manifest["run_id"]
                  and state["manifest_sha256"] == manifest_digest
@@ -349,7 +352,10 @@ def _validate_evidence(state, manifest, manifest_digest, *, now=None):
         # Freshness is a reporting concern; an otherwise valid old snapshot
         # can be loaded for cleanup, but every sweep discards its window credit.
         latest = state["window"]["latest_utc"]
-        _refresh_status(manifest, expected, _timestamp(latest) if latest else now)
+        # In-flight checkpoints can contain GET events newer than the last
+        # completed sample; those events are not future evidence at load time.
+        status_time = _timestamp(latest) if latest and state["reconciled"] else now
+        _refresh_status(manifest, expected, status_time)
         for key in ("status", "known_owned_cleanup_status", "reconciliation_window_status"):
             _require(state[key] == expected[key], "INVALID_EVIDENCE_STATUS")
     except (KeyError, TypeError, ValueError, policy.EvidenceError):
@@ -394,13 +400,19 @@ def _refresh_status(manifest, state, now):
 
 
 def sweep_once(manifest, state, provider, *, clock_time=None, monotonic=None, persist=None):
-    """Keep exact-owned positives even if a later inventory page fails."""
+    """Persist positives promptly; qualify only after LIST and every known GET."""
     clock_time = clock_time or _time.time
     monotonic = monotonic or _time.monotonic
     persist = persist or (lambda: None)
     seen = set()
     conflicts = set()
     live_seen = set()
+    round_ok = True
+
+    # Retain healthy window progress, but no in-flight checkpoint may claim
+    # reconciliation, even if the preceding round completed the horizon.
+    state["reconciled"] = False
+    persist()
 
     def event(pod_id, kind, **kwargs):
         try:
@@ -411,6 +423,8 @@ def sweep_once(manifest, state, provider, *, clock_time=None, monotonic=None, pe
             state["journal_ok"] = False
 
     def interrupt(reason):
+        nonlocal round_ok
+        round_ok = False
         state["reconciled"] = False
         try:
             at = _utc(clock_time())
@@ -444,23 +458,35 @@ def sweep_once(manifest, state, provider, *, clock_time=None, monotonic=None, pe
         provider.visit_pods(observe)
     except Exception:
         scan_ok = False
-    state["reconciled"] = scan_ok and not conflicts
+        interrupt("PROVIDER_FAILED")
     state["total_rounds_run"] += 1
     for pod_id in state["owned_ids"]:
         if not scan_ok:
             event(pod_id, "SCAN_FAILED")
         elif pod_id not in seen and pod_id not in conflicts:
             event(pod_id, "ABSENT_SCAN")
-    try:
-        policy.observe_window(state["window"], _utc(clock_time()), monotonic(),
-                              complete=scan_ok and not conflicts, owned_seen=bool(seen),
-                              cutoff=manifest["cutoff_utc"])
-    except Exception:
-        state["journal_ok"] = False
-        interrupt("CLOCK_INVALID")
     persist()
 
     for pod_id in list(state["owned_ids"]):
+        # A prior confirmation is a hypothesis to falsify, not a GET exemption.
+        # GET precedes DELETE so a conflicting binding cannot authorize deletion.
+        try:
+            pod = provider.get_pod(pod_id)
+        except Exception:
+            event(pod_id, "UNKNOWN")
+            interrupt("PROVIDER_FAILED")
+        else:
+            if pod is None:
+                event(pod_id, "MISSING")
+            elif _owned(pod, manifest) and pod.get("id") == pod_id:
+                observe(pod)
+            else:
+                conflicts.add(pod_id)
+                state["ownership_ambiguous"] = True
+                event(pod_id, "OWNERSHIP_CONFLICT")
+                interrupt("OWNERSHIP_CONFLICT")
+        persist()
+
         rec = state["pod_evidence"][pod_id]
         last_binding = next((entry["kind"] for entry in reversed(rec["history"])
                              if entry["kind"] in ("OBSERVE", "OWNERSHIP_CONFLICT")), None)
@@ -481,21 +507,19 @@ def sweep_once(manifest, state, provider, *, clock_time=None, monotonic=None, pe
             if result in ("HTTP_OTHER", "TRANSPORT_UNKNOWN"):
                 interrupt("PROVIDER_FAILED")
             persist()
-        try:
-            pod = provider.get_pod(pod_id)
-        except Exception:
-            event(pod_id, "UNKNOWN")
-            interrupt("PROVIDER_FAILED")
-        else:
-            if pod is None:
-                event(pod_id, "MISSING")
-            elif _owned(pod, manifest) and pod.get("id") == pod_id:
-                observe(pod)
-            else:
-                state["ownership_ambiguous"] = True
-                event(pod_id, "OWNERSHIP_CONFLICT")
-                interrupt("OWNERSHIP_CONFLICT")
-        persist()
+
+    # This is the only publication point for a qualifying sample. In particular,
+    # neither an early GET nor its durable checkpoint can complete the window.
+    complete = round_ok and state["journal_ok"] and not state["ownership_ambiguous"]
+    try:
+        policy.observe_window(state["window"], _utc(clock_time()), monotonic(),
+                              complete=complete, owned_seen=bool(seen),
+                              cutoff=manifest["cutoff_utc"])
+        state["reconciled"] = complete
+    except Exception:
+        state["journal_ok"] = False
+        interrupt("CLOCK_INVALID")
+    persist()
     return scan_ok
 
 

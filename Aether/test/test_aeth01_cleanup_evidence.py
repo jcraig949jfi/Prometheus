@@ -72,6 +72,7 @@ def reports(local_pods=None, reaper_pods=None, window=None):
              "pod_evidence": deepcopy(local_pods or {}), "journal_ok": True,
              "ownership_ambiguous": False, "cleanup_status": "LOCAL_CLEANUP_CONFIRMED"}
     reaper = {"policy_version": 1, "owned_ids": list(reaper_pods or {}),
+              "observation_policy": "LIST_AND_KNOWN_GET_V1",
               "pod_evidence": deepcopy(reaper_pods or {}), "journal_ok": True,
               "ownership_ambiguous": False, "status": "REAPER_CLEANUP_CONFIRMED",
               "window": healthy() if window is None else window}
@@ -592,3 +593,14 @@ def test_default_now_uses_current_time_and_invalid_now_is_rejected(monkeypatch):
     for now in (True, float("nan"), float("inf"), "3600"):
         with pytest.raises(evidence.EvidenceError):
             evidence.aggregate(*pair, now=now)
+
+
+@pytest.mark.parametrize("marker", [None, "LIST_ONLY", ""])
+def test_old_inventory_only_reports_cannot_be_promoted(marker):
+    local, reaper = reports()
+    if marker is None:
+        del reaper["observation_policy"]
+    else:
+        reaper["observation_policy"] = marker
+    with pytest.raises(evidence.EvidenceError):
+        combine(local, reaper)

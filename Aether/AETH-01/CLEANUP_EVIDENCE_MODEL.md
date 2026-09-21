@@ -130,3 +130,58 @@ absent->RUNNING; TERMINATED->absent->RUNNING->TERMINATED; unrelated/partial
 matches; hour-blind/50s burst; healthy 3600s sampling; t=1800 failure; t=3500
 owned discovery; partial pages retaining positives; permission loss; restarts
 after each evidence state; wall/monotonic jumps; forged/stale aggregate labels.
+
+## Review 03 amendment -- dual endpoints and authoritative local seal
+
+Specified against c6719c1be before the N1/N2 implementation. No physics,
+deployment, image build or paid canary is authorized by this amendment.
+
+N1: each qualifying sample requires complete LIST plus GET of EVERY known
+reaper-owned ID, including currently confirmed IDs. LIST discovers unknown
+duplicates; GET attempts to falsify cleanup of known IDs. An exact-owned
+GET positive (even TERMINATED) interrupts the empty window. A live response
+demotes current cleanup and re-enables DELETE in that round. Failed GET
+(transport/auth/schema) makes the round non-qualifying. GET 404 is MISSING,
+not an absence witness; only complete LIST adds absence evidence. A GET
+identity conflict is an ownership anomaly, never a deletion authorization.
+Do not publish a qualifying sample before ALL required GETs finish. Any
+failure later in the round must invalidate it, including at persistence/crash
+boundaries. The existing maximum-gap and restart rules remain in force.
+Reaper reports/states require observation_policy=LIST_AND_KNOWN_GET_V1;
+older LIST-only evidence is refused, never upgraded by adding a label.
+
+N2 chooses Option C: post-window, point-in-time sealing under RunLock. The
+operational combiner MUST receive the authoritative original run directory;
+copied/offline directories are not authoritative. It acquires the same OS
+lock held for the entire launch/recovery provider-interaction lifecycle,
+loads the current durable plan/state, verifies the supplied local report's
+canonical state SHA-256 and replay-derived contents, and evaluates the reaper
+report while still locked. Local reports include their state hash and UTC
+generation time. A later durable state B rejects report A even if A's own
+histories and the reaper window look clean. Lock contention, missing source,
+unfinished local state, hash/content mismatch or malformed evidence refuse.
+Sealing itself performs NO provider calls. The returned seal binds state,
+local report, reaper report and seal time; it is NOT a permanent certificate.
+Any later controller activity requires a fresh locked aggregation; evidence
+after window start forces a fresh horizon by the existing ordering rule.
+
+The pure policy evaluator has no access to authoritative storage and cannot
+establish report freshness. Its results are explicitly non-authoritative;
+only the locked controller workflow supplies an authoritative local seal.
+This is not a distributed authenticated store: B3 must preserve one original
+run directory, restrict writers to lock-obeying controller entry points, and
+invoke sealing there (or refuse while that authoritative host is unavailable).
+Hashes detect mismatch, not malicious rollback/copying by a trusted operator.
+
+Qualification adds an independent small test oracle, with no import of the
+shared policy module, checking observed endpoint traces, healthy duration,
+interruptions, all known IDs, later contradictions and controller ordering.
+Required adversaries: empty LIST with known GET becoming RUNNING at t=1800;
+GET TERMINATED/failure/404/conflict; current A then durable B plus stale A;
+concurrent recovery/sealing. These are software tests, not B3 operational proof.
+
+Operator timing: cutoff_utc means independent forced-cleanup start/deadline,
+not billing cessation. Confirmation is no earlier than cutoff plus a full
+post-cleanup reconciliation horizon; provider charge reconciliation is a
+separate completion event. HMAC arming and shared-policy agreement retain
+their previously declared provenance and common-mode limitations.

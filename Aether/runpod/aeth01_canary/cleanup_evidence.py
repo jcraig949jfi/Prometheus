@@ -18,6 +18,7 @@ import time
 
 
 POLICY_VERSION = 1
+OBSERVATION_POLICY = "LIST_AND_KNOWN_GET_V1"
 MAX_SCAN_GAP_SECONDS = 60
 CLOCK_TOLERANCE_SECONDS = 2
 MIN_WINDOW_SCANS = 6
@@ -360,7 +361,7 @@ def _manifest_digest(manifest):
 def _validate_report(report, side, now):
     required = {"policy_version", "manifest", "manifest_sha256", "run_id", "owned_ids",
                 "pod_evidence", "journal_ok", "ownership_ambiguous"}
-    required |= {"cleanup_status"} if side == "local" else {"status", "window"}
+    required |= {"cleanup_status"} if side == "local" else {"status", "window", "observation_policy"}
     _require(isinstance(report, dict) and required <= set(report), "INVALID_REPORT")
     _require(type(report["policy_version"]) is int and report["policy_version"] == POLICY_VERSION,
              "INVALID_REPORT")
@@ -378,6 +379,7 @@ def _validate_report(report, side, now):
         allowed = {"LOCAL_CLEANUP_CONFIRMED", "LOCAL_CLEANUP_UNRESOLVED", "UNRESOLVED"}
         status = report["cleanup_status"]
     else:
+        _require(report["observation_policy"] == OBSERVATION_POLICY, "INVALID_REPORT")
         allowed = {"REAPER_CLEANUP_CONFIRMED", "REAPER_CLEANUP_UNRESOLVED", "REAPER_PENDING",
                    "UNRESOLVED", "PENDING"}
         status = report["status"]
@@ -391,6 +393,8 @@ def aggregate(local, reaper, *, now=None):
     Side labels are returned for provenance, not accepted as proof. Every record
     from both sources must currently confirm (including shared IDs). A pod already
     deleted locally need not occur in the reaper's independently empty horizon.
+    This PURE evaluation cannot establish source freshness. Only the controller's
+    locked authoritative-directory combiner may issue a local evidence seal.
     """
     now = _number(time.time() if now is None else now)
     local_pods = _validate_report(local, "local", now)
@@ -429,6 +433,7 @@ def aggregate(local, reaper, *, now=None):
                    and local["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
                    and reaper["status"] == "REAPER_CLEANUP_CONFIRMED")
     return {"run_id": local["run_id"],
+            "authoritative_local_state": False,
             "known_owned_cleanup_status": "KNOWN_OWNED_CLEANUP_CONFIRMED" if known_ok else "KNOWN_OWNED_CLEANUP_UNRESOLVED",
             "reconciliation_window_status": "RECONCILIATION_COMPLETE" if window_ok else "RECONCILIATION_PENDING",
             "operational_cleanup_status": "OPERATIONAL_CLEANUP_CONFIRMED" if operational else "OPERATIONAL_CLEANUP_UNRESOLVED",

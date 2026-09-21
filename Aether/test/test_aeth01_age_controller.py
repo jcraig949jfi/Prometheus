@@ -1476,6 +1476,7 @@ def structured_reports(rig):
         age.policy.observe_window(window, age.policy.utc(start + offset), 100.0 + offset,
                                   complete=True, owned_seen=False, cutoff=manifest["cutoff_utc"])
     reaper = {"version": 2, "policy_version": 1, "manifest": manifest,
+              "observation_policy": "LIST_AND_KNOWN_GET_V1",
               "manifest_sha256": age._sha(age._encode(manifest)), "run_id": local["run_id"],
               "owned_ids": [], "pod_evidence": {}, "ownership_ambiguous": False,
               "journal_ok": True, "status": "REAPER_CLEANUP_CONFIRMED", "window": window,
@@ -1484,21 +1485,25 @@ def structured_reports(rig):
     return local, reaper, start + horizon
 
 
-def test_combine_replays_structured_histories_and_full_independent_window(structured_reports):
+def test_combine_replays_structured_histories_and_full_independent_window(structured_reports, rig):
     local, reaper, now = structured_reports
     original = deepcopy((local, reaper))
-    result = age.combine_operational_cleanup(local, reaper, now=now)
+    result = age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
     assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_CONFIRMED"
     assert result["reconciliation_window_status"] == "RECONCILIATION_COMPLETE"
     assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_CONFIRMED"
+    assert result["authoritative_local_state"] is True
+    assert result["local_seal"]["state_sha256"] == local["state_sha256"]
+    assert read_json(rig.directory / "cleanup_seal.json") == result
     assert (local, reaper) == original
 
 
-def test_combine_refuses_trivial_confirmed_labels_without_facts():
+def test_combine_refuses_trivial_confirmed_labels_without_facts(rig):
+    launch(rig)
     local = {"run_id": "offline-run", "cleanup_status": "LOCAL_CLEANUP_CONFIRMED"}
     reaper = {"run_id": "offline-run", "status": "REAPER_CLEANUP_CONFIRMED"}
     with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
-        age.combine_operational_cleanup(local, reaper, now=EPOCH)
+        age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=EPOCH)
 
 
 @pytest.mark.parametrize("side,key", [("local", "manifest"), ("local", "manifest_sha256"),
@@ -1507,15 +1512,15 @@ def test_combine_refuses_trivial_confirmed_labels_without_facts():
                                      ("local", "ownership_ambiguous"), ("local", "cleanup_status"),
                                      ("reaper", "window"), ("reaper", "status"),
                                      ("reaper", "pod_evidence"), ("reaper", "manifest")])
-def test_combine_refuses_missing_facts(structured_reports, side, key):
+def test_combine_refuses_missing_facts(structured_reports, rig, side, key):
     local, reaper, now = structured_reports
     del (local if side == "local" else reaper)[key]
     with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
-        age.combine_operational_cleanup(local, reaper, now=now)
+        age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
 
 
 @pytest.mark.parametrize("tamper", ["manifest_digest", "manifest_binding", "cached_confidence", "no_history"])
-def test_combine_refuses_forged_or_unbound_evidence(structured_reports, tamper):
+def test_combine_refuses_forged_or_unbound_evidence(structured_reports, rig, tamper):
     local, reaper, now = structured_reports
     if tamper == "manifest_digest":
         reaper["manifest_sha256"] = "0" * 64
@@ -1527,12 +1532,12 @@ def test_combine_refuses_forged_or_unbound_evidence(structured_reports, tamper):
     else:
         del local["pod_evidence"]["pod_1"]["history"]
     with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
-        age.combine_operational_cleanup(local, reaper, now=now)
+        age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
 
 
 @pytest.mark.parametrize("case", ["short_window", "stale_window", "newer_live", "reaper_only_live",
                                   "journal_failure", "local_unresolved", "reaper_unresolved"])
-def test_combine_does_not_trust_confirmed_labels_over_current_facts(structured_reports, case):
+def test_pure_evaluation_does_not_trust_labels_but_cannot_attest_authority(structured_reports, case):
     local, reaper, now = structured_reports
     if case == "short_window":
         start = age._timestamp(reaper["manifest"]["cutoff_utc"])
@@ -1558,9 +1563,103 @@ def test_combine_does_not_trust_confirmed_labels_over_current_facts(structured_r
         local["cleanup_status"] = "LOCAL_CLEANUP_UNRESOLVED"
     else:
         reaper["status"] = "REAPER_CLEANUP_UNRESOLVED"
-    result = age.combine_operational_cleanup(local, reaper, now=now)
+    result = age.policy.aggregate(local, reaper, now=now)
+    assert result["authoritative_local_state"] is False
     assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_UNRESOLVED"
     if case in ("short_window", "stale_window", "newer_live", "reaper_only_live"):
         assert result["reconciliation_window_status"] == "RECONCILIATION_PENDING"
     if case in ("newer_live", "reaper_only_live"):
         assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
+
+
+def test_n2_report_a_rejected_after_newer_durable_live_evidence_b(structured_reports, rig):
+    local_a, reaper, now = structured_reports
+    # The reaper's claimed window is already in progress when recovery sees B.
+    rig.clock.advance(age._timestamp(reaper["window"]["start_utc"]) + 1800 - rig.clock.time())
+    lifecycle = reload_lifecycle(rig)
+    lifecycle._observe_get("pod_1", dict(deepcopy(rig.provider.pods["pod_1"]), status="RUNNING"))
+    local_b = lifecycle.outcome()
+    assert local_b["state_sha256"] != local_a["state_sha256"]
+    assert read_json(rig.directory / "state.json")["pod_evidence"]["pod_1"]["last_status"] == "RUNNING"
+    with pytest.raises(age.ControllerError, match="STALE_LOCAL_OUTCOME"):
+        age.combine_operational_cleanup(local_a, reaper, run_dir=rig.directory, now=now)
+    assert not (rig.directory / "cleanup_seal.json").exists()
+    result = age.combine_operational_cleanup(local_b, reaper, run_dir=rig.directory, now=now)
+    assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_UNRESOLVED"
+    assert result["reconciliation_window_status"] == "RECONCILIATION_PENDING"
+    assert result["exit_code"] == 2
+    # Replacing only A's hash cannot hide its stale contents.
+    local_a["state_sha256"] = local_b["state_sha256"]
+    with pytest.raises(age.ControllerError, match="INVALID_CLEANUP_EVIDENCE"):
+        age.combine_operational_cleanup(local_a, reaper, run_dir=rig.directory, now=now)
+
+
+def test_n2_authoritative_source_is_required_and_cannot_be_offline(structured_reports, tmp_path):
+    local, reaper, now = structured_reports
+    with pytest.raises(age.ControllerError, match="AUTHORITATIVE_RUN_DIR_REQUIRED"):
+        age.combine_operational_cleanup(local, reaper, now=now)
+    with pytest.raises(age.ControllerError, match="RUN_LOCKED_OR_UNAVAILABLE"):
+        age.combine_operational_cleanup(local, reaper, run_dir=tmp_path / "offline", now=now)
+
+
+def test_n2_sealing_and_recovery_use_same_exclusive_lock(structured_reports, rig, monkeypatch):
+    local, reaper, now = structured_reports
+    before = list(rig.events)
+    with age.RunLock(rig.directory):
+        with pytest.raises(age.ControllerError, match="RUN_LOCKED_OR_UNAVAILABLE"):
+            age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
+    original = age.policy.aggregate
+    def while_locked(*args, **kwargs):
+        with pytest.raises(age.ControllerError, match="RUN_LOCKED_OR_UNAVAILABLE"):
+            age.recover(rig.directory, provider=rig.provider, clock=rig.clock)
+        return original(*args, **kwargs)
+    monkeypatch.setattr(age.policy, "aggregate", while_locked)
+    with patch.object(age.os, "environ", NoEnvironment()):
+        result = age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
+    assert result["authoritative_local_state"] is True
+    assert rig.events == before  # Seal has no provider or credential interactions.
+
+
+@pytest.mark.parametrize("mutation", ["missing_hash", "future_generation", "unfinished_state"])
+def test_n2_seal_fails_closed_on_invalid_source(structured_reports, rig, mutation):
+    local, reaper, now = structured_reports
+    if mutation == "missing_hash":
+        del local["state_sha256"]
+    elif mutation == "future_generation":
+        local["generated_at_utc"] = age.policy.utc(now + 1)
+    else:
+        state = read_json(rig.directory / "state.json")
+        state["phase"] = "CLEANUP"
+        age.atomic_write(rig.directory / "state.json", age._encode(state))
+    with pytest.raises(age.ControllerError):
+        age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
+    assert not (rig.directory / "cleanup_seal.json").exists()
+
+
+def test_n2_failed_seal_write_cannot_return_confirmation(structured_reports, rig, monkeypatch):
+    local, reaper, now = structured_reports
+    def failed_write(*args):
+        raise OSError("offline synthetic seal write failure")
+    monkeypatch.setattr(age, "atomic_write", failed_write)
+    with pytest.raises(age.ControllerError, match="INVALID_CLEANUP_EVIDENCE"):
+        age.combine_operational_cleanup(local, reaper, run_dir=rig.directory, now=now)
+
+
+def test_n2_cli_combines_only_against_current_durable_state(structured_reports, rig, monkeypatch, capsys):
+    local, reaper, now = structured_reports
+    paths = [rig.directory / "local-outcome.json", rig.directory / "reaper-report.json"]
+    for path, report in zip(paths, (local, reaper)):
+        age.atomic_write(path, age._encode(report))
+    monkeypatch.setattr(age.Clock, "time", staticmethod(lambda: now))
+    args = ["combine", "--run-dir", str(rig.directory), "--local-outcome", str(paths[0]),
+            "--reaper-report", str(paths[1])]
+    assert age.main(args) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["authoritative_local_state"] is True
+    assert result["local_seal"]["sealed_at_utc"] == age.policy.utc(now)
+    # Even benign newer durable state cannot silently reuse this old outcome.
+    state = read_json(rig.directory / "state.json")
+    state["controller_failed"] = True
+    age.atomic_write(rig.directory / "state.json", age._encode(state))
+    assert age.main(args) == 2
+    assert json.loads(capsys.readouterr().out)["reason"] == "STALE_LOCAL_OUTCOME"
