@@ -142,3 +142,12 @@ reported as an instrument question with the channel-hunt as the single
 proposed follow-up, and the seat still parks pending the operator.
 
 ## ADDENDA (dated, appended only)
+
+ADDENDUM 1 (2026-09-21, after the disposition; no rule changed). (a) GA
+seeds 1-3 reproduce the cycle-0 lineages exactly; the independent count
+is 7 new lineages + 3 re-evaluated (report s1). (b) W4/W13 shuffled
+controls are balanced on the regime but not on the SHOWN cue; a cue
+reflex scores 0.59 there (LEDGER). Criterion (ii) is therefore
+conservative; dispositions unchanged. (c) Two EXPLORATORY post-hoc
+analyses were run and are labelled: supp_selfloop (carrier = recurrent
+activation, keep never used) and the accretion re-reading (report s3).
