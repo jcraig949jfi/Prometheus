@@ -1,0 +1,61 @@
+{
+  "economics": {
+    "generations_per_lineage": 8,
+    "lineages_per_hour_single_core": 5577,
+    "lineages_timed": 10,
+    "seconds_for_64_lineages_single_core": 41.31,
+    "seconds_per_lineage_max": 1.0546,
+    "seconds_per_lineage_mean": 0.6454,
+    "seconds_per_lineage_min": 0.1012
+  },
+  "engine_sha256": "34c07210dbf6ea71f5309fc924a745f53cde79a4ad3e4d34ba46441c99e2d62d",
+  "eval_instances_per_family": 200,
+  "lineage_independence": {
+    "distinct_artifacts": 1,
+    "identical_to_base_image": 10,
+    "lineages_sampled": 10,
+    "reads": "distinct_artifacts well below lineages_sampled means the improver's operator set is too small for lineages to be independent units -- a C1 blocker, not a cosmetic issue",
+    "same_seed_reproduces_same_artifact": true
+  },
+  "python": "3.12.10",
+  "sensitivity": {
+    "machinery_lift_fresh": 1.0,
+    "memory_only_fresh": 0.0,
+    "memory_only_on_memorised": 1.0,
+    "positive_control_fresh": 1.0,
+    "reads": "machinery transfers to unseen instances; cached answers do not",
+    "scratch_fresh": 0.0,
+    "state_lift_fresh": 0.0
+  },
+  "starting_accuracy": {
+    "frozen_window": [
+      0.15,
+      0.7
+    ],
+    "inside_frozen_window": false,
+    "lift": 0.25,
+    "note": "outside the window is REPORTED, never tuned away",
+    "per_family": {
+      "arith": {
+        "base": 1.0,
+        "positive_control": 1.0
+      },
+      "numtheory": {
+        "base": 0.0,
+        "positive_control": 1.0
+      },
+      "sortkey": {
+        "base": 1.0,
+        "positive_control": 1.0
+      },
+      "strops": {
+        "base": 1.0,
+        "positive_control": 1.0
+      }
+    },
+    "uniform_mix_base": 0.75,
+    "uniform_mix_positive_control": 1.0
+  },
+  "tier": "2 (apparatus calibration) -- NOT a Campaign 1 result",
+  "written_utc": "2026-09-21T12:10:56Z"
+}
