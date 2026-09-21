@@ -38,10 +38,16 @@ def _status(value):
 
 
 class ProviderError(Exception):
-    """Only a numeric HTTP status escapes the transport; None means local failure."""
+    """Only a numeric HTTP status escapes the transport; None means local failure.
 
-    def __init__(self, status=None):
+    ``category`` is an optional, closed-vocabulary coarse hint distinguishing a
+    malformed/unexpected provider response shape (SCHEMA_INVALID) from a plain
+    transport/local failure. It carries no untrusted text.
+    """
+
+    def __init__(self, status=None, category=None):
         self.status = _status(status)
+        self.category = category if category in ("SCHEMA_INVALID",) else None
         message = "Provider request failed"
         if self.status is not None:
             message += " (HTTP %d)" % self.status
@@ -119,7 +125,7 @@ class _Client:
         return "%s()" % type(self).__name__
 
     def _request(self, url, method, expected, limit, data=None, missing=(),
-                 accept="application/json", deadline=None):
+                 accept="application/json", deadline=None, status_out=None):
         response = None
         payload = None
         status = None
@@ -163,6 +169,8 @@ class _Client:
         # Raise OUTSIDE the except block: no secret-bearing exception context.
         if not succeeded:
             raise ProviderError(status) from None
+        if status_out is not None:
+            status_out.append(status)
         return payload
 
 
@@ -187,14 +195,21 @@ def _json_object(payload):
     except Exception:
         pass
     if not isinstance(result, dict):
-        raise ProviderError() from None
+        raise ProviderError(category="SCHEMA_INVALID") from None
     return result
 
 
 def _pod(value):
     if not isinstance(value, dict):
-        raise ProviderError() from None
-    _pod_id(value.get("id"))
+        raise ProviderError(category="SCHEMA_INVALID") from None
+    valid_id = True
+    try:
+        _pod_id(value.get("id"))
+    except ProviderError:
+        valid_id = False
+    # Raise OUTSIDE the except block: no secret-bearing exception context.
+    if not valid_id:
+        raise ProviderError(category="SCHEMA_INVALID") from None
     return value
 
 
@@ -224,7 +239,7 @@ class RunPodAPI(_Client):
             return None
         pod = _pod(_json_object(payload))
         if pod["id"] != pod_id:
-            raise ProviderError() from None
+            raise ProviderError(category="SCHEMA_INVALID") from None
         return pod
 
     def list_pods(self):
@@ -258,14 +273,14 @@ class RunPodAPI(_Client):
             items = page.get("pods")
             pagination = page.get("pagination")
             if not isinstance(items, list) or not isinstance(pagination, dict):
-                raise ProviderError() from None
+                raise ProviderError(category="SCHEMA_INVALID") from None
             if "nextCursor" not in pagination or type(pagination.get("hasNextPage")) is not bool:
-                raise ProviderError() from None
+                raise ProviderError(category="SCHEMA_INVALID") from None
             cursor = pagination["nextCursor"]
             if cursor is not None and not isinstance(cursor, str):
-                raise ProviderError() from None
+                raise ProviderError(category="SCHEMA_INVALID") from None
             if len(pods) + len(items) > _POD_LIMIT:
-                raise ProviderError() from None
+                raise ProviderError(category="SCHEMA_INVALID") from None
             for item in items:
                 pod = _pod(item)
                 pods.append(pod)
@@ -275,7 +290,7 @@ class RunPodAPI(_Client):
             if not pagination["hasNextPage"]:
                 return pods
             if not cursor or cursor in seen:
-                raise ProviderError() from None
+                raise ProviderError(category="SCHEMA_INVALID") from None
             seen.add(cursor)
             query = None
             try:
@@ -289,8 +304,18 @@ class RunPodAPI(_Client):
         raise ProviderError() from None
 
     def terminate_pod(self, pod_id):
+        """Return "ACK_204" or "NOT_FOUND_404"; never collapse the two.
+
+        NOT_FOUND_404 means not found OR not accessible to the caller [W1];
+        it is NOT proof of termination. Any other outcome raises ProviderError,
+        with .status carrying the HTTP status (HTTP_OTHER) or None (transport
+        failure, no reliable status) -- the caller must classify accordingly
+        and must never invent a termination result from an exception.
+        """
+        status_out = []
         self._request(_API_URL + "/" + _pod_id(pod_id), "DELETE", 204, None,
-                      missing=(404,))
+                      missing=(404,), status_out=status_out)
+        return "ACK_204" if status_out[0] == 204 else "NOT_FOUND_404"
 
 
 class ArtifactClient(_Client):

@@ -217,7 +217,7 @@ class TransportTests(unittest.TestCase):
         with redirect_stdout(output), redirect_stderr(output):
             self.assertEqual(provider.create_pod(body), pod)
             self.assertEqual(provider.get_pod("pod_1"), pod)
-            self.assertIsNone(provider.terminate_pod("pod_1"))
+            self.assertEqual(provider.terminate_pod("pod_1"), "ACK_204")
         self.assertEqual(output.getvalue(), "")
         requests = [call[0] for call in opener.calls]
         self.assertEqual([r.get_method() for r in requests], ["POST", "GET", "DELETE"])
@@ -267,11 +267,11 @@ class TransportTests(unittest.TestCase):
 
     def test_404_get_and_delete_are_idempotent_but_not_create(self):
         for raised in (False, True):
-            for method in ("get_pod", "terminate_pod"):
+            for method, expected in (("get_pod", None), ("terminate_pod", "NOT_FOUND_404")):
                 response = Response(404, forbid_read=True)
                 outcome = HTTPError("https://api.runpod.io/v2/pods/p", 404, "offline", {}, response) if raised else response
                 provider = api.RunPodAPI(Opener(outcome))
-                self.assertIsNone(getattr(provider, method)("p"))
+                self.assertEqual(getattr(provider, method)("p"), expected)
                 self.assertEqual(response.read_sizes, [])
                 self.assertTrue(response.closed)
 
@@ -610,6 +610,36 @@ class TransportTests(unittest.TestCase):
                     self.assertEqual(len(handler.calls), 1)
                     self.assertEqual(handler.body.read_sizes, [])
                     self.assertTrue(handler.body.closed)
+
+    def test_delete_ack_and_not_found_are_never_collapsed(self):
+        # B1: DELETE outcomes must remain distinguishable to the controller.
+        ack = Response(204, forbid_read=True)
+        self.assertEqual(api.RunPodAPI(Opener(ack)).terminate_pod("p"), "ACK_204")
+        not_found = Response(404, forbid_read=True)
+        self.assertEqual(api.RunPodAPI(Opener(not_found)).terminate_pod("p"), "NOT_FOUND_404")
+        for status in (401, 403, 429, 500, 502, 503):
+            response = Response(status, forbid_read=True)
+            error = self.assert_error(status, lambda: api.RunPodAPI(Opener(response)).terminate_pod("p"))
+            self.assertIsNone(error.category)
+        transport_failure = Opener(URLError("offline"))
+        error = self.assert_error(None, lambda: api.RunPodAPI(transport_failure).terminate_pod("p"))
+        self.assertIsNone(error.category)
+
+    def test_schema_invalid_category_distinguishes_decode_from_transport(self):
+        # B4: coarsely distinguish a malformed provider response from a transport failure.
+        for payload in (b"not json", b"[]", b'{"id":"../p"}', b'{"id":false}'):
+            error = self.assert_error(None, lambda: api.RunPodAPI(
+                Opener(Response(payload=payload))).get_pod("p"))
+            self.assertEqual(error.category, "SCHEMA_INVALID")
+        error = self.assert_error(None, lambda: api.RunPodAPI(
+            Opener(URLError("offline"))).get_pod("p"))
+        self.assertIsNone(error.category)
+        error = self.assert_error(500, lambda: api.RunPodAPI(
+            Opener(Response(500, forbid_read=True))).get_pod("p"))
+        self.assertIsNone(error.category)
+        for value in (ENV["RUNPOD_API_KEY"], True, {}, -1, "OTHER_CATEGORY"):
+            self.assertIsNone(api.ProviderError(status=None, category=value).category)
+        self.assertEqual(api.ProviderError(category="SCHEMA_INVALID").category, "SCHEMA_INVALID")
 
     def test_malformed_transport_responses_fail_safely(self):
         for status in (None, "200", True, -1):
