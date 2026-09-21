@@ -1,0 +1,190 @@
+{
+  "B3_negative_discrimination": {
+    "family": "collatz_steps",
+    "note": "the basis has no branch primitive and no integer constants, so the 3n+1 transition is inexpressible; if this family had passed, the certificate would be suspect",
+    "rejected_as_expected": true
+  },
+  "basis_primitives": [
+    "add",
+    "fdiv",
+    "gcd",
+    "mod",
+    "mul",
+    "powr",
+    "sub"
+  ],
+  "candidates": [
+    {
+      "B1_basis_insufficiency": {
+        "pass": true,
+        "with_last": {
+          "charges": 316260,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        },
+        "without_last": {
+          "charges": 316260,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        }
+      },
+      "B2_m2_sufficiency": {
+        "charges": 4,
+        "mechanism": {
+          "body": "(acc + v)",
+          "final": "acc",
+          "init": "0"
+        },
+        "pass": true,
+        "validated_accuracy": 1.0
+      },
+      "B4_length_extrapolation": {
+        "accuracy_at_extrapolation_lengths": 1.0,
+        "accuracy_at_search_lengths": 1.0,
+        "accuracy_at_stress_length_200": 1.0,
+        "artifact_bytes": 1480,
+        "artifact_sha256": "2ecd3990ce27f3772c4c15ed49bf0ee7860caf18063c8fcc1296a80eb8316b95",
+        "pass": true,
+        "single_iteration_at_extrapolation": 0.0
+      },
+      "ELIGIBLE_TO_FREEZE": true,
+      "development_instances": 2,
+      "extrapolation_lengths": [
+        20,
+        60
+      ],
+      "family": "list_sum",
+      "query_parameter_outside_sequence": false,
+      "required_property": "variable-length accumulation",
+      "search_lengths": [
+        4,
+        9
+      ],
+      "stress_length": 200,
+      "surrogate_battery": {
+        "load_bearing": true,
+        "survivors": []
+      }
+    },
+    {
+      "B1_basis_insufficiency": {
+        "pass": true,
+        "with_last": {
+          "charges": 425334,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        },
+        "without_last": {
+          "charges": 425334,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        }
+      },
+      "B2_m2_sufficiency": {
+        "charges": 397,
+        "mechanism": {
+          "body": "(acc * v)",
+          "final": "(acc % last)",
+          "init": "1"
+        },
+        "pass": true,
+        "validated_accuracy": 1.0
+      },
+      "B4_length_extrapolation": {
+        "accuracy_at_extrapolation_lengths": 1.0,
+        "accuracy_at_search_lengths": 1.0,
+        "accuracy_at_stress_length_200": 1.0,
+        "artifact_bytes": 1503,
+        "artifact_sha256": "fbaf065ad50d7178c927fcbc0dd6d357f0af48f351f76d0e522cac20b97fd99c",
+        "pass": true,
+        "single_iteration_at_extrapolation": 0.0
+      },
+      "ELIGIBLE_TO_FREEZE": true,
+      "development_instances": 2,
+      "extrapolation_lengths": [
+        20,
+        60
+      ],
+      "family": "list_prod_mod",
+      "query_parameter_outside_sequence": true,
+      "required_property": "variable-length accumulation + a reusable intermediate representation (the running product) consumed by a final step that uses the query parameter",
+      "search_lengths": [
+        4,
+        9
+      ],
+      "stress_length": 200,
+      "surrogate_battery": {
+        "load_bearing": true,
+        "survivors": []
+      }
+    },
+    {
+      "B1_basis_insufficiency": {
+        "pass": true,
+        "with_last": {
+          "charges": 4907,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        },
+        "without_last": {
+          "charges": 6937,
+          "expression": null,
+          "found_on_dev": false,
+          "solves": false,
+          "validated_accuracy": null
+        }
+      },
+      "B2_m2_sufficiency": {
+        "charges": 60,
+        "mechanism": null,
+        "pass": false,
+        "validated_accuracy": null
+      },
+      "B4_length_extrapolation": {
+        "pass": null
+      },
+      "ELIGIBLE_TO_FREEZE": false,
+      "development_instances": 2,
+      "extrapolation_lengths": [
+        20,
+        60
+      ],
+      "family": "collatz_steps",
+      "query_parameter_outside_sequence": false,
+      "required_property": "iteration to convergence with data-dependent branching",
+      "search_lengths": [
+        4,
+        9
+      ],
+      "stress_length": 200,
+      "surrogate_battery": {
+        "load_bearing": null,
+        "survivors": []
+      }
+    }
+  ],
+  "eligible_families": [
+    "list_sum",
+    "list_prod_mod"
+  ],
+  "engine_sha256": "6df93c2a4f7c671287f7d3eb46fbe5943baeef9a9eb703ffe4d96ef38ba0dd93",
+  "grammar_hash": "713195e32926e538e2cebb9831359782854e20f29c227c3fbdd2f1f3f6849d16",
+  "grammar_version": "v2-size-indexed-symmetric",
+  "mechanism_grammar": "M2 fold: acc = INIT; for v in vals: acc = E(acc, v); return F(acc[, last])  -- `last` exposed ONLY for query-parameter families",
+  "status": "CERTIFICATE ONLY -- no evolutionary search was run",
+  "thresholds": {
+    "fails": 0.1,
+    "solves": 0.99
+  },
+  "written_utc": "2026-09-21T18:21:01Z"
+}

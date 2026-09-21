@@ -238,3 +238,32 @@ Practical readings:
 STATUS: the isolation is real but CHEAP -- one apparatus, a code worker,
 a perfect oracle. It shows the second factor can be zero on its own. It
 does not establish the relative size of the two factors anywhere else.
+
+
+## T10. Structural novelty is basis-relative (PROMOTED TO INVARIANT)
+
+This is no longer a working theory. It is INVARIANT 1 in METHODOLOGY.md,
+promoted by operator ruling on 2026-09-21, and it binds this seat's own
+reporting as well as its assessment of others':
+
+  A discovered mechanism cannot be credited as load-bearing when an
+  allowed primitive implements the same input-output transformation
+  within the surrogate budget.
+
+Origin: the local engine's grammar had `gcd` as a primitive. A
+lineage-discoverable helper implementing Euclid's algorithm -- a real
+bounded loop, searched for and not handed -- solves the numtheory class at
+1.000 and is defeated by the single surrogate `gcd(x, y)`. Every class in
+that distribution sat one primitive application from solved, so no
+structural mechanism could be credited at any lineage count under any
+entropy.
+
+The sharp form: a mechanism can be CAUSALLY REAL and still
+COMPUTATIONALLY DECORATIVE relative to its substrate. This is the general
+falsifier the library needed for scaffolding claims, recursive tool-use
+claims, agent architectures and learned modularity -- and it is why
+T1 ("the harness is where the leverage lives") needs a companion warning:
+harness complexity is not evidence of harness contribution.
+
+See METHODOLOGY.md for how to apply it, and for INVARIANT 2, the
+basis-separation certificate that must precede any search.
