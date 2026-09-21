@@ -42,6 +42,29 @@ MARKER_DIR = Path(tempfile.gettempdir()) / "aphrodite_engine_markers"
 LOADER_PATH = "engine.Recipient.load/v1"     # the ONE loader path every arm uses
 
 
+FROZEN_GENERATION = 8            # the positional extraction point
+
+# ---------------------------------------------------------------- entropy domains
+# Frozen derivation rule, AMENDMENT_3_2026-09-21.md section 1. Development and
+# search entropy are derived from a preregistered lineage identifier. Tribunal
+# entropy is drawn from a DISJOINT domain that contains no lineage identifier,
+# so no lineage can influence or predict what will judge it.
+def _h64(domain: str) -> int:
+    return int(hashlib.sha256(domain.encode()).hexdigest()[:16], 16)
+
+
+def dev_entropy(lineage_id: str, generation: int) -> int:
+    return _h64("APHRODITE/ENGINE/DEV/v1/%s/%d" % (lineage_id, generation))
+
+
+def search_entropy(lineage_id: str) -> int:
+    return _h64("APHRODITE/ENGINE/SEARCH/v1/%s" % lineage_id)
+
+
+def tribunal_entropy(capability_class: str, index: int) -> int:
+    return _h64("APHRODITE/ENGINE/TRIBUNAL/v1/%s/%d" % (capability_class, index))
+
+
 def source_hash() -> str:
     """sha256 of this engine's own source, so a receipt names the engine it came from."""
     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
@@ -226,39 +249,42 @@ VALUE_CEILING = 10 ** 18          # candidates producing larger values are dropp
 MAX_SYNTH_CANDIDATES = 40000      # hard cap per synthesis attempt
 
 
-def _synthesise(examples: List[Dict], escrow: Escrow, cap: int) -> Optional[str]:
-    """Search for an expression over PRIMITIVES reproducing every example.
+def _compose(vectors: List[List[int]], golds: List[str], escrow: Escrow, cap: int,
+             extra: Optional[List[tuple]] = None,
+             rng: Optional[random.Random] = None) -> Optional[str]:
+    """Bottom-up enumerative composition with observational-equivalence pruning.
 
-    `examples` are development instances ONLY. The evaluator's held-out
-    instances are never visible here. Returns Python source for the
-    expression, or None if nothing was found within `cap` candidates or the
-    escrow's remaining budget -- whichever binds first.
+    Two combination rounds, so the deepest expression constructible is
+    op(depth2, depth2). `extra` supplies additional TERMINALS -- this is how a
+    discovered helper becomes an intermediate representation, and it is what
+    makes add(h, fdiv(mul(a,b), h)) reachable when the helper-free form of the
+    same program is depth 4 and is not.
     """
-    vectors = []
-    for t in examples:
-        nums = [int(x) for x in re.findall(r"-?\d+", t["prompt"])]
-        if len(nums) < TERMINALS:
-            return None
-        vectors.append(nums)
-    golds = [t["gold"] for t in examples]
-
     def matches(vals):
         return all(str(v) == g for v, g in zip(vals, golds))
 
-    pool = []                     # (source, value-vector)
-    seen = set()
-    for i in range(TERMINALS):
-        vals = tuple(v[i] for v in vectors)
-        pool.append(("nums[%d]" % i, vals))
+    pool, seen = [], set()
+    terminals = [("nums[%d]" % i, tuple(v[i] for v in vectors)) for i in range(TERMINALS)]
+    terminals += list(extra or [])
+    if rng is not None:
+        rng.shuffle(terminals)
+    for src, vals in terminals:
+        if vals in seen:
+            continue
         seen.add(vals)
+        pool.append((src, vals))
         if matches(vals):
-            return "nums[%d]" % i
+            return src
+
+    ops = list(PRIMITIVES.items())
+    if rng is not None:
+        rng.shuffle(ops)
 
     spent = 0
     frontier = list(pool)
     for _ in range(2):            # depth 2 then depth 3
         new = []
-        for name, (fn, tmpl) in PRIMITIVES.items():
+        for _name, (fn, tmpl) in ops:
             for lsrc, lvals in frontier:
                 for rsrc, rvals in pool:
                     if spent >= cap or escrow.remaining() <= 0:
@@ -283,12 +309,267 @@ def _synthesise(examples: List[Dict], escrow: Escrow, cap: int) -> Optional[str]
     return None
 
 
+def _synthesise(examples: List[Dict], escrow: Escrow, cap: int,
+                rng: Optional[random.Random] = None) -> Optional[str]:
+    """Composition-only search (v1 behaviour, unchanged in substance).
+
+    `examples` are development instances ONLY; held-out and tribunal
+    instances are never visible here.
+    """
+    vectors = []
+    for t in examples:
+        nums = [int(x) for x in re.findall(r"-?\d+", t["prompt"])]
+        if len(nums) < TERMINALS:
+            return None
+        vectors.append(nums)
+    return _compose(vectors, [t["gold"] for t in examples], escrow, cap, rng=rng)
+
+
+# ---------------------------------------------------------------- Tier-2 structure
+# AMENDMENT 3 section 5. A helper with a BOUNDED loop whose update expressions
+# are SEARCHED, not supplied: Euclid is E1 = y, E2 = (x % y), and is therefore
+# discoverable rather than handed. Memoization and multi-subprocedure
+# decomposition are permitted by the ruling but NOT implemented this slice.
+LOOP_BOUND = 64
+HELPER_CANDIDATE_CAP = 40         # distinct helpers examined per attempt
+PER_HELPER_CANDIDATE_CAP = 120000
+STRUCTURAL_ATTEMPTS_PER_LINEAGE = 2
+
+
+def helper_solver_source(family: str, e1: str, e2: str, answer: str) -> str:
+    """Bounded helper + the answer expression that calls it."""
+    return (
+        "\ndef _h_%s(x, y):\n"
+        "    steps = 0\n"
+        "    while y != 0 and steps < %d:\n"
+        "        x, y = %s, %s\n"
+        "        steps = steps + 1\n"
+        "    return x\n"
+        "def _disc_%s(p):\n"
+        "    nums = [int(v) for v in re.findall(r\"-?\\d+\", p)]\n"
+        "    h = _h_%s\n"
+        "    return str(%s)\n"
+        "DISCOVERED[\"%s\"] = _disc_%s\n"
+        % (family, LOOP_BOUND, e1, e2, family, family, answer, family, family))
+
+
+def shortcut_solver_source() -> str:
+    """The v1 numtheory fossil: a*b + 1, preserved for tribunal fixtures."""
+    return _discovered_solver_source(
+        "numtheory", "((nums[0] * nums[1]) + (nums[0] // nums[0]))")
+
+
+def structural_change(artifact: "Artifact") -> bool:
+    """C6: a helper with bounded control flow that the answer path calls.
+
+    A single-expression dispatch does not qualify however accurate it is.
+    """
+    src = artifact.modules().get("search", "")
+    for m in re.finditer(r"def (_h_\w+)\(x, y\):(.*?)\n(?=def |DISCOVERED|\Z)", src, re.S):
+        name, body = m.group(1), m.group(2)
+        if "while " not in body:
+            continue
+        fam = name[len("_h_"):]
+        caller = re.search(r"def _disc_%s\(p\):(.*?)\nDISCOVERED" % re.escape(fam), src, re.S)
+        if caller and ("h(" in caller.group(1) or name + "(" in caller.group(1)):
+            return True
+    return False
+
+
+def _helper_values(e1: str, e2: str, pairs: List[tuple]) -> Optional[tuple]:
+    """Execute the bounded loop directly (not via exec) during the search."""
+    out = []
+    for a, b in pairs:
+        x, y, steps = a, b, 0
+        try:
+            while y != 0 and steps < LOOP_BOUND:
+                x, y = (eval(e1, {"__builtins__": {}, "x": x, "y": y, "math": math}),
+                        eval(e2, {"__builtins__": {}, "x": x, "y": y, "math": math}))
+                steps += 1
+                if abs(x) > VALUE_CEILING or abs(y) > VALUE_CEILING:
+                    return None
+        except Exception:      # noqa: BLE001 -- a bad helper is simply not a helper
+            return None
+        out.append(x)
+    return tuple(out)
+
+
+def _structural_search(examples: List[Dict], escrow: Escrow, cap: int,
+                       rng: random.Random) -> Optional[tuple]:
+    """Search helper(E1, E2) + an answer expression that uses it.
+
+    Returns (e1, e2, answer_source) or None. Ordering is randomised from the
+    lineage's search entropy: a permitted stochastic search decision, so
+    different lineages examine different helpers first under the same budget.
+    """
+    vectors, golds = [], []
+    for t in examples:
+        nums = [int(v) for v in re.findall(r"-?\d+", t["prompt"])]
+        if len(nums) < TERMINALS:
+            return None
+        vectors.append(nums)
+        golds.append(t["gold"])
+    pairs = [(v[0], v[1]) for v in vectors]
+
+    # candidate update expressions over {x, y}, depth <= 2
+    atoms = ["x", "y"]
+    exprs = list(atoms)
+    for _n, (_fn, tmpl) in PRIMITIVES.items():
+        for a in atoms:
+            for b in atoms:
+                exprs.append(tmpl.format(a, b))
+    rng.shuffle(exprs)
+
+    helpers, seen_vec = [], set()
+    for e1 in exprs:
+        for e2 in exprs:
+            if len(helpers) >= HELPER_CANDIDATE_CAP:
+                break
+            vals = _helper_values(e1, e2, pairs)
+            if vals is None or vals in seen_vec:
+                continue
+            if all(v == vals[0] for v in vals):          # constant: computes nothing
+                continue
+            if any(vals == tuple(v[i] for v in vectors) for i in range(TERMINALS)):
+                continue                                  # identical to an input
+            seen_vec.add(vals)
+            helpers.append((e1, e2, vals))
+        if len(helpers) >= HELPER_CANDIDATE_CAP:
+            break
+
+    spent = 0
+    for e1, e2, hvals in helpers:
+        if spent >= cap or escrow.remaining() <= 0:
+            return None
+        sub = min(PER_HELPER_CANDIDATE_CAP, cap - spent)
+        expr = _compose(vectors, golds, escrow, sub,
+                        extra=[("h(nums[0], nums[1])", hvals)], rng=rng)
+        spent += sub
+        if expr is not None and "h(" in expr:
+            return e1, e2, expr
+    return None
+
+
 def _discovered_solver_source(family: str, expr: str) -> str:
     return (
         "\ndef _disc_%s(p):\n"
         "    nums = [int(x) for x in re.findall(r\"-?\\d+\", p)]\n"
         "    return str(%s)\n"
         "DISCOVERED[\"%s\"] = _disc_%s\n" % (family, expr, family, family))
+
+
+# ---------------------------------------------------------------- hostile tribunal
+def _counterexamples(cls: str, n: int) -> List[Dict]:
+    """Regions where a KNOWN shortcut fails. AMENDMENT 3 section 4."""
+    out = []
+    for i in range(n):
+        rng = random.Random(tribunal_entropy(cls, 10_000 + i))
+        if cls == "numtheory":
+            mode = i % 4
+            if mode == 0:                                   # shared prime factor
+                k = rng.choice([2, 3, 5, 7, 11, 13])
+                a, b = k * rng.randint(2, 60), k * rng.randint(2, 60)
+            elif mode == 1:                                 # one divides the other
+                a = rng.randint(2, 60)
+                b = a * rng.randint(2, 12)
+            elif mode == 2:                                 # equal numbers
+                a = b = rng.randint(2, 500)
+            else:                                           # common multiple
+                k = rng.randint(2, 20)
+                a, b = k * rng.randint(2, 30), k * rng.randint(2, 30)
+            g = math.gcd(a, b)
+            out.append({"family": cls, "prompt": "Give gcd(%d, %d) + lcm(%d, %d)." % (a, b, a, b),
+                        "gold": str(g + a * b // g), "key": "ce-%s-%d" % (cls, i)})
+        else:
+            mode = i % 4
+            if mode == 0:
+                a, b, m = rng.randint(2, 99), rng.randint(2, 12), 1
+            elif mode == 1:
+                m = rng.randint(2, 50)
+                a, b = m * rng.randint(1, 20), rng.randint(2, 12)
+            elif mode == 2:
+                m = rng.randint(2, 500)
+                a, b = m, rng.randint(2, 12)
+            else:
+                m = rng.randint(2, 40)
+                a, b = rng.randint(m + 1, m + 500), rng.randint(2, 6)
+            out.append({"family": cls, "prompt": "Give (%d ** %d) mod %d." % (a, b, m),
+                        "gold": str(pow(a, b) % m), "key": "ce-%s-%d" % (cls, i)})
+    return out
+
+
+class Tribunal:
+    """Independently seeded, constructed ONLY after a generation-8 freeze.
+
+    No tribunal information flows back to the lineage that produced the
+    artifact: there is no repair loop, and a failing artifact is recorded as
+    failing.
+    """
+
+    def __init__(self, frozen_hash: str):
+        self.frozen_hash = frozen_hash
+
+    @classmethod
+    def after_freeze(cls, artifact: Optional["Artifact"]) -> "Tribunal":
+        if artifact is None:
+            raise BoundaryViolation("tribunal requested before any artifact was frozen")
+        if artifact.generation != FROZEN_GENERATION:
+            raise ValueError("tribunal requires the frozen generation %d, got %s"
+                             % (FROZEN_GENERATION, artifact.generation))
+        return cls(artifact.sha256)
+
+    def _instances(self, cls_: str, n: int) -> List[Dict]:
+        out = []
+        for i in range(n):
+            rng = random.Random(tribunal_entropy(cls_, i))
+            p, g = _task(cls_, rng)
+            out.append({"family": cls_, "prompt": p, "gold": g, "key": "tb-%s-%d" % (cls_, i)})
+        return out
+
+    def _metamorphic(self, artifact: "Artifact", cls_: str, n: int = 40) -> bool:
+        """Oracle-free consistency. A shortcut that happens to fit instances
+        still has to obey the relation the capability itself obeys."""
+        r = Recipient.fresh(seed=4242)
+        r.load(artifact)
+        for i in range(n):
+            rng = random.Random(tribunal_entropy(cls_, 20_000 + i))
+            if cls_ == "numtheory":
+                a, b, k = rng.randint(2, 400), rng.randint(2, 400), rng.randint(2, 9)
+                f = lambda x, y: r.answer("Give gcd(%d, %d) + lcm(%d, %d)." % (x, y, x, y), cls_)
+                base, swapped, scaled = f(a, b), f(b, a), f(k * a, k * b)
+                if base is None or swapped is None or scaled is None:
+                    return False
+                try:
+                    if base != swapped or int(scaled) != k * int(base):
+                        return False
+                except (TypeError, ValueError):
+                    return False
+            else:
+                m = rng.randint(2, 200)
+                a, b = rng.randint(m + 1, m + 900), rng.randint(3, 10)
+                g = lambda x, y, mm: r.answer("Give (%d ** %d) mod %d." % (x, y, mm), cls_)
+                full, reduced, prev = g(a, b, m), g(a % m, b, m), g(a, b - 1, m)
+                if full is None or reduced is None or prev is None:
+                    return False
+                try:
+                    if full != reduced or int(full) != (int(prev) * a) % m:
+                        return False
+                except (TypeError, ValueError):
+                    return False
+        return True
+
+    def score(self, artifact: "Artifact", cls_: str, n: int = 200) -> Dict:
+        held = self._instances(cls_, n)
+        ce = _counterexamples(cls_, n // 2)
+        r1 = Recipient.fresh(seed=4242)
+        r1.load(artifact)
+        r2 = Recipient.fresh(seed=4242)
+        r2.load(artifact)
+        return {
+            "held_out_accuracy": r1.run_tasks(held, Escrow(10 ** 7))["accuracy"],
+            "counterexample_accuracy": r2.run_tasks(ce, Escrow(10 ** 7))["accuracy"],
+            "metamorphic_pass": self._metamorphic(artifact, cls_),
+        }
 
 
 def memorised_state(seen: List[Dict]) -> Dict[str, str]:
@@ -391,6 +672,18 @@ class Recipient:
         ev = self._ns["evidence"]["summarise"](results)
         return {"evaluated": len(results), "accuracy": ev["accuracy"], "escrow_exhausted": exhausted}
 
+    def answer(self, prompt: str, family: str) -> Optional[str]:
+        """Raw answer, used by the tribunal's oracle-free metamorphic checks."""
+        if not self._loaded:
+            raise RuntimeError("recipient has no modules loaded")
+        fn = self._ns["search"]["solvers"]().get(family)
+        if fn is None:
+            return None
+        try:
+            return fn(prompt)
+        except Exception:          # noqa: BLE001 -- an evolved solver may simply be wrong
+            return None
+
     # -- reset integrity fixtures
     def plant_markers(self) -> None:
         (self.workspace / "marker.tmp").write_text("forbidden", encoding="utf-8")
@@ -423,10 +716,12 @@ class _State(dict):
 class Lineage:
     seed: int
     base: Dict[str, str]
+    lineage_id: Optional[str] = None   # preregistered; drives independent entropy
     generation: int = 0
     modules: Dict[str, str] = field(default_factory=dict)
     state: _State = field(default_factory=_State)
     history: List[Dict] = field(default_factory=list)
+    _structural_attempts: int = 0
 
     def __post_init__(self):
         self.modules = dict(self.base)
@@ -461,20 +756,54 @@ class Lineage:
             cap = min(MAX_SYNTH_CANDIDATES, max(0, escrow.remaining() - reserve))
             if cap <= 0:
                 return None
-            expr = _synthesise(examples, escrow, cap)
-            if expr is None:
-                continue
-            v = dict(self.modules)
-            v["search"] = v["search"] + _discovered_solver_source(fam, expr)
-            return v
+            rng = self._search_rng()
+            # Which mode is attempted first is a stochastic search decision
+            # driven by the lineage's own search entropy (AMENDMENT 3 s1), so
+            # independent lineages explore the space in different orders.
+            modes = ["compose", "structural"]
+            if rng.random() < 0.5:
+                modes.reverse()
+            for mode in modes:
+                # Recomputed per mode: a failed search must not let the next
+                # mode respend a budget that is already gone.
+                cap = min(MAX_SYNTH_CANDIDATES, max(0, escrow.remaining() - reserve))
+                if cap <= 0:
+                    return None
+                if mode == "compose":
+                    expr = _synthesise(examples, escrow, cap, rng=rng)
+                    if expr is not None:
+                        v = dict(self.modules)
+                        v["search"] = v["search"] + _discovered_solver_source(fam, expr)
+                        return v
+                elif self._structural_attempts < STRUCTURAL_ATTEMPTS_PER_LINEAGE:
+                    self._structural_attempts += 1
+                    # `cap` is already reserve-aware: the structural search may
+                    # never spend the budget the dev evaluations still owe.
+                    got = _structural_search(examples, escrow, cap, rng)
+                    if got is not None:
+                        e1, e2, ans = got
+                        v = dict(self.modules)
+                        v["search"] = v["search"] + helper_solver_source(fam, e1, e2, ans)
+                        return v
         return None
+
+    def _search_rng(self) -> random.Random:
+        if self.lineage_id is not None:
+            return random.Random(search_entropy(self.lineage_id) + self.generation)
+        return random.Random(self.seed + self.generation)
 
     def evolve(self, generations: int, escrow: Escrow, dev_seed: int = 7) -> None:
         rng = random.Random(self.seed)
         for _ in range(generations):
+            # RULING 1: an independently launched lineage draws its development
+            # instances from its own preregistered entropy, so lineages are
+            # independent experimental units rather than replays of one
+            # trajectory. Lineages without an id keep the v1 behaviour.
+            gen_seed = (dev_entropy(self.lineage_id, self.generation)
+                        if self.lineage_id is not None else dev_seed + self.generation)
             dev = []
             for fam in DEV_FAMILIES:
-                dev += tasks(family=fam, n=DEV_PER_FAMILY, seed=dev_seed + self.generation)
+                dev += tasks(family=fam, n=DEV_PER_FAMILY, seed=gen_seed)
             best, best_score = None, -1.0
             variants = self._variants(rng)
             reserve = (len(variants) + 1) * len(dev) * max(1, generations - self.generation)

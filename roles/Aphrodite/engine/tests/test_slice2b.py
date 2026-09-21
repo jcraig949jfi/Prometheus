@@ -56,7 +56,7 @@ def test_tribunal_refuses_to_exist_before_the_freeze():
     with pytest.raises(E.BoundaryViolation):
         E.Tribunal.after_freeze(None)
     lin = E.Lineage(seed=1, base=E.base_image(), lineage_id="L-001")
-    lin.evolve(generations=2, escrow=E.Escrow(5000))
+    lin.evolve(generations=2, escrow=E.Escrow(10 ** 7))
     with pytest.raises(ValueError):
         E.Tribunal.after_freeze(lin.extract(2))     # not the frozen generation
 
@@ -101,6 +101,32 @@ def test_the_tribunal_accepts_a_correct_solver():
 def test_structural_detector_rejects_single_expression_dispatch():
     art = E.Artifact.from_modules(
         dict(E.base_image(), search=E.base_image()["search"] + E.shortcut_solver_source()))
+    assert E.structural_change(art) is False
+
+
+def test_structural_detector_rejects_a_DECORATIVE_helper():
+    """RED as of 2026-09-21. The detector is gameable and was gamed.
+
+    Lineages L-004, L-005 and L-008 produced artifacts that pass C6: each
+    contains a helper with a bounded `while` loop, and the answer path calls
+    it. L-004's helper is `x, y = (x + y), (x // x)` -- y becomes 1 and never
+    reaches 0, so the loop simply runs to its bound -- and its answer is
+    `(h(...) // h(...)) + (nums[0] * nums[1])`, in which the helper's entire
+    contribution is `h // h == 1`. The program is the v1 coprime shortcut
+    `a*b + 1` with a decorative loop bolted on, and its held-out score is the
+    same 0.61.
+
+    That is structural THEATRE: the criterion is satisfied syntactically while
+    all causal work rides on a trivial constant -- the exact form the operator
+    named in the slice 2B ruling. C6 must therefore require the helper to be
+    LOAD-BEARING: replacing its value with a constant must change the answers.
+    """
+    decorative = E.helper_solver_source(
+        "numtheory", e1="(x + y)", e2="(x // x)",
+        answer="((h(nums[0], nums[1]) // h(nums[0], nums[1])) + (nums[0] * nums[1]))")
+    art = E.Artifact.from_modules(
+        dict(E.base_image(), search=E.base_image()["search"] + decorative),
+        generation=E.FROZEN_GENERATION)
     assert E.structural_change(art) is False
 
 
