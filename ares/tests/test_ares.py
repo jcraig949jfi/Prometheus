@@ -111,7 +111,8 @@ def test_cheat_control_W4_carrier_destroyed_by_no_state_ablation():
     f = R.rollout(cheat_W4(), w, R.EVAL_SEEDS)[0]
     assert f > 25, f                                  # 40 steps, +1 each when right
     d = R.dissect(cheat_W4().genome(0), "W4", "present")
-    assert d["substrate_ablation"]["no_state"] < 10, d["substrate_ablation"]
+    assert d["substrate_ablation"]["no_activation_mem"] < 10, d["substrate_ablation"]
+    assert d["substrate_ablation"]["no_memory"] < 10, d["substrate_ablation"]
 
 
 def test_genome_round_trip():

@@ -187,6 +187,9 @@ class W4HiddenRegime(World):
         o[:, 0] = self.noise[t]; o[:, 1] = self.cue[t]
         return o
 
+    def balance_key(self):
+        return (self.r,)
+
     def _step(self, a):
         good = self.r + 1
         r = np.where(a == good, 1.0, np.where(a == 0, 0.0, -1.0)).astype(np.float32)
@@ -210,6 +213,11 @@ class W5DelayedRevelation(World):
         if self.mode == "absent":
             self.ch0[T - 2] = self.pay
         self.dec = T - 2
+
+    def balance_key(self):
+        # both hidden binaries: the token shown and the side that pays
+        # (identical in present/absent; independent in shuffled)
+        return (int(self.token > 0), int(self.pay > 0))
 
     def _obs(self):
         o = self._base_obs(); t = self.t
@@ -274,6 +282,9 @@ class W11IrreversibleCommitment(World):
         mean = 0.4 * self.truth if self.mode != "shuffled" else 0.0
         self.ev = mean + rng.normal(0, 1.0, size=T)
         self.committed = np.zeros(self.P, dtype=np.int64)   # 0 none, 1 A, 2 B
+
+    def balance_key(self):
+        return (int(self.truth > 0),)
 
     def _obs(self):
         o = self._base_obs(); t = self.t
@@ -368,7 +379,45 @@ class W9MatchingPennies:
         return self._obs(self.histB, self.histA), self._obs(self.histA, self.histB), rA, rB
 
 
+class W13CarrierStress(World):
+    """W4 + W5 combined, cycle-1 carrier stress test ONLY (operator
+    directive 2026-09-21 item 4). Regime cue on ch1 for steps 0-2; then
+    ch1 carries distractor noise (sd 1.0, louder than W4's 0.3) for
+    steps 3-59; reward exists ONLY in steps 60-79 (+1/-1 for the regime
+    action, 0 abstain). No reward channel. absent: cue every step.
+    shuffled: early cue independent of the regime."""
+    name = "W13"
+    T = 80
+    CUE = 3
+    PAY_FROM = 60
+
+    def _draw(self, rng):
+        T = self.T
+        self.r = int(rng.integers(0, 2))
+        shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.cue = rng.normal(0, 1.0, size=T)
+        k = T if self.mode == "absent" else self.CUE
+        self.cue[:k] = (2 * shown - 1) + rng.normal(0, 0.2, size=k)
+        self.noise = rng.normal(0, 1.0, size=T)
+
+    def balance_key(self):
+        return (self.r,)
+
+    def _obs(self):
+        o = self._base_obs(); t = self.t
+        o[:, 0] = self.noise[t]; o[:, 1] = self.cue[t]
+        return o
+
+    def _step(self, a):
+        if self.t < self.PAY_FROM:
+            return np.zeros(self.P, dtype=np.float32), np.ones(self.P, bool), dict(regime=self.r)
+        good = self.r + 1
+        r = np.where(a == good, 1.0, np.where(a == 0, 0.0, -1.0)).astype(np.float32)
+        return r, np.ones(self.P, bool), dict(regime=self.r)
+
+
 WORLDS = {
+    "W13": W13CarrierStress,
     "W1": W1CatastrophicTail, "W2": W2RareOverride, "W3": W3ChangingRules,
     "W4": W4HiddenRegime, "W5": W5DelayedRevelation, "W7": W7IncompatibleRegimes,
     "W11": W11IrreversibleCommitment, "W12": W12DyingLineage,
