@@ -198,3 +198,92 @@ either L: exploratory only.
 - The transplant core is the Campaign 0 assay renamed: P1 = D_VAULT with
   the transplanted object named as I_8's code, so the primary endpoint
   keeps its qualification.
+
+## PATCH 1 (2026-09-21, before any Campaign 1 execution; operator disposition
+## "C1 DESIGN: FREEZE / EXECUTION: BLOCKED ON CONTRACTS + BENCHMARK ONLY /
+## NO ADDITIONAL QUALIFICATION ROUND REQUIRED")
+
+### P1.1 The primary causal estimand, stated exactly
+
+    D_VAULT = score(fresh recipient + frozen evolved artifact)
+              - score(fresh scratch recipient)
+
+measured on SEALED POST-DONOR tasks (fresh instances of sealed families
+the donor never saw, drawn after the donor's freeze), under IDENTICAL
+enforced compute for both arms -- inference and any in-cell adaptation
+alike, metered below the improver. The lineage is the unit; one value per
+lineage; Holm within the confirmatory family; TOST at delta = 3 points.
+
+### P1.2 The artifact boundary (what "transplant" is permitted to mean)
+
+The transplanted artifact is BYTE-IDENTICAL to the generation-8
+extraction. It is hashed at extraction and re-hashed at load in the
+recipient; the two hashes must match and both appear in the cell's
+receipt. NOTHING ELSE crosses the donor/recipient boundary: not episodic
+history, caches, logs, archives, accumulated observations, evaluator
+interaction, seeds, lineage identifiers, environment variables, loader
+state, metadata, scaffolding, or any file written by the donor other than
+the hashed artifact bytes.
+The recipient is identical in every arm except for those bytes: same
+loader and version, same worker A_0, same empty state, same escrow, same
+fresh-seed procedure. SCRATCH loads nothing; SHAM and POSITIVE load a
+byte-hashed artifact of the same form through the SAME loader path.
+A cell whose two hashes differ, or whose boundary receipt shows anything
+else crossing, is VOID: it is reported and excluded, never repaired.
+
+### P1.3 Qualification envelope (the operator's caveat, answered plainly)
+
+Campaign 0 qualified the SUBTRACTION and its statistics -- one value per
+lineage, Holm, TOST, the flag logic, the recovery of planted causal
+structure -- under the stated variance structure. It did NOT qualify any
+implementation of the carrier: its planted object was an effect in a
+generative model and crossed no serialization, reset or loader path.
+"Same subtraction" therefore does not imply "same instrument", and this
+preregistration does not claim it does.
+Campaign 1's transplant path is INSIDE the qualified envelope only if,
+before the confirmatory run and demonstrated by Vivarium's fixtures and
+per-cell receipts:
+  E1 artifact bytes hash-identical at extraction and at load;
+  E2 the boundary receipt enumerates everything the recipient process
+     read from any donor-derived path, and it is exactly those bytes;
+  E3 the recipient reset is proven to destroy planted state markers
+     (memory, cache, temp, process, environment) before every cell;
+  E4 loader, scaffold, worker and initialization are identical across
+     SCRATCH, TRANSPLANT, SHAM, POSITIVE and MEMORY-ONLY, differing only
+     in the loaded bytes;
+  E5 the enforced escrow is identical across arms and metered below the
+     improver (Harmonia);
+  E6 evaluation instances are fresh, sealed, post-donor, evaluator-blind.
+Also reported, not gated: the observed between-lineage standard deviation
+of D_VAULT against the variance structure Campaign 0 assumed; if it is
+materially larger, the qualified power statement is weaker than stated
+and the report says so.
+If E1-E6 are not all demonstrated on the production path, P1 is reported
+as OUTSIDE ENVELOPE and is DOWNGRADED TO EXPLORATORY for that run: it
+keeps its estimate and interval and loses its confirmatory status. No
+additional synthetic qualification round is required to run; this
+downgrade is the price of an unproven path.
+
+### P1.4 The extraction point is positional, not performance-based
+
+The artifact is whatever the lineage's machinery IS at the end of
+generation 8. No early extraction because a lineage "looks ready", no
+late extraction because it is "almost there", no choosing among
+generations, no re-extraction after seeing any recipient result.
+Artifact identity is fixed by POSITION so that artifact choice cannot
+become an unrecorded search channel.
+A lineage that fails before generation 8 (crash, repeated preflight
+rejection, void cells) is FLAGGED and excluded from the confirmatory
+analysis; it is never replaced by another lineage, and the count of
+flagged lineages is reported beside every result.
+(E5 of section 5 -- the exploratory artifact search over modules, pairs,
+state and declared diffs -- operates only on the generation-8 extraction
+and never changes what the confirmatory P1 artifact is.)
+
+### P1.5 Status
+
+Design FROZEN. Execution remains blocked on: substrate closure from the
+frozen benchmark receipts; Archaeon, Harmonia and Vivarium contracts with
+their cheat fixtures caught, including the E1-E6 envelope demonstration;
+the POSITIVE module committed and hashed; and the operator's
+authorisation.
