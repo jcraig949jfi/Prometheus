@@ -540,6 +540,9 @@ class _Lifecycle:
         self.provider, self.artifacts, self.clock = provider, artifacts, clock
         self.journal_failed = False
         self.evidence_failed_ids = set()
+        # If a prior conflict could not be journaled, require fresh bindings
+        # for every saved ID rather than treating old history as authorization.
+        self.binding_conflicts = set(state["owned_ids"]) if state["ownership_ambiguous"] else set()
         self.last_wall = _timestamp(state["last_wall_utc"])
         self.last_mono = clock.monotonic()
         remaining = max(0, _timestamp(state["deadline_utc"]) - clock.time())
@@ -591,6 +594,10 @@ class _Lifecycle:
 
     def _record(self, pod_id, kind, *, status=None, result=None):
         """Keep provider facts durable without making recording a DELETE gate."""
+        if kind == "OWNERSHIP_CONFLICT":
+            self.binding_conflicts.add(pod_id)
+        elif kind == "OBSERVE":
+            self.binding_conflicts.discard(pod_id)
         try:
             rec = self.state["pod_evidence"].setdefault(pod_id, _new_pod_evidence())
             policy.append_pod(rec, kind, policy.utc(self.clock.time()),
@@ -814,7 +821,7 @@ class _Lifecycle:
         rec = self.state["pod_evidence"].get(pod_id, {})
         last_binding = next((entry["kind"] for entry in reversed(rec.get("history", []))
                              if entry["kind"] in ("OBSERVE", "OWNERSHIP_CONFLICT")), None)
-        if last_binding == "OWNERSHIP_CONFLICT":
+        if pod_id in self.binding_conflicts or last_binding == "OWNERSHIP_CONFLICT":
             # Do not act on a stale identity after positively observing a
             # different object at this ID. A fresh exact binding is required.
             return

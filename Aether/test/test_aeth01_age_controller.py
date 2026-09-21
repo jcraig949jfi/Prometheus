@@ -1341,6 +1341,27 @@ def test_recovery_does_not_delete_known_id_after_identity_conflict(rig, owned_li
     assert lifecycle.outcome()["ownership_ambiguous"] is True
 
 
+@pytest.mark.parametrize("reload", [False, True])
+def test_conflict_recording_failure_never_authorizes_old_binding(
+        rig, owned_lifecycle, monkeypatch, reload):
+    rig.provider.pods["pod_1"]["image"] = "unrelated-image"
+    def broken_record(*args, **kwargs):
+        raise age.policy.EvidenceError("INVALID_UTC")
+    with monkeypatch.context() as context:
+        context.setattr(age.policy, "append_pod", broken_record)
+        owned_lifecycle._observe_get("pod_1", deepcopy(rig.provider.pods["pod_1"]))
+    lifecycle = reload_lifecycle(rig) if reload else owned_lifecycle
+    lifecycle.terminate("pod_1")
+    assert not rig.provider.deleted
+    assert not any(e[0] == "DELETE" for e in rig.events)
+    assert lifecycle.outcome()["cleanup_status"] == "LOCAL_CLEANUP_UNRESOLVED"
+    # Fresh binding, not successful journal writing, governs safe targeting.
+    rig.provider.pods["pod_1"]["image"] = rig.plan["config"]["image"]
+    lifecycle.reconcile()
+    lifecycle.terminate("pod_1")
+    assert rig.provider.deleted == {"pod_1"}
+
+
 @pytest.mark.parametrize("version", [1, 2, 4, True])
 def test_recovery_explicitly_refuses_old_or_unknown_state_schema(rig, owned_lifecycle, version):
     state = read_json(rig.directory / "state.json")
