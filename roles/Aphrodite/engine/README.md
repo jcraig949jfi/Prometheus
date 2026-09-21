@@ -1,12 +1,16 @@
-# The Aphrodite local engine (v0, 2026-09-21)
+# The Aphrodite local engine (v1, 2026-09-21)
 
 Built to the operator's directive of 2026-09-21: "the cheapest
 self-contained local engine capable of executing the frozen Campaign 1
 causal structure ... optimise for auditability, reset integrity,
 transplantability and experimental throughput -- not benchmark quality."
-Evidence tier 2 (apparatus). It runs no Campaign 1 and decides nothing
-about the substrate (see AMENDMENT_2_DRAFT in prompts/2026-09-21_local_
-engine/).
+Evidence tier 2 (apparatus). It has run no Campaign 1 cell and decides
+nothing about the substrate; eligibility is ruled on in
+science/campaign1/AMENDMENT_2_2026-09-21.md.
+
+v0 (membrane only) -> v1 (endogenous discovery) under the operator's
+authorised slice: "Make the improver capable of endogenous discovery. Do
+not optimize Campaign 1 performance."
 
 ## Four boundaries
 
@@ -47,61 +51,105 @@ rather than a pass.
   arms, and the improver cannot raise it
 - same seed, same artifact hash
 
-## Measured on M4 (2026-09-21, qualify_engine.py, 200 instances/family)
+## Measured on M4 (2026-09-21, engine v1, qualify_engine.py, 200/family)
 
-    base image starting accuracy   arith 1.00, sortkey 1.00, strops 1.00,
-                                   numtheory 0.00; uniform 4-family 0.75
-    positive control               1.00 on the same mix (lift +0.25)
-    sensitivity (numtheory, fresh) scratch 0.00 -> positive control 1.00
-    memory-only, fresh instances   0.00 (no lift), but 1.00 on the very
-                                   instances it memorised
-    lineage cost (8 generations)   0.645 s mean, 0.10-1.05 s, single core
-    throughput                     ~5,577 lineages / hour / core;
-                                   64 lineages = 41 s
-    determinism                    same seed reproduces the same artifact
+Distribution declared PRE-DATA in science/campaign1/AMENDMENT_2_2026-09-21.md
+section C, committed (07183a97d) before it was measured.
 
-The sensitivity row is the one that matters: machinery transfers to
-instances the donor never saw, cached answers do not. The substrate can
-express a detectable transferable improvement, which is what the operator
-required of it.
+    base image           arith 1.00, sortkey 1.00, strops 1.00,
+                         numtheory 0.00, modexp 0.00; uniform mix 0.60
+    positive control     1.00 on every class (lift +0.40)
+    memory-only          0.00 on fresh instances, 1.00 on the instances it
+                         memorised -- state does not transfer, machinery does
+    lineage cost         1.112 s mean (0.21-1.90), 8 generations
+    throughput           ~3,237 lineages / hour / core; 64 lineages = 71 s
+    escrow spent         24,667 per lineage, identical across seeds
 
-Two defects were found BY these measurements, not by assertion:
-1. the sandbox's builtins lacked `reversed`, so a base solver crashed and
-   strops read 0.00; the first measurement was an artifact of the
-   sandbox, not of the base image;
-2. THE IMPROVER IS INERT (below).
+ELIGIBILITY under the replacement rule R1-R5 (AMENDMENT 2 section A):
+    R1 unsolved capability            PASS (two classes at 0.00)
+    R2 positive control >= delta      PASS (+40 points vs delta = 3)
+    R3 resolution for delta-effects   PASS (1/200 = 0.5 points per class)
+    R4 not reachable by replay        PASS (memory-only 0.00 on fresh)
+    R5 headroom spans >= 2 classes    PASS (numtheory, modexp)
+This seat wrote a distribution that passes the rule it was just given, which
+is the exact shape drift takes. The defence is procedural, not rhetorical:
+the mix was declared and committed BEFORE measurement, the prohibitions in
+section C bind it, and the numbers are published as they came out -- see the
+numtheory row below, which is not a flattering one.
 
-## The blocking defect: an inert improver
+## Endogenous discovery: it works, and the named adversary arrived with it
 
-Across 10 seeds, every lineage's generation-8 artifact was BYTE-IDENTICAL
-to the base image: `distinct_artifacts: 1, identical_to_base_image: 10`.
-The development scores are `[1.0, 1.0, ...]` from generation 1.
+    class      discovered expression                       dev    held-out
+    modexp     (pow(nums[0], nums[1]) % nums[2])           1.00      1.00
+    numtheory  ((nums[0] * nums[1]) + (nums[0] // nums[0])) 1.00      0.635
 
-Cause, exactly: `Lineage.evolve` draws dev tasks only from arith, sortkey
-and strops -- the three families the base image already solves perfectly
--- so every candidate ties at 1.0, and `score > best_score` keeps the
-first candidate, which is the unmutated one. The one family with headroom
-(numtheory) never enters the development distribution, and the mutation
-operators only tune `N_CANDIDATES` and `STRICT` anyway, so no reachable
-variant could acquire it.
+modexp is the true solution, found by search, transferring perfectly into a
+fresh recipient.
 
-The 12 membrane tests all passed throughout. They could not see this:
-they ask whether a bounded artifact crosses correctly, never whether the
-donor produced one worth crossing. tests/test_improver.py now encodes the
-missing requirement and is committed FAILING (4 red), as the record of
-the gap.
+numtheory is `a*b + 1`, which equals gcd(a,b) + lcm(a,b) exactly when
+gcd(a,b) == 1. It scores 1.00 on the two development instances and 0.635 on
+held-out instances. 6/pi^2 = 0.6079 is the density of coprime pairs, so the
+number is not noise -- it is the shortcut's exact reach. This is
+development-distribution exploitation, the adversary named in AMENDMENT 2
+section E, appearing on its first outing.
 
-CONSEQUENCE: Campaign 1 must not run on engine v0 at any lineage count.
-It would extract the base image, transplant the base image, and measure
-the null by construction -- a guaranteed, uninformative "no transfer".
-This is a stronger blocker than the eligibility-window question, and it
-is independent of it.
+The aggregate anti-overfitting test PASSED on this lineage, because the
+combined headroom gain was large. The per-class test
+(test_each_headroom_class_that_looks_solved_on_dev_generalises) catches it
+and is committed RED. Per AMENDMENT 2 section C the development instance
+count may NOT be raised to make the overfit go away.
+
+MECHANISM CLASS, labelled per AMENDMENT 2 section B:
+    P1 endogenous discovery   YES -- searched for, not handed
+    P2 causal competence      YES -- fresh recipient, held-out instances
+    P3 nontrivial mechanism   YES -- carries no answers or donor experience
+    P4 generative leverage    NO  -- each solver supplies one capability
+    CLASS: PROGRAM_COMPOSITION. Not ALGORITHMIC_STRUCTURE: the search
+    composes declared primitives and invents no control flow.
+The strongest claim this supports is "an evolutionary process discovered a
+separable computational modification that causally increased fresh-recipient
+competence". It is not reasoning-substrate self-improvement.
+
+## The declared primitive set (no primitive equals a target)
+
+    terminals  nums[0], nums[1], nums[2]   (integers parsed from the prompt)
+    binary     add, sub, mul, fdiv, mod, gcd, powr
+    search     bottom-up enumeration to depth 3, observational-equivalence
+               pruning, <= 40,000 candidates, metered against the escrow
+               (1 charge per candidate), stops above a reserve so it can
+               never starve the dev evaluations it still owes
+`gcd` and `pow` are general primitives; neither computes a target. Both
+targets are reachable by composition, neither by lookup.
+
+## OPEN, and a C1 blocker: lineages are clones, not replicates
+
+    distinct artifacts across 10 seeds   1
+    identical to the base image          0
+    same seed reproduces same artifact   true
+
+Every lineage discovered the same two expressions and produced the same
+artifact hash. Cause: development instances are seeded by
+`dev_seed + generation` and do NOT depend on the lineage seed, so every
+lineage sees an identical development distribution and runs an identical
+deterministic search.
+
+Diversity is measured, never required (AMENDMENT 2 section D), and identical
+artifacts can legitimately mean convergent discovery. But for Campaign 1 the
+consequence is structural: 64 lineages would carry ONE causal object, so the
+artifact-level inference rests on n = 1 replicated 64 times. That is
+pseudoreplication at the artifact level -- the same sin Campaign 0 was built
+to prevent at the lineage level.
+
+The fix is one line (seed development instances per lineage), and this seat
+has NOT applied it: it changes whether lineages are independent units, which
+is a Campaign 1 statistical-design property, not an engine detail. It is put
+to the operator instead.
 
 ## What is NOT here yet (next slices, TDD)
 
-a development distribution with headroom and a mutation space that can
-actually reach it (the next slice: make the 4 red tests pass without
-weakening them); regime shift at generation 5; sham artifacts drawn from
-a lineage's rejected-mutation archive; cross-lineage insertion; per-cell
-receipt files on disk (receipts are in-memory dicts today); the
-memory-only arm as a first-class cell.
+per-lineage development seeding (above, pending a ruling); regime shift at
+generation 5; sham artifacts drawn from a lineage's rejected-mutation
+archive; cross-lineage insertion; per-cell receipt files on disk (receipts
+are in-memory dicts today); the memory-only arm as a first-class cell; a
+mutation space that can reach ALGORITHMIC_STRUCTURE (control flow), which
+today's expression grammar cannot express at all.

@@ -28,7 +28,15 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 MODULE_NAMES = ("search", "verify", "allocate", "memory", "evidence")
-FAMILIES = ("arith", "sortkey", "strops", "numtheory")
+# The engine v1 task distribution, declared pre-data in
+# science/campaign1/AMENDMENT_2_2026-09-21.md section C. Each class is
+# scored separately; HEADROOM_FAMILIES are the two independently scored
+# classes the base image cannot solve (R5 of the replacement rule).
+FAMILIES = ("arith", "sortkey", "strops", "numtheory", "modexp")
+HEADROOM_FAMILIES = ("numtheory", "modexp")
+DEV_FAMILIES = FAMILIES          # the improver develops against all classes
+DEV_PER_FAMILY = 2               # deliberately small: overfitting must stay
+                                 # reachable so the held-out tests can catch it
 MARKER_ENV_PREFIX = "APHRODITE_MARKER_"
 MARKER_DIR = Path(tempfile.gettempdir()) / "aphrodite_engine_markers"
 LOADER_PATH = "engine.Recipient.load/v1"     # the ONE loader path every arm uses
@@ -74,6 +82,9 @@ def _task(family: str, rng: random.Random):
         ws = [rng.choice(["alpha", "delta", "sigma", "omega", "kappa"]) for _ in range(5)]
         return ("Reverse the words and capitalise each: " + " ".join(ws),
                 " ".join(w.capitalize() for w in reversed(ws)))
+    if family == "modexp":
+        a, b, m = rng.randint(2, 99), rng.randint(2, 12), rng.randint(7, 9999)
+        return f"Give ({a} ** {b}) mod {m}.", str(pow(a, b) % m)
     a, b = rng.randint(12, 999), rng.randint(12, 999)
     return f"Give gcd({a}, {b}) + lcm({a}, {b}).", str(math.gcd(a, b) + a * b // math.gcd(a, b))
 
@@ -116,6 +127,7 @@ class Artifact:
 # ---------------------------------------------------------------- the base image (I_0)
 BASE_SEARCH = '''
 N_CANDIDATES = 1
+DISCOVERED = {}
 def solvers():
     # math and re are provided by the loader namespace; modules never import
     def arith(p):
@@ -128,7 +140,9 @@ def solvers():
     def strops(p):
         ws = p.split(":", 1)[1].split()
         return " ".join(w.capitalize() for w in reversed(ws))
-    return {"arith": arith, "sortkey": sortkey, "strops": strops}
+    out = {"arith": arith, "sortkey": sortkey, "strops": strops}
+    out.update(DISCOVERED)
+    return out
 '''
 
 BASE_VERIFY = '''
@@ -161,18 +175,120 @@ def base_image() -> Dict[str, str]:
             "memory": BASE_MEMORY, "evidence": BASE_EVIDENCE}
 
 
+POSITIVE_CONTROL_SOLVERS = '''
+def _pc_numtheory(p):
+    nums = re.findall(r"\\d+", p)
+    a, b = int(nums[0]), int(nums[1])
+    g = math.gcd(a, b)
+    return str(g + a * b // g)
+def _pc_modexp(p):
+    nums = re.findall(r"\\d+", p)
+    a, b, m = int(nums[0]), int(nums[1]), int(nums[2])
+    return str(pow(a, b) % m)
+DISCOVERED["numtheory"] = _pc_numtheory
+DISCOVERED["modexp"] = _pc_modexp
+'''
+
+
 def positive_control_artifact() -> Artifact:
-    """A hand-written, known-useful module: the numtheory solver the base image lacks."""
+    """Hand-written, known-useful machinery: solvers for BOTH headroom classes.
+
+    This is the SENSITIVITY gate (R2), not a discovery. It is written by the
+    experimenter and proves only that the substrate can carry a transferable
+    improvement -- never that a lineage can find one.
+    """
     mods = base_image()
-    mods["search"] = BASE_SEARCH.replace(
-        '    return {"arith": arith, "sortkey": sortkey, "strops": strops}',
-        '    def numtheory(p):\n'
-        '        nums = re.findall(r"\\d+", p)\n'
-        '        a, b = int(nums[0]), int(nums[1])\n'
-        '        g = math.gcd(a, b)\n'
-        '        return str(g + a * b // g)\n'
-        '    return {"arith": arith, "sortkey": sortkey, "strops": strops, "numtheory": numtheory}')
+    mods["search"] = BASE_SEARCH + POSITIVE_CONTROL_SOLVERS
     return Artifact.from_modules(mods, generation=-1)
+
+
+# ---------------------------------------------------------------- endogenous discovery
+# The improver's mutation space includes SYNTHESIS: bottom-up enumerative
+# program search over a fixed primitive set, with observational-equivalence
+# pruning. The primitive set is declared in full in README.md and in
+# AMENDMENT 2 section C. It contains NO primitive equal to either headroom
+# target, so both are reachable by COMPOSITION and neither by lookup.
+#
+# Honest label, stated before the search was ever run: a solver found this
+# way has mechanism class PROGRAM_COMPOSITION, not ALGORITHMIC_STRUCTURE --
+# the search composes existing primitives, it does not invent control flow.
+PRIMITIVES = {
+    "add":  (lambda x, y: x + y,                     "({0} + {1})"),
+    "sub":  (lambda x, y: x - y,                     "({0} - {1})"),
+    "mul":  (lambda x, y: x * y,                     "({0} * {1})"),
+    "fdiv": (lambda x, y: None if y == 0 else x // y, "({0} // {1})"),
+    "mod":  (lambda x, y: None if y == 0 else x % y,  "({0} % {1})"),
+    "gcd":  (lambda x, y: math.gcd(abs(x), abs(y)),  "math.gcd(abs({0}), abs({1}))"),
+    "powr": (lambda x, y: None if not (0 <= y <= 32) else x ** y, "pow({0}, {1})"),
+}
+TERMINALS = 3                     # nums[0], nums[1], nums[2]
+VALUE_CEILING = 10 ** 18          # candidates producing larger values are dropped
+MAX_SYNTH_CANDIDATES = 40000      # hard cap per synthesis attempt
+
+
+def _synthesise(examples: List[Dict], escrow: Escrow, cap: int) -> Optional[str]:
+    """Search for an expression over PRIMITIVES reproducing every example.
+
+    `examples` are development instances ONLY. The evaluator's held-out
+    instances are never visible here. Returns Python source for the
+    expression, or None if nothing was found within `cap` candidates or the
+    escrow's remaining budget -- whichever binds first.
+    """
+    vectors = []
+    for t in examples:
+        nums = [int(x) for x in re.findall(r"-?\d+", t["prompt"])]
+        if len(nums) < TERMINALS:
+            return None
+        vectors.append(nums)
+    golds = [t["gold"] for t in examples]
+
+    def matches(vals):
+        return all(str(v) == g for v, g in zip(vals, golds))
+
+    pool = []                     # (source, value-vector)
+    seen = set()
+    for i in range(TERMINALS):
+        vals = tuple(v[i] for v in vectors)
+        pool.append(("nums[%d]" % i, vals))
+        seen.add(vals)
+        if matches(vals):
+            return "nums[%d]" % i
+
+    spent = 0
+    frontier = list(pool)
+    for _ in range(2):            # depth 2 then depth 3
+        new = []
+        for name, (fn, tmpl) in PRIMITIVES.items():
+            for lsrc, lvals in frontier:
+                for rsrc, rvals in pool:
+                    if spent >= cap or escrow.remaining() <= 0:
+                        return None
+                    escrow.charge(1)      # the search is metered beneath the improver
+                    spent += 1
+                    try:
+                        vals = tuple(fn(a, b) for a, b in zip(lvals, rvals))
+                    except Exception:     # noqa: BLE001 -- a bad composition is just wrong
+                        continue
+                    if any(v is None or abs(v) > VALUE_CEILING for v in vals):
+                        continue
+                    if vals in seen:      # observational equivalence
+                        continue
+                    seen.add(vals)
+                    src = tmpl.format(lsrc, rsrc)
+                    if matches(vals):
+                        return src
+                    new.append((src, vals))
+        pool = pool + new
+        frontier = new
+    return None
+
+
+def _discovered_solver_source(family: str, expr: str) -> str:
+    return (
+        "\ndef _disc_%s(p):\n"
+        "    nums = [int(x) for x in re.findall(r\"-?\\d+\", p)]\n"
+        "    return str(%s)\n"
+        "DISCOVERED[\"%s\"] = _disc_%s\n" % (family, expr, family, family))
 
 
 def memorised_state(seen: List[Dict]) -> Dict[str, str]:
@@ -185,7 +301,7 @@ SAFE_BUILTINS = {"len": len, "range": range, "sorted": sorted, "sum": sum, "min"
                  "int": int, "str": str, "isinstance": isinstance, "enumerate": enumerate,
                  "list": list, "dict": dict, "map": map, "zip": zip, "abs": abs, "any": any, "all": all,
                  "reversed": reversed, "tuple": tuple, "set": set, "float": float, "bool": bool,
-                 "divmod": divmod, "round": round, "filter": filter}
+                 "divmod": divmod, "round": round, "filter": filter, "pow": pow}
 
 
 def _load_modules(modules: Dict[str, str]) -> Dict[str, Dict]:
@@ -327,12 +443,45 @@ class Lineage:
         out.append(v)
         return out
 
+    def _synthesis_variant(self, dev: List[Dict], escrow: Escrow, reserve: int) -> Optional[Dict[str, str]]:
+        """Attempt endogenous discovery for the first class this lineage fails.
+
+        Spends only what is left above `reserve`, so an improver on a small
+        escrow simply cannot afford to search -- it never gets to raise its
+        own budget, and never starves the dev evaluations it still owes.
+        """
+        probe = Recipient(self.seed)
+        probe.load(Artifact.from_modules(dict(self.modules)))
+        for fam in HEADROOM_FAMILIES:
+            examples = [t for t in dev if t["family"] == fam]
+            if not examples:
+                continue
+            if probe.run_tasks(examples, Escrow(len(examples) + 1))["accuracy"] == 1.0:
+                continue                      # already solved; nothing to discover
+            cap = min(MAX_SYNTH_CANDIDATES, max(0, escrow.remaining() - reserve))
+            if cap <= 0:
+                return None
+            expr = _synthesise(examples, escrow, cap)
+            if expr is None:
+                continue
+            v = dict(self.modules)
+            v["search"] = v["search"] + _discovered_solver_source(fam, expr)
+            return v
+        return None
+
     def evolve(self, generations: int, escrow: Escrow, dev_seed: int = 7) -> None:
         rng = random.Random(self.seed)
         for _ in range(generations):
-            dev = tasks(family=rng.choice(["arith", "sortkey", "strops"]), n=5, seed=dev_seed + self.generation)
+            dev = []
+            for fam in DEV_FAMILIES:
+                dev += tasks(family=fam, n=DEV_PER_FAMILY, seed=dev_seed + self.generation)
             best, best_score = None, -1.0
-            for cand in self._variants(rng):
+            variants = self._variants(rng)
+            reserve = (len(variants) + 1) * len(dev) * max(1, generations - self.generation)
+            synth = self._synthesis_variant(dev, escrow, reserve)
+            if synth is not None:
+                variants.append(synth)
+            for cand in variants:
                 r = Recipient(self.seed)          # an internal probe, not a Campaign 1 recipient
                 r.load(Artifact.from_modules(cand))
                 score = 0
@@ -344,7 +493,11 @@ class Lineage:
                     best, best_score = cand, score
             self.modules = best
             self.generation += 1
-            self.history.append({"generation": self.generation, "score": best_score / max(len(dev), 1)})
+            # `dev` is kept for audit only: history is donor state and never
+            # crosses the boundary -- only the five module sources do.
+            self.history.append({"generation": self.generation,
+                                 "score": best_score / max(len(dev), 1),
+                                 "dev": dev})
 
     def extract(self, generation: int) -> Artifact:
         if generation != self.generation:

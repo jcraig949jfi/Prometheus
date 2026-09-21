@@ -80,6 +80,28 @@ def main():
     unchanged = sum(1 for h in hashes if h == base_bytes)
 
     mean_t = statistics.mean(times)
+
+    # endogenous discovery: WHAT did the lineages find, and does it generalise?
+    base_art = E.Artifact.from_modules(dict(E.base_image()))
+    discovery = {}
+    for fam in E.HEADROOM_FAMILIES:
+        held = E.tasks(family=fam, n=N_EVAL, seed=987654)
+        lin = E.Lineage(seed=11, base=E.base_image())
+        lin.evolve(generations=GENERATIONS, escrow=E.Escrow(10 ** 7))
+        art = lin.extract(GENERATIONS)
+        import re as _re
+        exprs = dict(_re.findall(r"def _disc_(\w+)\(p\):\n.*?\n    return str\((.*?)\)\n",
+                                 art.modules()["search"], _re.S))
+        dev_final = [t for t in lin.history[-1]["dev"] if t["family"] == fam]
+        r = E.Recipient.fresh(seed=2)
+        r.load(art)
+        discovery[fam] = {
+            "expression_discovered": exprs.get(fam),
+            "development_accuracy": r.run_tasks(dev_final, E.Escrow(10 ** 6))["accuracy"],
+            "held_out_accuracy": accuracy(art, held),
+            "base_accuracy": accuracy(base_art, held),
+        }
+
     rec = {
         "written_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "engine_sha256": E.source_hash() if hasattr(E, "source_hash") else None,
@@ -113,6 +135,18 @@ def main():
             "lineages_per_hour_single_core": int(3600 / mean_t),
             "seconds_for_64_lineages_single_core": round(64 * mean_t, 2),
         },
+        "endogenous_discovery": dict(
+            discovery,
+            reads=("P1 endogenous discovery: the expressions were searched for, "
+                   "not handed. P2 causal competence: measured in a fresh "
+                   "recipient on held-out instances. P4 generative leverage: NOT "
+                   "claimed -- each solver supplies one capability. Mechanism "
+                   "class PROGRAM_COMPOSITION, never ALGORITHMIC_STRUCTURE: the "
+                   "search composes declared primitives and invents no control "
+                   "flow."),
+            eligibility_R5=("headroom spans %d independently scored classes"
+                            % len(E.HEADROOM_FAMILIES)),
+        ),
         "lineage_independence": {
             "same_seed_reproduces_same_artifact": deterministic,
             "lineages_sampled": len(hashes),

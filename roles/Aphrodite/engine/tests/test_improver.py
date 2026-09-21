@@ -113,6 +113,41 @@ def test_development_gain_is_matched_by_held_out_gain():
             "exploitation" % (sd, dev_gain, held_gain))
 
 
+def test_each_headroom_class_that_looks_solved_on_dev_generalises():
+    """RED as of 2026-09-21, and the defect is real.
+
+    The aggregate test above passed on a lineage that had NOT solved
+    numtheory: it discovered `a*b + 1`, which equals gcd+lcm exactly when
+    gcd(a,b)==1, scores 1.00 on the two development instances, and 0.635 on
+    held-out instances -- 6/pi^2 = 0.6079 is the density of coprime pairs,
+    so the number is not noise, it is the shortcut's exact reach.
+
+    The policed claim is not "must be perfect". It is that MASTERY CLAIMED ON
+    DEVELOPMENT MUST GENERALISE. A class the lineage scores 1.00 on in
+    development must not collapse on unseen instances of the same class.
+
+    Per AMENDMENT 2 section C, the fix may NOT be to enlarge the development
+    instance count after observing overfitting.
+    """
+    for sd in SEEDS:
+        lin, art = _evolved(sd)
+        dev_final = lin.history[-1]
+        for fam in E.HEADROOM_FAMILIES:
+            dev_tasks = [t for t in dev_final.get("dev", []) if t["family"] == fam]
+            if not dev_tasks:
+                continue
+            r = E.Recipient.fresh(seed=2)
+            r.load(art)
+            dev_acc = r.run_tasks(dev_tasks, E.Escrow(BUDGET))["accuracy"]
+            if dev_acc < 1.0:
+                continue                      # never claimed this class
+            held = _score(art, _held_out(fam, n=200))
+            assert held >= 0.90, (
+                "seed %d: %s scores %.3f on development but %.3f on held-out "
+                "instances -- development-distribution exploitation"
+                % (sd, fam, dev_acc, held))
+
+
 def test_the_artifact_does_not_encode_evaluation_instances():
     """Mutations encoding instance identifiers or memorised answers."""
     _, art = _evolved(SEEDS[0])
