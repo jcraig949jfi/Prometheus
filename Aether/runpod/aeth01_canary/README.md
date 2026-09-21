@@ -11,18 +11,75 @@ From this directory, `python age_controller.py --help` lists its three commands:
 
 - `plan --config CONFIG --run-dir FRESH_DIRECTORY`: zero network and zero
   credential reads. Parent directory must exist. Writes nonsecret `plan.json`
-  with a random run UUID, exact source hashes and a plan SHA-256 summary.
+  (random run UUID, exact source hashes, plan SHA-256 summary) AND
+  `reaper_manifest.json` (the B3 pre-create handoff for `independent_reaper.py`).
 - `run --run-dir DIRECTORY --approval APPROVAL --execute-paid-run`: **future
   paid operation, NOT authorized now**. Validates approval and local source
-  bytes, locks the run, journals intent, then attempts exactly one POST.
+  bytes, locks the run, journals intent, confirms the independent reaper has
+  durably armed (`reaper_ack.json` matching `reaper_manifest.json`, HMAC-bound
+  with `AGE_REAPER_SHARED_SECRET` -- see "Independent reaper" below), then
+  attempts exactly one POST.
 - `recover --run-dir DIRECTORY`: cleanup only, never POST; allowed even after
   approval expires. Requires the same durable plan/state directory. Recovery
   returns nonzero even after confirmed cleanup; it never upgrades science.
 
 Run directories are private local operational records, not repository artifacts.
 Do not edit, duplicate, delete or reuse them. `state.json` retains owned IDs,
-artifact hashes, `science_verdict`, `cleanup_status`, and sanitized failure code.
-Artifacts are saved under `artifacts/<pod_id>/` before normal teardown.
+per-pod cleanup evidence (`pod_evidence`), artifact hashes, `science_verdict`,
+`cleanup_status`, a bounded secret-safe `diagnostics` journal, and a sanitized
+failure code. Artifacts are saved under `artifacts/<pod_id>/` before normal
+teardown.
+
+### Cleanup evidence contract (B1/B2/B3, ASTRA_CLOSURE_REVIEW_02.md section 4)
+
+`cleanup_status` is `LOCAL_CLEANUP_CONFIRMED` or `LOCAL_CLEANUP_UNRESOLVED` --
+this controller's own bounded evidence ONLY. A pod's cleanup evidence
+(`state.json["pod_evidence"][pod_id]`) reaches `CONFIRMED` only via (a) a
+positive `TERMINATED` observation, or (b) an acknowledged DELETE (`ACK_204`)
+corroborated by independent inventory reconciliation (two full, successful
+scans that do not see the pod, with no intervening reappearance). An
+ambiguous 404 alone -- "not found or not accessible" per the official
+NotFoundError semantics -- NEVER confirms termination on its own, and a
+pod's evidence is demoted back to `UNRESOLVED` if it later reappears.
+Reconciliation now runs every cleanup round unconditionally, even after an
+apparently clean create; it is never disarmed by an optimistic response.
+
+`LOCAL_CLEANUP_CONFIRMED` is NOT the same as the run's true operational
+cleanup status: `reconciliation_required` stays `true` forever as a durable
+obligation the independent reaper also carries. Use
+`age_controller.combine_operational_cleanup(local_outcome, reaper_report)`
+(an operator/CI step run after the reaper's own reconciliation window) to
+merge this controller's outcome with `independent_reaper.py`'s
+`REAPER_CLEANUP_CONFIRMED`/`REAPER_CLEANUP_UNRESOLVED`/`REAPER_PENDING`
+report into one `OPERATIONAL_CLEANUP_CONFIRMED`/`_UNRESOLVED` verdict.
+Neither side may unilaterally declare billing risk retired.
+
+### Independent reaper (B3)
+
+`independent_reaper.py` is a separate, cleanup-only module with no import
+dependency on `age_controller.py` and no `create_pod` capability anywhere in
+its own code path (`ReaperProvider` never exposes one). Deploy it on any
+host/process/scheduler independent of this controller's process, filesystem,
+power, network session, and artifact proxy:
+
+1. `arm --manifest reaper_manifest.json --out-ack reaper_ack.json
+   --scheduler-id ID` (reads `AGE_REAPER_SHARED_SECRET`): durably
+   acknowledges an exact plan BEFORE the controller may POST. Copy
+   `reaper_ack.json` back into the run directory (or keep the run directory
+   on storage both hosts can reach) so `run()`'s `_require_reaper_armed`
+   gate can read it.
+2. `sweep --manifest reaper_manifest.json --out-evidence reaper_evidence.json
+   [--ack reaper_ack.json] [--rounds N] [--poll-seconds S]` (reads
+   `RUNPOD_API_KEY`): run repeatedly (cron/systemd timer/job queue) from at
+   or after the plan's cutoff until `reconciliation_horizon_seconds` has
+   elapsed. Evidence accumulates across invocations; "confirmed with zero
+   owned pods ever found" requires the full horizon to have elapsed with a
+   long, unbroken, fully-successful empty-scan streak -- never a handful of
+   scans in one process lifetime.
+
+See `independent_reaper.py`'s module docstring and
+`Aether/test/test_aeth01_independent_reaper.py` (including a host-offline
+rehearsal test) for the full contract and offline-tested scenarios.
 
 ### Configuration and approval (nonsecret JSON)
 
@@ -54,12 +111,16 @@ The latter has exactly `attested: true`, `deadline_utc`, and `reference`;
 deadline and reference must equal the config. Do not attest a cutoff that has
 not actually been armed independently of this host. None was armed here.
 
-Only a future live `run` reads `RUNPOD_API_KEY` and `AGE_ARTIFACT_TOKEN` from
-the operator's privately supplied environment. Generate the latter independently
-with a cryptographic RNG (at least 32 printable non-whitespace characters).
-Never reuse the API key as the artifact token. Never put either value in JSON,
-shell arguments, logs, review packets or commits. Recovery can terminate without
-the artifact token, but cannot download artifacts without it.
+Only a future live `run` reads `RUNPOD_API_KEY`, `AGE_ARTIFACT_TOKEN`, and
+`AGE_REAPER_SHARED_SECRET` from the operator's privately supplied environment.
+Generate each independently with a cryptographic RNG (at least 32 printable
+non-whitespace characters). Never reuse any of the three for another; never
+put any of them in JSON, shell arguments, logs, review packets or commits.
+`AGE_REAPER_SHARED_SECRET` never reaches the provider or the pod -- it only
+HMACs the local `reaper_manifest.json`/`reaper_ack.json` handoff with the
+independent reaper (see "Independent reaper" below) and must also be
+supplied to that separate process via its own environment. Recovery can
+terminate without the artifact token, but cannot download artifacts without it.
 
 `launch_pod.sh` and `terminate_pod.sh` are **disabled migration stubs**:
 they print guidance to stderr, exit nonzero, and make no provider calls.
@@ -88,9 +149,11 @@ end-to-end run has been validated:
    cannot erase a pod already found. Incomplete inventory never confirms cleanup.
 4. Use RunPod API v2 at `https://api.runpod.io/v2/pods`: create expects
    **POST 201**; GET returns structured data; listing must handle pagination.
-   Termination expects **DELETE 204**, followed by GET verification of
-   **404 or `TERMINATED`**. A DELETE response alone is not verified cleanup;
-   stopped, unreachable, or missing artifacts do not establish termination.
+   `terminate_pod()` returns `ACK_204` or `NOT_FOUND_404` -- these are never
+   collapsed into each other, since **404 also means "not accessible to the
+   caller," not solely "no longer exists"** (official v2 semantics). Neither
+   a DELETE response alone, nor a single ambiguous GET 404, is verified
+   cleanup; see "Cleanup evidence contract" above for what actually is.
 5. Fetch **bounded** `receipt.json`, `canary.log`, and `result.json` over the
    pod's **HTTPS proxy for port 8080**, using a distinct artifact token
    supplied to the container through its environment. Bound request time,
