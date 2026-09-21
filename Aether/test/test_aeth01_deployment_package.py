@@ -1,5 +1,7 @@
 """Offline package guardrails; no image builds, provider calls or credentials."""
 
+import importlib.util
+import json
 from pathlib import Path
 import re
 import shutil
@@ -50,6 +52,27 @@ def test_build_requires_explicit_tag_and_amd64_and_no_launch():
     assert "docker build --platform linux/amd64" in text
     assert "docker push" in text and "@sha256" in text
     assert not re.search(r"^\s*(runpodctl|python[0-9]*|curl|wget) ", text, re.MULTILINE)
+
+
+def test_image_manifest_covers_runtime_critical_files_and_is_current():
+    spec = importlib.util.spec_from_file_location("_image_manifest_test",
+                                                   PACKAGE / "image_manifest.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    manifest = module.build_manifest()
+    # Every file actually shipped in the docker build context is covered,
+    # plus pod_service.py and the controller-facing receipt schema (section
+    # 9's "not only CPU oracle/GPU kernel/canary runner").
+    docker_payload = {"aeth01_cpu_oracle.py", "aeth01_gpu_kernel.py",
+                      "run_canary.py", "pod_service.py", "watchdog.sh"}
+    assert docker_payload <= set(manifest["file_hashes_sha256"])
+    assert {"pod_service.py", "receipt_schema.json", "Dockerfile"} <= set(
+        manifest["file_hashes_sha256"])
+    committed = json.loads((PACKAGE / "image_manifest.json").read_text())
+    assert committed["file_hashes_sha256"] == manifest["file_hashes_sha256"]
+    # Never claim build-verified identity that has not actually been checked.
+    assert manifest["immutable_image_digest"] is None
+    assert manifest["pinned_dependencies_build_verified"] is False
 
 
 def test_linux_payload_files_are_lf_with_checkout_attributes():

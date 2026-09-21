@@ -452,7 +452,8 @@ class PodServiceTests(unittest.TestCase):
     def test_image_uses_system_python_and_service_entrypoint(self):
         dockerfile = (CANARY_DIR / "Dockerfile").read_text(encoding="utf-8")
         self.assertIn("python3 python3-pip", dockerfile)
-        self.assertIn("python3 -m pip install --no-cache-dir numpy cupy-cuda12x", dockerfile)
+        self.assertIn("python3 -m pip install --no-cache-dir numpy==2.2.0 cupy-cuda12x==13.3.0",
+                     dockerfile)
         self.assertNotIn("python3.11", dockerfile)
         self.assertIn("pod_service.py watchdog.sh /app/", dockerfile)
         self.assertIn('CMD ["python3", "/app/pod_service.py"]', dockerfile)

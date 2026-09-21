@@ -1,0 +1,21 @@
+{
+  "base_image": "nvidia/cuda:12.4.1-runtime-ubuntu22.04",
+  "file_hashes_sha256": {
+    "Dockerfile": "fccdd508f5367ae6e003cc11a98f82051b09a5ca545840d9d293500ced709346",
+    "aeth01_cpu_oracle.py": "0d516f1b2f790afcdba0c42e2b8b88b54ed379bb77cc9c355831ee1d53e67ef6",
+    "aeth01_gpu_kernel.py": "0b7c89bd35912c82cae9c3baca10d0e56eef3cf72222c9da045026f58c3195e3",
+    "pod_service.py": "f5053e38525cdde82b407f9cc8d61d4d3ea89d539f632346659000187e1a636a",
+    "receipt_schema.json": "6838951bded25a5ae786a4f3c8f532ae79d6f0186a3d3bb407608246f41ff3e3",
+    "run_canary.py": "4964a84e0b55bb58792de3b277431e4e27f8c2bd29dd5d7479aa051818928101",
+    "watchdog.sh": "1a3d53882de0fc951c0a609ec39b8cfcb3dcd22cf69fea79595774e621f778bd"
+  },
+  "immutable_image_digest": null,
+  "installed_dependencies": null,
+  "notes": "file_hashes_sha256 covers worktree source bytes at manifest-generation time, not a built image's on-disk contents. installed_dependencies and immutable_image_digest MUST be filled in from an actual `docker build --platform linux/amd64` + `docker inspect` + `pip freeze` before this manifest is treated as binding R1 image identity evidence.",
+  "pinned_dependencies": {
+    "cupy-cuda12x": "13.3.0",
+    "numpy": "2.2.0"
+  },
+  "pinned_dependencies_build_verified": false,
+  "version": 1
+}

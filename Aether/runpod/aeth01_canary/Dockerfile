@@ -7,10 +7,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Package versions are currently unpinned: this image has not been built.
-# Record resolved versions and deploy only the approved immutable image digest;
-# repeat builds from this Dockerfile alone are NOT claimed reproducible.
-RUN python3 -m pip install --no-cache-dir numpy cupy-cuda12x
+# Pinned target versions (ASTRA_CLOSURE_REVIEW_02.md section 7/9): this is
+# a best-effort pin only, NOT build-verified -- the Docker daemon was
+# unavailable in the repair environment that wrote this pin (README.md
+# "Status"). Before R1: actually build this image, confirm these versions
+# resolve and install cleanly, record whatever versions actually installed
+# (pip freeze) in the image/source manifest, and deploy only the resulting
+# immutable digest. Do not trust this pin as a substitute for that build.
+RUN python3 -m pip install --no-cache-dir numpy==2.2.0 cupy-cuda12x==13.3.0
 
 WORKDIR /app
 COPY aeth01_gpu_kernel.py aeth01_cpu_oracle.py run_canary.py pod_service.py watchdog.sh /app/
