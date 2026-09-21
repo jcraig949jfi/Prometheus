@@ -1,16 +1,10 @@
 #!/bin/bash
-# AETH-01 RunPod canary cost-control watchdog.
+# AETH-01 legacy command timeout wrapper; NOT a pod billing watchdog.
 #
-# Hard wall-clock kill switch: runs the given command, and if it has not
-# exited within HARD_TIMEOUT_SECONDS, kills it. This bounds worst-case
-# spend independently of whatever `run_canary.py` itself does (a hang,
-# infinite loop, or CuPy install/import stall must not silently consume
-# the whole $19.93 budget). `launch_pod.sh` derives this value from the
-# operator-supplied HOURLY_RATE and MAX_DOLLAR_BUDGET (with a safety
-# factor) and passes it in via AETH01_CANARY_TIMEOUT_SECONDS; the 600s
-# default below only applies if this script is invoked standalone,
-# outside `launch_pod.sh` (e.g. local testing), and is NOT itself a
-# budget calculation -- see README.md's cost-control section for that.
+# Kills the command on timeout, not the pod. Stopping a command or container
+# does NOT stop pod billing or bound spend. Only external controller/operator
+# termination does that. Use pod_service.py for authenticated artifact retrieval
+# before teardown; do NOT wrap that service in this timeout (it must stay alive).
 #
 # Usage: watchdog.sh <command> [args...]
 # A killed run still counts as spend (AETHER_RUNPOD.md) and must be
@@ -20,7 +14,18 @@
 
 set -u
 
-HARD_TIMEOUT_SECONDS="${AETH01_CANARY_TIMEOUT_SECONDS:-600}"
+HARD_TIMEOUT_SECONDS="${AETH01_CANARY_TIMEOUT_SECONDS-600}"
+
+# GNU timeout treats zero as disabled: explicitly reject zero, empty, fractions,
+# negatives, and values outside the same 1..600 contract as pod_service.py.
+if [[ ! "$HARD_TIMEOUT_SECONDS" =~ ^[0-9]{1,3}$ ]]; then
+    echo "[watchdog] AETH01_CANARY_TIMEOUT_SECONDS must be an integer in 1..600" >&2
+    exit 2
+fi
+if (( 10#$HARD_TIMEOUT_SECONDS < 1 || 10#$HARD_TIMEOUT_SECONDS > 600 )); then
+    echo "[watchdog] AETH01_CANARY_TIMEOUT_SECONDS must be an integer in 1..600" >&2
+    exit 2
+fi
 
 if [ "$#" -lt 1 ]; then
     echo "usage: watchdog.sh <command> [args...]" >&2
@@ -28,13 +33,14 @@ if [ "$#" -lt 1 ]; then
 fi
 
 echo "[watchdog] hard timeout: ${HARD_TIMEOUT_SECONDS}s"
-echo "[watchdog] running: $*"
+echo "[watchdog] pod billing continues until external termination" >&2
 
 timeout --signal=KILL "${HARD_TIMEOUT_SECONDS}" "$@"
 status=$?
 
 if [ "$status" -eq 137 ]; then
-    echo "[watchdog] KILLED at ${HARD_TIMEOUT_SECONDS}s hard timeout -- this is a cost-control event, not a normal exit" >&2
+    echo "[watchdog] command killed; pod still requires external termination" >&2
+    status=124
 fi
 
 exit "$status"

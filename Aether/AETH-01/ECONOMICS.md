@@ -30,15 +30,32 @@ limit, not an oversight (DECISIONS.md).
     REPLENISH_AMOUNT = 0
     (MUT_NUMER independently swept, not part of the economic regime)
 
-No passive decay, no inflow: a cell's initial energy allocation is the
-ONLY energy it will ever have, spent 1 unit per WRITE attempt until
-exhausted. This is the simplest possible cost model layered on
-AETH-00 -- a single scalar "WRITE budget" per cell, fully reproducible,
-easiest to hand-verify and to write golden vectors for. Dormancy is
-strictly free (an inert cell never loses energy). Every run is
-finite-lived by construction (total possible WRITEs in the whole world
-<= total initial energy / WRITE_COST) unless transfers redistribute
-energy from richer to poorer cells, which cannot increase the total.
+No passive decay or external inflow: each WRITE attempt spends 1 unit.
+An isolated cell has only its initial energy budget; field-4 transfers
+can redistribute reserves between cells, never increase the world total.
+This is the simplest cost model layered on AETH-00, fully reproducible
+and easy to hand-verify. Dormancy is free of passive energy decay.
+The world's total possible WRITEs are bounded by total initial energy /
+WRITE_COST even WITH transfers; redistribution is not an exception to
+finite total activity. Per-cell pulse counts require the isolation
+assumptions below, rather than ignoring incoming/outgoing transfers.
+
+### Exact isolated pulse budget (write before maintenance)
+
+For an unchanged WRITE cell targeting fields 0-3, with no incoming or
+outgoing energy transfers and no replenishment, let initial energy be E,
+write cost w, maintenance m. If w>0, the exact emission count is zero
+when E<w; otherwise `N = 1 + floor((E-w)/(w+m))`. Each full active tick
+uses w+m until the last one: emission checks only E>=w, THEN maintenance
+is floored at zero. Thus `floor(E/(w+m))` undercounts by one whenever
+the remainder is >=w. Example: E=23,w=3,m=2 emits five times, with
+post-tick energies 18,13,8,3,0; E=22 emits four times. With m=0 the
+formula reduces to floor(E/w), and a starved cell may retain energy.
+With w=0 there is NO energy-limited exhaustion, even for m>0 and E=0;
+the uint64 tick limit remains separate. These assumptions matter:
+external activation, transfers, replenishment or self-reconfiguration
+invalidate this isolated-cell formula. See K4 in KILL_GATES_01.md and
+the boundary/recurrence regressions in `test_aeth01_kill_gates.py`.
 
 ## Regime B -- "Metabolic ecology"
 

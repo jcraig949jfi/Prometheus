@@ -33,8 +33,8 @@ in a field wide enough to hold `2^32` exactly (repairs S02(a)).
 ## 3. Tick semantics (synchronous, 7 phases, extends AETH-00's 5)
 
 1. DECODE: `STARVED = energy < WRITE_COST` for WRITE cells.
-2. EMIT: each active, non-starved WRITE cell emits one proposal per
-   von-Neumann-neighbor target (`arg0 mod 4`) and target field
+2. EMIT: each active, non-starved WRITE cell emits exactly one proposal,
+   to the selected von-Neumann-neighbor target (`arg0 mod 4`) and field
    (`arg1 mod 5`); fields 0-3 carry `payload`; field 4 carries
    `transfer_amt = min(payload, energy - WRITE_COST)`.
 3. ARBITRATE: AETH-00's unmodified SplitMix64 chained-priority law,
@@ -45,8 +45,9 @@ in a field wide enough to hold `2^32` exactly (repairs S02(a)).
    cell is debited `WRITE_COST`; (b) every field-4-emitting cell is
    further debited its full `transfer_amt`, win or lose; (c) per
    contest, only the winner is credited `min(transfer_amt, 255 -
-   target_energy)` (the delta, saturating); losers' amounts and any
+   target_energy_after_own_debits)` (the delta, saturating); losers' amounts and any
    winner overflow above 255 are destroyed, never refunded/redirected.
+   All source debits precede all target credits, including self-transfers.
 6. MAINTENANCE: `energy -= min(MAINTENANCE_COST, energy)` (floored).
 7. REPLENISH: independent per-cell Bernoulli at `REPLENISH_NUMER/2^32`
    credits `min(REPLENISH_AMOUNT, 255 - energy)`.
@@ -61,8 +62,9 @@ untouched bytes, never on field 4, at ANY `MUT_NUMER` including
 C(row,col)) XOR field)`; `triggered = (key>>32) < MUT_NUMER`;
 `bit_index = key AND 0b111`; stored value is the donor's payload,
 XOR'd with `1 << bit_index` if triggered, else unchanged. Repeated
-overwrite from a FIXED, unmutated donor is memoryless (i.i.d. per
-event, not a cumulative walk) -- `KILL_GATES_01.md` K2.
+overwrite from a FIXED, unmutated donor resets to that donor each time,
+not a cumulative walk -- `KILL_GATES_01.md` K2. This does not prove
+statistical independence of deterministic hash-keyed events across ticks.
 
 ## 5. Replenishment (`Rho`) -- independent per cell
 
@@ -117,7 +119,7 @@ lattice bytes)`.
 - `WRITE_COST`/`MAINTENANCE_COST`/replenishment: new scarcity/decay
   mechanics; AETH-00 had none.
 - Replay-identity tuple grows from 6 to 11 components.
-- Instrumentation grows from 3 to 8 event kinds.
+- Instrumentation adds 8 event kinds to AETH-00's 3 (11 total).
 
 ## 10. Differences from the pre-repair draft (`5e41c1d67`)
 
@@ -131,9 +133,14 @@ Every difference below is itemized, reasoned, and falsifier-bearing in
 - Mutation mechanism description replaced: copy-coupled, not
   autonomous/dormant drift; mod-5 adjacency loss made explicit -- S03,
   M01.
-- Heredity tier ladder gains a separated `CONSTRUCTED_CAPACITY` tier and
-  9 independent evidence axes, closing the relay/recursive-construction
-  gap -- S04.
+- Heredity has exactly five tiers: STRUCTURAL_RESEMBLANCE,
+  CAUSAL_VALUE_CONSTRUCTION, CONSTRUCTED_CAPACITY,
+  RECURSIVE_CONSTRUCTION, HEREDITY_VARIATION, plus 10 separately
+  reported evidence axes -- S04. Resemblance is not a causal prerequisite.
+  K3 fixture 3 is distributed construction by A_opcode and A_arg0 with
+  initialized scaffold; fixture 4 is recursive activation of preconfigured
+  machinery, NOT recursive configuration construction. These fixture-local
+  distinctions do not supply a general detector or population evidence.
 - Absorption/`FROZEN`/`DEAD` labels downgraded to censored, not proven,
   stops -- S05.
 - Provenance `instrument_class` composition rule made explicit and

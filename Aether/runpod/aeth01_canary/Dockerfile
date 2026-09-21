@@ -4,18 +4,21 @@
 FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3.11 python3-pip \
+        python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Pinned only to a major line, not an exact patch version, since this
-# has never been built; an exact pin should be recorded in the receipt
-# once a real build happens, not guessed here.
-RUN pip3 install --no-cache-dir numpy cupy-cuda12x
+# Package versions are currently unpinned: this image has not been built.
+# Record resolved versions and deploy only the approved immutable image digest;
+# repeat builds from this Dockerfile alone are NOT claimed reproducible.
+RUN python3 -m pip install --no-cache-dir numpy cupy-cuda12x
 
 WORKDIR /app
-COPY aeth01_gpu_kernel.py aeth01_cpu_oracle.py run_canary.py watchdog.sh /app/
+COPY aeth01_gpu_kernel.py aeth01_cpu_oracle.py run_canary.py pod_service.py watchdog.sh /app/
 RUN chmod +x /app/watchdog.sh
+EXPOSE 8080
 
-# No ENTRYPOINT/CMD: the RunPod pod launch command (README.md) supplies
-# the exact invocation explicitly, so a pod started without arguments
-# does nothing expensive by accident.
+# The controller supplies AGE_ARTIFACT_TOKEN, AETH01_RUN_ID and the bounded
+# timeout, exposes 8080/http, retrieves artifacts, then TERMINATES the pod.
+# Missing auth/run binding fails closed before any canary starts. Finishing
+# the canary does NOT stop pod billing. Never put RunPod API credentials here.
+CMD ["python3", "/app/pod_service.py"]

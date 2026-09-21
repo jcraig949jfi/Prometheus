@@ -5,8 +5,9 @@ AETH-01 -- preregistered CPU (`oracle_aeth01.py`) vs GPU-shaped
 Preregistered categories (fixed BEFORE running, per GPU_RUNPOD.md
 "Verify" tier and ADVERSARIAL_ANALYSIS.md #9's closure requirement):
 (1) the 6 K1 hand-worked accounting cases, run on both implementations;
-(2) the two K3 heredity fixtures (relay, constructed-capacity), both
-    ablation variants, run on both implementations;
+(2) all four seeded K3 fixtures, including distributed two-source
+    construction and recursive activation of preconfigured machinery,
+    with per-source/content/control/scaffold interventions and rescues;
 (3) explicit H,W in {1,2} toroidal self-aliasing dimension cases;
 (4) >=500 randomized small worlds (Hypothesis), single tick;
 (5) multi-tick trajectories (5 chained steps) on randomized worlds,
@@ -21,11 +22,13 @@ actual GPU execution.
 """
 
 import numpy as np
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from reference import oracle_aeth01 as ok1
 from reference.gpu_aeth01 import gpu_step
+from reference.scientific_aeth01 import k3_intervention_cases
 
 MAX_DIM = 4
 
@@ -42,18 +45,22 @@ def _from_arrays(arrays, H, W):
 
 def _gpu_step_on_grid(world):
     opcode, arg0, arg1, payload, energy = _to_arrays(world.grid, world.H, world.W)
-    no_, na0, na1, npl, ne, _counters = gpu_step(
+    no_, na0, na1, npl, ne, counters = gpu_step(
         world.H, world.W, world.seed, world.tick, world.write_cost,
         world.maintenance_cost, world.replenish_numer, world.replenish_amount,
         world.mut_numer, opcode, arg0, arg1, payload, energy,
     )
-    return _from_arrays([no_, na0, na1, npl, ne], world.H, world.W)
+    return _from_arrays([no_, na0, na1, npl, ne], world.H, world.W), counters
 
 
 def _assert_cpu_gpu_agree(world, msg=""):
-    cpu_next = world.step()
-    gpu_grid = _gpu_step_on_grid(world)
+    trace = []
+    cpu_next = world.step(trace=trace)
+    gpu_grid, counters = _gpu_step_on_grid(world)
     assert gpu_grid == cpu_next.grid, f"CPU/GPU mismatch {msg}: cpu={cpu_next.grid} gpu={gpu_grid}"
+    emitted = sum(event[0] == "proposal_emitted" for event in trace)
+    assert counters["activity_density"] == emitted / (world.H * world.W), msg
+    assert counters["total_energy"] == sum(cell[ok1.ENERGY] for row in cpu_next.grid for cell in row), msg
     return cpu_next
 
 
@@ -79,65 +86,32 @@ def test_gpu_matches_cpu_k1_cases():
         _assert_cpu_gpu_agree(w, msg=f"K1 case {i+1}")
 
 
-# --- (2) K3 fixtures, both ablation variants ---------------------------
+# --- (2) Shared K3 input corpus; independent transition implementations --
 
-def test_gpu_matches_cpu_k3_relay_fixture():
-    for a_active in (True, False):
-        a_opcode = ok1.WRITE_OPCODE if a_active else 0x02
-        A = (a_opcode, 1, 3, 77, 10)
-        B = (ok1.WRITE_OPCODE, 1, 3, 0, 10)
-        C = (0, 0, 0, 0, 0)
-        D = (0, 5, 5, 5, 0)
-        w = _world(1, 4, seed=21, write_cost=1, grid=[[A, B, C, D]])
-        for t in range(3):
-            w = _assert_cpu_gpu_agree(w, msg=f"K3 relay a_active={a_active} tick={t}")
+@pytest.mark.parametrize("name,world", tuple(k3_intervention_cases()))
+def test_gpu_matches_cpu_k3_interventions(name, world):
+    for tick in range(4):
+        world = _assert_cpu_gpu_agree(world, msg=f"K3 {name} tick={tick}")
 
 
-def test_gpu_matches_cpu_k3_constructed_capacity_fixture():
-    for a_active in (True, False):
-        a_opcode = ok1.WRITE_OPCODE if a_active else 0x02
-        A = (a_opcode, 1, 0, ok1.WRITE_OPCODE, 10)
-        B = (0x00, 1, 3, 99, 10)
-        C = (0, 0, 0, 0, 0)
-        D = (0, 5, 5, 5, 0)
-        w = _world(1, 4, seed=23, write_cost=1, grid=[[A, B, C, D]])
-        for t in range(4):
-            w = _assert_cpu_gpu_agree(w, msg=f"K3 capacity a_active={a_active} tick={t}")
-
-
-# --- (2b) K3 closure-patch addendum: CONSTRUCTION + RECURSIVE_CONSTRUCTION --
-
-def test_gpu_matches_cpu_k3_construction_fixture():
-    for a_opcode_active in (True, False):
-        for a_arg0_active in (True, False):
-            a_opcode_op = ok1.WRITE_OPCODE if a_opcode_active else 0x02
-            a_arg0_op = ok1.WRITE_OPCODE if a_arg0_active else 0x02
-            ctrl = (0, 5, 5, 5, 0)
-            a_opcode_cell = (a_opcode_op, 2, 0, ok1.WRITE_OPCODE, 10)
-            a_arg0_cell = (a_arg0_op, 1, 1, 1, 10)
-            b = (0x00, 2, 3, 77, 10)
-            unused = (0, 0, 0, 0, 0)
-            c = (0, 0, 0, 0, 0)
-            f = (0, 0, 0, 0, 0)
-            grid = [[ctrl, a_opcode_cell, unused], [a_arg0_cell, b, c], [unused, f, unused]]
-            w = _world(3, 3, seed=31, write_cost=1, grid=grid)
-            for t in range(3):
-                w = _assert_cpu_gpu_agree(
-                    w, msg=f"K3 construction a_opcode={a_opcode_active} a_arg0={a_arg0_active} tick={t}"
-                )
-
-
-def test_gpu_matches_cpu_k3_recursive_construction_fixture():
-    for a_active in (True, False):
-        a_op = ok1.WRITE_OPCODE if a_active else 0x02
-        a = (a_op, 1, 0, ok1.WRITE_OPCODE, 10)
-        b = (0x00, 1, 0, ok1.WRITE_OPCODE, 10)
-        c = (0x00, 1, 3, 99, 10)
-        d = (0, 0, 0, 0, 0)
-        e = (0, 5, 5, 5, 0)
-        w = _world(1, 5, seed=37, write_cost=1, grid=[[a, b, c, d, e]])
-        for t in range(4):
-            w = _assert_cpu_gpu_agree(w, msg=f"K3 recursive a_active={a_active} tick={t}")
+@pytest.mark.parametrize("energy,write_cost,maintenance_cost,pulses", [
+    (0, 3, 2, 0), (2, 3, 2, 0), (3, 3, 2, 1), (4, 3, 2, 1),
+    (20, 3, 2, 4), (22, 3, 2, 4), (23, 3, 2, 5), (24, 3, 2, 5),
+    (7, 3, 0, 2), (255, 255, 255, 1), (255, 1, 255, 1),
+    (0, 0, 0, 8), (0, 0, 2, 8), (5, 0, 2, 8), (255, 0, 255, 8),
+])
+def test_gpu_matches_cpu_pulse_budget_boundary(energy, write_cost, maintenance_cost, pulses):
+    world = _world(1, 2, seed=41, write_cost=write_cost, maintenance_cost=maintenance_cost,
+                   grid=[[(1, 1, 3, 7, energy), (0, 0, 0, 0, 0)]])
+    observed = 0
+    for tick in range(8):
+        # Cross-checked against GPU activity_density inside the step helper,
+        # even when a final same-value write leaves no visible template delta.
+        trace = []
+        world.step(trace=trace)
+        observed += sum(event[0] == "proposal_emitted" for event in trace)
+        world = _assert_cpu_gpu_agree(world, msg=f"pulse boundary tick={tick}")
+    assert observed == pulses
 
 
 # --- (3) explicit H,W in {1,2} self-aliasing dimensions -----------------

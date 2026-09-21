@@ -1,187 +1,165 @@
 # AETH-01 RunPod canary package
 
-Status: **PACKAGE ONLY, NOT LAUNCHED.** No RunPod spend has occurred.
-This package exists so a single, small, operator-approved run can
-happen with one command, inside the $19.93 hard cap (AETHER_RUNPOD.md)
-and a **$3 canary-specific sub-cap**. Nothing here runs itself.
+Status: **LOCAL VALIDATION ONLY; NO GPU OR RUNPOD RUN.** No image build or
+push has been performed; the Docker daemon is unavailable. The spend ledger
+remains **$0**. The operator-stated $19.93 balance is not live-verified.
 
-## What this canary answers
+## Entry points and migration
 
-The single question (AETHER_RUNPOD.md's 5-item run-proposal
-requirement): **does the GPU-shaped algorithm
-(`test/reference/gpu_aeth01.py`, already verified against the CPU
-oracle locally via NumPy) produce bit-identical results to the CPU
-oracle when its array backend is swapped to an actual CUDA array
-library (CuPy) on real GPU hardware?** This is the open half of R12
-(REQUIREMENTS.md): the gather-shape feasibility argument is strong, but
-"no GPU implementation of ANY AETH candidate has been built or
-measured" until this runs.
+`age_controller.py` is the stdlib programmatic launch/recovery entry point.
+From this directory, `python age_controller.py --help` lists its three commands:
 
-## Package inventory
+- `plan --config CONFIG --run-dir FRESH_DIRECTORY`: zero network and zero
+  credential reads. Parent directory must exist. Writes nonsecret `plan.json`
+  with a random run UUID, exact source hashes and a plan SHA-256 summary.
+- `run --run-dir DIRECTORY --approval APPROVAL --execute-paid-run`: **future
+  paid operation, NOT authorized now**. Validates approval and local source
+  bytes, locks the run, journals intent, then attempts exactly one POST.
+- `recover --run-dir DIRECTORY`: cleanup only, never POST; allowed even after
+  approval expires. Requires the same durable plan/state directory. Recovery
+  returns nonzero even after confirmed cleanup; it never upgrades science.
 
-- `README.md` -- this file.
-- `Dockerfile` -- CUDA + Python 3.11 + CuPy + NumPy image; copies the
-  canary payload in; no other dependencies.
-- `aeth01_gpu_kernel.py` -- backend-agnostic port of
-  `test/reference/gpu_aeth01.py`: uses CuPy if importable, else falls
-  back to NumPy (so the identical file can be smoke-tested locally
-  before ever touching a pod). **No physics change from
-  `gpu_aeth01.py`** -- this file must be kept byte-identical to it
-  except for the backend-selection shim at the top; any divergence
-  invalidates the local differential-test evidence already gathered.
-- `aeth01_cpu_oracle.py` -- verbatim copy of `test/reference/oracle_aeth01.py`,
-  bundled so the pod can verify against the SAME CPU reference without
-  a network dependency at run time.
-- `run_canary.py` -- on-pod entry point: runs a small preregistered
-  differential corpus (same shape as
-  `test/test_aeth01_gpu_differential.py`) CPU-oracle vs GPU-kernel on
-  whatever backend is active, times the GPU path, writes `receipt.json`.
-- `watchdog.sh` -- hard wall-clock kill switch (cost control).
-- `build_and_push.sh` -- builds and pushes the container image. Not run.
-- `launch_pod.sh` -- the exact proposed RunPod launch command, with
-  fail-closed budget-derived cost control (requires `HOURLY_RATE` and
-  `MAX_DOLLAR_BUDGET`, no defaults) and automatic pod cleanup on exit.
-  Not run.
-- `terminate_pod.sh` -- explicit manual pod termination; independent
-  fallback to `launch_pod.sh`'s own automatic cleanup. Not run.
-- `receipt_schema.json` -- JSON Schema for `receipt.json`'s required shape.
+Run directories are private local operational records, not repository artifacts.
+Do not edit, duplicate, delete or reuse them. `state.json` retains owned IDs,
+artifact hashes, `science_verdict`, `cleanup_status`, and sanitized failure code.
+Artifacts are saved under `artifacts/<pod_id>/` before normal teardown.
 
-## Exact proposed RunPod command (NOT executed)
+### Configuration and approval (nonsecret JSON)
 
-`launch_pod.sh` wraps the command below with fail-closed budget
-derivation and automatic cleanup (next section); this is the
-underlying `runpodctl` call it makes:
+Config keys are exact; unknown keys, boolean numbers and nonfinite values fail.
 
-    runpodctl create pod \
-      --name aeth01-canary \
-      --imageName <registry>/aeth01-canary:latest \
-      --gpuType "NVIDIA RTX A4000" \
-      --gpuCount 1 \
-      --containerDiskSize 10 \
-      --volumeSize 0 \
-      --cost <HOURLY_RATE> \
-      --env "AETH01_CANARY_TIMEOUT_SECONDS=<derived>" \
-      --args "bash /app/watchdog.sh python3 /app/run_canary.py"
+| Config key | Required value |
+|---|---|
+| `image` | Immutable registry/repository reference with `@sha256:<64 lowercase hex>` |
+| `gpu_id`, `cloud` | Current operator-selected GPU; `COMMUNITY` or `SECURE` |
+| `hourly_rate_usd` | Positive, current conservative **all-in** hourly estimate |
+| `canary_budget_usd` | Positive, at most 3 |
+| `remaining_budget_usd` | At least canary budget and at most 19.93; operator reconciles prior spend |
+| `max_lifetime_seconds` | Integer, at most 900; starts before create, including boot/pull |
+| `canary_timeout_seconds` | Integer 1..600 |
+| `independent_cutoff_deadline_utc` | Absolute UTC timestamp for the independently armed cutoff |
+| `independent_cutoff_reference` | Nonsecret identifier for that cutoff/recovery arrangement |
 
-`<registry>` and any API key/token are supplied via the operator's own
-`runpodctl` authentication (never embedded in this repo, never passed
-as a command-line literal -- `runpodctl` reads its API key from its own
-config file, set up out-of-band by the operator, not by this package).
-GPU type is the single cheapest CUDA-capable option available at
-launch time; `A4000` is a placeholder for "cheapest available," not a
-hard requirement. `--cost` is `runpodctl`'s own $/hr price ceiling,
-passed through as a second, provider-side check that the actual price
-never exceeds the operator-supplied `HOURLY_RATE`.
+Lifetime reserves 60s for retrieval and 120s for cleanup; boot/pull remainder
+must be at least 30s. Quoted lifetime cost must be <= half the canary budget.
+Cutoff must follow lifetime and fit the full budget/rate window measured from
+plan creation. Approval expires before cutoff; the full lifetime must still
+fit before cutoff at launch. These are conservative admission checks, not
+account-wide budget reservation or observed billing. Only one operator-approved
+canary is in scope; this is not a multi-run scheduler or campaign engine.
 
-## Cost-control calculation (EXAMPLE ONLY -- rates fluctuate)
+Approval has exactly `approved: true`, the generated `run_id`, `plan_sha256`
+(hash of exact plan bytes), `expires_at_utc`, and `independent_billing_cutoff`.
+The latter has exactly `attested: true`, `deadline_utc`, and `reference`;
+deadline and reference must equal the config. Do not attest a cutoff that has
+not actually been armed independently of this host. None was armed here.
 
-    EXAMPLE ONLY: RTX A4000 community-cloud rate ~= $0.17/hour (2026-09
-    ballpark, NOT fetched live, NOT a quote)
-    $3.00 cap / $0.17 per hour ~= 17.6 HOURS maximum runtime
+Only a future live `run` reads `RUNPOD_API_KEY` and `AGE_ARTIFACT_TOKEN` from
+the operator's privately supplied environment. Generate the latter independently
+with a cryptographic RNG (at least 32 printable non-whitespace characters).
+Never reuse the API key as the artifact token. Never put either value in JSON,
+shell arguments, logs, review packets or commits. Recovery can terminate without
+the artifact token, but cannot download artifacts without it.
 
-(Corrected from an earlier draft of this file, which mis-stated the
-result as "17.6 minutes" -- $3.00 / $0.17/hr is 17.6 **hours**, not
-minutes, at this EXAMPLE-ONLY rate. The actual binding constraint in
-practice is `watchdog.sh`'s wall-clock cap below, not this arithmetic
-by itself.)
+`launch_pod.sh` and `terminate_pod.sh` are **disabled migration stubs**:
+they print guidance to stderr, exit nonzero, and make no provider calls.
+Neither is a fallback paid path. For an existing pod, use controller
+recovery or terminate it in the RunPod console and verify termination.
 
-`launch_pod.sh` now REQUIRES the operator to supply `HOURLY_RATE` (read
-off the RunPod console at launch time -- no default, no silent fallback
-to the example rate above) and `MAX_DOLLAR_BUDGET` (must be `<=` the $3
-canary sub-cap). It fails closed (aborts, launches nothing) if either
-is missing or non-numeric. From these it derives an in-container hard
-timeout: `MAX_DOLLAR_BUDGET / HOURLY_RATE * 3600 * SAFETY_FACTOR`
-seconds (`SAFETY_FACTOR` defaults to `0.5`, i.e. at most half the
-dollar budget is allowed to be consumed by the container's own compute
-time; the rest is margin for pod boot/image-pull time, which is billed
-but not covered by an in-container timer). This derived value is passed
-into the container as `AETH01_CANARY_TIMEOUT_SECONDS`, which
-`watchdog.sh` reads instead of its generic 600s standalone default. The
-canary script itself is expected to complete in under 2 minutes (it is
-a few hundred tiny-world differential comparisons plus one timing loop,
-not a campaign); the derived timeout at the example rate/budget above
-is far larger than that, so in practice `watchdog.sh` is not expected
-to be the thing that stops a normal run -- it exists purely as the
-fail-safe for a hang.
+## Required controller contract
 
-If `run_canary.py` has not exited by the watchdog's deadline, the
-watchdog kills the container. `launch_pod.sh` also registers its own
-automatic cleanup: a shell trap that runs `runpodctl remove pod` when
-the script exits for ANY reason (normal completion, error, or an
-operator interrupt), so a pod is not left running just because the
-launching script stopped. This is defense in depth, not a replacement
-for `watchdog.sh`'s in-container timer, and it is not an absolute
-guarantee either -- see "Known unresolved risks" below. A killed or
-auto-terminated run still counts as spend (AETHER_RUNPOD.md) and must
-be logged in `AETHER_RUNPOD.md`'s spend ledger regardless of outcome.
-`terminate_pod.sh` remains available as an independent manual fallback
-if the automatic cleanup ever fails or warns.
+These are launch gates and lifecycle requirements, not a claim that a paid
+end-to-end run has been validated:
 
-## Expected receipt (`receipt.json`)
+1. A run-specific plan and explicit operator approval bind the `run_id`,
+   immutable image reference (`registry/repository@sha256:<digest>`), source
+   hashes, hardware, duration, cost estimate, and acceptance criteria.
+   The canary sub-cap is **$3**, within the **$19.93 total policy cap** in
+   [AETHER_RUNPOD.md](../../AETHER_RUNPOD.md). No standing approval applies.
+2. Before create, require an **operator-attested independent provider-side
+   or external cutoff**, with a run-specific deadline and recovery path
+   independent of the controller host. Without that attestation, fail closed.
+   A local timer or cleanup trap alone does not meet this requirement.
+3. Persist durable run ownership and create intent **before** sending POST.
+   A lost or ambiguous create response must trigger reconciliation against
+   structured, paginated pod listings using that ownership, **not a POST
+   retry**. Do not guess a pod ID from text or terminate an unrelated pod.
+   Positive ownership is journaled page by page, so a later listing failure
+   cannot erase a pod already found. Incomplete inventory never confirms cleanup.
+4. Use RunPod API v2 at `https://api.runpod.io/v2/pods`: create expects
+   **POST 201**; GET returns structured data; listing must handle pagination.
+   Termination expects **DELETE 204**, followed by GET verification of
+   **404 or `TERMINATED`**. A DELETE response alone is not verified cleanup;
+   stopped, unreachable, or missing artifacts do not establish termination.
+5. Fetch **bounded** `receipt.json`, `canary.log`, and `result.json` over the
+   pod's **HTTPS proxy for port 8080**, using a distinct artifact token
+   supplied to the container through its environment. Bound request time,
+   response sizes, and total collection time; do not delay cutoff indefinitely
+   for artifacts. The controller's RunPod API key must **never** reach the pod,
+   artifacts, or logs. Never print tokens or raw provider responses that may
+   contain environment secrets.
+6. Require a final `result.json` with `finished` equal to `true` and the
+   approved run binding. Cross-check its `run_id` with the receipt and plan;
+   an incomplete, stale, or wrong-run artifact is not success. Retrieve
+   artifacts before termination when possible, but prioritize the cutoff.
+   Verify cleanup and record actual spend even on failure or missing evidence.
+   Known owned IDs receive cleanup before further inventory scans. Expired
+   recovery gets a 120s cooperative emergency-cleanup scheduling window (up to
+   three rounds). In-flight calls can overrun that window; it is not hard
+   preemption. Original-lifetime overrun still prevents controller PASS.
 
-See `receipt_schema.json` for the enforced shape. `status` is the
-single authoritative verdict, drawn from a closed vocabulary: `PASS`,
-`FAIL_MISMATCH` (a case disagreed), `FAIL_ENVIRONMENT` (`backend` fell
-back to `numpy_fallback` when a real GPU was required -- CuPy failed to
-import; this is ALWAYS a fail on a real pod, never inferred as a pass
-even if the fallback arithmetic happens to match the CPU oracle),
-`FAIL_ERROR` (an unhandled exception), or `FAIL_INCOMPLETE` (the
-placeholder written before the run starts -- finding this on disk means
-the run never reached a verdict, e.g. `watchdog.sh` killed it; it must
-never be read as a pass by omission). `run_canary.py`'s own process
-exit code is 0 iff `status == "PASS"`.
+## Billing boundary
 
-Other contents: `semantics_id="aeth01.v1"`; `cases_run` /
-`cases_matched` (must be equal for `PASS`) covering both the
-`single_tick_trials` corpus and the `multi_tick_trials` x
-`multi_tick_steps` trajectory corpus (compared at every intermediate
-tick, not just the final one); `gpu_kernel_seconds` vs
-`cpu_oracle_seconds` (throughput comparison, informational only, not
-itself a pass/fail gate); `mismatches` (empty list on success; full
-CPU/GPU state diff, including which tick of a trajectory, on any
-disagreement, never silently dropped); `source_hashes` (sha256 of the
-bundled physics/harness files actually present on the pod, so a
-reviewer can confirm which revision ran without git history there);
-`cost_context` (echo of the `HOURLY_RATE`/`MAX_DOLLAR_BUDGET`/derived
-timeout `launch_pod.sh` used for this run, if launched that way);
-`started_at_utc` / `finished_at_utc`; and `python_version` /
-`numpy_version` / `cupy_version`.
+No maximum-price or hard-expiry field is documented for this API create
+contract. The v2 returned `cost` is checked against the quote at create/status,
+but does not reserve a rate. A rate estimate, image tag, local timeout, or client-side budget
+calculation is not provider-enforced protection. **The controller is not an
+absolute billing guarantee**, even with independent cutoff attestation.
+Provider failure, network loss, boot/image-pull delays, and failed cleanup
+remain risks; the operator must independently check termination and charges.
 
-## Known unresolved risks
+`pod_service.py` supervises the canary process group with a maximum **600s**
+compute deadline. When the child finishes or is killed, the service remains
+up to serve artifacts. **The pod continues billing until externally
+terminated**; process exit and the in-container watchdog do not stop billing.
 
-- CuPy's `uint64` bitwise/wraparound semantics on the actual pod's CUDA
-  version have not been checked against this package's assumption that
-  they exactly mirror NumPy's (verified locally in NumPy only,
-  REQUIREMENTS.md R12 note).
-- Fancy-index gather (`array[n_row, n_col]` with 2-D index arrays) is
-  used identically to the NumPy version; CuPy documents this as
-  supported, but it has not been exercised on real hardware here.
-- Pod boot / image pull time is unmeasured and could consume a
-  meaningful fraction of the $3 cap before the canary itself starts;
-  `launch_pod.sh`'s derived timeout budgets only half of
-  `MAX_DOLLAR_BUDGET` for in-container compute time specifically to
-  leave margin for this, but the actual boot/pull duration on real
-  hardware is still unmeasured.
-- This canary establishes ONE differential-match data point on ONE GPU
-  type; it is not a throughput benchmark or a campaign-readiness proof.
-- **Residual provider-side billing risk (fundamental, not fixed by this
-  package):** `launch_pod.sh`'s cleanup trap and `watchdog.sh`'s
-  in-container timeout are both LOCAL mechanisms. If the machine
-  running `launch_pod.sh` loses network connectivity or power before
-  the trap fires, or if `runpodctl remove pod`/`stop pod` itself fails
-  silently on the provider side, no local script can detect or correct
-  that -- the pod keeps billing until an operator checks the RunPod
-  console directly. Neither this package nor any client-side script can
-  fully close this gap; the operator must check the console after every
-  run regardless of what the scripts report.
-- `launch_pod.sh`'s parsing of `runpodctl create pod`/`get pod` output
-  (to extract `POD_ID` and to detect when the pod stops running) is
-  best-effort text matching, not a documented, versioned API contract;
-  it has not been exercised against real `runpodctl` output and may
-  need adjustment the first time it is actually run.
-- `launch_pod.sh` does not itself copy `receipt.json` off the pod; the
-  printed summary (all fields except `mismatches`) is expected to be
-  visible via the pod's own stdout/logs, but retrieving the full
-  `receipt.json` file (needed to see mismatch detail on a FAIL) is the
-  operator's responsibility and must happen before the cleanup trap
-  terminates the pod.
+## Scientific acceptance
+
+The canary asks whether the CuPy GPU implementation matches the bundled CPU
+oracle for `aeth01.v1`: **200 single-tick comparisons + 20 trajectories x 5
+intermediate ticks = 300 matches**. A GPU PASS requires actual **CuPy**,
+all 300 comparisons matched, no mismatches, the approved source hashes and
+`run_id`, and the final run-bound result above. Receipt shape alone is not
+sufficient; see `receipt_schema.json` and the controller validation.
+
+A **NumPy PASS is a local smoke result, not GPU evidence**. GPU fallback,
+incomplete results, and incorrect hashes or run binding cannot pass the GPU
+gate. Timings are informational: one small correctness canary is neither a
+throughput benchmark nor campaign-readiness proof.
+
+## Image preparation and local validation
+
+`build_and_push.sh` is for a separate, explicit operator invocation only. It
+requires `REGISTRY` and `IMAGE_TAG`, builds with `--platform linux/amd64`,
+then pushes that tagged image. Registry authentication is configured out of
+band; no credentials belong in the script or command arguments. Retrieve
+the pushed digest from the registry or the printed RepoDigests inspection
+instruction, and bind approval to **`@sha256`**, never a mutable tag. Image
+publication does not approve or launch a pod.
+
+The existing dependencies and CUDA base version are unchanged. Local
+`.gitattributes` forces LF for Python, shell, Dockerfile, and JSON files so
+Windows checkout conversion does not break Linux scripts or raw source-hash
+agreement. Validate actual worktree bytes before building or hashing.
+
+Validation is local only, not a GPU, authenticated provider API, image build, or
+registry-push validation. Run `python -m pytest Aether/test -q` from the repository
+root. Linux-specific service/process-group tests also run directly with
+`python3 Aether/test/test_aeth01_pod_service.py`; Windows skips those cases.
+The closure packet records exact results. No paid action is authorized here.
+
+Public contracts consulted (not live provider validation):
+- https://docs.runpod.io/api-reference-v2/pods/create-a-pod
+- https://docs.runpod.io/api-reference-v2/pods/list-pods
+- https://docs.runpod.io/api-reference-v2/pods/trigger-a-pod-state-transition
+- https://docs.cupy.dev/en/v13.5.1/reference/comparison.html

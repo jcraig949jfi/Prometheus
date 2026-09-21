@@ -1,10 +1,10 @@
 """
 Aether AETH-01 (candidate semantics_id aeth01.v1) -- GPU canary kernel.
 
-Backend-agnostic port of `test/reference/gpu_aeth01.py`: identical body,
-only the import at the top differs (CuPy if importable -- i.e. actual
-GPU hardware + CUDA -- else NumPy, so this exact file can also be
-smoke-tested locally before ever touching a pod). Any change to the
+Backend-agnostic port of `test/reference/gpu_aeth01.py`: identical physics
+bodies and constants, with abbreviated docs and omitted array annotations.
+The backend/warning shim selects CuPy if importable (not proof of working
+GPU hardware), else NumPy for local smoke tests. Any change to the
 PHYSICS below that is not also made in `gpu_aeth01.py` invalidates the
 local differential-test evidence this canary is meant to extend onto
 real hardware; keep the two in sync by hand (no build step copies one
@@ -14,9 +14,11 @@ into the other).
 try:
     import cupy as np  # noqa: N811 -- intentional alias, see module docstring.
     BACKEND = "cupy"
-except ImportError:  # pragma: no cover -- exercised only off a GPU pod.
+except ImportError:
     import numpy as np  # noqa: N811
     BACKEND = "numpy_fallback"
+    # Intended uint64 wraparound; CuPy does not implement numpy.seterr.
+    np.seterr(over="ignore")
 
 MASK64 = np.uint64((1 << 64) - 1)
 U64 = np.uint64
@@ -32,8 +34,6 @@ MUT_DOMAIN_CONST = U64(0xD1B54A32D192ED03)
 REPLENISH_DOMAIN_CONST = U64(0x2545F4914F6CDD1D)
 
 _NEIGHBOR_SLOTS = ((-1, 0, SOUTH), (1, 0, NORTH), (0, 1, WEST), (0, -1, EAST))
-
-np.seterr(over="ignore")
 
 
 def mix64_vec(x):

@@ -1,10 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "AETH-01 RunPod canary receipt",
-  "description": "Enforced shape of receipt.json written by run_canary.py. A receipt missing any required field, with status != \"PASS\", or with cases_matched != cases_run, is a failed/incomplete canary regardless of what run_canary.py printed to stdout. `status` is the single authoritative pass/fail signal (run_canary.py's own process exit code is 0 iff status == \"PASS\"); cases_matched == cases_run alone is NOT sufficient, since status can be FAIL_ENVIRONMENT or FAIL_INCOMPLETE with zero cases run.",
+  "description": "Shape of receipt.json written by run_canary.py. PASS requires the entire preregistered 200 + 20*5 corpus, no mismatches, and complete source hashes. Controllers must additionally require backend=cupy and match run_id and all three source hashes to their launch inputs; a local numpy_fallback smoke-test PASS is not GPU evidence.",
   "type": "object",
   "required": [
-    "semantics_id", "backend", "status", "cases_run", "cases_matched",
+    "semantics_id", "backend", "status", "cases_expected", "cases_run", "cases_matched",
     "single_tick_trials", "multi_tick_trials", "multi_tick_steps",
     "rng_seed", "gpu_kernel_seconds", "cpu_oracle_seconds", "mismatches",
     "started_at_utc", "finished_at_utc", "source_hashes", "cost_context",
@@ -12,6 +12,10 @@
   ],
   "properties": {
     "semantics_id": { "type": "string", "const": "aeth01.v1" },
+    "run_id": {
+      "type": ["string", "null"], "minLength": 1,
+      "description": "Optional launch binding, copied verbatim from AETH01_RUN_ID at main() entry. Null when unset or empty. Controllers must reject absent, null, or unexpected IDs."
+    },
     "backend": {
       "type": "string",
       "enum": ["cupy", "numpy_fallback"],
@@ -20,11 +24,12 @@
     "status": {
       "type": "string",
       "enum": ["PASS", "FAIL_MISMATCH", "FAIL_ENVIRONMENT", "FAIL_ERROR", "FAIL_INCOMPLETE"],
-      "description": "Closed vocabulary, the single authoritative verdict. FAIL_INCOMPLETE is the placeholder written before the run starts -- it must never be reinterpreted as a pass; finding it on disk means the run did not reach a verdict (e.g. killed by watchdog.sh)."
+      "description": "Closed vocabulary. FAIL_INCOMPLETE is the initial placeholder or a final verdict that the full preregistered corpus was not completed."
     },
+    "cases_expected": { "type": "integer", "const": 300 },
     "cases_run": {
       "type": "integer", "minimum": 0,
-      "description": "0 is valid only when status is FAIL_ENVIRONMENT or FAIL_INCOMPLETE (the corpus never ran)."
+      "description": "Comparisons completed; zero never qualifies for PASS. May be zero for environment, incomplete, or error failures."
     },
     "cases_matched": { "type": "integer", "minimum": 0 },
     "single_tick_trials": {
@@ -45,15 +50,44 @@
     },
     "gpu_kernel_seconds": {
       "type": "number", "minimum": 0,
-      "description": "Informational throughput comparison only, not itself a pass/fail gate."
+      "description": "Wall time of gpu_step bracketed by current CUDA stream synchronization on CuPy, including completion of queued output operations. Excludes initial upload and output download/comparison; not a pure device-kernel benchmark or a pass/fail gate."
     },
     "cpu_oracle_seconds": { "type": "number", "minimum": 0 },
     "mismatches": {
       "type": "array",
-      "description": "Empty on success. Never silently dropped: each entry is the full CPU/GPU input state that disagreed, including which tick of a multi-tick trajectory it was.",
+      "description": "Empty on success. Each first divergence includes the last agreed input grid, all parameters, both full outputs, and every differing cell/field (or output shape).",
       "items": {
         "type": "object",
-        "required": ["trial", "tick_index", "H", "W", "seed", "tick", "grid"]
+        "required": [
+          "corpus", "trial", "tick_index", "H", "W", "seed", "tick", "grid",
+          "write_cost", "maintenance_cost", "replenish_numer", "replenish_amount",
+          "mut_numer", "cpu_output", "gpu_output", "output_diff"
+        ],
+        "properties": {
+          "corpus": { "enum": ["single_tick", "multi_tick"] },
+          "cpu_output": { "$ref": "#/definitions/output" },
+          "gpu_output": { "$ref": "#/definitions/output" },
+          "output_diff": {
+            "type": "array", "minItems": 1,
+            "items": {
+              "type": "object", "required": ["field"],
+              "properties": {
+                "field": { "enum": ["opcode", "arg0", "arg1", "payload", "energy"] },
+                "row": { "type": "integer", "minimum": 0 },
+                "col": { "type": "integer", "minimum": 0 },
+                "cpu": { "type": "integer" },
+                "gpu": { "type": "integer" },
+                "cpu_shape": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+                "gpu_shape": { "type": "array", "items": { "type": "integer", "minimum": 0 } }
+              },
+              "oneOf": [
+                { "required": ["row", "col", "cpu", "gpu"] },
+                { "required": ["cpu_shape", "gpu_shape"] }
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
       }
     },
     "started_at_utc": {
@@ -62,21 +96,22 @@
     },
     "finished_at_utc": {
       "type": ["string", "null"],
-      "description": "ISO-8601 UTC timestamp of the final verdict; null only in the FAIL_INCOMPLETE placeholder."
+      "description": "ISO-8601 UTC timestamp of the final verdict, including a completed but insufficient corpus; null only in the FAIL_INCOMPLETE placeholder."
     },
     "source_hashes": {
       "type": "object",
-      "description": "sha256 hex digest of each bundled physics/harness source file actually present on the pod, so a reviewer can confirm which revision ran without needing git history there (the image only ever contains a copy, not a checkout).",
+      "description": "SHA-256 of the raw bytes of the three existing sources beside run_canary.py. Null only in a placeholder or failed run; PASS requires all three digests. Compare with the controller's expected source bytes, not merely with each other.",
       "required": ["aeth01_cpu_oracle.py", "aeth01_gpu_kernel.py", "run_canary.py"],
       "properties": {
-        "aeth01_cpu_oracle.py": { "type": ["string", "null"] },
-        "aeth01_gpu_kernel.py": { "type": ["string", "null"] },
-        "run_canary.py": { "type": ["string", "null"] }
-      }
+        "aeth01_cpu_oracle.py": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "aeth01_gpu_kernel.py": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "run_canary.py": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
     },
     "cost_context": {
       "type": "object",
-      "description": "Echo of launch_pod.sh's cost-control inputs for this run, if it set them; all null when run standalone (e.g. local smoke test).",
+      "description": "Echo of AGE controller quote/budget/process-timeout inputs, not actual spend or a billing guarantee; all null when run standalone (e.g. local smoke test).",
       "required": ["hourly_rate_usd", "max_dollar_budget_usd", "watchdog_timeout_seconds"],
       "properties": {
         "hourly_rate_usd": { "type": ["number", "null"] },
@@ -95,5 +130,41 @@
       "description": "Present only when status == FAIL_ERROR: repr() of the unhandled exception."
     }
   },
+  "definitions": {
+    "output": {
+      "type": "object",
+      "required": ["opcode", "arg0", "arg1", "payload", "energy"],
+      "properties": {
+        "opcode": {}, "arg0": {}, "arg1": {}, "payload": {}, "energy": {}
+      },
+      "description": "Each field is its full host array converted with tolist(), normally an H-by-W matrix. Malformed output shapes are retained rather than discarded.",
+      "additionalProperties": false
+    },
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "PASS" } } },
+      "then": {
+        "properties": {
+          "cases_run": { "const": 300 },
+          "cases_matched": { "const": 300 },
+          "single_tick_trials": { "const": 200 },
+          "multi_tick_trials": { "const": 20 },
+          "multi_tick_steps": { "const": 5 },
+          "rng_seed": { "const": 0 },
+          "mismatches": { "maxItems": 0 },
+          "finished_at_utc": { "type": "string", "minLength": 1 },
+          "source_hashes": {
+            "properties": {
+              "aeth01_cpu_oracle.py": { "$ref": "#/definitions/digest" },
+              "aeth01_gpu_kernel.py": { "$ref": "#/definitions/digest" },
+              "run_canary.py": { "$ref": "#/definitions/digest" }
+            }
+          }
+        }
+      }
+    }
+  ],
   "additionalProperties": false
 }

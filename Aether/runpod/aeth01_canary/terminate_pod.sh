@@ -1,22 +1,11 @@
 #!/bin/bash
-# AETH-01 RunPod canary -- explicit pod termination.
-#
-# NOT RUN by this repair cycle. `launch_pod.sh` now also terminates the
-# pod itself automatically (a trap firing on any of its own exit paths,
-# including success, failure, and interrupt) -- this script remains as
-# an independent manual fallback: run it if `launch_pod.sh`'s own
-# automatic cleanup ever fails or warns, or any time a pod needs to be
-# terminated outside that flow. Must be run as soon as `run_canary.py`
-# has finished (or the watchdog has killed it) and `receipt.json` has
-# been retrieved -- a pod left running past the canary's completion is
-# pure wasted spend against the $19.93 / $3 caps (AETHER_RUNPOD.md).
-#
-# Usage: POD_ID=<id from launch_pod.sh output> ./terminate_pod.sh
+# Disabled migration stub: does not terminate a pod or print provider data.
 
 set -euo pipefail
 
-: "${POD_ID:?set POD_ID, e.g. POD_ID=abc123 ./terminate_pod.sh}"
-
-echo "[terminate_pod] terminating pod ${POD_ID}"
-runpodctl remove pod "${POD_ID}"
-echo "[terminate_pod] done. Log actual cost and result in Aether/AETHER_RUNPOD.md's spend ledger now."
+printf '%s\n' \
+    '[terminate_pod] DISABLED: no pod was terminated; any existing pod may still be billing.' \
+    '[terminate_pod] Use the recovery workflow in age_controller.py, or terminate in the RunPod console now.' \
+    '[terminate_pod] From this directory, consult: python age_controller.py --help' \
+    '[terminate_pod] Verify termination independently and record actual spend regardless of outcome.' >&2
+exit 1

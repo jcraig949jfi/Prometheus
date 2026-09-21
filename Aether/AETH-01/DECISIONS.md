@@ -209,10 +209,11 @@ contradictory across replicate seeds at every point in this 5-axis
 grid, the axis choice itself (not just the grid resolution) should be
 reconsidered before assuming the physics itself is uninteresting.
 
-**D-AETH01-11 -- Heredity claims are structured into five strictly
-ordered tiers (STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION /
-CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / HERITABLE_VARIATION),
-each requiring intervention evidence, not pattern-matching alone.
+**D-AETH01-11 -- Heredity claims use five tiers of claim strength
+(STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION /
+CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / HEREDITY_VARIATION).
+Causal tiers require intervention evidence, not pattern-matching alone;
+resemblance is NOT a prerequisite for the causal tiers.
 **[REPAIRED per ASTRA_REVIEW_01.md S04, ACCEPT, see
 REPAIR_LEDGER_01.md]** The originally reviewed four-tier ladder's
 "CAUSAL_CONSTRUCTION" tier conflated value-transport with
@@ -226,7 +227,12 @@ Alternatives considered: a single binary "heredity detected" flag --
 rejected outright as incompatible with D-11 and with
 HEREDITY_REQUIREMENTS.md's adversarial-case table, which specifically
 requires distinguishing degrees of evidence.
-Hidden prior: the four-tier ordering itself is a design choice; a
+Mechanism qualifiers are not tiers: K3 fixture 3 is distributed
+construction by `{A_opcode,A_arg0}` with initialized scaffold; fixture 4
+is recursive activation of preconfigured machinery, not recursive
+configuration construction, despite its formal RECURSIVE_CONSTRUCTION
+tier. Neither fixture establishes HEREDITY_VARIATION.
+Hidden prior: the five-tier ordering itself is a design choice; a
 different taxonomy might carve the evidence space differently.
 Falsifier/reversal: if, once a detector is actually built, real
 specimens repeatedly produce evidence that does not fit cleanly into

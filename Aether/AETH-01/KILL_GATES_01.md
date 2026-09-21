@@ -9,10 +9,15 @@ K8 remain explicitly DEFERRED (see bottom) -- each still requires
 either a completed sweep or a production trace implementation that do
 not exist yet.
 
-The K1/K2/K3/K6 sections immediately below retain their original
-hand-derivation text unchanged (now additionally confirmed executable
-by `test_aeth01_kill_gates.py`); the K4/K5 sections further down are
-new this closure-patch cycle.
+Scientific/inference repair: K3's attribution and controls and K4's
+pulse-budget boundary below supersede the earlier closure wording.
+Historical PASS statements are not a receipt for the updated tests.
+On 2026-09-21, the expanded kill-gate, GPU-shaped differential and scientific
+documentation regressions ran together: **135 passed**, exit 0, with
+`python -m pytest Aether/test/test_aeth01_kill_gates.py Aether/test/test_aeth01_gpu_differential.py Aether/test/test_aeth01_scientific_docs.py -q`.
+The differential backend was NumPy, not GPU hardware. No campaign or
+population evidence is claimed. See `REVIEW_PACKET_AGE_CLOSURE_2026-09-21.md`
+for the integrated local validation and remaining deployment gates.
 
 ## K1 -- accounting identity hand ledger
 
@@ -72,7 +77,7 @@ equation... checked as an exact property"). No blocking issue; proceed.
 2. **Fixed donor payload, repeated overwrite.** If a donor cell's OWN
    payload field is itself never targeted by any winning WRITE (i.e.
    the donor's `p` is constant across ticks), then each tick's
-   overwrite of the SAME target is an independent draw: stored value is
+   overwrite of the SAME target uses the fixed donor value: stored value is
    `p` w.p. `1-MUT_NUMER/2^32`, or one of `p`'s 8 Hamming-1 neighbors
    (uniform 1/8 each) w.p. `MUT_NUMER/2^32` -- **memoryless**, because
    the target's stored value is fully overwritten each time and the
@@ -82,8 +87,9 @@ equation... checked as an exact property"). No blocking issue; proceed.
    event" drift described in PHYSICS_SPEC_DRAFT.md's accessibility
    analysis requires the COPIED VALUE ITSELF to change between copies
    (a chain of distinct copying cells, each possibly mutated in turn) --
-   a fixed, unmutated donor produces i.i.d. one-step draws at a fixed
-   target, never a cumulative random walk over time. This distinction
+   a fixed, unmutated donor produces donor-relative one-step outcomes at
+   a fixed target, never a cumulative random walk over time. Cross-tick
+   independence is NOT proved (PHYSICS_SPEC_DRAFT.md M07). This distinction
    was not explicit anywhere in the packet; it is recorded here as a
    clarifying, non-blocking finding, not a repair (no prior claim
    contradicted it).
@@ -124,44 +130,57 @@ Full fixtures and derivations already hand-worked in
 These two verdicts are **different**, satisfying the operator's
 pre-registered pass condition (identical verdicts would have forced
 `INFERENCE_CONTRACT_UNRESOLVED`). **K3 verdict: PASS.** The repaired
-4-tier ladder (`HEREDITY_REQUIREMENTS.md`) is usable: it discriminates
+five-tier ladder (`HEREDITY_REQUIREMENTS.md`) discriminates
 the exact case (S04) that broke the reviewed draft. No blocking issue;
 proceed.
 
-**[NEW, closure-patch addendum]** Two further fixtures, executable
-(`test_aeth01_kill_gates.py`, `test_aeth01_gpu_differential.py`, 28
-new cases total, all passing on both CPU oracle and GPU-shaped
-NumPy implementation), strengthen K3 beyond the original relay-vs-
-capacity pair:
+The formal ladder has exactly FIVE tiers: STRUCTURAL_RESEMBLANCE,
+CAUSAL_VALUE_CONSTRUCTION, CONSTRUCTED_CAPACITY,
+RECURSIVE_CONSTRUCTION, HEREDITY_VARIATION. Mechanism qualifiers are
+not additional tiers. The executable fixture contracts now require:
 
-- **Construction fixture (fixture 3).** Discriminates
-  `ACTIVATION_OF_PRECONFIGURED_MACHINERY` from `CONSTRUCTION` (the
-  taxonomy split added to `HEREDITY_REQUIREMENTS.md`'s tier 3) via
-  THREE independent ablations on one fixture, not one on/off toggle:
-  (a) opcode-only ablation -- target never activates at all, same
-  signature as the original capacity fixture; (b) routing-only
-  ablation -- target DOES activate (its capacity-to-act was still
-  constructed) but its `arg0` routing byte is never touched, so it
-  writes to the wrong (inert-default) neighbor instead of the intended
-  one -- proving activation and behavioral construction are separable
-  claims, not one bundled fact; (c) matched control -- an unrelated
-  cell's bytes are confirmed untouched in every combination. All three
-  ablations produced exactly the predicted, distinct byte-level
-  outcomes; no ambiguity.
-- **Recursive construction fixture (fixture 4).** A single upstream
-  ablation (removing the one constructor, A) is confirmed to propagate
-  through BOTH construction steps of an A-constructs-B,
-  B-constructs-C chain simultaneously: without A, neither B's nor C's
-  capacity ever changes, at any tick, for the whole run. This is the
-  positive existence proof that `RECURSIVE_CONSTRUCTION` (tier 4) is
-  actually reachable by a concrete fixture under the repaired ladder,
-  not just definable on paper.
+- **Relay and activation (fixtures 1/2).** Derive distinct verdicts
+  from actual winning writes, content-only interventions, resulting
+  target bytes and target proposal behavior. Replacing hard-coded
+  `False != True` with these observations is essential; labels alone
+  test nothing about inference. A no-effect intervention is unresolved,
+  not an automatic STRUCTURAL_RESEMBLANCE verdict.
+- **Distributed construction (fixture 3).** On the 3x3 torus,
+  `A_opcode=(0,1)` writes B's opcode and `A_arg0=(1,0)` writes B's
+  routing in the SAME tick. B=(1,1), C=(1,2), F=(2,1). Independent and
+  joint ablations give (C.payload,F.payload) = (77,0) with both,
+  (0,0) without opcode, (0,77) without routing, (0,0) without both.
+  Attribution is to the SET `{A_opcode,A_arg0}`; no lone A built both
+  fields. B's `arg1=3`, `payload=77`, initial energy=10, and donor
+  configurations are pre-existing scaffold, explicitly perturbed in
+  separate regressions. Verdict: CONSTRUCTED_CAPACITY /
+  DISTRIBUTED_CONSTRUCTION, limited to opcode and routing construction.
+- **Controls and semantic-negative case.** Actually perturb unrelated
+  control content; also perturb an active, cost/energy-matched control
+  with a winning path outside the focal mechanism. An untouched control
+  is not an intervention. These controls match emission opportunity,
+  not every environmental factor. A routing byte changed from 1 to 5
+  still decodes EAST: observed byte causation alone must NOT be promoted
+  to a behavior-construction claim.
+- **Recursive activation (fixture 4).** A activates B, B activates C,
+  C writes to D, with time ordering checked at every transition.
+  Independently blocking B's opcode-writing payload leaves A->B intact
+  but prevents C's activation; rescuing B or C with A absent tests
+  the intermediate preconfigured machinery directly. Only B/C opcodes
+  are constructed; routing/field/payload remain initialized. Formal
+  tier: RECURSIVE_CONSTRUCTION. Required mechanism qualifier:
+  RECURSIVE_ACTIVATION_OF_PRECONFIGURED_MACHINERY. This is NOT recursive
+  configuration construction, which needs configuration-field ablations
+  at each generation. An upstream A knockout alone was insufficient to
+  establish both edges by the same evidentiary standard.
 
-**K3 verdict (updated): PASS**, unchanged from the original two-fixture
-adjudication, now with a wider discriminating battery and a taxonomy
-(`PAYLOAD_RELAY` / `ACTIVATION_OF_PRECONFIGURED_MACHINERY` /
-`CONSTRUCTION` / `RECURSIVE_CONSTRUCTION`) that a future detector's
-report must cite by name, never a bare tier number.
+All fixtures are SEEDED_CONTROL, over four transitions. None is a
+HEREDITY_VARIATION or spontaneous-origin result. Shared input builders
+are in `test/reference/scientific_aeth01.py`; CPU/GPU-shaped differential
+checks compare each state and activity/energy counters. These are bounded
+fixture contracts, not a general heredity detector or K7 trace audit.
+**Updated K3 runtime verdict: PASS for the bounded seeded fixtures**, included
+in the 135-test focused run above. This is not a general detector validation.
 
 ## K6 -- provenance composition round-trip
 
@@ -187,10 +206,11 @@ blocking issue; proceed.
 
 ## Overall disposition
 
-K1, K2, K3, K6 all PASS with no discrepancy, no contradiction, and no
-`INFERENCE_CONTRACT_UNRESOLVED` outcome. Per the operator's "STOP if
-unresolved" instruction: **nothing here is unresolved.** The repair
-cycle may proceed to write the repaired freeze candidate contract.
+The original K1/K2/K3/K6 hand adjudications were PASS. That historical
+disposition does not qualify the expanded K3 tests or corrected K4
+formula as executed results. Current validation status is stated above;
+deferred campaign/trace gates below remain open. No new freeze approval
+or general inference qualification follows from these edits.
 
 ## K4 -- cheap deterministic fixtures now run; full statistical characterization still deferred
 
@@ -202,11 +222,21 @@ passing) -- NOT the statistical characterization of emergent strategy
 DISTRIBUTIONS across many seeds/parameter points that K4 ultimately
 requires (that part remains genuinely deferred, below):
 
-1. **Isolated pulse-budget cell.** A single WRITE cell with no
-   replenishment exhausts in exactly `floor(energy0 / (write_cost +
-   maintenance_cost))` emitting ticks, then STAYS starved forever
-   (confirmed for 5 further ticks). Closed-form budget confirmed exact,
-   not approximate.
+1. **Isolated pulse-budget cell -- corrected boundary.** For a persistent
+   template writer, no energy transfers or replenishment, initial E,
+   write cost w>0, maintenance m>=0: N=0 if E<w; otherwise
+   `N = 1 + floor((E-w)/(w+m))`. Emission needs only w; subsequent
+   maintenance floors at zero. Equivalently N=floor(E/(w+m)) plus one
+   iff the remainder is >=w. The old floor-only expression misses that
+   final pulse. E=23,w=3,m=2 gives FIVE pulses (energies after emission
+   and maintenance: 18,13,8,3,0), not four. The old E=20 fixture never
+   exercised the boundary. New tests cover threshold/residual cases,
+   zero maintenance (starvation may leave nonzero energy), large costs,
+   every byte energy across 42 positive-write-cost/maintenance pairs,
+   and CPU/GPU-shaped per-tick activity as well as state. For w=0,
+   energy never prevents emission even after maintenance drains it;
+   there is no finite energy-limited pulse count (tick overflow remains
+   a separate limit). The amended tests await execution, not a new PASS.
 2. **Equal-mean bursty pair.** Two replenishment configurations with
    the identical theoretical mean rate (5/tick: `prob=1.0,amount=5` vs
    `prob=0.5,amount=10`) produce PROVABLY DIFFERENT realized
@@ -222,12 +252,13 @@ requires (that part remains genuinely deferred, below):
 4. **Zero-amount vs. large-amount contest.** A bounded seed search
    (0..199, deterministic, no sampling) finds concrete seeds where a
    zero-amount proposal beats a 200-amount proposal AND seeds where the
-   large amount wins -- confirming arbitration priority is a pure hash
-   of (seed, tick, coords), never a function of the proposed value, in
-   either direction.
+   large amount wins. This shows BOTH outcomes are reachable, not that
+   their probabilities are equal. Amount-blindness follows from the
+   priority inputs in the law, not this bounded seed search.
 
-**K4 verdict (partial): the mechanism-level existence claims above are
-CONFIRMED, deterministically, with zero tolerance.** Still deferred:
+**K4 verdict (partial): prior mechanism fixtures were reported passing;
+the pulse-budget generalization was wrong and is corrected above.
+Updated boundary regressions PASS in the focused run above.** Still deferred:
 the actual DISTRIBUTION of emergent economic strategies across a real
 parameter sweep (referenced as a still-open falsifier by
 DECISIONS.md's D-AETH01-01/-03/-05) -- that requires a running sweep,

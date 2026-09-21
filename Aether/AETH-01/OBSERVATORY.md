@@ -183,6 +183,17 @@ perturbation. / Expensive (full trace replay + graph construction over
 a window). / Triggered/forensic only, always paired with raw trace
 retention (below).
 
+Scientific claim tiers are separate from the telemetry-cost tiers below.
+Use the FIVE-tier ladder in HEREDITY_REQUIREMENTS.md:
+STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION / CONSTRUCTED_CAPACITY /
+RECURSIVE_CONSTRUCTION / HEREDITY_VARIATION. Reports also name the
+mechanism and source set: K3 fixture 3 is distributed construction by
+A_opcode and A_arg0 with initialized scaffold; fixture 4 is recursive
+activation of preconfigured machinery, not recursive configuration
+construction. Byte changes in enabling fields must change decoded
+behavior under intervention; a neutral routing-byte change is only
+value evidence. Fixture-local checks are not a qualified general detector.
+
 ## Tiered architecture
 
 **[REPAIRED per ASTRA_REVIEW_01.md M06, see REPAIR_LEDGER_01.md -- the
