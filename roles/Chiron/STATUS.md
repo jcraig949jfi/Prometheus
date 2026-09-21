@@ -1,45 +1,67 @@
 # Chiron status
 
-Currency: 2026-09-21 (seat created; CDE design thesis received,
-captured and reviewed; implementation explicitly ON HOLD).
+Currency: 2026-09-21 (third pass of the day: program-wide synthesis
+directive captured; remit changed to design and delegation for the
+fifth-engine candidate).
 
-seat state: SUBJECT NAMED, BUILD WITHHELD. The operator delivered the
-  Chiron Developmental Engine (CDE) "Engine Five" design thesis with
-  the instructions "Capture this. Review it. Add your thoughts" and
-  "Capture this. Do not start on it." Capture and review are done.
-  Nothing is being built.
-what it asserts: PRESENT (seat files on a pushed branch); ACTIVE (the
-  thesis was captured, manifested and reviewed); PRODUCTIVE = one
-  review document and one verified capture, nothing executable; VALID
-  not claimed -- no CDE experiment has been designed, run or measured.
-host: BUCKKEEP (a Windows machine outside the M1-M4 fleet; single git
-  clone at C:\Prometheus, no WORKING_CONTRACT.md s2 worktree tree on
-  this host -- work done on the seat's own branch in the canonical
-  clone, recorded as a known deviation rather than silently
-  normalized).
-workspace: branch chiron/base-role-adopt-2026-09-21; base 3e2c59c31
-  (origin/main at fetch time); commit 481dbfe40 (seat creation).
+seat state: ON POINT FOR DESIGN AND DELEGATION, NOT FOR SCALE. The
+  operator delivered the PROMETHEUS SYNTHESIS CAPTURE DIRECTIVE
+  (program-wide, more evolved than the CDE thesis and correcting parts
+  of it) with the remit that Chiron designs and delegates fifth-engine
+  work. The directive states of itself that it is NOT an implementation
+  directive, and its s14 says do not scale before F5-0 / F5-1 / F5-4
+  report.
+what it asserts: PRESENT (seat files on a pushed branch); ACTIVE (two
+  verbatim captures with verified MANIFESTs, one review, one ledger
+  correction); PRODUCTIVE = documents only -- no experiment has been
+  designed, preregistered, delegated, run or measured; VALID not
+  claimed for anything.
+host: BUCKKEEP (Windows, outside the M1-M4 fleet; single clone at
+  C:\Prometheus, no WORKING_CONTRACT s2 worktree tree on this host --
+  seat branches checked out directly in the canonical clone, recorded
+  as a known deviation rather than silently normalized).
+workspace: branch chiron/base-role-adopt-2026-09-21; base 3e2c59c31;
+  commits 481dbfe40 (seat creation), fe3140d66 (thesis capture +
+  review). origin/main has since moved to 6d08ff412 and this branch has
+  NOT been merged forward.
 artifacts:
-  prompts/2026-09-21_cde_thesis/CDE_THESIS.md -- operator's thesis,
-    verbatim, MANIFEST verified (1 entry, 0 mismatches).
-  CDE_THESIS_REVIEW_2026-09-21.md -- the seat's review.
-review headline: the thesis is unusually honest (it states its own kill
-  gate, treats its priors as a treatment, and pre-commits to the
-  ablation that could kill its result), and its central question is not
-  yet measurable because "reachable" is undefined. Two findings drove
-  the review: (1) the closest prior art is not Voyager but Crius, whose
-  four campaigns returned NO on nearly the same hypothesis with a valid
-  assay; (2) Atlas's catalog already holds voyager/sima/genie plus the
-  omni/poet/ada family -- the gap was consumption, not discovery -- and
-  a cross-tab of its own fields puts CDE's corner at n=1 occupant.
-comms: NOT booted. `python -m comms boot Chiron` cannot run on this
-  host: psycopg2 is not installed (a missing dependency, not merely an
-  unreachable LAN host). `python -m comms.manifest` needs no DB and
-  does work. Recorded as a blocker, not worked around.
+  prompts/2026-09-21_cde_thesis/ -- CDE design thesis, verbatim,
+    MANIFEST verified.
+  prompts/2026-09-21_synthesis_directive/ -- program-wide synthesis
+    directive, verbatim, MANIFEST verified.
+  CDE_THESIS_REVIEW_2026-09-21.md -- review of the thesis; its s2/s3
+    framing is partly superseded, see the ledger.
+  superseded/RESPONSIBILITIES_2026-09-21_pre_synthesis.md
+what the directive changed: Engine Five is NOT "the learning engine"
+  (its s3, an explicit correction -- learning is the hope for every
+  engine); it is the PROSPECTIVE fifth engine and must earn existence
+  experimentally; the portable-organ hypothesis {identity, semantic
+  description, executable payload, retrieval key} is named as a
+  convergence across Voyager, Techne capsules and Nyx's ledger and is
+  explicitly NOT to be standardized or declared true; the scientific
+  unit is now organism x world x pressure x machinery x observer; and
+  s16 forbids freezing the metaphors into ontology.
+standing external state (read, not owned): Atlas's queue at
+  roles/Atlas/proposals/2026-09-21_prior_art_raid/ holds 34 experiments,
+  the Engine Five killable ladder (rungs 0-7: F5-0, F5-1, F5-4, EV-10,
+  F5-5, F5-2, F5-3, F5-6) and a five-clause kill gate. Techne's
+  FIRST_RETURN_2026-09-21 has Voyager fossilized (MIT, pinned 55e45a88,
+  457 files, SOURCE_ONLY) and SIMA 2 / Genie 3 confirmed NO_PUBLIC_SOURCE.
+  Chiron designs against that ladder, not in parallel to it.
+calibration: one row opened today. I wrote a review characterizing a
+  prior-art gap without reading roles/Atlas/proposals/, which was in my
+  own base tree and already contained most of my recommendations in
+  more operational detail. Practice changed; see the ledger.
+comms: NOT booted. psycopg2 is missing on this host, so `comms boot`,
+  `comms post` and `comms tasks` cannot run. Under the previous remit
+  this was an inconvenience. Under a DELEGATION remit it is the
+  blocking defect: the seat cannot issue a delegation to Techne, Nyx,
+  Atlas or Harmonia without it. Elevated to the top of the backlog
+  (CHIRON-02). `comms.manifest` needs no DB and does work.
 monitors owned or fed: none. No row in roles/base-role/MONITORS.md.
-blockers: executable charter PENDING (build is on hold by instruction);
-  comms boot unavailable on this host (CHIRON-02).
-next executable action: none authorized. Awaiting the operator's
-  response to the review's s14 open questions -- above all whether the
-  CDE artifact writer is an LLM, which determines CDE-0's entire
-  control structure.
+blockers: comms unavailable on this host (blocks all delegation);
+  four design questions unanswered (BACKLOG CHIRON-03).
+next executable action: CHIRON-04 -- read Atlas's F5-0/F5-1/F5-4
+  records and Techne's FIRST_RETURN in full, then write the gap note
+  saying what design work those records still need, before proposing
+  any new experiment.
