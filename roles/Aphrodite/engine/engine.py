@@ -249,10 +249,98 @@ VALUE_CEILING = 10 ** 18          # candidates producing larger values are dropp
 MAX_SYNTH_CANDIDATES = 40000      # hard cap per synthesis attempt
 
 
+# ---------------------------------------------------------------- grammar v2
+# SLICE 2C: repair of the asymmetric enumerator, versioned and hashed
+# separately from the slice-2B grammar. v1 built each round as
+# op(LEFT from the previous frontier, RIGHT from the pool), which can never
+# construct op(terminal, deep) -- the gap the numtheory witness sat in.
+# v2 enumerates BY SIZE: for size s, every split (i, j) with i + j = s - 1,
+# both directions. Nothing else is expanded: same primitives, same task
+# distribution, same tribunal.
+GRAMMAR_VERSION = "v2-size-indexed-symmetric"
+MAX_SIZE = 4                      # operator applications; terminals are size 0
+
+
+def grammar_hash() -> str:
+    """Identity of the exact search space, for the reachability certificate."""
+    spec = json.dumps({
+        "version": GRAMMAR_VERSION,
+        "max_size": MAX_SIZE,
+        "terminals": TERMINALS,
+        "primitives": {k: v[1] for k, v in sorted(PRIMITIVES.items())},
+        "value_ceiling": VALUE_CEILING,
+        "loop_bound": LOOP_BOUND,
+    }, sort_keys=True)
+    return hashlib.sha256(spec.encode()).hexdigest()
+
+
+def _compose_v2(vectors: List[List[int]], golds: List[str], escrow: Escrow, cap: int,
+                extra: Optional[List[tuple]] = None,
+                rng: Optional[random.Random] = None) -> Optional[tuple]:
+    """Size-indexed bottom-up enumeration with observational-equivalence pruning.
+
+    Returns (source, size, charges) or None.
+    """
+    def matches(vals):
+        return all(str(v) == g for v, g in zip(vals, golds))
+
+    terminals = [("nums[%d]" % i, tuple(v[i] for v in vectors)) for i in range(TERMINALS)]
+    terminals += list(extra or [])
+    if rng is not None:
+        rng.shuffle(terminals)
+
+    pools: Dict[int, List[tuple]] = {0: []}
+    seen = set()
+    for src, vals in terminals:
+        if vals in seen:
+            continue
+        seen.add(vals)
+        pools[0].append((src, vals))
+        if matches(vals):
+            return src, 0, 0
+
+    ops = list(PRIMITIVES.items())
+    spent = 0
+    for s in range(1, MAX_SIZE + 1):
+        pools[s] = []
+        splits = [(i, s - 1 - i) for i in range(s)]     # includes (0, s-1) and (s-1, 0)
+        if rng is not None:
+            rng.shuffle(splits)
+            rng.shuffle(ops)
+        for _name, (fn, tmpl) in ops:
+            for i, j in splits:
+                for lsrc, lvals in pools[i]:
+                    for rsrc, rvals in pools[j]:
+                        if spent >= cap or escrow.remaining() <= 0:
+                            return None
+                        escrow.charge(1)
+                        spent += 1
+                        try:
+                            vals = tuple(fn(a, b) for a, b in zip(lvals, rvals))
+                        except Exception:      # noqa: BLE001
+                            continue
+                        if any(v is None or abs(v) > VALUE_CEILING for v in vals):
+                            continue
+                        if vals in seen:
+                            continue
+                        seen.add(vals)
+                        src = tmpl.format(lsrc, rsrc)
+                        if matches(vals):
+                            return src, s, spent
+                        pools[s].append((src, vals))
+    return None
+
+
+GRAMMAR_V1_VERSION = "v1-frontier-asymmetric"   # SLICE 2B, preserved for reproduction
+
+
 def _compose(vectors: List[List[int]], golds: List[str], escrow: Escrow, cap: int,
              extra: Optional[List[tuple]] = None,
              rng: Optional[random.Random] = None) -> Optional[str]:
-    """Bottom-up enumerative composition with observational-equivalence pruning.
+    """SLICE 2B GRAMMAR v1 -- retained ONLY to reproduce the 0/16 result.
+
+    Its asymmetry (LEFT from the previous frontier only) is the defect that
+    made the numtheory witness unreachable. Not used by slice 2C.
 
     Two combination rounds, so the deepest expression constructible is
     op(depth2, depth2). `extra` supplies additional TERMINALS -- this is how a
@@ -322,7 +410,8 @@ def _synthesise(examples: List[Dict], escrow: Escrow, cap: int,
         if len(nums) < TERMINALS:
             return None
         vectors.append(nums)
-    return _compose(vectors, [t["gold"] for t in examples], escrow, cap, rng=rng)
+    got = _compose_v2(vectors, [t["gold"] for t in examples], escrow, cap, rng=rng)
+    return got[0] if got else None
 
 
 # ---------------------------------------------------------------- Tier-2 structure
@@ -331,7 +420,12 @@ def _synthesise(examples: List[Dict], escrow: Escrow, cap: int,
 # discoverable rather than handed. Memoization and multi-subprocedure
 # decomposition are permitted by the ruling but NOT implemented this slice.
 LOOP_BOUND = 64
-HELPER_CANDIDATE_CAP = 40         # distinct helpers examined per attempt
+# SLICE 2C: the arbitrary truncation is removed. The helper space is bounded
+# by the declared grammar (update expressions of depth <= 2 over {x, y}), which
+# yields 48 distinct helpers on two development instances -- Euclid is rank 44,
+# so a cap of 40 silently excluded the only witness for numtheory. This raises
+# no budget: the full enumeration is measured in the reachability certificate.
+HELPER_CANDIDATE_CAP = 1024       # effectively "all distinct helpers"
 PER_HELPER_CANDIDATE_CAP = 120000
 STRUCTURAL_ATTEMPTS_PER_LINEAGE = 2
 
@@ -357,6 +451,84 @@ def shortcut_solver_source() -> str:
     """The v1 numtheory fossil: a*b + 1, preserved for tribunal fixtures."""
     return _discovered_solver_source(
         "numtheory", "((nums[0] * nums[1]) + (nums[0] // nums[0]))")
+
+
+# ---------------------------------------------------------------- surrogate battery
+# SLICE 2C: descriptive C6 is RETIRED. Presence, invocation, looping, AST depth
+# and helper count are telemetry only. A structural component is credited as
+# LOAD-BEARING only if no substantially simpler causal surrogate preserves the
+# claimed capability: constant outputs, identity/passthrough, trivial
+# expressions, simplified control flow, and removal/bypass.
+def trivial_surrogates() -> List[tuple]:
+    """(name, body) pairs for a helper of signature h(x, y). 'Trivial' means
+    size <= 1 in the declared grammar: a terminal or a single primitive
+    application, plus constants and passthrough."""
+    out = [("const_0", "0"), ("const_1", "1"),
+           ("identity_x", "x"), ("identity_y", "y")]
+    for name, (_fn, tmpl) in sorted(PRIMITIVES.items()):
+        for a in ("x", "y"):
+            for b in ("x", "y"):
+                out.append(("expr_%s(%s,%s)" % (name, a, b), tmpl.format(a, b)))
+    return out
+
+
+def _replace_helper(artifact: "Artifact", family: str, body: str) -> "Artifact":
+    """Rebuild the artifact with the helper's computation replaced."""
+    src = artifact.modules()["search"]
+    pat = re.compile(r"def _h_%s\(x, y\):.*?\n    return x\n" % re.escape(family), re.S)
+    new = "def _h_%s(x, y):\n    return %s\n" % (family, body)
+    if not pat.search(src):
+        return artifact
+    return Artifact.from_modules(dict(artifact.modules(), search=pat.sub(new, src)),
+                                 generation=artifact.generation)
+
+
+def _single_iteration(artifact: "Artifact", family: str) -> "Artifact":
+    """Simplified control flow: the loop runs at most once."""
+    src = artifact.modules()["search"]
+    new = src.replace("while y != 0 and steps < %d:" % LOOP_BOUND,
+                      "while y != 0 and steps < 1:")
+    return Artifact.from_modules(dict(artifact.modules(), search=new),
+                                 generation=artifact.generation)
+
+
+def surrogate_battery(artifact: "Artifact", family: str, instances: List[Dict]) -> Dict:
+    """Run the intervention battery. Returns the verdict and every surrogate
+    that preserved the capability."""
+    def acc(art):
+        r = Recipient.fresh(seed=31337)
+        r.load(art)
+        return r.run_tasks(instances, Escrow(10 ** 7))["accuracy"]
+
+    original = acc(artifact)
+    survivors = []
+    for name, body in trivial_surrogates():
+        s = _replace_helper(artifact, family, body)
+        if s.sha256 == artifact.sha256:
+            continue
+        a = acc(s)
+        if a >= original - 1e-9:
+            survivors.append({"surrogate": name, "accuracy": a})
+    s1 = _single_iteration(artifact, family)
+    if s1.sha256 != artifact.sha256:
+        a = acc(s1)
+        if a >= original - 1e-9:
+            survivors.append({"surrogate": "single_iteration", "accuracy": a})
+    return {
+        "original_accuracy": original,
+        "surrogates_that_preserved_capability": survivors,
+        "load_bearing": len(survivors) == 0 and original > 0.0,
+    }
+
+
+def structural_telemetry(artifact: "Artifact") -> Dict:
+    """Telemetry ONLY -- never a criterion (slice 2C ruling)."""
+    src = artifact.modules().get("search", "")
+    helpers = re.findall(r"def (_h_\w+)\(x, y\):", src)
+    return {"helper_count": len(helpers),
+            "helpers": helpers,
+            "contains_loop": "while " in src,
+            "invoked": bool(re.search(r"h\(nums\[0\], nums\[1\]\)", src))}
 
 
 def structural_change(artifact: "Artifact") -> bool:
@@ -442,11 +614,11 @@ def _structural_search(examples: List[Dict], escrow: Escrow, cap: int,
         if spent >= cap or escrow.remaining() <= 0:
             return None
         sub = min(PER_HELPER_CANDIDATE_CAP, cap - spent)
-        expr = _compose(vectors, golds, escrow, sub,
-                        extra=[("h(nums[0], nums[1])", hvals)], rng=rng)
+        got = _compose_v2(vectors, golds, escrow, sub,
+                          extra=[("h(nums[0], nums[1])", hvals)], rng=rng)
         spent += sub
-        if expr is not None and "h(" in expr:
-            return e1, e2, expr
+        if got is not None and "h(" in got[0]:
+            return e1, e2, got[0]
     return None
 
 

@@ -1,0 +1,120 @@
+{
+  "all_load_bearing_classes_reachable": true,
+  "certificate_budget": 50000000,
+  "classes": [
+    {
+      "best_validation_accuracy": 1.0,
+      "class": "numtheory",
+      "composition": {
+        "charges": 47719,
+        "seconds": 0.09,
+        "witness": null
+      },
+      "development_instances": 2,
+      "enabling_but_not_load_bearing": [
+        {
+          "answer": "((h(nums[0], nums[1]) + (nums[0] * nums[1])) // math.gcd(abs(nums[0]), abs(nums[1])))",
+          "defeated_by": [
+            "const_1",
+            "expr_fdiv(x,x)",
+            "expr_fdiv(x,y)",
+            "expr_fdiv(y,y)",
+            "expr_gcd(x,y)",
+            "expr_gcd(y,x)"
+          ],
+          "e1": "y",
+          "e2": "(y // x)",
+          "original_accuracy": 0.1525
+        },
+        {
+          "answer": "(h(nums[0], nums[1]) + (nums[0] * (nums[1] // h(nums[0], nums[1]))))",
+          "defeated_by": [
+            "expr_gcd(x,y)",
+            "expr_gcd(y,x)"
+          ],
+          "e1": "y",
+          "e2": "(x % y)",
+          "original_accuracy": 1.0
+        },
+        {
+          "answer": "(math.gcd(abs(nums[0]), abs(nums[1])) + (h(nums[0], nums[1]) // math.gcd(abs(nums[0]), abs(nums[1]))))",
+          "defeated_by": [
+            "expr_mul(x,y)",
+            "expr_mul(y,x)",
+            "single_iteration"
+          ],
+          "e1": "(x * y)",
+          "e2": "(x - x)",
+          "original_accuracy": 1.0
+        },
+        {
+          "answer": "((nums[1] + h(nums[0], nums[1])) // (nums[0] * math.gcd(abs(nums[0]), abs(nums[1]))))",
+          "defeated_by": [],
+          "e1": "(x * y)",
+          "e2": "(x % y)",
+          "original_accuracy": 0.15
+        }
+      ],
+      "enabling_helpers_examined": 4,
+      "load_bearing_structural_witness": null,
+      "reachable_exactly": true,
+      "structural": {
+        "answer": "((h(nums[0], nums[1]) // math.gcd(abs(nums[2]), abs(nums[1]))) + math.gcd(abs(nums[2]), abs(nums[1])))",
+        "charges": 3504938,
+        "e1": "(x * y)",
+        "e2": "(x % x)",
+        "seconds": 7.44
+      },
+      "validation": {
+        "structural_accuracy": 1.0
+      }
+    },
+    {
+      "best_validation_accuracy": 1.0,
+      "class": "modexp",
+      "composition": {
+        "charges": 900,
+        "seconds": 0.0,
+        "size": 2,
+        "witness": "(pow(nums[0], nums[1]) % nums[2])"
+      },
+      "development_instances": 2,
+      "enabling_but_not_load_bearing": [
+        {
+          "answer": "((nums[0] * h(nums[0], nums[1])) % nums[2])",
+          "defeated_by": [],
+          "e1": "(x * x)",
+          "e2": "(x % y)",
+          "original_accuracy": 0.1275
+        }
+      ],
+      "enabling_helpers_examined": 1,
+      "load_bearing_structural_witness": null,
+      "reachable_exactly": true,
+      "structural": {
+        "charges": 50940,
+        "seconds": 0.44,
+        "witness": null
+      },
+      "validation": {
+        "composition_accuracy": 1.0
+      }
+    }
+  ],
+  "classes_with_a_load_bearing_structural_witness": [],
+  "engine_sha256": "6df93c2a4f7c671287f7d3eb46fbe5943baeef9a9eb703ffe4d96ef38ba0dd93",
+  "grammar_hash": "713195e32926e538e2cebb9831359782854e20f29c227c3fbdd2f1f3f6849d16",
+  "grammar_version": "v2-size-indexed-symmetric",
+  "max_size": 4,
+  "primitives": [
+    "add",
+    "fdiv",
+    "gcd",
+    "mod",
+    "mul",
+    "powr",
+    "sub"
+  ],
+  "structural_success_criterion_satisfiable": false,
+  "written_utc": "2026-09-21T16:24:50Z"
+}

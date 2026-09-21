@@ -104,22 +104,13 @@ def test_structural_detector_rejects_single_expression_dispatch():
     assert E.structural_change(art) is False
 
 
-def test_structural_detector_rejects_a_DECORATIVE_helper():
-    """RED as of 2026-09-21. The detector is gameable and was gamed.
+def test_surrogate_battery_rejects_the_decorative_loop_fossil():
+    """PERMANENT REGRESSION FIXTURE (slice 2C ruling).
 
-    Lineages L-004, L-005 and L-008 produced artifacts that pass C6: each
-    contains a helper with a bounded `while` loop, and the answer path calls
-    it. L-004's helper is `x, y = (x + y), (x // x)` -- y becomes 1 and never
-    reaches 0, so the loop simply runs to its bound -- and its answer is
-    `(h(...) // h(...)) + (nums[0] * nums[1])`, in which the helper's entire
-    contribution is `h // h == 1`. The program is the v1 coprime shortcut
-    `a*b + 1` with a decorative loop bolted on, and its held-out score is the
-    same 0.61.
-
-    That is structural THEATRE: the criterion is satisfied syntactically while
-    all causal work rides on a trivial constant -- the exact form the operator
-    named in the slice 2B ruling. C6 must therefore require the helper to be
-    LOAD-BEARING: replacing its value with a constant must change the answers.
+    L-004's slice-2B artifact: helper `x, y = (x + y), (x // x)` feeding
+    `(h // h) + (nums[0] * nums[1])`. Descriptive C6 credited it. The
+    surrogate battery must not: `h // h` is 1, so a constant surrogate
+    preserves the capability exactly.
     """
     decorative = E.helper_solver_source(
         "numtheory", e1="(x + y)", e2="(x // x)",
@@ -127,8 +118,38 @@ def test_structural_detector_rejects_a_DECORATIVE_helper():
     art = E.Artifact.from_modules(
         dict(E.base_image(), search=E.base_image()["search"] + decorative),
         generation=E.FROZEN_GENERATION)
-    assert E.structural_change(art) is False
+    inst = E.tasks(family="numtheory", n=100, seed=515151)
+    verdict = E.surrogate_battery(art, "numtheory", inst)
+    assert verdict["load_bearing"] is False
+    assert any(s["surrogate"].startswith("const") or s["surrogate"].startswith("expr")
+               for s in verdict["surrogates_that_preserved_capability"])
 
+
+def test_even_euclid_is_not_load_bearing_while_gcd_is_a_primitive():
+    """The slice-2C finding, encoded so it cannot be quietly forgotten.
+
+    A helper that computes gcd by a genuine bounded loop -- Euclid, discovered
+    rather than handed -- solves numtheory exactly. It is still NOT credited as
+    load-bearing, because the single primitive application gcd(x, y) reproduces
+    it. Structure can only be load-bearing RELATIVE TO A PRIMITIVE SET.
+    """
+    src = E.helper_solver_source(
+        "numtheory", e1="y", e2="(x % y)",
+        answer="(h(nums[0], nums[1]) + ((nums[0] * nums[1]) // h(nums[0], nums[1])))")
+    art = E.Artifact.from_modules(
+        dict(E.base_image(), search=E.base_image()["search"] + src),
+        generation=E.FROZEN_GENERATION)
+    inst = E.tasks(family="numtheory", n=100, seed=626262)
+    verdict = E.surrogate_battery(art, "numtheory", inst)
+    assert verdict["original_accuracy"] == 1.0        # Euclid genuinely solves it
+    assert verdict["load_bearing"] is False           # and is still not credited
+    assert any("gcd" in s["surrogate"] for s in verdict["surrogates_that_preserved_capability"])
+
+
+# RETIRED by the slice-2C ruling: descriptive C6 (presence / invocation /
+# looping / AST depth / helper count) is telemetry only. The decorative-loop
+# fossil it used to guard is preserved above as a permanent regression
+# fixture, adjudicated by the surrogate battery instead.
 
 def test_the_grammar_can_express_a_bounded_helper_with_control_flow():
     """If Euclid is not EXPRESSIBLE, C6 is unreachable by construction and the
