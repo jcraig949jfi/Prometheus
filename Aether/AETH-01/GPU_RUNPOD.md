@@ -40,10 +40,25 @@ roughly $10/campaign, optimized for information gained per dollar
   number of ticks PROVES a world "cannot change further," which is
   false: a starved writer can be replenished later, a same-value winner
   can later mutate, and a currently-losing writer can win under a later
-  tick's priority.]** Only the mathematically certified precondition
-  (zero cells anywhere carrying `opcode=WRITE`, AND `REPLENISH_NUMER=0`)
-  is safe to hard-stop on as a proven `DEAD_CERTIFIED` result, freeing
-  its batch slot permanently. Any OTHER near-zero-activity stop is a
+  tick's priority.]** **[Further repaired per ASTRA_CLOSURE_REVIEW_02.md
+  S05: zero WRITE cells and zero rain (`REPLENISH_NUMER=0`) alone do
+  NOT certify full-state absorption -- `MAINTENANCE_COST>0` can still
+  reduce stored energy every tick until it floors at zero (an inert
+  `E=10, MAINTENANCE_COST=1` world still changes to `E=9` on the very
+  next tick; T/test_aeth01_kill_gates.py's inert-fixture regression).]**
+  The precondition (zero cells anywhere carrying `opcode=WRITE`, AND
+  `REPLENISH_NUMER=0`) certifies that no further TEMPLATE/ACTIVITY
+  observable can change (OBSERVATORY.md tier 1: no cell can newly
+  activate, copy, or mutate, because nothing can ever WRITE again) --
+  it does NOT certify the full lattice state, including per-cell energy,
+  is absorbed while `MAINTENANCE_COST>0` and any energy remains above
+  its floor. `DEAD_CERTIFIED` under this precondition therefore means
+  "template/activity-observable dead," not "byte-for-byte state frozen."
+  A full-state certificate additionally requires either
+  `MAINTENANCE_COST=0`, or that the maintenance tail has already run to
+  completion (every cell's energy has reached its floor of 0, which is
+  reachable in a bounded number of further ticks and may be waited out
+  or computed in closed form rather than stepped). Any OTHER near-zero-activity stop is a
   budget-limited, RIGHT-CENSORED pause (`DEAD_CENSORED`/
   `FROZEN_CENSORED`): its batch slot may still be freed for compute-cost
   reasons, but the stopped world's outcome is recorded as CENSORED, not

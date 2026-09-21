@@ -35,14 +35,27 @@ def test_k1_case1_execution_alone():
 
 
 def test_k1_case2_two_competing_donors():
+    # Golden winner pinned independently of this trace (KILL_GATES_01.md K1
+    # case 2 repair): arbitration_priority(seed=5, tick=0, target=(0,1),
+    # target_field=4, source=(0,0)) = 7433961230129473403 for P versus
+    # 13045711265774597214 for Q at source=(0,2) -- Q wins. The prose
+    # previously assumed P wins (total 80); this is the corrected P-loses,
+    # Q-wins case (total 90), not derived from the trace under test.
+    assert ok1.arbitration_priority(5, 0, 0, 1, 4, 0, 0) == 7433961230129473403
+    assert ok1.arbitration_priority(5, 0, 0, 1, 4, 0, 2) == 13045711265774597214
     w = _world(1, 3, seed=5, write_cost=5)
     w.grid = [[(1, 1, 4, 30, 50), (0, 0, 0, 0, 0), (1, 3, 4, 40, 80)]]
     trace = []
     n = w.step(trace=trace)
+    winner_source = [row[1] for row in trace if row[0] == "proposal_won"][0]
+    credited = [row[2] for row in trace if row[0] == "energy_credited"][0]
+    assert winner_source == (0, 2) and credited == 40  # Q, uncontested full amount.
+    assert n.grid[0][0][ok1.ENERGY] == 15  # P: 50 - 5 (exec) - 30 (attempted, loses).
+    assert n.grid[0][1][ok1.ENERGY] == 40  # Target: 0 + 40 (Q's credited amount).
+    assert n.grid[0][2][ok1.ENERGY] == 35  # Q: 80 - 5 (exec) - 40 (attempted) + 0.
     total_before = 50 + 0 + 80
     total_after = sum(n.grid[0][c][ok1.ENERGY] for c in range(3))
-    credited = [row[2] for row in trace if row[0] == "energy_credited"][0]
-    assert total_after == total_before - (5 + 5) - (30 + 40) + credited
+    assert total_after == 90 == total_before - (5 + 5) - (30 + 40) + credited
 
 
 def test_k1_case3_overflow():
@@ -73,6 +86,32 @@ def test_k1_case6_saturated_replenishment():
     w.grid = [[(0, 0, 0, 0, 250)]]
     n = w.step()
     assert n.grid[0][0][ok1.ENERGY] == 255  # gross 20 partially rejected.
+
+
+# ---------------------------------------------------------------------
+# S05 -- zero WRITE / zero rain does not certify full-state absorption
+# while MAINTENANCE_COST > 0 (ASTRA_CLOSURE_REVIEW_02.md section 1/3;
+# GPU_RUNPOD.md's DEAD_CERTIFIED description repaired to match).
+# ---------------------------------------------------------------------
+
+def test_s05_inert_world_still_decays_under_maintenance_before_floor():
+    # E=10, MAINTENANCE_COST=1, no WRITE cells anywhere, no rain: the
+    # DEAD_CERTIFIED template/activity precondition already holds (no
+    # opcode=WRITE cell exists), but energy is NOT yet absorbed -- an
+    # immediate hard-stop claiming full-state stasis here is false.
+    w = _world(1, 1, seed=6, maintenance_cost=1)
+    w.grid = [[(0, 0, 0, 0, 10)]]
+    assert not any(cell[ok1.OPCODE] == 1 for row in w.grid for cell in row)
+    n = w.step()
+    assert n.grid[0][0][ok1.ENERGY] == 9  # changed: not yet at the floor.
+    for expected in (8, 7, 6, 5, 4, 3, 2, 1, 0):
+        n = n.step()
+        assert n.grid[0][0][ok1.ENERGY] == expected
+    # Only now (after ceil(10/1)=10 ticks, HABITABILITY.md:52) is the
+    # full lattice state -- not just template/activity observables --
+    # actually fixed forever.
+    fixed = n.step()
+    assert fixed.grid == n.grid
 
 
 # ---------------------------------------------------------------------

@@ -329,6 +329,19 @@ def settle_energy(
     return next_energy
 
 
+def _require_int(name, value, low, high):
+    # Reject, never truncate: fractional/nonintegral, bool (int/bool
+    # ambiguity), NaN/infinity, numpy scalar, and out-of-range values are all
+    # rejected here -- `isinstance(x, int)` is False for numpy int64/float64
+    # and for float, and True/False are excluded explicitly despite being
+    # `int` subclasses. See ASTRA_CLOSURE_REVIEW_02.md section 3.
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(f"{name} must be an exact int in [{low}, {high}]; got {value!r}")
+    if not (low <= value <= high):
+        raise ValueError(f"{name} must satisfy {low} <= x <= {high}; got {value}")
+    return value
+
+
 class Aeth01World:
     """One AETH-01 (candidate `aeth01.v1`) lattice state S[t] plus
     (seed, tick, 5 run parameters) needed to compute S[t+1]. Construction
@@ -350,27 +363,21 @@ class Aeth01World:
         tick: int = 0,
         grid: Optional[Grid] = None,
     ):
-        if not (isinstance(H, int) and isinstance(W, int)):
-            raise ValueError("H and W must be int")
-        if not (1 <= H <= MASK32) or not (1 <= W <= MASK32):
-            raise ValueError(f"H, W must satisfy 1 <= H,W <= 2**32-1; got H={H} W={W}")
-        if not (0 <= seed <= MASK64):
-            raise ValueError(f"seed must be uint64; got {seed}")
-        if not (0 <= tick <= MASK64):
-            raise ValueError(f"tick must be uint64; got {tick}")
+        _require_int("H", H, 1, MASK32)
+        _require_int("W", W, 1, MASK32)
+        _require_int("seed", seed, 0, MASK64)
+        _require_int("tick", tick, 0, MASK64)
         for name, value in (
             ("write_cost", write_cost),
             ("maintenance_cost", maintenance_cost),
             ("replenish_amount", replenish_amount),
         ):
-            if not (0 <= value <= 255):
-                raise ValueError(f"{name} must be a uint8 (0..255); got {value}")
+            _require_int(name, value, 0, 255)
         for name, value in (
             ("replenish_numer", replenish_numer),
             ("mut_numer", mut_numer),
         ):
-            if not (0 <= value <= U33_MAX):
-                raise ValueError(f"{name} must satisfy 0 <= x <= 2**32; got {value}")
+            _require_int(name, value, 0, U33_MAX)
         self.H, self.W, self.seed, self.tick = H, W, seed, tick
         self.write_cost = write_cost
         self.maintenance_cost = maintenance_cost
@@ -384,8 +391,10 @@ class Aeth01World:
                 raise ValueError("grid shape does not match H, W")
             for row in grid:
                 for cell in row:
-                    if len(cell) != NUM_FIELDS or any(not (0 <= f <= 255) for f in cell):
+                    if len(cell) != NUM_FIELDS:
                         raise ValueError(f"invalid cell (must be 5 uint8 fields): {cell}")
+                    for index, field_value in enumerate(cell):
+                        _require_int("cell field %d" % index, field_value, 0, 255)
             self.grid = [[tuple(cell) for cell in row] for row in grid]
 
     @classmethod

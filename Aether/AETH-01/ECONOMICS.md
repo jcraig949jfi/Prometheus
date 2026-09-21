@@ -67,9 +67,13 @@ the boundary/recurrence regressions in `test_aeth01_kill_gates.py`.
 Now holding energy is not free anywhere: every cell's stored energy
 decays every tick, active or not. The world is no longer intrinsically
 finite-lived (there is an external inflow), but energy is genuinely
-scarce and must be captured (by being targeted by a winning transfer)
-before it decays away. This is the regime intended to produce real
-ecological tension (below).
+scarce and, absent replenishment, must be gained either by direct rain
+(REPLENISH_NUMER/REPLENISH_AMOUNT credits a cell independent of any
+transfer contest, PHYSICS_SPEC_DRAFT.md) or by being targeted by a
+winning transfer -- not by winning a transfer alone; a cell with no
+neighbors ever attempting a transfer to it can still gain energy purely
+from rain (ASTRA_CLOSURE_REVIEW_02.md M03). This is the regime intended
+to produce real ecological tension (below).
 
 ## Regime C -- "Free compute" (adversarial/boring negative control)
 
@@ -145,22 +149,40 @@ question doesn't yet bite. Regime B is where it becomes real:
   `MAINTENANCE_COST`/replenishment ratios where lean gaps between
   inflow events are common enough to matter but not so punishing that
   holding energy at all is a net loss.
-- **Cooperation** is directly realizable and directly ambiguous with
-  parasitism: a cell whose arg0/arg1 happen to target field 4 of a
-  specific neighbor is, from the physics' point of view, simply
-  "attempting a transfer" -- whether that is feeding a struggling
-  partner (raising both cells' joint survival odds) or draining a
-  victim is not a physics-level distinction at all; it is exactly the
-  ambiguity HEREDITY_REQUIREMENTS.md and ADVERSARIAL_ANALYSIS.md must
-  address with behavior/outcome evidence, not with a "cooperation flag"
-  the physics could never honestly provide (R1).
-- **Parasitism** is cheap to realize by construction: an inert
-  (`RESERVED_INERT`, WRITE_COST-free) cell that happens to be the
-  target of repeated winning transfers from an active neighbor
-  accumulates energy while contributing nothing -- the physics makes no
-  distinction between "a stored reserve for later use" and "a free
-  rider," which is scientifically the correct property (R1: the
-  physics does not get to know which one it is looking at).
+- **Donor-controlled transfer, recipient benefit.** A cell whose
+  arg0/arg1 happen to target field 4 of a specific neighbor is, from
+  the physics' point of view, simply "attempting a transfer": the
+  SOURCE is always debited (`WRITE_COST` plus its own attempted
+  amount, every source debit made before any target credit,
+  PHYSICS_SPEC_DRAFT.md), and the TARGET, if it wins the contest, is
+  only ever credited, never debited by that transfer -- the physics
+  provides no mechanism by which being the target of a transfer
+  reduces a cell's own energy. **[REPAIRED per
+  ASTRA_CLOSURE_REVIEW_02.md M03: earlier language describing this as
+  a donor possibly "draining a victim" had the debit/credit direction
+  backwards -- donor debit refutes direct recipient draining.]**
+  Whether a given transfer functions as feeding a struggling partner
+  (raising both cells' joint survival odds) or as upstream
+  reconfiguration for the donor's own benefit is not a physics-level
+  distinction at all; measuring realized benefit/contribution and
+  donor-reconfiguration outcomes over a trajectory is exactly the
+  behavior/outcome evidence HEREDITY_REQUIREMENTS.md and
+  ADVERSARIAL_ANALYSIS.md must supply, not a "cooperation flag" the
+  physics could never honestly provide (R1).
+- **Measured resource benefit, not an inferred moral label.** A cell
+  that receives energy -- whether via a winning transfer or via direct
+  rain (REPLENISH_NUMER/REPLENISH_AMOUNT, which credits a cell without
+  any transfer contest at all) -- gains stored energy regardless of
+  whether it ever attempts a WRITE of its own. **[REPAIRED per
+  ASTRA_CLOSURE_REVIEW_02.md M03: passive receipt alone does not by
+  itself establish parasitism; direct rain refutes any claim that
+  energy must be acquired only by winning a transfer.]** The physics
+  makes no distinction between "a stored reserve for later use" and
+  "a free rider": both are simply measured energy contribution/benefit
+  over a trajectory (source of the credit, whether the recipient
+  later spends it, and each cell's own reconfiguration), not a
+  parasitism/cooperation verdict the physics can supply on its own
+  (R1: the physics does not get to know which one it is looking at).
 
 No regime is asserted to be "the" AETH-01 configuration. Recommended
 sequencing: qualify the substrate under Regime A first (simplest,

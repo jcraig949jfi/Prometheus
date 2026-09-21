@@ -28,10 +28,17 @@ Using the repaired identity (`PHYSICS_SPEC_DRAFT.md`, S01 repair):
    fields-0-3 WRITE only (no field-4 proposal): `X=5, A=C=D=R=0`.
    `100-5-0+0-0+0=95`. Matches direct computation (`100-5=95`). PASS.
 2. **Two competing donors.** P (energy=50) attempts 30, Q (energy=80)
-   attempts 40, into an empty target (energy=0); P wins. `WRITE_COST=5`
-   each. `X=5+5=10`, `A=30+40=70`, `C=30` (winner's full amount, no
-   saturation), `D=R=0`. `130-10-70+30-0+0=80`. Direct: P->50-35=15,
-   Q->80-45=35, target->0+30=30, sum=80. PASS.
+   attempts 40, into an empty target (energy=0), at seed=5, tick=0.
+   **Golden winner, pinned independently of any test's own trace:**
+   `arbitration_priority(5,0, target=(0,1), field=4, source=(0,0))
+   =7433961230129473403` for P versus `=13045711265774597214` for
+   `source=(0,2))` for Q; higher priority wins, so **Q wins** (an earlier
+   draft of this hand ledger assumed P wins and totaled 80 -- that was
+   never checked against the executable seed and is corrected here;
+   T/test_aeth01_kill_gates.py pins both priorities as an explicit
+   regression). `WRITE_COST=5` each. `X=5+5=10`, `A=30+40=70`, `C=40`
+   (Q's full amount, no saturation), `D=R=0`. `130-10-70+40-0+0=90`.
+   Direct: P->50-5-30=15, Q->80-5-40=35, target->0+40=40, sum=90. PASS.
 3. **Overflow.** Single uncontested proposal, energy=200,
    `WRITE_COST=2`, attempted `A=198`, target starts at 100 (headroom
    155). Credited DELTA `C=min(198,255-100)=155` (NOT the raw attempted

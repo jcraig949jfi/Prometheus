@@ -351,31 +351,47 @@ finest-grained physical event is a single Mu-triggered bit flip inside
 one already-COPIED byte (i.e. one that just won a WRITE contest) --
 Hamming distance 1 from the winning donor's payload, at a rate the
 experimenter controls (`MUT_NUMER`). This is much smoother than a
-discrete-genome insertion/deletion/point-mutation alphabet ALONG A
-REALIZED CHAIN OF COPY EVENTS: if a byte value is repeatedly re-copied
-(by any sequence of winning WRITEs, possibly from different source
-cells at different ticks), it can drift up to 8 Hamming-distance-1
-steps away from its original value per copy event. This is NOT a claim
-that any byte is reachable from any other "in at most 8 one-step
-events" independent of copying activity -- a byte that is never the
-target of a winning WRITE never changes at all, regardless of
-`MUT_NUMER` (see "Mutation (Mu)" above). Reachability is therefore
-gated by the ACCESSIBILITY of copy opportunities (a route, a live
-source, sufficient energy, and contest survival), not by the mutation
-alphabet's smoothness alone.
+discrete-genome insertion/deletion/point-mutation alphabet, but each
+copy event is DONOR-CONDITIONED, not an accumulating random walk: a
+winning WRITE replaces the target's byte with the CURRENT donor's
+payload, optionally flipping one bit of THAT value; it does not build
+on the target's own prior history. A fixed donor `p` can therefore only
+ever place `p` itself or one of `p`'s 8 Hamming-1 neighbors at the
+target on any single copy event, however many times that same donor
+wins -- repeated overwrite from a fixed donor never cumulatively
+random-walks the target through byte space (e.g. a fixed donor of 0 can
+place only 0 or a power of two, never 3, no matter how many times it
+wins; ASTRA_CLOSURE_REVIEW_02.md section 3, K8/T/test_aeth01_kill_gates.py).
+Reaching a value outside a fixed donor's 9-value reachable set requires
+a DIFFERENT donor to win a later contest, which is an accessibility
+question (a route, a live and differently-valued source, sufficient
+energy, and contest survival), not a property of the mutation alphabet
+alone. A byte that is never the target of a winning WRITE never changes
+at all, regardless of `MUT_NUMER` (see "Mutation (Mu)" above).
 
-**Categorical cliffs exist but are narrow, not sheer.** The opcode
-field is an ordinary byte subject to the same copy+Mu process as any
-other field, so "waking up" a RESERVED_INERT neighbor (any value ->
-0x01) or "putting a WRITE cell to sleep" (0x01 -> any other value) rides
-the same smooth mutation channel. But it is directionally lopsided:
-from `0x00`, exactly 1 of the 8 possible single-bit flips reaches WRITE
-(the LSB); the other 7 land on other RESERVED_INERT values. From
-`0x01`, 7 of 8 single-bit flips deactivate the cell; the 8th (bit 0)
-gives `0x00`, still inert. So "activation" is an approximately
-1-in-8-per-mutation-event target, not a zero-measure cliff and not
-free -- a directly measurable, testable quantity (a natural
-HABITABILITY.md observable: measured activation rate vs. `MUT_NUMER`).
+**Categorical cliffs exist but are narrow, not sheer, and are
+donor-conditioned.** The opcode field is an ordinary byte subject to
+the same copy+Mu process as any other field, so "waking up" a
+RESERVED_INERT neighbor (any value -> 0x01) or "putting a WRITE cell to
+sleep" (0x01 -> any other value) rides the same smooth mutation
+channel, but the activation probability for a single copy event from a
+FIXED donor byte `p` is **not** a generic 1-in-8: for uniform per-bit
+mutation sampling, the marginal probability that a copy event from
+donor `p` writes exactly `0x01` is
+`(1-mu)*[p=1] + (mu/8)*[popcount(p XOR 1)=1]`, where `mu=MUT_NUMER/2**32`
+and `[.]` is 1 if the bracketed condition holds, else 0. A fixed donor
+of `p=1` therefore activates with probability `1-mu` copy-for-copy
+(already active, most copies preserve it), not 1/8; a fixed donor with
+`popcount(p XOR 1)!=1` never activates by mutation from that donor at
+all (e.g. donor 0 never activates: `popcount(0 XOR 1)=1` is true, so it
+DOES activate at rate `mu/8` -- but a donor such as 3, with
+`popcount(3 XOR 1)=1` false, activates at rate 0 from that source).
+"Approximately 1-in-8" is at best a loose description of the mutation
+kernel's own branching factor, not of realized activation probability,
+which depends on which donor is actually copying. This remains a
+directly measurable, testable quantity (a natural HABITABILITY.md
+observable: measured activation rate vs. `MUT_NUMER`, conditioned on
+the donor actually observed), not a closed-form constant.
 
 **Neutral networks are large by construction, but require copy traffic
 to explore, same as any other mutation.** 255 of 256 opcode values
