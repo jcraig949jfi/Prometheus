@@ -1,377 +1,134 @@
 <title>Z80 × Atlas</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
   :root {
-    --bg:        #f5f6f8;
-    --surface:   #ffffff;
-    --surface2:  #eef0f4;
-    --border:    #d4d8e0;
-    --text:      #1a1d24;
-    --text-2:    #4a5060;
-    --text-3:    #7a8090;
-    --mono:      #2a3040;
-    --accent:    #0f7569;
-    --accent-hi: #0d9e8f;
-    --ok:        #0a7a4a;
-    --ok-bg:     #d6f0e3;
-    --warn:      #8a5a00;
-    --warn-bg:   #fef0c8;
-    --bad:       #8a2020;
-    --bad-bg:    #fce8e8;
-    --dim:       #c8ccd6;
+    --bg:#f5f6f8; --surface:#ffffff; --surface2:#eef0f4; --border:#d4d8e0;
+    --text:#1a1d24; --text-2:#4a5060; --text-3:#7a8090; --mono:#2a3040;
+    --accent:#0f7569; --ok:#0a7a4a; --warn:#8a5a00; --warn-bg:#fdf3d8;
+    --bad:#8a2020; --dim:#c8ccd6; --corr:#7a3d00; --corr-bg:#fdf0e0;
   }
-
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg:        #0d1017;
-      --surface:   #151b25;
-      --surface2:  #1c2433;
-      --border:    #2a3245;
-      --text:      #dce3ed;
-      --text-2:    #8a97ab;
-      --text-3:    #5a6678;
-      --mono:      #a8c4d4;
-      --accent:    #2ec4b0;
-      --accent-hi: #3de0ca;
-      --ok:        #2ab870;
-      --ok-bg:     #0a2a1a;
-      --warn:      #e0a030;
-      --warn-bg:   #2a1a00;
-      --bad:       #e05050;
-      --bad-bg:    #2a0808;
-      --dim:       #2a3245;
+      --bg:#0d1017; --surface:#151b25; --surface2:#1c2433; --border:#2a3245;
+      --text:#dce3ed; --text-2:#8a97ab; --text-3:#5a6678; --mono:#a8c4d4;
+      --accent:#2ec4b0; --ok:#2ab870; --warn:#e0a030; --warn-bg:#2a1f05;
+      --bad:#e05050; --dim:#2a3245; --corr:#e8a860; --corr-bg:#2a1a08;
     }
   }
-
   :root[data-theme="dark"] {
-    --bg:        #0d1017;
-    --surface:   #151b25;
-    --surface2:  #1c2433;
-    --border:    #2a3245;
-    --text:      #dce3ed;
-    --text-2:    #8a97ab;
-    --text-3:    #5a6678;
-    --mono:      #a8c4d4;
-    --accent:    #2ec4b0;
-    --accent-hi: #3de0ca;
-    --ok:        #2ab870;
-    --ok-bg:     #0a2a1a;
-    --warn:      #e0a030;
-    --warn-bg:   #2a1a00;
-    --bad:       #e05050;
-    --bad-bg:    #2a0808;
-    --dim:       #2a3245;
+    --bg:#0d1017; --surface:#151b25; --surface2:#1c2433; --border:#2a3245;
+    --text:#dce3ed; --text-2:#8a97ab; --text-3:#5a6678; --mono:#a8c4d4;
+    --accent:#2ec4b0; --ok:#2ab870; --warn:#e0a030; --warn-bg:#2a1f05;
+    --bad:#e05050; --dim:#2a3245; --corr:#e8a860; --corr-bg:#2a1a08;
   }
-
-  *, *::before, *::after { box-sizing: border-box; }
-
+  *,*::before,*::after { box-sizing:border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', system-ui, sans-serif;
-    font-size: 15px;
-    line-height: 1.65;
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:15px; line-height:1.65;
   }
-
-  .page { max-width: 940px; margin: 0 auto; padding: 0 24px; }
-
-  /* ── HEADER ── */
-  .header {
-    border-bottom: 1px solid var(--border);
-    padding: 32px 0 24px;
-    margin-bottom: 36px;
-  }
-
+  .page { max-width:960px; margin:0 auto; padding:0 24px; }
+  .header { border-bottom:1px solid var(--border); padding:32px 0 24px; margin-bottom:28px; }
   .header-meta {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:10px;
+    display:flex; gap:22px; flex-wrap:wrap;
   }
-
   h1 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: clamp(24px, 4vw, 38px);
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 10px;
-    letter-spacing: -.02em;
-    line-height: 1.15;
-    text-wrap: balance;
+    font-family:'IBM Plex Mono',monospace; font-size:clamp(24px,4vw,36px); font-weight:600;
+    margin:0 0 10px; letter-spacing:-.02em; line-height:1.15; text-wrap:balance;
   }
-
-  .subtitle {
-    color: var(--text-2);
-    font-size: 15px;
-    max-width: 640px;
-    margin: 0;
+  .subtitle { color:var(--text-2); font-size:15px; max-width:660px; margin:0; }
+  .rev {
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--corr); background:var(--corr-bg); border:1px solid var(--corr);
+    border-radius:3px; padding:2px 8px; margin-bottom:12px;
   }
-
-  /* ── STAT TILES ── */
   .tiles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 40px;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(146px,1fr));
+    gap:12px; margin-bottom:38px;
   }
-
-  .tile {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 14px 16px;
-  }
-
+  .tile { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; }
   .tile-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
+    font-family:'IBM Plex Mono',monospace; font-size:21px; font-weight:600;
+    line-height:1.1; font-variant-numeric:tabular-nums;
   }
-
   .tile-label {
-    font-size: 11px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    margin-top: 4px;
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--text-3); margin-top:4px;
   }
-
-  .tile.accent .tile-val { color: var(--accent); }
-  .tile.ok .tile-val { color: var(--ok); }
-
-  /* ── SECTIONS ── */
-  .section { margin-bottom: 44px; }
-
+  .tile.accent .tile-val { color:var(--accent); }
+  .tile.ok .tile-val { color:var(--ok); }
+  .section { margin-bottom:44px; }
   h2 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--dim);
+    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:0 0 14px; padding-bottom:8px; border-bottom:1px solid var(--dim);
   }
-
-  h3 {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 8px;
-    color: var(--text);
-    text-wrap: balance;
+  .lede { color:var(--text-2); font-size:13.5px; margin:0 0 14px; max-width:700px; }
+  .corrections { display:flex; flex-direction:column; gap:10px; }
+  .corr-item {
+    background:var(--corr-bg); border:1px solid var(--border);
+    border-left:3px solid var(--corr); border-radius:0 6px 6px 0; padding:13px 16px;
   }
-
-  /* ── VERDICT TABLE ── */
-  .verdict-grid {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-    background: var(--surface);
+  .corr-id {
+    font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+    color:var(--corr); letter-spacing:.08em; margin-bottom:3px;
   }
-
-  .vg-head, .vg-row {
-    display: contents;
+  .corr-was, .corr-now { font-size:13.5px; line-height:1.55; margin:2px 0; }
+  .corr-was { color:var(--text-3); }
+  .corr-was::before { content:"was  "; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; }
+  .corr-now::before { content:"now  "; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); }
+  .vg { display:grid; grid-template-columns:1fr auto auto auto; border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--surface); }
+  .vg > * { padding:9px 14px; border-bottom:1px solid var(--border); font-size:13px; font-variant-numeric:tabular-nums; }
+  .vg > .h {
+    background:var(--surface2); font-family:'IBM Plex Mono',monospace; font-size:11px;
+    font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3);
   }
-
-  .vg-head > *, .vg-row > * {
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-    font-variant-numeric: tabular-nums;
+  .vg > .last { border-bottom:none; }
+  .vg-flag { font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--mono); }
+  .n-adm { color:var(--ok); font-weight:600; text-align:right; }
+  .n-weak { color:var(--warn); font-weight:600; text-align:right; }
+  .n-bad { color:var(--bad); font-weight:600; text-align:right; }
+  table.eff { width:100%; border-collapse:collapse; font-size:12.5px; background:var(--surface); }
+  .eff-wrap { border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  table.eff th {
+    background:var(--surface2); font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+    font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3);
+    padding:9px 12px; text-align:left; white-space:nowrap;
   }
-
-  .vg-row:last-child > * { border-bottom: none; }
-
-  .vg-head > * {
-    background: var(--surface2);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text-3);
-  }
-
-  .vg-flag { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--mono); }
-  .vg-adm { color: var(--ok); font-weight: 600; text-align: right; }
-  .vg-weak { color: var(--warn); font-weight: 600; text-align: right; }
-  .vg-bad { color: var(--bad); font-weight: 600; text-align: right; }
-
-  /* ── EFFECTS TABLE ── */
-  .effects-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .effects-table th {
-    background: var(--surface2);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    padding: 9px 14px;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  .effects-table th:not(:first-child),
-  .effects-table td:not(:first-child) { text-align: right; }
-
-  .effects-table td {
-    padding: 8px 14px;
-    border-top: 1px solid var(--border);
-    font-variant-numeric: tabular-nums;
-    vertical-align: middle;
-  }
-
-  .effects-table tr.highlight td { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
-
-  .axis-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--mono);
-  }
-
-  .bar-cell { width: 120px; }
-
-  .bar-wrap {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .bar-track {
-    flex: 1;
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    background: var(--accent);
-  }
-
-  .bar-fill.neg { background: var(--bad); }
-
-  .d-val { font-weight: 600; font-size: 12px; font-variant-numeric: tabular-nums; }
-  .d-pos { color: var(--ok); }
-  .d-neg { color: var(--bad); }
-  .d-small { color: var(--text-3); }
-
-  /* ── DEFECTS ── */
-  .defect-list { display: flex; flex-direction: column; gap: 14px; }
-
-  .defect {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--warn);
-    border-radius: 0 6px 6px 0;
-    padding: 14px 16px;
-  }
-
-  .defect-id {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--warn);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .defect-title { font-weight: 600; margin-bottom: 4px; }
-  .defect-body { color: var(--text-2); font-size: 13.5px; line-height: 1.55; margin: 0; }
-
-  /* ── NOTES ── */
+  table.eff th.num, table.eff td.num { text-align:right; }
+  table.eff td { padding:7px 12px; border-top:1px solid var(--border); font-variant-numeric:tabular-nums; }
+  table.eff tr.hi td { background:color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+  .ax { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mono); }
+  .win { font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; color:var(--accent); white-space:nowrap; }
+  .d-val { font-weight:600; font-variant-numeric:tabular-nums; }
+  .d-pos { color:var(--ok); } .d-neg { color:var(--bad); } .d-nil { color:var(--text-3); }
   .note {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px 18px;
-    font-size: 13.5px;
-    color: var(--text-2);
-    line-height: 1.6;
+    background:var(--surface); border:1px solid var(--border); border-radius:6px;
+    padding:15px 17px; font-size:13.5px; color:var(--text-2); line-height:1.6;
   }
-
-  .note + .note { margin-top: 10px; }
-
-  .note strong { color: var(--text); }
-
-  /* ── EXPLOIT FLAGS ── */
-  .exploit-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-
-  .exploit-row:last-child { border-bottom: none; }
-
-  .exploit-name {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--mono);
-  }
-
-  .exploit-count {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--text-2);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .exploit-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  /* ── FOOTER ── */
+  .note strong { color:var(--text); }
+  .note.flag { border-left:3px solid var(--warn); border-radius:0 6px 6px 0; }
+  .stack { display:flex; flex-direction:column; gap:11px; }
+  code { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mono); }
+  .bars { display:flex; flex-direction:column; gap:7px; margin:4px 0 2px; }
+  .bar-row { display:grid; grid-template-columns:118px 1fr 78px; align-items:center; gap:10px; font-size:12.5px; }
+  .bar-lab { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-2); }
+  .bar-track { height:14px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; background:var(--accent); border-radius:3px; }
+  .bar-fill.warnc { background:var(--warn); }
+  .bar-num { font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-2); text-align:right; font-variant-numeric:tabular-nums; }
   .footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 0 32px;
-    font-size: 12px;
-    color: var(--text-3);
-    font-family: 'IBM Plex Mono', monospace;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-top: 44px;
+    border-top:1px solid var(--border); padding:20px 0 34px; margin-top:44px;
+    font-size:11.5px; color:var(--text-3); font-family:'IBM Plex Mono',monospace;
+    display:flex; gap:22px; flex-wrap:wrap;
   }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .tiles { grid-template-columns: repeat(2, 1fr); }
-    .verdict-grid { grid-template-columns: 1fr auto auto auto; }
-    .bar-cell { display: none; }
-    .effects-table th:nth-child(3), .effects-table td:nth-child(3) { display: none; }
+  @media (max-width:620px) {
+    .tiles { grid-template-columns:repeat(2,1fr); }
+    table.eff th:nth-child(5), table.eff td:nth-child(5),
+    table.eff th:nth-child(6), table.eff td:nth-child(6) { display:none; }
+    .bar-row { grid-template-columns:96px 1fr 62px; }
   }
 </style>
 
@@ -379,301 +136,352 @@
 
   <div class="header">
     <div class="header-meta">
-      <span>Nestor Z80 × Atlas</span>
-      <span>72-Hour Autonomous Run</span>
-      <span>2026-09-19 → 2026-09-22</span>
-      <span>Grammar 570c8037</span>
+      <span>Nestor Z80 × Atlas</span><span>72-Hour Autonomous Run</span>
+      <span>2026-09-19 → 2026-09-22</span><span>Grammar 570c8037</span>
     </div>
+    <div class="rev">Revision 2 · corrected against the machine-readable record</div>
     <h1>Combinatorial Search for<br>Evolutionary Accessibility</h1>
     <p class="subtitle">
-      Which combinations of reproductive physics, representation topology, ecological structure,
-      and environmental pressure create evolutionary paths to computations inaccessible under
-      ordinary externally managed reproduction?
+      Which combinations of reproductive physics, representation topology, ecological
+      structure, and environmental pressure create evolutionary paths to computations
+      inaccessible under ordinary externally managed reproduction?
     </p>
   </div>
 
-  <!-- HEADLINE STATS -->
   <div class="tiles">
     <div class="tile"><div class="tile-val">23,471</div><div class="tile-label">Runs completed</div></div>
     <div class="tile ok"><div class="tile-val">0</div><div class="tile-label">Failed / voided</div></div>
     <div class="tile"><div class="tile-val">20,638</div><div class="tile-label">Families</div></div>
-    <div class="tile"><div class="tile-val">2,254</div><div class="tile-label">Promotions</div></div>
-    <div class="tile accent"><div class="tile-val">1,031</div><div class="tile-label">Admissible spontaneous replicators</div></div>
-    <div class="tile"><div class="tile-val">409/416</div><div class="tile-label">Priority pairs covered</div></div>
-    <div class="tile"><div class="tile-val">9,586</div><div class="tile-label">Distinct cells emitted</div></div>
-    <div class="tile"><div class="tile-val">41,402</div><div class="tile-label">Specimens archived</div></div>
+    <div class="tile"><div class="tile-val">10,741</div><div class="tile-label">Matched pairs</div></div>
+    <div class="tile accent"><div class="tile-val">1,031</div><div class="tile-label">Admissible replication events</div></div>
+    <div class="tile"><div class="tile-val">120</div><div class="tile-label">Of those reaching depth ≥ 2</div></div>
+    <div class="tile"><div class="tile-val">28</div><div class="tile-label">Effect axes</div></div>
+    <div class="tile"><div class="tile-val">1,221</div><div class="tile-label">Special flags</div></div>
   </div>
 
-  <!-- ADJUDICATION -->
   <div class="section">
-    <h2>Special-flag adjudication</h2>
-    <p style="color:var(--text-2);font-size:13.5px;margin:0 0 14px;max-width:700px;">
-      1,221 flags fired as preregistered (preservation triggers, not promotion signals).
-      Post-hoc adjudicator applied stricter rules to the frozen record: final-state threshold 0.90,
-      control separation margin 0.25, evidence-backed birth required.
+    <h2>What revision 2 corrects</h2>
+    <p class="lede">
+      Revision 1 was written from the campaign's human-readable packet rather than from the
+      machine-readable record. Four claims were wrong in consequence. Each is recomputed
+      below and each now has a test that fails if it regresses.
     </p>
-    <div class="verdict-grid">
-      <div class="vg-head">
-        <div>Flag</div><div style="text-align:right">Admissible</div><div style="text-align:right">Weak</div><div style="text-align:right">Inadmissible</div>
+    <div class="corrections">
+      <div class="corr-item">
+        <div class="corr-id">R-01 · Sign inversion in two headline effects</div>
+        <p class="corr-was">Removing explicit fitness raised scores; forced read order beat answer-before-read.</p>
+        <p class="corr-now">Both reversed. The effect is defined as experiment minus control and the axis label reads experiment then control, so a positive value means the left-hand level scored higher. Explicit fitness beat implicit, and answer-before-read beat forced read.</p>
       </div>
-      <div class="vg-row">
-        <div class="vg-flag">SPONTANEOUS_REPLICATOR_FROM_RANDOM_BYTES</div>
-        <div class="vg-adm">1031</div><div class="vg-weak">—</div><div class="vg-bad">—</div>
+      <div class="corr-item">
+        <div class="corr-id">R-02 · Wrong run named as the admissible instance</div>
+        <p class="corr-was">Named a run whose final held-out score was 0.75, which cannot satisfy the 0.90 rule.</p>
+        <p class="corr-now">That run adjudicates weak. The single admissible instance is a different run entirely, at 1.0 against a control at 0.0. The wrong identity came from the preserved-flag stream, which carries no verdict.</p>
       </div>
-      <div class="vg-row">
-        <div class="vg-flag">REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION</div>
-        <div class="vg-adm">1</div><div class="vg-weak">50</div><div class="vg-bad">14</div>
+      <div class="corr-item">
+        <div class="corr-id">R-03 · Categorical claims the record does not carry</div>
+        <p class="corr-was">The reservoir question is answerable from per-run lineage records; first-replication times show no sharp accessibility cliff.</p>
+        <p class="corr-now">Lineage keeps a truncated tail and logs no migration events, so the ancestry certificate the reservoir claim needs cannot generally be rebuilt. The epoch range pools tiers and cells and identifies nothing about topology.</p>
       </div>
-      <div class="vg-row">
-        <div class="vg-flag">REPRODUCTIVE_ARCHITECTURE_CHANGED_UNDER_TASK_DEMAND</div>
-        <div class="vg-adm">—</div><div class="vg-weak">1</div><div class="vg-bad">—</div>
-      </div>
-      <div class="vg-row">
-        <div class="vg-flag">RESERVOIR_CROSSED_A_MOAT</div>
-        <div class="vg-adm">—</div><div class="vg-weak">—</div><div class="vg-bad">124</div>
+      <div class="corr-item">
+        <div class="corr-id">R-04 · Incomplete effect table</div>
+        <p class="corr-was">Twenty-four axes, inherited from what the packet's summary happened to print.</p>
+        <p class="corr-now">All twenty-eight axes in the record, recomputed from the run index.</p>
       </div>
     </div>
   </div>
 
-  <!-- MATCHED-PAIR EFFECTS -->
   <div class="section">
     <h2>Matched-pair effects</h2>
-    <p style="color:var(--text-2);font-size:13.5px;margin:0 0 14px;max-width:700px;">
-      The causal-shaped reading: each row pairs runs differing in one declared factor only.
-      Mean Δ held-out is the average score difference (experiment minus control).
-      Rows with |d| ≥ 0.10 highlighted.
+    <p class="lede">
+      The only causal-shaped reading. Each row pairs runs differing in exactly one declared
+      factor. The effect is the experiment's final held-out score minus the control's, so
+      the <em>higher</em> column names the level that scored better. All 10,741 pairs were
+      checked mechanically: every one differs in exactly one factor, and in every one that
+      factor is the declared axis. Rows with an absolute effect at or above 0.10 are shaded.
     </p>
-    <div style="overflow-x:auto;">
-    <table class="effects-table">
-      <thead>
-        <tr>
-          <th>Axis flip</th>
-          <th>Pairs</th>
-          <th class="bar-cell">Effect</th>
-          <th>Mean Δ held</th>
-          <th>Only exp.</th>
-          <th>Only ctrl.</th>
-        </tr>
-      </thead>
-      <tbody id="effects-body">
-      </tbody>
-    </table>
+    <div class="eff-wrap" style="overflow-x:auto;">
+      <table class="eff">
+        <thead><tr>
+          <th>Axis: experiment → control</th><th class="num">Pairs</th>
+          <th>Higher</th><th class="num">Mean Δ</th>
+          <th class="num">Crossed exp. only</th><th class="num">Crossed ctrl. only</th>
+        </tr></thead>
+        <tbody id="eff-body"></tbody>
+      </table>
     </div>
   </div>
 
-  <!-- KEY FINDINGS -->
   <div class="section">
-    <h2>Key findings</h2>
-
-    <div style="display:flex;flex-direction:column;gap:12px;">
-
-      <div class="note">
-        <strong>Spontaneous replication is robust and common.</strong>
-        1,031 randomly-initialised populations produced evidence-backed self-replicators
-        (fidelity 0.906–0.990) with zero seeding. These are the cleanest admissible results
-        in the campaign — no flags on seeding, no ambiguity about the initial condition.
-        The earliest arose at epoch 5; the latest at epoch 2,899, suggesting no sharp
-        accessibility cliff.
-      </div>
-
-      <div class="note">
-        <strong>Explicit fitness selection is the strongest single-factor signal.</strong>
-        Removing explicit fitness (EXPLICIT_FITNESS → NONE_IMPLICIT) raised held-out scores
-        by a mean of <strong>+0.30</strong> across 513 matched pairs, with 85 crossings only
-        in the explicit-fitness arm vs 11 in the implicit arm. This is the largest and
-        best-supported effect in the table.
-      </div>
-
-      <div class="note">
-        <strong>Pair-execution (endogenous) reproduction hurts task performance.</strong>
-        PAIR_EXECUTION → EXTERNAL shows mean Δ = −0.12 across 2,258 pairs (the largest pair
-        count), with 218 crossings only under pair-execution vs 343 under external. Endogenous
-        reproduction carries a performance cost in this substrate; the question of whether it
-        unlocks qualitatively different accessibility remains open (one ADMISSIBLE instance at
-        final state, but marginal — see defects).
-      </div>
-
-      <div class="note">
-        <strong>Forced read order is the cycle-8 accessibility finding in bytes.</strong>
-        ANSWER_BEFORE_READ → FORCED_READ: mean Δ = +0.10, 37 crossings only in the
-        forced-read arm vs 13 in the answer-before-read arm. Consistent with the
-        CW01 cycle-8 topological obstruction: the plateau organism answers before reading,
-        and every partial-read edit is deleterious. Enforcing the read order in the world
-        rather than the genome moves the population.
-      </div>
-
-      <div class="note">
-        <strong>Reservoir stepping-stone structure is unanswered.</strong>
-        All 124 RESERVOIR_CROSSED_A_MOAT flags are inadmissible: 22 of 124 are seeded
-        instruments and the remainder are exogenous controls or carry D01 final-state
-        mismatches. The question requires tracing each crossing lineage's ancestry into
-        the easy niche from per-run lineage records. Records are preserved; this is
-        answerable post-campaign.
-      </div>
-
-    </div>
-  </div>
-
-  <!-- DEFECTS -->
-  <div class="section">
-    <h2>Defects recorded in flight</h2>
-    <p style="color:var(--text-2);font-size:13.5px;margin:0 0 14px;max-width:700px;">
-      Three defects found during execution. None patched in flight — the campaign froze its
-      flag rules before launch; patching mid-run would make the two halves of the record
-      incomparable. All three adjudicated post-hoc by <code style="font-size:12px;">adjudicate.py</code>.
+    <h2>Special-flag adjudication</h2>
+    <p class="lede">
+      1,221 flags fired as preregistered. They are preservation triggers, not verdicts.
+      The post-hoc adjudicator applied stricter rules to the frozen record: 0.90 at final
+      state, 0.25 separation from the matched control, and an evidence-backed birth.
     </p>
-    <div class="defect-list">
-      <div class="defect">
-        <div class="defect-id">Z80A-D01 · Medium</div>
-        <div class="defect-title">Flags mix a historical crossing event with a final-state measurement</div>
-        <p class="defect-body">
-          <code>crossed</code> is true if any organism ever crossed the threshold at any
-          validation pass; <code>held_max</code> is the best score at the <em>end</em>.
-          REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION fires on the historical flag and reports
-          final-state numbers as evidence, with no margin requirement. Of 65 instances,
-          4 had a <em>negative</em> margin — the exogenous control finished better than the
-          flagged run.
-        </p>
-      </div>
-      <div class="defect">
-        <div class="defect-id">Z80A-D02 · Medium</div>
-        <div class="defect-title">Reservoir flag does not require the reservoir to have contributed</div>
-        <p class="defect-body">
-          RESERVOIR_CROSSED_A_MOAT fires on structure + moat + any historical crossing, without
-          checking that the easy niche supplied the crossing lineage. 22 of 124 instances are
-          seeded instruments; niche occupancy in inspected instances is roughly uniform, consistent
-          with no stepping-stone structure. Answerable from per-run lineage records.
-        </p>
-      </div>
-      <div class="defect">
-        <div class="defect-id">Z80A-D03 · Low (adjudicator only)</div>
-        <div class="defect-title">Index whitelist omits replication evidence; adjudicator read it there</div>
-        <p class="defect-body">
-          The index carries <code>replicated</code> and <code>replication_rate</code> but not
-          <code>replication_events</code> or <code>births_similar_no_write</code>. The first
-          adjudicator read from the index, found those fields absent, and returned INADMISSIBLE
-          for all 36 spontaneous-replicator flags in flight at the time. Per-run records always
-          held both. Index schema left unchanged; adjudicator now reads per-run records.
-        </p>
-      </div>
+    <div class="vg">
+      <div class="h">Flag</div><div class="h" style="text-align:right">Admissible</div>
+      <div class="h" style="text-align:right">Weak</div><div class="h" style="text-align:right">Inadmissible</div>
+
+      <div class="vg-flag">SPONTANEOUS_REPLICATOR_FROM_RANDOM_BYTES</div>
+      <div class="n-adm">1031</div><div class="n-weak">—</div><div class="n-bad">—</div>
+
+      <div class="vg-flag">REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION</div>
+      <div class="n-adm">1</div><div class="n-weak">50</div><div class="n-bad">14</div>
+
+      <div class="vg-flag">REPRODUCTIVE_ARCHITECTURE_CHANGED_UNDER_TASK_DEMAND</div>
+      <div class="n-adm">—</div><div class="n-weak">1</div><div class="n-bad">—</div>
+
+      <div class="vg-flag last">RESERVOIR_CROSSED_A_MOAT</div>
+      <div class="n-adm last">—</div><div class="n-weak last">—</div><div class="n-bad last">124</div>
     </div>
   </div>
 
-  <!-- EXPLOIT FLAGS -->
   <div class="section">
-    <h2>Exploit and anomaly flags</h2>
-    <p style="color:var(--text-2);font-size:13.5px;margin:0 0 14px;max-width:600px;">
-      Recorded and preserved, not silently fixed. These are observations about the substrate
-      under adversarial or unusual conditions.
+    <h2>Findings</h2>
+    <div class="stack">
+
+      <div class="note">
+        <strong>Explicit fitness outperformed implicit selection.</strong>
+        Across 513 matched pairs the explicit-fitness arm finished a mean of 0.3036 higher
+        on held-out score, and crossed in 85 pairs where its implicit control did not
+        against 11 the other way. This is the largest effect in the table and it rests on
+        the second-largest pair count. Revision 1 stated this backwards.
+      </div>
+
+      <div class="note flag">
+        <strong>Answer-before-read outperformed forced read, opposite to cycle 8.</strong>
+        Both read-order rows agree and they are independent sets of pairs. With
+        answer-before-read as the experiment the effect is +0.1029 over 334 pairs, 37
+        crossings to 13. With the flip run the other way it is −0.0687 over 304 pairs, 14
+        to 33. Cycle 8 concluded the opposite: that the plateau organism answers before
+        reading the ask tick, that no edit of the answer makes it conditional until a read
+        is added, and that every partial read is deleterious. This campaign does not
+        reproduce that advantage. The discrepancy is recorded as an open result, not
+        resolved. Three candidate explanations are separable by experiment and none is
+        adopted here: the endpoint differs, since cycle 8 scored crossing a specific world
+        while this scores final held-out competence; forcing the read costs instructions in
+        a byte VM where the read must be executed and timed; and the moat tag couples read
+        order to the bridge factor, so the two arms may not be exchangeable. Cycle 9 should
+        settle which.
+      </div>
+
+      <div class="note">
+        <strong>Replication events are common; self-sustaining lineages are rare.</strong>
+        1,031 randomly initialised, unseeded populations produced at least one birth backed
+        by evidence that the organism placed the child's bytes, at fidelity 0.906 to 0.990.
+        That is a causal claim about single events and it holds. It is not a claim about
+        lineages. Reconstructing ancestry from the stored parent pointers gives a maximum
+        chain depth of 1 in 911 of the 1,031 runs: one parent, several children, no
+        grandchild. Only 120 runs reach depth 2 or more and only 9 reach depth 3. Counting
+        events rather than generations is far more generous, at 952 runs with two or more
+        and 308 with ten or more, because a single parent replicating repeatedly inflates
+        the event count without extending the lineage. No run in this set had its lineage
+        tail truncated, so the depth figures are exact rather than a floor.
+      </div>
+
+      <div class="bars" style="margin-top:2px;">
+        <div class="bar-row"><span class="bar-lab">depth 1</span><span class="bar-track"><span class="bar-fill warnc" style="width:88.4%"></span></span><span class="bar-num">911</span></div>
+        <div class="bar-row"><span class="bar-lab">depth 2</span><span class="bar-track"><span class="bar-fill" style="width:10.8%"></span></span><span class="bar-num">111</span></div>
+        <div class="bar-row"><span class="bar-lab">depth 3</span><span class="bar-track"><span class="bar-fill" style="width:0.9%"></span></span><span class="bar-num">9</span></div>
+      </div>
+
+      <div class="note">
+        <strong>The single admissible endogenous-reproduction instance.</strong>
+        Run <code>64dea50f417efb02-s1203-tL-a0</code> finished at 1.0 on held-out score
+        with its matched external-reproduction control at 0.0, a margin of 1.0. Its cell is
+        a graph world under a coevolving environment, partial endogenous reproduction, block
+        copy, periodic-migration niches, and forced read order. It is one run. The other 64
+        instances of this flag fail on the defect below: 50 are below threshold at final
+        state and 14 have the exogenous control finishing ahead.
+      </div>
+
+      <div class="note">
+        <strong>The reservoir question is not answerable from the current record.</strong>
+        All 124 reservoir flags are inadmissible, in two exact groups: 117 fired on seeded
+        instrument populations, which cannot bear on what evolution finds unaided, and 7
+        fired on runs whose reproduction is external, which is the exogenous control rather
+        than a reservoir result. None is weak, so none is a near miss. Supporting the claim
+        the flag names needs a certificate that a lineage arose in the easy niche, migrated,
+        and crossed in a hard one. The record cannot generally supply it: the stored lineage
+        is the last 400 births and is thinned to 50 under disk pressure, each entry carries
+        only the parent's niche at the moment of birth, and migrations are counted in
+        aggregate without being logged as events. A lineage that migrated between two births
+        leaves no trace of having done so.
+      </div>
+
+      <div class="note">
+        <strong>First-replication timing identifies nothing on its own.</strong>
+        Across the admissible set the first evidence-backed replication appears anywhere
+        from epoch 0 to epoch 3,946. That range is not a statement about accessibility. It
+        pools two tiers with different epoch budgets, 979 runs at 4,000 epochs and 52 at
+        2,000, and 35 distinct combinations of reproduction physics, ecological structure,
+        and representation, one of which supplies a third of the set on its own. Revision 1
+        read the range as evidence against a sharp threshold. It is not evidence either way.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Defects in the campaign's own flag layer</h2>
+    <p class="lede">
+      Found during execution, recorded rather than patched: the campaign froze its flag
+      rules before launch, so changing them after seeing results would make the two halves
+      of the record incomparable. All three are handled by the post-hoc adjudicator.
     </p>
-    <div class="exploit-wrap">
-      <div class="exploit-row">
-        <span class="exploit-name">SANDBOX_ESCAPE</span>
-        <span class="exploit-count">11,531 runs</span>
+    <div class="stack">
+      <div class="note flag">
+        <strong>Z80A-D01 — historical event measured against final state.</strong>
+        A run counts as having crossed if any organism reached the threshold at any
+        validation pass, but the score reported beside it is the best among organisms alive
+        at the end. These disagree whenever a crossing lineage later dies, which is common
+        in contested worlds. This is why 50 endogenous instances adjudicate weak and 14
+        invert outright.
       </div>
-      <div class="exploit-row">
-        <span class="exploit-name">STALE_RESIDUE_BIRTH</span>
-        <span class="exploit-count">3,313 runs</span>
+      <div class="note flag">
+        <strong>Z80A-D02 — the reservoir flag never checks the reservoir contributed.</strong>
+        It fires on structure, moat, and any historical crossing, without asking whether the
+        easy niche supplied the lineage that crossed. See the reservoir finding above for
+        why the existing record cannot close this.
       </div>
-      <div class="exploit-row">
-        <span class="exploit-name">ALLOC_DENIAL</span>
-        <span class="exploit-count">1,385 runs</span>
-      </div>
-      <div class="exploit-row">
-        <span class="exploit-name">HELDOUT_GAP</span>
-        <span class="exploit-count">617 runs</span>
-      </div>
-      <div class="exploit-row">
-        <span class="exploit-name">NONTERMINATION_WIN</span>
-        <span class="exploit-count">186 runs</span>
+      <div class="note flag">
+        <strong>Z80A-D03 — replication evidence absent from the index.</strong>
+        The index whitelist carries the replication rate but not the two counters that
+        separate an evidence-backed birth from a resemblance copying never caused. The first
+        adjudicator read them there, found nothing, and wrongly declared every spontaneity
+        flag inadmissible. The index schema is deliberately unchanged; the adjudicator now
+        reads the per-run record.
       </div>
     </div>
   </div>
 
-  <!-- OPEN QUESTIONS -->
   <div class="section">
-    <h2>Open questions for cycle 9</h2>
-    <div style="display:flex;flex-direction:column;gap:10px;">
+    <h2>Audit</h2>
+    <p class="lede">
+      Every number above is declared in a machine-readable block inside this page and
+      recomputed from the frozen record by <code>report_audit.py</code>, which writes
+      <code>AUDIT_RECEIPT.json</code>. It fails on sign inversion, wrong run identity, stale
+      counts, a named instance sourced from anywhere but the adjudication record, and a list
+      of phrases the record cannot support. It reads the campaign evidence and writes
+      nothing into it.
+    </p>
+    <div class="stack">
       <div class="note">
-        <strong>Reservoir lineage trace.</strong> 124 INADMISSIBLE reservoir flags are
-        answerable from per-run lineage records. A post-campaign trace would determine
-        whether any crossing lineage actually passed through the easy niche.
+        <strong>Pair purity.</strong> 10,741 pairs, Hamming distance 1 in every case, and in
+        every case the differing factor is the declared control axis. The grammar's control
+        builder is allowed to repair other fields after a flip, so this was checked rather
+        than assumed. Zero impure pairs means excluding them changes no row of the effect
+        table.
       </div>
       <div class="note">
-        <strong>Endogenous ADMISSIBLE instance.</strong> Run
-        <code style="font-size:12px;">1af37ab8c765a7b2-s1099-tL-a0</code> survived all
-        adjudication cuts, but the packet entry shows endogenous_held 0.75 / external_held 0.0
-        — a large margin but from a single run. Lineage inspection and a replication check
-        before treating as meaningful.
-      </div>
-      <div class="note">
-        <strong>Forced-read world for cycle 8 successor.</strong> The read-order matched-pair
-        effect (+0.10, 334 pairs) supports constructing a world that structurally enforces the
-        ask-tick read rather than relying on genome evolution to add it against a deleterious
-        gradient.
+        <strong>Provenance rule.</strong> A claim naming an admissible instance must cite the
+        adjudication record. Citing the preserved-flag stream is a hard failure, because that
+        stream carries no verdict and that is exactly how R-02 entered revision 1.
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <span>commit 3b407946e</span>
-    <span>grammar 570c8037ccf4f86d</span>
-    <span>merged to main 6aeb8ae7c</span>
-    <span>2026-09-22</span>
+    <span>campaign 3b407946e</span><span>grammar 570c8037ccf4f86d</span>
+    <span>23,471 runs · 0 voided</span><span>revision 2 · 2026-09-22</span>
   </div>
-
 </div>
+
+<script type="application/json" id="report-claims">
+{
+  "revision": 2,
+  "n_pairs_total": 10741,
+  "n_axes_shown": 28,
+  "effects": [
+    {"axis_key":"pressure:EXPLICIT_FITNESS->NONE_IMPLICIT","n_pairs":513,"mean_d_held":0.3036,
+     "crossed_only_experiment":85,"crossed_only_control":11,"better_level":"EXPLICIT_FITNESS"},
+    {"axis_key":"read_order:ANSWER_BEFORE_READ->FORCED_READ","n_pairs":334,"mean_d_held":0.1029,
+     "crossed_only_experiment":37,"crossed_only_control":13,"better_level":"ANSWER_BEFORE_READ"},
+    {"axis_key":"read_order:FORCED_READ->ANSWER_BEFORE_READ","n_pairs":304,"mean_d_held":-0.0687,
+     "crossed_only_experiment":14,"crossed_only_control":33,"better_level":"ANSWER_BEFORE_READ"},
+    {"axis_key":"reproduction:PAIR_EXECUTION->EXTERNAL","n_pairs":2258,"mean_d_held":-0.1197,
+     "crossed_only_experiment":218,"crossed_only_control":343,"better_level":"EXTERNAL"}
+  ],
+  "admissible_instances": [
+    {"flag":"REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION",
+     "run_id":"64dea50f417efb02-s1203-tL-a0","source":"ADJUDICATION.json"}
+  ],
+  "verdict_counts": [
+    {"flag":"SPONTANEOUS_REPLICATOR_FROM_RANDOM_BYTES","ADMISSIBLE":1031,"WEAK":0,"INADMISSIBLE":0},
+    {"flag":"REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION","ADMISSIBLE":1,"WEAK":50,"INADMISSIBLE":14},
+    {"flag":"REPRODUCTIVE_ARCHITECTURE_CHANGED_UNDER_TASK_DEMAND","ADMISSIBLE":0,"WEAK":1,"INADMISSIBLE":0},
+    {"flag":"RESERVOIR_CROSSED_A_MOAT","ADMISSIBLE":0,"WEAK":0,"INADMISSIBLE":124}
+  ],
+  "verdict_reasons": [
+    {"flag":"RESERVOIR_CROSSED_A_MOAT","verdict":"INADMISSIBLE","why_contains":"seeded instrument","n":117},
+    {"flag":"RESERVOIR_CROSSED_A_MOAT","verdict":"INADMISSIBLE","why_contains":"exogenous control","n":7},
+    {"flag":"REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION","verdict":"WEAK","why_contains":"below the crossing threshold","n":50},
+    {"flag":"REACHED_ONLY_UNDER_ENDOGENOUS_REPRODUCTION","verdict":"INADMISSIBLE","why_contains":"exogenous control finished better","n":14}
+  ],
+  "distributions": [
+    {"key":"n_admissible","value":1031},
+    {"key":"depth_1_only","value":911},
+    {"key":"depth_ge_2","value":120},
+    {"key":"at_least_2_events","value":952},
+    {"key":"at_least_3_events","value":872},
+    {"key":"at_least_10_events","value":308},
+    {"key":"runs_with_truncated_lineage","value":0},
+    {"key":"distinct_repro_structure_representation","value":35}
+  ],
+  "lineage_capability": [
+    {"key":"retained_tail","value":400},
+    {"key":"migration_events_logged","value":false},
+    {"key":"migrations_counted_only","value":true}
+  ]
+}
+</script>
 
 <script>
 const EFFECTS = [
-  ["pressure:EXPLICIT_FITNESS→NONE_IMPLICIT",        513,   0.3036,  85,  11],
-  ["copy_primitive:BLOCK→BYTEWISE",                    9,  -0.2269,   4,   0],
-  ["self_location:PRIMITIVE→NONE",                     4,   0.1875,   3,   0],
-  ["task_transform:XOR5A→ADD1",                       11,   0.1477,   2,   0],
-  ["mutation_locality:LOCAL→STRUCTURAL",               6,   0.1458,   1,   0],
-  ["pressure:QUALITY_DIVERSITY→NONE_IMPLICIT",       256,   0.1250,  14,   4],
-  ["self_location:NONE→PRIMITIVE",                    17,  -0.1225,   6,   0],
-  ["reproduction:PAIR_EXECUTION→EXTERNAL",          2258,  -0.1197, 218, 343],
-  ["pressure:TASK_GATED_INTERACTION→NONE_IMPLICIT",  223,   0.1079,  12,   6],
-  ["read_order:ANSWER_BEFORE_READ→FORCED_READ",      334,   0.1029,  37,  13],
-  ["pressure:TAPE_COST→NONE_IMPLICIT",               304,  -0.0843,   1,  35],
-  ["pressure:RESOURCE_GATED→NONE_IMPLICIT",          266,   0.0780,  12,  32],
-  ["pressure:MINIMAL_CRITERION→NONE_IMPLICIT",       241,   0.0742,   2,  12],
-  ["read_order:FORCED_READ→ANSWER_BEFORE_READ",      304,  -0.0687,  14,  33],
-  ["pressure:PREDATION→NONE_IMPLICIT",               294,   0.0631,  11,   8],
-  ["mutation_locality:STRUCTURAL→LOCAL",              10,   0.0458,   6,   0],
-  ["pressure:COMPETITION→NONE_IMPLICIT",             295,   0.0447,   3,  46],
-  ["pressure:METABOLIC→NONE_IMPLICIT",               306,   0.0320,  11,  30],
-  ["task_transform:XOR1→XOR15",                      667,   0.0314, 183,   2],
-  ["reproduction:OVERWRITE→EXTERNAL",                853,  -0.0229,  43, 209],
-  ["pressure:NOVELTY→NONE_IMPLICIT",                 309,   0.0160,  13,  10],
-  ["task_transform:ADD1→XOR5A",                      415,   0.0147,  98,   2],
-  ["reproduction:CONSTRUCTIVE→EXTERNAL",             849,   0.0122,  18, 218],
+  ["task_transform","XOR15","XOR1",1,-0.6250,1,0],
+  ["pressure","EXPLICIT_FITNESS","NONE_IMPLICIT",513,0.3036,85,11],
+  ["copy_primitive","BLOCK","BYTEWISE",9,-0.2269,4,0],
+  ["self_location","PRIMITIVE","NONE",4,0.1875,3,0],
+  ["task_transform","XOR5A","ADD1",11,0.1477,2,0],
+  ["mutation_locality","LOCAL","STRUCTURAL",6,0.1458,1,0],
+  ["pressure","QUALITY_DIVERSITY","NONE_IMPLICIT",256,0.1250,14,4],
+  ["self_location","NONE","PRIMITIVE",17,-0.1225,6,0],
+  ["reproduction","PAIR_EXECUTION","EXTERNAL",2258,-0.1197,218,343],
+  ["pressure","TASK_GATED_INTERACTION","NONE_IMPLICIT",223,0.1079,12,6],
+  ["read_order","ANSWER_BEFORE_READ","FORCED_READ",334,0.1029,37,13],
+  ["pressure","TAPE_COST","NONE_IMPLICIT",304,-0.0843,1,35],
+  ["pressure","RESOURCE_GATED","NONE_IMPLICIT",266,0.0780,12,32],
+  ["pressure","MINIMAL_CRITERION","NONE_IMPLICIT",241,0.0742,2,12],
+  ["read_order","FORCED_READ","ANSWER_BEFORE_READ",304,-0.0687,14,33],
+  ["pressure","PREDATION","NONE_IMPLICIT",294,0.0631,11,8],
+  ["mutation_locality","STRUCTURAL","LOCAL",10,0.0458,6,0],
+  ["pressure","COMPETITION","NONE_IMPLICIT",295,0.0447,3,46],
+  ["pressure","METABOLIC","NONE_IMPLICIT",306,0.0320,11,30],
+  ["task_transform","XOR1","XOR15",667,0.0314,183,2],
+  ["reproduction","OVERWRITE","EXTERNAL",853,-0.0229,43,209],
+  ["copy_primitive","BYTEWISE","BLOCK",6,-0.0208,1,0],
+  ["pressure","NOVELTY","NONE_IMPLICIT",309,0.0160,13,10],
+  ["task_transform","ADD1","XOR5A",415,0.0147,98,2],
+  ["reproduction","CONSTRUCTIVE","EXTERNAL",849,0.0122,18,218],
+  ["pressure","EXEC_TIME_COST","NONE_IMPLICIT",331,0.0096,5,12],
+  ["reproduction","ENDOGENOUS_PARTIAL","EXTERNAL",803,0.0062,23,180],
+  ["reproduction","ENDOGENOUS_COPY","EXTERNAL",856,-0.0015,11,208]
 ];
 
-const MAX_ABS = 0.31;
-const tbody = document.getElementById('effects-body');
-
-EFFECTS.forEach(([axis, pairs, d, onlyExp, onlyCtrl]) => {
-  const highlight = Math.abs(d) >= 0.10;
-  const dClass = d > 0.01 ? 'd-pos' : d < -0.01 ? 'd-neg' : 'd-small';
-  const barPct = Math.round(Math.abs(d) / MAX_ABS * 100);
-  const barClass = d < 0 ? 'neg' : '';
-
+const tb = document.getElementById('eff-body');
+EFFECTS.forEach(([axis, from, to, n, d, oE, oC]) => {
   const tr = document.createElement('tr');
-  if (highlight) tr.className = 'highlight';
-  tr.innerHTML = `
-    <td class="axis-label">${axis}</td>
-    <td>${pairs.toLocaleString()}</td>
-    <td class="bar-cell">
-      <div class="bar-wrap">
-        <div class="bar-track"><div class="bar-fill ${barClass}" style="width:${barPct}%"></div></div>
-      </div>
-    </td>
-    <td><span class="d-val ${dClass}">${d >= 0 ? '+' : ''}${d.toFixed(4)}</span></td>
-    <td>${onlyExp}</td>
-    <td>${onlyCtrl}</td>
-  `;
-  tbody.appendChild(tr);
+  if (Math.abs(d) >= 0.10) tr.className = 'hi';
+  const winner = d > 0 ? from : (d < 0 ? to : '—');
+  const cls = d > 0.0005 ? 'd-pos' : (d < -0.0005 ? 'd-neg' : 'd-nil');
+  tr.innerHTML =
+    '<td class="ax">' + axis + ':' + from + '→' + to + '</td>' +
+    '<td class="num">' + n.toLocaleString() + '</td>' +
+    '<td class="win">' + winner + '</td>' +
+    '<td class="num"><span class="d-val ' + cls + '">' +
+      (d >= 0 ? '+' : '') + d.toFixed(4) + '</span></td>' +
+    '<td class="num">' + oE + '</td>' +
+    '<td class="num">' + oC + '</td>';
+  tb.appendChild(tr);
 });
 </script>
