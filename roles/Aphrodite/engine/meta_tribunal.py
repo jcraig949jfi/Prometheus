@@ -11,6 +11,16 @@ import basis_v4 as G
 import engine as E
 import improver as I
 
+# The family provider. Defaults to the Tier-3A catalog; Tier 3B installs its
+# own frozen catalog via use_provider(). A provider supplies tasks(), witness()
+# and the family spec -- never the tribunal, which stays here and stays hidden.
+_P = I
+
+
+def use_provider(mod):
+    global _P
+    _P = mod
+
 
 def program_source(family: str, prog) -> str:
     """Every Tier-3A family carries a trailing query parameter, so `vals`
@@ -51,7 +61,7 @@ def counterexamples(family: str, n: int) -> List[Dict]:
         xs = ([rng.randint(2, 30)] * k if i % 3 == 0
               else [rng.randint(2, 30) for _ in range(k)])
         m = rng.choice([1, 2, rng.randint(3, 97)])
-        gold = I.run(I.witness(family), xs + [m])
+        gold = G.run_program(_P.witness(family), xs + [m], True)
         out.append({"family": family,
                     "prompt": ("Family %s over: " % family) + ", ".join(map(str, xs))
                               + " with %d." % m,
@@ -98,9 +108,9 @@ class MetaTribunal:
             return rr.run_tasks(instances, E.Escrow(10 ** 7))["accuracy"]
         seed = E.tribunal_entropy("t3a-" + self.family, 1)
         return {
-            "held_out_extrapolation": acc(I.tasks(self.family, n, seed,
+            "held_out_extrapolation": acc(_P.tasks(self.family, n, seed,
                                                   G.EXTRAPOLATION_LENGTHS)),
-            "stress_length_200": acc(I.tasks(self.family, 40, seed,
+            "stress_length_200": acc(_P.tasks(self.family, 40, seed,
                                              (G.STRESS_LENGTH, G.STRESS_LENGTH))),
             "counterexample_accuracy": acc(counterexamples(self.family, 40)),
             "metamorphic_pass": self._metamorphic(artifact),
