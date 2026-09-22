@@ -100,7 +100,8 @@ def fold_source(family: str, init: str, e_body: str, f_body: str) -> str:
         "        acc = %s\n"
         "    return str(%s)\n"
         "DISCOVERED[\"%s\"] = _fold_%s\n"
-        % (family, "True" if trailing else "False", init, e_body, f_body,
+        % (family, "True" if trailing else "False", init,
+           e_body.replace("pow(", "_pw("), f_body.replace("pow(", "_pw("),
            family, family))
 
 
@@ -135,7 +136,12 @@ def fold_eval(init_c, body_c, final_c, nums: List[int], trailing: bool) -> Optio
     module source, but without rebuilding an artifact per candidate."""
     vals = nums[:-1] if trailing else nums
     last = nums[-1]
-    g = {"__builtins__": {}, "math": math, "pow": pow, "abs": abs}
+    def _pw(a, b):
+        if b < 0 or b > 32:      # the declared bound on `powr`, enforced BEFORE
+            return 0             # the operation rather than after it
+        return pow(a, b)
+
+    g = {"__builtins__": {}, "math": math, "pow": _pw, "abs": abs}
     try:
         acc = eval(init_c, g, {})
         for v in vals:

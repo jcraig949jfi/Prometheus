@@ -34,6 +34,8 @@ def main():
         except E.EscrowExhausted:
             pass
         art = lin.extract(lin.generation)
+        print("[phase1] %s gen=%d spent=%d %.1fs" % (lid, lin.generation, esc.spent,
+              time.perf_counter() - started), flush=True)
         frozen.append({"lineage_id": lid, "artifact_sha256": art.sha256,
                        "generation": art.generation,
                        "non_base": art.sha256 != base_art.sha256,
@@ -43,8 +45,10 @@ def main():
                        "telemetry": E.structural_telemetry(art),
                        "_art": art})
 
+    print("[phase2] all %d artifacts frozen; constructing tribunal" % len(frozen), flush=True)
     for row in frozen:
         art = row.pop("_art")
+        print("[phase2] adjudicating %s" % row["lineage_id"], flush=True)
         if art.generation != E.FROZEN_GENERATION:
             row["qualifies"] = False
             row["disposition"] = "did not reach the frozen generation"

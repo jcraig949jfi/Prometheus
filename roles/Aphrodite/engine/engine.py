@@ -522,13 +522,25 @@ def surrogate_battery(artifact: "Artifact", family: str, instances: List[Dict]) 
 
 
 def structural_telemetry(artifact: "Artifact") -> Dict:
-    """Telemetry ONLY -- never a criterion (slice 2C ruling)."""
+    """Telemetry ONLY -- never a criterion (slice 2C ruling).
+
+    DEFECT FOUND 2026-09-21: this looked only for slice-2B `_h_` helpers, so it
+    reported contains_loop=False on slice-2C artifacts that contain two `for`
+    loops. Telemetry-only, so no adjudication was affected -- the surrogate
+    battery does that work -- but the telemetry fields in
+    SLICE2C_RESULTS_2026-09-21.json were written by the stale version and are
+    wrong. Corrected values appear in the slice-2C review packet.
+    """
     src = artifact.modules().get("search", "")
     helpers = re.findall(r"def (_h_\w+)\(x, y\):", src)
+    folds = re.findall(r"def (_fold_\w+)\(p\):", src)
     return {"helper_count": len(helpers),
             "helpers": helpers,
-            "contains_loop": "while " in src,
-            "invoked": bool(re.search(r"h\(nums\[0\], nums\[1\]\)", src))}
+            "fold_count": len(folds),
+            "folds": folds,
+            "contains_loop": ("while " in src) or ("for v in vals" in src),
+            "invoked": bool(re.search(r"h\(nums\[0\], nums\[1\]\)", src))
+                       or bool(re.search(r"DISCOVERED\[\"\w+\"\] = _fold_", src))}
 
 
 def structural_change(artifact: "Artifact") -> bool:
