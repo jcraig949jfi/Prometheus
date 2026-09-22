@@ -37,18 +37,18 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
 ## Scientific ontology
 
 1. Scientific/domain focus -- ANSWERED 2026-09-20 (AETHER_CONCEPT.md,
-   Scientific identity): does removing predefined organism boundaries and
-   changing the representation of heredity expose evolutionary pathways
-   that discrete genome evolution cannot reach?
+   Scientific identity): does removing predefined assembly boundaries and
+   changing the representation of configuration transmission expose evolutionary pathways
+   that discrete executable configuration evolution cannot reach?
 2. Differentiation from BEE/NPE/SFE -- ANSWERED 2026-09-20: those engines
-   begin with identifiable organisms/genomes; Aether begins one level
-   lower (executable matter, no predefined organism or genome boundary).
+   begin with identifiable assemblies/executable configurations; Aether begins one level
+   lower (executable matter, no predefined assembly or executable configuration boundary).
 3. First scientific transplant sourcing -- ANSWERED 2026-09-20 (D-15):
    the operator stated the target scientific property directly and
    abstractly (information present, selection pressure present, useful
    conditional computation inaccessible due to representation topology;
    incumbent answers before reading the needed information; viable
-   alternative separated from the incumbent by a zero-fitness valley with
+   alternative separated from the incumbent by a zero-evaluation score valley with
    no local one/two-edit route; a seeded viable witness is strongly
    selectable). Aether reproduces this property, never any existing
    engine's implementation, and does not inspect existing engine code.
@@ -67,8 +67,8 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
    (hard candidate constraint).
 6. Conflict resolution rule for synchronous ticks -- FROZEN 2026-09-20
    (D-18, semantics_id `aeth00.v1`): SplitMix64-finalizer-based
-   deterministic max-arbitration over (seed, tick, target cell, target
-   field, source cell), chained construction and constants given in
+   deterministic max-arbitration over (seed, tick, target site, target
+   field, source site), chained construction and constants given in
    AETHER_SPEC.md, with a proof of unconditional tie-freedom (no
    coordinate-range caveat -- see question 31).
 7. Resource/decay update semantics: formula and rates not specified.
@@ -87,7 +87,7 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
     is RESERVED_INERT (never "becomes NOP" or becomes 0x00), preserved
     byte-for-byte, emits no proposal, remains writable, never traps.
     255 inert encodings / 1 active encoding is a property of this
-    conformance specimen's ISA budget only.
+    conformance observed instance's ISA budget only.
 28. Minimum lattice dimension -- RESOLVED 2026-09-20 (D-17, `aeth00.v1`):
     ordinary (non-adversarial) runs require H>=3 && W>=3, solely to
     remove immediate-neighbor aliasing; not a scientific-adequacy claim.
@@ -122,7 +122,7 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
     Still open beyond AETH-00: the permanent Aether v1 layout (energy/
     resource fields, registers, execution flags all deferred).
 
-## Heredity / observatory
+## Configuration transmission / observatory
 
 11. Seeded control vs. spontaneous emergence -- ANSWERED 2026-09-20:
     seeded structures are calibration instruments, never evidence of
@@ -142,8 +142,8 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
 
 15. Adversarial tests against false discoveries -- SUBSTANTIALLY ANSWERED
     2026-09-20 (D-9): adversarial negative fixtures and detector FP/FN
-    rates on known fixtures are required; the six heredity adversarial
-    cases are named (AETHER_CONCEPT.md, Causal heredity). Still open: the
+    rates on known fixtures are required; the six configuration transmission adversarial
+    cases are named (AETHER_CONCEPT.md, Causal configuration transmission). Still open: the
     concrete fixture implementations, deferred to pre-code design.
 16. What exactly qualifies the substrate as "trustworthy" -- PARTIALLY
     ANSWERED 2026-09-20: future gate's CATEGORIES named (AETHER_SPEC.md,
@@ -158,7 +158,7 @@ which answers 31 by elimination. AETH-00 is now FROZEN as semantics_id
 
 17. CPU/GPU differential equivalence tolerance: bit-exact for which state
     components, statistical for which, and what statistical test if any.
-30. GPU mapping validation timing: the candidate per-cell-parallel-eval
+30. GPU mapping validation timing: the candidate per-site-parallel-eval
     plus deterministic-arbitration-commit mapping (D-13) is not exercised
     until a GPU implementation exists (excluded from AETH-00) -- which
     milestone first builds and differentially tests it against the CPU

@@ -2,7 +2,7 @@
 
 Mutators update and return their dictionary. Validators replay rather than trust
 snapshots. Pod history is sequence-ordered, not wall-clock-ordered. A historical
-termination or contradiction survives recovery, but is not current proof.
+termination or contradiction persists recovery, but is not current proof.
 Window resets archive samples without crediting them to the current session.
 Ownership classification, durable writes and new-invocation resets are callers'
 responsibility; this module neither authenticates reports nor proves billing stop.

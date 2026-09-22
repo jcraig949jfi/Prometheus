@@ -2,11 +2,11 @@
 Aether AETH-00 (semantics_id aeth00.v1) -- MINIMAL PRODUCTION CPU
 transition implementation.
 
-Disposable conformance specimen (AETHER_SPEC.md, AETH-00 "Scope"):
+Disposable conformance observed instance (AETHER_SPEC.md, AETH-00 "Scope"):
 exists only to demonstrate that a production implementation can
 satisfy the frozen aeth00.v1 contract exactly. Not a template or a
 step toward a generalized future Aether engine. No GPU code, no
-mutation/resource/observatory machinery, no ISA dispatch framework.
+perturbation/resource/observatory machinery, no ISA dispatch framework.
 
 INDEPENDENCE STATEMENT: this module imports NOTHING from
 reference.oracle, reference.oracle_independent, reference.mutants, or
@@ -14,11 +14,11 @@ reference.golden_vectors (see Aether/test/reference/). Its algorithm is
 also a different SHAPE from both reference oracles: those are "scatter"
 implementations (decode every WRITE source's one proposal, then group
 proposals by target). This module is a "gather" implementation instead
--- for every (target cell, target field) it inspects only that
+-- for every (target site, target field) it inspects only that
 target's up to 4 physical von Neumann neighbors and asks whether each
 neighbor's own (opcode, arg0, arg1) addresses this specific (target,
 field), directly following AETHER_SPEC.md's non-normative "Deferred
-implementation guidance" ("one owner per target cell -> inspects its
+implementation guidance" ("one owner per target site -> inspects its
 up to 4 neighbor sources"). This also makes "two proposals from the
 same physical source in one contest" structurally impossible here (see
 _NEIGHBOR_SLOTS docstring below) rather than something checked for
@@ -30,7 +30,7 @@ code.
 
 Public surface (deliberately minimal): State, step(), arbitration_priority(),
 InvalidStateError, TickOverflowError. No campaign runner, no simulation
-class, no plugin system, no organism abstraction.
+class, no plugin system, no assembly abstraction.
 """
 
 from typing import Optional
@@ -43,7 +43,7 @@ SEMANTICS_ID = "aeth00.v1"
 WRITE_OPCODE = 0x01  # AETHER_SPEC.md "Instruction set": 0x01 = WRITE;
 # every other byte value (0x00 included) is RESERVED_INERT.
 
-OPCODE, ARG0, ARG1, PAYLOAD = 0, 1, 2, 3  # field indices within a cell.
+OPCODE, ARG0, ARG1, PAYLOAD = 0, 1, 2, 3  # field indices within a site.
 
 # arg0 mod 4 direction encoding (AETHER_SPEC.md "Direction encoding").
 NORTH, EAST, SOUTH, WEST = 0, 1, 2, 3
@@ -149,7 +149,7 @@ class State:
         self.W = W
         self.data = normalized
 
-    def cell(self, row: int, col: int):
+    def site(self, row: int, col: int):
         """Returns (opcode, arg0, arg1, payload) for (row, col)."""
         i = (row * self.W + col) * 4
         d = self.data
@@ -167,18 +167,18 @@ class State:
         return f"State(H={self.H}, W={self.W}, data=<{len(self.data)} bytes>)"
 
 
-# The 4 physical von Neumann neighbors of a target cell, paired with the
+# The 4 physical von Neumann neighbors of a target site, paired with the
 # arg0 mod 4 direction value THAT NEIGHBOR must itself encode for its
 # one proposal to land on this target (AETHER_SPEC.md "Direction
 # encoding" + non-normative "Deferred implementation guidance"). E.g.
 # the neighbor physically north of the target must itself encode SOUTH
-# to reach the target. Because each physical cell has exactly one arg0
+# to reach the target. Because each physical site has exactly one arg0
 # value, it can satisfy the required-direction check of AT MOST ONE of
 # these 4 slots for AT MOST ONE target overall (the 4 required
 # directions below are pairwise distinct) -- so a single physical
 # source can never be gathered into two different contests, including
 # under toroidal self-aliasing at H<=2 or W<=2, where two slots of the
-# SAME target may point at the SAME physical cell but still demand two
+# SAME target may point at the SAME physical site but still demand two
 # DIFFERENT required directions.
 _NEIGHBOR_SLOTS = (
     (-1, 0, SOUTH),  # neighbor to the north; must itself emit SOUTH to hit us
@@ -189,7 +189,7 @@ _NEIGHBOR_SLOTS = (
 
 
 def _emit_proposal_trace(data: bytes, H: int, W: int, trace: list) -> None:
-    """Pure trace side-channel: decodes every WRITE-opcode cell's one
+    """Pure trace side-channel: decodes every WRITE-opcode site's one
     proposal and appends a `proposal_emitted` event. Never consulted by
     the state-computing code in step() below -- trace-enabled and
     trace-disabled runs execute the identical state-computing path."""
@@ -215,7 +215,7 @@ def step(state: State, seed: int, tick: int, trace: Optional[list] = None) -> St
     """S[t] -> S[t+1] (AETHER_SPEC.md "Tick semantics"). `seed`/`tick`
     are supplied fresh by the caller (no hidden state). Rejects (never
     wraps) a step attempted FROM tick == 2**64-1. Returns a NEW State;
-    `state` is never mutated."""
+    `state` is never perturbed."""
     if not isinstance(state, State):
         raise InvalidStateError(f"state must be a State, got {type(state).__name__}")
     seed = _require_int("seed", seed)

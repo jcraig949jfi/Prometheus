@@ -195,7 +195,7 @@ def _parameters(world):
 
 
 def _assert_trajectory(modules, world, label, steps=5):
-    initial_bytes = bytes(value for row in world.grid for cell in row for value in cell)
+    initial_bytes = bytes(value for row in world.grid for site in row for value in site)
     assert world.to_bytes() == initial_bytes, label
     bundled = modules.cpu.Aeth01World.from_bytes(
         *_parameters(world), data=initial_bytes, tick=world.tick
@@ -224,7 +224,7 @@ def _assert_trajectory(modules, world, label, steps=5):
         emitted = sum(event[0] == "proposal_emitted" for event in source_trace)
         counters = {
             "activity_density": emitted / (world.H * world.W),
-            "total_energy": sum(cell[4] for row in source_next.grid for cell in row),
+            "total_energy": sum(site[4] for row in source_next.grid for site in row),
         }
         for name, arrays in trajectories.items():
             # Each implementation consumes its OWN prior output, not a reset
@@ -257,7 +257,7 @@ def test_full_k3_corpus_multitick_parity(modules):
     ([[(1, 255, 255, 255, 254)]], {"write_cost": 255, "maintenance_cost": 255}),
     ([[(1, 255, 253, 255, 0)]], {"mut_numer": 1 << 32}),
 ], ids=["template", "contest", "spill", "self-transfer", "decay", "replenish",
-        "starved", "free-write-mutation"])
+        "starved", "free-write-perturbation"])
 def test_hand_boundary_multitick_parity(modules, grid, parameters):
     kwargs = dict(write_cost=0, maintenance_cost=0, replenish_numer=0,
                   replenish_amount=0, mut_numer=0)

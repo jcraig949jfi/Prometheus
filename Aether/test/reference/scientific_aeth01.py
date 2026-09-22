@@ -1,4 +1,4 @@
-"""Seeded scientific contract fixtures, not a general heredity detector.
+"""Seeded scientific contract fixtures, not a general configuration-transmission detector.
 
 The oracle and GPU-shaped implementation remain independent; these builders
 only share their input corpus. No transition-law or production code lives here.
@@ -8,12 +8,19 @@ from math import inf
 
 from reference import oracle_aeth01 as oracle
 
+# Tier-5 canonical TRANSMITTED_VARIATION; frozen ladder alias HEREDITY_VARIATION.
+TRANSMITTED_VARIATION = "TRANSMITTED_VARIATION"
+HEREDITY_VARIATION = "HEREDITY_VARIATION"  # frozen compatibility alias -> TRANSMITTED_VARIATION
+CLAIM_TIER_ALIASES = {
+    TRANSMITTED_VARIATION: TRANSMITTED_VARIATION,
+    HEREDITY_VARIATION: TRANSMITTED_VARIATION,
+}
 CLAIM_TIERS = (
     "STRUCTURAL_RESEMBLANCE",
     "CAUSAL_VALUE_CONSTRUCTION",
     "CONSTRUCTED_CAPACITY",
     "RECURSIVE_CONSTRUCTION",
-    "HEREDITY_VARIATION",
+    TRANSMITTED_VARIATION,
 )
 
 CONTROL = (0, 5, 5, 5, 0)
@@ -24,9 +31,9 @@ def _world(grid, seed):
     return oracle.Aeth01World(len(grid), len(grid[0]), seed, 1, 0, 0, 0, 0, grid=grid)
 
 
-def set_field(world, cell, field, value):
+def set_field(world, site, field, value):
     """Explicit intervention on a fresh fixture or replay-fork state."""
-    r, c = cell
+    r, c = site
     values = list(world.grid[r][c])
     values[field] = value
     world.grid[r][c] = tuple(values)

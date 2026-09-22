@@ -22,21 +22,21 @@ deleted.
   254+1 values) emits nothing. Same SplitMix64 chained max-arbitration
   law as `aeth00.v1`, reused unchanged (it already generalizes to a
   5-valued target_field with no change to the hash chain).
-- **Source of change**: local, one-hop, instruction-like (a cell's own
+- **Source of change**: local, one-hop, instruction-like (a site's own
   decoded opcode/operands determine its one proposal).
   Discrete/synchronous, not continuous/event-driven.
 - **Information persistence**: a byte (opcode or payload) persists by
   being repeatedly re-copied (WRITE-templated) into place, or by simply
   never being targeted. No separate "memory" region; state IS the
   record.
-- **Causal construction**: a cell can turn a neighbor's opcode field
+- **Causal construction**: a site can turn a neighbor's opcode field
   from RESERVED_INERT into WRITE (or vice versa) -- literally
   "switching on/off" a neighbor's own future agency -- and can template
   a neighbor's payload. Multi-field, multi-tick sequences of such
   writes are how anything more complex than a single copy gets built.
 - **Resource/energy model (new, not in AETH-00)**: WRITE costs a fixed
   `WRITE_COST` debited from the source's own energy field before a
-  proposal is even emitted; a cell below cost is starved (behaves as
+  proposal is even emitted; a site below cost is starved (behaves as
   RESERVED_INERT that tick). Field 4 (energy) is a conservative
   TRANSFER, not an overwrite: source always pays the proposed amount
   once it attempts a transfer; only the contest winner's target is
@@ -48,28 +48,28 @@ deleted.
   lattice literally cannot change further); homogenization (one
   RESERVED_INERT value or one payload value colonizes everything via
   fast copying); explosive copying followed by resource collapse;
-  chaotic flicker at high `P_MUT` (mutation, below); slow decay to a
+  chaotic flicker at high `P_MUT` (perturbation, below); slow decay to a
   static residue under aggressive `MAINTENANCE_COST`.
 - **GPU mapping**: identical shape to AETH-00's proven gather mapping --
-  one lane per (target cell, target field) inspects <=4 physical
+  one lane per (target site, target field) inspects <=4 physical
   neighbors, reduces each contest independently, writes a separate
   next-state buffer. Energy debits are also purely a function of each
-  cell's own S[t] state (no cross-lane dependency at debit time); credit
+  site's own S[t] state (no cross-lane dependency at debit time); credit
   is the same reduction as any other field. No new parallelism hazard.
 - **Major hidden priors**: von Neumann/toroidal locality (inherited from
   AETH-00); flat WRITE_COST regardless of target field/distance/content
-  (arbitrary, not physically derived); mutation (if enabled, below)
+  (arbitrary, not physically derived); perturbation (if enabled, below)
   applies only to fields 0-3, never to energy -- segregates "genetic"
   information from "resource" information by construction, in tension
-  with R3's instruction not to presume where heredity lives; single
+  with R3's instruction not to presume where configuration transmission lives; single
   active opcode means no compare/branch/sense-then-act primitive exists
   -- conditional behavior is only expressible indirectly via what
   happens to be written where, never as an explicit "if."
 - **What it may accidentally privilege**: small, spatially compact,
   fast-copying patterns (locality + per-hop cost reward tight loops
-  over sprawling structures); "genome-in-the-instruction-fields, body
-  absent" organization, since only 4 of 5 fields carry heritable-looking
-  information and the 5th (energy) cannot itself be copied/mutated,
+  over sprawling structures); "executable configuration-in-the-instruction-fields, body
+  absent" organization, since only 4 of 5 fields carry transmissible-looking
+  information and the 5th (energy) cannot itself be copied/perturbed,
   only moved.
 
 ## Candidate 2 -- Asynchronous Local Reaction Automaton (chemistry-like)
@@ -79,11 +79,11 @@ deleted.
   packed in a few bytes) rather than an opcode/operand tuple. No
   instruction is carried by matter; a small FIXED catalog of local
   reaction rules (rate constants, stoichiometry, at most 2-site range)
-  is a law of the universe, not something a cell can rewrite.
+  is a law of the universe, not something a site can rewrite.
 - **Local update law**: event-driven. Each site independently draws
   reaction/diffusion events from a Poisson process parameterized by its
   local species counts and the fixed rate catalog (Gillespie-style
-  continuous-time next-reaction, or a per-cell asynchronous clock).
+  continuous-time next-reaction, or a per-site asynchronous clock).
   "Rules emerge from interaction" (concentration-dependent propensities)
   rather than "matter carries rules."
 - **Source of change**: local (nearest-neighbor diffusion/reaction),
@@ -159,14 +159,14 @@ deleted.
   fragmentation/aggregation oscillation; jamming (a densely packed
   region blocks all further movement).
 - **GPU mapping**: MODERATE difficulty, well-precedented (GPU molecular
-  dynamics is a mature field: spatial hashing/binning gives each cell
+  dynamics is a mature field: spatial hashing/binning gives each site
   of a coarse grid a bounded neighbor-candidate list, updated every
   step) -- plausible, but a materially bigger engineering lift than
   Candidate 1's fixed-lattice gather, and dynamic neighbor lists
   reintroduce order-dependence risk in collision resolution that must
   be arbitrated as carefully as AETH-00's WRITE contests.
 - **Major hidden priors**: privileges spatial self-assembly / geometric
-  packing as THE construction mechanism; "genome" would have to be
+  packing as THE construction mechanism; "executable configuration" would have to be
   reinterpreted as bond topology or spatial arrangement, which is
   scientifically interesting but means information storage capacity is
   tied to how much particles can physically pack together, not to an
@@ -175,7 +175,7 @@ deleted.
 - **What it may accidentally privilege**: crystal-like/close-packing
   organization and crack-propagation-style "growth," which resembles
   physical/chemical self-assembly far more than anything resembling
-  computation or heredity-by-copying -- construction is easy to get,
+  computation or configuration transmission-by-copying -- construction is easy to get,
   computation is not.
 
 ## Selection: Candidate 1 (Costed Executable Lattice) for AETH-01
@@ -196,7 +196,7 @@ Reasons, in order of weight:
    "not aspirational, it is proven," inconsistent with the fact that
    the only implementation that exists (`Aether/production/aeth00.py`)
    is CPU-only, gather-shaped, and its own receipt says so.]** Candidate
-   1's per-cell gather shape maps onto AETH-00's proven CPU gather
+   1's per-site gather shape maps onto AETH-00's proven CPU gather
    ontology unchanged, which makes GPU implementation plausible and
    low-risk -- but R12 remains open until a GPU implementation is
    actually built and differentially verified (this repair cycle's
@@ -207,11 +207,11 @@ Reasons, in order of weight:
    engineering bet for a first milestone beyond AETH-00.
 3. **Construction/movement ambiguity is a feature here, not a bug
    (R6).** Because Candidate 1 has no literal particle-movement
-   primitive, a "traveling pattern" and a "self-copying pattern" are
+   primitive, a "traveling pattern" and a "recursive state copying pattern" are
    PHYSICALLY IDENTICAL processes (repeated neighbor-copying), which
    directly instantiates the exact adversarial case (R6, and Design
    Task 8's "traveling structure vs. constructor") that a later
-   heredity detector must resolve -- the physics forces the hard
+   configuration transmission detector must resolve -- the physics forces the hard
    question to exist rather than defining it away.
 4. **Resource economics (R8) attaches to the existing WRITE semantics
    with a small, fully specified addition** (one new field, one cost

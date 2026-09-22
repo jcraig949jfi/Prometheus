@@ -170,13 +170,13 @@ def make_trial(rng):
         row = []
         for _c in range(W):
             if rng.random() < 0.5:
-                cell = (1, rng.randint(0, 255), rng.randint(0, 255),
+                site = (1, rng.randint(0, 255), rng.randint(0, 255),
                         rng.randint(0, 255), rng.randint(0, 255))
             else:
-                cell = (rng.choice([x for x in range(256) if x != 1]),
+                site = (rng.choice([x for x in range(256) if x != 1]),
                         rng.randint(0, 4), rng.randint(0, 4),
                         rng.randint(0, 4), rng.randint(0, 255))
-            row.append(cell)
+            row.append(site)
         grid.append(row)
     return H, W, seed, tick, write_cost, maintenance_cost, replenish_numer, replenish_amount, mut_numer, grid
 
@@ -196,7 +196,7 @@ def _synchronize_gpu():
 
 
 def _output_diff(cpu_arrays, gpu_arrays):
-    """Every differing field/cell, including malformed output shapes."""
+    """Every differing field/site, including malformed output shapes."""
     differences = []
     for field, cpu, gpu in zip(_FIELDS, cpu_arrays, gpu_arrays):
         if cpu.shape != gpu.shape:

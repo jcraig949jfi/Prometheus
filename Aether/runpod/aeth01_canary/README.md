@@ -137,7 +137,7 @@ transport/auth/schema failure makes the round non-qualifying; ambiguous GET
 published before all required GETs finish. Budget request latency so complete
 rounds remain within the 60-second maximum observation gap.
 
-Per-pod histories survive restart, but window credit does not. Repeated short
+Per-pod histories persist restart, but window credit does not. Repeated short
 cron jobs CANNOT accumulate a qualifying horizon. A fully successful empty scan
 starts a new window after failure, any owned discovery (even TERMINATED), a
 gap >60 seconds, or clock discontinuity. Require both UTC and monotonic spans
@@ -154,7 +154,7 @@ evidence, not automatic confidence repair. A known-ID identity conflict blocks
 DELETE until a fresh exact binding is observed and remains an unresolved anomaly.
 
 The HMAC `arm` file proves a bound handoff, NOT that a scheduler is running,
-credentials are usable, a separate host survives failure, or billing has stopped.
+credentials are usable, a separate host persists failure, or billing has stopped.
 Deployment, controller-host-loss rehearsal, credential/alert/operator-fallback
 proof and provider charge reconciliation remain B3 operational admission gates.
 None is authorized or claimed completed by these offline tests.

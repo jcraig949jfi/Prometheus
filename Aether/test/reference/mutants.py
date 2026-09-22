@@ -8,7 +8,7 @@ Aether/AETHER_SPEC.md, named after the bug it encodes.
 
 Each mutant function has the same shape as the relevant primary-oracle
 stage it corrupts, reusing oracle.py helpers ONLY for the stages it does
-NOT deliberately break (this is normal, expected practice for mutation
+NOT deliberately break (this is normal, expected practice for perturbation
 testing: the point is "does the suite catch this one bug", not
 "is this file structurally independent of the oracle").
 """
@@ -58,15 +58,15 @@ def mutant_signed_priority_arbitrate(seed: int, tick: int, contests: ok.Contests
 
 
 def mutant_global_arbitration_step(world: "ok.Aeth00World") -> ok.Grid:
-    """Bug: groups contests by TARGET CELL ONLY (ignoring field), so
-    proposals aimed at different fields of the same cell wrongly compete;
+    """Bug: groups contests by TARGET SITE ONLY (ignoring field), so
+    proposals aimed at different fields of the same site wrongly compete;
     only the single overall-highest-priority proposal's field is written,
     other genuinely-targeted fields are silently dropped that tick."""
     proposals = ok.decode_proposals(world.grid, world.H, world.W)
     by_cell: Dict[Tuple[int, int], List[ok.Proposal]] = {}
     for p in proposals:
         by_cell.setdefault(p.target, []).append(p)
-    next_grid = [[cell for cell in row] for row in world.grid]
+    next_grid = [[site for site in row] for row in world.grid]
     for target, plist in by_cell.items():
         best_p, best_priority = None, -1
         for p in plist:
@@ -112,7 +112,7 @@ def mutant_wrong_direction_step(world: "ok.Aeth00World") -> ok.Grid:
 def mutant_duplicate_source_proposals(world: "ok.Aeth00World") -> ok.Contests:
     """Bug: at small dimensions where a source's own N/S (or E/W) resolve
     to the same physical target, the (defective) decoder emits TWO
-    proposal records for that one source cell -- one "as if via N" and
+    proposal records for that one source site -- one "as if via N" and
     one "as if via S" -- instead of the single proposal the frozen
     proposal-identity rule requires. Returns raw contests (not a
     committed grid) so the harness-level duplicate-source detector
@@ -145,7 +145,7 @@ def mutant_priority_payload_swap_step(world: "ok.Aeth00World") -> ok.Grid:
     proposals = ok.decode_proposals(world.grid, world.H, world.W)
     contests = ok.group_contests(proposals)
     winners = ok.arbitrate(world.seed, world.tick, contests)
-    next_grid = [[cell for cell in row] for row in world.grid]
+    next_grid = [[site for site in row] for row in world.grid]
     for (target, field), (_winner, _priority) in winners.items():
         first_proposal = contests[(target, field)][0]  # BUG: ignores _winner
         tr, tc = target
@@ -174,18 +174,18 @@ def mutant_priority_missing_wrap(
 
 
 def mutant_in_place_sequential_step(world: "ok.Aeth00World") -> ok.Grid:
-    """Bug: violates tick-start snapshot semantics. Processes cells in
-    row-major order, decoding and immediately committing each cell's
+    """Bug: violates tick-start snapshot semantics. Processes sites in
+    row-major order, decoding and immediately committing each site's
     write against whatever the grid ALREADY looks like this tick (so an
-    earlier cell's write can be observed, same tick, by a later cell's
-    decode) instead of decoding every cell from a frozen S[t] snapshot
+    earlier site's write can be observed, same tick, by a later site's
+    decode) instead of decoding every site from a frozen S[t] snapshot
     first. No arbitration is performed; the last sequential writer to a
     given field simply overwrites it."""
-    grid = [[cell for cell in row] for row in world.grid]  # mutated as we go
+    grid = [[site for site in row] for row in world.grid]  # perturbed as we go
     H, W = world.H, world.W
     for r in range(H):
         for c in range(W):
-            opcode, arg0, arg1, payload = grid[r][c]  # BUG: reads mutated grid
+            opcode, arg0, arg1, payload = grid[r][c]  # BUG: reads perturbed grid
             if opcode != ok.WRITE_OPCODE:
                 continue
             tr, tc = ok.neighbor(r, c, H, W, arg0 % 4)
@@ -213,5 +213,5 @@ class MutantStaleNextState:
         winners = ok.arbitrate(world.seed, world.tick, contests)
         base = self._stale_base if self._stale_base is not None else world.grid
         next_grid = ok.commit(base, world.H, world.W, winners)  # BUG: stale base
-        self._stale_base = [[cell for cell in row] for row in world.grid]
+        self._stale_base = [[site for site in row] for row in world.grid]
         return next_grid

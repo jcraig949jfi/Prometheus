@@ -1,6 +1,6 @@
 """
 AETH-00A -- frozen golden arbitration vectors (AETHER_TEST_PLAN.md test
-23) and the mutation-style checks that show these vectors are strict
+23) and the perturbation-style checks that show these vectors are strict
 enough to catch specific classes of implementation bugs (per the
 AETH-00A instructions' explicit defect list).
 """

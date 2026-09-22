@@ -4,7 +4,7 @@ Aether AETH-00 (semantics_id aeth00.v1) -- PRIMARY independent CPU oracle.
 This is a deliberately naive, directly-readable re-statement of the
 frozen transition law in Aether/AETHER_SPEC.md. It is test-support code,
 NOT the production implementation: no GPU-oriented optimization, no
-generalized "future Aether" framework, no mutation/resource/observatory
+generalized "future Aether" framework, no perturbation/resource/observatory
 machinery. It exists to be ground truth for AETH-00A's tests.
 
 Every formula below is copied verbatim (in meaning, not just style) from
@@ -39,7 +39,7 @@ NORTH, EAST, SOUTH, WEST = 0, 1, 2, 3
 
 
 class DuplicateSourceProposalError(Exception):
-    """Two or more proposals in one contest share a physical source cell.
+    """Two or more proposals in one contest share a physical source site.
 
     Forbidden by the proposal-identity rule (AETHER_SPEC.md, "WRITE
     semantics and proposal identity"). This can never happen from a
@@ -116,7 +116,7 @@ def neighbor(row: int, col: int, H: int, W: int, direction: int) -> Tuple[int, i
 def decode_proposals(
     grid: Grid, H: int, W: int, trace: Optional[list] = None
 ) -> List[Proposal]:
-    """S[t] -> every WRITE cell emits exactly one proposal (AETHER_SPEC.md,
+    """S[t] -> every WRITE site emits exactly one proposal (AETHER_SPEC.md,
     "WRITE semantics and proposal identity"). Reads only the given grid
     (the tick-start snapshot); never mutates it."""
     proposals: List[Proposal] = []
@@ -136,7 +136,7 @@ def decode_proposals(
 
 
 def group_contests(proposals: List[Proposal]) -> Contests:
-    """Group proposals by (target cell, target field); each group is one
+    """Group proposals by (target site, target field); each group is one
     independent arbitration contest (AETHER_SPEC.md, "Independent
     arbitration of different fields")."""
     contests: Contests = {}
@@ -149,7 +149,7 @@ def group_contests(proposals: List[Proposal]) -> Contests:
 def assert_no_duplicate_sources(contests: Contests) -> None:
     """Harness-level defect detector (AETHER_TEST_PLAN.md test 27): the
     proposal-identity rule forbids two proposals in one contest sharing a
-    physical source cell. A correct decode of any valid AETH-00 state can
+    physical source site. A correct decode of any valid AETH-00 state can
     never trigger this; if it does, the CANDIDATE implementation under
     test is defective, not the arbitration law."""
     for key, plist in contests.items():
@@ -187,10 +187,10 @@ def commit(
     trace: Optional[list] = None,
 ) -> Grid:
     """All winners commit simultaneously into a COPIED snapshot; S[t] is
-    never mutated in place (AETHER_SPEC.md, "Tick semantics"). Any field
+    never perturbed in place (AETHER_SPEC.md, "Tick semantics"). Any field
     untouched by a winner is bit-identical to its S[t] value because it
     is only ever copied, never rewritten."""
-    next_grid: Grid = [[cell for cell in row] for row in grid]
+    next_grid: Grid = [[site for site in row] for row in grid]
     for (target, field), (winner, _priority) in winners.items():
         tr, tc = target
         old_cell = list(next_grid[tr][tc])
@@ -238,7 +238,7 @@ class Aeth00World:
         else:
             if len(grid) != H or any(len(row) != W for row in grid):
                 raise ValueError("grid shape does not match H, W")
-            self.grid = [[tuple(cell) for cell in row] for row in grid]
+            self.grid = [[tuple(site) for site in row] for row in grid]
 
     @classmethod
     def from_bytes(cls, H: int, W: int, seed: int, data: bytes, tick: int = 0):

@@ -52,7 +52,7 @@ because evolution might need it, anomalies/failures/ambiguity preserved
 as evidence.
 
 D-9 (2026-09-20, operator). TDD/emergence resolution: TDD applies to
-physics semantics, determinism/replay, mutation behavior, resource
+physics semantics, determinism/replay, perturbation behavior, resource
 accounting, causal provenance, seeded positive controls, adversarial
 negative controls, detector false positive/negative rates on known
 fixtures, CPU/GPU equivalence, checkpoint integrity, and experiment
@@ -66,7 +66,7 @@ D-10 (2026-09-20, operator). Runpod success metric is useful simulated
 interactions per dollar and information gained per dollar, not raw
 ticks/sec.
 
-D-11 (2026-09-20, operator). Causal heredity is tracked as three distinct,
+D-11 (2026-09-20, operator). Causal configuration transmission is tracked as three distinct,
 non-interchangeable concepts: STRUCTURAL_RESEMBLANCE, CAUSAL_CONSTRUCTION,
 RECURSIVE_CONSTRUCTION. Structural resemblance alone is never replication
 evidence.
@@ -81,7 +81,7 @@ must never define the scientific semantics. Physics has an
 implementation-independent specification and a CPU oracle FIRST; GPU is a
 performance target implementing that same specification, checked by
 differential testing (AETHER_OPEN_QUESTIONS.md question 17). (A candidate
-GPU mapping -- per-cell parallel evaluation/proposal generation followed
+GPU mapping -- per-site parallel evaluation/proposal generation followed
 by deterministic parallel arbitration/commit -- is recorded as a
 candidate in AETHER_SPEC.md, not frozen here.)
 
@@ -99,7 +99,7 @@ remains inaccessible because of representation topology. In the observed
 case, an existing behavior produced its answer before reading the
 information required for the better behavior; the viable conditional
 form required several coordinated changes separated from the incumbent
-by a zero-fitness valley, no beneficial local one/two-edit route existed,
+by a zero-evaluation score valley, no beneficial local one/two-edit route existed,
 and a seeded viable witness was strongly selectable.
 
 D-16 (2026-09-20, operator). AETH-00 opcode semantics (resolves
@@ -144,7 +144,7 @@ RESERVED_INERT opcode -- requires a NEW semantics_id and a new decision
 entry here. Per D-19's own scope statement (AETHER_SPEC.md, "Scope"),
 freezing AETH-00 licenses engineering progression only; it does not
 establish suitable primordial physics, scientific neutrality,
-open-endedness, heredity, emergence, evolutionary accessibility, GPU
+open-endedness, configuration transmission, emergence, evolutionary accessibility, GPU
 correctness, or Runpod qualification.
 
 ## Rejected alternatives

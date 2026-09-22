@@ -174,7 +174,7 @@ def commit_template(
     winners: Dict[Tuple[Tuple[int, int], int], Tuple[Proposal, int]],
     trace: Optional[list] = None,
 ) -> List[List[int]]:
-    template = [[cell[f] for f in TEMPLATE_FIELDS] for row in grid for cell in row]
+    template = [[site[f] for f in TEMPLATE_FIELDS] for row in grid for site in row]
     template = [template[r * W : (r + 1) * W] for r in range(H)]
     for (target, field), (winner, _priority) in winners.items():
         if field == ENERGY:
@@ -199,7 +199,7 @@ def settle_energy(
     winners: Dict[Tuple[Tuple[int, int], int], Tuple[Proposal, int]],
     trace: Optional[list] = None,
 ) -> List[List[int]]:
-    next_energy = [[cell[ENERGY] for cell in row] for row in grid]
+    next_energy = [[site[ENERGY] for site in row] for row in grid]
 
     for p in proposals:
         r, c = p.source
@@ -296,12 +296,12 @@ class Aeth01World:
             if len(grid) != H or any(len(row) != W for row in grid):
                 raise ValueError("grid shape does not match H, W")
             for row in grid:
-                for cell in row:
-                    if len(cell) != NUM_FIELDS:
-                        raise ValueError(f"invalid cell (must be 5 uint8 fields): {cell}")
-                    for index, field_value in enumerate(cell):
-                        _require_int("cell field %d" % index, field_value, 0, 255)
-            self.grid = [[tuple(cell) for cell in row] for row in grid]
+                for site in row:
+                    if len(site) != NUM_FIELDS:
+                        raise ValueError(f"invalid site (must be 5 uint8 fields): {site}")
+                    for index, field_value in enumerate(site):
+                        _require_int("site field %d" % index, field_value, 0, 255)
+            self.grid = [[tuple(site) for site in row] for row in grid]
 
     @classmethod
     def from_bytes(

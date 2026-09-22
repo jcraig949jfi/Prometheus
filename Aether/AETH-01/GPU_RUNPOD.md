@@ -15,9 +15,9 @@ roughly $10/campaign, optimized for information gained per dollar
   coarse-grid row of the habitability sweep (HABITABILITY.md) at once.
   No cross-world interaction is possible by construction (worlds do
   not share a lattice), so this is embarrassingly parallel at the
-  batch level in addition to AETH-00's proven per-cell parallelism
+  batch level in addition to AETH-00's proven per-site parallelism
   within a world.
-- **Deterministic RNG across a batch.** Arbitration, mutation, and
+- **Deterministic RNG across a batch.** Arbitration, perturbation, and
   replenishment all key on `seed` already (PHYSICS_SPEC_DRAFT.md); a
   batch of worlds simply uses distinct seeds per world. SplitMix64-style
   generators are specifically designed to decorrelate sequential seeds,
@@ -41,22 +41,22 @@ roughly $10/campaign, optimized for information gained per dollar
   false: a starved writer can be replenished later, a same-value winner
   can later mutate, and a currently-losing writer can win under a later
   tick's priority.]** **[Further repaired per ASTRA_CLOSURE_REVIEW_02.md
-  S05: zero WRITE cells and zero rain (`REPLENISH_NUMER=0`) alone do
+  S05: zero WRITE sites and zero rain (`REPLENISH_NUMER=0`) alone do
   NOT certify full-state absorption -- `MAINTENANCE_COST>0` can still
   reduce stored energy every tick until it floors at zero (an inert
   `E=10, MAINTENANCE_COST=1` world still changes to `E=9` on the very
   next tick; T/test_aeth01_kill_gates.py's inert-fixture regression).]**
-  The precondition (zero cells anywhere carrying `opcode=WRITE`, AND
+  The precondition (zero sites anywhere carrying `opcode=WRITE`, AND
   `REPLENISH_NUMER=0`) certifies that no further TEMPLATE/ACTIVITY
-  observable can change (OBSERVATORY.md tier 1: no cell can newly
+  observable can change (OBSERVATORY.md tier 1: no site can newly
   activate, copy, or mutate, because nothing can ever WRITE again) --
-  it does NOT certify the full lattice state, including per-cell energy,
+  it does NOT certify the full lattice state, including per-site energy,
   is absorbed while `MAINTENANCE_COST>0` and any energy remains above
   its floor. `DEAD_CERTIFIED` under this precondition therefore means
   "template/activity-observable dead," not "byte-for-byte state frozen."
   A full-state certificate additionally requires either
   `MAINTENANCE_COST=0`, or that the maintenance tail has already run to
-  completion (every cell's energy has reached its floor of 0, which is
+  completion (every site's energy has reached its floor of 0, which is
   reachable in a bounded number of further ticks and may be waited out
   or computed in closed form rather than stepped). Any OTHER near-zero-activity stop is a
   budget-limited, RIGHT-CENSORED pause (`DEAD_CENSORED`/
@@ -67,13 +67,13 @@ roughly $10/campaign, optimized for information gained per dollar
   before any campaign claims those parameter regions are actually dead.
 - **Forensic capture only when needed.** Rolling forensic buffers
   (OBSERVATORY.md tier 2) are only allocated/computed for worlds that
-  survive past the scout tier (below); expensive triggered analysis
+  persist past the scout tier (below); expensive triggered analysis
   (tier 3, e.g. intervention replays) is never run on-GPU at all in
   AETH-01 -- flagged worlds are checkpointed and their deepen/verify
   analysis is done by re-running the tiny, cheap CPU reference
   implementation. **[REPAIRED per ASTRA_REVIEW_01.md N01, ACCEPT, see
   REPAIR_LEDGER_01.md -- corrected arithmetic]** At AETH-00B's baseline
-  (~300K cell-steps/second, single-threaded CPU, pre-AETH-01), a 32x32
+  (~300K site-steps/second, single-threaded CPU, pre-AETH-01), a 32x32
   world for 3,000 ticks costs `32*32*3000/300000 ~= 10.24 seconds`, NOT
   "a fraction of a second" as the reviewed draft stated -- still cheap
   per world, but not negligible at the scale of a full sweep (below),
@@ -107,7 +107,7 @@ roughly $10/campaign, optimized for information gained per dollar
    tier's data exists.
 3. **Deepen** (CPU, per-flagged-world): the small number of individual
    worlds flagged as STRUCTURED/MOBILE/METASTABLE/BOUNDARY_FORMING/
-   CHAOTIC get full forensic replay on CPU: lineage-graph construction
+   CHAOTIC get full forensic replay on CPU: causal provenance-graph construction
    (HEREDITY_REQUIREMENTS.md), intervention/perturbation runs
    (OBSERVATORY.md tier 3), full trace retention.
 4. **Verify** (CPU, mandatory before any claim leaves the pipeline):
@@ -120,7 +120,7 @@ roughly $10/campaign, optimized for information gained per dollar
 
 This funnel is the direct cost-control mechanism: the most expensive
 tiers only ever run on a small, pre-filtered fraction of the scout
-tier's population.
+tier's ensemble.
 
 ## Scope comparison table
 
@@ -130,12 +130,12 @@ tier's population.
 | Differentiable learning | REJECT | Breaks integer-only determinism (REQUIREMENTS.md); presumes a gradient-based optimization paradigm not implied by anything in the physics |
 | 3-D worlds | DEFER | Plausible future extension (adds a 6th von Neumann neighbor pair); not needed to satisfy R13, and doubles/triples state-touching cost for no established scientific need yet |
 | Explicit agents (agents-with-actions ontology) | REJECT | Directly contradicts R1/R14; nothing in AETH-01's state supports an "agent" boundary |
-| Conventional genetic algorithms (external GA loop over the physics) | REJECT | An externally imposed selection/reproduction operator would violate R2/R9 in spirit even if not in the literal state layout -- selection must arise from the physics' own dynamics, not be bolted on from outside |
+| Conventional genetic algorithms (external GA loop over the physics) | REJECT | An externally imposed selection/recursive construction operator would violate R2/R9 in spirit even if not in the literal state layout -- selection must arise from the physics' own dynamics, not be bolted on from outside |
 | Multi-GPU | DEFER | Single-GPU batched-worlds throughput has not yet been measured; multi-GPU orchestration cost is not justified without a measured single-GPU ceiling first |
 | Distributed orchestration | DEFER | Pods-vs-serverless topology is explicitly undecided (AETHER_RUNPOD.md, open question 14); no workload shape exists yet to benchmark against |
-| LLMs inside the physics | REJECT | Would violate R4 (a local cell cannot host a global-context model) and R12 (LLM inference is not remotely GPU-parallel at AETH-01's per-cell grain); conceptually unrelated to this milestone |
-| Sophisticated tasks | DEFER -- prerequisite needed | D-12: no broad scientific campaign, and by extension no task design, until the substrate is qualified trustworthy; when tasks do arrive they must satisfy R9 (no direct task-reproduction coupling) |
-| Full heredity taxonomy (a working detector) | DEFER -- prerequisite needed | Requires HEREDITY_REQUIREMENTS.md's tiered evidence pipeline built and adversarially tested against ADVERSARIAL_ANALYSIS.md's cases first |
+| LLMs inside the physics | REJECT | Would violate R4 (a local site cannot host a global-context model) and R12 (LLM inference is not remotely GPU-parallel at AETH-01's per-site grain); conceptually unrelated to this milestone |
+| Sophisticated tasks | DEFER -- prerequisite needed | D-12: no broad scientific campaign, and by extension no task design, until the substrate is qualified trustworthy; when tasks do arrive they must satisfy R9 (no direct task-recursive construction coupling) |
+| Full configuration transmission taxonomy (a working detector) | DEFER -- prerequisite needed | Requires HEREDITY_REQUIREMENTS.md's tiered evidence pipeline built and adversarially tested against ADVERSARIAL_ANALYSIS.md's cases first |
 | Atlas integration | DEFER | No stated dependency from AETH-01; revisit if/when a concrete integration need appears |
 | Self-modification | ALREADY PRESENT (physics-level) / REJECT (simulator-level) | Matter modifying nearby matter (including opcode fields) is core AETH-01 physics, not an addition; the simulator/campaign-runner CODE modifying itself is out of scope and rejected -- these are different senses of the term and must not be conflated |
 | Ouija/regret analysis | DEFER -- prerequisite needed | Not evaluable without a task/policy notion, which is itself deferred; revisit only after "sophisticated tasks" has a concrete design, and design independently rather than importing another engine's implementation (D-1) |

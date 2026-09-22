@@ -11,10 +11,10 @@ from reference import mutants as mut
 from reference import oracle as ok
 
 
-def _world(H, W, seed, cells):
+def _world(H, W, seed, sites):
     grid = [[(0, 0, 0, 0) for _ in range(W)] for _ in range(H)]
-    for (r, c), cell in cells.items():
-        grid[r][c] = cell
+    for (r, c), site in sites.items():
+        grid[r][c] = site
     return ok.Aeth00World(H, W, seed, grid=grid)
 
 
@@ -24,7 +24,7 @@ def test_mutant_min_priority_picks_wrong_winner():
         3,
         3,
         seed=111,
-        cells={(0, 1): (1, 2, 0, 0x10), (2, 1): (1, 0, 0, 0x20)},  # both -> (1,1) opcode
+        sites={(0, 1): (1, 2, 0, 0x10), (2, 1): (1, 0, 0, 0x20)},  # both -> (1,1) opcode
     )
     proposals = ok.decode_proposals(world.grid, world.H, world.W)
     contests = ok.group_contests(proposals)
@@ -50,7 +50,7 @@ def test_mutant_in_place_update_violates_snapshot_semantics():
 
 
 def test_mutant_duplicate_source_aliasing_is_detected_by_harness():
-    world = _world(1, 3, seed=3, cells={(0, 0): (1, 0, 0, 0x11)})  # N==S at H=1
+    world = _world(1, 3, seed=3, sites={(0, 0): (1, 0, 0, 0x11)})  # N==S at H=1
     contests = mut.mutant_duplicate_source_proposals(world)
     try:
         ok.assert_no_duplicate_sources(contests)
@@ -97,12 +97,12 @@ def test_mutant_stale_next_state_reverts_untouched_field():
 
 
 def test_mutant_wrong_direction_encoding_targets_wrong_cell():
-    world = _world(3, 3, seed=5, cells={(1, 1): (1, 1, 3, 0x77)})  # East -> (1,2) payload
+    world = _world(3, 3, seed=5, sites={(1, 1): (1, 1, 3, 0x77)})  # East -> (1,2) payload
     correct = world.step()
     buggy = mut.mutant_wrong_direction_step(world)
     assert correct.grid[1][2] == (0, 0, 0, 0x77)
     assert buggy[1][2] == (0, 0, 0, 0)  # East mis-mapped to South in the mutant
-    assert buggy[2][1] == (0, 0, 0, 0x77)  # written to the wrong cell instead
+    assert buggy[2][1] == (0, 0, 0, 0x77)  # written to the wrong site instead
 
 
 def test_mutant_global_arbitration_drops_a_genuinely_independent_field():
@@ -110,7 +110,7 @@ def test_mutant_global_arbitration_drops_a_genuinely_independent_field():
         3,
         3,
         seed=9,
-        cells={
+        sites={
             (0, 1): (1, 2, 0, 0x01),  # South -> (1,1) opcode field
             (1, 0): (1, 1, 3, 0x02),  # East -> (1,1) payload field
         },
@@ -129,7 +129,7 @@ def test_mutant_priority_payload_swap_writes_wrong_value():
         3,
         3,
         seed=1,
-        cells={(0, 0): (1, 2, 3, 0xAA), (2, 0): (1, 0, 3, 0xBB)},  # both -> (1,0) payload
+        sites={(0, 0): (1, 2, 3, 0xAA), (2, 0): (1, 0, 3, 0xBB)},  # both -> (1,0) payload
     )
     correct = world.step()
     buggy = mut.mutant_priority_payload_swap_step(world)

@@ -1,7 +1,7 @@
 """
 AETH-01 -- scientific contract regressions for K1-K6. A disagreement
 requires checking BOTH the oracle and the derivation, not assuming either
-is correct. K3 is seeded, fixture-local evidence, not a heredity detector.
+is correct. K3 is seeded, fixture-local evidence, not a configuration transmission detector.
 """
 
 from math import inf
@@ -95,13 +95,13 @@ def test_k1_case6_saturated_replenishment():
 # ---------------------------------------------------------------------
 
 def test_s05_inert_world_still_decays_under_maintenance_before_floor():
-    # E=10, MAINTENANCE_COST=1, no WRITE cells anywhere, no rain: the
+    # E=10, MAINTENANCE_COST=1, no WRITE sites anywhere, no rain: the
     # DEAD_CERTIFIED template/activity precondition already holds (no
-    # opcode=WRITE cell exists), but energy is NOT yet absorbed -- an
+    # opcode=WRITE site exists), but energy is NOT yet absorbed -- an
     # immediate hard-stop claiming full-state stasis here is false.
     w = _world(1, 1, seed=6, maintenance_cost=1)
     w.grid = [[(0, 0, 0, 0, 10)]]
-    assert not any(cell[ok1.OPCODE] == 1 for row in w.grid for cell in row)
+    assert not any(site[ok1.OPCODE] == 1 for row in w.grid for site in row)
     n = w.step()
     assert n.grid[0][0][ok1.ENERGY] == 9  # changed: not yet at the floor.
     for expected in (8, 7, 6, 5, 4, 3, 2, 1, 0):
@@ -115,7 +115,7 @@ def test_s05_inert_world_still_decays_under_maintenance_before_floor():
 
 
 # ---------------------------------------------------------------------
-# K2 -- exact conditional mutation graph
+# K2 -- exact conditional perturbation graph
 # ---------------------------------------------------------------------
 
 def test_k2_all_inert_world_never_mutates_at_probability_one():
@@ -130,7 +130,7 @@ def test_k2_all_inert_world_never_mutates_at_probability_one():
 def test_k2_fixed_donor_repeated_overwrite_is_memoryless():
     # Donor's own payload is never targeted, so it stays fixed; target
     # is overwritten fresh each tick, never accumulating drift. If the
-    # implementation instead mutated the TARGET's evolving stored value
+    # implementation instead perturbed the TARGET's evolving stored value
     # (a bug), popcount would tend to exceed 1 after a few ticks; a
     # fixed-donor memoryless process keeps it at exactly 1 every tick.
     w = _world(1, 2, seed=11, mut_numer=2**32)  # always mutates.
@@ -157,7 +157,7 @@ def test_k2_mod5_selector_has_zero_single_bit_neutral_edges():
 # ---------------------------------------------------------------------
 # K3 -- observed edges, distributed attribution and recursive activation.
 # These helpers classify ONLY the named fixtures; no resemblance or
-# HEREDITY_VARIATION detector (or spontaneous-origin claim) is implied.
+# TRANSMITTED_VARIATION detector (or spontaneous-origin claim) is implied.
 # ---------------------------------------------------------------------
 
 def _record(world, ticks=4):
@@ -189,7 +189,7 @@ def _edge_verdict(baseline, changed, control, source, target):
     """Fixture-local verdict from winners, byte effects AND emitted behavior.
 
     No evidence is unresolved (None), not automatic STRUCTURAL_RESEMBLANCE.
-    This is intentionally not a population/recursion/variation detector.
+    This is intentionally not a ensemble/recursion/variation detector.
     """
     r, c = target
     assert [w.grid[r][c] for w in baseline[0]] == [w.grid[r][c] for w in control[0]]
@@ -202,9 +202,9 @@ def _edge_verdict(baseline, changed, control, source, target):
     return "CAUSAL_VALUE_CONSTRUCTION"
 
 
-def _perturbed(builder, cell, field, value):
+def _perturbed(builder, site, field, value):
     world = builder()
-    set_field(world, cell, field, value)
+    set_field(world, site, field, value)
     return _record(world)
 
 
@@ -360,7 +360,7 @@ def test_k3_recursive_activation_does_not_construct_initialized_field_selection(
 def test_k3_five_tier_names_are_not_mechanism_labels():
     assert CLAIM_TIERS == (
         "STRUCTURAL_RESEMBLANCE", "CAUSAL_VALUE_CONSTRUCTION", "CONSTRUCTED_CAPACITY",
-        "RECURSIVE_CONSTRUCTION", "HEREDITY_VARIATION",
+        "RECURSIVE_CONSTRUCTION", "TRANSMITTED_VARIATION",
     )
 
 
@@ -368,12 +368,12 @@ def test_k3_five_tier_names_are_not_mechanism_labels():
 # K6 -- provenance overlay composition (EXPERIMENTS.md S06 repair)
 # ---------------------------------------------------------------------
 
-def test_k6_seeded_base_survives_every_overlay():
+def test_k6_seeded_base_persists_under_every_overlay():
     # Regime 3/4 (seeded) base + regime 5/6/7 (resource/init) overlay.
     assert instrument_class(seeded_pattern_present=True) == SEEDED_CONTROL
 
 
-def test_k6_spontaneous_base_survives_every_overlay():
+def test_k6_spontaneous_base_persists_under_every_overlay():
     # Regime 1/2 (unstructured) base + regime 5/6/7 overlay.
     assert instrument_class(seeded_pattern_present=False) == SPONTANEOUS
 
@@ -528,7 +528,7 @@ def test_k5_starved_writer_reactivates_after_delayed_replenishment():
         trace = []
         w = w.step(trace=trace)
         emitted_by_tick.append(any(ev[0] == "proposal_emitted" for ev in trace))
-    # Dormant (looks "dead") for at least one full tick, THEN reactivates --
+    # Inactive (looks "dead") for at least one full tick, THEN reactivates --
     # a naive detector stopping early on "no activity" would have missed this.
     assert emitted_by_tick[0] is False
     assert True in emitted_by_tick[1:], "writer never reactivated within the horizon checked"
@@ -536,7 +536,7 @@ def test_k5_starved_writer_reactivates_after_delayed_replenishment():
 
 def test_k5_same_value_written_repeatedly_then_mutates():
     # Fixed donor (K2's memoryless-overwrite setup); scan for the first
-    # tick a mutation actually fires. Finding idle_ticks > 0 confirms a
+    # tick a perturbation actually fires. Finding idle_ticks > 0 confirms a
     # "looks frozen" (same byte written repeatedly) run segment existed
     # before the eventual change -- same-value is NOT proof of immutability.
     mut_numer = 1 << 28  # ~6.5% per tick -- small enough to usually take
@@ -549,8 +549,8 @@ def test_k5_same_value_written_repeatedly_then_mutates():
         w = w.step()
         values.append(w.grid[0][1][ok1.PAYLOAD])
     first_change = next((i for i, v in enumerate(values) if v != 0), None)
-    assert first_change is not None, "no mutation observed within the search window"
-    assert first_change > 0, "expected at least one idle (unchanged-value) tick before the mutation"
+    assert first_change is not None, "no perturbation observed within the search window"
+    assert first_change > 0, "expected at least one idle (unchanged-value) tick before the perturbation"
     assert bin(values[first_change]).count("1") == 1  # single-bit flip, per K2.
 
 

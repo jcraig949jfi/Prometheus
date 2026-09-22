@@ -44,7 +44,7 @@ opcode/payload for engineering convenience, not a physical derivation.
 entry described the 5-field extension as purely additive; it is NOT
 additive at the `arg1` field-SELECTOR level -- extending the selector
 from mod-4 to mod-5 destroys AETH-00's single-bit-neutral subspace
-entirely (no power of two is divisible by 5), a real, accepted mutation-
+entirely (no power of two is divisible by 5), a real, accepted perturbation-
 topology change, not analyzed in the original version of this entry.
 Falsifier/reversal: **[TIGHTENED per B03]** if 0-255 is shown, via K1's
 hand-worked cases or the (deferred) K4 economic gates, to saturate or
@@ -64,13 +64,13 @@ Hidden prior: cost is content- and direction-independent -- an
 arbitrary simplification, named in PHYSICS_SPEC_DRAFT.md's
 accessibility analysis (moat #3).
 Falsifier/reversal: **[TIGHTENED per B03]** if K4's isolated
-pulse-budget cell probe (deferred this cycle) shows >90% of a
+pulse-budget site probe (deferred this cycle) shows >90% of a
 preregistered sample of surviving strategies converge on the identical
 narrow behavior class (e.g. minimal-cost same-value writes) across
 Regime B's parameter range, a content/direction-sensitive cost model
 should be designed as a new semantics_id.
 
-**D-AETH01-04 -- Introduce explicit, reproducible mutation (`Mu`,
+**D-AETH01-04 -- Introduce explicit, reproducible perturbation (`Mu`,
 single-bit flip at rate `MUT_NUMER`) on fields 0-3 only, breaking
 AETH-00's "no byte synthesis" property on purpose.**
 Rationale: AETH-00 explicitly disqualified itself from being a
@@ -79,12 +79,12 @@ shrink (AETHER_SPEC.md, "Known limitation"); AETH-01 is the first
 candidate that must address this, and a domain-separated, explicit,
 seed/tick/target-keyed hash keeps it exactly as replayable as
 arbitration (R11).
-Alternatives considered: no mutation at all (kept as `MUT_NUMER=0`, a
-valid degenerate case, not removed as an option); mutation applied
+Alternatives considered: no perturbation at all (kept as `MUT_NUMER=0`, a
+valid degenerate case, not removed as an option); perturbation applied
 uniformly across all 5 fields including energy -- rejected because a
-"mutated" conserved quantity has no clean physical source/sink
+"perturbed" conserved quantity has no clean physical source/sink
 interpretation (would break the accounting equation).
-Hidden prior: mutation strictly excludes the resource field, which is
+Hidden prior: perturbation strictly excludes the resource field, which is
 the R3-tension already named in REQUIREMENTS.md and
 PHYSICS_SPEC_DRAFT.md. **[REPAIRED per ASTRA_REVIEW_01.md B02]** This is
 NOT, by itself, proof that resource-handling traits cannot be
@@ -124,18 +124,18 @@ Rationale: keeps exactly one transition function to specify and test;
 qualification can start at the simplest point (Regime A) without a
 second code path.
 Alternatives considered: genuinely different physics for a
-"conservation-only" vs. "metabolic" mode -- rejected as needless
+"conservation-only" vs. "resource-maintenance" mode -- rejected as needless
 duplication of the conformance/testing burden for no added expressive
 power (both are reachable as parameter settings of one law).
 Hidden prior: assumes decay and replenishment are well-modeled as
-uniform, spatially-blind per-cell probabilities -- no notion of
+uniform, spatially-blind per-site probabilities -- no notion of
 distance-to-a-resource-source or spatial gradient exists yet (partially
 addressed by EXPERIMENTS.md's heterogeneous-environment regime, which
 varies parameters by zone rather than by a continuous field).
 Falsifier/reversal: if heterogeneous-environment experiments show
 zone-level parameter variation is too coarse to produce interesting
 gradient-following dynamics, a continuous spatial resource FIELD
-(rather than per-cell independent Bernoulli draws) should be designed
+(rather than per-site independent Bernoulli draws) should be designed
 as a new semantics_id.
 
 **D-AETH01-07 -- No primitive relocates an (opcode,arg0,arg1,payload)
@@ -151,7 +151,7 @@ Hidden prior: "movement" and "replication" are physically fused by this
 choice; a system that badly needs literal relocation (e.g. to model
 real transport cost distinct from copying cost) cannot express it.
 Falsifier/reversal: if HEREDITY_REQUIREMENTS.md's traveling-structure
-adversarial case turns out to be UNRESOLVABLE even with full lineage
+adversarial case turns out to be UNRESOLVABLE even with full causal provenance
 graphs and intervention testing (i.e. copying-based movement and
 copying-based construction are provably indistinguishable from any
 evidence the physics can produce), a literal movement primitive should
@@ -209,9 +209,9 @@ contradictory across replicate seeds at every point in this 5-axis
 grid, the axis choice itself (not just the grid resolution) should be
 reconsidered before assuming the physics itself is uninteresting.
 
-**D-AETH01-11 -- Heredity claims use five tiers of claim strength
+**D-AETH01-11 -- Configuration transmission claims use five tiers of claim strength
 (STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION /
-CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / HEREDITY_VARIATION).
+CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / TRANSMITTED_VARIATION).
 Causal tiers require intervention evidence, not pattern-matching alone;
 resemblance is NOT a prerequisite for the causal tiers.
 **[REPAIRED per ASTRA_REVIEW_01.md S04, ACCEPT, see
@@ -223,7 +223,7 @@ capacity-construction; it is now split into CAUSAL_VALUE_CONSTRUCTION
 Rationale: directly implements D-11 (AETHER_DECISIONS.md, AETH-00-era)
 and AETHER_DOCTRINE.md's falsification-over-confirmation stance at the
 most consequential possible claim category.
-Alternatives considered: a single binary "heredity detected" flag --
+Alternatives considered: a single binary "configuration transmission detected" flag --
 rejected outright as incompatible with D-11 and with
 HEREDITY_REQUIREMENTS.md's adversarial-case table, which specifically
 requires distinguishing degrees of evidence.
@@ -231,11 +231,11 @@ Mechanism qualifiers are not tiers: K3 fixture 3 is distributed
 construction by `{A_opcode,A_arg0}` with initialized scaffold; fixture 4
 is recursive activation of preconfigured machinery, not recursive
 configuration construction, despite its formal RECURSIVE_CONSTRUCTION
-tier. Neither fixture establishes HEREDITY_VARIATION.
+tier. Neither fixture establishes TRANSMITTED_VARIATION.
 Hidden prior: the five-tier ordering itself is a design choice; a
 different taxonomy might carve the evidence space differently.
 Falsifier/reversal: if, once a detector is actually built, real
-specimens repeatedly produce evidence that does not fit cleanly into
+observed instances repeatedly produce evidence that does not fit cleanly into
 any one tier (e.g. genuinely partial/graded cases), the tier boundaries
 -- not the requirement for tiers at all -- should be revisited.
 
@@ -258,14 +258,14 @@ are trusted.
 **D-AETH01-13 -- GPU/Runpod funnel does deepen/verify analysis on CPU,
 never on-GPU, in AETH-01.**
 Rationale: AETH-01's tiny-world scale (R13) makes CPU replay of
-flagged worlds cheap (AETH-00B's measured ~300K cell-steps/second);
+flagged worlds cheap (AETH-00B's measured ~300K site-steps/second);
 building GPU-side forensic/intervention analysis is unjustified
 engineering cost for a first milestone.
 Alternatives considered: on-GPU forensic buffers and intervention runs
 -- deferred, not rejected outright; may become necessary if the deepen
 tier's flagged-world count grows too large for CPU replay to keep up.
 Hidden prior: assumes the deepen tier will remain a small fraction of
-the scout tier's population; if habitability turns out to be common
+the scout tier's ensemble; if habitability turns out to be common
 rather than rare in the swept parameter space, this assumption fails.
 Falsifier/reversal: if the deepen tier's CPU replay backlog becomes the
 throughput bottleneck of an actual campaign, on-GPU forensic tooling

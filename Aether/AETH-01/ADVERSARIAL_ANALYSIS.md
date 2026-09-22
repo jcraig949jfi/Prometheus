@@ -5,14 +5,14 @@ failure mode, a misleading observation, a boring explanation, and an
 experiment/control that exposes it. This is a required, not optional,
 part of the design (AETHER_DOCTRINE.md item 4).
 
-**1. Reproduction actually caused by environment.** Observation: a
+**1. Recursive construction actually caused by environment.** Observation: a
 pattern appears to "make a copy of itself." Boring explanation: an
-unrelated neighboring active cell happens to template both the
-"parent" and the "child" from a third source. Control: lineage-graph
+unrelated neighboring active site happens to template both the
+"parent" and the "child" from a third source. Control: causal provenance-graph
 intervention (HEREDITY_REQUIREMENTS.md) -- perturb the alleged parent
 only; if the child is unaffected, environment did it.
 
-**2. Heredity caused by spatial persistence, not causation.** Observation:
+**2. Configuration transmission caused by spatial persistence, not causation.** Observation:
 two similar regions coexist for a long time. Boring explanation: both
 are simply RESERVED_INERT and nobody ever addressed them (persistence
 by neglect, PHYSICS_SPEC_DRAFT.md accessibility analysis). Control:
@@ -24,15 +24,15 @@ distant regions change "in step." Boring explanation: the tick itself
 is a shared clock; anything gated only by starvation thresholds or
 replenishment timing can look synchronized without any spatial
 interaction. Control: compare against an equivalent world with
-per-cell-independent replenishment phase offsets; true coupling should
-survive phase-randomization, clock artifacts should not.
+per-site-independent replenishment phase offsets; true coupling should
+persist phase-randomization, clock artifacts should not.
 
 **4. Topology-induced recurrence.** Observation: a pattern "returns to
 itself" periodically. Boring explanation: toroidal wraparound at small
 H/W literally re-presents the same neighbor relationships on a fixed
 cycle. Control: rerun at H,W large enough that wrap-induced
 self-neighboring is impossible in the observed window; periodicity
-that survives is not a topology artifact.
+that persists is not a topology artifact.
 
 **5. Detector recovers the seeded instrument.** Observation: a
 "spontaneous" run's detector fires and its structure resembles the
@@ -52,11 +52,11 @@ translated/rotated coordinate offset; a "dominant" pattern that follows
 the translation is behavioral, one that stays at the same absolute
 coordinates is a hash artifact.
 
-**7. Resource accounting secretly acting as fitness.** Observation:
-cells with more energy simply act more and "win" more, read as
+**7. Resource accounting secretly acting as evaluation score.** Observation:
+sites with more energy simply act more and "win" more, read as
 selection for a trait. Boring explanation: energy is initial-condition
-luck, not a measured behavioral trait, and nothing computes a fitness
-score (R9) -- but the *effect* can still look identical to a fitness
+luck, not a measured behavioral trait, and nothing computes a evaluation score
+score (R9) -- but the *effect* can still look identical to a evaluation score
 gradient. Control: hold initial energy fixed and identical across a
 comparison set, vary only the trait of interest, before attributing
 outcome differences to that trait.
@@ -77,8 +77,8 @@ bit-exact CPU/GPU differential testing on the full replay-identity
 tuple (REQUIREMENTS.md) before any GPU-produced trajectory is used for
 a scientific claim.
 
-**10. Boundary detector invents organisms.** Observation: an arbitrary
-spatial partition is drawn and reported as "two populations." Boring
+**10. Boundary detector invents assemblies.** Observation: an arbitrary
+spatial partition is drawn and reported as "two ensembles." Boring
 explanation: any partition of a lattice produces *some* flux/boundary
 statistic; a boundary existing does not mean the physics itself
 produced or "knows about" that partition (R1). Control: require a
@@ -86,16 +86,16 @@ boundary to be independently rediscovered by an unsupervised
 detector (e.g. from `spatial_autocorr` discontinuities) rather than
 hand-drawn, before treating it as a finding.
 
-**11. Mutation's bit-index and trigger bits are correlated.**
-Observation: mutation appears biased toward certain bit positions,
+**11. Perturbation's bit-index and trigger bits are correlated.**
+Observation: perturbation appears biased toward certain bit positions,
 read as a "directional" evolutionary pressure. Boring explanation: `Mu`
 reuses one 64-bit hash for both the trigger decision (top 32 bits) and
 the bit index (bottom 3 bits) -- if `M`'s output has any residual
-correlation between these bit ranges, the mutation spectrum is
+correlation between these bit ranges, the perturbation spectrum is
 non-uniform for a purely mechanical reason. Control: an explicit
 statistical test (chi-square over `bit_index` conditional on
 `triggered=true`, across many independent (seed,tick,target) draws)
-before any claim of biological "directionality" in mutation.
+before any claim of biological "directionality" in perturbation.
 
 **12. Energy as a pure initial-condition-luck artifact (R5 tension).**
 Observation: one region "persists" much longer than another, read as
@@ -104,10 +104,10 @@ energy; nothing about its structure or behavior caused the difference.
 Control: matched-initial-energy comparison (as in #7); persistence
 claims require the SAME starting energy across compared instances.
 
-**13. Toroidal self-aliasing lets a cell "feed itself."** Observation:
+**13. Toroidal self-aliasing lets a site "feed itself."** Observation:
 at H<=2 OR W<=2 **[REPAIRED per ASTRA_REVIEW_01.md B02: dimension 2
-also aliases opposite neighbors to the SAME other cell, not only
-dimension 1]**, a cell's own opposite neighbors coincide (self-targeting
+also aliases opposite neighbors to the SAME other site, not only
+dimension 1]**, a site's own opposite neighbors coincide (self-targeting
 specifically requires a dimension of exactly 1), so an energy-transfer
 proposal can resolve to the source itself, appearing as self-sustaining
 closed-loop metabolism. Boring explanation: it is a topological
@@ -149,22 +149,22 @@ be too late, miss the causal field, or leave a redundant pathway), #2
 claim -- construction may precede the window, or an enabling/resource
 cause need not appear as a structural-copy winner there), #3/#6 (a
 genuinely functioning mechanism CAN depend on its forcing environment;
-survival of phase-randomization/transplant is not a definition of
+persistence of phase-randomization/transplant is not a definition of
 genuine organization and failure is not a clean artifact proof -- use
 crossed content/location/forcing controls and limit conclusions to the
 tested dependence), #8/#10 (sustained change and an unsupervised
 boundary detector are not neutral admission criteria for organization
 -- they can exclude quiet functional memory and reproduce a clustering
-prior; they are observables to calibrate, not organism definitions),
+prior; they are observables to calibrate, not assembly definitions),
 and #19 (below) each need the sharper standard from M05/S04's
 intervention/redundancy requirements and M06's scout/tier-2-metric
 scope fix, per REPAIR_LEDGER_01.md B01. No control is deleted; each is
 narrowed to what it actually establishes.
 
 **15. Correlated starvation from shared low-probability replenishment.**
-Observation: a whole region "goes dormant together," read as a
+Observation: a whole region "goes inactive together," read as a
 coordinated signal or synchronized life-cycle. Boring explanation: at
-low `REPLENISH_NUMER`, independent per-cell Bernoulli draws still
+low `REPLENISH_NUMER`, independent per-site Bernoulli draws still
 produce long simultaneous dry spells across a small region purely by
 chance (a shared statistical tail event, not shared causation).
 Control: compare the observed simultaneous-dormancy rate against the
@@ -180,16 +180,16 @@ neutral (AETHER_SPEC.md's own explicit caveat) -- apparent dominance may
 be a hash artifact of specific coordinate values, not a competitive
 outcome. Control: AETH-00A-style statistical-diagnostic sweep
 (stratified, pre-registered) rerun for AETH-01's actual contest
-population before crediting any "dominance" to behavior.
+ensemble before crediting any "dominance" to behavior.
 
 **17. Energy saturation at 255 mimics evolved resilience.** Observation:
-a cell that received lots of inflow never seems to run out, read as a
+a site that received lots of inflow never seems to run out, read as a
 "storage adaptation." **[REPAIRED per ASTRA_REVIEW_01.md B02: a
-saturated cell genuinely IS storing 255 units -- saturation is a
+saturated site genuinely IS storing 255 units -- saturation is a
 confound for ADAPTIVE-storage claims, not proof of non-storage.]**
 Boring explanation: it is capped at the uint8 ceiling and any further
 inflow beyond the cap is destroyed as overflow spillage, so a
-frequently-saturated cell's APPARENT inexhaustibility may just reflect
+frequently-saturated site's APPARENT inexhaustibility may just reflect
 being permanently full, not any acquisition/retention skill. Control:
 check `energy_overflow_spilled` trace rows; compare causal ACQUISITION
 (how the reserve was won), RETENTION (how long it is held before being
@@ -202,8 +202,8 @@ composition trends in some direction over a run. Boring explanation:
 `Mu` triggers uniformly regardless of context; in a small world, pure
 sampling drift under a neutral or near-neutral process produces
 apparent trends with no selective cause. Control: compare the observed
-trend's magnitude against a null model (the same mutation process with
-no differential survival, e.g. run on an all-RESERVED_INERT world)
+trend's magnitude against a null model (the same perturbation process with
+no differential persistence, e.g. run on an all-RESERVED_INERT world)
 before calling any trend "adaptive."
 
 **19. Inert-majority camouflage hides real activity (a false-negative

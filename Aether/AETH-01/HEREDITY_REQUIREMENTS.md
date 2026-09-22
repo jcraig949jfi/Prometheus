@@ -1,4 +1,4 @@
-# AETH-01 -- future heredity detector requirements (Design Task 8) and
+# AETH-01 -- configuration-transmission detector requirements (legacy path HEREDITY_REQUIREMENTS.md; Design Task 8) and
 novelty/gravitational-pull data preservation (Design Task 9)
 
 Status: DRAFT REQUIREMENTS ONLY. No detector is built in AETH-01. This
@@ -10,7 +10,7 @@ creates an incentive to define them conveniently.
 
 The formal tiers are exactly STRUCTURAL_RESEMBLANCE /
 CAUSAL_VALUE_CONSTRUCTION / CONSTRUCTED_CAPACITY /
-RECURSIVE_CONSTRUCTION / HEREDITY_VARIATION. Tiers 3-5 require the
+RECURSIVE_CONSTRUCTION / TRANSMITTED_VARIATION. Tiers 3-5 require the
 causal evidence of the preceding causal tier; resemblance (tier 1)
 is NOT a prerequisite for tier 2 or above. Mechanism labels below are
 qualifiers, not extra tiers. Missing evidence is unresolved, not an
@@ -46,7 +46,7 @@ is standing variation); (8) **environmental/scaffold contribution**
 (what pre-existing, non-constructed machinery the process depended on,
 named explicitly, never left implicit); (9) **resource contribution**
 (energy-transfer edges are typed separately from structural-copy edges
-and MAY carry heredity-relevant patterning -- not excluded by field
+and MAY carry configuration transmission-relevant patterning -- not excluded by field
 type, correcting the reviewed draft's blanket resource-flow exclusion);
 (10) **individuality/segmentation hypothesis** (any claimed
 "individual" boundary is stated as a hypothesis with its own evidence,
@@ -61,13 +61,13 @@ case).
    necessary nor sufficient for causal construction (a dissimilar
    A->B->A construction is not excluded by requiring resemblance first).
 2. **CAUSAL_VALUE_CONSTRUCTION** -- a specific winning WRITE (or chain
-   of winning WRITEs), traced through the lineage graph (OBSERVATORY.md,
+   of winning WRITEs), traced through the causal provenance graph (OBSERVATORY.md,
    preserving ALL contenders per contest, not only winners), demonstrably
    caused specific bytes at a target location to take their observed
    VALUES, AND a content-only intervention (perturb the purported
    source's payload, replay, compare) confirms the target's value
    changes accordingly while a matched control (perturb an unrelated
-   cell with similar surface statistics AND comparable causal
+   site with similar surface statistics AND comparable causal
    opportunity) does not. This is axes 2+3 together. **This tier alone
    is what a preconfigured forwarding relay (K3 relay fixture, below)
    can satisfy -- it is renamed from the reviewed draft's
@@ -127,40 +127,40 @@ case).
    supplied at each step. It does NOT demonstrate recursive configuration
    construction. That stronger mechanism claim needs routing/field
    construction and independent field ablations at each generation.
-5. **HEREDITY_VARIATION** -- RECURSIVE_CONSTRUCTION holds across a
-   population of >=3 causally-linked instances, AND an identified
+5. **TRANSMITTED_VARIATION** (frozen ladder alias: `HEREDITY_VARIATION`) -- RECURSIVE_CONSTRUCTION holds across a
+   ensemble of >=3 causally-linked instances, AND an identified
    difference has separately supported provenance (axis 6: a traceable
    Mu-triggered event OR standing/spatial/energy-pattern variation), AND
    that difference is itself propagated by a further
    CAUSAL_VALUE_CONSTRUCTION step (axis 7 -- transmission, evaluated
-   separately from origin). Only a NEW mutation-origin claim requires
+   separately from origin). Only a NEW perturbation-origin claim requires
    absence from its immediate source; standing variation need not be
    newly created during the observed chain. None of the four K3 fixtures
-   supplies a population-level variation-transmission assay.
+   supplies a ensemble-level variation-transmission assay.
 
 Each tier requires an explicit falsifier (a stated observation that
 would retract the claim) and a stated boring alternative explanation
 that was checked and rejected, per AETHER_DOCTRINE.md item 4 -- a tier
 is never claimed by pattern-matching alone. "Parent-intact vs.
 parent-consumed" is DROPPED as a required universal movement/
-reproduction discriminator (it is a real observable in SOME cases, not
+recursive construction discriminator (it is a real observable in SOME cases, not
 a universal law, per REPAIR_LEDGER_01.md B02); instead, whether a
 successor's construction CONSUMED a predecessor's capacity is tested
 directly as its own observable, never assumed.
 
-## Adversarial cases the detector must survive
+## Adversarial cases the detector must persist
 
-| Case | Why it is hard | What would fool a naive detector | Minimum evidence to survive it |
+| Case | Why it is hard | What would fool a naive detector | Minimum evidence to persist it |
 |---|---|---|---|
 | Value-transport source | Baseline tier-2 positive case, not necessarily a capacity constructor | Confusing caused content with caused behavior | Winning-value provenance + content intervention and controls; capacity claims additionally require tier 3 evidence |
-| Convergent lookalike | Two regions look alike with no causal link (independent random drift into similar byte patterns) | Compressibility/resemblance metrics alone | Lineage graph must show NO causal edge between them; intervention on one must not affect the other |
-| Traveling structure | Copying-driven translation and self-copying share physical primitives | A component-tracker reporting a "new" instance at each step, mistaken for offspring | Test construction and recurrence of capacity directly; record predecessor-capacity consumption separately. Parent-intact vs. consumed is not a universal movement/reproduction discriminator |
-| Resource asymmetry (measured, not labeled "parasite") | A cell receives resource/material from a source without contributing causally to that source's structure | High mutual information / flux between the two read as "cooperation" or "shared lineage"; OR treating passive receipt alone (transfer edges in, no structural-copy edges out) as sufficient to certify exploitation, ignoring that donor debit means the source -- not the recipient -- pays for the transfer (ASTRA_CLOSURE_REVIEW_02.md M03) | Lineage graph edges must be typed (structural-copy edge vs. energy-transfer edge, OBSERVATORY.md flux) and reported with measured benefit/contribution per cell (energy received, energy spent, source of each credit); an asymmetric flow pattern (transfer edges in, no structural-copy edges out) is evidence to report, not by itself a "parasite" verdict -- that requires the same behavior/outcome evidence (donor-reconfiguration cost, recipient's own downstream contribution or lack thereof) as any other resource-mediated case, never edge-type presence alone |
-| Mutual constructors A<->B | Each depends on the other; neither looks like a sufficient cause alone | A one-directional lineage-graph slice showing only "A causes B" (missed reverse edge) | Both directions of the intervention test (perturb A, check B; perturb B, check A) must be run and both must show positive causal effect before "mutual" is claimed |
-| Partial copier completed by environment | The copier alone is causally insufficient; environmental dynamics (e.g. mutation, or an unrelated third cell) finish the job | Crediting the copier with full CONSTRUCTED_CAPACITY when it only supplied partial (e.g. CAUSAL_VALUE_CONSTRUCTION-level) evidence | Lineage graph must show ALL contributing source cells/events for the completed target, not just the most obvious one; if a non-designed environmental event is a necessary contributor, that must be stated, not omitted |
-| Distributed consortium | No single cell/component is "the constructor"; construction is spread across several cooperating regions with no privileged center | Any detector that requires attributing construction to one component/organism_id (which does not exist, R1) | Detector output must support multi-source lineage-graph attribution (a set of contributing sources, not a single one) as a normal case, not an edge case |
+| Convergent lookalike | Two regions look alike with no causal link (independent random drift into similar byte patterns) | Compressibility/resemblance metrics alone | Causal provenance graph must show NO causal edge between them; intervention on one must not affect the other |
+| Traveling structure | Copying-driven translation and recursive state copying share physical primitives | A component-tracker reporting a "new" instance at each step, mistaken for successor | Test construction and recurrence of capacity directly; record predecessor-capacity consumption separately. Parent-intact vs. consumed is not a universal movement/recursive construction discriminator |
+| Resource asymmetry (measured, not labeled "asymmetric-resource-dependence case") | A site receives resource/material from a source without contributing causally to that source's structure | High mutual information / flux between the two read as "cooperation" or "shared causal provenance"; OR treating passive receipt alone (transfer edges in, no structural-copy edges out) as sufficient to certify exploitation, ignoring that donor debit means the source -- not the recipient -- pays for the transfer (ASTRA_CLOSURE_REVIEW_02.md M03) | Causal provenance graph edges must be typed (structural-copy edge vs. energy-transfer edge, OBSERVATORY.md flux) and reported with measured benefit/contribution per site (energy received, energy spent, source of each credit); an asymmetric flow pattern (transfer edges in, no structural-copy edges out) is evidence to report, not by itself a "asymmetric-resource-dependence case" verdict -- that requires the same behavior/outcome evidence (donor-reconfiguration cost, recipient's own downstream contribution or lack thereof) as any other resource-mediated case, never edge-type presence alone |
+| Mutual constructors A<->B | Each depends on the other; neither looks like a sufficient cause alone | A one-directional causal provenance-graph slice showing only "A causes B" (missed reverse edge) | Both directions of the intervention test (perturb A, check B; perturb B, check A) must be run and both must show positive causal effect before "mutual" is claimed |
+| Partial state copier completed by environment | The state copier alone is causally insufficient; environmental dynamics (e.g. perturbation, or an unrelated third site) finish the job | Crediting the state copier with full CONSTRUCTED_CAPACITY when it only supplied partial (e.g. CAUSAL_VALUE_CONSTRUCTION-level) evidence | Causal provenance graph must show ALL contributing source sites/events for the completed target, not just the most obvious one; if a non-designed environmental event is a necessary contributor, that must be stated, not omitted |
+| Distributed consortium | No single site/component is "the constructor"; construction is spread across several cooperating regions with no privileged center | Any detector that requires attributing construction to one component/assembly_id (which does not exist, R1) | Detector output must support multi-source causal provenance-graph attribution (a set of contributing sources, not a single one) as a normal case, not an edge case |
 | Periodic structure resembling copying but causing nothing | A recurring pattern (HABITABILITY.md's PERIODIC label) with the visual signature of copying but no downstream causal effect anywhere | Periodicity or resemblance metrics alone mistaken for construction | Intervention test: perturbing the "copy" must be shown to matter to something else, or the claim is capped at STRUCTURAL_RESEMBLANCE regardless of how copy-like it looks |
-| Resource flow that creates resemblance | Energy redistribution can indirectly cause similar starvation/activity patterns in unrelated regions (shared upstream cause) without any structural copying | Correlated activity mistaken for shared lineage | Type energy-transfer edges separately and test interventions/transmission; correlation alone is insufficient, but resource-mediated causal evidence is not categorically excluded from tiers 2-5 |
+| Resource flow that creates resemblance | Energy redistribution can indirectly cause similar starvation/activity patterns in unrelated regions (shared upstream cause) without any structural copying | Correlated activity mistaken for shared causal provenance | Type energy-transfer edges separately and test interventions/transmission; correlation alone is insufficient, but resource-mediated causal evidence is not categorically excluded from tiers 2-5 |
 | Seeded positive control | Known instrument, not evidence of spontaneous origin | Any claim that a regime-3 (EXPERIMENTS.md) result demonstrates spontaneous capability | `instrument_class=SEEDED_CONTROL` tag (EXPERIMENTS.md) makes such a claim structurally invalid regardless of how the detector scores it; reports must state the tag alongside every detector output |
 | **[NEW, S04 repair]** Preconfigured forwarding relay | A genuine, verifiable causal chain of VALUE changes exists (A really does change B really does change C) using machinery that was never built by anything | Any claim standard that only checks value-transport (old "CAUSAL_CONSTRUCTION") certifies this as recursive construction | Must be capped at CAUSAL_VALUE_CONSTRUCTION; fails CONSTRUCTED_CAPACITY because an enabling-state intervention on A does not change B's own opcode/arg0/arg1 (B's capacity pre-existed A) -- see K3 relay fixture, `KILL_GATES_01.md` |
 
@@ -170,7 +170,7 @@ directly as its own observable, never assumed.
 `KILL_GATES_01.md` for the adjudicated outcome.]** These are the two
 minimal, hand-specified byte configurations the repaired tier ladder
 above must discriminate. Both use a 1-row segment `A,B,C` on a 1x4
-torus with a fourth control cell; EAST/WEST neighbors are distinct but
+torus with a fourth control site; EAST/WEST neighbors are distinct but
 NORTH/SOUTH self-alias. Direction encodings select the right neighbor
 with `arg0 mod 4 = 1` (EAST), consistent with PHYSICS_SPEC_DRAFT.md.
 
@@ -204,7 +204,7 @@ with `arg0 mod 4 = 1` (EAST), consistent with PHYSICS_SPEC_DRAFT.md.
    CONSTRUCTED_CAPACITY (the enabling-state intervention -- removing
    A's specific opcode-field write -- changes B's own capacity to act,
    confirmed by ablation, with a matched control of perturbing an
-   unrelated inert cell showing no effect on B). Whether B->C also
+   unrelated inert site showing no effect on B). Whether B->C also
    constructs C's CAPACITY (as opposed to only C's value) depends on
    C's own configuration, which this minimal fixture leaves passive
    (C is a value-transport target only) -- this fixture demonstrates
@@ -224,8 +224,8 @@ They do not: see `KILL_GATES_01.md` K3 for the adjudicated disposition.
    field=1, payload=1, energy=10)`. BOTH write into B in the first
    tick, to different fields, without contention. B acts only on the
    NEXT tick, routing EAST to C at `(1,2)`, not SOUTH to F at `(2,1)`.
-   Control is at `(0,0)`; other cells start zero. WRITE_COST=1,
-   maintenance/replenishment/mutation=0, seed=31.
+   Control is at `(0,0)`; other sites start zero. WRITE_COST=1,
+   maintenance/replenishment/perturbation=0, seed=31.
      - Disable only `A_opcode`: B stays inert; neither C nor F gets 77.
      - Disable only `A_arg0`: B activates but routes SOUTH; F gets 77,
        C does not. Disable both: B stays inert with default SOUTH routing.
@@ -248,7 +248,7 @@ They do not: see `KILL_GATES_01.md` K3 for the adjudicated disposition.
    opcode and routing construction. No recursive or variation claim.
 4. **Recursive activation of preconfigured machinery fixture.**
    Formal tier RECURSIVE_CONSTRUCTION, NOT evidence of recursive
-   configuration construction. 1-row, 5-cell segment `A,B,C,D,E` (`E` = unrelated
+   configuration construction. 1-row, 5-site segment `A,B,C,D,E` (`E` = unrelated
    inert control, `D` = C's non-interfering write target). Initial
    state: `A = (WRITE, right, field=0, payload=WRITE_opcode_byte,
    energy>=WRITE_COST)` targets B's opcode; `B`'s opcode starts INERT,
@@ -281,18 +281,18 @@ They do not: see `KILL_GATES_01.md` K3 for the adjudicated disposition.
 
 All four are SEEDED_CONTROL fixtures, checked over four transitions by
 the revised tests (execution status is recorded in KILL_GATES_01.md).
-The no-activation consequences in these isolated, no-inflow/no-mutation
+The no-activation consequences in these isolated, no-inflow/no-perturbation
 worlds also follow from the law, but finite tests are not unbounded
 campaign observations. Shared builders are in
-`test/reference/scientific_aeth01.py`; the kill-gate suite tests byte,
+`test/reference/scientific_aeth01.py`; the falsification gate suite tests byte,
 winner, behavior and intervention evidence rather than hard-coded verdict
 booleans. Differential tests reuse inputs, not transition implementations.
 These regressions are fixture-local calibration, not a general detector;
-K7 trace qualification and population-level heredity work remain deferred.
+K7 trace qualification and ensemble-level configuration transmission work remain deferred.
 
 ## What data must be preserved NOW so this remains possible later
 
-The lineage graph and intervention evidence above require: (a) the full
+The causal provenance graph and intervention evidence above require: (a) the full
 `proposal_emitted`/`proposal_won`/`stored_bits_changed` trace
 (AETHER_SPEC.md, already required), (b) AETH-01's extended energy-event
 trace (PHYSICS_SPEC_DRAFT.md Instrumentation), (c) OBSERVATORY.md's
@@ -305,13 +305,13 @@ format, trace schema, replay-fork capability) not foreclose it.
 ## Novelty / "gravitational-pull" observatory -- future requirement (Design Task 9)
 
 Not part of AETH-01 physics or observatory v0. If a mechanism ever
-survives the tiers above, a LATER milestone may ask disguised frontier
-models "what familiar human mechanism best explains this specimen?"
+persists the tiers above, a LATER milestone may ask disguised frontier
+models "what familiar human mechanism best explains this observed instance?"
 Requirements on that future assay (not built now):
 
 - mechanism names, source engine identity, and provenance must be
   hidden from the model at query time;
-- causal traces (the lineage graph and intervention results, not just a
+- causal traces (the causal provenance graph and intervention results, not just a
   visual/summary rendering) must be what is shown, since resemblance
   alone is exactly what tier 1 already warns against;
 - multiple models queried independently, without letting them see each
@@ -322,13 +322,13 @@ Requirements on that future assay (not built now):
   claim (absence of recognition is weak evidence, easily produced by a
   bad description, not just by genuine novelty);
 - calibration set: known, disguised, FAMILIAR mechanisms (e.g. a
-  hand-seeded copier from EXPERIMENTS.md regime 3, described the same
+  hand-seeded state copier from EXPERIMENTS.md regime 3, described the same
   way) must be run through the identical pipeline to measure the
   models' baseline recognition rate on things that are NOT novel,
-  before any AETH-01 specimen's "low recognition" score means anything.
+  before any AETH-01 observed instance's "low recognition" score means anything.
 
 **What AETH-01 must preserve now, specifically for this future use**:
-the full lineage graph and intervention-result set for any specimen
+the full causal provenance graph and intervention-result set for any observed instance
 that reaches CAUSAL_VALUE_CONSTRUCTION or above (not just a summary),
 `instrument_class` provenance (so a seeded calibration case is never
 confused with a candidate novel case), and enough of the raw trace to
@@ -337,11 +337,11 @@ Aether-specific terminology (opcode/WRITE/etc.) into the disguised
 query -- i.e. an abstraction layer between raw trace and any future
 natural-language description is a requirement on the eventual query
 pipeline, not something AETH-01 needs to build, but AETH-01's trace
-must contain enough structure (typed lineage edges, intervention
+must contain enough structure (typed causal provenance edges, intervention
 deltas) that such an abstraction is possible later without re-running
 the original world.
 
 ## Explicitly not done in AETH-01
 
-No detector code, no claim pipeline, no LLM assay, no lineage-graph
+No detector code, no claim pipeline, no LLM assay, no causal provenance-graph
 implementation. This document is requirements only.

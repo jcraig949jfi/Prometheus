@@ -42,10 +42,10 @@ def test_hand_built_examples_agree():
             {(0, 1): (1, 2, 0, 0x01), (1, 0): (1, 1, 3, 0x02), (1, 2): (1, 3, 3, 0x03)},
         ),
     ]
-    for H, W, seed, cells in cases:
+    for H, W, seed, sites in cases:
         grid = [[(0, 0, 0, 0) for _ in range(W)] for _ in range(H)]
-        for (r, c), cell in cells.items():
-            grid[r][c] = cell
+        for (r, c), site in sites.items():
+            grid[r][c] = site
         world = ok.Aeth00World(H, W, seed, grid=grid)
         primary_next = world.step().to_bytes()
         independent_next = oki.step_bytes(H, W, seed, world.tick, world.to_bytes())

@@ -1620,12 +1620,12 @@ def test_n2_sealing_and_recovery_use_same_exclusive_lock(structured_reports, rig
     assert rig.events == before  # Seal has no provider or credential interactions.
 
 
-@pytest.mark.parametrize("mutation", ["missing_hash", "future_generation", "unfinished_state"])
-def test_n2_seal_fails_closed_on_invalid_source(structured_reports, rig, mutation):
+@pytest.mark.parametrize("perturbation", ["missing_hash", "future_generation", "unfinished_state"])
+def test_n2_seal_fails_closed_on_invalid_source(structured_reports, rig, perturbation):
     local, reaper, now = structured_reports
-    if mutation == "missing_hash":
+    if perturbation == "missing_hash":
         del local["state_sha256"]
-    elif mutation == "future_generation":
+    elif perturbation == "future_generation":
         local["generated_at_utc"] = age.policy.utc(now + 1)
     else:
         state = read_json(rig.directory / "state.json")

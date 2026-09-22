@@ -2,12 +2,12 @@
 Aether AETH-01 (candidate semantics_id aeth01.v1) -- GPU-SHAPED CPU
 implementation, exact-integer, no floating point anywhere.
 
-This is the "gather" (per-target-cell, no atomics, embarrassingly
+This is the "gather" (per-target-site, no atomics, embarrassingly
 parallel) shape GPU_RUNPOD.md and PHYSICS_CANDIDATES.md's R12
 feasibility argument describe, following AETH-00's own
 `Aether/production/aeth00.py` gather precedent, generalized to the
 5-field / 7-phase repaired law. It uses NumPy's array API (vectorized
-whole-grid operations, no per-cell Python loop) because no GPU library
+whole-grid operations, no per-site Python loop) because no GPU library
 (CuPy/Numba-CUDA/PyTorch) is installed in this workspace and no GPU
 hardware is available locally, and installing one is a dependency
 decision requiring explicit sign-off (not taken here). NumPy's
@@ -88,7 +88,7 @@ def gpu_step(
     H, W, seed, tick, write_cost, maintenance_cost, replenish_numer,
     replenish_amount, mut_numer, opcode, arg0, arg1, payload, energy,
 ):
-    """One tick, whole-grid vectorized, no per-cell Python loop (the
+    """One tick, whole-grid vectorized, no per-site Python loop (the
     GPU-shaped computation). Inputs/outputs are H x W uint8 arrays.
     Returns (next_opcode, next_arg0, next_arg1, next_payload,
     next_energy, counters) -- `counters` is a small tier-1-style dict
@@ -143,7 +143,7 @@ def gpu_step(
     e += delta
     # Phase 6: maintenance decay, floored at 0.
     e -= np.minimum(maintenance_cost, e)
-    # Phase 7: independent per-cell replenishment, saturating at 255.
+    # Phase 7: independent per-site replenishment, saturating at 255.
     triggered = rho_vec(seed, tick, row_idx, col_idx, replenish_numer)
     headroom2 = 255 - e
     e += np.where(triggered, np.minimum(replenish_amount, headroom2), 0)

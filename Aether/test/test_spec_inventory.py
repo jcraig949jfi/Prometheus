@@ -14,10 +14,10 @@ import random
 from reference import oracle as ok
 
 
-def _world(H, W, seed, cells=None, tick=0):
+def _world(H, W, seed, sites=None, tick=0):
     grid = [[(0, 0, 0, 0) for _ in range(W)] for _ in range(H)]
-    for (r, c), cell in (cells or {}).items():
-        grid[r][c] = cell
+    for (r, c), site in (sites or {}).items():
+        grid[r][c] = site
     return ok.Aeth00World(H, W, seed, tick=tick, grid=grid)
 
 
@@ -36,7 +36,7 @@ def test_01_all_nop_world_invariant_across_ticks():
 
 
 def test_02_single_write_changes_only_intended_neighbor_field():
-    world = _world(3, 3, seed=2, cells={(1, 1): (1, 1, 3, 0x42)})  # East, payload
+    world = _world(3, 3, seed=2, sites={(1, 1): (1, 1, 3, 0x42)})  # East, payload
     nxt = world.step()
     for r in range(3):
         for c in range(3):
@@ -55,7 +55,7 @@ def test_03_toroidal_wrap_from_every_edge_and_corner():
     positions = [(0, 0), (0, W - 1), (H - 1, 0), (H - 1, W - 1), (0, 1), (1, 0)]
     for (r, c) in positions:
         for direction in range(4):
-            world = _world(H, W, seed=10 + direction, cells={(r, c): (1, direction, 3, 0x07)})
+            world = _world(H, W, seed=10 + direction, sites={(r, c): (1, direction, 3, 0x07)})
             nxt = world.step()
             expected_target = ok.neighbor(r, c, H, W, direction)
             tr, tc = expected_target
@@ -73,7 +73,7 @@ def test_03_toroidal_wrap_from_every_edge_and_corner():
 
 def test_04_all_four_target_fields_reachable():
     for field in range(4):
-        world = _world(3, 3, seed=field, cells={(1, 1): (1, 1, field, 0x55)})
+        world = _world(3, 3, seed=field, sites={(1, 1): (1, 1, field, 0x55)})
         nxt = world.step()
         assert nxt.grid[1][2][field] == 0x55
 
@@ -122,9 +122,9 @@ def test_06_newly_written_opcode_has_no_effect_this_tick():
 
 
 def test_07_collision_outcome_deterministic():
-    cells = {(0, 1): (1, 2, 0, 0xAA), (2, 1): (1, 0, 0, 0xBB)}  # both -> (1,1) opcode
-    r1 = _world(3, 3, seed=77, cells=cells).step()
-    r2 = _world(3, 3, seed=77, cells=cells).step()
+    sites = {(0, 1): (1, 2, 0, 0xAA), (2, 1): (1, 0, 0, 0xBB)}  # both -> (1,1) opcode
+    r1 = _world(3, 3, seed=77, sites=sites).step()
+    r2 = _world(3, 3, seed=77, sites=sites).step()
     assert r1.to_bytes() == r2.to_bytes()
 
 
@@ -153,9 +153,9 @@ def test_08_collision_outcome_independent_of_enumeration_order():
 
 
 def test_09_replay_is_bit_identical_tick_for_tick_not_only_hash():
-    cells = {(0, 0): (1, 1, 3, 0x11), (2, 2): (1, 3, 1, 0x22)}
-    w1 = _world(3, 3, seed=321, cells=cells)
-    w2 = _world(3, 3, seed=321, cells=cells)
+    sites = {(0, 0): (1, 1, 3, 0x11), (2, 2): (1, 3, 1, 0x22)}
+    w1 = _world(3, 3, seed=321, sites=sites)
+    w2 = _world(3, 3, seed=321, sites=sites)
     for _ in range(8):
         assert w1.to_bytes() == w2.to_bytes()  # full bytes, not a hash
         assert hash(w1.to_bytes()) == hash(w2.to_bytes())  # hash as a fast secondary check only
@@ -167,8 +167,8 @@ def test_09_replay_is_bit_identical_tick_for_tick_not_only_hash():
 
 
 def test_10_only_winning_fields_change_and_untargeted_fields_preserved():
-    cells = {(0, 1): (1, 2, 3, 0xAA), (2, 1): (1, 0, 3, 0xBB)}  # both -> (1,1) payload
-    world = _world(3, 3, seed=1, cells=cells)  # seed=1 -> winner is (2,1) (see test_mutants)
+    sites = {(0, 1): (1, 2, 3, 0xAA), (2, 1): (1, 0, 3, 0xBB)}  # both -> (1,1) payload
+    world = _world(3, 3, seed=1, sites=sites)  # seed=1 -> winner is (2,1) (see test_mutants)
     nxt = world.step()
     assert nxt.grid[1][1][3] == 0xBB  # winner's value, never the loser's 0xAA
     for r in range(3):
@@ -183,14 +183,14 @@ def test_10_only_winning_fields_change_and_untargeted_fields_preserved():
 
 
 def test_11_dimensions_and_dtypes_invariant_across_ticks():
-    world = _world(4, 5, seed=1, cells={(0, 0): (1, 1, 3, 200)})
+    world = _world(4, 5, seed=1, sites={(0, 0): (1, 1, 3, 200)})
     for _ in range(5):
         world = world.step()
         assert world.H == 4 and world.W == 5
         for row in world.grid:
-            for cell in row:
-                assert len(cell) == 4
-                for byte in cell:
+            for site in row:
+                assert len(site) == 4
+                for byte in site:
                     assert isinstance(byte, int) and 0 <= byte <= 255
 
 
@@ -200,7 +200,7 @@ def test_11_dimensions_and_dtypes_invariant_across_ticks():
 
 def test_13_dense_collisions_exactly_one_winner_across_many_seeds():
     for seed in range(50):
-        for arity, cells in [
+        for arity, sites in [
             (2, {(0, 1): (1, 2, 0, 1), (2, 1): (1, 0, 0, 2)}),
             (3, {(0, 1): (1, 2, 0, 1), (2, 1): (1, 0, 0, 2), (1, 0): (1, 1, 0, 3)}),
             (
@@ -213,7 +213,7 @@ def test_13_dense_collisions_exactly_one_winner_across_many_seeds():
                 },
             ),
         ]:
-            world = _world(3, 3, seed=seed, cells=cells)
+            world = _world(3, 3, seed=seed, sites=sites)
             nxt = world.step()
             # Exactly one of the `arity` competing values is stored (a
             # single uint8 field cannot hold more than one value at
@@ -226,13 +226,13 @@ def test_13_dense_collisions_exactly_one_winner_across_many_seeds():
 
 
 def test_14_degenerate_self_targeting_h1_is_one_ordinary_proposal():
-    world = _world(1, 3, seed=1, cells={(0, 0): (1, 0, 3, 0x99)})  # N==S at H=1
+    world = _world(1, 3, seed=1, sites={(0, 0): (1, 0, 3, 0x99)})  # N==S at H=1
     nxt = world.step()
     assert nxt.grid[0][0] == (1, 0, 3, 0x99)  # writes its own payload into itself
 
 
 def test_14_degenerate_self_targeting_h2_north_south_distinct_but_wrap():
-    world = _world(2, 3, seed=1, cells={(0, 0): (1, 0, 3, 0x88)})  # N: (H-1,0)=(1,0)
+    world = _world(2, 3, seed=1, sites={(0, 0): (1, 0, 3, 0x88)})  # N: (H-1,0)=(1,0)
     nxt = world.step()
     assert nxt.grid[1][0][3] == 0x88
     assert nxt.grid[0][0] == world.grid[0][0]  # source itself untouched
@@ -240,7 +240,7 @@ def test_14_degenerate_self_targeting_h2_north_south_distinct_but_wrap():
 
 def test_14_genuine_collision_at_minimal_dimensions_arbitrated_normally():
     # H=1: two DIFFERENT sources both target (0,1) via opposite wraps.
-    world = _world(1, 3, seed=42, cells={(0, 0): (1, 1, 3, 0xA1), (0, 2): (1, 3, 3, 0xA2)})
+    world = _world(1, 3, seed=42, sites={(0, 0): (1, 1, 3, 0xA1), (0, 2): (1, 3, 3, 0xA2)})
     nxt = world.step()
     assert nxt.grid[0][1][3] in (0xA1, 0xA2)  # exactly one winner, arbitrated normally
 
@@ -251,11 +251,11 @@ def test_14_genuine_collision_at_minimal_dimensions_arbitrated_normally():
 
 def test_15_reserved_inert_bytes_preserved_untouched_never_traps():
     sample_opcodes = [0x00, 0x02, 0x03, 0x7F, 0x80, 0xFE, 0xFF]
-    cells = {(0, i): (op, 1, 2, 3) for i, op in enumerate(sample_opcodes)}
-    world = _world(1, len(sample_opcodes), seed=1, cells=cells)
+    sites = {(0, i): (op, 1, 2, 3) for i, op in enumerate(sample_opcodes)}
+    world = _world(1, len(sample_opcodes), seed=1, sites=sites)
     for _ in range(5):
         proposals = ok.decode_proposals(world.grid, world.H, world.W)
-        assert proposals == []  # (a) no proposal from any RESERVED_INERT cell
+        assert proposals == []  # (a) no proposal from any RESERVED_INERT site
         world = world.step()  # (c) never traps/errors
     for i, op in enumerate(sample_opcodes):
         assert world.grid[0][i] == (op, 1, 2, 3)  # (b) bit-identical, incl. opcode byte
@@ -265,7 +265,7 @@ def test_15_reserved_inert_bytes_preserved_untouched_never_traps():
 
 
 def test_16_same_value_write_wins_but_changes_zero_bits():
-    world = _world(3, 3, seed=1, cells={(1, 1): (1, 1, 3, 0x00)})  # East, payload=0 (already 0)
+    world = _world(3, 3, seed=1, sites={(1, 1): (1, 1, 3, 0x00)})  # East, payload=0 (already 0)
     trace = []
     nxt = world.step(trace=trace)
     assert nxt.grid[1][2][3] == 0x00
@@ -275,11 +275,11 @@ def test_16_same_value_write_wins_but_changes_zero_bits():
     assert changed[0][1] == (1, 2) and changed[0][2] == 3 and changed[0][3] is False
 
 
-# --- Test 17: an inert source cell can still be a write target -----------
+# --- Test 17: an inert source site can still be a write target -----------
 
 
 def test_17_inert_cell_can_still_be_written_to():
-    world = _world(3, 3, seed=1, cells={(0, 1): (1, 2, 0, 0x01), (1, 1): (0, 9, 9, 9)})
+    world = _world(3, 3, seed=1, sites={(0, 1): (1, 2, 0, 0x01), (1, 1): (0, 9, 9, 9)})
     nxt = world.step()
     assert nxt.grid[1][1][0] == 0x01  # inert target's opcode field changed normally
 
@@ -288,12 +288,12 @@ def test_17_inert_cell_can_still_be_written_to():
 
 
 def test_18_independent_per_field_arbitration_no_cross_field_interaction():
-    cells = {
+    sites = {
         (0, 1): (1, 2, 0, 0x01),  # South -> (1,1) opcode field, from a lone source
         (1, 0): (1, 1, 3, 0x02),  # East -> (1,1) payload field, from a lone source
         (1, 2): (1, 3, 3, 0x03),  # West -> (1,1) payload field, second competitor
     }
-    world = _world(3, 3, seed=1, cells=cells)
+    world = _world(3, 3, seed=1, sites=sites)
     nxt = world.step()
     assert nxt.grid[1][1][0] == 0x01  # opcode contest had only one competitor: unaffected
     assert nxt.grid[1][1][3] in (0x02, 0x03)  # payload contest resolved independently
@@ -303,7 +303,7 @@ def test_18_independent_per_field_arbitration_no_cross_field_interaction():
 
 
 def test_19_replay_identity_uses_all_six_required_components():
-    world = _world(3, 3, seed=99, cells={(0, 0): (1, 1, 3, 0x5A)}, tick=7)
+    world = _world(3, 3, seed=99, sites={(0, 0): (1, 1, 3, 0x5A)}, tick=7)
     identity = (
         world.SEMANTICS_ID,
         world.H,
@@ -312,7 +312,7 @@ def test_19_replay_identity_uses_all_six_required_components():
         world.tick,
         world.to_bytes(),
     )
-    same = _world(3, 3, seed=99, cells={(0, 0): (1, 1, 3, 0x5A)}, tick=7)
+    same = _world(3, 3, seed=99, sites={(0, 0): (1, 1, 3, 0x5A)}, tick=7)
     identity2 = (
         same.SEMANTICS_ID,
         same.H,
@@ -348,12 +348,12 @@ def test_21_exhaustive_tiny_torus_single_write_fixtures():
         for direction in range(4):
             for field in range(4):
                 for payload in (0x00, 0x01, 0xFF):
-                    world = _world(H, W, seed=0, cells={(0, 0): (1, direction, field, payload)})
+                    world = _world(H, W, seed=0, sites={(0, 0): (1, direction, field, payload)})
                     nxt = world.step()
                     tr, tc = _expected_neighbor_independent(0, 0, H, W, direction)
-                    expected = [[list(cell) for cell in row] for row in world.grid]
+                    expected = [[list(site) for site in row] for row in world.grid]
                     expected[tr][tc][field] = payload
-                    got = [[list(cell) for cell in row] for row in nxt.grid]
+                    got = [[list(site) for site in row] for row in nxt.grid]
                     assert got == expected, (
                         f"H={H} W={W} dir={direction} field={field} payload={payload}: "
                         f"got {got}, expected {expected}"

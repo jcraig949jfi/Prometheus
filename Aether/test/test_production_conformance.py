@@ -156,7 +156,7 @@ def test_winner_vector_4way_matches_production_step():
         _set_cell(data, W, source[0], source[1], prod.WRITE_OPCODE, direction, field, value)
     state = prod.State(H, W, bytes(data))
     nxt = prod.step(state, seed, tick)
-    assert nxt.cell(tr, tc)[field] == exp_value
+    assert nxt.site(tr, tc)[field] == exp_value
 
 
 # --- trace semantics (AETHER_SPEC.md "Instrumentation") --------------------
@@ -165,7 +165,7 @@ def test_winner_vector_4way_matches_production_step():
 def _contested_state():
     # (5,5) field 3 contested by two of its four physical neighbors; a
     # third neighbor is RESERVED_INERT (emits no proposal); the same
-    # cell that wins also gets a same-value write on another field
+    # site that wins also gets a same-value write on another field
     # elsewhere to exercise stored_bits_changed=False.
     H = W = 11
     data = _blank_grid(H, W)
@@ -222,8 +222,8 @@ def _small_worlds(draw):
     data = bytearray(H * W * 4)
     idx = 0
     for row in grid:
-        for cell in row:
-            data[idx : idx + 4] = bytes(cell)
+        for site in row:
+            data[idx : idx + 4] = bytes(site)
             idx += 4
     return H, W, seed, tick, bytes(data)
 

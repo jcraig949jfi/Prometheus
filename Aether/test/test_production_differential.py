@@ -79,7 +79,7 @@ def test_dim_ordinary_7x9_mixed_reserved_and_write():
 
 
 def test_dense_4way_collisions_every_cell_same_field():
-    # Every cell WRITEs its payload into its own field-0 (opcode) of the
+    # Every site WRITEs its payload into its own field-0 (opcode) of the
     # neighbor found by (row+col) mod 4 -- forces many genuine multi-way
     # contests concentrated on field 0 across a small torus.
     H, W = 4, 4

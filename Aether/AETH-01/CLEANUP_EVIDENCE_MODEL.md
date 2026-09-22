@@ -78,7 +78,7 @@ timestamps. Monotonic time measures elapsed observation spacing within one
 invocation. No distributed clock or cross-host elapsed inference is attempted.
 
 Conservative restart rule: every new sweep invocation starts a NEW qualifying
-window. Per-pod histories and interruption/discovery history survive; prior
+window. Per-pod histories and interruption/discovery history persist; prior
 window progress is archived as history but never credited after restart. This
 explicitly excludes all downtime and avoids inventing healthy elapsed time
 from two wall-clock readings on opposite sides of a restart. The deployed

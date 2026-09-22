@@ -15,15 +15,15 @@ PREREGISTRATION (fixed here, before any result below is interpreted):
   slot ~ Binomial(N, 1/arity).
 - Strata: every combination of contest ARITY in {2,3,4} and the actual
   SET of competing directions (all C(4,2)=6 pairs, C(4,3)=4 triples,
-  C(4,4)=1 quadruple -- 11 strata, 28 (stratum, slot) cells total).
+  C(4,4)=1 quadruple -- 11 strata, 28 (stratum, slot) sites total).
   Never pooled across arity or direction-combo (that pooling is exactly
   what test 20 says is insufficient).
 - Sample size: N = 300 contests per stratum (fixed here; not tuned
   after seeing results).
-- Test: exact two-sided binomial test per cell against p = 1/arity.
+- Test: exact two-sided binomial test per site against p = 1/arity.
 - Multiple-comparison handling: Bonferroni correction across all 28
-  cells; family-wise alpha = 0.01, so per-cell alpha = 0.01 / 28.
-- Non-claim: failing to reject H0 for a cell is NOT evidence that cell
+  sites; family-wise alpha = 0.01, so per-site alpha = 0.01 / 28.
+- Non-claim: failing to reject H0 for a site is NOT evidence that site
   is unbiased; it only means this sample did not detect deviation at
   this power. No "five-nines" or similar language is used here.
 """
@@ -48,7 +48,7 @@ def _direction_that_targets(src, target):
 
 
 def _slot_source(slot_direction):
-    """The physical cell at TARGET's `slot_direction` neighbor position."""
+    """The physical site at TARGET's `slot_direction` neighbor position."""
     return ok.neighbor(TARGET[0], TARGET[1], H, W, slot_direction)
 
 
@@ -93,11 +93,11 @@ def run_diagnostic(rng_seed=20260920, n_per_stratum=N_PER_STRATUM):
         for _ in range(n_per_stratum):
             counts[_run_one_contest(rng, combo)] += 1
         p_null = 1.0 / arity
-        cells = []
+        sites = []
         for slot in combo:
             k = counts[slot]
             pval = _exact_two_sided_binomial_pvalue(k, n_per_stratum, p_null)
-            cells.append(
+            sites.append(
                 {
                     "slot": slot,
                     "wins": k,
@@ -107,7 +107,7 @@ def run_diagnostic(rng_seed=20260920, n_per_stratum=N_PER_STRATUM):
                     "flagged": pval < per_cell_alpha,
                 }
             )
-        report["strata"].append({"combo": combo, "cells": cells})
+        report["strata"].append({"combo": combo, "sites": sites})
     return report
 
 
@@ -117,13 +117,13 @@ def test_diagnostic_protocol_runs_and_produces_full_stratified_report():
     # every test invocation with a different sample size.
     report = run_diagnostic(rng_seed=1, n_per_stratum=60)
     assert len(report["strata"]) == 11  # 6 pairs + 4 triples + 1 quadruple
-    total_cells = sum(len(s["cells"]) for s in report["strata"])
+    total_cells = sum(len(s["sites"]) for s in report["strata"])
     assert total_cells == 28
     for stratum in report["strata"]:
-        n_total = sum(cell["wins"] for cell in stratum["cells"])
+        n_total = sum(site["wins"] for site in stratum["sites"])
         assert n_total == 60  # every contest produced exactly one winner
-        for cell in stratum["cells"]:
-            assert 0.0 <= cell["p_value"] <= 1.0
+        for site in stratum["sites"]:
+            assert 0.0 <= site["p_value"] <= 1.0
 
 
 if __name__ == "__main__":
@@ -131,11 +131,11 @@ if __name__ == "__main__":
     flagged = [
         (s["combo"], c["slot"], c["wins"], c["p_value"])
         for s in rpt["strata"]
-        for c in s["cells"]
+        for c in s["sites"]
         if c["flagged"]
     ]
     print(f"n_per_stratum={rpt['n_per_stratum']} per_cell_alpha={rpt['per_cell_alpha']:.6f}")
-    print(f"strata={len(rpt['strata'])} cells={sum(len(s['cells']) for s in rpt['strata'])}")
-    print(f"flagged cells (p < per_cell_alpha): {len(flagged)}")
+    print(f"strata={len(rpt['strata'])} sites={sum(len(s['sites']) for s in rpt['strata'])}")
+    print(f"flagged sites (p < per_cell_alpha): {len(flagged)}")
     for combo, slot, wins, p in flagged:
         print(f"  combo={combo} slot={slot} wins={wins} p={p:.6g}")

@@ -15,14 +15,14 @@ Superseded entries are annotated in place, never silently rewritten.
    physics
 
 Scientific purpose (only): establish trustworthy minimal executable
-physics. No organism, genome, birth, allocation, fitness, task, energy,
-resource ecology, mutation, heredity detector, structural detector, GPU
+physics. No assembly, executable configuration, birth, allocation, evaluation score, task, energy,
+resource resource regime, perturbation, configuration transmission detector, structural detector, GPU
 implementation or Runpod expenditure. AETH-00 does not test anything
 about emergence.
 
 ### Scope (frozen, operator ruling 2026-09-20)
 
-AETH-00 is a REPLACEABLE CONFORMANCE SPECIMEN for Aether's engineering
+AETH-00 is a REPLACEABLE CONFORMANCE OBSERVED_INSTANCE for Aether's engineering
 methodology, not the frozen scientific foundation of Aether. Passing it
 establishes only that we can define and reproduce an exact
 executable-matter transition law -- specify it, test it, replay it, and
@@ -32,7 +32,7 @@ only. It explicitly does NOT establish:
 - suitable primordial physics;
 - scientific neutrality;
 - open-endedness;
-- heredity;
+- configuration transmission;
 - emergence;
 - evolutionary accessibility;
 - GPU correctness;
@@ -70,7 +70,7 @@ in opcode/arg0/arg1/payload order) layout.
 AETH-00 therefore has exactly ONE active opcode encoding (0x01, WRITE)
 and 255 RESERVED_INERT opcode encodings, of which 0x00 is conventionally
 called NOP. This 1-active/255-inert ratio is a property of THIS
-conformance specimen, not a claim about the eventual primordial
+conformance observed instance, not a claim about the eventual primordial
 substrate's opcode budget.
 
 RESERVED_INERT semantics (all values other than 0x01), frozen:
@@ -80,10 +80,10 @@ RESERVED_INERT semantics (all values other than 0x01), frozen:
   remains physically distinct and is preserved byte-for-byte across
   ticks unless overwritten by a winning WRITE proposal targeting that
   field, exactly like any other stored byte;
-- a cell decoding a RESERVED_INERT opcode emits NO proposal that tick;
-- a cell decoding a RESERVED_INERT opcode remains writable: any of its
+- a site decoding a RESERVED_INERT opcode emits NO proposal that tick;
+- a site decoding a RESERVED_INERT opcode remains writable: any of its
   four fields, including its own opcode field, can still be the target
-  of an incoming WRITE from a neighbor and be changed by it -- a cell's
+  of an incoming WRITE from a neighbor and be changed by it -- a site's
   own inertness never blocks writes arriving at it;
 - encountering any RESERVED_INERT opcode value NEVER traps, errors, or
   causes host failure -- it is ordinary, valid, decodable state;
@@ -96,8 +96,8 @@ RESERVED_INERT semantics (all values other than 0x01), frozen:
 WRITE reads only the tick-start snapshot S[t]. arg0 mod 4 selects a von
 Neumann neighbor (frozen order: 0=N, 1=E, 2=S, 3=W); arg1 mod 4 selects
 one field of that neighbor (frozen order: 0=opcode, 1=arg0, 2=arg1,
-3=payload); the value written is the issuing cell's own payload.
-Lattice boundaries wrap toroidally. No reproduction primitive exists; a
+3=payload); the value written is the issuing site's own payload.
+Lattice boundaries wrap toroidally. No recursive construction primitive exists; a
 WRITE can still plant an opcode value into a neighbor by writing payload
 into the neighbor's opcode field -- a deliberate consequence of "no
 privileged code/data distinction" (D-14), not a hidden one. This
@@ -108,50 +108,50 @@ does not distinguish opcode fields from any other field when deciding
 whether a write is legal.
 
 Corrected proposal-generation rule (this paragraph supersedes any prior
-looser phrasing): each cell that decodes opcode=WRITE at S[t] emits
-EXACTLY ONE proposal for that tick: (source = this cell's own (row,
-col), target = the single neighbor cell computed from this cell's own
-arg0 mod 4, target_field = this cell's own arg1 mod 4, value = this
-cell's own payload). A cell never emits more than one proposal per tick,
+looser phrasing): each site that decodes opcode=WRITE at S[t] emits
+EXACTLY ONE proposal for that tick: (source = this site's own (row,
+col), target = the single neighbor site computed from this site's own
+arg0 mod 4, target_field = this site's own arg1 mod 4, value = this
+site's own payload). A site never emits more than one proposal per tick,
 regardless of how many directions might alias to the same physical
-neighbor at small lattice dimensions -- a cell has exactly one arg0
+neighbor at small lattice dimensions -- a site has exactly one arg0
 value and therefore exactly one resolved direction per tick. Direction
 resolves a physical destination; it does not create proposal
 multiplicity.
 
-Proposal identity within a tick is the physical source cell's (row,
+Proposal identity within a tick is the physical source site's (row,
 col). Two proposals are the same proposal only if they share the same
-source cell. Two proposals from two DIFFERENT source cells are always
+source site. Two proposals from two DIFFERENT source sites are always
 distinct proposals, even if toroidal aliasing at small H or W makes them
-resolve to the same target cell.
+resolve to the same target site.
 
 A collision (arbitration contest) exists only when 2 or more DISTINCT
-physical source cells emit proposals sharing the same (target cell,
-target_field). Toroidal aliasing where a single source cell's own N and
-S (or E and W) neighbor resolve to the same physical cell (e.g. H=1 or
-W=1, or a self-targeting cell) is NOT itself a collision: it is that
-cell's one proposal targeting a neighbor that happens to equal another
-specific cell, including possibly the source cell itself. This remains a
+physical source sites emit proposals sharing the same (target site,
+target_field). Toroidal aliasing where a single source site's own N and
+S (or E and W) neighbor resolve to the same physical site (e.g. H=1 or
+W=1, or a self-targeting site) is NOT itself a collision: it is that
+site's one proposal targeting a neighbor that happens to equal another
+specific site, including possibly the source site itself. This remains a
 single proposal and must be handled as an ordinary write, never rejected
 and never manufactured into extra competitors. Genuine collisions at
-small dimensions still arise normally whenever 2+ DIFFERENT cells'
-independently-computed proposals land on the same (target cell, field);
+small dimensions still arise normally whenever 2+ DIFFERENT sites'
+independently-computed proposals land on the same (target site, field);
 this uses the same arbitration as any larger lattice, no special case.
 
 ### Tick semantics
 
-    S[t] -> every cell independently decodes S[t]
-         -> each WRITE-opcode cell emits exactly one proposal (above)
-         -> for each (target cell, target field), all proposals aimed at
+    S[t] -> every site independently decodes S[t]
+         -> each WRITE-opcode site emits exactly one proposal (above)
+         -> for each (target site, target field), all proposals aimed at
             it compete independently of every other field's contest,
-            including other fields of the same target cell
+            including other fields of the same target site
          -> exactly one deterministic winner selected per contest
             (arbitration below)
          -> all winners commit simultaneously
          -> S[t+1]
 
 A write that changes a neighbor's opcode cannot affect execution before
-the following tick. No mutation, resource update, decay or other side
+the following tick. No perturbation, resource update, decay or other side
 effect exists in AETH-00.
 
 ### Complete transition function parameters (FROZEN, aeth00.v1)
@@ -203,18 +203,18 @@ effect exists in AETH-00.
   (Instrumentation, below) even though stored_bits_changed=false for
   that field. A same-value write must never be specially rejected,
   skipped, or excluded from arbitration.
-- Preservation of untargeted fields: any physical field, of any cell,
+- Preservation of untargeted fields: any physical field, of any site,
   that is not the target field of any proposal in a given tick --
   winning or losing -- is bit-identical in S[t+1] to its value in S[t].
-  This includes fields of a cell that is itself a WRITE source, and the
-  three fields of a target cell not actually contested that tick. This
-  also covers every field of every RESERVED_INERT cell not targeted
+  This includes fields of a site that is itself a WRITE source, and the
+  three fields of a target site not actually contested that tick. This
+  also covers every field of every RESERVED_INERT site not targeted
   that tick: its opcode and other fields are preserved byte-for-byte.
-- Independent arbitration of different fields: a cell's four fields are
+- Independent arbitration of different fields: a site's four fields are
   four independent arbitration contests. Proposals targeting different
-  fields of the SAME target cell never compete with each other, even in
+  fields of the SAME target site never compete with each other, even in
   the same tick; each field's contest uses only the proposals whose
-  (target cell, target field) match that field.
+  (target site, target field) match that field.
 - Replay identity (frozen): two runs are asserted bit-identical only
   when compared using ALL of (semantics_id, H, W, seed, tick, full
   lattice bytes) at each corresponding tick. A replay-identity claim
@@ -224,7 +224,7 @@ effect exists in AETH-00.
 ### Collision arbitration (FROZEN, aeth00.v1)
 
 Requirement: the winner depends only on (semantics_id, seed, tick,
-target cell, target field, the set of competing PHYSICAL SOURCE cells)
+target site, target field, the set of competing PHYSICAL SOURCE sites)
 -- never on iteration, thread, scheduling, batch position, hardware
 identity, or implementation identity. Payload is never an input to
 arbitration.
@@ -275,7 +275,7 @@ are fixed (that is the definition of "contest"), so h0, h1, h2 and h3
 are identical across every competing proposal in that contest. The only
 input that varies between two DISTINCT competing proposals is
 C(source_row, source_col) -- and by the proposal-identity rule above, a
-collision requires 2+ DISTINCT physical source cells, which by C's
+collision requires 2+ DISTINCT physical source sites, which by C's
 bijectivity always have distinct C(source_row, source_col) values (no
 range restriction: this holds for the full uint32 x uint32 source
 domain). XOR with the fixed h3 is a bijection and M is a bijection, so
@@ -287,7 +287,7 @@ prior candidate construction required.
 
 No coordinate tie-break exists in this frozen semantics (removed,
 Q31): none is needed, per the proof above. If an implementation ever
-produces two proposals sharing the same physical source cell within one
+produces two proposals sharing the same physical source site within one
 contest -- which the proposal-identity rule above forbids -- that is an
 IMPLEMENTATION DEFECT, not a case the arbitration law resolves; test
 harnesses must detect and fail on it rather than silently picking one
@@ -319,12 +319,12 @@ conformance suite (only its behavioral OUTPUT is checked, via CPU/GPU
 differential testing, at whichever later milestone builds a GPU
 implementation -- AETHER_OPEN_QUESTIONS.md question 30):
 
-one owner (thread/lane) per target cell -> it inspects its up to 4
-distinct von Neumann physical neighbor cells' decoded state from S[t]
--> determines which, if any, emit a proposal targeting this owner's cell
+one owner (thread/lane) per target site -> it inspects its up to 4
+distinct von Neumann physical neighbor sites' decoded state from S[t]
+-> determines which, if any, emit a proposal targeting this owner's site
 for each of the 4 fields -> independently reduces each field's contest
 using the H-comparison above -> writes the result into a SEPARATE
-next-state buffer (S[t] is never mutated in place). No atomic operation,
+next-state buffer (S[t] is never perturbed in place). No atomic operation,
 packed-key atomic, or any other specific GPU primitive is prescribed;
 "independently reduces" may be implemented by any technique that
 reproduces the H-comparison result specified above.
@@ -332,7 +332,7 @@ reproduces the H-comparison result specified above.
 ### Known limitation -- no byte synthesis
 
 AETH-00 cannot synthesize new byte values. WRITE only ever propagates
-the issuing cell's own payload; no operation in AETH-00 computes a new
+the issuing site's own payload; no operation in AETH-00 computes a new
 value from other values (no arithmetic, no combination). Consequently
 the set of distinct byte values present anywhere in a world can only
 stay constant or SHRINK over any run, never grow. This is a useful
@@ -347,13 +347,13 @@ Recorded here because they are consequences of the design, not
 oversights, and should not be "fixed" without a deliberate decision
 (any such change requires a new semantics_id):
 
-- Synchronous ticks supply a universal clock shared by every cell.
+- Synchronous ticks supply a universal clock shared by every site.
 - Toroidal topology permits recurrence and wraparound interaction.
 - Von Neumann locality privileges the axes / Manhattan geometry over any
   other notion of distance or neighborhood.
 - The four fields (opcode, arg0, arg1, payload) are a designed, typed
   ontology, not an emergent one.
-- WRITE privileges outward payload templating (a cell can only push its
+- WRITE privileges outward payload templating (a site can only push its
   own payload outward; it cannot pull, transform, or combine).
 - Coordinate-keyed deterministic arbitration creates a time/space-
   dependent forcing field: which proposal wins a given contest is a
@@ -361,7 +361,7 @@ oversights, and should not be "fixed" without a deliberate decision
   quantity -- itself a designed asymmetry, not a physical force.
 - The opcode space is heavily skewed toward inertness by design: 1
   active encoding (WRITE, 0x01) and 255 RESERVED_INERT encodings. This
-  is a property of THIS conformance specimen's ISA budget, not a claim
+  is a property of THIS conformance observed instance's ISA budget, not a claim
   about how many active opcodes any eventual primordial substrate
   should have.
 
@@ -372,11 +372,11 @@ qualification philosophy, below). AETH-00's own test traces must already
 distinguish three semantically different events per proposal, tagged
 with semantics_id:
 
-- `proposal_emitted`: a WRITE-opcode cell decoded at S[t] produced a
+- `proposal_emitted`: a WRITE-opcode site decoded at S[t] produced a
   proposal (source, target, target_field, value), regardless of whether
   it later wins.
 - `proposal_won`: a specific proposal was selected as the arbitration
-  winner of its (target cell, target_field) contest.
+  winner of its (target site, target_field) contest.
 - `stored_bits_changed`: the winning proposal's value differs from the
   pre-tick value of that target field (distinguishes a same-value win,
   which changes nothing physically, from a bit-changing win).
@@ -385,8 +385,8 @@ These must not be collapsed into a single boolean.
 
 ### Explicit exclusions
 
-No organism, genome, birth, allocation, fitness, task, energy, resource
-ecology, mutation, heredity detector, structural detector, GPU
+No assembly, executable configuration, birth, allocation, evaluation score, task, energy, resource
+resource regime, perturbation, configuration transmission detector, structural detector, GPU
 implementation, Runpod expenditure.
 
 ## Substrate qualification philosophy (UNFROZEN, categories only)

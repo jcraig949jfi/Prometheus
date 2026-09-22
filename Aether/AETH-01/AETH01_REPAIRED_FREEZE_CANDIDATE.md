@@ -32,8 +32,8 @@ in a field wide enough to hold `2^32` exactly (repairs S02(a)).
 
 ## 3. Tick semantics (synchronous, 7 phases, extends AETH-00's 5)
 
-1. DECODE: `STARVED = energy < WRITE_COST` for WRITE cells.
-2. EMIT: each active, non-starved WRITE cell emits exactly one proposal,
+1. DECODE: `STARVED = energy < WRITE_COST` for WRITE sites.
+2. EMIT: each active, non-starved WRITE site emits exactly one proposal,
    to the selected von-Neumann-neighbor target (`arg0 mod 4`) and field
    (`arg1 mod 5`); fields 0-3 carry `payload`; field 4 carries
    `transfer_amt = min(payload, energy - WRITE_COST)`.
@@ -41,20 +41,20 @@ in a field wide enough to hold `2^32` exactly (repairs S02(a)).
    `target_field` as a plain uint64 input (0..4).
 4. COMMIT TEMPLATE (fields 0-3): winner's value, after Mu (below), is
    stored; all untargeted bytes preserved exactly.
-5. SETTLE ENERGY (field 4), atomically per cell: (a) every emitting
-   cell is debited `WRITE_COST`; (b) every field-4-emitting cell is
+5. SETTLE ENERGY (field 4), atomically per site: (a) every emitting
+   site is debited `WRITE_COST`; (b) every field-4-emitting site is
    further debited its full `transfer_amt`, win or lose; (c) per
    contest, only the winner is credited `min(transfer_amt, 255 -
    target_energy_after_own_debits)` (the delta, saturating); losers' amounts and any
    winner overflow above 255 are destroyed, never refunded/redirected.
    All source debits precede all target credits, including self-transfers.
 6. MAINTENANCE: `energy -= min(MAINTENANCE_COST, energy)` (floored).
-7. REPLENISH: independent per-cell Bernoulli at `REPLENISH_NUMER/2^32`
+7. REPLENISH: independent per-site Bernoulli at `REPLENISH_NUMER/2^32`
    credits `min(REPLENISH_AMOUNT, 255 - energy)`.
 
 Phases 1-3 read only `S[t]`.
 
-## 4. Mutation (`Mu`) -- copy-coupled, fields 0-3 only
+## 4. Perturbation (`Mu`) -- copy-coupled, fields 0-3 only
 
 Fires ONLY on a winning proposal targeting fields 0-3; never on
 untouched bytes, never on field 4, at ANY `MUT_NUMER` including
@@ -66,7 +66,7 @@ overwrite from a FIXED, unmutated donor resets to that donor each time,
 not a cumulative walk -- `KILL_GATES_01.md` K2. This does not prove
 statistical independence of deterministic hash-keyed events across ticks.
 
-## 5. Replenishment (`Rho`) -- independent per cell
+## 5. Replenishment (`Rho`) -- independent per site
 
 Third domain-separated hash chain, same `M`/`C` primitives, own
 `REPLENISH_DOMAIN_CONST`. Cross-domain (Mu/Rho/arbitration)
@@ -111,9 +111,9 @@ lattice bytes)`.
 
 - 5th field `energy`, uint8, saturating, conservatively transported.
 - `arg1 mod 5` selector (was `mod 4`) -- destroys ALL single-bit
-  mutation-neutral edges for `arg1` (proven exhaustively, K2); no
+  perturbation-neutral edges for `arg1` (proven exhaustively, K2); no
   power of two is divisible by 5.
-- Explicit copy-coupled single-bit mutation (`Mu`) on fields 0-3,
+- Explicit copy-coupled single-bit perturbation (`Mu`) on fields 0-3,
   breaking AETH-00's "no byte synthesis" property on purpose
   (DECISIONS.md D-AETH01-04).
 - `WRITE_COST`/`MAINTENANCE_COST`/replenishment: new scarcity/decay
@@ -130,17 +130,17 @@ Every difference below is itemized, reasoned, and falsifier-bearing in
 - `REPLENISH_NUMER`/`MUT_NUMER` widened to represent `2^32` -- S02(a).
 - Heterogeneous-parameter regime narrowed to initial-byte-only overlays
   (no per-zone LAW) -- S02(b).
-- Mutation mechanism description replaced: copy-coupled, not
-  autonomous/dormant drift; mod-5 adjacency loss made explicit -- S03,
+- Perturbation mechanism description replaced: copy-coupled, not
+  autonomous/inactive drift; mod-5 adjacency loss made explicit -- S03,
   M01.
-- Heredity has exactly five tiers: STRUCTURAL_RESEMBLANCE,
+- Configuration transmission has exactly five tiers: STRUCTURAL_RESEMBLANCE,
   CAUSAL_VALUE_CONSTRUCTION, CONSTRUCTED_CAPACITY,
-  RECURSIVE_CONSTRUCTION, HEREDITY_VARIATION, plus 10 separately
+  RECURSIVE_CONSTRUCTION, TRANSMITTED_VARIATION, plus 10 separately
   reported evidence axes -- S04. Resemblance is not a causal prerequisite.
   K3 fixture 3 is distributed construction by A_opcode and A_arg0 with
   initialized scaffold; fixture 4 is recursive activation of preconfigured
   machinery, NOT recursive configuration construction. These fixture-local
-  distinctions do not supply a general detector or population evidence.
+  distinctions do not supply a general detector or ensemble evidence.
 - Absorption/`FROZEN`/`DEAD` labels downgraded to censored, not proven,
   stops -- S05.
 - Provenance `instrument_class` composition rule made explicit and
@@ -162,7 +162,7 @@ Every difference below is itemized, reasoned, and falsifier-bearing in
 
 ## 11. Carried-forward, explicitly unresolved
 
-R3 (mutation excludes resource field), R5 (exogenous initial-energy
+R3 (perturbation excludes resource field), R5 (exogenous initial-energy
 persistence confound), R14 (no branch/compare primitive), M07's
 cross-domain hash independence (unmeasured, not redesigned), and K4/K5/
 K7/K8 (deferred, `KILL_GATES_01.md`) remain open. None blocks this

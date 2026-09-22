@@ -1,4 +1,4 @@
-# AETH-01 -- KILL_GATES_01: adjudicated outcomes for K1, K2, K3, K6 (+ K4/K5 deterministic halves)
+# AETH-01 -- Falsification gates (legacy path KILL_GATES_01.md): adjudicated outcomes for K1, K2, K3, K6 (+ K4/K5 deterministic halves)
 
 Status: original hand-worked adjudication (K1, K2, K3, K6) from the
 repair cycle, PLUS -- once the CPU oracle existed -- executable
@@ -12,11 +12,11 @@ not exist yet.
 Scientific/inference repair: K3's attribution and controls and K4's
 pulse-budget boundary below supersede the earlier closure wording.
 Historical PASS statements are not a receipt for the updated tests.
-On 2026-09-21, the expanded kill-gate, GPU-shaped differential and scientific
+On 2026-09-21, the expanded falsification gate, GPU-shaped differential and scientific
 documentation regressions ran together: **135 passed**, exit 0, with
 `python -m pytest Aether/test/test_aeth01_kill_gates.py Aether/test/test_aeth01_gpu_differential.py Aether/test/test_aeth01_scientific_docs.py -q`.
 The differential backend was NumPy, not GPU hardware. No campaign or
-population evidence is claimed. See `REVIEW_PACKET_AGE_CLOSURE_2026-09-21.md`
+ensemble evidence is claimed. See `REVIEW_PACKET_AGE_CLOSURE_2026-09-21.md`
 for the integrated local validation and remaining deployment gates.
 
 ## K1 -- accounting identity hand ledger
@@ -24,7 +24,7 @@ for the integrated local validation and remaining deployment gates.
 Using the repaired identity (`PHYSICS_SPEC_DRAFT.md`, S01 repair):
 `TotalEnergy[t+1] = TotalEnergy[t] - X - A + C - D + R`.
 
-1. **Execution alone.** One cell, energy=100, `WRITE_COST=5`, a
+1. **Execution alone.** One site, energy=100, `WRITE_COST=5`, a
    fields-0-3 WRITE only (no field-4 proposal): `X=5, A=C=D=R=0`.
    `100-5-0+0-0+0=95`. Matches direct computation (`100-5=95`). PASS.
 2. **Two competing donors.** P (energy=50) attempts 30, Q (energy=80)
@@ -50,7 +50,7 @@ Using the repaired identity (`PHYSICS_SPEC_DRAFT.md`, S01 repair):
    the two (as the reviewed draft implicitly did) is exactly how S01's
    double-count arose.
 4. **Self-transfer** (`W=1` or any dimension-1 aliasing case,
-   ADVERSARIAL_ANALYSIS.md #13). Single cell, energy=50, `WRITE_COST=3`,
+   ADVERSARIAL_ANALYSIS.md #13). Single site, energy=50, `WRITE_COST=3`,
    proposes a self-targeting transfer of `A=47` (uncontested).
    Debits first: `50-3-47=0`; credit then applies to the SAME
    already-debited running total: `C=min(47,255-0)=47`; final `=47`.
@@ -70,18 +70,18 @@ identity with zero tolerance; no discrepancy found. These 6 become the
 required golden vectors (REQUIREMENTS.md Part 2's "energy conservation
 equation... checked as an exact property"). No blocking issue; proceed.
 
-## K2 -- exact conditional mutation graph
+## K2 -- exact conditional perturbation graph
 
-1. **All-inert world.** Zero cells decode WRITE => zero proposals =>
+1. **All-inert world.** Zero sites decode WRITE => zero proposals =>
    zero winning proposals => `Mu` is invoked exactly 0 times, for
    ANY `MUT_NUMER` including `2^32` (probability 1). This follows
    directly from the spec text ("`Mu`... invoked once per winning
    proposal... and never otherwise") without needing a simulator.
    Falsifies the reviewed draft's "unconditional eight-event
    reachability" claim by direct substitution: an all-inert world has
-   zero reachable byte changes at any mutation rate. PASS
+   zero reachable byte changes at any perturbation rate. PASS
    (confirms S03's repair; not a new finding, a direct corollary).
-2. **Fixed donor payload, repeated overwrite.** If a donor cell's OWN
+2. **Fixed donor payload, repeated overwrite.** If a donor site's OWN
    payload field is itself never targeted by any winning WRITE (i.e.
    the donor's `p` is constant across ticks), then each tick's
    overwrite of the SAME target uses the fixed donor value: stored value is
@@ -93,7 +93,7 @@ equation... checked as an exact property"). No blocking issue; proceed.
    **Finding:** the "up to 8 Hamming-distance-1 steps away per copy
    event" drift described in PHYSICS_SPEC_DRAFT.md's accessibility
    analysis requires the COPIED VALUE ITSELF to change between copies
-   (a chain of distinct copying cells, each possibly mutated in turn) --
+   (a chain of distinct copying sites, each possibly perturbed in turn) --
    a fixed, unmutated donor produces donor-relative one-step outcomes at
    a fixed target, never a cumulative random walk over time. Cross-tick
    independence is NOT proved (PHYSICS_SPEC_DRAFT.md M07). This distinction
@@ -143,7 +143,7 @@ proceed.
 
 The formal ladder has exactly FIVE tiers: STRUCTURAL_RESEMBLANCE,
 CAUSAL_VALUE_CONSTRUCTION, CONSTRUCTED_CAPACITY,
-RECURSIVE_CONSTRUCTION, HEREDITY_VARIATION. Mechanism qualifiers are
+RECURSIVE_CONSTRUCTION, TRANSMITTED_VARIATION. Mechanism qualifiers are
 not additional tiers. The executable fixture contracts now require:
 
 - **Relay and activation (fixtures 1/2).** Derive distinct verdicts
@@ -182,10 +182,10 @@ not additional tiers. The executable fixture contracts now require:
   establish both edges by the same evidentiary standard.
 
 All fixtures are SEEDED_CONTROL, over four transitions. None is a
-HEREDITY_VARIATION or spontaneous-origin result. Shared input builders
+TRANSMITTED_VARIATION or spontaneous-origin result. Shared input builders
 are in `test/reference/scientific_aeth01.py`; CPU/GPU-shaped differential
 checks compare each state and activity/energy counters. These are bounded
-fixture contracts, not a general heredity detector or K7 trace audit.
+fixture contracts, not a general configuration transmission detector or K7 trace audit.
 **Updated K3 runtime verdict: PASS for the bounded seeded fixtures**, included
 in the 135-test focused run above. This is not a general detector validation.
 
@@ -196,7 +196,7 @@ hand-picked overlay combinations:
 
 | Base | Overlay | `instrument_class` | Reasoning |
 |---|---|---|---|
-| Regime 3 (seeded copier) | Regime 5 (resource-rich) | `SEEDED_CONTROL` | A hand-authored functional pattern is present in the initial lattice; overlay only changes initial energy, never the origin label |
+| Regime 3 (seeded state copier) | Regime 5 (resource-rich) | `SEEDED_CONTROL` | A hand-authored functional pattern is present in the initial lattice; overlay only changes initial energy, never the origin label |
 | Regime 1 (random soup) | Regime 5 (resource-rich) | `SPONTANEOUS` | Entire initial content is unstructured generation; high initial energy does not introduce hand-authored bytes |
 | Regime 4 (adversarial inert control, seeded) | Regime 7 (heterogeneous init) | `SEEDED_CONTROL` | Hand-authored bytes present, even though causally inert; zone-varying initial content is still an overlay, not a base-origin change |
 | Regime 2 (sparse soup) | Regime 6 (resource-poor) | `SPONTANEOUS` | Unstructured generation base; low energy is an overlay only |
@@ -229,7 +229,7 @@ passing) -- NOT the statistical characterization of emergent strategy
 DISTRIBUTIONS across many seeds/parameter points that K4 ultimately
 requires (that part remains genuinely deferred, below):
 
-1. **Isolated pulse-budget cell -- corrected boundary.** For a persistent
+1. **Isolated pulse-budget site -- corrected boundary.** For a persistent
    template writer, no energy transfers or replenishment, initial E,
    write cost w>0, maintenance m>=0: N=0 if E<w; otherwise
    `N = 1 + floor((E-w)/(w+m))`. Emission needs only w; subsequent
@@ -280,12 +280,12 @@ passing), each confirming one of GPU_RUNPOD.md's S05-repair claims is
 actually reachable, not just theoretically possible:
 
 1. **Delayed reactivation.** A starved writer (energy below
-   `write_cost`) stays dormant (emits nothing, "looks dead") for at
+   `write_cost`) stays inactive (emits nothing, "looks dead") for at
    least one full tick, then -- once replenishment crosses the
    threshold -- resumes emitting, confirmed at a fixed seed/config.
-2. **Same-value-then-mutation.** A fixed donor overwrites the same
+2. **Same-value-then-perturbation.** A fixed donor overwrites the same
    target with byte value `0` for several consecutive ticks (a naive
-   detector would call this "FROZEN"), then a single-bit Mu mutation
+   detector would call this "FROZEN"), then a single-bit Mu perturbation
    fires at a later tick -- confirmed: at least one idle tick preceded
    the change, and the change itself is a single-bit flip (consistent
    with K2).
@@ -298,7 +298,7 @@ actually reachable, not just theoretically possible:
 **K5 verdict (partial): all three CONFIRMED reachable, deterministically,
 at a fixed seed.** Still deferred: the actual continued-horizon
 reactivation AUDIT over a real sweep's `DEAD_CENSORED`/
-`FROZEN_CENSORED` population (a preregistered random resumed subset,
+`FROZEN_CENSORED` ensemble (a preregistered random resumed subset,
 GPU_RUNPOD.md) -- that requires an actual sweep to exist first.
 
 ## Deferred gates (still NOT run this cycle)

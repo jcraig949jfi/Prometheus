@@ -15,32 +15,32 @@ the operator's own material.
 ## Scientific identity
 
 Aether is a GPU-native artificial physics in which executable matter must
-discover persistent organization, heredity, reproduction and useful
-computation without being given predefined organisms or genome
+discover persistent organization, configuration transmission, recursive construction and useful
+computation without being given predefined assemblies or executable configuration
 boundaries.
 
-Existing Prometheus engines begin with identifiable organisms/genomes.
+Existing Prometheus engines begin with identifiable assemblies/executable configurations.
 Aether begins one level lower:
 
     executable matter -> local interaction -> persistent structure ->
-    possible heredity -> possible organism
+    possible configuration transmission -> possible assembly
 
-The physics does not know what an organism is. The observatory may infer
+The physics does not know what an assembly is. The observatory may infer
 structure afterward, from the outside.
 
-Central scientific question: does removing predefined organism boundaries
-and changing the representation of heredity expose evolutionary pathways
-that discrete genome evolution cannot reach?
+Central scientific question: does removing predefined assembly boundaries
+and changing the representation of configuration transmission expose evolutionary pathways
+that discrete executable configuration evolution cannot reach?
 
 ## Hard candidate constraints [CANDIDATE]
 
 Strong design candidates, not yet frozen specification:
 
 - NO BIRTH primitive; NO ALLOC primitive.
-- NO organism_id in simulated physics.
-- NO genome_id or fixed genome boundary.
+- NO assembly_id in simulated physics.
+- NO genome_id or fixed executable configuration boundary.
 - NO external copying in endogenous treatments.
-- NO direct reproduction reward from task competence.
+- NO direct recursive construction reward from task competence.
 - NO observatory metadata visible to simulated matter.
 - Structural resemblance alone is never replication evidence.
 - Seeded structures are calibration instruments, not evidence of
@@ -73,15 +73,15 @@ Privileged operations such as block-copy are suspect; if ever included,
 as experimental physics variants, not base-universe assumptions. Nothing
 in the base instruction set means "reproduce."
 
-## Causal heredity
+## Causal configuration transmission
 
 Central to the whole project. Three distinct concepts, kept separate:
 STRUCTURAL_RESEMBLANCE, CAUSAL_CONSTRUCTION, RECURSIVE_CONSTRUCTION.
 Cases the observatory must eventually distinguish: high resemblance
 without causal ancestry; causal construction with low resemblance;
-parasites; mutual constructors (A constructs B, B constructs A); partial
+asymmetric-resource-dependence cases; mutual constructors (A constructs B, B constructs A); partial
 copying completed by environmental dynamics; traveling structures that
-must not be mistaken for offspring. The observatory must survive
+must not be mistaken for successor. The observatory must persist
 adversarial fixtures for all of these before any claim in this category
 is trusted.
 

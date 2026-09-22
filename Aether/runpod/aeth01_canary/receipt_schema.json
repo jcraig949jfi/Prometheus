@@ -55,7 +55,7 @@
     "cpu_oracle_seconds": { "type": "number", "minimum": 0 },
     "mismatches": {
       "type": "array",
-      "description": "Empty on success. Each first divergence includes the last agreed input grid, all parameters, both full outputs, and every differing cell/field (or output shape).",
+      "description": "Empty on success. Each first divergence includes the last agreed input grid, all parameters, both full outputs, and every differing site/field (or output shape).",
       "items": {
         "type": "object",
         "required": [

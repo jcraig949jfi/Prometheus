@@ -240,7 +240,7 @@ def test_pod_snapshot_tampering_is_rejected(field, value):
         evidence.pod_confirmed(rec)
 
 
-@pytest.mark.parametrize("mutation", [
+@pytest.mark.parametrize("perturbation", [
     lambda rec: rec.pop("history"),
     lambda rec: rec.update(history=None),
     lambda rec: rec["history"][0].update(seq=True),
@@ -249,9 +249,9 @@ def test_pod_snapshot_tampering_is_rejected(field, value):
     lambda rec: rec["history"][0].update(contradictory_live_reappearance=True),
     lambda rec: rec["history"][0].update(raw_provider_object={}),
 ])
-def test_malformed_history_is_not_promoted(mutation):
+def test_malformed_history_is_not_promoted(perturbation):
     rec = terminated()
-    mutation(rec)
+    perturbation(rec)
     with pytest.raises(evidence.EvidenceError):
         evidence.validate_pod(rec)
 
@@ -375,7 +375,7 @@ def test_precutoff_sample_resets_and_cannot_start_a_window():
     assert window["scan_count"] == 1 and window["covered_seconds"] == 0
 
 
-@pytest.mark.parametrize("mutation", [
+@pytest.mark.parametrize("perturbation", [
     lambda w: w.pop("history"), lambda w: w.update(scan_count=True),
     lambda w: w.update(covered_seconds=36000), lambda w: w.update(latest_utc=at(3700)),
     lambda w: w.update(interrupted=True), lambda w: w.update(reset_reason="SCAN_FAILED"),
@@ -388,9 +388,9 @@ def test_precutoff_sample_resets_and_cannot_start_a_window():
     lambda w: w["samples"][2].update(session_id="different-process"),
     lambda w: w["samples"][2].update(cutoff_utc=at(200)),
 ])
-def test_malformed_or_forged_window_fails_closed(mutation):
+def test_malformed_or_forged_window_fails_closed(perturbation):
     window = healthy()
-    mutation(window)
+    perturbation(window)
     with pytest.raises(evidence.EvidenceError):
         evidence.window_complete(window, 3600, EPOCH + 3600)
 
@@ -525,7 +525,7 @@ def test_missing_required_report_fields_never_get_optimistic_defaults(side, fiel
         combine(*pair)
 
 
-@pytest.mark.parametrize("mutation", [
+@pytest.mark.parametrize("perturbation", [
     lambda l, r: r.pop("window"), lambda l, r: r.update(window=None),
     lambda l, r: l.pop("cleanup_status"), lambda l, r: r.pop("status"),
     lambda l, r: l.update(policy_version=True), lambda l, r: r.update(policy_version=0),
@@ -537,9 +537,9 @@ def test_missing_required_report_fields_never_get_optimistic_defaults(side, fiel
     lambda l, r: r.update(run_id="other-run"),
     lambda l, r: r.update(status="UNRECOGNIZED_SUCCESS"),
 ])
-def test_invalid_reports_and_bindings_raise_not_confirm(mutation):
+def test_invalid_reports_and_bindings_raise_not_confirm(perturbation):
     local, reaper = reports()
-    mutation(local, reaper)
+    perturbation(local, reaper)
     with pytest.raises(evidence.EvidenceError):
         combine(local, reaper)
 

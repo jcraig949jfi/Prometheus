@@ -64,8 +64,8 @@ def test_property_accounting_identity_holds_exactly(world):
     even if the grid happens to be correct."""
     trace = []
     nxt = world.step(trace=trace)
-    total_before = sum(cell[ok1.ENERGY] for row in world.grid for cell in row)
-    total_after = sum(cell[ok1.ENERGY] for row in nxt.grid for cell in row)
+    total_before = sum(site[ok1.ENERGY] for row in world.grid for site in row)
+    total_after = sum(site[ok1.ENERGY] for row in nxt.grid for site in row)
     X = sum(row[2] for row in trace if row[0] == "energy_debited")
     C = sum(row[2] for row in trace if row[0] == "energy_credited")
     D = sum(row[2] for row in trace if row[0] == "energy_decayed")
@@ -81,8 +81,8 @@ def test_property_accounting_identity_holds_exactly(world):
 def test_property_energy_field_always_in_uint8_range(world):
     nxt = world.step()
     for row in nxt.grid:
-        for cell in row:
-            assert 0 <= cell[ok1.ENERGY] <= 255
+        for site in row:
+            assert 0 <= site[ok1.ENERGY] <= 255
 
 
 @settings(max_examples=300, deadline=None)
@@ -121,7 +121,7 @@ def test_property_starved_cell_emits_nothing_and_pays_no_cost(world):
     emitted_sources = {row[1] for row in trace if row[0] == "proposal_emitted"}
     assert starved_cells.isdisjoint(emitted_sources)
     for (r, c) in starved_cells:
-        # A starved cell's own energy is untouched by execution/transfer
+        # A starved site's own energy is untouched by execution/transfer
         # debits (it never emitted), though it may still change via
         # maintenance/replenishment or an incoming credit as a TARGET.
         debited = any(

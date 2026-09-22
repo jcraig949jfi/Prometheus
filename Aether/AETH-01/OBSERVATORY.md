@@ -20,7 +20,7 @@ scientific claim rather than a debugging observation.
 Each entry: what it measures / what it does NOT establish / likely
 false positives / cost / tier.
 
-**Activity density** -- fraction of cells proposing per tick. / Does
+**Activity density** -- fraction of sites proposing per tick. / Does
 NOT establish organization, only that *something* is happening. /
 False positive: uniform random soup at high WRITE density looks
 "active" with zero structure. / O(H*W) per tick, trivial. / Always-on.
@@ -32,25 +32,25 @@ have identical entropy). / False positive: low entropy from a single
 huge inert region misread as "one interesting structure." / O(H*W) per
 tick. / Always-on.
 
-**Local mutual information** (a cell's state at t vs. its neighbor's
+**Local mutual information** (a site's state at t vs. its neighbor's
 state at t+1) -- whether a neighbor's future state is statistically
-predictable from a cell's current state, beyond what tick-global
+predictable from a site's current state, beyond what tick-global
 statistics predict. / Does NOT establish causation (correlation from
 shared ancestry or a common upstream cause looks the same). / False
-positive: two cells both being repeatedly overwritten by the same
+positive: two sites both being repeatedly overwritten by the same
 distant fast-copying source show high mutual information despite never
 directly interacting. / Moderate -- needs a sliding window of joint
 histograms, O(H*W) per window. / Rolling forensic buffer.
 
 **Persistence time** -- how long a given byte value, or a tracked
-component's identity, survives before being overwritten/dispersed. /
+component's identity, persists before being overwritten/dispersed. /
 Does NOT establish *why* something persisted (dynamics vs. simply never
-being targeted). / False positive: a cell nobody's arg0/arg1 ever
+being targeted). / False positive: a site nobody's arg0/arg1 ever
 happens to address looks "persistent" for a boring combinatorial
 reason. / Cheap if computed incrementally (track last-changed tick per
 field). / Always-on counter, forensic detail on trigger.
 
-**Spatial autocorrelation** -- similarity between a cell and its
+**Spatial autocorrelation** -- similarity between a site and its
 immediate neighbors, lattice-wide average. / Does NOT distinguish
 "organized structure" from "one big homogenized blob" (both are highly
 autocorrelated). / False positive: HOMOGENIZED regimes score exactly
@@ -60,7 +60,7 @@ entropy/compressibility. / O(H*W) per tick. / Always-on.
 **Flux** -- count of winning proposals (by field, separately for
 value-templating fields 0-3 and the energy field 4) crossing a chosen
 spatial boundary per tick. / Does NOT establish direction of "benefit"
-(an energy flux toward a cell could be feeding or draining it,
+(an energy flux toward a site could be feeding or draining it,
 ECONOMICS.md). / False positive: a region boundary drawn arbitrarily
 (not aligned with any real structure) still reports nonzero flux from
 ordinary background activity. / O(boundary length) per tick, cheap. /
@@ -98,7 +98,7 @@ tick). / Rolling forensic buffer (e.g. every N ticks).
 
 **Causal influence under intervention** -- fork a replay from an
 identical (semantics_id, params, S[t]) state, flip exactly one field of
-one cell, and measure downstream divergence (Hamming distance over
+one site, and measure downstream divergence (Hamming distance over
 time, or divergence in a specific downstream region/component). / Does
 NOT by itself establish *what* the influenced structure does, only that
 an influence exists and how far/fast it propagates. / False positive:
@@ -109,7 +109,7 @@ general"). / Expensive -- requires a full second run per intervention. /
 Triggered/forensic only, never continuous.
 
 **Connected-component persistence and tracking** -- group
-currently-active (or currently-similar) cells into components, match
+currently-active (or currently-similar) sites into components, match
 components frame-to-frame by maximal spatial overlap, and report each
 tracked component's lifetime and identity-continuity. / Does NOT
 establish that a tracked component is "the same thing" in any
@@ -118,7 +118,7 @@ not a claim about individuality (R1); grouping/centroid/matching choices
 can manufacture apparent individuality purely from the observer's
 scale/window (M08). / False positive: two unrelated components that
 happen to overlap spatially at one frame get merged into one false
-lineage by the tracker. **[REPAIRED per ASTRA_REVIEW_01.md M08]** Any
+causal provenance by the tracker. **[REPAIRED per ASTRA_REVIEW_01.md M08]** Any
 centroid/displacement computation MUST be torus-aware (wrap-corrected,
 e.g. via minimum-image convention on each axis) -- a naive Euclidean
 centroid discontinuously jumps at the torus wrap boundary and would
@@ -155,25 +155,25 @@ specifically (H,W in {1,2}) as a known confound. / Cheap for a coarse
 summary signal, moderate for full-state hashing. / Always-on for the
 coarse signal; forensic for full-state confirmation.
 
-**Lineage-like construction evidence (forensic only)** -- reconstruct,
+**Causal provenance-like construction evidence (forensic only)** -- reconstruct,
 from the trace, a provenance graph of "this target field's stored value
-at tick t was contributed by winning source cell X" chains, and look
+at tick t was contributed by winning source site X" chains, and look
 for chains consistent with CAUSAL_VALUE_CONSTRUCTION,
 CONSTRUCTED_CAPACITY, or RECURSIVE_CONSTRUCTION shapes
 (HEREDITY_REQUIREMENTS.md, repaired). **[REPAIRED per ASTRA_REVIEW_01.md
 M05, see REPAIR_LEDGER_01.md]** The graph must preserve, per contest:
 ALL contenders (not only the winner), the winning proposal's
-pre-mutation and post-mutation payload, the source's energy/starvation
+pre-perturbation and post-perturbation payload, the source's energy/starvation
 status, and whether the write targeted an ENABLING field (opcode/arg0/
 arg1, i.e. the target's own capacity) versus a CONTENT field (payload)
 -- winner-only, content-blind provenance cannot distinguish
 CAUSAL_VALUE_CONSTRUCTION from CONSTRUCTED_CAPACITY at all. / Does NOT
-by itself establish heredity in any inference-worthy sense -- this is
+by itself establish configuration transmission in any inference-worthy sense -- this is
 raw graph reconstruction, evidence gathering, not a verdict; winners-
 only edges also miss enabling, redundant, and initial-scaffold causes.
 / False positive: convergent copying from a shared, unrelated source
 (two targets both repeatedly overwritten by the same distant fast
-copier) produces a lineage-graph shape indistinguishable from true
+state copier) produces a causal provenance-graph shape indistinguishable from true
 shared ancestry without further intervention-based checks; an arbitrary
 source-bit perturbation causing Hamming divergence is not sufficient
 attribution by itself, since it may destroy routing/energy rather than
@@ -186,7 +186,7 @@ retention (below).
 Scientific claim tiers are separate from the telemetry-cost tiers below.
 Use the FIVE-tier ladder in HEREDITY_REQUIREMENTS.md:
 STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION / CONSTRUCTED_CAPACITY /
-RECURSIVE_CONSTRUCTION / HEREDITY_VARIATION. Reports also name the
+RECURSIVE_CONSTRUCTION / TRANSMITTED_VARIATION. Reports also name the
 mechanism and source set: K3 fixture 3 is distributed construction by
 A_opcode and A_arg0 with initialized scaffold; fixture 4 is recursive
 activation of preconfigured machinery, not recursive configuration
@@ -219,11 +219,11 @@ worlds, leaving false-negative simulator failures unaudited.]**
    tier run (HABITABILITY.md step 5), not on every scout-tier run.
    CONFIRMED labels may be assigned once this tier's data exists.
 3. **Expensive triggered analysis** (fires only on a predefined
-   mechanical trigger -- e.g. a tracked component survives past a
+   mechanical trigger -- e.g. a tracked component persists past a
    duration threshold, a boundary persists past a threshold, or a
    habitability-sweep run lands in a flagged non-trivial label):
    intervention/perturbation runs, full-state periodicity confirmation,
-   lineage-graph reconstruction. On trigger, the rolling forensic
+   causal provenance-graph reconstruction. On trigger, the rolling forensic
    buffer covering the anomaly is PROMOTED to permanent storage
    (never overwritten) before any further analysis -- raw evidence
    around anomalies is preserved first, interpreted second, per

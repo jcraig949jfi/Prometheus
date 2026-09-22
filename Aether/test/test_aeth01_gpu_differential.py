@@ -60,7 +60,7 @@ def _assert_cpu_gpu_agree(world, msg=""):
     assert gpu_grid == cpu_next.grid, f"CPU/GPU mismatch {msg}: cpu={cpu_next.grid} gpu={gpu_grid}"
     emitted = sum(event[0] == "proposal_emitted" for event in trace)
     assert counters["activity_density"] == emitted / (world.H * world.W), msg
-    assert counters["total_energy"] == sum(cell[ok1.ENERGY] for row in cpu_next.grid for cell in row), msg
+    assert counters["total_energy"] == sum(site[ok1.ENERGY] for row in cpu_next.grid for site in row), msg
     return cpu_next
 
 

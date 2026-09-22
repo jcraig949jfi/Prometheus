@@ -87,38 +87,38 @@ arbitration), only the frozen dimension domain (1 <= H,W <= 2^32-1).
     rationale). MANDATORY for both H=1 and H=2 (and, symmetrically,
     W=1 and W=2 -- Q28/D-17: these dimensions are supported, never
     rejected as invalid, and are required adversarial fixtures, not
-    merely permitted ones): a single source cell's own arg0 value
-    resolves to a neighbor that is the SAME physical cell as another of
+    merely permitted ones): a single source site's own arg0 value
+    resolves to a neighbor that is the SAME physical site as another of
     that source's possible arg0 values would resolve to (e.g. N and S
     coincide when H=1; N and S are distinct but both wrap when H=2), or
-    resolves to the source cell itself. Assert this remains exactly ONE
+    resolves to the source site itself. Assert this remains exactly ONE
     proposal from that source (never duplicated into multiple
     competitors, never dropped), and that it is applied as an ordinary
     write. Separately, assert that a genuine collision at these same
-    minimal dimensions -- two or more DIFFERENT source cells' proposals
-    landing on the same (target cell, field) -- is arbitrated exactly
+    minimal dimensions -- two or more DIFFERENT source sites' proposals
+    landing on the same (target site, field) -- is arbitrated exactly
     like any larger lattice, with no special case.
 15. RESERVED_INERT byte preservation (Q27/D-16, corrected -- was
-    "unknown-opcode-as-NOP candidate default"): construct cells holding
+    "unknown-opcode-as-NOP candidate default"): construct sites holding
     every RESERVED_INERT opcode value (0x00 and a representative sample
     of 0x02..0xFF, not only 0x00), across multiple ticks with no
     incoming WRITE targeting them. Assert (a) no proposal is emitted by
-    any of them; (b) every field of each such cell, INCLUDING the
+    any of them; (b) every field of each such site, INCLUDING the
     opcode byte itself, is bit-identical across ticks (never silently
     coerced to 0x00 or to each other); (c) none of this ever traps,
     errors, or halts the run. Separately (overlaps test 17): a
-    RESERVED_INERT cell targeted by a winning incoming WRITE still has
+    RESERVED_INERT site targeted by a winning incoming WRITE still has
     that field changed normally -- its own inertness does not make it
     write-immune.
 16. Same-value WRITE is valid and may change zero bits: construct a
     proposal whose value equals the target field's current value; if it
     wins, assert proposal_won=true and stored_bits_changed=false for
     that field (not a special case, not rejected, not skipped).
-17. Inert source can still be a target: a cell whose own opcode is NOP
+17. Inert source can still be a target: a site whose own opcode is NOP
     (or any non-WRITE state) can still be the target of an incoming
-    WRITE from a neighbor and have its state changed; a cell's own
+    WRITE from a neighbor and have its state changed; a site's own
     inertness never blocks writes arriving at it.
-18. Independent per-field arbitration: construct a target cell contested
+18. Independent per-field arbitration: construct a target site contested
     on two different fields (e.g. opcode and payload) by different sets
     of sources in the same tick; assert each field's winner is
     determined solely by the proposals aimed at that field, with no
@@ -140,7 +140,7 @@ arbitration), only the frozen dimension domain (1 <= H,W <= 2^32-1).
 
 21. Exhaustive tiny-torus identity fixtures: for the smallest lattices
     (1x1, 1x2, 2x1, 2x2, and a representative 3x3), exhaustively enumerate
-    every possible single-WRITE-cell instruction assignment (all opcode/
+    every possible single-WRITE-site instruction assignment (all opcode/
     arg0/arg1/payload combinations relevant to WRITE) and assert the
     exact resulting S[t+1] against a hand-derived expected value -- not a
     property, an exact fixture.
@@ -156,7 +156,7 @@ arbitration), only the frozen dimension domain (1 <= H,W <= 2^32-1).
     implementation's output (catches an implementation bug that a
     property-based test could miss because it is internally consistent
     but wrong relative to the specified constants).
-24. Order perturbation plus deliberate faulty implementations: mutation-
+24. Order perturbation plus deliberate faulty implementations: perturbation-
     testing style checks -- construct at least one deliberately WRONG
     arbitration implementation (e.g. one that uses dict/list iteration
     order as a tie-break, or a fixed-priority rule) and assert the test
@@ -169,7 +169,7 @@ arbitration), only the frozen dimension domain (1 <= H,W <= 2^32-1).
     sampling distribution assumed under the null (e.g. binomial with
     p = 1/N per contest arity); independence assumptions (each contest
     drawn from an independent seed/tick/coordinate tuple); the sample
-    size (number of contests per arity/direction-pair cell); and the
+    size (number of contests per arity/direction-pair site); and the
     confidence bound used to flag a deviation (e.g. a two-sided
     binomial test at a stated alpha). "Five-nines" or any other
     percentage is never used as a generic quality adjective -- every
@@ -186,7 +186,7 @@ arbitration), only the frozen dimension domain (1 <= H,W <= 2^32-1).
 27. Duplicate-source proposal detection in the test harness: the test
     harness itself must be able to detect the implementation defect
     named in AETHER_SPEC.md's arbitration section -- two or more
-    proposals sharing the same physical source cell within one contest
+    proposals sharing the same physical source site within one contest
     (forbidden by the proposal-identity rule, D-18). Construct at least
     one deliberately DEFECTIVE implementation that emits such a
     duplicate (e.g. by double-counting one source's proposal) and assert

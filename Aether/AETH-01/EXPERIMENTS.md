@@ -12,24 +12,24 @@ REPLENISH_AMOUNT, MUT_NUMER). All randomized regimes draw from an
 explicit, seeded, reproducible PRNG stream logged in provenance
 (REQUIREMENTS.md) -- "random" never means "unrecorded."
 
-1. **Random soup.** Every field of every cell drawn i.i.d. uniformly
+1. **Random soup.** Every field of every site drawn i.i.d. uniformly
    from its valid range (opcode uniform over 256 values -- i.e. WRITE
    at ~1/256 density; energy uniform 0-255). No structure at t=0.
    Purpose: the least-informative baseline; almost certainly DEAD or
    HOMOGENIZED, itself a required data point.
 
 2. **Sparse soup.** As random soup, but opcode drawn so WRITE appears
-   at a swept low density (e.g. 1-5%), all other cells RESERVED_INERT
+   at a swept low density (e.g. 1-5%), all other sites RESERVED_INERT
    with random non-WRITE opcode byte; arg0/arg1/payload still uniform
-   random for WRITE cells. Purpose: isolate the effect of active-cell
+   random for WRITE sites. Purpose: isolate the effect of active-site
    density independent of the full 1/256 baseline; a central sweep
    axis for HABITABILITY.md.
 
 3. **Structured positive control (SEEDED).** A hand-authored small
    pattern known, by direct inspection of its own opcode/arg0/arg1
-   values, to cause at least one cell to repeatedly copy a specific
+   values, to cause at least one site to repeatedly copy a specific
    payload into a specific neighbor field over multiple ticks (a
-   minimal deterministic "template copier"), placed in an otherwise
+   minimal deterministic "template state copier"), placed in an otherwise
    inert or sparse-soup background. Purpose: (a) confirms the
    observatory's detectors can recognize a KNOWN true positive; (b) a
    deliberately simple instrument, not a claim about spontaneous
@@ -39,21 +39,21 @@ explicit, seeded, reproducible PRNG stream logged in provenance
    LOOKS structurally suggestive (e.g., a periodic block of identical
    non-WRITE bytes, or a symmetric static arrangement) but contains no
    WRITE opcode anywhere, so it is causally inert by construction.
-   **[REPAIRED per ASTRA_REVIEW_01.md S03: mutation is copy-coupled, not
-   an autonomous per-tick process -- see PHYSICS_SPEC_DRAFT.md "Mutation
+   **[REPAIRED per ASTRA_REVIEW_01.md S03: perturbation is copy-coupled, not
+   an autonomous per-tick process -- see PHYSICS_SPEC_DRAFT.md "Perturbation
    (Mu)"]** If placed in a wholly `RESERVED_INERT` background, this
    pattern's bytes cannot change AT ALL, ever, at any `MUT_NUMER`,
-   because mutation only fires on a winning WRITE proposal and none
-   exists anywhere in this configuration -- there is no "rare mutation"
+   because perturbation only fires on a winning WRITE proposal and none
+   exists anywhere in this configuration -- there is no "rare perturbation"
    path for a fully inert world. If placed in a sparse-soup background
-   instead, it can change ONLY if a background WRITE cell's proposal
-   wins a contest targeting one of this pattern's cells (an ordinary
+   instead, it can change ONLY if a background WRITE site's proposal
+   wins a contest targeting one of this pattern's sites (an ordinary
    external cause, not a spontaneous internal event). Purpose: a
    required true-negative check -- any detector that reports
-   "construction" or "heredity" activity on this control has a
+   "construction" or "configuration transmission" activity on this control has a
    confirmed false-positive bug, full stop.
 
-5. **Resource-rich.** Any of the above, with high initial per-cell
+5. **Resource-rich.** Any of the above, with high initial per-site
    energy (e.g. near 255) and/or Regime-B-style dense replenishment.
    Purpose: tests whether abundance alone is sufficient/necessary for
    persistent structure, independent of density regimes 1-2.
@@ -71,7 +71,7 @@ explicit, seeded, reproducible PRNG stream logged in provenance
    different, unspecified physics while claiming the `aeth01.v1` replay
    tuple.]** A single world, under the SAME five global run parameters
    for its entire extent, split into spatial zones with DIFFERENT
-   INITIAL BYTE CONTENT ONLY -- e.g. different initial per-cell energy
+   INITIAL BYTE CONTENT ONLY -- e.g. different initial per-site energy
    levels or different initial WRITE density by zone (a density or
    energy GRADIENT across columns is legal; a `WRITE_COST` gradient is
    NOT). Purpose: tests whether spatial heterogeneity of INITIAL
@@ -87,7 +87,7 @@ explicit, seeded, reproducible PRNG stream logged in provenance
 **[REPAIRED per ASTRA_REVIEW_01.md S06, ACCEPT, see REPAIR_LEDGER_01.md
 -- the reviewed draft let regimes 5-7 "wrap" a seeded regime-3/4 pattern
 while ALSO calling regimes 5-7 spontaneous-origin, a direct
-contradiction: a seeded copier with altered energy satisfied both
+contradiction: a seeded state copier with altered energy satisfied both
 descriptions.]** Origin classification (`instrument_class`, below)
 COMPOSES through every overlay: regimes 5-7 are OVERLAYS (resource/
 energy/initial-content heterogeneity choices) applicable on top of
@@ -111,7 +111,7 @@ convention:
    field: `SPONTANEOUS` or `SEEDED_CONTROL`, plus, for seeded runs, the
    exact byte pattern and placement used. This tag lives ONLY in
    run metadata (observatory/provenance layer) -- it is never encoded
-   into the lattice bytes themselves and cannot be read by any cell
+   into the lattice bytes themselves and cannot be read by any site
    (R1, R10).
 2. **No pooling across classes.** Any statistic, detector calibration,
    or scientific claim must report SPONTANEOUS and SEEDED_CONTROL

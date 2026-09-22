@@ -31,7 +31,7 @@ _cell_strategy = st.one_of(
         st.integers(0, 255),
         st.integers(0, 255),
     ),
-    # Occasionally a non-WRITE (RESERVED_INERT) cell, incl. same-value bytes.
+    # Occasionally a non-WRITE (RESERVED_INERT) site, incl. same-value bytes.
     st.tuples(
         st.integers(0, 255).filter(lambda o: o != ok.WRITE_OPCODE),
         st.integers(0, 3),
@@ -64,7 +64,7 @@ def worlds(draw, max_dim=MAX_DIM, max_steps_ahead=1):
 
 
 def _distinct_byte_values(world):
-    return {b for row in world.grid for cell in row for b in cell}
+    return {b for row in world.grid for site in row for b in site}
 
 
 @settings(max_examples=300, deadline=None)

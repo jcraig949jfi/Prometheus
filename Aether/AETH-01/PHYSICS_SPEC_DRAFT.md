@@ -26,10 +26,10 @@ range 0-255, saturating (never wraps).
 
     WRITE_COST        uint8    in [0,255]     -- execution cost per WRITE
     MAINTENANCE_COST  uint8    in [0,255]     -- passive per-tick decay
-    REPLENISH_NUMER   u33      in [0,2^32]    -- per-cell inflow probability
+    REPLENISH_NUMER   u33      in [0,2^32]    -- per-site inflow probability
                                                  numerator, denominator 2^32
     REPLENISH_AMOUNT  uint8    in [0,255]     -- energy credited on inflow
-    MUT_NUMER         u33      in [0,2^32]    -- per-write mutation
+    MUT_NUMER         u33      in [0,2^32]    -- per-write perturbation
                                                  probability numerator,
                                                  denominator 2^32
 
@@ -51,7 +51,7 @@ All five are explicit scalar configuration, analogous to AETH-00's
 seed: never inferred, never defaulted silently, always logged with a
 run's provenance (REQUIREMENTS.md). All five apply UNIFORMLY to the
 entire lattice for the lifetime of a run -- there is no per-zone or
-per-cell parameter map in `aeth01.v1` (see EXPERIMENTS.md regime 7's
+per-site parameter map in `aeth01.v1` (see EXPERIMENTS.md regime 7's
 repaired scope, S02(b)).
 
 ## Neighborhood / interaction relation
@@ -65,7 +65,7 @@ unchanged.
     0=opcode  1=arg0  2=arg1  3=payload  4=energy (new)
 
 Fields 0-3 keep AETH-00's overwrite semantics exactly (the value
-written is the issuing cell's own payload, subject to mutation below).
+written is the issuing site's own payload, subject to perturbation below).
 Field 4 has different (conservative-transfer) semantics, specified
 below -- it is a different KIND of field, not a fifth ordinary
 overwrite target, and this is a deliberate, load-bearing asymmetry.
@@ -74,8 +74,8 @@ overwrite target, and this is a deliberate, load-bearing asymmetry.
 REPAIR_LEDGER_01.md]** `arg1 mod 5` is NOT a harmless additive
 extension of AETH-00's `arg1 mod 4`: because no power of two is
 divisible by 5, EVERY single-bit flip of `arg1` changes its target-field
-residue -- AETH-00's "top six bits of `arg1` are mutation-neutral"
-property does not survive this extension at all, for any bit. The
+residue -- AETH-00's "top six bits of `arg1` are perturbation-neutral"
+property does not persist this extension at all, for any bit. The
 256-value encoding is also non-uniform across the 5 targets (52 byte
 values select field 0; 51 each select fields 1-4). This is stated here
 as a factual, accepted property of the frozen encoding, not a defect to
@@ -89,7 +89,7 @@ exhaustive 256-value x 8-bit-position adjacency table.
 Unchanged opcode budget: 0x01 = WRITE, all other 255 values =
 RESERVED_INERT (0x00 conventionally NOP), same RESERVED_INERT
 guarantees as AETH-00 (never traps, preserved byte-for-byte unless
-targeted, remains writable). A cell that decodes WRITE at S[t] but
+targeted, remains writable). A site that decodes WRITE at S[t] but
 lacks sufficient `energy` (below) is treated as RESERVED_INERT for
 proposal-emission purposes that tick only -- its opcode byte itself is
 untouched by starvation; starvation affects behavior, not stored state.
@@ -97,30 +97,30 @@ untouched by starvation; starvation affects behavior, not stored state.
 ## Tick semantics (synchronous; extends AETH-00's five-phase tick)
 
     S[t]
-      -> (1) DECODE: every cell decodes S[t]; a WRITE cell computes
-             STARVED = (S[t].energy at that cell < WRITE_COST)
-      -> (2) EMIT: each non-RESERVED_INERT, non-STARVED WRITE cell
+      -> (1) DECODE: every site decodes S[t]; a WRITE site computes
+             STARVED = (S[t].energy at that site < WRITE_COST)
+      -> (2) EMIT: each non-RESERVED_INERT, non-STARVED WRITE site
              emits exactly one proposal, computed purely from S[t]:
                target      = von Neumann neighbor per arg0 mod 4
                target_field= arg1 mod 5
-               value       = this cell's own payload            (fields 0-3)
-               transfer_amt= min(this cell's own payload,
-                                  S[t].energy at this cell - WRITE_COST)
+               value       = this site's own payload            (fields 0-3)
+               transfer_amt= min(this site's own payload,
+                                  S[t].energy at this site - WRITE_COST)
                                                                   (field 4 only)
-      -> (3) ARBITRATE: for each (target cell, target_field) with >=1
+      -> (3) ARBITRATE: for each (target site, target_field) with >=1
              proposal, select the winner via AETH-00's UNCHANGED
              SplitMix64 chained priority law (target_field is just a
              uint64 input to h3; the law is defined for any uint64
              value and needs no modification for the 0..4 range)
       -> (4) COMMIT TEMPLATE (fields 0-3): the winning value, after
-             mutation (below), is stored; untargeted fields of every
-             cell are preserved byte-for-byte, exactly as AETH-00
-      -> (5) SETTLE ENERGY (field 4), all as one atomic step per cell:
-             (a) every cell that emitted ANY proposal this tick
+             perturbation (below), is stored; untargeted fields of every
+             site are preserved byte-for-byte, exactly as AETH-00
+      -> (5) SETTLE ENERGY (field 4), all as one atomic step per site:
+             (a) every site that emitted ANY proposal this tick
                  (fields 0-3 or field 4) is debited WRITE_COST from its
                  S[t] energy value (source-side, unconditional, applies
                  whether the proposal won or lost)
-             (b) every cell that additionally emitted a field-4
+             (b) every site that additionally emitted a field-4
                  proposal is further debited its own transfer_amt
                  (source-side, unconditional -- attempting a transfer
                  always costs the sender the attempted amount)
@@ -130,9 +130,9 @@ untouched by starvation; starvation affects behavior, not stored state.
                  counted as overflow spillage); every losing
                  proposal's already-debited transfer_amt is destroyed
                  (dissipated, not refunded, not delivered anywhere)
-      -> (6) MAINTENANCE DECAY: every cell's energy (after step 5) is
+      -> (6) MAINTENANCE DECAY: every site's energy (after step 5) is
              reduced by MAINTENANCE_COST, floored at 0 (never negative)
-      -> (7) REPLENISH: for every cell, independently, a deterministic
+      -> (7) REPLENISH: for every site, independently, a deterministic
              Bernoulli draw (function Rho, below) at rate
              REPLENISH_NUMER/2^32 credits REPLENISH_AMOUNT energy
              (saturating at 255)
@@ -142,7 +142,7 @@ Steps 1-3 are a pure function of S[t] only (no phase reads anything
 produced later in the same tick) -- this preserves AETH-00's "reads
 only the tick-start snapshot" invariant exactly.
 
-## Mutation (Mu) -- fields 0-3 only, never field 4
+## Perturbation (Mu) -- fields 0-3 only, never field 4
 
 For a winning proposal targeting (target_row, target_col, target_field)
 in {0,1,2,3} at tick `t` under run seed `seed`:
@@ -160,17 +160,17 @@ in {0,1,2,3} at tick `t` under run seed `seed`:
 functions. `MUT_DOMAIN_CONST` is a frozen 64-bit odd constant distinct
 from AETH-00's arbitration constant (proposed: `0xD1B54A32D192ED03`, a
 public-domain SplitMix64-family constant, not derived from any
-Prometheus engine). Mutation NEVER influences which proposal wins
+Prometheus engine). Perturbation NEVER influences which proposal wins
 (computed after arbitration, over a domain-separated hash chain that
 does not reuse the arbitration `priority` value) and never applies to
 field 4, preserving conservation exactly.
 
 **[REPAIRED per ASTRA_REVIEW_01.md S03, see REPAIR_LEDGER_01.md --
 supersedes the "Representation & accessibility analysis" section
-below's original claims about autonomous/dormant drift.]** Mutation is
+below's original claims about autonomous/inactive drift.]** Perturbation is
 **copy-coupled**: it is an error process attached to a SUCCESSFUL
 incoming WRITE event only, never an autonomous process on stored or
-dormant bytes. Precisely: `Mu` is invoked once per winning proposal
+inactive bytes. Precisely: `Mu` is invoked once per winning proposal
 targeting fields 0-3, and never otherwise. A byte that is never the
 target of a winning WRITE proposal NEVER changes, at ANY `MUT_NUMER`
 value including `MUT_NUMER = 2^32` (probability 1) -- there is no
@@ -179,14 +179,14 @@ being written to. Concretely, from donor payload `p`: with probability
 `1 - MUT_NUMER/2^32` the stored value is exactly `p`; with probability
 `MUT_NUMER/2^32` it is one of `p`'s 8 Hamming-1 neighbors, each with
 conditional probability 1/8 (never `p` itself -- flipping any bit
-always changes the byte). "Dormant machinery survives for free" (true,
-see accessibility analysis below) and "dormant machinery MUTATES for
+always changes the byte). "Inactive machinery persists for free" (true,
+see accessibility analysis below) and "inactive machinery MUTATES for
 free" (false) are two different, non-implied properties; only the
-first is claimed. No background mutation is added to rescue any
-previously stated intuition -- the choice to make mutation copy-coupled
+first is claimed. No background perturbation is added to rescue any
+previously stated intuition -- the choice to make perturbation copy-coupled
 is stated here as intentional, not repaired away.
 
-## Replenishment (Rho) -- per cell, independent
+## Replenishment (Rho) -- per site, independent
 
     r0  = M(seed XOR REPLENISH_DOMAIN_CONST)
     r1  = M(r0 XOR tick)
@@ -194,22 +194,22 @@ is stated here as intentional, not repaired away.
     triggered = (key >> 32) < REPLENISH_NUMER
 
 `REPLENISH_DOMAIN_CONST` is a third frozen 64-bit odd constant, distinct
-from both the arbitration and mutation constants (proposed:
+from both the arbitration and perturbation constants (proposed:
 `0x2545F4914F6CDD1D`). Three independent hash domains (arbitration,
-mutation, replenishment) share the same validated `M` primitive.
+perturbation, replenishment) share the same validated `M` primitive.
 
 **[REPAIRED per ASTRA_REVIEW_01.md M07, ACCEPT_WITH_QUALIFICATION, see
 REPAIR_LEDGER_01.md]** The original claim that the three domains "never
 share input material in a way that would correlate their outcomes" is
 an OVERCLAIM and is withdrawn. What is actually established: (1) for a
-FIXED opportunity (a specific cell, tick, and field), the `Mu` key is
+FIXED opportunity (a specific site, tick, and field), the `Mu` key is
 uniform over its input domain, and its trigger bits (top 32) and
 bit-index bits (bottom 3) are exactly independent by construction of a
 bijective mix -- this positive result is real. (2) Cross-domain,
 cross-tick, or realized-trajectory independence is NOT proven: an exact
 tick offset can be constructed (see ASTRA_REVIEW_01.md M07 derivation)
-that makes the mutation and replenishment chains' internal words
-coincide at matched cells. Whether this is practically exploitable
+that makes the perturbation and replenishment chains' internal words
+coincide at matched sites. Whether this is practically exploitable
 within any actual campaign's tick range is an open, unmeasured
 statistical question, not a proven defect -- the hash is NOT redesigned
 in response to this finding (per operator instruction and Astra's own
@@ -226,7 +226,7 @@ counterexample there.]**
 
 Energy is NOT a strict invariant (there are explicit sources and
 sinks), but every unit's fate is fully accounted every tick. Let, for a
-given tick and cell: `X` = ExecutionCost (step 5a), `A` =
+given tick and site: `X` = ExecutionCost (step 5a), `A` =
 TransferAttempted (step 5b, everything debited from a source attempting
 a field-4 proposal, win or lose), `C` = TransferCredited (step 5c,
 winners only, ALREADY net of saturation -- i.e. `C` is the ACCEPTED
@@ -306,7 +306,7 @@ scope limit, not an oversight -- recorded in DECISIONS.md.
 ## Initialization
 
 A world is initialized by supplying H, W, the five run parameters, and
-an explicit H*W*5-byte buffer (every field of every cell set
+an explicit H*W*5-byte buffer (every field of every site set
 explicitly; no implicit default beyond what the caller supplies).
 Concrete initialization REGIMES (random soup, sparse soup, structured
 controls, resource-rich/poor, heterogeneous) are experimental design,
@@ -326,7 +326,7 @@ observational metadata.
 
 In addition to AETH-00's `proposal_emitted`, `proposal_won`,
 `stored_bits_changed`, AETH-01 traces must also emit, per tick:
-`cell_starved` (a WRITE cell was blocked by insufficient energy),
+`cell_starved` (a WRITE site was blocked by insufficient energy),
 `mutation_applied` (Mu triggered, with the bit index flipped),
 `energy_debited` / `energy_credited` / `energy_lost` /
 `energy_overflow_spilled` / `energy_decayed` / `energy_replenished`
@@ -343,7 +343,7 @@ explicitly named as a defect; this closes that gap.
 ## Representation & accessibility analysis (Design Task 3)
 
 **[REPAIRED per ASTRA_REVIEW_01.md S03, see REPAIR_LEDGER_01.md and
-the "Mutation (Mu)" section above, which is now the authoritative
+the "Perturbation (Mu)" section above, which is now the authoritative
 description of the mechanism this analysis describes.]**
 
 **One-step variation is copy-coupled, not autonomous.** The
@@ -351,7 +351,7 @@ finest-grained physical event is a single Mu-triggered bit flip inside
 one already-COPIED byte (i.e. one that just won a WRITE contest) --
 Hamming distance 1 from the winning donor's payload, at a rate the
 experimenter controls (`MUT_NUMER`). This is much smoother than a
-discrete-genome insertion/deletion/point-mutation alphabet, but each
+discrete-executable configuration insertion/deletion/point-perturbation alphabet, but each
 copy event is DONOR-CONDITIONED, not an accumulating random walk: a
 winning WRITE replaces the target's byte with the CURRENT donor's
 payload, optionally flipping one bit of THAT value; it does not build
@@ -365,28 +365,28 @@ wins; ASTRA_CLOSURE_REVIEW_02.md section 3, K8/T/test_aeth01_kill_gates.py).
 Reaching a value outside a fixed donor's 9-value reachable set requires
 a DIFFERENT donor to win a later contest, which is an accessibility
 question (a route, a live and differently-valued source, sufficient
-energy, and contest survival), not a property of the mutation alphabet
+energy, and contest persistence), not a property of the perturbation alphabet
 alone. A byte that is never the target of a winning WRITE never changes
-at all, regardless of `MUT_NUMER` (see "Mutation (Mu)" above).
+at all, regardless of `MUT_NUMER` (see "Perturbation (Mu)" above).
 
 **Categorical cliffs exist but are narrow, not sheer, and are
 donor-conditioned.** The opcode field is an ordinary byte subject to
 the same copy+Mu process as any other field, so "waking up" a
-RESERVED_INERT neighbor (any value -> 0x01) or "putting a WRITE cell to
-sleep" (0x01 -> any other value) rides the same smooth mutation
+RESERVED_INERT neighbor (any value -> 0x01) or "putting a WRITE site to
+sleep" (0x01 -> any other value) rides the same smooth perturbation
 channel, but the activation probability for a single copy event from a
 FIXED donor byte `p` is **not** a generic 1-in-8: for uniform per-bit
-mutation sampling, the marginal probability that a copy event from
+perturbation sampling, the marginal probability that a copy event from
 donor `p` writes exactly `0x01` is
 `(1-mu)*[p=1] + (mu/8)*[popcount(p XOR 1)=1]`, where `mu=MUT_NUMER/2**32`
 and `[.]` is 1 if the bracketed condition holds, else 0. A fixed donor
 of `p=1` therefore activates with probability `1-mu` copy-for-copy
 (already active, most copies preserve it), not 1/8; a fixed donor with
-`popcount(p XOR 1)!=1` never activates by mutation from that donor at
+`popcount(p XOR 1)!=1` never activates by perturbation from that donor at
 all (e.g. donor 0 never activates: `popcount(0 XOR 1)=1` is true, so it
 DOES activate at rate `mu/8` -- but a donor such as 3, with
 `popcount(3 XOR 1)=1` false, activates at rate 0 from that source).
-"Approximately 1-in-8" is at best a loose description of the mutation
+"Approximately 1-in-8" is at best a loose description of the perturbation
 kernel's own branching factor, not of realized activation probability,
 which depends on which donor is actually copying. This remains a
 directly measurable, testable quantity (a natural HABITABILITY.md
@@ -394,25 +394,25 @@ observable: measured activation rate vs. `MUT_NUMER`, conditioned on
 the donor actually observed), not a closed-form constant.
 
 **Neutral networks are large by construction, but require copy traffic
-to explore, same as any other mutation.** 255 of 256 opcode values
+to explore, same as any other perturbation.** 255 of 256 opcode values
 behave identically (RESERVED_INERT). This is a large neutral plateau IF
 and only if the byte in question keeps being re-copied (by winning
-WRITEs) -- a dormant cell's opcode byte that is NEVER targeted by a
+WRITEs) -- a inactive site's opcode byte that is NEVER targeted by a
 winning WRITE stays exactly where it started, forever, at any
 `MUT_NUMER` (S03 repair, above). What is unconditionally true and
-architecturally cheap is the SURVIVAL half of R6's "dormant machinery
-survives to completion" case: a non-WRITE cell pays no `WRITE_COST` and
+architecturally cheap is the persistence half of R6's "inactive machinery
+persists to completion" case: a non-WRITE site pays no `WRITE_COST` and
 (if `MAINTENANCE_COST=0`) no decay either, so it can sit inert
 indefinitely, unchanged, until a WRITE (its own future activation, or a
 neighbor's write) touches it. The EXPLORATION half (neutral drift while
-dormant) is NOT free -- it requires the dormant byte to be a live
+inactive) is NOT free -- it requires the inactive byte to be a live
 target of repeated winning writes, which is an accessibility question
-(does a copier route to it, does it survive contest, etc.), not a
-property of the mutation alphabet alone.
+(does a state copier route to it, does it persist contest, etc.), not a
+property of the perturbation alphabet alone.
 
 **Multi-component cooperative construction is common but not
 structurally forced.** One WRITE touches exactly one field of ONE
-neighbor per tick from a given source; however, a single target cell
+neighbor per tick from a given source; however, a single target site
 CAN receive up to 4 simultaneous winning writes in one tick, one from
 each of its 4 von Neumann neighbors, each targeting a DIFFERENT field
 (e.g. all 4 non-energy fields updated at once by 4 distinct sources) --
@@ -426,19 +426,19 @@ is not the only structurally possible path.
 
 **Likely accessibility moats introduced by AETH-01 itself:**
 
-1. Von Neumann/toroidal locality caps causal influence at 1 cell/tick
+1. Von Neumann/toroidal locality caps causal influence at 1 site/tick
    (a "speed limit"), inherited from AETH-00 but now economically
    reinforced (WRITE_COST makes "reaching far" via relay chains
    expensive per hop) -- likely privileges small, compact, fast-cycling
    organization over large, slow, spread-out organization.
-2. Mutation is defined to NEVER touch field 4 (energy), while the
+2. Perturbation is defined to NEVER touch field 4 (energy), while the
    conservative transfer mechanism is the ONLY way energy state
    changes. This means "how to handle resources" cannot itself be a
-   heritable, mutable trait encoded the same way "what to write where"
-   is -- it can only be expressed indirectly, through the (heritable)
+   transmissible, mutable trait encoded the same way "what to write where"
+   is -- it can only be expressed indirectly, through the (transmissible)
    fields 0-3 content that decides WHEN and WHERE a transfer is
    attempted. This is a hidden prior that partially pre-decides where
-   heredity "lives" (in the instruction fields, not the resource
+   configuration transmission "lives" (in the instruction fields, not the resource
    field), in tension with R3's instruction not to presume this in
    advance -- flagged, not hidden (DECISIONS.md, ADVERSARIAL_ANALYSIS.md).
 3. A flat, content- and distance-independent `WRITE_COST` is an
@@ -450,7 +450,7 @@ is not the only structurally possible path.
 4. A single active opcode (WRITE) means there is no explicit
    conditional/compare/branch primitive -- "sense, then act
    differently" is not directly expressible; any apparent
-   conditionality can only emerge indirectly (e.g., a starved cell
+   conditionality can only emerge indirectly (e.g., a starved site
    simply fails to act) rather than as a designed decision. This is an
    expressivity ceiling worth flagging for AETH-02, not a claim that
    AETH-01 is complete.

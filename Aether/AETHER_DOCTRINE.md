@@ -32,7 +32,7 @@ Aether is the high-rigor moonshot of Prometheus. Move slowly.
 ## TDD / emergence resolution (2026-09-20)
 
 TDD applies to the things Aether controls and claims to measure: physics
-semantics; determinism and replay; mutation behavior; resource
+semantics; determinism and replay; perturbation behavior; resource
 accounting; causal provenance; seeded positive controls; adversarial
 negative controls; detector false positives/negatives on known fixtures;
 CPU/GPU equivalence; checkpoint integrity; experiment accounting.

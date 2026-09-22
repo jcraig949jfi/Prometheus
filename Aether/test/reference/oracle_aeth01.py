@@ -35,7 +35,7 @@ ARBITRATION_SEED_XOR = 0x9E3779B97F4A7C15
 MIX_MUL_1 = 0xBF58476D1CE4E5B9
 MIX_MUL_2 = 0x94D049BB133111EB
 
-# New, domain-separated constants (PHYSICS_SPEC_DRAFT.md "Mutation (Mu)"
+# New, domain-separated constants (PHYSICS_SPEC_DRAFT.md "Perturbation (Mu)"
 # / "Replenishment (Rho)"), distinct from the arbitration constant and
 # from each other.
 MUT_DOMAIN_CONST = 0xD1B54A32D192ED03
@@ -45,9 +45,9 @@ NORTH, EAST, SOUTH, WEST = 0, 1, 2, 3
 
 
 class DuplicateSourceProposalError(Exception):
-    """Two proposals in one contest share a physical source cell -- a
+    """Two proposals in one contest share a physical source site -- a
     harness/implementation defect (AETH-00's proposal-identity rule is
-    unchanged for AETH-01: one WRITE cell emits exactly one proposal)."""
+    unchanged for AETH-01: one WRITE site emits exactly one proposal)."""
 
 
 class TickOverflowError(OverflowError):
@@ -68,7 +68,7 @@ Contests = Dict[Tuple[Tuple[int, int], int], List[Proposal]]
 
 def splitmix64_mix(x: int) -> int:
     """M(x): unchanged SplitMix64 finalizer, shared by all three hash
-    domains (arbitration, mutation, replenishment)."""
+    domains (arbitration, perturbation, replenishment)."""
     x &= MASK64
     u = ((x ^ (x >> 30)) * MIX_MUL_1) & MASK64
     v = ((u ^ (u >> 27)) * MIX_MUL_2) & MASK64
@@ -120,7 +120,7 @@ def arbitration_priority(
 def mu_triggered_and_bit(
     seed: int, tick: int, row: int, col: int, field: int, mut_numer: int
 ) -> Tuple[bool, int]:
-    """Mu's domain-separated hash chain (PHYSICS_SPEC_DRAFT.md, "Mutation
+    """Mu's domain-separated hash chain (PHYSICS_SPEC_DRAFT.md, "Perturbation
     (Mu)"). `field` must be in {0,1,2,3} (template fields only -- Mu is
     never invoked for field 4, by construction of the caller). Returns
     (triggered, bit_index)."""
@@ -135,7 +135,7 @@ def mu_triggered_and_bit(
 
 def rho_triggered(seed: int, tick: int, row: int, col: int, replenish_numer: int) -> bool:
     """Rho's domain-separated hash chain (PHYSICS_SPEC_DRAFT.md,
-    "Replenishment (Rho)"), independent per cell."""
+    "Replenishment (Rho)"), independent per site."""
     r0 = splitmix64_mix((seed & MASK64) ^ REPLENISH_DOMAIN_CONST)
     r1 = splitmix64_mix(r0 ^ (tick & MASK64))
     key = splitmix64_mix(r1 ^ pack_coords(row, col))
@@ -146,9 +146,9 @@ def rho_triggered(seed: int, tick: int, row: int, col: int, replenish_numer: int
 def decode_and_emit(
     grid: Grid, H: int, W: int, write_cost: int, trace: Optional[list] = None
 ) -> List[Proposal]:
-    """S[t] -> every active, non-starved WRITE cell emits exactly one
-    proposal (PHYSICS_SPEC_DRAFT.md tick phases 1-2). A cell is STARVED
-    if its energy < write_cost; a starved cell emits nothing and pays no
+    """S[t] -> every active, non-starved WRITE site emits exactly one
+    proposal (PHYSICS_SPEC_DRAFT.md tick phases 1-2). A site is STARVED
+    if its energy < write_cost; a starved site emits nothing and pays no
     WRITE_COST (starvation affects behavior only, never stored state)."""
     proposals: List[Proposal] = []
     for r in range(H):
@@ -176,7 +176,7 @@ def decode_and_emit(
 
 
 def group_contests(proposals: List[Proposal]) -> Contests:
-    """Group by (target cell, target field); each group is one
+    """Group by (target site, target field); each group is one
     independent arbitration contest, for target_field in 0..4."""
     contests: Contests = {}
     for p in proposals:
@@ -188,7 +188,7 @@ def group_contests(proposals: List[Proposal]) -> Contests:
 def assert_no_duplicate_sources(contests: Contests) -> None:
     """Harness-level defect detector, unchanged from AETH-00: a correct
     decode of any valid AETH-01 state can never produce two proposals
-    from the same source cell in one contest (each cell emits at most
+    from the same source site in one contest (each site emits at most
     one proposal per tick, to exactly one (target, field) pair)."""
     for key, plist in contests.items():
         sources = [p.source for p in plist]
@@ -231,8 +231,8 @@ def commit_template(
     winning value, after Mu, into a mutable copy of the template fields.
     Field 4 (energy) is left untouched here; settle_energy() handles it
     separately. Returns a list-of-lists (mutable) of the 4 template
-    fields per cell, copied from `grid`."""
-    template = [[cell[f] for f in TEMPLATE_FIELDS] for row in grid for cell in row]
+    fields per site, copied from `grid`."""
+    template = [[site[f] for f in TEMPLATE_FIELDS] for row in grid for site in row]
     # Reshape to [row][col][field] for readability below.
     template = [template[r * W : (r + 1) * W] for r in range(H)]
     for (target, field), (winner, _priority) in winners.items():
@@ -267,11 +267,11 @@ def settle_energy(
     trace: Optional[list] = None,
 ) -> List[List[int]]:
     """Field 4 settlement (PHYSICS_SPEC_DRAFT.md phases 5-7), atomically
-    per cell. Returns the next tick's H x W energy grid (plain ints)."""
-    next_energy = [[cell[ENERGY] for cell in row] for row in grid]
+    per site. Returns the next tick's H x W energy grid (plain ints)."""
+    next_energy = [[site[ENERGY] for site in row] for row in grid]
 
-    # 5a + 5b: every emitting cell is debited WRITE_COST; every field-4
-    # emitting cell is further debited its own transfer_amt. Guaranteed
+    # 5a + 5b: every emitting site is debited WRITE_COST; every field-4
+    # emitting site is further debited its own transfer_amt. Guaranteed
     # non-negative because non-starved implies energy >= write_cost, and
     # transfer_amt <= energy - write_cost by construction (EMIT phase).
     for p in proposals:
@@ -315,7 +315,7 @@ def settle_energy(
                 if trace is not None:
                     trace.append(("energy_decayed", (r, c), d))
 
-    # 7: independent per-cell replenishment, saturating at 255.
+    # 7: independent per-site replenishment, saturating at 255.
     for r in range(H):
         for c in range(W):
             if rho_triggered(seed, tick, r, c, replenish_numer):
@@ -390,12 +390,12 @@ class Aeth01World:
             if len(grid) != H or any(len(row) != W for row in grid):
                 raise ValueError("grid shape does not match H, W")
             for row in grid:
-                for cell in row:
-                    if len(cell) != NUM_FIELDS:
-                        raise ValueError(f"invalid cell (must be 5 uint8 fields): {cell}")
-                    for index, field_value in enumerate(cell):
-                        _require_int("cell field %d" % index, field_value, 0, 255)
-            self.grid = [[tuple(cell) for cell in row] for row in grid]
+                for site in row:
+                    if len(site) != NUM_FIELDS:
+                        raise ValueError(f"invalid site (must be 5 uint8 fields): {site}")
+                    for index, field_value in enumerate(site):
+                        _require_int("site field %d" % index, field_value, 0, 255)
+            self.grid = [[tuple(site) for site in row] for row in grid]
 
     @classmethod
     def from_bytes(
