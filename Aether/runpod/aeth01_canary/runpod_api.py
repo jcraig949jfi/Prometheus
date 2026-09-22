@@ -29,6 +29,10 @@ _REQUEST_SECONDS = 10
 _LIST_SECONDS = 30
 _LIST_LIMIT = 16 * 1024 * 1024
 _POD_LIMIT = 10000
+# A non-default User-Agent is required: the provider is fronted by Cloudflare,
+# whose managed rule 1010 blocks urllib's default agent signature with HTTP 403
+# before the request reaches the API's own authentication.
+_USER_AGENT = "AGE-AETH01-canary/1.0"
 _ARTIFACT_NAMES = frozenset({"receipt.json", "canary.log", "result.json"})
 _POD_ID = re.compile(r"[A-Za-z0-9_-]{1,128}")
 
@@ -133,7 +137,8 @@ class _Client:
         try:
             request_deadline = monotonic() + _REQUEST_SECONDS
             deadline = request_deadline if deadline is None else min(deadline, request_deadline)
-            request = Request(url, data=data, method=method, headers={"Accept": accept})
+            request = Request(url, data=data, method=method,
+                              headers={"Accept": accept, "User-Agent": _USER_AGENT})
             # Defense in depth: even a redirecting opener must not copy credentials.
             request.add_unredirected_header("Authorization", self._authorization)
             if data is not None:

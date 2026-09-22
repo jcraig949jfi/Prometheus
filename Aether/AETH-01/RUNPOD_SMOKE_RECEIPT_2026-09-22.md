@@ -92,3 +92,98 @@ separately authorized single-Pod attempt with the 403 cause diagnosed
 through non-mutating means (e.g. contacting RunPod support, or reading
 the response body via a client library that surfaces error content on
 non-2xx without needing a second live `POST`).
+
+
+---
+
+# Attempt 2 (same day) — root cause of Attempt 1's 403 found; new failure isolated
+
+Starting HEAD: `339601100bbd34e3371c7a0d5c15ddc1e91fd73b` (unchanged)
+
+## What happened
+
+1. **Root cause of Attempt 1's HTTP 403 (now definitively diagnosed): Cloudflare,
+   not authorization.** `api.runpod.io` is fronted by Cloudflare. A request from
+   Python's `urllib` default agent (`Python-urllib/3.x`) is rejected by Cloudflare
+   managed rule **1010 ("Access denied — the site owner has blocked access based on
+   your browser's signature")** with HTTP 403, *before* it ever reaches RunPod's
+   auth layer. Confirmed three ways: (a) the 403 body was Cloudflare
+   `error_code: 1010`, not RunPod's `problem+json`; (b) an *unauthenticated* request
+   returned the identical 1010 403; (c) resending with any ordinary `User-Agent`
+   (`curl`, a browser string, or a custom token) returned **HTTP 200** with real
+   data. This also explains Attempt 1's paradox: the `runpod_api` (urllib) create
+   got 403 while the PowerShell `Invoke-RestMethod` diagnostic — which sends a
+   browser-like UA — sailed through to a real 201.
+2. **Fix applied to the controller transport** (`Aether/runpod/aeth01_canary/runpod_api.py`):
+   added a `User-Agent` header (`_USER_AGENT = "AGE-AETH01-canary/1.0"`) to every
+   request. This is the local controller path only; the pinned on-pod files and
+   their SHA-256s are unchanged.
+3. **Baseline re-verified clean** through the repo's own controller: `GET /v2/pods`
+   → `pods: []` (0 pods); `GET /v2/billing?lastN=1` → all-zero totals. GPU
+   pre-flight: `RTX 3070` COMMUNITY exists at $0.13/hr, availability LOW. Canary
+   file pre-flight: all four raw.githubusercontent.com files at the pinned commit
+   fetched with matching SHA-256.
+4. **Exactly one pod created** (first attempt, no retries): `id omn4987e0lz9ok`,
+   `aeth01-smoke-6622d04c`, RTX 3070 COMMUNITY, `disk 20`, `ports ["8080/http"]`,
+   image `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`, created
+   `2026-09-22T12:13:22.481Z`, went `RUNNING`. A strong per-run `AGE_ARTIFACT_TOKEN`
+   and `AETH01_RUN_ID` were injected via `env`; the RunPod API key was never placed
+   on the pod by us.
+5. **Canary never ran — a genuine incompatibility was isolated.** Container logs
+   showed the boot script looping every ~15s: files download + checksum **OK**,
+   `numpy`/`cupy-cuda12x` install **OK**, then `pod_service.py` prints
+   **"RunPod API credentials must stay off-pod"** and exits code 2, the container
+   command dies, RunPod restarts it, repeat. Cause: **RunPod auto-injects
+   `RUNPOD_API_KEY` into every pod's environment**, which trips `pod_service.py`'s
+   `load_config` credential-isolation guard (it rejects any of `RUNPOD_API_KEY` /
+   `RUNPOD_API_TOKEN` / `RUNPOD_TOKEN` in the environment). As written,
+   `pod_service.py` therefore cannot start on a real RunPod pod. `result.json` was
+   never produced; CPU/GPU utilization stayed at 0%.
+6. **Terminated and verified.** Per the hard limits (one pod, terminate and stop on
+   anything unexpected — this is *not* the "capacity failure, no pod created" case
+   that allowed a same-body retry), the pod was terminated immediately on diagnosis:
+   `terminate_pod` → `ACK_204`; `GET /v2/pods` → `pods: []`. Absence confirmed by
+   inventory. No second pod was created.
+
+## Report
+
+- **Image**: `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04` (launched and
+  pulled successfully this time; digest not separately resolved).
+- **GPU type**: `NVIDIA GeForce RTX 3070` (COMMUNITY, $0.13/hr, availability LOW).
+- **CUDA/CuPy status**: dependencies installed cleanly on-pod
+  (`numpy==2.2.0`, `cupy-cuda12x==13.3.0`), but the canary process never started, so
+  real-GPU CuPy execution was **not** exercised.
+- **Canary PASS/FAIL**: **FAIL** — canary did not run (pod_service refused to start).
+- **300-match result**: not reached.
+- **Pod termination status**: Confirmed terminated. `omn4987e0lz9ok` created
+  `2026-09-22T12:13:22.481Z`; terminated ~`12:36Z` (~23 min); `terminate_pod`
+  returned `ACK_204`; `GET /v2/pods` → `pods: []`.
+- **Actual cost**: today's `GET /v2/billing/pods` posted `$0.00188` against the
+  *prior* pod `qqn877vv9iivcr`; this pod's runtime had not yet posted at report time.
+  Upper bound for this pod: ~23 min × $0.13/hr ≈ **$0.05**. Well under the $3 cap.
+- **Final disposition**: `RUNPOD_SMOKE_FAIL`
+
+## What this attempt established (and the remaining blocker)
+
+- The AGE controller transport now works end-to-end on RunPod: create, list, get,
+  logs (out-of-band), and terminate all succeed once the Cloudflare-1010 UA issue is
+  fixed. Attempt 1's 403 mystery is fully resolved.
+- The remaining blocker is a **one-line environment conflict**, not a physics or
+  transport problem: RunPod injects `RUNPOD_API_KEY`, and `pod_service.py` treats
+  that as fatal.
+
+### Recommended fix for a future, separately-authorized single-pod attempt
+
+Pick one (the first needs no change to the pinned GitHub files or their checksums):
+
+- **Boot-script scrub (minimal):** in the create body's `cmd`, run
+  `unset RUNPOD_API_KEY RUNPOD_API_TOKEN RUNPOD_TOKEN` immediately before
+  `python3 pod_service.py`. RunPod's injected key is removed from the environment
+  `pod_service` sees; the canary child env is an allowlist that never included it
+  anyway, so the isolation intent is preserved.
+- **Guard refinement (code change; requires re-pinning + re-pushing the commit and
+  updating the four SHA-256s in the create body):** relax `pod_service.load_config`
+  so RunPod's platform-injected key is tolerated (or scrubbed) rather than fatal.
+
+No second pod was created for either option — applying and testing a fix requires a
+fresh, explicitly authorized single-pod run.
