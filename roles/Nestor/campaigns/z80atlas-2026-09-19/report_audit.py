@@ -410,7 +410,11 @@ def main(argv):
         "checks": checks,
         "recomputed": R,
     }
-    (here / "AUDIT_RECEIPT.json").write_text(
+    # The receipt belongs beside the artifact it certifies, NOT beside this script.
+    # Writing it next to the script meant test_report_audit.py - which audits mutated
+    # copies in a temp directory - overwrote the real report's receipt with the last
+    # mutation's FAIL. The committed receipt then certified a file that does not exist.
+    (report.parent / "AUDIT_RECEIPT.json").write_text(
         json.dumps(receipt, indent=1, ensure_ascii=True, default=str), encoding="ascii")
     for c in checks:
         print("%-4s %s  %s" % ("PASS" if c["pass"] else "FAIL", c["check"], c["detail"]))
