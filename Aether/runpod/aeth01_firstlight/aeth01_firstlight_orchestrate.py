@@ -330,9 +330,8 @@ def main():
         log("  downloaded %-24s %s" % (name, digest[:16]))
     import hashlib as _h
     for path, body in SHIPPED:
-        log("  shipped    %-24s %s" % (os.path.basename(path),
-            _h.sha256((body + "
-").encode("utf-8")).hexdigest()[:16]))
+        digest = _h.sha256(body.encode("utf-8")).hexdigest()
+        log("  shipped    %-24s %s" % (os.path.basename(path), digest[:16]))
     for w in worlds:
         log("  world %-24s %s" % (w["name"], w["params"]))
 
