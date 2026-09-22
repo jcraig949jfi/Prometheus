@@ -447,7 +447,23 @@ than degrading.
   not read back from the provider. Confirming it in the console is a
   one-look operator action.
 
-### One cosmetic regression, reported not hidden
+### One cosmetic warning, reported not hidden
+
+**CORRECTION 2026-09-22, same day, before Phase A.** The paragraph
+below called this warning a REGRESSION introduced by this round. That
+was wrong. The pre-round expression form warns identically on a scalar:
+both forms go through the same ufunc, and a direct experiment
+(old and new form, scalar and array, under `warnings.catch_warnings`)
+gives 1 warning each on the scalar and 0 each on the array. The
+baseline A40 run emitted it too. It became VISIBLE this round only
+because this round fixed the `.gitignore` rule that had been swallowing
+`*.log`, so the pod's logs were committed for the first time -- a
+change in observability, not in behaviour. The original text is left
+standing below with this annotation rather than rewritten. Ledger row:
+`roles/Aether/calibration/LEDGER.md`. The warning is removed in the
+Phase A repair (`MIX64_SCALAR_REPAIR_2026-09-22.md`).
+
+#### Original text, uncorrected
 
 Both `canary.log` and `bench.log` carry a new NumPy warning:
 

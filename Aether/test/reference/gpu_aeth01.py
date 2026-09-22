@@ -55,6 +55,25 @@ def mix64_vec(x: np.ndarray) -> np.ndarray:
     x *= MIX_MUL_2
     x ^= x >> U64(31)
     return x
+def mix64_scalar(x):
+    """Same splitmix64 finalizer as `mix64_vec`, on one host scalar.
+
+    Exists because NumPy reports integer overflow for scalar operations
+    and not for array ones, so feeding a scalar to the vectorized mixer
+    emits `overflow encountered in scalar multiply` on a wraparound that
+    is the intended semantic. Python ints are unbounded and the mask is
+    explicit, so this path cannot overflow rather than overflowing
+    quietly. Constants are reused from the vectorized mixer, not
+    restated, and equality with it is asserted over a randomized 64-bit
+    corpus in test_aeth01_mix64_scalar.py."""
+    mask = int(MASK64)
+    x = int(x) & mask
+    x ^= x >> 30
+    x = (x * int(MIX_MUL_1)) & mask
+    x ^= x >> 27
+    x = (x * int(MIX_MUL_2)) & mask
+    x ^= x >> 31
+    return np.uint64(x)
 
 
 def pack_coords_vec(row: np.ndarray, col: np.ndarray) -> np.ndarray:
@@ -64,16 +83,16 @@ def pack_coords_vec(row: np.ndarray, col: np.ndarray) -> np.ndarray:
 def arbitration_priority_vec(
     seed, tick, target_packed, field, source_packed
 ) -> np.ndarray:
-    h0 = mix64_vec(np.uint64(seed) ^ ARBITRATION_SEED_XOR)
-    h1 = mix64_vec(h0 ^ np.uint64(tick))
+    h0 = mix64_scalar(np.uint64(seed) ^ ARBITRATION_SEED_XOR)
+    h1 = mix64_scalar(h0 ^ np.uint64(tick))
     h2 = mix64_vec(h1 ^ target_packed)
     h3 = mix64_vec(h2 ^ np.uint64(field))
     return mix64_vec(h3 ^ source_packed)
 
 
 def mu_vec(seed, tick, packed, field, mut_numer):
-    g0 = mix64_vec(np.uint64(seed) ^ MUT_DOMAIN_CONST)
-    g1 = mix64_vec(g0 ^ np.uint64(tick))
+    g0 = mix64_scalar(np.uint64(seed) ^ MUT_DOMAIN_CONST)
+    g1 = mix64_scalar(g0 ^ np.uint64(tick))
     g2 = mix64_vec(g1 ^ packed)
     key = mix64_vec(g2 ^ np.uint64(field))
     triggered = (key >> U64(32)) < np.uint64(mut_numer)
@@ -82,8 +101,8 @@ def mu_vec(seed, tick, packed, field, mut_numer):
 
 
 def rho_vec(seed, tick, packed, replenish_numer):
-    r0 = mix64_vec(np.uint64(seed) ^ REPLENISH_DOMAIN_CONST)
-    r1 = mix64_vec(r0 ^ np.uint64(tick))
+    r0 = mix64_scalar(np.uint64(seed) ^ REPLENISH_DOMAIN_CONST)
+    r1 = mix64_scalar(r0 ^ np.uint64(tick))
     key = mix64_vec(r1 ^ packed)
     return (key >> U64(32)) < np.uint64(replenish_numer)
 
