@@ -86,12 +86,27 @@ def uses_query_param(family: str) -> bool:
     return family in QUERY_PARAM_FAMILIES
 
 
+# The declared primitive `powr` bounds its exponent to [0, 32]. The emitted
+# artifact must honour the same bound as the search evaluator, or the two
+# disagree about what the grammar means.
+# DEFECT FOUND 2026-09-22: an earlier patch rewrote `pow(` to `_pw(` in the
+# emitted body WITHOUT emitting this definition, so any fold using powr would
+# have raised NameError inside the sandbox. No slice-2C result is affected --
+# the selected folds are (acc + v) and (acc * v), which contain no powr -- but
+# a powr-using fold would have been scored wrong for the wrong reason.
+POW_GUARD = ("def _pw(a, b):\n"
+             "    if b < 0 or b > 32:\n"
+             "        return 0\n"
+             "    return pow(a, b)\n")
+
+
 def fold_source(family: str, init: str, e_body: str, f_body: str) -> str:
     """Emit the fold as module source. `last`/`vals` split is fixed by the
     family's declared shape, not chosen by the search."""
     trailing = uses_query_param(family)
     return (
-        "\ndef _fold_%s(p):\n"
+        "\n" + POW_GUARD +
+        "def _fold_%s(p):\n"
         "    nums = [int(v) for v in re.findall(r\"-?\\d+\", p)]\n"
         "    vals = nums[:-1] if %s else nums\n"
         "    last = nums[-1]\n"
