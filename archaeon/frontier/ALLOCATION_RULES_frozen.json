@@ -1,0 +1,37 @@
+{
+ "anti_collapse": {
+  "epochs": 2,
+  "exploration_boost": 0.1,
+  "reopen_bin_min": 7,
+  "single_lineage_share": 0.5
+ },
+ "ceilings": {
+  "EXPLOITATION": 0.6
+ },
+ "digest": "sha256:430e49549f0ac8c2dc49abffd5b5046ec361f8a0bcd6e8e575298fe86e469d3b",
+ "epoch": {
+  "evaluations": 100000,
+  "wall_hours": 24
+ },
+ "floors": {
+  "AUDIT": 0.15,
+  "EXPLORATION": 0.2
+ },
+ "initial": {
+  "AUDIT": 0.2,
+  "EXPLOITATION": 0.4,
+  "EXPLORATION": 0.4
+ },
+ "max_move": 0.1,
+ "relevance_floor_band": 0.0625,
+ "relevance_floor_controls": 3,
+ "schema": "archaeon.frontier.allocation.v1",
+ "step": 0.25,
+ "yield_terms": [
+  "corroborated_events",
+  "new_phenomenon_families",
+  "blind_spots_with_new_positive_control",
+  "interpretations_overturned",
+  "retirements_with_reopen"
+ ]
+}

@@ -128,17 +128,506 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:1341-1530"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:238-382"
+   }
+  ],
+  "inspected_files": [
+   "compress42.c 238-382 (defines), 1341-1530 (compress())"
+  ],
+  "date": "2026-09-17T22:50Z",
+  "note": "LZW as shipped in Unix compress: a dictionary that is never stored, only re-derived; codes that widen as the dictionary fills; and a block-mode heuristic that throws the dictionary away when the compression ratio starts falling",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://github.com/vapier/ncompress/archive/refs/tags/v4.2.4.6.tar.gz sha256:112acfc76382e7b631d6cfc8e6ff9c8fd5b3677e5d49d3d9f1657bc15ad13d13",
+   "payload_manifest_id": "techne tree_sha256 d729870244f7739a50fed2b8382a405ef37261fcb0f935bdd2a391e3e88f13a5 (24 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/ncompress-4.2.4.6/compress42.c",
+     "payload_hash_read": "3805f5a6c1748c64db0119ca5d3c5e25cbb559bf78333d243efcbd136400cc52",
+     "techne_recorded_hash": "3805f5a6c1748c64db0119ca5d3c5e25cbb559bf78333d243efcbd136400cc52",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "fossil_ancestry": "compress-4.2.4-lzw",
+   "human_name": "fcode = (byte << BITS-8) ^ ent; htab / codetab; free_ent from FIRST=257 (compress() 1440-1530)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the current string is represented by its dictionary code ent; each new byte c forms the key (c, ent); if the pair is in the hash table its code becomes the new ent (the string grows), else the code for ent is emitted, the pair is entered at the next free code, and ent restarts at c; the decoder rebuilds the same table from the code stream, so the dictionary is never sent; the table is open-addressed with a secondary hash (disp = HSIZE - hp - 1, after G. Knott)",
+   "input": "bytes",
+   "output": "codes of n_bits each",
+   "state": "htab (hash of pair -> code), free_ent",
+   "update": "per byte",
+   "assumptions": [
+    "the decoder will see codes in the same order and can reconstruct each entry one step behind the encoder (the KwKwK case is the decoder's to handle)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+    "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving"
+   ],
+   "fitness_value_in_ancestor": "one pass, no model transmitted, adaptive to any byte statistics",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Welch 1984 (LZW); the hash-with-secondary-probe is the 4.x BSD implementers'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:1440-1530"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the hfound/next/next2 loop and the hash probe",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "fossil_ancestry": "compress-4.2.4-lzw",
+   "human_name": "n_bits / extcode / MAXCODE / INIT_BITS (1362-1379, 1394-1410)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "codes start 9 bits wide (INIT_BITS); when free_ent reaches 2^n_bits the width increments (the output bit position is realigned to a code boundary, boff) up to maxbits (default 16); at maxbits the table is frozen (stcode = 0) and no new entries are added until a CLEAR",
+   "input": "free_ent",
+   "output": "n_bits; a realignment",
+   "state": "n_bits, extcode, boff",
+   "update": "on each table-size threshold",
+   "assumptions": [
+    "the decoder increments its width at the same free_ent counts (the alignment is part of the format, including the padding to a code boundary at each width change)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+    "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving"
+   ],
+   "fitness_value_in_ancestor": "short codes early, wide codes only when the dictionary is large",
+   "failure_landscape": "by reading: the boff realignment is the source of the classic 'compress' format incompatibilities between versions",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:1362-1379, 1394-1410"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the if (free_ent >= extcode ...) block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "fossil_ancestry": "compress-4.2.4-lzw",
+   "human_name": "CHECK_GAP / ratio / checkpoint / CLEAR (1411-1440)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "once the table is full (stcode = 0), every CHECK_GAP = 10000 input bytes the running ratio bytes_in/bytes_out (8 fractional bits) is compared with the best seen; if it improved the best is updated; if it FELL, the table is cleared, a CLEAR code (256) is emitted, the width returns to 9 bits and the dictionary starts over; the check itself is only made at string boundaries (ent < FIRST)",
+   "input": "bytes_in, bytes_out",
+   "output": "a CLEAR code and a fresh table, or nothing",
+   "state": "ratio (best), checkpoint",
+   "update": "per CHECK_GAP bytes once full",
+   "assumptions": [
+    "a falling ratio means the frozen dictionary no longer fits the data (the input statistics drifted); restarting costs a few thousand bytes of poor compression and pays back if the drift is real"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+    "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes"
+   ],
+   "fitness_value_in_ancestor": "adaptivity restored after the dictionary freezes; the only feedback loop in the coder",
+   "failure_landscape": "by reading: a ratio that oscillates around the best value triggers resets on every dip (no hysteresis beyond 'best so far'); the reset costs the whole dictionary, never part of it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "block mode (the 0x80 flag in the header byte) was added to compress 4.0 by the Unix community; the 10000-byte gap is tuning",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:365, 1411-1440"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the if (!stcode && bytes_in >= checkpoint ...) block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "decompress() and the KwKwK special case",
+   "reason": "OTHER",
+   "evidence": "NOT READ (1594-1820); the decoder's table rebuild is the mirror of the encoder organ; residue",
+   "note": "a second pass reads it for the one asymmetric case",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
+  },
+  {
+   "candidate": "main(), comprexx(), compdir() (file handling, recursion into directories, the magic bytes, signal handling), the FAST hash variant",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:compress-4.2.4-lzw/upstream/tree/ncompress-4.2.4.6/compress42.c:707-1340; the #ifdef FAST branch",
+   "note": "drivers and a performance variant of the same probe",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
+  },
+  {
+   "candidate": "'LZW' / 'compress' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the implicit dictionary, the code widening and the ratio reset are separately replaceable; gzip (in the vault) keeps none of them and beats it -- the record's superseded-design tag",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compress-4.2.4-lzw"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "compress-4.2.4-lzw::P.a_model_that_can_only_grow_must_be_discarded_wholesale_when_the_source_drifts_and_the_only_signal_is_its_own_recent_performance",
+   "source_fossil": "compress-4.2.4-lzw",
+   "source_evidence": "compress42.c 1411-1440; record tags dictionary-coding / lzw",
+   "condition": "an organism builds a dictionary from what it has seen; once full it cannot change; the source's statistics may drift; the organism sees only its own compression ratio, in chunks",
+   "resource_or_constraint": "a full dictionary is frozen; a reset costs the dictionary and a restart",
+   "failure_condition": "keeping a stale dictionary (ratio decays) or resetting on noise (ratio never recovers)",
+   "world_punishes": "both",
+   "world_rewards": "a reset rule that fires on real drift and not on noise",
+   "observable_consequence": "compressed size on a source that changes statistics at a known point vs a stationary source, with the reset enabled and disabled",
+   "vacuity_condition": "a stationary source or an unbounded dictionary",
+   "trivial_shortcuts": "a world that announces the drift",
+   "cheat_control": "an organism told the drift point must reset exactly there and beat the ancestor; the ancestor with block mode off must show the decay after the drift: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: adaptive dictionary compression with reset (Unix compress 4.x)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "free_ent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "freeze at maxbits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "clear_htab",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "back to 9 bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bytes_in/bytes_out",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "compress-4.2.4-lzw",
@@ -146,10 +635,30 @@
    "to": "ncompress-5.0-lzw-1985",
    "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "algorithm_from",
+   "to": "Welch 1984 (LZW) on Lempel-Ziv 1978; Unix compress by Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost (the file's header)",
+   "note": "from the source header; record lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "decompress() not read",
+   "the FAST hash variant read only to its first probe",
+   "nothing ran"
+  ],
+  "note": "the encoder's three mechanisms are accounted for; the vault's ncompress-5.0 and gzip fossils are recurrence/supersession neighbours",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

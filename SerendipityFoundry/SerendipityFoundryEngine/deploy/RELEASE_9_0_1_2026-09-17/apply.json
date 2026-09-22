@@ -1,0 +1,160 @@
+{
+ "phase": "apply",
+ "at": "2026-09-17T17:01:06Z",
+ "commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+ "steps": [
+  {
+   "pin": {
+    "from": "1b9286292e3f",
+    "to": "b0d75218382d",
+    "rc": 0
+   }
+  },
+  {
+   "stop": "stopped 5596"
+  },
+  {
+   "watchdog": "",
+   "rc": 0
+  },
+  {
+   "repinned": "D:\\Prometheus-worktrees\\daedalus-boot-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json"
+  }
+ ],
+ "checks": [
+  {
+   "check": "still nobody writing",
+   "pass": true,
+   "events_last_10min": 0
+  },
+  {
+   "check": "pinned worktree advanced",
+   "pass": true,
+   "head": "b0d75218382d"
+  },
+  {
+   "check": "pinned tree reproduces the candidate hash",
+   "pass": true
+  },
+  {
+   "check": "engine answers after restart",
+   "pass": true,
+   "outage_s": 13.3
+  },
+  {
+   "check": "process is NEW (start time advanced, pid changed)",
+   "pass": true,
+   "before": "2026-09-17T10:51:30Z",
+   "after": "2026-09-17T17:01:12Z"
+  },
+  {
+   "check": "engine instance UNCHANGED (ledger state)",
+   "pass": true
+  },
+  {
+   "check": "source hash == candidate",
+   "pass": true,
+   "live": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc"
+  },
+  {
+   "check": "schema 9 live AND in the ledger",
+   "pass": true
+  },
+  {
+   "check": "route count delta == +0",
+   "pass": true,
+   "before": 72,
+   "after": 72
+  },
+  {
+   "check": "checkpointer alive on the new process",
+   "pass": true,
+   "runs": 4,
+   "wal_bytes": 0
+  },
+  {
+   "check": "ledger path and bind unchanged",
+   "pass": true,
+   "bind": "192.168.1.191"
+  },
+  {
+   "check": "no event lost across the migration",
+   "pass": true,
+   "events": 12611
+  },
+  {
+   "check": "capabilities advertises the release",
+   "pass": true
+  }
+ ],
+ "before": {
+  "recorded_at": "2026-09-17T17:01:07Z",
+  "process_start_utc": "2026-09-17T10:51:30Z",
+  "pid": 5596,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"D:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"D:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"D:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+  "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382",
+  "schema_version": 9,
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "capabilities_features": {
+   "logical_time": true,
+   "typed_termination": true,
+   "world_events": true,
+   "manifest_envelope": true,
+   "labels": true,
+   "artifact_list": true,
+   "cursor_pagination": true,
+   "fork_changed_fields": true
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 9,
+   "events": 12611
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+   "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382"
+  }
+ },
+ "outage_s": 13.3,
+ "after": {
+  "recorded_at": "2026-09-17T17:01:23Z",
+  "process_start_utc": "2026-09-17T17:01:12Z",
+  "pid": 8900,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"D:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"D:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"D:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5",
+  "schema_version": 9,
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "capabilities_features": {
+   "logical_time": true,
+   "typed_termination": true,
+   "world_events": true,
+   "manifest_envelope": true,
+   "labels": true,
+   "artifact_list": true,
+   "cursor_pagination": true,
+   "fork_changed_fields": true
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 9,
+   "events": 12611
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+   "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382"
+  }
+ },
+ "ok": true
+}

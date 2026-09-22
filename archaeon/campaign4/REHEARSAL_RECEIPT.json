@@ -1,0 +1,818 @@
+{
+ "_what_this_is": "Campaign 4 synthetic end-to-end rehearsal receipt. REHEARSAL ONLY -- no scientific claim.",
+ "campaign_seed": 20260921,
+ "driver": "archaeon/campaign4/rehearsal_full.py",
+ "generated_at": "2026-09-18T00:22:24Z",
+ "generated_by": "Archaeon[m2-49ee5a4d]",
+ "identity": {
+  "identity_file": "archaeon/campaign4/CAMPAIGN4_EXECUTION_IDENTITY.json",
+  "identity_file_digest": "sha256:440a012dc2658bf3daca7f1a0f34fed6dca9e77d89ca9e68892a93e97669f254",
+  "tuple": {
+   "archaeon": {
+    "campaign_seed": 20260921
+   },
+   "daedalus": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "schema_version": 9
+   },
+   "pew": {
+    "reader_version": "ew.campaign_ingest/1.4",
+    "schema_version": 5
+   },
+   "proteus": {
+    "foundry_profile_id": "pfp1:625bc70456ebfa20",
+    "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832"
+   },
+   "vivarium": {
+    "build_commit": "08081c6ed"
+   }
+  }
+ },
+ "pass": true,
+ "pass_rule": "S5 invariant holds AND S7 rebuild digests stable AND S8 reproduces (REHEARSAL_PLAN.md s3)",
+ "plan": "archaeon/campaign4/REHEARSAL_PLAN.md",
+ "preconditions": [
+  {
+   "blocks": [
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8"
+   ],
+   "id": "P1",
+   "owner": "operator / Daedalus",
+   "present": true,
+   "what": "campaign 4 engine credential (archaeon/campaign4/config.local.json)"
+  },
+  {
+   "blocks": [
+    "S3"
+   ],
+   "evidence": "archaeon/campaign4/G3_READ_PROOF.json",
+   "id": "P2",
+   "owner": "Vivarium",
+   "present": true,
+   "what": "B1 read grant for the Campaign 4 identity on the M2 ledger (superseded wording: cli_2bb36261 was the M1-era grantee; the live grantee is cmp4-archaeon cli_6354da5b, Vivarium #399)"
+  },
+  {
+   "blocks": [
+    "S4",
+    "S5"
+   ],
+   "evidence": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1.json",
+   "id": "P3",
+   "owner": "Daedalus + Vivarium",
+   "present": true,
+   "what": "deliberate mid-run engine restart, executed and receipted by Daedalus"
+  },
+  {
+   "blocks": [
+    "S7"
+   ],
+   "evidence": "evidence_wiki/integration/s7_rehearsal_results.json",
+   "id": "P4",
+   "owner": "Mnemosyne (tool); run by Archaeon with Mnemosyne's written consent, comms #391",
+   "present": true,
+   "what": "PEW ingest/rebuild/release-check leg"
+  },
+  {
+   "blocks": [],
+   "evidence": [
+    {
+     "experiment_id": "4b3aa3b1",
+     "not_before": "2026-12-31 19:00:00-05:00"
+    },
+    {
+     "experiment_id": "357050fd",
+     "not_before": "2026-12-31 19:00:00-05:00"
+    },
+    {
+     "experiment_id": "a3eee9d4",
+     "not_before": "2026-12-31 19:00:00-05:00"
+    },
+    {
+     "experiment_id": "2556d667",
+     "not_before": "2026-12-31 19:00:00-05:00"
+    },
+    {
+     "experiment_id": "6c2a3016",
+     "not_before": "2026-12-31 19:00:00-05:00"
+    }
+   ],
+   "id": "P5",
+   "owner": "Archaeon",
+   "present": true,
+   "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
+  }
+ ],
+ "register_dump": "archaeon/campaign4/rehearsal/REGISTER_C4-REH-1.json",
+ "stage_mode": "full",
+ "stages": [
+  {
+   "bundle_digest": "sha256:cc4e0464ee9ed2a8fff3ef79b6bff9780fb64f49eced38a01d0a59a363bea485",
+   "bundle_manifest": "archaeon/campaign4/rehearsal/bundle/MANIFEST.json",
+   "note": "bundle built by the previous instance (m2-411504ab) and not rebuilt; validated again below",
+   "stage": "S1",
+   "status": "OK",
+   "units": 48
+  },
+  {
+   "admitted_spec_hashes_match_bundle": true,
+   "all_valid": true,
+   "arm_collision_by_contract": true,
+   "arm_collision_note": "arms a and b differ only in QUEUE COLUMNS (arm_id, request_key), which viv/spec.py deliberately banishes from the sealed hash, so the pair shares one spec_hash and one derived world name. For this rehearsal that is correct and useful: the two arms are a REPLICATION PAIR, not a contrast, and the collision exercises the request-key path that keeps them distinct rows. CONSEQUENCE FOR CAMPAIGN 4: two arms that differ only in provenance are the same experiment; any real C4 contrast must differ in an EXECUTION INPUT or it will not be distinguishable in the sealed record.",
+   "distinct_spec_hashes": 24,
+   "rows": [
+    {
+     "arm": "a",
+     "seed": 1,
+     "spec_hash": "sha256:b1e4cb0310e93f507742e93a8d6accfd715377ef3ba678464200889589c3bd27",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 2,
+     "spec_hash": "sha256:67bccef64deff0030a524142d65ec16e401a129d43396653f08ebfb4f901a4e5",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 3,
+     "spec_hash": "sha256:7e75ed336a97090c672762572fd4de2e18dee66fa2c841e2fded0bd89a80d884",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 4,
+     "spec_hash": "sha256:65a5010d4228c66241afddd41653177c14ec3b0d73d5922847f22ee8a57580ee",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 5,
+     "spec_hash": "sha256:c5d8715075cf6762a2c3d5cd2cad7fe129d7a6fd9db5668f044994742d4a36e8",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 6,
+     "spec_hash": "sha256:c8204a0bfb004320205254f0f2a81da0247e52048bf5eea0acaca10d44890215",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 7,
+     "spec_hash": "sha256:f7c0d9d3fa445aa999cc118eaf36f78161eef1c9831223322c9ad09686cd3e7d",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 8,
+     "spec_hash": "sha256:be056851f814b94310c1a71fb3aba13da62a337eba0b83f158e311769e991f82",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 9,
+     "spec_hash": "sha256:c66fd655e92049f52684a42aeed47055852d9a641b60c86399a526ffdc70d8d4",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 10,
+     "spec_hash": "sha256:2d9a002241c87e88fc307ca273419938af7cb2c88e0452e2e0f95d8a196056e5",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 11,
+     "spec_hash": "sha256:01ee392f50a2b1d818cf97e830c76a3fb75f6f27d5c8b7073c0d43a44a014c4a",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 12,
+     "spec_hash": "sha256:6fc873aa717d1fd33a9f380f9cec0d387b86c1cf589d08608e1d16ec12e9b8b2",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 13,
+     "spec_hash": "sha256:a3403248807b3c07b810fd1275fc33fa98a8a4dafe4df7ab346d5c269e497628",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 14,
+     "spec_hash": "sha256:df8dfc88e09477fe3908d49e5b8611f189ad04745f94ddef7c61c30dc3567c80",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 15,
+     "spec_hash": "sha256:65831ceef90e8497c17539129b79d8041ed65a20448dbd10c7637032a94d2f2f",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 16,
+     "spec_hash": "sha256:9830031d495bb9787411e4a124b2b2c93aec5a05567cc5332b989357d2b390d7",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 17,
+     "spec_hash": "sha256:20731b29b54407ff32368b4a308f5dd4f1a6ab54cbcb19866576dd96794d7f80",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 18,
+     "spec_hash": "sha256:ca7de747e84e796dcd6baf81fb36d8fc16196e71f9f3d2c69e12dfb2ccd1b38d",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 19,
+     "spec_hash": "sha256:765b1045bf91b4d04d6a837358c4ecea226f88f6cb9bbfadd00d815da2bb443a",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 20,
+     "spec_hash": "sha256:dd765439639559e6921d2f0a628b8e3bd5d636261ae215571999ab93c5a6241e",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 21,
+     "spec_hash": "sha256:7f2c20f6ab82ce465a5875141f2c8dbcd55508106becea8d52d60aff9c3b08c4",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 22,
+     "spec_hash": "sha256:21409875dfd16de060c1ebbcc65446c7112a111b4b8ccc6b19a1f2fede4ce085",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 23,
+     "spec_hash": "sha256:383597526666e30fa2ca3e82e4727621ac1a0c3759990cbf83bbd47c535f2265",
+     "valid": true
+    },
+    {
+     "arm": "a",
+     "seed": 24,
+     "spec_hash": "sha256:960df396cb29c716b0247fa6fe26aaa39898885c678b23ab6869e25dcd3e1609",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 1,
+     "spec_hash": "sha256:b1e4cb0310e93f507742e93a8d6accfd715377ef3ba678464200889589c3bd27",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 2,
+     "spec_hash": "sha256:67bccef64deff0030a524142d65ec16e401a129d43396653f08ebfb4f901a4e5",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 3,
+     "spec_hash": "sha256:7e75ed336a97090c672762572fd4de2e18dee66fa2c841e2fded0bd89a80d884",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 4,
+     "spec_hash": "sha256:65a5010d4228c66241afddd41653177c14ec3b0d73d5922847f22ee8a57580ee",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 5,
+     "spec_hash": "sha256:c5d8715075cf6762a2c3d5cd2cad7fe129d7a6fd9db5668f044994742d4a36e8",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 6,
+     "spec_hash": "sha256:c8204a0bfb004320205254f0f2a81da0247e52048bf5eea0acaca10d44890215",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 7,
+     "spec_hash": "sha256:f7c0d9d3fa445aa999cc118eaf36f78161eef1c9831223322c9ad09686cd3e7d",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 8,
+     "spec_hash": "sha256:be056851f814b94310c1a71fb3aba13da62a337eba0b83f158e311769e991f82",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 9,
+     "spec_hash": "sha256:c66fd655e92049f52684a42aeed47055852d9a641b60c86399a526ffdc70d8d4",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 10,
+     "spec_hash": "sha256:2d9a002241c87e88fc307ca273419938af7cb2c88e0452e2e0f95d8a196056e5",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 11,
+     "spec_hash": "sha256:01ee392f50a2b1d818cf97e830c76a3fb75f6f27d5c8b7073c0d43a44a014c4a",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 12,
+     "spec_hash": "sha256:6fc873aa717d1fd33a9f380f9cec0d387b86c1cf589d08608e1d16ec12e9b8b2",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 13,
+     "spec_hash": "sha256:a3403248807b3c07b810fd1275fc33fa98a8a4dafe4df7ab346d5c269e497628",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 14,
+     "spec_hash": "sha256:df8dfc88e09477fe3908d49e5b8611f189ad04745f94ddef7c61c30dc3567c80",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 15,
+     "spec_hash": "sha256:65831ceef90e8497c17539129b79d8041ed65a20448dbd10c7637032a94d2f2f",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 16,
+     "spec_hash": "sha256:9830031d495bb9787411e4a124b2b2c93aec5a05567cc5332b989357d2b390d7",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 17,
+     "spec_hash": "sha256:20731b29b54407ff32368b4a308f5dd4f1a6ab54cbcb19866576dd96794d7f80",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 18,
+     "spec_hash": "sha256:ca7de747e84e796dcd6baf81fb36d8fc16196e71f9f3d2c69e12dfb2ccd1b38d",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 19,
+     "spec_hash": "sha256:765b1045bf91b4d04d6a837358c4ecea226f88f6cb9bbfadd00d815da2bb443a",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 20,
+     "spec_hash": "sha256:dd765439639559e6921d2f0a628b8e3bd5d636261ae215571999ab93c5a6241e",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 21,
+     "spec_hash": "sha256:7f2c20f6ab82ce465a5875141f2c8dbcd55508106becea8d52d60aff9c3b08c4",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 22,
+     "spec_hash": "sha256:21409875dfd16de060c1ebbcc65446c7112a111b4b8ccc6b19a1f2fede4ce085",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 23,
+     "spec_hash": "sha256:383597526666e30fa2ca3e82e4727621ac1a0c3759990cbf83bbd47c535f2265",
+     "valid": true
+    },
+    {
+     "arm": "b",
+     "seed": 24,
+     "spec_hash": "sha256:960df396cb29c716b0247fa6fe26aaa39898885c678b23ab6869e25dcd3e1609",
+     "valid": true
+    }
+   ],
+   "spec_version": 3,
+   "stage": "S2-validate",
+   "status": "OK",
+   "units": 48
+  },
+  {
+   "created_by": "archaeon",
+   "experiment_ids": {
+    "C4-REH-1-a-s1": "bc0022a9-4569-4339-a30f-415641ccfe48",
+    "C4-REH-1-a-s10": "55fc6d2e-5079-4246-a0f6-800aff9b5676",
+    "C4-REH-1-a-s11": "cfee5dd0-b4b6-4a7b-91c2-fbb86495bfde",
+    "C4-REH-1-a-s12": "e69b2f0f-fa18-4af9-8970-d724bf1eab3d",
+    "C4-REH-1-a-s13": "9fc94bc4-4347-48ec-871f-3dc0944e6188",
+    "C4-REH-1-a-s14": "8f8f0cec-3d8a-4e18-9ff4-0177a765bb07",
+    "C4-REH-1-a-s15": "fe96fde7-376f-41f4-9b76-0abe3761f87c",
+    "C4-REH-1-a-s16": "6a89364e-dfc7-47bc-b7da-d85aed540dc3",
+    "C4-REH-1-a-s17": "73dc7942-bf92-4dcc-a0ca-e192dba63e9e",
+    "C4-REH-1-a-s18": "d3489aa5-eb95-48bd-8321-52cfee0c9904",
+    "C4-REH-1-a-s19": "12082bc4-f4d0-4e97-b7f0-cb78e0a12282",
+    "C4-REH-1-a-s2": "3e0fc7a7-bdde-4fd7-8f24-f9985062e1b7",
+    "C4-REH-1-a-s20": "7eeeb684-754f-4e1e-84b9-8174560f1bdb",
+    "C4-REH-1-a-s21": "8154e646-b336-4277-8340-7418943c3af9",
+    "C4-REH-1-a-s22": "3cb9ced7-5f59-4fe7-bb39-ac33001fa911",
+    "C4-REH-1-a-s23": "58e19e54-3867-4928-91d9-ca4a7c74a5c5",
+    "C4-REH-1-a-s24": "cb890ad0-0327-4729-8eca-047f4505864f",
+    "C4-REH-1-a-s3": "9d43b29a-1175-4801-91a4-33d6cd19b5ff",
+    "C4-REH-1-a-s4": "a455030d-1fc4-4c75-b312-0ed28979dd3a",
+    "C4-REH-1-a-s5": "b0fcb396-6f2d-4274-b1de-676e30472bff",
+    "C4-REH-1-a-s6": "4b88d933-f8d8-4bcf-8a1d-29f6584316fa",
+    "C4-REH-1-a-s7": "460c7c91-8e63-4802-a64e-249f48b71834",
+    "C4-REH-1-a-s8": "0afdf2df-d14c-4123-a1b2-b478c35c02a1",
+    "C4-REH-1-a-s9": "50af028b-ff4f-40b2-8792-b438cdd8f505",
+    "C4-REH-1-b-s1": "6745cd68-0a0f-48f7-aa52-3457230d1881",
+    "C4-REH-1-b-s10": "c8642c6d-b161-4751-8c82-789383837dad",
+    "C4-REH-1-b-s11": "56326a4a-f105-4e60-8573-e08720d55aaa",
+    "C4-REH-1-b-s12": "7fd391c3-fc7a-4b1d-97e1-4a0e05d9df83",
+    "C4-REH-1-b-s13": "520cd717-9851-4ea7-94d6-87441c275722",
+    "C4-REH-1-b-s14": "16325ad4-72be-415c-b253-22f2458c8ba8",
+    "C4-REH-1-b-s15": "a10d66a7-28f3-418d-ba45-39d552e8ff15",
+    "C4-REH-1-b-s16": "ddd11764-9250-4220-a13c-19b38c25c6c7",
+    "C4-REH-1-b-s17": "38130da3-96d6-4efc-9f90-74679907b587",
+    "C4-REH-1-b-s18": "a1d26b49-8443-4b24-abe8-365f737e5473",
+    "C4-REH-1-b-s19": "a2610d2e-6721-433b-b28d-44de3e6963a4",
+    "C4-REH-1-b-s2": "306b609a-88da-4613-a090-05bf37ebee40",
+    "C4-REH-1-b-s20": "40e5794f-fc2a-4565-b0d8-d7dd9e3155e1",
+    "C4-REH-1-b-s21": "601c4478-89f5-4a7d-8b86-6205cad9a74b",
+    "C4-REH-1-b-s22": "2f9845d7-995b-45b2-ad34-4b1613d59a9a",
+    "C4-REH-1-b-s23": "a2e68e75-d1f6-4dd6-aef3-8ded7d02ea19",
+    "C4-REH-1-b-s24": "649b9f89-44c5-4088-b8ad-c952e1112260",
+    "C4-REH-1-b-s3": "9323af92-1169-461c-b007-07c39762f58e",
+    "C4-REH-1-b-s4": "5ba9e174-c910-40db-85fa-834f4e6a0ad4",
+    "C4-REH-1-b-s5": "ef7dcc22-1d3f-4c6a-a257-431b720edfff",
+    "C4-REH-1-b-s6": "a027fdca-f7d7-4b79-903f-c143391b5697",
+    "C4-REH-1-b-s7": "0e1c1a6e-dedd-40d4-ac62-4f44843ac01f",
+    "C4-REH-1-b-s8": "3057b1ab-7d27-402c-a8ce-ab7438cc5d21",
+    "C4-REH-1-b-s9": "f49b6bfa-3344-48a3-ad6e-b1bbea8f863b"
+   },
+   "family_id": "C4-REH-1",
+   "pacing": {
+    "lead_s": 30.0,
+    "spacing_s": 10.0,
+    "t0": "2026-09-17T23:59:53Z"
+   },
+   "stage": "S2",
+   "status": "OK",
+   "units_admitted": 48
+  },
+  {
+   "completed": 48,
+   "expected_units": 48,
+   "failed": [],
+   "sfe_experiment_ids_distinct": 48,
+   "stage": "S3",
+   "status": "OK",
+   "units": 48
+  },
+  {
+   "daedalus_receipts": {
+    "invariants_all_true": true,
+    "mid_request_kill_present": true,
+    "note": "digests are sha256 over the LF git blob (comms/manifest.py rule); a value quoted from a CRLF working copy will differ and is not the artifact's identity",
+    "origin_main": "66f90c39a45aa34b8d9aceab98e415c69c96f494",
+    "receipts": {
+     "k1": {
+      "digest_lf_blob": "sha256:82ec9d5d11381ba8067e94b711048e7e248b641b46a3ed59079eb10fbd69bf6b",
+      "interrupt": {
+       "listener_pid": 21084,
+       "open_intents_at_kill": [],
+       "port_free_after_s": 0.64,
+       "t0": 1789689638.5988162,
+       "t0_utc": "2026-09-18T00:00:38Z"
+      },
+      "invariants": {
+       "a6_degraded": false,
+       "chain": true,
+       "checkpointer_alive": true,
+       "events_monotonic": true,
+       "ok": true
+      },
+      "invariants_all_true": true,
+      "keys": [
+       "finished_at",
+       "interrupt",
+       "invariants",
+       "pin",
+       "post",
+       "pre",
+       "recovery",
+       "relaunch",
+       "result",
+       "retry",
+       "schema",
+       "started_at",
+       "tag"
+      ],
+      "mid_request": false,
+      "origin_main": "66f90c39a45aa34b8d9aceab98e415c69c96f494",
+      "path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1.json",
+      "post": {
+       "first_event_after_restart": {
+        "actor": "cli_2bb36261427e607191ece250",
+        "event_id": "evt_42ca513b014bcbd691ff89a9",
+        "event_seq": 13789,
+        "event_type": "OBSERVATION_RECORDED",
+        "ts": 1789689637.4804895,
+        "world_id": "wld_00f67ffcbffbe9939941fbdf"
+       },
+       "first_op_after_t0_s": -1.1
+      },
+      "pre_events_last_60s": 68,
+      "recovery": {
+       "answered_after_s": 266.0,
+       "identity_checks": {
+        "bind": true,
+        "engine_instance_id": true,
+        "engine_source_hash": true,
+        "new_process": true,
+        "pin_engine_source_hash": true,
+        "route_digest": true,
+        "routes": true,
+        "schema_version": true
+       },
+       "version": {
+        "api": "v2",
+        "engine_instance_id": "eng_906356f7fb1da180131f9290",
+        "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+        "max_artifact_bytes": 33554432,
+        "registration_open": true,
+        "runtime": "serendipity-foundry-sfe",
+        "schema_version": 9,
+        "science_profile": "warn",
+        "session_enforcement": "advisory",
+        "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+       }
+      },
+      "result": "PASS",
+      "retry": {
+       "effected_after_t0": 0,
+       "keyed_replays_after_t0": 0,
+       "open_at_kill": [],
+       "refused_after_t0": 0
+      },
+      "status": "PRESENT",
+      "tag": "C4-REH-1"
+     },
+     "k2": {
+      "digest_lf_blob": "sha256:3ea3b2c12e1ac41fca8f9483ae04aca50d341e6c62e34d4fe98330f5628fd40d",
+      "interrupt": {
+       "listener_pid": 10384,
+       "open_intents_at_kill": [
+        {
+         "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+         "rid": "req_457b0a6d55b5b1bcb72c821c",
+         "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/observations",
+         "ts": 1789690206.2696433
+        }
+       ],
+       "port_free_after_s": 0.79,
+       "t0": 1789690206.0496926,
+       "t0_utc": "2026-09-18T00:10:06Z"
+      },
+      "invariants": {
+       "a6_degraded": false,
+       "chain": true,
+       "checkpointer_alive": true,
+       "events_monotonic": true,
+       "ok": true
+      },
+      "invariants_all_true": true,
+      "keys": [
+       "addendum_post_recovery",
+       "armed",
+       "finished_at",
+       "interrupt",
+       "invariants",
+       "mid_request_trigger",
+       "pin",
+       "post",
+       "pre",
+       "recovery",
+       "relaunch",
+       "result",
+       "retry",
+       "schema",
+       "started_at",
+       "tag"
+      ],
+      "mid_request": true,
+      "origin_main": "66f90c39a45aa34b8d9aceab98e415c69c96f494",
+      "path": "SerendipityFoundry/SerendipityFoundryEngine/deploy/REHEARSAL_RESTART_2026-09/restart_C4-REH-1-k2.json",
+      "post": {
+       "first_event_after_restart": {
+        "actor": "cli_2bb36261427e607191ece250",
+        "event_id": "evt_47566f6374f67b297a1e8463",
+        "event_seq": 14040,
+        "event_type": "EXPERIMENT_CREATED",
+        "ts": 1789690206.0550928,
+        "world_id": "wld_d1940e75e492c148ab4aa0e5"
+       },
+       "first_op_after_t0_s": 0.0
+      },
+      "pre_events_last_60s": 0,
+      "recovery": {
+       "answered_after_s": 298.5,
+       "identity_checks": {
+        "bind": true,
+        "engine_instance_id": true,
+        "engine_source_hash": true,
+        "new_process": true,
+        "pin_engine_source_hash": true,
+        "route_digest": true,
+        "routes": true,
+        "schema_version": true
+       },
+       "version": {
+        "api": "v2",
+        "engine_instance_id": "eng_906356f7fb1da180131f9290",
+        "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+        "max_artifact_bytes": 33554432,
+        "registration_open": true,
+        "runtime": "serendipity-foundry-sfe",
+        "schema_version": 9,
+        "science_profile": "warn",
+        "session_enforcement": "advisory",
+        "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+       }
+      },
+      "result": "PASS",
+      "retry": {
+       "effected_after_t0": 9,
+       "keyed_replays_after_t0": 0,
+       "open_at_kill": [
+        {
+         "idem_key": "idem:d1bffd5ca37f5160b0f8c04365ad9d24",
+         "outcome_now": null,
+         "ref": null,
+         "rid": "req_457b0a6d55b5b1bcb72c821c",
+         "route": "POST /v2/worlds/wld_d1940e75e492c148ab4aa0e5/observations"
+        }
+       ],
+       "refused_after_t0": 0
+      },
+      "status": "PRESENT",
+      "tag": "C4-REH-1-k2"
+     }
+    },
+    "status": "PRESENT"
+   },
+   "go": {
+    "body": "roles/Archaeon/prompts/2026-09-17_c4_convergence/02_DAEDALUS_S4_GO.md",
+    "body_digest": "sha256:00b30afbf238404775e1b3b6f020733da71159a91b061961b9756147553c671f",
+    "posted_at": "2026-09-17T23:59:53Z",
+    "rc": 0,
+    "stderr": "",
+    "stdout": "posted 401"
+   },
+   "register_saw_interruption": true,
+   "stage": "S4",
+   "status": "OK",
+   "units_resumed": [
+    "C4-REH-1-a-s10"
+   ]
+  },
+  {
+   "duplicates_minted": 0,
+   "engine": {
+    "all_exact": true,
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "examined": 48,
+    "not_readable": [],
+    "status": "OK"
+   },
+   "observations_exactly": 1152,
+   "observations_total": 1152,
+   "register_invariants_hold": true,
+   "stage": "S5",
+   "status": "OK",
+   "step_status_census": {
+    "FAILED": 1,
+    "NEW": 2544,
+    "RECOMPUTED": 25,
+    "REPLAYED": 10,
+    "REUSED": 1
+   },
+   "units_violating": [],
+   "units_with_more_than_one_attempt": [
+    {
+     "attempt_states": [
+      "FAILED",
+      "COMPLETED"
+     ],
+     "step_statuses": {
+      "FAILED": 1,
+      "NEW": 53,
+      "RECOMPUTED": 25,
+      "REPLAYED": 10,
+      "REUSED": 1
+     },
+     "unit": "C4-REH-1-a-s10"
+    }
+   ],
+   "worlds_distinct": 48,
+   "worlds_expected": 48
+  },
+  {
+   "at": "2026-09-18T00:21:55Z",
+   "files": [
+    "archaeon/campaign4/C4-REH-1/rows.json",
+    "archaeon/campaign4/C4-REH-1/RECEIPT.json",
+    "archaeon/campaign4/C4-REH-1/RECORD.md"
+   ],
+   "receipt_digest": "sha256:79a9320987bdbae524bf0731b1262f581e57c05c139b566aff0319e5292b362d",
+   "rows_digest": "sha256:3810dfc98e5c45463b09e120cce630920128e168c959064ac96fdb52aeed8d7d",
+   "stage": "S6",
+   "status": "OK"
+  },
+  {
+   "all_pass": true,
+   "commit": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+   "gates": [
+    {
+     "gate": "I1_ingest_campaign4",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "I2_second_ingest_idempotent",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "I3_campaign4_rows_present",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "R1_rebuild_equal_and_unchanged_from_frozen",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "C1_release_check",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "F1_frozen_surface_holds",
+     "pass": true,
+     "skipped": false
+    },
+    {
+     "gate": "X1_vivarium_outbox_reconciliation",
+     "pass": true,
+     "skipped": false
+    }
+   ],
+   "rc": 0,
+   "results_digest": "sha256:0e658b322a9c496a6a9df5b7c31baa6f804581cb441875e1cbddf4e26da0213d",
+   "results_file": "evidence_wiki/integration/s7_rehearsal_results.json",
+   "stage": "S7",
+   "status": "OK"
+  },
+  {
+   "bytes_equal": true,
+   "canonical_equal": true,
+   "commit": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+   "receipt_digest_committed": "sha256:79a9320987bdbae524bf0731b1262f581e57c05c139b566aff0319e5292b362d",
+   "receipt_digest_rederived": "sha256:79a9320987bdbae524bf0731b1262f581e57c05c139b566aff0319e5292b362d",
+   "stage": "S8",
+   "status": "OK"
+  }
+ ],
+ "state": "archaeon/campaign4/rehearsal/STATE_C4-REH-1.json",
+ "workspace": {
+  "base_sha": "87ab74a1ac02ebad2f95edc5df28b2c3d2aba901",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ }
+}

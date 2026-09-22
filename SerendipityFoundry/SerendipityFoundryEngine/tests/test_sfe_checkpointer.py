@@ -49,14 +49,39 @@ def test_checkpointer_backfills_and_truncates_a_wal_the_request_path_left_alone(
     wal = db + "-wal"
     grown = os.path.getsize(wal)
     assert grown > 1_000_000, grown                          # the request path did NOT checkpoint
-    ck = Checkpointer(db, interval_s=60)                     # drive it by hand
+    from sfe import store as _st
+    # mode truncate_when_idle, UNDER LOAD (a write happened just now): PASSIVE
+    # only, no reset -- a FULL-class checkpoint would block writers for its
+    # whole backfill + fsync (defender_ab/A1: both writers stalled 5-13 s in
+    # lock-step nine times)
+    _st.WRITE_LOCK_STATS.last_at = time.time()
+    ck_idle = Checkpointer(db, interval_s=60, reset_mode="truncate_when_idle")
+    out_busy = ck_idle.tick()
+    assert out_busy["passive"][0] == 0 and out_busy["truncate"] is None
+    # the SHIPPED mode (truncate_when_idle) UNDER LOAD: PASSIVE only, no reset
+    # -- every writer-blocking reset mode was measured and rejected (v2/v3
+    # TRUNCATE-when-clean: 5-13 s lock-step stalls; a RESTART valve at 8 MB:
+    # 34 stalls, throughput halved; at 512 MB: writers held > 30 s -> 500)
+    ck = Checkpointer(db, interval_s=60)
+    out_big = ck.tick()
+    assert out_big["passive"][0] == 0 and out_big["truncate"] is None
+    # the rejected valve mode still exists for measurement, behind a flag
+    ckv = Checkpointer(db, interval_s=60, reset_mode="restart_when_big")
+    _st.WAL_HARD_LIMIT_BYTES = 1
+    try:
+        out_valve = ckv.tick()
+    finally:
+        _st.WAL_HARD_LIMIT_BYTES = 512 * 1024 * 1024
+    assert out_valve["truncate"] is not None and out_valve.get("reset_mode_used") == "RESTART"
+    # IDLE (no write for > WAL_IDLE_S): TRUNCATE, and the file shrinks
+    _st.WRITE_LOCK_STATS.last_at = time.time() - 10
     out = ck.tick()
     busy, log_frames, backfilled = out["passive"]
-    assert busy == 0 and log_frames == backfilled and log_frames > 0
-    assert out["truncate"] is not None and out["truncate"][0] == 0   # clean -> truncated
+    assert busy == 0 and log_frames == backfilled
+    assert out["truncate"] is not None and out["truncate"][0] == 0   # clean + idle -> truncated
     assert os.path.getsize(wal) < grown and os.path.getsize(wal) <= WAL_SIZE_LIMIT_BYTES
     snap = ck.snapshot()
-    assert snap["runs"] == 1 and snap["truncates"] == 1 and snap["errors"] == 0
+    assert snap["runs"] == 2 and snap["truncates"] == 1 and snap["resets"] == 1 and snap["errors"] == 0
     assert snap["max_wal_bytes_seen"] >= 0 and snap["request_path_autocheckpoint"] == 0
     # with a reader holding the WAL, TRUNCATE is refused (busy), never blocked
     for i in range(300):
@@ -65,6 +90,7 @@ def test_checkpointer_backfills_and_truncates_a_wal_the_request_path_left_alone(
     reader = sqlite3.connect(db, isolation_level=None)
     cur = reader.execute("SELECT * FROM events")                # open read snapshot
     cur.fetchone()
+    _st.WRITE_LOCK_STATS.last_at = time.time() - 10             # idle, so TRUNCATE is attempted
     t0 = time.monotonic()
     out2 = ck.tick()
     assert time.monotonic() - t0 < 2.0                        # did not block behind the reader

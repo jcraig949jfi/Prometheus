@@ -1,0 +1,35 @@
+{
+ "controls_extended_port": {
+  "C-TOP20": {
+   "n": 20,
+   "ok": 20,
+   "pass": true
+  },
+  "C-TRAJ64": {
+   "n": 395,
+   "ok": 395,
+   "pass": true
+  }
+ },
+ "controls_search_port": {
+  "C-TOP20": {
+   "n": 20,
+   "ok": 20,
+   "pass": true
+  },
+  "C-TRAJ64": {
+   "n": 395,
+   "ok": 395,
+   "pass": true
+  }
+ },
+ "differing_rollouts_extended_port": 0,
+ "differing_rollouts_search_port": 0,
+ "extended_port_commit": "593d57096",
+ "extended_port_sha256": "8f89f00a8436a4eaf4113bea71b4da6199676d0649956dfbe457079fc52e956f",
+ "first_attempt_defects": "regeneration keyed S0 patterns by catalogue code (63 codes are duplicated: 5 rollouts wrong) and compared float64 frames to float32-stored ones (11 spurious); both mine, both fixed before delivery",
+ "reading": "the extended port reproduces every executed rollout byte for byte (128x128 through the float32 cast for the 20 stored; 64x64 for all 395; mass 395/395)",
+ "search_port_commit": "44d109558",
+ "search_port_sha256_LF": "bbc43b781118e39e6f25688b2fad30521d8706d0446e927e68557e974eaa1a8c",
+ "what": "port-extension identity check on the 395 executed rollouts of run_2026-09-18 (corrected lookups)"
+}

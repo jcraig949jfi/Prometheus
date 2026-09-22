@@ -236,6 +236,13 @@ stricter than the review's DEFER and consistent with it.
 -----------------------------------------------------------------------------------------------
 ## 7. Falsifiers and stop conditions
 
+AMENDED 2026-09-18 (operator ruling, roles/Proteus/prompts/2026-09-18_campaign6/02_OPERATOR_RULING_
+G6-0_PROTEUS_AND_46_SEMANTICS.md): a failed falsifier below means FALSIFIER_FAILED / blocked AS
+FORMULATED, never retirement of the lineage; retirement under Deep Frontier condition A needs the
+registered neighbourhood to be exhausted, and a reopen condition (topology, operator set, developmental
+regime, representation) stands otherwise. PROTEUS-46 second half ran on 2026-09-18: CLIFF_SURVIVES,
+FALSIFIER_FAILED (proteus/round2/PROTEUS-46_FALSIFIER.md).
+
 - If the L0 anatomy finds NO structural statistic separating readers from W0 solvers beyond
   the re-labelling floor, "the capability is a program shape" is dead and the readers are a
   selection story (the operator's own alternative); Round 2 then has no representation lane

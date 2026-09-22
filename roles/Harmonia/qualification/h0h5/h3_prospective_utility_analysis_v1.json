@@ -1,0 +1,93 @@
+{
+ "analysis": "h3_prospective_utility",
+ "analysis_version": "1.0.0",
+ "declared_by": "Harmonia[m2-ca1148a0]",
+ "declared_on": "2026-09-18",
+ "rules_version": "QR-1.2.0",
+ "convention": "RULING_WP_X1_ANALYSIS_FAMILY_2026-09-08.md s1 (ten fields) + lane_gate('H3')",
+ "mode": "FROZEN",
+ "mode_note": "FROZEN over the ANALYSIS RULE before any confirmatory stream exists. source_refs and source_set_digest are bound by a dated addendum committed BEFORE the first replay of the sealed streams; an addendum that postdates a replay voids this manifest (WP-X1 refusal 3). The 2026-09-11 dead-stream control (5 seeds, 16-item caps) is DIAGNOSTIC and is not a source here.",
+ "claim": "bounded behavioral/random retention (hybrid) improves PROSPECTIVE UTILITY on a sealed future-task manifest relative to top-K, uniform and behavioral-only retention, at identical item and byte caps",
+ "source_refs": {
+  "status": "UNBOUND_UNTIL_SEAL",
+  "form": "ordered list, one per seed: (stream_manifest.stream_digest, assay_ref, descriptors_manifest_digest, future_tasks_manifest_digest); never a query",
+  "already_fixed": {
+   "descriptors": "archaeon/docs/h0h5/H3_DESCRIPTORS_v1.json (archaeon.h3.descriptors.v1, 2 axes x 4 bins = 16 cells)",
+   "future_queries": "archaeon/docs/h0h5/H3_FUTURE_QUERIES_v1.json manifest_digest sha256:de4cae9b5983216c965e2da43861e9dad5046aae1def4dafdf40fc8fb96cc882 (n = 12 queries)",
+   "stream_format": "archaeon/docs/h0h5/H3_STREAM_FORMAT.md v0 (archaeon.producer.h3_replay.Candidate; failed rows STAY in the stream)"
+  }
+ },
+ "source_set_digest": "BOUND_AT_SEAL: sha256 over the canonicalised, sorted source_refs",
+ "unit_of_analysis": {
+  "unit": "the STREAM SEED: one independently generated candidate stream, replayed through all four policies (paired across arms within the seed)",
+  "mapping_rule": "one unit per stream seed; the 12 future queries are WITHIN-unit repeats and add no units; a policy's per-seed value is its solve fraction over ALL 12 queries",
+  "declared_n": "n_seeds, fixed at seal; MINIMUM 6 (min_attainable_p 0.031 <= 0.05); 5 seeds is NOTHING_COULD_FIRE and is reported as such",
+  "denominator": "all 12 sealed queries per seed, including queries no archive answers"
+ },
+ "measurement_identity": {
+  "kind_field": "h3.replay.future_query_answered",
+  "direction": "higher is better",
+  "range": [0.0, 1.0],
+  "definition": "fraction of the sealed future queries the frozen archive answers under the declared rule (score_at_least at the query's threshold; cell queries per H3_FUTURE_QUERIES_v1); a query is answered or not, never partially",
+  "not_pooled_with": "archive coverage, occupancy, diversity, QD score (secondary, reported, never a gate: refuse_endpoint('H3'))"
+ },
+ "arms": {
+  "top_k": {"policy": "h3.top_k.v0", "cap_items": 64, "cap_bytes": "IDENTICAL_ACROSS_ARMS_DECLARED_AT_SEAL", "reserve": 0},
+  "uniform": {"policy": "h3.uniform.v0#<seed>", "cap_items": 64, "cap_bytes": "IDENTICAL_ACROSS_ARMS_DECLARED_AT_SEAL", "reserve": 0},
+  "behavioral": {"policy": "h3.behavioral.v0", "cap_items": 64, "cap_bytes": "IDENTICAL_ACROSS_ARMS_DECLARED_AT_SEAL", "reserve": 0, "edges": "H3_DESCRIPTORS_v1"},
+  "hybrid": {"policy": "h3.hybrid.v0#<seed>", "cap_items": 64, "cap_bytes": "IDENTICAL_ACROSS_ARMS_DECLARED_AT_SEAL", "reserve": 16, "edges": "H3_DESCRIPTORS_v1"},
+  "shared_caps_rule": "cap_items and cap_bytes are one pair of numbers for all four arms (design H3: 'both the behavioral and random portions count against the same total caps; duplicate items do not silently expand capacity'); a seal that gives two arms different caps is REFUSED; count_bound and byte_bound are printed per arm per seed",
+  "same_stream_rule": "every arm replays the IDENTICAL ordered stream per seed (stream_digest equal across arms, asserted)"
+ },
+ "primary_contrasts": {
+  "hybrid_minus_topk": {"a": "hybrid", "b": "top_k"},
+  "behavioral_minus_topk": {"a": "behavioral", "b": "top_k"},
+  "uniform_minus_topk": {"a": "uniform", "b": "top_k"},
+  "multiplicity": "BONFERRONI over 3 (alpha 0.05 / 3 per interval); the three share the top_k arm and their induced correlation is printed (paired_contrasts_shared_arm)",
+  "estimator": "paired_contrast over per-seed differences (qualification_rules.paired_contrast, n_primary = 3)"
+ },
+ "secondary": {
+  "hybrid_minus_behavioral": "the reserve's marginal value; reported, not a gate",
+  "coverage_and_occupancy": "reported per arm; NEVER an endpoint (refuse_endpoint)",
+  "costs": "descriptor computation, ingestion, eviction, retrieval, adaptation charged per arm; a policy whose cost receipt is missing has its verdict withheld"
+ },
+ "practical_threshold": {
+  "value": 0.0833,
+  "unit": "solve fraction (1 of 12 queries)",
+  "status": "PROPOSED",
+  "rationale": "the smallest effect a retention policy can show on a 12-query manifest is one more query answered; a policy that cannot buy one query is not worth its cost. Fixed BEFORE the pilot on that ground; FROZEN_FROM_PILOT binds the VALUE after the pilot SD is seen, never moves it to the noise (SIZING_RULE.md)",
+  "quantity_promised_at_beta": "PRECISION",
+  "quantity_promised_at_1_0": "POWER"
+ },
+ "declared_null": {
+  "generator": "score-permuted twin of each stream (the DEAD stream: scores permuted across candidates, descriptors and bytes kept), replayed through the same four policies at the same caps and seed",
+  "reference": "H3_DEAD_STREAM_CONTROL_2026-09-11 (Apollo S1 shape): occupancy is identical live vs dead; only score-reading policies separate them",
+  "attainable_range_of_statistic": "each contrast in [-1, 1]; per seed the difference is a multiple of 1/12",
+  "controls_run_first": {
+   "positive": "a planted stream in which one descriptor cell holds every future-query answer: behavioral and hybrid must reach the ceiling, top_k must not (declared sign)",
+   "negative": "the dead stream: every contrast must be INCONCLUSIVE at the practical threshold and its false-SUPPORT rate at threshold 0 must sit at alpha/3 across seeds",
+   "cheat": "a cheat archive that reads the future-query labels must answer 12/12 on every seed; if it does not, the query channel cannot observe what the analysis claims to measure"
+  }
+ },
+ "eligible_count": {
+  "printed_before_the_statistic": true,
+  "definition": "n_seeds whose four archives sealed with count_bound and byte_bound recorded and whose stream_digest is identical across arms",
+  "min_attainable_p_at_n": {"5": 0.0625, "6": 0.03125, "8": 0.0078125, "12": 0.00048828125}
+ },
+ "min_attainable_p": "2 / 2^n_seeds (paired sign-flip lattice); n_seeds < 6 -> INELIGIBLE (HA-1.6)",
+ "exclusions": {
+  "rule": "a seed is excluded only if its stream failed to seal (no stream_digest) or an arm's cost receipt is missing; the rule is identical across arms; every exclusion is listed with its seed and reason and COUNTED in the denominator report",
+  "count": "printed at analysis time; 0 expected"
+ },
+ "decision_rule": "SUPPORTED if the Bonferroni interval's lower bound exceeds the threshold; UNSUPPORTED if the upper bound is below it; else INCONCLUSIVE; INELIGIBLE if min_attainable_p > alpha. Each of the three contrasts decided separately; 'H3 supported' is never said of the lane unless hybrid_minus_topk is SUPPORTED",
+ "refusals": [
+  "any diversity measure offered as the endpoint",
+  "a retrospective change to descriptor edges, bins, tie order, caps or the query manifest",
+  "a query subset",
+  "an arm replayed on a different stream than the others",
+  "declared_n greater than the seed count",
+  "FROZEN claimed for a manifest whose seal addendum postdates a replay",
+  "n_seeds < 6 read as anything but NOTHING_COULD_FIRE"
+ ],
+ "what_would_falsify_the_design": "a positive control in which behavioral/hybrid fail to reach the planted ceiling shows the descriptor grid cannot see the planted structure and the analysis is void before any live seed is read"
+}

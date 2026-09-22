@@ -42,6 +42,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 from . import attempts as _att
+from . import stepkey as _sk
 from . import bundle as _bundle
 from . import conformance as _conf
 from . import db as _db
@@ -401,6 +402,21 @@ class Vivarium:
                 return None
             return self.attempts.prior_result(ctx, kind, list(parts))
         record.prior = prior
+
+        def key(kind, parts=()):
+            """The ENGINE-facing idempotency key for a step (None when attempts
+            are off): the step key SCOPED TO THIS ROW. The step key alone is
+            per design, on purpose (two rows of one design share it; VIV22
+            keeps replay inside a row) -- but the engine's idempotency store
+            is per client, and canary run 8 reused a design across rows and
+            got 409 "idempotency key reused for a materially different
+            request". Scoping by experiment_id makes the key unique per row
+            and stable across that row's attempts, which is what a retry or a
+            NEW ATTEMPT's re-post needs (Daedalus #354; the D16 routes)."""
+            if ctx is None or not ctx.enabled:
+                return None
+            return _sk.engine_key(_sk.step_key(ctx.design_digest, kind, list(parts)), ctx.experiment_id)
+        record.key = key
         return record
 
     def _evaluate_gates(self, conn, row, phase: str) -> Optional[dict]:
@@ -1024,6 +1040,7 @@ class Vivarium:
         eid = str(row["experiment_id"])
         partial = exc.partial
         reason = {"ENGINE_TRANSPORT": "ENGINE_TRANSPORT", "LEASE_LOST": "ENGINE_TRANSPORT",
+                  "ENGINE_REJECTED": "EXECUTOR_ERROR",            # the engine refused OUR request (4xx)
                   "EXECUTOR_ERROR": "EXECUTOR_ERROR", "EXECUTOR_NOT_IMPLEMENTED": "INSTRUMENT_INVALID",
                   "PREFLIGHT_REJECTED": "INSTRUMENT_INVALID", "UNCLAIMED_EXECUTION": "INSTRUMENT_INVALID",
                   "BUDGET_EXCEEDED": "BUDGET_EXHAUSTED"}.get(exc.failure_class or "", "EXECUTOR_ERROR")
@@ -1070,7 +1087,7 @@ class Vivarium:
                          dry_run: bool = False) -> dict:
         """Extend the declared read scopes with this owner's newly eligible
         worlds (viv/scope.py). Between ticks only; never on a row's path."""
-        scopes = _scope.declared(self.cfg)
+        scopes = _scope.declared(self.cfg, _vardir.resolve(self.cfg))
         runner = self._runner if self._runner is not None else (
             self.runner() if scopes else None)
         client = getattr(runner, "c", None)

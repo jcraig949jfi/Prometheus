@@ -1,0 +1,692 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "terralingua-data-abundant-exp-1",
+  "canonical_name": "TerraLingua dataset slice: experiment abundant_exp_1 (top-level files + annotations/)",
+  "aliases": [
+    "hf GPaolo/TerraLingua data/abundant_exp_1"
+  ],
+  "lineage": "one of the 40 experiments (8 conditions x 5 repetitions) of terralingua-2026; annotations by Claude Sonnet 4.5 / Haiku 4.5 per the dataset README",
+  "domain": [
+    "dataset",
+    "artificial-life",
+    "llm-agents",
+    "annotations"
+  ],
+  "era": "2026",
+  "version": "hf GPaolo/TerraLingua main (lastModified 2026-03-19); files pinned by sha256 at acquire",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/agent_events.json",
+        "filename": "agent_events.json",
+        "extract": false,
+        "sha256": "496bb054ac2007b6cb7cd54c1a92fe58e5a9df3b18b1b1fae0f0828cabf9f933",
+        "bytes": 20218
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/agent_names.json",
+        "filename": "agent_names.json",
+        "extract": false,
+        "sha256": "843925e6bdf749ff838edac01e8fbe76400a49a774399f42819860af0a01ab68",
+        "bytes": 819
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/agent_trajectories.pkl",
+        "filename": "agent_trajectories.pkl",
+        "extract": false,
+        "sha256": "8f050dd391eb21fddf95a9484ee60541f032d87def51db83948f9fca6adf3058",
+        "bytes": 10818
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/artifacts.json",
+        "filename": "artifacts.json",
+        "extract": false,
+        "sha256": "c389704e11acef129f56c711e9a488cb992618e0f4f92d97fa0ac309ce98075e",
+        "bytes": 169879
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/communities.json",
+        "filename": "communities.json",
+        "extract": false,
+        "sha256": "ff0909bd898fccb977cd8ac5779c1afc43d909b548bc441d02c89a9004be5681",
+        "bytes": 601
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/food_counts.json",
+        "filename": "food_counts.json",
+        "extract": false,
+        "sha256": "4fb034b8c7670e45c7233d62b89cfdb7d26dd0a18e7fd4a28afde2c75f29d39a",
+        "bytes": 3605
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/graph.pkl",
+        "filename": "graph.pkl",
+        "extract": false,
+        "sha256": "b40749cef63b4efb447b5ff7dc351bf953ebdd4bf5d6e25e5fd40efe9cbacc5f",
+        "bytes": 215315
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/messages.json",
+        "filename": "messages.json",
+        "extract": false,
+        "sha256": "916b6011839f1fa48d311bb0559125cea934672a0c70d8130becf1742b755360",
+        "bytes": 266898
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/open_gridworld.log",
+        "filename": "open_gridworld.log",
+        "extract": false,
+        "sha256": "1f9f5587ad1e97772e59d934659d93f22ce8a8add5a838ea12143c6d1b931000",
+        "bytes": 889437
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/params.json",
+        "filename": "params.json",
+        "extract": false,
+        "sha256": "cd18c6d08c9d814d2157d00b1e402642f794015e97c6afb76f1dec7935464fcf",
+        "bytes": 1540
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/video.mp4",
+        "filename": "video.mp4",
+        "extract": false,
+        "sha256": "1abfc9c0d2316172253ba0df51ceaced742ad22ee576fe950ffcb0b7f25dd94e",
+        "bytes": 4053206
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/anthropologist_notes.json",
+        "filename": "annotations__anthropologist_notes.json",
+        "extract": false,
+        "sha256": "555158869fcc29f790728fca5880d4f4b8cef2c3553d15189cf062468d88b832",
+        "bytes": 52439
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being0.json",
+        "filename": "annotations__being0.json",
+        "extract": false,
+        "sha256": "97d779ede152e6a4673301b4dd1ff7575f2fdbeb72311a695d94bce5dc79e523",
+        "bytes": 11057
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being1.json",
+        "filename": "annotations__being1.json",
+        "extract": false,
+        "sha256": "063b24a09673537222bb41836a3ceee1c0560b9fb2ff051f05e086f6552934d4",
+        "bytes": 13466
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being10.json",
+        "filename": "annotations__being10.json",
+        "extract": false,
+        "sha256": "cff60f961dd8ba2bf5863e5246aa12fdce24f414fa76c7dbb8ea5d9e0931c693",
+        "bytes": 2124
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being10_0.json",
+        "filename": "annotations__being10_0.json",
+        "extract": false,
+        "sha256": "06a1cb718dc816e17e212a992133dda5b9fc5e5576f26487af080e7e2ae0a5a2",
+        "bytes": 11801
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being11.json",
+        "filename": "annotations__being11.json",
+        "extract": false,
+        "sha256": "1050e770fadf5a59a9a83f79873c687f49d2780389925eb6649aae103a445c32",
+        "bytes": 15110
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being12.json",
+        "filename": "annotations__being12.json",
+        "extract": false,
+        "sha256": "2072dfa470e96a8401d77c5f78b515882c745abc7a43e4a49ae06b94be90ec54",
+        "bytes": 10457
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being13.json",
+        "filename": "annotations__being13.json",
+        "extract": false,
+        "sha256": "681bb14aba98b587c57871f808c6bbcc344ffa63cf2391a5b97231bba966bb91",
+        "bytes": 11822
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being14.json",
+        "filename": "annotations__being14.json",
+        "extract": false,
+        "sha256": "a14b571cdb926ab4532eacaf4b7811d8cffb4881c4988952fffbe4d2f4dd20bb",
+        "bytes": 12165
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being15.json",
+        "filename": "annotations__being15.json",
+        "extract": false,
+        "sha256": "812e0578fe24d130d272ed3901eb3afa8fee57e0de898c46d9de9f4ddfb7f6df",
+        "bytes": 3951
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being15_0.json",
+        "filename": "annotations__being15_0.json",
+        "extract": false,
+        "sha256": "c60db59aea29ddce0d53327bc04a3a85c88db42a21a94fc9f5d1922bb92f02ff",
+        "bytes": 9720
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being15_0_0.json",
+        "filename": "annotations__being15_0_0.json",
+        "extract": false,
+        "sha256": "92b17450673ae3015a0e66530b2ab19b8d167962f95fdd39b4345a92534973f7",
+        "bytes": 10061
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being16.json",
+        "filename": "annotations__being16.json",
+        "extract": false,
+        "sha256": "b5381e6ca8c3c54239c4d3e97f2ce3d99645d5822cfd4200733db99199a64966",
+        "bytes": 3135
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being16_0.json",
+        "filename": "annotations__being16_0.json",
+        "extract": false,
+        "sha256": "073aefddbef348318a90cb22ae3da39da5dfbed19871920b5830552b80683317",
+        "bytes": 7361
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being17.json",
+        "filename": "annotations__being17.json",
+        "extract": false,
+        "sha256": "9bf67ef5f7be04f4d14168216f7f8032bcb75db1605273d79d5c2dc8a2c91b4d",
+        "bytes": 13067
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being18.json",
+        "filename": "annotations__being18.json",
+        "extract": false,
+        "sha256": "4a7451801e6abeb78b9d063a66875888e52dce87ad41eacb41fddc46e1f500f9",
+        "bytes": 10982
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being19.json",
+        "filename": "annotations__being19.json",
+        "extract": false,
+        "sha256": "e9928e4d899ce384fc26377c3f630447d2de594623474ac4dd1fe4bd8a529354",
+        "bytes": 14390
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being1_0.json",
+        "filename": "annotations__being1_0.json",
+        "extract": false,
+        "sha256": "cd7b2cc8d2780b16034f556033e919aacd83a046b06c2ac0d9810e14fe15f730",
+        "bytes": 2424
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being1_0_0.json",
+        "filename": "annotations__being1_0_0.json",
+        "extract": false,
+        "sha256": "bf90980f3ac13d4a60cd181c27773c1c3f40f42a67ba50da0c1f851a21a65722",
+        "bytes": 9260
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being1_0_0_0.json",
+        "filename": "annotations__being1_0_0_0.json",
+        "extract": false,
+        "sha256": "29f92b20eba875bcb7d4cd305e147e18600de921c21acf0298978540c8f17133",
+        "bytes": 8669
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being2.json",
+        "filename": "annotations__being2.json",
+        "extract": false,
+        "sha256": "d7f44257154601020c193ad46db6a1cf847ea09b36088d424564cfba0acaba72",
+        "bytes": 2284
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being2_0.json",
+        "filename": "annotations__being2_0.json",
+        "extract": false,
+        "sha256": "5c82af2a1750d2eac2dc762608e59b8cff9edb2656d8e367645cb9fd1b2858a2",
+        "bytes": 9469
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being3.json",
+        "filename": "annotations__being3.json",
+        "extract": false,
+        "sha256": "29cb4735f2a61e92129445fcce975a15c581c37956f3187bfe29c4cd77af696e",
+        "bytes": 11233
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being4.json",
+        "filename": "annotations__being4.json",
+        "extract": false,
+        "sha256": "dd3b6d28875b3aba5733d182cf3aa215b1dbd1802c26cf23af11c191096ab390",
+        "bytes": 9917
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being5.json",
+        "filename": "annotations__being5.json",
+        "extract": false,
+        "sha256": "95d90663a09e3940836dd299fdda7bcfa0336654747bee2e838eed2a5e60fe11",
+        "bytes": 9960
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being6.json",
+        "filename": "annotations__being6.json",
+        "extract": false,
+        "sha256": "cb7635a71a4b60fbbcd88efef6361ef224983ea4307756496de9fe4db0b15432",
+        "bytes": 3762
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being6_0.json",
+        "filename": "annotations__being6_0.json",
+        "extract": false,
+        "sha256": "97ff7bbcc868b7236bade017fa4cab82e61a1a2ffffb8cbf05fad0f0b2871e98",
+        "bytes": 11050
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being7.json",
+        "filename": "annotations__being7.json",
+        "extract": false,
+        "sha256": "ccb0d4816366e4623698bc8243d1a0926a827778345f92d100fd1ff138922ff4",
+        "bytes": 13471
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being7_0.json",
+        "filename": "annotations__being7_0.json",
+        "extract": false,
+        "sha256": "e395a4e442c137863c62c5e8251fbf0df9597cd261f0f00abe3604f6875d2129",
+        "bytes": 11623
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being8.json",
+        "filename": "annotations__being8.json",
+        "extract": false,
+        "sha256": "cc23ec07e0ba86c11df2468cd8aee1b04bc2ac86df08a1984756c74dd7b7f803",
+        "bytes": 10598
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/being9.json",
+        "filename": "annotations__being9.json",
+        "extract": false,
+        "sha256": "1389be322f74bf184a27316a79704162a402f42e9b5d39523eac9808d611432a",
+        "bytes": 13526
+      },
+      {
+        "kind": "url",
+        "url": "https://huggingface.co/datasets/GPaolo/TerraLingua/resolve/main/data/abundant_exp_1/annotations/token_usage.jsonl",
+        "filename": "annotations__token_usage.jsonl",
+        "extract": false,
+        "sha256": "4f79f3094e69522ebaac7572265a2afeae6b663ab1521075eb98bfc99536c593",
+        "bytes": 2023
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "dataset": "huggingface.co/datasets/GPaolo/TerraLingua",
+    "path": "data/abundant_exp_1 (+ annotations/); agent_logs/, artifact_analysis/, community_annotations/ NOT taken"
+  },
+  "hashes": {
+    "tree_sha256": "280760a1f206c57900acf6d99dac8f48f850df7f2d7038170d9e006bb9a5d800",
+    "n_files": 43,
+    "bytes": 5974713,
+    "artifacts": [
+      {
+        "filename": "agent_events.json",
+        "sha256": "496bb054ac2007b6cb7cd54c1a92fe58e5a9df3b18b1b1fae0f0828cabf9f933",
+        "commit": null
+      },
+      {
+        "filename": "agent_names.json",
+        "sha256": "843925e6bdf749ff838edac01e8fbe76400a49a774399f42819860af0a01ab68",
+        "commit": null
+      },
+      {
+        "filename": "agent_trajectories.pkl",
+        "sha256": "8f050dd391eb21fddf95a9484ee60541f032d87def51db83948f9fca6adf3058",
+        "commit": null
+      },
+      {
+        "filename": "artifacts.json",
+        "sha256": "c389704e11acef129f56c711e9a488cb992618e0f4f92d97fa0ac309ce98075e",
+        "commit": null
+      },
+      {
+        "filename": "communities.json",
+        "sha256": "ff0909bd898fccb977cd8ac5779c1afc43d909b548bc441d02c89a9004be5681",
+        "commit": null
+      },
+      {
+        "filename": "food_counts.json",
+        "sha256": "4fb034b8c7670e45c7233d62b89cfdb7d26dd0a18e7fd4a28afde2c75f29d39a",
+        "commit": null
+      },
+      {
+        "filename": "graph.pkl",
+        "sha256": "b40749cef63b4efb447b5ff7dc351bf953ebdd4bf5d6e25e5fd40efe9cbacc5f",
+        "commit": null
+      },
+      {
+        "filename": "messages.json",
+        "sha256": "916b6011839f1fa48d311bb0559125cea934672a0c70d8130becf1742b755360",
+        "commit": null
+      },
+      {
+        "filename": "open_gridworld.log",
+        "sha256": "1f9f5587ad1e97772e59d934659d93f22ce8a8add5a838ea12143c6d1b931000",
+        "commit": null
+      },
+      {
+        "filename": "params.json",
+        "sha256": "cd18c6d08c9d814d2157d00b1e402642f794015e97c6afb76f1dec7935464fcf",
+        "commit": null
+      },
+      {
+        "filename": "video.mp4",
+        "sha256": "1abfc9c0d2316172253ba0df51ceaced742ad22ee576fe950ffcb0b7f25dd94e",
+        "commit": null
+      },
+      {
+        "filename": "annotations__anthropologist_notes.json",
+        "sha256": "555158869fcc29f790728fca5880d4f4b8cef2c3553d15189cf062468d88b832",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being0.json",
+        "sha256": "97d779ede152e6a4673301b4dd1ff7575f2fdbeb72311a695d94bce5dc79e523",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being1.json",
+        "sha256": "063b24a09673537222bb41836a3ceee1c0560b9fb2ff051f05e086f6552934d4",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being10.json",
+        "sha256": "cff60f961dd8ba2bf5863e5246aa12fdce24f414fa76c7dbb8ea5d9e0931c693",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being10_0.json",
+        "sha256": "06a1cb718dc816e17e212a992133dda5b9fc5e5576f26487af080e7e2ae0a5a2",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being11.json",
+        "sha256": "1050e770fadf5a59a9a83f79873c687f49d2780389925eb6649aae103a445c32",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being12.json",
+        "sha256": "2072dfa470e96a8401d77c5f78b515882c745abc7a43e4a49ae06b94be90ec54",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being13.json",
+        "sha256": "681bb14aba98b587c57871f808c6bbcc344ffa63cf2391a5b97231bba966bb91",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being14.json",
+        "sha256": "a14b571cdb926ab4532eacaf4b7811d8cffb4881c4988952fffbe4d2f4dd20bb",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being15.json",
+        "sha256": "812e0578fe24d130d272ed3901eb3afa8fee57e0de898c46d9de9f4ddfb7f6df",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being15_0.json",
+        "sha256": "c60db59aea29ddce0d53327bc04a3a85c88db42a21a94fc9f5d1922bb92f02ff",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being15_0_0.json",
+        "sha256": "92b17450673ae3015a0e66530b2ab19b8d167962f95fdd39b4345a92534973f7",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being16.json",
+        "sha256": "b5381e6ca8c3c54239c4d3e97f2ce3d99645d5822cfd4200733db99199a64966",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being16_0.json",
+        "sha256": "073aefddbef348318a90cb22ae3da39da5dfbed19871920b5830552b80683317",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being17.json",
+        "sha256": "9bf67ef5f7be04f4d14168216f7f8032bcb75db1605273d79d5c2dc8a2c91b4d",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being18.json",
+        "sha256": "4a7451801e6abeb78b9d063a66875888e52dce87ad41eacb41fddc46e1f500f9",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being19.json",
+        "sha256": "e9928e4d899ce384fc26377c3f630447d2de594623474ac4dd1fe4bd8a529354",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being1_0.json",
+        "sha256": "cd7b2cc8d2780b16034f556033e919aacd83a046b06c2ac0d9810e14fe15f730",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being1_0_0.json",
+        "sha256": "bf90980f3ac13d4a60cd181c27773c1c3f40f42a67ba50da0c1f851a21a65722",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being1_0_0_0.json",
+        "sha256": "29f92b20eba875bcb7d4cd305e147e18600de921c21acf0298978540c8f17133",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being2.json",
+        "sha256": "d7f44257154601020c193ad46db6a1cf847ea09b36088d424564cfba0acaba72",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being2_0.json",
+        "sha256": "5c82af2a1750d2eac2dc762608e59b8cff9edb2656d8e367645cb9fd1b2858a2",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being3.json",
+        "sha256": "29cb4735f2a61e92129445fcce975a15c581c37956f3187bfe29c4cd77af696e",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being4.json",
+        "sha256": "dd3b6d28875b3aba5733d182cf3aa215b1dbd1802c26cf23af11c191096ab390",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being5.json",
+        "sha256": "95d90663a09e3940836dd299fdda7bcfa0336654747bee2e838eed2a5e60fe11",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being6.json",
+        "sha256": "cb7635a71a4b60fbbcd88efef6361ef224983ea4307756496de9fe4db0b15432",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being6_0.json",
+        "sha256": "97ff7bbcc868b7236bade017fa4cab82e61a1a2ffffb8cbf05fad0f0b2871e98",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being7.json",
+        "sha256": "ccb0d4816366e4623698bc8243d1a0926a827778345f92d100fd1ff138922ff4",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being7_0.json",
+        "sha256": "e395a4e442c137863c62c5e8251fbf0df9597cd261f0f00abe3604f6875d2129",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being8.json",
+        "sha256": "cc23ec07e0ba86c11df2468cd8aee1b04bc2ac86df08a1984756c74dd7b7f803",
+        "commit": null
+      },
+      {
+        "filename": "annotations__being9.json",
+        "sha256": "1389be322f74bf184a27316a79704162a402f42e9b5d39523eac9808d611432a",
+        "commit": null
+      },
+      {
+        "filename": "annotations__token_usage.jsonl",
+        "sha256": "4f79f3094e69522ebaac7572265a2afeae6b663ab1521075eb98bfc99536c593",
+        "commit": null
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\terralingua-data-abundant-exp-1",
+    "hash_list": "techne/fossils/specimens/terralingua-data-abundant-exp-1/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0 (dataset card tag)",
+    "status": "permissive",
+    "evidence": "hf dataset card license tag"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "JSON",
+    "pickle",
+    "log"
+  ],
+  "build_system": "none",
+  "compiler_or_interpreter": "n/a",
+  "dependencies": [],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "artifacts.json, messages.json, agent_events.json, open_gridworld.log; annotations__being*.json"
+  ],
+  "example": {
+    "command": "python -c \"import json; a=json.load(open('artifacts.json')); print(len(a))\"",
+    "input": "the slice",
+    "output": "artifact count"
+  },
+  "environment": {
+    "runner": "native"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "hf GPaolo/TerraLingua README (Total size ~4.7 GB, 40 experiments)"
+  ],
+  "human_capability_summary": {
+    "built_to": "record one ecology run for post-hoc analysis",
+    "pressure": "n/a (data)",
+    "success_means": "n/a (data)"
+  },
+  "known_human_problem_solved": "n/a (data slice for TECHNE-108)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "target": "terralingua-2026",
+      "note": "produced by the code at or before the pinned commit; exact commit not stated by the dataset"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-108",
+    "data-slice"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [],
+    "host_class": "any"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:52:15Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

@@ -130,17 +130,352 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:588-812"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:71-330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:332-560"
+   }
+  ],
+  "inspected_files": [
+   "src/pybreaker/__init__.py 71-330 (structure), 332-560 (names), 588-812"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "the circuit breaker as a three-state machine on a failure counter: CLOSED counts consecutive failures (successes reset the count) and trips to OPEN at fail_max; OPEN fails every call immediately until reset_timeout has elapsed since it opened, then moves to HALF-OPEN; HALF-OPEN lets one call through and closes on success or re-opens on failure; the state and counter live in a storage object so that several processes can share one breaker through Redis, where 'opened_at' is written with a set-if-greater so concurrent openers agree on the latest time",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/danielfm/pybreaker/archive/refs/tags/1.2.0.tar.gz sha256:45e588556260e0decdf577dca7d2ef65b31f04354028d27dc27a30405beef017",
+   "payload_manifest_id": "techne tree_sha256 c76f5023265bc8f7e5818353e8858aa020563eb686c95ecf5a520772e12101f5 (18 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py",
+     "payload_hash_read": "b5862d1ad4eeec596503051a04d6e3b7ac5980f6bba7466b3358a870842883e2",
+     "techne_recorded_hash": "b5862d1ad4eeec596503051a04d6e3b7ac5980f6bba7466b3358a870842883e2",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "fossil_ancestry": "pybreaker-1.2.0",
+   "human_name": "CircuitClosedState.on_failure (727-736): counter >= fail_max -> open(); CircuitOpenState.before_call (759-770): if now < opened_at + reset_timeout raise CircuitBreakerError else half_open(); CircuitHalfOpenState (779-812): on_failure -> open(), on_success -> close(); _handle_success resets the counter (622-625); excluded exceptions do not count (204-215)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "in the closed state each call runs; a failure (an exception not in the excluded list) increments a counter and at fail_max the breaker opens and re-raises wrapped; in the open state every call raises immediately without touching the dependency until the reset timeout has passed since the recorded opening time, at which point the breaker goes half-open and the current call is the probe; a probe success closes the breaker and resets the counter, a probe failure re-opens it and restarts the timeout",
+   "input": "calls and their outcomes",
+   "output": "pass-through results or fast failures",
+   "state": "state, counter, opened_at",
+   "update": "per call",
+   "assumptions": [
+    "a dependency that has failed fail_max times in a row is down and calling it wastes time and worsens its recovery; one probe per timeout is enough to detect recovery"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater"
+   ],
+   "fitness_value_in_ancestor": "the calling system stays responsive while a dependency is down and does not hammer it during recovery (Nygard's Release It!)",
+   "failure_landscape": "by reading: consecutive failures only (a 1 percent error rate never trips; rate-based trips are a later variant); the probe is the first real call, so it may fail for the caller",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Nygard 2007; the pattern is older in electrical protection",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:588-812"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three state classes",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "fossil_ancestry": "pybreaker-1.2.0",
+   "human_name": "CircuitBreakerStorage (332-375: state, counter, opened_at as properties), CircuitMemoryStorage (377-420), the Redis storage (428-560): namespaced keys, increment_counter by INCR, opened_at via a pipeline 'set_if_greater' (547-557)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the breaker never holds its state in the object; every read and write goes through a storage interface with an in-memory default; the Redis storage keeps the state string, the counter (atomic increment) and the opening timestamp under namespaced keys, and writes the timestamp only if it is greater than the stored one inside a transaction, so that two processes opening the breaker at nearly the same time agree on the later time and neither shortens the other's timeout",
+   "input": "state reads and writes",
+   "output": "a shared view of the breaker",
+   "state": "the store",
+   "update": "per transition",
+   "assumptions": [
+    "a breaker per process would let each process discover the outage separately; sharing through a store gives the fleet one decision"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call"
+   ],
+   "fitness_value_in_ancestor": "fleet-wide fail-fast from a single-process pattern",
+   "failure_landscape": "by reading: the Redis round trip is on every call's path; a Redis outage becomes a breaker outage (the code falls back to closed on read errors per the names, not verified)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the pattern's distributed variants (Hystrix's per-process design vs shared state)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:332-560"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the storage classes",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the decorator and context-manager sugar (__call__, calling), the async and generator call variants, listeners (before_call / success / failure / state_change hooks), the type annotations, the tests",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:pybreaker-1.2.0/upstream/tree/pybreaker-1.2.0/src/pybreaker/__init__.py:219-330, 565-590",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pybreaker-1.2.0"
+  },
+  {
+   "candidate": "'circuit breaker' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the state machine and the shared store are separable; the atlas's backoff cut holds the complementary retry mechanism the pattern is meant to bound",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pybreaker-1.2.0"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "pybreaker-1.2.0::P.a_caller_of_a_failing_dependency_must_stop_calling_it_quickly_keep_its_own_latency_bounded_and_notice_recovery_without_flooding_the_dependency_while_many_callers_decide_independently",
+   "source_fossil": "pybreaker-1.2.0",
+   "source_evidence": "the three state classes; the Redis storage's set-if-greater",
+   "condition": "N organisms call a dependency that goes down for a while and then recovers slowly; each call to a down dependency costs a timeout; the score is the callers' latency during the outage, the load on the dependency during recovery, and the delay in noticing recovery",
+   "resource_or_constraint": "a counter and a clock per breaker; optionally a shared store",
+   "failure_condition": "callers blocked on timeouts throughout the outage, or a recovery stalled by a flood of retries, or a breaker that never closes",
+   "world_punishes": "retry-forever; per-process breakers that each probe at once; no half-open state",
+   "world_rewards": "a failure-count trip, a timeout-gated single probe, shared state",
+   "observable_consequence": "caller latency and dependency load over a simulated outage-and-recovery for no breaker, per-process breakers and a shared breaker; time from recovery to the first closed breaker",
+   "vacuity_condition": "a dependency that never fails",
+   "trivial_shortcuts": "an oracle that says when the dependency is up (the cheat control)",
+   "cheat_control": "an organism told the outage interval must show zero timeouts and zero probes; retry-forever must show latency equal to the timeout for the whole outage; N per-process breakers must show N probes per reset period where the shared breaker shows one: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: stability pattern for distributed callers (Nygard 2007; pybreaker 2010-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "to": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pybreaker-1.2.0::breaker_state_and_counter_held_in_a_pluggable_storage_so_processes_share_one_breaker_with_the_opening_time_written_by_set_if_greater",
+   "to": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "pybreaker-1.2.0",
@@ -148,10 +483,23 @@
    "to": "Nygard 2007",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pybreaker-1.2.0",
+   "relation": "reimplementation_of",
+   "to": "Nygard's circuit breaker (Release It!, 2007); the atlas's backoff-2.2.1 is its complement (retry policy) and redlock-py the other distributed-coordination body in the same order",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "async / generator variants and listeners unread (sugar)",
+   "nothing ran",
+   "M3-RUNNABLE PACKET CANDIDATE: pure Python with the in-memory store; a simulated outage is the world"
+  ],
+  "note": "the fifth pure-Python candidate of this pass; the pattern's two mechanisms are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

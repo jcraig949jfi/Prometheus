@@ -15,8 +15,11 @@ from qualification_rules import (                                    # noqa: E40
     RULES_VERSION, LanePlan, PlanRefused, validate_plan, h0_estimands,
     required_blocks, min_attainable_p_paired, H4_ADAPTIVE_PROTOCOL,
     H4_PROTOCOL_VERSION)
+from qualification_rules import lane_gate, THREE_QUANTITIES          # noqa: E402
 from adversarial_fixtures import (                                   # noqa: E402
-    FIXTURES_VERSION, run_battery, detect_f6)
+    FIXTURES_VERSION, run_battery_1_1_0 as run_battery, detect_f6)
+from exchangeability import EX_VERSION, classify_dossier              # noqa: E402
+from floor_precheck import FP_VERSION                                 # noqa: E402
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))), "contracts"))
@@ -31,7 +34,8 @@ except CanonicalCheckoutRefused as e:
 
 OUT = {}
 print("=" * 74)
-print("H0-H5 QUALIFICATION  rules %s  fixtures %s" % (RULES_VERSION, FIXTURES_VERSION))
+print("H0-H5 QUALIFICATION  rules %s  fixtures %s  exchangeability %s  floor %s"
+      % (RULES_VERSION, FIXTURES_VERSION, EX_VERSION, FP_VERSION))
 print("=" * 74)
 
 # ------------------------------------------------------------- 1. battery
@@ -86,7 +90,7 @@ OUT["se_ratio_interaction_over_main"] = {"measured": obs, "predicted": math.sqrt
 
 # --------------------------------------- 3. is 5 pp decidable, and at what n
 print("\n" + "=" * 74)
-print("3. IS THE PROPOSED 5 pp THRESHOLD DECIDABLE? BLOCKS REQUIRED")
+print("3. IS THE PROPOSED 5 pp THRESHOLD DECIDABLE? BLOCKS REQUIRED (PRECISION: interval clearance, not power)")
 print("=" * 74)
 print("""
   The operator's rule makes INCONCLUSIVE the default: a verdict needs the CI
@@ -99,8 +103,11 @@ print("  block SD   contrast      true effect   blocks needed")
 print("  --------   -----------   -----------   -------------")
 for sd in (0.05, 0.10, 0.15, 0.20):
     for eff, lab in ((0.00, "0 pp (null)"), (0.15, "15 pp (real)")):
-        n_main = required_blocks(sd, 0.05, n_primary=2, true_effect=eff)
-        n_int = required_blocks(sd * math.sqrt(2), 0.05, n_primary=2, true_effect=eff)
+        # QR-1.1.0 renamed required_blocks -> blocks_for_interval_clearance and its
+        # keyword true_effect -> assumed_effect (this table is PRECISION, not POWER);
+        # the runner kept the old keyword and raised TypeError from 09-10 to 09-18.
+        n_main = required_blocks(sd, 0.05, n_primary=2, assumed_effect=eff)
+        n_int = required_blocks(sd * math.sqrt(2), 0.05, n_primary=2, assumed_effect=eff)
         print("  %8.2f   main          %-11s   %s" % (sd, lab, n_main))
         print("  %8s   interaction   %-11s   %s" % ("", lab, n_int))
         rows.append({"block_sd": sd, "true_effect": eff,
@@ -174,6 +181,29 @@ print("    =>         %s" % H4_ADAPTIVE_PROTOCOL["distinct_from_m_signal"]["cons
 print("\n  PROHIBITED ENDPOINT")
 print("    %s" % H4_ADAPTIVE_PROTOCOL["endpoint_surface"]["PROHIBITED"])
 OUT["h4_protocol"] = H4_ADAPTIVE_PROTOCOL
+
+# ------------------------------------------------- 6. lane gates (QR-1.2.0)
+print("\n" + "=" * 74)
+print("6. LANE GATES  (QR-1.2.0: beta and 1.0 per lane; the quantity each promises)")
+print("=" * 74)
+print("\n  lane  stage           promises           primaries  min n  multiplicity")
+gates = {}
+for lane in ("H0", "H1", "H2", "H3", "H4", "H5"):
+    g = lane_gate(lane)
+    for st in (g.beta, g.one_point_zero):
+        print("  %-4s  %-14s  %-17s  %-9d  %-5d  %s"
+              % (lane, st.stage, st.promised_quantity, len(st.primary_contrasts), st.min_blocks, st.multiplicity))
+    gates[lane] = g.as_dict()
+OUT["lane_gates"] = gates
+OUT["three_quantities"] = list(THREE_QUANTITIES)
+
+# ------------------------------------ 7. exchangeability on the live dossier
+doss = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..",
+                    "archaeon", "docs", "h0h5", "D3_LIVE_DOSSIER_2026-09-10.json")
+if os.path.exists(doss):
+    cls = classify_dossier(os.path.abspath(doss))
+    print("\n  exchangeability on the live D3 dossier: %d regions  %s" % (cls["n_regions"], cls["counts"]))
+    OUT["exchangeability_live_dossier"] = {k: v for k, v in cls.items() if k != "regions"}
 
 led = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ledgers")
 os.makedirs(led, exist_ok=True)

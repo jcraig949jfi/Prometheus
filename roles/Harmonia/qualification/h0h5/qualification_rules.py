@@ -1,4 +1,4 @@
-"""Harmonia qualification rules for the H0-H5 lanes.  QR-1.1.0  2026-09-10.
+"""Harmonia qualification rules for the H0-H5 lanes.  QR-1.2.0  2026-09-18.
 
 Executable rules, not prose. Every gate here is mechanical: no LLM verdict is
 consulted anywhere in this module, and none may be.
@@ -35,7 +35,32 @@ import math
 from dataclasses import dataclass, field, asdict
 from itertools import combinations
 
-RULES_VERSION = "QR-1.1.0"
+RULES_VERSION = "QR-1.2.1"
+
+# QR-1.2.0 (2026-09-18, Harmonia[m2-ca1148a0]) ADDS, without changing any QR-1.1.0
+# number or refusal:
+#   lane_gate(lane)            HARM-05..10: the beta and 1.0 gate per lane, each naming
+#                              WHICH of the three quantities it promises, its attainable
+#                              range, and its eligibility count; H3 refuses diversity as
+#                              an endpoint, H4 refuses any endpoint on training tasks,
+#                              H5 carries the analytic reach bounds 8 / 12 as constants
+#   freeze_plan / validate_plan(frozen=, data_opened=)
+#                              HARM-34: a DIAGNOSTIC plan cannot be relabelled
+#                              CONFIRMATORY after its data is read
+#   contrast_correlation, paired_contrasts_shared_arm
+#                              HARM-30: contrasts sharing a baseline arm carry their
+#                              induced correlation; the fresh/S00 case is 0.5 under
+#                              exchangeable equal variances
+#   validate_cell_payloads     HARM-01: one payload hash under two CELL labels is refused;
+#                              a declared alias (fresh == S00) is one baseline, two labels
+#   replay_attestation / refuse_replay_as_replicate
+#                              HARM-28: a bit-identical replay is an ATTESTATION and never
+#                              a replicate
+#   MULTIPLICITY.md, SIZING_RULE.md beside this module (HARM-11, HARM-12)
+# QR-1.2.1 (2026-09-18, self-attack on 1.2.0, review packet Q1/Q2): refuse_relabel admits a
+#   NEW confirmatory plan whose confirmation set is DISJOINT from the diagnostic's tasks
+#   (freeze_plan records task_ids); validate_cell_payloads resolves alias chains and refuses
+#   cycles; h5_reach_bounds_computed() derives 8 / 12 over the 4,096-entry map.
 
 # QR-1.1.0 amends QR-1.0.0 in three places, after Archaeon reproduced
 # Appendix A (SE(I)/SE(G) = sqrt(6) with equal marginal variances 0.005079)
@@ -409,7 +434,9 @@ def blocks_for_power(sd_of_block_diff, threshold, true_effect, target_power=0.80
 
 # ------------------------------------------------------------- H4 protocol
 
-H4_PROTOCOL_VERSION = "H4-ADAPTIVE-1.0.0"
+H4_PROTOCOL_VERSION = "H4-ADAPTIVE-1.0.1"   # 1.0.1 (2026-09-18, HARM-32): the "reporting" sentence
+                                            # made CONDITIONAL; no rule, endpoint or void condition changed;
+                                            # H4 is at SCAFFOLD and no campaign ran under 1.0.0
 
 H4_ADAPTIVE_PROTOCOL = {
     "version": H4_PROTOCOL_VERSION,
@@ -446,8 +473,10 @@ H4_ADAPTIVE_PROTOCOL = {
                   "campaign; its own version pinned and hashed"),
     "design": "2x2, fixed/adaptive curriculum x transfer off/on",
     "reporting": ("combined effect and interaction reported SEPARATELY, with "
-                  "simultaneous uncertainty across both; the interaction carries "
-                  "sqrt(2) times the main effect's SE by construction"),
+                  "simultaneous uncertainty across both; the interaction's SE is "
+                  "c_I' Sigma c_I over the pilot Sigma (sqrt(2) times the combined "
+                  "effect's SE ONLY under equal marginal variances and exchangeable "
+                  "within-block correlation; QR-1.1.0)"),
     "denominator": ("every ASSIGNED task in the frozen suite, including those "
                     "never attempted and those censored by budget exhaustion"),
     "censoring": ("budget exhaustion is CENSORED, not failure and not success; "
@@ -460,3 +489,511 @@ H4_ADAPTIVE_PROTOCOL = {
         "confirmation opened before the plan hash was committed",
     ],
 }
+
+
+# =========================================================================
+# QR-1.2.0 additions (2026-09-18). Nothing above this line changed.
+# =========================================================================
+
+# --------------------------------------------- the three quantities (HARM-12)
+
+MEANINGFUL_EFFECT = "MEANINGFUL_EFFECT"   # a scientific / resource decision, fixed BEFORE the pilot
+PRECISION = "PRECISION"                   # interval half-width at n; arithmetic (blocks_for_interval_clearance)
+POWER = "POWER"                           # P(conclusive verdict) under an assumed truth (blocks_for_power)
+THREE_QUANTITIES = (MEANINGFUL_EFFECT, PRECISION, POWER)
+
+
+# ---------------------------------------------------- HARM-34: no relabelling
+
+def freeze_plan(p: LanePlan, frozen_at: str = "") -> dict:
+    """The record committed BEFORE a pilot opens. It carries the purpose the plan
+    was frozen under and a digest of everything else, so a later plan can be
+    recognised as 'the same plan with the purpose changed'."""
+    body = asdict(p)
+    purpose = body.pop("purpose")
+    return {"digest_without_purpose": "sha256:" + hashlib.sha256(
+                json.dumps(body, sort_keys=True, default=str).encode()).hexdigest(),
+            "purpose": purpose, "plan_version": p.plan_version, "lane": p.lane,
+            "frozen_at": frozen_at, "digest": p.digest(),
+            # QR-1.2.1: the task ids the frozen plan touched, so a later CONFIRMATORY plan can
+            # be admitted when, and only when, its confirmation set is disjoint from them
+            "task_ids": sorted(set(p.pilot_task_ids) | set(p.confirmation_task_ids))}
+
+
+def refuse_relabel(p: LanePlan, frozen: dict, data_opened: bool) -> None:
+    """A DIAGNOSTIC plan whose data has been read may not become CONFIRMATORY.
+    The eligibility gate (HA-1.6) was NOT applied to it, its rows were seen, and
+    'the same plan, now confirmatory' is selection after the fact. The route is
+    a NEW plan version with a DISJOINT confirmation set, frozen before that set
+    is opened."""
+    if frozen.get("purpose") == "DIAGNOSTIC" and p.purpose == "CONFIRMATORY" and data_opened:
+        same = freeze_plan(p)["digest_without_purpose"] == frozen.get("digest_without_purpose")
+        seen = set(frozen.get("task_ids") or [])
+        overlap = seen & set(p.confirmation_task_ids)
+        # QR-1.2.1 (self-attack 2026-09-18): a NEW plan whose confirmation set is DISJOINT from
+        # every task the diagnostic touched is the route the refusal itself prescribes, so it is
+        # admitted; the refusal fires on the same body, or on any confirmation task the
+        # diagnostic already read. A frozen record without task_ids (pre-1.2.1) refuses as before.
+        if same or overlap or not frozen.get("task_ids"):
+            raise PlanRefused(
+                "a DIAGNOSTIC plan (%s, frozen %s) may not be relabelled CONFIRMATORY after its "
+                "data was read%s; version a new plan with a disjoint confirmation set"
+                % (frozen.get("plan_version"), frozen.get("frozen_at") or "?",
+                   " (same plan body)" if same else
+                   (" (%d confirmation task(s) were read by the diagnostic)" % len(overlap) if overlap
+                    else " (frozen record carries no task ids)")))
+
+
+_validate_plan_1_1_0 = validate_plan
+
+
+def validate_plan(p: LanePlan, frozen: dict = None, data_opened: bool = False) -> list:  # noqa: F811
+    """QR-1.2.0: the QR-1.1.0 checks, then the relabel refusal when a frozen
+    record is supplied. Without `frozen` the behaviour is exactly QR-1.1.0."""
+    ok = _validate_plan_1_1_0(p)
+    if frozen is not None:
+        refuse_relabel(p, frozen, data_opened)
+        ok.append("no_relabel_after_data_opened")
+    return ok
+
+
+# ------------------------------------------ HARM-30: shared-arm correlation
+
+def contrast_correlation(c1: dict, c2: dict, sigma: dict) -> float:
+    """corr(c1'y, c2'y) = c1' Sigma c2 / sqrt(c1' Sigma c1 * c2' Sigma c2). THE general
+    rule; every special case is this at a particular Sigma."""
+    cov = 0.0
+    for i in CELLS:
+        for j in CELLS:
+            cov += c1.get(i, 0.0) * c2.get(j, 0.0) * sigma[(i, j)]
+    v1, v2 = contrast_variance(c1, sigma), contrast_variance(c2, sigma)
+    return cov / math.sqrt(v1 * v2) if v1 > 0 and v2 > 0 else float("nan")
+
+
+C_TRANSPORT = {"S11": 0.0, "S10": 1.0, "S01": 0.0, "S00": -1.0}   # failures-only vs baseline
+C_LIBRARY = {"S11": 0.0, "S10": 0.0, "S01": 1.0, "S00": -1.0}     # library-only vs baseline
+
+
+def paired_contrasts_shared_arm(blocks, contrasts: dict, alpha=0.05) -> dict:
+    """Several contrasts over the SAME paired blocks, reported WITH the correlation
+    they inherit from shared arms. Two contrasts that both subtract S00 are not
+    independent results, and a reader who sees two 'supported' rows must see
+    the correlation beside them. contrasts: {name: coefficient dict}."""
+    sig = sigma_from_blocks(blocks)
+    names = list(contrasts)
+    est = {}
+    for nm in names:
+        vals = [sum(contrasts[nm].get(c, 0.0) * b[c] for c in CELLS) for b in blocks]
+        est[nm] = paired_contrast(nm, vals, alpha, len(names))
+    corr = {}
+    for a, b in combinations(names, 2):
+        corr["%s|%s" % (a, b)] = contrast_correlation(contrasts[a], contrasts[b], sig)
+    return {"estimates": est, "induced_correlation": corr, "sigma": sig,
+            "note": ("contrasts sharing an arm are correlated; Bonferroni over %d is "
+                     "conservative under positive correlation, never anti-conservative"
+                     % len(names))}
+
+
+def shared_arm_correlation_exchangeable(c1: dict, c2: dict, rho: float = 0.0) -> float:
+    """The special case a reader can check by hand: equal marginal variances and
+    exchangeable within-block correlation rho. For two simple differences that
+    share one arm (transport = S10 - S00, G = S11 - S00) the value is 0.5 for
+    every rho."""
+    return contrast_correlation(c1, c2, sigma_exchangeable(1.0, rho))
+
+
+# ------------------------------------------- HARM-01: cell payload identity
+
+def validate_cell_payloads(plan: dict) -> dict:
+    """plan: {"cells": {label: {"payload_hash": ...}}, "aliases": {alias: cell_label}}.
+    Two CELL labels with one payload hash are ONE measurement under two labels and
+    are refused (charter s3). A declared alias is allowed and recorded as such:
+    'fresh' == 'S00' is one baseline that two lanes name differently."""
+    cells = plan["cells"]
+    by_hash, by_payload = {}, {}
+    for label, cell in cells.items():
+        by_hash.setdefault(cell["payload_hash"], []).append(label)
+        if "declared_payload" in cell:       # Charon A1: one payload can carry two hashes when a
+            key = json.dumps(cell["declared_payload"], sort_keys=True)   # label leaks into the hash;
+            by_payload.setdefault(key, []).append(label)                 # compare the content too
+    dup = {h: ls for h, ls in by_hash.items() if len(ls) > 1}
+    if dup:
+        raise PlanRefused("one payload hash under two cell labels: %s -- one measurement, "
+                          "two labels; declare an alias or remove a cell"
+                          % "; ".join("%s -> %s" % (h[:19], ls) for h, ls in dup.items()))
+    dup_p = {k: ls for k, ls in by_payload.items() if len(ls) > 1}
+    if dup_p:
+        raise PlanRefused("identical declared payload under two cell labels (hashes differ, so a "
+                          "label leaked into the hash): %s" % "; ".join(str(ls) for ls in dup_p.values()))
+    aliases = plan.get("aliases", {})
+    resolved = {}
+    for alias in aliases:                    # QR-1.2.1: an alias may name an alias; chains resolve,
+        if alias in cells:                   # cycles, dangling targets and alias/cell double-use refused
+            raise PlanRefused("%s is both an alias and a cell label" % alias)
+        target, hops = alias, []
+        while target in aliases:
+            hops.append(target)
+            target = aliases[target]
+            if target in hops:
+                raise PlanRefused("alias cycle %s -> %s" % (" -> ".join(hops), target))
+        if target not in cells:
+            raise PlanRefused("alias %s -> %s names no cell" % (alias, target))
+        resolved[alias] = target
+    return {"distinct_payloads": len(by_hash), "cell_labels": len(cells),
+            "aliases": {a: {"cell": t, "payload_hash": cells[t]["payload_hash"]} for a, t in resolved.items()},
+            "baselines_under_two_labels": [(a, t) for a, t in resolved.items()]}
+
+
+# ------------------------------------- HARM-28: replay is an attestation
+
+def replay_attestation(rows, payload_key="spec_hash", output_key="output_digest") -> list:
+    """Rows sharing a payload hash are ONE measurement. Returns one attestation per
+    payload hash with more than one row: were the outputs bit-identical? A replay
+    that reproduces its bytes ATTESTS determinism; it adds no unit."""
+    groups = {}
+    for r in rows:
+        groups.setdefault(r[payload_key], []).append(r)
+    out = []
+    for h, rs in groups.items():
+        if len(rs) < 2:
+            continue
+        outs = {r.get(output_key) for r in rs}
+        out.append({"payload_hash": h, "n_rows": len(rs), "n_distinct_outputs": len(outs),
+                    "attests_determinism": len(outs) == 1,
+                    "counts_as_units": 1})
+    return out
+
+
+def refuse_replay_as_replicate(rows, payload_key="spec_hash") -> int:
+    """Returns the number of INDEPENDENT units in rows. Raises when a payload hash
+    appears more than once, because an analysis that received these rows as
+    replicates would count one measurement several times."""
+    seen = {}
+    for r in rows:
+        seen[r[payload_key]] = seen.get(r[payload_key], 0) + 1
+    dup = {h: n for h, n in seen.items() if n > 1}
+    if dup:
+        raise PlanRefused("replay rows offered as replicates: %s; a bit-identical replay is an "
+                          "attestation (replay_attestation) and contributes one unit"
+                          % ", ".join("%s x%d" % (h[:19], n) for h, n in dup.items()))
+    return len(seen)
+
+
+# ---------------------------------------------- HARM-05..10: lane gates
+
+# H5's analytic construction facts (archaeon/docs/h0h5/H5_1_READOUT_2026-09-11.md):
+# the four high bits of the direct 12-bit genome are inert, so a direct decoder
+# reaches at most 8 distinct rules from a genome's 12 single-bit neighbours; a
+# permutation of the map cannot create more than 12 distinct neighbours. Only the
+# EXCESS over these bounds is evidence about a learned encoding.
+H5_DIRECT_REACH_BOUND = 8
+H5_PERMUTED_REACH_BOUND = 12
+H5_GENOME_BITS = 12
+H5_RULES = 256
+H5_ENCODINGS_PER_RULE = 16
+
+H1_POOL_RULE = "pool >= 2K"   # RULING_H1H0_FAIRNESS_C3_2_ANALYSIS_2026-09-10.md s2c: packs differ substantially only then
+
+
+@dataclass
+class Gate:
+    stage: str                      # BETA | ONE_POINT_ZERO
+    endpoint: str
+    primary_contrasts: tuple
+    promised_quantity: str          # one of THREE_QUANTITIES (SIZING_RULE.md)
+    attainable_range: tuple         # of the endpoint statistic
+    unit: str
+    min_blocks: int                 # smallest eligible n under HA-1.6 at alpha 0.05
+    multiplicity: str
+    preconditions: tuple            # measured facts that must be printed before the gate
+    refusals: tuple                 # what this gate refuses mechanically
+    secondary: tuple = ()
+    constants: dict = field(default_factory=dict)
+
+    def eligibility(self, n_blocks: int, alpha: float = 0.05) -> dict:
+        """Printed BEFORE any gate is applied (charter s1)."""
+        mp = min_attainable_p_paired(n_blocks)
+        return {"n_blocks": n_blocks, "min_attainable_p": mp, "alpha": alpha,
+                "label": "ELIGIBLE" if mp <= alpha else "NOTHING_COULD_FIRE"}
+
+
+@dataclass
+class LaneGate:
+    lane: str
+    claim: str
+    beta: Gate
+    one_point_zero: Gate
+
+    def as_dict(self):
+        return asdict(self)
+
+
+_MIN_ELIGIBLE = 6      # 2/2^6 = 0.031 <= 0.05; five blocks give 0.0625
+
+_COMMON_REFUSALS = (
+    "unit other than paired (seed x task_block)",
+    "denominator other than all assigned tasks",
+    "pilot/confirmation overlap",
+    "primary contrasts > 1 with multiplicity NONE",
+    "n_blocks below the HA-1.6 minimum",
+    "threshold moved after the pilot SD is seen",
+)
+
+
+def _h0():
+    beta = Gate("BETA", "solve fraction over all assigned held-out tasks, four cells",
+                ("G_joint_treatment_S11_minus_S00", "interaction_I"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("pilot Sigma estimated on DISJOINT blocks (sigma_from_blocks)",
+                 "se_ratio_report printed beside both estimands",
+                 "shared-arm correlation printed for any contrast pair sharing S00 (paired_contrasts_shared_arm)",
+                 "cell payload hashes distinct (validate_cell_payloads)"),
+                _COMMON_REFUSALS + ("G reported as a marginal main effect",
+                                    "a supported G read as synergy"),
+                secondary=("C_M1", "C_M2"))
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, beta.primary_contrasts, POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "BONFERRONI",
+               beta.preconditions + ("block count from blocks_for_power at the pilot Sigma, "
+                                     "SEPARATELY for G and for I (I needs ~2x)",
+                                     "threshold FROZEN_FROM_PILOT"),
+               beta.refusals + ("confirmation opened before the plan hash was committed",),
+               secondary=beta.secondary)
+    return LaneGate("H0", "failure transport + component reuse improve held-out solving; "
+                          "interaction is a separate, stronger claim", beta, one)
+
+
+def _h1():
+    beta = Gate("BETA", "solve fraction over all assigned target tasks, three arms",
+                ("relevant_minus_random", "random_minus_fresh"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("realised pool size P and K printed; %s measured BEFORE a relevance arm is licensed" % H1_POOL_RULE,
+                 "mean inter-arm pack overlap printed",
+                 "input width >= 4 bits, or K <= 2 at 3 bits (fairness ruling s2c)",
+                 "every retrieved input queried against the target oracle; fresh arm's probe allowance equal"),
+                _COMMON_REFUSALS + ("relevance arm at 3 bits with K = 4 (pool cannot reach 2K)",
+                                    "witness == null read as solved",
+                                    "extra oracle access or source/target solution overlap"))
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, ("relevant_minus_random",), POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "NONE",
+               beta.preconditions + ("threshold FROZEN_FROM_PILOT on a disjoint pilot",
+                                     "block count from blocks_for_power"),
+               beta.refusals + ("retrospective search for favourable task partitions",),
+               secondary=("resource_to_solve including unsolved cases",))
+    return LaneGate("H1", "relevant compatible source failures improve later CEGIS over "
+                          "random-compatible retrieval and fresh search", beta, one)
+
+
+def _h2():
+    # three SEPARATE results; a gate that merges them is refused by construction
+    beta = Gate("BETA", "(a) computation: task accuracy on the frozen catalogue; "
+                        "(b) causal contribution: targeted vs matched-random intervention delta; "
+                        "(c) frozen reuse: new-composition accuracy with vs without the component",
+                ("a_computation", "b_causal_contribution", "c_frozen_reuse"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("readout-only / direct-input baseline printed beside (a)",
+                 "matched random rules, matched intervention magnitude, matched state size and readout capacity",
+                 "confirmation labels inaccessible to rule search and readout fitting"),
+                _COMMON_REFUSALS + ("(a) reported as (b) or (c)",
+                                    "a readout-explained gain attributed to the substrate",
+                                    "criticality measures used as a gate"))
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, beta.primary_contrasts, POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "BONFERRONI",
+               beta.preconditions + ("untouched finite task manifests for each of (a), (b), (c)",),
+               beta.refusals + ("a null on (b) or (c) discarding the CA runner",))
+    return LaneGate("H2", "bounded CA dynamics contribute causally to computation and become "
+                          "reusable stateful components", beta, one)
+
+
+DIVERSITY_ENDPOINTS = ("archive_diversity", "qd_score", "coverage", "descriptor_spread", "novelty")
+
+
+def _h3():
+    beta = Gate("BETA", "prospective utility: solve fraction on the sealed future-task manifest, four policies",
+                ("hybrid_minus_topk", "behavioral_minus_topk", "uniform_minus_topk"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("identical ordered stream across the four policies (digest)",
+                 "byte cap and item cap parity across policies",
+                 "future queries frozen and sealed before any archive is replayed",
+                 "descriptor, bins, tie order and capacity frozen"),
+                _COMMON_REFUSALS + ("any diversity measure as an endpoint (%s)" % ", ".join(DIVERSITY_ENDPOINTS),
+                                    "retrospective descriptor change",
+                                    "cherry-picked query subset"),
+                secondary=("archive diversity, reported and never a gate",))
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, beta.primary_contrasts, POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "BONFERRONI",
+               beta.preconditions + ("policy cost receipts complete; costs charged in every arm",),
+               beta.refusals, secondary=beta.secondary)
+    return LaneGate("H3", "bounded behavioral/random retention improves future utility over "
+                          "top-K, uniform and behavioral-only", beta, one)
+
+
+def _h4():
+    beta = Gate("BETA", "competence on the FROZEN final suite, identical for every arm; "
+                        "retention on the historical suite as secondary",
+                ("combined_effect_adaptive_x_transfer", "interaction"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("protocol version %s pinned and hashed" % H4_PROTOCOL_VERSION,
+                 "evaluator fixed, independent of every arm, never updated mid-campaign",
+                 "denominator: every ASSIGNED frozen-suite task, censored runs counted",
+                 "policy_id, policy_version, seed streams, budgets, stopping and censoring rules precommitted"),
+                _COMMON_REFUSALS + tuple(H4_ADAPTIVE_PROTOCOL["void_conditions"])
+                + ("training-task solve rate as an endpoint in ANY arm",),
+                secondary=("historical-suite retention/forgetting, never fed back",))
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, beta.primary_contrasts, POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "BONFERRONI",
+               beta.preconditions + ("interaction sized at sqrt(2) worse precision than the combined effect, by construction",),
+               beta.refusals, secondary=beta.secondary)
+    return LaneGate("H4", "adaptive challenges and transfer improve independently evaluated competence", beta, one)
+
+
+def _h5():
+    consts = {"H5_DIRECT_REACH_BOUND": H5_DIRECT_REACH_BOUND, "H5_PERMUTED_REACH_BOUND": H5_PERMUTED_REACH_BOUND,
+              "H5_GENOME_BITS": H5_GENOME_BITS, "H5_RULES": H5_RULES, "H5_ENCODINGS_PER_RULE": H5_ENCODINGS_PER_RULE}
+    beta = Gate("BETA", "held-out solve fraction AND functional offspring yield, "
+                        "learned-balanced vs direct vs scrambled-learned decoders",
+                ("learned_minus_scrambled_solve", "learned_minus_scrambled_yield"),
+                PRECISION, (-1.0, 1.0), "paired (seed x task_block)", _MIN_ELIGIBLE, "BONFERRONI",
+                ("phenotype multiplicities EXACTLY preserved (16 per rule, 4096 entries)",
+                 "initial phenotype distribution, mutation operator and target budget matched",
+                 "training and decoding costs charged; total-cost result before any amortisation",
+                 "mean class-reach reported as EXCESS over the analytic bound for the decoder's construction "
+                 "(direct <= %d, any permutation <= %d)" % (H5_DIRECT_REACH_BOUND, H5_PERMUTED_REACH_BOUND)),
+                _COMMON_REFUSALS + ("reach at or under the construction bound quoted as evolvability evidence",
+                                    "a hand-designed or scrambled decoder read as a learned effect",
+                                    "benefit that disappears after frequency / initial-phenotype / cost controls"),
+                constants=consts)
+    one = Gate("ONE_POINT_ZERO", beta.endpoint, beta.primary_contrasts, POWER, (-1.0, 1.0),
+               beta.unit, _MIN_ELIGIBLE, "BONFERRONI",
+               beta.preconditions + ("decoder frozen and hashed before target evaluation",),
+               beta.refusals, constants=consts)
+    return LaneGate("H5", "a learned balanced decoder improves access to useful variation after "
+                          "phenotype frequencies and total costs are controlled", beta, one)
+
+
+_LANES = {"H0": _h0, "H1": _h1, "H2": _h2, "H3": _h3, "H4": _h4, "H5": _h5}
+
+
+def lane_gate(lane: str) -> LaneGate:
+    if lane not in _LANES:
+        raise PlanRefused("no gate for lane %r; lanes are %s" % (lane, sorted(_LANES)))
+    return _LANES[lane]()
+
+
+def refuse_endpoint(lane: str, endpoint_name: str, computed_on: str = "held_out") -> None:
+    """Mechanical endpoint refusals: H3 refuses diversity; H4 refuses anything
+    computed on training tasks."""
+    e = endpoint_name.lower()
+    if lane == "H3" and any(d in e for d in DIVERSITY_ENDPOINTS):
+        raise PlanRefused("H3: %r is a diversity measure; prospective utility is the endpoint and "
+                          "diversity is secondary (design: 'more measured diversity without later "
+                          "solving benefit is a negative result')" % endpoint_name)
+    if lane == "H4" and computed_on == "training":
+        raise PlanRefused("H4: endpoint %r computed on TRAINING tasks; an adaptive arm generates its own "
+                          "tasks, so training solve rate is confounded by task generation "
+                          "(%s endpoint_surface.PROHIBITED)" % (endpoint_name, H4_PROTOCOL_VERSION))
+
+
+def h5_excess_over_construction(mean_reach: float, decoder_kind: str) -> dict:
+    """Only the excess over the analytic bound counts. decoder_kind: direct | permuted |
+    scrambled | learned. A learned decoder is a permutation of the map (swaps preserve
+    multiplicities), so its bound is the permuted one."""
+    bound = {"direct": H5_DIRECT_REACH_BOUND, "permuted": H5_PERMUTED_REACH_BOUND,
+             "scrambled": H5_PERMUTED_REACH_BOUND, "learned": H5_PERMUTED_REACH_BOUND}[decoder_kind]
+    excess = mean_reach - bound
+    return {"mean_reach": mean_reach, "decoder_kind": decoder_kind, "analytic_bound": bound,
+            "excess_over_construction": excess,
+            "label": "AT_OR_UNDER_BOUND_NO_EVIDENCE" if excess <= 0 else "EXCESS_%.4f" % excess}
+
+
+def h0_worked_sizing(pilot_blocks, threshold=0.05, alpha=0.05, target_power=0.80):
+    """HARM-06: the H0 sizing at a PILOT Sigma, G and I sized SEPARATELY.
+    Returns the measured SE ratio, and for each contrast the interval-clearance
+    n (PRECISION) at the null and the power n (POWER) at 2x the threshold."""
+    rep = se_ratio_report(pilot_blocks)
+    n = len(pilot_blocks)
+    sdG = math.sqrt(rep["var_G_joint_treatment"])
+    sdI = math.sqrt(rep["var_I_interaction"])
+    out = {"pilot_n_blocks": n, "se_ratio_measured": rep["se_ratio_measured"],
+           "se_ratio_if_exchangeable_equal_var": rep["se_ratio_if_exchangeable_equal_var"]}
+    for nm, sd in (("G", sdG), ("I", sdI)):
+        prec = blocks_for_interval_clearance(sd, threshold, alpha, 2, assumed_effect=0.0)
+        pw, achieved = blocks_for_power(sd, threshold, true_effect=2 * threshold, target_power=target_power,
+                                        alpha=alpha, n_primary=2, trials=400)
+        out[nm] = {"block_sd": sd, "blocks_for_interval_clearance_at_null": prec,
+                   "blocks_for_power_at_2x_threshold": pw, "achieved_power": achieved,
+                   "quantities": {PRECISION: prec, POWER: pw, MEANINGFUL_EFFECT: threshold}}
+    return out
+
+
+# ----------------------------------------------- HARM-11: multiplicity ACROSS lanes
+
+PROGRAM_LANES = ("H0", "H1", "H2", "H3", "H4", "H5")
+
+
+def program_family(alpha: float = 0.05, lanes=PROGRAM_LANES) -> dict:
+    """MULTIPLICITY.md, mechanical. Two families, never one:
+    LANE family      each lane's declared primaries, Bonferroni within the lane at
+                     alpha (what validate_plan enforces). A lane's own verdict is
+                     read at this level.
+    PROGRAM family   any claim that AGGREGATES lanes ('the ecosystem works',
+                     'k of 6 supported'). Under a global null the probability that
+                     at least one of n independent lane families returns a false
+                     SUPPORTED is 1 - (1-alpha)^n; a program-level claim uses
+                     alpha / n per lane. Both numbers are printed with any
+                     cross-lane sentence."""
+    n = len(lanes)
+    return {"lanes": list(lanes), "n_lanes": n, "lane_alpha": alpha,
+            "program_fwer_if_uncorrected": 1.0 - (1.0 - alpha) ** n,
+            "expected_false_supports_if_uncorrected": n * alpha,
+            "program_level_alpha_per_lane": alpha / n,
+            "rule": "lane verdicts at lane_alpha (within-lane Bonferroni); cross-lane claims at alpha/n"}
+
+
+# ------------------------------------ QR-1.2.1: the H5 bounds COMPUTED, not quoted
+
+def h5_reach_bounds_computed(seed: int = 7, n_permutations: int = 3) -> dict:
+    """Self-attack 2026-09-18 (review packet Q2): the constants 8 / 12 were quoted
+    from Archaeon's readout. Compute them over the full map instead.
+    Genome: 12 bits; direct decoder = the low 8 bits (rule 0..255); a genome's
+    neighbours are its 12 single-bit flips. Reach = number of DISTINCT rules among
+    the neighbours' decodings. For the direct decoder every genome reaches
+    exactly 8 non-parent rules (each low-bit flip changes exactly one rule bit; the
+    4 high bits are inert and give 4 NEUTRAL neighbours). For ANY decoder the reach
+    is at most the neighbour count, 12, attained only when no neighbour is neutral. A
+    balanced random permutation (16 genomes per rule preserved) is sampled to show
+    where a permuted map lands (the live balanced_7 read 11.7305)."""
+    import random as _r
+    N, BITS = 4096, 12
+    direct = [g & 0xFF for g in range(N)]
+
+    # DEFINITION FOUND BY THIS CHECK: the readout's "reach" counts distinct rules among
+    # the neighbours EXCLUDING the parent's own rule; neutral neighbours (same rule as the
+    # parent) are counted separately as mean_neutral (4.0000 for direct). Counting the
+    # parent's rule as well gives 9 for the direct decoder, not 8. Both are computed;
+    # the constants 8 / 12 are the non-parent definition and the file says so.
+    def reach_excl(dec):
+        return [len({dec[g ^ (1 << b)] for b in range(BITS)} - {dec[g]}) for g in range(N)]
+
+    def reach_incl(dec):
+        return [len({dec[g ^ (1 << b)] for b in range(BITS)}) for g in range(N)]
+
+    def neutral(dec):
+        return [sum(1 for b in range(BITS) if dec[g ^ (1 << b)] == dec[g]) for g in range(N)]
+    de, di, dn = reach_excl(direct), reach_incl(direct), neutral(direct)
+    rng = _r.Random(seed)
+    perm_means = []
+    for _ in range(n_permutations):
+        table = list(range(256)) * 16                # exactly 16 genomes per rule
+        rng.shuffle(table)
+        perm_means.append(sum(reach_excl(table)) / N)
+    return {"genomes": N, "neighbours_per_genome": BITS,
+            "definition": "reach = distinct rules among the 12 neighbours EXCLUDING the parent's rule; "
+                          "neutral = neighbours decoding to the parent's rule",
+            "direct_reach_excl_parent": {"min": min(de), "max": max(de), "mean": sum(de) / N},
+            "direct_reach_incl_parent": {"min": min(di), "max": max(di), "mean": sum(di) / N},
+            "direct_neutral_mean": sum(dn) / N,
+            "H5_DIRECT_REACH_BOUND": H5_DIRECT_REACH_BOUND, "direct_bound_holds": max(de) == H5_DIRECT_REACH_BOUND,
+            "H5_PERMUTED_REACH_BOUND": H5_PERMUTED_REACH_BOUND,
+            "permuted_bound_is_neighbour_count": H5_PERMUTED_REACH_BOUND == BITS,
+            "balanced_random_permutation_mean_reach_excl_parent": perm_means,
+            "multiplicity_preserved": True}

@@ -1,0 +1,143 @@
+{
+ "at": "2026-09-19T0038Z",
+ "events_by_kind": {
+  "CHUNK": 2,
+  "CREATED": 13,
+  "FALSIFIER_FAILED": 1,
+  "FREEZE_REF": 12745,
+  "FRONTIER_EXTENDED": 4,
+  "GATED": 8,
+  "OBSERVATION": 4,
+  "RUN": 4,
+  "SPECS_ATTACHED": 12,
+  "UNGATED": 7
+ },
+ "interpretations": [],
+ "queues": {
+  "AUDIT": {
+   "claimed": 2,
+   "done": 0,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 0,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 10,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 10,
+   "pending_budget": 275000
+  },
+  "EXPLOITATION": {
+   "claimed": 0,
+   "done": 1,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 1,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 9,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 10,
+   "pending_budget": 760000
+  },
+  "EXPLORATION": {
+   "claimed": 0,
+   "done": 3,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 5,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 9,
+    "MIXED": 0,
+    "PROCEDURAL": 203
+   },
+   "pending": 217,
+   "pending_budget": 2937000
+  },
+  "REVISIT": {
+   "claimed": 0,
+   "done": 0,
+   "dropped": 0,
+   "lanes_pending": {
+    "EVOLUTION_GENERATED": 0,
+    "HUMAN_DIRECTED": 0,
+    "LLM_PROPOSED": 8,
+    "MIXED": 0,
+    "PROCEDURAL": 0
+   },
+   "pending": 8,
+   "pending_budget": 510000
+  }
+ },
+ "registry": {
+  "by_mode": {
+   "AUDIT": 2,
+   "BLIND_SPOT": 2,
+   "BREADTH": 4,
+   "DEPTH": 2,
+   "REVISIT": 3
+  },
+  "evaluations_used": 95968,
+  "frontier_total": 247,
+  "lineages": 13,
+  "open": 13,
+  "retired": 0
+ },
+ "runs": [
+  {
+   "chunks": 2,
+   "complexity_bin": 3,
+   "evaluations": 16000,
+   "fired": {
+    "behavioral_novelty": 1108,
+    "classifier_failure": 12745,
+    "detector_disagreement": 12593,
+    "environmental_modification": 526,
+    "lineage_discontinuity": 169,
+    "structural_reuse": 12334
+   },
+   "freeze_scopes": {
+    "COMPLETE": 3094,
+    "PARTIAL_BY_POLICY": 6892,
+    "PARTIAL_FREEZE": 2759
+   },
+   "generations": 500,
+   "lineage": "LIN-2d4fd1c7",
+   "mode": "BREADTH",
+   "pressure_kinds": {
+    "EXOGENOUS_PRESSURE": 502
+   },
+   "profile": "v0",
+   "reward_first": [
+    0,
+    0.0,
+    0.7129999999999996
+   ],
+   "reward_last": [
+    499,
+    0.7129999999999996,
+    0.7129999999999996
+   ],
+   "reward_max_over_run": 1.0,
+   "tiers": {
+    "FULL": 5853,
+    "PARTIAL": 6892
+   },
+   "title": "Breadth scatter: procedural worlds x unlabeled schedules x v0/graph, uniform bins",
+   "transformation": "B-scatter.T000",
+   "trigger": null,
+   "unable": {
+    "lineage_discontinuity": 556,
+    "niche_divergence": 12745,
+    "regime_persistence": 12745,
+    "unexpected_causal_dependence": 12745,
+    "unexpected_transfer": 12745,
+    "unexplained_gain": 12745
+   },
+   "world_kind": "c6.composed.v1"
+  }
+ ],
+ "schema": "archaeon.frontier.digest.v1"
+}

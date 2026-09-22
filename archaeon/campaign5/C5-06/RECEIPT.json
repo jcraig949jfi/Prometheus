@@ -1,0 +1,259 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:bd17274e0b69b729d76d8effdb38bb308dc114ffdec16c3ec2cbba0c9002b321",
+   "blob_hash": "sha256:fb87f438aff6180033a1bf415effa0937c6a16418432fbd46a242b4025e60801",
+   "bytes": 1687,
+   "declared": "sha256:fb87f438aff6180033a1bf415effa0937c6a16418432fbd46a242b4025e60801",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  },
+  "recovery": {
+   "artifact_id": "sha256:da041e85062c32834c8ad06474dd0f503336c97196669949e61b16a3c7a97066",
+   "blob_hash": "sha256:cf4891a86a7294a3472722c78d50576259cde66a753c7acc7b7c04aa25a95b2b",
+   "bytes": 1386,
+   "declared": "sha256:cf4891a86a7294a3472722c78d50576259cde66a753c7acc7b7c04aa25a95b2b",
+   "hash_ok": true,
+   "kind": "cmp5.c506_recovery.v1"
+  }
+ },
+ "attempt": 2,
+ "attempt_id": "C5-06/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260922,
+ "decisions": [],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 0,
+   "declared": 0,
+   "survived": 0
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 154.0,
+   "effect": 75.0,
+   "min_effect": 0.0,
+   "n_control": 1,
+   "n_treatment": 1,
+   "paired": 1,
+   "paired_wins": 1,
+   "treatment_mean": 229.0
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C5-06",
+ "finished_at": "2026-09-18T14:49:46Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_934f6a4cfb218cbe944fe7a1",
+ "imports": {},
+ "prereg_digest": "sha256:4ff5b2a5aa1cc504bd05b52f766596ed5d735b979c6b610a7bf5378d57530a9d",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "BOTH_DIE": {
+   "exp_id": "exp_f5c71a7aa159ae866d6a295f",
+   "obs_id": "obs_63c569fe63f69f59d05ea566"
+  },
+  "BOTH_LIVE": {
+   "exp_id": "exp_14457570071e39b2ae8d302e",
+   "obs_id": "obs_3ff877d68004109f03e0b38c"
+  },
+  "INSULATION_LOSS": {
+   "exp_id": "exp_ea93300cc36abd88ee453711",
+   "obs_id": "obs_6a010d3c61322cdafd65ee42"
+  },
+  "RECOVERY": {
+   "exp_id": "exp_26f3e1343262336ace74a2b9",
+   "obs_id": "obs_30db5c1a805d2d7deee54e7a"
+  }
+ },
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T14:49:30Z",
+ "steps": {
+  "idem:24b82a09ededb414fc1ff4ee2bb631a4": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "INSULATION_LOSS"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ea93300cc36abd88ee453711",
+    "obs_id": "obs_6a010d3c61322cdafd65ee42"
+   },
+   "wall_s": 0.029
+  },
+  "idem:3c61452f64a67f8339b04907743da609": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "BOTH_LIVE"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_14457570071e39b2ae8d302e",
+    "obs_id": "obs_3ff877d68004109f03e0b38c"
+   },
+   "wall_s": 0.055
+  },
+  "idem:636643c49935737e7bbb4114319cc80f": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.022
+  },
+  "idem:935d36ec69fc7df58f2e6f9890000a2a": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "recovery"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:da041e85062c32834c8ad06474dd0f503336c97196669949e61b16a3c7a97066",
+    "blob_hash": "sha256:cf4891a86a7294a3472722c78d50576259cde66a753c7acc7b7c04aa25a95b2b",
+    "bytes": 1386,
+    "declared": "sha256:cf4891a86a7294a3472722c78d50576259cde66a753c7acc7b7c04aa25a95b2b",
+    "hash_ok": true,
+    "kind": "cmp5.c506_recovery.v1"
+   },
+   "wall_s": 0.011
+  },
+  "idem:9af4f6feb7f3971be98e933b83b7c129": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "local-recovery"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c5-06-local-recovery",
+    "policy": "ISOLATED",
+    "world_id": "wld_7a60ba20e1418303391ceaa3"
+   },
+   "wall_s": 0.056
+  },
+  "idem:a9c20177678c1d7ab6af4eb112831d61": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_7376824ae1cfb3f839317cef",
+   "wall_s": 0.022
+  },
+  "idem:c72a0e4452ff5e9b25499f44a9f686b4": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:bd17274e0b69b729d76d8effdb38bb308dc114ffdec16c3ec2cbba0c9002b321",
+    "blob_hash": "sha256:fb87f438aff6180033a1bf415effa0937c6a16418432fbd46a242b4025e60801",
+    "bytes": 1687,
+    "declared": "sha256:fb87f438aff6180033a1bf415effa0937c6a16418432fbd46a242b4025e60801",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.04
+  },
+  "idem:d8173ce466783459eb20b6c4bbeb4716": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "RECOVERY"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_26f3e1343262336ace74a2b9",
+    "obs_id": "obs_30db5c1a805d2d7deee54e7a"
+   },
+   "wall_s": 0.069
+  },
+  "idem:db87245ffef3e9f01ead1996b3e23bbf": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "BOTH_DIE"
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_f5c71a7aa159ae866d6a295f",
+    "obs_id": "obs_63c569fe63f69f59d05ea566"
+   },
+   "wall_s": 0.019
+  },
+  "idem:de9e910715a86ad80b0fd3e62b272287": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_934f6a4cfb218cbe944fe7a1",
+   "wall_s": 0.016
+  }
+ },
+ "teardown": {
+  "local-recovery": "TERMINATED"
+ },
+ "timings": {
+  "replicate_s": 14.38,
+  "startup_s": 0.05,
+  "teardown_s": 0.05,
+  "total_s": 15.6
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "4ee445942571574f4442854dd8ea865fdf2ca69b",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "local-recovery": "wld_7a60ba20e1418303391ceaa3"
+ }
+}

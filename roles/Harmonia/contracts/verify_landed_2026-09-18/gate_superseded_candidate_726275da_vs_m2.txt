@@ -1,0 +1,20 @@
+==========================================================================
+SFE CONFORMANCE CHECK
+==========================================================================
+  contract describes : eng_8a37a5d305969034d488c43e  schema 8
+  target             : https://192.168.1.191:8811/v2
+
+  [PASS] engine_reachable                           /v2/version -> 200
+  [ADDED] engine_source_hash                         live sha256:699ca0f952448b4 vs contract sha256:726275da9c8daa3
+  [DRIFT] engine_instance_id                         live eng_906356f7fb1da180131f9290
+  [ADDED] schema_version                             live 9 vs contract 8
+  [PASS] science_profile                            live warn vs contract warn
+  [PASS] session_enforcement                        live advisory vs contract advisory
+  [PASS] no_route_removed                           0 removed
+  [ADDED] route_set_complete                         72 live, 68 in contract; 4 added: GET /v2/capabilities, GET /v2/worlds/{wid}/artifacts, GET /v2/worlds/{wid}/manifest, POST /v2/worlds/{wid}/events
+  [PASS] session_scoping_sample                     30 GET routes probed; all match
+
+==========================================================================
+DRIFT -- 1 breaking check(s) failed. STOP THE LOOP.
+Something the contract DESCRIBES has moved, or the ledger changed.
+   engine_instance_id: live eng_906356f7fb1da180131f9290

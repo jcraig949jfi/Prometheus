@@ -1,0 +1,32 @@
+{
+ "hypothesis": "REHEARSAL ONLY, no scientific content: the Campaign 4 execution tuple carries a unit of work from enqueue to reproduced receipt through an engine restart.",
+ "outcome_rule": {
+  "aggregate": "all",
+  "field": "executed",
+  "if_false": "FALSIFIED",
+  "if_indeterminate": "INCONCLUSIVE",
+  "if_true": "SURVIVED",
+  "op": "==",
+  "value": true
+ },
+ "pew": null,
+ "prediction": null,
+ "repeat": {
+  "budget": {
+   "max_observations": 24,
+   "max_seconds": 600
+  },
+  "count": 24,
+  "order": "sequential",
+  "seed_derivation": "sha256_index",
+  "state": "reset"
+ },
+ "spec_version": 3,
+ "work": {
+  "kind": "noop_v0",
+  "payload": {}
+ },
+ "world": {
+  "seed_root": 20260921017
+ }
+}

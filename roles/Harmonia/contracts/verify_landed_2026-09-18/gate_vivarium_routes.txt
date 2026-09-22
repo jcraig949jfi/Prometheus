@@ -1,0 +1,18 @@
+==========================================================================
+SFE CONFORMANCE CHECK
+==========================================================================
+  contract describes : eng_906356f7fb1da180131f9290  schema 9
+  target             : https://192.168.1.191:8811/v2
+
+  [PASS] engine_reachable                           /v2/version -> 200
+  [PASS] engine_source_hash                         live sha256:699ca0f952448b4 vs contract sha256:699ca0f952448b4
+  [PASS] engine_instance_id                         live eng_906356f7fb1da180131f9290
+  [PASS] schema_version                             live 9 vs contract 9
+  [PASS] science_profile                            live warn vs contract warn
+  [PASS] session_enforcement                        live advisory vs contract advisory
+  [PASS] no_route_removed                           0 removed
+  [PASS] route_set_complete                         72 live, 72 in contract; 0 added
+  [PASS] session_scoping_sample                     33 GET routes probed; all match
+
+==========================================================================
+CONFORMANT -- safe to proceed

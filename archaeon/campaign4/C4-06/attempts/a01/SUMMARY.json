@@ -1,0 +1,113 @@
+{
+ "mutation_only": {
+  "births": {
+   "mated_no_splice": {
+    "n": 0,
+    "viable": 0,
+    "viable_share": null
+   },
+   "mated_splice": {
+    "n": 0,
+    "viable": 0,
+    "viable_share": null
+   },
+   "mutation": {
+    "n": 118627,
+    "viable": 97212,
+    "viable_share": 0.8195
+   }
+  },
+  "crossings": 0,
+  "heldout_behaviour_distinct": [
+   7,
+   4,
+   4,
+   3,
+   2,
+   3
+  ],
+  "heldout_final": [
+   0.5312,
+   0.3542,
+   0.5312,
+   0.5104,
+   0.5625,
+   0.5208
+  ],
+  "shelf": 6,
+  "structural_novelty_total": [
+   13709,
+   13794,
+   13699,
+   13577,
+   13936,
+   13716
+  ]
+ },
+ "negative_control_start_best_heldout": 0.53125,
+ "predictions": {
+  "P1": {
+   "held": false,
+   "mutation_only": 0,
+   "recombination": 0,
+   "stated": "crossings(recombination) - crossings(mutation_only) >= 2"
+  },
+  "P2": {
+   "held": false,
+   "mated_splice_nonviable": 0.2663,
+   "mutation_nonviable": 0.1855,
+   "stated": "catastrophic share among mate-splice births exceeds mutation births' by >= 0.10 (recombination arm)"
+  }
+ },
+ "recombination": {
+  "births": {
+   "mated_no_splice": {
+    "n": 111640,
+    "viable": 91347,
+    "viable_share": 0.8182
+   },
+   "mated_splice": {
+    "n": 6218,
+    "viable": 4562,
+    "viable_share": 0.7337
+   },
+   "mutation": {
+    "n": 787,
+    "viable": 641,
+    "viable_share": 0.8145
+   }
+  },
+  "crossings": 0,
+  "heldout_behaviour_distinct": [
+   4,
+   1,
+   4,
+   2,
+   3,
+   2
+  ],
+  "heldout_final": [
+   0.5312,
+   0.3542,
+   0.5312,
+   0.5104,
+   0.5625,
+   0.5208
+  ],
+  "shelf": 6,
+  "structural_novelty_total": [
+   13677,
+   13889,
+   13441,
+   13137,
+   13817,
+   13797
+  ]
+ },
+ "walkers": {
+  "digest_mismatches": 0,
+  "regenerated": 188,
+  "used": 188
+ },
+ "wall_s": 124.5
+}

@@ -1,0 +1,186 @@
+================================================================================
+REVIEW PACKET -- ASAL golden-path packet, first verdict assimilated (Stage D')
+-- Mechanism Archaeology Pipeline, Nyx (Chop Shop), 2026-09-18
+Commit(s) of record: this commit (Stage D' record); packet FREEZE
+  c6627d265757e81433b34a1a9dcaf9a5e8566c8e3d96a65cbb8ba4a5e2b0bf2c on
+  origin/main at 360a33931; Harmonia ruling + rows committed separately.
+Author: Nyx[gandalf-9e21f277] (Opus 4.8, M3/GANDALF)
+Invoked by: standing order (review-packet after substantial work); the
+  substantial block is the first prediction packet to travel fossil ->
+  cut -> frozen packet -> independent verdict -> Stage D'.
+================================================================================
+
+0. WHAT THIS PACKET IS
+   The pipeline's first mechanism carried all the way to an independent
+   verdict. I (Nyx) cut the ASAL open-endedness score out of the SakanaAI
+   ASAL fossil, wrote a frozen prediction packet, and Harmonia ran a
+   sealed-then-frozen search against it and ruled. This packet is my
+   Stage D' write-up of that verdict: what was predicted, what came back,
+   what I got wrong, and what changed.
+   CONFLICT OF INTEREST, DECLARED: I authored both the cut and the frozen
+   packet under review. Harmonia (a separate seat, instance gandalf-
+   6cd1348b) built the ruler, ran the search, and ruled independently; the
+   operator then read my earlier review packet and TIGHTENED the return.
+   I did not run anything for this result.
+
+1. CONTEXT
+   ASAL (Automating the Search for Artificial Life, Sakana 2024) replaces
+   hand-written artificial-life metrics with a foundation-model observer:
+   roll out a simulation, embed a few sampled frames with a vision model,
+   and score "open-endedness" purely in embedding space. The score at
+   asal_metrics.py:52-64 is the mean, over 8 sampled frames, of each
+   frame's maximum embedding similarity to any strictly earlier frame,
+   minimised; lower means "more open-ended". Earlier work (Techne's
+   TECHNE-107) showed scene-level GARBAGE beats living Lenia by this score
+   through CLIP. The operator's open question: can a search over
+   LEGITIMATE (alive) Lenia parameters cross below the garbage score too?
+
+2. THE QUESTION THE WORK WAS ANSWERING (operator, verbatim intent)
+   "Can a search over legitimate Lenia parameters cross below the observed
+   garbage score?" -- the narrow ASAL fast-lane cut of the 2026-09-18
+   refinery directive, s2.
+
+3. WHAT WAS DONE, STEP BY STEP
+   3.1 Cut nyx/atlas/cuts/asal_sakana_2024.py: two organs bound to the
+       fossil's own lines -- the score (asal_metrics.py:52-64) and the
+       K=8 even-interval frame sampling (rollout.py:78-95). The boundary
+       is the fossil's lines, not Harmonia's port; the port is a
+       descendant (numpy Lenia + torch CLIP) that agrees with the fossil
+       metric to 5.6e-16 (E1, Harmonia fixture).
+   3.2 Frozen packet MECH-ASAL-LEGIT-SEARCH-001, four exact interventions,
+       each novelty_kind=observer:
+         I0-CATALOGUE-ONLY  min ALIVE catalogue score UNCHANGED in
+             [0.8167, 0.8750] -- prediction: the raw catalogue does NOT
+             cross the garbage mean without search.
+         I1-CROSSING-MEAN   min ALIVE search score DECREASE below 0.8167.
+         I2-CROSSING-2SD    same, below 0.7999 (mean - 2 sd).
+         I3-CLASS-OF-BEST   best ALIVE crosser is a metric/observer
+             exploit (indicator 1).
+   3.3 INTERLOCK (Harmonia's protocol, adopted as rule A8): Harmonia sealed
+       the search readouts UNREAD, I froze the packet without seeing them,
+       then the seal was opened with a hash check. Order of record:
+       fixture 51df96271 -> search sealed ~05:55Z -> SEAL ffd11a1c0
+       (unread) -> FREEZE 360a33931 -> plan d8381a961 -> unseal (hashes
+       MATCH) -> ruling. Neither side could peek at the other.
+
+4. RESULTS (Harmonia-executed this program-tick; rows committed = E3)
+   Threshold provenance: garbage mean 0.8167, sd 0.0084, 5 seeds (E1,
+   TECHNE-107 GARBAGE arm). All scores are the ASAL open-endedness score;
+   lower = more open-ended.
+
+   intervention | predicted            | observed        | verdict
+   -------------+----------------------+-----------------+---------------------
+   I0 catalogue | UNCHANGED, no cross  | 0.8076 < 0.8167 | PREDICTION_FAILED
+   I1 vs mean   | cross below 0.8167   | 0.7665          | SUPPORTED_BY_WITNESS
+   I2 vs 2sd    | cross below 0.7999   | 0.7665          | SUPPORTED_BY_WITNESS
+   I3 class     | exploit (1)          | S2_189 EXPLOIT  | SUPPORTED_ON_
+                |                      | (executed 395)  |   EXECUTED_SUBSET
+   boundary     | cut_kill silent      | agrees 5.6e-16  | CUT_SUPPORTED
+
+   Executed vs intended domain (E3): 395 of 1,045 budgeted draws executed;
+   333 ALIVE. The port refused 650 (547 fractional-b strings like "1/2,1",
+   94 kernel/growth cores kn/gn >= 3, 9 patterns larger than 128).
+   Class of the 395 executed (E3, descriptive of the subset, NOT the
+   domain): 49 metric-exploit, 47 unclassified, 9 genuine near the mean.
+   Best genuine rollout S2_135 scored 0.7933 (E3) -- a two-lobed body
+   shrinking to a persistent rotating glider, BELOW the 2-sd line.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   - nyx/atlas/cuts/asal_sakana_2024.py: Stage D' reading recorded (the
+     mechanism finding, strengthened).
+   - nyx/atlas/gates/LEDGER.json: ASAL packet closed (verdict_tick
+     2026-09-18); two returns_received rows (boundary + interventions).
+   - roles/Nyx/calibration/LEDGER.md: +2 rows (A7 estimated-mean-as-
+     threshold; A4/A6 existential-vs-domain granularity).
+   - roles/Nyx/STATUS.md, roles/Nyx/journal/2026-09-17.md refreshed.
+   - Scoreboard now: packets 3, verdicts 10, supported 3, failed 2,
+     indeterminate 2, open packets none, median cut->verdict 0 days.
+   - Comms: posted #476 (Stage D' to Harmonia cc Techne/Theophrastus/
+     Archaeon). Cost: no compute run by this seat; assimilation only.
+
+6. WHAT THIS DID NOT ESTABLISH
+   - Nothing about the best crosser over the full 1,045-point intended
+     domain. Only 395 executed; I3 is SUPPORTED_ON_EXECUTED_SUBSET, not
+     unrestricted. The class proportions are of the subset.
+   - Nothing about ASAL's OWN JAX Lenia dynamics. The observer claim was
+     tested through a descendant CLIP port; the equivalence to ASAL's Flax
+     CLIP path is a separate untested claim (HARM-55, pending an AVX host).
+   - No atlas fossil skeleton exists yet for the ASAL body (it sits
+     outside the frozen 121 census), so the two organs are not in the
+     organ catalog; the cut binds by hash only. Flagged, next action.
+   - The mechanism is not yet on a bench: Theophrastus has a cell OFFERED,
+     not accepted. mechanisms_accepted_downstream stays 0.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   7.1 I0 was FALSE and it was the weak claim by construction. I predicted
+       the raw catalogue does not cross; five catalogued lifeforms cross
+       with no search (min 0.8076). Cost: the packet asserted an existence
+       claim ("none cross") that a single counterexample kills, while I1/I2
+       were correctly existential the other way ("one crosses"). Lesson
+       (calibration): choose the existential direction so the ROBUST side
+       is the claim.
+   7.2 I froze a 5-seed ESTIMATED garbage mean (0.8167) as an EXACT
+       threshold. The I0 margin 0.009 is 1.1 sd of that estimate -- a
+       crossed convention, not a statistical result. Harmonia's rule A7
+       (adopted): freeze a confidence-aware reference distribution or an
+       explicitly NAMED cutoff, never an estimated mean used silently as
+       ground truth.
+   7.3 I wrote I3 as if it ranged over the intended 1,045 domain without
+       first proving the executor accepts that domain. It accepted 395.
+       Rule A4 (adopted): a packet is not executable until the executor's
+       accepted subdomain is shown with exact accepted/refused counts.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Nyx: atlas skeletons for the 6 ALife bodies so the organs enter the
+     catalog (next action); POET's two mechanisms; the Avida ancestry cut
+     with A5 definedness checks and A9 ancestry handling.
+   - Techne: the Flax-CLIP scores for HARM-55 on an AVX host (395 rollouts,
+     same frames, path identity); port extension for fractional rings and
+     kn/gn>=3, or ASAL's JAX Lenia on an AVX host; the accepted subdomain
+     stated in the executable fossil packet.
+   - Harmonia: HARM-57 domain-acceptance and measure-definedness fixtures;
+     then HARM-55 comparison with the pairwise-discordance table; then
+     HARM-56 class-ruler calibration.
+   - Theophrastus: accept or decline the offered ASAL cell.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   9.1 The mechanism return, strengthened, is: "the ASAL scalar admits both
+       exploit turbulence AND coherent morphing life below the garbage
+       reference, including crossings already in the published catalogue;
+       selection alone suffices, search only deepens it; the score detects
+       large CLIP-embedding novelty vs earlier frames and by itself does
+       not identify the mechanism that produced it." Is that the right
+       reusable claim to carry to a bench, or is it overreaching from 395
+       rollouts on one port?
+   9.2 FALSIFICATION: what observation would falsify the strengthened
+       claim? Candidate: on ASAL's own Flax CLIP path (HARM-55), if the
+       catalogue crossings and the S2_135 genuine crosser DISAPPEAR (the
+       torch port manufactured them), the "selection alone suffices"
+       reading is a port artifact, not a property of the metric.
+   9.3 WHAT SHOULD WE STOP: is it right to NOT complete the 1,045-point
+       domain now and treat a full-domain run as a new preregistered
+       replication after port extension? Or does leaving 650/1,045
+       unexecuted leave a domain claim dangling that a reader will misread
+       as settled?
+   9.4 Is recording ONE packet's verdict as two scoreboard rows (a
+       boundary CUT_SUPPORTED and a compound intervention row that hits
+       both "supported" and "failed" by substring) an honest scoreboard,
+       or does it inflate the supported/failed counts? The substring
+       matcher is the current convention; should compound verdicts get a
+       structured verdict object instead?
+
+10. HOW TO REPRODUCE
+   Nyx side (deterministic, no GPU):
+     cd <nyx worktree>
+     python -m nyx.atlas.schema           # validator, 121/0
+     python -m pytest -q nyx/tests        # 23 passed
+     python -m nyx.atlas.build            # .scoreboard block, as in s5
+     sha256sum nyx/atlas/predictions/MECH-ASAL-LEGIT-SEARCH-001.json
+       # canonical-bytes hash must equal the FREEZE file:
+       # c6627d265757e81433b34a1a9dcaf9a5e8566c8e3d96a65cbb8ba4a5e2b0bf2c
+   Harmonia side (needs the numpy Lenia + torch CLIP port; the search is
+   deterministic given the frozen budget and disjoint seeds): see
+   roles/Harmonia/science/asal_ruler/PLAN_ASAL_001_2026-09-18.md and
+   out/run_2026-09-18/search/ (row hashes == SEAL.md). The Flax
+   equivalence (HARM-55) needs an AVX host with jax/flax and is pending.
+================================================================================

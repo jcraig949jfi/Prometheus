@@ -168,14 +168,14 @@
    "compact.h, compact.c, tree.c (all)",
    "uncompact.c (skimmed)"
   ],
-  "date": "2026-09-17T10:53Z",
+  "date": "2026-09-17T22:50Z",
   "note": "an adaptive (one-pass, no header) Huffman coder from 1979: the model and the code are the same tree, updated after every symbol by a sibling-property repair; two reserved leaves (NC = not-yet-seen escape, EF = end) make the code self-describing",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T10:53Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/Makefile sha256:4879c253db9e11ea40cc2a39c3df5a265cf1af8efd9981ece6d4580ff5682179; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/ccat.sh sha256:dd0f859958876e0a0fdf8b0b033f2922da8e1ea3ef59c98f05fa7e9886fe1b98; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.c sha256:25aabb7398a4a4648dc646549bacecdc112769bc892c2ecb6f86da57e891f3af; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.h sha256:36249c3e18988ff74dcbd32fc2689d73b8a0991f4ef6e373b24b4151320f5cb5; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/tree.c sha256:1cb5a8e00565c058afd0e06a884341dd088bfc9c2a3cfa03d8f14dcb8c07732e; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/uncompact.c sha256:076ef0682506bbdfbf076f53dcbec75867d3f83aab7683c39181e096d0eb169a",
    "payload_manifest_id": "techne tree_sha256 6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d (6 files)",
    "host_tree_matches_record": true,
@@ -1097,6 +1097,13 @@
    "to": "Gallager 1978 (adaptive Huffman)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compact-4.2bsd-1983",

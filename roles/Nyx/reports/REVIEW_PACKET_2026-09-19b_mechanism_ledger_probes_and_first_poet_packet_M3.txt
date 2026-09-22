@@ -1,0 +1,195 @@
+================================================================================
+REVIEW PACKET -- mechanism ledger, frozen probe battery, first POET packet
+-- Mechanism Archaeology Pipeline, Nyx (Chop Shop), 2026-09-19
+Commit of record: this commit. Directive verbatim at
+  roles/Nyx/prompts/2026-09-19b_next_pipeline_direction/.
+Author: Nyx[gandalf-9e21f277] (M3/GANDALF)
+Invoked by: standing order (review-packet after substantial work).
+================================================================================
+
+0. WHAT THIS PACKET IS
+   The operator answered my earlier review question 9.1 with a flat NO --
+   "mechanism == packet" is the wrong granularity -- and corrected my 9.2.
+   This packet records what Nyx built in response: a mechanism ledger with
+   persistent identity, a scoreboard that counts unique mechanism ids, a
+   frozen two-channel probe battery, and the first POET prediction packet.
+   CONFLICT OF INTEREST: I authored everything under review here, including
+   the POET packet and the cut it rests on. Harmonia adjudicates it.
+   A SECOND DISCLOSURE, up front: unlike the ASAL packet, the POET packet is
+   CONFIRMATORY, not blind. I ran every row before freezing (section 7.1).
+
+1. CONTEXT
+   The ASAL branch is blocked on execution placement, not science: the
+   native-observer (Flax/JAX) scoring needs an AVX host and this machine is
+   a 2008 i7-920. Techne confirmed the original-observer column is
+   bit-identical over all 395 rollouts, so the frames and script ARE the
+   pipeline that produced the search result. Nyx therefore holds the ASAL
+   behavioral cuts and spends the tick on machinery and on POET, which
+   tests whether mechanism archaeology generalises past Lenia-shaped things.
+
+2. THE QUESTIONS THIS WORK ANSWERS
+   2.1 How should a mechanism be counted, if not per packet?
+   2.2 Can the discovery machinery be fixed in place before the data that
+       will judge it exists?
+   2.3 Does the pipeline find anything in a body that is not Lenia?
+
+3. WHAT WAS DONE
+   3.1 MECHANISM LEDGER (nyx/atlas/mechanisms.py, schema
+       nyx.mechanism_ledger/1, over gates/MECHANISMS.json). Fields per the
+       directive: id, source lineage, minimal executable organ + boundary,
+       proposed behavior, predicted intervention, falsifier, evidence
+       packets, counterevidence packets, observer dependence, transplant
+       history, disposition. The validator refuses a mechanism with an
+       empty falsifier, with no executable boundary ("a mechanism without
+       an executable boundary is a name, not a mechanism"), with a
+       duplicate id, or claiming SURVIVED_TRANSPLANT without a SUPPORTED
+       transplant row. Observer dependence uses Harmonia's own A/B/C
+       vocabulary so HARM-56's disposition drops straight in.
+   3.2 SCOREBOARD -> nyx.scoreboard/3. Mechanism counts now read from the
+       ledger over UNIQUE ids. Packet-level counts stay packet-level.
+   3.3 PROBE BATTERY (nyx/atlas/probes.py) implemented and FROZEN by source
+       sha256 53f63df5..., exercised only on synthetic fixtures.
+   3.4 POET: atlas skeleton, a 3-organ cut, and one frozen packet.
+
+4. RESULTS
+
+   4.1 The decoupling is real, not cosmetic. Counts now diverge:
+       quantity                            | value
+       ------------------------------------+-------
+       packets issued                      |   4
+       packets adjudicated                 |   2
+       predictions tested                  |   7
+       predictions falsified               |   2
+       cuts technically supported          |   2
+       mechanisms registered               |   6
+       mechanisms isolated                 |   6
+       observer-stable mechanisms          |   0
+       observer dependence unresolved      |   2
+       unresolved anomalies                |   1
+       MECHANISMS THAT SURVIVED TRANSPLANT |   0
+       One ASAL packet carries TWO mechanisms, and that same packet is both
+       evidence (I1/I2 by witness) and counterevidence (I0 failed) for one
+       of them. Under the old scheme that single packet moved three
+       different counters; now it moves none of the mechanism counters.
+
+   4.2 POET novelty estimator -- three properties read out of the code,
+       then measured (all E3, deterministic, on the fossil's own bytes):
+       observation                                    | measured
+       -----------------------------------------------+-------------
+       estimator identity holds, archive sizes 1..20  | true
+       same-fraction ratio, roughness vs stump_height | 2.666667
+       the same ratio if the declared norm were used  | 1.000000
+       distance(no pit, pit of width zero)            | 0.000000
+       strict increases in novelty, archive 5..40     | 0
+       novelty at archive size 5 -> size 40           | 2.89 -> 0.24
+       The mechanism: argsort()[:k] silently returns fewer than k elements
+       when the archive is smaller than k, so "novelty" is whole-archive
+       dispersion early in a run and local density later -- it changes what
+       it measures, with no discontinuity flagged. normalize=False is
+       hardcoded, so the norm vector [8,8,8,3,3] declared inside that very
+       function is never applied. And because delete_optimizer never prunes
+       the archive while remove_oldest prunes the active population, the
+       deflation runs against environments that are no longer in the
+       population at all.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   - nyx/atlas/mechanisms.py, gates/MECHANISMS.json: new (6 mechanisms).
+   - nyx/atlas/probes.py + probes.FREEZE: new, frozen.
+   - nyx/atlas/build.py: scoreboard -> /3, mechanism counts from the ledger.
+   - nyx/atlas/cuts/poet_original_2019.py: new, COARSE, 3 organs.
+   - nyx/atlas/predictions/MECH-POET-NOVELTY-ESTIMATOR-001.json + FREEZE.
+   - nyx/atlas/fossils/poet-original-2019.json: new skeleton.
+   - nyx/atlas/census.py: reader accepts "to" or "target" (see 6/7.2).
+   - nyx/tests/test_scoreboard.py (5), test_probes.py (17): suite 25 -> 45.
+   - Prompts, STATUS, journal. Comms #494 (packet), #495 (relay).
+
+6. WHAT THIS DID NOT ESTABLISH
+   - Nothing about whether the POET novelty properties change POET's
+     trajectory in a real run. That needs Box2D and fiber workers, absent
+     here. The estimator's behaviour is established; its consequence for
+     open-endedness is a separate question and a separate packet.
+   - Nothing new about ASAL. observer_stable_mechanisms is 0 by
+     construction until HARM-55/56.
+   - The probe battery has never been run on real data, by design.
+   - The two POET mechanisms other than the novelty estimator (minimal
+     criterion, FIFO discard) are registered PROPOSED with falsifiers and
+     NO evidence. They are hypotheses on the record, not findings.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   7.1 The POET packet is CONFIRMATORY. I scouted all four rows and three
+       controls against the fossil before freezing, because my own
+       calibration ledger requires bands be set from a model checked at the
+       operating point. Both disciplines are real and they conflict here:
+       scouting buys correct bands and costs the blind-prediction strength
+       the ASAL packet had (where Harmonia sealed results before my
+       freeze). I disclosed this in the packet's band_basis fields and to
+       Harmonia, and offered to take the ruling on whatever basis it sets.
+       I do not think a confirmatory packet is worthless -- it is a
+       machine-checked immutable statement adjudicated by someone who is
+       not me -- but it is weaker evidence and should not be counted as if
+       it were blind.
+   7.2 I nearly shipped a probe battery with a dead probe. Autocorrelation
+       computed on raw non-negative intensities never drops (cosine stays
+       ~0.75 even between independent random fields), so identity half-life
+       could not separate a static blob from noise. Caught by a synthetic
+       fixture before freezing; fixed by mean-centering. This is the case
+       for testing the battery on synthetic data first: on real data the
+       probe would have returned a plausible constant and I would have
+       believed it.
+   7.3 My review question 9.2 was wrong and the operator corrected it. I
+       had written that finding no separating axis would show the low-score
+       population is homogeneous. It would show only that this battery
+       found no separator. The corrected stop condition is recorded.
+
+8. WHAT IS OWED, AND BY WHOM
+   - Harmonia: rule on the POET packet (no AVX needed, does not queue
+     behind HARM-55); native control anchors through the native observer,
+     reported as locked-thresholds and native-anchors views; HARM-56
+     disposition A/B/C; then freeze the replication exactly once.
+   - Techne: Flax scoring on any AVX host; portable specimen capsules;
+     prove port closure over the frozen domain; two record defects (below).
+   - Nyx: Avida ancestry cut; assimilate the POET ruling; author the
+     replication packet when HARM-56 lands; then the behavioral cuts.
+   - Theophrastus: a receiving ecology whose fitness is not CLIP score.
+
+   RECORD DEFECTS FOUND, reported to Techne, not silently repaired:
+   (a) 46 lineage relations across 24 records use "target" where the other
+       112 use "to" (the 22 ASAL capsules, POET, one terralingua record).
+       It broke the census reader outright. I made the reader tolerant and
+       left Techne's records alone; one canonical key matters more than
+       which key wins, given that capsules must be readable months later.
+   (b) POET's handoff block is entirely empty, so its provenance grade
+       reads UNKNOWN despite an authoritative source type and a pinned
+       commit. The packet records UNKNOWN rather than inferring a grade.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   9.1 Should a confirmatory packet (7.1) be admissible at all, or should
+       Nyx be required to hand scouted rows to Harmonia as a fixture and
+       predict only rows it has not run? There is a real tension between
+       "bands must be checked at the operating point" and "predictions must
+       be blind", and I do not think I should be the one to resolve it.
+   9.2 Is "a mechanism == a cut organ" now the right granularity, given
+       that "a mechanism == a packet" was wrong? Six mechanisms currently
+       map one-to-one onto six organs. That may just be the same mistake
+       one level down.
+   9.3 FALSIFY the POET reading: if Harmonia's independent harness finds
+       the same-fraction ratio is 1.0, the declared normalisation is in
+       fact applied somewhere and the scale-blindness claim dies outright.
+   9.4 STOP: the POET novelty defects are real but may be inconsequential.
+       What would show they matter? I claim nothing about run trajectories
+       and cannot test it here. Is a mechanism that is demonstrably
+       mis-specified but of unmeasured consequence worth carrying to a
+       bench, or should it be recorded and dropped?
+
+10. HOW TO REPRODUCE
+   cd <nyx worktree>
+   python -m nyx.atlas.mechanisms   # 6 mechanisms, 0 problems
+   python -m nyx.atlas.probes       # frozen hash, intact True
+   python -m nyx.atlas.schema       # 123 fossil files, 0 problems
+   python -m nyx.atlas.build        # .scoreboard is nyx.scoreboard/3
+   python -m pytest -q nyx/tests    # 45 passed
+   POET packet freeze must equal:
+     291a22ed0cbf8bea324ffc567cdd0104dbb877c9f2782285e24f4e51645cbe3a
+   Probe battery freeze must equal:
+     53f63df5b43d4eff58fe7820ae89767130a9a197a20d98b3e30c68a53730976d
+================================================================================

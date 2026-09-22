@@ -1,0 +1,5 @@
+    R0_campaign_rate_writer_paced_reader      331.8 s  5xx 0  >5s 0  lock_max 0.015 s  obsPOST p50 q1/q4 0.0/2.0 ms  WAL max    8 MB  ck runs 2920 err 0  restart 1.05 s  anchors 50/50
+    R1_seq_writer_paced_reader                127.9 s  5xx 0  >5s 0  lock_max 0.016 s  obsPOST p50 q1/q4 0.0/0.0 ms  WAL max 3321 MB  ck runs  785 err 0  restart 0.55 s  anchors 50/50
+    R3_two_writers_no_reader                  131.2 s  5xx 0  >5s 0  lock_max 0.265 s  obsPOST p50 q1/q4 0.0/0.0 ms  WAL max 3402 MB  ck runs  890 err 0  restart 4.86 s  anchors 50/50
+    R2_two_writers_tight_reader               254.4 s  5xx 0  >5s 0  lock_max 0.344 s  obsPOST p50 q1/q4 3.1/7.9 ms  WAL max 3417 MB  ck runs 2081 err 0  restart 9.71 s  anchors 50/50
+    R0N_campaign_rate_nvme_4h_paced_reader   15408.3 s  5xx 0  >5s 0  lock_max 0.006 s  obsPOST p50 q1/q4 1.9/1.9 ms  WAL max    2 MB  ck runs 7664 err 0  restart 2.05 s  anchors 50/50

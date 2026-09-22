@@ -242,3 +242,29 @@ def test_daemon_without_a_reconcile_method_is_unaffected(monkeypatch, tmp_path):
         assert d.run(install_signals=False, max_ticks=2) == _daemon.EXIT_OK
     finally:
         _FakeViv.reconcile_scopes = lambda self, *, trigger, dry_run=False: self.reconciles.append(trigger) or {"added_total": 0}
+
+
+# ------------------------------------------------------------- Campaign 4: re-binding the grantee without a commit
+
+def test_grant_reader_overrides_the_grantee_host_locally_and_idempotently(tmp_path):
+    """POSITIVE: a local binding replaces config.json's grantee for that
+    scope and records where it came from; NEGATIVE: a malformed client id is
+    refused and nothing is written; CHEAT: another scope's grantee is
+    untouched; re-binding the same id is a no-op state (idempotent)."""
+    from viv import scope as _scope
+    cfg = {"read_scopes": [{"scope_name": "archaeon-campaigns", "grantee": "cli_" + "1" * 24, "name_prefix": "viv-"},
+                           {"scope_name": "other", "grantee": "cli_" + "2" * 24, "name_prefix": "x-"}]}
+    assert [s["grantee_source"] for s in _scope.declared(cfg, tmp_path)] == ["config.json", "config.json"]
+    import pytest
+    with pytest.raises(ValueError):
+        _scope.set_local_grantee(tmp_path, "archaeon-campaigns", "not-a-client", set_by="t", reason="x")
+    assert not (tmp_path / _scope.LOCAL_FILE).exists()
+    new = "cli_" + "a" * 24
+    _scope.set_local_grantee(tmp_path, "archaeon-campaigns", new, set_by="Vivarium", reason="C4 client on the M2 ledger")
+    d = {s["scope_name"]: s for s in _scope.declared(cfg, tmp_path)}
+    assert d["archaeon-campaigns"]["grantee"] == new and d["archaeon-campaigns"]["grantee_config"] == "cli_" + "1" * 24
+    assert d["archaeon-campaigns"]["grantee_source"].startswith(_scope.LOCAL_FILE)
+    assert d["other"]["grantee"] == "cli_" + "2" * 24 and d["other"]["grantee_source"] == "config.json"
+    _scope.set_local_grantee(tmp_path, "archaeon-campaigns", new, set_by="Vivarium", reason="again")
+    assert _scope.declared(cfg, tmp_path)[0]["grantee"] == new
+    assert _scope.local_overrides(tmp_path)["archaeon-campaigns"]["previous"]["grantee"] == new   # history kept

@@ -1,5 +1,5 @@
 {
-  "_what_this_is": "DRAFT of the production descriptor (roles/Vivarium/point_release/PRODUCTION_DESCRIPTOR.md). Vivarium's reader (viv/production.py) prefers <repo>/deploy/PRODUCTION.json when Daedalus/Hermes/Vivarium land the shared file; until then this draft is read. No secrets: credential entries name FILES and KEYS only.",
+  "_what_this_is": "Production descriptor Vivarium gates on (roles/Vivarium/point_release/PRODUCTION_DESCRIPTOR.md). 'draft' in the file name means: the SHARED <repo>/deploy/PRODUCTION.json (Daedalus/Hermes/Vivarium) has not been created; viv/production.py reads that file first when it exists and this one otherwise. The values here are the ones production ran on through window C4-20260917-W1 and are authoritative for Vivarium. No secrets: credential entries name FILES and KEYS only.",
   "descriptor_version": "prometheus.production.v1",
   "ruled_by": "operator",
   "ruled_at": "2026-09-17T00:00:00Z",
@@ -10,10 +10,10 @@
     "endpoint": "https://192.168.1.191:8811",
     "engine_instance_id": "eng_906356f7fb1da180131f9290",
     "schema_floor": 9,
-    "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
     "cacert": "SerendipityFoundry/SerendipityFoundryClient/config/m2.crt",
     "contract": "roles/Harmonia/contracts/sfe_contract.json",
-    "note": "observed 2026-09-17 ~11:0xZ after Daedalus's schema-9 window (#334): schema 9, source hash bc8d3a0c. schema_floor is the gate; the hash is informational until Daedalus pins the build in the shared descriptor."
+    "note": "schema_floor is the refusal; engine_source_hash is informational and follows Daedalus's deployments (bc8d3a0c = schema-9 point release 2026-09-17 06:57Z; 699ca0f9 = 9.0.1 request-path repair, deployed 2026-09-17 ~19:0xZ, comms 2983bd548). Daedalus pins the build in the shared descriptor when it lands."
   },
   "store": {
     "environment": "prometheus-canonical",
@@ -46,7 +46,14 @@
       "optional_note": "pew_token gates the DELIVERER (VivariumOutboxDelivererM2; the outbox holds without it), not the consumer; issued by Mnemosyne out of band (evidence_wiki agent_identities: sha256 committed, value delivered)",
       "bootstrap": "python -m viv.cli sfe-identity --ensure  (registers the production client on the engine above if absent; refused if a client of that name already exists on this ledger)",
       "dead_man_task": "VivariumDeadmanM2",
-      "deliverer_task": "VivariumOutboxDelivererM2"
+      "deliverer_task": "VivariumOutboxDelivererM2",
+      "pinned_build": {
+        "sha": "6e7ac48f015479290ef40f866a2e2630cace8e35",
+        "worktree": "D:/Prometheus-worktrees/vivarium-consumer",
+        "advanced_at": "2026-09-17T23:24:09Z",
+        "advanced_by": "vivarium/deploy/window.py --steps advance (window C4-20260917-W1)",
+        "attested_by": "the restart receipt var/restart-vivarium@m2.json (code.base_sha) written by the consumer at every start"
+      }
     },
     "archaeon": {
       "client_name": "cmp<N>-archaeon",

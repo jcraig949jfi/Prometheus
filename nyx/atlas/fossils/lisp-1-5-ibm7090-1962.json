@@ -193,14 +193,14 @@
    "lisp15.asm 1329-1400, 1512-1830, 2091-2143, 5240-5330, 7180-7360, 7700-7800",
    "README, notes.txt (all)"
   ],
-  "date": "2026-09-17T10:58Z",
+  "date": "2026-09-17T22:50Z",
   "note": "the famous names (eval/apply, garbage collection, the a-list) are here as 7090 machine code with the mechanisms exposed: marking by sign bit and by a separate bit table, a free list threaded during the sweep, a recursion stack that is itself a root, a cons budget that traps, and an interpreter whose environment is a list searched linearly",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T10:58Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
    "provenance_grade_read": "LATER_TRANSCRIPTION",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://github.com/informatimago/lisp-1-5@fddd37ed99ed7808825455dfc9e74cb0d36eae6b",
    "payload_manifest_id": "techne tree_sha256 36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076 (17 files)",
    "host_tree_matches_record": true,
@@ -1544,6 +1544,13 @@
    "to": "femtolisp",
    "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "lisp-1-5-ibm7090-1962",

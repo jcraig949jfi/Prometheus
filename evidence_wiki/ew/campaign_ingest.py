@@ -39,7 +39,7 @@ sys.path.insert(0, str(HERE))
 from ew import db as ewdb                              # noqa: E402
 from ew import workspace                               # noqa: E402
 
-READER_VERSION = "ew.campaign_ingest/1.3"   # 1.1: design factors in run strata; 1.2: foundry_profile_scheme (Proteus #339); 1.3: campaign 4 directory, seed UNKNOWN until Archaeon names it
+READER_VERSION = "ew.campaign_ingest/1.5"   # 1.4: C4 seed 20260921; 1.5: campaign 5 (seed 20260922, archaeon/campaign5; Archaeon #447/#449) after the C4 freeze lifted
 CONTRACT_VERSION = "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)"
 UNKNOWN = "UNKNOWN"
 # Proteus #339: "instr1-16:6528b9dc" is ARCHAEON's rendering of a Proteus
@@ -60,11 +60,11 @@ CAMPAIGNS = {
     1: {"campaign_id": "cmp1", "seed": 20260917, "dir": "archaeon/campaign1"},
     2: {"campaign_id": "cmp2", "seed": 20260918, "dir": "archaeon/campaign2"},
     3: {"campaign_id": "cmp3", "seed": 20260920, "dir": "archaeon/campaign3"},
-    # Campaign 4: the directory is known, the seed is not yet (MNE-53). T1 then
-    # identifies a row by the producer's stamp, else the path; when Archaeon
-    # names the seed it is added here as reader 1.4 by explicit version
-    # transition (the frozen surface pins this map).
-    4: {"campaign_id": "cmp4", "seed": None, "dir": "archaeon/campaign4"},
+    # Campaign 4: seed 20260921 named by Archaeon (#370, archaeon/campaign4/
+    # c4base.py, "first unused value after cmp3"); reader 1.4 by explicit
+    # version transition (MNE-53); the frozen surface pins this map.
+    4: {"campaign_id": "cmp4", "seed": 20260921, "dir": "archaeon/campaign4"},   # named by Archaeon #370 (c4base.py)
+    5: {"campaign_id": "cmp5", "seed": 20260922, "dir": "archaeon/campaign5"},   # c5base.py; Archaeon #447/#449
 }
 SEED_TO_CAMPAIGN = {v["seed"]: v["campaign_id"] for v in CAMPAIGNS.values() if v["seed"] is not None}
 DEFINITION_FILES = {

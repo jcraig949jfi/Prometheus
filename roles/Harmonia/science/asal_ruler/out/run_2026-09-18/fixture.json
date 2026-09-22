@@ -1,0 +1,117 @@
+{
+ "F": {
+  "CHEAT": {
+   "delta": -4.172325134277344e-07,
+   "mine": 0.8749995827674866,
+   "pass": true,
+   "techne": 0.875
+  },
+  "CYCLE2": {
+   "delta": 2.0370483078124835e-09,
+   "mine": 0.8546890020370483,
+   "pass": true,
+   "techne": 0.854689
+  },
+  "DRIFT_SYN": {
+   "delta": -3.9238739013569557e-07,
+   "mine": 0.8729726076126099,
+   "pass": true,
+   "techne": 0.872973
+  },
+  "GARBAGE": {
+   "delta": 3.799095154022325e-07,
+   "mine_mean": 0.8166863799095154,
+   "pass": true,
+   "techne_mean": 0.816686,
+   "techne_sd": 0.008363
+  },
+  "HUECYCLE": {
+   "delta": -3.7450027468022284e-07,
+   "mine": 0.8369166254997253,
+   "pass": true,
+   "techne": 0.836917
+  },
+  "LENIA": {
+   "delta": -6.837463384368192e-08,
+   "mine": 0.8472459316253662,
+   "pass": true,
+   "techne": 0.847246
+  },
+  "NOISE": {
+   "delta": 4.354591369715166e-07,
+   "mine_mean": 0.8662884354591369,
+   "pass": true,
+   "techne_mean": 0.866288,
+   "techne_sd": 0.002109
+  },
+  "STATIC": {
+   "delta": -3.5762786865234375e-07,
+   "mine": 0.8749996423721313,
+   "pass": true,
+   "techne": 0.875
+  }
+ },
+ "all_controls_pass": true,
+ "controls": {
+  "C-CHEAT-SCORE": {
+   "expected": 0.830329,
+   "pass": true,
+   "score": 0.8303285837173462
+  },
+  "C-METRIC": {
+   "max_abs_diff_float32": 3.129243850708008e-07,
+   "max_abs_diff_float64": 5.551115123125783e-16,
+   "pass": true
+  },
+  "C-NEG-BLANK": {
+   "alive": false,
+   "pass": true,
+   "score": 0.8749995231628418
+  },
+  "C-POS-SEARCH": {
+   "best": 0.7949087619781494,
+   "evals": 50,
+   "pass": true,
+   "threshold": 0.816686
+  },
+  "F_fixture": {
+   "pass": true
+  }
+ },
+ "stage": "fixture",
+ "thresholds": {
+  "coh_O": 0.9659503203670327,
+  "d_clip_H": 0.04501099245888846,
+  "d_clip_O": 0.03832137584686279,
+  "d_pix_H": 0.0,
+  "d_pix_O": 0.07214030080162391,
+  "disp_O": 31.922809343714615,
+  "mass_cv_O": 0.014652026896380198,
+  "orbium_alive": true,
+  "orbium_mass": [
+   76.86274509803921,
+   73.51138007162263,
+   73.69621915415426,
+   73.5118305653536,
+   73.36058833133,
+   73.61704615699455,
+   73.78888209021994,
+   73.78435669914238,
+   73.27873302948117
+  ]
+ },
+ "witness": {
+  "animals_sha256": "09cf0a831c1ef8a73ebfaa9126257fbe076108362b706a98d88650ca9848d206",
+  "clip_weights_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+  "executable": "C:\\Prometheus\\vault\\techne_tools\\asal107\\Scripts\\python.exe",
+  "host": "GANDALF",
+  "numpy": "1.26.4",
+  "pip_freeze_n": 234,
+  "pip_freeze_sha256": "789925ba643d7fc881c14d4c4eedd6952482a93e037edaef012a1b4e59f9ed6b",
+  "python": "3.11.9",
+  "ruler_sha256": "ff873cfc4ae07f07a016b8edd3b9f74fb9cdb7cb53d15e69c1a416f61cf6aada",
+  "techne_receipt_sha256": "f014cc555bdb401b4c8ae56f3cf3529a31e11ed444bb156265c97ef507cfa2a6",
+  "techne_script_sha256": "134df9a0842b890e831ce57ce807760928fd87312b716e092e1054245cdae33f",
+  "torch": "2.14.0+cpu"
+ }
+}

@@ -126,20 +126,800 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/eval.c:25-113"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/board.c:100-476"
+   }
+  ],
+  "inspected_files": [
+   "search.c (all)",
+   "eval.c, board.c (function lists and table headers)"
+  ],
+  "date": "2026-09-17T22:03Z",
+  "note": "a 1997 teaching engine: negamax alpha-beta with a quiescence search on captures, iterative deepening with a time check by longjmp, principal-variation ordering, a history heuristic, and a static evaluation from piece-square tables; each is a separate function",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "http://www.tckerrigan.com/Chess/TSCP/tscp181.zip sha256:4b72c74fa56169710149639061e7cb0e0dd60a10b6658b4927e244af9fa90145",
+   "payload_manifest_id": "techne tree_sha256 3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4 (13 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/tscp181/search.c",
+     "payload_hash_read": "829b698c46f5edc726d3fb6eefcb80f607e14f819923e17c3820da7de23a1958",
+     "techne_recorded_hash": "829b698c46f5edc726d3fb6eefcb80f607e14f819923e17c3820da7de23a1958",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/tscp181/eval.c",
+     "payload_hash_read": "45d632e5f383e2ec522b0a932ee4fa21410791f0b75b2211bec483c8567d6d8d",
+     "techne_recorded_hash": "45d632e5f383e2ec522b0a932ee4fa21410791f0b75b2211bec483c8567d6d8d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/tscp181/board.c",
+     "payload_hash_read": "3b4c4e57650c429de16194551e8900fc83c4fad672187499a7e54522f6e20687",
+     "techne_recorded_hash": "3b4c4e57650c429de16194551e8900fc83c4fad672187499a7e54522f6e20687",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "search() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "depth-first negamax: at each node the moves are generated, ordered, and searched with the window (-beta, -alpha) negated; a score >= beta cuts the node; a score > alpha raises alpha and records the move into the principal variation; a repeated position (hash equal to any in the last fifty-move window) returns 0; being in check extends depth by one; no legal move is mate (-10000 + ply) or stalemate (0); the fifty-move rule returns 0",
+   "input": "alpha, beta, depth; the board",
+   "output": "a score; pv[] filled",
+   "state": "ply, the pv triangle, nodes",
+   "update": "per node",
+   "assumptions": [
+    "the evaluation is symmetric (negamax); alpha-beta's soundness needs a consistent ordering only for speed, not for correctness"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+    "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+    "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+    "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms"
+   ],
+   "fitness_value_in_ancestor": "the effective branching factor drops from ~35 toward ~6 with good ordering",
+   "failure_landscape": "by reading: no transposition table, no null move, no futility: the 1997 minimum; the horizon effect is handled only by quiescence",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Knuth & Moore 1975 alpha-beta in negamax form; check extension as the one extension",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:search"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "search()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "quiesce() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at depth 0 the static evaluation is taken as a lower bound (stand pat: if it is >= beta cut; if > alpha raise alpha); then only captures are generated and searched recursively with the same window, so the search stops at a quiet position instead of a mid-exchange one",
+   "input": "alpha, beta; the board",
+   "output": "a score",
+   "state": "the same pv triangle",
+   "update": "per leaf",
+   "assumptions": [
+    "the side to move can always decline to capture (stand pat) -- false in zugzwang but harmless in tactical exchanges"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms"
+   ],
+   "fitness_value_in_ancestor": "cures the horizon effect for exchanges: no evaluation is taken in the middle of a capture sequence",
+   "failure_landscape": "by reading: unbounded capture chains are possible in principle; MAX_PLY caps them",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:quiesce"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "quiesce()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "think() / checkup() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "search depth 1, 2, ... up to max_depth; before each iteration set follow_pv so the previous iteration's principal variation is searched first; every 1024 nodes checkup() compares the clock with stop_time and, if over, longjmps out of the recursion back into think(), which unwinds the move stack (takeback until ply 0) and keeps the last completed iteration's pv; mate scores stop the deepening early; an opening-book move short-circuits everything",
+   "input": "a time budget; max_depth",
+   "output": "the best move (pv[0][0])",
+   "state": "the pv triangle across iterations; history[]",
+   "update": "per iteration",
+   "assumptions": [
+    "a shallow completed search is worth more than a deep incomplete one; the previous pv is the best guess for ordering the next iteration"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort"
+   ],
+   "fitness_value_in_ancestor": "a fixed time budget with anytime behaviour; the ordering benefit makes deepening nearly free",
+   "failure_landscape": "by reading: longjmp abandons the current iteration's partial results entirely (no fail-soft use of the interrupted search)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:think, checkup"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "think() and checkup()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "sort_pv() / sort() / history[][] (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the pv move from the previous iteration gets +10,000,000; captures get MVV/LVA scores at generation (board.c); every move that raises alpha adds depth to history[from][to], and moves carry their history score; sort() does one selection-sort step per move searched, so only the moves actually visited are ordered",
+   "input": "the generated move list; pv[]; history[]",
+   "output": "the next move to search",
+   "state": "history (64x64 ints, reset per think)",
+   "update": "per node",
+   "assumptions": [
+    "moves that were good elsewhere in the tree are likely good here (the history heuristic, Schaeffer 1983)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp"
+   ],
+   "fitness_value_in_ancestor": "ordering is what makes alpha-beta cut; the incremental sort avoids sorting moves never searched",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:sort_pv, sort; history increments in search()"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two sort functions and the history array",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "eval() and its tables (eval.c 25-113 read; 113-398 by function list)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "material by piece_value[]; positional bonuses from 64-entry piece-square tables (pawn, knight, bishop, king, king-endgame) flipped for the dark side; pawn terms (doubled, isolated, backward, passed) from per-file pawn_rank arrays; king safety from the pawn shield in front of the king; the endgame king table switches on when material is low",
+   "input": "the board",
+   "output": "a score from the side to move's view",
+   "state": "none",
+   "update": "per leaf",
+   "assumptions": [
+    "a linear sum of hand-tuned terms approximates the game-theoretic value well enough for a shallow search"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw"
+   ],
+   "fitness_value_in_ancestor": "the only knowledge in the program; everything else is search",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "every number in the tables is the author's judgement",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/eval.c:25-113 (tables); eval() 113-398 by structure"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "eval.c; CANDIDATE because eval() itself was read by function list only",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "move generation, make/unmake with the history stack, Zobrist hashing (board.c), the xboard protocol and book (main.c, book.c)",
+   "reason": "OTHER",
+   "evidence": "read by function list only; generic chess mechanics and I/O",
+   "note": "the Zobrist hash is the repetition detector's input (an organ elsewhere in the vault's hash lineage)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tscp-1.81-kerrigan-1997"
+  },
+  {
+   "candidate": "'chess engine' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "search, quiescence, deepening, ordering and evaluation are separately replaceable and are the axes along which every later engine differs",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tscp-1.81-kerrigan-1997"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tscp-1.81-kerrigan-1997::P.a_two_player_game_tree_far_larger_than_the_budget_must_be_searched_to_a_decision_within_a_time_limit_using_a_cheap_leaf_estimate",
+   "source_fossil": "tscp-1.81-kerrigan-1997",
+   "source_evidence": "search.c; record domain game-tree-search",
+   "condition": "an adversarial game with branching ~35; the organism has a clock, a static estimate of positions, and no tree it can exhaust; it must return the best move it can by the deadline",
+   "resource_or_constraint": "nodes per second; the deadline",
+   "failure_condition": "a move chosen from an unfinished search, or a leaf estimate taken mid-exchange (horizon)",
+   "world_punishes": "depth-first commitment without pruning; estimates in unstable positions",
+   "world_rewards": "pruning by bounds, ordering, deepening with a completed-iteration fallback, and quiescence",
+   "observable_consequence": "nodes to reach a given depth with ordering on/off; blunder rate with quiescence on/off; move quality vs time",
+   "vacuity_condition": "a game small enough to solve",
+   "trivial_shortcuts": "a tablebase or an oracle",
+   "cheat_control": "an organism given the game-theoretic value of every position must play perfectly at depth 1; the ancestor with alpha-beta disabled (plain negamax) must search ~35x more nodes per ply: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: chess play under a clock (Kerrigan 1997, a teaching program)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at depth 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "previous pv",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at the ply caps",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "tscp-1.81-kerrigan-1997",
+   "relation": "algorithm_from",
+   "to": "Knuth & Moore 1975 (alpha-beta); Slate & Atkin 1977 (iterative deepening); Schaeffer 1983 (history heuristic); the quiescence search of the Shannon/Turing era",
+   "note": "from the code's structure; not verified against sources",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "eval() body read by function list only (organ is CANDIDATE)",
+   "board.c and main.c not read line by line",
+   "nothing ran"
+  ],
+  "note": "search.c is accounted for line by line",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

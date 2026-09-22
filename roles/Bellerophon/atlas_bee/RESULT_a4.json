@@ -1,0 +1,141 @@
+{
+ "adaptation_id": "a4",
+ "comparison": {
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; deterministic search (fixed seed)"
+   ],
+   "measurement": [
+    "fraction of archive elites with origin=import, final generation"
+   ],
+   "representational": [
+    "takeover = archive origin-share over generations (S3 origin inheritance)",
+    "no per-parent offspring cap (UNREPRESENTABLE): takeover is shaped by selection alone"
+   ],
+   "resource": [
+    "dose=4, population=16, generations=8, mature trained 10 gens"
+   ],
+   "scientific": [
+    "no import took over (mature=0.00 permuted=0.00 fresh=0.00): all injected lineages wash out under pure selection. C3-SFE-10's mature~=permuted EQUIVALENCE is preserved (competence gives no takeover edge), but takeover itself is ABSENT -- its mechanism (the offspring cap that sustains a dose) is UNREPRESENTABLE in BEE, so a non-optimal import is simply selected out.",
+    "final import-share: mature=0.0, permuted=0.0, fresh=0.0"
+   ]
+  },
+  "finals": {
+   "fresh": 0.0,
+   "mature": 0.0,
+   "permuted": 0.0
+  },
+  "new_phenomena": [
+   "takeover in SFE is dose-driven because the offspring cap guarantees injected organisms reproduction slots; BEE has no offspring cap, so mature, permuted and fresh imports wash out EQUALLY -- the equivalence survives, the takeover does not"
+  ],
+  "signals": {
+   "fresh": [
+    0.25,
+    0.312,
+    0.125,
+    0.25,
+    0.25,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mature": [
+    0.25,
+    0.312,
+    0.125,
+    0.25,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "permuted": [
+    0.25,
+    0.188,
+    0.188,
+    0.25,
+    0.375,
+    0.062,
+    0.0,
+    0.0
+   ]
+  },
+  "summary": "no import took over (mature=0.00 permuted=0.00 fresh=0.00): all injected lineages wash out under pure selection. C3-SFE-10's mature~=permuted EQUIVALENCE is preserved (competence gives no takeover edge), but takeover itself is ABSENT -- its mechanism (the offspring cap that sustains a dose) is UNREPRESENTABLE in BEE, so a non-optimal import is simply selected out.",
+  "verdict": "PHENOMENON_ABSENT"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 3,
+  "IDENTICAL": 2,
+  "MODIFIED": 1,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 1
+ },
+ "notes": [
+  "takeover measured from archive origin-share; offspring cap UNREPRESENTABLE per manifest"
+ ],
+ "observed": {
+  "mature_train_objs": [
+   51.0,
+   46.0,
+   45.25,
+   45.25
+  ],
+  "takeover": {
+   "fresh": {
+    "archive_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a4\\takeover_fresh\\archive.jsonl",
+    "final_share": 0.0,
+    "import_share_by_gen": [
+     0.25,
+     0.312,
+     0.125,
+     0.25,
+     0.25,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "kind": "fresh"
+   },
+   "mature": {
+    "archive_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a4\\takeover_mature\\archive.jsonl",
+    "final_share": 0.0,
+    "import_share_by_gen": [
+     0.25,
+     0.312,
+     0.125,
+     0.25,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "kind": "mature"
+   },
+   "permuted": {
+    "archive_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a4\\takeover_permuted\\archive.jsonl",
+    "final_share": 0.0,
+    "import_share_by_gen": [
+     0.25,
+     0.188,
+     0.188,
+     0.25,
+     0.375,
+     0.062,
+     0.0,
+     0.0
+    ],
+    "kind": "permuted"
+   }
+  }
+ },
+ "prereg_sha256": "0ead62e45ed366b9112d0aac4283a8950dded748f9b26958b61284d6306c7a48",
+ "replay": [],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "archaeon.campaign/cmp3:C3-SFE-10",
+  "disposition": "CAPABLE_NEGATIVE",
+  "original": "mature imports take over, but a permuted control takes over equally (11/12 vs 12/12): dose, not competence"
+ },
+ "utc": "2026-09-19T13:32:21Z",
+ "wall_s": 2.5
+}

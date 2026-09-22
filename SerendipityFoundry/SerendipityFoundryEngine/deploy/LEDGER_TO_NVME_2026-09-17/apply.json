@@ -1,0 +1,279 @@
+{
+ "at": "2026-09-17T23:10:49Z",
+ "consumers_of_the_path": [
+  "the scheduled task SFEngineM2Watchdog (Arguments: -File <data>\\sfengine_m2_watchdog.ps1)",
+  "<data>\\sfengine_m2_watchdog.ps1 (derives log/state/park/cert/launcher from its own directory)",
+  "<data>\\sfengine_m2.cmd (--db, --tls-cert, --tls-key, log redirect)",
+  "deploy/DEPLOYED_BUILD_M2.json data_dir + supervisor (pin; updated by hand after apply)",
+  "docs/RUNNING_M1_VS_M2.md and roles/base-role/MONITORS.md row 21 (docs; updated by hand)",
+  "deploy/qualify_v9.py DB, deploy/release_v9.py DATA (maintainer tools; --db/--data override)",
+  "deploy/longrun_load.py --db-dir (scratch runs must ALSO move to C: -- same drive, same pathology)"
+ ],
+ "copied": {
+  "engine.db": {
+   "dst": "15ead0494e10b869a922aaf3826e264b2c36cf127761b4b548ded0c0bc278963",
+   "src": "15ead0494e10b869a922aaf3826e264b2c36cf127761b4b548ded0c0bc278963"
+  },
+  "m2.crt": "35862be77b2a9611",
+  "m2.key": "adf66e7dbdbb51ec",
+  "sfengine_m2.log": "a1ff201026db1543",
+  "sfengine_m2_watchdog.log": "a9b12b1a011955fa",
+  "sfengine_m2_watchdog.ps1": "3e822caef1fd76c9",
+  "sfengine_m2_watchdog.state.json": "2e5befe61c64e32e"
+ },
+ "dst": "C:\\Prometheus-data\\sfe",
+ "fsync_probe": {
+  "dst": {
+   "max_s": 0.0011,
+   "median_s": 0.0003,
+   "n": 5,
+   "total_s": 0.0
+  },
+  "src": {
+   "max_s": 0.8877,
+   "median_s": 0.0595,
+   "n": 5,
+   "total_s": 1.61
+  }
+ },
+ "health_after": {
+  "attestation_dir": "C:\\Prometheus-data\\sfe\\incidents",
+  "checkpointer_alive": true,
+  "degraded": false,
+  "ledger_path": "C:\\Prometheus-data\\sfe\\engine.db"
+ },
+ "inflight": {
+  "engine_claimed_running": 0
+ },
+ "ledger_at_stop": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "events": 13665,
+  "last_world_created_ts": 1789664519.5528543,
+  "max_event_seq": 13665,
+  "schema_version": 9,
+  "work_items": {
+   "COMPLETED": 348,
+   "QUEUED": 3
+  },
+  "worlds": 432
+ },
+ "ledger_before": {
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "events": 13665,
+  "last_world_created_ts": 1789664519.5528543,
+  "max_event_seq": 13665,
+  "schema_version": 9,
+  "work_items": {
+   "COMPLETED": 348,
+   "QUEUED": 3
+  },
+  "worlds": 432
+ },
+ "live_after": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "live_before": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "mode": "apply",
+ "outage_s": 13.0,
+ "process_cmdline_after": "\"D:\\Prometheus\\.venv-m2\\Scripts\\python.exe\"  \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" \n\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"C:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"C:\\Prometheus-data\\sfe\\m2.key\" \npowershell -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'serve.py' } | Select -Expand CommandLine\"",
+ "result": "MOVED",
+ "rollback_snapshots": [
+  "engine.db.pre-release-20260917T142605Z.bak",
+  "engine.db.pre-release-20260917T142605Z.bak-shm",
+  "engine.db.pre-release-20260917T142605Z.bak-wal",
+  "engine.db.pre-release-20260917T170038Z.bak",
+  "engine.db.pre-release-20260917T170038Z.bak-shm",
+  "engine.db.pre-release-20260917T170038Z.bak-wal",
+  "engine.db.pre-schema4-20260904T180254.bak",
+  "engine.db.pre-schema8-20260916T074830.bak",
+  "engine.db.pre-schema9-20260917T104051Z.bak",
+  "engine.db.pre-schema9-20260917T104051Z.bak-shm",
+  "engine.db.pre-schema9-20260917T104051Z.bak-wal",
+  "engine.db.pre-schema9-20260917T105054Z.bak",
+  "engine.db.pre-schema9-20260917T105054Z.bak-shm",
+  "engine.db.pre-schema9-20260917T105054Z.bak-wal",
+  "engine.db.predeploy-20260904T194451.bak"
+ ],
+ "schema": "sfe_ledger_move_m2.v1",
+ "source_assets": {
+  "backup": true,
+  "blobs": true,
+  "engine.db": true,
+  "incidents": true,
+  "m2.crt": true,
+  "m2.key": true,
+  "sfengine_m2.cmd": true,
+  "sfengine_m2.log": true,
+  "sfengine_m2_watchdog.log": true,
+  "sfengine_m2_watchdog.ps1": true,
+  "sfengine_m2_watchdog.state.json": true
+ },
+ "src": "D:\\Prometheus-data\\sfe",
+ "steps": [
+  {
+   "check": "live engine identifies itself",
+   "detail": "{\"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"engine_source_hash\": \"sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc\", \"schema_version\": 9, \"source_commit\": \"b0d75218382dd0d30021640b5be3ff108c3e16f5\"}",
+   "pass": true
+  },
+  {
+   "check": "source ledger readable; identity matches the live service",
+   "detail": "{\"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"schema_version\": 9, \"events\": 13665, \"max_event_seq\": 13665, \"work_items\": {\"COMPLETED\": 348, \"QUEUED\": 3}, \"worlds\": 432, \"last_world_created_ts\": 1789664519.5528543}",
+   "pass": true
+  },
+  {
+   "check": "no work in flight on the engine (CLAIMED/RUNNING = 0)",
+   "detail": "engine 0",
+   "pass": true
+  },
+  {
+   "check": "every source asset present",
+   "detail": "{\"m2.key\": true, \"m2.crt\": true, \"sfengine_m2_watchdog.ps1\": true, \"sfengine_m2_watchdog.state.json\": true, \"sfengine_m2_watchdog.log\": true, \"sfengine_m2.log\": true, \"engine.db\": true, \"sfengine_m2.cmd\": true, \"blobs\": true, \"backup\": true, \"incidents\": true}",
+   "pass": true
+  },
+  {
+   "check": "a rollback snapshot exists at the source",
+   "detail": "engine.db.pre-schema9-20260917T105054Z.bak-shm\nengine.db.pre-schema9-20260917T105054Z.bak-wal\nengine.db.predeploy-20260904T194451.bak",
+   "pass": true
+  },
+  {
+   "check": "destination volume is NVMe",
+   "detail": "{\"disk\": \"AGI1T0G43AI818\", \"bus\": \"NVMe\", \"media\": \"SSD\", \"free\": 792687603712, \"size\": 1023456309248}",
+   "pass": true
+  },
+  {
+   "check": "destination has 3x the space",
+   "detail": "need 82.3 MB x3; free 738.2 GB",
+   "pass": true
+  },
+  {
+   "check": "source volume is the SATA HDD the long run measured",
+   "detail": "{\"disk\": \"ST8000DM004-2U9188\", \"bus\": \"SATA\", \"media\": \"HDD\", \"free\": 7371623010304, \"size\": 8001546088448}",
+   "pass": true
+  },
+  {
+   "check": "fsync probe recorded (the licensing measurement of the moment)",
+   "detail": "{\"src\": {\"n\": 5, \"median_s\": 0.0595, \"max_s\": 0.8877, \"total_s\": 1.61}, \"dst\": {\"n\": 5, \"median_s\": 0.0003, \"max_s\": 0.0011, \"total_s\": 0.0}}",
+   "pass": true
+  },
+  {
+   "check": "scheduled task runs the source watchdog",
+   "detail": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+   "pass": true
+  },
+  {
+   "check": "destination does not already hold a ledger",
+   "detail": "C:\\Prometheus-data\\sfe",
+   "pass": true
+  },
+  {
+   "check": "static assets + new launcher at the destination",
+   "detail": "{\"m2.key\": \"adf66e7dbdbb51ec\", \"m2.crt\": \"35862be77b2a9611\", \"sfengine_m2_watchdog.ps1\": \"3e822caef1fd76c9\", \"sfengine_m2_watchdog.state.json\": \"2e5befe61c64e32e\", \"sfengine_m2_watchdog.log\": \"a9b12b1a011955fa\", \"sfengine_m2.log\": \"a1ff201026db1543\"}",
+   "pass": true
+  },
+  {
+   "check": "watchdog task DISABLED for the move",
+   "detail": "Disabled",
+   "pass": true
+  },
+  {
+   "check": "service stopped and port 8811 free",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "no non-empty -wal left beside the source ledger",
+   "detail": "0 bytes",
+   "pass": true
+  },
+  {
+   "check": "engine.db copied byte-identical",
+   "detail": "15ead0494e10b869",
+   "pass": true
+  },
+  {
+   "check": "blobs/ copied (266 files, 7.0 MB)",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "backup/ copied (15 files, 56.2 MB)",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "incidents/ copied (3 files, 2.3 MB)",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "destination ledger identity == source at stop",
+   "detail": "{\"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"schema_version\": 9, \"events\": 13665, \"max_event_seq\": 13665, \"work_items\": {\"COMPLETED\": 348, \"QUEUED\": 3}, \"worlds\": 432, \"last_world_created_ts\": 1789664519.5528543}",
+   "pass": true
+  },
+  {
+   "check": "scheduled task now runs the destination watchdog",
+   "detail": "-NoProfile -ExecutionPolicy Bypass -File \"C:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+   "pass": true
+  },
+  {
+   "check": "service answers from the destination",
+   "detail": "{\"api\": \"v2\", \"schema_version\": 9, \"runtime\": \"serendipity-foundry-sfe\", \"registration_open\": true, \"session_enforcement\": \"advisory\", \"science_profile\": \"warn\", \"max_artifact_bytes\": 33554432, \"engine_instance_id\": \"eng_906356f7fb1da180131f9290\", \"engine_source_hash\": \"sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc\", \"source_commit\": \"b0d75218382dd0d30021640b5be3ff108c3e16f5\"}",
+   "pass": true
+  },
+  {
+   "check": "engine_instance_id / engine_source_hash / schema unchanged",
+   "detail": "",
+   "pass": true
+  },
+  {
+   "check": "the serving process reads --db from the destination",
+   "detail": "\"D:\\Prometheus\\.venv-m2\\Scripts\\python.exe\"  \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"C:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max",
+   "pass": true
+  },
+  {
+   "check": "health: ledger and A6 journal on the destination, checkpointer alive, journal not degraded",
+   "detail": "{\"ledger_path\": \"C:\\\\Prometheus-data\\\\sfe\\\\engine.db\", \"attestation_dir\": \"C:\\\\Prometheus-data\\\\sfe\\\\incidents\", \"checkpointer_alive\": true, \"degraded\": false}",
+   "pass": true
+  }
+ ],
+ "stop_at": "2026-09-17T23:12:00Z",
+ "task_args_after": "-NoProfile -ExecutionPolicy Bypass -File \"C:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+ "task_args_before": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\"",
+ "volumes": {
+  "bytes_to_copy": 86281213,
+  "dst": {
+   "bus": "NVMe",
+   "disk": "AGI1T0G43AI818",
+   "free": 792687603712,
+   "media": "SSD",
+   "size": 1023456309248
+  },
+  "src": {
+   "bus": "SATA",
+   "disk": "ST8000DM004-2U9188",
+   "free": 7371623010304,
+   "media": "HDD",
+   "size": 8001546088448
+  }
+ }
+}

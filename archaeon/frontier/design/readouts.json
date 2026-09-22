@@ -1,0 +1,34 @@
+[
+ {
+  "id": "P-boom.readout.1",
+  "module": "boom_readout",
+  "lineage": "LIN-f14ab25f",
+  "condition": {
+   "family": "P-boom",
+   "done_min": 8
+  },
+  "state": "DONE",
+  "registered_at": "2026-09-19T02:54:41Z",
+  "primary_statistic": "spike rate per 100 archived generations per arm (boom.py docstring)",
+  "note": "the readout is the durable object; the scheduler runs it when the condition holds",
+  "ran_at": "2026-09-19T07:17:34Z",
+  "result": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\archaeon\\frontier\\design\\BOOM_READOUT_2026-09-19T0717Z.json",
+  "rc": 0
+ },
+ {
+  "id": "P-boom.readout.2",
+  "module": "boom_readout",
+  "lineage": "LIN-f14ab25f",
+  "condition": {
+   "family": "P-boom",
+   "done_min": 13,
+   "ids_prefix": [
+    "K_"
+   ]
+  },
+  "state": "PENDING",
+  "registered_at": "2026-09-19T07:19:14Z",
+  "primary_statistic": "spike rate per 100 archived generations per arm, K_ arms (shared streams)",
+  "note": "fires when the 13 stream-keyed arms are DONE"
+ }
+]

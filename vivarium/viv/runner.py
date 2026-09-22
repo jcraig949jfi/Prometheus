@@ -164,6 +164,17 @@ class _LeaseKeeper:
                 "error": self.error}
 
 
+def _kw_if(fn, **kw) -> dict:
+    """Only the keyword arguments `fn` declares (and that are not None): the
+    production client takes idem_key; the recording doubles do not."""
+    import inspect
+    try:
+        params = inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return {}
+    return {k: v for k, v in kw.items() if v is not None and k in params}
+
+
 class _NotClaimable(Exception):
     """Raised inside the claim step; typed by the caller."""
 
@@ -440,16 +451,59 @@ class SfeRunner:
                 "session_id": sid}
 
     @staticmethod
-    def _world_alive(c, prior) -> bool:
+    def _items(resp, key):
+        """Schema 9 list routes answer {key: [...], next_after_seq, truncated}
+        (Daedalus D8 cursors); older engines and the test doubles answer a
+        bare list. The s14 canary D showed the verifiers iterating the DICT's
+        keys, so every 'present' check on production read False. A truncated
+        page is NOT a complete answer: the caller gets None and must not
+        claim absence from it."""
+        if isinstance(resp, dict):
+            if resp.get("truncated"):
+                return None
+            return list(resp.get(key) or [])
+        return list(resp or [])
+
+    @staticmethod
+    def _world_alive(c, prior, *, name=None, sid=None):
+        """Alive by id; with NO recorded result, by NAME among this session's
+        worlds (the name is derived from the sealed spec), returning the
+        recovered world record so no second world is minted."""
         try:
-            return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if prior is not None:
+                return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if not name:
+                return False
+            worlds = SfeRunner._items(c.list_worlds(), "worlds")
+            if worlds is None:
+                return False
+            for w in worlds:
+                if w.get("name") == name and str(w.get("state")) not in ("TERMINATED", "None") \
+                        and (sid is None or w.get("session_id") == sid):
+                    return {"world_id": w["world_id"], "labels": {}, "labels_applied": False,
+                            "session_id": w.get("session_id"), "recovered_by": "name"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
     @staticmethod
-    def _experiment_readable(c, wid, prior) -> bool:
+    def _experiment_readable(c, wid, prior, *, spec_hash=None):
+        """Readable by id; with NO recorded result, by spec_hash among the
+        world's experiments (one design commits one experiment per world),
+        returning the recovered ids so no second experiment is committed."""
         try:
-            return bool(c.get_experiment(wid, prior["exp_id"]))
+            if prior is not None:
+                return bool(c.get_experiment(wid, prior["exp_id"]))
+            if not spec_hash:
+                return False
+            exps = SfeRunner._items(c.list_experiments(wid), "experiments")
+            if exps is None:
+                return False
+            for e in exps:
+                if e.get("spec_hash") == spec_hash:
+                    return {"hyp_id": e.get("hyp_id"), "pred_id": e.get("pred_id"), "exp_id": e["exp_id"],
+                            "recovered_by": "spec_hash"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -467,10 +521,25 @@ class SfeRunner:
             return False
 
     @staticmethod
-    def _observation_present(c, wid, prior_obs_id) -> bool:
+    def _observation_present(c, wid, prior_obs_id, *, exp_id=None, repeat_index=None):
+        """Is the prior observation on the engine? With a recorded id: by id.
+        With NO recorded id (the worker died after the engine committed the
+        observation and before the step's result landed -- s14 canary D): by
+        CONTENT, (exp_id, content.repeat_index), returning the recovered obs_id
+        so the step is REPLAYED rather than re-posted (which the engine
+        refuses: one ORIGINAL per experiment, 409)."""
         try:
-            return any((o.get("obs_id") or o.get("id")) == prior_obs_id
-                       for o in c.list_observations(wid))
+            obs = SfeRunner._items(c.list_observations(wid), "observations")
+            if obs is None:
+                return False
+            if prior_obs_id is not None:
+                return any((o.get("obs_id") or o.get("id")) == prior_obs_id for o in obs)
+            if exp_id is None or repeat_index is None:
+                return False
+            for o in obs:
+                if o.get("exp_id") == exp_id and (o.get("content") or {}).get("repeat_index") == repeat_index:
+                    return o.get("obs_id") or o.get("id") or False
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -563,7 +632,8 @@ class SfeRunner:
         else:
             world = record("world", lambda: self._create_world(
                 c, sid, _spec.world_name(sealed), spec["world"]["seed_root"], labels=labels),
-                parts=["plain"], replayable=True, verify=lambda r: self._world_alive(c, r))
+                parts=["plain"], replayable=True,
+                verify=lambda r: self._world_alive(c, r, name=_spec.world_name(sealed), sid=sid))
         wid = world["world_id"]
         out.world_id = wid
 
@@ -603,18 +673,26 @@ class SfeRunner:
                     str(exc), partial=out,
                     failure_class="BUDGET_EXCEEDED") from exc
 
+        key_of = getattr(record, "key", None)
+        idem_exp = key_of("experiment", [wid]) if key_of else None
+
         def _commit_experiment():
-            hyp = c.hypothesis(wid, spec["hypothesis"])
+            # Idempotency-Key = the step key (Daedalus #354): the engine
+            # replays the same ids to a retry or a NEW ATTEMPT's re-post
+            hyp = c.hypothesis(wid, spec["hypothesis"],
+                               **_kw_if(c.hypothesis, idem_key=idem_exp and idem_exp + ":hyp"))
             pred = None
             if spec.get("prediction") is not None:
-                pred = c.prediction(wid, hyp, spec["prediction"])
+                pred = c.prediction(wid, hyp, spec["prediction"],
+                                    **_kw_if(c.prediction, idem_key=idem_exp and idem_exp + ":pred"))
             e = c.experiment(wid, spec, hyp_id=hyp, pred_id=pred,
-                             commit=True, enqueue=True, kind=spec["work"]["kind"])
+                             commit=True, enqueue=True, kind=spec["work"]["kind"],
+                             **_kw_if(c.experiment, idem_key=idem_exp))
             return {"hyp_id": hyp, "pred_id": pred, "exp_id": e["exp_id"]}
 
         committed = record("experiment", _commit_experiment, parts=[wid],
                            replayable=True,
-                           verify=lambda r: self._experiment_readable(c, wid, r))
+                           verify=lambda r: self._experiment_readable(c, wid, r, spec_hash=sealed))
         hyp_id, pred_id, exp_id = committed["hyp_id"], committed["pred_id"], committed["exp_id"]
         out.sfe_experiment_id = exp_id
 
@@ -679,10 +757,18 @@ class SfeRunner:
                 out.anchor = self._failure_anchor(wid, exp_id)
             except Exception:                       # noqa: BLE001, S110
                 pass
+            # A 4xx is the ENGINE'S ANSWER to a request of ours, not a
+            # transport failure: the s14 canary's 409 (one ORIGINAL observation
+            # per experiment) was classed ENGINE_TRANSPORT, which is the
+            # consumer's declared HALT class -- it parked and paged Daedalus
+            # for a defect that was Vivarium's. ENGINE_REJECTED fails the row,
+            # typed, and parks nothing. 5xx and socket errors stay transport.
+            status = getattr(exc, "status", None)
+            rejected = isinstance(status, int) and 400 <= status < 500
             raise ExecutionFailure(
                 "%s after the experiment was committed: %s"
                 % (type(exc).__name__, exc), partial=out,
-                failure_class="ENGINE_TRANSPORT") from exc
+                failure_class="ENGINE_REJECTED" if rejected else "ENGINE_TRANSPORT") from exc
 
     # -- preflight ---------------------------------------------------------
     def _release(self, c, reservations) -> list:
@@ -1072,7 +1158,10 @@ class SfeRunner:
         for rep in repeats:
             outcome_i, prov_i = _spec.apply_outcome_rule(spec, rep["result"])
 
-            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i):
+            key_of = getattr(record, "key", None)
+            idem_obs = key_of("observe", [rep["repeat_index"]]) if key_of else None
+
+            def _post(rep=rep, outcome_i=outcome_i, prov_i=prov_i, idem_obs=idem_obs):
                 return c.observation(
                     wid, exp_id,
                     {"result": rep["result"], "outcome_rule_provenance": prov_i,
@@ -1083,10 +1172,12 @@ class SfeRunner:
                      "repeat_seed_derivation": plan["seed_derivation"],
                      "executed_by": "vivarium", "worker_id": self.worker_id},
                     outcome_i, pred_id=pred_id, work_id=work_id,
-                    replication=rep["repeat_index"] > 0)
+                    replication=rep["repeat_index"] > 0,
+                    **_kw_if(c.observation, idem_key=idem_obs))
 
             oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
-                         verify=lambda r, w=wid: self._observation_present(c, w, r))
+                         verify=lambda r, w=wid, i=rep["repeat_index"]: self._observation_present(
+                             c, w, r, exp_id=exp_id, repeat_index=i))
             obs_ids.append(oid)
         out.obs_ids = obs_ids
         obs_id = obs_ids[0] if obs_ids else None

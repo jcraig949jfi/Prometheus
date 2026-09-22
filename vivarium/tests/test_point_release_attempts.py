@@ -87,7 +87,13 @@ class VerifyingClient(RecordingClient):
         return oid
 
     def list_observations(self, wid):
-        return list(self.observations.get(wid, []))
+        # schema 9's shape (D8 cursors): a page object, never a bare list --
+        # the s14 canary D found the verifiers iterating the dict's keys
+        return {"observations": list(self.observations.get(wid, [])), "next_after_seq": None, "truncated": False}
+
+    def list_experiments(self, wid):
+        return {"experiments": [{"exp_id": e, "spec_hash": None} for e in self.experiments.get(wid, [])],
+                "next_after_seq": None, "truncated": False}
 
     def events(self, wid, limit=100):
         # the base double has only OBSERVATION_RECORDED events; a completed
@@ -122,7 +128,7 @@ def _attempts(conn, schema, eid):
 
 def _steps(conn, schema, attempt_id):
     with _db.dict_cur(conn) as cur:
-        cur.execute("SELECT step_kind, parts, status, replay_of_step, recomputed_from_step, step_key FROM "
+        cur.execute("SELECT step_kind, parts, status, replay_of_step, recomputed_from_step, step_key, result FROM "
                     + schema + ".execution_step WHERE attempt_id=%s ORDER BY started_at", (attempt_id,))
         rows = [dict(r) for r in cur.fetchall()]
     conn.rollback()
@@ -638,3 +644,226 @@ def test_negative_a_lease_that_expired_mid_run_is_claimed_afresh_and_completed_o
     assert [it["status"] for it in client.items.values()] == ["COMPLETED"]
     assert sum(1 for name, _ in client.calls if name == "complete") == 1      # attempt 1 died before its complete was recorded; attempt 2 completed once
     assert sum(1 for name, _ in client.calls if name == "claim") == 2
+
+
+# ------------------------------------------------------------- s14 canary finding D (2026-09-17): the engine committed, the step result never landed
+
+class OriginalOnceClient(WorkItemClient):
+    """The engine's rule: one ORIGINAL observation per experiment; a second
+    non-replication post is 409. list_observations carries exp_id and the
+    posted content (repeat_index), which is what recovery-by-content reads."""
+
+    def observation(self, wid, exp_id, content, outcome, **kw):
+        self._owning(wid)
+        mine = [o for o in self.observations.get(wid, []) if o.get("exp_id") == exp_id]
+        if mine and not kw.get("replication"):
+            raise RuntimeError("HTTP 409: this experiment (or prediction) already has an ORIGINAL observation")
+        oid = RecordingClient.observation(self, wid, exp_id, content, outcome, **kw)
+        self.observations.setdefault(wid, []).append({"obs_id": oid, "exp_id": exp_id, "content": content})
+        return oid
+
+
+def test_a_death_between_the_engines_commit_and_the_step_result_is_recovered_by_content(conn, drafted, tmp_path):
+    """POSITIVE: attempt 1's observe:0 landed on the engine but its step row
+    has result NULL (the worker died in between). Attempt 2 finds it by
+    (exp_id, repeat_index), REPLAYS it with the recovered obs_id, and posts
+    only observe:1. NEGATIVE (the pre-fix behaviour, asserted by the double):
+    re-posting observe:0 would be a 409 -- so a pass here means no re-post
+    happened. CHEAT: a NULL-result step whose act is NOT on the engine is
+    RECOMPUTED, never invented."""
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-rec-1", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = OriginalOnceClient()
+    store = tmp_path / "sessions"
+    v = _viv(schema, client, spec, worker="rec-w1")
+    v._runner.session_store = store
+    real = client.observation
+
+    def commit_then_die(wid, exp_id, content, outcome, **kw):
+        real(wid, exp_id, content, outcome, **kw)         # the engine has it ...
+        raise RuntimeError("simulated death before the step result landed")   # ... the recorder does not
+    client.observation = commit_then_die
+    eid = _enqueue(conn, schema, spec)
+    assert v.tick(conn).outcome == FAILED
+    client.observation = real
+    atts = _attempts(conn, schema, eid)
+    st1 = {(s["step_kind"], tuple(s["parts"])): s for s in _steps(conn, schema, atts[0]["attempt_id"])}
+    assert st1[("observe", (0,))]["result"] is None                      # the gap, as production showed it
+    with conn.cursor() as cur:
+        cur.execute("INSERT INTO " + schema + ".execution_attempt (experiment_id, attempt_number, parent_attempt_id, design_digest, worker_id) "
+                    "VALUES (%s, 2, %s, %s, 'rec-w1')", (eid, atts[0]["attempt_id"], _spec.spec_hash(spec)))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue DISABLE TRIGGER trg_req_transition")
+        cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='running', claimed_by='rec-w1', finished_at=NULL WHERE experiment_id=%s", (eid,))
+        cur.execute("ALTER TABLE " + schema + ".research_experiment_queue ENABLE TRIGGER trg_req_transition")
+    conn.commit()
+    _q.release_stranded(conn, eid, actor="op", reason="worker died", schema=schema, new_attempt=True)
+    conn.commit()
+    v2 = _fresh_process(schema, client, spec, "rec-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    st2 = {(s["step_kind"], tuple(s["parts"])): s for s in _steps(conn, schema, atts[2]["attempt_id"])}
+    assert st2[("observe", (0,))]["status"] == "REPLAYED" and st2[("observe", (0,))]["result"] is not None
+    assert st2[("observe", (1,))]["status"] == "NEW"
+    wid = st2[("world", ("plain",))]["result"]["world_id"]
+    assert len(client.observations[wid]) == 2                             # exactly two on the engine, no duplicate
+    # CHEAT: a NULL-result step with nothing on the engine is recomputed, not invented
+    from viv.runner import SfeRunner
+    assert SfeRunner._observation_present(client, wid, None, exp_id="exp_nothing", repeat_index=7) is False
+
+
+# ------------------------------------------------------------- s14 canary D (2026-09-17): a 4xx is the engine's answer, not transport
+
+def test_an_engine_4xx_after_the_commit_is_engine_rejected_not_transport(conn, drafted):
+    """POSITIVE: an EngineError with a 4xx status after the commit fails the
+    row ENGINE_REJECTED (termination reason EXECUTOR_ERROR), which is NOT the
+    consumer's halt class -- on production the 409 was classed
+    ENGINE_TRANSPORT, the consumer parked and paged Daedalus. NEGATIVE: a
+    5xx stays ENGINE_TRANSPORT (the engine is unhealthy; that IS the halt
+    class); a socket error stays ENGINE_TRANSPORT."""
+    from sfclient import EngineError
+    schema = drafted
+    for status, expect in ((409, "ENGINE_REJECTED"), (503, "ENGINE_TRANSPORT")):
+        spec = make_spec(hypothesis="probe %d" % status)
+        eid = _enqueue(conn, schema, spec)
+        client = VerifyingClient()
+
+        def refuse(*a, _st=status, **k):
+            raise EngineError(_st, {"error": "x"})
+        client.observation = refuse
+        r = _viv(schema, client, spec).tick(conn)
+        assert r.outcome == FAILED and r.failure_class == expect, (status, r)
+        atts = _attempts(conn, schema, eid)
+        assert atts[0]["termination"]["termination_reason"] == ("EXECUTOR_ERROR" if expect == "ENGINE_REJECTED" else "ENGINE_TRANSPORT")
+    spec = make_spec(hypothesis="probe socket")
+    eid = _enqueue(conn, schema, spec)
+    client = VerifyingClient()
+
+    def drop(*a, **k):
+        raise OSError("connection reset")
+    client.observation = drop
+    r = _viv(schema, client, spec).tick(conn)
+    assert r.outcome == FAILED and r.failure_class == "ENGINE_TRANSPORT"
+
+
+# ------------------------------------------------------------- Daedalus #354: Idempotency-Key = the step key on the id-minting posts
+
+def test_the_step_key_travels_as_the_idempotency_key_when_the_client_accepts_it(conn, drafted):
+    from viv import stepkey as _sk
+    schema = drafted
+
+    class KeyedClient(VerifyingClient):
+        def __init__(self):
+            super().__init__(); self.keys = {}
+
+        def observation(self, wid, exp_id, content, outcome, pred_id=None, work_id=None, replication=False, idem_key=None):
+            self.keys[("observe", content["repeat_index"])] = idem_key
+            return super().observation(wid, exp_id, content, outcome, pred_id=pred_id, work_id=work_id, replication=replication)
+
+        def experiment(self, wid, spec, idem_key=None, **kw):
+            self.keys[("experiment", wid)] = idem_key
+            return super().experiment(wid, spec, **kw)
+
+    spec = make_spec(hypothesis="probe keys")
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    eid = _enqueue(conn, schema, spec)
+    client = KeyedClient()
+    assert _viv(schema, client, spec).tick(conn).outcome == EXECUTED
+    design = _spec.spec_hash(spec)
+    assert client.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid)
+    assert client.keys[("observe", 1)] == _sk.engine_key(_sk.step_key(design, "observe", [1]), eid)
+    wid = next(k for k in client.keys if k[0] == "experiment")[1]
+    assert client.keys[("experiment", wid)] == _sk.engine_key(_sk.step_key(design, "experiment", [wid]), eid)
+    # NEGATIVE (canary run 8): the SAME design enqueued as a second row must not reuse the engine key
+    eid2 = _enqueue(conn, schema, spec)
+    client2 = KeyedClient()
+    assert _viv(schema, client2, spec).tick(conn).outcome == EXECUTED
+    assert client2.keys[("observe", 0)] != client.keys[("observe", 0)]
+    assert client2.keys[("observe", 0)] == _sk.engine_key(_sk.step_key(design, "observe", [0]), eid2)
+    # a client without the parameter is called without it (the recording doubles above)
+
+
+def test_the_verifiers_read_schema_9_page_objects_and_refuse_a_truncated_page():
+    """POSITIVE: {observations: [...], truncated: False} is read as the list.
+    NEGATIVE: a truncated page never proves absence (None -> not present ->
+    the caller recomputes rather than trusting an incomplete answer)."""
+    from viv.runner import SfeRunner
+
+    class C:
+        def list_observations(self, wid):
+            return {"observations": [{"obs_id": "obs_1", "exp_id": "e", "content": {"repeat_index": 0}}],
+                    "next_after_seq": 9, "truncated": False}
+    assert SfeRunner._observation_present(C(), "w", "obs_1") is True
+    assert SfeRunner._observation_present(C(), "w", None, exp_id="e", repeat_index=0) == "obs_1"
+    assert SfeRunner._items({"observations": [1], "truncated": True}, "observations") is None
+    assert SfeRunner._items([1, 2], "observations") == [1, 2]
+
+
+# ------------------------------------------------------------- 010 (s14 canary run 7 row D): a transport-failed row is re-attemptable
+
+def test_a_row_failed_on_engine_transport_is_released_to_a_new_attempt_and_nothing_else_is(conn, drafted, tmp_path):
+    """POSITIVE: attempt 1 closes FAILED/ENGINE_TRANSPORT (a socket error
+    after the commit; the engine has the observation); `release --new-attempt`
+    takes the terminal `failed` row back to queued; attempt 2 replays the
+    world, the experiment, the recovered observation and finishes with ONE
+    world. NEGATIVE: a row failed on EXECUTOR_ERROR / PREREQUISITE_FAILED /
+    ENGINE_REJECTED is refused by the queue AND by the trigger. CHEAT: the
+    bare UPDATE failed -> queued without the release setting is refused."""
+    import psycopg2
+    schema = drafted
+    spec = make_spec(pew={"encounter_id": "enc-010", "players": []})
+    spec["repeat"] = {"count": 2, "order": "sequential", "seed_derivation": "constant", "state": "reset",
+                      "budget": {"max_seconds": 60, "max_observations": 2}}
+    client = OriginalOnceClient()
+    store = tmp_path / "sessions"
+    v = _viv(schema, client, spec, worker="tr-w1")
+    v._runner.session_store = store
+    real = client.observation
+
+    def commit_then_socket_error(wid, exp_id, content, outcome, **kw):
+        real(wid, exp_id, content, outcome, **kw)
+        raise OSError("connection reset by peer")
+    client.observation = commit_then_socket_error
+    eid = _enqueue(conn, schema, spec)
+    r1 = v.tick(conn)
+    assert r1.outcome == FAILED and r1.failure_class == "ENGINE_TRANSPORT"
+    assert _q.get(conn, eid, schema=schema)["status"] == "failed"
+    client.observation = real
+    # CHEAT: no release setting -> frozen
+    with pytest.raises(psycopg2.Error, match="frozen"):
+        with conn.cursor() as cur:
+            cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='queued' WHERE experiment_id=%s", (eid,))
+    conn.rollback()
+    row = _q.release_stranded(conn, eid, actor="op", reason="engine stall", schema=schema, new_attempt=True)
+    conn.commit()
+    assert row["status"] == "queued"
+    assert [e["event_type"] for e in _q.events(conn, eid, schema=schema)][-1] == "transport_failure_released"
+    v2 = _fresh_process(schema, client, spec, "tr-w2", store)
+    r2 = v2.tick(conn)
+    assert r2.outcome == EXECUTED, r2
+    atts = _attempts(conn, schema, eid)
+    assert [a["terminal_state"] for a in atts] == ["FAILED", "COMPLETED"] and atts[1]["parent_attempt_id"] == atts[0]["attempt_id"]
+    st2 = {(s["step_kind"], tuple(s["parts"])): s["status"] for s in _steps(conn, schema, atts[1]["attempt_id"])}
+    assert st2[("world", ("plain",))] == "REPLAYED" and st2[("observe", (0,))] == "REPLAYED" and st2[("observe", (1,))] == "NEW"
+    assert sum(1 for name, _ in client.calls if name == "create_world") == 1
+    # NEGATIVE: a design/executor failure stays terminal
+    spec_b = make_spec(hypothesis="probe rejected")
+    eid_b = _enqueue(conn, schema, spec_b)
+    client_b = VerifyingClient()
+    from sfclient import EngineError
+
+    def refuse(*a, **k):
+        raise EngineError(409, {"error": "x"})
+    client_b.observation = refuse
+    assert _viv(schema, client_b, spec_b).tick(conn).failure_class == "ENGINE_REJECTED"
+    with pytest.raises(RuntimeError, match="not ENGINE_TRANSPORT"):
+        _q.release_stranded(conn, eid_b, actor="op", reason="x", schema=schema, new_attempt=True)
+    conn.rollback()
+    with pytest.raises(psycopg2.Error, match="frozen"):                     # the trigger says the same
+        with conn.cursor() as cur:
+            cur.execute("SET LOCAL viv.release = 'new_attempt'")
+            cur.execute("UPDATE " + schema + ".research_experiment_queue SET status='queued' WHERE experiment_id=%s", (eid_b,))
+    conn.rollback()

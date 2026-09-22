@@ -129,20 +129,531 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/kernel.c:1258-1330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/bddop.c:539-644"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/reorder.c:468-572"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/reorder.c:1170-1233"
+   }
+  ],
+  "inspected_files": [
+   "kernel.c 1258-1330",
+   "bddop.c 539-644",
+   "reorder.c 468-572, 1170-1233"
+  ],
+  "date": "2026-09-17T22:47Z",
+  "note": "reduced ordered BDDs as three mechanisms: a unique table that makes structurally equal nodes the same integer (canonicity is a hash-consing invariant, not a check), a recursive apply on the top variable with a computed-result cache so the recursion is bounded by the product of the operand sizes, and dynamic variable reordering by sifting each variable to the position that minimises the node count, implemented as in-place adjacent-level swaps that preserve every external reference",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:47Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceforge.net/projects/buddy/files/latest/download sha256:d3df80a6a669d9ae408cb46012ff17bd33d855529d20f3a7e563d0d913358836",
+   "payload_manifest_id": "techne tree_sha256 8090220207a7cae1411b7459f4c03507c4a809adabc4d7c32d38ac83470e597e (114 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/buddy-2.4/src/kernel.c",
+     "payload_hash_read": "c289ae81bb786b467e060e2f3ea95e19beb34cbb6643c1fd630070963643828b",
+     "techne_recorded_hash": "c289ae81bb786b467e060e2f3ea95e19beb34cbb6643c1fd630070963643828b",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/buddy-2.4/src/bddop.c",
+     "payload_hash_read": "a9116a00a722cac6933051dc5346f40621b40d0878a32781d837f24272fdb92d",
+     "techne_recorded_hash": "a9116a00a722cac6933051dc5346f40621b40d0878a32781d837f24272fdb92d",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/buddy-2.4/src/reorder.c",
+     "payload_hash_read": "d9dd97b813188445b26f27a4dccb5db4cea0a02eb121b1832057e053560341d8",
+     "techne_recorded_hash": "d9dd97b813188445b26f27a4dccb5db4cea0a02eb121b1832057e053560341d8",
+     "match": true,
+     "refs": 3
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "bdd_makenode (kernel.c 1258-1330): low == high -> low; NODEHASH chain walk; free-list pop; on exhaustion bdd_gbc, then reorder via longjmp if node usage crossed usednodes_nextreorder, then resize if free nodes fall below minfreenodes percent",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a node request (level, low, high) first returns low if the children are equal (the reduction rule), then walks the hash chain for an existing node with the same triple and returns its index; otherwise a node is taken from the free list; if none is free, garbage collect; if the collection reveals the node count has crossed the reorder trigger and reordering is enabled, abandon the current operation by longjmp to the operator entry (which restarts it after reordering); if free nodes are still scarce, grow the table and rehash",
+   "input": "(level, low, high)",
+   "output": "a node index",
+   "state": "the node array with hash chains and refcounts; the free list",
+   "update": "per node creation",
+   "assumptions": [
+    "hash-consing every node makes equality of functions equality of integers (the ROBDD canonicity theorem, Bryant 1986); the free/gc/resize/reorder ladder keeps the invariant under memory pressure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+    "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best"
+   ],
+   "fitness_value_in_ancestor": "satisfiability, equivalence and counting become O(1) or linear in the DAG; the table is the whole representation",
+   "failure_landscape": "by reading: the longjmp restart of an operation mid-recursion is the cost of reordering from inside makenode; the panic path returns 0 (false) with an error code when nothing can be freed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Bryant 1986; the unique table with a free list and gc is Brace, Rudell, Bryant 1990 (the CUDD lineage)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/kernel.c:1258-1330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "bdd_makenode and the gc/resize hooks it calls",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "apply_rec (bddop.c 539-644): the switch of terminal cases per applyop; oprres for constants; BddCache_lookup(applycache, APPLYHASH(l, r, applyop)); the three level cases; PUSHREF/POPREF around the recursive results",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for two BDDs and a Boolean operator: apply operator-specific terminal rules (l == r, a constant operand), then consult the cache for (l, r, op); on a miss recurse on the cofactors of whichever operand has the lower level (both if equal), build the result node through makenode, record it in the cache; intermediate results are pushed on a reference stack so a garbage collection inside the recursion cannot free them",
+   "input": "two node indices and an operator code",
+   "output": "a node index",
+   "state": "the computed cache (direct-mapped, overwritten on collision)",
+   "update": "per call",
+   "assumptions": [
+    "subproblems repeat (shared sub-DAGs), so caching bounds the work by |l| x |r| instead of the exponential recursion tree"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+    "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best"
+   ],
+   "fitness_value_in_ancestor": "every Boolean operation in time proportional to the product of the operand sizes",
+   "failure_landscape": "by reading: the cache is direct-mapped, so a collision drops an entry (bdd_setcacheratio tunes it); the cache is cleared on reordering",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Bryant 1986's Apply; the cache from Brace et al.",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/bddop.c:539-644"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "apply_rec (ite_rec and the others share the pattern; not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "reorder_sift_bestpos (reorder.c 468-572): maxAllowed = best/5 + best; direction by position; blockdown; bestpos; reorder_swap (1170-1233): the four cofactors f00..f11, reorder_makenode, in-place VAR/LOW/HIGH update, rehash",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for a variable (block): starting toward the nearer end, move it one level at a time (blockdown) as long as the total node count stays within 20 percent above the best seen (or a global cap), recording the best position; then sweep the other direction; finally move back to the best; an adjacent swap of levels v0 < v1 rewrites every v0 node in place as a v1 node over new v0 children built from the four grand-cofactors, so external references (indices) stay valid, and rehashes the node; dead nodes are reclaimed by a local gc afterwards",
+   "input": "the current order",
+   "output": "a new order with (locally) fewer nodes",
+   "state": "the node table, rewritten in place",
+   "update": "per reorder event",
+   "assumptions": [
+    "node count is unimodal enough along one variable's position that a bounded sweep finds a good position; keeping indices stable is worth the in-place rewrite"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+    "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator"
+   ],
+   "fitness_value_in_ancestor": "orders of magnitude in size for real circuits without user-chosen orders",
+   "failure_landscape": "by reading: reordering is O(n^2) swaps in the worst case and blocks all other work; the 20 percent slack is a heuristic constant",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rudell 1993 (sifting); the in-place swap is Rudell's / CUDD's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/reorder.c:468-572, 1170-1233"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the sift and swap functions (win2/win3 and random reorders are variants, not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "bdd_gbc (mark from the reference stack and external refs, sweep to the free list), bdd_noderesize, the cache table, ite_rec / restrict / constrain / compose / exist / simplify, satcount / allsat, the variable block tree, fdd.c and bvec.c, bddio.c",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "satcount and the quantifiers are each a small mechanism on the same recursion pattern",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-bdd"
+  },
+  {
+   "candidate": "'BDD' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the representation invariant (unique table), the operation (apply + cache) and the optimisation (reorder) are separable and were published in three papers",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-bdd"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "buddy-bdd::P.boolean_functions_over_many_variables_must_be_stored_compared_and_combined_canonically_with_a_size_that_depends_on_a_variable_order_the_organism_must_choose_itself",
+   "source_fossil": "buddy-bdd",
+   "source_evidence": "kernel.c bdd_makenode; bddop.c apply_rec; reorder.c sift",
+   "condition": "an organism holds many Boolean functions (a circuit, a transition relation) and must answer equivalence and satisfiability and build new functions by AND/OR/NOT; memory is bounded; the representation's size can vary exponentially with the variable order",
+   "resource_or_constraint": "the node table; the order",
+   "failure_condition": "two equal functions stored differently (a missed equivalence), operations exponential in the DAG size, or a size blow-up under a bad order",
+   "world_punishes": "tree representations; uncached recursion; a fixed order",
+   "world_rewards": "hash-consing, a computed cache, and dynamic reordering",
+   "observable_consequence": "node count and operation time on ISCAS-style circuits and on the classic worst case (a multiplier) with reordering on and off",
+   "vacuity_condition": "functions of few variables",
+   "trivial_shortcuts": "an order supplied by the world (which it must withhold)",
+   "cheat_control": "an organism given the optimal order must show the minimum node count; a fixed-order organism on a permuted input must show the blow-up; sifting must recover within 20 percent of the given-order size: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: symbolic Boolean manipulation (Bryant 1986; Rudell 1993)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "every result node",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "to": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "longjmp on the node-count threshold",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "rewrites the table in place",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "cache cleared",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "buddy-bdd",
+   "relation": "algorithm_from",
+   "to": "Bryant 1986 (ROBDD, apply); Brace, Rudell, Bryant 1990 (unique table, cache); Rudell 1993 (sifting)",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "gc, the other operators, quantification and counting unread",
+   "finite-domain and bit-vector layers unread",
+   "nothing ran"
+  ],
+  "note": "the three defining mechanisms are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

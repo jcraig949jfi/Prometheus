@@ -1,0 +1,72 @@
+[
+ {
+  "admit": false,
+  "change": "Not admitted. The scored judge is always gated by a downstream exact evaluation, and no judge false-accept or exploitation rate is measured, so it gives no k* or q for G2/T2. Its judge is stronger than the worker, so it does not bear on G4 either. It is a useful compute-accounting example for C2 (CPU hours, wall clock and API cost are reported separately, including judge calls).",
+  "date": "2026-09-17",
+  "dedupe_key": "2609.19526",
+  "first_seen": "2026-09-18",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "SIFT prefilters candidate self-modifications with pairwise LLM-judge comparisons (regularized Bradley-Terry) and runs full benchmark evaluation only on top nodes; on Polyglot-225 with a Qwen3-30B coder it reports 31.1% vs HGM 30.5%, DGM 27.1%, SICA 25.1% (224 vs 347 CPU hours for HGM, single run), and 35.1% with o3-mini (repeats 35.1/32.0/35.6%). Judge rank vs true score Spearman rho was +0.40 (diffs only) to +0.68 (full files) on Polyglot; the authors note the judge is stronger than the coding backbone.",
+  "target_id": "G2",
+  "target_type": "question",
+  "title": "Self Improvement via Fast Tree-search (SIFT)",
+  "url": "https://arxiv.org/abs/2609.19526"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: this is harness efficiency found by a fixed search loop. It has no second-order, transplant or evaluator-exploitation measurement, so it leaves T0 unchanged (and supports it as ordinary search plus selection).",
+  "date": "2026-09-17",
+  "dedupe_key": "2609.20519",
+  "first_seen": "2026-09-18",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Auto-research loops at the harness layer selected four mechanisms (action execution, context compaction, observation handling, delegated reading). On the 51-task EdgeBench the result matches the Pi harness across GPT-5.6 Sol and Opus 5 while cutting recorded token traffic by 44.7-49.0% and API cost by about one third (abstract only read).",
+  "target_id": "none",
+  "target_type": "none",
+  "title": "SoL-Pi: Recursively Scaling Auto-Research Loops for Efficient Agent Harness",
+  "url": "https://arxiv.org/abs/2609.20519"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: submitted 2026-09-01, outside this pass's window, and it evolves worker harnesses, not the improver. Worth a later pass as real-system evidence for B6's 'feedback up / held-out down' shape and as a caution for H1/T8 (substrate portability is conditional).",
+  "date": "2026-09-01",
+  "dedupe_key": "2609.01437",
+  "first_seen": "2026-09-18",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Six creator LLMs build and then evolve agent harnesses across four domains (2,207 downstream instances). Evolution gains on visible feedback shrink on held-out tasks (Qwen 3.7 Max +13.9 to +1.43; DeepSeek V4 Pro +13.4 to +3.17), and harness capability ports across executor models only when compatible (an Opus-built harness fell from 69.3 to 33.0 on SWE-bench Pro under a Gemini executor). An audit found no harness scoring through a prohibited route; the same commit varies by about +/-4.75 pair-score points.",
+  "target_id": "B6",
+  "target_type": "question",
+  "title": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+  "url": "https://arxiv.org/abs/2609.01437"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: it measures the degree of AI involvement in first-order R&D tasks (a capability/automation index), not second-order improvement of an improver, so L2's answer (only Hyperagents imp@k, HGM metaproductivity, AIDE^2) is unchanged; no transplant, compute-matched or evaluator-exploitation data.",
+  "date": "2026-09-17",
+  "dedupe_key": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+  "first_seen": "2026-09-21",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Anthropic (Marina Favaro, Phillie Wright) reports that as of August 2026 Claude 'leads' (Epoch AI scale AL4) 26% of its AI R&D work, up from under 1% in February 2026, that over 90% is at AL3 or above, and that 0% is at AL5 (fully autonomous); online monitors blocked 0.002% of actions with about 30,000 agents deployed. The page itself is dated August 2026 in the fetch; the public disclosure was reported by Bloomberg and others on 2026-09-17, and the authors note Claude helped build the task inventory and scores (correlated-judge risk).",
+  "target_id": "L2",
+  "target_type": "question",
+  "title": "Measurements for understanding the pace of AI development inside frontier labs (Anthropic R&D Automation Index)",
+  "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: outside the window (v2 2026-09-09) and the abstract reports no transplant, memory-strip or compute-matched evidence, so nothing in T0, B1 or O1 changes; a future pass could read the body for a meta-policy transfer arm.",
+  "date": "2026-09-06",
+  "dedupe_key": "2609.06396",
+  "first_seen": "2026-09-21",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "A 31-author paper (first author Zihan Tan; v1 2026-09-06, v2 2026-09-09) composes three typed operators (Data-RSI, Harness-RSI, Model-RSI) under a two-axis optimizer that chooses operator order and proposal policy, with a meta-level policy revising the schedule. Only the abstract page was read; it gives no numbers on transfer of the meta-level policy, compute matching or seeds.",
+  "target_id": "none",
+  "target_type": "none",
+  "title": "MetaRSI / RSI2: A Meta-Recursive Self-Improving System for Recursive Self-Improving Systems Themselves",
+  "url": "https://arxiv.org/abs/2609.06396"
+ }
+]

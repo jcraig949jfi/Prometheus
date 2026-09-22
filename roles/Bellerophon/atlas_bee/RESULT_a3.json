@@ -1,0 +1,359 @@
+{
+ "adaptation_id": "a3",
+ "comparison": {
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; every cell replays bit-for-bit (seeded weather)"
+   ],
+   "measurement": [
+    "erase-vs-sham gap as a fraction of the cost-matched sham charge, meaned over elites"
+   ],
+   "representational": [
+    "retention = lifetime kv workspace persisting across a run's episodes",
+    "organisms had to be EVOLVED to use retention (random memory-users do not -- see A6)"
+   ],
+   "resource": [
+    "top-3 evolved elites; 8 test seeds; 6 episodes x 24 ticks; distinct=2 (recur) vs 6 (no-recur)"
+   ],
+   "scientific": [
+    "retention is load-bearing (erase < sham) but the recurrence-0 control does NOT hold: cost under RECUR=4.7% NO_RECUR=-26.4%"
+   ]
+  },
+  "new_phenomena": [
+   "retention costs MORE without recurrence than with it -- the opposite of e01's recurrence-necessity: in BEE retained state buys resilience to situational DIVERSITY, not to recurrence"
+  ],
+  "signals": {
+   "NO_RECUR_erase_vs_sham": -0.26426426426426425,
+   "RECUR_erase_vs_sham": 0.04722222222222226,
+   "all_replay_MET": true,
+   "table": {
+    "NO_RECUR": {
+     "erase": 10.208333333333334,
+     "off": 13.875,
+     "sham": 13.875
+    },
+    "RECUR": {
+     "erase": 31.416666666666668,
+     "off": 30.0,
+     "sham": 30.0
+    }
+   }
+  },
+  "summary": "retention is load-bearing (erase < sham) but the recurrence-0 control does NOT hold: cost under RECUR=4.7% NO_RECUR=-26.4% | replay MET=True",
+  "verdict": "PHENOMENON_CHANGED"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 2,
+  "IDENTICAL": 4,
+  "MODIFIED": 1,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 0
+ },
+ "notes": [
+  "organisms EVOLVED under recurrence to make retention load-bearing (per manifest MODIFIED)"
+ ],
+ "observed": {
+  "cells": [
+   {
+    "arm": "off",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_RECUR_off.jsonl",
+    "mean": 32.5,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "erase",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_RECUR_erase.jsonl",
+    "mean": 31.875,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "sham",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_RECUR_sham.jsonl",
+    "mean": 32.5,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "off",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_NO_RECUR_off.jsonl",
+    "mean": 15.25,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "erase",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_NO_RECUR_erase.jsonl",
+    "mean": 12.75,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "sham",
+    "elite": 0,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e0_NO_RECUR_sham.jsonl",
+    "mean": 15.25,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 66.33333333333333
+   },
+   {
+    "arm": "off",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_RECUR_off.jsonl",
+    "mean": 24.625,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "erase",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_RECUR_erase.jsonl",
+    "mean": 32.75,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "sham",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_RECUR_sham.jsonl",
+    "mean": 24.625,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "off",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_NO_RECUR_off.jsonl",
+    "mean": 12.125,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "erase",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_NO_RECUR_erase.jsonl",
+    "mean": 13.25,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "sham",
+    "elite": 1,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e1_NO_RECUR_sham.jsonl",
+    "mean": 12.125,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 62.666666666666664
+   },
+   {
+    "arm": "off",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_RECUR_off.jsonl",
+    "mean": 32.875,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   },
+   {
+    "arm": "erase",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_RECUR_erase.jsonl",
+    "mean": 29.625,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   },
+   {
+    "arm": "sham",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_RECUR_sham.jsonl",
+    "mean": 32.875,
+    "recurrence": "RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   },
+   {
+    "arm": "off",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_NO_RECUR_off.jsonl",
+    "mean": 14.25,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   },
+   {
+    "arm": "erase",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_NO_RECUR_erase.jsonl",
+    "mean": 4.625,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   },
+   {
+    "arm": "sham",
+    "elite": 2,
+    "file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a3\\e2_NO_RECUR_sham.jsonl",
+    "mean": 14.25,
+    "recurrence": "NO_RECUR",
+    "replay": "MET",
+    "train_obj": 59.833333333333336
+   }
+  ],
+  "n_elites": 3
+ },
+ "prereg_sha256": "c66ea8190f3edae4fd687abb09819a987d85288fcd4c5ac60b19dc5ef26d9203",
+ "replay": [
+  {
+   "divergent": [],
+   "file": "e0_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e0_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e0_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e0_NO_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e0_NO_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e0_NO_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_NO_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_NO_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e1_NO_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_NO_RECUR_off.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_NO_RECUR_erase.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "e2_NO_RECUR_sham.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  }
+ ],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "nestor.cw01/cw01-2026-09-17:cw01-e01",
+  "disposition": "POSITIVE",
+  "original": "retention load-bearing; erase costs -10.2% vs cost-matched sham; recurrence-0 control; 5/5"
+ },
+ "utc": "2026-09-19T13:28:44Z",
+ "wall_s": 4.2
+}

@@ -578,7 +578,10 @@ def create_app(db_path: str, *, registration_open: bool = True,
     # its own connection, PASSIVE every ~2 s, TRUNCATE only when clean; state
     # on /v2/health. Request-path handles have wal_autocheckpoint=0.
     from sfe.store import Checkpointer
-    app.state.checkpointer = Checkpointer(db_path, interval_s=checkpoint_interval_s).start()
+    import os as _os
+    app.state.checkpointer = Checkpointer(
+        db_path, interval_s=checkpoint_interval_s,
+        reset_mode=_os.environ.get("SFE_WAL_RESET_MODE", "truncate_when_idle")).start()
 
     # 9.0.1 (2026-09-17, SFE_LONG_RUN_REPORT.md s7). Before this, get_foundry
     # constructed a NEW Foundry -- a new Store, a new SQLite connection,

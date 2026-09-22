@@ -1,4 +1,4 @@
-"""Six adversarial fixtures every H0-H5 lane must pass.  AF-1.0.0  2026-09-08.
+"""Nine adversarial fixtures every H0-H5 lane must pass.  AF-1.1.0  2026-09-18.
 
 Each fixture GENERATES a run record carrying one known defect, and each
 detector is a mechanical predicate over that record. No LLM verdict appears
@@ -10,6 +10,13 @@ anywhere: every detector is an equality, a count, a sign, or a rate.
     F4 swapped labels          arm labels exchanged
     F5 exhausted run           budget exhaustion dropped from the denominator
     F6 no-effect synthetic     identical arms must not read as support
+    F7 degenerate replicate    bit-identical replays offered as replicates       (AF-1.1.0)
+    F8 structural floor        a corpus whose units sit on the attainable bound   (AF-1.1.0)
+    F9 non-exchangeable rows   a trended region read against an i.i.d. null       (AF-1.1.0)
+
+AF-1.1.0 (HARM-04, Harmonia[m2-ca1148a0]) adds F7-F9, each run TWICE: once with
+the defect (must fire) and once on a clean control (must be silent). A detector
+that fires on everything detects nothing; the silence is half the fixture.
 
 WHY F4 NEEDS A SIGNED POSITIVE CONTROL, and this is the load-bearing point.
 Swapping labels on a NO-EFFECT dataset is undetectable in principle -- that is
@@ -28,7 +35,7 @@ import random
 
 from qualification_rules import (SUPPORTED, paired_contrast, h0_estimands)
 
-FIXTURES_VERSION = "AF-1.0.0"
+FIXTURES_VERSION = "AF-1.1.0"
 
 
 def _digest(b: bytes) -> str:
@@ -223,8 +230,13 @@ def detect_f6(trials=4000, n_blocks=12, thresholds=(0.0, 0.05), seed=11):
     out = {}
     for thr in thresholds:
         rng = random.Random(seed)
-        cnt = {"additive_gain_S11_minus_S00": 0, "interaction_I": 0}
-        ses = {"additive_gain_S11_minus_S00": [], "interaction_I": []}
+        # AF-1.1.0 FIX: QR-1.1.0 (789ce4fdd, 09-10) renamed the estimand to
+        # G_joint_treatment_S11_minus_S00 and this dict kept the QR-1.0.0 name, so
+        # run_qualification.py raised KeyError here from 09-10 until 09-18; the
+        # committed ledger h0h5_qualification.json (dd38720c0, 09-09) predates the
+        # rename. Keyed on the estimand's own name now.
+        cnt = {"G_joint_treatment_S11_minus_S00": 0, "interaction_I": 0}
+        ses = {"G_joint_treatment_S11_minus_S00": [], "interaction_I": []}
         for _ in range(trials):
             g, i = h0_estimands(f6_no_effect(rng, n_blocks))
             for e in (g, i):
@@ -271,4 +283,116 @@ def run_battery(seed=20260908):
     rec("F4_control_unswapped", detect_f4(f4_swapped_labels(rng, swap=False)),
         expect=False)
 
+    return results
+
+
+# ======================================================= AF-1.1.0 fixtures
+
+from qualification_rules import (PlanRefused, replay_attestation,        # noqa: E402
+                                 refuse_replay_as_replicate)
+from floor_precheck import floor_precheck, CorpusRefused                   # noqa: E402
+from exchangeability import diagnose, VIOLATED, SUSPECT                    # noqa: E402
+
+
+# --------------------------------------------- F7 degenerate replicate
+
+def f7_degenerate_replicate(rng, replay=True):
+    """Twelve units; with the defect, four of them are bit-identical replays of
+    the same payload (same spec hash, same output bytes) offered as four
+    independent units. Clean control: twelve distinct payloads."""
+    rows = []
+    for i in range(12):
+        h = "sha256:%032x" % rng.getrandbits(128)
+        rows.append({"unit": "u%02d" % i, "spec_hash": h,
+                     "output_digest": "sha256:%032x" % rng.getrandbits(128),
+                     "value": rng.uniform(0.2, 0.6)})
+    if replay:
+        for k in (3, 4, 5):                       # rows 3-5 become replays of row 2
+            rows[k]["spec_hash"] = rows[2]["spec_hash"]
+            rows[k]["output_digest"] = rows[2]["output_digest"]
+            rows[k]["value"] = rows[2]["value"]
+    return rows
+
+
+def detect_f7(rows):
+    hits = []
+    att = replay_attestation(rows)
+    for a in att:
+        hits.append("payload %s appears %d times (%s); counts as %d unit"
+                    % (a["payload_hash"][:19], a["n_rows"],
+                       "bit-identical: attests determinism" if a["attests_determinism"]
+                       else "outputs DIFFER: not deterministic, not a replicate either",
+                       a["counts_as_units"]))
+    try:
+        refuse_replay_as_replicate(rows)
+    except PlanRefused as e:
+        hits.append("REFUSED as replicates: %s" % e)
+    return hits
+
+
+# ------------------------------------------------ F8 structural floor
+
+def f8_structural_floor(rng, floor=True):
+    """120 units. With the defect, 100 sit at the attainable bound 0.0 on every
+    sample (C3-2's shape). Clean control: 120 non-degenerate units."""
+    units = []
+    for i in range(120):
+        if floor and i < 100:
+            units.append([0.0, 0.0, 0.0, 0.0])
+        else:
+            base = rng.uniform(0.2, 0.8)
+            units.append([min(1.0, max(0.0, base + rng.gauss(0, 0.03))) for _ in range(4)])
+    return units
+
+
+def detect_f8(units):
+    vals = [sum(s) / len(s) for s in units]
+    try:
+        rec = floor_precheck(vals, 0.0, 1.0, units)
+    except CorpusRefused as e:
+        return ["REFUSED: %s" % e]
+    return [] if rec["label"] == "PASS" else ["label %s" % rec["label"]]
+
+
+# --------------------------------------------- F9 non-exchangeable rows
+
+def f9_non_exchangeable(rng, trended=True, n=12):
+    """A region's rows in commit order. With the defect, a linear drift of the
+    metric with committed_seq that a variance-ratio detector would read as
+    dispersion. Clean control: exchangeable noise around a constant."""
+    seqs = sorted(rng.sample(range(1000, 9000), n))
+    if trended:
+        metrics = [0.3 + 0.00005 * (s - seqs[0]) + rng.gauss(0, 0.01) for s in seqs]
+    else:
+        metrics = [0.4 + rng.gauss(0, 0.03) for _ in seqs]
+    return seqs, metrics
+
+
+def detect_f9(seqs_metrics):
+    seqs, metrics = seqs_metrics
+    rec = diagnose(seqs, metrics)
+    if rec.label in (VIOLATED, SUSPECT):
+        return ["%s: serial r %+.3f, trend explains %.0f%% of the variance, ratio inflation x%.2f; "
+                "no i.i.d.-calibrated rate may be quoted for this region"
+                % (rec.label, rec.serial_r, 100 * rec.trend_fraction, rec.inflation)]
+    return []
+
+
+def run_battery_1_1_0(seed=20260918):
+    """The AF-1.0.0 battery, then F7-F9 each with its clean control."""
+    results = run_battery(seed)
+    rng = random.Random(seed + 1)
+
+    def rec(name, hits, expect=True):
+        detected = bool(hits)
+        results.append({"fixture": name, "defect_present": expect,
+                        "detected": detected, "evidence": hits,
+                        "pass": detected == expect})
+
+    rec("F7_degenerate_replicate", detect_f7(f7_degenerate_replicate(rng, replay=True)))
+    rec("F7_control_distinct", detect_f7(f7_degenerate_replicate(rng, replay=False)), expect=False)
+    rec("F8_structural_floor", detect_f8(f8_structural_floor(rng, floor=True)))
+    rec("F8_control_clean", detect_f8(f8_structural_floor(rng, floor=False)), expect=False)
+    rec("F9_non_exchangeable_rows", detect_f9(f9_non_exchangeable(rng, trended=True)))
+    rec("F9_control_exchangeable", detect_f9(f9_non_exchangeable(rng, trended=False)), expect=False)
     return results
