@@ -1,9 +1,9 @@
 # Aether status
 
-Currency: 2026-09-22 (bootstrap pass on BUCKKEEP, instance
-Aether[buckkeep-7a10ca4b]). Supersedes the 2026-09-19 status, which said
-the seat had no lane and no science; both statements were true when
-written and are false now.
+Currency: 2026-09-22 (bootstrap, then the AETH-01 memory-wall round
+through Phase 6, on BUCKKEEP as Aether[buckkeep-7a10ca4b]).
+Supersedes the 2026-09-19 status, which said the seat had no lane and
+no science; both statements were true when written and are false now.
 
 seat state: ACTIVE. Working the AETH-01 lane. Not blocked on any other
   seat.
@@ -46,18 +46,36 @@ test gate: green. Before any edit, the three Phase-4 files passed
   (95 tests) and the full Aether/test suite passed at 251bc987e
   (984 passed, 5 skipped -- the 5 are Linux/POSIX pod-side gates, so
   they are UNMEASURED on this host, not passed).
-work this pass: AETH-01 memory-wall round, Phases 2, 3, 4 and 6.
-  Peak per-tick allocation measured 240.00 -> 113.01 bytes/site (2.12x)
-  with output bit-exact: 8/8 real-A40 digests reproduced including
-  2048^2, 400/400 randomized and 464/464 adversarial differential cases.
-  Report: Aether/AETH-01/GPU_MEMORY_OPTIMIZATION_01_2026-09-22.md.
-  Disposition MEMORY_WALL_MOVED_PENDING_HARDWARE -- the wall is a claim
-  about an A40 and no A40 has run this kernel.
-blockers: none blocking. Three open operator decisions: the paid A40
-  run (Phase 5, below); the canonical checkout sitting on a seat branch
-  (D-23 s1); and the stale duplicate worktree C:/Prometheus-aether.
-next executable action: Phase 5 -- one A40 pod, sizes 256..16384, one
-  pod at a time, $3 ceiling, no pod-creating retries, terminate and
-  re-confirm ACTIVE_POD_COUNT 0. HELD for the operator's explicit go
-  because it spends real money. Its falsifier is already written down:
-  8192^2 should fall from 16,718 MB to roughly 8.2-9.2 GB of used pool.
+work this pass: AETH-01 memory-wall round, Phases 2 through 6,
+  COMPLETE. Disposition MEMORY_WALL_MOVED. Off-GPU peak allocation
+  240.00 -> 113.01 bytes/site; on a real A40 the marginal pool cost
+  measured 257 -> 128 bytes/site (2.008x). 16384^2 = 268,435,456 sites
+  now runs on one A40 at 7.42 s/tick and 36.2 M sites/sec with 12.2 GiB
+  free, where the previous kernel OOM'd. Canary 300/300 bit-exact on the
+  GPU; all ten digests shared with the baseline A40 run are byte-
+  identical. Report: Aether/AETH-01/GPU_MEMORY_OPTIMIZATION_01_2026-09-22.md;
+  raw artifacts under Aether/AETH-01/evidence/2026-09-22_optimized_scale_run/.
+spend to date: $0.0253 of a $3 authorization (0.84%), one pod
+  (6q9raukca794ou, 186 s), terminated ACK_204 with absence confirmed
+  twice, ACTIVE_POD_COUNT 0. Billing reconciliation is INCOMPLETE and is
+  not claimed: the figure is computed from measured wall time at the
+  quoted rate; this client has no billing endpoint.
+new limiting boundary: 32768^2 OOMs. The fitted model
+  (used_MiB = 270.2 + 128.000 B/site, intercept independently confirmed
+  by the four smallest lattices) puts the device ceiling at about
+  370.5 M sites (19249^2), so the next doubling is a device-count
+  problem, not an allocation problem.
+blockers: none. Three open operator decisions, none blocking: the
+  canonical checkout is sitting on a seat branch (D-23 s1); the stale
+  duplicate worktree C:/Prometheus-aether; and
+  roles/Aether/RESPONSIBILITIES.md still saying charter PENDING.
+known cosmetic defect: a NumPy RuntimeWarning ("overflow encountered in
+  scalar multiply") now appears in pod logs from the in-place mix64_vec
+  scalar path, which CuPy leaves outside np.seterr. Noise, not a defect;
+  deliberately not fixed during the evidence run.
+next executable action: none in this round; it is closed. The seat's
+  next decisions are AETH-01 science, not kernel work -- whether to
+  freeze aeth01.v1, and which habitability campaign the new 268 M-site
+  capacity should buy. Note that 7.42 s/tick means 16384^2 costs about
+  2.1 hours per 1,000 ticks on one A40, which is a campaign-planning
+  fact this round did not exist to settle.

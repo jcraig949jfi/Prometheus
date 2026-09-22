@@ -9,11 +9,19 @@ Goal (unchanged from `GPU_MEMORY_OPTIMIZATION_HANDOFF_2026-09-22.md`):
 push AGE past the A40 memory wall while preserving `aeth01.v1` behavior
 exactly. Target was roughly 261 -> 120 bytes/site.
 
-**Local disposition: `MEMORY_WALL_MOVED_PENDING_HARDWARE`.**
-Peak per-tick allocation measured 240.00 -> 113.01 bytes/site (2.12x)
-with bit-exact output on every instrument available off-GPU. The claim
-"the wall moved" is NOT yet made: it is a claim about an A40, and no A40
-has run this kernel. Phase 5 is unstarted and costs money.
+**Disposition: `MEMORY_WALL_MOVED`** (Phase 5 complete, section 9).
+
+On a real A40 the optimized kernel ran **16384 x 16384 =
+268,435,456 sites at 7.42 s/tick with 12.2 GiB still free**, where the
+pre-optimization kernel died with OutOfMemoryError. The canary passed
+300/300 bit-exact against the CPU oracle on the GPU, and all ten
+lattice sizes the two runs have in common produced byte-identical final
+states. Total cost $0.025 of the $3 authorization; pod terminated and
+absence confirmed twice.
+
+Off-GPU, peak per-tick allocation measured 240.00 -> 113.01 bytes/site
+(2.12x); on the A40 the marginal pool cost measured 257 -> 128
+bytes/site (2.01x).
 
 ## 1. The previous round's accounting was never measured. This one is.
 
@@ -228,7 +236,13 @@ pool.** If the A40 run reports 8192^2 materially above that band, the
 allocation model in section 1 is wrong about CuPy even though the
 digests are right, and the 16384^2 projection should not be trusted.
 
-## 7. What is NOT established
+## 7. What was NOT established BEFORE the A40 run
+
+ANNOTATION 2026-09-22, after Phase 5: every risk in this section was
+subsequently CLOSED on real hardware (section 9). The list is left
+standing, unedited, because it is the pre-registered statement of what
+the run had to settle -- rewriting it after the fact would erase the
+record of what was actually uncertain beforehand.
 
 - **No GPU has run this.** Every number here is NumPy on CPU. CuPy pool
   behavior, and its dtype-promotion and `roll` implementations, are
@@ -269,11 +283,214 @@ kernel and must not be reused as the identity of this one.
 time rather than storing them, so it needs no edit -- it will pin
 whatever it ships.
 
-## 9. Next executable action
+## 9. Phase 5 -- the A40 run
 
-Phase 5: one A40 pod, sizes 256..16384, one pod at a time, $3 ceiling,
-no pod-creating retries, terminate and re-confirm `ACTIVE_POD_COUNT 0`.
-It spends real money and is therefore held for the operator's explicit
-go. Phase 6's final disposition (`MEMORY_WALL_MOVED` /
-`NO_MATERIAL_GAIN` / `SEMANTIC_PARITY_FAILURE`) is written from that
-run's receipt, against the section 6 predictions.
+Executed 2026-09-22, one pod, pinned to commit
+`084c648274a30a11573b2fd97647a186f6b4ffdc` (NOT `faf567ab8`, which the
+Phase 5 instruction quoted as the branch head; that commit predates this
+round and pinning it would have benchmarked the OLD kernel and answered
+the wrong question).
+
+Raw evidence is committed beside this document under
+`evidence/2026-09-22_optimized_scale_run/`: `bench.log`, `canary.log`,
+`receipt.json`, `result.json`, `scale_report.txt`, `verdict.txt`.
+
+### Run identity
+
+- `run_id`: `aeth01-20260922T184536Z-71bd2e9d`
+- pod `6q9raukca794ou`, NVIDIA A40, SECURE, $0.49/hr, 20 GB disk
+- image `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`
+- on-pod stack: Python 3.11.10, NumPy 2.2.0, CuPy 13.3.0
+- reported device memory: 45,498 MiB usable
+- kernel shipped: `aeth01_gpu_kernel.py`
+  `f6323456b190f71e094fd1342fcbe5956c6c8b708f148c9597159dd9d8d78ed4`
+  -- the optimized one, confirmed by the receipt's own `source_hashes`,
+  and verified before launch to be byte-identical between the local
+  worktree, the git blob and the GitHub raw bytes the pod downloads
+
+### Preflight (before any pod existed)
+
+Inventory checked read-only: `ACTIVE_POD_COUNT 0`, auth working. The four
+pinned files' sha256 were compared local vs git-blob vs GitHub-raw, all
+four MATCH, so the pod's own `sha256sum -c` gate could not fail for a
+line-ending or push-lag reason. A standalone terminate-and-verify script
+was written BEFORE launch so that an orchestrator killed mid-run could
+not leave a pod billing.
+
+### Canary -- PASS, on the GPU
+
+300 frozen differential cases against the CPU oracle, run on the A40
+before any benchmarking:
+
+- status **PASS**, backend **cupy**, **300 / 300 matched**, 0 mismatches
+- `gpu_kernel_seconds` 11.779 (baseline run: 14.747 on the same corpus)
+
+This is the load-bearing semantic result: the narrowed dtypes, the
+`np.roll` gathers and the in-place `mix64_vec` all behave identically
+under CuPy, not merely under NumPy. The three risks section 7 listed as
+unverified are now verified on hardware.
+
+### Scaling curve
+
+Same fixed parameters as the baseline run (`SEED=0x1234ABCD`,
+`WRITE_COST=10`, `MAINT=1`, `REPL_NUMER=MUT_NUMER=2**31`, `REPL_AMT=5`,
+2 warmup + 5 measured ticks). Digest = sha256[:16] of the 5 uint8 fields
+after 7 ticks.
+
+| size | sites | tick_med (s) | sites/sec | mem used (MiB) | parity | digest | vs baseline |
+|-----:|------:|-------------:|----------:|---------------:|:-------|:-------|:------------|
+| 16 | 256 | 0.022952 | 11,153.9 | 270.2 | PASS | 1000219c591e1595 | same |
+| 32 | 1,024 | 0.023848 | 42,939.2 | 270.2 | PASS | 9f65f15cb87b630f | same |
+| 64 | 4,096 | 0.023230 | 176,326.0 | 270.2 | PASS | 3ce333436da923b0 | same |
+| 128 | 16,384 | 0.023075 | 710,021.5 | 272.2 | PASS | 3ab66c98546a3a95 | same |
+| 256 | 65,536 | 0.023026 | 2,846,231.4 | 278.2 | SKIPPED | 7383c7d828504a30 | same |
+| 512 | 262,144 | 0.022989 | 11,402,985.0 | 302.2 | SKIPPED | a04b1321280b0b97 | same |
+| 1024 | 1,048,576 | 0.032410 | 32,353,728.2 | 398.2 | SKIPPED | 87b8194c84a440d0 | same |
+| 2048 | 4,194,304 | 0.119645 | 35,056,228.4 | 782.2 | SKIPPED | f2ad4a9ec9dbac4f | same |
+| 4096 | 16,777,216 | 0.467566 | 35,882,025.5 | 2,318.2 | SKIPPED | 3741cde26ed38979 | same |
+| 8192 | 67,108,864 | 1.859690 | 36,086,056.4 | 8,462.2 | SKIPPED | 2f787e64bf323091 | same |
+| **16384** | **268,435,456** | **7.419936** | **36,177,599.4** | **33,038.2** | SKIPPED | **b3d06be54c1be93c** | **baseline OOM'd** |
+| 32768 | 1,073,741,824 | -- | -- | -- | -- | -- | `AETH01_BENCH_STOP reason=OOM` |
+
+"parity PASS" is bit-exact agreement with the pure-Python CPU oracle,
+checked where the oracle is practical (<= 128).
+
+**All ten digests the two runs share are byte-identical to the
+pre-optimization A40 run** (`RUNPOD_SCALE_RECEIPT_2026-09-22.md`). That
+is the semantic claim settled on hardware rather than by local proxy.
+16384^2's digest `b3d06be54c1be93c` is new because the baseline could
+not reach that size at all.
+
+### The critical falsifier: PASSED
+
+Section 6 predicted, before the run, that 8192^2 should fall from
+16,718 MB to roughly 8.2-9.2 GB of used pool, and said that a materially
+higher number would falsify the allocation model even if the digests
+were right.
+
+    8192^2 observed:  8,462.2 MiB = 8.87 GB   -- INSIDE the band
+    baseline:        16,718.2 MiB
+    reduction:        1.976x
+
+### The pool model, now over-determined rather than guessed
+
+Section 6's two overhead models rested on a single data point and were
+flagged as the weakest numbers in this document. Two large sizes now
+determine both parameters, and the fit is exact:
+
+    used(MiB) = 270.2 + 128.000 bytes/site
+
+Solved from 8192^2 and 16384^2 alone, the intercept comes out at
+270.2 MiB -- which is exactly the floor the four smallest lattices
+measured independently (270.2 MiB at 16, 32 and 64). A two-point fit
+that reproduces a separately observed constant to the decimal is not a
+coincidence.
+
+The same form applied to the baseline run gives 257.000 bytes/site
+marginal, so the measured on-GPU reduction is **2.008x**, against the
+2.124x that tracemalloc measured off-GPU. The gap is CuPy's pool
+rounding, and 128.000 bytes/site exactly is that rounding showing
+itself: the measured 113.01 bytes/site of real allocation is being
+served from power-of-two-shaped pool blocks.
+
+Both section 6 predictions bracket the truth: 16384^2 was predicted at
+32.99 GB (multiplicative) and 35.98 GB (additive) and came in at
+34.64 GB, between them.
+
+### Answering the primary question
+
+> Can 16384^2 = 268,435,456 sites now execute on one A40 while
+> remaining bit-exact aeth01.v1?
+
+**Yes.** 7.42 s/tick, 36.18 M sites/sec, 33,038.2 MiB used with
+**12,459.8 MiB (12.2 GiB) still free** -- comfortable, not marginal.
+
+### The new limiting boundary
+
+Still memory, and still not time. 32768^2 stopped with
+`AETH01_BENCH_STOP reason=OOM size=32768 err=OutOfMemoryError`, which
+the model explains exactly: 1,073,741,824 sites would need
+270.2 + 131,072 MiB = **128.3 GiB** against 45,498 MiB available.
+
+The model puts the true ceiling at **370.5 M sites, about 19249^2** --
+so 16384^2 is the largest power-of-two lattice that fits, and the next
+doubling cannot fit on this device by a factor of ~2.9. Moving past
+16384^2 is therefore a multi-GPU or sharding question, not another
+constant-factor allocation question.
+
+### Throughput
+
+Peak **36,177,599 sites/sec**, up from 21,227,101 (**1.704x**). At the
+one size both runs measured, 8192^2, tick time fell 3.161471 s ->
+1.859690 s (1.700x). Section 4 guessed a bandwidth-bound GPU would also
+get faster; it did, by 1.70x rather than the 2.3x seen on CPU.
+
+Throughput is flat from 2048^2 upward (35.1, 35.9, 36.1, 36.2 M
+sites/sec), so at 16384^2 the kernel is saturating the device rather
+than degrading.
+
+### Cost and containment
+
+- pod wall time **186 s**, at $0.49/hr = **$0.0253**, against a $3
+  authorization used to 0.84%
+- exactly one pod, created on the first attempt (201), no
+  pod-creating retries
+- terminated `ACK_204`; absence confirmed by the orchestrator
+  (`ACTIVE_POD_COUNT 0`) and then again by a separate script run
+  afterwards from a clean process
+- no credential printed, placed on argv, or written to any artifact; all
+  six committed artifacts were scanned for credential patterns before
+  committing
+- BILLING RECONCILIATION IS INCOMPLETE and should not be read as done:
+  $0.0253 is computed from measured pod wall time at the quoted SECURE
+  rate. This client has no billing endpoint, so the charge itself was
+  not read back from the provider. Confirming it in the console is a
+  one-look operator action.
+
+### One cosmetic regression, reported not hidden
+
+Both `canary.log` and `bench.log` carry a new NumPy warning:
+
+    /app/aeth01_gpu_kernel.py:42: RuntimeWarning: overflow encountered
+    in scalar multiply  x *= MIX_MUL_1
+
+It comes from the in-place `mix64_vec` when it is called on the numpy
+SCALAR pre-mixes (`h0`, `h1`) rather than on an array. The uint64
+wraparound is the intended semantic, and the bundled kernel cannot call
+`np.seterr` because CuPy has no such function, so under the CuPy backend
+the scalar path is not covered by the overflow policy the NumPy backend
+sets. It is noise, not a defect: the canary matched 300/300 and all ten
+shared digests are byte-identical. It was NOT fixed here because the
+authorization said no kernel edits during the evidence run. Suggested
+follow-up: compute the two scalar pre-mixes with explicit masking so the
+warning cannot appear, which is a no-op on the values.
+
+## 10. What is established now, and what still is not
+
+Established on hardware: the optimized kernel is semantically identical
+to the frozen one under CuPy; 268 M sites run on one A40; the memory
+model is measured rather than projected; the boundary moved from
+"16384^2 OOMs" to "32768^2 OOMs".
+
+Still not established:
+
+- **Nothing about the physics.** This round changed allocation and
+  nothing else. `aeth01.v1` is still a CANDIDATE, not frozen, and no
+  AETH-01 scientific claim is advanced by a faster kernel.
+- Long runs. Every number here is 7 ticks. Nothing is known about
+  stability, drift or determinism over the thousands of ticks a real
+  campaign needs, and 7.42 s/tick means 16384^2 costs about 2.1 hours
+  per 1,000 ticks on one A40 -- a campaign-planning fact, not a result.
+- The ceiling of 19249^2 is a model extrapolation from two points, not a
+  measurement. The only measured facts are that 16384^2 fits with
+  12.2 GiB free and 32768^2 does not fit at all.
+- Billing, as above.
+
+## 11. Next executable action
+
+None in this round; it is complete and its disposition is
+`MEMORY_WALL_MOVED`. The seat's next decisions are AETH-01 science
+questions (whether to freeze `aeth01.v1`, and which habitability
+campaign the new 268 M-site capacity should be spent on), not further
+kernel optimization -- the next doubling is a device-count problem, not
+an allocation problem.
