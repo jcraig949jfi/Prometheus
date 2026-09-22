@@ -120,6 +120,16 @@ SHIPPED = [
 
 GATE = r'''set +e
 touch /app/bench.log
+# The artifact server comes up BEFORE the science, not after it. The
+# first-light run is hours long, so a server started afterwards would
+# mean no progress visibility for its whole duration, and -- worse --
+# terminating a pod mid-run would destroy every sample it had taken,
+# because nothing could be fetched until the runner exited. With the
+# server first, the log is retrievable at any moment and a truncated run
+# still yields all the samples it managed to take.
+python3 /app/aeth01_bench_server.py &
+SERVER_PID=$!
+echo "AETH01_FL_SERVER_UP pid=$SERVER_PID" >> /app/bench.log
 for i in $(seq 1 180); do
   if curl -fsS -H "Authorization: Bearer $AGE_ARTIFACT_TOKEN" http://127.0.0.1:8080/result.json -o /app/result.json 2>/dev/null; then break; fi
   sleep 5
@@ -133,7 +143,7 @@ if [ "$STATUS" = "PASS" ]; then
 else
   echo "AETH01_FL_SKIPPED reason=canary_not_pass status=$STATUS" >> /app/bench.log
 fi
-python3 /app/aeth01_bench_server.py'''
+wait $SERVER_PID'''
 
 
 def log(msg):
