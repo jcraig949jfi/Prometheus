@@ -22,6 +22,15 @@ SPEC = importlib.util.spec_from_file_location("_age_controller_test", MODULE)
 age = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(age)
 LIVE_CLIENTS = age._live_clients
+
+# The real independent reaper, loaded separately (not through age_controller's
+# import) for the C1 regression below -- Review 04's exact repro sequence runs
+# both modules together against one shared local outcome.
+REAPER_MODULE = (Path(__file__).resolve().parents[1] / "runpod" / "aeth01_canary"
+                 / "independent_reaper.py")
+REAPER_SPEC = importlib.util.spec_from_file_location("_age_controller_test_reaper", REAPER_MODULE)
+independent_reaper = importlib.util.module_from_spec(REAPER_SPEC)
+REAPER_SPEC.loader.exec_module(independent_reaper)
 # Deliberately synthetic, non-credential fixtures; never consult the host environment.
 TOKEN = "offline-fixture-artifact-token-0123456789"
 REAPER_SECRET = "offline-fixture-reaper-shared-secret-0123456789"
@@ -1475,10 +1484,17 @@ def structured_reports(rig):
     for offset in range(0, horizon + 1, 60):
         age.policy.observe_window(window, age.policy.utc(start + offset), 100.0 + offset,
                                   complete=True, owned_seen=False, cutoff=manifest["cutoff_utc"])
+    # C1: the reaper must have independently probed every controller-known ID
+    # (here, pod_1) before that ID's cleanup can count as confirmed coverage.
+    # This confirming GET happened in a round strictly before this empty
+    # window began, exactly like a real OWNED_SEEN reset followed by a fresh
+    # qualifying horizon.
+    pod_1 = age.policy.new_pod()
+    age.policy.append_pod(pod_1, "OBSERVE", age.policy.utc(start - 60), status="TERMINATED")
     reaper = {"version": 2, "policy_version": 1, "manifest": manifest,
               "observation_policy": "LIST_AND_KNOWN_GET_V1",
               "manifest_sha256": age._sha(age._encode(manifest)), "run_id": local["run_id"],
-              "owned_ids": [], "pod_evidence": {}, "ownership_ambiguous": False,
+              "owned_ids": ["pod_1"], "pod_evidence": {"pod_1": pod_1}, "ownership_ambiguous": False,
               "journal_ok": True, "status": "REAPER_CLEANUP_CONFIRMED", "window": window,
               "known_owned_cleanup_status": "KNOWN_OWNED_CLEANUP_CONFIRMED",
               "reconciliation_window_status": "RECONCILIATION_COMPLETE"}
@@ -1663,3 +1679,99 @@ def test_n2_cli_combines_only_against_current_durable_state(structured_reports, 
     age.atomic_write(rig.directory / "state.json", age._encode(state))
     assert age.main(args) == 2
     assert json.loads(capsys.readouterr().out)["reason"] == "STALE_LOCAL_OUTCOME"
+
+
+class _C1StaleListLiveGetProvider:
+    """Independent reaper's own provider view (Review 04 Appendix A): LIST is
+    complete but stale/empty for the entire sweep, so pod_1 -- controller-known
+    and exact-owned -- never enters the reaper's owned_ids at all. A direct
+    GET on that exact ID would nonetheless reveal it is still RUNNING.
+    """
+
+    def __init__(self, pod, live_from_mono=1800):
+        self.pod, self.live_from_mono = pod, live_from_mono
+        self.mono = 0.0
+        self.calls = []
+
+    def visit_pods(self, visitor):
+        self.calls.append("LIST")
+
+    def get_pod(self, pod_id):
+        self.calls.append(("GET", pod_id))
+        if pod_id == self.pod["id"] and self.mono >= self.live_from_mono:
+            return dict(self.pod, status="RUNNING")
+        return None
+
+    def terminate_pod(self, pod_id):
+        raise AssertionError("C1: an unprobed known ID must never reach DELETE")
+
+
+def test_c1_controller_known_id_omitted_from_reaper_probe_set_stays_unresolved(rig):
+    """Review 04 C1: the authoritative controller state knows pod_1 exactly,
+    but the independent reaper's LIST never learns of it and therefore never
+    issues the single GET that would falsify local's stale success. The fixed
+    combiner must refuse OPERATIONAL_CLEANUP_CONFIRMED for this coverage gap.
+    """
+    local = launch(rig)
+    assert local["owned_ids"] == ["pod_1"]
+    assert local["cleanup_status"] == "LOCAL_CLEANUP_CONFIRMED"
+    manifest = local["manifest"]
+    digest = independent_reaper._sha(independent_reaper._encode(manifest))
+    cutoff = independent_reaper._timestamp(manifest["cutoff_utc"])
+    provider = _C1StaleListLiveGetProvider(rig.provider.pods["pod_1"])
+    state = independent_reaper.new_evidence_state(manifest, digest)
+
+    def clock_time():
+        return cutoff + provider.mono
+
+    def monotonic():
+        return provider.mono
+
+    def sleep(seconds):
+        provider.mono += seconds
+
+    report = independent_reaper.sweep(manifest, digest, provider, state, rounds=61,
+                                      poll_seconds=60, sleep=sleep, clock_time=clock_time,
+                                      monotonic=monotonic)
+    # The bug: 61 LIST calls, ZERO GET calls, ZERO DELETE calls, yet a claimed
+    # confirmed empty horizon -- pod_1 never became a known ID to the reaper.
+    assert provider.calls == ["LIST"] * 61
+    assert report["owned_ids"] == [] and report["status"] == "REAPER_CLEANUP_CONFIRMED"
+    result = age.combine_operational_cleanup(local, report, run_dir=rig.directory,
+                                             now=clock_time())
+    assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
+    assert result["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_UNRESOLVED"
+    assert result["exit_code"] == 2
+    assert read_json(rig.directory / "cleanup_seal.json") == result
+    # The pod really is exact-owned and RUNNING, exactly as C1 describes.
+    live = provider.get_pod("pod_1")
+    assert independent_reaper._owned(live, manifest) and live["status"] == "RUNNING"
+
+
+def test_c1_forged_local_report_omitting_owned_id_is_caught_by_fresh_state(rig):
+    """C1-J: a caller-supplied local report that omits a controller-known ID
+    cannot bypass the coverage check, because combine_operational_cleanup
+    reconstructs the authoritative outcome from durable state, not from the
+    supplied report.
+    """
+    local = launch(rig)
+    forged = deepcopy(local)
+    forged["owned_ids"] = []
+    del forged["pod_evidence"]["pod_1"]
+    manifest = local["manifest"]
+    window = age.policy.new_window("offline-c1j-window")
+    start = age._timestamp(manifest["cutoff_utc"])
+    for offset in range(0, manifest["reconciliation_horizon_seconds"] + 1, 60):
+        age.policy.observe_window(window, age.policy.utc(start + offset), 100.0 + offset,
+                                  complete=True, owned_seen=False, cutoff=manifest["cutoff_utc"])
+    reaper_report = {"version": 2, "policy_version": 1, "manifest": manifest,
+                     "observation_policy": "LIST_AND_KNOWN_GET_V1",
+                     "manifest_sha256": age._sha(age._encode(manifest)), "run_id": local["run_id"],
+                     "owned_ids": [], "pod_evidence": {}, "ownership_ambiguous": False,
+                     "journal_ok": True, "status": "REAPER_CLEANUP_CONFIRMED", "window": window,
+                     "known_owned_cleanup_status": "KNOWN_OWNED_CLEANUP_CONFIRMED",
+                     "reconciliation_window_status": "RECONCILIATION_COMPLETE"}
+    with pytest.raises(age.ControllerError, match="^INVALID_CLEANUP_EVIDENCE$"):
+        age.combine_operational_cleanup(forged, reaper_report, run_dir=rig.directory,
+                                        now=start + manifest["reconciliation_horizon_seconds"])
+    assert not (rig.directory / "cleanup_seal.json").exists()

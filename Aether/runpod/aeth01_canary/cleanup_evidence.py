@@ -391,8 +391,11 @@ def aggregate(local, reaper, *, now=None):
     """Validate bound reports and derive three separate cleanup propositions.
 
     Side labels are returned for provenance, not accepted as proof. Every record
-    from both sources must currently confirm (including shared IDs). A pod already
-    deleted locally need not occur in the reaper's independently empty horizon.
+    from both sources must currently confirm (including shared IDs). Every
+    locally-owned ID (even one already deleted locally) MUST also occur in the
+    reaper's own report: only the reaper's independent GET can falsify a stale
+    local success (C1). An ID the reaper alone discovered need not be locally
+    known -- that is a legitimate independent discovery, not a coverage gap.
     This PURE evaluation cannot establish source freshness. Only the controller's
     locked authoritative-directory combiner may issue a local evidence seal.
     """
@@ -426,7 +429,12 @@ def aggregate(local, reaper, *, now=None):
     ambiguous = (local["ownership_ambiguous"] or reaper["ownership_ambiguous"]
                  or any(event["kind"] == "OWNERSHIP_CONFLICT" for event in local_events + reaper_events))
     owned_ids = set(local_pods) | set(reaper_pods)
-    known_ok = not ambiguous and all(
+    # C1: a controller-known ID absent from the reaper's report was never
+    # independently GET-probed; the reaper's empty LIST horizon cannot
+    # substitute for that missing falsification attempt. Reaper-only IDs
+    # (discovered independently, unknown to local) are not required back.
+    coverage_ok = set(local_pods) <= set(reaper_pods)
+    known_ok = not ambiguous and coverage_ok and all(
         pods[pid]["cleanup_confidence"] == "CONFIRMED"
         for pid in owned_ids for pods in (local_pods, reaper_pods) if pid in pods)
     operational = (known_ok and window_ok and local["journal_ok"] and reaper["journal_ok"]

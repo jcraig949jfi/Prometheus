@@ -440,9 +440,10 @@ def test_b2_b5_empty_union_still_requires_complete_fresh_independent_horizon():
     assert_unresolved(combine(local, reaper, now=3661))
 
 
-def test_union_retains_local_only_reaper_only_and_multiple_exact_owned_ids():
+def test_union_retains_reaper_only_ids_but_requires_reaper_coverage_of_local_ids():
     local, reaper = reports({"local-only": terminated(), "shared": terminated()},
-                            {"reaper-only": terminated(), "shared": terminated()})
+                            {"local-only": terminated(), "reaper-only": terminated(),
+                             "shared": terminated()})
     before = deepcopy((local, reaper))
     assert combine(local, reaper)["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_CONFIRMED"
     assert (local, reaper) == before
@@ -451,6 +452,14 @@ def test_union_retains_local_only_reaper_only_and_multiple_exact_owned_ids():
     assert_unresolved(combine(local, reaper))
     reaper["pod_evidence"]["late-duplicate"] = terminated()
     assert combine(local, reaper)["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_CONFIRMED"
+    # C1: an ID known only to local (never independently GET-probed by the
+    # reaper) must block confirmation, even though local already confirmed it
+    # and every ID the reaper DOES report is itself clean.
+    reaper["owned_ids"].remove("local-only")
+    del reaper["pod_evidence"]["local-only"]
+    result = combine(local, reaper)
+    assert result["known_owned_cleanup_status"] == "KNOWN_OWNED_CLEANUP_UNRESOLVED"
+    assert_unresolved(result)
 
 
 @pytest.mark.parametrize("side", [0, 1])
@@ -489,7 +498,7 @@ def test_hidden_ownership_conflict_in_history_cannot_be_cleared_by_report_flag()
 def test_window_must_strictly_follow_latest_local_event_even_after_wall_rollback():
     rec = terminated(5)
     event(rec, "OBSERVE", -1, status="TERMINATED")
-    pair = reports({"pod": rec})
+    pair = reports({"pod": rec}, {"pod": terminated(-2)})
     assert combine(*pair)["reconciliation_window_status"] == "RECONCILIATION_PENDING"
     pair[1]["window"] = healthy(start=6, end=3606)
     assert combine(*pair, now=3606)["operational_cleanup_status"] == "OPERATIONAL_CLEANUP_CONFIRMED"
