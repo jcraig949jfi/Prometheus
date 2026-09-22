@@ -130,12 +130,21 @@ CEIL = 10 ** 40
 _CODE_CACHE = {}
 
 
+CODE_CACHE_LIMIT = 200_000
+
+
 def _code(expr: str):
-    """Compile each expression string ONCE. Pure performance: eval() on a raw
-    string recompiles on every call, which dominated the runtime. Semantics,
-    candidate order and charge accounting are unchanged."""
+    """Compile each expression string ONCE, with a BOUNDED cache.
+
+    DEFECT FOUND 2026-09-22: the original cache was unbounded. The G4 fallback
+    enumerates millions of distinct expression strings, so the cache grew
+    without limit -- 1.65 GB and climbing, with the attendant dict and GC cost
+    dominating the run. Semantics, candidate order and charge accounting are
+    unchanged; only the cache is capped."""
     c = _CODE_CACHE.get(expr)
     if c is None:
+        if len(_CODE_CACHE) >= CODE_CACHE_LIMIT:
+            _CODE_CACHE.clear()
         c = compile(expr, "<g4>", "eval")
         _CODE_CACHE[expr] = c
     return c

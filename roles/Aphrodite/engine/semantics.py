@@ -49,6 +49,8 @@ def signature(expr: str) -> Tuple:
     functions are distinguished by WHERE they are undefined."""
     code = _CODE.get(expr)
     if code is None:
+        if len(_CODE) >= 200_000:      # bounded, same reason as basis_v4._code
+            _CODE.clear()
         code = compile(expr, "<sem>", "eval")
         _CODE[expr] = code
     out = []

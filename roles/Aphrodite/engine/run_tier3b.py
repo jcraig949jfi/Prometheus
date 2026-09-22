@@ -179,7 +179,7 @@ def main():
 
     arms = [("EVOLVED", evolved), ("PRISTINE", pristine)]
     for s in QUAL["sham_libraries"]:
-        arms.append(("SHAM_%d" % s[0]["name"].split("_")[1], I.Library(s)))
+        arms.append(("SHAM_%s" % s[0]["name"].split("_")[1], I.Library(s)))
 
     out = {"written_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
            "families": FAMILIES, "recipients_per_arm": N, "escrow": ESCROW,
@@ -189,7 +189,9 @@ def main():
         out["per_family"][fam] = {}
         out["detail"][fam] = {}
         for arm_name, lib in arms:
+            _t = time.perf_counter()
             rows = [run_recipient(fam, arm_name, lib, i) for i in range(N)]
+            print("   [%s/%s] %.1fs" % (fam, arm_name, time.perf_counter() - _t), flush=True)
             out["detail"][fam][arm_name] = rows
             out["per_family"][fam][arm_name] = summarise(rows)
         line = {k: v["PRIMARY_censored_mean_effort"] for k, v in out["per_family"][fam].items()}

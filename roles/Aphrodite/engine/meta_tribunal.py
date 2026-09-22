@@ -40,6 +40,14 @@ def program_source(family: str, prog) -> str:
         "    acc = %s" % sub(init),
         "    for v in vals:",
         "        acc = %s" % sub(body),
+        # CONFORMANCE REPAIR 2026-09-22: run_program (used during search)
+        # returns None once a value passes the declared 10**40 ceiling, but the
+        # emitted artifact had no such guard, so a pow-bodied program grew its
+        # accumulator without bound across 200 tribunal elements and HUNG the
+        # run -- 1,829s of CPU with no output. The guard makes the artifact
+        # agree with the searcher about the same program instead of diverging.
+        "        if acc is None or abs(acc) > 10 ** 40:",
+        "            return \"overflow\"",
         "    return str(%s)" % sub(final),
         'DISCOVERED["%s"] = _t3_%s' % (family, family),
         "",
@@ -53,7 +61,27 @@ def artifact_for(family: str, prog):
         generation=E.FROZEN_GENERATION)
 
 
+# Instance batteries are deterministic functions of (family, n, seed, lengths),
+# so they are generated ONCE and reused. Pure performance: the same instances,
+# in the same order, with the same golds. Regenerating them per scoring call
+# was costing ~2.5 hours per family across 800 recipients.
+_CE_CACHE: Dict[tuple, List[Dict]] = {}
+_TASK_CACHE: Dict[tuple, List[Dict]] = {}
+
+
+def _cached_tasks(family, n, seed, lengths):
+    key = (id(_P), family, n, seed, lengths)
+    got = _TASK_CACHE.get(key)
+    if got is None:
+        got = _P.tasks(family, n, seed, lengths)
+        _TASK_CACHE[key] = got
+    return got
+
+
 def counterexamples(family: str, n: int) -> List[Dict]:
+    key = (id(_P), family, n)
+    if key in _CE_CACHE:
+        return _CE_CACHE[key]
     out = []
     for i in range(n):
         rng = random.Random(E.tribunal_entropy("t3a-" + family, 10_000 + i))
@@ -66,6 +94,7 @@ def counterexamples(family: str, n: int) -> List[Dict]:
                     "prompt": ("Family %s over: " % family) + ", ".join(map(str, xs))
                               + " with %d." % m,
                     "gold": str(gold), "key": "ce-t3a-%d" % i})
+    _CE_CACHE[key] = out
     return out
 
 
@@ -81,19 +110,30 @@ class MetaTribunal:
             raise ValueError("tribunal requires the frozen generation")
         return cls(family)
 
+    _MM_CACHE: Dict[tuple, list] = {}
+
+    def _mm_probes(self, n):
+        key = (id(_P), self.family, n)
+        got = MetaTribunal._MM_CACHE.get(key)
+        if got is None:
+            got = []
+            for i in range(n):
+                rng = random.Random(E.tribunal_entropy("t3a-" + self.family, 20_000 + i))
+                xs = [rng.randint(2, 30) for _ in range(rng.randint(5, 30))]
+                m = rng.randint(3, 97)
+                perm = xs[1:]
+                rng.shuffle(perm)
+                got.append((xs, [xs[0]] + perm, m))
+            MetaTribunal._MM_CACHE[key] = got
+        return got
+
     def _metamorphic(self, artifact, n=25) -> bool:
         """Oracle-free: every declared body is commutative-associative over the
         sequence, so the answer must be invariant under permutation."""
         r = E.Recipient.fresh(seed=4242)
         r.load(artifact)
         fam = self.family
-        for i in range(n):
-            rng = random.Random(E.tribunal_entropy("t3a-" + fam, 20_000 + i))
-            xs = [rng.randint(2, 30) for _ in range(rng.randint(5, 30))]
-            m = rng.randint(3, 97)
-            perm = xs[1:]
-            rng.shuffle(perm)
-            perm = [xs[0]] + perm          # `first` is pinned; order else free
+        for xs, perm, m in self._mm_probes(n):
             ask = lambda ys: r.answer(("Family %s over: " % fam) + ", ".join(map(str, ys))
                                       + " with %d." % m, fam)
             a, b = ask(xs), ask(perm)
@@ -108,10 +148,10 @@ class MetaTribunal:
             return rr.run_tasks(instances, E.Escrow(10 ** 7))["accuracy"]
         seed = E.tribunal_entropy("t3a-" + self.family, 1)
         return {
-            "held_out_extrapolation": acc(_P.tasks(self.family, n, seed,
-                                                  G.EXTRAPOLATION_LENGTHS)),
-            "stress_length_200": acc(_P.tasks(self.family, 40, seed,
-                                             (G.STRESS_LENGTH, G.STRESS_LENGTH))),
+            "held_out_extrapolation": acc(_cached_tasks(self.family, n, seed,
+                                                        G.EXTRAPOLATION_LENGTHS)),
+            "stress_length_200": acc(_cached_tasks(self.family, 40, seed,
+                                                   (G.STRESS_LENGTH, G.STRESS_LENGTH))),
             "counterexample_accuracy": acc(counterexamples(self.family, 40)),
             "metamorphic_pass": self._metamorphic(artifact),
         }
