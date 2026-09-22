@@ -1,10 +1,10 @@
 {
- "audited": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\reportaudit_orq37gbj\\banned_phrase_proves.html",
+ "audited": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\z80atlas-2026-09-19\\REPORT.html",
  "source_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\z80atlas-2026-09-19\\observatory",
  "grammar_hash": "570c8037ccf4f86d06bc7ef2a8263dab88fbd6d2bf430cbe52f346c8eb56c901",
  "n_checks": 40,
- "n_failed": 1,
- "verdict": "FAIL",
+ "n_failed": 0,
+ "verdict": "PASS",
  "checks": [
   {
    "check": "CHK-CLAIMS-PRESENT",
@@ -198,8 +198,8 @@
   },
   {
    "check": "CHK-LANGUAGE:\\bproves\\b|\\bproven\\b",
-   "pass": false,
-   "detail": "unsupported phrase 'proves': the campaign preserves and measures; it does not prove"
+   "pass": true,
+   "detail": "absent"
   },
   {
    "check": "CHK-LANGUAGE:\\bno sharp accessibility cli",
