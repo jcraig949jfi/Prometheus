@@ -130,10 +130,25 @@ def compression_ratio(fields):
     if not raw:
         return 0.0
     packed = len(zlib.compress(raw, 6))
-    baseline_bytes = np.random.default_rng(0xA37E).integers(
-        0, 256, size=len(raw), dtype=np.uint8).tobytes()
-    baseline = len(zlib.compress(baseline_bytes, 6))
+    baseline = _random_baseline_size(len(raw))
     return float(packed) / float(baseline) if baseline else 0.0
+
+
+_BASELINE_CACHE = {}
+
+
+def _random_baseline_size(n):
+    """Compressed size of n iid random bytes, memoised.
+
+    Deterministic in n, and n is the same on every sample of a given
+    lattice, so recomputing it per sample would regenerate and compress
+    tens of megabytes of noise for an answer already known.
+    """
+    if n not in _BASELINE_CACHE:
+        noise = np.random.default_rng(0xA37E).integers(
+            0, 256, size=n, dtype=np.uint8).tobytes()
+        _BASELINE_CACHE[n] = len(zlib.compress(noise, 6))
+    return _BASELINE_CACHE[n]
 
 
 def state_digest(fields):
@@ -209,7 +224,8 @@ def change_rate(xp, before, after):
     return changed / float(before[0].size * len(before)), per_field
 
 
-def sample(xp, fields, write_cost, want_compression=False, want_maps=False):
+def sample(xp, fields, write_cost, want_compression=False,
+           want_maps=False, map_blocks=128):
     """One full observatory sample. Returns plain JSON-able values.
 
     Nothing here is a verdict. Every key is a measured quantity, and
@@ -243,7 +259,8 @@ def sample(xp, fields, write_cost, want_compression=False, want_maps=False):
             out["state_digest"] = state_digest(host_fields)
     if want_maps:
         out["_maps"] = {
-            "energy": coarse_map(xp, energy),
-            "write": coarse_map(xp, (opcode == WRITE_OPCODE).astype(xp.uint8) * 255),
+            "energy": coarse_map(xp, energy, blocks=map_blocks),
+            "write": coarse_map(xp, (opcode == WRITE_OPCODE).astype(xp.uint8) * 255,
+                                blocks=map_blocks),
         }
     return out
