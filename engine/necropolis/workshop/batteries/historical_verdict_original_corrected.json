@@ -1,0 +1,39 @@
+{
+ "battery_id": "historical_verdict_original_corrected",
+ "name": "HISTORICAL VERDICT -> ORIGINAL -> CORRECTED",
+ "question": "What did the original instrument say, what does an honest instrument say on the same inputs, and is the difference the instrument or the data?",
+ "steps": [
+  {
+   "step": 1,
+   "tool_id": "NT-048",
+   "role": "HISTORICAL VERDICT",
+   "does": "replay the ORIGINAL logic unchanged (Pollux exemplar; NT-001 grading oracle for ladder scores) and record its verdict"
+  },
+  {
+   "step": 2,
+   "tool_id": "NT-047",
+   "role": "ORIGINAL (characterised)",
+   "does": "instrument-null reading of the original statistic on independent / shuffled / repeated inputs"
+  },
+  {
+   "step": 3,
+   "tool_id": "NT-056",
+   "role": "ORIGINAL (static)",
+   "does": "literal-verdict lint of the original code path: could it have said anything else?"
+  },
+  {
+   "step": 4,
+   "tool_id": "NT-049",
+   "role": "CORRECTED",
+   "does": "the corrected statistic (labelled NECROPOLIS ADAPTER, never represented as history) on the same inputs"
+  },
+  {
+   "step": 5,
+   "tool_id": "NT-031",
+   "role": "FLOOR",
+   "does": "chance floor / constant-responder score for the corrected read"
+  }
+ ],
+ "coroner_run_required": true,
+ "output_contract": "{historical_verdict, instrument_null_reading, static_lint, corrected_read, chance_floor, attribution: INSTRUMENT / DATA / BOTH / UNDETERMINED}; the corrected read is filed under the adapter's tool_id, never under the original's"
+}

@@ -91,7 +91,9 @@ def main(pin_root: str) -> None:
 
     def run_split(frames, args_over=None):
         ex = make_explore(args_over or {})
-        rle = [ge.RLEArray.fromarray(f) if hasattr(ge, "RLEArray") else f for f in frames]
+        # REPAIR 2026-09-15 (ledgered 9a46e93c2): was ge.RLEArray.fromarray(f), a guessed name. The ancestor encodes
+        # RLEArray(gray_uint8) (import_ai.py:131-139, montezuma_env.py:56) and try_split_frames decodes frombytes (goexplore.py:467).
+        rle = [ge.RLEArray(f) for f in frames]
         enc = [r.tobytes() if hasattr(r, "tobytes") else r for r in rle]
         shape, pix, n = ex.try_split_frames(enc)
         return {"shape": list(shape), "pix_val": int(pix), "n_parts": int(n)}

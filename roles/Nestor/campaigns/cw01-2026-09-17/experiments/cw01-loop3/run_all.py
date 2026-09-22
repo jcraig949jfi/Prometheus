@@ -1,0 +1,33 @@
+"""Run cycle 3's frozen ten sequentially (ARCH4 descendants live under cw01-arch4, the rest here)."""
+from __future__ import annotations
+
+import json
+import pathlib
+import subprocess
+import sys
+import time
+
+HERE = pathlib.Path(__file__).resolve().parent
+ARCH = HERE.parent / "cw01-arch4"
+ORDER = [(ARCH, "P-E02"), (ARCH, "P-E01"), (ARCH, "P-D14"), (HERE, "P-D06"), (HERE, "P-A05"), (HERE, "P-E08"), (ARCH, "P-E05"), (HERE, "P-E06"), (ARCH, "P-E03"), (ARCH, "P-E09")]
+
+
+def main(only=None):
+    status = json.loads((HERE / "RUN_STATUS.json").read_text(encoding="utf-8")) if (HERE / "RUN_STATUS.json").exists() else {}
+    for base, pid in ORDER:
+        if only and pid not in only:
+            continue
+        d = base / pid
+        script = next(d.glob("run_*.py"))
+        if (d / "run.log").exists():
+            (d / "run.log").rename(d / ("run_prev_%s.log" % time.strftime("%H%M%S")))
+        t0 = time.time()
+        with (d / "run.log").open("w", encoding="utf-8") as fh:
+            rc = subprocess.call([sys.executable, str(script)], stdout=fh, stderr=subprocess.STDOUT, cwd=str(d))
+        status[pid] = {"rc": rc, "wall_s": round(time.time() - t0, 1), "result_written": (d / "RESULT.json").exists()}
+        print("%s rc=%d %.0f s result=%s" % (pid, rc, status[pid]["wall_s"], status[pid]["result_written"]), flush=True)
+        (HERE / "RUN_STATUS.json").write_text(json.dumps(status, indent=1), encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main(set(sys.argv[1:]) or None)

@@ -1,0 +1,185 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bsd-4.3-distribution-tape-1986",
+ "techne_record": "techne/fossils/specimens/bsd-4.3-distribution-tape-1986/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bsd-4.3-distribution-tape-1986",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "4.3BSD distribution tape (June 1986): stand, miniroot, root dump, usr.tar -- the last pre-slow-start BSD TCP, bootable",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.3BSD (Jun 1986); TUHS Archive/Distributions/UCB/4BSD/4.3BSD (stand, miniroot, rootdump, usr.tar; FORMAT)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1986",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "operating-system",
+     "networks",
+     "TCP",
+     "historical-toolchain",
+     "distribution-tape",
+     "vax"
+    ],
+    "lineage": "Plain 4.3BSD (1986) predates Jacobson's slow start / congestion avoidance (which arrived in 4.3BSD-Tahoe, 1988): its TCP is the 4.2 design with two years of fixes -- a BEFORE point for the congestion lineage that, unlike the Tahoe tape (usr.tar cut short in the archive), is COMPLETE and installable. The classic SIMH-installable BSD."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "distribution and installation of 4.3BSD",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "install a complete 4.3BSD system on a VAX from one tape",
+    "pressure": "the 1986 congestion collapse happened on THIS release's TCP",
+    "success_means": "boots multi-user; TCP answers; netstat -s shows the retransmission counters"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "the Internet of 1986: shared scarce links, loss as the only signal, no congestion window yet",
+    "failure_condition": "congestion collapse (historical); install failure (tape/disk)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (4BSD kernel and userland)",
+    "VAX assembler"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Plain 4.3BSD (1986) predates Jacobson's slow start / congestion avoidance (which arrived in 4.3BSD-Tahoe, 1988): its TCP is the 4.2 design with two years of fixes -- a BEFORE point for the congestion lineage that, unlike the Tahoe tape (usr.tar cut short in the archive), is COMPLETE and installable. The classic SIMH-installable BSD.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: bsd-tcp-4.2-1983"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded_by: bsd-tcp-4.3-tahoe-1988"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "incorrect_assumptions"
+    ],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+      "says": "The congestion-control algorithms absent from 4.3BSD were added in 4.3BSD-Tahoe, making the plain 4.3BSD TCP the pre-fix design."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "4.3BSD -> 4.3BSD-Tahoe -> 4.3BSD-Reno -> 4.4BSD release lineage",
+      "says": "Each BSD release supersedes the previous distribution."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "0b4517d6e80cb0bad20540f778f29bb3d07b7a988310093d1beca2f5f9dea7de"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-simh:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "bsd-4.3-distribution-tape-1986",
+   "relation": "historical_version_of",
+   "to": "bsd-tcp-4.2-1983",
+   "note": "4.3's TCP = 4.2's design + fixes, still no congestion window",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.3-distribution-tape-1986",
+   "relation": "superseded_by",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "Tahoe added slow start / congestion avoidance [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

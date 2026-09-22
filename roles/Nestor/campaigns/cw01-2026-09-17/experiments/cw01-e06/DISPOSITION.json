@@ -1,0 +1,61 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e06",
+ "attempt_id": "cw01-e06-a01",
+ "title": "Representation ecology",
+ "disposition": "INCONCLUSIVE / DESIGN UNREACHABLE",
+ "phase_reached": "QUALIFY",
+ "executed_under_frozen_contract": false,
+ "_no_contract_was_frozen": "No verdict contract was hashed and no organism was ever evaluated under a frozen criterion. Every number here comes from qualification probes, not from EXECUTE.",
+
+ "why_inconclusive_and_not_null": "NULL would be a claim about the WORLD - that representations compute differently but produce no robust ecological distinction. That is not what happened. The ecological interaction was never genuinely exercised, because one substrate cannot persist against the other: TAPE invades TREE but TREE cannot invade TAPE, in every world iteration tested. The preregistration defines INCONCLUSIVE as exactly this case. Calling it NULL would claim a finding that was not earned.",
+
+ "qualification_gate": {
+  "preconditions": {
+   "P1_non_degenerate": "every reuse band produces a target that varies over its own input domain",
+   "P2_two_sided": "Delta(r) = F_TREE(r) - F_TAPE(r) changes sign across bands of ONE substrate-neutral generator",
+   "P3_mutually_invasible": "each substrate invades the other when rare, against an EVOLVED resident"
+  },
+  "final_run": {
+   "bands": [
+    {"band": 0.00, "reuse_measured": 0.00, "tree_cost": 25, "tape_cost": 12, "distinct_outputs": 15},
+    {"band": 0.25, "reuse_measured": 0.07, "tree_cost": 39, "tape_cost": 14, "distinct_outputs": 10},
+    {"band": 0.50, "reuse_measured": 0.17, "tree_cost": 33, "tape_cost": 12, "distinct_outputs": 8},
+    {"band": 0.75, "reuse_measured": 0.07, "tree_cost": 39, "tape_cost": 14, "distinct_outputs": 17}
+   ],
+   "delta_r": [-0.0260, -0.0148, -0.0109, 0.0260],
+   "invasion": {"TAPE_into_TREE": {"seeded": 0.104, "final": 0.740, "invaded": true},
+                "TREE_into_TAPE": {"seeded": 0.104, "final": 0.000, "invaded": false}},
+   "P1": true, "P2": true, "P3": false, "admitted": false
+  },
+  "gate_credibility": {
+   "legacy_fixture_refused": true,
+   "detail": "The pre-fix world (targets generated as depth-3 expression trees) was run through the same gate and REFUSED on P2 and P3 in both executions: single band, delta +0.0036, no sign change; TREE invades TAPE but TAPE cannot invade TREE. The gate was therefore demonstrated capable of refusing before its verdict on the redesigned world was trusted.",
+   "_rule": "the gate was never relaxed to admit; a refusal is recorded as a finding"
+  }
+ },
+
+ "what_was_achieved": {
+  "substrate_leak_removed": "CW01-D054 is closed on evidence. The redesigned substrate-neutral operation-graph generator produces Delta(r) that CHANGES SIGN across reuse bands (-0.0260, -0.0148, -0.0109, +0.0260), which the tree-native generator could never do (single band, +0.0036). Two-sided comparative advantage exists.",
+  "direction_reversal_confirms_the_leak": "In the LEGACY world TREE invades TAPE and TAPE cannot. In the REDESIGNED world the direction REVERSES: TAPE invades TREE and TREE cannot. The invasion asymmetry follows the target geometry, which is independent confirmation that the substrate leak was real and is now gone.",
+  "degeneracy_and_dead_structure_fixed": "CW01-D056's correction restored non-degeneracy in every band (4 -> 17 distinct outputs at band 0.75) and made tree_cost behave mechanically: 25/39/33/39 against tape_cost 12/14/12/14, no longer FALLING as reuse rises.",
+  "inherited_stack_proven": "All five inherited engineering targets were demonstrated by observed refusal before any science: repopath across two directory depths, recordsafety ascii, tally-drift agreement, guardproof vacuous-fixture refusal, and writerlock refusing a git write while a live RowWriter existed."
+ },
+
+ "what_was_not_achieved": {
+  "mutual_invasibility": "P3 never held, in four successive world iterations. TREE cannot invade TAPE from rarity in the redesigned world.",
+  "requirement_4": "The design requirement that TREE-fixes, TAPE-fixes, coexistence, contingent dominance and no-difference must EACH be attainable is not satisfied: coexistence is not reachable in the exercised domain.",
+  "decisive_statistic_unmeasurable": "The preregistered ecological quantity - frequency dependence of the interaction term, mixed minus solo-predicted - cannot be measured meaningfully in a world where one type cannot persist. Frequency-dependent coexistence has no referent when coexistence is unreachable."
+ },
+
+ "limitations_and_residuals": [
+  "The reuse axis is still only weakly realised: measured fan-out 0.00/0.07/0.17/0.07 against requested bands 0.00/0.25/0.50/0.75. Delta(r)'s sign change is real but is NOT demonstrably reuse-driven; it may be graph-to-graph variation. Recorded as a limitation rather than pursued, under the one-correction budget.",
+  "CW01-D055 stands: under this price list TAPE is universally at least as compact as TREE (it expresses any tree with n internal nodes in n instructions, where TREE pays ~2n+1 counting leaves). TREE's only plausible advantage is dynamic - subtree crossover transplanting an intact functional unit - and it never materialised into invasion ability.",
+  "Control A's rapid hitchhiking was deliberately deferred and remains unaddressed: labels fix at generation ~26 against a neutral-drift expectation of ~96, so the ecological noise floor is lineage hitchhiking rather than drift. It was never reached as a blocker because P3 failed first.",
+  "Two organism substrates only, small programs, a coarse four-band reuse grid, and a single attempt_id for qualification probes."
+ ],
+
+ "what_a_future_attempt_would_need": "Not another parameter change. A price list or variation regime in which TREE has a genuine mechanical advantage that survives evolution - because the present one grants TAPE both compactness and local, incremental mutation, leaving TREE with no channel through which to invade. Mutual invasibility should remain a hard pre-QUALIFY gate: it cost minutes to evaluate and would have refused all four world iterations before any evolutionary budget was spent.",
+
+ "doctrine_promoted": "Representation neutrality has at least three layers: neutral REWARD, neutral TASK GENERATION, and neutral ecological BOOKKEEPING. e06 satisfied layer one and accidentally violated layer two - the reward function never read the substrate label, but the target distribution was expressed in one substrate's native geometry. A representation-blind scorer is insufficient if the problem distribution itself is not."
+}

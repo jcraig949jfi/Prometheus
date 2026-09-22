@@ -1,0 +1,1123 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "ff-planner-2.3",
+ "techne_record": "techne/fossils/specimens/ff-planner-2.3/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "ff-planner-2.3",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "FF (Fast-Forward) planner v2.3 -- Joerg Hoffmann",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "FF-v2.3 from the author's Saarland page",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2000 (v2.3)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "planning",
+     "search",
+     "heuristic-search",
+     "strips",
+     "symbolic-ai"
+    ],
+    "lineage": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "classical planning by relaxed-plan heuristic forward search",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find a plan from initial state to goal in STRIPS/ADL by heuristic forward search, using the relaxed (delete-free) plan length as the guiding heuristic",
+    "pressure": "the huge branching of forward search; the relaxed-plan heuristic makes it tractable where blind or Graphplan-style search stalls",
+    "success_means": "a valid plan found fast on the AIPS/IPC benchmark domains (gripper, logistics, blocksworld)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "flex",
+    "bison"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Hoffmann & Nebel, JAIR 2001"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: graphplan-blum-furst-1995"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:174-437"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:765-815"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/relax.c:359-445"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/relax.c:770-960"
+   }
+  ],
+  "inspected_files": [
+   "search.c 1-120, 174-437, 765-815",
+   "relax.c 359-445, 770-960 (+ function list)"
+  ],
+  "date": "2026-09-17T11:03Z",
+  "note": "the famous name (FF, 'the planner that won 2000') covers: a relaxation that ignores delete effects, a layered reachability fixpoint, a backward plan extraction whose LENGTH is the heuristic, a pruning rule that keeps only the actions the relaxed plan used first, a local search that commits to the first strictly better state found by breadth-first search, a second pruning rule that discards successors whose newly achieved goal the relaxed plan would delete, and a complete fallback",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T11:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://fai.cs.uni-saarland.de/hoffmann/ff/FF-v2.3.tgz sha256:3d80fa30bb64b14de3a5156e202fc764301efbbb777fe3b703e67139a6150c88",
+   "payload_manifest_id": "techne tree_sha256 a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0 (29 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/FF-v2.3/search.c",
+     "payload_hash_read": "6024a4c3d4863b39ada551ae438c3dff89471b4e7f474f60f5893fb04cd9327f",
+     "techne_recorded_hash": "6024a4c3d4863b39ada551ae438c3dff89471b4e7f474f60f5893fb04cd9327f",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/FF-v2.3/relax.c",
+     "payload_hash_read": "106120708b22eb1b2800265c699f718876faaed8c2de6db55bce3a6a7a979340",
+     "techne_recorded_hash": "106120708b22eb1b2800265c699f718876faaed8c2de6db55bce3a6a7a979340",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "build_fixpoint / activate_ft / activate_ef (relax.c 359-530)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "from the current state, facts are activated at level 0; an effect becomes active at the first level where all its preconditions are active (a per-effect counter of active preconditions), and its add effects (deletes ignored) become new facts at the next level; the loop stops when every current goal is active or no new fact appears (then the goal is unreachable: h = INFINITY)",
+   "input": "a state S and the current goal set",
+   "output": "a level for every fact and effect reached; the depth at which the goals are all reached",
+   "state": "lF/lE lists, per-fact and per-effect level fields (reset per call)",
+   "update": "per heuristic evaluation",
+   "assumptions": [
+    "delete effects can be ignored to bound the distance from below (the relaxation)",
+    "the connectivity graph gft_conn/gef_conn/gop_conn is precomputed by instantiation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+    "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+    "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails"
+   ],
+   "fitness_value_in_ancestor": "a polynomial reachability analysis that terminates in a handful of layers on benchmark domains; the level structure is what makes extraction cheap",
+   "failure_landscape": "by reading: domains where deletes matter (resource consumption, one-way doors) get a heuristic that is badly optimistic; the record's note that it is 'symbolic-ai / strips' is the scope",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Graphplan's layered graph (Blum & Furst 1995) without mutexes; the vault's graphplan-blum-furst-1995 is the ancestor for a recurrence test",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/relax.c:359-530"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "build_fixpoint and the four activation helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "achieve_goals (relax.c 770-875); extract_1P",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "goals are placed at the level where they first became true; from the top level down, each goal not already made true at that level is assigned the achiever effect active one level below whose precondition levels sum to the least; the achiever's preconditions become goals at their own levels (unless already true or already goals), its add effects (and those of its implied effects) are marked true at this level so later goals at the same level can be covered for free; the count of distinct operators used (lh) is the heuristic value",
+   "input": "the fixpoint levels and the goal set",
+   "output": "a relaxed plan (a set of effects per level) and h = number of actions in it",
+   "state": "lgoals_at[level], is_true/is_goal marks, gin_plan_E",
+   "update": "per heuristic evaluation",
+   "assumptions": [
+    "the relaxed plan's length approximates the real distance better than the fixpoint depth alone; ties among achievers are broken by precondition cost, a greedy choice"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+    "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+    "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+    "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete"
+   ],
+   "fitness_value_in_ancestor": "the heuristic is the LENGTH of a concrete relaxed plan, not an abstract level count, so it is sensitive to how many actions are needed at each level; the plan itself feeds the next organ",
+   "failure_landscape": "by reading: greedy achiever choice is not optimal for the relaxed problem (which is NP-hard to solve optimally); the comment in the code notes the ordering constraints 'don't explore the full potential'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hoffmann's choice of the min-precondition-level-sum achiever and the 'true at this level' bookkeeping",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/relax.c:770-875"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "achieve_goals and its callers in extract_1P",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "collect_H_info (relax.c 876-955); gH used in search.c",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after extraction, the actions considered by the search are ONLY those whose effects are at level 0 and add a goal placed at level 1 (i.e. what the relaxed plan would do first); they are ordered so that actions deleting fewer goal/subgoal facts come first, and later-collected (deeper) goals' achievers are preferred on ties by inserting from the back",
+   "input": "the relaxed plan's level-1 goals",
+   "output": "the ordered list gH of applicable operators to expand",
+   "state": "gH, gnum_H, is_in_H flags",
+   "update": "per heuristic evaluation",
+   "assumptions": [
+    "what the relaxed plan does first is a good proxy for what the real plan should do first (incomplete: a needed action may be pruned)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+    "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search"
+   ],
+   "fitness_value_in_ancestor": "branching factor collapses from all applicable actions to the handful the heuristic 'wants'; the incompleteness is caught by the fallback organ",
+   "failure_landscape": "by reading: pruning is incomplete by design; when EHC fails FF restarts with best-first search over ALL actions",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the helpful-action pruning (Hoffmann & Nebel 2001) -- a search-space cut derived from the heuristic's own computation",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/relax.c:876-955; vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:298-301, 396-399"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "collect_H_info and the gH loops",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "do_enforced_hill_climbing / search_for_better_state / expand_first_node (search.c 174-437)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "from S with h(S), run breadth-first search over helpful-action successors (a FIFO of EhcNodes, states hashed to skip repeats) evaluating h at each node; the FIRST node with h < h(S) ends the search: its path is appended to the plan, it becomes S, and the outer loop repeats until h = 0; if the FIFO empties (a plateau or dead end with no escape) EHC fails and returns FALSE; the search depth is reported as it grows",
+   "input": "start and goal states",
+   "output": "a plan (sequence of operators) or FALSE",
+   "state": "the EHC space list, the hash table, the plan hash",
+   "update": "per plateau escape",
+   "assumptions": [
+    "h decreases somewhere within a small breadth-first radius on most benchmark instances (the 'plateau' assumption); no backtracking over committed steps"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+    "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+    "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+    "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+    "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails"
+   ],
+   "fitness_value_in_ancestor": "linear-in-plan-length memory in the common case; the commitment is what makes FF fast and what makes it incomplete",
+   "failure_landscape": "by reading: unbounded breadth-first search on a large plateau; dead ends are only detected when the FIFO empties; states already visited in an earlier plateau escape are re-visited (the hash is reset per call)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the 'enforced' variant (exhaustive BFS for a better state instead of sampling neighbours)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:174-437"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three functions and add_to_ehc_space",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "EXTERNAL_RESET",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "new_goal_gets_deleted (search.c 765-780); expand_first_node 387-391",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when a successor is generated, result_to_dest records which goal fact (if any) the action newly achieved; when that node is expanded, if any effect in the CURRENT relaxed plan deletes that goal, the node is pruned (h = INFINITY) because the plan would undo what was just gained",
+   "input": "a node's new_goal and the relaxed plan's effects",
+   "output": "prune / keep",
+   "state": "new_goal per node",
+   "update": "per expansion",
+   "assumptions": [
+    "achieving a goal that the heuristic's own plan will delete is wasted; the check is against the relaxed plan, so it is itself approximate"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+    "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search"
+   ],
+   "fitness_value_in_ancestor": "cuts oscillation between achieving and destroying goals in domains with interacting goals",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the 'informed goal added deletion heuristic' named in the file header",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:765-780, 387-391, 1067-1170 (result_to_dest, not read in full)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "new_goal_gets_deleted and its call site",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails",
+   "fossil_ancestry": "ff-planner-2.3",
+   "human_name": "do_best_first_search (search.c 815-1060, headers read; body not read)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when EHC returns FALSE the planner restarts from the initial state with a greedy best-first search over all applicable actions using the same heuristic (per the file header and main.c control flow, not traced line by line)",
+   "input": "the failed EHC",
+   "output": "a plan or unsolvable",
+   "state": "the BFS open list and hash",
+   "update": "once per problem",
+   "assumptions": [
+    "the fallback restores completeness (for the relaxed-plan heuristic it is complete but may be slow)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+    "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes"
+   ],
+   "fitness_value_in_ancestor": "EHC's incompleteness costs at most a restart",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:815-1060 (function headers only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "do_best_first_search; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the instantiation pipeline (inst_pre/easy/hard/final: grounding PDDL/ADL into the connectivity graph), parse.c, output.c, memory.c, main.c",
+   "reason": "OTHER",
+   "evidence": "NOT READ (about 10,000 of 15,846 lines); residue",
+   "note": "grounding is where the ADL-to-STRIPS compilation lives; a mechanism-bearing region for a second pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ff-planner-2.3"
+  },
+  {
+   "candidate": "state hashing and repeated-state detection (hash_ehc_node, ehc_state_hashed, state_sum)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:ff-planner-2.3/upstream/tree/FF-v2.3/search.c:438-613 (not read in full); a sum-based hash with a bucket list",
+   "note": "an instrument for the search, not a planning mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ff-planner-2.3"
+  },
+  {
+   "candidate": "'FF' / 'heuristic search planning' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the relaxation, the extraction, the helpful-action cut, the local search, the goal-deletion cut and the fallback are each separately replaceable (later planners replaced each one independently)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ff-planner-2.3"
+  },
+  {
+   "candidate": "printf progress output ('Cueing down from goal distance', '[depth]')",
+   "reason": "OTHER",
+   "evidence": "instrument",
+   "note": "the printed h sequence is the natural observable for a Stage C run",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ff-planner-2.3"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "ff-planner-2.3::P.goal_distance_must_be_estimated_cheaply_from_a_relaxation_that_ignores_the_consequences_that_make_the_problem_hard",
+   "source_fossil": "ff-planner-2.3",
+   "source_evidence": "relax.c 359-445, 770-875; search.c 174-270; record domain planning/heuristic-search/strips",
+   "condition": "an organism must choose actions toward a goal in a state space too large to search; it may compute anything polynomial about a SIMPLIFIED version of the world (one where nothing is ever undone) and use it as a distance estimate",
+   "resource_or_constraint": "evaluations per step; the estimate's cost must be polynomial in the description size",
+   "failure_condition": "an estimate so optimistic that the search wanders (plateaus) or so expensive that no step is taken",
+   "world_punishes": "wandering on plateaus; time per node",
+   "world_rewards": "an estimate that orders neighbours correctly often enough that greedy commitment reaches the goal",
+   "observable_consequence": "nodes expanded per solved instance and solved fraction across domains where deletes matter vs not",
+   "vacuity_condition": "a world with no delete effects (the relaxation is exact) or one small enough to search exactly",
+   "trivial_shortcuts": "a world-provided distance; exact search on tiny instances",
+   "cheat_control": "an organism given the true distance must solve with zero wandering; the ancestor must fail (EHC returns FALSE) on a domain built so that every relaxed plan deletes its own subgoals: if the world cannot exhibit the plateau it is not exerting this pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: domain-independent classical planning (Hoffmann & Nebel 2001)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "ff-planner-2.3::P.the_estimator_itself_must_tell_the_search_which_neighbours_are_worth_generating",
+   "source_fossil": "ff-planner-2.3",
+   "source_evidence": "relax.c 876-955; search.c 298-301",
+   "condition": "branching is too wide to evaluate every neighbour; the organism's own estimate computation produces a by-product (which actions it would take first) that can cut the branching, at the risk of cutting the needed action",
+   "resource_or_constraint": "evaluations per step vs completeness",
+   "failure_condition": "pruning the only action that leads out (incompleteness) or pruning nothing (cost)",
+   "world_punishes": "both",
+   "world_rewards": "a cut that keeps the needed action almost always, with a detectable failure that triggers a complete fallback",
+   "observable_consequence": "fallback rate and evaluations per instance with the cut on vs off",
+   "vacuity_condition": "small branching factor",
+   "trivial_shortcuts": "a world that labels the useful actions",
+   "cheat_control": "an organism given the optimal plan's first action must expand exactly one successor per step; the ancestor with helpful actions disabled must show the evaluation blow-up on wide domains: both must be visible",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: helpful-action pruning (FF)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "to": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "which successors are generated",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "h value",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the plan's delete effects",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "to": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "h evaluated at every expanded node",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "to": "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "on failure",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "to": "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "ff-planner-2.3",
+   "relation": "shares_ancestor_with",
+   "to": "graphplan-blum-furst-1995",
+   "note": "both STRIPS planners; FF is forward heuristic search, Graphplan is planning-graph",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Hoffmann & Nebel, JAIR 2001",
+   "note": "relaxed-plan (ignore-delete-lists) heuristic + enforced hill-climbing",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Graphplan (Blum & Furst 1995) planning graph without mutexes; HSP (Bonet & Geffner) heuristic search; Hoffmann & Nebel 2001 JAIR",
+   "note": "from the file headers; the vault's graphplan-blum-furst-1995 is a sibling fossil for a recurrence test",
+   "basis": "SOURCE_READ"
+  }
+ ],
+ "residue": {
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "extract_1P body and initialize_goals (662-770) not read: the heuristic value's exact accounting is inferred from achieve_goals",
+   "best-first search body not read (bfs organ is CANDIDATE)",
+   "the grounding pipeline (~10,000 lines) not read",
+   "nothing ran; a STRIPS benchmark domain is a ready Stage C world"
+  ],
+  "note": "the heuristic-and-search core is located; the relation to graphplan-blum-furst-1995 is the first recurrence candidate this pass produces",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

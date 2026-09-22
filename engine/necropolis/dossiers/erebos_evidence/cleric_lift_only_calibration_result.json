@@ -1,0 +1,373 @@
+{
+  "harness": "charon/agents/erebos/sprint1/phase3/pair_aware_permutation_null.py",
+  "harness_constants": {
+    "MIN_COOCCURRENCE": 3,
+    "MIN_LIFT": 1.5,
+    "N_PERMUTATIONS": 200,
+    "SEED": 1789
+  },
+  "historical_quote_phase3K": {
+    "null_p95": 2,
+    "observed_deltas_vs_pair": 2,
+    "p_value": 0.105,
+    "source": "pivot/sprint1/phase3/PHASE3_K_PAIR_AWARE_NULL_VERDICT_2026-06-03.md"
+  },
+  "plant_design": {
+    "common_kp_prob_elsewhere": 0.85,
+    "n_shared_sigs_per_pair": 12,
+    "pairs": [
+      [
+        "g02_contrast",
+        "g10_boundary",
+        "threshold_artifact",
+        "boundary_artifact",
+        "permutation_null"
+      ],
+      [
+        "g23_asymptotic_limit",
+        "g24_symmetry_twist",
+        "residual_survival",
+        "coverage_gap",
+        "threshold_artifact"
+      ],
+      [
+        "g15_cross_gen_mi",
+        "g16_anti_anchor",
+        "permutation_null",
+        "residual_survival",
+        "coverage_gap"
+      ]
+    ],
+    "rare_kp_on_shared": 5
+  },
+  "question": "cleric_lift_only_calibration.py -- ONE question (Cleric attack on the",
+  "runs": [
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 1 substrate-vs-pair-aware deltas; null mean=0.34, p95=1; p-value=0.2750 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 55,
+      "n_pair_recs": 936,
+      "n_plants": 0,
+      "n_rows": 699,
+      "n_substrate_recs": 29,
+      "null_max": 4,
+      "null_mean": 0.335,
+      "null_p95": 1,
+      "null_std": 0.6187,
+      "observed_deltas_vs_pair": 1,
+      "observed_deltas_vs_plugin": 20,
+      "p_value": 0.275,
+      "seed": 11,
+      "unshuffled_disagreements": [
+        "g03_failure_neighborhood | given ('g02_contrast', 'residual_survival') : substrate=coverage_gap pair_counter=PROMOTED"
+      ],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "NULL",
+      "z_score": 1.0749
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "REAL SIGNAL: observed 2 substrate-vs-pair-aware deltas; null mean=0.29, p95=1; p-value=0.0300 < 0.05. The lift filter's advantage over the pair-aware counter survives the permutation null. The ROBUST PASS claim is statistically supported.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 6,
+      "n_pair_recs": 910,
+      "n_plants": 0,
+      "n_rows": 699,
+      "n_substrate_recs": 27,
+      "null_max": 3,
+      "null_mean": 0.295,
+      "null_p95": 1,
+      "null_std": 0.5366,
+      "observed_deltas_vs_pair": 2,
+      "observed_deltas_vs_plugin": 15,
+      "p_value": 0.03,
+      "seed": 23,
+      "unshuffled_disagreements": [
+        "g17_causal_intervention | given ('g04_survivor_tightening', 'boundary_artifact') : substrate=threshold_artifact pair_counter=coverage_gap",
+        "g17_causal_intervention | given ('g25_degeneracy', 'permutation_null') : substrate=residual_survival pair_counter=coverage_gap"
+      ],
+      "verdict": "REAL_SIGNAL",
+      "world": "NULL",
+      "z_score": 3.1772
+    },
+    {
+      "elapsed_s": 0.5,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 0 substrate-vs-pair-aware deltas; null mean=0.30, p95=1; p-value=1.0000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 2,
+      "n_null_ge_observed": 200,
+      "n_pair_recs": 929,
+      "n_plants": 0,
+      "n_rows": 699,
+      "n_substrate_recs": 24,
+      "null_max": 3,
+      "null_mean": 0.3,
+      "null_p95": 1,
+      "null_std": 0.5568,
+      "observed_deltas_vs_pair": 0,
+      "observed_deltas_vs_plugin": 16,
+      "p_value": 1.0,
+      "seed": 37,
+      "unshuffled_disagreements": [],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "NULL",
+      "z_score": -0.5388
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 5 substrate-vs-pair-aware deltas; null mean=5.74, p95=9; p-value=0.6900 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 10,
+      "n_null_ge_observed": 138,
+      "n_pair_recs": 726,
+      "n_plants": 2,
+      "n_rows": 699,
+      "n_substrate_recs": 52,
+      "null_max": 12,
+      "null_mean": 5.735,
+      "null_p95": 9,
+      "null_std": 2.2638,
+      "observed_deltas_vs_pair": 5,
+      "observed_deltas_vs_plugin": 25,
+      "p_value": 0.69,
+      "seed": 11,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g03_failure_neighborhood | given ('g02_contrast', 'threshold_artifact') : substrate=coverage_gap pair_counter=PROMOTED",
+        "g18_minimal_counterexample | given ('g23_asymptotic_limit', 'residual_survival') : substrate=boundary_artifact pair_counter=permutation_null",
+        "g19_proof_obligation | given ('g10_boundary', 'permutation_null') : substrate=threshold_artifact pair_counter=coverage_gap",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival"
+      ],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "LIFT2",
+      "z_score": -0.3247
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "REAL SIGNAL: observed 10 substrate-vs-pair-aware deltas; null mean=5.09, p95=9; p-value=0.0400 < 0.05. The lift filter's advantage over the pair-aware counter survives the permutation null. The ROBUST PASS claim is statistically supported.",
+      "min_observed_to_clear_p05": 10,
+      "n_null_ge_observed": 8,
+      "n_pair_recs": 715,
+      "n_plants": 2,
+      "n_rows": 699,
+      "n_substrate_recs": 55,
+      "null_max": 13,
+      "null_mean": 5.095,
+      "null_p95": 9,
+      "null_std": 2.2463,
+      "observed_deltas_vs_pair": 10,
+      "observed_deltas_vs_plugin": 26,
+      "p_value": 0.04,
+      "seed": 23,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g03_failure_neighborhood | given ('g23_asymptotic_limit', 'residual_survival') : substrate=PROMOTED pair_counter=permutation_null",
+        "g04_survivor_tightening | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=boundary_artifact",
+        "g04_survivor_tightening | given ('g23_asymptotic_limit', 'residual_survival') : substrate=boundary_artifact pair_counter=permutation_null",
+        "g09_projection_collapse | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=boundary_artifact pair_counter=PROMOTED",
+        "g17_causal_intervention | given ('g02_contrast', 'threshold_artifact') : substrate=threshold_artifact pair_counter=residual_survival",
+        "g17_causal_intervention | given ('g04_survivor_tightening', 'boundary_artifact') : substrate=threshold_artifact pair_counter=coverage_gap",
+        "g17_causal_intervention | given ('g25_degeneracy', 'permutation_null') : substrate=residual_survival pair_counter=coverage_gap",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival",
+        "g25_degeneracy | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=residual_survival"
+      ],
+      "verdict": "REAL_SIGNAL",
+      "world": "LIFT2",
+      "z_score": 2.1836
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 6 substrate-vs-pair-aware deltas; null mean=4.15, p95=7; p-value=0.2300 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 8,
+      "n_null_ge_observed": 46,
+      "n_pair_recs": 726,
+      "n_plants": 2,
+      "n_rows": 699,
+      "n_substrate_recs": 50,
+      "null_max": 10,
+      "null_mean": 4.15,
+      "null_p95": 7,
+      "null_std": 1.8782,
+      "observed_deltas_vs_pair": 6,
+      "observed_deltas_vs_plugin": 19,
+      "p_value": 0.23,
+      "seed": 37,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g04_survivor_tightening | given ('g10_boundary', 'permutation_null') : substrate=PROMOTED pair_counter=residual_survival",
+        "g09_projection_collapse | given ('g10_boundary', 'permutation_null') : substrate=PROMOTED pair_counter=residual_survival",
+        "g17_causal_intervention | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=permutation_null",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival",
+        "g25_degeneracy | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=PROMOTED"
+      ],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "LIFT2",
+      "z_score": 0.985
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 7 substrate-vs-pair-aware deltas; null mean=6.30, p95=10; p-value=0.4400 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 11,
+      "n_null_ge_observed": 88,
+      "n_pair_recs": 618,
+      "n_plants": 3,
+      "n_rows": 699,
+      "n_substrate_recs": 73,
+      "null_max": 12,
+      "null_mean": 6.305,
+      "null_p95": 10,
+      "null_std": 2.2298,
+      "observed_deltas_vs_pair": 7,
+      "observed_deltas_vs_plugin": 32,
+      "p_value": 0.44,
+      "seed": 11,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g03_failure_neighborhood | given ('g02_contrast', 'threshold_artifact') : substrate=coverage_gap pair_counter=PROMOTED",
+        "g15_cross_gen_mi | given ('g16_anti_anchor', 'coverage_gap') : substrate=residual_survival pair_counter=permutation_null",
+        "g18_minimal_counterexample | given ('g23_asymptotic_limit', 'residual_survival') : substrate=boundary_artifact pair_counter=permutation_null",
+        "g19_proof_obligation | given ('g10_boundary', 'permutation_null') : substrate=threshold_artifact pair_counter=coverage_gap",
+        "g19_proof_obligation | given ('g16_anti_anchor', 'coverage_gap') : substrate=coverage_gap pair_counter=permutation_null",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival"
+      ],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "LIFT3",
+      "z_score": 0.3117
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "REAL SIGNAL: observed 11 substrate-vs-pair-aware deltas; null mean=5.38, p95=9; p-value=0.0100 < 0.05. The lift filter's advantage over the pair-aware counter survives the permutation null. The ROBUST PASS claim is statistically supported.",
+      "min_observed_to_clear_p05": 10,
+      "n_null_ge_observed": 2,
+      "n_pair_recs": 638,
+      "n_plants": 3,
+      "n_rows": 699,
+      "n_substrate_recs": 69,
+      "null_max": 13,
+      "null_mean": 5.375,
+      "null_p95": 9,
+      "null_std": 2.2637,
+      "observed_deltas_vs_pair": 11,
+      "observed_deltas_vs_plugin": 31,
+      "p_value": 0.01,
+      "seed": 23,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g03_failure_neighborhood | given ('g23_asymptotic_limit', 'residual_survival') : substrate=PROMOTED pair_counter=permutation_null",
+        "g04_survivor_tightening | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=boundary_artifact",
+        "g04_survivor_tightening | given ('g23_asymptotic_limit', 'residual_survival') : substrate=boundary_artifact pair_counter=permutation_null",
+        "g09_projection_collapse | given ('g15_cross_gen_mi', 'permutation_null') : substrate=threshold_artifact pair_counter=residual_survival",
+        "g15_cross_gen_mi | given ('g16_anti_anchor', 'coverage_gap') : substrate=residual_survival pair_counter=permutation_null",
+        "g17_causal_intervention | given ('g02_contrast', 'threshold_artifact') : substrate=threshold_artifact pair_counter=residual_survival",
+        "g17_causal_intervention | given ('g04_survivor_tightening', 'boundary_artifact') : substrate=threshold_artifact pair_counter=coverage_gap",
+        "g17_causal_intervention | given ('g25_degeneracy', 'permutation_null') : substrate=residual_survival pair_counter=coverage_gap",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival",
+        "g25_degeneracy | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=residual_survival"
+      ],
+      "verdict": "REAL_SIGNAL",
+      "world": "LIFT3",
+      "z_score": 2.4849
+    },
+    {
+      "elapsed_s": 0.4,
+      "headline": "STATISTICALLY UNDERDETERMINED: observed 7 substrate-vs-pair-aware deltas; null mean=4.71, p95=8; p-value=0.2000 >= 0.05. The lift filter's divergence from the pair-aware counter is NOT distinguishable from chance lift-vs-count disagreement. The ROBUST PASS / 'lift filter is load-bearing' claim (Phase 3.E, the architecture's strongest real-data validation) is downgraded.",
+      "min_observed_to_clear_p05": 9,
+      "n_null_ge_observed": 40,
+      "n_pair_recs": 630,
+      "n_plants": 3,
+      "n_rows": 699,
+      "n_substrate_recs": 63,
+      "null_max": 10,
+      "null_mean": 4.71,
+      "null_p95": 8,
+      "null_std": 1.9457,
+      "observed_deltas_vs_pair": 7,
+      "observed_deltas_vs_plugin": 23,
+      "p_value": 0.2,
+      "seed": 37,
+      "unshuffled_disagreements": [
+        "g02_contrast | given ('g10_boundary', 'permutation_null') : substrate=boundary_artifact pair_counter=threshold_artifact",
+        "g04_survivor_tightening | given ('g10_boundary', 'permutation_null') : substrate=PROMOTED pair_counter=residual_survival",
+        "g09_projection_collapse | given ('g10_boundary', 'permutation_null') : substrate=PROMOTED pair_counter=residual_survival",
+        "g15_cross_gen_mi | given ('g16_anti_anchor', 'coverage_gap') : substrate=residual_survival pair_counter=permutation_null",
+        "g17_causal_intervention | given ('g10_boundary', 'permutation_null') : substrate=coverage_gap pair_counter=permutation_null",
+        "g23_asymptotic_limit | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=residual_survival",
+        "g25_degeneracy | given ('g24_symmetry_twist', 'threshold_artifact') : substrate=coverage_gap pair_counter=PROMOTED"
+      ],
+      "verdict": "STATISTICALLY_UNDERDETERMINED",
+      "world": "LIFT3",
+      "z_score": 1.1769
+    }
+  ],
+  "summary": {
+    "LIFT2": {
+      "detected_at_p05": 1,
+      "null_mean": [
+        5.735,
+        5.095,
+        4.15
+      ],
+      "null_p95": [
+        9,
+        9,
+        7
+      ],
+      "observed": [
+        5,
+        10,
+        6
+      ],
+      "p_values": [
+        0.69,
+        0.04,
+        0.23
+      ]
+    },
+    "LIFT3": {
+      "detected_at_p05": 1,
+      "null_mean": [
+        6.305,
+        5.375,
+        4.71
+      ],
+      "null_p95": [
+        10,
+        9,
+        8
+      ],
+      "observed": [
+        7,
+        11,
+        7
+      ],
+      "p_values": [
+        0.44,
+        0.01,
+        0.2
+      ]
+    },
+    "NULL": {
+      "detected_at_p05": 1,
+      "null_mean": [
+        0.335,
+        0.295,
+        0.3
+      ],
+      "null_p95": [
+        1,
+        1,
+        1
+      ],
+      "observed": [
+        1,
+        2,
+        0
+      ],
+      "p_values": [
+        0.275,
+        0.03,
+        1.0
+      ]
+    },
+    "reading": "If LIFT2 and LIFT3 are detected at p<0.05 while NULL is not, the committed statistic HAS resolution at N=699 for the lift-vs-count class the Phase 3.E claim named, and the historical observed=2 / p=0.105 is a weak negative about the data rather than an instrument floor."
+  }
+}

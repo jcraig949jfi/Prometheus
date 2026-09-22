@@ -1,0 +1,142 @@
+{
+ "schema": "techne.fossil.world_images/1",
+ "written_utc": "2026-09-16T17:19:09Z",
+ "note": "An image ID pins WHICH bytes ran. It does not make them reconstructible: the prometheus-fossil-* images are built locally and exist in no registry, so their identity is pinned and their availability is single-host.",
+ "images": {
+  "gcc:4.9": {
+   "present": true,
+   "id": "sha256:6356ef8b29cc3522527a85b6c58a28626744514bea87a10ff2bf67599a7474f5",
+   "repo_digests": [
+    "gcc@sha256:6356ef8b29cc3522527a85b6c58a28626744514bea87a10ff2bf67599a7474f5"
+   ],
+   "created": "2017-09-14T02:31:22.113077111Z",
+   "origin": "UPSTREAM_REGISTRY"
+  },
+  "golang:1.22-bookworm": {
+   "present": true,
+   "id": "sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253",
+   "repo_digests": [
+    "golang@sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253"
+   ],
+   "created": "2025-02-04T18:23:13Z",
+   "origin": "UPSTREAM_REGISTRY"
+  },
+  "golang:1.24-bookworm": {
+   "present": true,
+   "id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+   "repo_digests": [
+    "golang@sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac"
+   ],
+   "created": "2026-02-04T17:05:03.56774403Z",
+   "origin": "UPSTREAM_REGISTRY"
+  },
+  "prometheus-fossil-c:bookworm": {
+   "present": true,
+   "id": "sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878",
+   "repo_digests": [
+    "prometheus-fossil-c@sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878"
+   ],
+   "created": "2026-09-16T09:55:55.530011578-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-goexplore:min": {
+   "present": true,
+   "id": "sha256:1939f8fb245250df9e0101846d96a5728033ceda24a1369f84677604d61df073",
+   "repo_digests": [
+    "prometheus-fossil-goexplore@sha256:1939f8fb245250df9e0101846d96a5728033ceda24a1369f84677604d61df073"
+   ],
+   "created": "2026-09-16T09:59:44.042391875-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-hw:bookworm": {
+   "present": true,
+   "id": "sha256:a2490f22afd05c188199c91f1f7e5e077a93d8a8396ccd768d280c99921d8425",
+   "repo_digests": [
+    "prometheus-fossil-hw@sha256:a2490f22afd05c188199c91f1f7e5e077a93d8a8396ccd768d280c99921d8425"
+   ],
+   "created": "2026-09-16T09:57:10.614149392-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-i386:bookworm": {
+   "present": true,
+   "id": "sha256:791df15dfac69e3e1c875108b41ebf32a8c436c2671ece283b16e13be1b7ade3",
+   "repo_digests": [
+    "prometheus-fossil-i386@sha256:791df15dfac69e3e1c875108b41ebf32a8c436c2671ece283b16e13be1b7ade3"
+   ],
+   "created": "2026-09-16T09:58:06.655604877-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-ibm709x:bookworm": {
+   "present": true,
+   "id": "sha256:946a0fd5e65a62dfff0de8fb2de2dc3c241ec71ca48098410f0ecb9e7228f494",
+   "repo_digests": [
+    "prometheus-fossil-ibm709x@sha256:946a0fd5e65a62dfff0de8fb2de2dc3c241ec71ca48098410f0ecb9e7228f494"
+   ],
+   "created": "2026-09-16T11:32:30.166056258-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-lang:bookworm": {
+   "present": true,
+   "id": "sha256:9e06db570f150ee93ba2ebff8bc12a2195b3bcf89a5e82b4f5d4d7c0fe3f0852",
+   "repo_digests": [
+    "prometheus-fossil-lang@sha256:9e06db570f150ee93ba2ebff8bc12a2195b3bcf89a5e82b4f5d4d7c0fe3f0852"
+   ],
+   "created": "2026-09-16T09:56:25.481769423-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-legacy:bookworm": {
+   "present": true,
+   "id": "sha256:90417c26c7e2d424f9aa8531c743de7000ffe1b1fe0462a721a6d11bd6ac19f9",
+   "repo_digests": [
+    "prometheus-fossil-legacy@sha256:90417c26c7e2d424f9aa8531c743de7000ffe1b1fe0462a721a6d11bd6ac19f9"
+   ],
+   "created": "2026-09-16T09:57:45.139120414-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-octave:bookworm": {
+   "present": true,
+   "id": "sha256:43392f8e2789b84c2dac7317e7e9e2314b5c9da7766536ff49c55ec887f0e522",
+   "repo_digests": [
+    "prometheus-fossil-octave@sha256:43392f8e2789b84c2dac7317e7e9e2314b5c9da7766536ff49c55ec887f0e522"
+   ],
+   "created": "2026-09-16T09:58:51.826833476-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-pdp1:display": {
+   "present": true,
+   "id": "sha256:ca04506abb2aaf3ce0ff37d4a8bac84de60250778817e6e895de0a09edf9c156",
+   "repo_digests": [
+    "prometheus-fossil-pdp1@sha256:ca04506abb2aaf3ce0ff37d4a8bac84de60250778817e6e895de0a09edf9c156"
+   ],
+   "created": "2026-09-16T11:09:50.784302594-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-simh:bookworm": {
+   "present": true,
+   "id": "sha256:c246d2fdeeb86636397e4749bb260d1025b5ca4951724cca73b0d3eb4550ebcf",
+   "repo_digests": [
+    "prometheus-fossil-simh@sha256:c246d2fdeeb86636397e4749bb260d1025b5ca4951724cca73b0d3eb4550ebcf"
+   ],
+   "created": "2026-09-16T10:00:52.252529799-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "python:2.7-slim": {
+   "present": true,
+   "id": "sha256:6c1ffdff499e29ea663e6e67c9b6b9a3b401d554d2c9f061f9a45344e3992363",
+   "repo_digests": [
+    "python@sha256:6c1ffdff499e29ea663e6e67c9b6b9a3b401d554d2c9f061f9a45344e3992363"
+   ],
+   "created": "2020-04-20T19:35:46.135435015Z",
+   "origin": "UPSTREAM_REGISTRY"
+  },
+  "python:3.11-slim": {
+   "present": true,
+   "id": "sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534",
+   "repo_digests": [
+    "python@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534"
+   ],
+   "created": "2026-09-01T00:14:30.682171098Z",
+   "origin": "UPSTREAM_REGISTRY"
+  }
+ }
+}

@@ -1,0 +1,405 @@
+{
+  "artifact": "LUDUS-03 qualification-instrument controls",
+  "ts_utc": "2026-09-16T12:46:11+00:00",
+  "base_sha": "755d8a8dd05ef315e1517baa1ada08126b48bc90",
+  "branch": "ludus/boot-2026-09-16",
+  "worktree_path": "D:\\Prometheus-worktrees\\ludus-boot-2026-09-16",
+  "dirty": true,
+  "reading_guide": "instrument_behaved_as_expected=True on a row whose note starts with MISSED means the instrument's blind spot was predicted and confirmed, not that the instrument passed.",
+  "summary": {
+    "depth_profile": {
+      "rows": 8,
+      "as_expected": 8,
+      "missed_by_construction": 2
+    },
+    "bench_verify": {
+      "rows": 7,
+      "as_expected": 7,
+      "missed_by_construction": 2
+    },
+    "arena_keyname_check": {
+      "rows": 5,
+      "as_expected": 5,
+      "missed_by_construction": 3
+    },
+    "arena_differential_audit": {
+      "rows": 5,
+      "as_expected": 5,
+      "missed_by_construction": 0
+    }
+  },
+  "rows": [
+    {
+      "instrument": "depth_profile",
+      "kind": "regression",
+      "fixture": "LOOM",
+      "injected": "none (own_score hook added)",
+      "expected": {
+        "k=1": 0.0,
+        "k=2": 0.0,
+        "k=3": 0.0,
+        "k=4": 0.0
+      },
+      "observed": {
+        "k=1": 0.0,
+        "k=2": 0.0,
+        "k=3": 0.0,
+        "k=4": 0.0
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "the hook must not move any existing world's curve"
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "regression",
+      "fixture": "WEIR",
+      "injected": "none (own_score hook added)",
+      "expected": {
+        "k=1": 0.144,
+        "k=2": 0.112,
+        "k=3": 0.04,
+        "k=4": 0.012
+      },
+      "observed": {
+        "k=1": 0.144,
+        "k=2": 0.112,
+        "k=3": 0.04,
+        "k=4": 0.012
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "the hook must not move any existing world's curve"
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "regression",
+      "fixture": "TITHE",
+      "injected": "none (own_score hook added)",
+      "expected": {
+        "k=1": 0.156,
+        "k=2": 0.144,
+        "k=3": 0.056,
+        "k=4": 0.04
+      },
+      "observed": {
+        "k=1": 0.156,
+        "k=2": 0.144,
+        "k=3": 0.056,
+        "k=4": 0.04
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "the hook must not move any existing world's curve"
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "negative",
+      "fixture": "CTRL_LEDGER",
+      "injected": "optimal set == greedy set at every state",
+      "expected": {
+        "k=1": 0.0,
+        "k=2": 0.0,
+        "k=3": 0.0,
+        "k=4": 0.0
+      },
+      "observed": {
+        "k=1": 0.0,
+        "k=2": 0.0,
+        "k=3": 0.0,
+        "k=4": 0.0
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "eligible=200 sampled=200 survives_depth=False"
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "positive",
+      "fixture": "CTRL_ORCHARD",
+      "injected": "payoff deferred to the terminal state; PLANT optimal, GRAB greedy",
+      "expected": "gap(4) >= 0.20, curve decreasing in k",
+      "observed": {
+        "k=1": 0.7931,
+        "k=2": 0.6158,
+        "k=3": 0.468,
+        "k=4": 0.3448
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "eligible=203 sampled=203; LIMIT: PLANT-always is a constant policy, so this proves detection of deferred payoff, not of reasoning"
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "cheat",
+      "fixture": "CTRL_NIM345",
+      "injected": "normal-play Nim (3, 4, 5); Bouton's 4-line xor rule plays it perfectly",
+      "expected": "gate ADMITS (gap(4) >= 0.20) although a 4-line rule is optimal",
+      "observed": {
+        "gaps": {
+          "k=1": 0.5629,
+          "k=2": 0.5222,
+          "k=3": 0.2959,
+          "k=4": 0.2398
+        },
+        "sampled": 517,
+        "eligible": 517,
+        "admitted": true,
+        "gaps_at_default_n250": {
+          "k=1": 0.552,
+          "k=2": 0.504,
+          "k=3": 0.252,
+          "k=4": 0.2
+        },
+        "bouton_optimal_rate_on_N_positions": 1.0,
+        "n_positions": 430
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: the gate's cheap-player class is depth-k search with the world's own eval; it does not contain short closed-form programs. Charter v3 s2 question 2 needs a second family. On (3,4,5) the default n=250 sample read gap(4)=0.200, ON the gate; the exhaustive 517-state reading is what is judged."
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "cheat",
+      "fixture": "CTRL_NIM3456",
+      "injected": "normal-play Nim (3, 4, 5, 6); Bouton's 4-line xor rule plays it perfectly",
+      "expected": "gate ADMITS (gap(4) >= 0.20) although a 4-line rule is optimal",
+      "observed": {
+        "gaps": {
+          "k=1": 0.664,
+          "k=2": 0.656,
+          "k=3": 0.528,
+          "k=4": 0.496
+        },
+        "sampled": 250,
+        "eligible": 5607,
+        "admitted": true,
+        "gaps_at_default_n250": {
+          "k=1": 0.664,
+          "k=2": 0.656,
+          "k=3": 0.528,
+          "k=4": 0.496
+        },
+        "bouton_optimal_rate_on_N_positions": 1.0,
+        "n_positions": 4847
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: the gate's cheap-player class is depth-k search with the world's own eval; it does not contain short closed-form programs. Charter v3 s2 question 2 needs a second family. On (3,4,5) the default n=250 sample read gap(4)=0.200, ON the gate; the exhaustive 517-state reading is what is judged."
+    },
+    {
+      "instrument": "depth_profile",
+      "kind": "specimen",
+      "fixture": "CTRL_BARE_UNKNOWN",
+      "injected": "world with no own_score and a name no branch matches",
+      "expected": "loud failure (exception), never a silent number",
+      "observed": "AttributeError: 'PlyState' object has no attribute 'ta'",
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "positive",
+      "fixture": "MARTIAN_DICE (as committed)",
+      "injected": "none",
+      "expected": "verified_internally=True",
+      "observed": true,
+      "instrument_behaved_as_expected": true,
+      "note": "n_states=14653"
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "cheat",
+      "fixture": "MARTIAN_DICE pot+1 at (11, 1, 0, 0, 0, 0)",
+      "injected": "one pot value off by 1",
+      "expected": "FAIL via per_world",
+      "observed": {
+        "verified": false,
+        "per_world_failures": 1
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "cheat",
+      "fixture": "MARTIAN_DICE smallest prob*0.5",
+      "injected": "smallest draw probability of the initial state halved (mass removed 3.83e-11; tolerance 1e-7)",
+      "expected": "NOT detected: injection below the normalisation tolerance",
+      "observed": {
+        "verified": true,
+        "universal_failures": 0
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: the first injection tried; the perturbation was smaller than the check's own tolerance, so this row measures the instrument's floor (1e-7 of mass), not a defect. Eligibility first."
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "cheat",
+      "fixture": "MARTIAN_DICE largest prob*0.5",
+      "injected": "largest draw probability of the initial state halved (mass removed 0.00397)",
+      "expected": "FAIL via universal",
+      "observed": {
+        "verified": false,
+        "universal_failures": 1
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "cheat",
+      "fixture": "MARTIAN_DICE cycle via (0, 0, 0, 1, 0, 0)",
+      "injected": "an option of a successor points back at the initial state",
+      "expected": "FAIL via acyclic",
+      "observed": {
+        "verified": false,
+        "acyclic_failures": 1
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "cheat",
+      "fixture": "MARTIAN_DICE one ray face (MD_W ray=1)",
+      "injected": "the doubled ray face removed from the draw distribution",
+      "expected": "verified_internally=True (instrument blind to the draw law)",
+      "observed": {
+        "verified": true,
+        "n_states": 14653,
+        "n_states_committed": 14653
+      },
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: VERIFIED means internally consistent, never faithful (verify.py docstring). Only W3 (LUDUS-01) can see this."
+    },
+    {
+      "instrument": "bench_verify",
+      "kind": "specimen",
+      "fixture": "LUCKY_NUMBERS (no invariants)",
+      "injected": "a world absent from PER_WORLD",
+      "expected": "FAIL loudly: NO PER-WORLD INVARIANTS WRITTEN",
+      "observed": [
+        "NO PER-WORLD INVARIANTS WRITTEN"
+      ],
+      "instrument_behaved_as_expected": true,
+      "note": "archaeology L-1: loud, not silent; 17 of 21 worlds sit here"
+    },
+    {
+      "instrument": "arena_keyname_check",
+      "kind": "negative",
+      "fixture": "KUHN_POKER (as committed)",
+      "injected": "none",
+      "expected": "does not fire",
+      "observed": false,
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_differential_audit",
+      "kind": "negative",
+      "fixture": "KUHN_POKER (as committed)",
+      "injected": "none",
+      "expected": "0 leaks",
+      "observed": 0,
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_keyname_check",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_NAMED_KEY",
+      "injected": "observation key opponent_card",
+      "expected": "fires",
+      "observed": true,
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_differential_audit",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_NAMED_KEY",
+      "injected": "observation key opponent_card",
+      "expected": "fires",
+      "observed": {
+        "n_leaks": 3,
+        "channels": [
+          "observation"
+        ]
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_keyname_check",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_INNOCUOUS_KEY",
+      "injected": "observation key tiebreak",
+      "expected": "does not fire (key names only)",
+      "observed": false,
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: substring matching cannot find a leak (standing rule 6)"
+    },
+    {
+      "instrument": "arena_differential_audit",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_INNOCUOUS_KEY",
+      "injected": "observation key tiebreak",
+      "expected": "fires",
+      "observed": {
+        "n_leaks": 3,
+        "channels": [
+          "observation"
+        ]
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_keyname_check",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_ACTION_ORDER",
+      "injected": "legal_actions order flips on opp=K",
+      "expected": "does not fire (key names only)",
+      "observed": false,
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: substring matching cannot find a leak (standing rule 6)"
+    },
+    {
+      "instrument": "arena_differential_audit",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_ACTION_ORDER",
+      "injected": "legal_actions order flips on opp=K",
+      "expected": "fires",
+      "observed": {
+        "n_leaks": 4,
+        "channels": [
+          "error_text",
+          "legal_actions_order"
+        ]
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    },
+    {
+      "instrument": "arena_keyname_check",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_PUBLIC_STATE",
+      "injected": "public_state carries both cards",
+      "expected": "does not fire (key names only)",
+      "observed": false,
+      "instrument_behaved_as_expected": true,
+      "note": "MISSED by construction: substring matching cannot find a leak (standing rule 6)"
+    },
+    {
+      "instrument": "arena_differential_audit",
+      "kind": "cheat",
+      "fixture": "KUHN_LEAK_PUBLIC_STATE",
+      "injected": "public_state carries both cards",
+      "expected": "fires",
+      "observed": {
+        "n_leaks": 9,
+        "channels": [
+          "public_state",
+          "serialize",
+          "state_hash"
+        ]
+      },
+      "instrument_behaved_as_expected": true,
+      "note": ""
+    }
+  ]
+}

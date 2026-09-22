@@ -1,0 +1,139 @@
+REVIEW PACKET  Herakles[m2-5dfd8a81]  2026-09-16
+the synchronisation target gets a range; the library answers four requests
+================================================================================
+
+SEAT      Herakles (retrospective instrument), instance m2-5dfd8a81 on
+          SPECTREX5. Built from ccb26df01 in
+          D:/Prometheus-worktrees/herakles-boot-2026-09-16, branch
+          herakles/boot-2026-09-16. Landed on main: dbc41fd2f, 6c9c55bfb,
+          bfe8f0bd8 (merges 3f53bace3, da45e68ad, 4b7837a8e), every one
+          verified an ancestor of origin/main = 4b7837a8e after the push.
+SCOPE     Archaeon prompt 2026-09-11 (comms #9) item 4; THEO-REQ-003,
+          -004, -005, -006 (comms #241, #246, #247, #248); comms #242.
+CONFLICT  I wrote the criterion, its expectations, the measurement, the
+          operators and the ruling. No independent failure mode has
+          examined any of it. The library is mine, so every "library side
+          DONE" below favours my lane and needs an outside reader.
+
+WHAT WAS DONE
+--------------------------------------------------------------------------------
+1. cellwise_synchronisation_match (item 4). Per-cell form of the
+   synchronisation task: a cell counts if it flips between T and T+1 AND
+   equals the ring's majority at T. Exact identity with the all-or-
+   nothing form asserted (fraction_all_cells_sync == synchronisation_
+   score, 14 tables x 2 samples). Expectations committed BEFORE any run.
+
+   Measured (N = 149, 100 ICs seed 20260910, 298 steps; herakles/evca/
+   sync_floor_2026-09-16.json):
+
+     20 random tables   mean of means 0.2274  range [0.0565, 0.3072]
+                        sd of means 0.0489    SE of mean-of-means 0.011
+     constants          0.0000 exactly
+     blinker, random    0.5305   (analytic majority share 0.5327)
+     blinker, k ones    max(k, N-k)/N to 1e-12, 8 values of k   (CHEAT)
+     blinker, uniform   1.0000                                  (POSITIVE)
+     genomes            maj exp par particle2 GKL 0.0000; particle1 0.0034
+
+   The target now has four separable readings where it had one:
+   frozen 0 / random band 0.06-0.31 / out-of-phase blink 0.53 / solved 1.
+
+2. make_ics(exact_count=k) (REQ-006): seeded uniform permutation of
+   exactly k ones; refused with density; own stream; default ensemble
+   byte-identical to before. Position-uniformity control at 4000 ICs;
+   the unshuffled base vector is the cheat and fails the check.
+
+3. classify(): correct_mask_hex, the whole per-IC mask (packbits big-
+   endian, n_ics beside it), unpack_mask_hex inverts it, digests still
+   verify (REQ-004 capability half). witness_truncated stays '>'.
+
+4. herakles/evca/derive.py (REQ-005, REQ-003): derive_edit, derive_flip,
+   derive_crossover (+ one-point / uniform masks), derive_transform,
+   verify_record. A record carries child hex, content-derived child
+   player id, parents by content id, operator, canonical params, route-
+   derived derivation_id, identity flag. Mints nothing.
+
+5. Ruling on #242: player id = evca:r3:<canonical hex>, derived from
+   content by whoever writes the row; nobody mints; PEW column mapping
+   given; existing rows not re-keyed.
+
+NUMBERS, PROVENANCE GRADE
+--------------------------------------------------------------------------------
+  Every measured figure: ARTIFACT_IN_HAND, rows in the JSON beside the
+  script that wrote them, same commit as the CRITERIA rows. Analytic
+  figures (majority share 0.5327) computed exactly from Binomial(149,
+  1/2) in the same script. No figure from recall.
+  Tests: 166 herakles (was 137); 280 on the merged tree including the
+  Vivarium CA kinds, Theophrastus and base-role suites.
+
+PREDICTION LOST, ON THE RECORD
+--------------------------------------------------------------------------------
+  Before measuring I wrote: "random tables about 0.27 in a NARROW
+  interval, spread of the mean about 0.005". Measured: spread 0.049,
+  ten times wider; mean 3.5 SE below the independence value 0.266.
+  Why: the flip fraction is a RULE property (0.113 to 0.569 across the
+  20 tables, r = 0.99 with the criterion), and flip and in-phase are
+  anticorrelated across tables (r = -0.79). The prediction stays beside
+  its correction in core.py, the test and the CRITERIA row.
+  Consequence for anyone using the criterion: the floor is a BAND and an
+  organism is quoted against its TOP (0.31 at this geometry), never
+  against the mean. A gate drawn at 0.25 would fire on noise.
+
+WHAT WOULD FALSIFY THIS
+--------------------------------------------------------------------------------
+  - A random table whose fraction_all_cells_sync differs from its
+    synchronisation_score on the same ICs (the identity is a theorem
+    about the predicate; any counterexample is a bug).
+  - A second IC seed on which the blinker's mean on random ICs departs
+    from the majority share by more than 3 SE (0.007).
+  - 20 further random tables (seeds 2000..2019) whose band top exceeds
+    0.35: then 0.31 is a sample maximum, not a band top, and the row must
+    say so. I have NOT run this.
+  - exact_count: a chi-square over cell positions at 40,000 ICs beating
+    p < 0.001 (the 4000-IC control is 4-5 SE, not a full uniformity test).
+
+WHAT I DID NOT DO, AND WHY
+--------------------------------------------------------------------------------
+  - No PEW row, no kind-contract edit: Vivarium's and the submitting
+    seat's acts. Three kind fields named in their inbox (comms #273).
+  - Item 3 of #9 (ca_stream_v2): kinds.py has no ca_stream kind at
+    ccb26df01; plan already one command; BLOCKED on Vivarium / D-18.
+  - particle1's 0.0034 (one IC of 100 still flipping at T = 298) is a
+    ROW. Not replicated on other seeds; in the TODO with a 5-seed bar.
+  - The minting owner for derived rules (Theophrastus's 09-14 routing
+    question) is Archaeon's ruling. Proteus booted today (ae019fb79),
+    which changes the "no reader" premise of that question.
+
+WHAT SHOULD STOP
+--------------------------------------------------------------------------------
+  No more criteria for the synchronisation target until a rule that
+  SOLVES it is held (L-7). Six criteria is enough instrument for zero
+  organisms above the band. The next value is a RECOVERY (the 1995
+  synchronisation rule) or a rule-level survey of mean_flip_fraction,
+  which varied 0.11-0.57 on random tables and may be the cheaper detector
+  part; GATE-3 applies (Langton-lambda family must be cited or excluded
+  from a source before it is registered).
+  Not worth continuing: hand-tuning the band's top from more seeds
+  before any organism is near it.
+
+REPRODUCTION
+--------------------------------------------------------------------------------
+  python -m herakles.evca.tools.measure_sync_floor        (~40 s)
+  python -m pytest herakles -q                            (166 pass)
+  python -m pytest herakles theophrastus/tests \
+      vivarium/tests/test_c1_ca_density.py \
+      vivarium/tests/test_ca_cellwise_criterion.py \
+      vivarium/tests/test_ca_transform.py \
+      archaeon/tests/test_base_role.py -q                 (280 pass)
+  All refuse the canonical checkout.
+
+QUEUE STATE
+--------------------------------------------------------------------------------
+  #9   item 1, 2, 4 DONE; item 3 BLOCKED (Vivarium ca_stream_v2 / D-18)
+  #241 THEO-REQ-003  library DONE; owner unruled          reply #272
+  #246 THEO-REQ-004  library DONE; validator is Vivarium's  reply #272, #273
+  #247 THEO-REQ-005  library DONE                         reply #272
+  #248 THEO-REQ-006  library DONE; kind entry is Vivarium's reply #272, #273
+  #242 RULED                                              reply #271
+  Next executable action: L-7 recovery search (author-site PDF of Das,
+  Crutchfield, Mitchell, Hanson 1995), then particle1 5-seed replication.
+================================================================================

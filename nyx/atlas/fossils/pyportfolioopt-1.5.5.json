@@ -1,0 +1,165 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "pyportfolioopt-1.5.5",
+ "techne_record": "techne/fossils/specimens/pyportfolioopt-1.5.5/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "pyportfolioopt-1.5.5",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "PyPortfolioOpt 1.5.5 -- Markowitz mean-variance and related portfolio optimisation (Robert Martin)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v1.5.5 (2023)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1952 (theory); 2018- (package)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "finance",
+     "portfolio-optimization",
+     "convex-optimization",
+     "risk"
+    ],
+    "lineage": "Modern portfolio theory (Markowitz 1952) as a convex program: efficient frontier, maximum Sharpe, minimum volatility, plus shrinkage covariance (Ledoit-Wolf), Black-Litterman views and hierarchical risk parity (Lopez de Prado 2016) -- a compact library over cvxpy with a bundled price dataset."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "portfolio allocation under risk",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "choose asset weights that minimise variance for a target return (or maximise Sharpe) given estimated means and covariances",
+    "pressure": "estimation error in means/covariances that the optimiser amplifies; constraints (long-only, sector caps)",
+    "success_means": "a feasible weight vector whose in-sample risk is not worse than naive alternatives; profitability is NOT the oracle"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "uncertainty (estimation error), constraints, competition",
+    "failure_condition": "error maximisation: the optimiser concentrates in the assets whose returns were most over-estimated"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Modern portfolio theory (Markowitz 1952) as a convex program: efficient frontier, maximum Sharpe, minimum volatility, plus shrinkage covariance (Ledoit-Wolf), Black-Litterman views and hierarchical risk parity (Lopez de Prado 2016) -- a compact library over cvxpy with a bundled price dataset.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Markowitz 1952"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: glpk-5.0"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "algorithm_from",
+   "to": "Markowitz 1952",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "shares_ancestor_with",
+   "to": "glpk-5.0",
+   "note": "mathematical programming lineage (LP -> convex)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

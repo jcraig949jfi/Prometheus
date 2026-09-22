@@ -20,6 +20,7 @@ import pytest
 
 from viv import executors as _ex
 from viv import kinds as _kinds
+from viv import ca_density as _cd
 from viv.ca_density import SUCCESS_CRITERIA, WITNESS_LIMIT, _evca
 
 REPO = Path(__file__).resolve().parent.parent.parent
@@ -229,27 +230,44 @@ def test_c1_the_table_encoding_is_the_librarys():
     assert out["misclassified_ic"] == direct["witness"]
 
 
+# D2 (2026-09-16): a refused VALUE is now refused at ADMISSION, through the
+# kind's value_checker, before any executor runs -- so through executors.run
+# the refusal is the contract's (ExecutorUnavailable carrying the library's
+# words), and the library's own EvcaError is what the executor raises when
+# called directly. Both are asserted: the two paths share payload_problems().
+
+def _payload(rule_hex, **kw):
+    return spec_for(rule_hex, **kw)["work"]["payload"]
+
+
 @pytest.mark.parametrize("radius", [1, 2, 4, 0])
 def test_c1_an_unsupported_radius_is_refused_by_the_library(radius):
     _, core = _evca()
     g = golden()
-    with pytest.raises(core.EvcaError) as exc:
+    with pytest.raises(_ex.ExecutorUnavailable) as exc:
         run(g["rules"]["maj"]["hex"], radius=radius)
     assert "not supported" in str(exc.value)
+    with pytest.raises(core.EvcaError) as exc2:
+        _cd.run(_payload(g["rules"]["maj"]["hex"], radius=radius), seed=1)
+    assert "not supported" in str(exc2.value)
 
 
 def test_c1_an_even_lattice_is_refused_by_the_library():
     _, core = _evca()
     g = golden()
-    with pytest.raises(core.EvcaError):
+    with pytest.raises(_ex.ExecutorUnavailable):
         run(g["rules"]["maj"]["hex"], n_cells=20)
+    with pytest.raises(core.EvcaError):
+        _cd.run(_payload(g["rules"]["maj"]["hex"], n_cells=20), seed=1)
 
 
 def test_c1_a_malformed_rule_is_refused_by_the_library():
     _, core = _evca()
     for bad in ("abc", "z" * 32, 12345):
-        with pytest.raises(core.EvcaError):
+        with pytest.raises(_ex.ExecutorUnavailable):
             run(bad)
+        with pytest.raises(core.EvcaError):
+            _cd.run(_payload(bad), seed=1)
 
 
 # ------------------------------------------------- initial conditions
@@ -289,8 +307,10 @@ def test_c1_a_biased_density_is_a_different_ensemble():
 def test_c1_a_malformed_density_set_is_refused(bad):
     _, core = _evca()
     g = golden()
-    with pytest.raises(core.EvcaError):
+    with pytest.raises(_ex.ExecutorUnavailable):            # D2: admission
         run(g["rules"]["maj"]["hex"], densities=bad)
+    with pytest.raises(core.EvcaError):                     # the executor
+        _cd.run(_payload(g["rules"]["maj"]["hex"], densities=bad), seed=1)
 
 
 # ---------------------------------------------------- the kind contract
@@ -319,9 +339,12 @@ def test_c1_the_kind_is_stateless_so_persist_is_refused():
 def test_c1_an_undeclared_success_criterion_is_refused(bad):
     _, core = _evca()
     g = golden()
-    with pytest.raises(core.EvcaError) as exc:
+    with pytest.raises(_ex.ExecutorUnavailable) as exc:
         run(g["rules"]["maj"]["hex"], criterion=bad)
     assert "success_criterion" in str(exc.value)
+    with pytest.raises(core.EvcaError) as exc2:
+        _cd.run(_payload(g["rules"]["maj"]["hex"], criterion=bad), seed=1)
+    assert "success_criterion" in str(exc2.value)
 
 
 def test_c1_re_execution_is_bit_identical():

@@ -1,0 +1,1245 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "tinycc",
+ "techne_record": "techne/fossils/specimens/tinycc/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "tinycc",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "TinyCC (tcc) -- Fabrice Bellard's small C compiler",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "repo.or.cz/tinycc.git mob branch as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2001-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compilers",
+     "code-generation",
+     "parsing",
+     "languages",
+     "representation-transformation"
+    ],
+    "lineage": "TinyCC (2001-, Bellard): a tiny, fast C99 compiler with its own back end (parse -> in-memory code generation -> ELF/executable) that can compile-and-run C in one step; a whole compiler pipeline small enough to read"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fast, tiny C compilation (a full front-to-back compiler)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compile C to machine code very fast, in one small program that parses, type-checks, allocates registers and emits an executable (or runs it directly in memory)",
+    "pressure": "gcc's size and slowness; tcc trades optimisation for a compiler that is tiny, fast, and can be used as a scripting back end",
+    "success_means": "correct compilation and execution of C programs; tcc can even compile itself"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "TinyCC (2001-, Bellard): a tiny, fast C99 compiler with its own back end (parse -> in-memory code generation -> ELF/executable) that can compile-and-run C in one step; a whole compiler pipeline small enough to read",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccgen.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccpp.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccrun.c"
+   }
+  ],
+  "inspected_files": [
+   "tccgen.c (index; gv; gen_op)",
+   "tccpp.c (index)",
+   "tccrun.c (index)",
+   "tccelf.c (index)",
+   "file sizes"
+  ],
+  "date": "2026-09-16T12:18Z",
+  "note": "the interesting anatomy is what is ABSENT: no AST, no IR, no optimiser; parsing emits machine code directly through a value stack; every mechanism below is a consequence of that one design decision",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://repo.or.cz/tinycc.git@0fb54300b56512754221d80adda85ddb9815bceb",
+   "payload_manifest_id": "techne tree_sha256 926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c (546 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/tccgen.c",
+     "payload_hash_read": "753da8ee4fe1a346c22705ee42ff6c5710e215a862d0fcf400f5957f645634b7",
+     "techne_recorded_hash": "753da8ee4fe1a346c22705ee42ff6c5710e215a862d0fcf400f5957f645634b7",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/tccpp.c",
+     "payload_hash_read": "233c83c1087abe2c52eef23e03053bfd09dc6bcf5958aa463548ab455f016993",
+     "techne_recorded_hash": "233c83c1087abe2c52eef23e03053bfd09dc6bcf5958aa463548ab455f016993",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/tccrun.c",
+     "payload_hash_read": "68f5ad7ad0409a338a134ac5d091234598a44b5ba5d55d1397290bee0d7b8074",
+     "techne_recorded_hash": "68f5ad7ad0409a338a134ac5d091234598a44b5ba5d55d1397290bee0d7b8074",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/x86_64-gen.c",
+     "payload_hash_read": "17a55c5d873e3f522033a67b1ab019b3f5b1dfb31d1bc8654cdd75a41ef246f6",
+     "techne_recorded_hash": "17a55c5d873e3f522033a67b1ab019b3f5b1dfb31d1bc8654cdd75a41ef246f6",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/tccelf.c",
+     "payload_hash_read": "149661f8ff6dba6ddd5de599adaf8921c064f6444ed50e425673b7ca56324b75",
+     "techne_recorded_hash": "149661f8ff6dba6ddd5de599adaf8921c064f6444ed50e425673b7ca56324b75",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "tinycc::token_stream_with_macro_substitution_and_conditional_skipping_pulled_by_next",
+   "fossil_ancestry": "tinycc",
+   "human_name": "tccpp.c: next() / preprocess() / macro_subst / preprocess_skip",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the parser pulls one token at a time (next); the preprocessor is inline in that pull: directives are handled when a '#' is seen at line start (preprocess), macro bodies are stored as token strings (TokenString) and substituted with argument expansion and rescanning (macro_subst / macro_subst_tok), #if groups are skipped by scanning tokens (preprocess_skip), includes push a file on a stack",
+   "input": "source bytes",
+   "output": "one token per call",
+   "state": "the file stack, the define table, the token-string buffers",
+   "update": "per token",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccpp.c:874,1519,1792,2978-3470"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "tccpp.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "fossil_ancestry": "tinycc",
+   "human_name": "vstack / vtop / vpush* / vpop / vswap / vrott / gv()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "expression parsing pushes SValues (a type and a location: constant, symbol, local offset, register, lvalue flag) instead of emitting code; gv(rc) is the only point that forces a value into a register of class rc, generating loads (and, for bitfields, shift sequences; for float constants, a rodata entry) at that moment; operators pop two SValues and push one",
+   "input": "parsed operands",
+   "output": "register-resident values when needed",
+   "state": "vstack (bounded), vtop",
+   "update": "per operand / per operator",
+   "assumptions": [
+    "expressions are compiled left to right in one pass; no reordering is ever possible"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher"
+   ],
+   "composition_neighbors": [
+    "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+    "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+    "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+    "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place"
+   ],
+   "fitness_value_in_ancestor": "the substitute for an IR: delayed materialisation gets constant folding and addressing modes for free",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccgen.c:898-1003,1844-2000"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the v* functions and gv/gv2",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+   "fossil_ancestry": "tinycc",
+   "human_name": "gen_op / gen_opic / gen_opif / gen_opl",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "gen_op classifies the operator (shift, compare, arithmetic), promotes the two top types per C rules (functions to pointers, integer promotion, pointer arithmetic scaling), and if both operands are constants folds them at compile time (gen_opic for integers, gen_opif for floats) else calls the target's gen_opi/gen_opf; long long on 32-bit targets is split in gen_opl",
+   "input": "an operator token and two SValues",
+   "output": "one SValue (constant or register)",
+   "state": "none",
+   "update": "per operator",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+    "tinycc::per_target_instruction_emitters_behind_a_fixed_interface"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccgen.c:2100-3245"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "gen_op and its four helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+   "fossil_ancestry": "tinycc",
+   "human_name": "gjmp / gsym / gvtst / gind",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a conditional or unconditional jump to a not-yet-known target emits the instruction with the previous unresolved jump's address in its displacement field, forming a linked list through the code; gsym(t) walks that list writing the current position into each; gvtst turns the top SValue into a jump-on-condition (folding constants into an always/never jump)",
+   "input": "jump requests and label positions",
+   "output": "patched code",
+   "state": "the chain heads (ints in the parser's locals)",
+   "update": "per jump / per label",
+   "assumptions": [
+    "displacements are wide enough to hold a chain link"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+    "tinycc::per_target_instruction_emitters_behind_a_fixed_interface"
+   ],
+   "fitness_value_in_ancestor": "how one pass compiles if/while/&&/|| without a tree",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccgen.c:167-200,1056-1114"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "gsym / gjmp* / gvtst*",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "fossil_ancestry": "tinycc",
+   "human_name": "decl / type_decl / block / expr_* / unary",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the grammar is hand-written recursive descent (decl -> type_decl -> block -> statements -> expr_eq -> ... -> unary); each nonterminal pushes SValues or emits code immediately; symbols are a hashed stack scoped by block (sym_push / sym_pop); there is no tree",
+   "input": "tokens",
+   "output": "code + symbols",
+   "state": "the symbol stack, local offsets, loop/switch contexts",
+   "update": "per construct",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::token_stream_with_macro_substitution_and_conditional_skipping_pulled_by_next",
+    "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+    "tinycc::forward_jump_lists_patched_when_the_label_is_reached"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccgen.c:132-156 (declarations), 804 (labels)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the parsing functions of tccgen.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "fossil_ancestry": "tinycc",
+   "human_name": "x86_64-gen.c / i386-gen.c / arm*-gen.c / riscv64-gen.c: load, store, gen_opi, gen_opf, gfunc_call, gfunc_prolog/epilog, gjmp",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the generic layer calls a fixed set of target functions to move SValues to and from registers and to emit arithmetic, calls and jumps; each target file is a few thousand lines of byte-emission (o(), gen_le32) with register-class tables; no instruction selection beyond that",
+   "input": "SValues and register classes",
+   "output": "machine bytes into the text section",
+   "state": "ind (the emission pointer)",
+   "update": "per emitted instruction",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+    "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+    "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+    "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/x86_64-gen.c, i386-gen.c (sizes; interface names from tccgen.c call sites)"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the *-gen.c files",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place",
+   "fossil_ancestry": "tinycc",
+   "human_name": "tccelf.c + tccrun.c",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "code and data are appended to Section buffers (section_add / section_ptr_add) with an ELF symbol table and relocation entries as they are referenced; output either writes an ELF object/executable (tccelf) or, for -run, allocates executable memory, relocates the sections in place (tcc_relocate_ex), protects pages and jumps to main, with a backtrace/exception hook (tccrun)",
+   "input": "sections, symbols, relocs",
+   "output": "a file or a running program",
+   "state": "the Section list, symtab",
+   "update": "per emission; once at link",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+    "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinycc/upstream/tree/tccelf.c:130-380; tccrun.c:59-91"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "tccelf.c + tccrun.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "an optimiser / intermediate representation",
+   "reason": "OTHER",
+   "evidence": "none exists: tccgen.c emits from the value stack directly; there is no file between the parser and the target emitters",
+   "note": "NEGATIVE ANATOMY: the absence is the fossil's identity (compile speed over code quality)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinycc"
+  },
+  {
+   "candidate": "'the compiler' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "seven subsystems with separate state and files",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinycc"
+  },
+  {
+   "candidate": "tccasm.c (inline assembler), tccpe.c / tccmacho.c (other object formats), libtcc.c (API and option parsing), tcc.c (driver)",
+   "reason": "OTHER",
+   "evidence": "by file name; unread",
+   "note": "UNKNOWN, not rejected on merit",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinycc"
+  },
+  {
+   "candidate": "lib/ (runtime helpers: bcheck, libtcc1), include/, tests/",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "runtime support and the test suite; Techne's smoke (exit 42) is the executed evidence",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinycc"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tinycc::P.a_whole_language_must_compile_fast_enough_to_run_source_as_a_script",
+   "source_fossil": "tinycc",
+   "source_evidence": "the absence of an IR; tccrun.c",
+   "condition": "C programs are to be compiled and executed in one command in the time an interpreter would take to start; code quality is secondary",
+   "resource_or_constraint": "compile time; memory during compilation",
+   "failure_condition": "a multi-pass pipeline too slow for -run",
+   "world_punishes": "intermediate representations, separate passes, optimisation",
+   "world_rewards": "single-pass emission with just enough deferral (the value stack) to be correct",
+   "observable_consequence": "compile time per line vs gcc; code speed of the output (worse)",
+   "vacuity_condition": "no time budget",
+   "trivial_shortcuts": "an interpreter (slower to run; the world must charge run time too)",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a small fast C compiler (Bellard)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "tinycc::P.control_flow_targets_are_not_known_when_the_jump_must_be_emitted",
+   "source_fossil": "tinycc",
+   "source_evidence": "gsym / gjmp",
+   "condition": "one pass means the code for a branch target does not exist when the branch is compiled",
+   "resource_or_constraint": "no second pass",
+   "failure_condition": "unresolvable forward references",
+   "world_punishes": "two passes",
+   "world_rewards": "threading the unresolved jumps through the code itself and patching at the label",
+   "observable_consequence": "correct if/while/&&/|| code from one pass",
+   "vacuity_condition": "a tree or a second pass",
+   "trivial_shortcuts": "none in one pass",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tinycc::token_stream_with_macro_substitution_and_conditional_skipping_pulled_by_next",
+   "to": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "to": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "non-constant ops",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "gv loads",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "to": "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "patches displacements",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "to": "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "bytes into sections",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "float constants into rodata; symbols",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "tinycc",
+   "relation": "algorithm_from",
+   "to": "Bellard's OTCC / obfuscated C compiler lineage (by common knowledge, not from the body)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  }
+ ],
+ "residue": {
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the parser (9,001 lines) confirmed at two functions only",
+   "targets, assembler, PE/Mach-O, libtcc API, bounds checker unread",
+   "nothing ran here"
+  ],
+  "note": "the architecture is confidently cut at subsystem grain; every organ below the value stack is CANDIDATE-quality evidence despite the ACCEPTED status of the ones whose entry points were read",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "arms": [
+  "ca:maj",
+  "ca:exp",
+  "ca:par",
+  "ca:particle1",
+  "ca:particle2",
+  "ca:GKL",
+  "shift",
+  "direct",
+  "random"
+ ],
+ "assay_capability_requirement": "the ShiftRegister (perfect memory) reads >= 0.8 under the ridge readout (READOUT_CANNOT_EXPRESS otherwise); the best CA must exceed FrozenRandom by the preregistered margin for the explanations to be about anything",
+ "attempt": 1,
+ "budget": {
+  "delay": 2,
+  "eps": 0.02,
+  "horizon": 8,
+  "li_min": 0.1,
+  "n_cells": 31,
+  "pair_sites": 6,
+  "random_orders": 4,
+  "reset_density": 0.5,
+  "seeds": [
+   1
+  ]
+ },
+ "claim_ceiling": "weak; one CA family, one task; the flags are measurements with fixed rules, not a verdict",
+ "crn_policy": "per seed: one train/confirmation partition and one reset root shared by every substrate; shuffles drawn from one generator per row",
+ "decl": {
+  "n_min": 1,
+  "primary": {
+   "control": "random",
+   "metric": "base_acc",
+   "min_effect": 0.05,
+   "treatment": "ca:particle2"
+  },
+  "readout_control": {
+   "arm": "shift",
+   "chance": 0.5,
+   "metric": "base_acc",
+   "min_above": 0.3
+  }
+ },
+ "expected_machine_telemetry": [
+  "reset-only accuracy (the L-019 probe, wired)",
+  "time-shuffled and input-shuffled accuracies",
+  "greedy and random cumulative lesion curves",
+  "localization index and k50",
+  "pairwise interaction of the top-6 sites"
+ ],
+ "experiment": "C2-SFE-09",
+ "falsification_condition": "particle2 - random < 0.05 base accuracy => the parent's usefulness does not replicate; flag rules: reset_only >= base - 0.02 => readout artifact; time_shuffled >= base - 0.02 => dynamical bias; input_shuffled >= base - 0.02 => input-independent; LI >= 0.10 => localized (else distributed)",
+ "machine_changes_exercised": [
+  "H (the missing telemetry L-019)",
+  "B (readout_control state)",
+  "I"
+ ],
+ "parent_evidence": "SFE-04: particle2 0.608 on delayed recall d=2; lesion map flat within the matched-random band; frozen whole-substrate reuse positive; reset_leakage_probe unwired (L-019).",
+ "parents": [
+  "SFE-04"
+ ],
+ "positive_control": "ShiftRegister base accuracy (readout capability); DirectInput and FrozenRandom as floors",
+ "prereg_digest": "sha256:4f8854d3d7636d44b76a88b01d00249a66dac09403deb8e9c2a57790089b4d97",
+ "primary_observable": "base_acc per substrate x seed (particle2 vs random, the parent's pair); the four preregistered flags per CA row",
+ "question": "Which explanation of SFE-04's delayed-recall readout (0.608 vs 0.5 chance, flat single-window lesion map) survives: genuinely distributed computation, redundant/local computation invisible to single lesions, a readout artifact of the reset lattice, or a frozen dynamical bias?",
+ "reachability_estimate": {
+  "note": "not a WSE cell; the CA genomes are the six recovered Herakles genomes; the reachability table does not apply"
+ },
+ "title": "CA substrate: distributed vs redundant vs artifact",
+ "typed_failure_conditions": [
+  "READOUT_CANNOT_EXPRESS (shift < 0.8)",
+  "UNDERPOWERED",
+  "INSTRUMENT_FAILURE (probe signature)"
+ ]
+}

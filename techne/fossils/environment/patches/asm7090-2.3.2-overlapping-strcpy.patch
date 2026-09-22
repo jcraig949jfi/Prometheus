@@ -1,0 +1,18 @@
+Overlapping strcpy in the qualified-symbol scanner action (asm7090 2.3.2, scanner.h cases 3/12).
+
+    iiicp = strchr(symbol, '$'); *iiicp = 0; iiicp++;
+    strcpy (qualsym, symbol);
+    strcpy (symbol, iiicp);        <- src and dst overlap: undefined behaviour
+
+With glibc 2.36 on x86-64 the overlapping strcpy shifts the tail ("$ERROR" -> "EROOR",
+"$ZERO" -> "ZROO", "$CONS" -> "CNSS"), so every $-prefixed cross-namespace reference in the
+LISP 1.5 deck (741 of them) was looked up under a mangled name and reported undefined
+(Techne, 2026-09-16, techne/fossils/specimens/lisp-1-5-ibm7090-1962). memmove is defined
+for overlap. Applied to the WORLD (Dockerfile), never to a preserved body.
+
+--- asm7090/scanner.h
++++ asm7090/scanner.h
+@@ -86,2 +86,2 @@
+ 	 strcpy (qualsym, symbol);
+-	 strcpy (symbol, iiicp);
++	 memmove (symbol, iiicp, strlen (iiicp) + 1);

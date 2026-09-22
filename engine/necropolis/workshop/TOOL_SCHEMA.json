@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus://necropolis/workshop/TOOL_SCHEMA.json",
+  "title": "Necropolis workshop tool (TOOL MORGUE row)",
+  "description": "One meaningfully invokable forensic instrument harvested from Prometheus. A row records what the instrument IS and what has been MEASURED about it; it never records what the instrument PROVES about any grave. Status semantics: READY = imports, executes on a fixture, and has at least one accept AND one reject/differentiate control that was RUN by the Keeper (self_tests non-empty, last_verified_execution present). READY_WITH_CAVEAT = same but a named caveat limits evidentiary scope. NEEDS_DEPENDENCY = blocked by an uninstalled/unreachable dependency (dependency_status names it). NEEDS_ADAPTER = logic is sound but no stable invocation exists. NEEDS_VALIDATION = executes but no control has been run. HISTORICAL_ONLY = recovered from git history or a dead agent; characterised, not adopted. BROKEN = does not import or does not execute as documented (that is evidence, not a defect to fix). UNTRUSTED = executes and passes its own tests but a cheat defeated it. DUPLICATE = same logic as another row (duplicate_of names it).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tool_id", "name", "provenance", "current_path", "historical_path",
+    "source_commit", "tool_class", "deterministic", "mutates_state", "requires_model",
+    "dependencies", "dependency_status", "input_contract", "output_contract",
+    "historical_consumers", "last_verified_execution", "self_tests", "known_failure_modes",
+    "evidentiary_scope", "forbidden_inference", "necropolis_status", "harvest", "admissibility"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "tool_id": {"type": "string", "pattern": "^NT-[0-9]{3}$"},
+    "name": {"type": "string", "minLength": 3},
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["origin", "author_seat", "discovered_by", "discovery_loop"],
+      "properties": {
+        "origin": {"type": "string", "enum": ["LIVE_TREE", "GIT_HISTORY", "DEAD_AGENT", "TECHNE_INVENTORY", "EXTERNAL_DONOR", "NECROPOLIS_BUILT"]},
+        "author_seat": {"type": "string", "minLength": 1},
+        "discovered_by": {"type": "string", "minLength": 1},
+        "discovery_loop": {"type": "integer", "minimum": 1},
+        "techne_inventory_id": {"type": "string"},
+        "notes": {"type": "string"}
+      }
+    },
+    "current_path": {"type": ["string", "null"], "description": "repo-relative; null only for HISTORICAL_ONLY"},
+    "historical_path": {"type": ["string", "null"]},
+    "source_commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$", "description": "commit at which the instrument was read/characterised (git log -1 on current_path), or the last commit containing it for HISTORICAL_ONLY"},
+    "tool_class": {"type": "string", "enum": [
+      "validator", "grader", "scorer", "falsifier", "statistical_test", "null_generator",
+      "resampler", "calibration_battery", "negative_control", "anti_cheat", "provenance_validator",
+      "schema_validator", "invariant_checker", "replay_harness", "differential_test",
+      "exact_oracle", "symbolic_oracle", "proof_checker", "db_probe", "sampler", "loader",
+      "artifact_reader", "manifest_hash", "model_runner", "model_adapter", "coverage_diagnostic",
+      "kill_vector", "residue_gate", "failure_classifier", "diff_tool", "graph_diagnostic",
+      "feature_extractor", "inspection", "liveness_attestor", "denominator"
+    ]},
+    "deterministic": {"type": "string", "enum": ["YES", "SEEDED", "NO", "UNKNOWN"]},
+    "mutates_state": {"type": "string", "enum": ["NO", "WRITES_FILES", "WRITES_DB", "WRITES_TRACKED_FILES", "UNKNOWN"]},
+    "requires_model": {"type": "string", "enum": ["NO", "OPTIONAL", "YES", "UNKNOWN"]},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "dependency_status": {"type": "string", "enum": ["ALL_PRESENT", "MISSING", "UNREACHABLE", "HOST_LOCAL", "UNKNOWN"], "description": "MISSING = pip/binary absent here; UNREACHABLE = network/DB/host not reachable from the Keeper's host; HOST_LOCAL = present only on a named host"},
+    "dependency_detail": {"type": "string"},
+    "input_contract": {"type": "string", "minLength": 8},
+    "output_contract": {"type": "string", "minLength": 8},
+    "historical_consumers": {"type": "array", "items": {"type": "string"}},
+    "last_verified_execution": {
+      "type": ["object", "null"], "additionalProperties": false,
+      "required": ["date", "by", "how", "result"],
+      "properties": {
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "by": {"type": "string"},
+        "how": {"type": "string", "minLength": 8, "description": "the exact command or test that was executed"},
+        "result": {"type": "string", "minLength": 4},
+        "artifact": {"type": ["string", "null"], "description": "repo-relative path of the result file, if any"}
+      }
+    },
+    "self_tests": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "path", "result"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["ACCEPT", "REJECT", "CHEAT", "SYNTHETIC_SIGNAL", "SYNTHETIC_NULL", "CORRUPT_INPUT", "PERTURBATION", "REPETITION", "PARITY", "LAUNDERING"]},
+        "path": {"type": "string", "description": "repo-relative test/fixture path, or 'inline:<command>'"},
+        "result": {"type": "string", "enum": ["PASS", "FAIL", "NOT_RUN"]},
+        "note": {"type": "string"}
+      }
+    }},
+    "known_failure_modes": {"type": "array", "items": {"type": "string"}},
+    "evidentiary_scope": {"type": "string", "minLength": 8, "description": "what a run of this instrument CAN establish"},
+    "forbidden_inference": {"type": "string", "minLength": 8, "description": "what a run of this instrument must NOT be read as establishing"},
+    "necropolis_status": {"type": "string", "enum": [
+      "READY", "READY_WITH_CAVEAT", "NEEDS_DEPENDENCY", "NEEDS_ADAPTER", "NEEDS_VALIDATION",
+      "HISTORICAL_ONLY", "BROKEN", "UNTRUSTED", "DUPLICATE"
+    ]},
+    "status_reason": {"type": "string"},
+    "duplicate_of": {"type": "string", "pattern": "^NT-[0-9]{3}$"},
+    "caveat": {"type": "string"},
+    "necropolis_adapter": {"type": ["string", "null"], "description": "repo-relative path of the NECROPOLIS ADAPTER wrapping this instrument, if one was written"},
+    "admissibility": {
+      "type": "object", "additionalProperties": false,
+      "description": "The ladder PATH EXISTS != IMPORTS != EXECUTES != CONTROLLED != FORENSICALLY ADMISSIBLE, each rung measured separately (court charter 2026-09-14, TOOL ADMISSIBILITY). Derived by registry_source.py from measurements; never hand-set. admissible is true only for READY / READY_WITH_CAVEAT rows whose controls were RUN BY THE KEEPER; author tests never satisfy the CONTROLLED rung.",
+      "required": ["path_exists", "imports", "executes", "controlled", "control_state", "admissible", "admissible_as", "blocked_by"],
+      "properties": {
+        "path_exists": {"type": "boolean"},
+        "imports": {"type": "string", "enum": ["IMPORT_OK", "IMPORT_FAIL", "NOT_MEASURED"]},
+        "executes": {"type": "string", "enum": ["KEEPER_CONTROLS", "AUTHOR_TESTS_ONLY", "ERROR", "NOT_MEASURED"]},
+        "controlled": {"type": "string", "enum": ["KEEPER", "AUTHOR_ONLY", "NONE"]},
+        "control_state": {"type": "object", "additionalProperties": false, "required": ["pass", "fail", "error", "info", "artifact", "git_head"],
+          "properties": {"pass": {"type": "integer"}, "fail": {"type": "integer"}, "error": {"type": "integer"}, "info": {"type": "integer"},
+                         "artifact": {"type": ["string", "null"]}, "git_head": {"type": ["string", "null"]}}},
+        "admissible": {"type": "boolean"},
+        "admissible_as": {"type": "string", "enum": ["EVIDENCE", "EVIDENCE_WITH_CAVEAT", "NOT_ADMISSIBLE"]},
+        "blocked_by": {"type": ["string", "null"], "description": "the first rung that fails, or the status that blocks, for a non-admissible row"}
+      }
+    },
+    "layer": {"type": "string", "enum": ["ORIGINAL_SCIENTIFIC_LOGIC", "NECROPOLIS_ADAPTER", "NECROPOLIS_VALIDATION"], "description": "which of the three layers the current_path IS"},
+    "frankenstein_refs": {"type": "array", "items": {"type": "string", "pattern": "^FRANK-[0-9]{3}$"}},
+    "battery_refs": {"type": "array", "items": {"type": "string"}},
+    "harvest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["date", "keeper"],
+      "properties": {
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "keeper": {"type": "string"},
+        "inspected": {"type": "boolean", "description": "true only if the Keeper opened and read the main logic"}
+      }
+    }
+  },
+  "x-status-rules": {
+    "READY": "self_tests must contain at least one ACCEPT-family kind (ACCEPT, SYNTHETIC_SIGNAL, PARITY, REPETITION) AND at least one REJECT-family kind (REJECT, CHEAT, SYNTHETIC_NULL, CORRUPT_INPUT, PERTURBATION, LAUNDERING), every self_test result PASS, last_verified_execution non-null, current_path non-null",
+    "READY_WITH_CAVEAT": "as READY plus caveat non-empty",
+    "DUPLICATE": "duplicate_of required",
+    "BROKEN|UNTRUSTED|NEEDS_DEPENDENCY": "status_reason required",
+    "HISTORICAL_ONLY": "historical_path required; current_path may be null",
+    "UNTRUSTED": "at least one self_test of kind CHEAT with result FAIL"
+  }
+}

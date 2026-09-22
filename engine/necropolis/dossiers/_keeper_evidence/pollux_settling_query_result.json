@@ -1,0 +1,1724 @@
+{
+ "script": "pollux_settling_query.py",
+ "table": "agora.intelligence_outputs",
+ "boundary": "2026-05-25 23:30:00-04:00",
+ "total_rows": 286,
+ "rows_before_boundary": 90,
+ "by_output_summary": [
+  {
+   "output_summary": "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235",
+   "n": 17,
+   "first": "2026-05-24 03:08:13.064436-04:00",
+   "last": "2026-05-25 10:00:09.499987-04:00"
+  },
+  {
+   "output_summary": "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992",
+   "n": 17,
+   "first": "2026-05-24 03:28:00.014120-04:00",
+   "last": "2026-05-25 12:00:07.042151-04:00"
+  },
+  {
+   "output_summary": "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985",
+   "n": 17,
+   "first": "2026-05-24 03:57:05.532722-04:00",
+   "last": "2026-05-25 10:30:20.980843-04:00"
+  },
+  {
+   "output_summary": "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786",
+   "n": 16,
+   "first": "2026-05-24 04:26:06.524167-04:00",
+   "last": "2026-05-25 09:30:36.558486-04:00"
+  },
+  {
+   "output_summary": "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817",
+   "n": 56,
+   "first": "2026-05-25 11:00:20.723059-04:00",
+   "last": "2026-05-30 11:55:23.880165-04:00"
+  },
+  {
+   "output_summary": "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687",
+   "n": 5,
+   "first": "2026-05-25 11:29:57.806858-04:00",
+   "last": "2026-05-25 19:13:06.739959-04:00"
+  },
+  {
+   "output_summary": "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922",
+   "n": 53,
+   "first": "2026-05-25 13:29:13.973592-04:00",
+   "last": "2026-05-30 10:15:33.029910-04:00"
+  },
+  {
+   "output_summary": "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04",
+   "n": 54,
+   "first": "2026-05-25 13:58:23.629122-04:00",
+   "last": "2026-05-30 11:21:51.279347-04:00"
+  },
+  {
+   "output_summary": "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519",
+   "n": 51,
+   "first": "2026-05-25 19:46:12.623802-04:00",
+   "last": "2026-05-30 10:48:43.461555-04:00"
+  }
+ ],
+ "by_verdict": {
+  "REJECTED": 86,
+  "PROMOTED": 39,
+  "UNVERIFIED": 161
+ },
+ "by_pair": {
+  "deg10_vs_deg12": 17,
+  "deg14_vs_deg16": 17,
+  "salem_vs_pisot": 17,
+  "smyth_extremal_vs_rest": 16,
+  "even_deg_vs_odd_deg": 56,
+  "small_deg_vs_large_deg": 5,
+  "narrow_band_1.10_1.20_vs_1.30_1.50": 53,
+  "deg18_vs_deg20": 54,
+  "lehmer_witness_neighborhood": 51
+ },
+ "by_kill_pattern": {
+  "pollux_sign_flips_under_normalization": 86,
+  "pollux_correlation_survives_normalization": 39,
+  "pollux_correlation_attenuates_under_normalization": 161
+ },
+ "pair_sequence_rle": [
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "smyth_extremal_vs_rest",
+   1
+  ],
+  [
+   "deg10_vs_deg12",
+   1
+  ],
+  [
+   "salem_vs_pisot",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "small_deg_vs_large_deg",
+   1
+  ],
+  [
+   "deg14_vs_deg16",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "small_deg_vs_large_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "small_deg_vs_large_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "small_deg_vs_large_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "small_deg_vs_large_deg",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ],
+  [
+   "narrow_band_1.10_1.20_vs_1.30_1.50",
+   1
+  ],
+  [
+   "lehmer_witness_neighborhood",
+   1
+  ],
+  [
+   "deg18_vs_deg20",
+   1
+  ],
+  [
+   "even_deg_vs_odd_deg",
+   1
+  ]
+ ],
+ "tick_times_first_120": [
+  [
+   "2026-05-24 03:08:13.064436-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 03:28:00.014120-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 03:57:05.532722-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 04:26:06.524167-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 04:55:36.987847-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 05:24:51.300983-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 05:54:17.798675-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 06:24:28.609516-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 06:53:45.648970-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 07:22:53.466027-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 07:52:34.508830-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 08:21:57.945754-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 08:51:59.602729-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 09:21:07.767131-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 09:50:46.930051-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 10:20:20.330718-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 10:49:40.774762-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 11:19:18.303993-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 11:48:51.890194-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 12:18:26.394953-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 12:48:24.536000-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 13:18:00.344261-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 13:47:43.608548-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 14:17:39.542930-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 14:47:55.013316-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 15:17:13.014803-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 15:46:40.508954-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 16:15:58.691998-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 16:45:26.781545-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 17:15:15.971201-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 17:44:54.335595-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 18:14:10.531969-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 18:43:32.295855-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 19:12:41.983565-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 19:41:41.864823-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 20:10:56.615868-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 20:40:13.598168-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 21:09:21.302269-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 21:38:32.775768-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-24 22:08:05.636283-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-24 22:37:37.969115-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-24 23:07:07.605717-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-24 23:36:38.226249-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 00:06:01.529232-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 00:36:12.566532-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 01:04:58.555485-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 01:34:17.907262-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 01:45:15.935372-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 02:04:37.040484-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 02:33:59.458556-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 03:04:20.828904-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 03:34:08.958795-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 04:04:01.556616-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 04:33:36.094723-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 05:03:54.278065-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 05:34:10.789976-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 06:04:06.839675-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 06:33:28.590052-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 07:02:48.459013-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 07:32:15.190697-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 08:01:53.776963-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 08:31:05.478029-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 09:01:04.152582-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 09:30:36.558486-04:00",
+   "pair=smyth_extremal_vs_rest kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.0786"
+  ],
+  [
+   "2026-05-25 10:00:09.499987-04:00",
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235"
+  ],
+  [
+   "2026-05-25 10:30:20.980843-04:00",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  [
+   "2026-05-25 11:00:20.723059-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 11:29:57.806858-04:00",
+   "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687"
+  ],
+  [
+   "2026-05-25 12:00:07.042151-04:00",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992"
+  ],
+  [
+   "2026-05-25 12:30:03.810959-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 12:59:59.204842-04:00",
+   "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687"
+  ],
+  [
+   "2026-05-25 13:29:13.973592-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-25 13:58:23.629122-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-25 14:27:43.187975-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 14:56:59.830982-04:00",
+   "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687"
+  ],
+  [
+   "2026-05-25 15:26:48.440518-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-25 15:54:47.741898-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-25 16:28:11.848018-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 17:01:00.728016-04:00",
+   "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687"
+  ],
+  [
+   "2026-05-25 17:34:03.675476-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-25 18:07:08.106909-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-25 18:40:05.508458-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 19:13:06.739959-04:00",
+   "pair=small_deg_vs_large_deg kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.4687"
+  ],
+  [
+   "2026-05-25 19:46:12.623802-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-25 20:19:35.143058-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-25 20:52:40.675960-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 21:26:11.570699-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-25 21:59:35.926017-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-25 22:32:50.462580-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-25 23:06:04.861370-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-25 23:39:39.099765-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 00:12:57.866172-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 00:45:53.047157-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 01:18:32.688143-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 01:51:43.445980-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 02:35:13.502505-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 03:09:20.064302-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 03:43:11.323113-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 04:17:00.056020-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 04:51:12.956225-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 05:24:28.735485-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 05:57:41.578326-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 06:29:35.862721-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 07:02:40.310254-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 07:35:25.908430-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 08:07:52.972194-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 08:40:56.337192-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 09:14:01.989945-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 09:47:33.596180-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 10:20:26.585563-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 10:53:56.344976-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 11:27:21.561986-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 11:59:48.440183-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 12:33:25.592522-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 13:02:46.921072-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 13:36:17.528785-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ],
+  [
+   "2026-05-26 14:10:04.869946-04:00",
+   "pair=deg18_vs_deg20 kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.04"
+  ],
+  [
+   "2026-05-26 14:43:19.896274-04:00",
+   "pair=even_deg_vs_odd_deg kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0817"
+  ],
+  [
+   "2026-05-26 15:16:19.908749-04:00",
+   "pair=narrow_band_1.10_1.20_vs_1.30_1.50 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.6922"
+  ],
+  [
+   "2026-05-26 15:49:02.759108-04:00",
+   "pair=lehmer_witness_neighborhood kp=pollux_correlation_attenuates_under_normalization verdict=UNVERIFIED raw=1.0 norm=0.0519"
+  ]
+ ],
+ "prediction_if_code_wrote_ledger": {
+  "REJECTED": 62,
+  "PROMOTED": 63,
+  "UNVERIFIED": 161,
+  "rows_before_boundary": 95
+ },
+ "prediction_if_readers_right": {
+  "REJECTED": 86,
+  "PROMOTED": 39,
+  "UNVERIFIED": 161
+ },
+ "caveat": "DUAL-RECORDED IS NOT INDEPENDENTLY VERIFIED: same daemon, same tick as the lost ledger."
+}

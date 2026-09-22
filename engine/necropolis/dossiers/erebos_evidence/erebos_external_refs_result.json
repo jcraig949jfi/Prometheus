@@ -1,0 +1,140 @@
+{
+  "A2_p57_scope_case_insensitive": {
+    "files_with_hits": [
+      "charon/CHARON_SESSION_2026-06-03.md",
+      "charon/CHARON_SESSION_2026-06-15.md",
+      "engine/driver/backlog_gen.py",
+      "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "engine/ledger/AUTOPSY_TAXONOMY.md",
+      "engine/necropolis/QUEUE.jsonl",
+      "engine/necropolis/ROSTER.jsonl",
+      "engine/necropolis/build_roster.py",
+      "engine/queues/BACKCORPUS_MINING.jsonl",
+      "engine/queues/BACKLOG.jsonl",
+      "engine/queues/CONSUMPTION.jsonl",
+      "engine/queues/PROF_TRIAGE.jsonl",
+      "engine/shadow/WORKLOG.jsonl",
+      "techne/loop/rung_notes/MAHLER_PRECISION_BITES_PREREG.md"
+    ],
+    "files_with_hits_n": 14
+  },
+  "A_p57_replication": {
+    "files_with_hits": [
+      "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "engine/queues/BACKLOG.jsonl",
+      "engine/shadow/WORKLOG.jsonl"
+    ],
+    "files_with_hits_n": 3,
+    "note": "Hits under engine/necropolis/dossiers/erebos* are this investigation and are excluded; engine/ledger hits are the certificates themselves.",
+    "pattern": "EREBOS (case-sensitive)",
+    "scope": [
+      "engine",
+      "techne",
+      "charon/BACKLOG.md",
+      "charon/CHARON_SESSION_*.md"
+    ],
+    "session_docs_in_scope_n": 11
+  },
+  "B2_code_importers": {
+    "files": [
+      "charon/agents/_base.py",
+      "charon/agents/stygian/executor.py",
+      "charon/agents/stygian/tests/test_phase0_integration.py",
+      "harmonia/primitives/test_baseline_costume_parity.py",
+      "roles/Polyhymnia/ledgers/tensor_body_2026-09-11/tesserae.jsonl"
+    ],
+    "lines_n": 17,
+    "sample": [
+      "charon/agents/_base.py:304:        from charon.agents.erebos.daemon import ErebosAgent",
+      "charon/agents/stygian/executor.py:419:    from charon.agents.erebos._cost_instrumentation import (",
+      "charon/agents/stygian/tests/test_phase0_integration.py:15:from charon.agents.erebos._kill_pattern_registry import (",
+      "charon/agents/stygian/tests/test_phase0_integration.py:20:from charon.agents.erebos._quarantine import (",
+      "charon/agents/stygian/tests/test_phase0_integration.py:25:from charon.agents.erebos._value_metrics import (",
+      "charon/agents/stygian/tests/test_phase0_integration.py:29:from charon.agents.erebos.generators._base import ComposedClaim",
+      "charon/agents/stygian/tests/test_phase0_integration.py:30:from charon.agents.erebos.generators._predicate_handles import (",
+      "charon/agents/stygian/tests/test_phase0_integration.py:143:    from charon.agents.erebos.generators import applicable_plugins",
+      "charon/agents/stygian/tests/test_phase0_integration.py:144:    from charon.agents.erebos.tests._fixtures import empty_swarm_state",
+      "charon/agents/stygian/tests/test_phase0_integration.py:303:    from charon.agents.erebos.generators import REGISTRY",
+      "harmonia/primitives/test_baseline_costume_parity.py:34:from charon.agents.erebos._cross_cell_motif import (",
+      "harmonia/primitives/test_baseline_costume_parity.py:39:from charon.agents.erebos.sprint1.phase3.real_residue_smoke import ("
+    ]
+  },
+  "B3_stygian_files_naming_erebos": {
+    "loaders_n": 29,
+    "n": 53,
+    "other": [
+      "charon/agents/stygian/daemon.py",
+      "charon/agents/stygian/executor.py",
+      "charon/agents/stygian/loaders/_bocpd.py",
+      "charon/agents/stygian/loaders/_bootstrap_ci.py",
+      "charon/agents/stygian/loaders/_composition.py",
+      "charon/agents/stygian/loaders/_degeneracy_precondition.py",
+      "charon/agents/stygian/loaders/_emission_types.py",
+      "charon/agents/stygian/loaders/_mahler_composition_helpers.py",
+      "charon/agents/stygian/loaders/_selection_discipline.py",
+      "charon/agents/stygian/tests/test_bocpd_g10_v2.py",
+      "charon/agents/stygian/tests/test_bootstrap_ci_g23_v2.py",
+      "charon/agents/stygian/tests/test_catalog_profile.py",
+      "charon/agents/stygian/tests/test_cross_loader_salem_consistency.py",
+      "charon/agents/stygian/tests/test_degeneracy_precondition.py",
+      "charon/agents/stygian/tests/test_emission_types.py",
+      "charon/agents/stygian/tests/test_mc_gtest_g11_v5.py",
+      "charon/agents/stygian/tests/test_phase0_integration.py",
+      "charon/agents/stygian/tests/test_selection_discipline.py",
+      "charon/agents/stygian/tests/test_westfall_young_multi_binary.py"
+    ],
+    "tests_n": 5
+  },
+  "B4_harmonia_files": [
+    "harmonia/experiments/hunt_raw_20260610.json",
+    "harmonia/memory/architecture/failure_primitive_atlas.md",
+    "harmonia/memory/architecture/fp_candidate_shelf_20260610.json",
+    "harmonia/memory/architecture/fp_candidate_shelf_20260610.md",
+    "harmonia/memory/architecture/fp_void_schedule_20260610.json",
+    "harmonia/memory/architecture/reasoning_tool_candidates.md",
+    "harmonia/primitives/baseline_costume.py",
+    "harmonia/primitives/failure_primitives.py",
+    "harmonia/primitives/fp_void_map.py",
+    "harmonia/primitives/test_baseline_costume_parity.py",
+    "harmonia/proposals/2026-06-09/00_SEQUENCING_AND_HANDOFF.md",
+    "harmonia/proposals/2026-06-09/A_CLOSURE_2026-06-15_by_B.md",
+    "harmonia/proposals/2026-06-09/A_baseline_costume_detector.md",
+    "harmonia/proposals/2026-06-09/B_a3_lattice_void_mining.md",
+    "harmonia/proposals/2026-06-09/D_cross_agent_failure_primitive_atlas.md",
+    "harmonia/proposals/2026-06-09/RESTART_HANDOFF_by_B.md",
+    "harmonia/proposals/2026-06-09/REVIEW_E_failure_primitives_by_B.md",
+    "harmonia/proposals/2026-06-09/SYNTHESIS_interim_by_B.md",
+    "harmonia/proposals/2026-06-09/SYNTHESIS_v2_by_B.md"
+  ],
+  "B5_hecate_files": [
+    "charon/agents/hecate/daemon.py"
+  ],
+  "B_extended_census": {
+    "external_by_bucket": {
+      "aporia": 34,
+      "charon": 2,
+      "charon/agents/.gitignore": 1,
+      "charon/agents/__init__.py": 1,
+      "charon/agents/_base.py": 1,
+      "charon/agents/hecate": 1,
+      "charon/agents/stygian": 53,
+      "charon/quality": 1,
+      "docs": 1,
+      "engine": 11,
+      "ergon": 7,
+      "evidence_wiki": 1,
+      "harmonia": 19,
+      "pivot": 37,
+      "prometheus_math": 1,
+      "roles": 22,
+      "scripts": 3,
+      "stations": 1,
+      "techne": 1
+    },
+    "files_external_n": 198,
+    "files_own_n": 157,
+    "files_total_n": 355,
+    "pattern": "erebos (case-insensitive), tracked tree"
+  },
+  "question": "erebos_external_refs.py -- ONE question:"
+}

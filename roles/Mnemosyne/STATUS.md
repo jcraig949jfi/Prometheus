@@ -1,81 +1,142 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-11 15:00 local. Updated at least every four hours of activity.
+Currency: 2026-09-17 10:05 local (instance m2-9c10ae00; pre-Campaign-4 repair DONE, surface FROZEN). Updated at least
+every four hours of activity. The 2026-09-11 status is superseded where it
+says the service runs on M1; everything else it recorded stands as history.
 
-## What is running
+## What is running (asserting PRESENT, ACTIVE and PRODUCTIVE, measured)
 
-    PEW service      http://192.168.1.202:8377  (M1, SKULLPORT)
-                     schema 4, ontology 7, contract pew.fossil.v2,
-                     closure pew.closure.v0
+    PEW service      http://127.0.0.1:8377 on M2 (SPECTREX5), bound 0.0.0.0
+                     so M2 seats use 127.0.0.1 and LAN peers 192.168.1.191
+                     schema 5 (migrations 014, 015, 2026-09-17), ontology 7 in
+                     the registry (code constant still 2, MNE-19), contract
+                     pew.fossil.v2, closure pew.closure.v0; the store is
+                     ATTESTED before the port binds (health.store)
     serving from     the pinned worktree mnemosyne-pew (host convention
-                     F:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
-                     detached at e301547dd32d083903a4a727944daac663ea06a5
-                     (advanced 2026-09-11 14:44 local from bc3c39eee after
-                     the merged-tree tests; service pid 15616, started by
-                     the watchdog, model ready 4.59 s after start)
-                     main_worktree false, dirty false
-    store            PostgreSQL 17, prometheus_fire, schema ew, M1-local
-                     db_system_id 7628127204585430828 (M2 has its own)
-    scheduled        MnemosyneEvidenceWikiWatchdog (5 min, singleton-guarded)
-                     PEWBackupDaily 03:30, PEWRestoreVerifyWeekly Sun 04:30
-                     all three run from the pinned worktree
+                     D:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
+                     detached at f46e821e0, clean; workspace_known true;
+                     pid 19624 since 2026-09-17 09:50:00
+    store            the CANONICAL store: PostgreSQL 17 prometheus_fire on
+                     M1 (192.168.1.202), db_system_id 7628127204585430828,
+                     attested by the service (S2) on every battery run
+    engine           anchors verified against the M2 engine
+                     https://192.168.1.191:8811/v2 (Daedalus, ledger
+                     D:\Prometheus-data\sfe\engine.db) with a client token
+                     minted for pew-m2-service, held only in the untracked
+                     config.local.json
+    scheduled        MnemosyneEvidenceWikiWatchdogM2 (5 min, property
+                     probe, rule-10 bound 12, parks to Mnemosyne) from the
+                     pinned worktree
 
-## Last verified
+## What is NOT running, or cannot be seen from here
 
-    pew_battery 17/17 (E14 productive_not_present added), seam 12/12,
-    closure 19/19, lineage 14/14 + 1 SKIP (no --peer-sfe-url),
-    h0h5_refs 16/16 -- run 2026-09-11 14:50 local from the task worktree
-    against the service at e301547dd; results committed with this file.
-    Watchdog live tick: "ok  health 40ms  hybrid search 1426ms".
-    Earlier today (03:48-13:33 local) the batteries graded PEW against a
-    STALE ledger copy in the canonical checkout; the engine had moved to
-    its off-tree location. Resolution is now config-driven (sfe_db_path in
-    the untracked config.local.json), never a drive letter in code.
-    Backup: verified-restorable; last RESTORE_VERIFIED against a scratch
-    database, chain E-dbe8c504b8cc reconstructed byte-identical.
+    M1 PEW service   DORMANT since 2026-09-15 17:11:01 -0400 (last watchdog
+                     search in ew.read_log). M1 8377 does not answer from
+                     the LAN. M1 is Nestor's machine since 2026-09-15
+                     (ccb26df01); nothing on it can be attested from M2.
+    PEWBackupDaily   (M1) NOT RELIED ON since 2026-09-17; still UNLOCATED
+    PEWRestoreVerify from M2. The backup of record is now on M2 (below).
+    M2 fork store    untouched, quarantined, no reader since 2026-09-05;
+                     no service fronts it.
 
-## Corpora indexed
+## Backup of record (O2, ruling MNE-D1 2026-09-17)
 
-    cs-h1h0-1-p1   24/24 completed rows -> 96 typed refs
-    cs-c3-2       107/150 completed rows -> 428 typed refs
-                  (43 still queued/running at index time)
-    zero unresolved references, zero errors, zero ARTIFACT refs because
-    artifact_locators was empty on every row.
+    PEWBackupDailyM2          03:30 daily, M2, pinned worktree c46a882e9:
+                              attested dump of the canonical cluster over
+                              the LAN to D:\PrometheusBackups\pew, keep 14
+    PEWRestoreVerifyWeeklyM2  Sun 04:30: restore into the M2 local cluster
+                              (17.11, not canonical by identity) and
+                              compare every table in every schema with live
+    today                     2 backups (pewbk-20260917T055050-fea46038fa3c
+                              hand-run; pewbk-20260917T055922-1b1967c7670a
+                              by the task), 2 restore qualifications, both
+                              RESTORE_VERIFIED: 164/164 tables, loss {},
+                              chain identical, ~200 s each
+    alarms                    failed job -> comms report; missed job -> the
+                              M2 watchdog's stale check (36 h / 8 d), one
+                              report per stale day (exercised)
+    O3 conditions             1 backup cycles: 2 today (same day; nightly
+                              cycles accrue); 2 independent restore: DONE;
+                              3-7: open (consumer enumeration, reversible
+                              connection changes, point-release integration
+                              far enough, no active campaign, rollback
+                              rehearsed); destination: M2 unless a
+                              central-services host is imminent
 
-## Changed today (second pass)
+## Last verified (2026-09-17 07:1x, from the task worktree, against the
+## deployed service at 8665b1bdf)
 
-    watchdog        measures the property (authenticated hybrid search),
-                    writes a last-success line, restarts a PRESENT but
-                    non-answering service after 3 ticks, 300 s start grace;
-                    6/6 tests on a fake service (evidence_wiki/tests/)
-    service         embedding model warmed at startup under a lock; /health
-                    async, reports search.ready; first hybrid search after
-                    a cold start was 80 s, now 0 s at first request
-    identity        per-agent scoped tokens; Kairos holds a READ-ONLY one
-                    (R-4); value out of band, sha256 committed
-    store guard     ew.db refuses a store that is not the named environment
-                    (Hermes #69 accepted); M2 watchdog names m2-local-fork
-    config note     "DB is never exposed to the LAN" annotated FALSE (B2)
+    pew_battery 17/17, seam 12/12, closure 19/19, lineage 14/14 + 1 SKIP
+    (no peer engine reachable), h0h5_refs 16/16, campaign release check
+    15/15, ecology selector 7/7, minted player 7/7; projections
+    rebuild-check equal x3; unit tests 30 passed 2 skipped, watchdog 9/9,
+    base-role 11/11. Watchdog live tick: `ok  health 31ms  hybrid search
+    83ms`. S2 cheat: naming the fork FAILS. Wrong-store startup: REFUSED
+    (exit 1 before bind).
+
+## Pre-Campaign-4 repair (2026-09-17 09:xx; order s4) -- FROZEN
+
+    surface       docs/point_release/CAMPAIGN4_FROZEN_SURFACE.{md,json},
+                  digest sha256:0ba00db3481f...; tests/test_frozen_surface.py
+                  fails on any drift
+    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.3; builder
+                  ew.projections/1.0; reach_level v1, corridor_edge v1 (v0
+                  SUPERSEDED, kept); inbox pew.events.v1; thresholds 0.5 /
+                  0.45 / 0.90 + held-out confirmation
+    repairs       closure verify timeout 6 s -> 30 s + one retry (Daedalus
+                  #345; a stall wrote UNVERIFIED silently); content-duplicate
+                  sequences recorded (Vivarium #335, migration 015);
+                  foundry_profile scheme tag (Proteus #339)
+    acceptance    batteries green after restart; release check 16/16;
+                  second ingest 0 new (C3/C2/C1); rebuild digests identical
+                  to the point-release build; post-015 restore qualified
+    receipt       docs/point_release/PEW_REPAIR_RECEIPT_2026-09-17.json;
+                  dispositions PEW_STAGE3_DISPOSITIONS.md
+
+## Point release (2026-09-17; docs/point_release/PEW_RELEASE_PACKET.md)
+
+    ingested      campaigns 1-3 -> 26,636 campaign_observations (cmp3
+                  19,436; cmp2 5,629; cmp1 1,352; other producers 219);
+                  second pass 0 new; 278 checkpoints; 0 conflicts
+    projections   reach_level v1 (agrees with producer 1265/1265),
+                  reach_level v0 SUPERSEDED (156 rows differ; 126 = D3-006
+                  class), corridor_edge v1; rebuild equal
+    routes        campaign/observations, campaign/summary, projections,
+                  ingestion/*, events (outbox inbox), release
+    migration     014 at 06:50:07 against backup pewbk-20260917T064348;
+                  post-migration backup pewbk-20260917T070006 restored
+                  RESTORE_VERIFIED 171/171
+    gate (s22)    PEW: deployed, restarted, qualified -- reported #33x
+
+## Changed 2026-09-16
+
+    guard       ew.workspace fails closed when git does not answer
+    watchdog    one script, both machines; rule-10 bound enforced on M2;
+                creates derived/; finds .venv-m2 via the common git dir
+    tests       live-qualification scripts opt-in (Techne #194);
+                derived/ ignored
+    battery     S2 keyed by environment registry, not machine
+    routes      GET /fossil/encounters?ecology=<json> (THEO-REQ-001)
+    schema      migration 013: minted-player columns on fossil_players
+    identity    Proteus read+write (R-5); tracker R-6 (Agora #258)
+    client      fossil_encounters, register_fossil_player, get_fossil_player
+    deps        evidence_wiki/requirements.txt
 
 ## Open, and on whom
 
-    OPERATOR  R-1 rotate PEW credentials that lived in git history; R-3
-              rotate the archive key prefixes (low urgency, prefixes only,
-              never committed). docs/CREDENTIAL_ROTATION_TRACKER.md.
-    OPERATOR  D-15: append-only availability events as the canonical form
-              for X5. Archaeon concurs. Gates the X5 BUILD, not the design.
-    DAEDALUS  SFE /v2/audit/verify-anchor does not assert binds_session, so
-              a real anchor from the correct experiment but the WRONG
-              SESSION still verifies TRUE at the engine. PEW catches the
-              common case with its own splice witness, which is a net and
-              not a proof. PEW already consumes the field when present.
-    DAEDALUS  Nothing prevents two engines sharing one engine_instance_id.
-              Measured 2026-09-05: two clones of one engine.db, same id,
-              divergent ledgers. Proposed: a writer lease.
-    VIVARIUM  A witness to index, so WP-X5 can be built rather than designed.
-
-## Not run, and said so
-
-    X5 witness round trip: no witness exists yet.
-    Cross-machine PEW qualification from M2 itself: all M2-labelled legs so
-    far originated on M1.
+    RULED     MNE-D1 (operator, 2026-09-17, verbatim in prompts/
+              2026-09-17_point_release/02_OPERATOR_RULING_MNE-D1.md): O2
+              approved and DONE today; O3 deferred behind seven
+              conditions (MNE-46 tracks them); O4 rejected; M1 remains
+              SHARED infrastructure, not handed over, while the canonical
+              cluster serves both ecosystems.
+    OPERATOR  MNE-D2 CONFIRMED in chat 2026-09-16 ("We are going to run
+              the SFE ecosystem on M2 now"); residue: the fork database's
+              disposition (keep quarantined / drop).
+    OPERATOR  R-1, R-3 (credentials in history); R-6 (Agora #258).
+    ARCHAEON  archaeon/workspace.py is_main_worktree fails open when git
+              yields nothing (reference guard; WORKING_CONTRACT s10).
+    DAEDALUS  binds_session and the writer lease (unchanged, 2026-09-11).
+    PROTEUS   post the first prod mint's player_id; I read it back.
+    THEOPHRASTUS  write `ecology` on your rows; today 0 of 12,858
+              encounters carry one, so the selector's population is empty.

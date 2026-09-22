@@ -1,0 +1,49 @@
+{
+ "perturbation_id": "P-F05",
+ "parent": "T-E06",
+ "co_parents": [
+  "T-X14",
+  "T-X04",
+  "T-X16"
+ ],
+ "claim_type": "protocol-separation",
+ "protocols": {
+  "invasion": "resident alone 40 gens, invader 10 percent, 80 gens, both directions",
+  "scratch": "mixed from f0 .1 / .9, 120 gens",
+  "geometry": "phi {0,.5,1} x rate, f0 .1, 160 gens"
+ },
+ "rates": [
+  0.5,
+  0.55,
+  0.6,
+  0.65,
+  0.7,
+  0.75,
+  0.8
+ ],
+ "geometry_rates": [
+  0.5,
+  0.6,
+  0.7,
+  0.8,
+  0.9,
+  1.0
+ ],
+ "ids": [
+  "cw01-loop4-PF05-0",
+  "cw01-loop4-PF05-1",
+  "cw01-loop4-PF05-2"
+ ],
+ "geometry_ids": [
+  "cw01-loop4-PF05g-0",
+  "cw01-loop4-PF05g-1"
+ ],
+ "readouts": "per rate: TREE invades (from 10 percent, pre-adapted TAPE resident) vs from-scratch TREE gain from .1; TAPE invades vs from-scratch TAPE gain from .9; window presence per protocol; per phi the sign pattern over rate",
+ "material_rule": "the two protocols disagree on the direction at >= 2 rates, or the exclusion window (from-scratch, f0 .1) is absent under the invasion protocol, or the sign pattern over rate differs between phi values",
+ "continuation": [
+  "gens_resident dose",
+  "invader fraction dose"
+ ],
+ "written": "2026-09-19 02:45:13",
+ "prereg_sha256": "2058df1a5dc3c343c6bbac575b8a8961450105158aa4f987ea0728542b045119"
+}

@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "umdhmm-kanungo-1.02",
+ "techne_record": "techne/fossils/specimens/umdhmm-kanungo-1.02/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "umdhmm-kanungo-1.02",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "UMDHMM 1.02 -- Hidden Markov Model toolkit in C: forward, backward, Viterbi and Baum-Welch (Tapas Kanungo, 1998)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "UMDHMM 1.02 (VERSION file); mirror github.com/palanceli/UMDHMM master (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1998",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "estimation",
+     "hidden-state",
+     "HMM",
+     "EM",
+     "learning"
+    ],
+    "lineage": "Rabiner's 1989 tutorial algorithms implemented directly in C at the University of Maryland (1998): esthmm TRAINS an HMM from an observation sequence by Baum-Welch (EM), testfor/testvit evaluate and decode, genseq samples. The classic compact reference many later toolkits cite; complements the vault's decode-only viterbi-hmm-xukmin. Preserved from a GitHub mirror of Kanungo's original distribution (the author's page is gone) -- HISTORICAL_ARCHIVE_MIRROR."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "unsupervised learning of a hidden Markov process",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "learn the transition and emission probabilities of a hidden process from its outputs alone, then decode the hidden states",
+    "pressure": "hidden state with no labels; local optima of EM; sequences long enough for probabilities to underflow (scaling)",
+    "success_means": "the trained model reproduces the generating model's parameters (up to relabelling) and its likelihood on held-out data"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "hidden state, unlabeled observations, numerical underflow",
+    "failure_condition": "EM converges to a poor local optimum or the likelihood underflows without scaling"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Rabiner's 1989 tutorial algorithms implemented directly in C at the University of Maryland (1998): esthmm TRAINS an HMM from an observation sequence by Baum-Welch (EM), testfor/testvit evaluate and decode, genseq samples. The classic compact reference many later toolkits cite; complements the vault's decode-only viterbi-hmm-xukmin. Preserved from a GitHub mirror of Kanungo's original distribution (the author's page is gone) -- HISTORICAL_ARCHIVE_MIRROR.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Baum et al. 1970; Rabiner 1989"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: viterbi-hmm-xukmin"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "56f67cde1a1e01748d49a39265d574ea7adb7eadb5963c35f53f32d2ef8d1753"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "algorithm_from",
+   "to": "Baum et al. 1970; Rabiner 1989",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "shares_ancestor_with",
+   "to": "viterbi-hmm-xukmin",
+   "note": "HMM decode-only vs decode+train",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

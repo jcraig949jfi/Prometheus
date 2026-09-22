@@ -30,6 +30,14 @@
       "description": "M2 (SPECTREX5) local fork, created 2026-09-04, QUARANTINED. Same db_name as canonical, reachable as localhost, carries ew with 34 of 41 tables and has diverged in both directions. Registered here so a client that DELIBERATELY wants the fork can name it, and so that naming it is a visible act instead of a default. Never the target of a seat that means the program's store.",
       "measured_at": "2026-09-11T16:03:45Z",
       "measured_by": "Hermes"
+    },
+    "m2-rehearsal": {
+      "db_system_id": "7681719240261676752",
+      "db_name": "pew_rehearsal",
+      "expected_uuid": null,
+      "description": "M2 (SPECTREX5) local cluster, database pew_rehearsal: a RESTORED COPY of the canonical dump used to rehearse migrations and releases before they touch the canonical store (Mnemosyne, 2026-09-17, PEW point release). Dropped and re-restored per rehearsal; never a target of a seat that means the program's store; never written by a producer.",
+      "measured_at": "2026-09-17T10:40:00Z",
+      "measured_by": "Mnemosyne"
     }
   }
 }

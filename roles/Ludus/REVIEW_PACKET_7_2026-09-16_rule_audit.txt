@@ -1,0 +1,189 @@
+================================================================================
+REVIEW PACKET 7
+LUDUS -- THE FIRST PUBLISHED-SOURCE RULE AUDIT: MARTIAN DICE (LUDUS-01)
+================================================================================
+Prepared:        2026-09-16   frozen   Ludus[m2-c3a5ef7a], Claude Opus 5, M2
+For:             the operator (HITL; one spot check requested, section 9) and
+                 any external reviewer; self-contained
+Location/Code:   ludus/bench/{worlds.py, verify.py, rules_audit.json,
+                 RULES_AUDIT.md, rules_sources/}; ludus/atlas/{transfer_matrix
+                 .json, rules_fidelity.json}
+Version/Hash:    on top of 755d8a8dd (packet 6 merge); commit SHA in the
+                 closing receipt after ancestry is verified
+Headline:        The first world has been audited against a published source.
+                 All five constants were right. Two RULES were wrong, and
+                 correcting them doubles the state space (8,555 -> 14,653),
+                 raises optimal EV from 2.093806 to 3.110382, and REVERSES
+                 which decision axis carries the world's difficulty. Cycle
+                 002's "86% of Martian Dice lives on the claim axis" was a
+                 fact about the reconstruction. W3 count: 1 of 30, under P3
+                 (seat-performed audit; operator spot check pending).
+
+--------------------------------------------------------------------------------
+1. SOURCE
+--------------------------------------------------------------------------------
+Tasty Minstrel Games "Martian Dice" rule sheet, 2 pages, (c) 2011 Tasty
+Minstrel Games LLC; game design Scott Almes, graphics & rules editing Josh
+Cappel, development Seth Jaffee (credit block on the sheet).
+  fetched   http://jrsaathoff.com/files/md_rules.pdf   2026-09-16T12:37Z
+  sha256    cc8297f2227183bb9e291794a744760810701a13d1df506ca3f2598242e20c37
+  metadata  PDF creation date 2011-05-25
+  copy      ludus/bench/rules_sources/ (NOT committed; publisher's sheet.
+            rules_audit.json quotes the sentence behind each line; re-fetch
+            and compare the hash to re-verify)
+A second copy (tesera.ru) returned a DDoS-Guard challenge page, not the
+file. One source, one instrument: the independent-implementation route
+(LUDUS-16) has not run.
+
+--------------------------------------------------------------------------------
+2. LINE-BY-LINE RESULT (ids in ludus/bench/rules_audit.json)
+--------------------------------------------------------------------------------
+  MD-1  13 dice; faces 1 tank, 2 rays, 1 human, 1 cow, 1 chicken   OK
+        "13 Martian Dice. Each die features 1 Tank, 2 Death Rays,
+        1 Human, 1 Cow, and 1 Chicken."
+  MD-2  rays >= tanks to score, else zero                           OK
+  MD-3  1 per earthling; +3 with at least one of all three          OK
+  MD-4  all tanks set aside compulsorily, every roll                OK
+  MD-5  "claim all dice of exactly one symbol you have not claimed
+        before this turn; if you cannot, the turn ends scoring zero"
+                                                              WRONG x2
+        R1  "Death Rays may always be chosen, and are added to any
+            Death Rays set aside earlier this turn." The reconstruction
+            allowed rays once per turn, like an earthling.
+        R2  "If you cannot set aside any dice based on these
+            restrictions, your turn is over; proceed to Scoring." The
+            turn SCORES (rays >= tanks still applies). The reconstruction
+            treated it as a bust worth zero.
+  MD-6  stop or reroll after each claim; no dice left -> scoring    OK
+  MD-7  solitaire, one turn (the race to 25 and the death-ray-duel
+        tiebreak are not modelled)                                  SCOPE
+
+0 constants moved. 2 rules moved. The doubled ray face -- the constant this
+sheet's own priority-1 line called "the single highest-leverage constant in
+the bench" -- was correct. The leverage was in a rule nobody had flagged.
+
+--------------------------------------------------------------------------------
+3. WHAT WAS CHANGED, AND WHAT WAS PRESERVED
+--------------------------------------------------------------------------------
+- ludus/bench/worlds.py MartianDice: state is now (tanks, rays, humans,
+  cows, chickens, dead); rays are claimable on every roll; a roll with
+  nothing claimable moves its unclaimable dice to `dead` so the state is a
+  forced end that scores. rules_state = "AUDITED_BY_SEAT". Docstring
+  carries the source and both corrections.
+- MartianDiceRecon: the 2026-08-27 behaviour, kept verbatim as a class
+  (name MARTIAN_DICE_RECON_2026-08-27), NOT in ALL_WORLDS. It reproduces
+  the committed column exactly (8,555 states, EV 2.093806), which is how
+  the diff below is known to be the rule change and nothing else.
+- ludus/bench/verify.py check_martian: rewritten from the sheet for the
+  6-tuple (pot formula; counts never decrease; at most one earthling type
+  per transition and never one already claimed; dead dice only in a forced
+  end). New ledger hook: rules_audited comes ONLY from rules_audit.json.
+- ludus/atlas/transfer_matrix.json: MARTIAN_DICE recomputed (all 10
+  circuits, both axes); the old column preserved under
+  MARTIAN_DICE_RECON_2026-08-27 with a superseded note.
+- ludus/atlas/rules_fidelity.json: committed from this run (4 verified
+  internally, MARTIAN_DICE rules_audited=true with the source hash; 17
+  still lack invariants).
+- Annotations (not edits): RULES_AUDIT.md marks with citations;
+  roles/Ludus/CYCLE_002_stochastic_stopping.md head; ludus/stopworlds.py
+  docstring (its MartianDice is the reconstruction and stays that way).
+- CIRCUIT_MATURITY was NOT regenerated: re-adjudicating circuit rungs on a
+  changed column needs its own preregistered note first (LUDUS-36).
+
+--------------------------------------------------------------------------------
+4. THE RE-SOLVE DIFF (same instrument, ludus/bench/run.py, both worlds)
+--------------------------------------------------------------------------------
+                                   reconstruction        published rules
+  states                                    8,555                 14,653
+  optimal EV (one turn)                  2.093806               3.110382
+  cheap pair r0012+r0003 retention         0.9656                 0.9373
+  recovered by upgrading SELECT only      +0.0216                -0.0005
+  recovered by upgrading STOP only        +0.0091                +0.0486
+  total residual                           0.0344                 0.0627
+
+  STOP-axis retentions (SELECT held at optimal)
+    r0003   0.9872 -> 0.9373      r0004   0.2306 -> 0.9749
+    r0005   0.1783 -> 0.1200      r0007   0.8657 -> 0.9749
+    r0015   0.9620 -> 0.9958      r0006-fitted 0.9448 -> 0.9867
+  SELECT-axis retentions (STOP held at r0003)
+    r0010   0.8689 -> 0.9226      r0011   0.2507 -> 0.3983
+    r0012   0.9748 -> 0.9859      r0013   0.7398 -> 0.2604
+    r0014   0.8035 -> 0.8772      OPTIMAL 0.9872 -> 0.9368
+  Ranking stability, Kendall tau: STOP 0.429 (14 pairs, 10 concordant,
+  4 discordant); SELECT 0.733 (15 pairs, 13/2).
+
+Reading, in failure-shape form: once rays can be re-claimed, the claim
+decision stops being where the difficulty lives (you can always fix the
+ray deficit later), and the difficulty moves to WHEN to stop. r0004 and
+r0007 (two STOP circuits) go from "kills" (0.23, 0.87) to near-ceiling
+(0.97) on the same world with the rules fixed. Kills are cells; two cells
+of this column were facts about a wrong rule.
+
+--------------------------------------------------------------------------------
+5. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+Establishes: every Martian Dice rule line has a quoted sentence from a
+published sheet with a hash; two were wrong; the corrected world passes
+its rewritten invariants and its column is recomputed with the old one
+kept. The LUDUS-03 controls re-run on the corrected world: 25/25 as
+predicted.
+
+Does NOT establish: that the sheet is the current edition (metadata says
+2011; the reconstruction may have been of a later printing -- no evidence
+either way); that the audit is independent (one seat read one sheet and
+wrote the correction; LUDUS-16's second implementation is the independent
+instrument); that any circuit's maturity rung moves (LUDUS-36); anything
+about FLIP7, INCAN_GOLD, CANT_STOP (still HYPOTHESIZED, LUDUS-15). W3 = 1
+of 30 only if the operator accepts P3; otherwise it is 0 of 30 with one
+seat-performed audit awaiting a tick.
+
+Conflict of interest: the seat that reconstructed the rules wrongly is the
+seat that audited them. The mitigation is that every mark quotes the
+sheet, so a spot check is a one-minute read.
+
+--------------------------------------------------------------------------------
+6. WHAT WOULD FALSIFY THIS / WHAT TO STOP
+--------------------------------------------------------------------------------
+- A different edition of the sheet (or the publisher's current FAQ) that
+  says rays are NOT repeatable would reverse R1; the recon column is kept
+  for exactly that case.
+- If the operator rules P3 insufficient, the W3 count returns to 0 and
+  the next action is a delegation to Herakles (LUDUS-16) rather than more
+  seat audits.
+- Stop signal: if the other three audits (LUDUS-15) also move rules, the
+  entire pre-2026-09-16 matrix is a reconstruction artifact and cycle 002
+  should be re-run in full rather than annotated.
+
+--------------------------------------------------------------------------------
+7. NEXT
+--------------------------------------------------------------------------------
+LUDUS-15 (Flip 7, Incan Gold, Can't Stop against published sources) is now
+cheap with the ledger in place; LUDUS-02 (grammar v0) is the other alpha
+item. The seat's recommendation is LUDUS-15 first: one audit in four found
+two rule errors, so the prior on the other three is not small.
+
+--------------------------------------------------------------------------------
+8. REPRODUCTION
+--------------------------------------------------------------------------------
+  PYTHONPATH=. python -c "from ludus.bench.worlds import MartianDice,
+      MartianDiceRecon; from ludus.bench.compiled import compile_world,
+      solve; [print(w.name, compile_world(w).n_states, solve(compile_world
+      (w))[0]) for w in (MartianDiceRecon(), MartianDice())]"
+      -> 8555 2.093806 ; 14653 3.110382
+  PYTHONPATH=. python -m ludus.bench.run MARTIAN_DICE   (~130 s)
+  PYTHONPATH=. python ludus/bench/verify.py
+      -> MARTIAN_DICE VERIFIED-INTERNALLY (rules AUDITED by seat, P3)
+  PYTHONPATH=. python ludus/controls/run_controls.py -> 25/25
+
+--------------------------------------------------------------------------------
+9. THE ONE SPOT CHECK REQUESTED OF THE OPERATOR (LUDUS-31)
+--------------------------------------------------------------------------------
+Open the sheet (URL in section 1), read the ON YOUR TURN box, and confirm
+or deny: "Death Rays may always be chosen" and "If you cannot set aside
+any dice ... your turn is over; proceed to Scoring." A yes makes W3 = 1;
+a no reopens MD-5 and the recon column stands.
+
+================================================================================
+END OF PACKET. "Not worth continuing" remains answerable: section 6 says
+what it would take.
+================================================================================

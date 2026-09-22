@@ -1,0 +1,48 @@
+{
+  "network_lib_grep_hits": {},
+  "question": "erebos_tests_offline.py -- ONE question:",
+  "scopes": {
+    "erebos_sprint1_tests": {
+      "cmd": "pytest -q -p no:cacheprovider --no-header -rN charon/agents/erebos/tests/sprint1",
+      "counts": {
+        "passed": 59
+      },
+      "elapsed_s": 0.6,
+      "error_tests": [],
+      "failed_tests": [],
+      "returncode": 0,
+      "stderr_tail": [],
+      "summary_line": "59 passed in 0.32s"
+    },
+    "erebos_tests": {
+      "cmd": "pytest -q -p no:cacheprovider --no-header -rN charon/agents/erebos/tests --ignore charon/agents/erebos/tests/sprint1",
+      "counts": {
+        "passed": 608,
+        "skipped": 1
+      },
+      "elapsed_s": 1.1,
+      "error_tests": [],
+      "failed_tests": [],
+      "returncode": 0,
+      "stderr_tail": [],
+      "summary_line": "608 passed, 1 skipped in 0.83s"
+    },
+    "stygian_composition_tests": {
+      "cmd": "pytest -q -p no:cacheprovider --no-header -rN charon/agents/stygian/tests/test_composition_g02_synthetic_split.py charon/agents/stygian/tests/test_composition_g03_g09_g25_synthetic.py charon/agents/stygian/tests/test_composition_g10_multi_band_calibration.py charon/agents/stygian/tests/test_composition_g10_synthetic_smooth_control.py charon/agents/stygian/tests/test_composition_g11_family.py charon/agents/stygian/tests/test_composition_g11_v4_g24_v2.py charon/agents/stygian/tests/test_composition_g15_family.py charon/agents/stygian/tests/test_composition_g16_synthetic.py charon/agents/stygian/tests/test_composition_g17_threshold_sweep.py charon/agents/stygian/tests/test_composition_g18_synthetic_counterexample.py charon/agents/stygian/tests/test_composition_g19_synthetic_transitivity.py charon/agents/stygian/tests/test_composition_g19_v2_recursive.py charon/agents/stygian/tests/test_composition_g23_multi_law_fit.py charon/agents/stygian/tests/test_composition_g24_synthetic_x_flip.py",
+      "counts": {
+        "passed": 146
+      },
+      "elapsed_s": 32.2,
+      "error_tests": [],
+      "failed_tests": [],
+      "returncode": 0,
+      "stderr_tail": [],
+      "summary_line": "146 passed in 29.66s"
+    }
+  },
+  "test_files_n": {
+    "erebos_sprint1_tests": 11,
+    "erebos_tests": 39,
+    "stygian_composition_tests": 14
+  }
+}

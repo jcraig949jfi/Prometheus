@@ -1,0 +1,444 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-17T11:04Z",
+ "by_state": {
+  "PARTIALLY_EXPLAINED": 23,
+  "EXPLAINED_BY_CURRENT_CUT": 11,
+  "LARGE_RESIDUE": 4,
+  "CUT_INSTRUMENT_INSUFFICIENT": 1
+ },
+ "residue": [
+  {
+   "fossil_id": "bsd-tcp-4.2-1983",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "tcp_input.c outside 480-700 (state transitions, SYN/RST handling, reassembly, option parsing) not read",
+    "tcp_subr.c (template, respond, drop, close) and tcp_usrreq.c not read",
+    "the Karn ambiguity (RTT sample spanning a retransmission) is a reading-level claim: t_rtt is not cleared at TCPT_REXMT in tcp_timer.c and tcp_output.c only starts a timer on new data; not run"
+   ],
+   "note": "the sender's rate-governing machinery is fully accounted for: window, retransmit timer, persist, SWS thresholds; the finding is what is NOT there",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "cobol-programming-course-omp",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "Course #3 DB2 labs (CBLDB21-23) and Course #4 testing labs (DEPTPAY, EMPPAY) unread",
+    "the compiler runtime that executes every mechanism above is NOT in the body (GnuCOBOL is Techne's world)",
+    "nothing ran here; Techne's CBL0001 receipt is on M1"
+   ],
+   "note": "the six mechanisms are the language's; the fossil shows humans exercising them one at a time",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "compact-4.2bsd-1983",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "uncompact.c not read line by line (skimmed: the same tree code driven by input bits)",
+    "no claim about optimality or about the LZW comparison was run"
+   ],
+   "note": "every line of compact.c and tree.c is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "concurrencykit-0.7.2",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "25 of 41 headers unread (hash tables, rwlocks, sequence lock, cohort locks, elision)",
+    "hazard pointers by name only",
+    "nothing ran; Techne's ck_ticket validate is on M1",
+    "the epoch's actual advance rule (ck_epoch_synchronize_wait 425-527) skimmed, not read"
+   ],
+   "note": "four shapes (backoff, shared-word lock, per-node lock, epoch reclamation) are read; the library is much wider",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "corewar-redcode",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "opcodes after MOV (ADD..SPL) skimmed; SPL's dual enqueue and DJN's decrement-then-test are assumed per the standard",
+    "the parser body unread",
+    "nothing ran here (Techne: RUNNABLE_HISTORICAL_TOOLCHAIN, Python 2 -- __getslice__ in core.py)"
+   ],
+   "note": "the world's rules are fully accounted for by five mechanisms; the organisms are out of scope",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "des-reference",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "run_des.c (file I/O driver) not read; it is the harness, not the cipher",
+    "the 8 S-box tables are data whose design criteria are not in the fossil (published later by IBM); the atlas cannot say why these tables"
+   ],
+   "note": "4 mechanisms account for every operation in process_message and generate_sub_keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "dlmalloc",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "system-memory acquisition and segment management not read (about 400 lines); realloc/memalign/mspaces not read; the bin-index arithmetic (compute_tree_index) read as a macro only",
+    "nothing ran; the body's own debug checkers (DEBUG/FOOTERS) are an oracle for a Stage C run"
+   ],
+   "note": "the allocate/free core is accounted for; the boundary of the cut is the malloc_state and the two exported entry points",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "dmtcp-3.1.2",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "four plugins (alloc, dl, timer, svipc) unread",
+    "file-descriptor virtualization for files / pipes / ptys (plugin/ipc/file, event) unread",
+    "kvdb / lookup_service (the coordinator's name service) unread",
+    "signal wrappers, exec wrappers (how a checkpointed process forks and execs) unread",
+    "nothing ran; Techne's counter oracle is on M1"
+   ],
+   "note": "ten mechanisms cover the checkpoint/restart cycle; the wrapper corpus (dozens of files) is characterised only by its shape",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "eispack-netlib-1976",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "tred1/tql1/tqlrat (the no-vectors path) not read; assumed twins of tred2/tql2 per rs.f",
+    "harness/driver.f not read: the oracle matrix is Techne's"
+   ],
+   "note": "the vectors path (rs with matz != 0) is fully accounted for by 7 organs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "eliza-anthay-1966",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the matcher and the script reader read by index only",
+    "the embedded DOCTOR script not read",
+    "nothing ran here; Techne's CACM-line oracle is on M1"
+   ],
+   "note": "the response algorithm is read line by line; five mechanisms account for it",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "erfa-2.0.1",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "plan94 / epv00 / moon98 / dtdb assumed to be organ-1-shaped from size and name only",
+    "the matrix family and the astrometry family read from one routine each",
+    "the calendar / angle formatting routines are unassigned",
+    "nothing ran here; Techne's make check (t_erfa_c) is the executed evidence on M1"
+   ],
+   "note": "seven shapes cover the 247 names; the claim that each name belongs to a shape is by name for ~230 of them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "ff-planner-2.3",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "extract_1P body and initialize_goals (662-770) not read: the heuristic value's exact accounting is inferred from achieve_goals",
+    "best-first search body not read (bfs organ is CANDIDATE)",
+    "the grounding pipeline (~10,000 lines) not read",
+    "nothing ran; a STRIPS benchmark domain is a ready Stage C world"
+   ],
+   "note": "the heuristic-and-search core is located; the relation to graphplan-blum-furst-1995 is the first recurrence candidate this pass produces",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "fftpack-netlib",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the general-radix passes passf.f / radfg.f (any prime) are unread; their inner structure may be a distinct mechanism (a DFT of prime length by direct sums)",
+    "sint / cosq / sinq folds are assumed analogous to cost from names and sizes only",
+    "single-precision accuracy vs N is not measured (Techne's run had no oracle)"
+   ],
+   "note": "the small-radix path (factor, twiddle, driver, butterfly, real wrapper) is fully read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "glibc-rwlock-writer-starvation-2.36",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "rdlock tail (lines 420-526): timed wait, cancellation, the read-phase start CAS loop -- not read",
+    "wrunlock and wrlock tail (680-950): the give side of the token pass and the write->read hand-over -- not read",
+    "__cur_writer maintenance (where set/cleared) not traced",
+    "whether the harness's system glibc (Debian 12 = 2.36) matches the preserved source byte-for-byte is Techne's claim, not checked by Nyx"
+   ],
+   "note": "9 organs account for the two acquisition paths and the two policy modes as described in the design comment; the release paths are asserted from the comment, not the code",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "gzip-1.2.4-1993",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "trees.c read as state and index, not line by line",
+    "inflate.c CANDIDATE from signatures",
+    "the -1..-9 ablation is a ready Stage C experiment on Techne's container: ratio/time per level with the table as the only variable"
+   ],
+   "note": "deflate.c is fully read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "hashicorp-memberlist-0.5.4",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "push-pull merge and the conflict rules read by index",
+    "the transport, encryption and compression layers unread",
+    "nothing ran here; Techne's go test oracle is on M1"
+   ],
+   "note": "the failure detector, suspicion, awareness and gossip queue are read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "hopfield-takyamamoto",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing ran here; the record's entry point (corruption level, pattern count past 0.14 N) is a ready Stage C experiment",
+    "sign(0) = 0 and the 2-cycle blind spot of the energy stop are reading-level claims, unmeasured"
+   ],
+   "note": "every line of network.py is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "leveldb-1.23",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "memtable / skip list, the table format, the block cache and the read path are CANDIDATE or unread",
+    "DoCompactionWork's snapshot-aware dropping rule read by index only",
+    "nothing ran here; Techne's reopen harness is on M1"
+   ],
+   "note": "the write path (group commit, log, admission) and the version/compaction machinery are read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "libfec-karn",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "viterbi224 (K=24) and the CCSDS dual-basis conversion were not read; their shapes are assumed from names",
+    "the SIMD variants are claimed equivalent to the portable ones by the author, not measured",
+    "nothing ran here; Techne's receipt (vtest27) is the executed evidence, on M1",
+    "the interleaver the CCSDS standard needs is absent: the body is half of a concatenated system"
+   ],
+   "note": "the portable decoders are fully accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "linux-tcp-congestion",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the plant: kernel TCP core (loss detection, rate sampling, cwnd enforcement, pacing, slow start, additive increase) is outside the body; every organ here is a controller fragment whose behaviour is unobservable without it",
+    "lib/win_minmax.c (the windowed filter used by bbr.max_bw and cited by BBR's design) is not in the body",
+    "nothing ran: every coverage cell is READ; failure_landscape fields are UNKNOWN by run",
+    "cubic_root's accuracy vs a true cube root and its effect on K: not measured"
+   ],
+   "note": "SOURCE_ONLY fossil; Stage C needs a plant (a kernel with netem, per the record) that Techne has not built",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "lisp-1-5-ibm7090-1962",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "~9,000 of 11,092 cards unread: compiler/LAP, reader/printer, arithmetic, arrays, RELOC, overlord",
+    "provenance: the body is a 2014 transcription of a 1962 listing (README); Techne's grade is what Harmonia should read, not the record's handoff string",
+    "no claim was executed; simh i7094 is the record's named world (REACHABLE, untried)"
+   ],
+   "note": "the storage control program and the interpreter core are accounted for at mechanism level; everything else is named as unread",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "lmdb-0.9.31",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the B+tree operations, the memory map, and spilling are CANDIDATE from signatures and skims, not read in full",
+    "nested transactions and sub-databases / DUPSORT sub-pages (xcursor) are unread",
+    "the writer mutex acquisition and the NOLOCK / NOTLS / WRITEMAP flag variants are unread",
+    "nothing ran; the crash oracle is a Stage C candidate (kill between put and commit inside Techne's container)"
+   ],
+   "note": "the storage discipline (COW, double meta, freelist, reader table, commit order) is fully read; the tree on top of it is not",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "minisat-1.14-2006",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "newClause (clause construction, duplicate/tautology removal, learnt clause watch placement) skimmed only",
+    "analyzeFinal (the assumption-conflict path) skimmed",
+    "nothing ran here; Techne's harness (agreement with 2.2.0, picosat, zchaff) is on M1"
+   ],
+   "note": "search / propagate / analyze / reduceDB / VarOrder are read line by line; the nine organs account for them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "minisom",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing ran; Techne's harness (clustered 2-D points, quantisation error drops) is a Stage C candidate with the kernel radius and decay law as ablation targets",
+    "hexagonal vs rectangular topology is a coordinate change inside the kernel organ; whether it changes measured behaviour is UNKNOWN"
+   ],
+   "note": "seven mechanisms account for every line of train / train_batch_offline / update",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "odepack-netlib",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the sparse-Jacobian core (DPRJS/DSOLSS with the Yale sparse package), the Krylov cores (DSPIOM/DSPIGMR/DPCG), the implicit-form cores (DSTODI, DAINVG) and the root finder (DRCHEK/DROOTS) were not read: ~7,500 of 10,136 lines of opkda1.f",
+    "the DLSODA switch was read for its decision rule only; its rescaling and order reset on switch were not traced",
+    "no constant (MAXCOR, CCMAX, MSBP, 1.1, 0.2, RATIO=5) was tested; every tuning claim is SOURCE_READ"
+   ],
+   "note": "the DLSODE path is accounted for line by line; the body is one integrator with many front ends and this cut covers the common core plus one front end",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "padasip-1.2.2",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "preprocess/, detection/, ann/ characterised by names only (METADATA grade)",
+    "OCNLMS memory handling read in part",
+    "Ang's VSLMS variant not read (assumed the Mathews family)",
+    "nothing ran; Techne's 4-tap plant harness is on M1"
+   ],
+   "note": "the filter family is fully accounted for by one loop and four rule modifications plus two second-order alternatives",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "particles-chopin-0.4",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the model library and the QMC/Hilbert machinery were not read (sqmc is CANDIDATE)",
+    "the default resampling trigger (ESS < N/2 by convention) lives in the model classes, not read; the cut names the measure, not the threshold",
+    "nothing ran; kalman.py in the body is the exact oracle for a Stage C world"
+   ],
+   "note": "the loop and the resampling schemes are accounted for; the vault's filterpy-labbe and simple-kalman fossils are recurrence candidates against kalman.py",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "python-control",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the representation classes, interconnection and simulation read at index level only",
+    "optimal / flatsys / stochsys / robust unread",
+    "nothing ran here; Techne's 2-state LQR harness is on M1",
+    "the body's own numerics are nearly nil -- the atlas records the wrapper shapes and points at scipy/slycot as the true bodies"
+   ],
+   "note": "LQR and the Riccati dispatch are read; the fossil's identity as a wrapper layer is the finding",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "radamsa-0.6",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "generators / output / fuse / xp / digest unread",
+    "the lazy-stream position walk in mutate-once is read once, not understood to the constant (initial-ip 'magic value')",
+    "the scheduler's delta is a biased random walk: whether scores ever separate mutators in practice is UNKNOWN by run"
+   ],
+   "note": "the menu and the scheduler are fully read; the per-mutator implementations are read by index and signature",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "reed-solomon-rockliff-1991",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "the Chien and error-value blocks are skimmed, not read line by line",
+    "the silent pass-through on decoding failure is a reading claim; a Stage C run with tt + 1 injected errors would show it directly"
+   ],
+   "note": "every function of rs.c is assigned",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "spin-pathfinder-priority-inversion-1997",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "the emergent deadlock is fully accounted for by the two organs and their two composition edges: removing either organ, or breaking the feeds edge (A4), removes it",
+    "NOT explained by this fossil: what humans did to fix it (priority inheritance) -- absent from the body"
+   ],
+   "note": "a 2-organ fossil whose interesting object is a composition edge, not an organ",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "sqlite-3.49.1-amalgamation",
+   "state": "CUT_INSTRUMENT_INSUFFICIENT",
+   "unexplained": [
+    "261k lines read at file-map grain; every organ's inside is unread except the solver's head",
+    "nine front-end feature files and nine extensions unassigned",
+    "nothing ran here; Techne's smoke.sql is on M1",
+    "the cut instrument (one reader, one session) cannot reach line-level anatomy for a body this size; Stage B on SQLite needs a sampling plan (one subsystem per session)"
+   ],
+   "note": "layer boundaries are the amalgamation's own; the atlas records them as ACCEPTED because the file boundaries ARE executable boundaries (separately compilable units with declared interfaces)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "ssw-smith-waterman",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "banded_sw (traceback) unread",
+    "the 16-bit twin assumed",
+    "nothing ran; Techne's EMBOSS agreement oracle is on M1"
+   ],
+   "note": "the forward SIMD sweep is fully read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "tiny-aes-c",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "avalanche and the DES structural comparison are unmeasured reading claims",
+    "nothing ran here; Techne's FIPS vectors are on M1"
+   ],
+   "note": "every function in aes.c is assigned to one of six mechanisms",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "tinycc",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the parser (9,001 lines) confirmed at two functions only",
+    "targets, assembler, PE/Mach-O, libtcc API, bounds checker unread",
+    "nothing ran here"
+   ],
+   "note": "the architecture is confidently cut at subsystem grain; every organ below the value stack is CANDIDATE-quality evidence despite the ACCEPTED status of the ones whose entry points were read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "verilog-rr-arbiter",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "the equivalence of composition 1 and composition 2/3 is the author's claim; exhaustively checkable (64 cases at N=4) and NOT checked here",
+    "the self-deassert rule's purpose is unstated in the body"
+   ],
+   "note": "every line of the three modules is accounted for by five mechanisms",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "verilog-uart2bus",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "uart_top.v not read (wiring only, by its size and role)",
+    "nothing ran; the bench/ directory holds a ready iverilog world (tb_txt / tb_bin) for a SCOUT or Stage C run",
+    "the two reading-level defects (length-0 binary count wrap; no stop-bit check) are unmeasured"
+   ],
+   "note": "every always block in the five RTL files is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "willemt-raft",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "snapshotting, membership change and the vote request/response bodies were not read (about 700 of 1435 lines of raft_server.c); raft_log.c and raft_node.c not opened",
+    "no claim was executed; tests/virtraft2.py is a ready world (a Python network simulator with partitions) for a SCOUT run"
+   ],
+   "note": "the paper's five rules are each located at a line range; the library-specific choices (range [T,2T), length-based backoff, lazy apply, aggressive resend) are named",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "zchaff-2007",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "conflict_analysis_firstUIP body (the learning rule itself) not read",
+    "clause database layout (zchaff_dbase.cpp) not read -- the literal pool with terminators is inferred from the scan code",
+    "preprocess() not read",
+    "zverify_df not read",
+    "clause group ids / incremental add (add_clause_incr, delete_clause_group) not cut: incremental-SAT API surface"
+   ],
+   "note": "the search loop is accounted for by organs 1-10; learning and storage are named but not opened",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ]
+}

@@ -71,7 +71,9 @@ class ConformanceConfig:
     enabled: bool = True
     contract_path: str = "roles/Harmonia/contracts/sfe_contract.json"
     gate_script: str = "roles/Harmonia/contracts/conformance_check.py"
-    cacert: str = "SerendipityFoundry/SerendipityFoundryEngine/deploy/m1.crt"
+    # Campaign 2 (L-002): the certificate beside the client package, the same one the tracked
+    # engine descriptor (archaeon.wse.engine_descriptor) resolves; the M1 default outlived the move.
+    cacert: str = "SerendipityFoundry/SerendipityFoundryClient/config/m2.crt"
     base_url: Optional[str] = None                  # None -> the contract's engine.base_url
     #: every HTTP route this consumer calls today. Archaeon reads the ledger
     #: FILE under declared tenancy (archaeon.fossils, guarded by

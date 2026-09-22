@@ -1,0 +1,286 @@
+{
+ "artifacts": {},
+ "attempt": 2,
+ "attempt_id": "C2-SFE-09/a02",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-017: the four explanations are decided by preregistered rules on four measurements per CA genome; no explanation is assigned by reading rows"
+ ],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 0,
+   "declared": 0,
+   "survived": 0
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 0.4987,
+   "effect": 0.0768,
+   "min_effect": 0.05,
+   "n_control": 1,
+   "n_treatment": 1,
+   "paired": 1,
+   "paired_wins": 1,
+   "treatment_mean": 0.5755
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-09",
+ "finished_at": "2026-09-17T04:07:39Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:4f8854d3d7636d44b76a88b01d00249a66dac09403deb8e9c2a57790089b4d97",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 1,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T04:07:27Z",
+ "steps": {},
+ "summary": {
+  "ca:GKL": {
+   "LI": [
+    0.3962
+   ],
+   "base": [
+    0.549
+   ],
+   "flags": {
+    "flag_dynamical_bias": 0,
+    "flag_input_independent": 0,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.513
+   ],
+   "k50": [
+    3
+   ],
+   "reset_only": [
+    0.452
+   ],
+   "time_shuffled": [
+    0.503
+   ]
+  },
+  "ca:exp": {
+   "LI": [
+    0.7868
+   ],
+   "base": [
+    0.521
+   ],
+   "flags": {
+    "flag_dynamical_bias": 1,
+    "flag_input_independent": 0,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.491
+   ],
+   "k50": [
+    1
+   ],
+   "reset_only": [
+    0.466
+   ],
+   "time_shuffled": [
+    0.535
+   ]
+  },
+  "ca:maj": {
+   "LI": [
+    0.7149
+   ],
+   "base": [
+    0.518
+   ],
+   "flags": {
+    "flag_dynamical_bias": 0,
+    "flag_input_independent": 0,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.475
+   ],
+   "k50": [
+    1
+   ],
+   "reset_only": [
+    0.441
+   ],
+   "time_shuffled": [
+    0.486
+   ]
+  },
+  "ca:par": {
+   "LI": [
+    4851310.4839
+   ],
+   "base": [
+    0.478
+   ],
+   "flags": {
+    "flag_dynamical_bias": 1,
+    "flag_input_independent": 1,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.486
+   ],
+   "k50": [
+    1
+   ],
+   "reset_only": [
+    0.43
+   ],
+   "time_shuffled": [
+    0.548
+   ]
+  },
+  "ca:particle1": {
+   "LI": [
+    0.1129
+   ],
+   "base": [
+    0.555
+   ],
+   "flags": {
+    "flag_dynamical_bias": 0,
+    "flag_input_independent": 0,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.49
+   ],
+   "k50": [
+    1
+   ],
+   "reset_only": [
+    0.423
+   ],
+   "time_shuffled": [
+    0.51
+   ]
+  },
+  "ca:particle2": {
+   "LI": [
+    0.1333
+   ],
+   "base": [
+    0.576
+   ],
+   "flags": {
+    "flag_dynamical_bias": 0,
+    "flag_input_independent": 0,
+    "flag_localized": 1,
+    "flag_readout_artifact": 0
+   },
+   "input_shuffled": [
+    0.505
+   ],
+   "k50": [
+    1
+   ],
+   "reset_only": [
+    0.432
+   ],
+   "time_shuffled": [
+    0.517
+   ]
+  },
+  "direct": {
+   "LI": [
+    null
+   ],
+   "base": [
+    0.505
+   ],
+   "flags": null,
+   "input_shuffled": [
+    0.546
+   ],
+   "k50": [
+    null
+   ],
+   "reset_only": [
+    null
+   ],
+   "time_shuffled": [
+    0.57
+   ]
+  },
+  "random": {
+   "LI": [
+    null
+   ],
+   "base": [
+    0.499
+   ],
+   "flags": null,
+   "input_shuffled": [
+    0.499
+   ],
+   "k50": [
+    null
+   ],
+   "reset_only": [
+    null
+   ],
+   "time_shuffled": [
+    0.499
+   ]
+  },
+  "shift": {
+   "LI": [
+    null
+   ],
+   "base": [
+    1.0
+   ],
+   "flags": null,
+   "input_shuffled": [
+    0.56
+   ],
+   "k50": [
+    null
+   ],
+   "reset_only": [
+    null
+   ],
+   "time_shuffled": [
+    0.59
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "records_s": 0.0,
+  "substrates_s": 11.81,
+  "total_s": 12.0
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8f6ab645474cf157e447a3a6ee63cbaebb58281d",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

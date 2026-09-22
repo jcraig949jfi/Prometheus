@@ -1,5 +1,18 @@
 # Running the Engine on M1 vs M2
 
+> **TOPOLOGY RULING (operator, 2026-09-16).** Postgres and Redis are the
+> shared substrate (on M1, the canonical store); **every other service runs
+> on exactly one machine, never both**. A farm is a future roadmap item and
+> to date does not merit it. The Serendipity Foundry Engine's machine is
+> **M2** from 2026-09-16. The M1 engine was stopped ~2026-09-15 20:15Z for the
+> move and is not coming back; its ledger (eng_8a37a5d3, the production
+> identity) is adopted on M2 by `deploy/adopt_m1_ledger.py` once the operator
+> lands the data dir here. Until that swap, the engine on M2 serves the twin
+> ledger eng_906356f7 and is NOT production (Daedalus ruling, comms #270).
+> Everything below that describes "two engines" is history from 2026-09-04
+> to 2026-09-15, kept so the shape of the move can be explained; the M1
+> column no longer describes a running service.
+
 Two Serendipity Foundry Engines are live as of 2026-09-04, one per machine.
 They are **separate engines with separate substrates** — not a cluster, not a
 replica pair, and not a failover. Nothing is shared between them.
@@ -21,15 +34,15 @@ already held, and M2 got its own instance for new work.
 |---|---|---|
 | LAN address | `192.168.1.202` | `192.168.1.191` |
 | Repo root | `F:\Prometheus` | `D:\Prometheus` |
-| Engine tree | `F:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine` | `D:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine` |
+| Engine tree | pinned worktree `F:\Prometheus-worktrees\daedalus-sfengine` (detached `d5be5ec4b`, since 2026-09-11) | pinned worktree `D:\Prometheus-worktrees\daedalus-sfengine` (detached `ccb26df01` = candidate `726275da`, since **2026-09-16 11:48Z**; before that the canonical checkout, which serve.py's D-23 guard refused from 2026-09-14 05:33 until the move -- the engine was DEAD those two days) |
 | Interpreter | `H:\Python312\python.exe` (project venv) | `D:\Prometheus\.venv-m2\Scripts\python.exe` (3.12.10) |
 | Engine URL | `https://192.168.1.202:8811/v2` | `https://192.168.1.191:8811/v2` |
 | TLS cert (public) | `deploy\m1.crt`, SAN `192.168.1.202`, valid to Dec 2028 | `deploy\m2.crt`, SAN `192.168.1.191`, valid to Sep 2036 |
-| TLS key (never in git) | `deploy\m1.key`, stays on M1 | `deploy\m2.key`, stays on M2 |
-| Launcher | `deploy\sfengine.cmd` | `deploy\sfengine_m2.cmd` |
-| Database | `var\engine.db` on M1 | `var\engine.db` on M2 — **a different, initially empty database** |
-| Kept alive by | scheduled task `SFEngine` (S4U, AtLogOn+AtStartup) | watchdog task `SFEngineM2Watchdog` (S4U, AtStartup + every 5 min) |
-| Log | `deploy\sfengine.log` | `deploy\sfengine_m2.log`, watchdog `deploy\sfengine_m2_watchdog.log` |
+| TLS key (never in git) | `D:\Prometheus-data\sfe\m1.key`, stays on M1 | `D:\Prometheus-data\sfe\m2.key`, stays on M2 (copied out of `deploy\` 2026-09-16; the `deploy\` copy is not yet removed) |
+| Launcher | `D:\Prometheus-data\sfe\sfengine.cmd` (outside the repo, since 2026-09-12) | `D:\Prometheus-data\sfe\sfengine_m2.cmd` (outside the repo, since 2026-09-16; the tracked `deploy\sfengine_m2.cmd` is superseded and refused by the guard) |
+| Database | `D:\Prometheus-data\sfe\engine.db` on M1 (NVMe, since 2026-09-12) | `D:\Prometheus-data\sfe\engine.db` on M2 (since 2026-09-16; ledger `eng_906356f7`, schema 8) — **a different database**; the canonical `var\engine.db` copy is the schema-4 rollback and is not deleted. Same path string on both machines: identity is the `engine_instance_id`, never the path |
+| Kept alive by | scheduled task `SFEngine` (S4U, AtLogOn+AtStartup) | watchdog task `SFEngineM2Watchdog` (S4U, AtStartup + every 5 min) running the PINNED copy `D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1` (since 2026-09-16; a tracked script under the canonical checkout was replaced mid-run by a `git pull` on 2026-09-16 11:40Z, which is why it is pinned) |
+| Log | `D:\Prometheus-data\sfe\sfengine.log` | `D:\Prometheus-data\sfe\sfengine_m2.log`, watchdog `D:\Prometheus-data\sfe\sfengine_m2_watchdog.log` + `.state.json` (every tick) + `.park.json` (on park) |
 | Firewall rule | `SFEngine (LAN)`, TCP 8811, `192.168.1.0/24` | `SFEngine M2 (LAN)`, TCP 8811, `192.168.1.0/24` |
 | Neighbour to leave alone | D-13 instrument on `:8799` | *(none — D-13 does not run here)* |
 | D-13 release pin check | `F:\SerendipityD\RELEASE_MANIFEST.json` gives `50b5c232…` | **not applicable**; there is no `F:` drive on M2 |
@@ -68,11 +81,15 @@ Same shape as M1's, different names. The launcher `cmd.exe` spawns a child
 
     # start: let the watchdog do it, so the running instance is the supervised one
     powershell -NoProfile -ExecutionPolicy Bypass -File `
-      D:\Prometheus\SerendipityFoundry\SerendipityFoundryEngine\deploy\sfengine_m2_watchdog.ps1
+      D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1
 
 Verify before declaring it up:
 
     curl --cacert deploy/m2.crt https://192.168.1.191:8811/v2/version
+
+To advance the M2 build: `git -C D:\Prometheus-worktrees\daedalus-sfengine checkout --detach <sha>`,
+then stop + let the watchdog restart, then re-pin `deploy/DEPLOYED_BUILD_M2.json`.
+The relocation itself is receipted in `deploy/M2_RELOCATE_2026-09-16/` (tool `deploy/relocate_m2.py`).
 
 On M2 there is no service on `:8799` to protect — but there IS a local
 PostgreSQL on `:5432`; see the hazard below.

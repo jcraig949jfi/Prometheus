@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "spin-6.5.2-holzmann",
+ "techne_record": "techne/fossils/specimens/spin-6.5.2-holzmann/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "spin-6.5.2-holzmann",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "SPIN 6.5.2 model checker -- Gerard Holzmann",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git tag version-6.5.2, github.com/nimble-code/Spin (the author's repository)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1989 (6.5.2 released 2020)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "model-checking",
+     "verification",
+     "concurrency",
+     "protocols",
+     "search"
+    ],
+    "lineage": "SPIN (1989-, Bell Labs / JPL, Gerard Holzmann): explicit-state model checker for Promela; on-the-fly LTL verification via nested depth-first search, partial-order reduction, bitstate hashing"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "finding concurrency bugs by exhaustive state-space search",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "prove that a concurrent protocol or program model satisfies safety and liveness properties, or produce a concrete counterexample execution",
+    "pressure": "state explosion in asynchronous systems; telephony and spacecraft software whose bugs are interleaving-dependent",
+    "success_means": "an exhaustive (or bitstate-approximate) search reporting no errors, or a trail that reproduces a violation"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "yacc"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SPIN (1989-, Bell Labs / JPL, Gerard Holzmann): explicit-state model checker for Promela; on-the-fly LTL verification via nested depth-first search, partial-order reduction, bitstate hashing",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm (techne/fossils/environment/fossil-c-toolchain.Dockerfile)"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

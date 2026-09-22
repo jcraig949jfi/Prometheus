@@ -1,0 +1,818 @@
+{
+ "budget": {
+  "by_cohort": {
+   "B": {
+    "cpu_s": 1639.218,
+    "jobs": 5,
+    "status": {
+     "ok": 3,
+     "paused": 1,
+     "refused": 1
+    }
+   },
+   "C": {
+    "cpu_s": 2640.674,
+    "jobs": 8,
+    "status": {
+     "error": 1,
+     "ok": 6,
+     "paused": 1
+    }
+   },
+   "D": {
+    "cpu_s": 1645.08,
+    "jobs": 15,
+    "status": {
+     "error": 3,
+     "ok": 12
+    }
+   },
+   "E": {
+    "cpu_s": 3280.874,
+    "jobs": 5,
+    "status": {
+     "ok": 4,
+     "refused": 1
+    }
+   },
+   "G": {
+    "cpu_s": 44807.733,
+    "jobs": 151,
+    "status": {
+     "ok": 30,
+     "paused": 4,
+     "refused": 116,
+     "timeout": 1
+    }
+   },
+   "lane:B": {
+    "cpu_s": 10049.923,
+    "jobs": 8,
+    "status": {
+     "ok": 6,
+     "paused": 1,
+     "timeout": 1
+    }
+   },
+   "lane:C": {
+    "cpu_s": 2590.235,
+    "jobs": 3,
+    "status": {
+     "ok": 1,
+     "paused": 1,
+     "refused": 1
+    }
+   },
+   "lane:D": {
+    "cpu_s": 9358.221,
+    "jobs": 10,
+    "status": {
+     "error": 1,
+     "ok": 6,
+     "paused": 3
+    }
+   },
+   "lane:E": {
+    "cpu_s": 10224.608,
+    "jobs": 6,
+    "status": {
+     "ok": 5,
+     "paused": 1
+    }
+   },
+   "lane:G": {
+    "cpu_s": 70975.125,
+    "jobs": 17,
+    "status": {
+     "ok": 11,
+     "paused": 6
+    }
+   }
+  },
+  "by_lane": {
+   "B": 11689.141,
+   "C": 5230.908,
+   "D": 11003.301,
+   "E": 13505.483,
+   "G": 115782.859
+  }
+ },
+ "clock": {
+  "drain_ts": 1789497599.852,
+  "end_ts": 1789498799.852,
+  "epoch_s": 2400.0,
+  "epochs": 5,
+  "no_new_work_ts": 1789496399.852,
+  "round_id": "r6",
+  "stage": "PRODUCTION",
+  "start_ts": 1789484399.852
+ },
+ "closed_ts": 1789498799.852,
+ "epochs": [
+  {
+   "begin_ts": 1789486799.852,
+   "budget": {
+    "by_cohort": {
+     "B": {
+      "cpu_s": 1639.218,
+      "jobs": 5,
+      "status": {
+       "ok": 3,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "C": {
+      "cpu_s": 1242.47,
+      "jobs": 5,
+      "status": {
+       "error": 1,
+       "ok": 3,
+       "paused": 1
+      }
+     },
+     "D": {
+      "cpu_s": 11.063,
+      "jobs": 2,
+      "status": {
+       "error": 1,
+       "ok": 1
+      }
+     },
+     "E": {
+      "cpu_s": 3262.14,
+      "jobs": 4,
+      "status": {
+       "ok": 3,
+       "refused": 1
+      }
+     },
+     "G": {
+      "cpu_s": 8406.5,
+      "jobs": 81,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "refused": 73,
+       "timeout": 1
+      }
+     },
+     "lane:B": {
+      "cpu_s": 10049.923,
+      "jobs": 8,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "timeout": 1
+      }
+     },
+     "lane:C": {
+      "cpu_s": 2590.235,
+      "jobs": 3,
+      "status": {
+       "ok": 1,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "lane:D": {
+      "cpu_s": 9358.221,
+      "jobs": 10,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 3
+      }
+     },
+     "lane:E": {
+      "cpu_s": 10224.608,
+      "jobs": 6,
+      "status": {
+       "ok": 5,
+       "paused": 1
+      }
+     },
+     "lane:G": {
+      "cpu_s": 70975.125,
+      "jobs": 17,
+      "status": {
+       "ok": 11,
+       "paused": 6
+      }
+     }
+    },
+    "by_lane": {
+     "B": 11689.141,
+     "C": 3832.704,
+     "D": 9369.284,
+     "E": 13486.749,
+     "G": 79381.625
+    }
+   },
+   "controller": "A[m1-449a9e76]",
+   "drain_timeout_s": 2430.0,
+   "drained_ts": 1789486809.194,
+   "epoch": 1,
+   "export": {
+    "anomalies": 42,
+    "results": 110,
+    "state": 8,
+    "swarm": 950
+   },
+   "lanes": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "G"
+   ],
+   "sha": "578b966d0",
+   "stragglers": [],
+   "workers": {
+    "B": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789486809.117"
+    },
+    "C": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789486809.172"
+    },
+    "D": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789486809.117"
+    },
+    "E": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789486809.117"
+    },
+    "G": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789486809.152"
+    }
+   }
+  },
+  {
+   "begin_ts": 1789489199.852,
+   "budget": {
+    "by_cohort": {
+     "B": {
+      "cpu_s": 1639.218,
+      "jobs": 5,
+      "status": {
+       "ok": 3,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "C": {
+      "cpu_s": 2640.674,
+      "jobs": 8,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 1
+      }
+     },
+     "D": {
+      "cpu_s": 12.142,
+      "jobs": 5,
+      "status": {
+       "error": 1,
+       "ok": 4
+      }
+     },
+     "E": {
+      "cpu_s": 3280.874,
+      "jobs": 5,
+      "status": {
+       "ok": 4,
+       "refused": 1
+      }
+     },
+     "G": {
+      "cpu_s": 18551.968,
+      "jobs": 89,
+      "status": {
+       "ok": 13,
+       "paused": 2,
+       "refused": 73,
+       "timeout": 1
+      }
+     },
+     "lane:B": {
+      "cpu_s": 10049.923,
+      "jobs": 8,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "timeout": 1
+      }
+     },
+     "lane:C": {
+      "cpu_s": 2590.235,
+      "jobs": 3,
+      "status": {
+       "ok": 1,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "lane:D": {
+      "cpu_s": 9358.221,
+      "jobs": 10,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 3
+      }
+     },
+     "lane:E": {
+      "cpu_s": 10224.608,
+      "jobs": 6,
+      "status": {
+       "ok": 5,
+       "paused": 1
+      }
+     },
+     "lane:G": {
+      "cpu_s": 70975.125,
+      "jobs": 17,
+      "status": {
+       "ok": 11,
+       "paused": 6
+      }
+     }
+    },
+    "by_lane": {
+     "B": 11689.141,
+     "C": 5230.908,
+     "D": 9370.363,
+     "E": 13505.483,
+     "G": 89527.093
+    }
+   },
+   "controller": "A[m1-449a9e76]",
+   "drain_timeout_s": 2430.0,
+   "drained_ts": 1789489202.274,
+   "epoch": 2,
+   "export": {
+    "anomalies": 45,
+    "results": 117,
+    "state": 8,
+    "swarm": 974
+   },
+   "lanes": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "G"
+   ],
+   "sha": "36656181a",
+   "stragglers": [],
+   "workers": {
+    "B": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789489202.266"
+    },
+    "C": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789489202.266"
+    },
+    "D": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789489202.266"
+    },
+    "E": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789489202.266"
+    },
+    "G": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789489202.221"
+    }
+   }
+  },
+  {
+   "begin_ts": 1789491599.853,
+   "budget": {
+    "by_cohort": {
+     "B": {
+      "cpu_s": 1639.218,
+      "jobs": 5,
+      "status": {
+       "ok": 3,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "C": {
+      "cpu_s": 2640.674,
+      "jobs": 8,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 1
+      }
+     },
+     "D": {
+      "cpu_s": 976.799,
+      "jobs": 14,
+      "status": {
+       "error": 3,
+       "ok": 11
+      }
+     },
+     "E": {
+      "cpu_s": 3280.874,
+      "jobs": 5,
+      "status": {
+       "ok": 4,
+       "refused": 1
+      }
+     },
+     "G": {
+      "cpu_s": 29792.061,
+      "jobs": 99,
+      "status": {
+       "ok": 22,
+       "paused": 3,
+       "refused": 73,
+       "timeout": 1
+      }
+     },
+     "lane:B": {
+      "cpu_s": 10049.923,
+      "jobs": 8,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "timeout": 1
+      }
+     },
+     "lane:C": {
+      "cpu_s": 2590.235,
+      "jobs": 3,
+      "status": {
+       "ok": 1,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "lane:D": {
+      "cpu_s": 9358.221,
+      "jobs": 10,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 3
+      }
+     },
+     "lane:E": {
+      "cpu_s": 10224.608,
+      "jobs": 6,
+      "status": {
+       "ok": 5,
+       "paused": 1
+      }
+     },
+     "lane:G": {
+      "cpu_s": 70975.125,
+      "jobs": 17,
+      "status": {
+       "ok": 11,
+       "paused": 6
+      }
+     }
+    },
+    "by_lane": {
+     "B": 11689.141,
+     "C": 5230.908,
+     "D": 10335.02,
+     "E": 13505.483,
+     "G": 100767.187
+    }
+   },
+   "controller": "A[m1-449a9e76]",
+   "drain_timeout_s": 2430.0,
+   "drained_ts": 1789492120.726,
+   "epoch": 3,
+   "export": {
+    "anomalies": 53,
+    "results": 124,
+    "state": 8,
+    "swarm": 1019
+   },
+   "lanes": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "G"
+   ],
+   "sha": "2bff17b22",
+   "stragglers": [],
+   "workers": {
+    "B": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789492120.702"
+    },
+    "C": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789492120.702"
+    },
+    "D": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789492120.701"
+    },
+    "E": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789492120.702"
+    },
+    "G": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789492120.702"
+    }
+   }
+  },
+  {
+   "begin_ts": 1789493999.852,
+   "budget": {
+    "by_cohort": {
+     "B": {
+      "cpu_s": 1639.218,
+      "jobs": 5,
+      "status": {
+       "ok": 3,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "C": {
+      "cpu_s": 2640.674,
+      "jobs": 8,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 1
+      }
+     },
+     "D": {
+      "cpu_s": 1645.08,
+      "jobs": 15,
+      "status": {
+       "error": 3,
+       "ok": 12
+      }
+     },
+     "E": {
+      "cpu_s": 3280.874,
+      "jobs": 5,
+      "status": {
+       "ok": 4,
+       "refused": 1
+      }
+     },
+     "G": {
+      "cpu_s": 38814.28,
+      "jobs": 105,
+      "status": {
+       "ok": 27,
+       "paused": 4,
+       "refused": 73,
+       "timeout": 1
+      }
+     },
+     "lane:B": {
+      "cpu_s": 10049.923,
+      "jobs": 8,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "timeout": 1
+      }
+     },
+     "lane:C": {
+      "cpu_s": 2590.235,
+      "jobs": 3,
+      "status": {
+       "ok": 1,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "lane:D": {
+      "cpu_s": 9358.221,
+      "jobs": 10,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 3
+      }
+     },
+     "lane:E": {
+      "cpu_s": 10224.608,
+      "jobs": 6,
+      "status": {
+       "ok": 5,
+       "paused": 1
+      }
+     },
+     "lane:G": {
+      "cpu_s": 70975.125,
+      "jobs": 17,
+      "status": {
+       "ok": 11,
+       "paused": 6
+      }
+     }
+    },
+    "by_lane": {
+     "B": 11689.141,
+     "C": 5230.908,
+     "D": 11003.301,
+     "E": 13505.483,
+     "G": 109789.406
+    }
+   },
+   "controller": "A[m1-449a9e76]",
+   "drain_timeout_s": 2430.0,
+   "drained_ts": 1789494001.573,
+   "epoch": 4,
+   "export": {
+    "anomalies": 55,
+    "results": 126,
+    "state": 8,
+    "swarm": 1029
+   },
+   "lanes": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "G"
+   ],
+   "sha": "e5d5efcf5",
+   "stragglers": [],
+   "workers": {
+    "B": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789494001.543"
+    },
+    "C": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789494001.543"
+    },
+    "E": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789494001.543"
+    },
+    "G": {
+     "job_id": "",
+     "state": "stopped",
+     "ts": "1789494001.569"
+    }
+   }
+  },
+  {
+   "begin_ts": 1789497599.852,
+   "budget": {
+    "by_cohort": {
+     "B": {
+      "cpu_s": 1639.218,
+      "jobs": 5,
+      "status": {
+       "ok": 3,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "C": {
+      "cpu_s": 2640.674,
+      "jobs": 8,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 1
+      }
+     },
+     "D": {
+      "cpu_s": 1645.08,
+      "jobs": 15,
+      "status": {
+       "error": 3,
+       "ok": 12
+      }
+     },
+     "E": {
+      "cpu_s": 3280.874,
+      "jobs": 5,
+      "status": {
+       "ok": 4,
+       "refused": 1
+      }
+     },
+     "G": {
+      "cpu_s": 44807.733,
+      "jobs": 151,
+      "status": {
+       "ok": 30,
+       "paused": 4,
+       "refused": 116,
+       "timeout": 1
+      }
+     },
+     "lane:B": {
+      "cpu_s": 10049.923,
+      "jobs": 8,
+      "status": {
+       "ok": 6,
+       "paused": 1,
+       "timeout": 1
+      }
+     },
+     "lane:C": {
+      "cpu_s": 2590.235,
+      "jobs": 3,
+      "status": {
+       "ok": 1,
+       "paused": 1,
+       "refused": 1
+      }
+     },
+     "lane:D": {
+      "cpu_s": 9358.221,
+      "jobs": 10,
+      "status": {
+       "error": 1,
+       "ok": 6,
+       "paused": 3
+      }
+     },
+     "lane:E": {
+      "cpu_s": 10224.608,
+      "jobs": 6,
+      "status": {
+       "ok": 5,
+       "paused": 1
+      }
+     },
+     "lane:G": {
+      "cpu_s": 70975.125,
+      "jobs": 17,
+      "status": {
+       "ok": 11,
+       "paused": 6
+      }
+     }
+    },
+    "by_lane": {
+     "B": 11689.141,
+     "C": 5230.908,
+     "D": 11003.301,
+     "E": 13505.483,
+     "G": 115782.859
+    }
+   },
+   "controller": "A[m1-449a9e76]",
+   "drain_timeout_s": 30.0,
+   "drained_ts": 1789497599.86,
+   "epoch": 5,
+   "export": {
+    "anomalies": 55,
+    "results": 127,
+    "state": 8,
+    "swarm": 1042
+   },
+   "lanes": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "G"
+   ],
+   "sha": "5d83e3d81",
+   "stragglers": [],
+   "workers": {}
+  }
+ ],
+ "round_id": "r6"
+}

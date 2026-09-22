@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "go-runtime-deadlock-fixtures-1.22",
+ "techne_record": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "go-runtime-deadlock-fixtures-1.22",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Go runtime deadlock regression fixtures (src/runtime/testdata/testprog/deadlock.go, go1.22.0): SimpleDeadlock, LockedDeadlock, LockedDeadlock2, GoexitDeadlock, InitDeadlock",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "golang/go tag go1.22.0, files src/runtime/testdata/testprog/{deadlock.go,main.go}",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014- (fixtures; Go 1.22.0 = Feb 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "deadlock",
+     "failure",
+     "regression-fixture",
+     "runtime",
+     "go"
+    ],
+    "lineage": "The Go runtime's own regression programs for its deadlock detector (checkdead(): 'fatal error: all goroutines are asleep - deadlock!'), kept since Go 1.x and run by runtime/crash_test.go on every release. Each program is a REAL concurrent deadlock -- goroutines blocked on channels/mutexes with no runnable goroutine left -- preserved as the runtime team wrote it; the runtime is the detector, not the fix. The failing programs are not repaired."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "detection of whole-program deadlock in a concurrent runtime",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "keep the runtime's deadlock detector honest: each program must still be recognised as a deadlock on every release",
+    "pressure": "concurrent programs that block forever; a runtime that must tell 'everyone is waiting' from 'someone is still working'",
+    "success_means": "the runtime aborts with the deadlock diagnosis instead of hanging silently"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "many actors blocking on each other; no external observer",
+    "failure_condition": "a hung program that never terminates and never explains why"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Go"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The Go runtime's own regression programs for its deadlock detector (checkdead(): 'fatal error: all goroutines are asleep - deadlock!'), kept since Go 1.x and run by runtime/crash_test.go on every release. Each program is a REAL concurrent deadlock -- goroutines blocked on channels/mutexes with no runnable goroutine left -- preserved as the runtime team wrote it; the runtime is the detector, not the fix. The failing programs are not repaired.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: spin-pathfinder-priority-inversion-1997"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "golang:1.22-bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "go-runtime-deadlock-fixtures-1.22",
+   "relation": "shares_ancestor_with",
+   "to": "spin-pathfinder-priority-inversion-1997",
+   "note": "a deadlock found by execution + runtime detector vs one found by model checking",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

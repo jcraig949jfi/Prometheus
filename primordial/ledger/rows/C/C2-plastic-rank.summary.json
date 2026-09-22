@@ -1,0 +1,91 @@
+{
+ "exp_id": "C2-plastic-rank",
+ "git": "8cd41d65ab3061f5985107efccc0ab2bc81866b8",
+ "p1_real_tracking": {
+  "false_surprises_per_seed": [
+   0,
+   0,
+   0
+  ],
+  "held": true,
+  "rho_oracle_per_seed": [
+   0.9938079899999066,
+   1.0,
+   0.9938079899999066
+  ],
+  "switch_response_per_seed": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "within1_frac": 1.0
+ },
+ "p2_soft_below_oracle": {
+  "below_oracle_frac": 0.9166666666666666,
+  "held": false,
+  "rho_oracle_per_seed": [
+   0.9938079899999066,
+   0.95,
+   0.9559937503105924
+  ],
+  "within1_frac": 0.625
+ },
+ "p3_memory_parity": {
+  "held": false,
+  "per_seed": [
+   {
+    "excess_fixed2": 0.38940871929303067,
+    "excess_fixed8": 0.0015454604097024636,
+    "excess_plastic": 0.01562951915251696,
+    "params_ratio_plastic_over_fixed8": 0.3081597222222222,
+    "seed": 0
+   },
+   {
+    "excess_fixed2": 0.41538866054314927,
+    "excess_fixed8": 0.001388063194204303,
+    "excess_plastic": 0.026894049801060006,
+    "params_ratio_plastic_over_fixed8": 0.3107638888888889,
+    "seed": 1
+   },
+   {
+    "excess_fixed2": 0.40212915787000747,
+    "excess_fixed8": 0.0014030151476869667,
+    "excess_plastic": 0.01877623914271624,
+    "params_ratio_plastic_over_fixed8": 0.3103009259259259,
+    "seed": 2
+   }
+  ]
+ },
+ "p4_null": {
+  "held": true,
+  "rho_label_per_seed": [
+   null,
+   null,
+   null
+  ],
+  "spread_per_seed": [
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "p5_leak_probe": {
+  "held": true,
+  "honest_clean": "18/18",
+  "honest_deterministic": "18/18",
+  "leak_flagged": "9/9",
+  "tracking_rho_gap_leak_vs_plastic_real": [
+   0.0,
+   0.006192010000093395,
+   0.0
+  ]
+ },
+ "probe_worked": true,
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "source": "C2-plastic-rank_record_20260914T081632.jsonl",
+ "status_by_posted_rule": "PASS"
+}

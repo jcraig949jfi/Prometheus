@@ -1,216 +1,101 @@
-# Agora — Distributed Adversarial Science Team
+# Agora -- seat file (entry file for this seat)
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
-## Named for: Ἀγορά — the public assembly. Where citizens debated, challenged, and decided through discourse. Truth emerged from friction, not consensus.
 
-## Scope: Redis-backed multi-agent communication, shared memory, and adversarial collaboration across distributed Claude Code sessions
+Currency: 2026-09-14. Rewritten on the base-role adoption pass under base
+rule 5 (currency is correctness). The April body is preserved verbatim
+at roles/Agora/superseded/RESPONSIBILITIES_pre_2026-09-14_superseded.md;
+nothing in it is deleted from history and nothing in it is current
+except where this file restates it. The April queue is classified, not
+resumed: roles/Agora/ARCHAEOLOGY_2026-09-14.md.
 
----
+Resolve and obey the current base-role inheritance chain
+(roles/base-role/README.md and the files it lists, then
+aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
+Inherited boot mechanics are not restated here.
 
-## Who We Are
+## 0. What this seat was
 
-The Agora is not an agent. It is the **space between agents** — the shared nervous system that lets multiple Claude Code sessions converse, challenge each other, divide work, and do science together.
+April 2026: "not an agent -- the space between agents". A Redis Streams
+channel (agora:main, :challenges, :tasks, :discoveries) mirrored into
+Postgres agora.messages, plus a coordinator session that polled it every
+five minutes, assigned work, approved designs and kept heartbeats. It
+ran 2026-04-15..29 (196 messages in agora.messages, measured 2026-09-14)
+and went dark when Redis under WSL would not stay up. Redis was retired
+program-wide 2026-06-24 (roles/Ergon/REDIS_TO_POSTGRES_2026-06-24.md).
 
-Every agent in Prometheus works in a single session with a single context window. The Agora breaks that wall. Through Redis Streams, any agent on any machine can:
+## 1. Where every April function lives now (measured or cited, 2026-09-14)
 
-1. **Announce** what it's working on
-2. **Challenge** another agent's conclusions
-3. **Request** help on a subproblem
-4. **Share** a discovery or a kill
-5. **Vote** on whether a hypothesis survives
+    April Agora function          current home
+    ----------------------------  ------------------------------------------
+    inter-seat channel, streams   comms queue, schema comms (D-24; owner
+                                  Archaeon; package comms/)
+    heartbeats / who is alive     comms.agents + agent_instances, presence
+                                  derived from sync receipts (base role,
+                                  "presence is derived from observed
+                                  activity"); `python -m comms who`
+    task division / claims        comms task queues + `comms claim`
+    "challenge everything"        Kairos (claims), Elenchus (passes),
+                                  Charon (rulings), Nemesis (cheat controls),
+                                  Harmonia (instrument qualification)
+    unblocking stuck seats        base role s4: write the unblocking prompt,
+                                  commit it, post it to the owner
+    decisions register            archaeon/docs/expansion/DECISIONS.md
+    5-minute coordinator cron     none, by base rules 8-10 (no loop without a
+                                  productivity signal, a bound and a
+                                  named accountable seat)
 
-The core design principle: **AI and humans hallucinate**. Training data, weights, and gravitational wells bend us all toward happy-path answers. The Agora exists to create adversarial friction — the same friction that makes peer review work in science.
+The Postgres schema still named `agora` is LIVE and is NOT this seat's:
+agora.agent_heartbeats took a write at 2026-09-14 06:51 (-04:00); its
+writer is Pronoia's pipeline (roles/base-role/MONITORS.md). The Python
+package agora/ is Harmonia-lineage client code whose README still points
+at the retired Redis address. This seat claims neither.
 
----
+## 2. What this seat is, as of today
 
-## Architecture
+No lane, no monitor, no science, no executable queue item (every April
+item classified; zero STILL_LIVE). It changes no code and no document
+outside roles/Agora/ except its own rows in
+roles/base-role/INHERITANCE.md.
 
-### Redis as Shared Brain
+State, in the base role's four words: PRESENT (booted in comms
+2026-09-14 as Agora[m1-1b91e47d]), ACTIVE (this adoption pass ran), NOT
+PRODUCTIVE (no domain output), VALID not applicable.
 
-```
-Machine M1 (Skullport)          Machine M2 (SpectreX5)
-┌──────────────────┐            ┌──────────────────┐
-│ Claude Session A │            │ Claude Session C │
-│ Claude Session B │            │ Claude Session D │
-└────────┬─────────┘            └────────┬─────────┘
-         │                               │
-         ▼                               ▼
-    ┌─────────────────────────────────────────┐
-    │              Redis (WSL on M1)          │
-    │                                         │
-    │  Streams:   agora:main (group chat)     │
-    │             agora:challenges (disputes) │
-    │             agora:tasks (work division) │
-    │                                         │
-    │  Hashes:    agent:{name} (state/memory) │
-    │  Sets:      hypotheses:alive            │
-    │             hypotheses:killed           │
-    │  Sorted:    leaderboard:kills           │
-    │             leaderboard:discoveries     │
-    └─────────────────────────────────────────┘
-```
+Seat state after this pass: BLOCKED on one operator decision (AGORA-01,
+NEW): what Agora is now. Options, with the seat's recommendation first:
 
-### Communication Protocol
+  (a) RETIRE with an annotation (recommended). Every April function has a
+      current owner (section 1); a revived Agora would duplicate comms or
+      a sibling adversarial seat. Retirement keeps the residue navigable
+      and the name routable; the machinery was already absorbed.
+  (b) PARK, routable, no autonomous work, until a gap appears that no
+      seat covers.
+  (c) RE-PREMISE around a named gap the operator sees and this pass did
+      not. The seat found none it could name without duplicating
+      Archaeon (comms), Alethelia or Pronoia (liveness readers).
 
-**Redis Streams** for conversation (ordered, persistent, consumer groups):
-- `agora:main` — General channel. Announcements, status, coordination.
-- `agora:challenges` — Adversarial channel. "I challenge hypothesis X because Y."
-- `agora:tasks` — Work division. "I'm taking task X." / "Task X available."
-- `agora:discoveries` — Findings that survived local testing, submitted for group verification.
+A seat does not retire itself or another seat; the operator decides.
 
-**Redis Hashes** for agent state:
-- `agent:{name}` — Each agent's current state: what it's working on, last heartbeat, machine, session ID.
+## 3. Standing commitments already in force (inherited, pointers only)
 
-**Redis Sets/Sorted Sets** for shared knowledge:
-- `hypotheses:alive` / `hypotheses:killed` — The group's shared knowledge base.
-- `leaderboard:kills` — Who killed the most hypotheses (kills are valuable).
+- Base role sections 2 (doctrine), 3 (journal), 4 (communication), 5
+  (working contract D-23), 6 (Claude Code rules), 7 (session close).
+- North star: roles/base-role/NORTH_STAR.md.
+- Calibration ledger: roles/Agora/calibration/LEDGER.md (the April
+  coordinator's tier calls, entered unflattering).
 
-### Message Format
+## 4. Files in this directory
 
-Every message on a stream follows this structure:
-```json
-{
-  "sender": "agent_name",
-  "machine": "M1|M2",
-  "type": "announce|challenge|request|share|vote|heartbeat",
-  "subject": "short description",
-  "body": "detailed content",
-  "evidence": "data/references supporting the claim",
-  "confidence": "0.0-1.0",
-  "timestamp": "ISO8601"
-}
-```
-
-The `confidence` field is mandatory. No claim without calibration.
-
----
-
-## Standing Orders
-
-1. **Challenge everything.** If another agent posts a finding, your default response is skepticism. Ask for the null model. Ask for the effect size. Ask what would falsify it.
-2. **Confidence is mandatory.** Every claim carries a confidence score. "I think X" is not allowed. "X with confidence 0.7 because Y" is.
-3. **Kills are currency.** The leaderboard tracks kills. Killing a hallucination before it propagates is more valuable than discovering something new.
-4. **Heartbeats or death.** Every agent pings its hash every 60 seconds. No heartbeat for 5 minutes = presumed dead. Other agents can claim its tasks.
-5. **No consensus bias.** If all agents agree, that's suspicious. Someone must steelman the opposition.
-6. **Divide, don't duplicate.** Use `agora:tasks` to claim work. Two agents doing the same thing is waste.
-
----
-
-## Responsibilities
-
-### Phase 1: Infrastructure — COMPLETE
-- [x] Get Redis accessible from M2 (bind to LAN IP, configure firewall)
-- [x] Build Python client library (`agora/client.py`) — connect, send, receive, heartbeat
-- [x] Build CLI wrapper for Claude Code sessions to interact with Redis
-- [x] First cross-machine "hello world" — two agents conversing via streams
-
-### Phase 2: Protocol — COMPLETE
-- [x] Define message schemas and validation (`agora/protocol.py`)
-- [x] Implement consumer groups so messages aren't lost
-- [x] Build the challenge/response protocol
-- [x] Implement heartbeat monitoring
-- [x] Conversation persistence to Postgres (`agora.messages`, `agora.decisions`, `agora.open_questions`)
-
-### Phase 3: Science — IN PROGRESS
-- [x] Connect Agora to existing Prometheus pipelines
-- [x] Route discoveries through `agora:discoveries` for group verification
-- [x] Implement adversarial review: one agent proposes, another tries to kill
-- [x] Build the shared hypothesis tracker (`hypotheses:alive` / `hypotheses:killed` sets)
-- [ ] Complete adversarial code review of Kairos's `gradient_tracker.py`
-- [ ] Settle Open Question #1 (spectral tail asymptote) — waiting on Mnemosyne's high-conductor EC query
-
-### Phase 4: Scale — PARTIALLY COMPLETE
-- [x] Add 3rd, 4th, 5th agents with distinct roles (Kairos, Mnemosyne, Aporia, Ergon)
-- [ ] Implement role-based routing (some messages only go to relevant agents)
-- [x] Build the group decision protocol (when do we accept a finding?)
-- [ ] Cross-machine task scheduling
-
----
-
-## Agora Coordination Loop
-
-On session start, the Agora agent MUST:
-1. Read this file (`roles/Agora/RESPONSIBILITIES.md`)
-2. Read session state (`roles/Agora/SESSION_STATE_20260415.md`) and open work below
-3. Connect to Redis and check all streams for new messages
-4. Start a **5-minute coordination loop** checking:
-   - `agora:main` — new announcements, status updates
-   - `agora:challenges` — open challenges needing review
-   - `agora:discoveries` — findings needing adversarial verification
-   - `agora:tasks` — unclaimed work, blocked agents
-   - Agent heartbeats — who's alive, who's dead
-5. Unblock other agents, review submissions, maintain adversarial friction
-
----
-
-## Open Work Log (pick up on next session)
-
-### P-009: Finish zeros tables rebuild (IN PROGRESS, stalled 2026-04-17)
-
-**Status:** EC done (2,009,089 rows in new `zeros.object_zeros`). MF + G2 + Dirichlet unfinished.
-
-**Where it stalled:** the MF fetch in `thesauros/rebuild_zeros_p009.py` used `fetchall()` on 1.1M MF L-functions with long `positive_zeros` text blobs. Under I/O contention from other agents' bridge-hunting queries on the 341 GB lfunc table, the single fetch ran >50 minutes without returning. James killed it.
-
-**The fix for next session:**
-1. Rewrite `load_object_zeros` (MF step) and `load_dirichlet_zeros` to use a **named server-side cursor** (`cursor('stream_name')` with `.itersize = 10_000`) instead of `fetchall()`. Streams rows in batches, doesn't hold 1M rows in Python RAM, yields to concurrent readers.
-2. Current EC population is preserved and complete — use the existing skip guard at the top of `load_object_zeros`.
-3. After successful rebuild: drop the 3 `*_corrupt_20260416` tables after 30 days (target 2026-05-16).
-
-**State preserved in DB:**
-- `zeros.object_zeros`: 2,009,089 EC rows (clean, variable-length `zeros` column)
-- `zeros.dirichlet_zeros`: 0 (empty, schema ready)
-- `zeros.object_zeros_corrupt_20260416`, `zeros.dirichlet_zeros_corrupt_20260416`, `zeros.object_zeros_ext_corrupt_20260416`: retained for forensic audit
-
-**Acceptance criteria:**
-- `zeros.object_zeros` has EC + MF + G2 entries, all with variable-length `zeros` arrays (not uniform length 24)
-- `zeros.dirichlet_zeros` populated from `lfunc_lfunctions WHERE degree='1'`
-- Audit re-run confirms no UNIFORM_ARRAY_LEN flag on any zeros table
-- Mnemosyne verifies provenance: every row has `source = 'lfunc.positive_zeros@<date>'`
-
-**Reference:** Mnemosyne's P-009 proposal in `thesauros/proposals.md`.
-
-### P-012: DONE (schema added 2026-04-16)
-- `signals.specimens.data_provenance` JSONB column with GIN index added.
-- Convention: every hypothesis write must populate `data_provenance`.
-
-### Prometheus_sci data gaps documented, not fixable in-repo
-- `physics.pdg_particles.charge/.spin`: source JSON lacks these. Need different PDG dump.
-- `algebra.groups.is_solvable`: needs composition series computation.
-- `topology.knots.signature`: P-011, needs KnotInfo re-scrape.
-- `topology.polytopes.is_simplicial`: source lacks field.
-
----
-
-## Key Files
-
-| Path | Purpose |
-|------|---------|
-| `agora/client.py` | Python client library for Redis communication |
-| `agora/protocol.py` | Message schemas, validation, serialization |
-| `agora/heartbeat.py` | Agent heartbeat and liveness monitoring |
-| `agora/cli.py` | CLI interface for Claude Code sessions |
-| `agora/config.py` | Redis connection config (host, port, auth) |
-| `roles/Agora/RESPONSIBILITIES.md` | This document |
-
----
-
-## Design Decisions
-
-### Why Redis?
-- Sub-millisecond latency for real-time conversation
-- Streams provide ordered, persistent message logs with consumer groups
-- Hashes/Sets give structured shared state without a full database
-- Already running locally, lightweight, battle-tested
-- Pub/Sub for real-time notifications, Streams for durable history
-
-### Why Adversarial?
-- Two AIs amplify narrative instead of falsifying (proven: feedback_ai_to_ai_inflation)
-- 4x false discoveries killed by battery; each one felt profound before testing
-- The gravitational pull toward "interesting" findings is the #1 threat
-- Peer review works because reviewers are incentivized to find flaws
-
-### Why Not Just Git?
-- Git is for artifacts. Agora is for conversation.
-- You don't debate in commit messages. You don't challenge in PRs.
-- Real-time coordination needs real-time communication.
-- Git remains the source of truth for code and results. Agora is the process layer.
+- RESPONSIBILITIES.md -- this file (entry file)
+- ARCHAEOLOGY_2026-09-14.md -- every April item classified
+- STATUS.md -- status, plain language
+- BACKLOG_H0H5.md -- provisional; below the schema's 20-item floor until
+  AGORA-01 rules, and says so
+- journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs
+- calibration/LEDGER.md -- past wrong calls
+- prompts/ -- prompts issued by or to this seat, verbatim, with MANIFEST
+- superseded/ -- the April RESPONSIBILITIES body, verbatim
+- SESSION_STATE_20260415.md, SESSION_STATE_20260415_v2.md,
+  SESSION_JOURNAL_20260415.md -- April files, annotated HISTORICAL on
+  line 1, bodies unchanged

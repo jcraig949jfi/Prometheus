@@ -1,0 +1,27 @@
+{
+ "perturbation_id": "P-G08",
+ "parent": "T-R01",
+ "requires": [
+  "P-G01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "ruler-deformation",
+ "f": 0.1,
+ "draws": 4,
+ "rulers": [
+  "bernoulli",
+  "exact_count",
+  "contiguous",
+  "reached_only",
+  "disable"
+ ],
+ "readouts": "per ruler: mean loss, log-length slope (permutation band), set effect tops vs rest (relabel), for loss and for absolute reward change",
+ "reading": "RULER_DEPENDENT if the length slope or the set effect differs in significance or sign between (i) and any of (ii), (iv), (v); (iii) is the known-dilution reference",
+ "material_rule": "RULER_DEPENDENT, or (iii) differs from (i) as D084 predicts (a positive control on the ruler defect)",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:18:31",
+ "prereg_sha256": "420d71808104adf837d54c387c89e501b86517a66c02f67d62868c95cc266773"
+}

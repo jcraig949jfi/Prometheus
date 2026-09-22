@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os   # module level: the D-23 guard below uses it at import time (was missing 7d302b5ae..0100d36cd)
 import ssl
 import sys
 import urllib.error
@@ -131,11 +132,18 @@ def main():
                     help="permit a probe base that is not loopback. Refused by "
                          "default: a LAN address is how you probe somebody "
                          "else's engine by mistake.")
+    ap.add_argument("--candidate-hash", default=None,
+                    help="PRE-DEPLOY mode (Harmonia[m2-54a6d694], 2026-09-14, "
+                         "comms #215). Generate the contract for a build that "
+                         "is NOT yet live: the route table, schema and build "
+                         "hash come from the probe engine, which must report "
+                         "exactly this hash; the ledger identity comes from "
+                         "live. Writes sfe_contract.json ONLY, and the result "
+                         "must not replace the live contract until live "
+                         "reports this hash (promote_candidate_contract.py).")
     a = ap.parse_args()
 
     ver = get(a.base + "/v2/version", a.cacert)
-    spec = get(a.base + "/v2/openapi.json", a.cacert)
-    comps = spec.get("components", {}).get("schemas", {})
     try:
         pv = get(a.probe_base + "/v2/version")
     except Exception as e:                                         # noqa: BLE001
@@ -147,6 +155,38 @@ def main():
         print("  The probe base must be a reachable scratch engine, normally "
               "loopback HTTP. Nothing was probed.")
         return 2
+
+    # PRE-DEPLOY: why the live contract path must not receive this output.
+    # conformance_check.py treats a contract route that live lacks as REMOVED,
+    # which is DRIFT, the never-retry state. A candidate contract carrying a
+    # route the running build does not serve therefore halts every consumer
+    # that reads it before the restart. The candidate is generated beside the
+    # live contract and promoted only once live reports the candidate hash.
+    live_ver = ver
+    if a.candidate_hash:
+        if pv.get("engine_source_hash") != a.candidate_hash:
+            print("REFUSING: probe engine build %s is not the candidate %s"
+                  % ((pv.get("engine_source_hash") or "")[:22],
+                     a.candidate_hash[:22]))
+            return 2
+        if pv.get("engine_source_hash") == ver.get("engine_source_hash"):
+            print("REFUSING: the candidate hash IS the live build. Nothing is "
+                  "pending deploy; run without --candidate-hash.")
+            return 2
+        if pv.get("schema_version") != ver.get("schema_version"):
+            print("REFUSING: candidate schema %s != live schema %s. A schema "
+                  "change is not a pre-deploy contract; regenerate after the "
+                  "deploy." % (pv.get("schema_version"),
+                               ver.get("schema_version")))
+            return 2
+        # the surface is the candidate's; the ledger is live's, because a
+        # restart moves the build and never the ledger
+        ver = dict(pv)
+        ver["engine_instance_id"] = live_ver.get("engine_instance_id")
+        spec = get(a.probe_base + "/v2/openapi.json")
+    else:
+        spec = get(a.base + "/v2/openapi.json", a.cacert)
+    comps = spec.get("components", {}).get("schemas", {})
 
 
     # THE PROBE IS DESTRUCTIVE. It registers a client and fires a malformed
@@ -229,6 +269,18 @@ def main():
                              "does not contain the running code. The hash is "
                              "computed from the loaded source and is the build "
                              "identity.",
+            "pre_deploy": ({
+                "candidate_engine_source_hash": a.candidate_hash,
+                "live_engine_source_hash_at_generation":
+                    live_ver.get("engine_source_hash"),
+                "surface_read_from": "the probe engine (loopback scratch of "
+                                     "the candidate build), not live",
+                "promote_only_when": "live /v2/version reports "
+                                     "candidate_engine_source_hash, the same "
+                                     "engine_instance_id and the same schema; "
+                                     "before that this contract reads DRIFT "
+                                     "against live for every route it adds",
+            } if a.candidate_hash else None),
         },
         "auth": {
             "register": "POST /v2/clients {name} -> {client_id, token}; "
@@ -445,10 +497,16 @@ def main():
     }
 
     import os
-    for name, obj in (("sfe_contract.json", contract),
-                      ("sfe_traps.json", traps),
-                      ("epistemic_bounds.json", epistemic),
-                      ("selection_policy.json", policy)):
+    outputs = [("sfe_contract.json", contract),
+               ("sfe_traps.json", traps),
+               ("epistemic_bounds.json", epistemic),
+               ("selection_policy.json", policy)]
+    if a.candidate_hash:
+        # the other three are not derived from the engine; a candidate copy of
+        # them would be a second, drifting copy of the same text
+        outputs = outputs[:1]
+        os.makedirs(a.outdir, exist_ok=True)
+    for name, obj in outputs:
         p = os.path.join(a.outdir, name)
         with open(p, "w", encoding="utf-8") as f:
             json.dump(obj, f, indent=1, sort_keys=False)

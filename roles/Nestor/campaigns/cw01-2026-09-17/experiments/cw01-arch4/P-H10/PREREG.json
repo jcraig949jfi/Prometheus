@@ -1,0 +1,34 @@
+{
+ "perturbation_id": "P-H10",
+ "parent": "T-ARCH5",
+ "co_parents": [
+  "T-X17"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-representation",
+ "grammar_b_available": true,
+ "shapes": {
+  "0": "start_anchored",
+  "4": "periodic",
+  "5": "ask_time",
+  "1": "schedule"
+ },
+ "representatives": 8,
+ "depths": [
+  4,
+  8,
+  16
+ ],
+ "walkers": 2,
+ "walk": "band acceptance in the home world; proposals from grammar B (mutate_b) vs grammar v0.4 (C4-05 walk)",
+ "keep_shape": "curve distance < .2",
+ "keep_reward": "within band of r0",
+ "reading": "REPRESENTATION_INVARIANT if grammar-B walkers keep the shape within .15 of grammar-A walkers at depth 16 for every shape; REPRESENTATION_IS_A_COORDINATE if they differ by >= .25 in >= 2 shapes; MIXED otherwise; NOT_RUNNABLE if grammar B does not import",
+ "material_rule": "the reading is not MIXED",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:02:23",
+ "prereg_sha256": "d908010a2c9cda0546ce8dfcc9cedf971e8c23fe6672f7eed71cfbc536ebb516"
+}

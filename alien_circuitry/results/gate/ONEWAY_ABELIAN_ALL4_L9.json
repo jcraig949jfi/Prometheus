@@ -1,0 +1,781 @@
+{
+ "universe": "ONEWAY_ABELIAN_ALL4",
+ "L": 9,
+ "rules": [
+  "cancel[xX]: 'xX'->''",
+  "cancel[Xx]: 'Xx'->''",
+  "cancel[yY]: 'yY'->''",
+  "cancel[Yy]: 'Yy'->''",
+  "rel0[xy->yx]: 'xy'->'yx'",
+  "rel1[xY->Yx]: 'xY'->'Yx'",
+  "rel2[Xy->yX]: 'Xy'->'yX'",
+  "rel3[XY->YX]: 'XY'->'YX'"
+ ],
+ "NS": 349525,
+ "edges_nominal": 1339848,
+ "edges_distinct": 1194212,
+ "hashes": {
+  "edges_nominal_sha256": "428f01ac0f3be0963f832f36a0f5e0bea1cd341b3426c3255842744440fd70fd",
+  "edges_distinct_sha256": "7b4e33aed66cbbea0b5e1937e1881bb41b8e364deef7ed43806e09ef118ea56c",
+  "D_sha256": "46d38b965d262ad0c95d434ff83f339ec0731acdfc4206cbdda975c8601d90f0",
+  "targets": [
+   "",
+   "x",
+   "X",
+   "y",
+   "Y",
+   "xx",
+   "XX",
+   "yx",
+   "yX",
+   "yy",
+   "Yx",
+   "YX",
+   "YY"
+  ],
+  "rules": [
+   "cancel[xX]",
+   "cancel[Xx]",
+   "cancel[yY]",
+   "cancel[Yy]",
+   "rel0[xy->yx]",
+   "rel1[xY->Yx]",
+   "rel2[Xy->yX]",
+   "rel3[XY->YX]"
+  ]
+ },
+ "observation_language_sha256": "b52695eb83d865a11da691b77b773cb5c75cad89c790fb5bf52f25fcb2be8094",
+ "navigation_policies_sha256": "2cc048ec4614800d62ce1ec0621fa637735c778b71c1e1e9d92fd2f9f7b70420",
+ "features": [
+  "len",
+  "terminal",
+  "outdeg",
+  "n_actions",
+  "n_cancel",
+  "n_relator",
+  "cx",
+  "cX",
+  "cy",
+  "cY",
+  "eq_target"
+ ],
+ "target_rule": "all terminal (irreducible) states of length <= 2, index order",
+ "targets": [
+  "",
+  "x",
+  "X",
+  "y",
+  "Y",
+  "xx",
+  "XX",
+  "yx",
+  "yX",
+  "yy",
+  "Yx",
+  "YX",
+  "YY"
+ ],
+ "target_length_hist": {
+  "0": 1,
+  "1": 4,
+  "2": 8
+ },
+ "termination": {
+  "measure": "(len, #x) lexicographic",
+  "edges": 1339848,
+  "measure_violations": 669924,
+  "self_loops": 0,
+  "strongly_connected_components": 349525,
+  "scc_size_histogram": {
+   "1": 349525
+  },
+  "largest_scc": 1,
+  "cycles_present": false,
+  "terminal_states": 181,
+  "max_height_longest_path": 4,
+  "height_histogram": {
+   "0": 181,
+   "1": 41316,
+   "2": 112024,
+   "3": 132680,
+   "4": 63324
+  },
+  "termination_intrinsic": false,
+  "verdict": "TERMINATING (DAG confirmed; the (len,#x) measure does not apply to this rule set)"
+ },
+ "difficulty": {
+  "min_start_len": 3,
+  "candidate_problems": 104660,
+  "distance_histogram": {
+   "1": 108,
+   "2": 1108,
+   "3": 11028,
+   "4": 35652,
+   "5": 35376,
+   "6": 16012,
+   "7": 4176,
+   "8": 968,
+   "9": 192,
+   "10": 40
+  },
+  "max_D": 10,
+  "eligible_TRIVIAL": 1216,
+  "eligible_EASY": 46680,
+  "eligible_MEDIUM": 51388,
+  "eligible_HARD": 5376,
+  "branching_nominal_hist_all_states": {
+   "0": 181,
+   "1": 4320,
+   "2": 32088,
+   "3": 95232,
+   "4": 124584,
+   "5": 73136,
+   "6": 18284,
+   "7": 1664,
+   "8": 36
+  },
+  "branching_effective_hist_all_states": {
+   "0": 181,
+   "1": 5664,
+   "2": 47208,
+   "3": 132024,
+   "4": 126180,
+   "5": 36268,
+   "6": 2000
+  },
+  "mean_branching_nominal_all": 3.833339532222302,
+  "mean_branching_effective_all": 3.4166711966239895,
+  "mean_branching_nominal_live": 4.1534949035641615,
+  "mean_branching_effective_live": 3.654569597157077,
+  "fixpoint_states": 181,
+  "states_live_for_some_target": 104681
+ },
+ "target_stats": [
+  {
+   "target": "",
+   "len": 0,
+   "reachable_states": 5341,
+   "reachable_fraction_of_parity_compatible": 0.07640369072312424,
+   "distance_histogram": {
+    "0": 1,
+    "1": 4,
+    "2": 28,
+    "3": 240,
+    "4": 2236,
+    "5": 2040,
+    "6": 680,
+    "7": 96,
+    "8": 16
+   }
+  },
+  {
+   "target": "x",
+   "len": 1,
+   "reachable_states": 17211,
+   "reachable_fraction_of_parity_compatible": 0.06155139117373579,
+   "distance_histogram": {
+    "0": 1,
+    "1": 7,
+    "2": 60,
+    "3": 559,
+    "4": 5476,
+    "5": 6650,
+    "6": 3314,
+    "7": 884,
+    "8": 210,
+    "9": 40,
+    "10": 10
+   }
+  },
+  {
+   "target": "X",
+   "len": 1,
+   "reachable_states": 17211,
+   "reachable_fraction_of_parity_compatible": 0.06155139117373579,
+   "distance_histogram": {
+    "0": 1,
+    "1": 7,
+    "2": 60,
+    "3": 559,
+    "4": 5476,
+    "5": 6650,
+    "6": 3314,
+    "7": 884,
+    "8": 210,
+    "9": 40,
+    "10": 10
+   }
+  },
+  {
+   "target": "y",
+   "len": 1,
+   "reachable_states": 17211,
+   "reachable_fraction_of_parity_compatible": 0.06155139117373579,
+   "distance_histogram": {
+    "0": 1,
+    "1": 7,
+    "2": 60,
+    "3": 559,
+    "4": 5476,
+    "5": 6650,
+    "6": 3314,
+    "7": 884,
+    "8": 210,
+    "9": 40,
+    "10": 10
+   }
+  },
+  {
+   "target": "Y",
+   "len": 1,
+   "reachable_states": 17211,
+   "reachable_fraction_of_parity_compatible": 0.06155139117373579,
+   "distance_histogram": {
+    "0": 1,
+    "1": 7,
+    "2": 60,
+    "3": 559,
+    "4": 5476,
+    "5": 6650,
+    "6": 3314,
+    "7": 884,
+    "8": 210,
+    "9": 40,
+    "10": 10
+   }
+  },
+  {
+   "target": "xx",
+   "len": 2,
+   "reachable_states": 3378,
+   "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+   "distance_histogram": {
+    "0": 1,
+    "1": 10,
+    "2": 101,
+    "3": 1036,
+    "4": 1146,
+    "5": 734,
+    "6": 250,
+    "7": 78,
+    "8": 16,
+    "9": 6
+   }
+  },
+  {
+   "target": "XX",
+   "len": 2,
+   "reachable_states": 3378,
+   "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+   "distance_histogram": {
+    "0": 1,
+    "1": 10,
+    "2": 101,
+    "3": 1036,
+    "4": 1146,
+    "5": 734,
+    "6": 250,
+    "7": 78,
+    "8": 16,
+    "9": 6
+   }
+  },
+  {
+   "target": "yx",
+   "len": 2,
+   "reachable_states": 4246,
+   "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+   "distance_histogram": {
+    "0": 1,
+    "1": 11,
+    "2": 109,
+    "3": 1102,
+    "4": 1732,
+    "5": 950,
+    "6": 269,
+    "7": 58,
+    "8": 12,
+    "9": 2
+   }
+  },
+  {
+   "target": "yX",
+   "len": 2,
+   "reachable_states": 4246,
+   "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+   "distance_histogram": {
+    "0": 1,
+    "1": 11,
+    "2": 109,
+    "3": 1102,
+    "4": 1732,
+    "5": 950,
+    "6": 269,
+    "7": 58,
+    "8": 12,
+    "9": 2
+   }
+  },
+  {
+   "target": "yy",
+   "len": 2,
+   "reachable_states": 3378,
+   "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+   "distance_histogram": {
+    "0": 1,
+    "1": 10,
+    "2": 101,
+    "3": 1036,
+    "4": 1146,
+    "5": 734,
+    "6": 250,
+    "7": 78,
+    "8": 16,
+    "9": 6
+   }
+  },
+  {
+   "target": "Yx",
+   "len": 2,
+   "reachable_states": 4246,
+   "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+   "distance_histogram": {
+    "0": 1,
+    "1": 11,
+    "2": 109,
+    "3": 1102,
+    "4": 1732,
+    "5": 950,
+    "6": 269,
+    "7": 58,
+    "8": 12,
+    "9": 2
+   }
+  },
+  {
+   "target": "YX",
+   "len": 2,
+   "reachable_states": 4246,
+   "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+   "distance_histogram": {
+    "0": 1,
+    "1": 11,
+    "2": 109,
+    "3": 1102,
+    "4": 1732,
+    "5": 950,
+    "6": 269,
+    "7": 58,
+    "8": 12,
+    "9": 2
+   }
+  },
+  {
+   "target": "YY",
+   "len": 2,
+   "reachable_states": 3378,
+   "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+   "distance_histogram": {
+    "0": 1,
+    "1": 10,
+    "2": 101,
+    "3": 1036,
+    "4": 1146,
+    "5": 734,
+    "6": 250,
+    "7": 78,
+    "8": 16,
+    "9": 6
+   }
+  }
+ ],
+ "problems_per_target": {
+  "": 5336,
+  "x": 17210,
+  "X": 17210,
+  "y": 17210,
+  "Y": 17210,
+  "xx": 3377,
+  "XX": 3377,
+  "yx": 4244,
+  "yX": 4244,
+  "yy": 3377,
+  "Yx": 4244,
+  "YX": 4244,
+  "YY": 3377
+ },
+ "traps": {
+  "total": 0,
+  "cancel": 0,
+  "relator": 0,
+  "siblings": {
+   "traps": 0,
+   "with_any_nontrap_sibling": 0,
+   "exact_match_6_features": 0,
+   "loose_match_3_features": 0,
+   "match_features": [
+    "rule_family",
+    "succ_len",
+    "succ_outdeg",
+    "succ_eq_target",
+    "succ_n_cancel",
+    "succ_n_relator"
+   ],
+   "loose_features": [
+    "rule_family",
+    "succ_len",
+    "succ_outdeg"
+   ]
+  },
+  "per_target": {
+   "": 0,
+   "x": 0,
+   "X": 0,
+   "y": 0,
+   "Y": 0,
+   "xx": 0,
+   "XX": 0,
+   "yx": 0,
+   "yX": 0,
+   "yy": 0,
+   "Yx": 0,
+   "YX": 0,
+   "YY": 0
+  },
+  "all": {
+   "count": 0,
+   "H_obs_graph": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   },
+   "H_obs_tree": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   }
+  },
+  "cancel_traps": {
+   "count": 0,
+   "H_obs_graph": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   },
+   "H_obs_tree": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   }
+  },
+  "relator_traps": {
+   "count": 0,
+   "H_obs_graph": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   },
+   "H_obs_tree": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   }
+  },
+  "matched_subset": {
+   "count": 0,
+   "H_obs_graph": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   },
+   "H_obs_tree": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    ">5": 0,
+    "n": 0
+   }
+  },
+  "H_pair_matched_graph": {
+   "0": 0,
+   "1": 0,
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0,
+   ">5": 0,
+   "n": 0
+  },
+  "H_pair_matched_tree": {
+   "0": 0,
+   "1": 0,
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0,
+   ">5": 0,
+   "n": 0
+  },
+  "H_pair_all_with_good_sibling_graph": {
+   "0": 0,
+   "1": 0,
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0,
+   ">5": 0,
+   "n": 0
+  },
+  "trap_rate": 0.0
+ },
+ "Q1_exact_classification": {
+  "live_triples": 434792,
+  "traps": 0,
+  "non_traps": 434792,
+  "prevalence": 0.0,
+  "per_depth": {
+   "0": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 136,
+    "resolved_fraction": 0.00031279324366593683,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.999687206756334,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.500156396621833
+    }
+   },
+   "1": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 2344,
+    "resolved_fraction": 0.005391083552595264,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.9946089164474048,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5026955417762976
+    }
+   },
+   "2": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 32656,
+    "resolved_fraction": 0.075107177684962,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.924892822315038,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.537553588842481
+    }
+   },
+   "3": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 149460,
+    "resolved_fraction": 0.34375057498758027,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.6562494250124198,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.6718752874937901
+    }
+   },
+   "4": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 286188,
+    "resolved_fraction": 0.6582181824872583,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.3417818175127417,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.8291090912436292
+    }
+   },
+   "5": {
+    "traps_proven_graph": 0,
+    "traps_proven_tree": 0,
+    "nontraps_proven_safe": 382292,
+    "resolved_fraction": 0.8792526081436641,
+    "A_unknown_as_safe": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "fpr": 0.0,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.5
+    },
+    "B_unknown_as_trap": {
+     "precision": 0.0,
+     "recall": 1.0,
+     "fpr": 0.1207473918563359,
+     "fnr": 0.0,
+     "balanced_accuracy": 0.939626304071832
+    }
+   }
+  },
+  "base_rates": {
+   "always_safe": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "balanced_accuracy": 0.5
+   },
+   "always_trap": {
+    "precision": 0.0,
+    "recall": 1.0,
+    "balanced_accuracy": 0.5
+   }
+  },
+  "pr_auc_note": "not reported: the exact controller is three-valued and sound, so precision is 1 at every recall it attains; a PR curve would be a step function."
+ },
+ "lookahead_cost_per_call": {
+  "0": {
+   "calls": 305,
+   "mean_states_expanded": 1.0,
+   "mean_transitions_examined": 3.1049180327868853,
+   "verdicts": {
+    "UNKNOWN": 305
+   },
+   "resolved_fraction": 0.0
+  },
+  "1": {
+   "calls": 305,
+   "mean_states_expanded": 1.9967213114754099,
+   "mean_transitions_examined": 5.311475409836065,
+   "verdicts": {
+    "UNKNOWN": 304,
+    "SAFE": 1
+   },
+   "resolved_fraction": 0.003278688524590164
+  },
+  "2": {
+   "calls": 305,
+   "mean_states_expanded": 5.039344262295082,
+   "mean_transitions_examined": 13.222950819672132,
+   "verdicts": {
+    "UNKNOWN": 287,
+    "SAFE": 18
+   },
+   "resolved_fraction": 0.05901639344262295
+  },
+  "3": {
+   "calls": 305,
+   "mean_states_expanded": 10.154098360655738,
+   "mean_transitions_examined": 26.16393442622951,
+   "verdicts": {
+    "SAFE": 93,
+    "UNKNOWN": 212
+   },
+   "resolved_fraction": 0.30491803278688523
+  },
+  "4": {
+   "calls": 305,
+   "mean_states_expanded": 15.37049180327869,
+   "mean_transitions_examined": 39.38360655737705,
+   "verdicts": {
+    "SAFE": 199,
+    "UNKNOWN": 106
+   },
+   "resolved_fraction": 0.6524590163934426
+  },
+  "5": {
+   "calls": 305,
+   "mean_states_expanded": 18.540983606557376,
+   "mean_transitions_examined": 47.442622950819676,
+   "verdicts": {
+    "SAFE": 274,
+    "UNKNOWN": 31
+   },
+   "resolved_fraction": 0.898360655737705
+  }
+ },
+ "residual": {
+  "R5_graph_semantics": {
+   "count": 0
+  },
+  "R5_tree_semantics": {
+   "count": 0
+  }
+ },
+ "trap_table_sha256_uncompressed": "eb94bdbe1a1c1dc567c614bfb8c33eed4ed8d9558c39d937f8306d44ff2ec8f7",
+ "seconds": 2.2
+}

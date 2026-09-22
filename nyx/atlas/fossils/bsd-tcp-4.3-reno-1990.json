@@ -1,0 +1,183 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bsd-tcp-4.3-reno-1990",
+ "techne_record": "techne/fossils/specimens/bsd-tcp-4.3-reno-1990/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bsd-tcp-4.3-reno-1990",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "4.3BSD-Reno TCP (1990) -- fast retransmit and fast recovery",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.3BSD-Reno (June 1990), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_3_Reno",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1990",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "networks",
+     "congestion-control",
+     "retransmission",
+     "contention",
+     "failure"
+    ],
+    "lineage": "TCP congestion-control lineage, the SUCCESSOR: Reno keeps Tahoe's slow start/avoidance and adds fast retransmit on three duplicate ACKs and fast recovery (halve cwnd instead of collapsing to one segment). 'Reno' is the name later analyses (Fall & Floyd 1996) attach to this behaviour; NewReno, SACK, CUBIC descend from it. Preserved from unix-history-repo tag BSD-4_3_Reno."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "loss recovery without pipe drain",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate",
+    "pressure": "the cost of Tahoe's full slow-start restart on every loss on high bandwidth-delay paths",
+    "success_means": "one loss costs a halving, not a restart; throughput on long fat pipes roughly doubles versus Tahoe"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "high bandwidth-delay product, isolated losses",
+    "failure_condition": "multiple losses in one window still collapse it (the NewReno/SACK pressure)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (BSD kernel)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "TCP congestion-control lineage, the SUCCESSOR: Reno keeps Tahoe's slow start/avoidance and adds fast retransmit on three duplicate ACKs and fast recovery (halve cwnd instead of collapsing to one segment). 'Reno' is the name later analyses (Fall & Floyd 1996) attach to this behaviour; NewReno, SACK, CUBIC descend from it. Preserved from unix-history-repo tag BSD-4_3_Reno.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: bsd-tcp-4.3-tahoe-1988"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded_by: linux-tcp-congestion"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "incorrect_assumptions"
+    ],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno and SACK TCP, CCR 1996",
+      "says": "Reno performs poorly when multiple segments are lost from one window."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "RFC 2018 (TCP Selective Acknowledgment) and RFC 3782 (NewReno)",
+      "says": "Both were standardised specifically to address Reno's behaviour under multiple losses."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "0489c44ba9804179ca45d17805a3d710738bf91794b0dd3bf958a25b29b0912a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "none",
+     "note": "kernel code; preserved and hashed, not executed"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "historical_version_of",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "superseded_by",
+   "to": "linux-tcp-congestion",
+   "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

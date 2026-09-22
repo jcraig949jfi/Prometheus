@@ -1,0 +1,263 @@
+{
+  "schema": "techne.fossil.packet/1",
+  "specimen_id": "lisp-1-5-ibm7090-1962",
+  "pipeline_id": "FOSSIL-LISP15-001",
+  "written_utc": "2026-09-16T17:30:00Z",
+  "written_by": "Techne[m2-04bd52c0]",
+  "amendment": "roles/Techne/prompts/2026-09-16_amendment2/OPERATOR.md sha256:815e84b3c8ea387af348b2f1ca96220f6fee87ece3dbd136e32b04df19428b85",
+  "PAYLOAD_MANIFEST_ID": "a327128a690ba8b2b4aa0a595d6108940c158ef10377b96ab9d4905ccfb25c05",
+  "downstream_owners": {
+    "CUT_ID": "Nyx",
+    "NYX_PREDICTION_PACKET": "Nyx",
+    "ORACLE_SOURCES": "Harmonia",
+    "ORACLE_PROVENANCE_GRADES": "Harmonia",
+    "HARMONIA_SURROGATE_ID": "Harmonia",
+    "EQUIVALENCE_RESULT": "Harmonia",
+    "DIVERGENCE_LEDGER": "Harmonia",
+    "TEST_WORLD_ID": "Theophrastus",
+    "PRESSURE_ID": "Theophrastus",
+    "INTERVENTION_ID": "Theophrastus",
+    "TENSOR_ADMISSION_RESULT": "Theophrastus",
+    "PAYLOAD_READING_NULL": "Theophrastus",
+    "FINAL_DISPOSITION": "operator"
+  },
+  "CUT_ID": null,
+  "NYX_PREDICTION_PACKET": null,
+  "ORACLE_SOURCES": null,
+  "ORACLE_PROVENANCE_GRADES": null,
+  "HARMONIA_SURROGATE_ID": null,
+  "EQUIVALENCE_RESULT": null,
+  "DIVERGENCE_LEDGER": null,
+  "TEST_WORLD_ID": null,
+  "PRESSURE_ID": null,
+  "INTERVENTION_ID": null,
+  "TENSOR_ADMISSION_RESULT": null,
+  "PAYLOAD_READING_NULL": null,
+  "FINAL_DISPOSITION": null,
+  "FOSSIL_RAW_ID": {
+    "tree_sha256": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076",
+    "n_files": 17,
+    "bytes": 23535439,
+    "artifact": {
+      "kind": "git",
+      "url": "https://github.com/informatimago/lisp-1-5",
+      "commit": "fddd37ed99ed7808825455dfc9e74cb0d36eae6b"
+    },
+    "hash_list": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/UPSTREAM_HASHES.txt",
+    "host_stability": "acquired on M1 2026-09-14 (batch 12); re-fetched on M2 2026-09-16 at the pinned commit and MATCHed"
+  },
+  "PROVENANCE_GRADE": [
+    {
+      "artifact": "lisp15.asm (the body) + lisp15.lst + asm7090.patch + Makefile",
+      "grade": "LATER_TRANSCRIPTION",
+      "basis": "Bourguignon's card-deck transcription of the 1962 IBM 7090 LISP 1.5 assembly from the listing scan, with generated tables (GENER/GPLI/GPLA cards) and five inferred cards marked '** ASSUMING THIS IS THIS' (README); typos preserved by policy",
+      "edges": [
+        "TRANSCRIBES the 'Bonnie's Birthday Assembly' listing (1962)",
+        "DERIVES_FROM the LISP 1.5 system deck (MIT, 1962)"
+      ]
+    },
+    {
+      "artifact": "LISP1.5-Bonnie-sBirthdayAssembly.pdf (in the body)",
+      "grade": "CONTEMPORARY_COPY",
+      "basis": "scan of the 1962 assembly listing; the oracle for the transcription (224 pages, OCR layer)",
+      "edges": [
+        "CONTEMPORARY_LISTING of the 1962 assembly"
+      ]
+    },
+    {
+      "artifact": "Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4 (world)",
+      "grade": "DERIVED_RECOVERY_ARTIFACT",
+      "basis": "modern reimplementations of the 7090 toolchain (MIT licence, cozx.com); the versions the transcription names (2.2.2/2.1.4/1.0.5) are no longer served",
+      "edges": [
+        "CLAIMS_EQUIVALENCE_TO IBM 7090 FAP/MAP assembler and 709x hardware"
+      ]
+    },
+    {
+      "artifact": "LISPTAPE.BIN (in s709-2.4.4, 2008)",
+      "grade": "UNKNOWN",
+      "basis": "a bootable LISP 1.5 system image shipped by Pitts; build path and source not stated; used ONLY as the world's positive control, never as the body",
+      "edges": [
+        "CLAIMS_EQUIVALENCE_TO LISP 1.5 (banner 'EVALQUOTE OPERATOR AS OF 1 MARCH 1961')"
+      ]
+    }
+  ],
+  "FOSSIL_WORLD_ID": "fw-b65ca8959607e296378dabaf",
+  "FOSSIL_WORLD": {
+    "name": "prometheus-fossil-ibm709x:bookworm",
+    "dockerfile": "techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile",
+    "dockerfile_sha256": "48bb60e8de4ed2c9b74609003f6f140ed33c786bd018a2a32d5314e3f526dde2",
+    "architecture": "IBM 7090 (36-bit) emulated by s709 on linux/amd64",
+    "guest": "Debian 12 bookworm-slim + Pitts toolchain from sha256-pinned tarballs + world patch (memmove) + python3; Pitts' LISP material under /usr/local/share/ibm709x/lisp/",
+    "package_manifest_sha256": "6a74df00069e00137dd0ac09b71e01b0f3f100690ce01acc41ab93a05d6efe90",
+    "n_packages": 172,
+    "toolchain_probes": [
+      "asm7090 - version 2.3.2",
+      "IBM 7090 Simulator 2.4.4"
+    ],
+    "world_patch": "techne/fossils/environment/patches/asm7090-2.3.2-overlapping-strcpy.patch (applied by the Dockerfile; C11 finding)",
+    "environment_variable_schema": [
+      "BODY",
+      "HARNESS"
+    ]
+  },
+  "RUNTIME_WITNESS": [
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T142124Z.json",
+      "host": "SPECTREX5 (M2)",
+      "image_id": "sha256:f52d66cb24fff6b87a0a865f40638fca201d799c16a9f6a6f105f8da648d567e",
+      "schema": "techne.fossil.run_receipt/2",
+      "note": "UNPATCHED asm7090: 752 errors -- the INSTRUMENT_FAILURE_MASQUERADING_AS_FOSSIL_FAILURE receipt, kept"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T152519Z.json",
+      "host": "SPECTREX5 (M2)",
+      "image_id": "sha256:a2f7eec86b5e567e409d56a679fc26d0b4c52fb5387c079b0c9af1640d781214",
+      "schema": "techne.fossil.run_receipt/2",
+      "note": "patched world: assembles, words match the 1962 listing"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T153230Z.json",
+      "host": "SPECTREX5 (M2)",
+      "image_id": "sha256:946a0fd5e65a62dfff0de8fb2de2dc3c241ec71ca48098410f0ecb9e7228f494",
+      "schema": "techne.fossil.run_receipt/2",
+      "note": "+ Pitts LISP material: world positive control passes; body's job still prints nothing"
+    }
+  ],
+  "HOST_CAPS_ID": {
+    "host": "SPECTREX5",
+    "cpus": 28,
+    "ram_gb": 15,
+    "container_runtime": "docker 29.1.3 (WSL2)",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2"
+  },
+  "CAPABILITY_MATRIX": {
+    "INSTANTIATE": "yes",
+    "EXECUTE": "yes",
+    "OBSERVE": "yes",
+    "SNAPSHOT": "partial",
+    "RESTORE": "no",
+    "STEP": "yes",
+    "TRACE": "yes",
+    "EXAMINE": "yes",
+    "WATCH": "yes",
+    "INTERVENE": "yes",
+    "SCREENSHOT": "no",
+    "INJECT_INPUT": "yes",
+    "EXTRACT_OUTPUT": "yes",
+    "_source": "techne/fossils/WORLDS.json",
+    "_how": "s709 console: ss/sc step, ds/es examine/enter storage, b/w breakpoints and watchpoints, tf trace to file, D dump memory (SNAPSHOT partial: dump, no restore); card/tape units as input (INJECT_INPUT) and printer/punch BCD files decoded by bcd2txt (EXTRACT_OUTPUT)"
+  },
+  "SCAFFOLDING_LEDGER": {
+    "applied": [
+      {
+        "transformation_id": "W1",
+        "source_object": "asm7090 2.3.2 scanner.h (the WORLD, not the body)",
+        "derived_object": "patched asm7090 in the image",
+        "reason": "overlapping strcpy (undefined behaviour) shifts every $-prefixed cross-namespace symbol under glibc 2.36: 752 false 'undefined symbol' errors",
+        "sites_affected": "1 line",
+        "exact_operation": "strcpy(symbol, iiicp) -> memmove(symbol, iiicp, strlen(iiicp)+1)",
+        "tool": "sed in fossil-ibm709x-toolchain.Dockerfile; patch text in environment/patches/",
+        "evidence_requiring_it": "receipt 142124Z (752 errors, names shifted ERROR->EROOR) vs 152519Z (0 errors)",
+        "provenance_grade": "not applicable (instrument repair)",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly; C11 canonical case"
+      },
+      {
+        "transformation_id": "T1",
+        "source_object": "lisp15.asm + head.card",
+        "derived_object": "lisp15.src",
+        "reason": "the transcription's own Makefile step: pad cards to 80 columns, PCC ON, HEAD spellings",
+        "sites_affected": "all 11,114 cards",
+        "exact_operation": "make lisp15.src (the body's Makefile rule, sed only)",
+        "tool": "the body's Makefile",
+        "evidence_requiring_it": "asm7090 treats a blank opcode field as PZE only with full-width cards (README)",
+        "provenance_grade": "LATER_TRANSCRIPTION (the transcriber's own step)",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly"
+      }
+    ],
+    "measured_and_rejected": [
+      {
+        "transformation_id": "option sweeps",
+        "exact_operation": "asm7090 -f on/off, -m, -j, -x, -w variations",
+        "result": "752 (with -f) / 983 (without) errors unchanged -- the defect was not an option",
+        "measured_utc": "2026-09-16T14:2xZ"
+      },
+      {
+        "transformation_id": "older assembler",
+        "exact_operation": "obtain asm7090 2.2.2 / 2.1.4 (the versions the transcription names)",
+        "result": "not served on cozx.com; Wayback offline then 429; COPR carries only 2.3.2 -- superseded by W1",
+        "measured_utc": "2026-09-16T14:25Z,14:49Z"
+      }
+    ],
+    "note": "the BODY (lisp15.asm) is untouched; W1 repairs the instrument; T1 is the transcriber's own materialisation step"
+  },
+  "INSTRUMENT_CONTROLS": [
+    {
+      "instrument": "asm7090 2.3.2",
+      "control": "C11 canonical case: 752 'undefined symbol' errors traced to an overlapping strcpy in the scanner; after the memmove patch 0 errors and 5793/5793 generated words agree with the 1962 listing (5752 identical to the body's 2.1.4 reference, 38 completed where 2.1.4 printed 00000, 3 by adjudicated errata where 2.1.4 was WRONG); cheat: one altered word -> LISTING_WORDS_DIFFER",
+      "artifact": "harness/compare_listing.py, harness/reference_errata.json, receipt 152519Z"
+    },
+    {
+      "instrument": "s709 2.4.4 + runlisp conventions",
+      "control": "world positive control: Pitts' LISPTAPE.BIN prints the 1 MARCH 1961 EVALQUOTE banner, FACTORIAL(10)=3628800, and runs the Wang propositional calculus to END OF LISP RUN",
+      "artifact": "harness/world_control_pitts_lisp.sh, receipt 153230Z"
+    },
+    {
+      "instrument": "harvest run isolation",
+      "control": "body_preserved true on every receipt",
+      "artifact": "receipts"
+    }
+  ],
+  "TECHNE_STATE": "WORLD_EXECUTABLE",
+  "TECHNE_STATE_BASIS": "the world executes LISP 1.5 (Pitts' tape); the body assembles with 0 errors and is WORD-EXACT to the 1962 listing; the body's own tape (one obj2bin scatter-load record, 56,598 B) does not boot under s709 `lt` (Pitts' tape is [1482 B bootstrap][194,508 B core image]) -- the historical SETUP from assembled deck to bootable system image is the missing step. Not BODY_EXECUTABLE.",
+  "BEHAVIOR_EVIDENCE": null,
+  "REQUIRED_STATE_FOR_HANDOFF": "BODY_EXECUTABLE",
+  "REQUIRED_STATE_BASIS": "any Nyx cut on the interpreter (e.g. the free-storage / garbage collector, the EVALQUOTE loop) needs the job to run; parked below its requirement (R27: not dead)",
+  "HANDOFF_REQUESTED": false,
+  "TECHNE_RUN_RECEIPTS": [
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T142124Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T151959Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T152519Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T153230Z.json"
+  ],
+  "PRESERVATION": {
+    "copies": [
+      {
+        "object": "body tree 36e31960cedd",
+        "location_class": "host-local vault (SKULLPORT)",
+        "failure_domain": "M1",
+        "verification_time": "2026-09-14",
+        "verification_result": "VERIFIED",
+        "artifact": "record.json hashes at acquisition (batch 12, M1)"
+      },
+      {
+        "object": "body tree 36e31960cedd",
+        "location_class": "host-local vault (SPECTREX5), re-fetched at the pinned commit",
+        "failure_domain": "M2",
+        "verification_time": "2026-09-16T13:50:22Z",
+        "verification_result": "VERIFIED",
+        "artifact": "techne/fossils/VAULT_INTEGRITY_M2_2026-09-16.json"
+      },
+      {
+        "object": "origin github.com/informatimago/lisp-1-5 @ fddd37ed99ed",
+        "location_class": "GitHub",
+        "failure_domain": "GitHub",
+        "verification_time": "2026-09-16",
+        "verification_result": "VERIFIED (fetch matched)",
+        "artifact": "techne/fossils/REMATERIALIZE_M2_2026-09-16_run2.json"
+      },
+      {
+        "object": "Pitts tarballs (4) + LISPTAPE.BIN",
+        "location_class": "cozx.com (single personal site) + sha256 pins in the Dockerfile + tarballs in the session scratchpad only",
+        "failure_domain": "cozx.com",
+        "verification_time": "2026-09-16",
+        "verification_result": "VERIFIED by sha256 at build; NOT preserved off-site by Prometheus yet",
+        "artifact": "fossil-ibm709x-toolchain.Dockerfile"
+      }
+    ],
+    "r25_status": "two VERIFIED body copies (M1, M2) + GitHub origin; the WORLD's unique recovery artifacts (Pitts' toolchain and LISP tape) exist only on cozx.com -- R25 gap, the mirror/NAS is the fix (TECHNE-65)"
+  }
+}

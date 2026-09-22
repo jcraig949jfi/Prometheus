@@ -1,0 +1,37 @@
+{
+ "perturbation_id": "P-B03",
+ "parent": "T-E07",
+ "also": "T-E01",
+ "attempt_id": "cw01-loop1-PB03",
+ "claim_type": "confirmatory-transplant",
+ "delta": "e07 damage family (blind deletion of a fraction of stored region entries between steps) + bit-matched sham inside e01's world; STATIC/WEATHER/SHAMWEATHER during evolution",
+ "unchanged": "e01 economics, 5-gene organism, episode structure, e01 selection, arm-independent streams",
+ "attacks": "e07 D059 (state use never evolved) and e01 I4 gap",
+ "arms": [
+  "STATIC",
+  "WEATHER",
+  "SHAMWEATHER"
+ ],
+ "lineages_per_arm": 6,
+ "generations": 40,
+ "n_org": 64,
+ "sweep": [
+  0.1,
+  0.2,
+  0.3
+ ],
+ "f_test": 0.2,
+ "representatives": "top 8 by intact score on 8 selection streams (one rule for all arms)",
+ "assay": "16 matched test streams: intact, damaged f=0.2, floor = same genome with p_write=0",
+ "statistic": "r_l = (sum S_dmg - sum F)/(sum S_int - sum F) over useful reps; c in r_l = a + b S_l + c[WEATHER], exact relabelling over 12 lineages",
+ "decision": {
+  "damage_fires": "mean r over STATIC lineages < 0.95, else INCONCLUSIVE (damage inert)",
+  "sham_inert": "SHAMWEATHER vs STATIC c inside [p05,p95], else CONTAMINATED",
+  "POSITIVE": "c_weather > p95 with the two checks above",
+  "NEGATIVE": "c_weather < p05",
+  "NULL": "otherwise"
+ },
+ "seeds": "attempt id cw01-loop1-PB03, per-lineage seed suffix; no prior production seed",
+ "written": "2026-09-18 11:08:37",
+ "prereg_sha256": "185a1a8eb586efd4d8893fc7486bf2acb81582f77df9ba7cec90e07c23dbe192"
+}

@@ -115,7 +115,23 @@ def _evca():
     return evca, core
 
 
-def _require_density_set(value, core):
+def _require_density_set(value, core, n_cells=None):
+    """One block spec per entry, in declared order.
+
+    Three ensembles, one list (THEO-REQ-006, 2026-09-16, library dbc41fd2f):
+
+        null            each cell iid uniform: the published ensemble
+        0.35            each cell iid Bernoulli(0.35): a biased ensemble
+        {"count": 52}   EXACTLY 52 ones in a seeded uniform arrangement,
+                        so the realised density is 52 / n_cells on every IC
+                        and the majority target is fixed by the entry alone
+
+    Returns (kind, value) pairs: ("density", float | None) or ("count", int).
+    The library refuses density and exact_count together; this contract
+    refuses a dict with any key but `count`, so the two can never be mixed
+    inside one entry. `n_cells` is passed so a count outside [0, n_cells] is
+    refused HERE, before any world is committed, not by make_ics later.
+    """
     if not isinstance(value, list) or not value:
         raise core.EvcaError(
             "ic_density_set must be a non-empty list; use [null] for the "
@@ -123,13 +139,34 @@ def _require_density_set(value, core):
     out = []
     for d in value:
         if d is None:
-            out.append(None)
+            out.append(("density", None))
+            continue
+        if isinstance(d, dict):
+            if set(d) != {"count"}:
+                raise core.EvcaError(
+                    "an ic_density_set object entry must be exactly "
+                    "{\"count\": k}, got keys %s" % sorted(d))
+            k = d["count"]
+            if isinstance(k, bool) or not isinstance(k, int):
+                raise core.EvcaError(
+                    "ic_density_set count must be an integer, got %r" % (k,))
+            if n_cells is not None:
+                core.require_count(k, n_cells)
+            out.append(("count", int(k)))
             continue
         if isinstance(d, bool) or not isinstance(d, (int, float)):
             raise core.EvcaError(
-                "ic_density_set entries must be null or a number, got %r" % (d,))
-        out.append(core.require_density(float(d)))
+                "ic_density_set entries must be null, a number or "
+                "{\"count\": k}, got %r" % (d,))
+        out.append(("density", core.require_density(float(d))))
     return out
+
+
+def _make_block(core, n_ic, n_cells, seed, block):
+    kind, v = block
+    if kind == "count":
+        return core.make_ics(n_ic, n_cells, seed, exact_count=v)
+    return core.make_ics(n_ic, n_cells, seed, density=v)
 
 
 def _reflect_table(table, np):
@@ -184,6 +221,50 @@ def apply_transform(name, table, ics, np):
     raise ValueError("unknown transform %r" % (name,))
 
 
+def payload_problems(payload: dict) -> list:
+    """D2 (2026-09-16): every VALUE refusal this kind makes, as a list of
+    reasons, with nothing executed. Called at admission (viv.kinds, through
+    the registry's value_checker) and by run() at its entry, so the two
+    cannot drift: run() refuses exactly what admission would have refused.
+    The library's own require_* functions are the authority for the
+    numbers; this only sequences them and turns raises into reasons."""
+    try:
+        _, core = _evca()
+    except CaLibraryUnavailable as exc:
+        return [str(exc)]
+    reasons = []
+
+    def _try(what, fn):
+        try:
+            fn()
+        except Exception as exc:                              # noqa: BLE001
+            reasons.append("%s: %s" % (what, str(exc)[:300]))
+
+    if payload.get("transform") not in TRANSFORMS:
+        reasons.append(
+            "transform must be one of %s, got %r; these are the four EXACT "
+            "symmetries of the density task, so a transformed arm is a NULL "
+            "arm -- accuracy that moves under one is a defect, not a result"
+            % (list(TRANSFORMS), payload.get("transform")))
+    if payload.get("success_criterion") not in SUCCESS_CRITERIA:
+        reasons.append(
+            "success_criterion must be one of %s, got %r; `accuracy` is scored "
+            "under it and the choice is the requester's"
+            % (list(SUCCESS_CRITERIA), payload.get("success_criterion")))
+    _try("radius", lambda: core.require_radius(payload.get("radius")))
+    _try("n_cells", lambda: core.require_lattice(payload.get("n_cells")))
+    _try("steps", lambda: core.require_steps(payload.get("steps")))
+    n_cells = payload.get("n_cells")
+    _try("ic_density_set", lambda: _require_density_set(
+        payload.get("ic_density_set"), core,
+        n_cells=n_cells if isinstance(n_cells, int) else None))
+    n_ic = payload.get("n_ic")
+    if not isinstance(n_ic, int) or isinstance(n_ic, bool) or n_ic < 1:
+        reasons.append("n_ic must be a positive integer, got %r" % (n_ic,))
+    _try("rule_hex", lambda: core.decode_table(payload.get("rule_hex")))
+    return reasons
+
+
 def run(payload: dict, *, seed: int) -> dict:
     """Execute one CA density-classification measurement.
 
@@ -196,6 +277,13 @@ def run(payload: dict, *, seed: int) -> dict:
 
     evca, core = _evca()
 
+    # D2: the same refusals admission makes, made again here. A row that
+    # reached execution with a bad value (a pre-D2 row, or an enqueue path
+    # that skipped the registry) is refused BEFORE the world is committed.
+    problems = payload_problems(payload)
+    if problems:
+        raise core.EvcaError("; ".join(problems))
+
     rule_hex = payload["rule_hex"]
     radius = payload["radius"]
     n_cells = payload["n_cells"]
@@ -203,22 +291,14 @@ def run(payload: dict, *, seed: int) -> dict:
     n_ic = payload["n_ic"]
     criterion = payload["success_criterion"]
     transform = payload["transform"]
-    if transform not in TRANSFORMS:
-        raise core.EvcaError(
-            "transform must be one of %s, got %r; these are the four EXACT "
-            "symmetries of the density task, so a transformed arm is a NULL "
-            "arm -- accuracy that moves under one is a defect, not a result"
-            % (list(TRANSFORMS), transform))
-    if criterion not in SUCCESS_CRITERIA:
-        raise core.EvcaError(
-            "success_criterion must be one of %s, got %r; `accuracy` is scored "
-            "under it and the choice is the requester's"
-            % (list(SUCCESS_CRITERIA), criterion))
+    # transform / success_criterion membership: refused above by
+    # payload_problems (D2), which is the single owner of those messages.
 
     core.require_radius(radius)          # r=3 only; the library's refusal
     core.require_lattice(n_cells)        # odd, so majority never ties
     core.require_steps(steps)
-    densities = _require_density_set(payload["ic_density_set"], core)
+    densities = _require_density_set(payload["ic_density_set"], core,
+                                     n_cells=n_cells)
     if not isinstance(n_ic, int) or isinstance(n_ic, bool) or n_ic < 1:
         raise core.EvcaError("n_ic must be a positive integer, got %r" % (n_ic,))
 
@@ -226,7 +306,7 @@ def run(payload: dict, *, seed: int) -> dict:
 
     # One block per declared density, concatenated in order, so a witness
     # index means one thing across the whole ensemble.
-    blocks = [core.make_ics(n_ic, n_cells, int(seed) + j, density=d)
+    blocks = [_make_block(core, n_ic, n_cells, int(seed) + j, d)
               for j, d in enumerate(densities)]
     ics = np.concatenate(blocks, axis=0) if len(blocks) > 1 else blocks[0]
 
@@ -266,6 +346,11 @@ def run(payload: dict, *, seed: int) -> dict:
         raise core.EvcaError(
             "the wrapper's recomputed at_T mask disagrees with "
             "core.classify's; refusing to report a number from a wrapper that "
+            "has drifted from its library")
+    if core.pack_mask_hex(correct_at_t) != at_t["correct_mask_hex"]:
+        raise core.EvcaError(
+            "the wrapper's packed at_T mask disagrees with core.classify's "
+            "correct_mask_hex; refusing to report a mask from a wrapper that "
             "has drifted from its library")
 
     # stable: correct at T AND one further update leaves the lattice there.
@@ -331,6 +416,16 @@ def run(payload: dict, *, seed: int) -> dict:
         "n_cells": int(n_cells),
         "steps": int(steps),
         "witness_truncated": truncated,
+        # THEO-REQ-004 (2). The per-IC success mask itself, under the declared
+        # criterion, so a margin-response curve can be read off the fossil
+        # instead of re-executing every IC. The LIBRARY's encoding
+        # (core.pack_mask_hex, dbc41fd2f): numpy packbits, big bit order -- IC
+        # i is bit (7 - i % 8) of byte i // 8, zero-padded to a byte boundary,
+        # n_ic_total bits meaningful; core.unpack_mask_hex inverts it. Under
+        # at_T this is byte-identical to the library's own correct_mask_hex
+        # (checked below, the same way the digest is). Unpacked, its one-byte-
+        # per-IC sha256 is `mask_digest` (asserted in the tests).
+        "success_mask_hex": core.pack_mask_hex(chosen),
         # Present on every row so a reader never has to infer which shape
         # `accuracy` has from the criterion string.
         "accuracy_is_per_cell_mean": criterion == "cellwise_majority_match",
@@ -357,6 +452,12 @@ def run(payload: dict, *, seed: int) -> dict:
             out["cellwise_" + key] = float(cellwise[key])
         out["cellwise_comparable_to_published_P"] = bool(
             cellwise["comparable_to_published_P"])
-    if truncated:
-        out["_truncated"] = {"misclassified_ic": True, "witness": True}
+    # THEO-REQ-004 (2026-09-16). The executor declares the truncation state of
+    # its bounded vectors BOTH WAYS. Declaring only when it bit left a complete
+    # witness of exactly WITNESS_LIMIT entries indistinguishable from a silently
+    # cut one, and the validator -- correctly, by its own rule -- refused it:
+    # row theo:*:rou1 FAILED after 6 of 8 repeats on a repeat with exactly 64
+    # wrong of 100. `False` here is an assertion made from the full `wrong`
+    # array, the same evidence the `True` branch uses.
+    out["_truncated"] = {"misclassified_ic": truncated, "witness": truncated}
     return out

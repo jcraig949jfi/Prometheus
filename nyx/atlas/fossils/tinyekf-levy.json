@@ -1,0 +1,168 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "tinyekf-levy",
+ "techne_record": "techne/fossils/specimens/tinyekf-levy/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "tinyekf-levy",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "TinyEKF -- a header-only Extended Kalman Filter in C for microcontrollers and PCs (Simon D. Levy)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/simondlevy/TinyEKF master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2015-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "estimation",
+     "hidden-state",
+     "Kalman",
+     "embedded",
+     "small-mechanism",
+     "navigation"
+    ],
+    "lineage": "The Extended Kalman Filter (Schmidt/Smith, NASA Apollo era, 1960s) reduced to a few hundred lines with static allocation for Arduino/Teensy-class hardware; shipped with a GPS position/velocity example whose data and reference implementation come from Rachel Blakeley's 'Extended Kalman Filter for GPS' (MATLAB). SMALL MECHANISM: predict, then update with a linearised measurement model."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "embedded nonlinear state estimation",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "estimate a hidden state (position, clock bias) from nonlinear noisy measurements on a machine with kilobytes of RAM",
+    "pressure": "hidden state, measurement noise, nonlinearity (ranges), tiny memory and CPU budgets",
+    "success_means": "the estimate converges to the true trajectory and the covariance shrinks; no dynamic allocation"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "noisy observation, hidden state, bounded memory",
+    "failure_condition": "filter divergence: linearisation error or a bad noise model drives the covariance to inconsistency and the estimate away"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The Extended Kalman Filter (Schmidt/Smith, NASA Apollo era, 1960s) reduced to a few hundred lines with static allocation for Arduino/Teensy-class hardware; shipped with a GPS position/velocity example whose data and reference implementation come from Rachel Blakeley's 'Extended Kalman Filter for GPS' (MATLAB). SMALL MECHANISM: predict, then update with a linearised measurement model.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Kalman 1960; EKF (Schmidt, 1960s Apollo navigation)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: simple-kalman-denyssene"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "tinyekf-levy",
+   "relation": "algorithm_from",
+   "to": "Kalman 1960; EKF (Schmidt, 1960s Apollo navigation)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyekf-levy",
+   "relation": "shares_ancestor_with",
+   "to": "simple-kalman-denyssene",
+   "note": "scalar KF vs multivariate EKF",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

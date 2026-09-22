@@ -1,0 +1,72 @@
+{
+ "perturbation_id": "P-G03",
+ "parent": "T-X15",
+ "harness_q1_equals_evaluate": true,
+ "reading": "STATE_CORRELATED",
+ "eligible_by_q": {
+  "1.0": 121,
+  "0.75": 9,
+  "0.5": 0,
+  "0.25": 0,
+  "0.0": 0
+ },
+ "reward_by_q": {
+  "1.0": 0.7053571428571429,
+  "0.75": 0.4260912698412698,
+  "0.5": 0.25124007936507936,
+  "0.25": 0.1195436507936508,
+  "0.0": 0.03273809523809524
+ },
+ "loss_by_q": {
+  "1.0": 0.4132231404958678,
+  "0.75": 0.4722222222222222,
+  "0.5": null,
+  "0.25": null,
+  "0.0": null
+ },
+ "n_programs_with_lower_eligible_dose": 9,
+ "lowest_eligible_q_hist": {
+  "1.0": 0,
+  "0.75": 9,
+  "0.5": 0,
+  "0.25": 0,
+  "0.0": 0
+ },
+ "dose_contrast": {
+  "mean_diff": 0.0,
+  "p05": 0.0,
+  "p95": 0.0,
+  "n": 9,
+  "above_p95": false,
+  "below_p05": false
+ },
+ "pw_loss_correlation_q1": {
+  "rho": -0.12936593957458334,
+  "p05": -0.11723953393849071,
+  "p95": 0.16801144831323664,
+  "clears": true,
+  "n": 121
+ },
+ "by_persist_policy": {
+  "none": {
+   "n": 2,
+   "eligible_below_1": 0
+  },
+  "regs": {
+   "n": 52,
+   "eligible_below_1": 1
+  },
+  "tape": {
+   "n": 0,
+   "eligible_below_1": 0
+  },
+  "all": {
+   "n": 72,
+   "eligible_below_1": 8
+  }
+ },
+ "material": false,
+ "elapsed_s": 7.5,
+ "prereg_sha256": "5a02a6c386bf285119cc3c7b6e859dfaac2554fd644287100d7231335fd4766d",
+ "ts": "2026-09-19 03:18:50"
+}

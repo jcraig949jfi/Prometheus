@@ -1,0 +1,390 @@
+{
+ "apparatus": {
+  "ledger_lines": 6661,
+  "unique_keys": 6651,
+  "fields": [
+   "accuracy",
+   "answer_diversity",
+   "calibration",
+   "complexity_score",
+   "concept_names",
+   "fallback_only_ratio",
+   "frame",
+   "key",
+   "margin_accuracy",
+   "margin_calibration",
+   "model",
+   "novelty",
+   "reason",
+   "status",
+   "timestamp"
+  ]
+ },
+ "reason_class_by_window": {
+  "W0_pre_v2(<03-25 10:46)": {
+   "FORGED": 116,
+   "BATTERY:trap_battery_failed": 65,
+   "GEN:model_declined": 42,
+   "INSTR:api_call_failed": 28,
+   "GEN:runtime_error": 11,
+   "GEN:syntax_error": 3,
+   "GEN:no_code_found": 2,
+   "GEN:evaluate_returned_empty_list": 1,
+   "GEN:missing_methods": 1
+  },
+  "W1_15trap(03-25..03-27 06:49)": {
+   "BATTERY:trap_battery_failed": 660,
+   "INSTR:api_call_failed": 280,
+   "FORGED": 237,
+   "GEN:runtime_error": 102,
+   "GEN:syntax_error": 25,
+   "GEN:missing_methods": 4,
+   "GEN:no_code_found": 2,
+   "GEN:confidence_out_of_range": 2,
+   "GEN:forbidden_import": 1
+  },
+  "W2_58cat(03-27..05-17)": {
+   "INSTR:api_call_failed": 2553,
+   "BATTERY:trap_battery_failed": 772,
+   "GEN:runtime_error": 246,
+   "GEN:syntax_error": 82,
+   "GEN:forbidden_import": 38,
+   "GEN:no_code_found": 32,
+   "GEN:missing_methods": 15,
+   "FORGED": 10,
+   "GEN:confidence_out_of_range": 3,
+   "GEN:confidence_bad_return_type": 2
+  },
+  "W3_revival(05-17..05-18)": {
+   "BATTERY:trap_battery_failed": 69,
+   "GEN:runtime_error": 21,
+   "GEN:syntax_error": 16,
+   "FORGED": 5,
+   "GEN:evaluate_bad_return_type": 3,
+   "GEN:missing_methods": 2
+  },
+  "W4_tier_strat(05-18..05-26)": {
+   "BATTERY:trap_battery_failed": 656,
+   "GEN:syntax_error": 102,
+   "GEN:runtime_error": 52,
+   "INSTR:wall_clock_timeout": 19,
+   "GEN:missing_methods": 16,
+   "FORGED": 15,
+   "GEN:no_code_found": 1
+  },
+  "W5_behav_ncd(>=05-26 11:44)": {
+   "BATTERY:trap_battery_failed": 274,
+   "GEN:runtime_error": 44,
+   "GEN:syntax_error": 24,
+   "GEN:missing_methods": 3,
+   "GEN:no_code_found": 2,
+   "FORGED": 2
+  }
+ },
+ "inferred_n_traps_by_window": {
+  "W0_pre_v2(<03-25 10:46)": {
+   "15": 116
+  },
+  "W1_15trap(03-25..03-27 06:49)": {
+   "15": 237
+  },
+  "W2_58cat(03-27..05-17)": {
+   "186": 5,
+   "15": 3,
+   "62": 1,
+   "93": 1
+  },
+  "W3_revival(05-17..05-18)": {
+   "186": 3,
+   "93": 2
+  },
+  "W4_tier_strat(05-18..05-26)": {
+   "186": 6,
+   "62": 4,
+   "93": 3,
+   "15": 1,
+   "31": 1
+  },
+  "W5_behav_ncd(>=05-26 11:44)": {
+   "31": 1,
+   "93": 1
+  }
+ },
+ "yield_by_window": {
+  "W0_pre_v2(<03-25 10:46)": {
+   "rows": 269,
+   "forged": 116,
+   "instrument": 28,
+   "generation_defect": 60,
+   "battery_fail": 65,
+   "yield_raw": 0.4312,
+   "yield_excl_instrument": 0.4813,
+   "yield_among_battery_tested": 0.6409
+  },
+  "W1_15trap(03-25..03-27 06:49)": {
+   "rows": 1313,
+   "forged": 237,
+   "instrument": 280,
+   "generation_defect": 136,
+   "battery_fail": 660,
+   "yield_raw": 0.1805,
+   "yield_excl_instrument": 0.2294,
+   "yield_among_battery_tested": 0.2642
+  },
+  "W2_58cat(03-27..05-17)": {
+   "rows": 3753,
+   "forged": 10,
+   "instrument": 2553,
+   "generation_defect": 418,
+   "battery_fail": 772,
+   "yield_raw": 0.0027,
+   "yield_excl_instrument": 0.0083,
+   "yield_among_battery_tested": 0.0128
+  },
+  "W3_revival(05-17..05-18)": {
+   "rows": 116,
+   "forged": 5,
+   "instrument": 0,
+   "generation_defect": 42,
+   "battery_fail": 69,
+   "yield_raw": 0.0431,
+   "yield_excl_instrument": 0.0431,
+   "yield_among_battery_tested": 0.0676
+  },
+  "W4_tier_strat(05-18..05-26)": {
+   "rows": 861,
+   "forged": 15,
+   "instrument": 19,
+   "generation_defect": 171,
+   "battery_fail": 656,
+   "yield_raw": 0.0174,
+   "yield_excl_instrument": 0.0178,
+   "yield_among_battery_tested": 0.0224
+  },
+  "W5_behav_ncd(>=05-26 11:44)": {
+   "rows": 349,
+   "forged": 2,
+   "instrument": 0,
+   "generation_defect": 73,
+   "battery_fail": 274,
+   "yield_raw": 0.0057,
+   "yield_excl_instrument": 0.0057,
+   "yield_among_battery_tested": 0.0072
+  }
+ },
+ "by_day": {
+  "2026-03-24": {
+   "INSTR:api_call_failed": 20,
+   "GEN:model_declined": 42,
+   "BATTERY:trap_battery_failed": 15,
+   "GEN:no_code_found": 1,
+   "GEN:runtime_error": 2,
+   "FORGED": 5
+  },
+  "2026-03-25": {
+   "BATTERY:trap_battery_failed": 77,
+   "INSTR:api_call_failed": 8,
+   "GEN:runtime_error": 13,
+   "FORGED": 129,
+   "GEN:evaluate_returned_empty_list": 1,
+   "GEN:no_code_found": 1,
+   "GEN:syntax_error": 4,
+   "GEN:missing_methods": 1
+  },
+  "2026-03-26": {
+   "BATTERY:trap_battery_failed": 442,
+   "FORGED": 164,
+   "GEN:runtime_error": 58,
+   "INSTR:api_call_failed": 203,
+   "GEN:syntax_error": 18,
+   "GEN:no_code_found": 2,
+   "GEN:forbidden_import": 1,
+   "GEN:missing_methods": 4,
+   "GEN:confidence_out_of_range": 2
+  },
+  "2026-03-27": {
+   "INSTR:api_call_failed": 117,
+   "BATTERY:trap_battery_failed": 373,
+   "FORGED": 59,
+   "GEN:syntax_error": 29,
+   "GEN:runtime_error": 90,
+   "GEN:missing_methods": 3,
+   "GEN:forbidden_import": 1
+  },
+  "2026-03-28": {
+   "INSTR:api_call_failed": 72,
+   "BATTERY:trap_battery_failed": 8,
+   "GEN:runtime_error": 1,
+   "GEN:syntax_error": 1
+  },
+  "2026-03-31": {
+   "INSTR:api_call_failed": 2430,
+   "BATTERY:trap_battery_failed": 57,
+   "GEN:runtime_error": 7,
+   "GEN:syntax_error": 6,
+   "GEN:missing_methods": 2
+  },
+  "2026-04-01": {
+   "INSTR:api_call_failed": 3,
+   "BATTERY:trap_battery_failed": 58,
+   "GEN:syntax_error": 4,
+   "GEN:runtime_error": 15,
+   "GEN:confidence_out_of_range": 1
+  },
+  "2026-04-02": {
+   "INSTR:api_call_failed": 8,
+   "BATTERY:trap_battery_failed": 198,
+   "GEN:missing_methods": 4,
+   "GEN:runtime_error": 67,
+   "GEN:syntax_error": 6,
+   "GEN:no_code_found": 31,
+   "GEN:forbidden_import": 37,
+   "GEN:confidence_out_of_range": 1,
+   "FORGED": 2,
+   "GEN:confidence_bad_return_type": 1
+  },
+  "2026-05-16": {
+   "BATTERY:trap_battery_failed": 176,
+   "GEN:runtime_error": 77,
+   "GEN:syntax_error": 24,
+   "FORGED": 2,
+   "GEN:no_code_found": 1,
+   "GEN:confidence_bad_return_type": 1,
+   "GEN:confidence_out_of_range": 1,
+   "GEN:missing_methods": 2
+  },
+  "2026-05-17": {
+   "BATTERY:trap_battery_failed": 162,
+   "GEN:runtime_error": 50,
+   "GEN:syntax_error": 33,
+   "GEN:missing_methods": 5,
+   "FORGED": 7,
+   "GEN:evaluate_bad_return_type": 3
+  },
+  "2026-05-18": {
+   "GEN:missing_methods": 5,
+   "GEN:syntax_error": 26,
+   "BATTERY:trap_battery_failed": 176,
+   "FORGED": 6,
+   "GEN:runtime_error": 20
+  },
+  "2026-05-19": {
+   "GEN:syntax_error": 42,
+   "BATTERY:trap_battery_failed": 227,
+   "GEN:no_code_found": 1,
+   "FORGED": 6,
+   "GEN:runtime_error": 17,
+   "GEN:missing_methods": 2
+  },
+  "2026-05-22": {
+   "BATTERY:trap_battery_failed": 147,
+   "GEN:syntax_error": 19,
+   "GEN:runtime_error": 7,
+   "GEN:missing_methods": 6,
+   "INSTR:wall_clock_timeout": 19,
+   "FORGED": 2
+  },
+  "2026-05-26": {
+   "BATTERY:trap_battery_failed": 167,
+   "GEN:runtime_error": 22,
+   "GEN:syntax_error": 21,
+   "FORGED": 1,
+   "GEN:missing_methods": 7,
+   "GEN:no_code_found": 2
+  },
+  "2026-05-27": {
+   "GEN:runtime_error": 28,
+   "BATTERY:trap_battery_failed": 181,
+   "GEN:syntax_error": 16,
+   "FORGED": 2
+  },
+  "2026-05-28": {
+   "BATTERY:trap_battery_failed": 32,
+   "GEN:runtime_error": 2,
+   "GEN:syntax_error": 3
+  }
+ },
+ "forged_metrics": {
+  "pre0327": {
+   "n": 353,
+   "acc_mean": 0.304,
+   "acc_min": 0.2,
+   "acc_max": 0.6666666666666666,
+   "cal_mean": 0.271,
+   "margin_acc_mean": 0.104,
+   "margin_cal_mean": 0.204,
+   "acc_hist": {
+    "0.27": 122,
+    "0.2": 89,
+    "0.33": 72,
+    "0.4": 32,
+    "0.47": 16,
+    "0.53": 11,
+    "0.6": 8,
+    "0.67": 3
+   }
+  },
+  "mar_post": {
+   "n": 6,
+   "acc_mean": 0.339,
+   "acc_min": 0.2,
+   "acc_max": 0.44086021505376344,
+   "cal_mean": 0.321,
+   "margin_acc_mean": 0.027,
+   "margin_cal_mean": 0.056,
+   "acc_hist": {
+    "0.27": 2,
+    "0.44": 2,
+    "0.2": 1,
+    "0.42": 1
+   }
+  },
+  "may": {
+   "n": 26,
+   "acc_mean": 0.358,
+   "acc_min": 0.26344086021505375,
+   "acc_max": 0.44086021505376344,
+   "cal_mean": 0.196,
+   "margin_acc_mean": -0.067,
+   "margin_cal_mean": -0.267,
+   "acc_hist": {
+    "0.33": 4,
+    "0.34": 4,
+    "0.44": 3,
+    "0.35": 3,
+    "0.43": 2,
+    "0.39": 2,
+    "0.31": 2,
+    "0.32": 2
+   }
+  }
+ },
+ "duplicate_keys": {
+  "n_keys_with_multiple_rows": 10,
+  "example": [
+   "Falsificationism + Gauge Theory + Pragmatism",
+   "Emergence + Neural Plasticity + Renormalization",
+   "Compositional Semantics + Mechanism Design + Normalized Compression Distance"
+  ]
+ },
+ "api_failed_keys_ever_retried": {
+  "api_failed_first_keys": 2861,
+  "retried_later": 0
+ },
+ "frame_hist": {
+  "<absent>": 1967,
+  "E": 1066,
+  "B": 804,
+  "C": 696,
+  "D": 568,
+  "F": 477,
+  "G": 429,
+  "H": 413,
+  "A": 222,
+  "?": 19
+ },
+ "model_hist": {
+  "<absent>": 5309,
+  "qwen/qwen3.5-397b-a17b": 1352
+ }
+}

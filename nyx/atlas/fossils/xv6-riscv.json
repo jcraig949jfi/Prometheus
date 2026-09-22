@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "xv6-riscv",
+ "techne_record": "techne/fossils/specimens/xv6-riscv/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "xv6-riscv",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "xv6-riscv -- MIT teaching operating system (RISC-V port)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/mit-pdos/xv6-riscv riscv branch as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2006 (riscv port 2019-)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "operating-systems",
+     "process-scheduling",
+     "virtual-memory",
+     "filesystem",
+     "journaling",
+     "kernel"
+    ],
+    "lineage": "xv6 (2006-, MIT PDOS): a re-implementation of Sixth Edition Unix for teaching -- a real preemptive multiprocess kernel with a scheduler, virtual memory, a log-structured crash-safe filesystem, pipes and traps, small enough to read entirely"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "a working multiprocess operating system kernel",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "be a complete, readable Unix-like kernel -- schedule processes across cores, give each an isolated virtual address space, and keep a crash-recoverable filesystem -- for students to modify",
+    "pressure": "concurrency (locks, sleep/wakeup), crash safety (the FS log), and isolation (page tables) all at once, in a few thousand readable lines",
+    "success_means": "boots, runs a shell and concurrent user programs, and its usertests pass including crash-recovery of the filesystem"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "RISC-V assembly"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "xv6 (2006-, MIT PDOS): a re-implementation of Sixth Edition Unix for teaching -- a real preemptive multiprocess kernel with a scheduler, virtual memory, a log-structured crash-safe filesystem, pipes and traps, small enough to read entirely",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e7e3acd85c65ecfc6cee755e184efae9b5561f9bdb1025a44aa9f08c0dbfc5ee"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "none this pass -- SOURCE pinned; the riscv cross-toolchain + qemu world is a later emulated-run item (RUNNABLE_EMULATED candidate)"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "quadpack-netlib",
+ "techne_record": "techne/fossils/specimens/quadpack-netlib/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "quadpack-netlib",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "QUADPACK -- Piessens/de Doncker adaptive quadrature (1983)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "netlib.org/quadpack as served 2026-09-12 (per-file; no tarball endpoint)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1976-1985",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "scientific-computing",
+     "numerical-integration",
+     "adaptive",
+     "numerical"
+    ],
+    "lineage": "quadpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Piessens/de Doncker adaptive quadrature (1983)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "numerically integrate a function of one variable, ADAPTING the subdivision to the estimated error (Gauss-Kronrod rules + epsilon extrapolation), including singular and infinite ranges",
+    "pressure": "an integrand whose difficulty varies across the interval; fixed rules waste effort or miss features, so the routine spends evaluations where the estimated error is largest",
+    "success_means": "the returned integral is within the requested absolute/relative tolerance, with a returned error estimate; QUADPACK's own test battery"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 77"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "quadpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "36fcd9b89b93a2c342cca1cd2e6b1d5e645164eaa47b898e2bd84217e6aaec7e"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "native"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

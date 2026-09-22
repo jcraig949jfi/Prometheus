@@ -1,0 +1,1011 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-17T11:04Z",
+ "n": 141,
+ "by_relation": {
+  "algorithm_from": 51,
+  "derived_from": 7,
+  "shares_ancestor_with": 42,
+  "historical_version_of": 9,
+  "superseded_by": 14,
+  "reimplementation_of": 3,
+  "port_of": 1,
+  "forked_from": 1,
+  "supersedes": 6,
+  "rewrote": 2,
+  "rival_of": 1,
+  "successor_of": 2,
+  "predecessor_of": 1,
+  "inspired_by": 1
+ },
+ "edges": [
+  {
+   "from": "backoff-2.2.1",
+   "relation": "algorithm_from",
+   "to": "Ethernet BEB (Metcalfe & Boggs 1976); Brooker 2015 jitter",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "basic-computer-games-1978",
+   "relation": "derived_from",
+   "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "algorithm_from",
+   "to": "Smith 1981 (bimodal); McFarling 1993 (gshare)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "shares_ancestor_with",
+   "to": "picorv32",
+   "note": "RISC-V cores: one predicts, one does not",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.2-distribution-tape-1983",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.2-1983",
+   "note": "this tape CONTAINS the kernel whose netinet/tcp_* files are preserved as that specimen",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.3-distribution-tape-1986",
+   "relation": "historical_version_of",
+   "to": "bsd-tcp-4.2-1983",
+   "note": "4.3's TCP = 4.2's design + fixes, still no congestion window",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.3-distribution-tape-1986",
+   "relation": "superseded_by",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "Tahoe added slow start / congestion avoidance [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990",
+   "note": "this tape CONTAINS that kernel",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "superseded_by",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "the redesign forced by the 1986 collapse [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "shares_ancestor_with",
+   "to": "linux-tcp-congestion",
+   "note": "the same lineage four decades later (CUBIC, BBR)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "historical_version_of",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "superseded_by",
+   "to": "linux-tcp-congestion",
+   "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988",
+   "relation": "historical_version_of",
+   "to": "bsd-tcp-4.2-1983",
+   "note": "same files, redesigned under pressure",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.3-tahoe-1988",
+   "relation": "superseded_by",
+   "to": "bsd-tcp-4.3-reno-1990",
+   "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cjson-1.7.18",
+   "relation": "shares_ancestor_with",
+   "to": "radamsa-0.6",
+   "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "superseded_by",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "compress (LZW, 1984) displaced compact in BSD [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Gallager 1978 (adaptive Huffman)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "compress-4.2.4-lzw",
+   "relation": "historical_version_of",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question.",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "concurrencykit-0.7.2",
+   "relation": "algorithm_from",
+   "to": "Mellor-Crummey & Scott 1991 (MCS lock); Michael 2004 (hazard pointers); Fraser 2004 (epoch reclamation)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "corewar-redcode",
+   "relation": "algorithm_from",
+   "to": "ICWS '94 standard (docs/icws94.txt in the body); Dewdney 1984",
+   "note": "docs/icws94.txt is in the tree; not read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969",
+   "relation": "reimplementation_of",
+   "to": "eliza-weizenbaum-mad-slip-1965",
+   "note": "independent, from the published description rather than from the code",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "des-reference",
+   "relation": "superseded_by",
+   "to": "tiny-aes-c",
+   "note": "AES (Rijndael) replaced DES by NIST competition [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "dlmalloc",
+   "relation": "algorithm_from",
+   "to": "Knuth boundary tags; Lea's malloc lineage 1987-2012 (the file's own history); the glibc ptmalloc family derives from earlier versions (the comment at 27-30)",
+   "note": "from the source comments; not verified against the record this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "eispack-netlib-1976",
+   "relation": "port_of",
+   "to": "Wilkinson & Reinsch ALGOL procedures (1971)",
+   "note": "Fortran translation of the Handbook",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eispack-netlib-1976",
+   "relation": "superseded_by",
+   "to": "lapack-reference",
+   "note": "[relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "algorithm_from",
+   "to": "Weizenbaum 1966 (keyword decomposition/reassembly)",
+   "note": "first conversational-AI fossil; a pre-1970 program recovered via a faithful reconstruction, not the original MAD-SLIP binary (which runs only under CTSS emulation)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "shares_ancestor_with",
+   "to": "gnu-apl-2.0",
+   "note": "both are interpreters of a small formal notation, but ELIZA transforms text by rules and APL evaluates array expressions -- Techne records the shared machinery domain, not equivalence",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "eliza-anthay-1966",
+   "note": "the vault's eliza-anthay-1966 is a modern FAITHFUL reconstruction of THIS body; original and reconstruction are now both held",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "shares_ancestor_with",
+   "to": "cosell-eliza-bbn-lisp-1969",
+   "note": "independent reimplementation in a different language and world",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "emcee-3.1.6",
+   "relation": "algorithm_from",
+   "to": "Goodman & Weare 2010; Metropolis et al. 1953",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "algorithm_from",
+   "to": "Robinson 1965 (resolution); Bachmair-Ganzinger (superposition)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "shares_ancestor_with",
+   "to": "cocagne-plain-paxos",
+   "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "erfa-2.0.1",
+   "relation": "forked_from",
+   "to": "IAU SOFA (the code's own headers)",
+   "note": "not re-read from the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "erfa-2.0.1",
+   "relation": "derived_from",
+   "to": "IAU SOFA (Wallace et al.)",
+   "note": "relicensed derivative",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "shares_ancestor_with",
+   "to": "graphplan-blum-furst-1995",
+   "note": "both STRIPS planners; FF is forward heuristic search, Graphplan is planning-graph",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Hoffmann & Nebel, JAIR 2001",
+   "note": "relaxed-plan (ignore-delete-lists) heuristic + enforced hill-climbing",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Graphplan (Blum & Furst 1995) planning graph without mutexes; HSP (Bonet & Geffner) heuristic search; Hoffmann & Nebel 2001 JAIR",
+   "note": "from the file headers; the vault's graphplan-blum-furst-1995 is a sibling fossil for a recurrence test",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36",
+   "relation": "shares_ancestor_with",
+   "to": "concurrencykit-0.7.2",
+   "note": "ck_rwlock / ck_brlock are rival readers-writer designs with different fairness",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-apl-2.0",
+   "relation": "algorithm_from",
+   "to": "Iverson 1962 (APL)",
+   "note": "the founding array language; ancestor of J/K and of array programming generally",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "both ISO Prolog; gprolog compiles to WAM->native, SWI interprets a VM",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "algorithm_from",
+   "to": "Warren, The WAM, 1983",
+   "note": "Warren Abstract Machine",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "go-runtime-deadlock-fixtures-1.22",
+   "relation": "shares_ancestor_with",
+   "to": "spin-pathfinder-priority-inversion-1997",
+   "note": "a deadlock found by execution + runtime detector vs one found by model checking",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "supersedes",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: gzip displaced compress]",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "supersedes",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "historical_version_of",
+   "to": "zlib-1.3.1",
+   "note": "same author (Gailly) and algorithm; the library form",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "algorithm_from",
+   "to": "SWIM (Das, Gupta, Motivala 2002) + Lifeguard (Dadgar, Phillips, Currey 2018) -- named in the package's README, not re-read",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "algorithm_from",
+   "to": "Das, Gupta, Motivala 2002 (SWIM)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "two answers to 'who is alive': gossip suspicion vs leader heartbeats",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "hopfield-takyamamoto",
+   "relation": "algorithm_from",
+   "to": "Hopfield 1982 (with a mean-subtraction variant of the Hebb rule)",
+   "note": "from the code; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "hopfield-takyamamoto",
+   "relation": "algorithm_from",
+   "to": "Hopfield 1982 (with a mean-subtraction variant of the Hebb rule)",
+   "note": "from the code; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "algorithm_from",
+   "to": "Astrom & Wittenmark 1973",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "shares_ancestor_with",
+   "to": "padasip-1.2.2",
+   "note": "RLS identification is the estimator inside this controller",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "kissfft-131.1.0",
+   "relation": "algorithm_from",
+   "to": "Cooley & Tukey 1965",
+   "note": "mixed-radix FFT",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Cao & Hovakimyan 2006",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lapack-reference",
+   "relation": "rewrote",
+   "to": "linpack-netlib-1979",
+   "note": "same functionality, blocked for cache",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lapack-reference",
+   "relation": "rewrote",
+   "to": "eispack-netlib-1976",
+   "note": "same functionality, blocked for cache",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "leveldb-1.23",
+   "relation": "superseded_by",
+   "to": "RocksDB (Facebook fork 2012)",
+   "note": "Techne's edge with its note [migrated superseded -> superseded_by 2026-09-16 after Techne 1bb9965b4; direction from Techne's record note: the fork became the mainstream LSM engine]",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "leveldb-1.23",
+   "relation": "algorithm_from",
+   "to": "O'Neil et al. 1996 LSM-tree",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "leveldb-1.23",
+   "relation": "superseded_by",
+   "to": "RocksDB (Facebook fork 2012)",
+   "note": "human history: the fork became the mainstream LSM engine; LevelDB continues [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libcorrect-quiet",
+   "relation": "reimplementation_of",
+   "to": "libfec-karn",
+   "note": "portable C replacement for Karn's libfec; libfec-compatible shim",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libcorrect-quiet",
+   "relation": "shares_ancestor_with",
+   "to": "reed-solomon-rockliff-1991",
+   "note": "Reed-Solomon over GF(2^8)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libcorrect-quiet",
+   "relation": "shares_ancestor_with",
+   "to": "viterbi-hmm-xukmin",
+   "note": "the Viterbi algorithm: decoding codes vs decoding HMM states",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1982/1988",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "BP as a decoder vs BP as a general inference engine",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libfec-karn",
+   "relation": "algorithm_from",
+   "to": "Viterbi 1967; Fano 1963; Berlekamp 1968 / Massey 1969; Reed-Solomon 1960",
+   "note": "named by the functions themselves; not re-checked against the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "superseded_by",
+   "to": "lapack-reference",
+   "note": "same problems, restructured for memory hierarchy; the human record states the reason [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "shares_ancestor_with",
+   "to": "fftpack-netlib",
+   "note": "both netlib Fortran numerical libraries of the same era",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "rival_of",
+   "to": "linux-tcp-congestion",
+   "note": "INTRA-RECORD: bbr.* rival_of cubic.* (both live Linux modules; the record packs them as before/after)",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "successor_of",
+   "to": "bsd-tcp-4.3-reno-1990",
+   "note": "NewReno -> CUBIC per Techne's record of the reno fossil (superseded edge there)",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "supersedes",
+   "to": "TCP Reno/NewReno",
+   "note": "CUBIC replaced Reno-family as Linux default [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "algorithm_from",
+   "to": "Jacobson 1988",
+   "note": "the congestion-avoidance lineage all descend from",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "shares_ancestor_with",
+   "to": "femtolisp",
+   "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "lmdb-0.9.31",
+   "relation": "algorithm_from",
+   "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
+   "note": "human prior, not from the body",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "lmdb-0.9.31",
+   "relation": "shares_ancestor_with",
+   "to": "leveldb-1.23",
+   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "md5-rfc1321",
+   "relation": "superseded_by",
+   "to": "the SHA-2 family",
+   "note": "deployment moved to SHA-256 after the collision results [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "microkanren-scheme",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "both do unification + search over relations; microKanren is a functional-stream core, Prolog is WAM/SLD",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "microkanren-scheme",
+   "relation": "derived_from",
+   "to": "miniKanren (Byrd 2009)",
+   "note": "microKanren is the minimal core beneath miniKanren",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "successor_of",
+   "to": "zchaff-2007",
+   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "historical_version_of",
+   "to": "minisat-2.2.0",
+   "note": "1.14 (2006) -> 2.2.0 (2010)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "supersedes",
+   "to": "zchaff-2007",
+   "note": "direction: MiniSat superseded zChaff (recorded on both records) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "minisom",
+   "relation": "algorithm_from",
+   "to": "Kohonen 1982 / Kohonen 2013 (batch)",
+   "note": "named in the code's own docstring 724-727; Techne's record ancestry not re-read here",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "derived_from",
+   "to": "GEAR (Hindmarsh 1974)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "shares_ancestor_with",
+   "to": "quadpack-netlib",
+   "note": "netlib numerical lineage",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "superseded_by",
+   "to": "scipy.integrate.odeint / LSODA",
+   "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "openssl-1.0.1f-heartbleed",
+   "relation": "historical_version_of",
+   "to": "OpenSSL 1.0.1g (the fix)",
+   "note": "before-failure body; the replacement is one release later",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "padasip-1.2.2",
+   "relation": "algorithm_from",
+   "to": "Widrow & Hoff 1960 (LMS / ADALINE)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "padasip-1.2.2",
+   "relation": "shares_ancestor_with",
+   "to": "genann",
+   "note": "the delta rule is LMS applied to a perceptron",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "algorithm_from",
+   "to": "Newell & Simon 1961 (GPS); Weizenbaum 1966 (ELIZA); Robinson 1965 (unification)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "shares_ancestor_with",
+   "to": "tinyscheme-1.42",
+   "note": "Lisp family: programs vs language machine",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pari-gp-2.17",
+   "relation": "shares_ancestor_with",
+   "to": "reed-solomon-rockliff-1991",
+   "note": "finite-field / GF arithmetic underlies both (Techne records the shared machinery domain, not equivalence)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond, Smith 1993",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "shares_ancestor_with",
+   "to": "filterpy-labbe",
+   "note": "Bayesian filtering: Kalman (linear) vs particle (nonlinear)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "shares_ancestor_with",
+   "to": "libdai-mooij",
+   "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "picosat-965",
+   "relation": "shares_ancestor_with",
+   "to": "minisat-2.2.0",
+   "note": "both are CDCL SAT solvers descending from the Chaff/GRASP CDCL line; DIFFERENT implementations",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pid-autotune-hirschmann",
+   "relation": "algorithm_from",
+   "to": "Astrom & Hagglund 1984",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pid-autotune-hirschmann",
+   "relation": "shares_ancestor_with",
+   "to": "arduino-pid",
+   "note": "the PID this tunes; the vault's fixed-gain PID beside a gain-finding mechanism",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "py-vollib-lets-be-rational",
+   "relation": "algorithm_from",
+   "to": "Black & Scholes 1973; Jaeckel 2015",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pybreaker-1.2.0",
+   "relation": "algorithm_from",
+   "to": "Nygard 2007",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "algorithm_from",
+   "to": "Markowitz 1952",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5",
+   "relation": "shares_ancestor_with",
+   "to": "glpk-5.0",
+   "note": "mathematical programming lineage (LP -> convex)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "python-sgp4-2.23",
+   "relation": "algorithm_from",
+   "to": "Hoots & Roehrich 1980; Vallado et al. 2006",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "radamsa-0.6",
+   "relation": "algorithm_from",
+   "to": "Miller et al. 1990 (fuzz)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "redlock-py-redis-2014",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "lease-based exclusion vs consensus-based",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "souffle-2.4.1",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "Datalog is a decidable fragment of the logic-programming family Prolog belongs to",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spacewar-pdp1-1962",
+   "relation": "inspired_by",
+   "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spdylay",
+   "relation": "superseded_by",
+   "to": "HTTP/2 (RFC 7540)",
+   "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997",
+   "relation": "derived_from",
+   "to": "spin-6.5.2-holzmann",
+   "note": "the same tarball; this specimen is the failing model, that one is the checker",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997",
+   "relation": "algorithm_from",
+   "to": "Sha, Rajkumar, Lehoczky 1990 (the fix: priority inheritance)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ssw-smith-waterman",
+   "relation": "algorithm_from",
+   "to": "Smith & Waterman 1981; Farrar 2007 (striped); SWPS3 (the lazy-F fix, named in the comment at 281)",
+   "note": "from the code's comments",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "ssw-smith-waterman",
+   "relation": "algorithm_from",
+   "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
+   "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tiny-aes-c",
+   "relation": "supersedes",
+   "to": "des-reference",
+   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note) [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: AES replaced DES as the US standard]",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "tiny-aes-c",
+   "relation": "supersedes",
+   "to": "des-reference",
+   "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinycc",
+   "relation": "algorithm_from",
+   "to": "Bellard's OTCC / obfuscated C compiler lineage (by common knowledge, not from the body)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "tinyekf-levy",
+   "relation": "algorithm_from",
+   "to": "Kalman 1960; EKF (Schmidt, 1960s Apollo navigation)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyekf-levy",
+   "relation": "shares_ancestor_with",
+   "to": "simple-kalman-denyssene",
+   "note": "scalar KF vs multivariate EKF",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyscheme-1.42",
+   "relation": "derived_from",
+   "to": "MiniScheme (Moriwaki 1989)",
+   "note": "TinyScheme grew from MiniScheme",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyscheme-1.42",
+   "relation": "shares_ancestor_with",
+   "to": "microkanren-scheme",
+   "note": "both Scheme; microKanren is hosted in a Scheme like this one",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinystm-marlier",
+   "relation": "algorithm_from",
+   "to": "Shavit & Touitou 1995 (STM); Riegel 2006 (LSA)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinystm-marlier",
+   "relation": "shares_ancestor_with",
+   "to": "concurrencykit-0.7.2",
+   "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "algorithm_from",
+   "to": "Baum et al. 1970; Rabiner 1989",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02",
+   "relation": "shares_ancestor_with",
+   "to": "viterbi-hmm-xukmin",
+   "note": "HMM decode-only vs decode+train",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "valgrind-helgrind-fixtures-3.19",
+   "relation": "shares_ancestor_with",
+   "to": "go-runtime-deadlock-fixtures-1.22",
+   "note": "two runtimes' regression corpora for concurrency failure",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "verilog-arbiter-forencich",
+   "relation": "shares_ancestor_with",
+   "to": "verilog-rr-arbiter",
+   "note": "two arbiter designs for the same decision",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "verilog-rr-arbiter",
+   "relation": "algorithm_from",
+   "to": "Matt Weber, 'Arbiters: Design Ideas and Coding Styles' (readme reference [1])",
+   "note": "from readme.txt",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "verilog-uart2bus",
+   "relation": "algorithm_from",
+   "to": "the 16x-oversampling UART convention (8250-class devices); the 'uart2bus' OpenCores project (record lineage not re-read)",
+   "note": "from the module headers",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "walksat-v56",
+   "relation": "shares_ancestor_with",
+   "to": "picosat-965",
+   "note": "same problem (SAT), opposite paradigm: stochastic local search vs CDCL",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "walksat-v56",
+   "relation": "derived_from",
+   "to": "GSAT (Selman/Levesque/Mitchell 1992)",
+   "note": "WalkSAT is the random-walk successor to GSAT",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014",
+   "note": "Raft; itself a redesign of Paxos for understandability",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014, In Search of an Understandable Consensus Algorithm (the code cites the paper's section numbers in comments)",
+   "note": "from the source comments; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "zchaff-2007",
+   "relation": "superseded_by",
+   "to": "minisat-2.2.0",
+   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "zchaff-2007",
+   "relation": "shares_ancestor_with",
+   "to": "picosat-965",
+   "note": "CDCL family",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "note": "Techne's 'superseded' relation carries no fixed direction in its records (17 edges, both readings observed on 2026-09-16); direction must be read from each note"
+}

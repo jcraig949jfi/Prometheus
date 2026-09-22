@@ -1,0 +1,1495 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "glibc-rwlock-writer-starvation-2.36",
+ "techne_record": "techne/fossils/specimens/glibc-rwlock-writer-starvation-2.36/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "glibc-rwlock-writer-starvation-2.36",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "glibc 2.36 pthread_rwlock (nptl/pthread_rwlock_common.c): reader-preferring default and the documented writer STARVATION it permits",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "glibc tag glibc-2.36: nptl/pthread_rwlock_common.c, nptl/pthread_rwlock_wrlock.c (source); Debian bookworm libc6 2.36 (the running library)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2017- (this rwlock rewrite, Torvald Riegel); glibc 2.36 = 2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "starvation",
+     "fairness",
+     "failure",
+     "readers-writer-lock",
+     "glibc"
+    ],
+    "lineage": "POSIX read-write locks as glibc implements them: the default kind PTHREAD_RWLOCK_PREFER_READER_NP lets a continuous stream of readers hold a writer off indefinitely -- documented in pthread_rwlockattr_setkind_np(3) ('may result in writer starvation') and in glibc bug reports; the alternative kind PREFER_WRITER_NONRECURSIVE_NP is the corrected behaviour the caller must opt into. Preserved: the 2.36 source of the lock (the machinery), and a harness that drives Debian's glibc (the same version) under reader pressure with both kinds. The lock is not modified."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "readers-writer mutual exclusion",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let many readers share a structure while excluding writers, with a policy choice the standard leaves to the implementation",
+    "pressure": "continuous reader arrivals; a writer whose progress is not guaranteed by the default policy",
+    "success_means": "readers proceed concurrently; a writer eventually acquires -- 'eventually' being the documented weakness"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "asymmetric contention (many readers, few writers)",
+    "failure_condition": "writer starvation: updates never land while readers keep arriving"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "POSIX read-write locks as glibc implements them: the default kind PTHREAD_RWLOCK_PREFER_READER_NP lets a continuous stream of readers hold a writer off indefinitely -- documented in pthread_rwlockattr_setkind_np(3) ('may result in writer starvation') and in glibc bug reports; the alternative kind PREFER_WRITER_NONRECURSIVE_NP is the corrected behaviour the caller must opt into. Preserved: the 2.36 source of the lock (the machinery), and a harness that drives Debian's glibc (the same version) under reader pressure with both kinds. The lock is not modified.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: concurrencykit-0.7.2"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "project_documentation",
+      "ref": "pthread_rwlockattr_setkind_np(3)",
+      "says": "PTHREAD_RWLOCK_PREFER_READER_NP 'may result in writer starvation'. This documents a BEHAVIOUR of a currently shipped design, not its defeat."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "f9659af1515526b55f6fba4735cc6c3b9a48d979b36aebe55c8c1ef003a80d96"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c"
+   },
+   {
+    "grade": "EXECUTED",
+    "ref": "techne receipt run/20260913T054149Z: PREFER_READER 8 readers 3 s -> writer 1 acquisition (0.3/s); PREFER_WRITER_NONRECURSIVE -> 1.65e6/s (Techne's run, not Nyx's)"
+   }
+  ],
+  "inspected_files": [
+   "upstream/pthread_rwlock_common.c[1-420,526-680]",
+   "harness/starve.c",
+   "run/20260913T054149Z/runs-*.stdout.txt"
+  ],
+  "date": "2026-09-14T00:02Z",
+  "note": "small fossil (3 files, 1034 lines); the pathology is the specimen; the anti-starvation gate is one flag path",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_common.c;hb=glibc-2.36 sha256:7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6; https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_wrlock.c;hb=glibc-2.36 sha256:f7701020e3784df59afafae21d21d49781e247c30a5dcea512e623c81742343e; https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_rdlock.c;hb=glibc-2.36 sha256:a0914192854192c68e32848b8b3e9e3baca4d5ce3a04e140e2ff91941491bf1a",
+   "payload_manifest_id": "techne tree_sha256 f9659af1515526b55f6fba4735cc6c3b9a48d979b36aebe55c8c1ef003a80d96 (3 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/pthread_rwlock_common.c",
+     "payload_hash_read": "7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6",
+     "techne_recorded_hash": "7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6",
+     "match": true,
+     "refs": 9
+    }
+   ],
+   "unresolved_refs": [
+    "techne receipt run/20260913T054149Z: PREFER_READER 8 readers 3 s -> writer 1 acquisition (0.3/s); PREFER_WRITER_NONRECURSIVE -> 1.65e6/s (Techne's run, not Nyx'",
+    "run/20260913T054149Z: kind=PREFER_READER writer_acquisitions=1; kind=PREFER_WRITER_NONRECURSIVE writer_acquisitions=4950536 (Techne)"
+   ]
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "__readers state word (WP/WL/R/RW)",
+   "human_interpretation": "the single-writer-multiple-readers lock: which phase the lock is in and who is present",
+   "mechanism": "one 32-bit word packs four fields -- a write-phase bit, a primary-writer bit, a readers-waiting bit and a reader count -- and every state change of the lock is one atomic read-modify-write on that word (fetch_add for readers, fetch_or for the writer bit, CAS for phase transfers), so the eight legal lock states are eight value classes of one integer",
+   "input": "atomic RMW requests from reader/writer paths",
+   "output": "the new word value (the caller reads its own success from the returned bits)",
+   "state": "32-bit word: WP bit, WL bit, RW bit, R = count << 3",
+   "update": "fetch_add(1<<3) register reader; fetch_or(WL) elect writer; CAS to flip WP on hand-over; CAS to set RW",
+   "assumptions": [
+    "fewer than 2^28 concurrent readers",
+    "a single-word atomic RMW exists"
+   ],
+   "interface": "the word is the lock; every other mechanism here reads or RMWs it",
+   "dependencies": [
+    "hardware atomic RMW"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "glibc-rwlock-writer-starvation-2.36::phase_word.overflow_guard"
+   ],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+    "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+    "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+    "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class"
+   ],
+   "fitness_value_in_ancestor": "the whole lock's correctness rests on all transitions being single RMWs on one word; splitting the fields would need a second synchronisation",
+   "failure_landscape": "reader-count overflow (guarded, see child); ABA on RW is declared harmless in the comment",
+   "ablation": "NOT_RUN",
+   "decomposability": "the four fields are not separable without a second lock (the comment argues this)",
+   "composability": "any mechanism that can express its states as bit classes of one word",
+   "human_prior": "named by glibc's own comment (state table #1-#8)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "the word is readable from a debugger/probe; no API exposes it",
+   "intervention_readiness": "freeze/corrupt possible by patching the source; not tried",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:63-95,275-330"
+   },
+   "confidence": "HIGH that the word exists and is the sole lock state; MEDIUM on the exact transition set (tails unread)",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "struct field __readers + all atomic ops on it",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::phase_word.overflow_guard",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "reader overflow check",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after registering, if the count field is at its limit, CAS the count back down and report EAGAIN; the undo is a CAS not a fetch_add because the undoing thread might be the last reader and then owes a hand-over",
+   "input": "the post-registration word",
+   "output": "EAGAIN or continue",
+   "state": "none beyond the word",
+   "update": "CAS decrement",
+   "assumptions": [
+    "fewer than 2^28 threads in practice"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "bounds a field that would otherwise wrap into the flag bits",
+   "failure_landscape": "a wrap would corrupt WP/WL",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:355-375"
+   },
+   "confidence": "HIGH (read)",
+   "portability": "YES",
+   "compatibility": "N/A",
+   "utility": "N/A",
+   "source_boundary": "rdlock_full64 overflow while-loop",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "reader fast path",
+   "human_interpretation": "acquiring a read lock costs one atomic add when other readers hold it",
+   "mechanism": "a reader increments the count FIRST, unconditionally, and only then looks at the phase bit of the value it got back; if the lock was in a read phase it is already in, otherwise it is registered-but-waiting and must wait for hand-over or start a read phase itself if no primary writer exists",
+   "input": "request to read-acquire",
+   "output": "acquired / waiting",
+   "state": "the phase word",
+   "update": "fetch_add then branch on WP",
+   "assumptions": [
+    "registering before checking is safe because the count is part of the same word the writer inspects"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::phase_word",
+    "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+    "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover"
+   ],
+   "fitness_value_in_ancestor": "read-mostly workloads are the declared design target; this is why reader preference is the default",
+   "failure_landscape": "a registered-waiting reader prolongs the read phase for a writer -- the starvation mechanism when readers are preferred",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:348-395"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "rdlock_full64 after the RWAITING block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "WRLOCKED election",
+   "human_interpretation": "only one of the concurrent writers becomes THE writer; others wait",
+   "mechanism": "every arriving writer does fetch_or of one bit; the one that saw the bit clear is the primary writer, the rest register as waiting writers (count in a second word) and loop: retry the CAS when the bit clears, or accept a direct hand-over token",
+   "input": "write-acquire request",
+   "output": "primary / waiting",
+   "state": "WL bit in the phase word; __writers count",
+   "update": "fetch_or(WL); fetch_add(__writers)",
+   "assumptions": [
+    "one bit suffices because the count of writers lives elsewhere"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::phase_word",
+    "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass"
+   ],
+   "fitness_value_in_ancestor": "serialises writers without a mutex; uncontended write is one RMW",
+   "failure_landscape": "writer-writer contention is 'somewhat more costly' (comment) because the exact writer count is tracked",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:611-660"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "wrlock_full64 fetch_or + for(;;) loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "explicit hand-over",
+   "human_interpretation": "the last reader hands the lock to the waiting writer; a releasing writer hands it to the waiting readers",
+   "mechanism": "the thread that flips the phase bit also, as a SEPARATE later step, writes the new phase into a dedicated wait word and wakes everyone blocked on it; every waiter is obliged to block on that word rather than spin on the state word, so that one final store by the hander-over is guaranteed to free all of them -- which is what makes it safe to destroy the lock the moment nobody holds it",
+   "input": "a phase-ending release",
+   "output": "a phase flip plus a wake of all waiters of the other class",
+   "state": "__wrphase_futex (mirrors WP) with a FUTEX_USED bit",
+   "update": "CAS phase bit on the state word, then exchange on the wait word, then futex_wake(INT_MAX) if USED was set",
+   "assumptions": [
+    "waiters never take the spin shortcut (a discipline, enforced by code shape not by the hardware)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::phase_word",
+    "glibc-rwlock-writer-starvation-2.36::lazy_wake_flag",
+    "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic"
+   ],
+   "fitness_value_in_ancestor": "POSIX allows destroying a lock as soon as nobody holds it; without the two-step hand-over a pending wake could touch freed memory",
+   "failure_landscape": "a waiter that spins on the state word instead of the wait word breaks destruction safety (comment names this)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:96-121,256-272"
+   },
+   "confidence": "HIGH on the mechanism; MEDIUM on completeness (wrunlock body unread)",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "rdunlock tail + wrunlock",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "COORDINATES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "WRHANDOVER",
+   "human_interpretation": "a releasing writer passes the lock straight to a waiting writer, bypassing readers, when writers are preferred",
+   "mechanism": "if registered waiting writers exist, the primary writer CASes a hand-over bit into the writers word instead of clearing its ownership bit; a registered waiter that clears the hand-over bit by CAS becomes primary without the phase ever leaving write; the last waiter to give up while the bit is set must take ownership",
+   "input": "writer release with waiters registered",
+   "output": "ownership transferred without a phase change",
+   "state": "WRHANDOVER bit in __writers",
+   "update": "CAS set by releaser; CAS clear by taker",
+   "assumptions": [
+    "writers preferred (policy flag)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::primary_writer_election"
+   ],
+   "fitness_value_in_ancestor": "fast writer-to-writer transfer; readers cannot slip in between writers",
+   "failure_landscape": "a cancelling waiter must check the bit or the token is lost (comment)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:139-150,660-680"
+   },
+   "confidence": "MEDIUM (take side read; give side in unread wrunlock)",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "__writers WRHANDOVER CAS pair",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "COORDINATES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "RWAITING (PREFER_WRITER_NONRECURSIVE)",
+   "human_interpretation": "new readers wait behind a waiting writer instead of joining the current read phase",
+   "mechanism": "when a reader arrives during a read phase and sees that a primary writer is already waiting, it does NOT register in the count; it sets a waiting flag and blocks on the state word until the flag clears (the writer got in, or gave up); so the read phase can drain and the writer's turn comes; only active when the policy flag disallows recursive readers, because a recursive reader waiting behind a writer that waits for that same reader would deadlock",
+   "input": "reader arrival while WL set and WP clear and R>0",
+   "output": "the reader blocks without extending the phase",
+   "state": "RW bit",
+   "update": "CAS set RW; futex wait on the state word; cleared by whoever changes state out of #4a",
+   "assumptions": [
+    "no recursive read acquisition (declared by the kind flag)",
+    "the writer eventually gets the phase"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::phase_word",
+    "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic"
+   ],
+   "fitness_value_in_ancestor": "THIS is the anti-starvation machinery: Techne's run shows writer throughput 0.3/s -> 1.65e6/s when the flag enables it (8 readers)",
+   "failure_landscape": "with recursive readers it deadlocks (hence opt-in); readers now wait behind writers -- the pressure moves, it does not vanish (reader acquisitions fell 21e6 -> 2.3e6 in the same run)",
+   "ablation": "Techne's harness IS the switch ablation (kind flag on/off), executed by Techne; not yet varied by Nyx",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "EXECUTED",
+    "ref": "run/20260913T054149Z: kind=PREFER_READER writer_acquisitions=1; kind=PREFER_WRITER_NONRECURSIVE writer_acquisitions=4950536 (Techne)"
+   },
+   "confidence": "HIGH that the gate exists and is the flag-dependent path; the throughput numbers are Techne's, one machine, 2 repeats",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "rdlock_full64 lines 297-345 (the PREFER_WRITER_NONRECURSIVE_NP block)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STARVES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::lazy_wake_flag",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "PTHREAD_RWLOCK_FUTEX_USED",
+   "human_interpretation": "skip the wake syscall when nobody is asleep",
+   "mechanism": "a wait word has three states -- cannot block, can block, someone may be blocked; a thread about to sleep CASes the third state in; a waker only issues the system call if it sees that state; several sleepers share one flag so the waker must assume more remain",
+   "input": "sleep/wake intents",
+   "output": "a syscall or nothing",
+   "state": "one bit per wait word",
+   "update": "CAS before sleep; test-and-clear on wake",
+   "assumptions": [
+    "a lost wake is impossible because the flag is set under the same conditions that make sleeping possible"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover"
+   ],
+   "fitness_value_in_ancestor": "avoids a syscall on every release in the uncontended case",
+   "failure_landscape": "spurious wakes are accepted; the comment says the same scheme is in pthread_mutex_lock (an ancestry pointer inside glibc)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:152-162,193-200"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "FUTEX_USED bit handling on __wrphase_futex and __writers_futex",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "COMPUTE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glibc-rwlock-writer-starvation-2.36::self_deadlock_detect",
+   "fossil_ancestry": "glibc-rwlock-writer-starvation-2.36",
+   "human_name": "EDEADLK check",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "compare the recorded owner id with the calling thread's id before acquiring; equal means the caller already holds it as writer, report an error instead of blocking forever",
+   "input": "acquire request",
+   "output": "EDEADLK or continue",
+   "state": "__cur_writer (owner id)",
+   "update": "load; compare",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "turns one class of hang into an error code",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:290-296,600-604"
+   },
+   "confidence": "HIGH (read); LOW on whether it matters behaviourally -- never exercised by the harness",
+   "portability": "YES",
+   "compatibility": "N/A",
+   "utility": "UNKNOWN",
+   "source_boundary": "two 3-line checks",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "spin-then-block back-off before CAS retry",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c: three '/* TODO Back-off. */' and one '/* TODO Spin first. */' comments; no code",
+   "note": "the design names a mechanism the body does not contain; a reader of the comments alone would invent it",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "glibc-rwlock-writer-starvation-2.36"
+  },
+  {
+   "candidate": "memory-ordering (acquire/release/relaxed) discipline",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "every atomic call site carries an MO annotation; it constrains the compiler/hardware, it is not a mechanism with state of its own",
+   "note": "recorded because half the comment volume is about it",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "glibc-rwlock-writer-starvation-2.36"
+  },
+  {
+   "candidate": "futex wait/wake",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "futex_wake / __futex_abstimed_wait64 are kernel primitives; the fossil's contribution is WHEN to call them (lazy_wake_flag), not the sleep itself",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "glibc-rwlock-writer-starvation-2.36"
+  },
+  {
+   "candidate": "the kind flag (PREFER_READER vs PREFER_WRITER_NONRECURSIVE)",
+   "reason": "OTHER",
+   "evidence": "__data.__flags is read at two sites and chooses whether arrival_gate and writer_writer_token_pass run; it has no update of its own -- it is POLICY selecting mechanisms, recorded as composition edges ENVIRONMENT gates ...",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "glibc-rwlock-writer-starvation-2.36"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "glibc-rwlock-writer-starvation-2.36::P.asymmetric_contention_dominant_class_starves_minority",
+   "source_fossil": "glibc-rwlock-writer-starvation-2.36",
+   "source_evidence": "record.human_failure_condition + run receipt",
+   "condition": "one shared resource; two classes of users; the numerous class can share it among themselves, the rare class needs it alone; the numerous class re-arrives continuously",
+   "resource_or_constraint": "exclusive access for the rare class",
+   "failure_condition": "the rare class never obtains access while the numerous class keeps arriving",
+   "world_punishes": "updates that never land; unbounded wait for the rare class",
+   "world_rewards": "the numerous class if admitted freely (throughput), the rare class if admitted at all",
+   "observable_consequence": "Techne run: 8 continuous readers, 3 s: writer got in ONCE under the default policy",
+   "vacuity_condition": "no writer, or readers that pause",
+   "trivial_shortcuts": "make everyone exclusive (kills the reader throughput the lock exists for)",
+   "cheat_control": "measure BOTH classes' acquisition counts, not writer alone (the same run shows reader acquisitions fall 9x when writers are preferred)",
+   "cost_class": "throughput of the dominant class traded for progress of the rare class",
+   "purpose_separated_from_pressure": "PURPOSE: let many threads read a structure concurrently while writers update it safely",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "glibc-rwlock-writer-starvation-2.36::P.destroy_as_soon_as_free",
+   "source_fossil": "glibc-rwlock-writer-starvation-2.36",
+   "source_evidence": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:96-121",
+   "condition": "a synchronisation object may be freed by its owner the instant no thread holds or will acquire it, yet a releasing thread may still owe wake-ups to sleepers",
+   "resource_or_constraint": "memory of the lock object",
+   "failure_condition": "a wake-up touches freed memory",
+   "world_punishes": "use-after-free in the releaser",
+   "world_rewards": "a hand-over protocol whose final store is the last touch",
+   "observable_consequence": "the two-step phase flip + separate wait word in the source",
+   "vacuity_condition": "lock lifetime managed elsewhere (never destroyed under contention)",
+   "trivial_shortcuts": "never free locks",
+   "cheat_control": "UNKNOWN (not measurable from the harness)",
+   "cost_class": "an extra store and a discipline on waiters",
+   "purpose_separated_from_pressure": "PURPOSE: POSIX conformance of destruction semantics",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "glibc-rwlock-writer-starvation-2.36::P.syscall_cost_on_uncontended_release",
+   "source_fossil": "glibc-rwlock-writer-starvation-2.36",
+   "source_evidence": "F:/Prometheus/vault/fossils/glibc-rwlock-writer-starvation-2.36/upstream/pthread_rwlock_common.c:152-162",
+   "condition": "waking sleepers costs a kernel transition; most releases have no sleepers",
+   "resource_or_constraint": "CPU time per release",
+   "failure_condition": "a release always pays the syscall",
+   "world_punishes": "latency on the common path",
+   "world_rewards": "knowing whether anyone sleeps before calling",
+   "observable_consequence": "FUTEX_USED bit in two wait words",
+   "vacuity_condition": "always contended",
+   "trivial_shortcuts": "never wake (deadlock)",
+   "cheat_control": "count syscalls per release with and without sleepers (not run)",
+   "cost_class": "one extra CAS before sleeping",
+   "purpose_separated_from_pressure": "PURPOSE: fast uncontended locking",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "to": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "a gated reader never reaches the register step until the flag clears",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "to": "glibc-rwlock-writer-starvation-2.36::lazy_wake_flag",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "hand-over issues the wake only if the flag says someone may sleep",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "kind flag enables the gate",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "kind flag enables direct writer hand-over",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+   "to": "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "registered losers of the election are the token's recipients",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "to": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the last reader out performs the hand-over",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36",
+   "relation": "shares_ancestor_with",
+   "to": "concurrencykit-0.7.2",
+   "note": "ck_rwlock / ck_brlock are rival readers-writer designs with different fairness",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "rdlock tail (lines 420-526): timed wait, cancellation, the read-phase start CAS loop -- not read",
+   "wrunlock and wrlock tail (680-950): the give side of the token pass and the write->read hand-over -- not read",
+   "__cur_writer maintenance (where set/cleared) not traced",
+   "whether the harness's system glibc (Debian 12 = 2.36) matches the preserved source byte-for-byte is Techne's claim, not checked by Nyx"
+  ],
+  "note": "9 organs account for the two acquisition paths and the two policy modes as described in the design comment; the release paths are asserted from the comment, not the code",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

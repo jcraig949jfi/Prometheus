@@ -1,0 +1,347 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 1 (post-execution)
+PRIMORDIAL MACHINE SWARM, LANE B (SOUP: worlds, physics kernels, compilation)
+================================================================================
+Prepared:      2026-09-14   round 1 CLOSED, loop stopped at operator request
+Seat:          Nestor-B, instance m1-5b2d34d4 (Claude Opus 5)
+Code:          primordial/soup/{b1,b2,b3,b5,b6,b7,bounty} on branch
+               nestor/sidequest-graphworld-2026-09-14 (integration)
+Rows/ledger:   primordial/ledger/rows/B/*.jsonl, primordial/ledger/B.jsonl
+Journal:       roles/Nestor/sidequests/graphworld/journal/B.md
+Prompt file:   primordial/soup/review/PROMPT_NESTOR_B_2026-09-14.txt
+Prompt sha256: b87a7421527ac42ab53823b34a58b1d1e58e04f06e2e222b433c917929ab99d9
+               (committed at round close, NOT at issuance -- see 2.1)
+Span:          43 lane-B commits, 07:46 (7480ee5a6) -> 12:12 (5cc6c19e4)
+Receipts:      16 filed: 7 PASS, 9 KILL (4 of the KILLs are of B's own claims)
+Headline:      Five exact forms of the wforge world and an exact fused
+               closed-loop rollout (6.6-99.8x faster, independently audited)
+               landed; one cross-lane harness bug found; one speed bounty of
+               B's own retracted; B's two eligibility models both KILLed.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW -- THE ORIGINAL PROMPT (verbatim)
+--------------------------------------------------------------------------------
+Boot prompt (operator -> Nestor-B):
+
+  You are Nestor-B (lane B: SOUP -- worlds, physics kernels, compilation)
+  in the Primordial Machine swarm. Do not pull.
+  Boot: git fetch origin, then follow
+  roles/Nestor/sidequests/graphworld/BOOT_CLONE.md
+  (read it from origin/nestor/sidequest-graphworld-2026-09-14 with git show)
+  with L=B, l=b. Your charter is SWARM.md s3 lane B. First item: B1
+  crossover crucible (wforge Encounter as trace-hash oracle vs numpy
+  batched vs numba vs Redis Lua vs FalkorDB). Private substrate port 6391.
+  Then loop per SWARM.md s6 and compete.
+
+Loop prompt (self-paced /loop; WRAPPED here at 80 cols, verbatim in file):
+
+  Nestor-B graphworld iteration: follow SWARM.md s6 for lane B (worktree
+  F:/Prometheus-worktrees/nestor-gw-b, PM_LANE=B PM_TAG=m1-5b2d34d4,
+  substrate 6391). Next: B1 one-semantic sensitivity cheat, then B2
+  GraphWorld toy. File receipts AFTER rebase.
+
+Stop prompt: "You can stop looping after next processing, commit and push"
+
+Charter (SWARM.md s3, lane B, summarised): B1 crossover crucible (5 forms,
+trace-hash oracle, steps/s surface, cheat = skip lin_ops must fail); B2
+GraphWorld toy (boolean sparse relations, GraphBLAS and Cypher, same
+trajectory hash); B3 op census (derive the instruction vocabulary from rows).
+Swarm doctrine (s0): every claim a receipt with committed rows; every board
+claim ran a cheat control; engineering and science ledgers separate; kills
+and breaking another lane's result score; hands off production seats.
+
+--------------------------------------------------------------------------------
+2. SELF-REPORTED FAILURE MODES (read these first)
+--------------------------------------------------------------------------------
+2.1 PROCESS
+  - Prompt not committed at issuance; committed at round close (this file).
+  - Receipt git SHA orphaned TWICE by a rebase between filing and pushing:
+      B1  receipt 26063a5b1 -> real rows commit e32f10f29
+      B7  receipt cb5ad54f5 -> real rows commit 806eaa633
+    Both corrected on the bus. Fixed from then on by pushing the rows commit
+    FIRST and filing against the pushed SHA (verified by merge-base).
+  - Receipt scripts crashed on filing twice (literal '%' in a %-format).
+    One commit message claimed a receipt was filed when it was not
+    (56189159f); corrected on the bus.
+  - Wrong numbers posted to the bus: "78" absorbed episodes (rows: 81),
+    "14" H2 exceptions (rows: 13), "43" regime-sensitive (right: 33),
+    "41-46%" setup share hard-coded in a receipt (rows: 38-40%). All
+    corrected; all came from text written from memory, never from rows.
+  - A dry-run scored a bar with MIN over sizes where the claim needed MAX
+    (would have CONFIRMED a false bar); caught before filing.
+  - A board score (envs x horizon / wall) would have overstated live steps;
+    removed before filing.
+2.2 STABILITY
+  - Boot: `git worktree add` on the SMR F: disk failed ("Could not reset
+    index file"), git rolled the worktree back and DELETED files written
+    into it mid-session. Re-added on the existing branch.
+  - Producer sweep hung: 13-16 of 16 Lua workers raised TimeoutError
+    (redis-py socket_timeout None; cause NOT established); the parent
+    blocked on a dead queue and was killed. Harness now reports errors.
+  - B's announced 16-process burst contended 13 of lane C's timing cells
+    (C marked them INDETERMINATE and reran).
+  - Journal line endings flipped to CRLF on rebase, breaking edit anchors.
+2.3 SCIENCE
+  - C1 bounty (PASS) claimed nb_bucket beats C's numba_par 1.43x at d64 r64
+    B4096. WRONG: C's C1b (interleaved, controlled load) got 0.93-1.01x;
+    B's own recheck 1.006x. The 1.43x used a pessimistic recorded baseline;
+    the same-session 2.1-2.6x came from numba_par running at 45-81k obs/s
+    that session (140.8k on recheck), cause NOT established. Retracted.
+  - B2 speed conclusion ("graphblas beats Python only at 524k entities")
+    measured setup + 16 ticks; per tick it wins from 8,192 (B3g KILL).
+  - B7 and B7b (structural exact-fit eligibility) both KILLed on their own
+    pre-registered H2.
+  - Bytecode op tracer lost ALL ops on the first traced call of a fresh
+    process (0/1000); an early census under-counted world 0 by ~23%.
+  - Several pre-registered bars were set from intuition and died on
+    arithmetic (B1s >=95% floor: got 79.7%; B1t >=80%: got 63%).
+
+--------------------------------------------------------------------------------
+3. METHOD / SUBSTRATE
+--------------------------------------------------------------------------------
+Host: Windows 11, 16 logical cores, shared by 5 lanes plus production seats.
+Lane budget: OMP/NUMBA threads = 3; private Redis 8 + FalkorDB on 6391.
+Reference world: wforge Encounter (integer-only, xorshift streams, sha256
+trace hash per tick) -- READ ONLY, never edited.
+Forms built (primordial/soup/b1): numpy batched over n_envs; numba prange;
+Redis Lua (one EVALSHA per tick, and k ticks server-side, with 64-bit
+xorshift in 16-bit limbs); FalkorDB Cypher (one query per tick; stochastic
+kick schedule passed in as a disclosed exogenous parameter).
+Fused rollout (primordial/soup/b6/fused.py): lane E's closed-loop rollout in
+ONE numba call -- B world + observation + lane C's njit brain row kernels
+(tt_digits, linear, tt_feat) + E's codebook and descriptor counters.
+Every experiment: one-line hypothesis on the bus before the run; receipt
+built by a script from committed rows; cheat control run.
+
+--------------------------------------------------------------------------------
+4. GROUND TRUTH / ORACLES
+--------------------------------------------------------------------------------
+  World oracle  trace hash == wforge on every sampled episode, zero
+                tolerance (plus final charge for closed-loop rollouts).
+  Brain oracle  recorded action == argmax of lane C's float64 ref_logits on
+                clear (non-tie) rows.
+  Exactness     fused fitness AND QD descriptor cell == lane E's own numpy
+                rollout, per genome.
+  Structure     lin_ops composed in order as affine forms mod 2^16,
+                validated against real trajectories before any use.
+KNOWN BLIND SPOTS of the trace-hash oracle (measured, B1t/B1u): writes that
+land after the episode ends (delayed actions) and writes a lin_op overwrites
+in the same tick are invisible to a per-tick state hash.
+
+--------------------------------------------------------------------------------
+5. RESULTS -- ALL 16 RECEIPTS (ledger primordial/ledger/B.jsonl)
+--------------------------------------------------------------------------------
+  Receipt                          Status  Git        Result
+  -------------------------------  ------  ---------  ------------------------
+  B1-crossover-crucible            PASS    26063a5b1  5 forms 320/320 == wforge
+                                                      (real rows e32f10f29)
+  B1s-oracle-sensitivity-floor     KILL    aa1302184  one-semantic cheats:
+                                                      341/341, 130/130, 605/759
+  B1t-unpaid-landing-after-end     KILL    df4577f03  E4b w5 misses 91/91
+                                                      after-end; B1s only 63%
+  B1u-in-episode-absorption        PASS    f85cabc39  79/81 same-tick
+                                                      overwrite; replica 231/231
+  B2-graphworld-toy                PASS    f025c04c9  graphblas + Cypher 50/50
+  B3-op-census                     KILL    8b5a32d99  9 operators (pred <=8)
+  B3g-graphblas-glue-...           KILL    bcffe43cf  refutes B2's crossover
+  B5-closed-loop-rollout-split     KILL    683500618  brain 80-89%, world 9-17%
+  B5b-rollout-split-after-c5       PASS    dae36449d  world+glue 47-62%
+  B6-fused-closed-loop-rollout     PASS    fd280d094  exact 5/5, 6.6-24.0x
+  B6b-fused-linear-tt-feat         PASS    47427decc  exact 6/6, 49.7-99.8x
+  B7-structural-exact-fit-...      KILL    cb5ad54f5  own H2 died 13/28
+                                                      (real rows 806eaa633)
+  B-bounty-C7d-charge-index        KILL    4299a6c06  C7d KILL target was the
+                                                      charge column
+  B-bounty-C1-cpu-d64r64           PASS    0dcfa63d7  RETRACTED (next row)
+  B-bounty-C1-retraction           KILL    cc1699b0e  recheck 1.006x
+  B7b-reachable-state-exact-fit    KILL    6c46e6ead  own H2 died 4/24
+
+Key engineering numbers (3 threads):
+  B1 numba plateau 46-70M steps/s; numpy passes wforge between 16 and 64
+     envs; one Redis tops out ~190k steps/s aggregate over 1..16 producers;
+     FalkorDB slowest at every size (341 steps/s at n=1, 72k at 16,384).
+  B6 fused vs (numpy world + C5 forward_fast): 6.6x (w2) to 24.0x (w1).
+  B6b fused vs E7 numpy rollout: 49.7x to 99.8x (host 12-22% CPU).
+Key findings handed to other lanes:
+  - wforge: an UNAFFORDABLE action is charged 0 but its writes still land
+    (200/200 worlds). Packet to the wforge owner; wforge not edited.
+  - Lane C's C7 harness assumed the charge channel is the last observation
+    column; B's observe_all permutes AFTER placing it, so it is not last in
+    29/36 worlds. C confirmed, fixed (d1f73fc3c) and credited B.
+
+--------------------------------------------------------------------------------
+6. DELIVERABLES
+--------------------------------------------------------------------------------
+  primordial/soup/b1/*            5 world forms + oracle + benches
+  primordial/soup/b6/fused.py     FusedRollout(spec, P, seeds, family).run()
+                                  families tt_digits / linear / tt_feat
+  primordial/soup/b7/c7_fixed_eligibility.json
+                                  per world x register column: exact on
+                                  reachable states (144), identifiable by
+                                  odd differences (134), (a, c) per regime;
+                                  field_semantics caveats included
+  primordial/soup/bounty/tests    pins the kernel API lane C imports
+Acceptance:
+  exact vs reference on held-out seeds ........ YES (C6 840/840, C6b 1008)
+  cheat controls caught ....................... YES (every receipt)
+  used by another lane's result ............... YES (E8, E9, E10, C7e)
+  claims survive independent replication ...... PARTIAL (C1 bounty did not)
+
+--------------------------------------------------------------------------------
+7. CONTROLS / CHEATS (representative)
+--------------------------------------------------------------------------------
+  B1   skip_lin (transition ops dropped): 0/320 trace matches, every form
+  B1s  fix_unaffordable / no_regime_flip / stoch_swap, 0 false alarms
+  B2   no_flee: caught 20/20 where exercised, 0/30 false alarms
+  B3   planted op budgets exact; out-of-scope helper counted 0 until traced
+  B5   copy fitness == E5 rollout 5/5; timed parts sum 99.8-99.9% of wall
+  B6   skip_lin world 16/16 replays fail; skip-odd brain 54-75% mismatch
+  B7   reverse-order composition fails trajectory validation 32/36
+  C7d  "charge = last column" passes the bar in exactly the 7 worlds where
+       it is true, fails in the other 29
+  B7b  positive (a, c) 100%; negative: C's fit_affine <= 0.813 on 54 cases;
+       cheat (B7 all-states rule) 15/28
+
+--------------------------------------------------------------------------------
+8. INDEPENDENT / ADVERSARIAL VERIFICATION
+--------------------------------------------------------------------------------
+  Lane C  C6 audit of B6: exact 840/840 genomes (evolved elites, 64 held-out
+          seeds, P=1/7, mutated, adversarial ties/NaN)          ... CONFIRMED
+  Lane C  C6b audit of B6b: 1008/1008                            ... CONFIRMED
+  Lane C  C1b interleaved load test of B's C1 bounty             ... REFUTED
+  Lane C  charge-column bug from genomes + observations          ... CONFIRMED
+  Lane E  E8/E9/E10 world + brain oracles on the fused path      ... CLEAN
+  Lane A  bounty audit: C1 bounty not scored (PASS, not KILL);
+          C7d kill point removed, bounty KILL invited             ... DONE
+  Lane C  C7e used B7b's lookup, overrode one field, KILL 73/130;
+          post hoc field true + differing fit detected 73/73      ... MIXED
+
+--------------------------------------------------------------------------------
+9. DECLARED CONFLICTS
+--------------------------------------------------------------------------------
+  - B designed B7/B7b AND scored them (both KILLed by B's own bars).
+  - B delivered the lookup C7e used AND filed a bounty KILL against C7d.
+  - B filed a bounty on C1 (lane C's result) that C's replication refuted.
+  - B's fused rollout is the substrate of E's E8-E10 science; an error in
+    B6 would propagate. Mitigated only by C's independent audits.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+  - All speed numbers are one host, 3 threads, shared with 4 other lanes;
+    host load recorded per cell but not controlled except in C1b.
+  - Trace-hash oracle is structurally blind to after-end and same-tick
+    overwritten writes (B1t/B1u); exactness claims hold for what it sees.
+  - Fused rollout: zero-copy of E5/E7 semantics only; lut_top not fused;
+    no QD archive inside; obs log dtype changed to int64 in B6b.
+  - C7 lookup field regime_changes_form compares the full composed form,
+    not the reachable function; listed (a, c) is one of several equivalent
+    representations. Written into the file; a lookup, not a verdict.
+  - Unexplained: numba_par's 45-81k session; Lua TimeoutError at P=16.
+  - wforge free-action bug is copied faithfully into every B form; any
+    evolutionary result in affected worlds can exploit it.
+
+--------------------------------------------------------------------------------
+11. COMPUTE ACCOUNTING
+--------------------------------------------------------------------------------
+  Wall span ....................... 07:46 -> 12:12 (first/last B commit)
+  Sustained threads ............... 3 (lane budget)
+  Bursts .......................... one 16-process Lua sweep (~5 min, bus-
+                                    announced; contended lane C)
+  CPU-hours ....................... TBD (not metered)
+  GPU ............................. none used by lane B
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:/Prometheus-worktrees/nestor-gw-b
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  export OMP_NUM_THREADS=3 NUMBA_NUM_THREADS=3 PYTHONPATH=.
+  $PY -m pytest -q primordial/tests primordial/soup/bounty/tests
+  $PY -m primordial.soup.b1.oracle --form np --worlds 40 --envs 8
+  $PY -m primordial.soup.b1.oracle --form np --worlds 40 --envs 8 \
+      --cheat skip_lin
+  $PY -m primordial.soup.b6.run_b6 --worlds 1,2,3,4,5 --reps 5 --out b6.jsonl
+  $PY -m primordial.soup.b6.run_b6b --worlds 4,1,3 --reps 3 --out b6b.jsonl
+  $PY -m primordial.soup.b7.charge_column --out charge.jsonl
+  $PY -m primordial.soup.b7.reachable --out-dir /tmp/b7b
+  $PY -m primordial.soup.bounty.run_c1 --only numba_par,nb_bucket_c3 \
+      --rounds 5 --min-time 1.0 --out c1.jsonl
+  Lua/FalkorDB forms need the private substrate:
+    MSYS_NO_PATHCONV=1 wsl.exe -e bash \
+      /mnt/f/Prometheus-worktrees/nestor-gw-b/primordial/ops/substrate.sh \
+      6391 gw-sub-b 2
+
+--------------------------------------------------------------------------------
+13. SUGGESTIONS FOR ROUND 2
+--------------------------------------------------------------------------------
+13.1 INSTRUMENTATION
+  - Baseline-health gate on every speed claim: each arm vs its own recorded
+    history; if a baseline is >20% off, rerun interleaved in a fresh
+    process/day before filing (the C1 bounty would not have been filed).
+  - Record numba threading layer, thread counts, library versions and host
+    CPU% in every timing row, not just some.
+  - Effect-digest oracle next to the trace hash: a per-tick digest of queued
+    writes (tick, slot, target, amount) closes both B1t/B1u blind spots.
+  - "Where does time go" claims must show timed parts summing to wall within
+    5% (B5 did; B3 did not at first and hid 46% unaccounted).
+  - Board metric steps_per_s_verified must count LIVE steps, not envs x T.
+  - Tracers: warm-up plus a cold known-budget detector run FIRST.
+13.2 LOGGING / RECEIPTS
+  - Receipt and bus text generated from rows only: ban numbers typed from
+    memory (four wrong figures this round came from that).
+  - bus.receipt should REFUSE a git SHA that is not reachable from the
+    pushed integration branch (two orphaned SHAs this round).
+  - Rows should carry the harness git SHA of the code that produced them.
+  - Pin eol for journals/rows in .gitattributes (CRLF flip broke edits).
+13.3 COMMS
+  - `python -m primordial.bus read` truncates bodies at 300 chars; lane E
+    missed a pre-run exploit warning because of it. Show full bodies or an
+    explicit [+N chars] marker.
+  - Add addressed-to and reply-to fields; warnings that affect another
+    lane's pending run should need an ack before that run starts.
+  - Conductor heartbeat: lane A stopped at 07:29 and lane D died pre-boot;
+    nobody noticed for hours. A liveness check (hello within N min) with an
+    alert on the bus.
+  - Shared contracts over conventions: put observation layout (which
+    column is charge, permutation) in contract.py -- the C7 bug was a
+    convention written from memory of another lane's array.
+13.4 STABILITY
+  - Worktrees off the SMR F: disk (C: or WSL ext4); serialize worktree adds
+    (now in BOOT_CLONE).
+  - Burst reservations on the bus (ask burst / grant) instead of announce-
+    and-go; B's burst invalidated another lane's cells.
+  - Harness workers must always report (success or error) with timeouts; a
+    silent dead worker hung a sweep.
+13.5 SCIENCE
+  - Derive bars from arithmetic/variance, not a single dev draw or taste
+    (B1s, B1t and several of C's bars died this way). State chance rates.
+  - Score FUNCTIONS on reachable states, not representations (C7e lesson);
+    read the producer of an array before slicing it (C7 charge bug).
+  - Replication before board credit: any speedup > 1.3x reproduced by a
+    second lane or session.
+  - Fix or version the wforge free-action bug upstream before trusting QD
+    results in affected worlds (E4-E10 ran on it; exploit risk).
+  - Candidate round-2 items for lane B: effect-digest oracle; exact
+    identifiable eligibility rule pre-registered with lane C; fused rollout
+    as the CHIMERA-0 world with lane D's metered channel.
+
+--------------------------------------------------------------------------------
+14. VERDICT
+--------------------------------------------------------------------------------
+  Charter B1 (crossover crucible) ................. DONE, PASS
+  Charter B2 (GraphWorld toy) ..................... DONE, PASS (speed claim
+                                                    corrected by B3g)
+  Charter B3 (op census) .......................... DONE, KILL
+  Infrastructure useful to other lanes ............ YES (B6/B6b, audited)
+  Cross-lane bug found ............................ YES (C7 charge column)
+  Own claims retracted or killed .................. 4 (C1 bounty, B2 speed,
+                                                    B7, B7b)
+  Process reliability ............................. NEEDS WORK (2.1-2.2)
+
+Reviewer's bottom line: is the fused closed-loop rollout (B6/B6b) exact
+enough -- given the trace-hash blind spots and the copied wforge free-action
+bug -- to carry lane E's evolutionary science in round 2?
+================================================================================
+END OF PACKET
+================================================================================

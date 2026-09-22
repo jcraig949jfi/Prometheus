@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "souffle-2.4.1",
+ "techne_record": "techne/fossils/specimens/souffle-2.4.1/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "souffle-2.4.1",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Souffle 2.4.1 -- a Datalog engine that compiles to C++",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git tag 2.4.1, github.com/souffle-lang/souffle",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2016 (2.4.1 rel. 2023)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "databases",
+     "datalog",
+     "logic",
+     "deductive-database",
+     "static-analysis",
+     "fixpoint"
+    ],
+    "lineage": "Souffle (2016-, Oracle Labs / Sydney): a high-performance Datalog -- bottom-up semi-naive evaluation with a specialised data-structure back end, compiled to parallel C++; the modern engine behind large-scale static program analyses"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "deductive (Datalog) fixpoint computation over relations",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "evaluate Datalog -- compute the least fixpoint of a set of recursive Horn rules over relations -- fast enough for whole-program static analysis of millions of tuples",
+    "pressure": "the semi-naive fixpoint must not recompute derived tuples, and the join/index choices decide whether a real analysis finishes in seconds or hours",
+    "success_means": "the exact least model of the rules over the input facts, computed at C++ speed"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++",
+    "yacc/flex"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Souffle (2016-, Oracle Labs / Sydney): a high-performance Datalog -- bottom-up semi-naive evaluation with a specialised data-structure back end, compiled to parallel C++; the modern engine behind large-scale static program analyses",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: swipl-9.2.9"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "ac7b049d77c3f41025a6b66cec4450002e7dc6e8f6c877c61460b04913960c99"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "UPSTREAM_TESTS_NOT_RUN",
+    "environment": {
+     "runner": "none this pass -- SOURCE pinned; heavy cmake build deferred"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "UPSTREAM_TESTS_NOT_RUN"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "souffle-2.4.1",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "Datalog is a decidable fragment of the logic-programming family Prolog belongs to",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

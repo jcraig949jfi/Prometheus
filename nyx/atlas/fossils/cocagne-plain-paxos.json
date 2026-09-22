@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "cocagne-plain-paxos",
+ "techne_record": "techne/fossils/specimens/cocagne-plain-paxos/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "cocagne-plain-paxos",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Plain Paxos (Tom Cocagne) -- the essential Paxos roles (Proposer, Acceptor, Learner) and a practical variant with heartbeats and leadership, in Python, with its unit tests",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/cocagne/paxos master as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1989 (algorithm); 2012- (this code)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "distributed-systems",
+     "consensus",
+     "quorum",
+     "leader-election",
+     "heartbeat-timeout"
+    ],
+    "lineage": "Lamport's Paxos (1989/1998) -- quorum-based, asynchronous, single-decree consensus -- written as small readable classes (essential.py) plus a 'practical' layer (heartbeat-driven leader acquisition, message retransmission, durable state) and a 'functional' variant, each with tests. NOT Raft: no log, no explicit leader term, safety from quorum intersection alone. Widely read as the reference Python Paxos (the Java twin lives in src/)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fault-tolerant consensus",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let a majority of unreliable nodes agree on one value despite crashes and message loss, and keep agreeing when a leader dies",
+    "pressure": "asynchrony, crash failures, duelling proposers (livelock is Paxos's known liveness hazard, which the practical layer's leader heartbeats exist to suppress)",
+    "success_means": "no two learners learn different values; a value is learned once a quorum is available"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "partial failure, message loss, competing proposers",
+    "failure_condition": "duelling proposers never decide (liveness), or -- if the quorum rule is broken -- two values decided (safety)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python",
+    "Java"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Lamport's Paxos (1989/1998) -- quorum-based, asynchronous, single-decree consensus -- written as small readable classes (essential.py) plus a 'practical' layer (heartbeat-driven leader acquisition, message retransmission, durable state) and a 'functional' variant, each with tests. NOT Raft: no log, no explicit leader term, safety from quorum intersection alone. Widely read as the reference Python Paxos (the Java twin lives in src/).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: willemt-raft"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "espresso-logic",
+ "techne_record": "techne/fossils/specimens/espresso-logic/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "espresso-logic",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Espresso -- two-level Boolean logic minimizer (UC Berkeley)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/classabbyamp/espresso-logic master as of 2026-09-12 (a build-fixed mirror of the Berkeley source)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1980s (this a maintained rebuild)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "hardware",
+     "logic-minimization",
+     "boolean-network",
+     "combinational-logic",
+     "optimization"
+    ],
+    "lineage": "Espresso (1980s, Brayton/Hachtel/McMullen/Sangiovanni-Vincentelli, UC Berkeley): heuristic two-level logic minimisation (EXPAND / REDUCE / IRREDUNDANT over cube covers); the tool that defined PLA minimisation and seeded logic synthesis"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "two-level Boolean minimisation for hardware synthesis",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "minimise a two-level Boolean function (a truth table / PLA) to the fewest product terms, so the circuit that implements it is smaller and faster",
+    "pressure": "the exponential number of prime implicants; exact minimisation (Quine-McCluskey) is intractable, so Espresso is a heuristic that gets near-optimal covers fast",
+    "success_means": "a correct, much smaller SOP cover of the same Boolean function, in seconds on functions that defeat exact methods"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Espresso (1980s, Brayton/Hachtel/McMullen/Sangiovanni-Vincentelli, UC Berkeley): heuristic two-level logic minimisation (EXPAND / REDUCE / IRREDUNDANT over cube covers); the tool that defined PLA minimisation and seeded logic synthesis",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "LATER_SAME_LINEAGE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9c9a5c19ba973791cf5ded88526b14bd58c776acfdf1462f3a8fc7eebd05b6ab"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-hw:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

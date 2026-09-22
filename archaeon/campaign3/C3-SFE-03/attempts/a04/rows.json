@@ -1,0 +1,606 @@
+[
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.1",
+  "elite_manifest": {
+   "code_writable": true,
+   "genome": [
+    3244211466,
+    3315219861,
+    698215333,
+    901950477,
+    795652708,
+    4273391247,
+    3065641009,
+    450558891,
+    4150930065,
+    1633665018,
+    2936966000,
+    4291163514,
+    1570148169,
+    2559146557,
+    3708974571,
+    4157122070,
+    99995249,
+    1561212115,
+    1515574241,
+    1155904488,
+    346628748,
+    1158129107,
+    1069819116,
+    3195925337,
+    3318956648,
+    3412959859,
+    2189546910,
+    3164116751,
+    1450267606,
+    1005136039,
+    1249400285,
+    190010483,
+    3921178644,
+    4220014523,
+    1011115978,
+    1277316269,
+    462985814,
+    275196010,
+    908457721,
+    4041338258,
+    462985814,
+    275196010,
+    908457721,
+    4041338258,
+    4050214306,
+    2341373159,
+    1043297182,
+    1013504781
+   ],
+   "n_regs": 7,
+   "out_cap": 2,
+   "persist": "none",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 256,
+   "tick_budget": 256
+  },
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0833,
+    "comparison": 0.0833,
+    "control": 0.1667,
+    "indirection": 0.1667,
+    "logical": 0.25,
+    "opaque_io": 0.1667,
+    "randomness": 0.0833
+   },
+   "distinct_opcodes": 8,
+   "instr": 12,
+   "n_regs": 7,
+   "opcode_hist": {
+    "EQ": 1,
+    "JZ": 2,
+    "OUT": 2,
+    "RND": 1,
+    "SHL": 2,
+    "SHR": 1,
+    "ST": 2,
+    "SUB": 1
+   },
+   "persist": "none",
+   "tape_words": 256,
+   "tick_budget": 256,
+   "words": 48
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.041667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.0,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.041667,
+  "final_r1": 0.0,
+  "final_r2": 0.0,
+  "final_r3": 0.083333,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 7,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 24,
+  "heldout_by_rung": {
+   "R0": 0.0208,
+   "R1": 0.0208,
+   "R2": 0.0625,
+   "R3": 0.0625
+  },
+  "hold_gens": 0,
+  "hold_released_by": null,
+  "ladder_start": 0,
+  "matrix": [
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 0,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 1,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 2,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 3,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 4,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 5,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 6,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 7,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 8,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 9,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 10,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 11,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 12,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 13,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 14,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 15,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 16,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 17,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 18,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 19,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 20,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 21,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.125,
+    "gen": 22,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "p_after_general": null,
+  "p_switched_at": null,
+  "peak_r0": 0.041667,
+  "peak_r3": 0.125,
+  "persist": "none",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 1.0,
+  "revisit_cost_episodes": 36,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": false,
+    "mean": 0.011458,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 1,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 2,
+    "hold": false,
+    "mean": 0.0875,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 4,
+    "hold": false,
+    "mean": 0.0375,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 5,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 6,
+    "hold": false,
+    "mean": 0.046875,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 7,
+    "hold": false,
+    "mean": 0.214583,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": false,
+    "mean": 0.108333,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": false,
+    "mean": 0.060417,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 10,
+    "hold": false,
+    "mean": 0.171875,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": false,
+    "mean": 0.05625,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 12,
+    "hold": false,
+    "mean": 0.053125,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.125,
+    "gen": 14,
+    "hold": false,
+    "mean": 0.1,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.094792,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.094792,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.054167,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.108333,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.054167,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.001042,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "seed": 7,
+  "transitions": [
+   6,
+   12,
+   18
+  ],
+  "wall_s": 1.4,
+  "warnings": []
+ }
+]

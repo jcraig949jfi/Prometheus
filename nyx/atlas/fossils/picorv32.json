@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "picorv32",
+ "techne_record": "techne/fossils/specimens/picorv32/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "picorv32",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "PicoRV32 -- a size-optimised RISC-V CPU core in Verilog (Clifford Wolf / YosysHQ)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/YosysHQ/picorv32 main branch as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2015-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "hardware",
+     "cpu",
+     "verilog",
+     "sequential-logic",
+     "finite-state-machine",
+     "processor"
+    ],
+    "lineage": "PicoRV32 (2015-, Clifford Wolf): a small RV32I[MC] processor as synthesisable Verilog with a self-checking testbench; the reference small core of the open RISC-V / Yosys ecosystem"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "running a real instruction set on minimal hardware",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "execute the RISC-V RV32I instruction set as a small synthesisable processor -- fetch, decode, a state-machine control path, register file, and an ALU -- for FPGAs and teaching",
+    "pressure": "silicon area and timing: the core trades cycles-per-instruction for a tiny gate count, an explicit area/speed decision",
+    "success_means": "correct execution of RISC-V programs (its self-checking testbench passes) within the gate budget"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Verilog"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "SYNCHRONOUS_DIGITAL_LOGIC (derived from language=Verilog)",
+   "basis": "NYX_DERIVED"
+  },
+  "ANCESTRY": {
+   "value": "PicoRV32 (2015-, Clifford Wolf): a small RV32I[MC] processor as synthesisable Verilog with a self-checking testbench; the reference small core of the open RISC-V / Yosys ecosystem",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "4fc00e02722b9098da35ea77d0e18d866f14e70dcab178ba963e3be1f86420a9"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-hw:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

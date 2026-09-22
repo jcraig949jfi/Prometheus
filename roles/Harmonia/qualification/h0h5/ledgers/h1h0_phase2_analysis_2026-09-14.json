@@ -1,0 +1,733 @@
+{
+ "schema": "harmonia.h1h0_phase2_analysis.v1",
+ "instance": "m2-f541bed9",
+ "plan": "roles/Harmonia/qualification/h0h5/h1h0_phase2_analysis_plan_2026-09-14.md",
+ "purpose": "DIAGNOSTIC (QR-1.1.0): not evidence for or against H0 or H1",
+ "input": {
+  "path": "archaeon/docs/h0h5/H1H0_PHASE2_READOUT.json",
+  "sha256_bytes": "ca534d6ac964d78d6e976511dff8fe8cfca649d3186737627e94566e682e7190",
+  "sha256_lf": "a1305a9322613cd0005baf26602496d88f2e43d21a6e506b4e150b689249336d",
+  "written": "2026-09-10T23:15:24+00:00"
+ },
+ "receipt": {
+  "base_sha": "6d276c53f00588654468decf7dfea3a41e80f9f9",
+  "branch": "harmonia/m2-f541bed9-boot-2026-09-14",
+  "worktree_path": "D:\\Prometheus-worktrees\\harmonia-m2-f541bed9-boot",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "allow_canonical_override": false
+ },
+ "controls": {
+  "POSITIVE": {
+   "G": {
+    "name": "G",
+    "estimate": 0.5,
+    "lo": 0.11406547894046254,
+    "hi": 0.8859345210595375,
+    "se": 0.15075567228888181,
+    "n": 12,
+    "alpha": 0.025,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "SUPPORTED",
+    "block_differences": [
+     1.0,
+     0.0,
+     1.0,
+     0.0,
+     1.0,
+     0.0,
+     1.0,
+     0.0,
+     1.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "nonzero_blocks": 6
+   },
+   "pass": true
+  },
+  "CHEAT": {
+   "S_G": {
+    "name": "G_joint_treatment_S11_minus_S00",
+    "label": "NOTHING_COULD_FIRE",
+    "block_differences": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "n": 12,
+    "nonzero_blocks": 0
+   },
+   "V_G": {
+    "V1_solved_only": {
+     "eligible_blocks": [
+      "tgt-01",
+      "tgt-10"
+     ],
+     "n": 2,
+     "name": "G",
+     "label": "NOTHING_COULD_FIRE",
+     "block_differences": [
+      0.0,
+      0.0
+     ],
+     "nonzero_blocks": 0
+    },
+    "V2_cap_substitute": {
+     "name": "G",
+     "label": "NOTHING_COULD_FIRE",
+     "block_differences": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "n": 12,
+     "nonzero_blocks": 0
+    },
+    "V3_rank": {
+     "name": "G",
+     "label": "NOTHING_COULD_FIRE",
+     "block_differences": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "n": 12,
+     "nonzero_blocks": 0
+    }
+   },
+   "pass": true
+  },
+  "REFUSAL": {
+   "pass": true,
+   "fires_on_two_2x2_labels": true,
+   "silent_when_only_one_label_is_a_cell": true,
+   "detail": "spec hash shared by 2x2 labels ['S10', 'S01']"
+  },
+  "NEGATIVE_permutation_reference_S_G": {
+   "perms": 2000,
+   "abs_G_observed": 0.08333333333333333,
+   "fraction_ge_observed": 0.672,
+   "pass": true,
+   "note": "a reference distribution, not a test of H0"
+  }
+ },
+ "controls_failed": [],
+ "label_identities": {
+  "fresh==S00": 12,
+  "random_pack==S10": 12
+ },
+ "spec_hash_dedup_as_read": {
+  "distinct_payloads": 73,
+  "labels_sharing_a_hash": [],
+  "refusal": null
+ },
+ "planted_control_block": "tgt-11",
+ "provenance": {
+  "counts": {
+   "fresh|cs-h1h0-1-p2|None": 6,
+   "random_pack|cs-h1h0-1-p2b|reservation": 12,
+   "S00|cs-h1h0-1-p2|None": 5,
+   "S10|cs-h1h0-1-p2b|reservation": 12,
+   "S01|cs-h1h0-1-p2b|reservation": 12,
+   "S11|cs-h1h0-1-p2b|reservation": 12,
+   "S00-deg|cs-h1h0-1-p2-r1|None": 1,
+   "S00|cs-h1h0-1-p2-r1|None": 7,
+   "fresh|cs-h1h0-1-p2-r1|None": 6
+  },
+  "by_cell": {
+   "S00": [
+    [
+     "cs-h1h0-1-p2",
+     "None"
+    ],
+    [
+     "cs-h1h0-1-p2-r1",
+     "None"
+    ]
+   ],
+   "S10": [
+    [
+     "cs-h1h0-1-p2b",
+     "reservation"
+    ]
+   ],
+   "S01": [
+    [
+     "cs-h1h0-1-p2b",
+     "reservation"
+    ]
+   ],
+   "S11": [
+    [
+     "cs-h1h0-1-p2b",
+     "reservation"
+    ]
+   ]
+  },
+  "CROSS_DEPLOY": true
+ },
+ "S_a_all_12": {
+  "label": "S-a all 12 blocks (tgt-11 = planted instrument control, included)",
+  "n_blocks": 12,
+  "tasks": [
+   "tgt-00",
+   "tgt-01",
+   "tgt-02",
+   "tgt-03",
+   "tgt-04",
+   "tgt-05",
+   "tgt-06",
+   "tgt-07",
+   "tgt-08",
+   "tgt-09",
+   "tgt-10",
+   "tgt-11"
+  ],
+  "G": {
+   "name": "G_joint_treatment_S11_minus_S00",
+   "estimate": 0.08333333333333333,
+   "lo": -0.13,
+   "hi": 0.29666666666666663,
+   "se": 0.08333333333333333,
+   "n": 12,
+   "alpha": 0.025,
+   "min_attainable_p": 0.00048828125,
+   "decision_at_threshold_0": "INCONCLUSIVE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "nonzero_blocks": 1
+  },
+  "I": {
+   "name": "interaction_I",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 12,
+   "nonzero_blocks": 0
+  },
+  "M1_secondary": {
+   "name": "marginal_main_slot1",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 12,
+   "nonzero_blocks": 0
+  },
+  "M2_secondary": {
+   "name": "marginal_main_slot2",
+   "estimate": 0.08333333333333333,
+   "lo": -0.09824999999999999,
+   "hi": 0.26491666666666663,
+   "se": 0.08333333333333333,
+   "n": 12,
+   "alpha": 0.05,
+   "min_attainable_p": 0.00048828125,
+   "decision_at_threshold_0": "INCONCLUSIVE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "nonzero_blocks": 1
+  },
+  "transport_secondary_is_also_H1_transport": {
+   "name": "S10_minus_S00",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 12,
+   "nonzero_blocks": 0
+  },
+  "shared_arm": {
+   "corr_empirical": null,
+   "corr_from_sigma": null,
+   "var_T": 0.0,
+   "var_G": 0.08333333333333337,
+   "note": "undefined when either contrast has zero variance across blocks"
+  },
+  "se_ratio_report": {
+   "var_G_joint_treatment": 0.08333333333333337,
+   "var_I_interaction": 0.0,
+   "se_ratio_measured": 0.0,
+   "se_ratio_if_exchangeable_equal_var": 1.4142135623730951,
+   "marginal_variances": {
+    "S11": 0.20454545454545456,
+    "S10": 0.15151515151515152,
+    "S01": 0.20454545454545456,
+    "S00": 0.15151515151515152
+   },
+   "equal_marginal_variances": false,
+   "note": "sqrt(2) is CONDITIONAL on equal marginal variances and an exchangeable within-block correlation. Report the measured ratio and the Sigma; the reference is context, not a result."
+  }
+ },
+ "S_b_excl_planted": {
+  "label": "S-b 11 blocks, planted control excluded",
+  "n_blocks": 11,
+  "tasks": [
+   "tgt-00",
+   "tgt-01",
+   "tgt-02",
+   "tgt-03",
+   "tgt-04",
+   "tgt-05",
+   "tgt-06",
+   "tgt-07",
+   "tgt-08",
+   "tgt-09",
+   "tgt-10"
+  ],
+  "G": {
+   "name": "G_joint_treatment_S11_minus_S00",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 11,
+   "nonzero_blocks": 0
+  },
+  "I": {
+   "name": "interaction_I",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 11,
+   "nonzero_blocks": 0
+  },
+  "M1_secondary": {
+   "name": "marginal_main_slot1",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 11,
+   "nonzero_blocks": 0
+  },
+  "M2_secondary": {
+   "name": "marginal_main_slot2",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 11,
+   "nonzero_blocks": 0
+  },
+  "transport_secondary_is_also_H1_transport": {
+   "name": "S10_minus_S00",
+   "label": "NOTHING_COULD_FIRE",
+   "block_differences": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "n": 11,
+   "nonzero_blocks": 0
+  },
+  "shared_arm": {
+   "corr_empirical": null,
+   "corr_from_sigma": null,
+   "var_T": 0.0,
+   "var_G": 0.0,
+   "note": "undefined when either contrast has zero variance across blocks"
+  },
+  "se_ratio_report": {
+   "var_G_joint_treatment": 0.0,
+   "var_I_interaction": 0.0,
+   "se_ratio_measured": Infinity,
+   "se_ratio_if_exchangeable_equal_var": 1.4142135623730951,
+   "marginal_variances": {
+    "S11": 0.16363636363636364,
+    "S10": 0.16363636363636364,
+    "S01": 0.16363636363636364,
+    "S00": 0.16363636363636364
+   },
+   "equal_marginal_variances": true,
+   "note": "sqrt(2) is CONDITIONAL on equal marginal variances and an exchangeable within-block correlation. Report the measured ratio and the Sigma; the reference is context, not a result."
+  }
+ },
+ "V": {
+  "V1_solved_only": {
+   "G": {
+    "eligible_blocks": [
+     "tgt-01",
+     "tgt-10"
+    ],
+    "n": 2,
+    "name": "G",
+    "estimate": 642.5,
+    "lo": -15354.082,
+    "hi": 16639.082000000002,
+    "se": 628.5,
+    "alpha": 0.025,
+    "min_attainable_p": 0.5,
+    "decision_at_threshold_0": "INELIGIBLE",
+    "block_differences": [
+     1271.0,
+     14.0
+    ],
+    "nonzero_blocks": 2
+   },
+   "I": {
+    "eligible_blocks": [
+     "tgt-01",
+     "tgt-10"
+    ],
+    "n": 2,
+    "name": "I",
+    "estimate": 489.5,
+    "lo": -9729.478000000001,
+    "hi": 10708.478000000001,
+    "se": 401.5,
+    "alpha": 0.025,
+    "min_attainable_p": 0.5,
+    "decision_at_threshold_0": "INELIGIBLE",
+    "block_differences": [
+     891.0,
+     88.0
+    ],
+    "nonzero_blocks": 2
+   },
+   "transport": {
+    "eligible_blocks": [
+     "tgt-01",
+     "tgt-10"
+    ],
+    "n": 2,
+    "name": "transport",
+    "estimate": -92.5,
+    "lo": -251.325,
+    "hi": 66.32499999999999,
+    "se": 12.5,
+    "alpha": 0.05,
+    "min_attainable_p": 0.5,
+    "decision_at_threshold_0": "INELIGIBLE",
+    "block_differences": [
+     -105.0,
+     -80.0
+    ],
+    "nonzero_blocks": 2
+   }
+  },
+  "V2_cap_substitute": {
+   "G": {
+    "name": "G",
+    "estimate": -351.0,
+    "lo": -1578.6162783363393,
+    "hi": 876.6162783363393,
+    "se": 479.5376087251325,
+    "n": 12,
+    "alpha": 0.025,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     1271.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     14.0,
+     -5497.0
+    ],
+    "nonzero_blocks": 3
+   },
+   "I": {
+    "name": "I",
+    "estimate": 55.083333333333336,
+    "lo": -152.31101224478934,
+    "hi": 262.477678911456,
+    "se": 81.01341624145417,
+    "n": 12,
+    "alpha": 0.025,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     891.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     88.0,
+     -318.0
+    ],
+    "nonzero_blocks": 3
+   },
+   "transport": {
+    "name": "transport",
+    "estimate": -15.416666666666666,
+    "lo": -38.31181730825197,
+    "hi": 7.478483974918634,
+    "se": 10.507182488107068,
+    "n": 12,
+    "alpha": 0.05,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     -105.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     -80.0,
+     0.0
+    ],
+    "nonzero_blocks": 2
+   }
+  },
+  "V3_rank": {
+   "G": {
+    "name": "G",
+    "estimate": 0.125,
+    "lo": -0.7105727485873495,
+    "hi": 0.9605727485873495,
+    "se": 0.3263956049169334,
+    "n": 12,
+    "alpha": 0.025,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     2.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     2.0,
+     -2.5
+    ],
+    "nonzero_blocks": 3
+   },
+   "I": {
+    "name": "I",
+    "estimate": 0.25,
+    "lo": -0.39,
+    "hi": 0.89,
+    "se": 0.25,
+    "n": 12,
+    "alpha": 0.025,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     2.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     2.0,
+     -1.0
+    ],
+    "nonzero_blocks": 3
+   },
+   "transport": {
+    "name": "transport",
+    "estimate": -0.16666666666666666,
+    "lo": -0.4115135833845674,
+    "hi": 0.07818025005123408,
+    "se": 0.11236664374387369,
+    "n": 12,
+    "alpha": 0.05,
+    "min_attainable_p": 0.00048828125,
+    "decision_at_threshold_0": "INCONCLUSIVE",
+    "block_differences": [
+     0.0,
+     -1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "nonzero_blocks": 2
+   }
+  },
+  "sign_agreement": {
+   "G": {
+    "signs_V1_V2_V3": [
+     1,
+     -1,
+     1
+    ],
+    "reading": "CENSORING-DETERMINED"
+   },
+   "I": {
+    "signs_V1_V2_V3": [
+     1,
+     1,
+     1
+    ],
+    "reading": "signs agree where defined"
+   },
+   "transport": {
+    "signs_V1_V2_V3": [
+     -1,
+     -1,
+     -1
+    ],
+    "reading": "signs agree where defined"
+   }
+  }
+ }
+}

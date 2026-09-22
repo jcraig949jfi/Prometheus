@@ -1,0 +1,31 @@
+{
+  "_README": "Copy to monsters/FRANK-NNN.monster.json. Every field below is required by MONSTER_SCHEMA.json unless marked optional. The validator (validate.py) checks: every non-novel organ_id resolves to ORGANS.jsonl; the F2 sentence is verbatim; the lightning experiment carries expected_if_alive / expected_if_dead / kill_condition / chance_floor / positive_control / ancestral_comparison; status is in the enum; at least one organ is NOT novel (a monster made only of novel organs is a new project, F5). The template itself is skipped by the validator (filename starts with _).",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-NNN",
+  "title": "<what the assembled organism is, in one line>",
+  "author_role": "Doctor Frankenstein",
+  "premise_summary": "<mechanism, not hope: what the organism DOES>",
+  "graves_raided": ["<AgentA>", "<AgentB>"],
+  "organs": [
+    {"organ_id": "<agent>.<bucket>.<n>", "source_agent": "<AgentA>", "organ_type": "<from ORGANS.jsonl>", "contributes": "<causal function HERE, not what it was>", "novel": false, "modification_required": "", "failures_recorded_against": []},
+    {"organ_id": "novel.<name>", "source_agent": "NOVEL", "organ_type": "<type>", "contributes": "<the modern capability or new component>", "novel": true, "modification_required": "", "failures_recorded_against": []}
+  ],
+  "why_combination_changes_boundary": "<name the dossier and the kill-boundary layer this moves, and the mechanism by which recombination moves it>",
+  "modern_capability_enabling": {"depends_on_frontier": false, "capability": "none: pure recomposition of era-1 organs", "era_test": "<how capability vs recomposition is separated (LAW N16)>"},
+  "consumer": {"name": "<real consumer>", "reachable_now": false, "consumption_proof": "<the CONSUMPTION.jsonl row that would prove use>"},
+  "measurable_consequence": "<the number the consumer already reads that changes if alive>",
+  "strongest_alternative_explanation": "<best non-monster explanation of a positive, and how the design separates it>",
+  "lightning_experiment": {
+    "design": "<cheap, concrete, arms and N>",
+    "expected_if_alive": "<numeric>",
+    "expected_if_dead": "<numeric>",
+    "kill_condition": "<pre-declared, fires against the proposer>",
+    "chance_floor": "<P(result | no mechanism) and the null that yields it>",
+    "positive_control": "<what the instrument is known to detect>",
+    "resource_budget": {"available_now": false, "needs": ["<resource>"], "estimated_cost": "<calls / hours / GPU>"},
+    "ancestral_comparison": {"feasible": true, "ancestral_assembly": "<historical assembly under the same instrument, or closest proxy>", "rationale": "<why this measures evolutionary movement, or why infeasible>", "ancestral_result_on_record": "<dossier path + number, optional>"}
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {"status": "PROPOSED", "notes": "", "james_signoff": false, "dossier_if_dead": null},
+  "provenance": {"author": "<who, as Doctor Frankenstein>", "branch": "<branch>", "baseline_sha": "<sha>", "organs_inventory_sha": "<sha256 of ORGANS.jsonl>", "created_at": "<YYYY-MM-DD>", "amendments": []}
+}

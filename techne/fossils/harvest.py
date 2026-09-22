@@ -9,6 +9,9 @@
     python -m techne.fossils.harvest mirror-verify --dest D      re-hash every mirrored body against the records (a corrupted mirror file MUST fail this)
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
+    python -m techne.fossils.harvest rematerialize <id> | --all [--out F]  second host: fetch from origin, verify by hash, never write tracked files
+    python -m techne.fossils.harvest repin <id> --reason R     repair a CRLF/residue-defective record from upstream.drifted/ (old list kept as superseded)
+    python -m techne.fossils.harvest receipt-check [--out F]      RQ-4 census: receipts carrying / predating the environment block
 
 A RECIPE (techne/fossils/specimens/<id>/recipe.json) is the executable statement of "how to
 run it": {"runner": "wsl"|"native"|"docker", "image": ..., "workdir": <relative to the body>,
@@ -27,6 +30,12 @@ body_preserved into the receipt -- the property, not a promise. Before this rule
 bodies had been dirtied by in-place builds (techne/fossils/VAULT_INTEGRITY_2026-09-12.json).
 A recipe may set "in_place": true to opt out (archaeology of the old behaviour, and the
 positive control for the detector); the receipt then says isolation "in_place".
+
+ENVIRONMENT (2026-09-16, Rhadamanthus #245 RQ-4). Receipt schema /2 carries an "environment"
+block: interpreter implementation + version, sha256 over the sorted `name==version` list of every
+installed distribution, and the NAMES of the environment variables the vault code read (through
+vault.getenv; never a value) plus the names it exports into recipe commands. run() validates its
+own receipt (validate_run_receipt) before writing it; `receipt-check` censuses the tracked ones.
 """
 from __future__ import annotations
 
@@ -230,8 +239,74 @@ def restore(specimen_id: str) -> dict:
     return rep
 
 
+# --------------------------------------------------------------------------- environment (RQ-4)
+RUN_RECEIPT_SCHEMA = "techne.fossil.run_receipt/2"
+# names the runner EXPORTS into every recipe command (see _shell); values are paths, so names only
+ENV_EXPORTED_TO_RECIPE = ("BODY", "HARNESS")
+_HEX64 = re.compile(r"^[0-9a-f]{64}$")
+
+
+def pip_freeze_lines() -> list[str]:
+    """`name==version` for every installed distribution visible to THIS interpreter, sorted and
+    de-duplicated, from importlib.metadata rather than a pip subprocess (same answer, no shell)."""
+    from importlib import metadata
+    seen = set()
+    for d in metadata.distributions():
+        name = (d.metadata["Name"] or "").strip()
+        if name:
+            seen.add("%s==%s" % (name.lower(), (d.version or "").strip()))
+    return sorted(seen)
+
+
+def environment_fingerprint(env_reads=None) -> dict:
+    """What the harvest driver ran under (Rhadamanthus #245 RQ-4): interpreter version, a hash of
+    the package state, and the NAMES of the environment variables read -- never a value. The
+    recipe's own world (image, toolchain) is a separate fact and stays in the receipt's probe."""
+    import hashlib
+    lines = pip_freeze_lines()
+    reads = sorted(set(vault.ENV_READS if env_reads is None else env_reads))
+    return {"interpreter": {"implementation": platform.python_implementation(),
+                            "version": platform.python_version(),
+                            "executable_basename": pathlib.Path(sys.executable).name},
+            "pip_freeze_sha256": hashlib.sha256(("\n".join(lines) + "\n").encode("utf-8")).hexdigest(),
+            "pip_freeze_n": len(lines),
+            "env_vars_read": reads,
+            "env_vars_exported_to_recipe": list(ENV_EXPORTED_TO_RECIPE)}
+
+
+def validate_run_receipt(receipt: dict) -> list[str]:
+    """Defects in a run receipt's environment block, as strings; [] means it carries RQ-4.
+    Schema /1 receipts predate the field and are reported as such rather than failed."""
+    why = []
+    schema = receipt.get("schema")
+    if schema == "techne.fossil.run_receipt/1":
+        return ["schema/1 receipt: predates the environment block (not a defect of the receipt)"]
+    if schema != RUN_RECEIPT_SCHEMA:
+        return ["unknown receipt schema %r" % (schema,)]
+    env = receipt.get("environment")
+    if not isinstance(env, dict):
+        return ["environment block missing"]
+    it = env.get("interpreter")
+    if not isinstance(it, dict) or not it.get("version") or not it.get("implementation"):
+        why.append("interpreter version/implementation missing")
+    if not _HEX64.match(str(env.get("pip_freeze_sha256", ""))):
+        why.append("pip_freeze_sha256 is not a sha256 hex digest")
+    reads = env.get("env_vars_read")
+    if not isinstance(reads, list) or not all(isinstance(n, str) for n in reads):
+        why.append("env_vars_read is not a list of names")
+    else:
+        for n in reads:
+            if "=" in n or not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", n):
+                why.append("env_vars_read carries something that is not a bare name: %r" % n[:40])
+    for key in ("host", "tree_sha256_before", "recipe_sha256"):
+        if key not in receipt:
+            why.append("%s missing" % key)
+    return why
+
+
 # --------------------------------------------------------------------------- runners
-def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int) -> dict:
+def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int,
+           readonly: bool = False) -> dict:
     """Run `cmd` in <body>/<rel>. $HARNESS is the body's harness/ copy (Techne's smoke inputs),
     $BODY the body root, whatever the runner; the command text in the receipt is what ran."""
     t0 = time.time()
@@ -242,8 +317,8 @@ def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | Non
     elif runner == "docker":
         pre = "export BODY=/w HARNESS=/w/harness; cd %s && " % shlex.quote("/w/" + rel)
         full = ["wsl.exe", "-e", "bash", "-lc",
-                "docker run --rm -v %s:/w -w /w %s bash -lc %s" % (
-                    shlex.quote(vault.to_wsl(body)), shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
+                "docker run --rm -v %s:/w%s -w /w %s bash -lc %s" % (
+                    shlex.quote(vault.to_wsl(body)), ":ro" if readonly else "", shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
     elif runner == "native":
         b = str(body).replace("\\", "/")
         pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
@@ -287,14 +362,13 @@ def _expect_ok(res: dict, expect: dict | None) -> tuple[bool, list[str]]:
 
 
 # --------------------------------------------------------------------------- acquire
-def acquire(specimen_id: str) -> dict:
-    rec = record.load(specimen_id)
-    origin = rec["source_origin"]
-    body = vault.body_dir(specimen_id)
-    up = body / "upstream"
-    up.mkdir(parents=True, exist_ok=True)
-    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
-    for art in origin.get("artifacts", []):
+def _fetch_artifacts(artifacts: list, up: pathlib.Path, body: pathlib.Path) -> list:
+    """Fetch every artifact of a source_origin into <up>/ exactly as acquire() always has.
+    MUTATES the artifact dicts it is given (sha256 / bytes / extracted_to / commit_resolved):
+    acquire() passes the record's own list so the pins are written back; rematerialize()
+    passes a deep copy so the record is never touched."""
+    fetched = []
+    for art in artifacts:
         kind = art["kind"]
         if kind == "url":
             dest = up / art["filename"]
@@ -309,7 +383,7 @@ def acquire(specimen_id: str) -> dict:
             if art.get("extract", True) and dest.name.lower().endswith((".gz", ".tgz", ".zip", ".bz2", ".xz", ".tar")):
                 root = vault.extract(dest, up / "tree")
                 art["extracted_to"] = str(root.relative_to(body)).replace("\\", "/")
-            out["fetched"].append(f)
+            fetched.append(f)
         elif kind == "git":
             dest = up / "tree"
             # Submodules are fetched only when the record DECLARES them ("submodules": "required"),
@@ -322,9 +396,20 @@ def acquire(specimen_id: str) -> dict:
             if g.get("submodules") is not None:
                 art["submodules_pinned"] = [{"path": x["path"], "url": x["url"],
                                              "commit": x["pinned_commit"]} for x in g["submodules"]]
-            out["fetched"].append(g)
+            fetched.append(g)
         else:
             raise ValueError("unknown artifact kind " + kind)
+    return fetched
+
+
+def acquire(specimen_id: str) -> dict:
+    rec = record.load(specimen_id)
+    origin = rec["source_origin"]
+    body = vault.body_dir(specimen_id)
+    up = body / "upstream"
+    up.mkdir(parents=True, exist_ok=True)
+    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
+    out["fetched"] = _fetch_artifacts(origin.get("artifacts", []), up, body)
     # hash EVERYTHING under upstream/: the immutable archive(s) as fetched plus the extracted
     # tree plus any loose files, so one tree hash covers the whole body
     rows = vault.hash_tree(up)
@@ -343,6 +428,225 @@ def acquire(specimen_id: str) -> dict:
     print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
     return out
 
+
+# --------------------------------------------------------------------------- rematerialize (second host)
+REMAT_SCHEMA = "techne.fossil.rematerialize/1"
+
+
+def rematerialize(specimen_id: str, timeout: int = 900) -> dict:
+    """Bring a preserved body onto THIS host from its recorded origin and prove it is the same
+    body -- without touching anything tracked. The test of PRESERVATION.md's guarantee
+    ("reconstructible from the recorded origin + verifiable by hash"), one specimen at a time.
+
+        ALREADY_PRESENT_VERIFIED  a body is here and matches the record; nothing fetched
+        ALREADY_PRESENT_DRIFTED   a body is here and does NOT match; left alone (see restore)
+        MATCH                     fetched to a staging dir, tree hash == record; installed as upstream/
+        DRIFT                     fetched, tree hash != record; kept at upstream.drifted/, NOT installed
+        ORIGIN_UNREACHABLE        a fetch failed (network, 404, gone, sha256 mismatch on an archive);
+                                  staging removed, nothing installed
+        NO_ORIGIN                 the record names no artifacts
+
+    record.json and UPSTREAM_HASHES.txt are never written. A DRIFT or ORIGIN_UNREACHABLE row is
+    the finding: that body exists only where it was first acquired and must be copied by hash."""
+    import copy
+    t0 = time.time()
+    rec = record.load(specimen_id)
+    body = vault.body_dir(specimen_id)
+    row = {"specimen_id": specimen_id, "tree_sha256_recorded": rec["hashes"].get("tree_sha256"),
+           "n_files_recorded": rec["hashes"].get("n_files"), "status": None, "tree_sha256_fetched": None,
+           "n_files_fetched": None, "bytes_fetched": None, "added": [], "removed": [], "modified": [],
+           "error": None, "seconds": None}
+    try:
+        if (body / "upstream").exists():
+            d = drift(specimen_id)
+            row["status"] = "ALREADY_PRESENT_VERIFIED" if d["matches"] else "ALREADY_PRESENT_DRIFTED"
+            row["tree_sha256_fetched"] = d["tree_sha256_now"]
+            row["n_files_fetched"] = d["n_now"]
+            row.update({k: d[k] for k in ("added", "removed", "modified")})
+            return row
+        arts = copy.deepcopy(rec["source_origin"].get("artifacts", []))
+        if not arts:
+            row["status"] = "NO_ORIGIN"
+            return row
+        stage = body / "rematerialize.tmp"
+        if stage.exists():
+            _rmtree(stage)
+        up = stage / "upstream"
+        up.mkdir(parents=True)
+        try:
+            _fetch_artifacts(arts, up, stage)
+        except Exception as e:  # noqa: BLE001 -- the origin's failure IS the row
+            row["status"] = "ORIGIN_UNREACHABLE"
+            row["error"] = "%s: %s" % (type(e).__name__, str(e)[:300])
+            _rmtree(stage)
+            return row
+        rows = vault.hash_tree(up)
+        got = {rel: (h, n) for rel, h, n in rows}
+        want = _want_rows(specimen_id)
+        row["tree_sha256_fetched"] = vault.tree_hash_of(rows)
+        row["n_files_fetched"] = len(rows)
+        row["bytes_fetched"] = sum(r[2] for r in rows)
+        row["added"] = sorted(set(got) - set(want))
+        row["removed"] = sorted(set(want) - set(got))
+        row["modified"] = sorted(r for r in want if r in got and got[r][0] != want[r][0])
+        if row["tree_sha256_fetched"] == row["tree_sha256_recorded"]:
+            body.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(up), str(body / "upstream"))
+            _rmtree(stage)
+            row["status"] = "MATCH"
+        else:
+            drifted = body / "upstream.drifted"
+            if drifted.exists():
+                _rmtree(drifted)
+            body.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(up), str(drifted))
+            _rmtree(stage)
+            row["status"] = "DRIFT"
+        return row
+    finally:
+        row["seconds"] = round(time.time() - t0, 1)
+        print("%-32s %-26s %s" % (specimen_id, row["status"], row["error"] or (
+            "+%d -%d ~%d" % (len(row["added"]), len(row["removed"]), len(row["modified"])) if row["status"] == "DRIFT" else "")), flush=True)
+
+
+def rematerialize_all(out=None, specimen_ids=None, timeout: int = 900) -> dict:
+    """Every specimen through rematerialize(); the census is written after EVERY row so a killed
+    run leaves a readable partial file."""
+    ids = sorted(specimen_ids or (p.parent.name for p in vault.SPECIMENS.glob("*/record.json")))
+    census = {"schema": REMAT_SCHEMA, "written_utc": None, "host": platform.node(),
+              "vault_root": str(vault.vault_root()), "specimens": len(ids), "complete": False,
+              "counts": {}, "rows": []}
+
+    def flush():
+        census["written_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        c = {}
+        for r in census["rows"]:
+            c[r["status"]] = c.get(r["status"], 0) + 1
+        census["counts"] = c
+        if out:
+            pathlib.Path(out).write_text(json.dumps(census, indent=1) + "\n", encoding="utf-8", newline="\n")
+
+    for sid in ids:
+        census["rows"].append(rematerialize(sid, timeout=timeout))
+        flush()
+    census["complete"] = True
+    flush()
+    print("REMATERIALIZE", census["specimens"], "specimens", json.dumps(census["counts"], sort_keys=True))
+    return census
+
+
+
+# --------------------------------------------------------------------------- repin (record repair)
+REPIN_SCHEMA = "techne.fossil.repin_receipt/1"
+
+
+def classify_drift(specimen_id: str, fetched_root: pathlib.Path) -> dict:
+    """Explain a DRIFT file by file against a hash-verified fetch. Classes:
+    SAME; RECORD_IS_CRLF (recorded hash == sha256 of the fetched bytes with LF->CRLF, i.e. the
+    record was taken over a Windows-converted checkout); NOT_IN_ORIGIN (recorded, absent from
+    the pinned fetch -- by construction not upstream content: a build product or interpreter
+    residue hashed into the record); FETCH_IS_CRLF (the reverse smudge, a fetch-side defect);
+    OTHER (real content difference); plus ADDED (in the fetch, not in the record)."""
+    import hashlib
+    want = _want_rows(specimen_id)
+    got = {rel: (h, n) for rel, h, n in vault.hash_tree(fetched_root)}
+    classes = {"SAME": [], "RECORD_IS_CRLF": [], "NOT_IN_ORIGIN": [], "FETCH_IS_CRLF": [], "OTHER": [],
+               "ADDED": sorted(set(got) - set(want))}
+    for rel, (h, n) in want.items():
+        p = fetched_root / rel
+        if rel not in got:
+            classes["NOT_IN_ORIGIN"].append(rel)
+            continue
+        if got[rel][0] == h:
+            classes["SAME"].append(rel)
+            continue
+        b = p.read_bytes()
+        lf = b.replace(b"\r\n", b"\n")
+        if hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest() == h:
+            classes["RECORD_IS_CRLF"].append(rel)
+        elif hashlib.sha256(lf).hexdigest() == h:
+            classes["FETCH_IS_CRLF"].append(rel)
+        else:
+            classes["OTHER"].append(rel)
+    return classes
+
+
+def repin(specimen_id: str, reason: str) -> dict:
+    """Repair a record whose hash list was taken over a Windows-converted and/or build-dirtied
+    body, using the byte-exact fetch that `rematerialize` kept at upstream.drifted/.
+
+    REFUSES unless the drift is FULLY explained by RECORD_IS_CRLF and NOT_IN_ORIGIN: any
+    ADDED, FETCH_IS_CRLF or OTHER file means this is not a record defect and nothing is
+    touched. On success: UPSTREAM_HASHES.txt is renamed UPSTREAM_HASHES.superseded-<date>.txt
+    (kept, tracked), a new list is written from the fetch, record.hashes is replaced and the
+    old block appended to record.hashes_superseded with the reason and the receipt path, the
+    fetch becomes upstream/, and a tracked repin receipt carries every classified path.
+    Any host still holding the old body will now fail `verify` for it -- that is correct and
+    the receipt says so."""
+    rec = record.load(specimen_id)
+    sd = vault.specimen_dir(specimen_id)
+    body = vault.body_dir(specimen_id)
+    drifted = body / "upstream.drifted"
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    out = {"schema": REPIN_SCHEMA, "specimen_id": specimen_id, "receipt_id": "repin-%s-%s" % (specimen_id, ts),
+           "written_utc": ts, "host": platform.node(), "reason": reason, "status": None,
+           "tree_sha256_old": rec["hashes"].get("tree_sha256"), "tree_sha256_new": None,
+           "classes": None, "refused_because": []}
+    if (body / "upstream").exists():
+        out["refused_because"].append("upstream/ already present on this host; nothing to repin from")
+    if not drifted.exists():
+        out["refused_because"].append("no upstream.drifted/ (run rematerialize first; it keeps the fetch there on DRIFT)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    classes = classify_drift(specimen_id, drifted)
+    out["classes"] = {k: sorted(v) for k, v in classes.items()}
+    out["class_counts"] = {k: len(v) for k, v in classes.items()}
+    for k in ("ADDED", "FETCH_IS_CRLF", "OTHER"):
+        if classes[k]:
+            out["refused_because"].append("%d file(s) %s -- not a record defect: %s" % (len(classes[k]), k, classes[k][:5]))
+    if not (classes["RECORD_IS_CRLF"] or classes["NOT_IN_ORIGIN"]):
+        out["refused_because"].append("nothing to repair (no RECORD_IS_CRLF or NOT_IN_ORIGIN files)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    # --- repair, in the order that leaves a recoverable state at every step
+    rows = vault.hash_tree(drifted)
+    old_list = sd / "UPSTREAM_HASHES.txt"
+    superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts[:8])
+    if superseded.exists():
+        superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts)
+    old_text = old_list.read_text(encoding="utf-8")
+    superseded.write_text("# SUPERSEDED %s by %s -- %s\n" % (ts, out["receipt_id"], reason) + old_text,
+                          encoding="utf-8", newline="\n")
+    vault.write_hashes(specimen_id, rows)
+    new_hashes = {"tree_sha256": vault.tree_hash_of(rows), "n_files": len(rows), "bytes": sum(r[2] for r in rows),
+                  "artifacts": rec["hashes"].get("artifacts"), "body_location": str(body),
+                  "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
+    rp = sd / "receipts" / (out["receipt_id"] + ".json")
+    rp_rel = "techne/fossils/specimens/%s/receipts/%s.json" % (specimen_id, out["receipt_id"])
+    old_block = dict(rec["hashes"])
+    old_block.update({"superseded_utc": ts, "reason": reason, "receipt": rp_rel,
+                      "superseded_hash_list": "techne/fossils/specimens/%s/%s" % (specimen_id, superseded.name),
+                      "class_counts": out["class_counts"]})
+    rec.setdefault("hashes_superseded", []).append(old_block)
+    rec["hashes"] = new_hashes
+    record.save(rec)
+    shutil.move(str(drifted), str(body / "upstream"))
+    out["tree_sha256_new"] = new_hashes["tree_sha256"]
+    out["n_files_old"] = old_block.get("n_files")
+    out["n_files_new"] = len(rows)
+    out["superseded_hash_list"] = old_block["superseded_hash_list"]
+    out["consequence"] = ("any host whose body was hashed into the old list now fails verify for this specimen; "
+                          "receipts before %s were run on that body (tree %s)" % (ts, out["tree_sha256_old"]))
+    out["status"] = "REPINNED"
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    rp.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print("REPIN", specimen_id, "REPINNED", out["tree_sha256_old"][:12], "->", out["tree_sha256_new"][:12],
+          json.dumps(out["class_counts"], sort_keys=True))
+    return out
 
 # --------------------------------------------------------------------------- mirror
 def mirror(dest: str, specimen_ids=None, dry_run: bool = False, allow_same_volume: bool = False) -> dict:
@@ -494,12 +798,15 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     rundir = body / "run" / ts
     rundir.mkdir(parents=True, exist_ok=True)
-    receipt = {"schema": "techne.fossil.run_receipt/1", "specimen_id": specimen_id, "receipt_id": "run-%s-%s" % (specimen_id, ts),
+    receipt = {"schema": RUN_RECEIPT_SCHEMA, "specimen_id": specimen_id, "receipt_id": "run-%s-%s" % (specimen_id, ts),
                "written_utc": ts, "runner": runner, "image": image, "workdir": rel,
                "isolation": "in_place" if in_place else "disposable_copy",
                "exec_root": str(exec_body.relative_to(body)).replace("\\", "/") if exec_body != body else ".",
                "harness_sha256": {str(p.relative_to(sd / "harness")).replace("\\", "/"): vault.sha256_file(p) for p in sorted((sd / "harness").rglob("*")) if p.is_file()} if (sd / "harness").exists() else {},
                "host": {"platform": platform.platform(), "python": sys.version.split()[0]},
+               # schema/2 (2026-09-16, RQ-4): interpreter, package-state hash, env-var NAMES read;
+               # filled in AFTER the run so every read the run made is in the list
+               "environment": None,
                "tree_sha256_before": rec["hashes"].get("tree_sha256"),
                "recipe_sha256": vault.sha256_file(sd / "recipe.json"),
                "patches": [], "probe": [], "build": [], "runs": [], "tests": [],
@@ -552,6 +859,10 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     after_rows = vault.hash_tree(body / "upstream")
     receipt["tree_sha256_after"] = vault.tree_hash_of(after_rows)
     receipt["body_preserved"] = receipt["tree_sha256_after"] == receipt["tree_sha256_before"]
+    receipt["environment"] = environment_fingerprint()
+    defects = validate_run_receipt(receipt)
+    if defects:
+        raise RuntimeError("run receipt fails its own environment check: " + "; ".join(defects))
     if not persist:
         receipt["persisted"] = False
         receipt["world_override_image"] = recipe.get("image")
@@ -760,6 +1071,35 @@ def preservation_census(out=None):
     return doc
 
 
+def receipt_census(out=None) -> dict:
+    """Every tracked run receipt, validated; the RQ-4 coverage count is derived, not asserted."""
+    rows = []
+    for rp in sorted(vault.SPECIMENS.glob("*/receipts/run-*.json")):
+        try:
+            rcpt = json.loads(rp.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as e:
+            rows.append({"receipt": rp.name, "specimen_id": rp.parent.parent.name, "schema": None,
+                         "status": "UNREADABLE", "defects": [str(e)[:120]]})
+            continue
+        why = validate_run_receipt(rcpt)
+        legacy = rcpt.get("schema") == "techne.fossil.run_receipt/1"
+        rows.append({"receipt": rp.name, "specimen_id": rp.parent.parent.name, "schema": rcpt.get("schema"),
+                     "status": "PREDATES_RQ4" if legacy else ("CARRIES_RQ4" if not why else "DEFECTIVE"),
+                     "defects": [] if legacy else why})
+    c = {"n": len(rows), "carries_rq4": sum(r["status"] == "CARRIES_RQ4" for r in rows),
+         "predates_rq4": sum(r["status"] == "PREDATES_RQ4" for r in rows),
+         "defective": sum(r["status"] in ("DEFECTIVE", "UNREADABLE") for r in rows)}
+    print("RECEIPT-CHECK n=%(n)d carries_rq4=%(carries_rq4)d predates_rq4=%(predates_rq4)d defective=%(defective)d" % c)
+    for r in rows:
+        if r["status"] in ("DEFECTIVE", "UNREADABLE"):
+            print("  ", r["specimen_id"], r["receipt"], r["status"], "; ".join(r["defects"]))
+    if out:
+        pathlib.Path(out).write_text(json.dumps({"schema": "techne.fossil.receipt_census/1",
+                                                 "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                                                 "counts": c, "rows": rows}, indent=1) + "\n", encoding="utf-8", newline="\n")
+    return c
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -770,6 +1110,9 @@ def main(argv=None) -> int:
     mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
+    rm = sub.add_parser("rematerialize", help="bring bodies onto THIS host from their recorded origins and verify by hash; tracked files untouched"); rm.add_argument("specimen_id", nargs="?"); rm.add_argument("--all", action="store_true"); rm.add_argument("--out"); rm.add_argument("--timeout", type=int, default=900)
+    rpn = sub.add_parser("repin", help="repair a record whose hash list was CRLF-converted / build-dirtied, from the byte-exact fetch at upstream.drifted/; refuses any real content difference"); rpn.add_argument("specimen_id"); rpn.add_argument("--reason", required=True)
+    rc_ = sub.add_parser("receipt-check", help="RQ-4 census: every tracked run receipt by schema, defects listed"); rc_.add_argument("--out")
     pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
     if args.cmd == "acquire":
@@ -799,6 +1142,18 @@ def main(argv=None) -> int:
             print(json.dumps(preservation_of(args.specimen_id), indent=1))
             print("PRESERVATION", args.specimen_id, "OK" if ok else "FAIL", *probs)
             return 0 if ok else 1
+    elif args.cmd == "rematerialize":
+        if args.all or not args.specimen_id:
+            c = rematerialize_all(args.out, timeout=args.timeout)
+            bad = sum(v for k, v in c["counts"].items() if k not in ("MATCH", "ALREADY_PRESENT_VERIFIED"))
+            return 0 if bad == 0 else 1
+        r = rematerialize(args.specimen_id, timeout=args.timeout)
+        return 0 if r["status"] in ("MATCH", "ALREADY_PRESENT_VERIFIED") else 1
+    elif args.cmd == "repin":
+        return 0 if repin(args.specimen_id, args.reason)["status"] == "REPINNED" else 1
+    elif args.cmd == "receipt-check":
+        c = receipt_census(args.out)
+        return 0 if c["defective"] == 0 else 1
     elif args.cmd == "status":
         status()
     elif args.cmd == "summary":

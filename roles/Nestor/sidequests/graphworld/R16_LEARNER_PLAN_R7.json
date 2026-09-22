@@ -1,0 +1,2199 @@
+{
+ "round": "r7",
+ "item": "G-R7-3",
+ "rule": "SWARM_R7 O4: ascending cost estimate, a function of T and the world only",
+ "formula": "cpu_s(world, runs) = (12030.94 / 32) * T * S * runs / 32 -- J3's committed CPU for the w13 train128 learner (12,030.94 CPU-s, 32 runs, T*S 32) per unit T*S; T and S from E4.Spec(gen_seed) only, no outcome data",
+ "chunk_runs": 4,
+ "cpu_budget_rule": "min(36000, round(2 * chunk estimate + 300)); segment 2400 s",
+ "source": "PENDING cells of receipt G-R16-SCREEN-R6 (pm:results 1789495407858-0)",
+ "order": [
+  {
+   "gen_seed": 26,
+   "pressure": "train128_held64",
+   "t_x_s": 64,
+   "learner128_cpu_s": 24061.88
+  },
+  {
+   "gen_seed": 1,
+   "pressure": "train128_held64",
+   "t_x_s": 128,
+   "learner128_cpu_s": 48123.76
+  },
+  {
+   "gen_seed": 10,
+   "pressure": "train128_held64",
+   "t_x_s": 128,
+   "learner128_cpu_s": 48123.76
+  },
+  {
+   "gen_seed": 7,
+   "pressure": "train128_held64",
+   "t_x_s": 256,
+   "learner128_cpu_s": 96247.52
+  },
+  {
+   "gen_seed": 34,
+   "pressure": "train128_held64",
+   "t_x_s": 256,
+   "learner128_cpu_s": 96247.52
+  }
+ ],
+ "r16_remainder_order_file": "roles/Nestor/sidequests/graphworld/R16_ORDER_R6.json",
+ "jobs": [
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f4200-r0-3",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f4200-r4-7",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f2101-r0-3",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f2101-r4-7",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f3303-r0-3",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f3303-r4-7",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f5501-r0-3",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w26-f5501-r4-7",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 6315.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 3007.74
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:cell_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-cell-w26-train128_held64-r7",
+   "kwargs": {
+    "gen_seed": 26,
+    "pressure": "train128_held64",
+    "cpu_budget_s": 36000.0
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 36000.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 67,
+    "checkpointable": true,
+    "required_controls": [
+     "floor_suite",
+     "det_matches_stage1"
+    ],
+    "required_oracles": [
+     "world_oracle",
+     "fused_eq_numpy"
+    ],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_SCREEN_CELL"
+   },
+   "estimate_cpu_s": 0.0
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f4200-r0-3",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f4200-r4-7",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f2101-r0-3",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f2101-r4-7",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f3303-r0-3",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f3303-r4-7",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f5501-r0-3",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w1-f5501-r4-7",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:cell_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-cell-w1-train128_held64-r7",
+   "kwargs": {
+    "gen_seed": 1,
+    "pressure": "train128_held64",
+    "cpu_budget_s": 36000.0
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 36000.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 67,
+    "checkpointable": true,
+    "required_controls": [
+     "floor_suite",
+     "det_matches_stage1"
+    ],
+    "required_oracles": [
+     "world_oracle",
+     "fused_eq_numpy"
+    ],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_SCREEN_CELL"
+   },
+   "estimate_cpu_s": 0.0
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f4200-r0-3",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f4200-r4-7",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f2101-r0-3",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f2101-r4-7",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f3303-r0-3",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f3303-r4-7",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f5501-r0-3",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w10-f5501-r4-7",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 12331.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 6015.47
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:cell_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-cell-w10-train128_held64-r7",
+   "kwargs": {
+    "gen_seed": 10,
+    "pressure": "train128_held64",
+    "cpu_budget_s": 36000.0
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 36000.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 67,
+    "checkpointable": true,
+    "required_controls": [
+     "floor_suite",
+     "det_matches_stage1"
+    ],
+    "required_oracles": [
+     "world_oracle",
+     "fused_eq_numpy"
+    ],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_SCREEN_CELL"
+   },
+   "estimate_cpu_s": 0.0
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f4200-r0-3",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f4200-r4-7",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f2101-r0-3",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f2101-r4-7",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f3303-r0-3",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f3303-r4-7",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f5501-r0-3",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w7-f5501-r4-7",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:cell_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-cell-w7-train128_held64-r7",
+   "kwargs": {
+    "gen_seed": 7,
+    "pressure": "train128_held64",
+    "cpu_budget_s": 36000.0
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 36000.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 67,
+    "checkpointable": true,
+    "required_controls": [
+     "floor_suite",
+     "det_matches_stage1"
+    ],
+    "required_oracles": [
+     "world_oracle",
+     "fused_eq_numpy"
+    ],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_SCREEN_CELL"
+   },
+   "estimate_cpu_s": 0.0
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f4200-r0-3",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f4200-r4-7",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 4200,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f2101-r0-3",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f2101-r4-7",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 2101,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f3303-r0-3",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f3303-r4-7",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 3303,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f5501-r0-3",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     0,
+     1,
+     2,
+     3
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:learner_chunk_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-learn128-w34-f5501-r4-7",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "rng_family": 5501,
+    "run_seeds": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 24362.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 5,
+    "checkpointable": true,
+    "required_controls": [],
+    "required_oracles": [],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_LEARNER_CHUNK",
+    "evidence_class": "OBSERVATION"
+   },
+   "estimate_cpu_s": 12030.94
+  },
+  {
+   "lane": "G",
+   "fn": "primordial.metric.r16_cells:cell_job",
+   "exp_id": "G-R16-cell",
+   "rows": "primordial/ledger/rows/G/G-R16-cells.jsonl",
+   "job_key": "g-r16-cell-w34-train128_held64-r7",
+   "kwargs": {
+    "gen_seed": 34,
+    "pressure": "train128_held64",
+    "cpu_budget_s": 36000.0
+   },
+   "envelope": {
+    "runs_total": 32,
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "families": [
+     2101,
+     3303,
+     4200,
+     5501
+    ],
+    "n_per_family": {
+     "4200": 8,
+     "2101": 8,
+     "3303": 8,
+     "5501": 8
+    },
+    "campaign_stage": "PRODUCTION",
+    "wall_budget_s": 2400,
+    "cpu_budget_s": 36000.0,
+    "gpu_budget_s": 0,
+    "expected_output_rows": 67,
+    "checkpointable": true,
+    "required_controls": [
+     "floor_suite",
+     "det_matches_stage1"
+    ],
+    "required_oracles": [
+     "world_oracle",
+     "fused_eq_numpy"
+    ],
+    "cohort": "G",
+    "predicate_id": "G-R16-SCREEN",
+    "experiment_class": "R16_SCREEN_CELL"
+   },
+   "estimate_cpu_s": 0.0
+  }
+ ]
+}

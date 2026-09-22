@@ -1,0 +1,91 @@
+{
+ "perturbation_id": "P-F02",
+ "parent": "T-X17",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "manifold-measurement",
+ "positions": [
+  [
+   "W0D1",
+   "before_first_ask"
+  ],
+  [
+   "W0D2",
+   "between_puts"
+  ],
+  [
+   "W0D2",
+   "before_first_ask"
+  ],
+  [
+   "W0D2",
+   "before_first_put"
+  ],
+  [
+   "K2",
+   "between_puts"
+  ],
+  [
+   "K2",
+   "before_first_ask"
+  ],
+  [
+   "K2",
+   "before_second_ask"
+  ]
+ ],
+ "doses": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "vector_keys": [
+  "W0D1.before_first_ask.n1",
+  "W0D1.before_first_ask.n2",
+  "W0D1.before_first_ask.n3",
+  "W0D1.before_first_ask.n4",
+  "W0D2.between_puts.n1",
+  "W0D2.between_puts.n2",
+  "W0D2.between_puts.n3",
+  "W0D2.between_puts.n4",
+  "W0D2.before_first_ask.n1",
+  "W0D2.before_first_ask.n2",
+  "W0D2.before_first_ask.n3",
+  "W0D2.before_first_ask.n4",
+  "W0D2.before_first_put.n1",
+  "W0D2.before_first_put.n2",
+  "W0D2.before_first_put.n3",
+  "W0D2.before_first_put.n4",
+  "K2.between_puts.n1",
+  "K2.between_puts.n2",
+  "K2.between_puts.n3",
+  "K2.between_puts.n4",
+  "K2.before_first_ask.n1",
+  "K2.before_first_ask.n2",
+  "K2.before_first_ask.n3",
+  "K2.before_first_ask.n4",
+  "K2.before_second_ask.n1",
+  "K2.before_second_ask.n2",
+  "K2.before_second_ask.n3",
+  "K2.before_second_ask.n4",
+  "W0D1.order_ne",
+  "W0D1.order_en"
+ ],
+ "programs": "parents (all strata), walkers at depth 4/8/16, C4-08 tops, P-F03 evolved (8 arms x 16) and transplanted (4 x 16) tops",
+ "retained": [
+  "raw curves",
+  "transition dose per position (first dose with displacement >= .1)",
+  "order variants (hysteresis proxy)",
+  "lineage",
+  "world",
+  "n_instr / persist / persistent words / reward"
+ ],
+ "clustering": "k-means on programs with complete vectors, k in 2..6 chosen by silhouette; cluster centroids and composition reported; a cluster is an UNSEEN shape if its centroid matches none of: immune (all < .1), ask-time (W0D1/K2 before-ask >= .5 and K2 between_puts < .1), schedule (K2 between_puts >= .5 and before-asks < .1)",
+ "material_rule": "an unseen stable shape (>= 8 members) exists, or transition doses differ from 1 (dose-dependence) in >= 10 percent of sensitive positions, or order variants differ by >= .1 in >= 10 percent of programs",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:20:04",
+ "prereg_sha256": "2ee4c2698030664620f09d94575de799f9cd2cd6f57226ba43f47d9984859df5"
+}

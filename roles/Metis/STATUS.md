@@ -3,7 +3,25 @@
 Currency: 2026-09-11, second update (seated, then re-premised by
 operator ruling the same day). Plain language.
 
-## Seat state: AWAITING SEASON PROMPT
+## Seat state: SEASON 1 CLOSED -- awaiting operator on the F4 attack
+
+Season 1 ran 2026-09-13 and is closed with the ruling
+SPECIMEN_SURVIVES_RETROSPECTIVE (narrowly). Full receipt:
+roles/Metis/season1/SEASON1_RECEIPT.md; read
+roles/Metis/season1/FAILURE_LEDGER.md beside it.
+
+- The specimen vetoed all 5 historical episodes. One real positive
+  control (E1b) clears every confidence veto on the same episode one
+  day later, after the discriminators had run -- but it was built after
+  I saw the 5/5 result, so it is the season's weakest joint.
+- The named attack that would WITHDRAW the ruling: a second analyst
+  encoding the same five bundles blind. If their rules_out assignments
+  flip an episode, preregistered criterion F4 fires. Routing that to
+  Kairos, Charon, Nemesis or Elenchus is the operator's call.
+- Season 2 is RECOMMENDED, NOT STARTED. Prospective only.
+- Nothing integrated into any consumer.
+
+## Previous seat state: AWAITING SEASON PROMPT (2026-09-11, superseded)
 
 - METIS-02 RULED: the seat is RE-PREMISED. The lane is COMPOSITION --
   whether heterogeneous failure evidence combines into a better next

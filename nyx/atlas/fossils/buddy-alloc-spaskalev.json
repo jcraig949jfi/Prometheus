@@ -1,0 +1,147 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "buddy-alloc-spaskalev",
+ "techne_record": "techne/fossils/specimens/buddy-alloc-spaskalev/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "buddy-alloc-spaskalev",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "buddy_alloc -- a header-only buddy memory allocator (Stanislav Paskalev)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/spaskalev/buddy_alloc master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1965 (this impl modern)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "memory-allocation",
+     "operating-systems",
+     "buddy-system",
+     "resource-management",
+     "scarcity"
+    ],
+    "lineage": "Buddy allocation (Knowlton 1965, Knuth): split memory into power-of-two blocks, merge free 'buddies' on release; the allocator behind many kernels' page allocators, trading internal fragmentation for O(log n) alloc/free and fast coalescing"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fixed-arena allocation with fast coalescing (the buddy system)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "allocate and free memory from a FIXED arena in power-of-two blocks, merging freed buddies so large blocks become available again -- fast coalescing under a hard capacity bound",
+    "pressure": "a fixed, bounded arena (no asking the OS for more) where fragmentation must be fought or large requests fail while small free blocks litter the arena",
+    "success_means": "requests satisfied while any contiguous block of the size exists, with bounded internal fragmentation and O(log n) operations"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "a fixed memory arena, fragmentation, mixed allocation sizes",
+    "failure_condition": "fragmentation defeats it: a large request fails though enough total memory is free (just not contiguous); the kernel/embedded system runs out of usable memory"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Buddy allocation (Knowlton 1965, Knuth): split memory into power-of-two blocks, merge free 'buddies' on release; the allocator behind many kernels' page allocators, trading internal fragmentation for O(log n) alloc/free and fast coalescing",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "38db38112475eef217db6cbec5cdfa1214805241ad6b8fd243e3c92e0dbbbe21"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

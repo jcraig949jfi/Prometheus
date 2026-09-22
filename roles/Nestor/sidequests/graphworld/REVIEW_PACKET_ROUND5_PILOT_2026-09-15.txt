@@ -1,0 +1,253 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 5, BOUNDED PILOT
+THE PRIMORDIAL MACHINE: CODE-OWNED CLOCKS, BUDGETS AND ADMISSION
+================================================================================
+Prepared:      2026-09-15 ~09:00 local, after round close (08:56:10)
+Author:        Nestor-A[m1-449a9e76], conductor (logistics only)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Plan:          roles/Nestor/sidequests/graphworld/SWARM_R5.md (s1 = conductor bias overrides O1-O9)
+Operator msgs: prompts/2026-09-14_graphworld_swarm/19 (the plan, given as "suggestions"),
+               20 (40 CPU-min authorization) -- verbatim, sha256 in MANIFEST
+Clock (code):  pm:round:r5
+               start 06:56:10 | no_new_work 08:36:10 | drain 08:46:10 | closed 08:56:10
+               4 x 25 min epochs, stage PILOT
+Gate tip:      c5128d0d3 (16 items; full suite 664 passed)
+Close record:  ROUND_r5.json 077746f00; EPOCH_1..4 on integration
+Tally source:  scratchpad r5_close_tally.py over pm:events, pm:production_candidates, done streams,
+               pm:swarm and the prior ledger (code-owned streams, not prose)
+
+Headline:
+- The swarm ran a two-hour pilot under code-owned clocks, budgets and admission: no manual epoch
+  announcements, 0 session deaths, 0 work after NO_NEW_WORK, and no escalation.
+- It produced the first CANDIDATE_N-eligible Clause A PASS:
+  - w13 train128_held64, a 16-byte int4a4 genome against the 200-byte float baseline;
+  - progress 1.591, CI [1.139, 1.827];
+  - recomputed with 0 mismatches by a second lane (H);
+  - NOT promoted (same model family, single world).
+- Clause B, B2 admission and GPU-3 ended as measured PRODUCTION_CANDIDATEs, as the rules require.
+- About 21 minutes of the clock were lost to a launch defect introduced by the conductor.
+
+--------------------------------------------------------------------------------
+1. OPERATIONS
+--------------------------------------------------------------------------------
+Active wall: the 120 min clock ran to close; no extension.
+- Cohorts live: R 07:08, B 07:11, C 07:12, D 07:15, E 07:17, so ~99 min of full-cohort time.
+Launch defect (conductor; FIXED_WITH_REGRESSION eca1a725b):
+- Lane R was added to contract.LANES, but launch_lane.ps1 kept its own ValidateSet without R.
+- PowerShell rejected -Lane R and the predictor never booted; the launch chain waited 10 min.
+- Relaunched with a start-event check. The clock was not extended (operator 19 s0).
+Epochs (F14 controller, no conductor announcements):
+- E1 drain 30 s, 0 stragglers.
+- E2 drain sized to 650 s; B-R5-1 CHECKPOINTED and auto-resumed (the first live test of gate item 8).
+- E3 0 stragglers.
+- E4: NO_NEW_WORK set by code 08:36:10; drain hold; round_closed 08:56:10.
+- The controller's own push failed at every boundary and at close (rc 4, dirty repo); A pushed each
+  record.
+Session deaths: 0 (no liveness 'missing' page for R/B/C/D/E inside the round window).
+
+Jobs (F7 done streams):
+  lane  ok  refused  paused  error  CPU-s
+  B      2        1       1      0   1639
+  C      3        1       0      1    835
+  D      1        0       0      0     11
+  E      0        1       0      0      0   (+6 GPU jobs via the GPU queue)
+  R      -        -       -      -      -   (predictor: sealed priors only, no jobs)
+  D also ran 1 GPU job (D-R5-2) via the GPU queue; H ran 1 replay job (1 CPU token).
+
+Admission events: STAGE_BUDGET_REFUSAL 3 (4 reasons):
+- CPU_BUDGET_OVER_CEILING x2: B-R5-1 at the 1200 ceiling; the E Clause B pair.
+- CPU_WALL_OVER_CEILING x1: the E Clause B pair, ~20 min > 900 s.
+- ENVELOPE_MISSING x1: C's stale round 4 segment, not resubmitted.
+NO_NEW_WORK_REFUSAL 0 (no agent tried to start work after 08:36).
+EXPECTED_REFUSAL_OBSERVED 1 (B-R5-2 PILOT re-read). CHECKPOINTED 1 (B-R5-1).
+
+CPU: NODE_CAPACITY_PROFILE_R5 k* = 2 workers x 8 threads, by the O3 rule on the real M2 w13 workload.
+- k1: 9917 units/s, p95 20.82 s.
+- k2: 13260 units/s (1.34x), p95 31.14 s <= 31.23 s: PASS (marginal).
+- k3: 1.12x, p95 41.70 s: FAIL.
+- Measured with builder sessions sharing the host, so it may be conservative.
+- CPU_TOKEN_GRANT 9: C 4, B 3, D 1, H 1.
+- Idle-lane token hoarding was suspected and REFUTED in code: a slot is released after a 200 ms empty
+  poll.
+
+GPU: 7 jobs (E-R5-3 x6, D-R5-2 x1). All exact, lease held for every timing row, 0 INDETERMINATE timing
+rows, max job wall 22 s of 600.
+
+Operator intervention mid-round: message 20 raised PILOT cpu_budget_s 1200 -> 2400 in code (d64580db2;
+suite 670 passed). Workers picked it up on restart. B-R5-1 was then admitted.
+
+Automatic quiesce: WORKED (NO_NEW_WORK, drain hold and close all set by code).
+
+--------------------------------------------------------------------------------
+2. SCIENCE (OBSERVATION / ELIGIBILITY / VERDICT / INTERPRETATION)
+--------------------------------------------------------------------------------
+2.1 w13 Clause A pilot: B-R5-1 (receipt 1789473262958-0; rows 4e69568e8)
+OBSERVATION:
+- int4 linear + a4 nibble codebook, 16 B.
+- Candidate median 194.22, CI [186.33, 198.33]; runs_total 32, rng_family_count 4, runs_per_family 8;
+  readout top1_train.
+- Floor 166.47 (gate); baseline 183.91 (R16, same reader, 200 B).
+- Wall 563.8 s; 1637 CPU-s over 2 segments (epoch 2 pause).
+- Observation-use control: W zeroed -> 159.0 on 32/32 runs; 0 input-invariant.
+- Oracles clean (skip_lin fails 16/16; fused == numpy).
+- Per-family progress 1.148 / 1.184 / 1.681 / 1.783; 3 of 32 runs below the floor (all family 3303).
+ELIGIBILITY:
+- CANDIDATE_N met; w13 SURVIVED under the R16 rule.
+- Predicate 07:14, before any row.
+- Receipt guard 9/9; rows on integration.
+VERDICT:
+- qd_ledger check_r4 PASS; progress 1.591, CI [1.139, 1.827].
+- Cross-lane replay (H, rows a81a0e6e6, code 6a9f29d96): AGREE, 0 mismatches.
+INTERPRETATION:
+- A 16-byte genome beats the float linear baseline on the one fully adjudicated survivor under the shared
+  reader.
+- NOT promoted: single world; claim and replay are the same model family; per-family spread; 3 runs below
+  the floor.
+- Next: REPLICATION on a second SURVIVED world once the R16 screen resumes.
+
+2.2 w13 survival robustness: D-R5-1 (ANOM-1789453196045-0 REFUTED; rows D-R5-1-w13-family-loo)
+OBSERVATION: leave-one-family-out keeps SURVIVED in 4 of 4 cases; family 4200 out gives CI low 169.02 >
+166.47 (top1_train).
+INTERPRETATION: the round 4 draw dependence came from the retired top-16 readout; w13 survival does not
+hinge on one RNG family.
+
+2.3 B2 admission pilot: B2_SCREEN_INDETERMINATE(NOT_RUN_STAGE_BUDGET)
+OBSERVATION:
+- RefB2 is pure-Python, ~1.6 ms per episode.
+- The ruled pilot sample is 1.68e9 episodes, ~746 h single worker (~47 h ideal on 16 workers).
+- The rule was committed before any B2 data; nothing was run or trimmed.
+INTERPRETATION:
+- The blocker is throughput, not world hardness.
+- The B2 adapter oracles passed in P-BUILD (GraphBLAS == Cypher == ref; skip_mutation caught).
+
+2.4 Clause B controlled transfer pilot: E-R5-1
+Control clauseB_ctrl_v2_featperm, validated in P-BUILD (rows cd691d3f0):
+- planted positive beats scratch +9.42 and sham +4.84 (p 0.0039);
+- planted negative FAILs;
+- sham - scratch +4.58 on the positive, so the round 4 random-graft defect is fixed.
+Live pair w14 -> w13 (O1 donor rule, disjoint run seeds 16..31): refused on CPU wall and budget ->
+PRODUCTION_CANDIDATE with measured cost. No Clause B verdict this round (O6).
+
+2.5 Distant-QD: C-R5-01 PASS (rows 66 lines). C flags it VACUOUS (predicate trivially satisfied). Recorded,
+not evidence.
+
+2.6 True anti-prior: C-R5-AP-01 / AP-01b
+- Predictor R sealed 12 priors on a code-published candidate list (seed 20260915, 12 of 3744 cells).
+  - A verified: commitments, cells on the list, a single predictor, no leak.
+- 1 assignment.
+  - AP-01 INDETERMINATE: the fitness recount oracle caught a harness defect (1/16 control elites used raw
+    codebook bytes).
+  - AP-01b FAIL, oracles clean.
+- Calibration (descriptive, n = 1): the prior bucket <= 0.2 has 1 outcome, FAIL. Consistent; no inference
+  from n = 1.
+- Note: 12/12 priors <= 0.2, so the "confident expected failure" filter was non-selective this round.
+
+2.7 Anomaly resolutions
+- D-R5-1 REFUTED (2.2).
+- D-R5-2 REFUTED ANOM-1789471401162-0 (rows 22 lines): warm host-to-device copy at 65536 is 5.13 ms, so
+  E kernel + copy (8.43 ms) < numba 8 threads (10.355 ms). E's 34 ms copy did not reproduce even cold
+  (5.59 ms); cause unidentified.
+- The anomaly stream grew 38 -> 41 over the round (epoch exports).
+
+2.8 GPU crossovers (E-R5-3; D-R5-2)
+- GPU-1: Warp CUDA beats the best threaded numba only at n 4096-16384.
+- GPU-2: threaded CPU numba beats the resident CUDA graph closed loop at n 8192.
+- Warm copy cost corrected by D-R5-2.
+- GPU-3 NOT RUN (conductor ruling): the resident fp16 closed loop is not built, and an isolated forward
+  would answer a different question.
+
+Receipts vs rows: all 7 guarded receipts in the window resolve to committed rows on integration:
+B-R5-1, B-R5-2, C-R5-01, C-R5-AP-01, C-R5-AP-01b, D-R5-1, D-R5-2.
+
+--------------------------------------------------------------------------------
+3. INSTRUMENTATION DEFECTS
+--------------------------------------------------------------------------------
+Found during P-BUILD, all FIXED_WITH_REGRESSION before the gate:
+- receipt guard bypassable by omitting campaign_stage;
+- E/G seed field names split;
+- per-family minimum missing from BASELINE_N;
+- a duplicate rng_families spelling;
+- B2 not-run verdict mislabelled INSTRUMENT_FAIL;
+- admission horizon at end_ts instead of drain_ts;
+- no code-published candidate list for the predictor.
+
+Found in the pilot:
+  #    defect                                                                  status
+  D1   launch_lane.ps1 ValidateSet != contract.LANES (lane R); ~21 min lost     FIXED_WITH_REGRESSION eca1a725b
+  D2   b2_screen held a mirrored copy of the CEILINGS table (drift)             FIXED d64580db2
+  D3   epoch controller dirties its own repo after committing; push fails at
+       every boundary and at close (5/5)                                        OPEN, NONBLOCKING (A pushed)
+  D4   F7 warm child caches harness modules; a mid-round fix is not loaded
+       until the worker restarts (C-R5-AP-01b TypeError, 1 aborted row)         OPEN, NONBLOCKING, PC
+  D5   stale consumer name in the gpu-arbiter group (round 4 tag)               FIXED operationally (XGROUP DELCONSUMER)
+  D6   no code path files a measured cost against its refusal stub              OPEN, PC 1789474379663-0
+  D7   an ops.push rebase can orphan a predicate-cited code sha                 OPEN, PC 1789474379663-1
+  D8   prior-ledger seal is API-level, not cryptographic                        OPEN, NONBLOCKING, PC
+  D9   worker crash between token acquire and release pins a slot <= 60 s      OPEN, NONBLOCKING
+  D10  E-R5-3 GPU results and the H replay have committed rows but no guarded
+       receipt                                                                  OPEN, NONBLOCKING
+No PRODUCTION_BLOCKER defects remain open.
+
+--------------------------------------------------------------------------------
+4. PRODUCTION CANDIDATES (not run)
+--------------------------------------------------------------------------------
+Stream (round window): 8 records, 5 filed with measured cost, 3 refusal stubs.
+- Stub 1789470901381-0 has no filed record. It is C's stale round 4 segment C-R4-05 (ENVELOPE_MISSING),
+  not a candidate: closed as NOT_A_CANDIDATE.
+
+| candidate | cost basis | why it changes a decision |
+|---|---|---|
+| Clause B live pair w14 -> w13 | ~20 min wall at the M2 budget, runs_total 16 | first Clause B verdict under the hardened control |
+| B2 batched/compiled rollout (G, pre-round, 1789468339986-0) | RefB2 needs ~746 h for the pilot sample | prerequisite for any B2 screen |
+| GPU-3 resident fp16 closed loop (E) | precision gene in the cudagraph rollout + oracle | whether fp16 stays the free win on the resident path |
+| D-R5-1b w13 5th RNG family baseline (D) | 32 new QD runs | further robustness of the only survivor |
+| E machine checks D6 and D7 | build + tests, estimates in the records | removes two prose dependencies |
+| R16 74-cell re-screen, resume from checkpoint | ~9.8 h search wall | a second SURVIVED world is needed to replicate B-R5-1 |
+| Phase 2 HELD/CULLED deciders | ~37 h | only decides which worlds go to D's queue |
+| B-R5-1 initial refusal (superseded after operator 20) | 2150 CPU-s | resolved in round |
+
+--------------------------------------------------------------------------------
+5. EPISTEMIC STATE
+--------------------------------------------------------------------------------
+Promoted mechanisms: NONE.
+Surviving candidates: B-R5-1 (w13 train128, 16 B int4a4, progress 1.591, CI [1.139, 1.827];
+cross-lane replay AGREE).
+Unresolved claims:
+- the cause of E's 34 ms h2d copy;
+- w13 is the only fully adjudicated SURVIVED cell (68/74 R16 cells unscreened);
+- the per-family spread of B-R5-1.
+Parked campaigns: R16 re-screen (checkpointed); phase 2; B2 screen; Clause B verdict; GPU-3.
+Invalidated claims: round 4 B w13 claims (operator 15), superseded by B-R5-1 under the fixed reader and
+sample rule.
+New anomalies: anomaly stream 38 -> 41 during the round.
+
+--------------------------------------------------------------------------------
+6. OVERRIDE AUDIT (SWARM_R5 s1): did each override change an outcome?
+--------------------------------------------------------------------------------
+- O1 donor rule: YES. The live pair was w14->w13 on disjoint seeds, not the recalled w2->w4.
+- O2 B2 on the standard suite: YES. The sample was sized by rule; the forager was never a baseline.
+- O3 numeric concurrency rule: YES. k* = 2, measured, not an assumed 3.
+- O4 CANDIDATE_N: YES. B's verdict required the full sample; the PILOT re-read was refused (expected).
+- O5 sealed priors: YES. Mechanics held; the p <= 0.2 filter was non-selective (12/12).
+- O6 Clause B cost-first: YES. Ended in a PC with measured cost, as predicted.
+- O7 epochs 4 x 25: YES, held by code.
+- O8 error_metabolism to the refuter: rule built (H-R5-3); F12 progress axes were not computed at close
+  (open item).
+- O9 probe to 8 workers: stopped at k3 by rule.
+
+--------------------------------------------------------------------------------
+7. SUCCESS CONDITIONS (prompt 19 s17)
+--------------------------------------------------------------------------------
+ 1 loop without manual clock/budget babysitting .......... YES (code epochs, admission, drain, close)
+ 2 stage-budget code prevents escalation ................. YES (3 refusals, 0 after NNW)
+ 3 CPU concurrency chosen from measurement ................ YES (k* = 2)
+ 4 GPU work concurrent without contaminating timing ...... YES (lease on every row, 0 INDETERMINATE)
+ 5 Clause B receives a properly controlled pilot ......... PARTIAL (control validated; live pair -> PC)
+ 6 B2 bounded admission decision .......................... YES (INDETERMINATE, NOT_RUN_STAGE_BUDGET)
+ 7 >= 1 DISTANT_QD and >= 1 true ANTI_PRIOR attempted ...... YES (C-R5-01; C-R5-AP-01/01b)
+ 8 anomaly work minimum-discriminator sized ............... YES (D-R5-1, D-R5-2)
+ 9 automatic quiesce/checkpoint works ..................... YES (live pause/resume; code close)
+10 all claims reconstructable from committed rows ......... YES for guarded receipts; D10 notes 2 unreceipted row sets
+================================================================================
+END OF PACKET
+================================================================================

@@ -1,0 +1,498 @@
+{
+ "ancestry": "replacement (queue slot 4; the retired campaign 1/2 transfer lane). This is NOT 'does transferred residue help': every source is mature and the question is which subsequent searches its capability makes reachable",
+ "arms": [
+  "baseline",
+  "init_mature",
+  "init_control"
+ ],
+ "assay_capability_requirement": "at least 4 mature W0 solvers harvested (held-out >= 0.9 on W0) and >= 8 delay-general sources; the baseline arm must reach a foothold on at least one target (else the targets are all out of reach at this budget and only direct reuse is readable)",
+ "attempt": 2,
+ "budget": {
+  "E": 16,
+  "G": 6,
+  "N": 60,
+  "direct_probes": 66,
+  "dose": 4,
+  "harvest_G": 12,
+  "heldout_n": 48,
+  "informative_targets": [
+   "W2_K2",
+   "W3_K2",
+   "W7_K2"
+  ],
+  "runs": 11,
+  "seeds": [
+   1
+  ],
+  "table_fill_baselines": [
+   "W1_d8",
+   "W1_d16"
+  ],
+  "targets": [
+   {
+    "D": 1,
+    "K": 1,
+    "Kd": 0,
+    "ask_kind": "ASK",
+    "ask_mode": "all",
+    "ask_timing": "end",
+    "delay": 8,
+    "delays": [],
+    "expensive": 0,
+    "fanout": 1,
+    "interfere": false,
+    "interleave": "sequential",
+    "n_defs": 0,
+    "name": "W1_d8",
+    "noise_rate": 0.0,
+    "op_mode": "fixed",
+    "recycle": false,
+    "retire_rate": 0.0,
+    "topology": "streams",
+    "value_bits": 4,
+    "vocab": "train"
+   },
+   {
+    "D": 1,
+    "K": 1,
+    "Kd": 0,
+    "ask_kind": "ASK",
+    "ask_mode": "all",
+    "ask_timing": "end",
+    "delay": 16,
+    "delays": [],
+    "expensive": 0,
+    "fanout": 1,
+    "interfere": false,
+    "interleave": "sequential",
+    "n_defs": 0,
+    "name": "W1_d16",
+    "noise_rate": 0.0,
+    "op_mode": "fixed",
+    "recycle": false,
+    "retire_rate": 0.0,
+    "topology": "streams",
+    "value_bits": 4,
+    "vocab": "train"
+   },
+   {
+    "D": 1,
+    "K": 2,
+    "Kd": 0,
+    "ask_kind": "ASK",
+    "ask_mode": "all",
+    "ask_timing": "end",
+    "delay": 0,
+    "delays": [],
+    "expensive": 0,
+    "fanout": 1,
+    "interfere": false,
+    "interleave": "sequential",
+    "n_defs": 0,
+    "name": "W2_K2",
+    "noise_rate": 0.0,
+    "op_mode": "fixed",
+    "recycle": false,
+    "retire_rate": 0.0,
+    "topology": "streams",
+    "value_bits": 4,
+    "vocab": "train"
+   },
+   {
+    "D": 1,
+    "K": 2,
+    "Kd": 0,
+    "ask_kind": "ASK",
+    "ask_mode": "one",
+    "ask_timing": "end",
+    "delay": 0,
+    "delays": [],
+    "expensive": 0,
+    "fanout": 1,
+    "interfere": false,
+    "interleave": "sequential",
+    "n_defs": 0,
+    "name": "W3_K2",
+    "noise_rate": 0.0,
+    "op_mode": "fixed",
+    "recycle": false,
+    "retire_rate": 0.0,
+    "topology": "streams",
+    "value_bits": 4,
+    "vocab": "train"
+   },
+   {
+    "D": 1,
+    "K": 2,
+    "Kd": 0,
+    "ask_kind": "ASK2",
+    "ask_mode": "all",
+    "ask_timing": "end",
+    "delay": 0,
+    "delays": [],
+    "expensive": 0,
+    "fanout": 1,
+    "interfere": false,
+    "interleave": "sequential",
+    "n_defs": 0,
+    "name": "W7_K2",
+    "noise_rate": 0.0,
+    "op_mode": "fixed",
+    "recycle": false,
+    "retire_rate": 0.0,
+    "topology": "streams",
+    "value_bits": 4,
+    "vocab": "train"
+   }
+  ]
+ },
+ "claim_ceiling": "a sparse map at n=1 per edge and G=6: which edges show a measurable initialization advantage over a matched baseline, with the permuted control as the capability test; no claim that the advantage transfers structure rather than search time",
+ "crn_policy": "default; per (target, seed) the three arms share generation 0 (common fill: the import REPLACES the first 4 organisms of the same base population) and every per-generation battery; the permuted control uses the SAME manifests as init_mature. Targets a mature family already solves directly get the baseline arm ONLY, to fill their direct-search class in the reachability table (W1_d8/W1_d16 are UNESTABLISHED)",
+ "decl": {
+  "battery": [
+   {
+    "name": "permuted_control_gives_no_advantage",
+    "passed": null
+   },
+   {
+    "name": "advantage_survives_excluding_directly_solved_edges",
+    "passed": null
+   },
+   {
+    "name": "advantage_is_not_only_generation_0",
+    "passed": null
+   }
+  ],
+  "n_min": 3,
+  "primary": {
+   "control": "baseline",
+   "metric": "foothold",
+   "min_effect": 0.25,
+   "treatment": "init_mature"
+  }
+ },
+ "expected_machine_telemetry": [
+  "direct-reuse matrix (family x target)",
+  "levels and transition generations per run",
+  "import share",
+  "corridor rows (direct and init)",
+  "reachability rows for every target incl. the UNESTABLISHED delay cells"
+ ],
+ "experiment": "C3-SFE-04",
+ "falsification_condition": "init_mature does not beat baseline on foothold rate by >= 0.25 pooled over informative edges => no measurable corridor at this budget beyond direct competence",
+ "kill_condition": "fewer than 4 mature W0 solvers or fewer than 8 delay-general sources (no mature source set); or every target is solved directly (no search question left)",
+ "machine_changes_exercised": [
+  "C corridor table (direct + init rows)",
+  "A levels",
+  "B reachability rows for UNESTABLISHED cells",
+  "F common_fill dose"
+ ],
+ "parent_evidence": "C3-SFE-03: 11 delay-general elites (held-out 1.0 on delays 0/1/2/4) and the corridor W0 -> d1 -> free; its comparator gap (direct W1_d4 measured at G60 only) is L3-013, closed here by the baseline arm at G6. C3-SFE-01: W2_K2 summit OBSERVED_UNREACHABLE through G300; its shelf material is NOT mature (shelf, not solved) and is therefore excluded as a source. Campaign-2 corridor rows: W0 -> W3_K2 direct 0.54 (n=10), W2_K2 -> W1_d4 direct 0.96 (n=6). Table: W1_d8/W1_d16 UNESTABLISHED, W2_K2 REACHABLE/summit OBSERVED_UNREACHABLE, W3_K2 REACHABLE (N=100 only), W7_K2 OBSERVED_UNREACHABLE (0/10 at G60). Direct-probe table measured before sealing: {'delay_general->W0': {'n': 11, 'best': 1.0, 'median': 1.0, 'solved': 11}, 'delay_general->W1_d16': {'n': 11, 'best': 1.0, 'median': 1.0, 'solved': 11}, 'delay_general->W1_d8': {'n': 11, 'best': 1.0, 'median': 1.0, 'solved': 11}, 'delay_general->W2_K2': {'n': 11, 'best': 0.5417, 'median': 0.5417, 'solved': 0}, 'delay_general->W3_K2': {'n': 11, 'best': 0.5833, 'median': 0.5833, 'solved': 0}, 'delay_general->W7_K2': {'n': 11, 'best': 0.1458, 'median': 0.1354, 'solved': 0}}",
+ "parents": [
+  "C3-SFE-03",
+  "C3-SFE-01",
+  "C2-SFE-05"
+ ],
+ "positive_control": "the delay_general family solves W1_d8/W1_d16 directly, or the baseline arm reaches a foothold on W2_K2 (table: REACHABLE 24/51)",
+ "prereg_digest": "sha256:6d8c0b6b42b0550e1eb6bec5d391b56936625d6758d13ce7d3c0c25a6fd05b51",
+ "primary_observable": "per informative edge: first_foothold_gen, first_shelf_gen, first_summit_gen and final held-out competence, init_mature vs baseline (paired by seed); the machine primary is the pooled foothold rate init_mature vs baseline",
+ "question": "Which mature solutions are stepping stones into which difficult cells? For sources ['W0_solver', 'delay_general'] and targets ['W1_d8', 'W1_d16', 'W2_K2', 'W3_K2', 'W7_K2']: what does a mature solution already contain (direct held-out competence), and where it does not solve the target, does initializing a search with dose 4 of it change time-to-foothold, time-to-shelf, time-to-full-solve or the final level against a matched fresh baseline and a permuted-control import?",
+ "reachability_estimate": {
+  "W1_d16": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "freq": null,
+    "k": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "n": 0
+   }
+  },
+  "W1_d8": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "freq": null,
+    "k": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "n": 0
+   }
+  },
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      200,
+      30,
+      16
+     ],
+     [
+      200,
+      36,
+      16
+     ],
+     [
+      200,
+      40,
+      16
+     ],
+     [
+      200,
+      41,
+      16
+     ],
+     [
+      200,
+      42,
+      16
+     ],
+     [
+      200,
+      48,
+      16
+     ],
+     [
+      200,
+      55,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ],
+     [
+      200,
+      70,
+      16
+     ],
+     [
+      200,
+      300,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "class_summit": "OBSERVED_UNREACHABLE_AT_BUDGET",
+    "freq": 0.4706,
+    "k": 24,
+    "k_summit": 0,
+    "k_summit_any": 0,
+    "n": 51
+   }
+  },
+  "W3_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      100,
+      40,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "class_summit": "OBSERVED_UNREACHABLE_AT_BUDGET",
+    "freq": 0.3077,
+    "k": 4,
+    "k_summit": 0,
+    "k_summit_any": 0,
+    "n": 13
+   }
+  },
+  "W7_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "class_summit": "UNESTABLISHED",
+    "first_shelf_gens": [],
+    "first_solved_gens": [],
+    "first_summit_gens": [],
+    "freq": null,
+    "freq_shelf": null,
+    "freq_summit": null,
+    "k": 0,
+    "k_shelf": 0,
+    "k_summit": 0,
+    "k_summit_any": null,
+    "k_summit_candidate": null,
+    "levels": {
+     "FLOOR": 0,
+     "SHELF": 0,
+     "SUMMIT": 0
+    },
+    "n": 0,
+    "n_censored_runs": null,
+    "shelf_hist": {}
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "budgets": [
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "OBSERVED_UNREACHABLE_AT_BUDGET",
+    "class_summit": "OBSERVED_UNREACHABLE_AT_BUDGET",
+    "freq": 0.0,
+    "k": 0,
+    "k_summit": 0,
+    "k_summit_any": 0,
+    "n": 10
+   }
+  }
+ },
+ "replacement_condition": "if C3-SFE-03 had found no reliable corridor the map would have no mature multi-cell source; it did (11/12 delay-general)",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "corridor map",
+ "typed_failure_conditions": [
+  "IMMATURE_ARTIFACT",
+  "TARGET_UNREACHABLE",
+  "POSITIVE_CONTROL_FAILED",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ],
+ "why_this_slot": "the reachability table says which cells are hard; nothing says which hard cells are hard FROM WHERE. A sparse traversable graph turns every later rare-cell question into a route choice instead of a fresh search, and the same run supplies the matched-budget direct comparator C3-SFE-03 could not claim without."
+}

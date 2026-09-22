@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "l1-adaptive-control-basics-xkhainguyen",
+ "techne_record": "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "l1-adaptive-control-basics-xkhainguyen",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "L1 adaptive control basic simulation (Hovakimyan & Cao's L1 architecture on a first-order plant with unknown parameters), MATLAB, run under Octave",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/xkhainguyen/L1AC-Basics main (commit in hashes): MainL1_ODE1_v1.m, MainL1_ODE1_v2.m",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2006 (architecture); 2022 (code)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "control",
+     "adaptive",
+     "L1",
+     "state-predictor",
+     "robustness"
+    ],
+    "lineage": "L1 adaptive control (Cao & Hovakimyan, 2006-; book 2010): a state predictor, a fast projection-based adaptation law, and a low-pass filter on the control channel that decouples adaptation rate from robustness -- the adaptive architecture flown on NASA's AirSTAR and in quadrotor augmentation. This is a minimal simulation of the architecture (MATLAB, 2022) whose author later published L1 augmentation for geometric quadrotor control."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fast, robust adaptive control",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "adapt fast to an unknown plant without the high-gain fragility of classical MRAC, by filtering the adaptive control signal",
+    "pressure": "unknown/time-varying plant with robustness requirements (flight control)",
+    "success_means": "the plant tracks the reference; the adaptive estimate moves; the filtered control stays smooth"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "parametric uncertainty under a hard robustness margin",
+    "failure_condition": "loss of robustness under fast adaptation (the MRAC failure L1 was designed against; Rohrs 1985)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "MATLAB"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "L1 adaptive control (Cao & Hovakimyan, 2006-; book 2010): a state predictor, a fast projection-based adaptation law, and a low-pass filter on the control channel that decouples adaptation rate from robustness -- the adaptive architecture flown on NASA's AirSTAR and in quadrotor augmentation. This is a minimal simulation of the architecture (MATLAB, 2022) whose author later published L1 augmentation for geometric quadrotor control.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Cao & Hovakimyan 2006"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3029795a9e754436d70be8321e4481e8166ebe03b82fade737f9261fbb3c01c0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-octave:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen",
+   "relation": "algorithm_from",
+   "to": "Cao & Hovakimyan 2006",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

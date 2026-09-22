@@ -1,0 +1,180 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "spacewar-pdp1-1962",
+ "techne_record": "techne/fossils/specimens/spacewar-pdp1-1962/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "spacewar-pdp1-1962",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Spacewar! 2B (25 March 1962) -- Steve Russell et al., MIT, for the DEC PDP-1",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "spacewar 2b, 25 Mar 1962 (authentic source, as published by masswerk.at)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1962 (body: assembly source dated 25 Mar 1962)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "games",
+     "real-time",
+     "simulation",
+     "graphics",
+     "interactive",
+     "pre1970"
+    ],
+    "lineage": "Written in 1961-62 by Steve Russell, Martin Graetz, Wayne Wiitanen and others on MIT's PDP-1, with the starfield (Expensive Planetarium) by Peter Samson and gravity by Dan Edwards. Two ships under player control orbit a central star; thrust, rotation, torpedoes and hyperspace are computed in real time on an 18-bit machine with 4096 words of core and a Type 30 point-plotting CRT. Widely held to be the first widely distributed digital video game. The body preserved here is the AUTHENTIC 25 Mar 1962 assembly listing, not the later reconstructed-from-binary variant, which masswerk publishes separately."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "real-time interactive simulation on a machine with no OS and no spare cycles",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "demonstrate what an interactive computer with a CRT could do, by making two human-controlled ships duel under real gravity in real time",
+    "pressure": "18-bit words, 4096 words of core, no floating point, no operating system, and a display that must be refreshed by the program itself while the game logic runs",
+    "success_means": "the simulation stays responsive and the orbits remain believable within the machine's cycle budget"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "scarce core, scarce cycles, program-refreshed display, no floating point",
+    "failure_condition": "the display flickers or the game slows as object count rises; integer overflow distorts the orbits"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "PDP-1 macro assembly"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Written in 1961-62 by Steve Russell, Martin Graetz, Wayne Wiitanen and others on MIT's PDP-1, with the starfield (Expensive Planetarium) by Peter Samson and gravity by Dan Edwards. Two ships under player control orbit a central star; thrust, rotation, torpedoes and hyperspace are computed in real time on an 18-bit machine with 4096 words of core and a Type 30 point-plotting CRT. Widely held to be the first widely distributed digital video game. The body preserved here is the AUTHENTIC 25 Mar 1962 assembly listing, not the later reconstructed-from-binary variant, which masswerk publishes separately.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "retrospective",
+      "ref": "Graetz, The Origin of Spacewar, Creative Computing 1981",
+      "says": "Describes Spacewar's creation on the PDP-1 at MIT and its spread to other PDP-1 installations; the program is tied to that machine and its display."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "Computer History Museum PDP-1 restoration",
+      "says": "Spacewar is demonstrated on a restored PDP-1 because the machine it requires is no longer in ordinary existence; roughly 53 PDP-1s were built."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "NO_TESTS",
+    "environment": {
+     "machine": "DEC PDP-1",
+     "word_size": "18-bit",
+     "number_representation": "one's complement",
+     "memory": "4096 words of core (typical)",
+     "character_set": "FIODEC / concise code",
+     "os": "none -- the program owns the machine",
+     "display": "Type 30 point-plotting CRT",
+     "storage": "paper tape",
+     "runner": "docker prometheus-fossil-pdp1:display (open-simh pdp1 a1f57fa3 with SDL2 video + xvfb; simtools macro1 2d9a2d96), 2026-09-16; the headless :bookworm world is the negative control",
+     "world_status": "BEHAVIOR_REPRODUCED (2026-09-16, TECHNE-87b): with the Type 30 DPY device enabled under xvfb the 1962 program runs past its display I/O and draws -- frames 300k steps apart show the heavy star and both ships (85 and 120 lit pixels of 512x512, frames differ); with DPY disabled it stops at the IOH after its first display instruction. Frames kept under behaviour/ with their sha256 in the receipt. Run-to-run frame bytes vary (the program's random walk); the coordinate is the lit-pixel band and frame difference, not a fixed image.",
+     "scaffolding": "techne/fossils/specimens/spacewar-pdp1-1962/harness/prep_macro1.py (T3-T8, counted per run), macro_fiodec_jun63.txt (masswerk, sha256 8ff117912fd13ace8659c3b4fcfd57b66fb340bd5b832a6375adc27b6e7fef8e), spacewar_2b_2apr62.txt (masswerk, Landsteiner 2014 reconstruction, sha256 8e60bd3a950f0e05b570b79af1665488cdeb1f848b8b961d710f4fd4ae5f3349), run.ini"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "spacewar-pdp1-1962",
+   "relation": "inspired_by",
+   "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

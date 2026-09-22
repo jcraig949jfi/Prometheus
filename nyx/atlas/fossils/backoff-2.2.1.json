@@ -1,0 +1,156 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "backoff-2.2.1",
+ "techne_record": "techne/fossils/specimens/backoff-2.2.1/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "backoff-2.2.1",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "backoff 2.2.1 -- exponential backoff with jitter as Python decorators (litl)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v2.2.1 (2022)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "retry",
+     "backoff",
+     "contention",
+     "small-mechanism"
+    ],
+    "lineage": "The retry rule of Ethernet (binary exponential backoff, 1973-76) and of TCP RTO, packaged for application code; jitter follows the 'full jitter' analysis (Brooker, AWS Architecture Blog 2015). A small mechanism: wait = min(cap, base * 2^n) * random."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "collision/overload avoidance among retrying clients",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "spread retries out in time, and de-synchronise many retriers so they do not collide again",
+    "pressure": "a shared resource that fails under simultaneous demand; retries that re-collide if scheduled identically",
+    "success_means": "the retrying population thins out geometrically and desynchronises; the resource recovers"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "contention on a shared resource, transient failure",
+    "failure_condition": "synchronised retry storm: every client retries at the same instant and the resource never recovers"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The retry rule of Ethernet (binary exponential backoff, 1973-76) and of TCP RTO, packaged for application code; jitter follows the 'full jitter' analysis (Brooker, AWS Architecture Blog 2015). A small mechanism: wait = min(cap, base * 2^n) * random.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Ethernet BEB (Metcalfe & Boggs 1976); Brooker 2015 jitter"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "backoff-2.2.1",
+   "relation": "algorithm_from",
+   "to": "Ethernet BEB (Metcalfe & Boggs 1976); Brooker 2015 jitter",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

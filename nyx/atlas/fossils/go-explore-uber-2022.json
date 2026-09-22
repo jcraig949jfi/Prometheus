@@ -1,0 +1,153 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "go-explore-uber-2022",
+ "techne_record": "techne/fossils/specimens/go-explore-uber-2022/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "go-explore-uber-2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Go-Explore (Uber AI Labs reference implementation)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git 702fb9c7a9aeecf2872d07ced236c730d5536a8f (2022-01-10, 'clarify readme'; default-branch HEAD on 2026-09-12)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2019-2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "search",
+     "exploration",
+     "reinforcement-learning",
+     "quality-diversity",
+     "archive"
+    ],
+    "lineage": "Go-Explore (Ecoffet, Huizinga, Lehman, Stanley, Clune 2019/2021): archive-based exploration -- remember cells, return to them, explore from them, then robustify"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "detachment and derailment in exploration: remembering where you have been and going back on purpose",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy",
+    "pressure": "sparse and deceptive rewards where naive exploration forgets promising states and never returns to them; the environment punishes detachment and derailment",
+    "success_means": "reaching previously unreached game states and scores; in the paper, surpassing the human world record on Montezuma's Revenge and solving all Atari hard-exploration games"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python 3"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Go-Explore (Ecoffet, Huizinga, Lehman, Stanley, Clune 2019/2021): archive-based exploration -- remember cells, return to them, explore from them, then robustify",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "c9c7bdf06aa6fbbda5b2901bd28480ff05213bac99841a917d392223c0b3bd02"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "note": "source-at-pinned-revision receipt; no environment built. The Atari/MuJoCo requirements are recorded, not installed.",
+     "measured_2026-09-12": "the first blocking import from a clean CPython 3.12 is `loky` (basics.py line 24), before any gym/atari import; randselectors -> import_ai -> basics -> loky. A source-at-pinned-revision receipt was requested and no dependency was installed.",
+     "managed_minimal": {
+      "image": "prometheus-fossil-goexplore:min",
+      "dockerfile": "techne/fossils/specimens/go-explore-uber-2022/environment/... (host-local vault) ; committed copy in the record notes",
+      "requirements": "environment/requirements-min.txt (python:3.7 + non-Atari/non-MuJoCo subset of the 2020 pins)",
+      "measured_2026-09-12": "7/9 goexplore_py modules import incl. goexplore.py; randselectors.py and complex_fetch_env.py blocked by mujoco_py (excluded by Nyx)"
+     }
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

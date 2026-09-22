@@ -1,0 +1,315 @@
+{
+ "script": "pollux_rescan.py",
+ "daemon_path": "charon/agents/pollux/daemon.py",
+ "daemon_import": "ok",
+ "constants": {
+  "SETTLE_THRESHOLD": 5,
+  "CORR_SIGNIFICANT": 0.3,
+  "CORR_FLIPPED_DELTA": 0.2,
+  "n_seed_pairs": 4,
+  "n_candidate_pool": 5
+ },
+ "scans": [
+  {
+   "pair": "deg10_vs_deg12",
+   "n_a": 17,
+   "n_b": 24,
+   "n_paired": 17,
+   "a_desc": "Mossinghoff entries at degree 10 (n=17)",
+   "b_desc": "Mossinghoff entries at degree 12 (n=24)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0000000000000002,
+   "corr_norm": -0.2235294117647059,
+   "kill_pattern": "pollux_sign_flips_under_normalization",
+   "verdict": "REJECTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "deg14_vs_deg16",
+   "n_a": 24,
+   "n_b": 29,
+   "n_paired": 24,
+   "a_desc": "Mossinghoff entries at degree 14 (n=24)",
+   "b_desc": "Mossinghoff entries at degree 16 (n=29)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": 0.39920948616600793,
+   "kill_pattern": "pollux_correlation_survives_normalization",
+   "verdict": "PROMOTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "salem_vs_pisot",
+   "n_a": 8513,
+   "n_b": 112,
+   "n_paired": 112,
+   "a_desc": "Mossinghoff Salem-class entries (n=8513)",
+   "b_desc": "Mossinghoff non-Salem entries (n=112)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0000000000000002,
+   "corr_norm": 0.39846437346437347,
+   "kill_pattern": "pollux_correlation_survives_normalization",
+   "verdict": "PROMOTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "smyth_extremal_vs_rest",
+   "n_a": 16,
+   "n_b": 8609,
+   "n_paired": 16,
+   "a_desc": "Smyth-extremal entries (n=16)",
+   "b_desc": "Non-Smyth-extremal entries (n=8609)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": -0.07857142857142857,
+   "kill_pattern": "pollux_sign_flips_under_normalization",
+   "verdict": "REJECTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "deg18_vs_deg20",
+   "n_a": 33,
+   "n_b": 39,
+   "n_paired": 33,
+   "a_desc": "Mossinghoff entries at degree 18 (n=33)",
+   "b_desc": "Mossinghoff entries at degree 20 (n=39)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": 0.03995601173020527,
+   "kill_pattern": "pollux_correlation_attenuates_under_normalization",
+   "verdict": "UNVERIFIED",
+   "settle_reachable": false
+  },
+  {
+   "pair": "even_deg_vs_odd_deg",
+   "n_a": 8568,
+   "n_b": 57,
+   "n_paired": 57,
+   "a_desc": "Mossinghoff even-degree entries (n=8568)",
+   "b_desc": "Mossinghoff odd-degree entries (n=57)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": 0.08168147641831852,
+   "kill_pattern": "pollux_correlation_attenuates_under_normalization",
+   "verdict": "UNVERIFIED",
+   "settle_reachable": false
+  },
+  {
+   "pair": "small_deg_vs_large_deg",
+   "n_a": 62,
+   "n_b": 418,
+   "n_paired": 62,
+   "a_desc": "Mossinghoff entries deg in [2,8] (n=62)",
+   "b_desc": "Mossinghoff entries deg in [16,30] (n=418)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": 0.46869381279746164,
+   "kill_pattern": "pollux_correlation_survives_normalization",
+   "verdict": "PROMOTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "narrow_band_1.10_1.20_vs_1.30_1.50",
+   "n_a": 22,
+   "n_b": 82,
+   "n_paired": 22,
+   "a_desc": "Mossinghoff entries M in [1.100,1.200] (n=22)",
+   "b_desc": "Mossinghoff entries M in [1.300,1.500] (n=82)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": -0.6922077922077922,
+   "kill_pattern": "pollux_sign_flips_under_normalization",
+   "verdict": "REJECTED",
+   "settle_reachable": true
+  },
+  {
+   "pair": "lehmer_witness_neighborhood",
+   "n_a": 22,
+   "n_b": 8549,
+   "n_paired": 22,
+   "a_desc": "Mossinghoff entries M in [1.000,1.200] (n=22)",
+   "b_desc": "Mossinghoff entries M in [1.200,1.500] (n=8549)",
+   "truncation": "larger subset cut to its n smallest values",
+   "corr_raw": 1.0,
+   "corr_norm": 0.05194805194805195,
+   "kill_pattern": "pollux_correlation_attenuates_under_normalization",
+   "verdict": "UNVERIFIED",
+   "settle_reachable": false
+  }
+ ],
+ "deterministic_on_rerun": true,
+ "Q1_corr_raw_all_exactly_1_at_ledger_precision": true,
+ "Q1_corr_raw_max_abs_dev_from_1": 2.220446049250313e-16,
+ "Q1_corr_raw_values": [
+  1.0000000000000002,
+  1.0,
+  1.0000000000000002,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "Q2_verdicts": {
+  "deg10_vs_deg12": [
+   "pollux_sign_flips_under_normalization",
+   "REJECTED",
+   -0.2235294117647059
+  ],
+  "deg14_vs_deg16": [
+   "pollux_correlation_survives_normalization",
+   "PROMOTED",
+   0.39920948616600793
+  ],
+  "salem_vs_pisot": [
+   "pollux_correlation_survives_normalization",
+   "PROMOTED",
+   0.39846437346437347
+  ],
+  "smyth_extremal_vs_rest": [
+   "pollux_sign_flips_under_normalization",
+   "REJECTED",
+   -0.07857142857142857
+  ],
+  "deg18_vs_deg20": [
+   "pollux_correlation_attenuates_under_normalization",
+   "UNVERIFIED",
+   0.03995601173020527
+  ],
+  "even_deg_vs_odd_deg": [
+   "pollux_correlation_attenuates_under_normalization",
+   "UNVERIFIED",
+   0.08168147641831852
+  ],
+  "small_deg_vs_large_deg": [
+   "pollux_correlation_survives_normalization",
+   "PROMOTED",
+   0.46869381279746164
+  ],
+  "narrow_band_1.10_1.20_vs_1.30_1.50": [
+   "pollux_sign_flips_under_normalization",
+   "REJECTED",
+   -0.6922077922077922
+  ],
+  "lehmer_witness_neighborhood": [
+   "pollux_correlation_attenuates_under_normalization",
+   "UNVERIFIED",
+   0.05194805194805195
+  ]
+ },
+ "Q3_reachable_patterns_given_corr_raw_1": {
+  "pollux_correlation_attenuates_under_normalization": [
+   [
+    -1.0,
+    -0.7995
+   ],
+   [
+    0.0,
+    0.3
+   ]
+  ],
+  "pollux_sign_flips_under_normalization": [
+   [
+    -0.7995,
+    0.0
+   ]
+  ],
+  "pollux_correlation_survives_normalization": [
+   [
+    0.3,
+    1.0
+   ]
+  ]
+ },
+ "Q3_unreachable_patterns": [
+  "pollux_no_correlation_observed"
+ ],
+ "Q4_replay_286_ticks": {
+  "n_ticks": 286,
+  "rows_per_pair": {
+   "deg10_vs_deg12": 5,
+   "deg14_vs_deg16": 5,
+   "salem_vs_pisot": 5,
+   "smyth_extremal_vs_rest": 5,
+   "deg18_vs_deg20": 87,
+   "even_deg_vs_odd_deg": 88,
+   "small_deg_vs_large_deg": 5,
+   "narrow_band_1.10_1.20_vs_1.30_1.50": 5,
+   "lehmer_witness_neighborhood": 81
+  },
+  "rows_per_pattern": {
+   "pollux_sign_flips_under_normalization": 15,
+   "pollux_correlation_survives_normalization": 15,
+   "pollux_correlation_attenuates_under_normalization": 256
+  },
+  "settled": [
+   {
+    "name": "deg10_vs_deg12",
+    "verdict": "REJECTED",
+    "tick": 17
+   },
+   {
+    "name": "salem_vs_pisot",
+    "verdict": "PROMOTED",
+    "tick": 18
+   },
+   {
+    "name": "deg14_vs_deg16",
+    "verdict": "PROMOTED",
+    "tick": 21
+   },
+   {
+    "name": "smyth_extremal_vs_rest",
+    "verdict": "REJECTED",
+    "tick": 25
+   },
+   {
+    "name": "small_deg_vs_large_deg",
+    "verdict": "PROMOTED",
+    "tick": 39
+   },
+   {
+    "name": "narrow_band_1.10_1.20_vs_1.30_1.50",
+    "verdict": "REJECTED",
+    "tick": 47
+   }
+  ],
+  "final_active": [
+   "deg18_vs_deg20",
+   "even_deg_vs_odd_deg",
+   "lehmer_witness_neighborhood"
+  ],
+  "pool_exhausted": true,
+  "never_settling_pairs": [
+   "deg18_vs_deg20",
+   "even_deg_vs_odd_deg",
+   "lehmer_witness_neighborhood"
+  ]
+ },
+ "Q4_p69_census_claimed": {
+  "total": 286,
+  "sign_flips": 86,
+  "survives": 39,
+  "attenuates": 161,
+  "deg18_vs_deg20": 54,
+  "even_deg_vs_odd_deg": 56
+ },
+ "Q4_replay_census": {
+  "total": 286,
+  "sign_flips": 15,
+  "survives": 15,
+  "attenuates": 256,
+  "deg18_vs_deg20": 87,
+  "even_deg_vs_odd_deg": 88
+ },
+ "Q4_replay_matches_p69": {
+  "total": true,
+  "sign_flips": false,
+  "survives": false,
+  "attenuates": false,
+  "deg18_vs_deg20": false,
+  "even_deg_vs_odd_deg": false
+ },
+ "Q4_note": "The replay assumes today's data equals the May-2026 data and that every tick succeeded (no short-circuit rows). A mismatch therefore does NOT by itself impeach P69; it bounds how much of the census the code alone explains."
+}

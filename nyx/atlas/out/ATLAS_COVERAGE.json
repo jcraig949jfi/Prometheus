@@ -1,0 +1,274 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-17T11:04Z",
+ "organs": 294,
+ "dims": {
+  "input_topology": {
+   "read": 292,
+   "measured": 0,
+   "unmeasured": 2,
+   "values": {
+    "EVENT": 54,
+    "SCALAR": 50,
+    "SEQUENCE": 42,
+    "STREAM": 21,
+    "VECTOR": 63,
+    "SET": 30,
+    "MIXED": 6,
+    "MATRIX": 17,
+    "TREE": 4,
+    "GRAPH": 5
+   },
+   "vocabulary_unused": []
+  },
+  "output_topology": {
+   "read": 292,
+   "measured": 0,
+   "unmeasured": 2,
+   "values": {
+    "SCALAR": 40,
+    "EVENT": 36,
+    "DECISION": 40,
+    "VECTOR": 56,
+    "SEQUENCE": 55,
+    "STREAM": 9,
+    "TREE": 7,
+    "MIXED": 3,
+    "SET": 22,
+    "MATRIX": 23,
+    "GRAPH": 1
+   },
+   "vocabulary_unused": []
+  },
+  "state_amount": {
+   "read": 273,
+   "measured": 0,
+   "unmeasured": 21,
+   "values": {
+    "CONSTANT": 123,
+    "NONE": 65,
+    "LOG": 1,
+    "LINEAR_IN_INPUT": 74,
+    "SUPERLINEAR": 7,
+    "UNBOUNDED": 3
+   },
+   "vocabulary_unused": []
+  },
+  "state_persistence": {
+   "read": 73,
+   "measured": 0,
+   "unmeasured": 221,
+   "values": {
+    "PERSISTENT": 31,
+    "PER_EPISODE": 17,
+    "DURABLE": 13,
+    "PER_CALL": 12
+   },
+   "vocabulary_unused": [
+    "NONE"
+   ]
+  },
+  "feedback": {
+   "read": 20,
+   "measured": 0,
+   "unmeasured": 274,
+   "values": {
+    "DELAYED_CLOSED_LOOP": 7,
+    "CLOSED_LOOP": 12,
+    "NONE": 1
+   },
+   "vocabulary_unused": [
+    "OPEN_LOOP"
+   ]
+  },
+  "memory": {
+   "read": 83,
+   "measured": 0,
+   "unmeasured": 211,
+   "values": {
+    "SUMMARY_STATISTIC": 18,
+    "LAST_VALUE": 25,
+    "FULL_HISTORY": 16,
+    "WINDOW": 19,
+    "ARCHIVE": 3,
+    "NONE": 2
+   },
+   "vocabulary_unused": []
+  },
+  "stochasticity": {
+   "read": 114,
+   "measured": 0,
+   "unmeasured": 180,
+   "values": {
+    "ENVIRONMENT_RANDOM": 7,
+    "DETERMINISTIC": 87,
+    "SEEDED_RANDOM": 20
+   },
+   "vocabulary_unused": [
+    "ADVERSARIAL"
+   ]
+  },
+  "update_topology": {
+   "read": 116,
+   "measured": 0,
+   "unmeasured": 178,
+   "values": {
+    "EVENT_DRIVEN": 37,
+    "SWEEP": 43,
+    "RECURSIVE": 14,
+    "SINGLE_STEP": 13,
+    "PARALLEL_ROUNDS": 6,
+    "PRIORITY": 3
+   },
+   "vocabulary_unused": []
+  },
+  "order_sensitivity": {
+   "read": 30,
+   "measured": 0,
+   "unmeasured": 264,
+   "values": {
+    "SENSITIVE": 23,
+    "INVARIANT": 7
+   },
+   "vocabulary_unused": [
+    "PARTIALLY"
+   ]
+  },
+  "resource_dependence": {
+   "read": 29,
+   "measured": 0,
+   "unmeasured": 265,
+   "values": {
+    "BANDWIDTH": 3,
+    "SHARED_RESOURCE": 3,
+    "MEMORY": 15,
+    "COMPUTE": 8
+   },
+   "vocabulary_unused": [
+    "NONE",
+    "TIME"
+   ]
+  },
+  "failure_mode": {
+   "read": 31,
+   "measured": 0,
+   "unmeasured": 263,
+   "values": {
+    "COLLAPSES": 4,
+    "STALLS": 12,
+    "CORRUPTS": 6,
+    "NONE_KNOWN": 2,
+    "DEGRADES": 2,
+    "STARVES": 2,
+    "OSCILLATES": 2,
+    "DIVERGES": 1
+   },
+   "vocabulary_unused": []
+  },
+  "recovery": {
+   "read": 34,
+   "measured": 0,
+   "unmeasured": 260,
+   "values": {
+    "RETRIES": 5,
+    "NONE": 2,
+    "EXTERNAL_RESET": 4,
+    "ROLLS_BACK": 14,
+    "DEGRADES_GRACEFULLY": 4,
+    "SELF_RESETS": 5
+   },
+   "vocabulary_unused": []
+  },
+  "adaptation": {
+   "read": 20,
+   "measured": 0,
+   "unmeasured": 274,
+   "values": {
+    "STRUCTURE": 2,
+    "PARAMETER": 14,
+    "POLICY": 3,
+    "NONE": 1
+   },
+   "vocabulary_unused": []
+  },
+  "competition": {
+   "read": 34,
+   "measured": 0,
+   "unmeasured": 260,
+   "values": {
+    "CONTENDS": 10,
+    "ARBITRATES": 19,
+    "ISOLATES": 5
+   },
+   "vocabulary_unused": [
+    "NONE"
+   ]
+  },
+  "cooperation": {
+   "read": 16,
+   "measured": 0,
+   "unmeasured": 278,
+   "values": {
+    "COORDINATES": 7,
+    "SHARES": 4,
+    "AGREES": 5
+   },
+   "vocabulary_unused": [
+    "NONE"
+   ]
+  },
+  "hidden_state": {
+   "read": 18,
+   "measured": 0,
+   "unmeasured": 276,
+   "values": {
+    "ESTIMATES": 13,
+    "IGNORES": 1,
+    "ASSUMES": 4
+   },
+   "vocabulary_unused": [
+    "NONE"
+   ]
+  },
+  "uncertainty": {
+   "read": 10,
+   "measured": 0,
+   "unmeasured": 284,
+   "values": {
+    "POINT": 7,
+    "SAMPLE": 2,
+    "DISTRIBUTION": 1
+   },
+   "vocabulary_unused": [
+    "NONE",
+    "INTERVAL"
+   ]
+  },
+  "representation_sensitivity": {
+   "read": 32,
+   "measured": 0,
+   "unmeasured": 262,
+   "values": {
+    "SENSITIVE": 29,
+    "INVARIANT": 3
+   },
+   "vocabulary_unused": [
+    "UNKNOWN_BY_READ"
+   ]
+  },
+  "temporal_horizon": {
+   "read": 34,
+   "measured": 0,
+   "unmeasured": 260,
+   "values": {
+    "WINDOW": 12,
+    "STEP": 9,
+    "UNBOUNDED": 5,
+    "EPISODE": 6,
+    "INSTANT": 2
+   },
+   "vocabulary_unused": []
+  }
+ },
+ "note": "READ cells are Nyx's reading of the source; MEASURED cells come from wind-tunnel receipts only; a dimension with measured == 0 is UNMEASURED for the whole atlas whatever its read count"
+}

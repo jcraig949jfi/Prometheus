@@ -1,0 +1,162 @@
+{
+  "schema": "techne.fossil.run_receipt/2",
+  "specimen_id": "spacewar-pdp1-1962",
+  "receipt_id": "run-spacewar-pdp1-1962-20260916T151039Z",
+  "written_utc": "20260916T151039Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-pdp1:display",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "__pycache__/prep_macro1.cpython-314.pyc": "0dde5ef627e7e9b425a4c1db4b41a1e1127cc76d96dd463465dea5eff98d2aed",
+    "frame_metrics.sh": "33eb5ffe0e409f80e2249df70038be2e2f5974f74cc2b6eb3082a088e5e16332",
+    "macro_fiodec_jun63.txt": "8ff117912fd13ace8659c3b4fcfd57b66fb340bd5b832a6375adc27b6e7fef8e",
+    "prep_macro1.py": "51b2677e2c76c07112c8e3b4dc4550f1c29921a76f0b40d57c6d6d905c9a76af",
+    "run.ini": "c179774928489f83fe6ed2f2bec5269a4900460e755bd44eaf8fae8405d29aec",
+    "run_display.ini": "674d1865e397bf0733a5787dc9d61b458521fa68fa57145a6176342e042abacb",
+    "spacewar_2b_2apr62.txt": "8e60bd3a950f0e05b570b79af1665488cdeb1f848b8b961d710f4fd4ae5f3349"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.4"
+  },
+  "environment": {
+    "interpreter": {
+      "implementation": "CPython",
+      "version": "3.14.4",
+      "executable_basename": "python.exe"
+    },
+    "pip_freeze_sha256": "f9f87e9e3ad66b01148d929fd03c82905030a460fd7a12dbae27ab7be70728df",
+    "pip_freeze_n": 145,
+    "env_vars_read": [
+      "TECHNE_FOSSIL_VAULT"
+    ],
+    "env_vars_exported_to_recipe": [
+      "BODY",
+      "HARNESS"
+    ]
+  },
+  "tree_sha256_before": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
+  "recipe_sha256": "9d2800a62f443eb526a7f541ead845c9b808cf99b48e7b1f97a67b14aba40055",
+  "patches": [],
+  "probe": [
+    {
+      "name": "pdp1 --version 2>&1 | head -1; cat /usr/",
+      "cmd": "pdp1 --version 2>&1 | head -1; cat /usr/local/share/pdp1/simh-commit.txt /usr/local/share/pdp1/simtools-commit.txt; macro1 2>&1 | head -1; printf 'show dpy\nexit\n' > /tmp/p.ini; xvfb-run -a pdp1 /tmp/p.ini 2>&1 | grep -i dpy",
+      "exit": 0,
+      "seconds": 3.98,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Invalid switch --version\na1f57fa3738ed31148d31126ba1a7278ff845c6d\n2d9a2d96caa013428f8d0686e26a4f0164c889bf\nmacro1:  no input file specified\nDPY     disabled\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "prep-declared-scaffolding",
+      "cmd": "python3 $HARNESS/prep_macro1.py spacewar_2b_25mar62.txt sw2.mac",
+      "exit": 0,
+      "seconds": 0.36,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "prep_macro1: T3 one-line defines expanded=1 T4 library lines=61 T5 alias lines=6 T6 ranct calls expanded=1 T7 star-table lines appended=495 T8 variable renames=ran->qran lines_in=1100 lines_out=1673\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "assemble-macro1",
+      "cmd": "macro1 -r sw2.mac 2>&1 | tail -3; test -s sw2.rim && sha256sum sw2.rim",
+      "exit": 0,
+      "seconds": 0.39,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "spacewar 2b  25 mar 62 - pass 1\nspacewar 2b  25 mar 62 - pass 2\nddca90afda897a9675cf0fd8926dc68adc926fb48cfe7e2e2a06ecf2c9723b86  sw2.rim\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "headless-no-scope-stops-at-IOH",
+      "cmd": "pdp1 $HARNESS/run.ini 2>&1",
+      "exit": 0,
+      "seconds": 1.14,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\nPDP-1 simulator Open SIMH V4.1-0 Current        git commit id: a1f57fa3\n4:\t601462\n5:\t601457\n6:\t720004\n\nStep expired, PC: 000504 (LAC 2460)\nPC:\t000504\n\nInfinite I/O wait state, PC: 003774 (IOH)\nPC:\t003774\nCPU     \n        4KW, standard CPU, no multiply/divide\n        no SBS\nGoodbye\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "type30-display-under-xvfb",
+      "cmd": "xvfb-run -a -s '-screen 0 1024x1024x24' pdp1 $HARNESS/run_display.ini 2>&1 | grep -v ALSA; bash $HARNESS/frame_metrics.sh",
+      "exit": 0,
+      "seconds": 1.61,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\nPDP-1 simulator Open SIMH V4.1-0 Current        git commit id: a1f57fa3\nDPY     \n        not attached\n\nStep expired, PC: 000504 (LAC 2460)\nPC:\t000504\n\nStep expired, PC: 002110 (JDA 233)\nPC:\t002110\nScreenshot saved to frame1.png.bmp\n\nStep expired, PC: 004044 (IOH)\nPC:\t004044\nScreenshot saved to frame2.png.bmp\nGoodbye\nlit_pixels_frame1=85\nlit_pixels_frame2=120\nFRAME_HAS_CONTENT\nFRAMES_DIFFER\n5357da5cda6537aefe893c3fcd90744977d80dd1139edce30f1450e5a01df1c4  frame1.png\nb9b95e1402c69608989af8519b9523b0b3347c83b3c8c963416950ce3ee44004  frame2.png\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "frame1.png",
+      "sha256": "5357da5cda6537aefe893c3fcd90744977d80dd1139edce30f1450e5a01df1c4",
+      "bytes": 312
+    },
+    {
+      "path": "frame1.png.bmp",
+      "sha256": "0db685d98defc7ac20b04025c4c0fb96bbe0812b011af85789bb487d67dadaa1",
+      "bytes": 1048698
+    },
+    {
+      "path": "frame2.png",
+      "sha256": "b9b95e1402c69608989af8519b9523b0b3347c83b3c8c963416950ce3ee44004",
+      "bytes": 340
+    },
+    {
+      "path": "frame2.png.bmp",
+      "sha256": "699ee335950555289bc8028f4349adc263beee97c5db551c0c7a33cf1481d344",
+      "bytes": 1048698
+    },
+    {
+      "path": "sw2.lst",
+      "sha256": "c6057fb6e03ffa3a476e89a7bcbf2ce8d7f1521dcf55f247cb4b9928682c603b",
+      "bytes": 178356
+    },
+    {
+      "path": "sw2.mac",
+      "sha256": "b2cf15808c2d06b011c31fc7741ae2dd0c48bc5a920e2921ac87dc5d72613691",
+      "bytes": 25749
+    },
+    {
+      "path": "sw2.rim",
+      "sha256": "ddca90afda897a9675cf0fd8926dc68adc926fb48cfe7e2e2a06ecf2c9723b86",
+      "bytes": 14026
+    }
+  ],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "NO_TESTS",
+  "ok": true,
+  "tree_sha256_after": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
+  "body_preserved": true
+}

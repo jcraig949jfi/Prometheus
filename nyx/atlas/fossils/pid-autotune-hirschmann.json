@@ -1,0 +1,167 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "pid-autotune-hirschmann",
+ "techne_record": "techne/fossils/specimens/pid-autotune-hirschmann/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "pid-autotune-hirschmann",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "pid-autotune (Hirschmann) -- Astrom-Hagglund relay-feedback autotuner with Ziegler-Nichols / Tyreus-Luyben / Pessen rules, on a simulated brewing kettle",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/hirschmann/pid-autotune master as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1984 (method); 2016- (code)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "control",
+     "adaptive",
+     "self-tuning",
+     "relay-feedback",
+     "PID",
+     "small-mechanism"
+    ],
+    "lineage": "Astrom & Hagglund's relay auto-tuning (Automatica 1984): put the loop under a relay, measure the induced limit cycle's amplitude and period (ultimate gain and period), then compute PID gains by a tuning rule -- the mechanism inside industrial PID controllers' 'autotune' buttons. This implementation (2016-) drives a first-order thermal kettle model (volume, heater power, ambient loss) and prints the gains each rule yields; used by home-brewing controllers (CraftBeerPi lineage)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "PID controller auto-tuning",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let a controller find its own gains from the plant it is attached to, by provoking a controlled oscillation and measuring it",
+    "pressure": "unknown plant dynamics (kettle size, heater power), a user who cannot hand-tune",
+    "success_means": "the measured limit cycle yields gains that regulate the plant; a different plant yields different gains"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "unknown/varying plant, noisy temperature sensor, slow thermal dynamics",
+    "failure_condition": "no limit cycle detected (tuning fails) or gains that oscillate the real plant"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Astrom & Hagglund's relay auto-tuning (Automatica 1984): put the loop under a relay, measure the induced limit cycle's amplitude and period (ultimate gain and period), then compute PID gains by a tuning rule -- the mechanism inside industrial PID controllers' 'autotune' buttons. This implementation (2016-) drives a first-order thermal kettle model (volume, heater power, ambient loss) and prints the gains each rule yields; used by home-brewing controllers (CraftBeerPi lineage).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Astrom & Hagglund 1984"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: arduino-pid"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "pid-autotune-hirschmann",
+   "relation": "algorithm_from",
+   "to": "Astrom & Hagglund 1984",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "pid-autotune-hirschmann",
+   "relation": "shares_ancestor_with",
+   "to": "arduino-pid",
+   "note": "the PID this tunes; the vault's fixed-gain PID beside a gain-finding mechanism",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

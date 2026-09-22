@@ -1,0 +1,167 @@
+{
+ "arms": [
+  "mono",
+  "gated_serial",
+  "gated_serial_noex",
+  "parallel"
+ ],
+ "assay_capability_requirement": "mono reaches a foothold in >= 1 of 3 seeds (TARGET_UNREACHABLE otherwise); >= 1 producer solves within the cap (else no gated exchange happens and the rows record the cost of closed gates)",
+ "attempt": 1,
+ "budget": {
+  "E": 4,
+  "G": 8,
+  "N": 24,
+  "comm_bytes_per_gen": 4096,
+  "full_solve": 0.9,
+  "heldout_episodes": 48,
+  "producer_cap": 6,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "storage_gen_per_artifact": 0.5,
+  "top_k": 4
+ },
+ "claim_ceiling": "weak at best (n=3, one source/target pair); the break-even generation (producer solve time + comm + storage vs mono's exit) is the product",
+ "crn_policy": "default; the same producer run per seed feeds both exchange arms; consumers share generation 0 (gated_serial substitutes the fetched top-4 into it; parallel injects them at arrival)",
+ "decl": {
+  "n_min": 3,
+  "primary": {
+   "control": "mono",
+   "metric": "competence_heldout",
+   "min_effect": 0.1,
+   "treatment": "parallel"
+  },
+  "target": {
+   "baseline_arm": "mono",
+   "reach_metric": "reached",
+   "reach_min": 1,
+   "reachability_class": "UNESTABLISHED"
+  }
+ },
+ "expected_machine_telemetry": [
+  "producer solve time and maturity",
+  "costs charged per row",
+  "arrival generation",
+  "import lineage share at the end",
+  "first foothold and first full solve generations",
+  "reachability rows (mono baseline)"
+ ],
+ "experiment": "C2-SFE-07",
+ "falsification_condition": "parallel - mono < 0.10 held-out => wall-clock division of labour does not pay at this envelope; gated_serial - mono < 0.10 => serial gating does not pay",
+ "machine_changes_exercised": [
+  "E (gate = maturity.solved; publish requires it)",
+  "G (mid-run injection through the step API)",
+  "C (common_fill substitution)",
+  "D",
+  "F (costs from canonical bytes)",
+  "H (origin shares)",
+  "I"
+ ],
+ "parent_evidence": "SFE-10: mono 3/3 vs pc_0.4 1/3, pc_0.2 0/3 (CAPABLE_NEGATIVE); the one paying exchange came from a producer that solved W0 (1.0 at G12). C2-SFE-03/04: solved-W0 material lands on the K=2 half-credit shelf directly. Table: W2_K2 4-bit N200 G60 7/17; W0 4-bit COMMON by ~G35.",
+ "parents": [
+  "SFE-10"
+ ],
+ "positive_control": "mono on W2_K2 4-bit (own generation 0): expected 0.41 per seed",
+ "prereg_digest": "sha256:ca2ab0088b16c2f835eb17521f6f8f00bd98eca7286d3de224b7d44b1b1e9970",
+ "primary_observable": "competence_heldout per arm x seed (parallel vs mono; gated_serial vs mono secondary); first_solved_gen, charged generation at foothold and full_solve_gen as the economics",
+ "question": "Under a 8-generation envelope with explicit communication (ceil(bytes/4096) gens) and storage (0.5 gen/artifact) costs, does a producer on W0 4-bit that publishes ONLY once it has solved its cell (maturity gate) pay for itself when charged serially, and does it pay when it runs on its own clock and its elites are injected mid-run (wall-clock accounting)?",
+ "reachability_estimate": {
+  "W0": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "first_solved_gens": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "at_budget_any_foundry": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "foundries": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "budgets": [],
+    "class": "UNESTABLISHED",
+    "freq": null,
+    "k": 0,
+    "n": 0
+   }
+  },
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "first_solved_gens": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "at_budget_any_foundry": {
+    "band95": [
+     0.0,
+     1.0
+    ],
+    "class": "UNESTABLISHED",
+    "foundries": [],
+    "freq": null,
+    "k": 0,
+    "n": 0
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "band95": [
+     0.2153,
+     0.5577
+    ],
+    "budgets": [
+     [
+      200,
+      36,
+      16
+     ],
+     [
+      200,
+      48,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "freq": 0.3704,
+    "k": 10,
+    "n": 27
+   }
+  }
+ },
+ "title": "producer-consumer: maturity gating and wall-clock accounting",
+ "typed_failure_conditions": [
+  "TARGET_UNREACHABLE (mono 0/3)",
+  "IMMATURE_ARTIFACT cannot occur by construction (gate); a closed gate is a row with imported=false",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ]
+}

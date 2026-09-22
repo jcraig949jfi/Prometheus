@@ -1,0 +1,159 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bsd-4.2-distribution-tape-1983",
+ "techne_record": "techne/fossils/specimens/bsd-4.2-distribution-tape-1983/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bsd-4.2-distribution-tape-1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "4.2BSD distribution tape (August 1983): stand, miniroot, root dump, usr.tar -- the bootable system whose TCP is bsd-tcp-4.2-1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.2BSD (Aug 1983); TUHS Archive/Distributions/UCB/4BSD/4.2BSD (stand, miniroot, rootdump, usr.tar; FORMAT)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "operating-system",
+     "networks",
+     "TCP",
+     "historical-toolchain",
+     "distribution-tape",
+     "vax"
+    ],
+    "lineage": "The 4.2BSD release as shipped to VAX sites: the standalone boot programs, the miniroot filesystem, a dump of the root filesystem (with /vmunix) and the /usr tree. Preserved so that the kernel in bsd-tcp-4.2-1983 can be BOOTED under an emulated VAX-11/780 rather than only read. Transcribed from the physical 9-track tape into the TUHS archive."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "distribution and installation of a research operating system",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "install a complete 4.2BSD system on a VAX from one magnetic tape",
+    "pressure": "1983 hardware: a 9-track drive, an RP06 disk, a console; and the Internet that this release's TCP was about to collapse",
+    "success_means": "the kernel boots multi-user from disk and its TCP answers on lo0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "1983 media and hardware; the network stack shipped here had no congestion control",
+    "failure_condition": "a bad tape or disk geometry stops the install; historically, its TCP collapsed under congestion"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (4BSD kernel and userland)",
+    "VAX assembler"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The 4.2BSD release as shipped to VAX sites: the standalone boot programs, the miniroot filesystem, a dump of the root filesystem (with /vmunix) and the /usr tree. Preserved so that the kernel in bsd-tcp-4.2-1983 can be BOOTED under an emulated VAX-11/780 rather than only read. Transcribed from the physical 9-track tape into the TUHS archive.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: bsd-tcp-4.2-1983"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9dfc093874cc79e14e195292412746248cf079bc4133eb7d06739035aa7718cf"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-simh:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "bsd-4.2-distribution-tape-1983",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.2-1983",
+   "note": "this tape CONTAINS the kernel whose netinet/tcp_* files are preserved as that specimen",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

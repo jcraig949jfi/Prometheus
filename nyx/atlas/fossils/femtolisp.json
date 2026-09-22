@@ -1,0 +1,149 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "femtolisp",
+ "techne_record": "techne/fossils/specimens/femtolisp/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "femtolisp",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "femtolisp -- a small, fast Scheme-ish Lisp (Jeff Bezanson)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/JeffBezanson/femtolisp master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2008-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "languages",
+     "interpreters",
+     "lisp",
+     "bytecode",
+     "garbage-collection",
+     "virtual-machine"
+    ],
+    "lineage": "femtolisp (2008-, Jeff Bezanson): a compact Lisp with a bytecode compiler, mark-and-sweep GC, tail calls and a numeric tower; the language that bootstraps parts of Julia's front end"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "a small compiled-to-bytecode Lisp",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "evaluate a Lisp by compiling s-expressions to a compact bytecode and running them on a stack VM with garbage collection -- small and fast enough to embed and to bootstrap a larger language",
+    "pressure": "the interpretation overhead of naive tree-walking; the memory pressure of a numeric tower; correctness of tail calls and GC",
+    "success_means": "Lisp programs compile and run correctly and quickly; its own test suite passes"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "Lisp"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "femtolisp (2008-, Jeff Bezanson): a compact Lisp with a bytecode compiler, mark-and-sweep GC, tail calls and a numeric tower; the language that bootstraps parts of Julia's front end",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "29bbc9f1eb0c0ebdd3648e33a8d1c4f45a7598c3a6d6e898c8eca2aae6d3fad7"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "minisat-2.2.0",
+ "techne_record": "techne/fossils/specimens/minisat-2.2.0/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "minisat-2.2.0",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "MiniSat 2.2.0 -- Een and Sorensson",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "2.2.0 tarball from minisat.se (the authors' site)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2003 (2.2.0 released 2010)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "sat",
+     "logic",
+     "search",
+     "constraint-solving"
+    ],
+    "lineage": "MiniSat (2003-2010, Chalmers; Niklas Een, Niklas Sorensson): minimal CDCL SAT solver with two-watched literals, VSIDS, conflict-clause learning and restarts; the reference from which most modern SAT solvers descend"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "propositional satisfiability at industrial scale, in ~1000 lines",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "decide propositional satisfiability of large CNF formulas and, when satisfiable, produce a model",
+    "pressure": "industrial verification instances with millions of clauses; the need for a small, readable, extensible solver others could build on",
+    "success_means": "correct SAT/UNSAT answers (models checkable, UNSAT trusted or proof-logged) fast on competition and industrial benchmarks"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "MiniSat (2003-2010, Chalmers; Niklas Een, Niklas Sorensson): minimal CDCL SAT solver with two-watched literals, VSIDS, conflict-clause learning and restarts; the reference from which most modern SAT solvers descend",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "0a7fe1e69d3f84d222785eabf7e5cb0161463cc9b122b57008b5b9bf3f6adaa5"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "wsl or docker"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

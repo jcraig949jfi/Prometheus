@@ -1,0 +1,169 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bsd-4.3-reno-distribution-tape-1990",
+ "techne_record": "techne/fossils/specimens/bsd-4.3-reno-distribution-tape-1990/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bsd-4.3-reno-distribution-tape-1990",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "4.3BSD-Reno distribution tape (June 1990): stand, miniroot, root dump, usr.tar -- fast retransmit / fast recovery TCP, bootable",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.3BSD-Reno (Jun 1990); TUHS Archive/Distributions/UCB/4BSD/4.3BSD-Reno (stand, miniroot, rootdump, usr.tar; FORMAT)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1990",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "operating-system",
+     "networks",
+     "TCP",
+     "historical-toolchain",
+     "distribution-tape",
+     "vax"
+    ],
+    "lineage": "The bootable system containing the Reno TCP (bsd-tcp-4.3-reno-1990): slow start, congestion avoidance, fast retransmit and fast recovery. With the 4.3BSD tape this makes the congestion-control lineage's BEFORE and AFTER both installable under one emulated VAX-11/780; the Tahoe tape between them is cut short in the archive."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "distribution and installation of 4.3BSD-Reno",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "install 4.3BSD-Reno on a VAX from one tape",
+    "pressure": "high bandwidth-delay paths and isolated losses (the Reno redesign's motive)",
+    "success_means": "boots; TCP recovers from a single loss without draining the pipe"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "isolated loss on long fat pipes",
+    "failure_condition": "multiple losses in one window still collapse the window (NewReno/SACK pressure)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (4BSD kernel and userland)",
+    "VAX assembler"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The bootable system containing the Reno TCP (bsd-tcp-4.3-reno-1990): slow start, congestion avoidance, fast retransmit and fast recovery. With the 4.3BSD tape this makes the congestion-control lineage's BEFORE and AFTER both installable under one emulated VAX-11/780; the Tahoe tape between them is cut short in the archive.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: bsd-tcp-4.3-reno-1990"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "4.3BSD-Reno -> 4.4BSD / 4.4BSD-Lite release lineage",
+      "says": "4.4BSD superseded 4.3BSD-Reno as the Berkeley distribution."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "44e6e0bf76122e15fb11f5f1269bfac7c5e8f961201f983568144632241b6b4c"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-simh:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990",
+   "note": "this tape CONTAINS that kernel",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

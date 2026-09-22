@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "picosat-965",
+ "techne_record": "techne/fossils/specimens/picosat-965/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "picosat-965",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "PicoSAT 965 -- Armin Biere",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "965 from fmv.jku.at (the author's site)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2007 (965 rel. 2014)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "sat",
+     "logic",
+     "search",
+     "constraint-solving",
+     "proof-trace"
+    ],
+    "lineage": "PicoSAT (2007-, JKU Linz, Armin Biere): compact CDCL SAT solver with aggressive clause learning, phase saving and a trace/proof mode; a distinct CDCL lineage from MiniSat and the ancestor of PrecoSAT/Lingeling"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "propositional satisfiability with proof tracing",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "decide propositional satisfiability and emit a model or an UNSAT proof trace, in a small self-contained solver",
+    "pressure": "the same industrial CNF pressure as MiniSat, plus a demand for checkable UNSAT proofs (the trace mode)",
+    "success_means": "correct SAT/UNSAT, models that satisfy the clauses, and a replayable resolution proof on UNSAT"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "PicoSAT (2007-, JKU Linz, Armin Biere): compact CDCL SAT solver with aggressive clause learning, phase saving and a trace/proof mode; a distinct CDCL lineage from MiniSat and the ancestor of PrecoSAT/Lingeling",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: minisat-2.2.0"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "picosat-965",
+   "relation": "shares_ancestor_with",
+   "to": "minisat-2.2.0",
+   "note": "both are CDCL SAT solvers descending from the Chaff/GRASP CDCL line; DIFFERENT implementations",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

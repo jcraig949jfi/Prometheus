@@ -6,7 +6,7 @@ Every role below carries the banner on its primary document(s):
 
 | role | stamped document(s) |
 |---|---|
-| Agora | RESPONSIBILITIES.md (already) |
+| Agora | RESPONSIBILITIES.md (already; rewritten 2026-09-14 on the seat's adoption pass, April body preserved at roles/Agora/superseded/, April queue classified in ARCHAEOLOGY_2026-09-14.md; identity decision AGORA-01 pending; self-service row per Archaeon ruling #39) |
 | Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
@@ -39,6 +39,7 @@ Every role below carries the banner on its primary document(s):
 | Ludus | ROLE.md (already), CHARTER.md (already), BOOTSTRAP.md, CHARTER_v3_WORLD_FOUNDRY.md (2026-09-11) |
 | Metis | RESPONSIBILITIES.md (created 2026-09-11 on the seat's seating pass; the seat had no roles/ directory before and has never had an operator charter; agents/metis/README.md is the March 2026 agent README and scripts/metis_portfolio.py the May reporter, both annotated by the seat file, neither stamped) |
 | Mnemosyne | RESPONSIBILITIES.md (already) |
+| Nestor | RESPONSIBILITIES.md (created 2026-09-14 on the seat's creation pass; new seat, charter pending; self-service row per Archaeon ruling #39) |
 | Nous | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/nous/README.md is the March 2026 agent README, annotated by the seat file in ARCHAEOLOGY s5 rather than rewritten, and its cited scoring weights are contradicted by the artifact they cite) |
 | Pheme | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/pheme/CHARTER.md is Aporia's May design, annotated by the seat file, not stamped) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
@@ -51,6 +52,7 @@ Every role below carries the banner on its primary document(s):
 | Skopos | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter; agents/skopos/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | StructuralMathematician | RESPONSIBILITIES.md (already) |
 | Techne | RESPONSIBILITIES.md (already), CHARTER.md (already) |
+| Theophrastus | RESPONSIBILITIES.md, CHARTER.md (created 2026-09-13 on the seat's founding pass; new seat, computational ecology / combinatorial exploration; self-service row per Archaeon ruling #39) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
@@ -96,6 +98,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Ludus | BOOTSTRAP.md (from 2026-09-11; was ROLE.md) |
 | Metis | RESPONSIBILITIES.md |
 | Mnemosyne | RESPONSIBILITIES.md |
+| Nestor | RESPONSIBILITIES.md |
 | Nous | RESPONSIBILITIES.md |
 | Pheme | RESPONSIBILITIES.md |
 | MPADatabaseArchitect | RESPONSIBILITIES.md |

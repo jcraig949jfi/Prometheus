@@ -1,0 +1,169 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "lapack-reference",
+ "techne_record": "techne/fossils/specimens/lapack-reference/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "lapack-reference",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "LAPACK (reference) -- the blocked successor that superseded LINPACK and EISPACK",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/Reference-LAPACK/lapack as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1992- (LAPACK); this checkout modern",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "numerical-linear-algebra",
+     "scientific-computing",
+     "dense-linear-algebra",
+     "successor"
+    ],
+    "lineage": "LAPACK (Anderson et al., 1992-) rewrote the LINPACK/EISPACK functionality around BLOCKED algorithms expressed in Level-3 BLAS (matrix-matrix), so that data loaded into cache is reused O(block) times. It is the WINNER of this pair: same mathematics, different memory-access structure. Kept here as the rival, so the loser can be compared on a shared problem without Techne deciding why it won."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "high-performance dense linear algebra on cache-based machines",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "provide LINPACK/EISPACK functionality at high performance on machines with memory hierarchies, by blocking the algorithms onto Level-3 BLAS",
+    "pressure": "the same O(n^3) arithmetic, but on machines where memory bandwidth, not flops, is the binding constraint",
+    "success_means": "the same numerical answer at a large multiple of the unblocked rate"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "memory hierarchy: data movement costs more than arithmetic",
+    "failure_condition": "with a badly chosen block size or an unoptimised BLAS it degenerates toward the unblocked rate"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 90",
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "LAPACK (Anderson et al., 1992-) rewrote the LINPACK/EISPACK functionality around BLOCKED algorithms expressed in Level-3 BLAS (matrix-matrix), so that data loaded into cache is reused O(block) times. It is the WINNER of this pair: same mathematics, different memory-access structure. Kept here as the rival, so the loser can be compared on a shared problem without Techne deciding why it won.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "rewrote: linpack-netlib-1979",
+    "rewrote: eispack-netlib-1976"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": []
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d6f94c154171da32f48c9bb28466a9945544d2fb958d3fb23e3f813f84b6330e"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "lapack-reference",
+   "relation": "rewrote",
+   "to": "linpack-netlib-1979",
+   "note": "same functionality, blocked for cache",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lapack-reference",
+   "relation": "rewrote",
+   "to": "eispack-netlib-1976",
+   "note": "same functionality, blocked for cache",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

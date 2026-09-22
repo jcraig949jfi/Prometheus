@@ -1,0 +1,2173 @@
+[
+ {
+  "arm": "p0.0",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "indirection": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 9,
+   "opcode_hist": {
+    "OR": 1,
+    "OUT": 1,
+    "ST": 1,
+    "SUB": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.041667,
+  "final_r1": 0.041667,
+  "final_r2": 0.041667,
+  "final_r3": 0.041667,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.0,
+  "peak_r0": 0.041667,
+  "peak_r3": 0.041667,
+  "persist": "none",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.25,
+    "gen": 2,
+    "mean": 0.020833,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 9,
+    "mean": 0.0625,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.177083,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "p0.0",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.125,
+    "comparison": 0.0625,
+    "control": 0.1875,
+    "halt_yield": 0.125,
+    "indirection": 0.125,
+    "logical": 0.0625,
+    "opaque_io": 0.125,
+    "randomness": 0.125,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 11,
+   "instr": 16,
+   "n_regs": 9,
+   "opcode_hist": {
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 2,
+    "LDC": 1,
+    "LT": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 1,
+    "RND": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.125,
+  "final_r1": 0.083333,
+  "final_r2": 0.041667,
+  "final_r3": 0.083333,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.125,
+    "R1": 0.083333,
+    "R2": 0.041667,
+    "R3": 0.083333,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.0,
+  "peak_r0": 0.125,
+  "peak_r3": 0.083333,
+  "persist": "tape",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 4,
+    "mean": 0.03125,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 6,
+    "mean": 0.052083,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 10,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 11,
+    "mean": 0.041667,
+    "rung": 3
+   }
+  ],
+  "seed": 2,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.0",
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "control": 0.25,
+    "indirection": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "JNZ": 1,
+    "OUT": 1,
+    "ST": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.125,
+  "final_r3": 0.0,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.0,
+  "peak_r0": 0.0,
+  "peak_r3": 0.0,
+  "persist": "all",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": null,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 9,
+    "mean": 0.010417,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.03125,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 3,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.1",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "indirection": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 9,
+   "opcode_hist": {
+    "OR": 1,
+    "OUT": 1,
+    "ST": 1,
+    "SUB": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.041667,
+  "final_r1": 0.041667,
+  "final_r2": 0.041667,
+  "final_r3": 0.041667,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "peak_r0": 0.041667,
+  "peak_r3": 0.041667,
+  "persist": "none",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.25,
+    "gen": 2,
+    "mean": 0.020833,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 9,
+    "mean": 0.0625,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.177083,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "p0.1",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.125,
+    "comparison": 0.0625,
+    "control": 0.1875,
+    "halt_yield": 0.125,
+    "indirection": 0.125,
+    "logical": 0.0625,
+    "opaque_io": 0.125,
+    "randomness": 0.125,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 11,
+   "instr": 16,
+   "n_regs": 9,
+   "opcode_hist": {
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 2,
+    "LDC": 1,
+    "LT": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 1,
+    "RND": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.125,
+  "final_r1": 0.083333,
+  "final_r2": 0.041667,
+  "final_r3": 0.083333,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.125,
+    "R1": 0.083333,
+    "R2": 0.041667,
+    "R3": 0.083333,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "peak_r0": 0.125,
+  "peak_r3": 0.083333,
+  "persist": "tape",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 4,
+    "mean": 0.03125,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 6,
+    "mean": 0.052083,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 10,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 11,
+    "mean": 0.041667,
+    "rung": 3
+   }
+  ],
+  "seed": 2,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.1",
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "control": 0.25,
+    "indirection": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "JNZ": 1,
+    "OUT": 1,
+    "ST": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.125,
+  "final_r3": 0.0,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "peak_r0": 0.0,
+  "peak_r3": 0.0,
+  "persist": "all",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": null,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 9,
+    "mean": 0.010417,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.03125,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 3,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.25",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "indirection": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 9,
+   "opcode_hist": {
+    "OR": 1,
+    "OUT": 1,
+    "ST": 1,
+    "SUB": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.041667,
+  "final_r1": 0.041667,
+  "final_r2": 0.041667,
+  "final_r3": 0.041667,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.25,
+  "peak_r0": 0.041667,
+  "peak_r3": 0.041667,
+  "persist": "none",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.25,
+    "gen": 2,
+    "mean": 0.020833,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.052083,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "p0.25",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.125,
+    "comparison": 0.0625,
+    "control": 0.1875,
+    "halt_yield": 0.125,
+    "indirection": 0.125,
+    "logical": 0.0625,
+    "opaque_io": 0.125,
+    "randomness": 0.125,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 11,
+   "instr": 16,
+   "n_regs": 9,
+   "opcode_hist": {
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 2,
+    "LDC": 1,
+    "LT": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 1,
+    "RND": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.125,
+  "final_r1": 0.083333,
+  "final_r2": 0.041667,
+  "final_r3": 0.083333,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.125,
+    "R1": 0.083333,
+    "R2": 0.041667,
+    "R3": 0.083333,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.25,
+  "peak_r0": 0.125,
+  "peak_r3": 0.083333,
+  "persist": "tape",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 4,
+    "mean": 0.03125,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 6,
+    "mean": 0.052083,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 10,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 11,
+    "mean": 0.041667,
+    "rung": 3
+   }
+  ],
+  "seed": 2,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.25",
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "control": 0.25,
+    "indirection": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "JNZ": 1,
+    "OUT": 1,
+    "ST": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.125,
+  "final_r3": 0.0,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.25,
+  "peak_r0": 0.0,
+  "peak_r3": 0.0,
+  "persist": "all",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": null,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 9,
+    "mean": 0.010417,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.03125,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 3,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.5",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "indirection": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 9,
+   "opcode_hist": {
+    "OR": 1,
+    "OUT": 1,
+    "ST": 1,
+    "SUB": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.041667,
+  "final_r1": 0.041667,
+  "final_r2": 0.041667,
+  "final_r3": 0.041667,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.041667,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.5,
+  "peak_r0": 0.041667,
+  "peak_r3": 0.041667,
+  "persist": "none",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": 1.0,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.25,
+    "gen": 2,
+    "mean": 0.020833,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 6,
+    "mean": 0.072917,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 8,
+    "mean": 0.166667,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 10,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.2,
+  "warnings": []
+ },
+ {
+  "arm": "p0.5",
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "halt_yield": 0.1875,
+    "indirection": 0.125,
+    "logical": 0.125,
+    "opaque_io": 0.1875,
+    "randomness": 0.0625,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 12,
+   "instr": 16,
+   "n_regs": 16,
+   "opcode_hist": {
+    "ADD": 3,
+    "HALT": 1,
+    "IN": 1,
+    "INQ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "MUL": 1,
+    "NOP": 2,
+    "OUT": 1,
+    "RND": 1,
+    "ST": 1,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.083333,
+  "final_r3": 0.041667,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.041667,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.5,
+  "peak_r0": 0.0,
+  "peak_r3": 0.041667,
+  "persist": "regs",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": null,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.25,
+    "gen": 3,
+    "mean": 0.03125,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 4,
+    "mean": 0.09375,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.25,
+    "gen": 6,
+    "mean": 0.145833,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 10,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 2,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.083333,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.041667,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "p0.5",
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "control": 0.25,
+    "indirection": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "JNZ": 1,
+    "OUT": 1,
+    "ST": 1
+   },
+   "persist": "all",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.125,
+  "final_r3": 0.0,
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 3,
+   "fill": "wse.gen0",
+   "n": 24,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.0,
+    "R3": 0.0,
+    "gen": 5,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 10,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.125,
+    "R3": 0.0,
+    "gen": 11,
+    "rung": 3
+   }
+  ],
+  "p": 0.5,
+  "peak_r0": 0.0,
+  "peak_r3": 0.0,
+  "persist": "all",
+  "reached_r0_by_rung_end": 0,
+  "retention_r0": null,
+  "schedule": [
+   {
+    "best": 0.0,
+    "gen": 0,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 2,
+    "mean": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 5,
+    "mean": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 6,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 8,
+    "mean": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 9,
+    "mean": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.25,
+    "gen": 10,
+    "mean": 0.020833,
+    "rung": 3
+   },
+   {
+    "best": 0.0,
+    "gen": 11,
+    "mean": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 3,
+  "shelf": {
+   "R0": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R1": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   },
+   "R2": {
+    "fell_at_gen": null,
+    "peak": 0.125,
+    "value_at_fall": null
+   },
+   "R3": {
+    "fell_at_gen": null,
+    "peak": 0.0,
+    "value_at_fall": null
+   }
+  },
+  "wall_s": 0.1,
+  "warnings": []
+ }
+]

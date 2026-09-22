@@ -1,0 +1,91 @@
+[stage] built  rss=290 MB
+[stage] nav B0 done  rss=730 MB
+[stage] nav B1 done  rss=730 MB
+[stage] nav B2 done  rss=730 MB
+[stage] nav LA1 done  rss=730 MB
+[stage] nav LA2 done  rss=730 MB
+[stage] nav LA3 done  rss=730 MB
+[stage] nav LA4 done  rss=730 MB
+[stage] nav LA5 done  rss=730 MB
+[stage] nav KA done  rss=731 MB
+{
+ "universe": "UC1",
+ "NS": 823543,
+ "edges": 2470629,
+ "traps": 6097140,
+ "H_obs": {
+  "0": 0,
+  "1": 0,
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 0,
+  "6-12": 1157940,
+  "13-20": 4939200,
+  "21-30": 0,
+  ">30": 0,
+  "n": 6097140
+ },
+ "LA5_recall": 0.0,
+ "layers": {
+  "R0": 40577880,
+  "R1": 0,
+  "reachable": 11138190,
+  "R1_fraction_of_kernel_compatible": 0.0,
+  "R1_traps": 0,
+  "R1_trap_fraction_of_traps": 0.0
+ },
+ "leak_A_prauc": 0.8613728716269816,
+ "leak_B_prauc": 0.8618267244274852,
+ "leak_B_nmi": 0.3308971561591201,
+ "dist_table": {
+  "R2": 0.5098532727269645,
+  "exact_match": 0.23181430791597735,
+  "within_1": 0.6077605654985712,
+  "MAE": 1.4068687118078234,
+  "spearman": 0.6699609929925704
+ },
+ "dist_linear": {
+  "R2": 0.2680516242980957,
+  "exact_match": 0.16790494811249812,
+  "within_1": 0.47544994234722016,
+  "MAE": 1.775610327720642,
+  "spearman": 0.47234323969856645
+ },
+ "H0": {
+  "mean_D": 11.558333333333334,
+  "forward_bfs_mean": [
+   18165.558333333334,
+   51645.775
+  ],
+  "bidirectional_bfs_mean": [
+   760.7833333333333,
+   3076.4166666666665
+  ],
+  "per_problem_min_mean": [
+   760.7833333333333,
+   3075.383333333333
+  ],
+  "oracle_mean": [
+   11.558333333333334,
+   30.008333333333333
+  ],
+  "H0_states": 0.9848073257826363,
+  "H0_transitions": 0.9902424088054064
+ },
+ "H1": {
+  "best_cheap_policy": "B0",
+  "transitions": 0.9984088556176764,
+  "states": 0.9983004346329024,
+  "best_cheap_solve_rate": 0.9583333333333334
+ },
+ "H2": {
+  "kernel_aware_residual_blind": "KA",
+  "transitions": 0.5067123287671234,
+  "states": 0.5240219629375429,
+  "KA_solve_rate": 1.0
+ },
+ "seconds": 679.4,
+ "nav_seconds": 33.3
+}
+EXIT 0

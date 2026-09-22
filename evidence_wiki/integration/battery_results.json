@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-11T14:49:14",
+ "ran_at": "2026-09-17T10:02:31",
  "n_gates": 17,
  "n_scored": 17,
  "n_pass": 17,
@@ -11,19 +11,19 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2', 'uptime_s': 235.3, 'search': {'ready': True, 'loading': False, 'error': None, 'load_seconds': 4.59, 'loaded_at': '2026-09-11T14:44:41'}, 'workspace': {'base_sha': 'e301547dd32d083903a4a727944daac663ea06a5', 'branch': 'HEAD', 'worktree_path': 'F:\\\\Prometheus-worktrees\\\\mnemosyne-pew\\\\evidence_wiki', 'dirty': False, 'main_worktree': False}} in 4ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 5, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2', 'uptime_s': 46.4, 'search': {'ready': True, 'loading': False, 'error': None, 'load_seconds': 3.76, 'loaded_at': '2026-09-17T10:01:05'}, 'store': {'environment': 'prometheus-canonical', 'db_system_id': '7628127204585430828', 'db_name': 'prometheus_fire', 'db_host': '192.168.1.202', 'server_addr': '192.168.1.202/32', 'server_port': 5432, 'attested_at': '2026-09-17T10:01:01'}, 'workspace': {'base_sha': '87e2ab614d05829d581032b9b3a31e41271f55fe', 'branch': 'HEAD', 'worktree_path': 'D:\\\\Prometheus-worktrees\\\\mnemosyne-pew\\\\evidence_wiki', 'dirty': False, 'main_worktree': False, 'workspace_known': True}} in 17ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=19274"
+   "detail": "schema_version=5 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=170699"
   },
   {
    "gate": "S2_server_machine_identity",
    "pass": true,
    "skipped": false,
-   "detail": "machine=M1 db_system_id=7628127204585430828 expected=7628127204585430828 controls={'M2_as_M2_PASS': True, 'M1_claimed_as_M2_FAIL': True, 'M2_wrong_dbid_FAIL': True, 'header_not_substitute_for_server': True}"
+   "detail": "machine=M2 env=prometheus-canonical db_system_id=7628127204585430828 expected=7628127204585430828 controls={'M2_as_M2_PASS': True, 'M1_claimed_as_M2_FAIL': True, 'M2_wrong_dbid_FAIL': True, 'header_not_substitute_for_server': True}"
   },
   {
    "gate": "E2a_anchor_writes_accepted",
@@ -59,7 +59,7 @@
    "gate": "E6_query_by_run_world_player",
    "pass": true,
    "skipped": false,
-   "detail": "run=1 world=7 player=14 unfiltered=400"
+   "detail": "run=1 world=11 player=25 unfiltered=400"
   },
   {
    "gate": "E7_duplicate_and_conflict_semantics",
@@ -83,7 +83,7 @@
    "gate": "E10_no_silent_success",
    "pass": true,
    "skipped": false,
-   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 51 kinds"
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 77 kinds"
   },
   {
    "gate": "E13_batch_idempotent_and_atomic",
@@ -95,21 +95,21 @@
    "gate": "E11_real_run_recorded",
    "pass": true,
    "skipped": false,
-   "detail": "200 duplicate_identical encounter=SFEREAL-exp_6b565d61366f9c9e0ecd29c7 run=exp_6b565d61366f9c9e0ecd29c7:wrk_3a683b262b3af39bb420fcc4"
+   "detail": "200 inserted encounter=SFEREAL-exp_27d82d4b4d70551ff8102132 run=exp_27d82d4b4d70551ff8102132:wrk_ed9d393c9c9cc60766bc9d47"
   },
   {
    "gate": "E12_real_run_reconstructable",
    "pass": true,
    "skipped": false,
-   "detail": "world=wld_6dec6ff9e4970e25f2766b68 player=sfe-work:wrk_3a683b262b3af39bb420fcc4 run=exp_6b565d61366f9c9e0ecd29c7:wrk_3a683b262b3af39bb420fcc4 outcome=SURVIVED anchor=sha256:61b6f927d7c393f72..."
+   "detail": "world=wld_4973b0c9be8a6f7468f95bac player=sfe-work:wrk_ed9d393c9c9cc60766bc9d47 run=exp_27d82d4b4d70551ff8102132:wrk_ed9d393c9c9cc60766bc9d47 outcome=SURVIVED anchor=sha256:f7fdf2cecbc61372a..."
   },
   {
    "gate": "E14_productive_not_present",
    "pass": true,
    "skipped": false,
-   "detail": "search.ready=True loading=False error=None load_s=4.59 hybrid_search http=200 in 338ms (budget 15000)"
+   "detail": "search.ready=True loading=False error=None load_s=3.76 hybrid_search http=200 in 1168ms (budget 15000)"
   }
  ],
- "real_id": "SFEREAL-exp_6b565d61366f9c9e0ecd29c7",
- "real_run": "exp_6b565d61366f9c9e0ecd29c7:wrk_3a683b262b3af39bb420fcc4"
+ "real_id": "SFEREAL-exp_27d82d4b4d70551ff8102132",
+ "real_run": "exp_27d82d4b4d70551ff8102132:wrk_ed9d393c9c9cc60766bc9d47"
 }

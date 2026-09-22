@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "gnu-apl-2.0",
+ "techne_record": "techne/fossils/specimens/gnu-apl-2.0/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "gnu-apl-2.0",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "GNU APL 2.0 -- a free interpreter for the array language APL (ISO 13751), by Juergen Sauermann",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "GNU APL 2.0 (ftp.gnu.org/gnu/apl/apl-2.0.tar.gz)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1962 (APL); 2013- (GNU APL); 2.0 = 2017",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "language",
+     "array-language",
+     "APL",
+     "legacy-culture",
+     "interpreter"
+    ],
+    "lineage": "APL (Iverson, 1962; 'A Programming Language'): a notation that computes on whole arrays with a dense set of primitive functions and operators, no explicit loops -- the founding array-language culture (ancestor of J, K, kdb+, and of array thinking in NumPy). GNU APL (2013-) is a complete ISO-standard interpreter in C++. The vault's first array language; a genuinely different execution model (rank-polymorphic whole-array operations) from every other specimen."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "array-oriented computation",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "express computation as operations on whole arrays in a compact notation, without explicit iteration",
+    "pressure": "the human problem of concise mathematical/array notation; APL's terseness and non-ASCII glyphs are the cost",
+    "success_means": "an array expression yields the same result a looped program would, in one line"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "notational density; whole-array thinking versus element-at-a-time",
+    "failure_condition": "rank/shape errors (LENGTH ERROR, RANK ERROR) when arrays do not conform"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "APL (Iverson, 1962; 'A Programming Language'): a notation that computes on whole arrays with a dense set of primitive functions and operators, no explicit loops -- the founding array-language culture (ancestor of J, K, kdb+, and of array thinking in NumPy). GNU APL (2013-) is a complete ISO-standard interpreter in C++. The vault's first array language; a genuinely different execution model (rank-polymorphic whole-array operations) from every other specimen.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Iverson 1962 (APL)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "0c41fad109669c9c34381b83d3045e50d4920e74ed6786bd553f455d9562d7c8"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "gnu-apl-2.0",
+   "relation": "algorithm_from",
+   "to": "Iverson 1962 (APL)",
+   "note": "the founding array language; ancestor of J/K and of array programming generally",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

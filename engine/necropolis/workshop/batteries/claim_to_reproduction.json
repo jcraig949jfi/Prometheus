@@ -1,0 +1,45 @@
+{
+ "battery_id": "claim_to_reproduction",
+ "name": "CLAIM -> SOURCE TRACE -> EXECUTION EVIDENCE -> REPRODUCTION",
+ "question": "Was this claim ever computed by the code it cites, and can the number be re-derived from preserved inputs?",
+ "steps": [
+  {
+   "step": 1,
+   "tool_id": "NT-042",
+   "role": "CLAIM",
+   "does": "intake: does the claim name a referent that resolves in the tree (path#token)?"
+  },
+  {
+   "step": 2,
+   "tool_id": "NT-052",
+   "role": "SOURCE TRACE",
+   "does": "who imports / mentions the cited instrument; zero external consumers = the number was never consumed"
+  },
+  {
+   "step": 3,
+   "tool_id": "NT-051",
+   "role": "EXECUTION EVIDENCE",
+   "does": "git history of the instrument around the claim date; recover the bytes that existed THEN, not now"
+  },
+  {
+   "step": 4,
+   "tool_id": "NT-012",
+   "role": "REPRODUCTION (exact)",
+   "does": "for boolean / exact claims: truth-table oracle; NT-011 z3 via NT-057 redirect for satisfiability claims"
+  },
+  {
+   "step": 5,
+   "tool_id": "NT-015",
+   "role": "REPRODUCTION (calibrated)",
+   "does": "for forecast / calibration claims: declared-vs-reported audit against an external ledger"
+  },
+  {
+   "step": 6,
+   "tool_id": "NT-054",
+   "role": "LIVE STORE",
+   "does": "when the claim cites a database row: read-only probe with identity check (HITL for the connection)"
+  }
+ ],
+ "coroner_run_required": true,
+ "output_contract": "{referent_resolves, n_external_consumers, bytes_at_claim_date_sha256, reproduced: YES/NO/NOT_ATTEMPTED, reproduction_inputs_fingerprint}; 'reproduced' may only be YES when the inputs are the historical inputs (charter XIII)"
+}

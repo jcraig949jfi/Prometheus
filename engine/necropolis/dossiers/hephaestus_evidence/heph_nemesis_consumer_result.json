@@ -1,0 +1,207 @@
+{
+ "n_prompts": 92,
+ "chance_floor_mean": 0.3696,
+ "n_tools_evaluated": 140,
+ "tool_accuracy": {
+  "median": 0.3859,
+  "mean": 0.3685,
+  "min": 0.0543,
+  "max": 0.766,
+  "n_above_floor_by_0.10": 38,
+  "n_below_floor_by_0.10": 49
+ },
+ "tools_broken_per_prompt": {
+  "median": 91.5,
+  "max": 149,
+  "n_tools_per_prompt_median": 138.5
+ },
+ "blind_spot_prompts": 0,
+ "category_hist": {
+  "conditional_weaken": 21,
+  "chain_extend": 15,
+  "numeric_distractor": 11,
+  "affirm_consequent": 9,
+  "distractor_add": 7,
+  "premise_shuffle": 5,
+  "negation_inject": 5,
+  "scale_transform": 5,
+  "boundary_phase_transitions_x_": 3,
+  "comparison_flip": 2
+ },
+ "correct_index_hist": {
+  "0": 46,
+  "1": 7,
+  "2": 8,
+  "3": 6,
+  "4": 25
+ },
+ "constant_index_tool_accuracy": {
+  "always_0": 0.5,
+  "always_1": 0.0761,
+  "always_2": 0.087,
+  "always_3": 0.0652,
+  "always_4": 0.2717
+ },
+ "top_tools_answer_index_profile": [
+  {
+   "tool": "thermodynamics_x_reservoir_computing_x_mechanism_design",
+   "acc": 0.766,
+   "answered": 43,
+   "top_index_share": 0.372,
+   "index_hist": {
+    "4": 16,
+    "1": 4,
+    "3": 3,
+    "2": 7,
+    "0": 13
+   }
+  },
+  {
+   "tool": "fractal_geometry_x_cognitive_load_theory_x_mechanism_design",
+   "acc": 0.7551,
+   "answered": 46,
+   "top_index_share": 0.37,
+   "index_hist": {
+    "4": 17,
+    "1": 5,
+    "3": 3,
+    "0": 16,
+    "2": 5
+   }
+  },
+  {
+   "tool": "category_theory_x_information_theory_x_criticality",
+   "acc": 0.75,
+   "answered": 45,
+   "top_index_share": 0.378,
+   "index_hist": {
+    "4": 17,
+    "3": 3,
+    "0": 16,
+    "1": 2,
+    "2": 7
+   }
+  },
+  {
+   "tool": "thermodynamics_x_holography_principle_x_free_energy_principle",
+   "acc": 0.7308,
+   "answered": 49,
+   "top_index_share": 0.347,
+   "index_hist": {
+    "4": 17,
+    "1": 7,
+    "3": 3,
+    "0": 16,
+    "2": 6
+   }
+  },
+  {
+   "tool": "neural_architecture_search_x_criticality_x_free_energy_principle",
+   "acc": 0.7283,
+   "answered": 86,
+   "top_index_share": 0.349,
+   "index_hist": {
+    "1": 12,
+    "3": 7,
+    "0": 30,
+    "4": 25,
+    "2": 12
+   }
+  },
+  {
+   "tool": "thermodynamics_x_sparse_autoencoders_x_compositionality",
+   "acc": 0.7283,
+   "answered": 80,
+   "top_index_share": 0.425,
+   "index_hist": {
+    "0": 34,
+    "3": 7,
+    "1": 4,
+    "4": 25,
+    "2": 10
+   }
+  },
+  {
+   "tool": "statistical_mechanics_x_evolution_x_free_energy_principle",
+   "acc": 0.7111,
+   "answered": 45,
+   "top_index_share": 0.422,
+   "index_hist": {
+    "3": 13,
+    "4": 6,
+    "0": 19,
+    "1": 2,
+    "2": 5
+   }
+  },
+  {
+   "tool": "phase_transitions_x_renormalization_x_active_inference",
+   "acc": 0.6413,
+   "answered": 75,
+   "top_index_share": 0.333,
+   "index_hist": {
+    "1": 8,
+    "3": 8,
+    "0": 25,
+    "4": 24,
+    "2": 10
+   }
+  }
+ ],
+ "first_or_last_null": {
+  "n_prompts_first_or_last": 87,
+  "n_prompts_middle": 5,
+  "ceiling_acc_of_first_or_last_picker": 0.9457
+ },
+ "top_tools_on_middle_prompts": [
+  {
+   "tool": "thermodynamics_x_reservoir_computing_x_mechanism_design",
+   "overall_acc": 0.766,
+   "middle_prompts_answered": 2,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "fractal_geometry_x_cognitive_load_theory_x_mechanism_design",
+   "overall_acc": 0.7551,
+   "middle_prompts_answered": 2,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "category_theory_x_information_theory_x_criticality",
+   "overall_acc": 0.75,
+   "middle_prompts_answered": 2,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "thermodynamics_x_holography_principle_x_free_energy_principle",
+   "overall_acc": 0.7308,
+   "middle_prompts_answered": 2,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "neural_architecture_search_x_criticality_x_free_energy_principle",
+   "overall_acc": 0.7283,
+   "middle_prompts_answered": 5,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "thermodynamics_x_sparse_autoencoders_x_compositionality",
+   "overall_acc": 0.7283,
+   "middle_prompts_answered": 5,
+   "middle_prompts_acc": 0.0
+  },
+  {
+   "tool": "statistical_mechanics_x_evolution_x_free_energy_principle",
+   "overall_acc": 0.7111,
+   "middle_prompts_answered": 2,
+   "middle_prompts_acc": 0.5
+  },
+  {
+   "tool": "phase_transitions_x_renormalization_x_active_inference",
+   "overall_acc": 0.6413,
+   "middle_prompts_answered": 5,
+   "middle_prompts_acc": 0.0
+  }
+ ],
+ "middle_prompt_chance_floor": 0.2667
+}

@@ -1,0 +1,120 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e07",
+ "attempt_id": "cw01-e07-a01",
+ "phase": "PREFLIGHT",
+ "ts": "2026-09-18 08:19:51",
+ "environment": {
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "python_executable": "H:\\Python312\\python.exe",
+  "numpy": "2.2.6"
+ },
+ "provenance": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "head": "836023206",
+  "repo_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+  "campaign_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+ },
+ "path_policy": {
+  "rule": "every e07 module resolves roots via lib/repopath; NO parents[N]",
+  "discovery": {
+   "from_lib": {
+    "start": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\lib",
+    "depth": 8,
+    "repo": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+    "campaign": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+   },
+   "from_experiment": {
+    "start": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\experiments\\cw01-e07",
+    "depth": 9,
+    "repo": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+    "campaign": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+   },
+   "agree": true,
+   "depths_differ": true
+  }
+ },
+ "seed_policy": {
+  "rule": "three independent components via lib/seeds: task stream (attempt, r, kind, index), weather stream (attempt, r, kind, generation), evolution stream (attempt, r, arm, lineage); Q_r drawn ONCE per replicate world"
+ },
+ "inherited_stack": {
+  "modules": [
+   "contract",
+   "guardproof",
+   "repopath",
+   "recordsafety",
+   "writerlock",
+   "seeds",
+   "localrun",
+   "lineage",
+   "infometrics",
+   "learnability"
+  ],
+  "frozen": true,
+  "engineering_targets": "demonstrated by observed refusal in cw01-e06 (INHERIT_GATE.json); not re-proven here",
+  "smoke": {
+   "repopath": {
+    "rc": 0,
+    "last": "   all checks passed"
+   },
+   "recordsafety": {
+    "rc": 0,
+    "last": "   gate proven: yes | live tally: PASS"
+   },
+   "writerlock": {
+    "rc": 0,
+    "last": "   writerlock proven by observed refusal"
+   }
+  }
+ },
+ "writerlock_now": {
+  "outcome": "PASS",
+  "reason": "no live RowWriter markers; a git write is safe"
+ },
+ "durable_records": {
+  "checks": [
+   {
+    "path": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\CAMPAIGN_STATE.json",
+    "bytes": 25670,
+    "non_ascii_bytes": 0,
+    "first_offset": null,
+    "naive_readable": true,
+    "outcome": "PASS",
+    "reason": "ascii-clean; decodes under any ascii-superset encoding"
+   },
+   {
+    "path": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\DEFECTS.jsonl",
+    "bytes": 72332,
+    "non_ascii_bytes": 0,
+    "first_offset": null,
+    "naive_readable": true,
+    "outcome": "PASS",
+    "reason": "ascii-clean; decodes under any ascii-superset encoding"
+   },
+   {
+    "path": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\experiments\\cw01-e07\\WORLD.json",
+    "bytes": 2849,
+    "non_ascii_bytes": 0,
+    "first_offset": null,
+    "naive_readable": true,
+    "outcome": "PASS",
+    "reason": "ascii-clean; decodes under any ascii-superset encoding"
+   }
+  ],
+  "n_pass": 3,
+  "n_fail": 0,
+  "n_not_verified": 0,
+  "safe": true,
+  "verdict": "all records portable"
+ },
+ "tally_agreement": "PASS",
+ "capability_match": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_network": false,
+  "needs": "a git worktree and PM_TAG, nothing else",
+  "expected_compute": "minutes; 96 lineages x 120 generations, vectorised"
+ },
+ "world_params_hash_source": "WORLD.json"
+}

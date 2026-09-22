@@ -1,0 +1,580 @@
+{
+ "record": "ADAPTIVE_RECORD_01",
+ "frozen": true,
+ "current_evidence": "round2/stepA_tests.json (H1 pass 8/8; collapse on m not |2k-N|; exp/par complement-asymmetric, GKL/maj symmetric; N-trend at fixed m rule-specific)",
+ "competing_explanations_live": [
+  "H2 nominal-parameterisation artifact (arithmetic; contributes)",
+  "H3 rule-intrinsic finite-size response (contributes; sign per rule)",
+  "H4 convergence horizon (untested under P_unif)",
+  "H6 branch-specific asymmetry (observed on 2 GA rules; transport untested)",
+  "H7 nothing transportable"
+ ],
+ "question": "Is the signed-margin curve CONSTRUCTIVE (predicts new single-density cells), horizon-independent, transportable to an unused GA genome, and does the N-trend continue at W999?",
+ "selection_rule": "each cell must have at least one frozen quantitative prediction whose failure falsifies a named explanation; cells chosen where the curves at 149 vs 599 or d<1/2 vs d>1/2 diverge most (|z|>=4 in step A)",
+ "cells": [
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_d40",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:af2ff2dd32a627de301124a2fd79a190598f5e788918d89f0ceb6ce6b94399a9",
+   "spec_hash": "sha256:09fe40008f014bb94bf22e83dbc6726faa1bbe1ea2d92aba4a18488922be5fe0",
+   "why": "INVERT: majority-0 side at m~0.10; one-class collapse predicts near-failure",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.0983,
+    "min": -0.1528,
+    "max": -0.0409
+   },
+   "prediction": {
+    "pred": 0.3005,
+    "se": 0.003,
+    "fallback_ics": 103,
+    "n_ics": 800,
+    "from_curve": "exp/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_d60",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:f9f56984a0d52bdcb302251b88a7c318a865f476e8f8aced7dd6a124c341bf79",
+   "spec_hash": "sha256:31ed05994d1f2a9c065812244245edf84babcdda6403dc1b052016f915a1a008",
+   "why": "INVERT: majority-1 side at m~0.10; predicts ~1.0",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.1017,
+    "min": 0.0376,
+    "max": 0.1628
+   },
+   "prediction": {
+    "pred": 1.0,
+    "se": 0.0,
+    "fallback_ics": 143,
+    "n_ics": 800,
+    "from_curve": "exp/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_d40",
+    "world": "W149",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:5cc592f001ba01219aa3266ee606a06bc1b4c466bbe6ad22a26636c1897ae061",
+   "spec_hash": "sha256:d59d694d5e6c66b11bbb6b63796ce85deaa1ad2530277a55e01ba716147b7391",
+   "why": "same inversion at the smaller world: asymmetry milder",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.0976,
+    "min": -0.245,
+    "max": 0.0503
+   },
+   "prediction": {
+    "pred": 0.7345,
+    "se": 0.0021,
+    "fallback_ics": 189,
+    "n_ics": 800,
+    "from_curve": "exp/N149 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_d60",
+    "world": "W149",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:f4c05757f945b7b266e1ba949004654f8a1e6d9a494279625dd684c4d849c23e",
+   "spec_hash": "sha256:54ce1d3840603c3e07f5632a2d5cb9000a6d4f3dfd00f2525444e88ae5afb550",
+   "why": "same inversion at the smaller world",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.1031,
+    "min": -0.0235,
+    "max": 0.2315
+   },
+   "prediction": {
+    "pred": 0.9541,
+    "se": 0.0007,
+    "fallback_ics": 173,
+    "n_ics": 800,
+    "from_curve": "exp/N149 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "par",
+    "pressure": "P_d48",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:7f8cf990264ee6d78ed908d790694d261b70a2ff8ad68862a89f04e4cd9b3a92",
+   "spec_hash": "sha256:b75ad5deebe1c3ee588a0678387ddc69490f630be66c0f4dbc9c84ac764d0577",
+   "why": "par asymmetry, opposite sign: d<1/2 side high",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.0184,
+    "min": -0.0743,
+    "max": 0.0376
+   },
+   "prediction": {
+    "pred": 0.8206,
+    "se": 0.0008,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "par/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "par",
+    "pressure": "P_d52",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:913e58e4c97d46400cca713694b6e4efcaec166b33c8411689a91f0c900832d6",
+   "spec_hash": "sha256:a91085451ac106bd9942fc8842b81d6a986b996de96864bc088e7136e0a34ab9",
+   "why": "par asymmetry: d>1/2 side lower",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0213,
+    "min": -0.0426,
+    "max": 0.081
+   },
+   "prediction": {
+    "pred": 0.7458,
+    "se": 0.001,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "par/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "GKL",
+    "pressure": "P_d48",
+    "world": "W599",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:7ed3ebc06d924e2d69fe7f91696833346fc5cfadb4b2aa7c111c9d5230414977",
+   "spec_hash": "sha256:0e3c918eae8eb8c740c7aee81ff4e3e06b6561e0afe79f56b4806c9607168c6d",
+   "why": "symmetry control: GKL predicted equal on both sides",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.0184,
+    "min": -0.0743,
+    "max": 0.0376
+   },
+   "prediction": {
+    "pred": 0.8026,
+    "se": 0.0007,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "GKL/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "GKL",
+    "pressure": "P_d52",
+    "world": "W599",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:bcb6165b144dd104f146c9b78d0beac1fa46cd456b2b6e237247df078802a344",
+   "spec_hash": "sha256:95cae5905ea4dee7c96a79c18f6a3abf53e4f05273f8065f727a028e237cc601",
+   "why": "symmetry control",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0213,
+    "min": -0.0426,
+    "max": 0.081
+   },
+   "prediction": {
+    "pred": 0.835,
+    "se": 0.0007,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "GKL/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "maj",
+    "pressure": "P_d20",
+    "world": "W149",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:43ad61809f8fc8482cc4782d0160e9d0072abe068ce2b09a86eee96b32b6975f",
+   "spec_hash": "sha256:5ca86232e4cf5c3bc45cbad38824075bd8b06b4cfe80a12c0904dbb5db0a48ee",
+   "why": "boundary: maj at m~0.30, N=149 predicted mid",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.2987,
+    "min": -0.3993,
+    "max": -0.1779
+   },
+   "prediction": {
+    "pred": 0.5292,
+    "se": 0.0032,
+    "fallback_ics": 514,
+    "n_ics": 800,
+    "from_curve": "maj/N149 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "B",
+   "labels": {
+    "mechanism": "maj",
+    "pressure": "P_d20",
+    "world": "W599",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:17aaeb9954b62c4ebe3ed62c075e42cead6d5551976c427f128bbcd1a93b5428",
+   "spec_hash": "sha256:e9a60fe98417ca666a0b5abc8a8e93e87ed3dea8eef88c145bfe80489540249a",
+   "why": "boundary shift: maj at m~0.30, N=599 predicted low",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": -0.2991,
+    "min": -0.3531,
+    "max": -0.2412
+   },
+   "prediction": {
+    "pred": 0.1548,
+    "se": 0.0023,
+    "fallback_ics": 175,
+    "n_ics": 800,
+    "from_curve": "maj/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)"
+   }
+  },
+  {
+   "step": "C",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_unif",
+    "world": "W599s",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:be3c7b47ea8aaa130d270dbd7118f7526e3cd82f752c2da9f41f491d0621f0a6",
+   "spec_hash": "sha256:9327f5e4d5f4178133e266ca350780928e8bb22e9ecf8caf5fa28c52d1e944de",
+   "why": "H4: halved horizon; exact identity with W599/P_unif predicted (digest)",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0012,
+    "min": -0.4215,
+    "max": 0.4249
+   },
+   "prediction": {
+    "pred": 0.8237,
+    "se": 0.0014,
+    "fallback_ics": 138,
+    "n_ics": 800,
+    "from_curve": "exp/N599 signed-margin",
+    "pass_rule": "result_digest equal to the W599/P_unif row's => H4 killed",
+    "exact_identity_with": "sha256:119f133cc5bd3c4432fd75d3d5d8285d7853a347cfe04b0cbec7d3757572f1f5"
+   }
+  },
+  {
+   "step": "C",
+   "labels": {
+    "mechanism": "par",
+    "pressure": "P_unif",
+    "world": "W599s",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:d5338603113f01aebe4e9cc56be46f9f622d5359d2bb4907cadbcdaaaba9469b",
+   "spec_hash": "sha256:77a75f440efd6701afbacf51bd0717df59ad3d73949062d88c1e5c7b37039d2c",
+   "why": "H4: halved horizon; exact identity predicted",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0012,
+    "min": -0.4215,
+    "max": 0.4249
+   },
+   "prediction": {
+    "pred": 0.9838,
+    "se": 0.0003,
+    "fallback_ics": 138,
+    "n_ics": 800,
+    "from_curve": "par/N599 signed-margin",
+    "pass_rule": "result_digest equal to the W599/P_unif row's => H4 killed",
+    "exact_identity_with": "sha256:894368a81e3a46c8b3823a7a2c927aba8a1ab7344ad0e398a2643e749169986a"
+   }
+  },
+  {
+   "step": "D",
+   "labels": {
+    "mechanism": "particle1",
+    "pressure": "P_iid",
+    "world": "W149",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:a5904e139c668a931be44579818ed9be9dd99521ba911acced3045864e56fb42",
+   "spec_hash": "sha256:80d3810e95c1d62788508f9f637c4286fad059c8ebed10dfba39c4feba3d72e2",
+   "why": "transport: H1 invariance + H6 asymmetry predicted (direction unknown)",
+   "prediction": {
+    "H1": "P_iid vs P_unif at fixed m: no bin |z|>=3 (pass)",
+    "H6": "signed asymmetry: at least one bin |z|>=3 (GA-branch prediction); direction UNKNOWN and recorded either way",
+    "N_trend": "UNKNOWN; recorded"
+   }
+  },
+  {
+   "step": "D",
+   "labels": {
+    "mechanism": "particle1",
+    "pressure": "P_unif",
+    "world": "W149",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:3b00d71756601eb6f573c56a3cfb6f71f85f61007fe95364dd59905918fb2829",
+   "spec_hash": "sha256:475a994cd0bf6fb86d9d57b03a4a6f8ecef8b3ce7596364e706704718008502b",
+   "why": "transport",
+   "prediction": {
+    "H1": "P_iid vs P_unif at fixed m: no bin |z|>=3 (pass)",
+    "H6": "signed asymmetry: at least one bin |z|>=3 (GA-branch prediction); direction UNKNOWN and recorded either way",
+    "N_trend": "UNKNOWN; recorded"
+   }
+  },
+  {
+   "step": "D",
+   "labels": {
+    "mechanism": "particle1",
+    "pressure": "P_iid",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:fb0fcc798159f870d9407431ba3b7318d42cf0bd4a3dae443e286d737cb07a3d",
+   "spec_hash": "sha256:505a656f7a1301541d6e43e81320caa1423d96324a58a0383c1947b2185e6a47",
+   "why": "transport",
+   "prediction": {
+    "H1": "P_iid vs P_unif at fixed m: no bin |z|>=3 (pass)",
+    "H6": "signed asymmetry: at least one bin |z|>=3 (GA-branch prediction); direction UNKNOWN and recorded either way",
+    "N_trend": "UNKNOWN; recorded"
+   }
+  },
+  {
+   "step": "D",
+   "labels": {
+    "mechanism": "particle1",
+    "pressure": "P_unif",
+    "world": "W599",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:a09157c1a82591a0a6e82bcd60169eeb156c8acb8a4929c57b9c90293849f19f",
+   "spec_hash": "sha256:0af957f0019b8cff0d14757d8b32e313aa36c752b13d016fda3bd0c3b2bde618",
+   "why": "transport",
+   "prediction": {
+    "H1": "P_iid vs P_unif at fixed m: no bin |z|>=3 (pass)",
+    "H6": "signed asymmetry: at least one bin |z|>=3 (GA-branch prediction); direction UNKNOWN and recorded either way",
+    "N_trend": "UNKNOWN; recorded"
+   }
+  },
+  {
+   "step": "E",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_iid",
+    "world": "W999",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:bfd7b32e31b546b1768f25b78f7246eeef23f30131c15dad619d2c1de110d047",
+   "spec_hash": "sha256:8f6ece0cb44d779068d831bf2560dd8dd6d9be4c7a9de693045c0b9f8ccb92b5",
+   "why": "scaling: one-class collapse predicts accuracy -> 0.50 and total asymmetry",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0013,
+    "min": -0.0445,
+    "max": 0.0435
+   },
+   "prediction": {
+    "pred": 0.5303,
+    "se": 0.0002,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "exp/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)",
+    "note": "curve is N=599's; the frozen QUALITATIVE prediction is the N-trend: exp -> accuracy 0.50 +- 0.04 under P_iid with asymmetry |z|>=10; GKL fixed-m success at m in [0.01,0.03] >= N599's value - 2SE"
+   }
+  },
+  {
+   "step": "E",
+   "labels": {
+    "mechanism": "exp",
+    "pressure": "P_unif",
+    "world": "W999",
+    "branch": "ga_evolved_1993_95",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:f238c39a07ee4c410adf3da614a276d034b6e326f43ebe93a56308b69ba803c2",
+   "spec_hash": "sha256:5043ea95804832f2e12e7aec39388b0263816bb4553d4d5177c030213d1dee03",
+   "why": "scaling",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0006,
+    "min": -0.4169,
+    "max": 0.4229
+   },
+   "prediction": {
+    "pred": 0.8228,
+    "se": 0.0014,
+    "fallback_ics": 83,
+    "n_ics": 800,
+    "from_curve": "exp/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)",
+    "note": "curve is N=599's; the frozen QUALITATIVE prediction is the N-trend: exp -> accuracy 0.50 +- 0.04 under P_iid with asymmetry |z|>=10; GKL fixed-m success at m in [0.01,0.03] >= N599's value - 2SE"
+   }
+  },
+  {
+   "step": "E",
+   "labels": {
+    "mechanism": "GKL",
+    "pressure": "P_iid",
+    "world": "W999",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:cf48c1eeae8f9203e410d2d1a1c54235421ec4d267fc5c8fb8bf204f7af62dd0",
+   "spec_hash": "sha256:0389843dce331f9834cfd9fa0115a83e2c93870b588d0aec855365c88ac46ec1",
+   "why": "scaling: sharpening predicts fixed-m success >= N599's",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0013,
+    "min": -0.0445,
+    "max": 0.0435
+   },
+   "prediction": {
+    "pred": 0.7236,
+    "se": 0.0008,
+    "fallback_ics": 0,
+    "n_ics": 800,
+    "from_curve": "GKL/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)",
+    "note": "curve is N=599's; the frozen QUALITATIVE prediction is the N-trend: exp -> accuracy 0.50 +- 0.04 under P_iid with asymmetry |z|>=10; GKL fixed-m success at m in [0.01,0.03] >= N599's value - 2SE"
+   }
+  },
+  {
+   "step": "E",
+   "labels": {
+    "mechanism": "GKL",
+    "pressure": "P_unif",
+    "world": "W999",
+    "branch": "hand_designed",
+    "intervention": "NONE",
+    "seed_root": 20260913
+   },
+   "cell_id": "sha256:5a2c9185f707c9213cf9cdada3aac062d1c0c8c67e5a030dcef6bcca28d2b4a4",
+   "spec_hash": "sha256:9e57d14093412f7c38998320dc05f383150888645a97a1d42f10887ae2d621ec",
+   "why": "scaling",
+   "realised_margin_summary": {
+    "n": 800,
+    "mean_signed_m": 0.0006,
+    "min": -0.4169,
+    "max": 0.4229
+   },
+   "prediction": {
+    "pred": 0.9926,
+    "se": 0.0002,
+    "fallback_ics": 83,
+    "n_ics": 800,
+    "from_curve": "GKL/N599 signed-margin",
+    "pass_rule": "|observed - pred| <= 2*sqrt(se^2 + p(1-p)/800)",
+    "note": "curve is N=599's; the frozen QUALITATIVE prediction is the N-trend: exp -> accuracy 0.50 +- 0.04 under P_iid with asymmetry |z|>=10; GKL fixed-m success at m in [0.01,0.03] >= N599's value - 2SE"
+   }
+  }
+ ],
+ "cheat_b": {
+  "cell": {
+   "mechanism": "exp",
+   "pressure": "P_d40",
+   "world": "W599",
+   "branch": "ga_evolved_1993_95",
+   "intervention": "NONE",
+   "seed_root": 20260913
+  },
+  "prediction_from_wrong_curve": {
+   "pred": 0.9998,
+   "se": 0.0001,
+   "fallback_ics": 103,
+   "n_ics": 800
+  },
+  "prediction_from_right_curve": {
+   "pred": 0.3005,
+   "se": 0.003,
+   "fallback_ics": 103,
+   "n_ics": 800
+  },
+  "expected": "the wrong-curve prediction MISSES the observation; the right one passes"
+ },
+ "outcome_meanings": {
+  "B pass (>=8 of 10 within 2 SE)": "curve is constructive: SUFFICIENCY established",
+  "B fail on exp inversion": "one-class collapse reading killed; asymmetry is not class-side",
+  "B fail on maj W599": "boundary shift not real or curve too coarse",
+  "C identical digests": "H4 killed",
+  "C different digests": "horizon is an ingredient; reopen H4 with a sweep",
+  "D H1 pass + H6 asym": "branch-level transport of asymmetry to an unused genome",
+  "D H6 symmetric": "asymmetry is rule-specific, not branch-specific",
+  "E exp accuracy ~0.50 + asymmetry": "one-class collapse continues; obsolescence = collapse",
+  "E GKL sharpening": "sharpening continues; scaling verdict: relative margin + sharpening"
+ }
+}

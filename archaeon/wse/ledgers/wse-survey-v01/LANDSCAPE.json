@@ -1,0 +1,6106 @@
+{
+ "W0": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 1.0,
+     "16": 0.0026,
+     "2": 0.25,
+     "4": 0.0521,
+     "8": 0.026
+    },
+    {
+     "1": 1.0,
+     "16": 0.0651,
+     "2": 0.5,
+     "4": 0.25,
+     "8": 0.125
+    },
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    77,
+    19,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 1.0,
+     "ERASE_REGS": 1.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 1.0
+    },
+    {
+     "ERASE_ALL": 1.0,
+     "ERASE_REGS": 1.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 1.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 2,
+   "ops_per_episode": [
+    128.0,
+    303.0,
+    26.0
+   ],
+   "persist": [
+    "regs",
+    "regs",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "none",
+     "all",
+     "none",
+     "regs",
+     "none",
+     "all",
+     "tape",
+     "none",
+     "regs",
+     "none",
+     "tape",
+     "none",
+     "tape",
+     "none",
+     "regs",
+     "none",
+     "regs"
+    ],
+    [
+     "none",
+     "regs",
+     "none",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "none",
+     "regs",
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    1.0,
+    1.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.020833333333333332,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.25,
+    0.5,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0104,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0052
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    2.0,
+    17.0,
+    2.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none",
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W10_dag6": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    null,
+    null,
+    null
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    448.0,
+    7.0,
+    25.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    null,
+    null,
+    null
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    null,
+    null,
+    null
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    7.0,
+    7.0,
+    7.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    null,
+    null,
+    null
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W1_d1": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 1.0,
+     "16": 0.0339,
+     "2": 0.25,
+     "4": 0.1354,
+     "8": 0.0833
+    },
+    {
+     "1": 1.0,
+     "16": 0.0625,
+     "2": 0.5208,
+     "4": 0.25,
+     "8": 0.125
+    },
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0156
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "UNRESOLVED",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE*",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    49,
+    79,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 1.0,
+     "ERASE_REGS": 1.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.9792
+    },
+    {
+     "ERASE_ALL": 1.0,
+     "ERASE_REGS": 1.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 1.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 2,
+   "ops_per_episode": [
+    34.0,
+    609.0,
+    33.0
+   ],
+   "persist": [
+    "all",
+    "regs",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "none",
+     "regs",
+     "none",
+     "regs",
+     "all",
+     "regs",
+     "tape",
+     "regs",
+     "tape",
+     "regs",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "none",
+     "tape",
+     "none",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    1.0,
+    1.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.21875,
+    0.4895833333333333,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    3.0,
+    3.0,
+    3.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W1_d16": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 1.0,
+     "16": 0.0677,
+     "2": 0.5,
+     "4": 0.25,
+     "8": 0.1354
+    },
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0052
+    },
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0104,
+     "8": 0.0052
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "UNRESOLVED",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE*",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    28,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 1.0,
+     "ERASE_REGS": 1.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 1.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 1,
+   "ops_per_episode": [
+    9216.0,
+    144.0,
+    1152.0
+   ],
+   "persist": [
+    "all",
+    "tape",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "none",
+     "tape",
+     "regs",
+     "tape"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "tape",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "tape",
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.5,
+    0.010416666666666666,
+    0.010416666666666666
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    18.0,
+    18.0,
+    18.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W1_d4": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0104,
+     "8": 0.0052
+    },
+    {
+     "1": 0.0,
+     "16": 0.0052,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0104,
+     "2": 0.0,
+     "4": 0.0104,
+     "8": 0.0052
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.006666666666666666,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    96.0,
+    192.0,
+    96.0
+   ],
+   "persist": [
+    "all",
+    "tape",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "tape",
+     "all",
+     "none",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all"
+    ],
+    [
+     "none",
+     "regs",
+     "none",
+     "regs",
+     "all",
+     "none",
+     "all",
+     "none",
+     "tape",
+     "all",
+     "tape",
+     "all",
+     "tape"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "none",
+     "regs",
+     "tape",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.010416666666666666
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.006666666666666666,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    6.0,
+    6.0,
+    6.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W2_K2": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 1.0,
+     "16": 0.0703,
+     "2": 0.5,
+     "4": 0.2604,
+     "8": 0.1302
+    },
+    {
+     "1": 1.0,
+     "16": 0.013,
+     "2": 0.2292,
+     "4": 0.0833,
+     "8": 0.0052
+    },
+    {
+     "1": 0.0,
+     "16": 0.0052,
+     "2": 0.0,
+     "4": 0.0104,
+     "8": 0.0052
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "TRIVIAL_RECURRENCE",
+    "UNRESOLVED",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE*",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7292,
+    0.7188,
+    0.7292
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.003333333333333333,
+   "generation_first_solved": [
+    74,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.5,
+     "ERASE_REGS": 0.5,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.2292
+    },
+    {
+     "ERASE_ALL": 0.2188,
+     "ERASE_REGS": 0.2188,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.2188
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0104,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 1,
+   "ops_per_episode": [
+    256.0,
+    256.0,
+    98.0
+   ],
+   "persist": [
+    "regs",
+    "all",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "none",
+     "all",
+     "regs",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "none",
+     "all"
+    ],
+    [
+     "all",
+     "tape",
+     "all",
+     "tape",
+     "regs",
+     "all",
+     "regs",
+     "none",
+     "regs",
+     "none",
+     "regs",
+     "all",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    0.5,
+    0.28125,
+    0.010416666666666666
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.25,
+    0.07291666666666667,
+    0.015625
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7292,
+    0.7188,
+    0.7292
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.003333333333333333,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    4.0,
+    4.0,
+    4.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W2_K4": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.25,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0625,
+     "2": 0.5,
+     "4": 0.25,
+     "8": 0.125
+    },
+    {
+     "1": 0.0417,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "UNRESOLVED",
+    "UNRESOLVED",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE*",
+    "TRIVIAL_RECURRENCE*",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.6667,
+    0.6875,
+    0.5677
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.1458,
+     "ERASE_REGS": 0.1458,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.1198,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.1406
+    },
+    {
+     "ERASE_ALL": 0.1406,
+     "ERASE_REGS": 0.1406,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.2135
+    },
+    {
+     "ERASE_ALL": -0.0052,
+     "ERASE_REGS": -0.0052,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    109.0,
+    234.0,
+    128.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all"
+    ],
+    [
+     "all",
+     "none",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "tape",
+     "regs",
+     "tape",
+     "regs",
+     "none",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    0.2552083333333333,
+    0.2552083333333333,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.005208333333333333,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.1328125,
+    0.005208333333333333
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.6667,
+    0.6875,
+    0.5677
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    8.0,
+    8.0,
+    8.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none",
+     "regs",
+     "none"
+    ],
+    [
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W2_K8": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0208,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 1.0,
+     "16": 0.0755,
+     "2": 0.2917,
+     "4": 0.25,
+     "8": 0.125
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "UNRESOLVED"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "UNRESOLVED"
+   ],
+   "erase_ceiling": [
+    0.5208,
+    0.6094,
+    0.6276
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.00018229166666666665,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0052,
+     "ERASE_REGS": 0.0052,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0521,
+     "ERASE_REGS": 0.0521,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.1094
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    4096.0,
+    160.0,
+    1024.0
+   ],
+   "persist": [
+    "none",
+    "regs",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "regs",
+     "tape",
+     "regs",
+     "tape",
+     "regs",
+     "tape",
+     "none",
+     "regs",
+     "tape",
+     "regs",
+     "none",
+     "tape",
+     "regs",
+     "none",
+     "regs",
+     "tape",
+     "regs",
+     "none",
+     "all",
+     "none"
+    ],
+    [
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "tape",
+     "all",
+     "tape",
+     "none",
+     "tape",
+     "regs",
+     "tape",
+     "none",
+     "regs",
+     "none",
+     "regs"
+    ],
+    [
+     "all",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    0.0078125,
+    0.005208333333333333,
+    0.125
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0026041666666666665,
+    0.00390625,
+    0.06380208333333333
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.5208,
+    0.6094,
+    0.6276
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.00018229166666666665,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    272.0,
+    16.0,
+    32.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "regs",
+     "none",
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0078125,
+    0.0,
+    0.0026041666666666665
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0026041666666666665,
+    0.0,
+    0.0078125
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W3_K2": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 1.0,
+     "16": 0.0,
+     "2": 0.5,
+     "4": 0.4167,
+     "8": 0.1667
+    },
+    {
+     "1": 1.0,
+     "16": 0.0833,
+     "2": 0.5417,
+     "4": 0.3333,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0417,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.006666666666666666,
+   "generation_first_solved": [
+    45,
+    3,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.5208,
+     "ERASE_REGS": 0.5208,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.5208
+    },
+    {
+     "ERASE_ALL": 0.4583,
+     "ERASE_REGS": 0.4583,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.4583,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.4583
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 1,
+   "ops_per_episode": [
+    48.0,
+    42.0,
+    1536.0
+   ],
+   "persist": [
+    "regs",
+    "regs",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "regs",
+     "none",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "none",
+     "all",
+     "none",
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.5625,
+    0.4791666666666667,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.2708333333333333,
+    0.20833333333333334,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.006666666666666666,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    3.0,
+    3.0,
+    3.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none",
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W3_K4": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 1.0,
+     "16": 0.125,
+     "2": 0.5833,
+     "4": 0.1667,
+     "8": 0.0833
+    },
+    {
+     "1": 1.0,
+     "16": 0.0417,
+     "2": 0.5,
+     "4": 0.2083,
+     "8": 0.125
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "NO_ADAPTATION",
+    "TRIVIAL_RECURRENCE",
+    "UNRESOLVED"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "TRIVIAL_RECURRENCE",
+    "TRIVIAL_RECURRENCE*"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    48
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.2292,
+     "ERASE_REGS": 0.2292,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.2292
+    },
+    {
+     "ERASE_ALL": 0.25,
+     "ERASE_REGS": 0.25,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.25,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.25
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    1280.0,
+    45.0,
+    149.0
+   ],
+   "persist": [
+    "tape",
+    "regs",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "none",
+     "tape",
+     "none",
+     "tape",
+     "none",
+     "tape"
+    ],
+    [
+     "tape",
+     "regs",
+     "tape",
+     "all",
+     "regs",
+     "all",
+     "regs",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "regs",
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.2708333333333333,
+    0.22916666666666666
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.20833333333333334,
+    0.08333333333333333
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    5.0,
+    5.0,
+    5.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W3_K8": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0417
+    },
+    {
+     "1": 1.0,
+     "16": 0.0417,
+     "2": 0.5,
+     "4": 0.125,
+     "8": 0.125
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "NO_ADAPTATION",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.1042,
+     "ERASE_REGS": 0.1042,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.1042,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.1042
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    2304.0,
+    205.0,
+    72.0
+   ],
+   "persist": [
+    "regs",
+    "regs",
+    "regs"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "tape",
+     "none",
+     "all",
+     "regs",
+     "none",
+     "tape",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "all",
+     "none",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "none",
+     "tape",
+     "none",
+     "regs",
+     "all",
+     "regs"
+    ]
+   ],
+   "reward_heldout": [
+    0.020833333333333332,
+    0.14583333333333334,
+    0.041666666666666664
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0625,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    9.0,
+    36.0,
+    9.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W4_K2_D4_int": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7396,
+    0.7083,
+    0.7604
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    640.0,
+    10.0,
+    37.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7396,
+    0.7083,
+    0.7604
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    10.0,
+    10.0,
+    10.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E2": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7396,
+    0.7083,
+    0.7604
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    10.0,
+    10.0,
+    10.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E3": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7396,
+    0.7083,
+    0.7604
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    10.0,
+    10.0,
+    10.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W5_K4_D4": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.651,
+    0.6302,
+    0.6354
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    1280.0,
+    20.0,
+    77.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.651,
+    0.6302,
+    0.6354
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    20.0,
+    20.0,
+    20.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W6_f1_n8": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 128.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 192.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 320.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 576.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 17.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 33.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    128.0,
+    2.0,
+    5.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    2.0,
+    2.0,
+    2.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E2": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    2.0,
+    2.0,
+    2.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E3": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    2.0,
+    2.0,
+    2.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W6_f4_n8": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 128.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 192.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 320.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 576.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 17.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 33.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    320.0,
+    5.0,
+    17.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    5.0,
+    5.0,
+    5.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E2": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    5.0,
+    5.0,
+    5.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E3": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "fanout_curve": [
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    },
+    {
+     "1": {
+      "ops_per_episode": 2.0,
+      "reward": 0.0
+     },
+     "2": {
+      "ops_per_episode": 3.0,
+      "reward": 0.0
+     },
+     "4": {
+      "ops_per_episode": 5.0,
+      "reward": 0.0
+     },
+     "8": {
+      "ops_per_episode": 9.0,
+      "reward": 0.0
+     }
+    }
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    5.0,
+    5.0,
+    5.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W7_K2": {
+  "E0": {
+   "agreement": false,
+   "capacity_curve_K": [
+    {
+     "16": 0.0,
+     "2": 0.1875,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "16": 0.0026,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "16": 0.0078,
+     "2": 0.0,
+     "4": 0.0104,
+     "8": 0.0104
+    }
+   ],
+   "class_if_agreed": "DISAGREE",
+   "classes": [
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "TRIVIAL_RECURRENCE",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.5208,
+    0.5625,
+    0.5208
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.1562,
+     "ERASE_REGS": 0.1562,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.1771
+    },
+    {
+     "ERASE_ALL": -0.0104,
+     "ERASE_REGS": -0.0104,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0208,
+     "ERASE_REGS": 0.0208,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0208
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    64.0,
+    42.0,
+    128.0
+   ],
+   "persist": [
+    "regs",
+    "regs",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "regs"
+    ],
+    [
+     "all",
+     "none",
+     "tape",
+     "regs",
+     "tape",
+     "regs"
+    ],
+    [
+     "all",
+     "regs",
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.17708333333333334,
+    0.0,
+    0.010416666666666666
+   ],
+   "reward_heldout_D2x": [
+    0.010416666666666666,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.005208333333333333
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.5208,
+    0.5625,
+    0.5208
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    4.0,
+    4.0,
+    4.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "regs",
+     "none",
+     "regs",
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W8_K2_D3": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    null,
+    null,
+    null
+   ],
+   "class_if_agreed": "UNRESOLVED",
+   "classes": [
+    "UNRESOLVED",
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "classes_v012_property_keyed": [
+    "UNRESOLVED",
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "erase_ceiling": [
+    0.6875,
+    0.7604,
+    0.7188
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.000625,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    64.0,
+    128.0,
+    176.0
+   ],
+   "persist": [
+    "regs",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all",
+     "tape",
+     "all",
+     "regs"
+    ],
+    [
+     "all",
+     "none",
+     "all",
+     "none",
+     "all"
+    ],
+    [
+     "regs",
+     "none",
+     "all",
+     "regs",
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.375,
+    0.23958333333333334,
+    0.3645833333333333
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    null,
+    null,
+    null
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    null,
+    null,
+    null
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.6875,
+    0.7604,
+    0.7188
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.000625,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    8.0,
+    8.0,
+    8.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none",
+     "tape",
+     "none"
+    ],
+    [
+     "regs",
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    null,
+    null,
+    null
+   ],
+   "reward_heldout_K2x": [
+    null,
+    null,
+    null
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "W9_K2": {
+  "E0": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7812,
+    0.7396,
+    0.7396
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    512.0,
+    8.0,
+    29.0
+   ],
+   "persist": [
+    "all",
+    "all",
+    "all"
+   ],
+   "persist_switches": [
+    [
+     "all"
+    ],
+    [
+     "all"
+    ],
+    [
+     "all"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  },
+  "E1": {
+   "agreement": true,
+   "capacity_curve_K": [
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    },
+    {
+     "1": 0.0,
+     "16": 0.0,
+     "2": 0.0,
+     "4": 0.0,
+     "8": 0.0
+    }
+   ],
+   "class_if_agreed": "NO_ADAPTATION",
+   "classes": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "classes_v012_property_keyed": [
+    "NO_ADAPTATION",
+    "NO_ADAPTATION",
+    "NO_ADAPTATION"
+   ],
+   "erase_ceiling": [
+    0.7812,
+    0.7396,
+    0.7396
+   ],
+   "fanout_curve": [
+    null,
+    null,
+    null
+   ],
+   "floor": 0.0,
+   "generation_first_solved": [
+    null,
+    null,
+    null
+   ],
+   "intervention_drop": [
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    },
+    {
+     "ERASE_ALL": 0.0,
+     "ERASE_REGS": 0.0,
+     "ERASE_TAPE": 0.0,
+     "HALVE_CAP": 0.0,
+     "RESET_IP": 0.0,
+     "SCRAMBLE_LOC": 0.0,
+     "SCRAMBLE_VAL": 0.0,
+     "SWAP_TWO": 0.0,
+     "TRANSPLANT": 0.0
+    }
+   ],
+   "n_solved": 0,
+   "ops_per_episode": [
+    8.0,
+    8.0,
+    8.0
+   ],
+   "persist": [
+    "none",
+    "none",
+    "none"
+   ],
+   "persist_switches": [
+    [
+     "none"
+    ],
+    [
+     "none"
+    ],
+    [
+     "none"
+    ]
+   ],
+   "reward_heldout": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_D2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reward_heldout_K2x": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "seeds": [
+    1,
+    2,
+    3
+   ]
+  }
+ }
+}

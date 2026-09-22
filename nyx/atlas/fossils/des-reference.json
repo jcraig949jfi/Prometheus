@@ -1,0 +1,826 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "des-reference",
+ "techne_record": "techne/fossils/specimens/des-reference/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "des-reference",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "DES -- the Data Encryption Standard, withdrawn after its key length became breakable",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "a reference DES implementation (see source_identity)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1977 (FIPS 46); broken in practice 1998; withdrawn 2005",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "cryptography",
+     "block-cipher",
+     "feistel-network",
+     "security",
+     "loser"
+    ],
+    "lineage": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "standardised symmetric encryption",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "provide a single standard, hardware-friendly block cipher for unclassified US government data",
+    "pressure": "a cipher cheap enough for 1970s hardware yet strong enough to resist analysis, standardised so that different systems could interoperate",
+    "success_means": "ciphertext that only the key holder can invert, and identical output across every conforming implementation"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "an adversary with growing compute; a key length fixed in 1977 against hardware that kept getting cheaper",
+    "failure_condition": "the 56-bit keyspace became exhaustively searchable -- EFF's Deep Crack recovered keys in days in 1998, and the standard was withdrawn"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded_by: tiny-aes-c"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "OBSOLETED_BY_ENVIRONMENT",
+    "failure_reasons": [
+     "security_weakness"
+    ],
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "NIST FIPS 46-3 withdrawal (2005); FIPS 197 (AES, 2001)",
+      "says": "NIST withdrew the DES standard and replaced it with AES, selected through a public competition."
+     },
+     {
+      "kind": "retrospective",
+      "ref": "Electronic Frontier Foundation, Cracking DES (O'Reilly, 1998)",
+      "says": "EFF's purpose-built Deep Crack machine recovered DES keys by exhaustive search in days, demonstrating the 56-bit key was too short."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/des-reference/upstream/tree/des.c"
+   }
+  ],
+  "inspected_files": [
+   "des.c (tables, generate_sub_keys, process_message)",
+   "recipe.json runs"
+  ],
+  "date": "2026-09-14T00:10Z",
+  "note": "an OBSOLETED_BY_ENVIRONMENT fossil: the machinery still runs exactly; the world's compute grew past its key length",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/tarequeh/DES@6ad9df7a543481f9e419df90e4b69cd4cbbe8322",
+   "payload_manifest_id": "techne tree_sha256 ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c (6 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/des.c",
+     "payload_hash_read": "97df0854464688e1e48af7cacf676515780bbfe2f50d7a570f2975353bfa71bd",
+     "techne_recorded_hash": "97df0854464688e1e48af7cacf676515780bbfe2f50d7a570f2975353bfa71bd",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "des-reference::table_driven_bit_gather",
+   "fossil_ancestry": "des-reference",
+   "human_name": "permutation / expansion / compression tables (IP, FP, E, P, PC-1, PC-2)",
+   "human_interpretation": "rearrange the bits of a block according to a fixed table",
+   "mechanism": "for output bit i, read the table entry t[i], fetch input bit t[i]-1 by masking its byte, and OR it into output byte i/8 at position i%8; the same loop shape serves six tables; a table with repeated entries duplicates bits (expansion 32->48), a table shorter than its input drops bits (56->48, 64->56)",
+   "input": "a bit vector + a table",
+   "output": "a bit vector",
+   "state": "none (tables are constants)",
+   "update": "none",
+   "assumptions": [
+    "tables are the standard's data"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+    "des-reference::six_to_four_bit_substitution_from_eight_tables",
+    "des-reference::subkey_schedule_by_rotating_two_halves"
+   ],
+   "fitness_value_in_ancestor": "all diffusion across S-box boundaries comes from P and E; IP/FP are historically hardware-convenience with no cryptographic role",
+   "failure_landscape": "none structural; bit-serial loop is slow (software, not the standard's fault)",
+   "ablation": "NOT_RUN",
+   "decomposability": "one mechanism, six data tables",
+   "composability": "any fixed bit rewiring",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/des-reference/upstream/tree/des.c:7-100,255-262,278-285,360-368"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the six identical for-loops over a table",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "fossil_ancestry": "des-reference",
+   "human_name": "Feistel round",
+   "human_interpretation": "the structure that makes the cipher invertible regardless of the round function",
+   "mechanism": "split the block into L and R; new L = old R; new R = old L XOR f(old R, subkey_k); after 16 rounds swap once more; because f is only XORed in, running the same rounds with subkeys in reverse order inverts the whole thing without inverting f",
+   "input": "64-bit block, 16 subkeys, mode",
+   "output": "64-bit block",
+   "state": "l[4], r[4] per round",
+   "update": "16 iterations",
+   "assumptions": [
+    "XOR is its own inverse"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "des-reference::six_to_four_bit_substitution_from_eight_tables"
+   ],
+   "composition_neighbors": [
+    "des-reference::subkey_schedule_by_rotating_two_halves",
+    "des-reference::table_driven_bit_gather",
+    "des-reference::six_to_four_bit_substitution_from_eight_tables"
+   ],
+   "fitness_value_in_ancestor": "decryption is the same code with key_index = 17-k (line 288-292)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/des-reference/upstream/tree/des.c:265-275,286-292,370-385"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "process_message round loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "des-reference::six_to_four_bit_substitution_from_eight_tables",
+   "fossil_ancestry": "des-reference",
+   "human_name": "S-boxes",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the 48 expanded-and-keyed bits are cut into eight 6-bit groups; each group's outer two bits pick a row and inner four bits a column in that group's 64-entry table; the 4-bit outputs are concatenated; the only non-linear step in the cipher",
+   "input": "48 bits",
+   "output": "32 bits",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "the tables are the standard's (their design criteria were secret in 1977)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+    "des-reference::table_driven_bit_gather"
+   ],
+   "fitness_value_in_ancestor": "all non-linearity; without it the cipher is affine and breaks with 64 plaintexts",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/des-reference/upstream/tree/des.c:45-84,296-358"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the eight row/column blocks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "des-reference::subkey_schedule_by_rotating_two_halves",
+   "fossil_ancestry": "des-reference",
+   "human_name": "key schedule (PC-1, rotations, PC-2)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the 56 key bits (after a table gather that drops 8 parity bits) are split into two 28-bit halves; for each of 16 rounds both halves are rotated left by 1 or 2 positions per a fixed schedule table, and 48 of the 56 bits are gathered by a second table to form that round's subkey; all 16 subkeys are precomputed before any block is processed",
+   "input": "64-bit key",
+   "output": "16 x 48-bit subkeys",
+   "state": "c[4], d[4] rotating halves; key_sets[17]",
+   "update": "16 rotations",
+   "assumptions": [
+    "rotation amounts sum to 28 so the halves return to start"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+    "des-reference::table_driven_bit_gather"
+   ],
+   "fitness_value_in_ancestor": "each round sees a different 48-bit selection of the same 56 bits",
+   "failure_landscape": "weak keys (all-zero halves) make every subkey identical -- present in the standard, not tested here",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/des-reference/upstream/tree/des.c:148-245"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "generate_sub_keys",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'DES' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "four mechanisms with distinct data/state (above); the Feistel structure and the S-boxes are independently replaceable (later ciphers kept one and changed the other)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "des-reference"
+  },
+  {
+   "candidate": "initial/final permutation as cryptographic machinery",
+   "reason": "STATE_OBSERVATIONALLY_IRRELEVANT",
+   "evidence": "IP and FP are fixed, key-independent, mutually inverse bit rewirings applied outside the rounds; they change no security property (a known fact, not measured here) -- kept as INSTANCES of table_driven_bit_gather, rejected as a separate organ",
+   "note": "the human standard lists them as steps; the anatomy does not need them",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "des-reference"
+  },
+  {
+   "candidate": "byte-by-byte bit extraction (0x80 >> ...) idiom",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "the same three-line idiom appears 8 times; it is how C addresses a bit, not machinery",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "des-reference"
+  },
+  {
+   "candidate": "Techne's oracle claim 'known-answer test'",
+   "reason": "OTHER",
+   "evidence": "recipe.json runs: generate a random key, encrypt, decrypt, compare (roundtrip_identical=yes; ciphertext_differs=yes). A round trip passes for ANY invertible transform, e.g. XOR with the key; no published FIPS vector is checked",
+   "note": "TECHNE FEEDBACK: record.example says 'the ORACLE: a known-answer test'; the executed test is weaker than the record claims",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "des-reference"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "des-reference::P.adversary_with_growing_compute_against_a_fixed_secret_size",
+   "source_fossil": "des-reference",
+   "source_evidence": "record.human_failure_condition",
+   "condition": "the secret is a fixed number of bits; the cost of trying them all falls every year; the transform itself has no known shortcut",
+   "resource_or_constraint": "key length fixed by the standard; adversary compute",
+   "failure_condition": "exhaustive search becomes affordable (1998: days)",
+   "world_punishes": "a parameter frozen in a document",
+   "world_rewards": "nothing inside the machinery -- the fix was a new standard",
+   "observable_consequence": "withdrawal of the standard; the fossil still round-trips",
+   "vacuity_condition": "adversary compute stops growing",
+   "trivial_shortcuts": "none",
+   "cheat_control": "N/A",
+   "cost_class": "2^56 operations",
+   "purpose_separated_from_pressure": "PURPOSE: confidentiality of 64-bit blocks under a shared key",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "des-reference::P.confusion_and_diffusion_in_few_operations",
+   "source_fossil": "des-reference",
+   "source_evidence": "source structure",
+   "condition": "every output bit must depend non-linearly on every input and key bit, on 1977 hardware",
+   "resource_or_constraint": "gate count / cycle count",
+   "failure_condition": "a linear or local dependency exposes the key from few plaintexts",
+   "world_punishes": "affine structure; slow diffusion",
+   "world_rewards": "a non-linear step and a rewiring step per round, repeated",
+   "observable_consequence": "avalanche after few rounds (NOT measured here; record names it as the behavioural entry point)",
+   "vacuity_condition": "no adversary",
+   "trivial_shortcuts": "a random-looking but linear map",
+   "cheat_control": "a round-count sweep measuring output-bit flip fraction per input-bit flip (planned, not run)",
+   "cost_class": "16 rounds x (8 table lookups + 3 rewirings)",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "des-reference::subkey_schedule_by_rotating_two_halves",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "subkeys consumed one per round",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::table_driven_bit_gather",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "E before the XOR, P after the S-boxes, IP/FP outside",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "to": "des-reference::six_to_four_bit_substitution_from_eight_tables",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::six_to_four_bit_substitution_from_eight_tables",
+   "to": "des-reference::table_driven_bit_gather",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::table_driven_bit_gather",
+   "to": "des-reference::subkey_schedule_by_rotating_two_halves",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "PC-1 and PC-2 are table gathers inside the schedule",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "mode flips the subkey order",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "des-reference",
+   "relation": "superseded_by",
+   "to": "tiny-aes-c",
+   "note": "AES (Rijndael) replaced DES by NIST competition [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "run_des.c (file I/O driver) not read; it is the harness, not the cipher",
+   "the 8 S-box tables are data whose design criteria are not in the fossil (published later by IBM); the atlas cannot say why these tables"
+  ],
+  "note": "4 mechanisms account for every operation in process_message and generate_sub_keys",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

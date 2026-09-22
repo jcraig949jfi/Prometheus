@@ -26,7 +26,10 @@ class CanonicalCheckoutRefused(RuntimeError):
 
 
 def _git(*args: str, cwd: Optional[Path] = None) -> str:
-    return subprocess.run(["git", *args], cwd=str(cwd or REPO), capture_output=True, text=True, timeout=30).stdout.strip()
+    try:
+        return subprocess.run(["git", *args], cwd=str(cwd or REPO), capture_output=True, text=True, timeout=30).stdout.strip()
+    except Exception:                                   # noqa: BLE001 -- no git on PATH, timeout: "" means UNKNOWN
+        return ""
 
 
 def is_main_worktree(path: Optional[Path] = None) -> bool:
@@ -37,8 +40,20 @@ def is_main_worktree(path: Optional[Path] = None) -> bool:
     gd = _git("rev-parse", "--git-dir", cwd=cwd)
     cd = _git("rev-parse", "--git-common-dir", cwd=cwd)
     if not gd or not cd:
-        return False
+        return False                                    # undeterminable; see workspace_known()
     return Path(cwd, gd).resolve() == Path(cwd, cd).resolve()
+
+
+def workspace_known(path: Optional[Path] = None) -> bool:
+    """True iff git answered for this path. ARCH-52 (Mnemosyne #290,
+    2026-09-16): a PEW service ran from the CANONICAL checkout for a morning
+    with main_worktree=false in its own receipt because the scheduled-task
+    context had no git on PATH, _git() returned "", and is_main_worktree()
+    read "cannot tell" as "not canonical". This reference guard had the
+    same hole and every seat that copied it inherited it. "Cannot tell" is
+    not "not canonical": assert_not_canonical() now fails CLOSED on it."""
+    cwd = path or REPO
+    return bool(_git("rev-parse", "--git-dir", cwd=cwd)) and bool(_git("rev-parse", "HEAD", cwd=cwd))
 
 
 _REPO_ID: Dict[str, str] = {}
@@ -66,7 +81,8 @@ def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
     branch = _git("rev-parse", "--abbrev-ref", "HEAD", cwd=cwd)
     dirty = bool(_git("status", "--porcelain", "--untracked-files=no", cwd=cwd))
     return {"base_sha": sha, "branch": branch, "worktree_path": str(Path(cwd).resolve()),
-            "dirty": dirty, "main_worktree": is_main_worktree(cwd), "repo_id": repo_id(cwd),
+            "dirty": dirty, "main_worktree": is_main_worktree(cwd), "workspace_known": workspace_known(cwd),
+            "repo_id": repo_id(cwd),
             "allow_canonical_override": os.environ.get("ARCHAEON_ALLOW_CANONICAL") == "1"}
 
 
@@ -74,6 +90,11 @@ def assert_not_canonical(purpose: str = "work", *, allow_override: bool = True) 
     """Refuse to do `purpose` from the canonical checkout. Returns the
     workspace receipt when allowed."""
     r = receipt()
+    if not r["workspace_known"]:
+        raise CanonicalCheckoutRefused(
+            "refusing to {} from {}: git did not answer for this path (no git on PATH, or not a repository), so "
+            "whether it is the canonical checkout is UNKNOWN; the guard fails closed (ARCH-52, 2026-09-16)."
+            .format(purpose, r["worktree_path"]))
     if r["main_worktree"] and not (allow_override and r["allow_canonical_override"]):
         raise CanonicalCheckoutRefused(
             "refusing to {} from the canonical checkout {} (the repository's main worktree). "

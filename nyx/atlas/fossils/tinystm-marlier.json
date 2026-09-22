@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "tinystm-marlier",
+ "techne_record": "techne/fossils/specimens/tinystm-marlier/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "tinystm-marlier",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "TinySTM -- a lightweight word-based software transactional memory (Felber, Fetzer, Riegel, Marlier; 2007-)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/patrickmarlier/tinystm master as of 2026-09-12 (commit in hashes; 1.0.5 lineage)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2007-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "transactional-memory",
+     "contention",
+     "abort-retry",
+     "superseded-design"
+    ],
+    "lineage": "Software transactional memory (Shavit & Touitou 1995) as the research lineage that competed with lock-based concurrency in the multicore decade: TinySTM (2007, Univ. Neuchatel / TU Dresden) uses time-based validation (Riegel), encounter- or commit-time locking, and ships micro-benchmarks (bank, intset) that count aborts/commits. The human record: STM lost the mainstream to fine-grained locks and lock-free structures, survived in Haskell/Clojure and Intel TSX -- a partly SUPERSEDED design, preserved."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "composable atomic memory updates without locks",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let threads compose memory operations into atomic transactions that abort and retry on conflict instead of holding locks",
+    "pressure": "contention (conflicting transactions abort), memory reordering, the cost of validation",
+    "success_means": "the bank's total balance is invariant under any interleaving; aborts are bounded and retried"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "resource contention, competing writers, retry cost",
+    "failure_condition": "abort storms under high contention (livelock-like) or a validation bug that commits a conflicting transaction"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Software transactional memory (Shavit & Touitou 1995) as the research lineage that competed with lock-based concurrency in the multicore decade: TinySTM (2007, Univ. Neuchatel / TU Dresden) uses time-based validation (Riegel), encounter- or commit-time locking, and ships micro-benchmarks (bank, intset) that count aborts/commits. The human record: STM lost the mainstream to fine-grained locks and lock-free structures, survived in Haskell/Clojure and Intel TSX -- a partly SUPERSEDED design, preserved.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Shavit & Touitou 1995 (STM); Riegel 2006 (LSA)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: concurrencykit-0.7.2"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "tinystm-marlier",
+   "relation": "algorithm_from",
+   "to": "Shavit & Touitou 1995 (STM); Riegel 2006 (LSA)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinystm-marlier",
+   "relation": "shares_ancestor_with",
+   "to": "concurrencykit-0.7.2",
+   "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

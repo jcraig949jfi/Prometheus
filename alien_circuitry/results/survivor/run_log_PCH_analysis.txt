@@ -1,0 +1,61 @@
+[stage] built  rss=276 MB
+[stage] scc done  rss=304 MB
+[stage] ecc done  rss=316 MB
+[stage] traps done  rss=650 MB
+[stage] Q1 done  rss=650 MB
+[stage] ball costs done  rss=650 MB
+[stage] layers done  rss=653 MB
+[stage] leakage done  rss=653 MB
+[stage] distance done  rss=588 MB
+[stage] analysis results written  rss=589 MB
+{
+ "universe": "PCH",
+ "NS": 823543,
+ "edges": 2470629,
+ "traps": 3069066,
+ "H_obs": {
+  "0": 0,
+  "1": 0,
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 126,
+  "6-12": 14448,
+  "13-20": 608412,
+  "21-30": 2446080,
+  ">30": 0,
+  "n": 3069066
+ },
+ "LA5_recall": 4.105483557538352e-05,
+ "layers": {
+  "R0": 40577880,
+  "R1": 0,
+  "reachable": 11138190,
+  "R1_fraction_of_kernel_compatible": 0.0,
+  "R1_traps": 0,
+  "R1_trap_fraction_of_traps": 0.0
+ },
+ "leak_A_prauc": 0.6854366583759318,
+ "leak_B_prauc": 0.6845976020518549,
+ "leak_B_nmi": 0.3141094768213291,
+ "dist_table": {
+  "R2": 0.5802344620868646,
+  "exact_match": 0.237800170451697,
+  "within_1": 0.6113701308467439,
+  "MAE": 1.4297271323461698,
+  "spearman": 0.7497297061129002
+ },
+ "dist_linear": {
+  "R2": 0.45692509412765503,
+  "exact_match": 0.17423171404221185,
+  "within_1": 0.5013485737203589,
+  "MAE": 1.7111709117889404,
+  "spearman": 0.6392520781847101
+ },
+ "H0": {},
+ "H1": null,
+ "H2": null,
+ "seconds": 661.8,
+ "nav_seconds": null
+}
+EXIT 0

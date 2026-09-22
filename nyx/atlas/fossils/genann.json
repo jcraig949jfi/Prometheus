@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "genann",
+ "techne_record": "techne/fossils/specimens/genann/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "genann",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "genann -- a minimal feedforward neural network in C (Lewis Van Winkle)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/codeplea/genann master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1958/1986 lineage; this impl 2015",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "connectionist",
+     "neural-network",
+     "perceptron",
+     "backpropagation",
+     "adaptation",
+     "learning"
+    ],
+    "lineage": "The perceptron/MLP lineage (Rosenblatt 1958 -> Rumelhart backprop 1986): genann is a tiny ANSI C multilayer perceptron trained by backpropagation -- the connectionist update rule and forward pass in a few hundred readable lines"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "supervised learning of nonlinear functions by a connectionist network",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "learn a nonlinear input-output mapping from examples by adjusting connection weights via gradient descent (backpropagation) through a layered network",
+    "pressure": "a mapping (like XOR) that no single linear unit can represent; the network must distribute the function across hidden units and learn the weights from data alone",
+    "success_means": "the trained network generalises the target function (e.g. learns XOR, classifies IRIS) from examples"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "a nonlinearly-separable task, learning from examples only (no programmed rule)",
+    "failure_condition": "failure to converge (bad learning rate / local minimum) or overfitting -- the net memorises noise and does not generalise"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The perceptron/MLP lineage (Rosenblatt 1958 -> Rumelhart backprop 1986): genann is a tiny ANSI C multilayer perceptron trained by backpropagation -- the connectionist update rule and forward pass in a few hundred readable lines",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e35c6295244d4553a6043efd57f4ec261c9d86cb29398da01543d0730b25577f"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

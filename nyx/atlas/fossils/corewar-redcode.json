@@ -1,0 +1,1093 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "corewar-redcode",
+ "techne_record": "techne/fossils/specimens/corewar-redcode/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "corewar-redcode",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Core War (Redcode / MARS) -- warring programs in a virtual machine",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/rodrigosetti/corewar master as of 2026-09-12 (a Redcode MARS implementation; commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1984-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "artificial-life",
+     "virtual-machine",
+     "self-replication",
+     "competition",
+     "unconventional-computation",
+     "game"
+    ],
+    "lineage": "Core War (1984, A.K. Dewdney): two or more programs written in Redcode run in a shared circular memory on the Memory Array Redcode Simulator (MARS); they copy, bomb and evade each other until one survives -- a self-replication / competition substrate that predates and prefigures artificial life"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "a virtual battleground for self-replicating, competing programs",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "run competing self-modifying programs in a shared virtual memory and see which survives -- a substrate where programs copy themselves, attack rivals' code, and defend, entirely inside a tiny instruction set",
+    "pressure": "a fixed shared memory and a single CPU shared round-robin; a warrior must replicate or damage others faster than it is damaged",
+    "success_means": "in its native domain, surviving longer than the opponent; as a fossil, a running self-replication/competition VM Nyx can perturb"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Core War (1984, A.K. Dewdney): two or more programs written in Redcode run in a shared circular memory on the Memory Array Redcode Simulator (MARS); they copy, bomb and evade each other until one survives -- a self-replication / competition substrate that predates and prefigures artificial life",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "FAITHFUL_PORT",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "73122063b0992624db657416b9976090a3c5bb00687d4a628a79646013250f74"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/mars.py"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/core.py"
+   }
+  ],
+  "inspected_files": [
+   "mars.py 31-330",
+   "core.py (index)",
+   "redcode.py (index)",
+   "tests/, warriors/ (names)"
+  ],
+  "date": "2026-09-16T12:12Z",
+  "note": "this fossil is an ENVIRONMENT: every mechanism below is a rule of the world the warriors evolve in; the atlas records it because Vivarium-shaped questions (what a world must contain) are answered by exactly these rules",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/rodrigosetti/corewar@a228123a1fb6a81f1a38b4988d5c245fe022fa53",
+   "payload_manifest_id": "techne tree_sha256 73122063b0992624db657416b9976090a3c5bb00687d4a628a79646013250f74 (46 files)",
+   "host_tree_matches_record": false,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/corewar/mars.py",
+     "payload_hash_read": "d251e625520ea18c24f09194dac016e7ff7c76a01658d14c3167cb5454caafad",
+     "techne_recorded_hash": "d251e625520ea18c24f09194dac016e7ff7c76a01658d14c3167cb5454caafad",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/corewar/core.py",
+     "payload_hash_read": "eb44f547912dc599078a5a533e8371593398daf612f46c965307fca0675f9955",
+     "techne_recorded_hash": "eb44f547912dc599078a5a533e8371593398daf612f46c965307fca0675f9955",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/corewar/redcode.py",
+     "payload_hash_read": "d9b2e601f8060dff8eaef4f856afd150fc9b2fdf048b229e0ecbe7521c140de6",
+     "techne_recorded_hash": "d9b2e601f8060dff8eaef4f856afd150fc9b2fdf048b229e0ecbe7521c140de6",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "Core",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a fixed-size (8000) array of instruction records, addressed modulo its size (trim); reads and writes are further folded into a window around the executing address (trim_read / trim_write with read_limit / write_limit, both default to the whole core); cleared to a DAT instruction",
+   "input": "addresses",
+   "output": "instruction records",
+   "state": "the array",
+   "update": "per write",
+   "assumptions": [
+    "all warriors share one address space; there is no protection"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+    "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+    "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects"
+   ],
+   "fitness_value_in_ancestor": "the single resource fought over",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/core.py:10-50"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "core.py",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "SHARED_RESOURCE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "MARS.step / task_queue / enqueue",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one step executes one instruction per LIVE warrior in fixed order: pop the front of the warrior's task queue as the program counter; instructions push their successor (pc + 1, or a jump target, or both for SPL -- not shown) at the back; enqueue is dropped silently when the queue holds max_processes; a warrior with an empty queue is dead",
+   "input": "warriors' task queues",
+   "output": "one executed instruction per warrior",
+   "state": "task_queue per warrior (a list of addresses)",
+   "update": "per step",
+   "assumptions": [
+    "fairness by construction: every live warrior gets exactly one instruction per step regardless of its process count -- a warrior's processes share its turn"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+    "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+    "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets"
+   ],
+   "fitness_value_in_ancestor": "the game's clock and its death rule (DAT executes -> no enqueue -> process lost)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/mars.py:80-100,286-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "MARS.step outer loop + enqueue",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "COLLAPSES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "addressing modes (#, $, @, <, >, *, {, })",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each of the two operands: immediate -> the instruction itself; direct -> pc + number; indirect -> pc + number + the pointed instruction's A or B field; pre-decrement modes first decrement that field in core, post-increment modes increment it after the read; the read and write pointers are trimmed separately; the operand instruction is COPIED before the opcode acts (ira, irb) so a self-modifying instruction sees the old value",
+   "input": "an instruction, pc, core",
+   "output": "ira, irb (copies), rpa/rpb/wpa/wpb (offsets)",
+   "state": "core (mutated by pre/post modes)",
+   "update": "per instruction",
+   "assumptions": [
+    "the ICWS '94 evaluation order (A operand fully before B)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+    "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+    "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits"
+   ],
+   "fitness_value_in_ancestor": "side-effecting addressing is where Core War's compact self-modifying programs (the Imp, the Dwarf's bomb pointer) come from",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/mars.py:96-184"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the operand blocks of step()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "DAT MOV ADD SUB MUL DIV MOD JMP JMZ JMN DJN CMP/SEQ SNE SLT SPL NOP with modifiers .A .B .AB .BA .F .X .I",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the modifier selects which fields (A, B, cross, both, swapped, whole instruction) the opcode reads from ira/irb and writes at pc + wpb; arithmetic through do_arithmetic, comparisons through do_comparison (skip the next instruction on true: enqueue pc + 2); DAT enqueues nothing (kills the process); DIV/MOD by zero kills (the try in do_arithmetic, by structure); every access fires a core_event for observers",
+   "input": "ir, ira, irb",
+   "output": "core writes and the next pc",
+   "state": "none",
+   "update": "per instruction",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+    "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+    "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/mars.py:186-330 (through MOV; ADD..SPL follow the same shape, skimmed)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "do_arithmetic / do_comparison / the opcode chain",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "load_warriors",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the core is divided into equal spaces; each warrior is copied at n * space + a random offset bounded so that warriors stay at least minimum_separation apart; its task queue starts with one process at its start label",
+   "input": "warriors, core size, minimum_separation, a random source",
+   "output": "initial core and task queues",
+   "state": "none",
+   "update": "once per round",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::redcode_assembler_with_labels_expressions_and_default_modifiers",
+    "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+    "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/mars.py:55-79"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "load_warriors",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "corewar-redcode::redcode_assembler_with_labels_expressions_and_default_modifiers",
+   "fossil_ancestry": "corewar-redcode",
+   "human_name": "redcode.parse / Instruction.default_modifier",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "text -> Instruction records (opcode, modifier, two modes, two numbers); labels and EQU-style definitions resolved to relative offsets; a missing modifier is filled per the ICWS '94 defaults (default_modifier)",
+   "input": "Redcode text",
+   "output": "a Warrior",
+   "state": "none",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:corewar-redcode/upstream/tree/corewar/redcode.py:105-365 (index only)"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "redcode.py",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "graphics.py (pygame visualiser via core_event)",
+   "reason": "OTHER",
+   "evidence": "vault:corewar-redcode/upstream/tree/corewar/graphics.py -- an observer of core events",
+   "note": "instrument",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "corewar-redcode"
+  },
+  {
+   "candidate": "'Core War' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the memory, the scheduler, the addressing rules and the instruction set are separate rules that other MARS implementations vary independently (read/write limits, max processes, core size are constructor parameters here)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "corewar-redcode"
+  },
+  {
+   "candidate": "the shipped warriors (warriors/*.red) and tests",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "tests/mars_test.py, warriors/ -- organisms and checks, not the world",
+   "note": "the Imp and Dwarf in the record's example are ORGANISMS of this world; the atlas of organisms is not this pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "corewar-redcode"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "corewar-redcode::P.programs_share_one_unprotected_memory_and_can_only_survive_by_overwriting_each_other_first",
+   "source_fossil": "corewar-redcode",
+   "source_evidence": "mars.py step / enqueue / DAT; record example (Imp vs Dwarf)",
+   "condition": "every program's code is data in the same circular memory; any instruction can write anywhere (within the reach limit); a program dies when all its processes execute a DAT; turns alternate one instruction per program",
+   "resource_or_constraint": "8000 cells; one instruction per turn; max_processes",
+   "failure_condition": "being overwritten with DAT before overwriting the opponent",
+   "world_punishes": "staying still (bombable), being large (findable), spending turns on non-lethal work",
+   "world_rewards": "self-copying / self-moving code (the Imp), sparse bombing (the Dwarf), process splitting to survive partial damage",
+   "observable_consequence": "which warrior survives after N cycles, over many random placements",
+   "vacuity_condition": "one warrior",
+   "trivial_shortcuts": "none obvious inside the rules; the rules themselves (read/write limits, process cap) are the knobs",
+   "cheat_control": "a warrior told the opponent's placement must win nearly always; if random placement is not enforced, the world rewards fixed-address bombs",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a programming game (Dewdney 1984); later, an artificial-life substrate",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "corewar-redcode::P.side_effecting_address_arithmetic_makes_tiny_programs_expressive",
+   "source_fossil": "corewar-redcode",
+   "source_evidence": "mars.py addressing modes",
+   "condition": "with pre-decrement and post-increment operand modes one instruction can advance a pointer and act through it; program length is a liability (pressure 1)",
+   "resource_or_constraint": "instruction count",
+   "failure_condition": "long, slow warriors",
+   "world_punishes": "explicit loop counters and pointer updates",
+   "world_rewards": "folding the pointer update into the operand fetch",
+   "observable_consequence": "warrior length vs win rate",
+   "vacuity_condition": "no reach limit and no bombing (length is free)",
+   "trivial_shortcuts": "none",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "corewar-redcode::redcode_assembler_with_labels_expressions_and_default_modifiers",
+   "to": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "to": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "initial task queues",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "to": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pc",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "to": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "to": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "enqueue successors / none on DAT",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "to": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "pre-decrement / post-increment",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "corewar-redcode",
+   "relation": "algorithm_from",
+   "to": "ICWS '94 standard (docs/icws94.txt in the body); Dewdney 1984",
+   "note": "docs/icws94.txt is in the tree; not read",
+   "basis": "SOURCE_READ"
+  }
+ ],
+ "residue": {
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "opcodes after MOV (ADD..SPL) skimmed; SPL's dual enqueue and DJN's decrement-then-test are assumed per the standard",
+   "the parser body unread",
+   "nothing ran here (Techne: RUNNABLE_HISTORICAL_TOOLCHAIN, Python 2 -- __getslice__ in core.py)"
+  ],
+  "note": "the world's rules are fully accounted for by five mechanisms; the organisms are out of scope",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

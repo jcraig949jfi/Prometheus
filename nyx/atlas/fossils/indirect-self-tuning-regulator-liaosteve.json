@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "indirect-self-tuning-regulator-liaosteve",
+ "techne_record": "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "indirect-self-tuning-regulator-liaosteve",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Indirect self-tuning regulator (Astrom & Wittenmark, Adaptive Control ch. 3): RLS with forgetting factor estimates the plant online, pole-placement (R,S,T) recomputed every step -- a MATLAB implementation, run under Octave",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator master (commit in hashes): main_code.m, rls_forgetting.m",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1973 (algorithm); 2020 (code)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "control",
+     "adaptive",
+     "self-tuning-regulator",
+     "recursive-least-squares",
+     "pole-placement"
+    ],
+    "lineage": "The self-tuning regulator (Astrom & Wittenmark 1973; textbook Adaptive Control 1989/1995, Example 3.5-style: model-following with zero cancellation): a recursive-least-squares estimator with forgetting tracks the plant's a1,a2,b0,b1; the controller polynomials R,S,T are re-derived from the estimates each sample so the closed loop follows the reference model Am/Bm. This is a student's faithful implementation of the textbook algorithm (MATLAB, 2020) with the true plant's parameters drawn as reference lines -- the ORACLE the estimates converge to (a1=-1.6065, a2=0.6065, b0=0.1065, b1=0.0902)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "adaptive pole-placement control of an unknown plant",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "control a plant whose parameters are unknown by identifying them online and redesigning the controller at every step",
+    "pressure": "unknown/drifting plant, the need for the closed loop to match a specified reference model",
+    "success_means": "the estimated parameters converge to the plant's and the output follows the reference model"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "parameter uncertainty; excitation must be rich enough for identification",
+    "failure_condition": "estimator divergence or controller bursting when excitation vanishes (the known STR hazard)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "MATLAB"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The self-tuning regulator (Astrom & Wittenmark 1973; textbook Adaptive Control 1989/1995, Example 3.5-style: model-following with zero cancellation): a recursive-least-squares estimator with forgetting tracks the plant's a1,a2,b0,b1; the controller polynomials R,S,T are re-derived from the estimates each sample so the closed loop follows the reference model Am/Bm. This is a student's faithful implementation of the textbook algorithm (MATLAB, 2020) with the true plant's parameters drawn as reference lines -- the ORACLE the estimates converge to (a1=-1.6065, a2=0.6065, b0=0.1065, b1=0.0902).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Astrom & Wittenmark 1973"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: padasip-1.2.2"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "feea2a02de061ec6b9c5356ee5fa9c627eb3de2f62dd2ca2b85e752d6e592c57"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-octave:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "algorithm_from",
+   "to": "Astrom & Wittenmark 1973",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve",
+   "relation": "shares_ancestor_with",
+   "to": "padasip-1.2.2",
+   "note": "RLS identification is the estimator inside this controller",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

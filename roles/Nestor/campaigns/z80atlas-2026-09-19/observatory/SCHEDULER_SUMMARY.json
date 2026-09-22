@@ -1,0 +1,760 @@
+{
+ "grammar_hash": "570c8037ccf4f86d06bc7ef2a8263dab88fbd6d2bf430cbe52f346c8eb56c901",
+ "hours": 72.0,
+ "elapsed_h": 72.097,
+ "submitted": 23471,
+ "completed": 23471,
+ "failed": 0,
+ "promotions": 2254,
+ "specials": 1221,
+ "families": 20638,
+ "retired": 0,
+ "by_stage": {
+  "EARLY": 10033,
+  "MIDDLE": 12469,
+  "LATE": 969
+ },
+ "crossed_families": 5410,
+ "replicated_families": 4256,
+ "voided_families": 0,
+ "coverage": {
+  "runs_observed": 23471,
+  "levels_seen": 75,
+  "levels_total": 75,
+  "priority_pairs_seen": 409,
+  "priority_pairs_total": 416,
+  "priority_pairs_share": 0.9832,
+  "triples_seen": 702,
+  "distinct_cells_emitted": 9586,
+  "top_levels_by_interest": [
+   {
+    "factor": "pressure",
+    "level": "QUALITY_DIVERSITY",
+    "n": 1958,
+    "mean_interest": 0.475
+   },
+   {
+    "factor": "pressure",
+    "level": "EXPLICIT_FITNESS",
+    "n": 907,
+    "mean_interest": 0.4684
+   },
+   {
+    "factor": "atlas_axis",
+    "level": "RECOMBINATION",
+    "n": 3799,
+    "mean_interest": 0.4149
+   },
+   {
+    "factor": "structure",
+    "level": "NICHES_HIGH_MIG",
+    "n": 3030,
+    "mean_interest": 0.404
+   },
+   {
+    "factor": "world",
+    "level": "PAIR_TAPE",
+    "n": 7105,
+    "mean_interest": 0.3854
+   },
+   {
+    "factor": "environment",
+    "level": "COEVO_ENV",
+    "n": 6639,
+    "mean_interest": 0.3837
+   },
+   {
+    "factor": "bridge",
+    "level": "NEUTRAL_BRIDGE",
+    "n": 12629,
+    "mean_interest": 0.3734
+   },
+   {
+    "factor": "seeding",
+    "level": "SEEDED_READER",
+    "n": 6310,
+    "mean_interest": 0.3731
+   },
+   {
+    "factor": "reproduction",
+    "level": "PAIR_EXECUTION",
+    "n": 6038,
+    "mean_interest": 0.3635
+   },
+   {
+    "factor": "structure",
+    "level": "ENV_MIG",
+    "n": 2736,
+    "mean_interest": 0.3582
+   },
+   {
+    "factor": "mutation_rate",
+    "level": "LOW",
+    "n": 8247,
+    "mean_interest": 0.3566
+   },
+   {
+    "factor": "read_order",
+    "level": "ANSWER_BEFORE_READ",
+    "n": 12133,
+    "mean_interest": 0.3561
+   },
+   {
+    "factor": "pressure",
+    "level": "EXEC_TIME_COST",
+    "n": 1764,
+    "mean_interest": 0.3541
+   },
+   {
+    "factor": "mutation_operator",
+    "level": "OPERAND",
+    "n": 8252,
+    "mean_interest": 0.3512
+   },
+   {
+    "factor": "task_transform",
+    "level": "ADD1",
+    "n": 3909,
+    "mean_interest": 0.3493
+   },
+   {
+    "factor": "pressure",
+    "level": "PREDATION",
+    "n": 1795,
+    "mean_interest": 0.347
+   },
+   {
+    "factor": "structure",
+    "level": "RESERVOIR",
+    "n": 2601,
+    "mean_interest": 0.3439
+   },
+   {
+    "factor": "task_transform",
+    "level": "XOR5A",
+    "n": 4259,
+    "mean_interest": 0.3435
+   },
+   {
+    "factor": "seeding",
+    "level": "SEEDED_REPLICATOR",
+    "n": 5204,
+    "mean_interest": 0.3433
+   },
+   {
+    "factor": "atlas_axis",
+    "level": "TRANSITION_DETECTOR",
+    "n": 2868,
+    "mean_interest": 0.3432
+   }
+  ]
+ },
+ "observatory": {
+  "bytes_written": 228305052,
+  "gb_written": 0.213,
+  "disk_budget_gb": 60.0,
+  "degraded_runs": 0
+ },
+ "top_families": [
+  {
+   "family": "1f1cc86a91e6ff4b",
+   "interest": 0.9785,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "RESOURCE_LIMITED",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "3a599ec4227593fc",
+   "interest": 0.9726,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "1983bb876e3ce724",
+   "interest": 0.9717,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "6a81795603eff423",
+   "interest": 0.9698,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "96073ced6f628140",
+   "interest": 0.9696,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "XOR5A",
+    "read_order": "FORCED_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "d5c268a6375d39bc",
+   "interest": 0.9694,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "XOR5A",
+    "read_order": "FORCED_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "709fe2a4ca33d399",
+   "interest": 0.9692,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "801592f7d2ee9e78",
+   "interest": 0.9652,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "XOR5A",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "c268b83d0a153a0e",
+   "interest": 0.9613,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "14530181c07dba74",
+   "interest": 0.9612,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "RESOURCE_LIMITED",
+    "representation": "Z8_SLOTTED",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "PREDATION",
+    "structure": "RESERVOIR",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "BOTH",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "HIGH",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "7b11bd60e6389490",
+   "interest": 0.9589,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "3dd35cc5fffb9d9f",
+   "interest": 0.9564,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD1",
+    "read_order": "FORCED_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "a3747ade37761472",
+   "interest": 0.9562,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "RESOURCE_LIMITED",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR15",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "0d557d109e17fe4d",
+   "interest": 0.9535,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "RESOURCE_LIMITED",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR15",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "50939502d48f1dd9",
+   "interest": 0.9517,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD1",
+    "read_order": "FORCED_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "0bb06824ac490154",
+   "interest": 0.9513,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "XOR5A",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "473d8734a24e3066",
+   "interest": 0.9509,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "EXEC_TIME_COST",
+    "structure": "ENV_MIG",
+    "task_transform": "XOR15",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "MID",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "1609b14d99f2ed4b",
+   "interest": 0.9509,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "a4b90ad58b77d546",
+   "interest": 0.9502,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_64",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "PRIMITIVE",
+    "copy_primitive": "BLOCK",
+    "pressure": "QUALITY_DIVERSITY",
+    "structure": "NICHES_HIGH_MIG",
+    "task_transform": "ADD37",
+    "read_order": "FORCED_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPERAND",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "aaa8c7857c2e5f02",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "METABOLIC",
+    "structure": "WELL_MIXED",
+    "task_transform": "ADD37",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPCODE",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RESIDUE_TRANSPORT"
+   }
+  },
+  {
+   "family": "dd30f47fda54b9d0",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "COEVO_ENV",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "METABOLIC",
+    "structure": "WELL_MIXED",
+    "task_transform": "ADD37",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPCODE",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RESIDUE_TRANSPORT"
+   }
+  },
+  {
+   "family": "90af1ceadb3606e4",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "RESOURCE_LIMITED",
+    "representation": "Z8_SLOTTED",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "PREDATION",
+    "structure": "RESERVOIR",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "BOTH",
+    "mutation_locality": "LOCAL",
+    "mutation_rate": "HIGH",
+    "atlas_axis": "RECOMBINATION"
+   }
+  },
+  {
+   "family": "2448d8964ae5f800",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "METABOLIC",
+    "structure": "WELL_MIXED",
+    "task_transform": "ADD37",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPCODE",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RESIDUE_TRANSPORT"
+   }
+  },
+  {
+   "family": "0e6c36f044262537",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BLOCK",
+    "pressure": "METABOLIC",
+    "structure": "WELL_MIXED",
+    "task_transform": "ADD1",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPCODE",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RESIDUE_TRANSPORT"
+   }
+  },
+  {
+   "family": "32bc5c8060e30f7d",
+   "interest": 0.95,
+   "crossed": true,
+   "replicated": true,
+   "cell": {
+    "world": "PAIR_TAPE",
+    "environment": "STATIC",
+    "representation": "Z8_32",
+    "reproduction": "PAIR_EXECUTION",
+    "self_location": "NONE",
+    "copy_primitive": "BYTEWISE",
+    "pressure": "METABOLIC",
+    "structure": "WELL_MIXED",
+    "task_transform": "ADD37",
+    "read_order": "ANSWER_BEFORE_READ",
+    "bridge": "NEUTRAL_BRIDGE",
+    "seeding": "RANDOM",
+    "mutation_operator": "OPCODE",
+    "mutation_locality": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "atlas_axis": "RESIDUE_TRANSPORT"
+   }
+  }
+ ]
+}

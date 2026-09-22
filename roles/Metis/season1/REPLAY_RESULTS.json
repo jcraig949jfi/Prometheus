@@ -1,0 +1,489 @@
+{
+  "E1_greedy_lora": {
+    "admitted": [
+      "E1.ood_countermath",
+      "E1.per_source_scores",
+      "E1.raw_delta",
+      "E1.shuffle_control"
+    ],
+    "claim": "GENUINE_REASONING",
+    "cutoff": "2026-06-03",
+    "discriminator": {
+      "cost": "MINUTES",
+      "eliminates_by_branch": [
+        [
+          "BASE_RATE_PRIORS"
+        ],
+        [
+          "GENUINE_REASONING",
+          "VALUE_MEMORIZATION"
+        ]
+      ],
+      "id": "RELATION_BASE_RATE_ORACLE",
+      "kind": "CHEAP_KILL_AVAILABLE",
+      "note": "Compute, per relation type, the majority label over the training corpus; predict it on the eval set with no object and no value knowledge. Requires no GPU, no training, no new data -- the corpus is already built. If the adapter does not clear this floor by a wide margin, the bulk of the headline is background base rates."
+    },
+    "dropped_unavailable": [],
+    "episode": "E1_GREEDY_LORA",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E1.ood_countermath",
+          "E1.per_source_scores",
+          "E1.raw_delta",
+          "E1.shuffle_control"
+        ],
+        "shared_upstream": [
+          "ADAPTER_V1",
+          "FORMAT_GAIN"
+        ]
+      }
+    ],
+    "live_explanations": [
+      "BASE_RATE_PRIORS",
+      "FORMAT_FOLLOWING",
+      "VALUE_MEMORIZATION"
+    ],
+    "rejected_discriminators": [
+      {
+        "detail": "cost HOURS >= baseline HOURS",
+        "id": "ENTITY_DISJOINT_SPLIT",
+        "reason": "NOT_CHEAPER_THAN_BASELINE"
+      },
+      {
+        "id": "SCORE_COUNTERMATH_WITH_GOLD_LABELS",
+        "reason": "NOT_AVAILABLE_AT_CUTOFF"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['ADAPTER_V1', 'FORMAT_GAIN']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E1.ood_countermath",
+          "E1.per_source_scores",
+          "E1.raw_delta",
+          "E1.shuffle_control"
+        ],
+        "shared_upstream": [
+          "ADAPTER_V1",
+          "FORMAT_GAIN"
+        ]
+      },
+      {
+        "detail": "competing explanation BASE_RATE_PRIORS (the adapter learned which relation types usually hold, with no object or value knowledge) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is",
+        "explanation": "BASE_RATE_PRIORS",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation FORMAT_FOLLOWING (the adapter learned to emit a parseable True/False verdict; the base model could not) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is",
+        "explanation": "FORMAT_FOLLOWING",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation VALUE_MEMORIZATION (the adapter memorized invariant values of objects seen in training) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is",
+        "explanation": "VALUE_MEMORIZATION",
+        "kind": "CONFIDENCE_VETO"
+      }
+    ]
+  },
+  "E1b_greedy_lora_addendum": {
+    "admitted": [
+      "E1b.base_rate_oracle",
+      "E1b.entity_disjoint_shown",
+      "E1b.parse_fail_zero_both_arms"
+    ],
+    "claim": "NARROW_RELATIONAL_REASONING_PRESENT",
+    "cutoff": "2026-06-04",
+    "discriminator": null,
+    "dropped_unavailable": [],
+    "episode": "E1b_GREEDY_LORA_AFTER_DISCRIMINATORS  (POSITIVE CONTROL)",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E1b.base_rate_oracle",
+          "E1b.entity_disjoint_shown"
+        ],
+        "shared_upstream": [
+          "GOLD_EVAL_E_SHOWN"
+        ]
+      },
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E1b.parse_fail_zero_both_arms"
+        ],
+        "shared_upstream": []
+      }
+    ],
+    "live_explanations": [],
+    "rejected_discriminators": [
+      {
+        "id": "MULTI_STEP_CLAIMS_WHERE_PRIORS_CANNOT_SUBSTITUTE",
+        "reason": "NOTHING_LIVE_TO_DISCRIMINATE"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "2 evidence items collapse to ONE independent reason: they share load-bearing upstream ['GOLD_EVAL_E_SHOWN']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E1b.base_rate_oracle",
+          "E1b.entity_disjoint_shown"
+        ],
+        "shared_upstream": [
+          "GOLD_EVAL_E_SHOWN"
+        ]
+      }
+    ]
+  },
+  "E2_apollo_lift_april": {
+    "admitted": [
+      "E2.elites_all_drift",
+      "E2.llm_alive_zero",
+      "E2.llm_analysis_narrative",
+      "E2.stagnation_note"
+    ],
+    "claim": "LLM_MUTATION_WORTHLESS",
+    "cutoff": "2026-04-06",
+    "discriminator": {
+      "cost": "MINUTES",
+      "eliminates_by_branch": [
+        [
+          "LINEAGE_COUNTER_BROKEN"
+        ],
+        [
+          "LLM_MUTATION_WORTHLESS",
+          "TOO_EARLY_TO_MEASURE"
+        ]
+      ],
+      "id": "LINEAGE_CHEAT_CONTROL",
+      "kind": "CHEAP_KILL_AVAILABLE",
+      "note": "Inject one known-good LLM-tagged mutation, force it into the elite set, and read llm_alive. If the counter still reports zero, the counter is blind and every llm_alive row ever recorded is void. This is the base role's cheat control: success deliberately injected, to show the measurement channel can observe the thing it claims to measure. Costs one run of minutes against a 24-hour 800-generation experiment."
+    },
+    "dropped_unavailable": [],
+    "episode": "E2_APOLLO_LIFT_APRIL_CUTOFF",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E2.elites_all_drift",
+          "E2.llm_alive_zero",
+          "E2.llm_analysis_narrative"
+        ],
+        "shared_upstream": [
+          "AOS_LINEAGE_COUNTER",
+          "EVOLUTION_MONITOR_RUN"
+        ]
+      }
+    ],
+    "live_explanations": [
+      "LINEAGE_COUNTER_BROKEN",
+      "TOO_EARLY_TO_MEASURE"
+    ],
+    "rejected_discriminators": [
+      {
+        "detail": "every outcome branch leaves the same live set; both hypotheses predict it equally",
+        "id": "RUN_800_GEN_LLM_MODE",
+        "reason": "NO_DISCRIMINATORY_POWER"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "3 evidence items collapse to ONE independent reason: they share load-bearing upstream ['AOS_LINEAGE_COUNTER', 'EVOLUTION_MONITOR_RUN']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E2.elites_all_drift",
+          "E2.llm_alive_zero",
+          "E2.llm_analysis_narrative"
+        ],
+        "shared_upstream": [
+          "AOS_LINEAGE_COUNTER",
+          "EVOLUTION_MONITOR_RUN"
+        ]
+      },
+      {
+        "detail": "competing explanation LINEAGE_COUNTER_BROKEN (the survival counter does not observe LLM lineage; survivors exist but are not counted) is not eliminated by any admitted evidence item; confidence in 'LLM_MUTATION_WORTHLESS' must not be compounded until it is",
+        "explanation": "LINEAGE_COUNTER_BROKEN",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation TOO_EARLY_TO_MEASURE (at generation 53 with near-zero accuracy margins, selection has barely acted on anything) is not eliminated by any admitted evidence item; confidence in 'LLM_MUTATION_WORTHLESS' must not be compounded until it is",
+        "explanation": "TOO_EARLY_TO_MEASURE",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "instrument AOS_LINEAGE_COUNTER: metric pinned at its degenerate boundary in every observed stratum while its generator is independently measured active -- measurement failure explains the observation as well as the phenomenon does",
+        "evidence": "E2.llm_alive_zero",
+        "kind": "INSTRUMENT_VETO"
+      },
+      {
+        "detail": "instrument AOS_LINEAGE_COUNTER: metric pinned at its degenerate boundary in every observed stratum while its generator is independently measured active -- measurement failure explains the observation as well as the phenomenon does",
+        "evidence": "E2.elites_all_drift",
+        "kind": "INSTRUMENT_VETO"
+      }
+    ]
+  },
+  "E3_saxl": {
+    "admitted": [
+      "E3.cube_result",
+      "E3.fourth_power_result",
+      "E3.registry_row"
+    ],
+    "claim": "SAXL_IS_SOLVED",
+    "cutoff": "2026-05-11",
+    "discriminator": {
+      "cost": "MINUTES",
+      "eliminates_by_branch": [
+        [
+          "ANALOGUE_CONFLATED"
+        ],
+        [
+          "PROOF_WITHDRAWN",
+          "SAXL_IS_SOLVED"
+        ]
+      ],
+      "id": "CHECK_OBJECT_MATCHES_CLAIM",
+      "kind": "CHEAP_KILL_AVAILABLE",
+      "note": "Read each supporting citation's own statement of what it proves and compare the OBJECT (square vs cube vs fourth power vs unipotent characters) against the object in the claim. Requires no external fetch: the discrepancy is on the face of the cited titles."
+    },
+    "dropped_unavailable": [],
+    "episode": "E3_SAXL",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E3.cube_result",
+          "E3.fourth_power_result",
+          "E3.registry_row"
+        ],
+        "shared_upstream": [
+          "LLM_RECALL_OF_PREPRINT"
+        ]
+      }
+    ],
+    "live_explanations": [
+      "ANALOGUE_CONFLATED",
+      "PROOF_WITHDRAWN"
+    ],
+    "rejected_discriminators": [
+      {
+        "detail": "cost DAYS >= baseline DAYS",
+        "id": "COMMISSION_DEEP_RESEARCH_SURVEY",
+        "reason": "NOT_CHEAPER_THAN_BASELINE"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "3 evidence items collapse to ONE independent reason: they share load-bearing upstream ['LLM_RECALL_OF_PREPRINT']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E3.cube_result",
+          "E3.fourth_power_result",
+          "E3.registry_row"
+        ],
+        "shared_upstream": [
+          "LLM_RECALL_OF_PREPRINT"
+        ]
+      },
+      {
+        "detail": "competing explanation ANALOGUE_CONFLATED (a proved analogue for a different object (the tensor CUBE, or unipotent characters of a Lie-type group) has been read as the conjecture proper) is not eliminated by any admitted evidence item; confidence in 'SAXL_IS_SOLVED' must not be compounded until it is",
+        "explanation": "ANALOGUE_CONFLATED",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation PROOF_WITHDRAWN (the claimed proof was retracted by its own author and the conjecture is open) is not eliminated by any admitted evidence item; confidence in 'SAXL_IS_SOLVED' must not be compounded until it is",
+        "explanation": "PROOF_WITHDRAWN",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated",
+        "evidence": "E3.registry_row",
+        "kind": "STALE_VETO"
+      },
+      {
+        "detail": "contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated",
+        "evidence": "E3.cube_result",
+        "kind": "STALE_VETO"
+      },
+      {
+        "detail": "contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated",
+        "evidence": "E3.fourth_power_result",
+        "kind": "STALE_VETO"
+      }
+    ]
+  },
+  "E4_geometry1": {
+    "admitted": [
+      "E4.loading_density_coincidence",
+      "E4.method_a_naive_svd",
+      "E4.method_b_svt",
+      "E4.method_c_agreement_matrix",
+      "E4.variance_decomposition"
+    ],
+    "claim": "LOW_LATENT_RANK_IS_STRUCTURAL",
+    "cutoff": "2026-04-17",
+    "discriminator": {
+      "cost": "MINUTES",
+      "eliminates_by_branch": [
+        [
+          "MISSINGNESS_ARTIFACT"
+        ],
+        [
+          "LOW_LATENT_RANK_IS_STRUCTURAL",
+          "METHOD_ASSUMPTION_VIOLATION"
+        ]
+      ],
+      "id": "PERMUTE_THE_MASK_ALONE",
+      "kind": "CHEAP_KILL_AVAILABLE",
+      "note": "Hold the rank statistic fixed; resample only the observation mask to preserve row and column densities, and recompute. If the statistic survives mask-only resampling the rank is about the matrix; if it does not, it is about who tested what. Needs no new data, no new instrument and no new theory -- the mask and the estimator are both already in hand. This is the test Harmonia built on 2026-04-29 as missingness_confound_v01, ten days after the retraction, which measured roughly 52 percent of the rank-flavoured signal attributable to density marginals alone."
+    },
+    "dropped_unavailable": [],
+    "episode": "E4_GEOMETRY_1",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E4.method_a_naive_svd",
+          "E4.method_b_svt",
+          "E4.method_c_agreement_matrix",
+          "E4.variance_decomposition"
+        ],
+        "shared_upstream": [
+          "OBSERVATION_MASK",
+          "TENSOR_V1",
+          "ZERO_MEANS_UNOBSERVED"
+        ]
+      }
+    ],
+    "live_explanations": [
+      "METHOD_ASSUMPTION_VIOLATION",
+      "MISSINGNESS_ARTIFACT"
+    ],
+    "rejected_discriminators": [
+      {
+        "detail": "cost WEEKS >= baseline WEEKS",
+        "id": "ORDINAL_MNAR_MATRIX_FACTORIZATION",
+        "reason": "NOT_CHEAPER_THAN_BASELINE"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['OBSERVATION_MASK', 'TENSOR_V1', 'ZERO_MEANS_UNOBSERVED']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E4.method_a_naive_svd",
+          "E4.method_b_svt",
+          "E4.method_c_agreement_matrix",
+          "E4.variance_decomposition"
+        ],
+        "shared_upstream": [
+          "OBSERVATION_MASK",
+          "TENSOR_V1",
+          "ZERO_MEANS_UNOBSERVED"
+        ]
+      },
+      {
+        "detail": "competing explanation METHOD_ASSUMPTION_VIOLATION (SVT assumes continuous entries, missing-at-random and low-rank-plus-Gaussian structure; on a sparse ordinal matrix where 0 means unobserved the output is a diagnostic number, not a rank) is not eliminated by any admitted evidence item; confidence in 'LOW_LATENT_RANK_IS_STRUCTURAL' must not be compounded until it is",
+        "explanation": "METHOD_ASSUMPTION_VIOLATION",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation MISSINGNESS_ARTIFACT (the rank estimate is produced by the non-random observation mask; most-tested cells are most-loaded, and density marginals alone generate the apparent low rank) is not eliminated by any admitted evidence item; confidence in 'LOW_LATENT_RANK_IS_STRUCTURAL' must not be compounded until it is",
+        "explanation": "MISSINGNESS_ARTIFACT",
+        "kind": "CONFIDENCE_VETO"
+      }
+    ]
+  },
+  "E5_erebos": {
+    "admitted": [
+      "E5.25_archetypes_designed",
+      "E5.621_tests",
+      "E5.four_model_convergence",
+      "E5.sprint1_10_of_10"
+    ],
+    "claim": "EREBOS_COMPOSES_REAL_STRUCTURE",
+    "cutoff": "2026-05-27",
+    "discriminator": {
+      "cost": "HOURS",
+      "eliminates_by_branch": [
+        [
+          "EREBOS_COMPOSES_REAL_STRUCTURE"
+        ],
+        [
+          "INFRASTRUCTURE_ONLY",
+          "SYNTHETIC_FIXTURE_CIRCULARITY"
+        ]
+      ],
+      "id": "PERMUTATION_NULL_ON_REAL_LEDGER",
+      "kind": "CHEAP_KILL_AVAILABLE",
+      "note": "Take the strongest composed claim, run it against real (grown, non-synthetic) ledger rows, and compare its lift to a permutation null over several seeds. This is exactly what Phase 3.K did on 2026-06-03 and the answer was p=0.105 with a 7-seed mean of 0.102, with the triplet motif falsified below null. Running it on one archetype before building twenty-five costs hours against the weeks that went into the remaining generators."
+    },
+    "dropped_unavailable": [],
+    "episode": "E5_EREBOS_COMPOSITION",
+    "groups": [
+      {
+        "independent_reason_count_contribution": 1,
+        "members": [
+          "E5.25_archetypes_designed",
+          "E5.621_tests",
+          "E5.four_model_convergence",
+          "E5.sprint1_10_of_10"
+        ],
+        "shared_upstream": [
+          "GENERATOR_ARCHITECTURE"
+        ]
+      }
+    ],
+    "live_explanations": [
+      "INFRASTRUCTURE_ONLY",
+      "NO_LIVE_CONSUMER",
+      "SYNTHETIC_FIXTURE_CIRCULARITY"
+    ],
+    "rejected_discriminators": [
+      {
+        "detail": "every outcome branch leaves the same live set; both hypotheses predict it equally",
+        "id": "BUILD_REMAINING_ARCHETYPES",
+        "reason": "NO_DISCRIMINATORY_POWER"
+      }
+    ],
+    "unknowns": [],
+    "vetoes": [
+      {
+        "detail": "4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['GENERATOR_ARCHITECTURE']. Agreement among them is a property of the shared ancestor, not corroboration.",
+        "kind": "AGREEMENT_NOT_ADDITIVE",
+        "members": [
+          "E5.25_archetypes_designed",
+          "E5.621_tests",
+          "E5.four_model_convergence",
+          "E5.sprint1_10_of_10"
+        ],
+        "shared_upstream": [
+          "GENERATOR_ARCHITECTURE"
+        ]
+      },
+      {
+        "detail": "competing explanation INFRASTRUCTURE_ONLY (the code is correct and well-tested; correctness of the machinery says nothing about whether its output is true of the world) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is",
+        "explanation": "INFRASTRUCTURE_ONLY",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation NO_LIVE_CONSUMER (nothing downstream validates a composed claim, so no composed claim has been tested against anything) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is",
+        "explanation": "NO_LIVE_CONSUMER",
+        "kind": "CONFIDENCE_VETO"
+      },
+      {
+        "detail": "competing explanation SYNTHETIC_FIXTURE_CIRCULARITY (the passing fixtures were authored alongside the generators, so the pass measures agreement between a program and its own test data) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is",
+        "explanation": "SYNTHETIC_FIXTURE_CIRCULARITY",
+        "kind": "CONFIDENCE_VETO"
+      }
+    ]
+  }
+}

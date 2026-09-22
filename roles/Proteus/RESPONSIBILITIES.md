@@ -2,6 +2,8 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 ## Agent: Claude Code (Fable 5.1). Machine: *unassigned* (CPU-bound work; see §10).
+## Currency: 2026-09-16 (annotations for the two approved base-role conflicts; the seat has run as Opus 5 on M2 / SPECTREX5 since 2026-09-04 — the line above is the founding record, not the present).
+## Machine, ruled 2026-09-16 (operator, in chat): **M2 (SPECTREX5)**. The SFE ecosystem runs on M2 from today; M1 (SKULLPORT) runs a different ecosystem. §10's "Machine: unassigned" is closed. Proteus has no hardcoded host anywhere under `proteus/` (verified by grep 2026-09-16); the only machine-bound fact this seat carries is that comms/PEW still resolve to the M1 store (`EW_DB_HOST=192.168.1.202`) until Mnemosyne or Daedalus says the store moved.
 ## Established: 2026-09-02, by James, in the session that parked Diomedes.
 ## Named for: Proteus, the Old Man of the Sea. He takes every shape — lion, serpent, water, tree — and gives a true answer only to the one who holds on through all of them. Two things about him are the role: **he is the source of shapes, not the judge of them**, and **the truth is extracted by whoever pins him, never volunteered.** The Foundry manufactures forms. A neutral operator and the selection they impose do the pinning.
 
@@ -31,7 +33,10 @@ from the surrounding failure landscape*, found by someone else, in a world this 
 
 ## 2. Layer of operation — where Proteus sits in the fleet
 
-Per `feedback_agent_differentiation`, a seat exists at a layer nobody else occupies:
+Per `feedback_agent_differentiation` (**citation superseded 2026-09-16**, base-role adoption
+conflict A, approved by the operator via Archaeon 2026-09-11: local memory slugs are not
+normative; the rule stands uncited, its authority is `roles/base-role/RESPONSIBILITIES.md` §0),
+a seat exists at a layer nobody else occupies:
 
 - **Daedalus** maintains the *Serendipity Foundry Engine* (SFE): worlds as isolation units, event
   ledgers, work queues, budgets, provenance. SFE is authoritative for **what happened**.
@@ -210,13 +215,20 @@ is `REVIEW_PACKET_PROTEUS_V0_BRIEF_2026-09-02.txt`.
 ## 8. Standard mechanics
 
 - **Git:** work from a worktree on `origin/main` (the F: checkout is routinely parked on another
-  seat's branch — Elenchus precedent). Commit with an explicit pathspec in one invocation, message
-  prefix `Proteus:`, push `HEAD:main`, verify with `git merge-base --is-ancestor`. Never remove
-  another seat's lock. Never rewrite history.
+  seat's branch — Elenchus precedent). **Amended 2026-09-16** (conflict B, approved 2026-09-11):
+  read "the F: checkout" as **the canonical checkout**; drive letters are never authoritative
+  (`roles/base-role/WORKING_CONTRACT.md` §9). The full mechanics — never `git pull`, a task
+  branch from a recorded base SHA, receipts carrying base_sha/branch/worktree_path/dirty — are
+  inherited from the working contract and not restated here. Commit with an explicit pathspec in
+  one invocation, message prefix `Proteus:`, push `HEAD:main`, verify with
+  `git merge-base --is-ancestor`. Never remove another seat's lock. Never rewrite history.
 - **Prompts:** every significant brief is committed verbatim with its sha256 in the commit message
   and carries an ASCII review packet delivered as one paste block
-  (`feedback_significant_prompts_get_committed_and_packeted`).
-- **Rows ship with verdicts** in the same commit (`feedback_verdict_without_rows_is_an_assertion`).
+  (`feedback_significant_prompts_get_committed_and_packeted` — **citation superseded 2026-09-16**,
+  conflict A; the rule is base-role §4, "review packets are proactive").
+- **Rows ship with verdicts** in the same commit (`feedback_verdict_without_rows_is_an_assertion`
+  — **citation superseded 2026-09-16**, conflict A; the rule is base-role §2 and
+  `WORKING_CONTRACT.md` §5).
 - **Heartbeat / roster:** **AMENDED 2026-09-04.** Still not registered in
   `scripts/portfolio_monitor.py` `EXPECTED_AGENTS` (verified absent), but the condition this
   sentence attached registration to — "when the first `proteus/` code lands" — was met on
@@ -228,8 +240,9 @@ is `REVIEW_PACKET_PROTEUS_V0_BRIEF_2026-09-02.txt`.
   ontology 2, `pew.fossil.v2`). Deliverable 10 should be **exercised against the live service**
   rather than remain a specification. Tracked as **T5** in [`TODO.md`](TODO.md). PEW itself is
   Mnemosyne's, per James's ruling of 2026-09-04; Proteus supplies identity and provenance only.
-- **Namespace:** Greek per `reference_agent_names`; "Proteus" is unclaimed as a seat (the only
-  prior use is a Harmonia island note about Proteus groups, a mathematical object).
+- **Namespace:** Greek per `reference_agent_names` (**citation superseded 2026-09-16**, conflict A;
+  the convention stands uncited); "Proteus" is unclaimed as a seat (the only prior use is a
+  Harmonia island note about Proteus groups, a mathematical object).
 
 ## 9. Declared conflicts and biases
 

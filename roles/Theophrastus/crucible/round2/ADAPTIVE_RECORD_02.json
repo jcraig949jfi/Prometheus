@@ -1,0 +1,94 @@
+{
+ "record": "ADAPTIVE_RECORD_02",
+ "frozen": true,
+ "current_evidence": "ROUND2_SCORE.json: B 7/9 pass (maj boundary misses), C identical, D H1 pass/H6 symmetric, E exp collapse saturated / GKL sharpening",
+ "question": "does the exp/W599 majority-0 side at m~0.10 fail as the one-class-collapse curve predicts (the one Step-B cell the substrate refused)?",
+ "selection_rule": "same coordinate, n_ic halved and repeats doubled so the witness bound is unreachable; identical seed_root",
+ "cell": {
+  "cell_id": "sha256:6739be21abcde0f8dfb8fcf864ae5a8e9d1e2df68a77fef4376dcaea0d46c525",
+  "spec_hash": "sha256:435661c997608659520168a71c185c79155b7800b25968c5f7d7c06fd383da1c",
+  "execution_hash": "sha256:8c963a92457db8bc29779bf153e7b6fe5d574a124b692c0bdf89ad60fbbd9c7e",
+  "labels": {
+   "mechanism": "exp",
+   "pressure": "P_d40n50",
+   "world": "W599",
+   "branch": "ga_evolved_1993_95",
+   "intervention": "NONE",
+   "seed_root": 20260913
+  },
+  "coordinates": {
+   "mechanism": {
+    "rule_hex": "0505408305c90101200b0efb94c7cff7"
+   },
+   "pressure": {
+    "ic_density_set": [
+     0.4
+    ],
+    "n_ic": 50,
+    "success_criterion": "stable"
+   },
+   "world": {
+    "n_cells": 599,
+    "steps": 1198,
+    "radius": 3
+   },
+   "branch": {
+    "members": [
+     "0504058705000f77037755837bffb77f",
+     "0505408305c90101200b0efb94c7cff7"
+    ],
+    "relation": "sibling_of:hand_designed"
+   },
+   "intervention": {
+    "transform": "none"
+   },
+   "seed_root": 20260913,
+   "repeat": {
+    "count": 16,
+    "order": "sequential",
+    "seed_derivation": "sha256_index",
+    "state": "reset",
+    "budget": {
+     "max_seconds": 600,
+     "max_observations": 16
+    }
+   }
+  },
+  "mechanism_provenance": "herakles/evca/genomes.py GENOMES['exp'] (RECOVERED_SPECIMEN; EvCA review Table 1; also EvEmComp Table 1)",
+  "branch_evidence": "herakles/evca/genomes.py GENOMES[*].kind and .source (published characterisation: EvCA review Table 1 / EvEmComp Table 1)",
+  "branch_relation": "sibling_of:hand_designed",
+  "world_identity": "sha256:e8a94368005674b4a45d0cb0cfc8b4cdb42acf2fee87b38ded5e38b48603a8b5",
+  "pressure_identity": "sha256:31df639de4b8a18f6e21310ee634f8626df4e704c552ba78563f7119b3128926",
+  "proposal": {
+   "proposer": "round2:B-retry",
+   "llm_generated": false,
+   "rationale": "exp/W599/P_d40 refused by the Vivarium witness-bound validator at exactly 64 wrong; n_ic=50 cannot reach the bound"
+  }
+ },
+ "n_ics": 800,
+ "prediction_right_curve": {
+  "pred": 0.3042,
+  "se": 0.003,
+  "fallback_ics": 129,
+  "n_ics": 800
+ },
+ "prediction_wrong_curve_CHEAT_B": {
+  "pred": 0.9998,
+  "se": 0.0,
+  "fallback_ics": 129,
+  "n_ics": 800
+ },
+ "pass_rule": "|obs - pred| <= 2*sqrt(se^2 + p(1-p)/800); CHEAT-B must miss",
+ "outcome_meanings": {
+  "pass": "inversion confirmed on the 0-side; SUFFICIENCY complete for exp",
+  "fail low or high": "curve mis-specified on the 0-side at m~0.1; boundary unresolved"
+ },
+ "result": {
+  "status": "COMPLETED",
+  "observed": 0.3475,
+  "se_obs": 0.01683537013255129,
+  "pass": false,
+  "cheat_b_misses": true,
+  "tolerance": 0.03420115129641107
+ }
+}

@@ -1,0 +1,558 @@
+{
+ "perturbation_id": "P-J06",
+ "parent": "T-X17",
+ "summary": {
+  "FLAG": "witness-seeded scaffold",
+  "table": {
+   "S2|s1|add:1": {
+    "top4_held": 0.984,
+    "crossed": true,
+    "g_cross": 0
+   },
+   "S2|s1|xor:5": {
+    "top4_held": 0.547,
+    "crossed": false,
+    "g_cross": null
+   },
+   "S2|s2|add:1": {
+    "top4_held": 0.703,
+    "crossed": false,
+    "g_cross": null
+   },
+   "S2|s2|xor:5": {
+    "top4_held": 0.531,
+    "crossed": false,
+    "g_cross": null
+   },
+   "P2|s1|add:1": {
+    "top4_held": 0.547,
+    "crossed": false,
+    "g_cross": null
+   },
+   "P2|s1|xor:5": {
+    "top4_held": 0.547,
+    "crossed": false,
+    "g_cross": null
+   },
+   "P2|s2|add:1": {
+    "top4_held": 0.531,
+    "crossed": false,
+    "g_cross": null
+   },
+   "P2|s2|xor:5": {
+    "top4_held": 0.531,
+    "crossed": false,
+    "g_cross": null
+   },
+   "fresh|s1|add:1": {
+    "top4_held": 0.547,
+    "crossed": false,
+    "g_cross": null
+   },
+   "fresh|s1|xor:5": {
+    "top4_held": 0.547,
+    "crossed": false,
+    "g_cross": null
+   },
+   "fresh|s2|add:1": {
+    "top4_held": 0.531,
+    "crossed": false,
+    "g_cross": null
+   },
+   "fresh|s2|xor:5": {
+    "top4_held": 0.531,
+    "crossed": false,
+    "g_cross": null
+   }
+  },
+  "crossed": {
+   "S2": {
+    "add:1": [
+     true,
+     false
+    ],
+    "xor:5": [
+     false,
+     false
+    ]
+   },
+   "P2": {
+    "add:1": [
+     false,
+     false
+    ],
+    "xor:5": [
+     false,
+     false
+    ]
+   },
+   "fresh": {
+    "add:1": [
+     false,
+     false
+    ],
+    "xor:5": [
+     false,
+     false
+    ]
+   }
+  },
+  "g_cross": {
+   "S2": {
+    "add:1": [
+     0,
+     null
+    ],
+    "xor:5": [
+     null,
+     null
+    ]
+   },
+   "P2": {
+    "add:1": [
+     null,
+     null
+    ],
+    "xor:5": [
+     null,
+     null
+    ]
+   },
+   "fresh": {
+    "add:1": [
+     null,
+     null
+    ],
+    "xor:5": [
+     null,
+     null
+    ]
+   }
+  },
+  "gateway_rule_met": true,
+  "reuse": [
+   [
+    {
+     "reached_out": 21,
+     "out_reg": 3,
+     "unread_at_out": 0.0,
+     "literal_regime_regs": [
+      0
+     ],
+     "xval_regime_regs": [
+      0
+     ],
+     "control_knockouts": [
+      [
+       41,
+       19,
+       1.0
+      ],
+      [
+       43,
+       20,
+       1.0
+      ],
+      [
+       55,
+       20,
+       1.0
+      ],
+      [
+       58,
+       19,
+       1.0
+      ],
+      [
+       60,
+       19,
+       1.0
+      ]
+     ],
+     "n_control_necessary": 0
+    },
+    {
+     "reached_out": 18,
+     "out_reg": 3,
+     "unread_at_out": 0.0,
+     "literal_regime_regs": [
+      0
+     ],
+     "xval_regime_regs": [
+      0
+     ],
+     "control_knockouts": [
+      [
+       20,
+       20,
+       1.0
+      ],
+      [
+       26,
+       19,
+       1.0
+      ],
+      [
+       48,
+       19,
+       1.0
+      ]
+     ],
+     "n_control_necessary": 0
+    }
+   ]
+  ]
+ },
+ "rows": [
+  {
+   "lineage": "S2",
+   "seed": 1,
+   "transform": "add:1",
+   "top4_held": 0.984375,
+   "best_held": 0.984375,
+   "crossed": true,
+   "g_cross": 0,
+   "held_by_gen": [
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984,
+    0.984
+   ],
+   "reuse": [
+    {
+     "reached_out": 21,
+     "out_reg": 3,
+     "unread_at_out": 0.0,
+     "literal_regime_regs": [
+      0
+     ],
+     "xval_regime_regs": [
+      0
+     ],
+     "control_knockouts": [
+      [
+       41,
+       19,
+       1.0
+      ],
+      [
+       43,
+       20,
+       1.0
+      ],
+      [
+       55,
+       20,
+       1.0
+      ],
+      [
+       58,
+       19,
+       1.0
+      ],
+      [
+       60,
+       19,
+       1.0
+      ]
+     ],
+     "n_control_necessary": 0
+    },
+    {
+     "reached_out": 18,
+     "out_reg": 3,
+     "unread_at_out": 0.0,
+     "literal_regime_regs": [
+      0
+     ],
+     "xval_regime_regs": [
+      0
+     ],
+     "control_knockouts": [
+      [
+       20,
+       20,
+       1.0
+      ],
+      [
+       26,
+       19,
+       1.0
+      ],
+      [
+       48,
+       19,
+       1.0
+      ]
+     ],
+     "n_control_necessary": 0
+    }
+   ]
+  },
+  {
+   "lineage": "S2",
+   "seed": 1,
+   "transform": "xor:5",
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547
+   ]
+  },
+  {
+   "lineage": "S2",
+   "seed": 2,
+   "transform": "add:1",
+   "top4_held": 0.703125,
+   "best_held": 0.703125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703,
+    0.703
+   ]
+  },
+  {
+   "lineage": "S2",
+   "seed": 2,
+   "transform": "xor:5",
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531
+   ]
+  },
+  {
+   "lineage": "P2",
+   "seed": 1,
+   "transform": "add:1",
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547
+   ]
+  },
+  {
+   "lineage": "P2",
+   "seed": 1,
+   "transform": "xor:5",
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547
+   ]
+  },
+  {
+   "lineage": "P2",
+   "seed": 2,
+   "transform": "add:1",
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531
+   ]
+  },
+  {
+   "lineage": "P2",
+   "seed": 2,
+   "transform": "xor:5",
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531
+   ]
+  },
+  {
+   "lineage": "fresh",
+   "seed": 1,
+   "transform": "add:1",
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547
+   ]
+  },
+  {
+   "lineage": "fresh",
+   "seed": 1,
+   "transform": "xor:5",
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547,
+    0.547
+   ]
+  },
+  {
+   "lineage": "fresh",
+   "seed": 2,
+   "transform": "add:1",
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531
+   ]
+  },
+  {
+   "lineage": "fresh",
+   "seed": 2,
+   "transform": "xor:5",
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "crossed": false,
+   "g_cross": null,
+   "held_by_gen": [
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531,
+    0.531
+   ]
+  }
+ ],
+ "material": true,
+ "elapsed_s": 31.5,
+ "prereg_sha256": "3ff8cbcafd88eecb6a0e08d64834db9f796dc4bf7ce7352f8a740ad9e73ea1cb",
+ "ts": "2026-09-19 08:50:44"
+}

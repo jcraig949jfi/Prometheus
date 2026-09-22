@@ -5,6 +5,9 @@ its owner, why it is open, and what closing it would cost. Items are **not** ord
 within a section — the section is the priority.
 
 Last updated 2026-09-04, after the player/primitive closure pass (`6be6103f1`, `6ca171129`).
+**2026-09-16:** the schema-form queue is now `BACKLOG_H0H5.md`; every T-item below has a
+PROTEUS-NN row there (T3→02, T4→07, T5→06, T6→03, T7→22, T8→21, T9/T10→19, T11→23, T12→24,
+T13→18, T14→17). This file stays as the narrative companion until PROTEUS-25 folds it.
 Evidence for every claim below lives in `PROTEUS_CLOSURE_PACKET_2026-09-04.txt` and
 `proteus/v0_7/RESULT_*.json`.
 

@@ -1,3 +1,7 @@
+# NOTE 2026-09-16: the "superseded" lineage relation in this batch script was retired (undirected);
+# the committed records were migrated to superseded_by / supersedes by
+# techne/fossils/migrate_superseded_20260916.py. This script is the historical harvest record and is
+# NOT edited; re-running it would be refused by record.validate().
 """Batch 04 of the fossil harvest (2026-09-12): MACHINERY UNDER PRESSURE. records.
 
     python -m techne.fossils.batches.batch04

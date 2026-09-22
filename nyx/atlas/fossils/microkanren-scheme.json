@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "microkanren-scheme",
+ "techne_record": "techne/fossils/specimens/microkanren-scheme/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "microkanren-scheme",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "microKanren -- Hemann and Friedman (relational/logic programming kernel)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "jasonhemann/microKanren microKanren.scm as served 2026-09-12",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2013",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "logic-programming",
+     "relational-programming",
+     "unification",
+     "search",
+     "languages"
+    ],
+    "lineage": "microKanren (2013, Hemann & Friedman): a ~40-line relational programming kernel -- unification, fresh logic variables, interleaving (complete) search via streams; the minimal core underneath miniKanren and, by descent, a functional cousin of Prolog's resolution"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "relational logic programming in a minimal functional core",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "run relations (not functions) -- pose a goal with logic variables and get the complete stream of variable bindings that make it hold, by unification and interleaving search",
+    "pressure": "the need for a tiny, auditable core capturing logic programming's essence without Prolog's machinery; completeness of search (no infinite left-branch starvation)",
+    "success_means": "every and only the correct substitutions are enumerated, fairly, for a relation"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Scheme"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "microKanren (2013, Hemann & Friedman): a ~40-line relational programming kernel -- unification, fresh logic variables, interleaving (complete) search via streams; the minimal core underneath miniKanren and, by descent, a functional cousin of Prolog's resolution",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: miniKanren (Byrd 2009)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: swipl-9.2.9"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "64938449ab18672f65a6f1d9bb10c4547d2a90b4f525ce99b21a6eaafc1627de"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "microkanren-scheme",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "both do unification + search over relations; microKanren is a functional-stream core, Prolog is WAM/SLD",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "microkanren-scheme",
+   "relation": "derived_from",
+   "to": "miniKanren (Byrd 2009)",
+   "note": "microKanren is the minimal core beneath miniKanren",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "swipl-9.2.9",
+ "techne_record": "techne/fossils/specimens/swipl-9.2.9/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "swipl-9.2.9",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "SWI-Prolog 9.2.9 -- Jan Wielemaker",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git tag V9.2.9, github.com/SWI-Prolog/swipl-devel",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1987 (9.2.9 rel. 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "logic-programming",
+     "prolog",
+     "wam",
+     "unification",
+     "resolution",
+     "languages"
+    ],
+    "lineage": "SWI-Prolog (1987-, Wielemaker): a full ISO Prolog with a WAM-style virtual machine, garbage collection, constraint (CLP) libraries, tabling and modules; the most widely used free Prolog and a living WAM lineage (Warren 1983)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "logic programming (Prolog / resolution) at production scale",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "execute logic programs -- resolution (SLD) over Horn clauses with unification and backtracking -- as a practical, full-featured programming system",
+    "pressure": "the WAM exists because naive resolution is too slow; GC, indexing and tabling exist because real Prolog programs exhaust memory and loop",
+    "success_means": "goals succeed with correct bindings, deterministically where possible, on real programs"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "Prolog"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SWI-Prolog (1987-, Wielemaker): a full ISO Prolog with a WAM-style virtual machine, garbage collection, constraint (CLP) libraries, tabling and modules; the most widely used free Prolog and a living WAM lineage (Warren 1983)",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "f025c50c8cb2bb360223ed5a80052a38cf2a1f4ee980efd2fb98a93e0ac6d78b"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "UPSTREAM_TESTS_NOT_RUN",
+    "environment": {
+     "runner": "none this pass -- SOURCE pinned; build is a heavy cmake tree deferred to a later pass or on demand"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "UPSTREAM_TESTS_NOT_RUN"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

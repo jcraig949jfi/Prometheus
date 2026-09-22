@@ -1,0 +1,92 @@
+{
+ "contract": {
+  "experiment_id": "cw01-e08",
+  "attempt_id": "cw01-e08-a01",
+  "world_schema_version": "rank-tax-tt-v1",
+  "statistic_name": "capability_adjusted_scalar_burden_tax_contrast",
+  "statistic_formula": "scalar(B)_l = a + b*C_l + c_tax*[TAX] + c_amp*[AMP]; c_tax is the primary contrast; interaction c_int from the full model with + c_int*[TAX*AMP]",
+  "normalisation": "scalar(B) = sum_j w_j * B_j / B_j_max over (bond, params, flops, bits); C_l = mean held64 (per-seed mean summed clipped final charge on seeds 30000..30063) over COMPETENT representatives",
+  "intervention_control_relationship": "2x2 factorial; arms differ ONLY in sel = fit - lambda*scalar(B) (TAX) and in whether the scheduled structural operator truncates (AMP) or shams; same world, seeds, horizon, population, mutation, selection, instrumentation",
+  "null_construction": "randomisation of TAX labels within each AMP stratum, n_perm draws, seeded from seeds(attempt_id, 'perm')",
+  "effect_clearing_rule": "COMPLETE requires c_tax < p05 of its randomisation null with common support and minimum counts; c_int must lie inside its null for pooling, else the pooled contrast is NOT_VERIFIED and per-stratum contrasts are reported",
+  "set_selection_procedure": "representatives = top 8 of each lineage's final population by RECORDED tax-free train fitness (one rule for all arms); competent = held64 > competence floor; lineage competent iff >= 4 competent representatives",
+  "disposition_rules": {
+   "COMPLETE": "Q1-Q7 QUALIFIED; c_tax < p05; overlap >= 4 each way; >= 6 competent lineages per TAX level; non-competent lineage count in TAX arms exceeds no-TAX by at most 2 per level; no fixture WRONG",
+   "NULL": "question posed (overlap, counts, excess) and c_tax not below p05",
+   "INCONCLUSIVE": "any predicate failed; or a required contrast NOT_VERIFIED; or non-competent excess > 2 per level",
+   "INVALID": "contract mismatch, seed overlap, arm label reaching the assay, recount disagreement in production rows, or any post-freeze integrity failure"
+  },
+  "world": {
+   "gen_seed": 13,
+   "wid": "Wf250db380cb2afd3",
+   "A": 8,
+   "train_seeds": [
+    9100,
+    9107
+   ],
+   "held_seeds": [
+    30000,
+    30063
+   ]
+  },
+  "organism": {
+   "R_max": 5,
+   "init_G_noise": 0.3,
+   "record_nbytes": 32250
+  },
+  "evolution": {
+   "n_org": 128,
+   "tournament": 3,
+   "elite": 4,
+   "mut_rate": 0.05,
+   "mut_sigma": 0.2,
+   "p_rank": 0.2,
+   "grow_sigma": 0.3,
+   "generations": 200,
+   "g_amp": 5
+  },
+  "tax": {
+   "lambda": 390.0,
+   "weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "lambda_fraction_of_max": 2.0,
+   "coordinates": [
+    "bond",
+    "params",
+    "flops",
+    "bits"
+   ]
+  },
+  "arms": [
+   "CONTROL",
+   "TAX",
+   "AMP",
+   "TAX+AMP"
+  ],
+  "lineages_per_arm": 8,
+  "production_seed_component": "evo",
+  "qualification_seed_components": [
+   "pilot",
+   "q7",
+   "q7x"
+  ],
+  "assay": {
+   "top_k": 8,
+   "s_amp": 3,
+   "competence_floor_held64": 166.47
+  },
+  "stats": {
+   "n_perm": 10000,
+   "overlap_min": 4,
+   "min_competent_lineages": 6,
+   "noncompetent_excess_max": 2
+  },
+  "freeze_rule": "once the first production organism is evaluated under this attempt_id, no metric, coefficient, schedule, seed, exclusion rule, threshold or verdict criterion may change; a defect voids the verdict and opens a new attempt_id"
+ },
+ "contract_sha256": "607f4671da26c07f6ccc0fccbc5c0780562a2cd5a993caaeeaf89cf4a5fa72e6",
+ "_freeze_rule": "no criterion may change under this attempt_id once the first organism is evaluated; a defect voids the verdict and opens a new attempt_id"
+}

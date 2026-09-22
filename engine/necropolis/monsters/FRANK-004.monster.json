@@ -1,0 +1,144 @@
+{
+  "_README": "Repair (F7): one ancestor, one change. Doctor Frankenstein looking at the Pollux corpse after the Necromancer, the Cleric and the Keeper finished with it: the organism asked whether some Mahler-measure subset pairs share a spacing profile beyond what scale explains, and answered it with a rank correlation between two UNRELATED orderings (the n smallest values of each subset, sorted, gap-normalized, Spearman-ed) thresholded at 0.30 with no null. On the real marginals that verdict recurs under independence up to 0.94 of the time (N2) and is reproduced by each promoted pair's own marginals sampled independently (N1). The one change is the statistic: a two-sample distance between the two subsets' normalized spacing distributions, read against a random-same-size-subset null of the whole Mahler table, with a split-half positive control and a synthetic negative control. This is the Cleric's 'settling artefact' (dossiers/pollux_evidence/CLERIC.md section 3) written as a monster with a kill condition that fires against the proposer first: at the sizes Pollux chose (17..8513 per side), the split-half control may not land in the lower tail, in which case the instrument cannot see coincidence at that N and the monster dies before Pollux's question is asked. Status PROPOSED; DESIGN ONLY; nothing run; no LLM involved anywhere in this monster. Written by the Keeper (Rhadamanthus) in the Frankenstein role (DEFECTS D-61).",
+  "schema_version": "1.0.0",
+  "monster_id": "FRANK-004",
+  "title": "Pollux repair: replace the rank correlation of truncations with a two-sample spacing-distribution test under a random-subset null",
+  "author_role": "Doctor Frankenstein",
+  "kind": "repair",
+  "premise_summary": "Pollux's hypothesis was that certain pairs of Mahler-measure subsets (by degree, by Salem/Pisot class, by Smyth extremality, by M-band) share a spacing profile that survives scale normalization. Its design took each subset's values, truncated the larger subset to the n smallest, mean-spacing-normalized both, and computed Spearman between the two gap series as if the i-th gap of one subset corresponded to the i-th gap of the other; corr_norm >= 0.30 was PROMOTED, < 0.10 REJECTED, between UNVERIFIED (charon/agents/pollux/daemon.py _classify, CORR_SIGNIFICANT 0.30). No pairing relation between the subsets exists, so the statistic reads density shape: the Cleric's own-marginal null (N1) reproduces the three PROMOTED verdicts at p 0.14 / 0.042 / 0.06 and two independent samples of one density PROMOTE up to 0.94 of the time (N2). The raw 'before normalization' leg was Spearman(sorted, sorted) = 1 on every row (T1/T2). This monster keeps the 9-pair menu, the subset loaders, the normalizer and the ledger contract, and replaces the statistic with a two-sample distance D between the two normalized-gap distributions (Kolmogorov-Smirnov distance, the implementation already living in prometheus_math/research/anomaly_surface.py::kolmogorov_smirnov_p), read against a null of random same-size subset pairs drawn from the whole Mahler table (about 8.6K entries), so that 'coincidence beyond scale' means 'more similar than arbitrary subsets of the same sizes are', with the reading pre-registered and a floor published per pair.",
+  "graves_raided": [
+    "Pollux"
+  ],
+  "organs": [
+    {
+      "organ_id": "pollux.code.2",
+      "source_agent": "Pollux",
+      "organ_type": "producer",
+      "contributes": "_load_subset and its 7 selector kinds (mahler_by_degree, mahler_by_degree_parity, mahler_degree_range, mahler_M_range, mahler_by_class, mahler_smyth_extremal, mahler_non_smyth): the subset-selection layer that turns each of the 9 pair specs into two value lists. Kept unchanged; the repair claims the subsets were never the problem.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "pollux.code.0",
+      "source_agent": "Pollux",
+      "organ_type": "transform",
+      "contributes": "_mean_spacing_normalize: sort, take consecutive gaps, divide by the mean gap. This is the scale-stripping transform the hypothesis is stated in terms of ('beyond what scale explains') and it is applied to EACH subset in full, not to a truncation. Kept unchanged.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "pollux.data.0",
+      "source_agent": "Pollux",
+      "organ_type": "failure_corpus",
+      "contributes": "The 9-pair menu (SEED_PAIRS + CANDIDATE_POOL) with today's corr_norm and the Cleric's N1/N2/D floors per pair: the fixed set of contrasts the repair is run over, so the ancestral comparison is pair-by-pair on identical inputs. No new pairs are added; adding pairs would be a second change.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "pollux.code.5",
+      "source_agent": "Pollux",
+      "organ_type": "measurement_instrument",
+      "contributes": "cleric_chance_floor.py's null machinery (seeded draws from a subset's own marginals; one-density resampling; signed label permutation): reused as the template for the random-subset null and the two controls, so the floor is computed the way the Cleric computed the ancestor's floor and the two numbers are comparable.",
+      "novel": false,
+      "modification_required": "The draw functions are pointed at the whole Mahler table (random same-size subsets) instead of at one pair's marginals, and the statistic they wrap becomes the KS distance instead of the daemon's corr_norm.",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "pollux.schemas.0",
+      "source_agent": "Pollux",
+      "organ_type": "interface_contract",
+      "contributes": "The kill_ledger row shape (record_id, generator_id, kill_pattern, stats{...}, verdict): the repair writes one row per (pair, seed) in this shape so that a reader of the ancestor's ledger can read the repair's.",
+      "novel": false,
+      "modification_required": "stats.corr_raw is dropped (it was constant); stats gains ks_distance, null_n, null_quantile, p_lower, p_bonferroni, split_half_p, negative_control_p, n_a, n_b, seed; kill_pattern takes one of pollux_spacing_coincident / pollux_spacing_not_coincident / pollux_spacing_unresolvable (instrument floor). The verdict field carries its p-value beside it (pollux.representation_hints.1).",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "pollux.representation_hints.0",
+      "source_agent": "Pollux",
+      "organ_type": "informative_failure_mode",
+      "contributes": "The Necromancer's own sentence: a scanner that compares two unpaired samples must name its pairing relation or use a two-sample test; 'sort both and correlate' is the identity. This monster is that sentence with the two-sample test chosen, the null named, and a kill condition attached.",
+      "novel": false,
+      "modification_required": "",
+      "failures_recorded_against": []
+    },
+    {
+      "organ_id": "novel.two_sample_spacing_distance",
+      "source_agent": "NOVEL",
+      "organ_type": "measurement_instrument",
+      "contributes": "The replacement statistic: KS distance D(A,B) = sup_x |F_A(x) - F_B(x)| between the empirical CDFs of the two subsets' full normalized-gap series (lengths n_a - 1 and n_b - 1; no truncation), computed by prometheus_math/research/anomaly_surface.py::kolmogorov_smirnov_p's scipy call (ks_2samp, two-sided) or a 10-line equivalent. Novel to the grave, not to the tree: the implementation exists in the living repo and is not harvested from any corpse.",
+      "novel": true,
+      "modification_required": "Wrap ks_2samp to return the distance statistic, not only the asymptotic p; the p used by this monster is the random-subset null's, not scipy's.",
+      "failures_recorded_against": []
+    }
+  ],
+  "organ_execution_plan": "ORGAN_NOTES.json (Keeper overlay, populated 2026-09-11) records pollux.code.0, pollux.code.2, pollux.code.5 and pollux.data.0 as executed during the Necromancer/Cleric passes (imported unchanged by pollux_rescan.py, pollux_instrument_null.py and cleric_chance_floor.py; results deterministic on rerun) and pollux.schemas.0 as read only (no ledger bytes exist on any reachable tree). The plan restates the executions so they are re-run, not inherited (LAW N17). Before stage 1 reads anything: (a) run dossiers/pollux_evidence/pollux_rescan.py and require the 9 per-pair corr_norm values and verdicts to equal pollux_rescan_result.json Q2 to 4 dp and the three surviving May summaries in the second channel (pollux_settling_query_result.json); (b) run cleric_chance_floor.py at its recorded seed (20260911) and require N1/N2/D to reproduce cleric_chance_floor_result.json; (c) run the KS wrapper on a subset against itself and require D = 0, and on a subset against its reversed copy and require D = 0 (the statistic must be order-blind, which is the whole point); (d) write one row in the modified pollux.schemas.0 shape to a fresh file outside charon/agents/pollux/state and read it back. Any failure in (a)-(d) leaves the monster PROPOSED with the failure recorded in cleric_gate.notes. The hint organ is not executed; it is the hypothesis and stage 1 is its execution. The novel organ's only claim is that ks_2samp exists in the tree and computes a two-sided KS distance; (c) is its execution.",
+  "counterfactual_repair": {
+    "ancestor": "Pollux",
+    "historical_assembly": "Pollux daemon v0.6 (commit 43b094552): per tick, take the next pair in rotation -> _load_subset(a), _load_subset(b) -> n = min(len(a), len(b)); take sorted(a)[:n], sorted(b)[:n] -> corr_raw = _spearman of the two sorted truncations (identically 1) -> _mean_spacing_normalize each truncation -> corr_norm = _spearman of the two gap series (i-th gap paired with i-th gap) -> _classify: PROMOTED if corr_norm >= 0.30, REJECTED if < 0.10, else UNVERIFIED -> row appended to charon/agents/pollux/state/kill_ledger.jsonl and a pollux_tick_complete row to agora.intelligence_outputs -> PROMOTED pairs enqueued to Stygian (POLLUX-<pair>, hardness POLLUX_SURVIVOR; no loader ever existed) -> settle after 5 consecutive identical PROMOTED/REJECTED, replace from CANDIDATE_POOL while it lasts. 286 ticks 2026-05-24..05-30: 86 REJECTED / 39 PROMOTED / 161 UNVERIFIED.",
+    "failure_layer": "DESIGN",
+    "cause_class": "DESIGN_ERROR",
+    "retained_mechanism": "The 9 pair specs, the 7 subset selectors, the mean-spacing normalizer, the ledger row contract, the one-shot scan of every pair, and the reading 'a spacing profile shared beyond what scale explains'. The repair claims none of these was the problem; the problem was the number computed between the two normalized series.",
+    "replaced_component": "The statistic and its threshold rule: Spearman between the i-th gaps of two size-n truncations, thresholded at 0.30 / 0.10 with no null.",
+    "replacement": "The Kolmogorov-Smirnov distance D between the full normalized-gap distributions of the two subsets, read against a null of 1000 random same-size (n_a, n_b) subset pairs drawn from the whole Mahler table per seed, 5 seeds: p_lower = fraction of null pairs with D_null <= D_observed. A pair is 'coincident beyond scale' only if p_lower < 0.05 / 9 on every seed, the split-half positive control at the same sizes lands at p_lower < 0.05 / 9 on every seed, and the synthetic negative control (subset A vs an exponential-spacing sample of size n_b) does NOT land in the lower tail. The verdict is recorded with all three p-values beside it.",
+    "predicted_obstruction_removed": "The recorded symptom on DESIGN is that the verdict is reproduced by the pair's own marginals sampled independently (N1) and by two samples of one density (N2): the statistic had no relation between the sets to read, so it read shape. A two-sample distance between full gap distributions has no truncation choice (T5's sensitivity disappears by construction), no i-th-to-i-th pairing (the N1 reproduction disappears because the statistic no longer depends on which n values were kept or how they were ordered), and the random-subset null answers the question the design named: are these two subsets more alike in normalized spacing than arbitrary subsets of the Mahler table of the same sizes? What disappears is any verdict whose sign and size can be produced from the marginals alone; what remains is a pair-specific number with a published floor.",
+    "cheap_test": "lightning_experiment stage 0 (deterministic, seconds: organ_execution_plan (a)-(d) and the split-half control at each pair's sizes, which decides whether stage 1 can be informative) and stage 1 (deterministic, minutes: 9 pairs x 5 seeds x 1000 null draws plus the two controls, and the ancestral statistic computed on the identical inputs for the side-by-side).",
+    "kill_before_run": "KILL before stage 1 if the split-half positive control fails at any pair's sizes: split each subset of the pair into random halves 5 times and require D(half_1, half_2) to land at p_lower < 0.05 / 9 against the same random-subset null in at least 4 of 5 splits -- if a subset is not judged coincident with ITSELF at these sizes, the instrument cannot see coincidence there and a stage-1 zero would be a floor reading, not a death; this fires against the proposer and is recorded per pair (a pair may be unresolvable while others run). KILL before stage 1 if organ_execution_plan (a)-(d) does not reproduce the on-record numbers (fires against the proposer: the organs are not what the dossier says). KILL the resurrection hypothesis after stage 1 if no pair reaches p_lower < 0.05 / 9 on all 5 seeds while its split-half control does: that is the fair death of the Pollux hypothesis in its only stated form the record never contained. KILL as void if the negative control (subset vs exponential-spacing synthetic) lands in the lower tail for any pair: the instrument then calls everything coincident and stage 1 is uninformative.",
+    "error_evidence": "dossiers/pollux.dossier.json autopsy.cause_of_death_stack.DESIGN (DESIGN_ERROR, load_bearing, primary_cause), .HYPOTHESIS (NOT_EXAMINED: no defined test on record; N1/N2 result), .MEASUREMENT (MEASUREMENT_ERROR: verdicts with no null); dossiers/pollux_evidence/CLERIC.md C-2, C-4, C-6 and section 3 (settling artefact); dossiers/pollux_evidence/cleric_chance_floor_result.json (N1 p 0.14 / 0.042 / 0.06; N2 PROMOTED up to 0.938); dossiers/pollux_evidence/pollux_instrument_null_result.json T1/T2 (corr_raw constant), T5 (verdict flips under random size-n subsample: stability 0.0 on deg14); charon/agents/pollux/daemon.py run_tick / _classify.",
+    "record_check": "grep -rli 'ks_2samp|kolmogorov|two.sample' over charon/agents/pollux, prometheus_math and harmonia/docs finds a KS implementation (prometheus_math/research/anomaly_surface.py::kolmogorov_smirnov_p, against named reference ENSEMBLES such as GUE/Poisson, used by the anomaly-surface lens) and no application of any two-sample test to two Mahler SUBSETS against each other; grep -rli 'spacing' over prometheus_math finds spectral_gaps.py (L-function / spectral spacings, not Mahler subsets) and the normalizer only inside Pollux. The Pollux dossier's death certificates (05-25, 06-10, 06-23, 06-24, PROF_TRIAGE, P69) all read the corr_norm ledger; none ran or proposed a two-sample comparison. The 06-24 dossier's 'tautology' finding is the nearest thing on the record to this repair's premise and it stopped at the raw leg. Not dead-on-record. Caveat recorded: the Harmonia lanes have measured Mahler spacing statistics against GUE/Poisson references (memory: 'GUE deviation z=-19 POSSIBLE', 2026-04-15) -- that is one subset against a theoretical ensemble, not subset against subset, and it does not answer Pollux's pairwise question; the Cleric should confirm no Harmonia artefact computed a pairwise subset distance before this file is signed."
+  },
+  "why_combination_changes_boundary": "The Pollux dossier kill_boundary records that the general hypothesis was never tested (no pairing relation, no two-sample test, no null) and that its only operationalized form is inside its own null. The boundary claimed to move is 'the spacing-coincidence question is unanswerable on this record', not 'Mahler subsets share spacing profiles'. The mechanism is recomposition of era-1 organs -- the same pairs, the same loaders, the same normalizer, the same ledger contract -- with the statistic replaced by a two-sample distance whose null is the Mahler table itself and whose floor is published before the read. No model, modern or otherwise, enters; the monster is pure deterministic compute over the same 8.6K-entry table Pollux read in May (prometheus_math/databases/_mahler_data.py, unchanged since commit 12a76bade 2026-05-03).",
+  "modern_capability_enabling": {
+    "depends_on_frontier": false,
+    "capability": "none: pure recomposition of era-1 organs plus one statistic that existed in the tree (anomaly_surface.py) and in scipy before Pollux was written. The random-subset null is the N2 pattern the Cleric already executed, pointed at the whole table.",
+    "era_test": "Not needed: no frontier dependency, no LLM in the loop. A positive result cannot be attributed to capability."
+  },
+  "consumer": {
+    "name": "The Pollux dossier itself (engine/necropolis/dossiers/pollux.dossier.json: fair_test, kill_boundary, HYPOTHESIS layer, capability_contingency.what_would_move_it)",
+    "reachable_now": true,
+    "consumption_proof": "A CONSUMPTION.jsonl row {object: FRANK-004 stage-1 result file, consumed_by: pollux.dossier.json amendment under LAW N11, effect: HYPOTHESIS moves from NOT_EXAMINED to a verdict with a fair test behind it (either direction) or the per-pair 'unresolvable at this N' floor is recorded}. No production consumer is claimed: the ancestor's Stygian consumer was a stub (E9) and this monster does not pretend to build the loader; its consumer is the record.",
+    "_note": "Stage 0 has no consumer and cannot make the monster ALIVE on its own; it can only kill it."
+  },
+  "measurable_consequence": "Per pair and per seed: D_observed, the random-subset null's median and 5th percentile of D at (n_a, n_b), p_lower, p_bonferroni (x9), the split-half control's p_lower, the negative control's p_lower, and the verdict; beside them the ancestor's corr_norm and verdict on the identical inputs, so the 9-row table shows which of the 39-PROMOTED-pairs' verdicts survive a statistic that cannot read shape.",
+  "strongest_alternative_explanation": "A pair judged coincident under the random-subset null is coincident only relative to the Mahler table's global structure: two subsets selected by DEGREE (deg14 vs deg16) may both differ from random subsets in the same way because degree correlates with M, so their gap distributions are alike for a reason the word 'coincidence' overstates -- a shared covariate, not a shared profile. The separations are: (1) a second null that draws random subsets matched on M-range (the daemon's mahler_M_range selector makes this a one-line change) is reported beside the unmatched null; (2) a pair that is coincident under the unmatched null but not under the M-matched null is recorded as 'explained by M-range', which is exactly the 'beyond what scale explains' clause of the hypothesis failing. The M-matched null is a control on the same monster, not a second change to the ancestor; the Cleric may disagree.",
+  "lightning_experiment": {
+    "design": "Stage 0 (deterministic, no spend): organ_execution_plan (a)-(d); for each of the 9 pairs compute (n_a, n_b) from _load_subset; build the random-subset null at those sizes (1000 draws, seed s) from the whole Mahler table; run the split-half positive control (5 random halvings of each subset; D between halves; p_lower against a null at the half sizes) and the negative control (subset A vs an exponential(1) spacing sample of size n_b - 1, which is Poisson spacing after mean normalization); record per pair whether the instrument resolves coincidence at these sizes. Pairs that fail the split-half control are marked pollux_spacing_unresolvable and do not enter stage 1. Stage 1 (deterministic, minutes): for each resolvable pair and each of 5 seeds (20260911 + k), D_observed on the full normalized-gap series, p_lower against the unmatched random-subset null, p_lower against the M-range-matched null (control), and the ancestor's corr_norm / verdict on the identical inputs for the side-by-side. Pre-register the reading before unblinding: ALIVE requires p_lower < 0.05/9 on all 5 seeds under the unmatched null AND under the M-matched null for at least one pair; a pair alive under the unmatched null only is recorded as 'explained by M-range'.",
+    "expected_if_alive": "At least one pair reaches p_lower < 0.05/9 on all 5 seeds under both nulls while its split-half control passes and its negative control lands in the upper half of the null: two Mahler subsets are more alike in normalized spacing than arbitrary same-size subsets, including M-matched ones. The ancestor's verdict on that pair is reported beside it and is expected to be uninformative about which pair this is (the ancestor read shape).",
+    "expected_if_dead": "No resolvable pair reaches p_lower < 0.05/9 on all 5 seeds under the unmatched null, while the split-half controls pass: at the sizes Pollux chose, no pair is more alike than random subsets of the table. This is the fair death of the Pollux hypothesis in its only stated form; the record never contained it.",
+    "kill_condition": "Pre-declared: (1) organ_execution_plan (a)-(d) fails to reproduce on-record numbers -> not run, recorded against the proposer; (2) split-half control fails (< 4 of 5 halvings at p_lower < 0.05/9) for a pair -> that pair is pollux_spacing_unresolvable, not run, recorded against the proposer; if all 9 pairs are unresolvable the monster is DEAD BEFORE RUN against the proposer; (3) negative control lands at p_lower < 0.05 for any pair -> void for that pair (instrument calls Poisson spacing coincident), not a kill; (4) no resolvable pair reaches p_lower < 0.05/9 on all 5 seeds under the unmatched null -> DEAD; (5) a pair passes the unmatched null but not the M-matched null -> NOT ALIVE, recorded as explained by M-range; (6) the ancestral statistic on the identical inputs fails to reproduce pollux_rescan_result.json Q2 -> the ancestral comparison is void and the stage-1 read is reported without it.",
+    "chance_floor": "P(p_lower < 0.05/9 | the pair is an arbitrary same-size subset pair) = 0.05/9 = 0.0056 per seed by construction of the random-subset null (1000 draws), and the all-5-seeds requirement makes the per-pair floor smaller than that only if seeds are independent draws of the null, which they are; the family-wise floor over 9 pairs is 0.05 by Bonferroni. The floor is published per pair from the null's own quantiles at (n_a, n_b) in stage 0. The ancestor's floor under the same reading was 0.13..0.94 (cleric_chance_floor_result.json N1/N2).",
+    "positive_control": "Split-half: each subset against a random half of itself must be judged coincident at the pair's sizes (p_lower < 0.05/9 in >= 4 of 5 halvings). A subset that is not coincident with itself under this instrument marks the pair unresolvable at that N; this is the instrument-floor check the ancestor never had and it is expected to fail for the smallest subsets (smyth_extremal 16, deg10 17), which is recorded, not hidden.",
+    "resource_budget": {
+      "available_now": true,
+      "needs": [
+        "Stage 0: the repo only (charon/agents/pollux/daemon.py for the loaders and normalizer, prometheus_math/databases/_mahler_data.py, scipy for ks_2samp or a 10-line equivalent, dossiers/pollux_evidence/cleric_chance_floor.py as the null template); one operator-session; no model calls",
+        "Stage 1: minutes of deterministic compute (9 pairs x 5 seeds x 1000 draws x 2 nulls, each draw two subset selections and one KS over at most 8.6K gaps); a fresh ledger path outside any daemon state directory",
+        "Cleric adjudication (including the record check against Harmonia artefacts and the split-half rule) and James sign-off before stage 1 is read"
+      ],
+      "estimated_cost": "Stage 0: one script, under an hour. Stage 1: minutes. Zero model spend."
+    },
+    "ancestral_comparison": {
+      "feasible": true,
+      "ancestral_assembly": "The ancestor's statistic (sorted(a)[:n], sorted(b)[:n] -> _mean_spacing_normalize -> _spearman -> _classify with CORR_SIGNIFICANT 0.30) computed on the identical subsets inside the same script, per pair. Unlike Erebos, the ancestral assembly reproduces EXACTLY: the data file is unchanged since 2026-05-03, pollux_rescan.py Q2 is deterministic on rerun, its three surviving May summaries match the second channel to 4 dp, and the corrected replay reproduces the run's full per-pair census from the code (dossiers/_keeper_evidence/pollux_replay_corrected_result.json).",
+      "rationale": "The repair is one change to one ancestor, so the ancestral comparison is the ancestor's verdict and the repair's verdict on the same 9 inputs. Evolutionary movement is measured as the 9-row agreement table: if the repair's verdicts are independent of the ancestor's (expected: the ancestor read shape, N1/N2), the table shows it; if they agree, the Cleric's N1/N2 reading of the ancestor needs re-examination.",
+      "ancestral_result_on_record": "dossiers/pollux_evidence/pollux_rescan_result.json Q2_verdicts (deg10 REJECTED, deg14 PROMOTED, salem PROMOTED, smyth REJECTED, deg18 UNVERIFIED, even_odd UNVERIFIED, small_large PROMOTED, narrow_band REJECTED, lehmer UNVERIFIED) and the historical census 86 / 39 / 161 confirmed by dossiers/_keeper_evidence/pollux_settling_query_result.json."
+    }
+  },
+  "vindication_disclaimer": "A plausible modern reconstruction does not vindicate the historical agent, invalidate its autopsy, or constitute evidence that the original premise was correct. If this monster lives, the conditional viability frontier moved; Prometheus 1.0 did not succeed retroactively.",
+  "cleric_gate": {
+    "status": "PROPOSED",
+    "notes": "Not yet reviewed. Cleric checklist: (i) hallucination scan on the premise: confirm from daemon.py run_tick that the truncation is sorted(x)[:n] and that _classify has no null; confirm from cleric_chance_floor_result.json that N1 p and N2 floors are as quoted; (ii) confirm the record check: no pairwise Mahler-subset two-sample test in pivot/, harmonia/ or prometheus_math/ (the Keeper grepped charon/agents/pollux, prometheus_math, harmonia/docs only); (iii) check that 'one change' holds -- the random-subset null, the split-half control, the negative control and the M-matched null are instrument controls, not changes to the ancestor; if the Cleric reads 'full series instead of truncation' as a second change (the ancestor truncated; the repair does not), record that the truncation was part of the replaced statistic, not a separate design choice, or refile; (iv) the split-half rule (>= 4 of 5 halvings at p < 0.05/9) and the 5-seed all-pass rule are the proposer's own numbers and can be attacked -- in particular the split-half control is a SIMILARITY test on halves of one subset and may be easier than the pairwise test for reasons of sample size alone; (v) KS is one choice of distance; Anderson-Darling or energy distance may resolve tails better, and the choice was made for the existing implementation in the tree, not for power -- record as a proposer's convenience; (vi) the Necropolis trial was run by one operator across Necromancer, Cleric, Frankenstein and Keeper; a second reader is the first genuine Cleric this file has had.",
+    "james_signoff": false,
+    "dossier_if_dead": null
+  },
+  "provenance": {
+    "author": "Rhadamanthus (Keeper and Judge), writing as Doctor Frankenstein; DESIGN ONLY, nothing run",
+    "branch": "rhadamanthus/native-trial-2026-09-11",
+    "baseline_sha": "84da7e1b40773563d4a5792d92b5c9d1102bcfe5",
+    "organs_inventory_sha": "4c6fd91edd21fb7559b4a19b249fa3f0e9d78555d3815daebf7743d810b07bb3",
+    "created_at": "2026-09-11",
+    "amendments": []
+  }
+}

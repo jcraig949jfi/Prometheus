@@ -1,0 +1,355 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C3-SFE-07/a01",
+ "battery": [
+  {
+   "name": "random_pair_gap_smaller_than_treatment_gap",
+   "passed": true,
+   "value": {
+    "random_gap": 0,
+    "treatment_gap": 0
+   }
+  },
+  {
+   "name": "operator_masses_matched_across_arms",
+   "passed": true,
+   "value": {
+    "masses": {
+     "grammar": {
+      "config_perturbation": 0.084,
+      "deletion": 0.1145,
+      "duplication": 0.0427,
+      "insertion": 0.0855,
+      "movement": 0.0499,
+      "operand_perturbation": 0.2204,
+      "randomization": 0.0562,
+      "reference_redirection": 0.0956,
+      "region_swap": 0.0583,
+      "replacement": 0.1355,
+      "splice": 0.0517,
+      "unreachable_removal": 0.0059
+     },
+     "high_basin": {
+      "config_perturbation": 0.0922,
+      "deletion": 0.1035,
+      "duplication": 0.0315,
+      "insertion": 0.0962,
+      "movement": 0.0481,
+      "operand_perturbation": 0.2223,
+      "randomization": 0.0538,
+      "reference_redirection": 0.1078,
+      "region_swap": 0.0566,
+      "replacement": 0.1256,
+      "splice": 0.0544,
+      "unreachable_removal": 0.008
+     },
+     "low_basin": {
+      "config_perturbation": 0.0757,
+      "deletion": 0.1129,
+      "duplication": 0.0372,
+      "insertion": 0.0801,
+      "movement": 0.0456,
+      "operand_perturbation": 0.2287,
+      "randomization": 0.0496,
+      "reference_redirection": 0.1162,
+      "region_swap": 0.0574,
+      "replacement": 0.1322,
+      "splice": 0.0576,
+      "unreachable_removal": 0.0067
+     },
+     "rand_a": {
+      "config_perturbation": 0.0764,
+      "deletion": 0.1018,
+      "duplication": 0.044,
+      "insertion": 0.0822,
+      "movement": 0.0563,
+      "operand_perturbation": 0.2201,
+      "randomization": 0.0619,
+      "reference_redirection": 0.0985,
+      "region_swap": 0.0646,
+      "replacement": 0.1385,
+      "splice": 0.0478,
+      "unreachable_removal": 0.0078
+     },
+     "rand_b": {
+      "config_perturbation": 0.0859,
+      "deletion": 0.1096,
+      "duplication": 0.0335,
+      "insertion": 0.0851,
+      "movement": 0.0517,
+      "operand_perturbation": 0.2032,
+      "randomization": 0.0549,
+      "reference_redirection": 0.1038,
+      "region_swap": 0.0583,
+      "replacement": 0.1509,
+      "splice": 0.0554,
+      "unreachable_removal": 0.0077
+     }
+    },
+    "max_deviation": 0.0255
+   }
+  },
+  {
+   "name": "intervention_applied_every_arm",
+   "passed": true,
+   "value": {
+    "grammar": 0,
+    "high_basin": 2,
+    "low_basin": 2,
+    "rand_a": 2,
+    "rand_b": 2
+   }
+  }
+ ],
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-022: only C3-SFE-06 tables whose threshold is ABOVE CHANCE are used to choose the encodings (L3-030); skelB's target fell at 1/16 and its rows carry no search information",
+  "D3-018: the encodings are chosen by the preregistered rule (largest basin gap among pairs matched on accessible variation within 15%), from geometry measured by C3-SFE-06 BEFORE this run; no ordering was chosen on a known search time"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "POSITIVE_CONTROL_FAILED",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "POSITIVE_CONTROL_FAILED"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-07",
+ "finished_at": "2026-09-17T07:27:47Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:881d06d18a0e54e9572711a37084bb8ffcad8835eabd04007218561a3df40af8",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "selection": {
+  "encodings": [
+   {
+    "accessible_variation": 1.4399,
+    "basin_share": 0.0256,
+    "deceptive_share": 0.3201,
+    "encoding": "identity"
+   },
+   {
+    "accessible_variation": 1.4514,
+    "basin_share": 0.0269,
+    "deceptive_share": 0.3309,
+    "encoding": "class_grouped"
+   },
+   {
+    "accessible_variation": 1.4487,
+    "basin_share": 0.0298,
+    "deceptive_share": 0.3255,
+    "encoding": "perm_1"
+   },
+   {
+    "accessible_variation": 1.4493,
+    "basin_share": 0.0304,
+    "deceptive_share": 0.3257,
+    "encoding": "perm_2"
+   },
+   {
+    "accessible_variation": 1.4371,
+    "basin_share": 0.0305,
+    "deceptive_share": 0.3134,
+    "encoding": "perm_3"
+   },
+   {
+    "accessible_variation": 1.4385,
+    "basin_share": 0.0309,
+    "deceptive_share": 0.3144,
+    "encoding": "perm_4"
+   },
+   {
+    "accessible_variation": 1.4386,
+    "basin_share": 0.0276,
+    "deceptive_share": 0.3171,
+    "encoding": "perm_5"
+   },
+   {
+    "accessible_variation": 1.4321,
+    "basin_share": 0.0305,
+    "deceptive_share": 0.308,
+    "encoding": "perm_6"
+   },
+   {
+    "accessible_variation": 1.445,
+    "basin_share": 0.0338,
+    "deceptive_share": 0.3183,
+    "encoding": "perm_7"
+   },
+   {
+    "accessible_variation": 1.4296,
+    "basin_share": 0.0285,
+    "deceptive_share": 0.3071,
+    "encoding": "perm_8"
+   },
+   {
+    "accessible_variation": 1.4436,
+    "basin_share": 0.0297,
+    "deceptive_share": 0.3206,
+    "encoding": "perm_9"
+   },
+   {
+    "accessible_variation": 1.4391,
+    "basin_share": 0.028,
+    "deceptive_share": 0.3167,
+    "encoding": "perm_10"
+   }
+  ],
+  "gap": 0.0082,
+  "high": {
+   "accessible_variation": 1.445,
+   "basin_share": 0.0338,
+   "deceptive_share": 0.3183,
+   "encoding": "perm_7"
+  },
+  "low": {
+   "accessible_variation": 1.4399,
+   "basin_share": 0.0256,
+   "deceptive_share": 0.3201,
+   "encoding": "identity"
+  },
+  "rand_a": {
+   "accessible_variation": 1.4371,
+   "basin_share": 0.0305,
+   "deceptive_share": 0.3134,
+   "encoding": "perm_3"
+  },
+  "rand_b": {
+   "accessible_variation": 1.4321,
+   "basin_share": 0.0305,
+   "deceptive_share": 0.308,
+   "encoding": "perm_6"
+  },
+  "rand_gap": 0.0,
+  "tables_used": [
+   "skelA"
+  ]
+ },
+ "started_at": "2026-09-17T07:27:46Z",
+ "steps": {},
+ "summary": {
+  "grammar": {
+   "accessible_variation": null,
+   "basin_share": null,
+   "best_g20_med": 0.1875,
+   "confirmed": 0,
+   "confirmed_gen": [
+    null,
+    null
+   ],
+   "heldout_med": 0.0625,
+   "median_confirmed_gen": null,
+   "median_solved_gen": null,
+   "n": 2,
+   "rewrites_med": 0,
+   "solved": 0
+  },
+  "high_basin": {
+   "accessible_variation": 1.445,
+   "basin_share": 0.0338,
+   "best_g20_med": 0.1875,
+   "confirmed": 0,
+   "confirmed_gen": [
+    null,
+    null
+   ],
+   "heldout_med": 0.0625,
+   "median_confirmed_gen": null,
+   "median_solved_gen": null,
+   "n": 2,
+   "rewrites_med": 32,
+   "solved": 0
+  },
+  "low_basin": {
+   "accessible_variation": 1.4399,
+   "basin_share": 0.0256,
+   "best_g20_med": 0.1875,
+   "confirmed": 0,
+   "confirmed_gen": [
+    null,
+    null
+   ],
+   "heldout_med": 0.0625,
+   "median_confirmed_gen": null,
+   "median_solved_gen": null,
+   "n": 2,
+   "rewrites_med": 34,
+   "solved": 0
+  },
+  "rand_a": {
+   "accessible_variation": 1.4371,
+   "basin_share": 0.0305,
+   "best_g20_med": 0.1875,
+   "confirmed": 0,
+   "confirmed_gen": [
+    null,
+    null
+   ],
+   "heldout_med": 0.0625,
+   "median_confirmed_gen": null,
+   "median_solved_gen": null,
+   "n": 2,
+   "rewrites_med": 19,
+   "solved": 0
+  },
+  "rand_b": {
+   "accessible_variation": 1.4321,
+   "basin_share": 0.0305,
+   "best_g20_med": 0.1875,
+   "confirmed": 0,
+   "confirmed_gen": [
+    null,
+    null
+   ],
+   "heldout_med": 0.0625,
+   "median_confirmed_gen": null,
+   "median_solved_gen": null,
+   "n": 2,
+   "rewrites_med": 37,
+   "solved": 0
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "records_s": 0.0,
+  "search_s": 1.24,
+  "total_s": 1.4
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "arm": "grammar",
+    "metric": "confirmed",
+    "min": 1,
+    "rows": 2,
+    "rows_meeting": 0,
+    "values": [
+     0,
+     0
+    ]
+   },
+   "state": "POSITIVE_CONTROL_FAILED"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "c30df802a8d11b90dc3e8852d623a786b952014d",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

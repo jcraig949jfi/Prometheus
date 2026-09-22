@@ -33,9 +33,9 @@
     "author": "Phil Karn"
   },
   "hashes": {
-    "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+    "tree_sha256": "2b3fe8726f9a3ae6294e58a3899d0d52bdaeb1832a9df73e081b8d296a8506c9",
     "n_files": 127,
-    "bytes": 520060,
+    "bytes": 502404,
     "artifacts": [
       {
         "filename": "https://github.com/ka9q/libfec",
@@ -43,7 +43,7 @@
         "commit": "7c6706fb969c3f8fe6ec7778b2472762e0d88acc"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\libfec-karn",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\libfec-karn",
     "hash_list": "techne/fossils/specimens/libfec-karn/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -124,5 +124,33 @@
     "how_we_know_it_runs": "BLOCKED_PLATFORM / UPSTREAM_TESTS_NOT_RUN ; receipt none (pinned+hashed)",
     "what_humans_used_it_for": "recover the most-likely transmitted bit sequence from a noisy convolutionally-coded signal by the Viterbi algorithm (dynamic programming over a trellis of hidden encoder states), and to correct Reed-Solomon block errors"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+      "n_files": 127,
+      "bytes": 520060,
+      "artifacts": [
+        {
+          "filename": "https://github.com/ka9q/libfec",
+          "sha256": null,
+          "commit": "7c6706fb969c3f8fe6ec7778b2472762e0d88acc"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\libfec-karn",
+      "hash_list": "techne/fossils/specimens/libfec-karn/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T135000Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/libfec-karn/receipts/repin-libfec-karn-20260916T135000Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/libfec-karn/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 0,
+        "RECORD_IS_CRLF": 127,
+        "NOT_IN_ORIGIN": 0,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

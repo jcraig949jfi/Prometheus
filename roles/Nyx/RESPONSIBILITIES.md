@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-11 (charter received and adopted; first specimen opened).
+Currency: 2026-09-16 (section 5a added: Mechanism Archaeology Pipeline, Amendment 3 R32 supersedes ATLAS Stage C/D; the rest of this file is as of 2026-09-11).
 Supersedes the 2026-09-11 "charter PENDING" version of this file
 (commit 4219f543c), which is retained in git history and not annotated
 here because it made no claims a reader could act on.
@@ -116,6 +116,19 @@ positive / negative / cheat controls it proposes (base role: the cheat
 control is constitutional; charter IV CONTROL and CHEAT). Corrections are
 annotations beside the original. Deliveries are comms messages whose
 bodies are committed files under roles/Nyx/prompts/.
+
+## 5a. Mechanism Archaeology Pipeline (operator, 2026-09-16; supersedes parts of the ATLAS PASS 01 charter)
+
+roles/Nyx/prompts/2026-09-16_mechanism_archaeology_pipeline/ (Founding Charter, Amendments 2 and 3; verbatim
+transcriptions with MANIFEST). Where they and the 2026-09-13 ATLAS charter disagree, the pipeline directives win.
+Amendment 3 R32, explicit ruling: Nyx owns Stage A (dissection), Stage B (cut construction), Stage C' (prediction +
+intervention specification: NYX_PREDICTION_PACKET schema/1, nyx/atlas/predictions/) and Stage D' (assimilation of
+typed returns). The ATLAS charter's Stage C (ablation by Nyx) and Stage D (fingerprints by Nyx) are SUPERSEDED for
+the pipeline: formal ablation and equivalence belong to Harmonia (R1-R4) and Theophrastus. Exploratory runs by Nyx
+are permitted only labelled SCOUT / SEEN / NON-ADJUDICATIVE. Every cut carries R34 provenance (nyx.atlas/1-provenance:
+provenance_grade_read, source_object_id, payload_manifest_id, per-file payload hashes; enforced by the validator).
+The gate ledger (nyx/atlas/gates/LEDGER.json, reported by build.py) shows cuts_created beside
+cuts_returned_with_verdict; atlas growth is never reported instead of stalled falsification (R32).
 
 ## 6. Halloween (charter XV) as this seat reads it
 

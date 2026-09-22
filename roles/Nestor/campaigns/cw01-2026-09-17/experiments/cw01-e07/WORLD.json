@@ -1,0 +1,87 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e07",
+ "attempt_id": "cw01-e07-a01",
+ "world_schema_version": "computational-weather-v1",
+ "_doc": "Declarative parameters for cw01-e07. Every number here is fixed by PREREGISTRATION.md; the world module reads this file and never hardcodes a threshold.",
+ "world": {
+  "d": 4,
+  "K": 16,
+  "L": 64,
+  "theta_range": 2.0,
+  "obs_sigma": 1.0,
+  "clip": 4.0,
+  "_latent": "Q_r: attempt-stable random orthogonal dxd per replicate world (QR of a Gaussian, signs fixed); theta drawn once per lifetime; observations and queries per episode"
+ },
+ "damage": {
+  "family": "transient_state_deletion",
+  "selector": "k distinct cell indices uniformly at random; inputs (K, k, rng) only",
+  "severity_to_k": "max(1, round(f * K))",
+  "sweep": [0.10, 0.20, 0.30],
+  "primary": 0.20,
+  "T_d": 32,
+  "H": 32,
+  "window": 4,
+  "train_events": [1, 2],
+  "train_episode_range": [8, 48],
+  "test_conditions": [
+   {"name": "primary", "f": 0.20, "episodes": [32], "role": "primary"},
+   {"name": "sev010", "f": 0.10, "episodes": [32], "role": "secondary"},
+   {"name": "sev030", "f": 0.30, "episodes": [32], "role": "secondary"},
+   {"name": "gen_sev045", "f": 0.45, "episodes": [32], "role": "generalisation"},
+   {"name": "gen_sched3", "f": 0.20, "episodes": [12, 24, 36], "role": "generalisation"}
+  ],
+  "sham": "identical selector and draws; write M[i] <- M[i]; must be bit-identical to intact"
+ },
+ "evolution": {
+  "n_org": 64,
+  "generations": 120,
+  "lifetimes_per_eval": 8,
+  "_amendment_2": "lifetimes_per_eval 2 -> 8 is the ONE correction after the first gate refusal (PREREGISTRATION Amendment 2, CW01-D059). No other value changed.",
+  "tournament": 3,
+  "elite": 4,
+  "mut_prob": 0.2,
+  "mut_sigma": 0.05,
+  "init_sigma": 0.1,
+  "_matching": "task stream keyed (attempt, r, 'train', generation) identical across arms and lineages; weather stream keyed (attempt, r, 'weather|train', generation) consumed identically by WEATHER and SHAMWEATHER; evolution stream keyed per lineage"
+ },
+ "arms": ["STATIC", "WEATHER", "SHAMWEATHER"],
+ "lineages_per_arm": 8,
+ "replicates": ["r01", "r02", "r03", "r04"],
+ "test": {
+  "n_select": 16,
+  "n_test": 32,
+  "top_k": 8,
+  "useful_delta": 0.05,
+  "min_useful_reps": 4,
+  "min_useful_lineages": 6,
+  "overlap_min": 4,
+  "recover_threshold": 0.9
+ },
+ "gate": {
+  "pilot_lineages": 4,
+  "pilot_generations": 40,
+  "pilot_top_k": 16,
+  "p1_lifetimes": 64,
+  "p1_blocks": 8,
+  "p1_block_max": 0.95,
+  "p1_mean_max": 0.90,
+  "p1_stateless_tol": 1e-9,
+  "p2_tol": 1e-12,
+  "p3_median_aurc_min": 0.25,
+  "p3_rhoH_frac": 0.25,
+  "p3_rhoH_min": 0.5,
+  "p4_pair_tol": 0.02,
+  "p4_min_pairs": 16,
+  "p4_ratio_min": 3.0,
+  "min_useful_pilot": 24,
+  "p5_trials": 64,
+  "learnability_min_advantage_pct": 5.0,
+  "gain_family_n": 64,
+  "gain_family_range": [0.3, 1.0]
+ },
+ "rows": {
+  "generation_every": 4,
+  "_status_vocabulary": "record (WEATHER), control (STATIC, SHAMWEATHER); fixed by primordial.fabric.envelope.ROW_STATUSES"
+ }
+}

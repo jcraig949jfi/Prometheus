@@ -1,0 +1,241 @@
+{
+ "plan_id": "CR-001",
+ "slug": "pollux_frank004_random_subset_null",
+ "question": "Are any of Pollux's 9 Mahler-subset pairs more alike in mean-normalised spacing than random same-size subsets of the Mahler table (FRANK-004 stage 0 + stage 1), read with a statistic that cannot see the sorted-rank identity the daemon reported?",
+ "target": {
+  "dossier": "engine/necropolis/dossiers/pollux.dossier.json",
+  "monster": "FRANK-004",
+  "agent": "Pollux"
+ },
+ "target_grave": "engine/necropolis/dossiers/pollux.dossier.json",
+ "hitl_status": "PROPOSED",
+ "approval": null,
+ "invocation": {
+  "dry_check": "python engine/necropolis/workshop/coroner_run.py engine/necropolis/workshop/coroner_plans/CR-001_pollux_frank004.json",
+  "execute": "python engine/necropolis/workshop/coroner_run.py engine/necropolis/workshop/coroner_plans/CR-001_pollux_frank004.json --execute",
+  "preconditions": [
+   "hitl_status set to APPROVED by James",
+   "approval.record names a file that resolves under the repo",
+   "all 8 inputs re-fingerprint to sha256_lf recorded here",
+   "every tool in tools is READY / READY_WITH_CAVEAT in TOOLS.jsonl"
+  ],
+  "cwd": "repository root (worktree of branch rhadamanthus/tool-harvest-2026-09-11 or main after merge)",
+  "writes": "engine/necropolis/workshop/coroner_plans/CR-001/runs/<utc timestamp>/ only",
+  "expected_wall_clock": "under 5 minutes (9 pairs x 5 seeds x 1000 draws x 2 nulls of a 2-sample KS on <= 1500 gaps)"
+ },
+ "prepared_by": "Rhadamanthus",
+ "prepared": "2026-09-13",
+ "inputs": [
+  {
+   "path": "charon/agents/pollux/daemon.py",
+   "sha256_lf": "44270dac0f5b93b60eebe50c81cf2fa3025b42c42a386902a67333f11317171b",
+   "bytes": 26309
+  },
+  {
+   "path": "prometheus_math/databases/_mahler_data.py",
+   "sha256_lf": "399c39596d8dfca32fc482f5f0970359344c76b0231348dfd13baa401c46f9c9",
+   "bytes": 89454
+  },
+  {
+   "path": "engine/necropolis/monsters/FRANK-004.monster.json",
+   "sha256_lf": "3f98c813cb08ffadad4dec2e137ae281526cf48efab92b41e87889b5240487bd",
+   "bytes": 28252
+  },
+  {
+   "path": "engine/necropolis/dossiers/pollux_evidence/pollux_rescan_result.json",
+   "sha256_lf": "134df7afd2fce2b7645d3ec2ca65e1f8c63866453ab7fcfa1d88a0ee64e3c0c4",
+   "bytes": 8150
+  },
+  {
+   "path": "engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor_result.json",
+   "sha256_lf": "2ad00c6420d12b4061e399d4b21b14022abfcd6a0075af5ad30393f1696da3d0",
+   "bytes": 17606
+  },
+  {
+   "path": "engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null_result.json",
+   "sha256_lf": "798a6e09933eb1dbebc2744332bc5f37dfe616cae82e0470db2ae9098289f459",
+   "bytes": 19671
+  },
+  {
+   "path": "engine/necropolis/workshop/adapters/resampling_null.py",
+   "sha256_lf": "2af98f1dd45454f5317bb624fe7d9208ff5517f1b754eae63d0a41f911fc7a31",
+   "bytes": 7128
+  },
+  {
+   "path": "engine/necropolis/workshop/adapters/pollux_statistic_replay.py",
+   "sha256_lf": "3cd918d1e5cfc6f4ccc55046363c83b2a196a54aa95eb0f580425ca2a6c0f230",
+   "bytes": 4216
+  }
+ ],
+ "tools": [
+  "NT-048",
+  "NT-047",
+  "NT-049",
+  "NT-025",
+  "NT-006",
+  "NT-050"
+ ],
+ "actions": [
+  {
+   "step": 0,
+   "may": "M2",
+   "tool_id": "NT-048",
+   "module": "engine.necropolis.workshop.adapters.pollux_statistic_replay",
+   "function": "historical_statistic",
+   "kwargs": {
+    "_note": "for each of the 9 SEED_PAIRS: a,b = daemon._load_subset(spec) UNCHANGED; record corr_raw, corr_norm, verdict; require equality with pollux_rescan_result.json Q2 to 4 dp (organ_execution_plan (a)); mismatch -> STOP, record against proposer"
+   },
+   "writes": "<run_dir>/stage0_replay.json"
+  },
+  {
+   "step": 1,
+   "may": "M3",
+   "tool_id": "NT-047",
+   "module": "engine.necropolis.workshop.adapters.instrument_null",
+   "function": "probe",
+   "kwargs": {
+    "_note": "instrument-null reading of the daemon statistic on the 9 pairs (expected TAUTOLOGICAL; already measured on synthetic input in adapters_instrument_null.SYNTHETIC_NULL)"
+   },
+   "writes": "<run_dir>/stage0_instrument_null.json"
+  },
+  {
+   "step": 2,
+   "may": "M4",
+   "tool_id": "NT-049",
+   "module": "engine.necropolis.workshop.adapters.resampling_null",
+   "function": "split_half_control",
+   "kwargs": {
+    "_note": "for each pair and each side: 5 halvings, 1000 draws, seed 20260911, alpha 0.05/9; pool = all MAHLER_TABLE M values; resolvable iff >= 4/5 halvings at p_lower < alpha. PRE-RUN FINDING: this control cannot pass for any iid continuous gap law (see pre_run_findings[0])"
+   },
+   "writes": "<run_dir>/stage0_split_half.json"
+  },
+  {
+   "step": 3,
+   "may": "M5",
+   "tool_id": "NT-049",
+   "module": "engine.necropolis.workshop.adapters.resampling_null",
+   "function": "poisson_negative_control",
+   "kwargs": {
+    "_note": "subset A vs expovariate(1) gaps of size n_b-1; void if p_lower < 0.05"
+   },
+   "writes": "<run_dir>/stage0_negative_control.json"
+  },
+  {
+   "step": 4,
+   "may": "M4",
+   "tool_id": "NT-049",
+   "module": "engine.necropolis.workshop.adapters.resampling_null",
+   "function": "two_sample_read",
+   "kwargs": {
+    "seeds": [
+     20260911,
+     20260912,
+     20260913,
+     20260914,
+     20260915
+    ],
+    "n_draws": 1000,
+    "alpha": 0.005555555555555556,
+    "_note": "stage 1, only for pairs marked resolvable in step 2; unmatched random-subset null AND M-range-matched null (pool restricted to [min(M_a,M_b), max(M_a,M_b)]); report d_observed, null median / 5th pct, p_lower, p_bonferroni(x9), verdict, and the step-0 ancestor verdict beside it"
+   },
+   "writes": "<run_dir>/stage1_reads.json"
+  },
+  {
+   "step": 5,
+   "may": "M3",
+   "tool_id": "NT-006",
+   "module": "prometheus_math.research.anomaly_surface",
+   "function": "ks_2samp_crosscheck",
+   "kwargs": {
+    "_note": "scipy ks_2samp D on every stage-1 pair must equal adapters ks_distance to 1e-9 (PARITY already PASS in adapters_resampling_null.PARITY.ks_distance_matches_scipy)"
+   },
+   "writes": "<run_dir>/stage1_parity.json"
+  },
+  {
+   "step": 6,
+   "may": "M1",
+   "tool_id": "NT-050",
+   "module": "engine.necropolis.workshop.adapters.jsonl_ledger_census",
+   "function": "census",
+   "kwargs": {
+    "_note": "census of any Pollux state ledger that exists on the reachable tree (organ pollux.schemas.0 reads only; no ledger bytes were found on 2026-09-11)"
+   },
+   "writes": "<run_dir>/ledger_census.json"
+  }
+ ],
+ "controls": {
+  "positive": {
+   "name": "split-half",
+   "rule": ">= 4 of 5 halvings at p_lower < 0.05/9 per side",
+   "pre_run_status": "CANNOT PASS on iid continuous gaps (measured hit rate 0.0133 at alpha 0.00556, 0/30 resolvable); see pre_run_findings"
+  },
+  "negative": {
+   "name": "Poisson spacing",
+   "rule": "p_lower >= 0.05 (void otherwise)"
+  },
+  "repetition": {
+   "name": "seed repetition",
+   "rule": "same seed -> identical null quantiles and p (adapters_resampling_null.REPETITION.same_seed_same_null PASS)"
+  },
+  "parity": {
+   "name": "scipy KS parity",
+   "rule": "|D_adapter - D_scipy| < 1e-9"
+  },
+  "ancestor_parity": {
+   "name": "daemon replay",
+   "rule": "corr_norm equal to pollux_rescan_result.json Q2 to 4 dp on all 9 pairs"
+  }
+ },
+ "kill_criteria": [
+  "(1) step 0 fails to reproduce on-record corr_norm/verdicts -> NOT RUN; recorded against the proposer",
+  "(2) every pair fails the split-half control -> pollux_spacing_unresolvable on all 9 -> monster DEAD BEFORE RUN against the proposer (FIRES PRE-RUN, see pre_run_findings)",
+  "(3) any negative control p_lower < 0.05 -> that pair VOID (instrument reads Poisson spacing as coincidence)",
+  "(4) no resolvable pair reaches p_lower < 0.05/9 on all 5 seeds under the unmatched null -> Pollux hypothesis DEAD in its stated form",
+  "(5) a pair alive under the unmatched null but not under the M-matched null -> 'explained by M-range', hypothesis clause 'beyond what scale explains' fails for that pair",
+  "(6) stage-1 p at the floor 1/1001 on any seed -> report 'p <= 1/1001', never 0"
+ ],
+ "expected_outputs": {
+  "files": [
+   "stage0_replay.json",
+   "stage0_instrument_null.json",
+   "stage0_split_half.json",
+   "stage0_negative_control.json",
+   "stage1_reads.json",
+   "stage1_parity.json",
+   "ledger_census.json",
+   "RESULT.json"
+  ],
+  "row_schema": "per pair x seed: {pair, n_a, n_b, ks_distance, null_n, null_quantile, p_lower, p_bonferroni, split_half_p, negative_control_p, seed, verdict, ancestor_corr_norm, ancestor_verdict} (FRANK-004 organ 6 stats fields)"
+ },
+ "non_resurrection_argument": {
+  "X1": "no daemon process is started; daemon.py is imported for _load_subset and _mean_spacing_normalize only (pure functions), run_tick is never called",
+  "X2": "charon/agents/pollux/state is never opened for writing; all writes go to <run_dir>",
+  "X3": "no saved state is loaded; SEED_PAIRS is read as a constant",
+  "X4": "no pair rotation, no CANDIDATE_POOL promotion, no new specs: the 9 SEED_PAIRS are fixed inputs",
+  "X5": "no parameter is searched; seeds, alpha, n_draws are pre-registered constants",
+  "X6": "inputs are fingerprinted here and re-fingerprinted at run time; the ancestor verdict is replayed on identical inputs",
+  "X7": "the KS read is filed under NT-049 (NECROPOLIS ADAPTER); the ancestor read under NT-048/NT-010 (UNTRUSTED); RESULT.json keeps them in separate columns",
+  "X8": "coroner_run.py confines writes to <run_dir>"
+ },
+ "pre_run_findings": [
+  {
+   "id": "PRF-1",
+   "title": "Kill criterion (2) fires on synthetic data before any grave is read",
+   "measured": "engine/necropolis/workshop/tests/run_controls.py::adapters_resampling_null.PERTURBATION.split_half_control_fails_at_alpha_rate_for_iid_continuous -- 30 tight-lognormal sequences (n=200) vs a uniform pool, 5 halvings each: hit rate 0.0133 at alpha 0.00556, 0/30 resolvable; 50 percent member overlap gave p_lower ~0.3",
+   "why": "the two-sample KS statistic is distribution-free under 'same distribution'; the random-subset null at the half sizes IS a same-distribution null for any iid continuous gap law, so P(p_lower < alpha) = alpha regardless of n or shape. The lower tail can only see an IDENTICAL gap multiset (D ~ 0), measured in adapters_resampling_null.SYNTHETIC_SIGNAL.identical_gap_multiset_is_seen",
+   "input_characterisation": "MAHLER_TABLE: 8625 rows, 8497 distinct M, 143 rows in tied groups (1.7 percent); largest ties M=1.0 (29), 1.17628081826 (21), 1.324717957245 (16) -- ties are too sparse to produce identical gap multisets between degree subsets",
+   "consequence": "as written, FRANK-004 stage 0 marks all 9 pairs pollux_spacing_unresolvable and the monster is DEAD BEFORE RUN against the proposer. This is a finding about the DESIGN (the proposer's split-half rule, cleric_gate note (iv)), not about Pollux's hypothesis",
+   "recommendation": "before HITL approval, refile the read in the UPPER tail (do selected subsets DIFFER from random subsets more than random subsets differ from each other; p_upper), or with a location/scale-sensitive distance whose null is not distribution-free under 'same law' (Anderson-Darling on gaps; energy distance), and replace the split-half positive control with a planted-shift control whose pass rate is not pinned at alpha. Until then this plan is a record of why the monster cannot run, not a request to run it"
+  },
+  {
+   "id": "PRF-2",
+   "title": "p floor",
+   "measured": "1000 draws -> p_lower floor 1/1001 = 0.000999 < alpha 0.00556 (adequate); 150 draws -> floor 1/151 > alpha (inadequate)"
+  },
+  {
+   "id": "PRF-3",
+   "title": "ancestor statistic is a rank identity",
+   "measured": "adapters_instrument_null.SYNTHETIC_NULL.sorted_spearman_is_tautological PASS; pollux_pipeline.SYNTHETIC_NULL FAIL (corr_raw ~1.0 on independent samples)"
+  }
+ ]
+}

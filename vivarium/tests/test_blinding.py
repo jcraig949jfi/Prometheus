@@ -24,7 +24,7 @@ from conftest import make_spec
 from viv import queue as _q
 from viv import spec as _spec
 from viv.loop import Vivarium
-from viv.request import FIELDS, ExecutionRequest, SpecIntegrityError
+from viv.request import FIELDS, ClaimGrant, ExecutionRequest, SpecIntegrityError
 from viv.runner import RunResult
 
 
@@ -111,6 +111,9 @@ def _runner_over(client, sealed):
     from viv.runner import SfeRunner
     r = SfeRunner.__new__(SfeRunner)          # no network in __init__
     r.worker_id = "test-worker"
+    # D7: a test double over a recording client is the marked, non-
+    # production path; it waives the claim grant explicitly.
+    r.require_grant = False
     r.c = client
     r.lease_s = 120.0
     r.log = lambda *_a: None
@@ -258,7 +261,9 @@ def test_identical_specs_with_opposite_provenance_execute_identically(conn,
     for row in rows:
         client = RecordingClient()
         runner = _runner_over(client, row["spec_hash"])
-        runner.run(ExecutionRequest.from_queue_row(row))
+        runner.run(ExecutionRequest.from_queue_row(row),
+                   grant=ClaimGrant(experiment_id=str(row["experiment_id"]),
+                                    worker_id="test-worker", claimed_at="t"))
         transcripts.append(_normalise(client.calls))
 
     assert transcripts[0] == transcripts[1]
@@ -280,7 +285,9 @@ def test_no_field_of_the_row_appears_anywhere_in_the_sfe_traffic(conn, schema):
     row = _q.get(conn, eid, schema=schema)
     client = RecordingClient()
     runner = _runner_over(client, row["spec_hash"])
-    runner.run(ExecutionRequest.from_queue_row(row))
+    runner.run(ExecutionRequest.from_queue_row(row),
+                   grant=ClaimGrant(experiment_id=str(row["experiment_id"]),
+                                    worker_id="test-worker", claimed_at="t"))
     assert marker not in json.dumps(client.calls, default=str)
 
 

@@ -1,0 +1,217 @@
+{
+ "_doc": "Declarative world spec for cw01-e05 (mixture of marginally useful organisms). Written during PREFLIGHT, before implementation. Components are individually weak; conjunctive items yield value only when ALL required capabilities are present, so a lone component is worth little and a complementary set is worth a great deal. Nothing rewards carrying more, being diverse, or being complementary - the world prices inclusion and defines when value accrues.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "attempt_id": "cw01-e05-a01",
+ "world_family": "composition-economics-v1",
+ "components": {
+  "K": 8,
+  "cost_carry_per_episode": 3.0,
+  "_note": "Each component provides exactly ONE hidden capability, assigned attempt-stably. The organism cannot read which. Carrying is priced whether or not the component is ever used, so carry-everything is always available and always expensive.",
+  "_marginally_useful": "No component is a dramatic invention. Alone, each satisfies only the disjunctive items that happen to need its capability.",
+  "_budget_basis": "A carry BUDGET, not a price. Score was monotone in components carried at EVERY swept price (3.0 to 30.0): conjunctive demand makes marginal value INCREASING, because each added component unlocks new combinations, so a linear price cannot make carrying contested (CW01-D039). B=3 equals the measured mean conjunctive demand size (2.57 over 28 templates), so serving one conjunction consumes the budget and choosing WHICH becomes forced. The rule was declared before superadditivity was examined."
+ },
+ "items": {
+  "items_per_episode": 120,
+  "cost_attempt": 0.5,
+  "value_range": [
+   1.0,
+   11.0
+  ],
+  "conjunctive_fraction": 0.6,
+  "required_capabilities": {
+   "conjunctive": [
+    2,
+    3
+   ],
+   "disjunctive": [
+    1,
+    3
+   ]
+  },
+  "_conjunctive": "value accrues only if ALL required capabilities are present. One missing capability yields nothing.",
+  "_disjunctive": "value accrues if ANY required capability is present. Additive BY CONSTRUCTION - this is the built-in negative control.",
+  "_swept": "conjunctive_fraction is a world parameter and is SWEPT, never fixed at one convenient value"
+ },
+ "info_model": {
+  "satisfied": "log2(1 + value)",
+  "unsatisfied": 0.0,
+  "_trade": "carrying a component costs 3.0 per episode regardless of use. A component that unlocks no conjunction and few disjunctions is a net loss. Superadditivity is POSSIBLE but never rewarded directly."
+ },
+ "genome": {
+  "_shape": "a real-valued inclusion vector over the K components (carry when > 0), plus 2 neutral genes",
+  "inclusion_bounds": [
+   -1.0,
+   1.0
+  ],
+  "neutral_genes": [
+   "neutral_a",
+   "neutral_b"
+  ],
+  "_neutral": "no phenotype by construction; the drift floor and the basis of cost-matched shams (D011/D027)",
+  "_singleton_is_reachable": "carrying exactly one component is inside the search space. So is carrying none, and carrying all. The additive outcome must remain reachable; engineering it away would rig the experiment."
+ },
+ "arms": {
+  "_critical": "Arms are transformations applied UP FRONT so every arm runs identical code (D019/D021). Item draws come from a stream seed that never sees the arm.",
+  "treatment": {
+   "conjunctive_enabled": true,
+   "max_components": 3
+  },
+  "control_disjunctive_only": {
+   "conjunctive_enabled": false,
+   "max_components": 3,
+   "_tests": "the composition law is switched OFF - every item is disjunctive. Superadditivity must vanish. This arm IS intervention M3 expressed as a control."
+  },
+  "control_singleton": {
+   "conjunctive_enabled": true,
+   "max_components": 1,
+   "_tests": "at most one component may be carried; no assembly is possible. The best single component."
+  }
+ },
+ "population": {
+  "organisms": 64,
+  "generations_minimal_form": 60,
+  "generations_full": 200,
+  "elite_fraction": 0.25,
+  "mutation_sigma": 0.12
+ },
+ "measurements": {
+  "primary": "delta(useful_information_transformed / resource_cost) vs ancestor, matched world+budget",
+  "_basis": "CW01-D038b: superadditivity and ablation are defined on INFORMATION, not on score=info/cost. Every organism pays the same item-attempt floor (0.5 x 120 = 60.0), so summing solo SURPLUSES of a ratio double-counts that floor's dilution and inflates the additive prediction. Information composes linearly; cost is reported separately and never enters the arithmetic. This block was corrected during QUALIFY to match the qualified specification, which had already moved to information.",
+  "mixture_info": "mean INFORMATION of the evolved component set (world_e05.mean_info)",
+  "solo_value_i": "mean INFORMATION of a genome carrying ONLY component i, minus the empty-carrier baseline - MEASURED by running it, never inferred from a formula",
+  "additive_prediction": "empty-carrier baseline INFORMATION plus the sum of measured solo information surpluses over carried components",
+  "superadditivity": "mixture_info minus additive_prediction, on INFORMATION; zero means accumulation WITHOUT composition",
+  "mixture_score": "info/cost of the evolved set - REPORTED ALONGSIDE so the trade stays visible, never the basis of superadditivity",
+  "ablation_cost_i": "mixture_info minus the mean INFORMATION of the mixture with component i removed",
+  "load_bearing_i": "ablation_cost_i exceeds solo_value_i",
+  "per_organism": [
+   "components_carried",
+   "carry_cost",
+   "conjunctive_satisfied",
+   "disjunctive_satisfied",
+   "items_attempted",
+   "info",
+   "cost",
+   "score"
+  ],
+  "_critical": "The additive prediction is MEASURED by solo transplant. Computing it from a formula would make superadditivity a definition rather than a measurement."
+ },
+ "interventions_post_hoc": {
+  "M1_ablate_member": {
+   "effect": "remove the most load-bearing component",
+   "sham": "remove a RANDOM carried component",
+   "in_minimal_form": true,
+   "_decisive": "superadditivity requires the targeted removal to cost MORE than that member is worth alone"
+  },
+  "M2_scramble_capability": {
+   "effect": "permute which component provides which capability, identical cost",
+   "sham": "identity permutation",
+   "in_minimal_form": false
+  },
+  "M3_conjunction_to_disjunction": {
+   "effect": "items need ANY rather than ALL capabilities",
+   "sham": "composition law unchanged",
+   "in_minimal_form": true,
+   "_why_minimal": "UNUSUAL for a third intervention, but without it a superadditivity number cannot be distinguished from a scoring artefact. If the effect survives with the composition law switched off, it was never composition."
+  },
+  "M4_solo_transplant": {
+   "effect": "run each carried component alone to build the additive prediction directly",
+   "in_minimal_form": true
+  },
+  "_noise_floor": "EVERY intervention verdict must clear a sham-vs-sham floor via infometrics.effect_clears_null, not merely have the right sign (CW01-D035)"
+ },
+ "qualify_predicates": {
+  "_rule": "ALL must pass before science budget is spent. Most are STANDING GATES promoted from e01-e04 failures.",
+  "Q1_prices_positive": "cost_carry_per_episode and cost_attempt both > 0",
+  "Q2_carrying_is_a_real_trade": "measured by exhaustive enumeration of all C(8,3)=56 subsets: best 1.8978 [0,2,4], median 1.3206, worst 1.0015 [4,5,7], spread 89.5 percent. Choice is genuinely contested under the budget.",
+  "Q3_shams_are_cost_matched": "M1's random-removal sham removes the same NUMBER of components at the same carry saving; M3's sham leaves the composition law unchanged",
+  "Q4_seeds_reconstructible": "lib/seeds.py, re-asserted cross-process for this attempt_id",
+  "Q5_durable_without_redis": "a row written and re-parsed with the redis import blocked",
+  "Q6_neutral_genes_are_inert": "perturbing neutral_a/neutral_b changes no metric",
+  "Q7_pressure_actually_binds": "carry-everything is affordable but clearly suboptimal; the carry cost is large enough that useless components are punished",
+  "Q8_learnability": "STANDING GATE: a hand-built COMPLEMENTARY set must beat a hand-built REDUNDANT set, a CARRY-ALL organism and the best SINGLETON; a badly-chosen set must lose. Probes asserted pairwise distinct (D023).",
+  "Q9_mechanism_fires": "in the hand-built best case, conjunctive_satisfied is materially above zero - conjunctions are actually being completed",
+  "Q10_matched_arms": "with conjunctive demand disabled, treatment and control_disjunctive_only produce BIT-IDENTICAL metrics from the same stream seed, on a LIVE genome (D034: not on one that does nothing)",
+  "Q11_superadditivity_has_a_noise_floor": "the superadditivity index must clear a sham-vs-sham floor built from repeated measurement of the SAME mixture across independent seed blocks (D035)",
+  "Q12_disposition_rule_is_executable": "disposition computed by lib/lineage.decide; a branch is UNREACHABLE unless its tests ran (D024)",
+  "Q13_capabilities_are_not_free": "the organism never reads which capability a component provides, nor which capabilities an item requires",
+  "Q14_latent_facts_attempt_stable": "capability assignment and item demands drawn ONCE per attempt (D029)",
+  "Q15_no_unperformed_checks": "every logged test names the comparison it performed (D031)",
+  "Q16_additive_prediction_is_measured": "solo values come from RUNNING each component alone, never from a closed-form expression",
+  "Q_M3_interaction": "DIFFERENCE-IN-DIFFERENCES on NORMALISED superadditivity. Raw superadditivity is not comparable across composition laws because disjunctive overlap inflates the additive prediction (CW01-D040), and magnitude thresholds invented to look strict are not derived from the hypothesis (CW01-D041). The composition law must benefit a well-chosen set MORE than a poor one."
+ },
+ "backend_counterfactual": {
+  "requirement_IX": "organism-visible physics must not depend on one implementation",
+  "primary_backend": "in-process set operations",
+  "secondary_backend": "independent reimplementation using bitmask arithmetic instead of python sets",
+  "equivalence_test": "identical per-organism metric vectors from identical seeds",
+  "cap_rule": "if not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE"
+ },
+ "empirical_calibration": {
+  "subset_enumeration": {
+   "n_subsets": 56,
+   "best": [
+    0,
+    2,
+    4
+   ],
+   "best_score": 1.8978,
+   "median_score": 1.3206,
+   "worst": [
+    4,
+    5,
+    7
+   ],
+   "worst_score": 1.0015,
+   "spread_pct": 89.5,
+   "_note": "enumerated rather than hand-picked; the earlier hand-built 'complementary' set scored 1.3570, 30 percent below a random subset (CW01-D042)"
+  },
+  "interaction_test": {
+   "statistic": "difference-in-differences on normalised superadditivity",
+   "best_conjunctive_pct": 8.43,
+   "best_disjunctive_pct": -22.35,
+   "worst_conjunctive_pct": 0.0,
+   "worst_disjunctive_pct": -11.36,
+   "law_on_effect_best_points": 30.78,
+   "law_on_effect_worst_points": 11.36,
+   "difference_in_differences_points": 19.43,
+   "_reading": "the WORST set's mixture exactly equals its additive prediction (76.31 = 76.31) - a pure partition with no composition, which is the null outcome the pre-registration required to remain reachable"
+  },
+  "ablation_best_set": {
+   "load_bearing": "3/3",
+   "detail": [
+    {
+     "c": 0,
+     "ablation": 55.49,
+     "solo": 44.81
+    },
+    {
+     "c": 2,
+     "ablation": 54.41,
+     "solo": 49.89
+    },
+    {
+     "c": 4,
+     "ablation": 42.71,
+     "solo": 25.46
+    }
+   ]
+  }
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "ts": "2026-09-18 01:34:01",
+   "phase": "QUALIFY (pre-EXECUTE)",
+   "trigger": "Seven QUALIFY defects, all in the measurement layer (D037-D042)",
+   "changes": [
+    "treatment and control_disjunctive_only gain max_components=3, a BUDGET replacing a price that provably could not bind (D039)",
+    "superadditivity redefined on INFORMATION with interventions applied to baselines too (D038a/b)",
+    "M3 restated as a difference-in-differences on normalised superadditivity (D040/D041)",
+    "probe sets derived by exhaustive enumeration rather than hand-picked (D042)"
+   ],
+   "_no_result_observed": "No evolutionary run has been performed. All corrections are pre-data."
+  }
+ ]
+}

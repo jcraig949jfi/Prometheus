@@ -1,0 +1,170 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "gnu-prolog-1.5.0",
+ "techne_record": "techne/fossils/specimens/gnu-prolog-1.5.0/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "gnu-prolog-1.5.0",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "GNU Prolog 1.5.0 -- Daniel Diaz (WAM-compiling Prolog)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "1.5.0 from gprolog.org (the author's site)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1996 (1.5.0 rel. 2020)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "languages",
+     "logic-programming",
+     "prolog",
+     "wam",
+     "unification",
+     "resolution",
+     "constraint-solving"
+    ],
+    "lineage": "GNU Prolog (1996-, Diaz): an ISO Prolog that COMPILES to a WAM (Warren Abstract Machine) and thence to native code, with a finite-domain constraint solver; a WAM lineage distinct from SWI's VM interpreter"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "compiling logic programs to a register (WAM) machine",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "run Prolog by COMPILING clauses to Warren Abstract Machine instructions and then to native code -- unification, backtracking and SLD resolution as compiled machine operations rather than interpreted",
+    "pressure": "interpreted resolution is slow; the WAM is the classic answer, specialising unification and clause indexing into a register machine",
+    "success_means": "correct goal solving at compiled speed; a WAM the fossil record can hold beside SWI's interpreter"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "Prolog",
+    "WAM assembly"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "GNU Prolog (1996-, Diaz): an ISO Prolog that COMPILES to a WAM (Warren Abstract Machine) and thence to native code, with a finite-domain constraint solver; a WAM lineage distinct from SWI's VM interpreter",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Warren, The WAM, 1983"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: swipl-9.2.9"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "4fcc7ba2899110e8d4d1e8cf1ddee872b43283b53cf324d3d07549f2fdb72033"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "shares_ancestor_with",
+   "to": "swipl-9.2.9",
+   "note": "both ISO Prolog; gprolog compiles to WAM->native, SWI interprets a VM",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gnu-prolog-1.5.0",
+   "relation": "algorithm_from",
+   "to": "Warren, The WAM, 1983",
+   "note": "Warren Abstract Machine",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

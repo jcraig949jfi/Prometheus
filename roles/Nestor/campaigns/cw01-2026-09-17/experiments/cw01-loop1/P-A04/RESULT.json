@@ -1,0 +1,158 @@
+{
+ "perturbation_id": "P-A04",
+ "parent": "T-X02",
+ "runs": {
+  "8": [
+   {
+    "lineage": 0,
+    "n_seeds": 8,
+    "competent_reps": 8,
+    "held64_mean": 193.109375,
+    "held64_max": 206.171875,
+    "train_fit_max_per_seed": 257.75,
+    "scalar_mean": 1.5158976376269726,
+    "wall_s": 17.4
+   },
+   {
+    "lineage": 1,
+    "n_seeds": 8,
+    "competent_reps": 8,
+    "held64_mean": 178.96484375,
+    "held64_max": 189.0625,
+    "train_fit_max_per_seed": 257.25,
+    "scalar_mean": 1.8476182871809037,
+    "wall_s": 17.5
+   },
+   {
+    "lineage": 2,
+    "n_seeds": 8,
+    "competent_reps": 0,
+    "held64_mean": 123.134765625,
+    "held64_max": 148.046875,
+    "train_fit_max_per_seed": 256.25,
+    "scalar_mean": 1.8865069910983523,
+    "wall_s": 17.5
+   },
+   {
+    "lineage": 3,
+    "n_seeds": 8,
+    "competent_reps": 0,
+    "held64_mean": 144.25390625,
+    "held64_max": 145.546875,
+    "train_fit_max_per_seed": 226.125,
+    "scalar_mean": 1.6095237889714271,
+    "wall_s": 17.5
+   }
+  ],
+  "32": [
+   {
+    "lineage": 0,
+    "n_seeds": 32,
+    "competent_reps": 8,
+    "held64_mean": 194.0,
+    "held64_max": 194.0,
+    "train_fit_max_per_seed": 203.15625,
+    "scalar_mean": 1.3055534181077997,
+    "wall_s": 52.4
+   },
+   {
+    "lineage": 1,
+    "n_seeds": 32,
+    "competent_reps": 0,
+    "held64_mean": 152.23046875,
+    "held64_max": 154.515625,
+    "train_fit_max_per_seed": 190.28125,
+    "scalar_mean": 1.4365098478794875,
+    "wall_s": 53.0
+   },
+   {
+    "lineage": 2,
+    "n_seeds": 32,
+    "competent_reps": 0,
+    "held64_mean": 149.6015625,
+    "held64_max": 150.65625,
+    "train_fit_max_per_seed": 181.5,
+    "scalar_mean": 1.697630433638824,
+    "wall_s": 52.1
+   },
+   {
+    "lineage": 3,
+    "n_seeds": 32,
+    "competent_reps": 0,
+    "held64_mean": 160.9765625,
+    "held64_max": 164.828125,
+    "train_fit_max_per_seed": 191.40625,
+    "scalar_mean": 1.3387584840234001,
+    "wall_s": 52.1
+   }
+  ],
+  "128": [
+   {
+    "lineage": 0,
+    "n_seeds": 128,
+    "competent_reps": 0,
+    "held64_mean": 154.34765625,
+    "held64_max": 155.125,
+    "train_fit_max_per_seed": 170.453125,
+    "scalar_mean": 1.4548991946754533,
+    "wall_s": 215.9
+   },
+   {
+    "lineage": 1,
+    "n_seeds": 128,
+    "competent_reps": 8,
+    "held64_mean": 201.34375,
+    "held64_max": 203.8125,
+    "train_fit_max_per_seed": 199.34375,
+    "scalar_mean": 1.5171243476673868,
+    "wall_s": 214.1
+   },
+   {
+    "lineage": 2,
+    "n_seeds": 128,
+    "competent_reps": 8,
+    "held64_mean": 180.703125,
+    "held64_max": 180.703125,
+    "train_fit_max_per_seed": 189.1015625,
+    "scalar_mean": 1.2653834786797806,
+    "wall_s": 214.0
+   }
+  ]
+ },
+ "means": {
+  "8": {
+   "competent_reps": 4.0,
+   "held64": 159.86572265625
+  },
+  "32": {
+   "competent_reps": 2.0,
+   "held64": 164.2021484375
+  },
+  "128": {
+   "competent_reps": 5.333333333333333,
+   "held64": 178.79817708333334
+  }
+ },
+ "contrast_128_minus_8_competent": {
+  "effect": 1.333333333333333,
+  "p05": -3.3333333333333335,
+  "p95": 6.0,
+  "n_null": 35,
+  "exact": true,
+  "above_p95": false,
+  "below_p05": false
+ },
+ "contrast_128_minus_8_held64": {
+  "effect": 18.932454427083343,
+  "p05": -32.881673177083336,
+  "p95": 35.463574218749976,
+  "n_null": 35,
+  "exact": true,
+  "above_p95": false,
+  "below_p05": false
+ },
+ "material": false,
+ "elapsed_s": 923.4,
+ "prereg_sha256": "2a2ea468af693267be7aeb2b4aff6f6bbfbb755715d697a7f47df3e2292a6a17",
+ "ts": "2026-09-18 11:28:30"
+}

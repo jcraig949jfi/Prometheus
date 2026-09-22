@@ -1,0 +1,289 @@
+{
+ "perturbation_id": "P-I01",
+ "parent": "T-X21",
+ "ceilings": {
+  "A": {
+   "ignore_cue_best": {
+    "mean": 0.600625,
+    "p95": 0.75
+   },
+   "cue_follow": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "threshold": 0.9,
+   "invariant_cannot_reach_threshold": true
+  },
+  "B": {
+   "ignore_cue_best": {
+    "mean": 0.59,
+    "p95": 0.75
+   },
+   "cue_follow": {
+    "mean": 0.59,
+    "p95": 0.75
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "threshold": 0.8,
+   "invariant_cannot_reach_threshold": true
+  },
+  "C": {
+   "ignore_cue_best": {
+    "mean": 0.5,
+    "p95": 0.5
+   },
+   "cue_follow": {
+    "mean": 0.69375,
+    "p95": 0.875
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "tracker": {
+    "mean": 0.765625,
+    "p95": 1.0
+   },
+   "threshold": 0.8,
+   "invariant_cannot_reach_threshold": false
+  }
+ },
+ "thresholds": {
+  "A": 0.9,
+  "B": 0.8,
+  "C": 0.8
+ },
+ "table": {
+  "A|plain|s1": {
+   "top4_held": 0.515625,
+   "best_held": 0.515625,
+   "pop_held": 0.4539388020833333,
+   "train_final": 0.2838541666666667,
+   "len": 48.958333333333336,
+   "pw": 456.6770833333333,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.21875,
+    "tape": 0.0,
+    "all": 0.78125
+   },
+   "crossed": false
+  },
+  "A|plain|s2": {
+   "top4_held": 0.484375,
+   "best_held": 0.484375,
+   "pop_held": 0.4195963541666667,
+   "train_final": 0.41015625,
+   "len": 33.270833333333336,
+   "pw": 372.25,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.010416666666666666,
+    "tape": 0.010416666666666666,
+    "all": 0.9791666666666666
+   },
+   "crossed": false
+  },
+  "A|plain|s3": {
+   "top4_held": 0.515625,
+   "best_held": 0.515625,
+   "pop_held": 0.41552734375,
+   "train_final": 0.359375,
+   "len": 43.885416666666664,
+   "pw": 59.34375,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.8854166666666666,
+    "tape": 0.0,
+    "all": 0.11458333333333333
+   },
+   "crossed": false
+  },
+  "B|plain|s1": {
+   "top4_held": 0.546875,
+   "best_held": 0.546875,
+   "pop_held": 0.46875,
+   "train_final": 0.54296875,
+   "len": 48.354166666666664,
+   "pw": 69.82291666666667,
+   "persist": {
+    "none": 0.010416666666666666,
+    "regs": 0.875,
+    "tape": 0.0,
+    "all": 0.11458333333333333
+   },
+   "crossed": false
+  },
+  "B|plain|s2": {
+   "top4_held": 0.40625,
+   "best_held": 0.40625,
+   "pop_held": 0.3444010416666667,
+   "train_final": 0.8059895833333334,
+   "len": 47.979166666666664,
+   "pw": 69.97916666666667,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.78125,
+    "tape": 0.0,
+    "all": 0.21875
+   },
+   "crossed": false
+  },
+  "B|plain|s3": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.4280598958333333,
+   "train_final": 0.267578125,
+   "len": 38.958333333333336,
+   "pw": 299.03125,
+   "persist": {
+    "none": 0.020833333333333332,
+    "regs": 0.4375,
+    "tape": 0.0,
+    "all": 0.5416666666666666
+   },
+   "crossed": false
+  },
+  "C|plain|s1": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.3556315104166667,
+   "train_final": 0.3645833333333333,
+   "len": 30.875,
+   "pw": 16.166666666666668,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.9895833333333334,
+    "tape": 0.0,
+    "all": 0.010416666666666666
+   },
+   "crossed": false
+  },
+  "C|plain|s2": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.4314778645833333,
+   "train_final": 0.46875,
+   "len": 40.28125,
+   "pw": 101.23958333333333,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.6458333333333334,
+    "tape": 0.010416666666666666,
+    "all": 0.34375
+   },
+   "crossed": false
+  },
+  "C|plain|s3": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.4503580729166667,
+   "train_final": 0.4329427083333333,
+   "len": 45.510416666666664,
+   "pw": 157.80208333333334,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.8333333333333334,
+    "tape": 0.010416666666666666,
+    "all": 0.15625
+   },
+   "crossed": false
+  },
+  "B|destroyed|s1": {
+   "top4_held": 0.53125,
+   "best_held": 0.53125,
+   "pop_held": 0.42578125,
+   "train_final": 0.2552083333333333,
+   "len": 25.5,
+   "pw": 129.65625,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.6770833333333334,
+    "tape": 0.0,
+    "all": 0.3229166666666667
+   },
+   "crossed": false
+  },
+  "B|destroyed|s2": {
+   "top4_held": 0.453125,
+   "best_held": 0.453125,
+   "pop_held": 0.4189453125,
+   "train_final": 0.4817708333333333,
+   "len": 40.03125,
+   "pw": 42.166666666666664,
+   "persist": {
+    "none": 0.010416666666666666,
+    "regs": 0.9166666666666666,
+    "tape": 0.010416666666666666,
+    "all": 0.0625
+   },
+   "crossed": false
+  },
+  "C|destroyed|s1": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.4187825520833333,
+   "train_final": 0.4446614583333333,
+   "len": 39.9375,
+   "pw": 421.6770833333333,
+   "persist": {
+    "none": 0.0,
+    "regs": 0.20833333333333334,
+    "tape": 0.0,
+    "all": 0.7916666666666666
+   },
+   "crossed": false
+  },
+  "C|destroyed|s2": {
+   "top4_held": 0.5,
+   "best_held": 0.5,
+   "pop_held": 0.4306640625,
+   "train_final": 0.4192708333333333,
+   "len": 27.520833333333332,
+   "pw": 65.29166666666667,
+   "persist": {
+    "none": 0.010416666666666666,
+    "regs": 0.5729166666666666,
+    "tape": 0.0,
+    "all": 0.4166666666666667
+   },
+   "crossed": false
+  }
+ },
+ "B_controls_on_tops": {
+  "B|s1|shuffled": 0.5,
+  "B|s1|nocue": 0.5,
+  "B|s1|destroyed": 0.328125,
+  "B|s2|shuffled": 0.390625,
+  "B|s2|nocue": 0.390625,
+  "B|s2|destroyed": 0.203125,
+  "B|s3|shuffled": 0.4375,
+  "B|s3|nocue": 0.4375,
+  "B|s3|destroyed": 0.21875
+ },
+ "crossing_seeds": {
+  "A": 0,
+  "B": 0,
+  "C": 0
+ },
+ "loophole": {
+  "B": false,
+  "C": false
+ },
+ "disposition": {
+  "A": "NOT_CROSSED",
+  "B": "NOT_CROSSED",
+  "C": "NOT_CROSSED"
+ },
+ "material": true,
+ "elapsed_s": 224.7,
+ "prereg_sha256": "58bd67191de3f5154194702c32293579c15e048f58c42d9368081dab6d92ced7",
+ "ts": "2026-09-19 07:20:10"
+}

@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "verilog-arbiter-forencich",
+ "techne_record": "techne/fossils/specimens/verilog-arbiter-forencich/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "verilog-arbiter-forencich",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Parametrizable priority / round-robin arbiter with priority encoder (Verilog, Alex Forencich, verilog-axi)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "alexforencich/verilog-axi master rtl/arbiter.v + rtl/priority_encoder.v as fetched 2026-09-12",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "hardware",
+     "arbitration",
+     "contention",
+     "small-mechanism",
+     "verilog"
+    ],
+    "lineage": "The two-module arbiter used across Forencich's open FPGA IP (AXI, Ethernet, PCIe): a priority encoder plus an arbiter that can be fixed-priority or round-robin, with block-on-acknowledge or block-on-grant policies -- a SMALL DECISION MECHANISM (who gets the bus this cycle) with exposed state (mask, grant, grant_encoded). Rival to the freecores rr-arbiter already in the vault."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "bus arbitration",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "decide each cycle which of several requesters owns a shared resource, either by fixed priority or in rotation",
+    "pressure": "simultaneous requests for one bus; the fairness/latency trade-off between priority and rotation",
+    "success_means": "exactly one grant per cycle when any request is present; round-robin serves every persistent requester within PORTS cycles"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "resource contention, fairness versus priority",
+    "failure_condition": "starvation of a low-priority requester (fixed mode) or two simultaneous grants"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Verilog"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "SYNCHRONOUS_DIGITAL_LOGIC (derived from language=Verilog)",
+   "basis": "NYX_DERIVED"
+  },
+  "ANCESTRY": {
+   "value": "The two-module arbiter used across Forencich's open FPGA IP (AXI, Ethernet, PCIe): a priority encoder plus an arbiter that can be fixed-priority or round-robin, with block-on-acknowledge or block-on-grant policies -- a SMALL DECISION MECHANISM (who gets the bus this cycle) with exposed state (mask, grant, grant_encoded). Rival to the freecores rr-arbiter already in the vault.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: verilog-rr-arbiter"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d4a077c09b5d6bfa8705d70a5d10e329725b33e849b67a5ce5d31652399a54ad"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-hw:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "verilog-arbiter-forencich",
+   "relation": "shares_ancestor_with",
+   "to": "verilog-rr-arbiter",
+   "note": "two arbiter designs for the same decision",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

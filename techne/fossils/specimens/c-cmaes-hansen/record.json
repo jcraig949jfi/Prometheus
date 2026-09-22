@@ -32,9 +32,9 @@
     "repo": "github.com/CMA-ES/c-cmaes"
   },
   "hashes": {
-    "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+    "tree_sha256": "6e15eb7bb0aaf9248a59bf1412f7a87f57a825756f9310caa70ead7c66131006",
     "n_files": 19,
-    "bytes": 202515,
+    "bytes": 197592,
     "artifacts": [
       {
         "filename": "https://github.com/CMA-ES/c-cmaes",
@@ -42,7 +42,7 @@
         "commit": "4450d3deccf2aacb6aa955d8216cfc4461699c60"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\c-cmaes-hansen",
     "hash_list": "techne/fossils/specimens/c-cmaes-hansen/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -128,5 +128,33 @@
     "black-box-optimization",
     "stochastic-search"
   ],
-  "hardware_assumptions": ""
+  "hardware_assumptions": "",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+      "n_files": 19,
+      "bytes": 202515,
+      "artifacts": [
+        {
+          "filename": "https://github.com/CMA-ES/c-cmaes",
+          "sha256": null,
+          "commit": "4450d3deccf2aacb6aa955d8216cfc4461699c60"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen",
+      "hash_list": "techne/fossils/specimens/c-cmaes-hansen/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134957Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/c-cmaes-hansen/receipts/repin-c-cmaes-hansen-20260916T134957Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/c-cmaes-hansen/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 5,
+        "RECORD_IS_CRLF": 14,
+        "NOT_IN_ORIGIN": 0,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }
