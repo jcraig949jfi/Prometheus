@@ -10,8 +10,8 @@ tool here reads `z80atlas-2026-09-19/observatory` read-only.
 ## 1. Repair commit
 
 Repairs are implemented and staged on branch `nestor/sidequest-graphworld-2026-09-14`.
-The commit SHA is recorded at the end of this file after the commit lands; the packet is
-written first so the SHA covers it.
+Repair commit: **f13a563b4** on branch nestor/sidequest-graphworld-2026-09-14.
+Predecessor report-receipt fix: b05a34f1b.
 
 ## 2. Test matrix - repaired substrate
 
