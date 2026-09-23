@@ -69,17 +69,29 @@ class Campaign:
         self.runs_path = self.wd / "runs.jsonl"
         if resume and self.runs_path.exists():
             for line in self.runs_path.read_text(encoding="utf-8").splitlines():
-                if line.strip():
+                if not line.strip():
+                    continue
+                try:
                     rec = json.loads(line)
-                    if rec["family"] not in self.s["families"]:          # appended after the last checkpoint: rebuild the family row
-                        self.s["families"][rec["family"]] = {"vec": rec["vec"], "kind": rec["kind"], "runs": [], "scores": [], "allocated": 0,
-                                                             "retired": False, "promoted": False, "parents": rec.get("parents", []), "created_utc": _utc()}
-                    fam = self.s["families"][rec["family"]]
-                    if rec["id"] not in fam["runs"]:
-                        fam["runs"].append(rec["id"]); fam["scores"].append(rec["score"])
-                    self._index(rec)
+                except ValueError:                                         # s3: a line truncated by a kill mid-write
+                    self._decide("resume_skipped_truncated_line", None, "unparseable runs.jsonl line skipped (%d chars)" % len(line))
+                    continue
+                if rec["family"] not in self.s["families"]:          # appended after the last checkpoint: rebuild the family row
+                    self.s["families"][rec["family"]] = {"vec": rec["vec"], "kind": rec["kind"], "runs": [], "scores": [], "allocated": 0,
+                                                         "retired": False, "promoted": False, "parents": rec.get("parents", []), "created_utc": _utc()}
+                fam = self.s["families"][rec["family"]]
+                if rec["id"] not in fam["runs"]:
+                    fam["runs"].append(rec["id"]); fam["scores"].append(rec["score"])
+                    if rec["score"] >= 2 and not fam["promoted"] and rec["kind"] != "positive_control":    # s3: replay the promotion rule
+                        fam["promoted"] = True
+                        self._decide("promote", rec["family"], "run %s (replayed at resume) fired %d mechanical triggers" % (rec["id"], rec["score"]))
+                self._index(rec)
             if self.runs:
                 self.s["next_run_no"] = max(self.s["next_run_no"], max(int(r["id"][1:]) for r in self.runs) + 1)
+            # s3: a run that completed but was never ingested left a directory; its id is never reused
+            dirs = [int(p.name[1:]) for p in self.runs_dir.iterdir() if p.is_dir() and p.name[:1] == "r" and p.name[1:].isdigit()]
+            if dirs:
+                self.s["next_run_no"] = max(self.s["next_run_no"], max(dirs) + 1)
         self.s.pop("runs", None)
         self._batches = 0
         # m1 (forensics 2026-09-23): every (family, seed) is submitted at most once; duplicates were byte-identical

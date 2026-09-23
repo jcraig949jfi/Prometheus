@@ -282,3 +282,23 @@ def test_H1_hybrid_conditional_witness_is_relocated_under_v2():
     w2 = World(Config(reproduction="ENDOGENOUS_COPY", init="SEEDED_HYBRID", task="COND_ONE", ticks=3, cells=64, physics="v2"), 5)
     seed = [o for o in w2.cells if o is not None and o.mechanism == "seed"][0]
     assert A.verify_tape(bytes(seed.tape), Config(task="COND_ONE"), Task("COND_ONE"))["exact"]
+
+
+# ---- s3 (latent): the resume path --------------------------------------------------------------------------------------
+def test_s3_resume_tolerates_truncation_and_never_reuses_run_ids(tmp_path):
+    from prometheus.z80atlas.runner import run_spec
+    c = Sch.Campaign(str(tmp_path), hours=1.0, workers=1, ticks=8, cells=16, seed=3)
+    specs = c._explore_batch(2, with_pairs=False)
+    for sp in specs:
+        c.ingest(run_spec(sp), sp["kind"])
+    c.checkpoint()
+    # a run completed AFTER the checkpoint and was appended; another completed but was never ingested (crash)
+    late = c._explore_batch(2, with_pairs=False)
+    res = run_spec(late[0]); c.ingest(res, late[0]["kind"])
+    run_spec(late[1])                                                   # its directory exists, no runs.jsonl line
+    with (tmp_path / "runs.jsonl").open("a", encoding="utf-8") as fh:
+        fh.write('{"id": "r0000')                                      # a truncated final line (killed mid-write)
+    c2 = Sch.Campaign(str(tmp_path), hours=1.0, workers=1, ticks=8, cells=16, seed=3, resume=True)
+    assert late[0]["id"] in {r["id"] for r in c2.runs}
+    existing = {int(p.name[1:]) for p in (tmp_path / "runs").iterdir()}
+    assert c2.s["next_run_no"] > max(existing)                           # an orphaned run dir is never overwritten
