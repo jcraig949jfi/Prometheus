@@ -1,7 +1,6 @@
-# NEXT CAMPAIGN RECOMMENDATION -- Bellerophon Z80 x Atlas (draft; finalized only after GROUNDING_REPORT.md)
+# NEXT CAMPAIGN RECOMMENDATION -- Bellerophon Z80 x Atlas
 
-Status: DRAFT. Part A (instrument requirements) follows from the forensics alone and does not depend on the grounding
-outcome. Part B (scientific targets) is written only after the grounding round completes.
+Status: FINAL (after GROUNDING_REPORT.md). Part A follows from the forensics; Part B from the grounding round.
 
 ## A. Instrument requirements (from POST_CAMPAIGN_FORENSICS.md + ISSUE_AND_REPAIR_LEDGER.md)
 
@@ -31,4 +30,36 @@ A8. Run from a pinned code copy (as both the 72 h campaign and the grounding rou
 
 ## B. Scientific targets
 
-(written after the grounding round)
+B0. Do NOT optimise for more spontaneous replicators. Access is settled well enough to study (1-5% of fresh runs,
+    causally dependent on LDIR + the undefined-byte slide), and seeded replicators sustain in 37-40/40 runs in every
+    topology. Post-replication questions can be studied from SEEDED and TRANSPLANTED replicators (345 genuine
+    historical origin tapes are banked in receipts/grounding_inputs.json; 86% self-replicate in fresh worlds),
+    with a small fresh-origin lane kept for base rates.
+
+B1. The blocking fact: in this substrate reproduction and computation do not interact, or interact negatively.
+    Under IMPLICIT pressure the task is causally inert (five task cells were run-for-run identical); under endogenous
+    reproduction the copier is what selection sees and seeded task code decays (G3: 2/100 vs 100/100 external); a
+    grafted copier destroys a task routine and the "beneficial" mutations are those that break the copier (G4);
+    task-linked reproductive architecture 0/300 (G5). The directive's goal -- evolution modifying the machinery that
+    generates future adaptive solutions -- has no pathway to act on yet.
+
+B2. Proposed architecture: ONE coupling mechanism, chosen and preregistered before the campaign, e.g. (a) copy
+    cost: each byte written into the window costs energy, and the energy that pays for it is earned only by verified
+    task output (reproduction becomes task-funded); or (b) copy permission: a SELF_REPLICATION birth is viable only if
+    the writer produced a correct task output in the same execution. Each needs its positive control (a hybrid that
+    solves and copies spreads), negative control (a pure copier cannot persist), cheat control (output-before-read /
+    input tampering cannot fund reproduction), and a matched coupling-OFF arm. Gate: a bounded (<= 6 h)
+    preregistered pilot must show the coupling moves verified task retention in a matched design, and that fresh
+    worlds are not uniformly extinct (the v2 base extinction is 95-100% outside WELL_MIXED), before any multi-day run.
+
+B3. Campaign targets once coupled (in priority order): (i) heritable reproductive modifications that raise task
+    reaching in DESCENDANTS (measured with paired geometry and verified solving, transplant/ablation tested);
+    (ii) task-driven change in reproductive organisation with the frozen structural descriptor (G5 design, now with a
+    pathway); (iii) persistence and ecology among replicating lineages (WELL_MIXED vs LOCAL, which survived grounding
+    as an association); (iv) novelty beyond the shortest copier basin (the chemistry funnels 57% of origins into one
+    LDIR route; track routes by mechanism key, receipts/ORIGINS.json).
+
+B4. Keep for every claim: exposure-matched paired arms, both directions counted, fixed-allocation base-rate lane,
+    specimen-level ablation AND transplant, and noting that NOPing the copy byte is not a knockout in this chemistry
+    (HIST: 36.5% rescue by a copy instruction at a new position) -- knockouts must remove the setup (T into the
+    window), not only the copy opcode.

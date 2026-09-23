@@ -1,0 +1,392 @@
+{
+ "definition": "G4 (GROUNDING_PREREG.md s3): does beneficial-neighbourhood density follow the reproductive mechanism?\n\nSpecimens (unit = specimen = one independent origin):\n  (i)  HIST  -- the 10 historical REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY runs with the largest PAIRED gain\n               (receipts/GEOM_AUDIT_flagged.json): their top tape, their configured task and representation\n  (ii) GRND  -- the first 30 grounding G1 'ENDOGENOUS_COPY/Z80_64' runs (by run id) whose dominant SR tape self-copies\nInterventions per specimen X (paired beneficial density on the specimen's configured task, ATOMIC ruler):\n  intact           BD(X)\n  nopped           BD(X with every LDI/LDIR/COPYALL byte -> NOP)\n  graft_routine    routine = X[0 : copy_pc+1]; onto 10 foreign genomes (5 = task witness after the routine + random\n                   padding, 5 = random tapes), seeded per specimen\n  graft_control    the same foreign genomes with a same-length RANDOM graft in place of the routine\nEffects: mech_effect = BD(X) - BD(nopped); transplant_effect = mean BD(graft_routine) - mean BD(graft_control).\nAlso recorded: whether the grafted genomes self-copy (did the transplant transfer reproduction at all).\n    python g4_specimens.py --grounding <workdir> --workers 12   -> receipts/G4_SPECIMENS.json",
+ "mech_effect": {
+  "ci95_boot": [
+   0.0,
+   0.0206
+  ],
+  "mean": 0.007,
+  "median_abs": 0.0
+ },
+ "n_graftable": 6,
+ "n_specimens": 11,
+ "rows": [
+  {
+   "bd_graft_control": [
+    0.0,
+    0.0,
+    0.0234,
+    0.0,
+    0.0273,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0781,
+    0.0781,
+    0.0781,
+    0.0781,
+    0.0781,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 6,
+    "exec_before_copy": 4,
+    "exec_own_bytes": 13,
+    "self_copy": true,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft_routine_self_copy": 7,
+   "id": "HIST:r053563",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "BYTECODE32",
+   "source": "historical_flagged",
+   "task": "SUM2",
+   "transplant_effect": 0.034
+  },
+  {
+   "bd_graft_control": [
+    0.0,
+    0.0254,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0723,
+    0.0723,
+    0.0723,
+    0.0723,
+    0.0723,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.002,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 6,
+    "exec_before_copy": 4,
+    "exec_own_bytes": 30,
+    "self_copy": true,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft_routine_self_copy": 10,
+   "id": "HIST:r053884",
+   "mech_effect": 0.002,
+   "nopped_self_copy": false,
+   "rep": "BYTECODE32",
+   "source": "historical_flagged",
+   "task": "SUM2",
+   "transplant_effect": 0.0336
+  },
+  {
+   "bd_graft_control": [
+    0.0,
+    0.0234,
+    0.0312,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 7,
+    "exec_before_copy": 4,
+    "exec_own_bytes": 11,
+    "self_copy": true,
+    "task_accuracy": 0.0625,
+    "uses_io": true
+   },
+   "graft_routine_self_copy": 8,
+   "id": "HIST:r006495",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "BYTECODE32",
+   "source": "historical_flagged",
+   "task": "SUM2",
+   "transplant_effect": -0.0055
+  },
+  {
+   "bd_graft_control": [
+    0.0254,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0742,
+    0.0742,
+    0.0742,
+    0.0742,
+    0.0742,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.0742,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 7,
+    "exec_before_copy": 4,
+    "exec_own_bytes": 22,
+    "self_copy": true,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft_routine_self_copy": 10,
+   "id": "HIST:r058328",
+   "mech_effect": 0.0742,
+   "nopped_self_copy": false,
+   "rep": "BYTECODE32",
+   "source": "historical_flagged",
+   "task": "ECHO",
+   "transplant_effect": 0.0346
+  },
+  {
+   "bd_intact": 0.001,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 22,
+    "copy_pc": 4,
+    "exec_before_copy": 3,
+    "exec_own_bytes": 38,
+    "self_copy": false,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft": "NOT_GRAFTABLE (no own-code copy routine inside the tape)",
+   "id": "HIST:r020592",
+   "mech_effect": 0.001,
+   "nopped_self_copy": false,
+   "rep": "VM_COPY",
+   "source": "historical_flagged",
+   "task": "COND_ONE"
+  },
+  {
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 38,
+    "exec_before_copy": 30,
+    "exec_own_bytes": 30,
+    "self_copy": false,
+    "task_accuracy": 0.0625,
+    "uses_io": true
+   },
+   "graft": "NOT_GRAFTABLE (no own-code copy routine inside the tape)",
+   "id": "HIST:r062156",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "BYTECODE32",
+   "source": "historical_flagged",
+   "task": "SUM2"
+  },
+  {
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 22,
+    "copy_pc": 122,
+    "exec_before_copy": 61,
+    "exec_own_bytes": 61,
+    "self_copy": false,
+    "task_accuracy": 0.0625,
+    "uses_io": true
+   },
+   "graft": "NOT_GRAFTABLE (no own-code copy routine inside the tape)",
+   "id": "HIST:r050528",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "VM_COPY",
+   "source": "historical_flagged",
+   "task": "SUM2"
+  },
+  {
+   "bd_graft_control": [
+    0.0,
+    0.0137,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.0117,
+   "bd_nopped": 0.0117,
+   "descriptor": {
+    "copy_op": 22,
+    "copy_pc": 4,
+    "exec_before_copy": 2,
+    "exec_own_bytes": 6,
+    "self_copy": true,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft_routine_self_copy": 8,
+   "id": "HIST:r061494",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "VM_COPY",
+   "source": "historical_flagged",
+   "task": "COND_ONE",
+   "transplant_effect": -0.0014
+  },
+  {
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": null,
+    "copy_pc": null,
+    "exec_before_copy": 0,
+    "exec_own_bytes": 18,
+    "self_copy": false,
+    "task_accuracy": 0.0,
+    "uses_io": false
+   },
+   "graft": "NOT_GRAFTABLE (no own-code copy routine inside the tape)",
+   "id": "HIST:r053058",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "VM_COPY",
+   "source": "historical_flagged",
+   "task": "SUM2"
+  },
+  {
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 70,
+    "exec_before_copy": 59,
+    "exec_own_bytes": 59,
+    "self_copy": false,
+    "task_accuracy": 0.0,
+    "uses_io": true
+   },
+   "graft": "NOT_GRAFTABLE (no own-code copy routine inside the tape)",
+   "id": "HIST:r040257",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "Z80_64",
+   "source": "historical_flagged",
+   "task": "SUM2"
+  },
+  {
+   "bd_graft_control": [
+    0.0127,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_graft_routine": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bd_intact": 0.0,
+   "bd_nopped": 0.0,
+   "descriptor": {
+    "copy_op": 21,
+    "copy_pc": 19,
+    "exec_before_copy": 18,
+    "exec_own_bytes": 40,
+    "self_copy": true,
+    "task_accuracy": 0.0,
+    "uses_io": false
+   },
+   "graft_routine_self_copy": 1,
+   "id": "GRND:g001395",
+   "mech_effect": 0.0,
+   "nopped_self_copy": false,
+   "rep": "Z80_64",
+   "source": "grounding_G1",
+   "task": "INC",
+   "transplant_effect": -0.0013
+  }
+ ],
+ "transplant_effect": {
+  "ci95_boot": [
+   0.0025,
+   0.0283
+  ],
+  "mean": 0.0157
+ }
+}

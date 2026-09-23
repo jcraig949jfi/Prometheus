@@ -256,4 +256,9 @@ with every historical key equal (receipts/REPLAY_REPAIRED_sample36.json). Histor
 RAW_VALID: the numbers are what the v1 instrument measured. What changed is which readings of them are valid
 (per-row impact column of the ledger). Nothing in the campaign workdir was modified.
 
-(sections 3.1, 2.2, 2.6-neighbourhoods, and the phenomenon table are completed below when the traced receipts land)
+## 6. Outcome
+
+The bounded grounding round (GROUNDING_REPORT.md) ran all 12,130 preregistered runs. Final per-phenomenon verdicts
+and the readiness answers are in GROUNDING_REPORT.md s8-s9; next-campaign architecture in
+NEXT_CAMPAIGN_RECOMMENDATION.md. In one line: the instrument is ready; the physics is not yet a place where
+computation can affect reproduction, and that coupling -- not more replicators -- is the next campaign's precondition.
