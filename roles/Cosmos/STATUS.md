@@ -20,7 +20,7 @@ reproducibility: C2 and c2none full reruns byte-identical; pinned C0b replay par
 operational state: COSMOS_HOME = C:/Users/James/cosmos_runs (never the D: SMR disk).
 sealed universes remaining: NONE (D, E, F spent). No generalization claim beyond them.
 monitors owned or fed: none.
-blockers: none. Known repo defect outside this lane: archaeon/tests/test_base_role.py fails on Nyx's
+blockers: operator decisions D1-D3 (C3 only; design s9). Known repo defect outside this lane: archaeon/tests/test_base_role.py fails on Nyx's
   manifest drift (reported by Aether 2026-09-19; unchanged).
 next executable action: C3-0 -- the P1/P2 certificate (decodability + permutation null; interchange
   history ablation) with its planted calibration (FUNCTIONAL / PASSIVE / NONE / cheat systems), once the
