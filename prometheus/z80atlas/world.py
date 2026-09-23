@@ -63,6 +63,10 @@ class Config:
                                         # SEEDED_WITNESS/HYBRID seed the CONFIGURED task (C4), a capture birth credits
                                         # no writer (C8), no world-made copies under ENDOGENOUS physics (P1)
     ext_mut_mult: float = 4.0           # EXTERNAL offspring mutation multiplier (v1: 4x; a matched-arm design sets it, M3)
+    # chemistry ablations (Phase 8 probes; defaults = the historical chemistry, so v1 replay is unaffected)
+    ldir: str = "on"                    # on | off | cost4
+    undefined_op: str = "NOP"           # NOP | HALT
+    target_fill: str = "preserve"       # preserve (unwritten window bytes keep the target's contents) | zero (fresh memory)
 
     @property
     def L(self) -> int:
@@ -82,7 +86,11 @@ class Config:
 
     @property
     def mut_rate(self) -> float:
-        return {"LOW": 0.002, "MED": 0.008, "HIGH": 0.03}[self.mutation_rate]
+        return {"VLOW": 0.0005, "LOW": 0.002, "MED": 0.008, "HIGH": 0.03}[self.mutation_rate]
+
+    @property
+    def chem(self) -> dict:
+        return {"ldir": self.ldir, "undefined": self.undefined_op}
 
     def to_dict(self) -> dict:
         return {k: getattr(self, k) for k in self.__dataclass_fields__}
@@ -138,6 +146,10 @@ class World:
                         self.adj[i].append(j); self.adj[j].append(i)
         # telemetry
         self.parent_of: Dict[int, Optional[int]] = {}
+        self.birth_tape: Dict[int, bytes] = {}            # measurement (G6 genealogy): each organism's tape at birth
+        self.birth_class: Dict[int, tuple] = {}           # id -> (mechanism, self_copy, fidelity_pre, material)
+        self.sr_variant: set = set()                      # SR-born organisms whose tape differs from the writer's (heritable variants)
+        self.sr_variants_transmitted: set = set()         # ... that themselves self-replicated
         self.birth_tick: Dict[int, int] = {}
         self.seed_lineages: set = set()
         self.events: List[dict] = []
@@ -185,6 +197,7 @@ class World:
                 glineage=glineage if glineage is not None else (lineage if lineage is not None else oid))
         self.cells[i] = o
         self.parent_of[oid] = parent; self.birth_tick[oid] = self.tick
+        self.birth_tape[oid] = bytes(tape)
         self.births_by_mech[mechanism] = self.births_by_mech.get(mechanism, 0) + 1
         if mechanism in ("seed", "transplant"):
             self.seed_lineages.add(o.glineage)
@@ -302,8 +315,8 @@ class World:
         for k, v in enumerate(inputs[:16]):
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
-            tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall, strict_budget=sb)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb)
+            tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
             tr = tr1
             tr.win_prov.update(tr2.win_prov)                                  # measurement only (later writes win)
             tr.steps += tr2.steps; tr.outputs = tr1.outputs + tr2.outputs
@@ -318,7 +331,7 @@ class World:
                 tr.opcodes[k] = tr.opcodes.get(k, 0) + v
             tr.writes.update(tr2.writes)
         else:
-            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=sb)
+            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=sb, **cfg.chem)
         return mem, tr
 
     def _pair_execute(self, a: Org, b: Org, inputs: List[int]):
@@ -329,7 +342,7 @@ class World:
         self._pre_tape = bytes(a.tape)
         for k, v in enumerate(inputs[:16]):
             mem[vm.IN_BASE + k] = v
-        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=cfg.physics != "v1", prov_L=L)
+        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=cfg.physics != "v1", prov_L=L, **cfg.chem)
         return mem, tr
 
     # ---- the tick ---------------------------------------------------------------------------------------------------------
@@ -445,6 +458,9 @@ class World:
         if not viable:
             self.refused_writes += 1; return
         child = bytearray(mem[L:2 * L])
+        if cfg.target_fill == "zero":                  # ablation: only the bytes the writer wrote survive; the rest is fresh memory
+            wr = {a - L for a in tr.writes if L <= a < 2 * L}
+            child = bytearray(child[k] if k in wr else 0 for k in range(L))
         if target is not None and child == target.tape:
             self.null_rewrites += 1; return              # the partner was rewritten as EXACTLY itself: nothing was caused, no birth
         fid = 1.0 - sum(1 for x, y in zip(child, o.tape) if x != y) / L
@@ -474,13 +490,19 @@ class World:
             parent.repro_span = tr.pc_max + 1
         self.endogenous_births += 1
         self.sr_depth[c.id] = self.sr_depth.get(parent.id, 0) + 1 if self_copy else 0
+        self.birth_class[c.id] = (mechanism, self_copy, round(fid_pre, 3), material)
+        if self_copy and bytes(child) != self._pre_tape:
+            self.sr_variant.add(c.id)
+        if self_copy and parent.id in self.sr_variant:
+            self.sr_variants_transmitted.add(parent.id)
         if self_copy:
             self.self_rep_births += 1; self._tick_sr += 1
             self.sr_max_depth = max(self.sr_max_depth, self.sr_depth[c.id])
             if self.first_self_replication is None:
                 self.first_self_replication = {"tick": self.tick, "id": parent.id, "tape": self._pre_tape.hex(), "mechanism": mechanism,
                                                "fidelity_pre": round(fid_pre, 3),
-                                               "seeded": parent.glineage in self.seed_lineages or parent.lineage in self.seed_lineages}
+                                               "seeded": parent.glineage in self.seed_lineages or parent.lineage in self.seed_lineages,
+                                               "genealogy": self._genealogy(parent.id)}
         self.events.append({"tick": self.tick, "kind": "copy", "parent": parent.id, "child": c.id, "cell": j, "fidelity": round(fidelity, 3),
                             "mechanism": mechanism, "span": tr.pc_max + 1, "steps": tr.steps, "replaced": replaced.id if replaced else None,
                             "material": material, "glineage": glin, "fidelity_pre": round(fid_pre, 3), "self_copy": self_copy})
@@ -502,6 +524,18 @@ class World:
         own_code = sum(1 for pc in own if pc < L)
         ok = (material == "writer" and fid_post >= 0.9 and fid_pre >= 0.9 and len(own) >= 0.9 * L and own_code >= 0.9 * len(own))
         return ok, fid_pre
+
+    def _genealogy(self, oid: int, depth: int = 40) -> List[dict]:
+        """The writer's causal ancestry (writer-of-writer ...): per ancestor its birth tick, birth mechanism, whether that
+        birth was a SELF_REPLICATION, and its tape AT BIRTH (G6: was there a selectable ramp before the first
+        self-replicator, or a cliff?)."""
+        out = []
+        for a in self._ancestry(oid, depth):
+            bc = self.birth_class.get(a)
+            out.append({"id": a, "birth": self.birth_tick.get(a), "tape_at_birth": (self.birth_tape.get(a) or b"").hex(),
+                        "mechanism": bc[0] if bc else None, "self_copy": bc[1] if bc else None, "fidelity_pre": bc[2] if bc else None,
+                        "material": bc[3] if bc else None})
+        return out
 
     def _external_reproduce(self) -> int:
         """The population manager. ONLY under reproduction == EXTERNAL (asserted)."""
@@ -783,6 +817,11 @@ class World:
             "self_rep_births": self.self_rep_births, "sr_max_depth": self.sr_max_depth,
             "first_self_replication": self.first_self_replication,
             "world_copies_under_endogenous": self.world_copies_under_endogenous,
+            "sr_alive_end": sum(1 for o in alive if self.sr_depth.get(o.id, 0) > 0),
+            "sr_distinct_alive": len({bytes(o.tape) for o in alive if self.sr_depth.get(o.id, 0) > 0}),
+            "sr_variants_born": len(self.sr_variant), "sr_variants_transmitted": len(self.sr_variants_transmitted),
+            "dominant_sr_tape": (max(((bytes(o.tape), 1) for o in alive if self.sr_depth.get(o.id, 0) > 0), default=(b"", 0),
+                                     key=lambda kv: sum(1 for p in alive if bytes(p.tape) == kv[0]))[0]).hex(),
             "verified": self._verified(alive),
         }
 

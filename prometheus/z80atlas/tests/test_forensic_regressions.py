@@ -16,10 +16,7 @@ from prometheus.z80atlas import vm, grammar as G, geometry, scheduler as Sch, co
 from prometheus.z80atlas.tasks import Task
 from prometheus.z80atlas.world import World, Config
 
-adj = pytest.importorskip("prometheus.z80atlas.adjudication") if False else None   # imported per test so a missing module FAILS
-
-
-def _adj():
+def _adj():                         # imported per test, so a missing adjudication module FAILS the test (never skips)
     from prometheus.z80atlas import adjudication
     return adjudication
 
@@ -231,3 +228,44 @@ def test_m4_const_witness_check_is_not_vacuous():
     r = C.vm_executes()
     assert r["checks"]["witness_const"] is True
     assert C.witness_check("const", bytes([vm.HALT])) is False           # a program that outputs nothing must fail
+
+
+# ---- grounding instruments (added with the 2026-09-23 grounding round) ------------------------------------------------
+def test_chemistry_ablations_do_what_they_say():
+    mem = bytearray(256); mem[:8] = vm.replicator(64)
+    on = vm.execute(bytearray(mem), 64, 0, 512, [])
+    off = vm.execute(bytearray(mem), 64, 0, 512, [], ldir="off")
+    c4 = vm.execute(bytearray(mem), 64, 0, 512, [], ldir="cost4")
+    assert len(on.win_prov) == 64 and len(off.win_prov) == 0
+    assert c4.steps > on.steps
+    m2 = bytearray(256); m2[:3] = bytes([0x99, vm.LD_A_n, 5])        # 0x99 is undefined
+    assert vm.execute(bytearray(m2), 64, 0, 64, [], undefined="HALT").steps == 1
+    assert vm.execute(bytearray(m2), 64, 0, 64, []).steps > 1
+
+
+def test_target_fill_zero_gives_fresh_memory_to_unwritten_bytes():
+    cfg = Config(reproduction="ENDOGENOUS_PARTIAL", cells=16, ticks=5, target_fill="zero")
+    w = World(cfg, 9); w.cells = [None] * 16
+    writer = w._spawn(0, bytearray(bytes([vm.LD_A_n, 0x77, vm.LD_T_n, 70, vm.LD_pT_A, vm.HALT]) + bytes(58)), None, "init")
+    partner = w._spawn(1, bytearray(range(100, 164)), None, "init")
+    mem, tr = w._execute(writer, partner.tape, [1]); writer.tape = bytearray(mem[:64])
+    w._apply_reproduction(writer, 1, mem, tr)
+    child = w.cells[1]
+    assert child.tape[6] == 0x77 and sum(1 for b in child.tape if b) == 1
+
+
+def test_first_self_replication_records_genealogy_and_variants():
+    s = World(Config(reproduction="ENDOGENOUS_COPY", init="SEEDED_REPLICATOR", ticks=40, cells=64, physics="v2"), 11).run()
+    g = s["first_self_replication"]["genealogy"]
+    assert g and g[0]["id"] == s["first_self_replication"]["id"] and len(g[0]["tape_at_birth"]) == 128
+    assert s["sr_alive_end"] > 0 and s["sr_max_depth"] >= 3 and "sr_variants_transmitted" in s and s["dominant_sr_tape"]
+
+
+def test_repro_descriptor_separates_copier_from_witness():
+    A = _adj(); cfg = Config(task="INC")
+    d = A.repro_descriptor(vm.replicator(64), cfg)
+    assert d["self_copy"] and d["copy_op"] == vm.LDIR and d["exec_own_bytes"] >= 4 and d["task_accuracy"] < 0.5
+    h = A.repro_descriptor(vm.hybrid(vm.replicator(64), vm.witness_inc()), cfg)
+    assert h["self_copy"] and h["uses_io"] and h["task_accuracy"] == 1.0
+    wt = A.repro_descriptor(vm.witness_inc(), cfg)
+    assert not wt["self_copy"] and wt["task_accuracy"] == 1.0
