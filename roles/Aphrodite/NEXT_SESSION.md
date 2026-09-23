@@ -3,6 +3,16 @@
 Written 2026-09-22 at the end of Tier 3C, for a session that will return
 to pick up upgrades. READ THIS SECOND, after STATUS.md.
 
+THE STATE TO RECOVER, in the operator's words (2026-09-22):
+
+  "Aphrodite has demonstrated transferable local search leverage and
+   experimentally shown that a reusable schema can generalize across
+   unseen families, but has not yet demonstrated that the improver can
+   discover that abstraction itself."
+
+That last clause is THE ENTIRE SCIENTIFIC FRONTIER. Everything in
+section 2 is ordered to attack it and nothing else.
+
 --------------------------------------------------------------------------
 1. WHERE THE SCIENCE STANDS (one paragraph)
 --------------------------------------------------------------------------
@@ -20,44 +30,60 @@ Nothing here is Campaign 1 evidence. Campaign 1 remains FROZEN and UNRUN.
 Tier 3A, 3B and 3C are never pooled with each other or with anything else.
 
 --------------------------------------------------------------------------
-2. THE UPGRADE QUEUE, IN PRIORITY ORDER
+2. THE CAUSAL SEQUENCE (operator ruling, 2026-09-22 -- REPLACES my order)
 --------------------------------------------------------------------------
 
-Each needs an operator ruling before it runs; none is self-authorised.
+I had put "make the schema an arm" first. THE OPERATOR REVERSED THIS, and
+the reason is the point of the whole next slice:
 
-U1  MAKE THE SCHEMA AN ARM, NOT A SHAM DRAW.
-    Tier 3C's strongest evidence came from two randomly-seeded controls
-    (SHAM_0, SHAM_5) that happened to carry `(acc + {H})` and solved both
-    unseen-body families 16/16 while every schema-less library failed.
-    The obvious next experiment makes a schema-bearing library the
-    TREATMENT, with matched schema-free and wrong-schema controls.
-    This is the single highest-value item.
+  Promoting `(acc + {H})` from lucky sham to treatment hands Aphrodite an
+  answer that SHE FOUND BY RETROSPECTIVE INSPECTION of her own controls.
+  That is a valid positive control. It CANNOT establish that the improver
+  learned the abstraction, which is the only open question.
 
-U2  ABSTRACT OVER WHOLE-PROGRAM SEMANTIC CLASSES.
-    The donor failed because it abstracted over loop BODIES, and a body
-    is not invariant: `acc - v^2` with final `first - acc` is the same
-    program as `acc + v^2` with final `acc + first`. Either abstract over
-    the whole program's class, or canonicalise the body/final split
-    first. Without this, abstraction-from-self-observation is unreliable
-    in principle, not merely in practice.
+Each step needs an operator ruling before it runs; none is
+self-authorised. The steps are ordered, not a menu.
 
-U3  PAIRED SEEDS ACROSS ARMS AND CANDIDATE LIBRARIES.
-    Two libraries with identical content scored 13,479 and 51,018 in
-    Tier 3C because the search seed string contained the library name.
-    Identical content must produce identical cost. This invalidated the
-    donor's own selection step.
+S1  FIX THE ABSTRACTION UNIT FIRST.
+    Whole-program semantic normalisation / equivalence, so that
+    compensating factorisations COLLAPSE BEFORE abstraction is attempted.
+    `acc - v^2` with final `first - acc` and `acc + v^2` with final
+    `acc + first` must become one object. Until this holds, the donor is
+    abstracting over decomposition artifacts (INVARIANT 5), and every
+    downstream result is uninterpretable.
 
-U4  A VALIDATE SET THAT SURVIVES QUALIFICATION.
-    Declare more validate families than needed, so that generator
-    exclusions leave enough to measure with. Tier 3C's collapsed to one
-    family and the cross-validation stopped working.
+S2  FIX PAIRED SEEDS.
+    So that library selection measures LIBRARY QUALITY rather than RNG.
+    Tier 3C scored two byte-identical libraries at 13,479 and 51,018.
+    Until this holds, the donor's own selection step carries no
+    information, and step S3 cannot be read.
 
-U5  DIFFICULTY CONTROL ON TRANSFER FAMILIES.
-    Two of three unseen-body families were solvable only by the two lucky
-    shams. A pre-run control should establish that SOME arm can solve a
-    family before it is used to test transfer.
+S3  HAVE THE DONOR MECHANICALLY DERIVE A SCHEMA FROM ITS OWN SUCCESSES.
+    With S1 and S2 in place, anti-unification over whole-program classes
+    should be able to produce a hole-bearing schema endogenously. Whether
+    it does is the experiment.
 
-U6  CAMPAIGN 1 REMAINS BLOCKED on contracts from Archaeon (#452/#492/#534),
+S4  ONLY THEN MAKE THE DERIVED SCHEMA THE TREATMENT.
+    The treatment arm carries the schema THE DONOR DERIVED, not one the
+    seat selected by looking at results.
+
+S5  KEEP `(acc + {H})` AS A SENSITIVITY / POSITIVE CONTROL.
+    It proves what success should look like -- it solved both
+    unseen-body families 16/16 -- WITHOUT being allowed to count as
+    endogenous abstraction. It is the yardstick, never the claim.
+
+Supporting requirements, to be satisfied wherever they land in the above:
+
+S6  A VALIDATE SET THAT SURVIVES QUALIFICATION. Declare more validate
+    families than needed, so generator exclusions leave enough to measure
+    with. Tier 3C's collapsed to one family and the cross-validation
+    stopped working.
+
+S7  DIFFICULTY CONTROL ON TRANSFER FAMILIES. Two of three unseen-body
+    families were solvable only by the two lucky shams. Establish that
+    SOME arm can solve a family before using it to test transfer.
+
+S8  CAMPAIGN 1 REMAINS BLOCKED on contracts from Archaeon (#452/#492/#534),
     Harmonia (#453/#490/#533) and Vivarium (#454/#491/#532), and on
     benchmark receipts from Nestor (#471/#474) and Archaeon (#472/#475).
     Unchanged since 2026-09-21.
@@ -115,7 +141,10 @@ G5  WALL-CLOCK FROM SLICE 4 AND TIER 3A IS PERMANENTLY CONTAMINATED and
 5. THE ONE SENTENCE TO REMEMBER
 --------------------------------------------------------------------------
 
-An improver that gets better at searching without getting better at
-judging arrives at wrong answers sooner; and an improver that abstracts
-over a component of a factorisation will abstract over the wrong thing.
-Both were measured here, neither was assumed.
+Before evolving reusable parts, define a representation in which "part"
+is invariant enough to mean something. Otherwise evolution learns
+decomposition artifacts rather than mechanisms.
+
+(And separately, measured here and not assumed: an improver that gets
+better at searching without getting better at judging arrives at wrong
+answers sooner.)

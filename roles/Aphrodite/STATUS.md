@@ -13,8 +13,14 @@ workspace: worktree aphrodite-base-role, branch
 guard: linked worktree (git-dir differs from git-common-dir).
 comms: M1 canonical store via EW_DB_HOST=192.168.1.202.
 
-READ NEXT: NEXT_SESSION.md -- pick-up state, the upgrade queue U1-U6 and
+READ NEXT: NEXT_SESSION.md -- pick-up state, the ORDERED causal sequence
+S1-S8 (operator ruling 2026-09-22; the steps are ordered, not a menu) and
 the standing gates G1-G5.
+
+The open question, in the operator's words: Aphrodite has demonstrated
+transferable local search leverage and experimentally shown that a
+reusable schema can generalise across unseen families, but has NOT yet
+demonstrated that the improver can discover that abstraction itself.
 
 ## Dispositions on record (never pooled with each other)
 
@@ -61,5 +67,8 @@ news monitor: registered task AphroditeNewsWatch, ACTIVE. Last recorded
 ## Open operator decisions
 
 APHRODITE-31 (may Aphrodite ask other seats about the RSI program roles),
-APHRODITE-32 (Campaign 1 after the Campaign 0 report), and the upgrade
-queue U1-U5 in NEXT_SESSION.md -- none self-authorised.
+APHRODITE-32 (Campaign 1 after the Campaign 0 report), and each step of
+the sequence S1-S7 in NEXT_SESSION.md -- none self-authorised.
+
+PARKED 2026-09-22 by operator instruction: no further science until the
+next session.

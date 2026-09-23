@@ -119,11 +119,23 @@ yields nothing: different operator AND different arguments. The donor
 therefore formed no abstraction at all, and the slice's treatment arm
 degenerated into its control.
 
+THE OPERATOR'S FORM OF IT (2026-09-22), which is the one to quote:
+
+  Before evolving reusable parts, define a representation in which
+  "part" is invariant enough to mean something. Otherwise evolution
+  learns DECOMPOSITION ARTIFACTS rather than mechanisms.
+
 APPLY IT BY: abstracting over WHOLE-PROGRAM semantic classes, or
 canonicalising the factorisation (fixing a sign/scale/offset convention)
 before abstracting. This generalises past this engine: any scheme that
 learns "reusable parts" from its own successes must first fix what a part
 IS, or it will learn parts that cannot be recombined.
+
+COROLLARY ON EVIDENCE (operator, 2026-09-22): a schema found by
+RETROSPECTIVE INSPECTION of one's own controls is a positive control, not
+a discovery. Promoting it to treatment tests whether the schema works --
+already known -- not whether the improver can derive it. Keep the two
+roles strictly apart.
 
 --------------------------------------------------------------------------
 INVARIANT 6 -- THE CONFORMANCE GATE
