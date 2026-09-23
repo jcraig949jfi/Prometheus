@@ -76,8 +76,7 @@ def test_interaction_boundary_recovered():
 def test_substrate_artifact_not_promoted():
     res = mine_rows(_collect([m.Planted("artifact") for m in (pa, pb, pc)], seed=2).rows, workers=WORKERS)
     if res["verdict"] == "CANDIDATE":
-        assert "N" not in res["law"]["law"].replace("exp(-", "")[:0] + "".join(
-            ch for ch in res["law"]["law"] if ch.isalpha() and ch in "CNKG"), res["law"]
+        assert "N" not in res["law"]["law"], res["law"]   # variables are the only capital N
         assert _agreement(res, lambda X: X["C"] <= 0.30) >= 0.90
 
 
