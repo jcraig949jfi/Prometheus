@@ -98,3 +98,98 @@ where it lives, with its still-valid parts enumerated separately, and the
 defective code path is retained so the impaired result can be reproduced
 rather than trusted. Slice 2B's structural arm is the worked example:
 engine/SLICE2B_VALIDITY_SCAR.md.
+
+
+--------------------------------------------------------------------------
+INVARIANT 5 -- A COMPONENT OF A FACTORISATION IS NOT AN ABSTRACTION UNIT
+--------------------------------------------------------------------------
+
+Promoted 2026-09-22 (Tier 3C).
+
+  Do not abstract over one component of a program that decomposes in
+  several equivalent ways. The component's form is contingent on its
+  partner's, so syntactically incompatible components may implement the
+  same program.
+
+ORIGIN. A donor searching a sum-of-squares family did not find loop body
+`acc + v*v` with final `acc + first`. It found body `acc - v*v` with
+final `first - acc` -- accumulating the NEGATIVE sum and negating at the
+end. Anti-unifying that against its other observed body `(v + acc)`
+yields nothing: different operator AND different arguments. The donor
+therefore formed no abstraction at all, and the slice's treatment arm
+degenerated into its control.
+
+APPLY IT BY: abstracting over WHOLE-PROGRAM semantic classes, or
+canonicalising the factorisation (fixing a sign/scale/offset convention)
+before abstracting. This generalises past this engine: any scheme that
+learns "reusable parts" from its own successes must first fix what a part
+IS, or it will learn parts that cannot be recombined.
+
+--------------------------------------------------------------------------
+INVARIANT 6 -- THE CONFORMANCE GATE
+--------------------------------------------------------------------------
+
+Promoted 2026-09-22, after FOUR slices were damaged by the same failure:
+the implementation not matching the declared semantics (an asymmetric
+enumerator; string-vs-semantic identity; an unguarded exponent; an
+accumulator ceiling present in the searcher and absent from the emitted
+artifact, which hung a run for 1,829 s).
+
+  Where two evaluators exist for the same declared semantics, they must
+  be DIFFERENTIALLY TESTED over normal, boundary, overflow and failure
+  values before any run. No run begins while the gate is red.
+
+In this engine that is engine/conformance.py: 900 program shapes x 24
+input configurations = 21,600 comparisons between the search evaluator
+and the sandboxed artifact evaluator. The first slice to start from a
+green gate was also the first to hang nothing and leak nothing.
+
+--------------------------------------------------------------------------
+INVARIANT 7 -- QUALIFY THE GENERATOR, NOT ONE SAMPLE
+--------------------------------------------------------------------------
+
+Promoted 2026-09-22 (Tier 3B failure, Tier 3C repair).
+
+  A discrimination guarantee established on ONE drawn development set
+  does not transfer to other draws from the same generator. Qualify the
+  GENERATOR: many independent draws per candidate size, a survival rate
+  for wrong semantic classes, a confidence bound, and rejection of the
+  family if the bound is not met.
+
+EVIDENCE. Tier 3B qualified a battery to a zero false-positive basin on
+its chosen sample and then measured 4.688 false positives per recipient
+on fresh draws of the same size. Tier 3C qualified generators over 200
+draws per size, rejected three families of nine -- including both that
+had poisoned Tier 3B -- and recorded ZERO false positives across three
+families and ten arms.
+
+--------------------------------------------------------------------------
+INVARIANT 8 -- IDENTICAL CONTENT MUST COST THE SAME
+--------------------------------------------------------------------------
+
+Promoted 2026-09-22 (Tier 3C design error).
+
+  Randomisation must be PAIRED across arms and candidates. If two
+  configurations with identical content can score differently, the
+  comparison measures the seed.
+
+EVIDENCE. Two candidate libraries with byte-identical expansions scored
+13,479 and 51,018 -- a 3.8x spread -- because the search seed string
+contained the library's NAME. The donor's selection between them carried
+no information, and the cross-validation built to reward abstraction was
+never functional.
+
+--------------------------------------------------------------------------
+INVARIANT 9 -- VERIFY TERMINATION BY PID
+--------------------------------------------------------------------------
+
+Promoted 2026-09-22.
+
+  Task-control acknowledgement is not process death. Verify that the PID
+  and its tree are gone.
+
+EVIDENCE. Two detached python children survived TaskStop; one ran 18
+hours at 3.8 GB, contaminating wall-clock measurements across two slices
+and prompting a wrong diagnosis of a third. Those wall-clock figures are
+permanently marked contaminated; the charge-based endpoints they
+accompany are unaffected.
