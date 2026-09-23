@@ -1,0 +1,242 @@
+[
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.6718544317683195,
+  "law": "(K / (log(C) / K)) <= -1.597 AND ((C - N) / log(N)) >= -0.2619",
+  "law_ba_oracle": 0.7910884708205353,
+  "n_queries": 90,
+  "pays_rate_queried": 0.2,
+  "seed": 1,
+  "strategy": "random"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.6647001151820974,
+  "law": "(K / (N - log(C))) >= 0.5523",
+  "law_ba_oracle": 0.7997956888986397,
+  "n_queries": 90,
+  "pays_rate_queried": 0.12222222222222222,
+  "seed": 1,
+  "strategy": "grid"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7591460070206231,
+  "law": "(K / (C - exp(-G))) <= -9.09 AND ((K + log(N)) * C) <= 1.206",
+  "law_ba_oracle": 0.7162749561211057,
+  "n_queries": 90,
+  "pays_rate_queried": 0.32222222222222224,
+  "seed": 1,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7281016893374287,
+  "law": "(K / (C - exp(-G))) <= -5.133 AND ((C + G) + exp(-G)) >= 1.248",
+  "law_ba_oracle": 0.7450670524352787,
+  "n_queries": 90,
+  "pays_rate_queried": 0.17777777777777778,
+  "seed": 1,
+  "strategy": "active"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7509255704256252,
+  "law": "(C - (log(K) - G)) >= -1.167 AND (K / (G + log(C))) <= -0.6784",
+  "law_ba_oracle": 0.761120557261957,
+  "n_queries": 90,
+  "pays_rate_queried": 0.18888888888888888,
+  "seed": 2,
+  "strategy": "random"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.6069376645458534,
+  "law": "(K / log((C * G))) <= -0.4325 AND (exp(-G) / (C - G)) <= -0.4831",
+  "law_ba_oracle": 0.7836050625274242,
+  "n_queries": 90,
+  "pays_rate_queried": 0.1,
+  "seed": 2,
+  "strategy": "grid"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.75256074484423,
+  "law": "(K / log(C)) <= -0.6441 AND ((N / log(C)) + G) >= 0.3077",
+  "law_ba_oracle": 0.8172752577885036,
+  "n_queries": 90,
+  "pays_rate_queried": 0.3,
+  "seed": 2,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.723045332382624,
+  "law": "((N - K) / log(K)) <= -2.116 AND ((K / log(C)) + C) <= -0.3651",
+  "law_ba_oracle": 0.8146116717858709,
+  "n_queries": 90,
+  "pays_rate_queried": 0.2,
+  "seed": 2,
+  "strategy": "active"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7555225702062307,
+  "law": "(G - (K / log(C))) >= 1.329",
+  "law_ba_oracle": 0.8114921566476525,
+  "n_queries": 90,
+  "pays_rate_queried": 0.2,
+  "seed": 3,
+  "strategy": "random"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.6999883446687143,
+  "law": "(K / (log(C) / G)) <= -0.2611 AND ((N + log(C)) * N) >= -2.116",
+  "law_ba_oracle": 0.7939303148310664,
+  "n_queries": 90,
+  "pays_rate_queried": 0.1111111111111111,
+  "seed": 3,
+  "strategy": "grid"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7041636956998684,
+  "law": "(K / log((K - C))) >= 2.912 AND (K / (N + log(C))) <= -0.8249",
+  "law_ba_oracle": 0.7813802654673103,
+  "n_queries": 90,
+  "pays_rate_queried": 0.23333333333333334,
+  "seed": 3,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 30,
+  "knn_ba_oracle": 0.7615867705133831,
+  "law": "(C * N) <= 0.4748 AND ((C * K) * log(C)) <= -0.2042",
+  "law_ba_oracle": 0.8114475921456779,
+  "n_queries": 90,
+  "pays_rate_queried": 0.2111111111111111,
+  "seed": 3,
+  "strategy": "active"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7622415258885475,
+  "law": "log((N / (C * N))) <= 3.142 AND (K / log((G / C))) >= 0.9308",
+  "law_ba_oracle": 0.811512724879333,
+  "n_queries": 180,
+  "pays_rate_queried": 0.2388888888888889,
+  "seed": 1,
+  "strategy": "random"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7501782580078982,
+  "law": "(K / (log(C) / G)) <= -0.2406 AND (G / (K - log(N))) <= 0.217",
+  "law_ba_oracle": 0.7714595217200526,
+  "n_queries": 180,
+  "pays_rate_queried": 0.11666666666666667,
+  "seed": 1,
+  "strategy": "grid"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.779347438569548,
+  "law": "(C * K) >= 0.1728 AND (C - (G + exp(-N))) <= -1.028",
+  "law_ba_oracle": 0.8387073551996489,
+  "n_queries": 180,
+  "pays_rate_queried": 0.4166666666666667,
+  "seed": 1,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.762340939008337,
+  "law": "(C - exp(-(G * K))) >= -0.1334 AND (N - log((G - C))) <= 1.595",
+  "law_ba_oracle": 0.8078447235629662,
+  "n_queries": 180,
+  "pays_rate_queried": 0.20555555555555555,
+  "seed": 1,
+  "strategy": "active"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7579667617376042,
+  "law": "((C - K) * C) <= -0.1548 AND (G + exp(-(C + N))) >= 1.058",
+  "law_ba_oracle": 0.8303326568670469,
+  "n_queries": 180,
+  "pays_rate_queried": 0.23333333333333334,
+  "seed": 2,
+  "strategy": "random"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.5234443560772268,
+  "law": "(log(C) / log(K)) <= -0.3425 AND (C - (exp(-G) / K)) >= -0.1822",
+  "law_ba_oracle": 0.8091028137340939,
+  "n_queries": 180,
+  "pays_rate_queried": 0.09444444444444444,
+  "seed": 2,
+  "strategy": "grid"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.768322866388767,
+  "law": "(C - (G * exp(-N))) <= -0.1646 AND (C - (exp(-G) / K)) >= -0.165",
+  "law_ba_oracle": 0.8027575142606407,
+  "n_queries": 180,
+  "pays_rate_queried": 0.31666666666666665,
+  "seed": 2,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7321673431329531,
+  "law": "(N - (C / exp(-N))) <= 0.924 AND (K / (log(C) / K)) <= -1.699",
+  "law_ba_oracle": 0.7934092529618253,
+  "n_queries": 180,
+  "pays_rate_queried": 0.21666666666666667,
+  "seed": 2,
+  "strategy": "active"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7694575471698113,
+  "law": "exp(-((C - K) * C)) >= 1.152 AND (log((C / G)) / N) <= -1.458",
+  "law_ba_oracle": 0.8508049034664327,
+  "n_queries": 180,
+  "pays_rate_queried": 0.22777777777777777,
+  "seed": 3,
+  "strategy": "random"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.673376480912681,
+  "law": "exp(-C) >= 0.7261 AND (K / (C - log(K))) <= -2.978",
+  "law_ba_oracle": 0.7533251974550241,
+  "n_queries": 180,
+  "pays_rate_queried": 0.1,
+  "seed": 3,
+  "strategy": "grid"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.7894155879771829,
+  "law": "(C * K) >= 0.1605 AND (exp(-N) - (C / G)) >= 0.106",
+  "law_ba_oracle": 0.8476373957876262,
+  "n_queries": 180,
+  "pays_rate_queried": 0.3888888888888889,
+  "seed": 3,
+  "strategy": "boundary"
+ },
+ {
+  "budget": 60,
+  "knn_ba_oracle": 0.8221327885037297,
+  "law": "(K - log((K - C))) >= 1.34 AND ((C - exp(-N)) * K) <= -0.1703",
+  "law_ba_oracle": 0.8200931055287407,
+  "n_queries": 180,
+  "pays_rate_queried": 0.24444444444444444,
+  "seed": 3,
+  "strategy": "active"
+ }
+]
