@@ -1,0 +1,114 @@
+{
+ "perturbation_id": "P-C04",
+ "parent": "T-ARCH4/M1",
+ "summary": {
+  "distributed": {
+   "n": 376,
+   "loss": 0.6303191489361702,
+   "neutral": 0.3324468085106383,
+   "coherent": 0.03723404255319149,
+   "D7": 0,
+   "D6": 5,
+   "displacement_mean": 0.6195977393617021,
+   "displacement_hist": {
+    "0": 137,
+    "(0,0.25]": 0,
+    "(0.25,0.5]": 3,
+    "(0.5,0.75]": 2,
+    "(0.75,1]": 234
+   },
+   "classes": {
+    "D2": 177,
+    "D5": 125,
+    "D3": 60,
+    "D6": 5,
+    "D4": 9
+   }
+  },
+  "block": {
+   "n": 376,
+   "loss": 0.5691489361702128,
+   "neutral": 0.40691489361702127,
+   "coherent": 0.023936170212765957,
+   "D7": 0,
+   "D6": 2,
+   "displacement_mean": 0.5446309840425532,
+   "displacement_hist": {
+    "0": 163,
+    "(0,0.25]": 1,
+    "(0.25,0.5]": 5,
+    "(0.5,0.75]": 1,
+    "(0.75,1]": 206
+   },
+   "classes": {
+    "D2": 154,
+    "D3": 60,
+    "D5": 153,
+    "D4": 7,
+    "D6": 2
+   }
+  },
+  "sequential": {
+   "n": 376,
+   "loss": 0.047872340425531915,
+   "neutral": 0.8723404255319149,
+   "coherent": 0.0797872340425532,
+   "D7": 0,
+   "D6": 6,
+   "displacement_mean": 0.054105718085106384,
+   "displacement_hist": {
+    "0": 342,
+    "(0,0.25]": 3,
+    "(0.25,0.5]": 17,
+    "(0.5,0.75]": 3,
+    "(0.75,1]": 11
+   },
+   "classes": {
+    "D2": 18,
+    "D5": 328,
+    "D6": 6,
+    "D4": 24
+   }
+  }
+ },
+ "contrasts": {
+  "loss_block_minus_distributed": {
+   "mean_diff": -0.061170212765957445,
+   "p05": -0.061170212765957445,
+   "p95": 0.061170212765957445,
+   "n": 47,
+   "above_p95": false,
+   "below_p05": false
+  },
+  "loss_sequential_minus_distributed": {
+   "mean_diff": -0.5824468085106383,
+   "p05": -0.15691489361702127,
+   "p95": 0.15691489361702127,
+   "n": 47,
+   "above_p95": false,
+   "below_p05": true
+  },
+  "displacement_block_minus_distributed": {
+   "mean_diff": -0.07496675531914894,
+   "p05": -0.061835106382978726,
+   "p95": 0.06300698138297876,
+   "n": 47,
+   "above_p95": false,
+   "below_p05": true
+  },
+  "displacement_sequential_minus_distributed": {
+   "mean_diff": -0.5654920212765957,
+   "p05": -0.15027426861702128,
+   "p95": 0.1527676196808511,
+   "n": 47,
+   "above_p95": false,
+   "below_p05": true
+  }
+ },
+ "material": true,
+ "n_parents": 47,
+ "n_rows": 1128,
+ "elapsed_s": 22.0,
+ "prereg_sha256": "6d57d19dfebe7119da1e1bd57098a9cd43bf4c18317db3fcbc227790e1142a4d",
+ "ts": "2026-09-18 12:39:36"
+}

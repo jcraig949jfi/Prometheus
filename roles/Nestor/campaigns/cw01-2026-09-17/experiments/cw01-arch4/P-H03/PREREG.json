@@ -1,0 +1,42 @@
+{
+ "perturbation_id": "P-H03",
+ "parent": "T-ARCH4/W1",
+ "co_parents": [
+  "T-X17",
+  "T-X12"
+ ],
+ "deformation": "W",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "world-deformation",
+ "regimes": [
+  "stationary0",
+  "stationary1",
+  "phase_switch",
+  "moving",
+  "alternating",
+  "price_switch"
+ ],
+ "seeds": [
+  1,
+  2
+ ],
+ "generations": 60,
+ "delay": "an idle (empty) tick before the ask; delay n = n ticks",
+ "held_out": "episode family index 2: d0, d1, d2, mixed (alternating)",
+ "price_switch": "fitness = reward - price * n_instr with price 0 before generation 30 and 1/64 after",
+ "readouts": [
+  "tops' reward on d0 / d1 / d2 / mixed",
+  "share of tops solving both d0 and d1 above floor (SWITCH)",
+  "reward on unseen d2 (generalisation)",
+  "persistent words, length",
+  "curve set of the tops"
+ ],
+ "reading": "named from the regime x readout table only; a regime whose tops solve both phases above floor in >= 1/2 of tops while the stationary regimes do not is a SWITCHING transition; reward on d2 above floor from regimes that never saw d2 is PREDICTION",
+ "material_rule": "a regime differs from both stationary regimes on the switch share by >= .25 or on d2 reward by >= floor",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:03:07",
+ "prereg_sha256": "e4fcf1081d65bf4c9e613cf953d978b1555cf6d76052407ef38040459075814d"
+}

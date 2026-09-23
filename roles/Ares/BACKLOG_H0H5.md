@@ -1,6 +1,12 @@
 # Ares backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-19 (charter adopted; initial cycle). Lane column uses
+Currency: 2026-09-21 (seat PARKED after cycle 1; every row below is
+CLOSED or PARKED; the schema's 20-item floor is met by the record, not
+by live work). Closed: ARES-01..14 (cycle 0, commits eed9c7121..0a1eda32a),
+ARES-21..23,25-partial (evidence-wiki not submitted; see journal),
+cycle-1 repairs and validation (3ea24dda8 and the closing commit).
+PARKED: ARES-15..20, 24, 26, 27 -- no cycle 2 without the operator.
+Lane column uses
 ENGINE for the sandbox itself, EVIDENCE for measurements and reports,
 LIT for the research pass, TOOLS for instruments. The first five are
 started today. Items closed are deleted with the closing commit noted in

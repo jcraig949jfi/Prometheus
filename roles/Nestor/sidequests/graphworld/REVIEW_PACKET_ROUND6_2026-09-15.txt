@@ -1,0 +1,284 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 6, SIX-HOUR PRODUCTION-BOUNDED ROUND
+THE PRIMORDIAL MACHINE: HYGIENE WAVE, FROZEN-RECIPE REPLICATION, SEEDED RE-SCREEN
+================================================================================
+Prepared:      2026-09-15 ~15:10 local, after round close (15:00:00)
+Author:        Nestor-A[m1-449a9e76], conductor (logistics only)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Plan:          roles/Nestor/sidequests/graphworld/SWARM_R6.md (s1 = conductor bias rules O1-O6)
+Operator msgs: prompts/2026-09-14_graphworld_swarm/21 (6 h end-to-end cap + R5 review notes),
+               22 (go, PRODUCTION stage approved) -- verbatim, sha256 in MANIFEST
+Cap:           6 h end to end, 09:40 -> 15:40. HELD: builders 09:40, clock 11:00-15:00, packet ~15:10
+Clock (code):  pm:round:r6
+               start 11:00:00 | no_new_work 14:20 | drain 14:40 | closed 15:00
+               5 x 40 min epochs, stage PRODUCTION
+Gate tip:      bc5b661eb (items 1-14, 17-25 + live checks; full suite 736 passed)
+Close record:  ROUND-r6 757da3fc7 (pushed by the controller)
+Tally source:  scratchpad r6_close_tally.py + close_sweep --emit over code-owned streams (not prose)
+
+Headline:
+- The four control-plane holes the operator named were built, gated, and exercised live.
+  - D3: the controller pushed its own records 6/6 times (5 boundaries + close), 0 failures, 0 manual pushes by A.
+  - D7: every predicate cited this round is pinned under refs/pm/pred/*.
+  - D10: the close sweep found 19 rows files, 18 cited by guarded receipts, 1 UNRECEIPTED_OBSERVATION (disclosed).
+  - D4: PARTIAL; the fingerprint covers the job fn module but not its imports.
+- B-R5-1 received both robustness reads the operator asked for.
+  - Search budget: 102,400 evals/run on both sides, so extra search does not explain the win.
+  - Leave-one-family-out on the candidate itself: ROBUST 4/4 (thin at leave-4200-out, CI low 0.996).
+  - Replication on a second world: NOT_REACHED (the re-screen found no new SURVIVED cell). Still a CANDIDATE.
+- B2 is now cheap enough to interrogate.
+  - The compiled rollout is EXACT vs RefB2.
+  - The pilot sample falls from ~746 h to ~3-7 h. Simulation cost only; not run.
+- First anti-prior-arm surprise: a cell with sealed prior 0.10 (rank 39/48) PASSED at 1/5 CPU. n=2, descriptive.
+- The Clause B live pair ran (check_b v2 FAIL) but got NO verdict: the receipt guard refused its 16-run,
+  1-family sample. Conductor plan defect D13.
+- Cross-round residue in the live store cost time three times (D11, D12, D14). The gate's tests used fresh stores.
+
+--------------------------------------------------------------------------------
+1. OPERATIONS
+--------------------------------------------------------------------------------
+R6-BUILD (cap 11:15):
+- F, G, H were done by ~10:08.
+- The G-R6-3 trigger had no code caller. G was idle and bus notes do not wake an idle session; A used
+  SendMessage, and it was wired at 10:47.
+Gate GREEN ~10:59 at bc5b661eb. Clock T+0 11:00:00.
+
+Launch:
+- D11: publishing the r6 candidates was refused (CANDIDATES_ALREADY_PUBLISHED): the r5 prior ledger sat on the
+  same un-namespaced keys.
+  - A dumped it to JSON and renamed the keys to pm:prior:r5:* (no delete), then published n=48 of 3744.
+- Sessions:
+  - R hello 11:00, B 11:03, C 11:07, D 11:11, E 11:12.
+  - No PM_* scheduled task left enabled.
+  - R sealed 48 priors; A verified every commitment, the list membership, a single predictor, timestamps after
+    publish.
+- G: the first submit refused 73/73 (predicate_id None; no rows, no search). The fix 398894fc6 + pinned
+  predicate G-R16-SCREEN; resubmitted ~11:08.
+- D12: stale r5 stop flags (pm:jobs:{B,C,D,E}:stop='4', no TTL) left the B-E workers idle until ~11:19.
+  B found it; A deleted exactly those 4 keys.
+- D14: the r5 lane-D worker process was still alive. A's D12 clear woke it; it shared the worker-D group
+  and consumed one r6 D job (error, 0 rows). About 44 min of D was lost. D killed exactly those pids.
+  A verified: one worker per lane afterwards.
+
+Epochs (code; A announced nothing and pushed nothing):
+  E1 11:40  0 stragglers, committed 578b966d0, pushed, resumed
+  E2 12:20  0 stragglers, committed 36656181a, pushed, resumed
+  E3 13:00  held 8.8 min for one non-checkpointable D job (D15), committed 2bff17b22, pushed, resumed
+  E4 13:40  0 stragglers (D already stopped by design), committed e5d5efcf5, pushed, resumed
+  NO_NEW_WORK 14:20 (code); drain 14:40, 30 s, committed 5d83e3d81, pushed
+  CLOSE 15:00 round_closed, committed 757da3fc7, pushed
+
+Jobs (F7 done streams, clock window):
+  lane  ok  refused  paused  timeout  error  CPU-s
+  B      1        0       0        0      0      0
+  C      3        0       1        0      0   1806
+  D     11        0       0        0      3   1634
+  E      2        0       0        0      0   3177
+  G     30      116       4        1      0  44808
+  R      -        -       -        -      -      -   (predictor: sealed priors only)
+
+- Admission: STAGE_BUDGET_REFUSAL 116.
+  - 73 ENVELOPE_BAD_VALUE:predicate_id: G bug, no run, classified NOT_A_CANDIDATE.
+  - 43 PROJECTED_PAST_ROUND_END: G's remaining queued cells at 14:01; this is the R16 remainder.
+  - NO_NEW_WORK_REFUSAL 0.
+- CPU_TOKEN_GRANT 56 (G 35, D 14, C 4, E 2, B 1).
+- CHECKPOINTED 6, TIMEOUT 1 (G per-cell budget estimate too low, D17), CODE_RELOADED 1 (D4 fix fired live).
+- Session deaths 0. Every cohort posted ROUND 6 FINAL (R stayed idle after sealing, as designed).
+
+A interventions (O6):
+- Manual pushes: 0.
+- Live-store repairs: 2 (D11 key rename, D12 flag delete).
+- Rulings/requests carried: 8.
+  - G-R6-3 caller (x2 bus + 1 SendMessage).
+  - G-R6-3 applicability rule.
+  - H ref-push approval.
+  - F clock-shape flags.
+  - The E-R6-1 guard refusal (ruling b).
+  - The D4 import gap.
+  - G screen receipt before close.
+- Relaunches 0. A bus notes: 12.
+
+--------------------------------------------------------------------------------
+2. SCIENCE (OBSERVATION / ELIGIBILITY / VERDICT / INTERPRETATION)
+--------------------------------------------------------------------------------
+2.1 B-R6-1 search-budget accounting (receipt 1789485175950-0, guard 10/10; G code a3d628b4a)
+- OBSERVATION: B-R5-1 800 gens x 128 = 102,400 evals/run; w13 R16 float baseline 102,400; ratio 1.000.
+  Per-run CPU is recorded on neither side (not claimed).
+- VERDICT: the O2 rule decided the comparator does not fire, so the equal-budget comparator was not run.
+- INTERPRETATION: the 16 B win is not explained by extra search evaluations. Equal evals are not equal CPU.
+
+2.2 D-R6-1 leave-one-family-out on B-R5-1 (receipt 1789488540808-0, rows 4660b347c, 0 QD)
+- OBSERVATION: held-out pools of 24 runs (runs_total 24, rng_family_count 3, runs_per_family 8):
+    -4200 progress 1.384, CI low 0.9964
+    -2101 progress 1.488, CI low 1.102
+    -3303 progress 1.695, CI low 1.157
+    -5501 progress 1.652, CI low 1.237
+  8-run family blocks, reported not judged: CI low 4200 1.24 / 2101 1.00 / 3303 -0.26 / 5501 0.69.
+- ELIGIBILITY: the 32-run pool reproduces B's check_r4 PASS exactly; both planted controls correct; source-rows
+  oracle clean.
+- VERDICT: ROBUST (rule fixed before the read: CI low > 0.95 in 4/4 held-out pools).
+- INTERPRETATION: no single RNG family carries the PASS; removing 3303 raises progress. The 4200-out margin is
+  thin (+0.046). The family-3303 anomaly (3 below-floor runs) stays OPEN. Same-lane read; not a promotion.
+
+2.3 R16 re-screen (seeded order PCG64 20260916; receipt G-R16-SCREEN-R6 1789495407858-0 INDETERMINATE,
+    guard 10/10; rows G-R16-cells.jsonl @ d5aa57d85, 1507 rows)
+- OBSERVATION (gate_in|HOLD, 32/4/8): 31/74 cells complete.
+    SURVIVED 1: w13 t128 (the origin)
+    HELD 3: w1 t8, w7 t8, w13 t8
+    CULLED 22
+    PENDING 5: train128 learner > 14400 CPU-s; w1, w7, w10, w26, w34 t128; each a filed PC
+    UNSCREENED 43
+- Oracles: 42/42 world oracle clean; 42/42 fused == numpy; det_matches_stage1 33/33.
+- New SURVIVED: 0. pm:replication records: 0 (30 replication_check rows).
+- INTERPRETATION: B-R5-1 replication NOT_REACHED. This is not evidence against it. Unfinished cells are UNSCREENED,
+  never CULLED. Remainder measured cost: train8 163 wall-s / 797 CPU-s per cell; train128 551 wall-s /
+  2700 CPU-s per cell. The 43 cells are ~4.3 h wall on one worker, plus the 5 PENDING learners.
+
+2.4 E-R6-2 B2 compiled/batched rollout (receipt 1789486928415-0, guard 10/10; rows 78e65ac89; 141 rows)
+- OBSERVATION:
+  - O1 96/96 exact vs RefB2 (trace hash + charges + moving; 32 specs x random/forager/linear).
+  - O2 skip_mutation detected on every moved spec, and == RefB2's cheat 32/32.
+  - O3 batch of 64 == per-episode.
+  - Per episode: RefB2 table 1.47 ms, linear 13.96 ms; compiled table 7.0 us (1 thread) / 4.0 us (3 threads),
+    compiled linear 14.2 us / 6.4 us.
+- VERDICT: EXACT. Prediction (EXACT, >= 50x, pilot < 20 h) met.
+- INTERPRETATION: the R5 B2 pilot sample (1.68e9 episodes) falls from ~746 h to ~6.7 h (1 thread) / ~3.1 h
+  (3 threads). The full screen is ~6-13 h. This covers simulation only: QD search overhead is excluded, exactly
+  as in the R5 figure. Filed against PC 1789468339986-0. Not run (not in plan).
+
+2.5 E-R6-1 Clause B live pair w14 -> w13 (rows 520260e4e; NO RECEIPT)
+- OBSERVATION: 16 paired run seeds, 1 family, control clauseB_ctrl_v2_featperm; check_b v2 FAIL, gates clean;
+  graft-scratch -0.011 (p .506), graft-sham -0.018 (p .513); 1066 s wall, 3158 CPU-s.
+- ELIGIBILITY: the receipt guard refused sample_rule CANDIDATE_N (16/1/16 vs 32/4/8).
+- VERDICT: none. A ruling (b): no relabel, rerun or trim. Listed by the close sweep as UNRECEIPTED_OBSERVATION.
+- INTERPRETATION: an observation below the verdict sample rule, not a Clause B verdict.
+  OPEN OPERATOR QUESTION: does CANDIDATE_N bind Clause B? PC 1789486665691-0 (family axis + ruling;
+  est 2132 s / 6316 CPU-s).
+
+2.6 Anti-prior v2 (R sealed 48 on the code list, seed 20260917; ranks frozen; C never read pm:prior:*)
+- Priors: p range 0.07-0.45, median 0.15, 11 distinct values (R5: 12/12 <= 0.2). Ranks discriminate.
+- C-R6-AP-01, tucker/nk_stub/cpu_ttl/graphblas, arm anti_prior (u .961, rank 39/48, q .80, prior 0.10,
+  expected FAIL):
+  - PASS (receipt 1789488872310-0): cell median 2249154 >= bar 2226419 (control 2243838), TTL = 1/5 control CPU.
+  - D filed an OPEN anomaly (1789490583451-0).
+- C-R6-AP-02, bitset/nk_stub/obs_delay/redis_lua, arm calibration (u .029, rank 7/48, q .135, prior 0.30):
+  - FAIL (receipt 1789488837056-0): cell 3142843 < bar 3146550; 21/32 paired below.
+- Calibration by arm (descriptive, n = 1 per arm): anti_prior 1/1 PASS; calibration 0/1 PASS. No inference.
+
+2.7 C-R6-01 DISTANT_QD cp/w13/cpu_ttl/graphblas/metered_stream (receipt 1789488874742-0) -> FAIL
+- P1 true; P2 false (146.24 < floor 166.47); P3 7/32.
+- The planted null FAILED first, logged before any cell row, so the test is non-vacuous (the R5 PASS was vacuous).
+- C disclosure: its pre-stated CPU rule selected TRAIN8, which made P2 near-certain to bind.
+
+2.8 E-R6-3 dispatch surface (E_R6_3_DISPATCH_SURFACE.md; committed E-R5-3 + D-R5-2 rows only, no new timing)
+- GPU-1 world step: warp wins at batch 4096+ at every thread count (t8 margin 1.08x at 4096); at 1024 only at
+  t1/t2.
+- GPU-2 closed loop 8192: threaded numba wins at t2+ (1.5-6x).
+- UNMEASURED regions labelled, never interpolated. GPU-3 stays PC.
+
+2.9 D anomaly work (12 receipts: 11 decisions + 1 INDETERMINATE; 11 anomalies RESOLVED)
+- D-R6-2 MIXED (skip-odd blind int2 w4: 1 sample miss + 2 zero-flip on HELD8); D-R6-3 COVERAGE.
+- D-R6-4 OVERFIT_ONLY w13 t8; D-R6-5 SEARCH_SHORT w7 t8.
+- D-R6-6b: w1 t128 SEARCH_SHORT; w34 t8, w1 t8 OVERFIT_ONLY.
+- D-R6-7 MASS_BARRIER; D-R6-8 MIXED; D-R6-9 HELD_KEEPS_RISING (tt_feat w4).
+- D-R6-10 NULL_HOLDS (FAKEFIT 0/10 vs 100 nulls); D-R6-11 INIT_DOMINATES (tt_digits w3).
+- OPEN anomalies filed: family-3303 below-floor runs; the anti-prior-arm PASS.
+
+Receipts vs rows: 19 rows files committed in the window, 18 cited by guarded receipts. The 1 UNRECEIPTED is
+E-R6-1 (disclosed above).
+
+--------------------------------------------------------------------------------
+3. INSTRUMENTATION DEFECTS
+--------------------------------------------------------------------------------
+Hygiene wave (operator 21), live status:
+  D3  controller dirties own checkout ......... FIXED; verified live: 6/6 pushes by code, 0 failures, checkout clean
+  D4  stale code in warm worker ................ PARTIAL: fn module fingerprinted (CODE_RELOADED fired live);
+                                                  imported modules not (D-R6-5 error, 0 rows); PC 1789489827401-0
+  D6  measured-cost filing by code ............. FIXED (file_candidate used by E, G, F, C in round)
+  D7  predicate sha orphanable ................. FIXED (refs/pm/pred/*; guard check live on every receipt)
+  D10 rows bypassing guarded receipts .......... FIXED (close sweep: 18/19 cited, 1 UNRECEIPTED_OBSERVATION)
+
+New in round 6:
+  #    defect                                                                    status
+  D11  anti_prior keys not namespaced per round; the r5 ledger blocked the r6
+       publish                                                                    OPEN; A archived by rename
+  D12  round close keeps stop flags; round start does not clear them (B-E idle
+       ~19 min)                                                                   OPEN; A cleared 4 keys
+  D13  conductor plan fixed a Clause B sample the receipt guard refuses; gate never
+       exercised a Clause B receipt (E made the same error at predicate time)     OPEN (A); PC 1789486665691-0
+  D14  round close stops flags, not processes; a live r5 worker shared the lane group
+       and consumed an r6 job; the fingerprint does not check the worker's repo  OPEN; D killed the pids
+  D15  drain timeout sized to the max job wall; one non-checkpointable job holds
+       every lane at a boundary (8.8 min at E3)                                   OPEN, NONBLOCKING
+  D16  G plan envelopes had predicate_id None (73 refused, 73 spurious stubs); tests
+       did not pass envelopes through admit                                       FIXED_WITH_REGRESSION 398894fc6
+  D17  G per-cell CPU budget estimates too low (w4 t8 TIMEOUT at 641 CPU-s)       FIXED d788eac8d
+Common cause of D11, D12, D14: cross-round residue in the live store escapes a gate whose tests use fresh stores.
+Proposed gate item: at T-0, scan the live store for prior-round keys, flags and consumers, and assert one live
+consumer per lane group, running in the round worktree. The close must stop worker processes.
+Carried from R5, unchanged: D8 seal not cryptographic; D9 token pin <= 60 s.
+
+--------------------------------------------------------------------------------
+4. PRODUCTION CANDIDATES (not run)
+--------------------------------------------------------------------------------
+Stream (round window): 124 records.
+- 73 spurious G stubs (predicate_id None): NOT_A_CANDIDATE; left open by rule (file_candidate refuses a null cost).
+- 43 automatic G stubs (PROJECTED_PAST_ROUND_END), grouped into remainder PC 1789495428659-0.
+- 8 real candidates, all filed with measured cost:
+
+| candidate | cost basis | why it changes a decision |
+|---|---|---|
+| R16 remainder, 43 UNSCREENED cells (1789495428659-0) | ~4.3 h wall one worker (163 s / 551 s per t8 / t128 cell) | only path to a second SURVIVED world for replication |
+| PENDING learners w1/w7/w10/w26/w34 t128 (5 PCs) | > 14400 CPU-s each | decide 5 HELD-or-SURVIVED cells |
+| family-aware Clause B at CANDIDATE_N (1789486665691-0) | ~2132 s / 6316 CPU-s + family axis + operator ruling | first admissible Clause B verdict |
+| import-closure worker fingerprint (1789489827401-0) | build + regression test | closes D4 |
+| B2 screen with compiled rollout (1789468339986-0) | ~3-7 h simulation + unmeasured search overhead | first B2 admission verdict |
+| GPU-3 resident fp16 closed loop (R5 PC) | build + oracle | unchanged from R5 |
+Also filed in round: the stale R4 C-R4-05 stub (C, measured 2577 CPU-s).
+
+--------------------------------------------------------------------------------
+5. EPISTEMIC STATE
+--------------------------------------------------------------------------------
+Promoted mechanisms: NONE.
+Surviving candidates: B-R5-1 (w13 train128, 16 B int4a4).
+- Equal search budget.
+- Leave-one-family-out ROBUST 4/4.
+- Cross-lane replay AGREE (R5).
+- Replication NOT_REACHED.
+- Blocker to promotion: a second SURVIVED world plus an independent failure mode.
+Unresolved claims:
+- the family-3303 below-floor runs (OPEN);
+- the anti-prior-arm PASS on tucker/nk_stub at 1/5 CPU (OPEN);
+- no Clause B verdict at CANDIDATE_N;
+- whether CANDIDATE_N binds Clause B (operator);
+- B2 search overhead unmeasured.
+Parked: R16 remainder (43 cells); 5 PENDING learners; B2 screen; GPU-3; phase 2 deciders.
+Invalidated claims: none this round.
+
+--------------------------------------------------------------------------------
+6. RULE AUDIT (SWARM_R6 s1): did each rule change an outcome?
+--------------------------------------------------------------------------------
+- O1 frozen recipe, layout-rule applicability: NOT EXERCISED (no new survivor). Wired, tested, and checked on
+  30 cells.
+- O2 comparator rule: YES; code decided "no comparator" with no judgement call.
+- O3 rank arms + calibration Bernoulli: YES; one draw per arm; the anti-prior arm produced the surprise.
+- O4 seeded screen order: YES; coverage is a seeded sample of 31 cells, not headroom-ordered.
+- O5 hygiene gate: YES; D3/D6/D7/D10 live, D4 partial.
+- O6 count A interventions: 0 manual pushes, 2 live-store repairs, 8 rulings/requests.
+
+--------------------------------------------------------------------------------
+7. SUCCESS CONDITIONS
+--------------------------------------------------------------------------------
+ 1 six-hour end-to-end cap held ........................... YES (09:40 -> packet ~15:10)
+ 2 hygiene wave gated and live ............................ YES (D4 partial)
+ 3 zero manual controller pushes .......................... YES (6/6 by code)
+ 4 every row path receipted or UNRECEIPTED_OBSERVATION .... YES (18 receipted, 1 disclosed)
+ 5 B-R5-1 robustness reads (budget, family LOO) ........... YES
+ 6 replication on a second SURVIVED world ................. NOT_REACHED
+ 7 B2 cheap enough to interrogate ......................... YES (simulation; search overhead unmeasured)
+ 8 anti-prior ranks discriminate ........................... YES (p 0.07-0.45; 2 draws)
+ 9 Clause B verdict ........................................ NO (D13)
+10 no babysitting of clocks/budgets/admission .............. YES (2 residue repairs by A, D11 and D12)
+================================================================================
+END OF PACKET
+================================================================================

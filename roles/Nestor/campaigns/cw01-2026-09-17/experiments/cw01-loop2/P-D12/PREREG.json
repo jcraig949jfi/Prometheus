@@ -1,0 +1,17 @@
+{
+ "perturbation_id": "P-D12",
+ "parent": "T-X05",
+ "claim_type": "exploratory-dose",
+ "delta": "amputation interval g_amp in (None, 2, 5, 10, 20) (None = control), no tax",
+ "unchanged": "e08 organism, world, selection, assay, train-selected representatives",
+ "attacks": "TAX+AMP had the highest held64 (171) and the lowest burden in e08",
+ "measures": "per lineage: held64 mean of top-8, competent reps, scalar burden; relabelling band control vs each interval",
+ "continuation": [
+  "amputation severity (slices per event)",
+  "mask amputation",
+  "held-out selection",
+  "tax x interval"
+ ],
+ "written": "2026-09-18 20:20:46",
+ "prereg_sha256": "122998c73f1ee6f74ba075296396d4dc7a6c0b75c506d86eb811dfe4b492a829"
+}

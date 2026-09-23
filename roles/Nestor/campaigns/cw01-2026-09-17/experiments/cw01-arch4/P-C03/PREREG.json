@@ -1,0 +1,17 @@
+{
+ "perturbation_id": "P-C03",
+ "parent": "T-ARCH4/R1",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "one-axis-walk-descriptive",
+ "delta": "walk proposals decoded under R2 (trap-to-NOP for new out-of-table opcode words) vs modulo, on canonicalised parents",
+ "held_fixed": "walk rules (band 1/16 of the original parent, 32 proposals, depth 16), seeds, environments, parents' behaviour",
+ "attacks": "'the neutral network is large, connected and cheap' as a property of modulo decode (C4-05); the insulated neighbourhood",
+ "nonredundant": "C5 measured representation B's census (C5-05) and the OLD deep walk (C5-01); no walk under an insulating decode was run",
+ "measures": "connected depth, acceptance, insulation events per accepted step, length delta, structural diversity at depth 16, held-out exaptation at depth 16; paired sign-flip bands (modulo vs R2) per parent",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 12:39:36",
+ "prereg_sha256": "edee66c70a081d8bf9eb186a58b9751a7a735875a42511f67742bd71517ac6c2"
+}

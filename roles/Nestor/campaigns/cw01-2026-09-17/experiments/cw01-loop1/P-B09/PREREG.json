@@ -1,0 +1,19 @@
+{
+ "perturbation_id": "P-B09",
+ "parent": "T-X08",
+ "claim_type": "exploratory-with-relabelling",
+ "delta": "DIST arm evolves with ttl drawn per episode from (7, 15, 30); FIXED arm at 15",
+ "unchanged": "e04 world, organism, selection, 60 generations, worth map per attempt",
+ "attacks": "the inverted generality (better under ttl_double, worse under ttl_half): schedule specialisation?",
+ "replicates_per_arm": 4,
+ "test_ttls": [
+  7,
+  15,
+  30
+ ],
+ "sham": "ttl re-set to 15 (identity)",
+ "statistic": "rel(ttl) = mean score at ttl / mean score at 15 per replicate; DIST minus FIXED by exact relabelling; also absolute score at each ttl",
+ "decision": "descriptive; DIST rel(7) above p95 of the relabelling null is recorded as material (specialisation removed)",
+ "written": "2026-09-18 11:10:12",
+ "prereg_sha256": "f0b440ef2bf2ab6aab2a9d642cdbd3fc5f69d35dd7e48fe5ed4a098de96d0213"
+}

@@ -1,0 +1,24 @@
+{
+ "perturbation_id": "P-D14",
+ "parent": "T-ARCH4/W1",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-descriptive",
+ "archive": "walkers 1-4 depth 16 archived at 2/4/8/16 (C4-05 seeds)",
+ "rules": {
+  "A": "best reward on the parent environment (ties: shallowest)",
+  "B": "best reward on W2_K2d1 (ties: shallowest)"
+ },
+ "measure": "exaptation (D6 rule) on OTHER_ENVS minus the parent environment, same set for both rules",
+ "statistic": "paired sign-flip over parents of exaptive(B) - exaptive(A); Wilson bands of each rate",
+ "material_rule": "paired sign-flip outside its band",
+ "continuation": [
+  "selection on each held-out world in turn",
+  "top-k instead of best"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:21:00",
+ "prereg_sha256": "99bcd40bbb670c2fddaa25c88a9e29e6accd9ae01ac913c64b5f5f62f650410b"
+}

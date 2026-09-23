@@ -1,0 +1,37 @@
+{
+ "perturbation_id": "P-D02",
+ "parent": "T-ARCH4/W1",
+ "deformation": "B",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-switch-probe",
+ "grid": [
+  "det0",
+  "det1",
+  "det2",
+  "det4",
+  "stoch01",
+  "rare0001",
+  "hetero1234",
+  "interleaved_d0",
+  "interleaved_d1",
+  "random_order",
+  "noise_d0",
+  "noise_d1"
+ ],
+ "programs": "w0_solver parents (4 walkers), delay_general parents (4 walkers), C4-08 ordinary top-16 seed 1 (2 walkers)",
+ "held_fixed": "walk seeds and rules, displacement ruler, episodes (CRN)",
+ "attacks": "zero-vs-nonzero delay discontinuity (P-C14): causal delay or a hidden state transition exposed by any timing change?",
+ "trace": "W1_d1 displacement of every accepted step; loud = first step with displacement > 0.10",
+ "continuation": [
+  "revert-and-replay ablation of the loud step",
+  "delay on PUT vs ASK",
+  "combined noise x delay dose",
+  "C5 representation B walkers"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 16:59:20",
+ "prereg_sha256": "d4546e6be9df3a7e964bd9d859aeea86a96b09018e60439b5712fd79e0bb2a2d"
+}

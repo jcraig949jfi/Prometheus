@@ -1,0 +1,27 @@
+{
+ "schema_version": "z80atlas.observatory.v1",
+ "family": "cell_id: sha256 prefix of the factor vector. One family = one point in the grammar.",
+ "run_id": "<cell_id>-s<seed>-t<tier>-a<attempt>",
+ "index_row": {
+  "run_id": "unique run identifier",
+  "family": "cell_id",
+  "cell": "the full factor vector (one key per grammar factor)",
+  "derived": "computed tags: endogenous, spontaneity_test, constant_kind, has_task, moat, seeded_instrument",
+  "seed": "integer seed",
+  "tier": "S|M|L compute tier",
+  "role": "EXPERIMENT | CONTROL | VERIFY | INTERVENTION",
+  "control_of": "run_id this run is the matched control of, if any",
+  "control_axis": "the single factor flipped to make this control",
+  "parent_run": "run_id this run was promoted from, if any",
+  "reason": "why the scheduler allocated this run",
+  "stage": "EARLY | MIDDLE | LATE",
+  "signals": "mechanical promotion signals (see scheduler.SIGNALS)",
+  "interest": "scalar the producer was updated with",
+  "flags": "anticheat flags, with severity",
+  "voided": "true if a critical flag means this run cannot support a reproduction claim",
+  "summary": "headline aggregates",
+  "paths": "relative paths to the per-run artefacts",
+  "wall_s": "seconds of wall clock"
+ },
+ "note": "Rows are append-only. A run is never rewritten; a rerun is a new run_id with parent_run set."
+}

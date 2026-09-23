@@ -1,0 +1,614 @@
+{
+ "perturbation_id": "P-B03",
+ "parent": "T-E07",
+ "disposition": "NEGATIVE (weather lineages retain less)",
+ "damage_fires": true,
+ "sham_inert": true,
+ "c_weather": {
+  "c": -0.2644910016809639,
+  "p05": -0.12396375018206891,
+  "p95": 0.12396375018235781,
+  "n_null": 924,
+  "exact": true,
+  "above_p95": false,
+  "below_p05": true
+ },
+ "c_sham": {
+  "c": 6.372403138005201e-16,
+  "p05": -0.005752419448105904,
+  "p95": 0.005752419448106094,
+  "n_null": 924,
+  "exact": true,
+  "above_p95": false,
+  "below_p05": false
+ },
+ "intact_cost_weather_minus_static": {
+  "effect": -0.00385294462688264,
+  "p05": -0.0023653402366622675,
+  "p95": 0.002365340236662267,
+  "n_null": 924,
+  "exact": true,
+  "above_p95": false,
+  "below_p05": true
+ },
+ "arm_means": {
+  "STATIC": {
+   "r": 0.18065032156727853,
+   "S_int": 0.05468674936633416,
+   "n": 6
+  },
+  "WEATHER": {
+   "r": 0.35940672799057394,
+   "S_int": 0.05083380473945152,
+   "n": 6
+  },
+  "SHAMWEATHER": {
+   "r": 0.18065032156727853,
+   "S_int": 0.05468674936633416,
+   "n": 6
+  }
+ },
+ "lineages": [
+  {
+   "arm": "STATIC",
+   "lineage": 0,
+   "S_int": 0.054552611645565935,
+   "S_floor": 0.047714024783865897,
+   "S_dmg": 0.04895851882875448,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18198117097239178,
+   "gene_means": {
+    "p_write": 0.9757205850923846,
+    "cells_frac": 0.021810581735003866,
+    "p_retrieve": 0.9574931967219981,
+    "p_reenter": 0.9822105305278428,
+    "persist_steps": 43.40269749945646
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04980535829982529,
+    "best": 0.05953994109118351,
+    "ancestor_relative": 0.004291452954946207,
+    "mean_writes": 49.40625,
+    "mean_reentries": 8.8125,
+    "mean_recompute": 28.703125,
+    "mean_work_saved": 881.25,
+    "mean_jammed": 0.703125,
+    "mean_p_write": 0.8607154503531464,
+    "mean_p_reenter": 0.8869137785099781,
+    "mean_persist": 39.70448266047245
+   }
+  },
+  {
+   "arm": "STATIC",
+   "lineage": 1,
+   "S_int": 0.054958260178286124,
+   "S_floor": 0.04771359001935012,
+   "S_dmg": 0.049028742460736636,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18153379139895384,
+   "gene_means": {
+    "p_write": 0.9846281054990078,
+    "cells_frac": 0.018419591499200832,
+    "p_retrieve": 0.9636632400901356,
+    "p_reenter": 0.9868828569774006,
+    "persist_steps": 47.074704811620876
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.05011333971590068,
+    "best": 0.061973265644333295,
+    "ancestor_relative": 0.0051713386487703406,
+    "mean_writes": 50.21875,
+    "mean_reentries": 9.390625,
+    "mean_recompute": 26.421875,
+    "mean_work_saved": 939.0625,
+    "mean_jammed": 0.75,
+    "mean_p_write": 0.8964409589943003,
+    "mean_p_reenter": 0.8869132194541005,
+    "mean_persist": 39.103452971648075
+   }
+  },
+  {
+   "arm": "STATIC",
+   "lineage": 2,
+   "S_int": 0.05416333060596815,
+   "S_floor": 0.047716248213196324,
+   "S_dmg": 0.048888230347914424,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18178488552156286,
+   "gene_means": {
+    "p_write": 0.9839530658116622,
+    "cells_frac": 0.016870235789939042,
+    "p_retrieve": 0.9273681224191748,
+    "p_reenter": 0.9835716663628723,
+    "persist_steps": 33.2611432415247
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.05062927229017958,
+    "best": 0.06255373354333754,
+    "ancestor_relative": 0.004278953812734326,
+    "mean_writes": 49.8125,
+    "mean_reentries": 9.59375,
+    "mean_recompute": 25.828125,
+    "mean_work_saved": 959.375,
+    "mean_jammed": 2.09375,
+    "mean_p_write": 0.9246868023466501,
+    "mean_p_reenter": 0.9099337362900457,
+    "mean_persist": 46.313820259826635
+   }
+  },
+  {
+   "arm": "STATIC",
+   "lineage": 3,
+   "S_int": 0.054870855005770776,
+   "S_floor": 0.04771522053291591,
+   "S_dmg": 0.04895626757495762,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.17343633841969824,
+   "gene_means": {
+    "p_write": 0.9976789887185499,
+    "cells_frac": 0.016628654175582225,
+    "p_retrieve": 0.9388903105590181,
+    "p_reenter": 0.9875354547907291,
+    "persist_steps": 49.68081858733653
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.049608764641628326,
+    "best": 0.06774803478688046,
+    "ancestor_relative": 0.0035439559285950356,
+    "mean_writes": 49.765625,
+    "mean_reentries": 9.609375,
+    "mean_recompute": 26.734375,
+    "mean_work_saved": 960.9375,
+    "mean_jammed": 0.9375,
+    "mean_p_write": 0.8929733049868879,
+    "mean_p_reenter": 0.9092954978512653,
+    "mean_persist": 45.92722509718431
+   }
+  },
+  {
+   "arm": "STATIC",
+   "lineage": 4,
+   "S_int": 0.055027895401139185,
+   "S_floor": 0.04771221231608595,
+   "S_dmg": 0.049103857274156615,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.19022761673670036,
+   "gene_means": {
+    "p_write": 0.9661838360337297,
+    "cells_frac": 0.016441391443192347,
+    "p_retrieve": 0.9861166822765763,
+    "p_reenter": 0.9799040753972741,
+    "persist_steps": 48.12858209381396
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.052583205568047846,
+    "best": 0.06573210499573089,
+    "ancestor_relative": 0.007214230480661173,
+    "mean_writes": 50.40625,
+    "mean_reentries": 9.796875,
+    "mean_recompute": 26.5625,
+    "mean_work_saved": 979.6875,
+    "mean_jammed": 0.90625,
+    "mean_p_write": 0.9463364535150195,
+    "mean_p_reenter": 0.9162544756314623,
+    "mean_persist": 49.393878184117
+   }
+  },
+  {
+   "arm": "STATIC",
+   "lineage": 5,
+   "S_int": 0.05454754336127478,
+   "S_floor": 0.0477151840236187,
+   "S_dmg": 0.048910424164728,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.17493812635436404,
+   "gene_means": {
+    "p_write": 0.9571473824155564,
+    "cells_frac": 0.015,
+    "p_retrieve": 0.9416824479889266,
+    "p_reenter": 0.971995473896619,
+    "persist_steps": 53.59761291368101
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.050023978529500676,
+    "best": 0.06411710457807185,
+    "ancestor_relative": 0.0054517469982586775,
+    "mean_writes": 47.203125,
+    "mean_reentries": 8.671875,
+    "mean_recompute": 27.671875,
+    "mean_work_saved": 867.1875,
+    "mean_jammed": 0.828125,
+    "mean_p_write": 0.8396780394050638,
+    "mean_p_reenter": 0.8855823006069883,
+    "mean_persist": 47.78299875206609
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 0,
+   "S_int": 0.05180041093287684,
+   "S_floor": 0.04771846505308276,
+   "S_dmg": 0.048308446499523275,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.14453436273149856,
+   "gene_means": {
+    "p_write": 0.8713457255116678,
+    "cells_frac": 0.04542709126124523,
+    "p_retrieve": 0.8943125402286539,
+    "p_reenter": 0.9898910836060784,
+    "persist_steps": 23.898052118153053
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04673081285032223,
+    "best": 0.05636812406963966,
+    "ancestor_relative": 0.001150693984607487,
+    "mean_writes": 34.328125,
+    "mean_reentries": 1.515625,
+    "mean_recompute": 36.0,
+    "mean_work_saved": 151.5625,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.5511468663075184,
+    "mean_p_reenter": 0.862786243313505,
+    "mean_persist": 25.329125173076793
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 1,
+   "S_int": 0.05071866384917756,
+   "S_floor": 0.04772017572652683,
+   "S_dmg": 0.04860790694979311,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.29605960969473843,
+   "gene_means": {
+    "p_write": 0.662492479592681,
+    "cells_frac": 0.03146234126049919,
+    "p_retrieve": 0.8711454249664587,
+    "p_reenter": 0.8436653973078636,
+    "persist_steps": 44.43678298186616
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04603990871014531,
+    "best": 0.05676095101471813,
+    "ancestor_relative": 0.0005867889646311991,
+    "mean_writes": 31.078125,
+    "mean_reentries": 0.8125,
+    "mean_recompute": 35.0,
+    "mean_work_saved": 81.25,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.49924596563118234,
+    "mean_p_reenter": 0.5832745364202938,
+    "mean_persist": 36.81168624760305
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 2,
+   "S_int": 0.05064997366551087,
+   "S_floor": 0.047728249075859215,
+   "S_dmg": 0.048621975205443806,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.3058899297866903,
+   "gene_means": {
+    "p_write": 0.6682812478540712,
+    "cells_frac": 0.020455156808391495,
+    "p_retrieve": 0.7655126944380095,
+    "p_reenter": 0.9124607077743845,
+    "persist_steps": 36.92163835540594
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.047118604471912004,
+    "best": 0.058740873286397134,
+    "ancestor_relative": 0.0005796632095068019,
+    "mean_writes": 27.4375,
+    "mean_reentries": 0.9375,
+    "mean_recompute": 34.484375,
+    "mean_work_saved": 93.75,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.45263755010720524,
+    "mean_p_reenter": 0.5900010627515851,
+    "mean_persist": 29.439864345964388
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 3,
+   "S_int": 0.04788989346981583,
+   "S_floor": 0.04777043725379775,
+   "S_dmg": 0.04791232943173127,
+   "sham_dev": 0.0,
+   "n_useful": 1,
+   "r": 0.9150368170797907,
+   "gene_means": {
+    "p_write": 0.06091562427800004,
+    "cells_frac": 0.047483403834145864,
+    "p_retrieve": 0.25455768697624925,
+    "p_reenter": 0.6096346576085777,
+    "persist_steps": 37.130876084243454
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04624405559911407,
+    "best": 0.0621724918828378,
+    "ancestor_relative": -4.6770645394107746e-05,
+    "mean_writes": 9.6875,
+    "mean_reentries": 0.125,
+    "mean_recompute": 36.21875,
+    "mean_work_saved": 12.5,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.14788889238741965,
+    "mean_p_reenter": 0.3938663260324963,
+    "mean_persist": 35.44331670375442
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 4,
+   "S_int": 0.05385839608607068,
+   "S_floor": 0.047713935022653885,
+   "S_dmg": 0.04889337704334104,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.19195207008624093,
+   "gene_means": {
+    "p_write": 0.8942145744848309,
+    "cells_frac": 0.01826140207518038,
+    "p_retrieve": 0.9584846323129674,
+    "p_reenter": 0.940635992352486,
+    "persist_steps": 53.144450730359246
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04883304585689007,
+    "best": 0.06097039788057922,
+    "ancestor_relative": 0.0034582865215786185,
+    "mean_writes": 29.3125,
+    "mean_reentries": 1.40625,
+    "mean_recompute": 34.953125,
+    "mean_work_saved": 140.625,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.5039872422435047,
+    "mean_p_reenter": 0.7601678893229968,
+    "mean_persist": 37.50633821036085
+   }
+  },
+  {
+   "arm": "WEATHER",
+   "lineage": 5,
+   "S_int": 0.05008549043325736,
+   "S_floor": 0.04772181994174683,
+   "S_dmg": 0.048437935467084095,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.30296757856448475,
+   "gene_means": {
+    "p_write": 0.5769421160991074,
+    "cells_frac": 0.03512391021203509,
+    "p_retrieve": 0.8561963697109416,
+    "p_reenter": 0.899495910203997,
+    "persist_steps": 49.312251795779815
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.046597622285033904,
+    "best": 0.05734742150387859,
+    "ancestor_relative": 0.0018203382958663361,
+    "mean_writes": 18.1875,
+    "mean_reentries": 0.53125,
+    "mean_recompute": 35.8125,
+    "mean_work_saved": 53.125,
+    "mean_jammed": 0.0,
+    "mean_p_write": 0.29976120804775774,
+    "mean_p_reenter": 0.5957968355487897,
+    "mean_persist": 32.908129861801015
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 0,
+   "S_int": 0.054552611645565935,
+   "S_floor": 0.047714024783865897,
+   "S_dmg": 0.04895851882875448,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18198117097239178,
+   "gene_means": {
+    "p_write": 0.9757205850923846,
+    "cells_frac": 0.021810581735003866,
+    "p_retrieve": 0.9574931967219981,
+    "p_reenter": 0.9822105305278428,
+    "persist_steps": 43.40269749945646
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.04980535829982529,
+    "best": 0.05953994109118351,
+    "ancestor_relative": 0.004291452954946207,
+    "mean_writes": 49.40625,
+    "mean_reentries": 8.8125,
+    "mean_recompute": 28.703125,
+    "mean_work_saved": 881.25,
+    "mean_jammed": 0.703125,
+    "mean_p_write": 0.8607154503531464,
+    "mean_p_reenter": 0.8869137785099781,
+    "mean_persist": 39.70448266047245
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 1,
+   "S_int": 0.054958260178286124,
+   "S_floor": 0.04771359001935012,
+   "S_dmg": 0.049028742460736636,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18153379139895384,
+   "gene_means": {
+    "p_write": 0.9846281054990078,
+    "cells_frac": 0.018419591499200832,
+    "p_retrieve": 0.9636632400901356,
+    "p_reenter": 0.9868828569774006,
+    "persist_steps": 47.074704811620876
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.05011333971590068,
+    "best": 0.061973265644333295,
+    "ancestor_relative": 0.0051713386487703406,
+    "mean_writes": 50.21875,
+    "mean_reentries": 9.390625,
+    "mean_recompute": 26.421875,
+    "mean_work_saved": 939.0625,
+    "mean_jammed": 0.75,
+    "mean_p_write": 0.8964409589943003,
+    "mean_p_reenter": 0.8869132194541005,
+    "mean_persist": 39.103452971648075
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 2,
+   "S_int": 0.05416333060596815,
+   "S_floor": 0.047716248213196324,
+   "S_dmg": 0.048888230347914424,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.18178488552156286,
+   "gene_means": {
+    "p_write": 0.9839530658116622,
+    "cells_frac": 0.016870235789939042,
+    "p_retrieve": 0.9273681224191748,
+    "p_reenter": 0.9835716663628723,
+    "persist_steps": 33.2611432415247
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.05062927229017958,
+    "best": 0.06255373354333754,
+    "ancestor_relative": 0.004278953812734326,
+    "mean_writes": 49.8125,
+    "mean_reentries": 9.59375,
+    "mean_recompute": 25.828125,
+    "mean_work_saved": 959.375,
+    "mean_jammed": 2.09375,
+    "mean_p_write": 0.9246868023466501,
+    "mean_p_reenter": 0.9099337362900457,
+    "mean_persist": 46.313820259826635
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 3,
+   "S_int": 0.054870855005770776,
+   "S_floor": 0.04771522053291591,
+   "S_dmg": 0.04895626757495762,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.17343633841969824,
+   "gene_means": {
+    "p_write": 0.9976789887185499,
+    "cells_frac": 0.016628654175582225,
+    "p_retrieve": 0.9388903105590181,
+    "p_reenter": 0.9875354547907291,
+    "persist_steps": 49.68081858733653
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.049608764641628326,
+    "best": 0.06774803478688046,
+    "ancestor_relative": 0.0035439559285950356,
+    "mean_writes": 49.765625,
+    "mean_reentries": 9.609375,
+    "mean_recompute": 26.734375,
+    "mean_work_saved": 960.9375,
+    "mean_jammed": 0.9375,
+    "mean_p_write": 0.8929733049868879,
+    "mean_p_reenter": 0.9092954978512653,
+    "mean_persist": 45.92722509718431
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 4,
+   "S_int": 0.055027895401139185,
+   "S_floor": 0.04771221231608595,
+   "S_dmg": 0.049103857274156615,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.19022761673670036,
+   "gene_means": {
+    "p_write": 0.9661838360337297,
+    "cells_frac": 0.016441391443192347,
+    "p_retrieve": 0.9861166822765763,
+    "p_reenter": 0.9799040753972741,
+    "persist_steps": 48.12858209381396
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.052583205568047846,
+    "best": 0.06573210499573089,
+    "ancestor_relative": 0.007214230480661173,
+    "mean_writes": 50.40625,
+    "mean_reentries": 9.796875,
+    "mean_recompute": 26.5625,
+    "mean_work_saved": 979.6875,
+    "mean_jammed": 0.90625,
+    "mean_p_write": 0.9463364535150195,
+    "mean_p_reenter": 0.9162544756314623,
+    "mean_persist": 49.393878184117
+   }
+  },
+  {
+   "arm": "SHAMWEATHER",
+   "lineage": 5,
+   "S_int": 0.05454754336127478,
+   "S_floor": 0.0477151840236187,
+   "S_dmg": 0.048910424164728,
+   "sham_dev": 0.0,
+   "n_useful": 8,
+   "r": 0.17493812635436404,
+   "gene_means": {
+    "p_write": 0.9571473824155564,
+    "cells_frac": 0.015,
+    "p_retrieve": 0.9416824479889266,
+    "p_reenter": 0.971995473896619,
+    "persist_steps": 53.59761291368101
+   },
+   "hist_last": {
+    "gen": 39,
+    "mean": 0.050023978529500676,
+    "best": 0.06411710457807185,
+    "ancestor_relative": 0.0054517469982586775,
+    "mean_writes": 47.203125,
+    "mean_reentries": 8.671875,
+    "mean_recompute": 27.671875,
+    "mean_work_saved": 867.1875,
+    "mean_jammed": 0.828125,
+    "mean_p_write": 0.8396780394050638,
+    "mean_p_reenter": 0.8855823006069883,
+    "mean_persist": 47.78299875206609
+   }
+  }
+ ],
+ "elapsed_s": 94.2,
+ "prereg_sha256": "185a1a8eb586efd4d8893fc7486bf2acb81582f77df9ba7cec90e07c23dbe192",
+ "ts": "2026-09-18 11:10:12"
+}

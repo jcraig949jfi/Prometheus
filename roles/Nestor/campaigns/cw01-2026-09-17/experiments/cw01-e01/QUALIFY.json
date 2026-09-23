@@ -1,0 +1,75 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e01",
+ "attempt_id": "cw01-e01-a01",
+ "phase": "QUALIFY",
+ "completed_local": "2026-09-17 17:17:32",
+ "rule": "ALL predicates must pass before science budget is spent. A process existing is not qualification.",
+ "predicates": {
+  "Q1_holding_costs_something": {
+   "status": "PASS",
+   "evidence": "h=0.10 > 0"
+  },
+  "Q2_controls_differ_as_declared": {
+   "status": "PASS",
+   "evidence": "treatment recurrence 0.35; control_no_recurrence 0.0"
+  },
+  "Q3_shams_are_cost_matched": {
+   "status": "PASS",
+   "evidence": "intervention's OWN charge: erase 0.0, sham 0.0. Checked on the charge, NOT on downstream cost (downstream cost difference IS the effect). v2 sham charged +39% vs erase -3%: fixed (CW01-D014)."
+  },
+  "Q4_seeds_reconstructible": {
+   "status": "PASS",
+   "evidence": "bit-identical draws across PYTHONHASHSEED 0/12345/random in 3 separate processes; a01 vs a02 diverge. First run was a FALSE GREEN comparing three empty strings (bash path passed to Windows python)."
+  },
+  "Q5_durable_without_redis": {
+   "status": "PASS",
+   "evidence": "3 rows written via localrun.run_job_locally, re-parsed in a process with the redis import BLOCKED; status/exp_id/ts all present."
+  },
+  "Q6_ablation_is_real": {
+   "status": "PASS",
+   "evidence": "control_no_retention logged 140 hard Refused() events; the affordance refuses rather than no-ops."
+  },
+  "Q7_pressure_actually_binds": {
+   "status": "PASS",
+   "evidence": "observed 0.403 of items exceed one step budget vs 0.400 declared (4000-item stream); recurrence gaps mean 14.9 vs 15 declared, min 2 max 60."
+  },
+  "Q8_not_a_free_lunch": {
+   "status": "PASS",
+   "evidence": "conditional on CONFIGURATION at h=0.10: well-configured +13.15%, badly-configured -4.69%, never-retain 0.00%. Arithmetic form had passed while the world was in fact a free lunch across all swept prices (CW01-D015)."
+  }
+ },
+ "instrument_validation": {
+  "why": "QUALIFY proves the environment satisfies the contract. This proves the MEASUREMENT works, using a hand-built organism, before any evolved claim is made.",
+  "n_matched_streams": 24,
+  "genome": "hand-configured retainer (not evolved)",
+  "baseline_score": 0.05355,
+  "sham_score": 0.05444,
+  "erase_score": 0.04698,
+  "dependence_erase_minus_sham_pct": -13.71,
+  "paired_mean": -0.007462,
+  "paired_sd": 0.002455,
+  "negative_in": "24/24",
+  "re_entries": {
+   "baseline": 13.5,
+   "sham": 13.5,
+   "erase": 0.0
+  },
+  "info": {
+   "baseline": 581.4,
+   "sham": 581.4,
+   "erase": 523.8
+  },
+  "reading": "the sham preserves the mechanism exactly while relieving cost identically to erase, so information survival is the only difference between the arms."
+ },
+ "defects_found_before_spending_budget": [
+  "CW01-D009 (mechanism never fired)",
+  "CW01-D010 (arms unmatched; +40% advantage was a seed artifact)",
+  "CW01-D011 (persist_steps gene had no phenotype)",
+  "CW01-D012 (dead metrics emitted as data)",
+  "CW01-D014 (sham not cost-matched)",
+  "CW01-D015 (data-only predicate passed a free-lunch world)"
+ ],
+ "disposition_cap": "WORLD.json cap_rule: without the second backend exercised, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE. The EXECUTE driver must run the mem-vs-redis equivalence check to lift the cap.",
+ "verdict": "QUALIFIED - EXECUTE authorised"
+}

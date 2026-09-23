@@ -1,0 +1,48 @@
+{
+ "perturbation_id": "P-J07",
+ "parent": "T-X21",
+ "requires": [
+  "P-J02"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "anti-gravity",
+ "background": "P-J01 A' seed-1 final population (95) + 1 witness (anc 999)",
+ "witness": {
+  "source": "P-J02 minimal xor1 witness on P-I01 genome (seed 1, rank 0)",
+  "n_instr": 4,
+  "held": 1.0
+ },
+ "G": 40,
+ "arms": [
+  [
+   "pj01_regime",
+   16,
+   3
+  ],
+  [
+   "asks64",
+   64,
+   3
+  ],
+  [
+   "tournament2",
+   16,
+   2
+  ]
+ ],
+ "seeds": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "readouts": "witness-lineage frequency per generation, mean fitness of the lineage vs plateau, fixation (freq 1.0) / loss, final held-out",
+ "reading": "LOST under selection despite fitness 1.0 vs .5 = search failure of the dynamics (mutational load / noise); FIXED = the dynamics are not the obstruction, the encoding distance is",
+ "material_rule": "always material",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:44:44",
+ "prereg_sha256": "4019ceb1dd0ad15d83882e990fcf5bccea7996a5d96e7dda981269b2cb235816"
+}

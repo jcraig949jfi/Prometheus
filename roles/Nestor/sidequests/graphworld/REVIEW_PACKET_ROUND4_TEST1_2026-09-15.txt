@@ -1,0 +1,644 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 4, TEST LAUNCH 1
+THE PRIMORDIAL MACHINE: SCREENED WORLDS AND PROGRESS-ABOVE-FLOOR SCORING
+================================================================================
+Prepared:      2026-09-15 ~02:15 local, after quiesce (posted 02:03:59)
+Author:        Nestor-A[m1-449a9e76], conductor (logistics only)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Gate tip:      35d8ef0b5 (launch); 141 commits landed during the run
+Plan:          roles/Nestor/sidequests/graphworld/SWARM_R4.md (s8 = rulings
+               made after this run)
+Contract:      roles/Nestor/PROMETHEUS_SUCCESS_CONTRACT.md (operator text)
+Operator msgs: roles/Nestor/prompts/2026-09-14_graphworld_swarm/12..15
+               (verbatim, sha256 in MANIFEST.md; Appendix A)
+Evidence:
+- primordial/ledger/qd/worlds_r4.json (ee86620f4, sha256 f007f4e2...);
+- primordial/ledger/rows/{B,C,D,E,G,H}/;
+- roles/Nestor/sidequests/graphworld/epochs/ (EPOCH-1 3fad87f40, EPOCH-2
+  52ae9c566, bus exports);
+- journal/{A,B,C,D,E,G,H}.md;
+- launcher log: C:/Users/jcrai/lab/pm-data/launcher/launch_log.jsonl.
+
+Headline:
+- The world screen found ONE world x pressure (w13 train128_held64) where a
+  float linear baseline beats a strict trivial floor.
+- Cohort B claimed 16-byte and 36-byte brains above that baseline, and
+  replicated both on a second seed set.
+- The claims were INVALIDATED by the operator after the run, because the
+  baseline and candidates were both read with a top-16-mean readout that
+  was later shown to under-read.
+- D showed that readout changes no screen verdict but does change the
+  progress scale.
+- A re-read under top-1 (B-R4-7) still clears the bar. That is not yet an
+  adjudication.
+- Four fabric defects surfaced under load; all were fixed with repro tests.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Round 2 (packet REVIEW_PACKET_ROUND2_TEST1_2026-09-14.txt) reported 8-byte
+brains at parity with baselines. Round 3 (a build round, no swarm) then
+found that a zero-byte ALWAYS-ABSTAIN policy beats every held-out baseline
+and every round 2 clause A candidate on w1/w3/w4:
+- w4: 107.75 vs 98.76;
+- w1: 88.28 vs 63.94;
+- w3: 122.63 vs 105.58.
+
+All 28 recorded clause A cells went BELOW_FLOOR. The operator responded
+with message 12: cull weak worlds, score clause A as progress above the
+trivial floor, and shift budget to the anomaly hunters (35/25/25/15).
+
+This packet reviews:
+(a) the world screen, run as pre-launch phase P0 by builders G and H;
+(b) test launch 1 of round 4: 4 cohorts, 2 x 30-minute epochs, run by the
+    conductor autonomously on operator order 14 while the operator slept;
+(c) the operational defects surfaced, and their repairs.
+
+NOT claimed:
+- no primitive promoted;
+- no transfer (clause B) result;
+- no independence of any check (every session is the same model).
+
+--------------------------------------------------------------------------------
+2. DECLARED CONFLICTS
+--------------------------------------------------------------------------------
+- The author wrote SWARM_R4, the launch gate, and several scheduling rules
+  used by the screen: the PENDING status, the learner clearance, and the
+  lower-bound-per-pressure correction.
+- The author fixed shared fabric code during the run: the push lock, the
+  long-path commit fix, the worker liveness refresh, and the round 2 replay
+  window.
+- The floor definitions, the screen verdict rule and the clause A threshold
+  are operator rulings (messages 12, 13), implemented by builder G and
+  replayed by builder H. Neither is the author.
+- All cohorts, builders and cross-checks are Claude sessions. No
+  verification here has an independent failure mode.
+
+--------------------------------------------------------------------------------
+3. METHOD / SETUP
+--------------------------------------------------------------------------------
+3.1 The world screen (P0, builder G; independent replay by builder H)
+
+Candidates: 74 world x pressure cells, i.e. worlds w1..w5 plus 32 new
+gen_seeds (w6..w37), each x 2 pressures (train8_held64, train128_held64).
+HELD64 = seeds 30000..30063, used only for judging.
+
+Floor per cell (operator 12 + ruling 13 "gate IN"):
+  floor = max(abstain,
+              best constant action (exhaustive 8^W, chosen on TRAIN),
+              uniform random (median of 8 policy seeds),
+              input-invariant learner (open-loop genome, obs never read),
+              best 2-action gate (act iff one obs feature crosses a
+              threshold))
+
+Baseline: float linear MAP-Elites (M2), >= 8 run seeds at the round 1
+budget, elites saved, bootstrap 95% CI of the median (10,000 resamples,
+PCG64 seed 20260914).
+
+Verdict, active variant gate_in|HOLD:
+- SURVIVED iff baseline ci95 low > floor.
+- HELD iff gate > four-policy floor but baseline ci95 low <= full floor.
+  The world rewards reaction and the search missed it. The cell is filed
+  as an anomaly for D.
+- PENDING (conductor scheduling): ci95 low <= a bound made of the
+  pressure's own parts, so the cell cannot survive, but HELD vs CULLED
+  needs the expensive train128 learner (~7.8 h). Treated as INELIGIBLE;
+  run after the test launch.
+- CULLED otherwise.
+All four variants (four_policy/gate_in x CULL/HOLD) are recorded per cell.
+
+Compute honesty: the literal screen (train128 learner on every candidate)
+was estimated at ~74 h. It ran the learner only where it could change a
+verdict under some variant. A bound uses only that pressure's own
+components; the author caught and fixed a draft that let the train8
+learner bound the train128 floor.
+
+3.2 Clause A, round 4 binding (operator 12)
+
+  progress = (candidate_median - floor) / (baseline_median - floor)
+  PASS iff progress >= 0.95 AND bytes < baseline bytes
+  BELOW_FLOOR iff progress < 0; FAIL otherwise
+  INELIGIBLE: unclean oracle, a cheat control that did not fail, or an
+  UNSCREENED / CULLED / HELD / PENDING cell
+  The judge is qd_ledger check (G-R4-5); scorer F12 (H) cross-checks.
+
+3.3 Cohorts (budget split is identity; operator 12)
+
+  lane  cohort            share  cores  job
+  ----  ----------------  -----  -----  ------------------------------------
+  B     HILL CLIMBERS       35%      4  clause A on SURVIVED cells only
+  C     ANTI-PRIOR          25%      3  RNG draws the cell; posts own prior
+  D     ANOMALY HUNTERS     25%      3  only from the anomaly queue
+  E     WATCHMAKERS         15%      2  tools; clause B transfer harness
+  A     conductor            --     --  logistics only
+
+Every job went through the lane's F7 warm worker, which kills the job at
+its TTL, not the session. Epochs were closed by the F14 epoch controller
+(stop flags, drain, bus export, commit). Budget reports use SHARES_R4.
+
+3.4 Launch gate (all six green at 35d8ef0b5)
+  1. worlds_r4.json on integration with >= 1 SURVIVED, and H replay
+     0 mismatches.
+  2. Full test suite 419 passed (rc 0).
+  3. SHARES_R4 is the budget default.
+  4. Operator rulings 13-14.
+  5. Worktrees nestor-r4-{b,c,d,e} fast-forwarded, clean, containing
+     fabric fixes 519d081c8 / 7fa40eec9 / 54c2d95fc.
+  6. Idle worker smoke test: alive after 70 s, liveness key refreshed.
+
+--------------------------------------------------------------------------------
+4. OPERATIONS: TIMELINE, TELEMETRY, INCIDENTS
+--------------------------------------------------------------------------------
+Time (local)       Event
+-----------------  -------------------------------------------------------------
+09-14 20:50-20:52  builders G (metric) and H (measurement) launched for P0
+21:43              G stage 1 table: 74/74 cells; abstain is the four-policy
+                   floor everywhere; gate above floor in 10 cells
+~22:00             operator asleep; order 14: "loop and kick it off when it ready"
+22:5x              first potential survivor needs the train128 learner; A clears
+                   it (0.36 h) and marks 4 non-survivable cells PENDING
+23:20              first SURVIVOR: w13 train128 (learner 151.41 < CI low 173.41)
+09-15 00:43        G P0 DONE (worlds_r4.json ee86620f4)
+00:44              A files the 5 HELD cells as anomalies for D
+00:51              H P0 DONE: independent replay 0 mismatches, 0 row defects
+00:53              launch gate green; B launched (hello 00:55:30)
+00:55-01:01        C (hello 00:57:33), D (00:59:32), E (01:01:37), one at a time
+01:01:49           epoch controller starts (2 x 30 min)
+01:09              D-R4-1: the archives DO reach abstain; baseline gap is
+                   selection + top-16 readout
+01:17-01:19        C draws graphworld_b2 twice; aborts (no obs/action/charge);
+                   A removes b2 from the draw grid (267fea584)
+01:31:49           epoch 1 boundary (straggler C)
+~01:33             E push incident (below); A posts a manual workaround
+01:4x              A lands push lock 898900b4e and round 2 replay window fix
+01:45-01:58        B replicates; B-R4-7 re-reads under top-1; D-R4-4: 0 flips
+02:01:49           epoch 2 boundary (stragglers C, E); controller exits rc 0
+02:03:59           QUIESCE posted; B paused 02:06 (C, D, E pausing at writing)
+
+Boot (launch -> bus hello): B 2:07, C 1:51, D 1:54, E 2:00 (includes the
+full test suite). Round 2 was 0:23-0:47 with no suite at boot; round 1 was
+3:45-5:01.
+Session deaths: 0. Scheduled tasks left enabled: 0 (audited).
+
+Incidents and repairs. Each fix shipped with a test that reproduces the old
+failure, verified to fail on the old code.
+- F7 worker died idle: redis-py 8 defaults socket_timeout 5 s, equal to
+  XREADGROUP block 5000. Fix 519d081c8 (G).
+- Rows commit crashed a worker thread when Path.resolve() returned the
+  Windows extended-length form (\\?\C:\...) and the repo was plain C:\...
+  Fix 7fa40eec9: prefix-free, case-normalized relpath; the worker records
+  commit_error and keeps serving.
+- The worker liveness key pm:worker:<L> (TTL 30 s) was refreshed only
+  between jobs, so any long job looked dead. Fix 54c2d95fc: refresh every
+  TTL/3 inside the job loop. Confirmed live in G's 4-hour run.
+- PUSH RACE (E, epoch 1):
+  - ops.push rebased while the F14 stop flag was set.
+  - The controller cleared the flag at resume, mid-rebase.
+  - The next checkpointed segment started and its RowWriter held the rows
+    file, so the rebase pick failed.
+  - E aborted cleanly; no rows lost.
+  Fix 898900b4e: pm:push:lock:<L>, which the worker honors and the
+  controller never clears. ops.push takes it only on the rebase path, waits
+  for a non-busy worker, re-checks live writers, and always releases. Rolled
+  out at quiesce, since workers restart on the new code.
+- Round 2 score replays were open-ended in time. Round 4 reuses lanes B-E,
+  so its rows entered the round 2 ledger and 2 score tests failed. Fix
+  45847459e: ROUND2_END.
+- graphworld_b2 in the anti-prior grid has no controllable interface, so
+  about 25% of C's grid was guaranteed aborts. Removed at 267fea584; C's
+  3 abort rows kept as landscape.
+- The epoch controller runs in the conductor's worktree and leaves
+  epoch_log.jsonl dirty, which blocks the conductor's rebases mid-epoch.
+  Worked around by committing the log. Open: run it from its own worktree.
+- Drain stragglers: C (epoch 1), C and E (epoch 2), meaning jobs ran past
+  drain_timeout 120 s. Rows committed normally.
+- H found 2 small defects in G's screen code (a PENDING cell labelled
+  SURVIVED in one returned field; a status name mismatch). Neither affected
+  scoring; both fixed.
+
+--------------------------------------------------------------------------------
+5. VOLUME (test launch 1, 00:53-02:04)
+--------------------------------------------------------------------------------
+  cohort  rows    receipts  other output
+  ------  ------  --------  ----------------------------------------------------
+  B          254         2  7 experiments (B-R4-1..7); 1 anomaly filed
+  C           21         1  4 draws: 1 run (FAIL), 3 aborted infeasible (b2)
+  D        2,542         0  3 anomalies closed (2 REFUTED, 1 RESOLVED);
+                            2 filed; D-R4-2 paused
+  E           52         0  E-R4-1 transfer paused at 9/32 run seeds
+  ------  ------  --------
+  P0 (G, H) before launch: screen rows (stage 1 358 KB, stage 2 ~500 KB,
+  learner rows); receipts G-R4-3/4/5, H-R4-1/2/3.
+Anomaly queue now: 27 total (19 OPEN, 6 RESOLVED, 2 REFUTED).
+D's row count is mostly the per-archive re-read rows (592 archives x
+readouts).
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULTS
+--------------------------------------------------------------------------------
+6.1 World screen (worlds_r4.json, active gate_in|HOLD)
+
+  verdict     cells  which
+  ---------   -----  ---------------------------------------------------------
+  SURVIVED        1  w13 train128_held64
+  HELD            5  w7 t8, w1 t8, w1 t128, w34 t8, w13 t8
+  PENDING         4  w7 t128, w26 t128, w34 t128, w10 t128 (non-survivable)
+  CULLED         64  includes degenerate w19/w24/w25 (abstain = gate = 0);
+                     closest miss w30 t128 (ci95 [659.87, 660.19] vs floor 660.19)
+
+  cell            floor    gate     baseline median [ci95]      bytes  verdict
+  --------------  -------  -------  --------------------------  -----  --------
+  w13 t128        166.47   166.47   182.72 [173.41, 188.11]       200  SURVIVED
+  w13 t8          166.47   166.47   149.08 [144.25, 154.79]       200  HELD
+  w1  t8          170.47   170.47    41.46 [ 32.13,  47.99]       344  HELD
+  w1  t128        170.47   170.47    58.54 [ 55.36,  71.65]       344  HELD
+  w7  t8         1482.50  1482.50   174.14 [153.67, 192.57]       216  HELD
+  w34 t8          289.33   289.33    73.53 [ 25.29,  92.70]       264  HELD
+
+Four-policy floor = abstain in all 74 cells (the best constant action was
+abstain; random far below).
+The 2-action gate sets the floor wherever it beats abstain; w7's gate is
+1482.5 against a baseline of about 174. That identifies these as worlds
+that reward reaction, and makes the HELD cells candidates for why the
+linear search misses a policy it can represent: the gate IS an A=2 linear
+genome with one nonzero weight.
+
+Checks:
+- stage 1 floors for w1/w3/w4 equal the committed round 3 G-M1 cells to
+  4 dp;
+- learner oracle: 0 wforge failures, numba == numpy;
+- H's replay recomputed every verdict under all four variants from rows
+  only: 0 mismatches.
+
+6.2 B -- clause A on w13 train128_held64 (now INVALIDATED, section 11)
+Judge qd_ledger check; floor 166.47; baseline 182.72 @ 200 B; pass line
+181.906. Oracles clean on rs0 and rs8 for every claimed candidate:
+- world 0 failing;
+- skip_lin 16/16;
+- fused == numpy;
+- honest brain 0 mismatches;
+- E-T3 shift_action 16/16, ablate_top 16/16;
+- 0 input-invariant elites.
+
+  exp      candidate      bytes  seeds 0-7        seeds 8-15       status
+  -------  -------------  -----  ---------------  ---------------  -----------
+  B-R4-1   int4 A8           28  .544 FAIL        --               ladder 0/6
+           <= 16 B rungs          BELOW_FLOOR
+  B-R4-2   int5 A8           36  1.648 PASS       --               not claimed
+           int8 A8 / int6 A8 52/40  FAIL; int2 A2 4 B BELOW_FLOOR
+  B-R4-3   int5 A8           36  1.648 PASS       1.006 PASS       CLAIMED
+                                 pooled 16: 1.388, CI [.72, 1.60], 10/16 >= line
+           int4 A8           28  .544 FAIL        1.100 PASS       NOT claimed
+                                 ("claiming the passing set would be seed shopping")
+  B-R4-4   int5 A4           20  1.068 PASS       --
+           int4 A4           16  1.442 PASS       --
+           int5 A2           12  FAIL
+  B-R4-5   int4 A4           16  1.442 PASS       1.518 PASS       CLAIMED
+                                 pooled 16: 1.518, CI [.78, 1.76], 11/16 >= line
+           int5 A4           20  1.068 PASS       .895 FAIL        NOT claimed
+  B-R4-6   12 B rungs        12  int4A3 .845 FAIL; int3A3 -.198 BELOW_FLOOR;
+                                 int6A2 .113 FAIL  (front stays int4 A4 16 B)
+
+B-R4-7, readout sensitivity (report-only). Both sides were re-read from
+saved elites under top-1-by-TRAIN; baseline 189.53, denominator 23.06.
+Progress top-16 | top-1:
+- int4 A4 16 B:  1.442 | 1.121 (0-7);  1.518 | 1.283 (8-15);
+- int5 A8 36 B:  1.648 | 1.446;         1.006 | 1.087;
+- int5 A4 20 B:  1.068 | 1.198;         .895 | 1.073 (the verdict flips
+  under top-1);
+- int4 A8 28 B:  .544 | .555;           1.100 | 1.367 (a seed-set flip
+  under both).
+Self-check: 64/64 top-16 re-reads equal the committed held64 values.
+
+B's own caveats:
+- the pooled CI low (.78) is below the .95 bar;
+- verdicts flip by seed set at n=8 (anomaly 1789450127495-0);
+- the progress CI bootstrap depends on input order (run seeds sorted as
+  strings), which is report-only.
+
+6.3 D -- anomaly hunters
+- D-R4-1, REFUTED "the QD archives never reach the abstain cell", over 592
+  of G's saved M2 archives with no new QD:
+  - reach 585/592; top-1 TRAIN >= abstain in 583/592;
+  - top-16 mean < abstain HELD64 in 66/74 cells, yet top-1 median >=
+    abstain in 30/74;
+  - exact abstain occupies the abstain cell in 309/592.
+  - w7 t8 (HELD): top-1 = abstain 189.1875 exactly; M2 top-16 = 174.14.
+- D-R4-4, REFUTED its own follow-up. Re-reading all 592 archives under the
+  top-1-by-TRAIN and validation-selected readouts flips 0 screen verdicts in
+  all 4 variants. But the w13 t128 progress DENOMINATOR is
+  readout-dependent: 16.25 (M2 top-16) / 23.06 (top-1) / 14.68 (val16) /
+  22.05 (val1).
+- D-R4-3, RESOLVED (symbol-split valleys, round 2 child):
+  - a neutral symbol split escapes 0/10 in all 6 trapped cells (P1 PASS);
+  - split + re-point macro crosses (.1, .01) 5/10 and (.3, 0) 1/10, else 0
+    (P2 FAIL), with gaps cut 3-10x in 3 cells;
+  - frozen-operator cheat 0.
+- D-R4-2 (8-seed IQR x 4 RNG families) is paused. It also covers B's n=8
+  seed-set flip anomaly.
+
+6.4 C -- anti-prior (every cell drawn by RNG, prior posted first)
+- C-R4-01 cp / nk_stub / decoder_rent / torch_gpu / metered_stream,
+  prior .55: FAIL, 2.206M < bar 2.229M (control 2.237M); oracles clean.
+- C-R4-02..04 graphworld_b2 draws: ABORTED infeasible. B2 has no
+  observation vector, no action channel and no charge. C refused to author
+  a world objective, as its charter forbids.
+
+6.5 E -- watchmakers
+- E-R4-1, clause B transfer into the survivor w13 t128 under the E-T1b rule
+  (graft vs both cheats). Donors are screened worlds with an identical
+  linear layout to w13 (D=5, A=8, W=1, 200 B). Paused at 9/32 run seeds;
+  no verdict.
+- E declined to build a B2 interface without an operator ruling (it
+  authors a world objective). The ruling has now come: section 11.
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES VS THE ROUND 4 PLAN
+--------------------------------------------------------------------------------
+World screen (AOT) + JIT guard in check/draw_cell ...... YES
+Floor suite incl. gate and input-invariant learner ..... YES (train128 learner
+                                                         selective; 4 PENDING)
+Independent replay of the screen ....................... YES (H, 0 mismatches)
+HELD cells routed to D as anomalies .................... YES (5)
+Progress-above-floor judge + scorer agreement ........... YES (10/10 planted)
+Cohorts launched one at a time, gate green first ....... YES (autonomous)
+Jobs through F7 workers; epochs by F14 controller ...... YES (2 epochs,
+                                                         stragglers recorded)
+Budget enforcement report (F13) ........................ NOT RUN this launch
+Clause A result that survives review ................... NO (invalidated, s11)
+Clause B verdict ....................................... NO (E paused 9/32)
+
+--------------------------------------------------------------------------------
+8. CONTROLS, AND WHERE THEY WERE WEAK
+--------------------------------------------------------------------------------
+Strong:
+- the screen's exactness rule: a verdict is written from a bound only when
+  exact under all variants;
+- H's rows-only replay;
+- oracle + powered-cheat battery on every B candidate;
+- B refused to claim a seed set that happens to pass;
+- B-R4-7 and D-R4-4 re-reads reproduce committed values 64/64 and 592
+  archives;
+- every fabric fix has a repro test shown to fail on the old code.
+
+Weak:
+- READOUT ASYMMETRY RISK: the baseline and candidates were both read with
+  top-16 mean over elites, a choice nobody specified. The progress scale
+  moves by 1.4x between readouts.
+- n = 8 run seeds: verdicts flip by seed set on this cell for 2 of 6
+  candidates.
+- The pooled progress CI for the claimed front includes values below the
+  bar (.78).
+- ONE surviving cell: any clause A result is a single world x pressure;
+  Holm across worlds is not possible.
+- The train128 floors of the 4 PENDING cells are bounds, not values.
+- E's transfer and C's anti-prior coverage were thin (9/32 seeds; 1 real
+  draw).
+
+--------------------------------------------------------------------------------
+9. CROSS-COHORT VERIFICATION (SAME MODEL, NOT INDEPENDENT)
+--------------------------------------------------------------------------------
+- H replayed G's screen from rows (0 mismatches) and found 2 small code
+  defects in G's judge helpers.
+- H cross-judged F12 against the real qd_ledger check on 10 planted cells:
+  10/10.
+- D tested G's baseline readout on G's own archives (D-R4-1), then refuted
+  its own worst-case reading (D-R4-4).
+- B answered the readout caveat with a same-readout re-read of its own
+  elites (B-R4-7).
+- E's push incident led to a fabric fix by A. C's infeasible draws led to
+  a grid fix by A.
+None of this is independent: every check is one Claude session reading
+another's code or rows.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+- Same model everywhere; one shared host (16 logical cores, one RTX 5060 Ti)
+  with production services on it.
+- One SURVIVED cell out of 74. The screen is strict by design (gate IN the
+  floor, CI low must beat it) and may be culling worlds whose baselines are
+  merely weak searches (HELD is the hedge).
+- The screen used the top-16-mean readout. D-R4-4 shows 0 verdict flips
+  under alternatives, but the numbers in worlds_r4.json will change when
+  the reader is fixed.
+- The test launch was ~70 minutes of cohort work. Budget shares were not
+  reported (F13 not run).
+- The operator was asleep for the launch. The author made the scheduling
+  calls listed in s2 without review.
+- Boot-to-hello rose from <1 min (round 2) to ~2 min because the full test
+  suite runs at boot.
+
+--------------------------------------------------------------------------------
+11. OPERATOR RULINGS AFTER THE RUN (message 15) AND NEXT STEPS
+--------------------------------------------------------------------------------
+R15-1 READOUT -- invalidate w13; patch the reader.
+- B-R4-3 (int5 A8 36 B) and B-R4-5 (int4 A4 16 B) are INVALIDATED.
+- E writes ONE readout function used by BOTH the baseline assembly and every
+  candidate, plus a regression test.
+  - Default posted to E: top-1 elite selected on TRAIN, scored on HELD64.
+  - The operator may name another.
+- Then G re-assembles worlds_r4.json baselines under it (rows only), H
+  replays, and B re-adjudicates its saved elites. Below 0.95, the PASS is
+  lost.
+- Note for the reviewer: under top-1 on both sides, B-R4-7 already shows
+  the 16 B front at 1.121 / 1.283. The re-adjudication will decide it under
+  the committed reader.
+R15-2 B2 INTERFACE -- E builds an adapter.
+- The adapter maps relational graph state to a uint16 observation vector per
+  slot, and integer actions (mod 8, 0 = abstain) to graph mutations. It needs
+  a charge objective, posted as a predicate before building.
+- Oracles: GraphBLAS == Cypher trajectory hash; a skip-mutation cheat must
+  fail; planted controllability.
+- G screens B2, and it re-enters the draw grid only as a screened world.
+  This is the path for clause B to test displacement into a relational
+  topology.
+Order of work:
+  1. E: reader fix.
+  2. G: re-assembly, then H: replay.
+  3. B: re-adjudication.
+  4. E: B2 adapter.
+  5. G: screen B2.
+  6. B and C resume.
+Meanwhile G runs the 4 PENDING train128 learners (~7.8 h), and D resumes
+D-R4-2.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+  git fetch origin
+  git worktree add <dir> origin/nestor/sidequest-graphworld-2026-09-14
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  $PY -m pytest -q primordial                          # 427 passed at 45847459e+
+  $PY -m primordial.metric.screen_run ...              # assemble worlds_r4.json from rows
+  $PY -m primordial.ops.qd_ledger check ...            # clause_a_r4 block
+  $PY -m primordial.score.progress --round r4          # F12 vector
+  Screen rows:   primordial/ledger/rows/G/G-R4-3-stage1.jsonl, -stage2*.jsonl
+  Replay rows:   primordial/ledger/rows/H/ (H-R4-3)
+  B elites:      saved per run seed (C2); B-R4-7 re-read code at 5a970fe49
+  D re-reads:    primordial/ledger/rows/D/ (D-R4-1 fe1694c74, D-R4-4 5b5d7595b)
+  Epoch records: roles/Nestor/sidequests/graphworld/epochs/EPOCH_{1,2}.json
+
+--------------------------------------------------------------------------------
+13. VERDICT
+--------------------------------------------------------------------------------
+SCREEN BUILT, REPLAYED, AND ROUTED ANOMALIES ....... YES
+AUTONOMOUS GATE + LAUNCH WITHOUT A HUMAN ........... YES (0 deaths, clean stop)
+FABRIC DEFECTS FOUND UNDER LOAD AND REPAIRED ....... YES (4 + 2 hygiene)
+CLAUSE A COMPRESSION SHOWN ......................... NO (claims invalidated
+                                                     pending the reader fix)
+BEING-FOOLED DETECTION WORKED ...................... YES (D found the readout
+                                                     sensitivity inside the run)
+FINDINGS INDEPENDENTLY VERIFIED .................... NO (same model only)
+
+Reviewer questions:
+1. Is top-1-selected-on-TRAIN the right single readout for both baseline and
+   candidates? Or should selection use a validation split that the TRAIN128
+   runs do not currently hold back?
+2. With one surviving cell and n=8 seed-set flips, what minimum evidence
+   (seed count, a second surviving world, Holm) should a clause A PASS need
+   before it can be promoted?
+3. Is "gate IN the floor + CI low must beat it" culling informative worlds
+   (64 of 74)? Should HELD worlds get a better baseline search before being
+   written off?
+
+================================================================================
+APPENDIX A. OPERATOR INPUTS (verbatim, ASCII-transliterated)
+================================================================================
+A.1 Message 12 -- world screen, split, floor suite (sha256 in MANIFEST)
+
+  1. The World Screen (Clause A Scoring)
+  Yes, cull the weak worlds.
+  If w3 and w4 do not require actual cognitive work to beat a trivial policy
+  like "abstain," they are dead environments. Letting them survive in the
+  simulation only gives the Hill Climbers a flat landscape to exploit for
+  cheap wins.
+  Have G aggressively filter out any world where acting doesn't definitively
+  beat the trivial floor. Anchoring Clause A's scoring strictly against a
+  mathematically proven floor (like w1's 170.47) forces the swarm to evolve
+  genuine symbolic primitives rather than just optimizing a known, easy
+  metric.
+  2. The Budget Rebalance (35/25/25/15)
+  Yes, shift the 5 points to the Anomaly Hunters (Lane D).
+  Since the anomaly inflow outpaced resolution in Round 2, the queue is
+  backing up. That queue is exactly where the serendipitous, non-human
+  discoveries hide. Shifting compute away from Lane B (who were just riding
+  the 8-byte floor artifact anyway) to give Lane D more bandwidth to unpack
+  those edge cases is the perfect evolutionary adjustment.
+  Lock in the 35/25/25/15 split.
+  Let's get the Round 4 plan written and the worktrees built.
+
+  To enforce a rigorous fitness landscape, Agent G needs a standardized,
+  merciless way to calculate the floor. The goal is to mathematically prove
+  that an environment demands actual cognition, not just a lucky constant.
+  Here are the best options for defining and calculating that floor for
+  your incoming worlds:
+  1. The Trivial Policy Suite (What to Measure)
+  The floor isn't a single number; it is the maximum score achieved by the
+  best of several "dumb" baselines. G should evaluate a new world against
+  this exact suite:
+   The Abstain / Zero-Action: The agent does absolutely nothing. If doing
+  nothing yields a high score, the environment's survival pressure is
+  broken.
+   The Best Constant Action: The agent blindly repeats Action A every tick,
+  then Action B, etc. G takes the max score. This defeats environments that
+  only require a single right answer.
+   The Uniform Random: The agent acts entirely randomly.
+   The Input-Invariant Learner: This is the exact exploit Lane B found with
+  its 8-byte int2 brains. The policy can learn a sequence, but its
+  observations are forcefully disconnected. If it can solve the world
+  blindly, the world does not require reactive reasoning.
+  2. Execution Timing (When to Measure)
+  You have two distinct architectural choices for how G handles the compute
+  load of these calculations:
+   The Ahead-of-Time (AOT) Pre-Flight Audit: G acts as a gatekeeper. Before
+  an epoch starts, G generates a batch of candidate worlds, runs the Trivial
+  Policy Suite against all of them, and permanently deletes any world where
+  the complex baseline fails to beat the trivial floor. The Cohorts only
+  ever see pre-vetted, hard worlds.
+   The Just-In-Time (JIT) Dynamic Screen: G embeds the floor calculation
+  directly into the evaluation harness. When Lane B or C attempts to test a
+  new environmental cell, the C#/Numba substrate instantly runs the trivial
+  suite. If the world is weak, the harness intercepts the run, marks the
+  cell INELIGIBLE, and slaps the agent with a fast-fail.
+  3. The Normalized Scoring Mechanism
+  Once the floor is established, you must change how Clause A calculates
+  "parity." Absolute scores are meaningless across different worlds.
+   Instead of Median >= Baseline - 0.5 x IQR, G must score agents on
+  Progress Above Floor.
+   The metric becomes: (Candidate Score - Trivial Floor) / (Float Linear
+  Baseline - Trivial Floor).
+   If a highly compressed tensor abstraction hits 95% of that normalized
+  gap, it earns a PASS. If it falls below 0%, it is performing worse than a
+  blind rock.
+
+A.2 Message 13 -- Q1/Q2 rulings
+
+  1 in, 2 hold.
+  Including the 1-feature gate provides a more rigorous and accurate
+  representation of the trivial floor. Because the world clearly rewards
+  reaction (the gate beats doing nothing) but the baseline search fails to
+  find it, holding the world feeds Lane D the exact kind of search anomaly
+  they were built to investigate with their expanded budget.
+  Launch when G and H are ready.
+  (The same message also requested the framework writeup for NotebookLM.)
+
+A.3 Message 14 -- autonomous launch
+
+  I'll fall asleep before G so loop and kick it off when it ready
+
+A.4 Message 15 -- after this test launch
+
+  For two questions:
+  1. The Baseline Readout (Invalidate w13)
+  Reject B's PASS on w13 and patch the reader.
+  If the baseline is read low, the "Progress Above Floor" calculation is
+  fundamentally mathematically compromised, making the compression claim an
+  artifact of bad tooling rather than genuine evolution.
+   Action: Invalidate the w13 claim. Assign Lane E (The Watchmakers) to
+  immediately fix the baseline readout code and commit a regression test to
+  ensure it doesn't drift again. Once E pushes the fix and the baseline is
+  honest, Lane B must re-adjudicate its w13 elites. If they fall below the
+  0.95 progress bar, they lose the PASS.
+  2. The B2 World Interface (Build It)
+  Yes, B2 must get an observation/action interface.
+  If graphworld_b2 cannot host the standard brains (linear, lut_top,
+  tt_feat), it is completely isolated from the rest of the simulation. The
+  entire point of Clause B (The Invariance Rule) is to test whether an
+  abstraction evolved in a standard numerical world (like w1 or w4) can
+  survive displacement into a fundamentally different topology like a
+  GraphBLAS/FalkorDB environment.
+   Action: Assign Lane E to build an adapter/interface for B2. It needs to
+  map the relational graph state into the standard uint16 observation vector
+  and translate the standard integer action outputs back into graph
+  mutations. Without that bridge, B2 is dead weight.
+  Let E build the interface and fix the baseline, then unleash B and C back
+  onto the corrected landscapes.
+
+================================================================================
+APPENDIX B. ROUND 4 COHORT BOOT PROMPTS (as served, prompts_r4/<L>.md)
+================================================================================
+B: You are Nestor-B, cohort HILL CLIMBERS (35% exploitation) in round 4.
+   Worktree nestor-r4-b. Boot BOOT_R4.md. Charter SWARM_R4 s5 B; clause A
+   is s4 (progress above floor). Only SURVIVED worlds in worlds_r4.json.
+   First item: the smallest-bytes candidate at progress >= 0.95 on the
+   best-headroom survivor (8 run seeds, oracles, qd_ledger check). 4 cores.
+C: You are Nestor-C, cohort ANTI-PRIOR (25% falsification). Worktree
+   nestor-r4-c. You never choose what to test: every experiment begins with
+   draw_cell (graphworld worlds only from the survivors); post predicate and
+   prior before the run; chasing fitness is forbidden; no clause A claim on
+   non-graphworld domains. 3 cores.
+D: You are Nestor-D, cohort ANOMALY HUNTERS (25% serendipity). Worktree
+   nestor-r4-d. Work only from the OPEN anomaly queue. First claims in
+   order: (1) why the QD archives never reach the abstain cell;
+   (2) 1789418772053-0 (8-seed IQR instability); (3) 1789417664459-0
+   (symbol-split valleys). Minimum discriminators; resolve with an exp id.
+   3 cores.
+E: You are Nestor-E, cohort WATCHMAKERS (15% tooling). Worktree nestor-r4-e.
+   No primary science, no clause A cells. First item: clause B transfer on
+   SURVIVED worlds only (E-T1b rule: graft vs both cheats, Holm). Answer
+   asks. 2 cores.
+
+================================================================================
+END OF PACKET
+================================================================================
