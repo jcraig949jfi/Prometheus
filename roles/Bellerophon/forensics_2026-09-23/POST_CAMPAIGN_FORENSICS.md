@@ -99,7 +99,19 @@ solve z = 20.5, ARCH flag z = 13.8, BD flag z = 10.0) with a jump at the late st
 acceleration, saturation or phase transition in what the substrate produces per run; the late-stage "surge" is
 allocation feedback (the strongest families rerun), i.e. exposure, not discovery.
 
-2.2 Family structure / independent origins. See s3.1 (traced) -- PENDING the traced-replay receipt.
+2.2 Family structure / independent origins (receipts/ORIGINS.json; tools/origins.py). Origin unit = the run: every
+non-intervention RANDOM-init endogenous run is an independent random population, and contributes at most ONE origin
+(its first SELF_REPLICATION writer); descendants and within-run re-origins are never counted; promoted families are
+new vectors, not relatives of an organism. Pool: 14,910 such runs. Trigger set: 502 runs, fully traced: 346 contain
+SR. Untriggered: 14,408 runs, 296 traced at random: 15 contain SR (5.1%, Wilson 3.1-8.2%). Estimated origins
+~1,076 (346 censused + ~730 extrapolated), i.e. 7.2% of fresh random runs (95% CI 4.8-9.6%). The trigger missed more
+origins than it found. MECHANISM clustering (assumption: origins with the same copy opcode and first-write source
+offset use one route; setup-code multisets are a finer key): 361 origin tapes -> 28 coarse routes, but concentrated:
+LDIR from S=0 into the window 204 (57%), COPYALL from S=0 47 (13%), context-dependent copiers that write nothing when
+run alone 57 (16%), LDI loops 9, LD (T),A byte loops 3, and 20 single-instance offset variants. The 246 distinct
+setup multisets (227 singletons) are neutral junk around the same route. Answer to the directive's question: about
+1,100 independent ORIGINS (one per run, CI 700-1,450) along essentially THREE mechanistic routes (LDIR, COPYALL, LDI)
+plus a context-dependent class -- the chemistry funnels every origin into the shortest copier.
 
 2.3 Task dependence (receipts/RATES.json FIXED lane, family-bootstrap 95% CIs). Sustained exact solve (best_score_tail
 >= 0.999, a common ruler): ECHO 8.9% [7.8,10.1], INC 4.0% [3.2,4.9], SUM2 3.5% [2.8,4.3], CONST 2.2% [1.7,2.8],
@@ -122,17 +134,58 @@ differ by at most ~1.7 points in spontaneous rate with overlapping CIs. GATED_IN
 lowest spontaneous 0.8%. Representation: spontaneous VM_COPY 2.7%, Z80_64 2.2%, BYTECODE32 0.7%. Reproduction:
 EXTERNAL exact solve 8.5% [7.7,9.3] vs endogenous 0.5-3.1% -- consistent with the falsification of the ENDO flag (s3.3).
 
-2.6 Mutation geometry and basin width (receipts/BASIN.json; NEIGHBOURHOOD.json PENDING). A uniformly random tape is
+2.6 Mutation geometry and basin width (receipts/BASIN.json; receipts/NEIGHBOURHOOD.json). A uniformly random tape is
 already a self-replicator in isolation with probability 6/200,000 = 3.0e-5 (Z80_64), 2.0e-5 (BYTECODE32), 6.5e-5
 (VM_COPY); every one copies with LDIR (VM_COPY also COPYALL). P(>= 1 in a 128-tape initial population) ~ 0.4% /
 0.3% / 0.8%. The chemistry makes a minimal copier very short: registers start at 0 and LDIR with C = 0 sweeps up to
 256 bytes, so `LD T,L ; LDIR` (3 bytes) reached through a slide of undefined bytes (80% of byte values are NOPs;
 the PC leaves its own tape in 69% of random tapes) copies the tape. The basin is narrow per tape but wide per
-population-run: a random population evolving 500 ticks enters it in ~2% of runs.
+population-run: a random population evolving 500 ticks enters it in ~7% of runs (s2.2).
+Neighbourhoods (NEIGHBOURHOOD.json; 60 tapes per category; all L x 16 single substitutions; one paired INC panel):
+random tapes: 0/60 have ANY single mutant that self-copies; non-replicators: 1/60. First-generation replicators:
+8.0% of point mutants lose self-copying (92% robust); evolved replicators 7.4% -- evolution did not measurably change
+replication robustness. Paired INC beneficial density: 0.0001 for random, non-replicator, first-gen and evolved
+tapes alike, neutral fraction 1.00: replicator lineages carry NO task-relevant computation and no single mutation
+gives them any. Flagged "beneficial-density" organisms: 0.0058 (seeded hybrids carrying task code). Reading:
+replication is a narrow per-tape, wide per-population basin entered by building the shortest copier (65% of first
+self-replicators were constructed by other organisms' imperfect copies, s3.1); once entered it is robust; and in
+this substrate as run, what happens after entry is copying, not computing.
 
 ## 3. Adjudication of flag classes and triggers (Phase 3)
 
-3.1 Spontaneous replication -- PENDING traced receipt (receipts/TRACED_spontaneous.json, TRACED_baseline.json).
+3.1 Spontaneous self-replication -- REPRODUCED_ASSOCIATION at the forensic stage (confirmation: G1/G2/G6/HIST).
+Instrument: traced replay (tools/traced_replay.py v2) re-runs each run with the frozen harness plus byte provenance
+(source address, executing PC and opcode of the last write to every window byte) and classifies every birth; the
+tracer is checked on every replay against the stored summary (diverged: 0/544 and 0/300). Frozen classes:
+COPY_EVENT (any registered birth) / SELF_REPLICATION (own bytes, moved by own code, fidelity >= 0.9 before and after
+execution, writer material) / SUSTAINED_LINEAGE (an SR chain of depth >= 3) / EVOLUTIONARILY_ACTIVE (an SR-born
+variant that itself self-replicated). Results (non-intervention runs):
+  - v1 spontaneous_replication trigger: 502 runs. 346 contain SELF_REPLICATION (68.9%); 156 (31%) contain none:
+    false positives -- ENDOGENOUS_PARTIAL 83/182, PAIR 24/55, COPY 37/219, OVERWRITE 12/46 (captures, chimeras and
+    sweeps supply the 'hifi replication').
+  - of the 346: SUSTAINED 310 (89.6%, Wilson 85.9-92.4%), SR-born organism alive at tick 500: 237, EVOLUTIONARILY
+    ACTIVE 188; median maximum chain depth 146 generations; first SR at tick 0 in only 29 (median tick 117).
+  - untriggered runs (traced sample): 15/296 contain SR (7 sustained, 6 alive at end, 4 evolutionarily active),
+    including CONSTRUCTIVE (4/51), the physics the trigger credited with zero.
+  - COPY_EVENT is not replication: 9,271 of 14,003 recorded 'first replications' in RANDOM-init endogenous runs have
+    fidelity ~0 (in-place sweeps, junk constructions, M2/D2). The M1 self-smear hole changes little: of 9,670,487
+    births passing the post-execution test in the 502 trigger runs, 7,505 (0.08%) fail the pre-execution test;
+    9,662,982 SELF_REPLICATION births remain (of 25,069,717 registered births).
+  - dependence on target memory: 99.9% of SR births (9,648,506) OVERWRITE an occupied neighbour; 14,476 construct
+    into an empty cell (0.5% of all births go into empty cells). Self-replication here is overwriting reproduction;
+    the SR criterion requires the writer's own bytes in >= 90% of the window, so preserved target bytes cannot
+    supply an SR birth (target_fill ablation: P8). Environmental assistance: 2,319,892 births (9%) were written by
+    partner code the writer ran into; they are excluded from SR by the own-code criterion. P1 world copies are not
+    births at all.
+  - how the first self-replicator arose (receipts/G6_HISTORICAL.json, 361 origins): BUILT_BY_COPY 233 (65%) -- the
+    first true self-replicator was itself constructed by another organism's imperfect non-SR copy (169 writer-
+    material partial copies, 64 chimeras); INIT_LATER 98 (27%) -- an initial organism that became SR later
+    (mutation or context); INIT_AT_TICK0 30 (8%) -- present in the initial population. Historical ancestor tapes
+    were not recorded, so whether the constructing ancestors had SELECTABLE partial function (a ramp) is G6b.
+  - survival in fresh seeds and fresh memory: tested by the HIST lane (345 deduplicated origin tapes transplanted
+    into fresh random populations, intact vs copy-ops NOPed).
+Separation achieved: COPY_EVENT (millions) >> SELF_REPLICATION (in ~7% of fresh runs) > SUSTAINED (most of those)
+> EVOLUTIONARILY_ACTIVE (about half of those).
 
 3.2 REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY (493) -- INSTRUMENT_FAILURE.
 receipts/GEOM_AUDIT_flagged.json + GEOM_AUDIT_control.json (tools/geom_audit.py). All 493 flagged runs rebuilt

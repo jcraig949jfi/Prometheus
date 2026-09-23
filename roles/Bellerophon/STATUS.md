@@ -2,7 +2,17 @@
 
 Currency: 2026-09-23.
 
-NEXT DIRECTIVE WAITING — DO NOT SKIP ON BOOT:
+POST-CAMPAIGN FORENSICS IN PROGRESS (2026-09-23, Bellerophon[m2-9e74888e]; branch
+  bellerophon/post-campaign-forensics-2026-09-23; artifacts roles/Bellerophon/forensics_2026-09-23/):
+  Phases 1-5 done (POST_CAMPAIGN_FORENSICS.md, ISSUE_AND_REPAIR_LEDGER.md, receipts/). GROUNDING ROUND RUNNING
+  (preregistered, GROUNDING_PREREG.md frozen at a1b066309, plan f17eadbc..., 12,130 runs) from pinned code
+  C:/Users/James/z80atlas_grounding_2026-09-23/code; started 2026-09-23T12:55:59Z, hard cap 2026-09-24T00:55:59Z.
+  Status: python -m prometheus.z80atlas.grounding --workdir C:/Users/James/z80atlas_grounding_2026-09-23 --status
+  (run from the pinned code dir). A restart re-executes only runs without a result line. Do NOT launch another
+  campaign; after the round: GROUNDING_REPORT.md, G4 specimens, NEXT_CAMPAIGN_RECOMMENDATION.md.
+  Note (D3): this file at 2df98af3e called archaeon/z80atlas "Nestor's own build"; it is Archaeon's (c7610ea19).
+
+DIRECTIVE (being executed):
   prompts/2026-09-23_post_campaign_forensics/00_OPERATOR_DIRECTIVE_verbatim.md
   Read it in full before taking any action. It is a 10-phase forensic + grounding mandate, not a
   campaign launch. The directive is authoritative; this STATUS entry is only a pointer to it.
