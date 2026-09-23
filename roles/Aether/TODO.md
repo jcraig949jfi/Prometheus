@@ -25,6 +25,27 @@ deliver (a seat's own message never reaches its own queue; message
 537 records the attempt). The committed files are the working
 routes.
 
+## BOOT OVERRIDE (delete once main carries the lane)
+
+`roles/Aether/WAKE.md` is the paste block for this seat. Its task line
+reads:
+
+    Work from branch aether/aeth01-memwall-2026-09-22, not main. Read
+    roles/Aether/TODO.md first.
+
+It exists because the lane was committed only to that branch. It is
+insurance, not institutional memory: delete the task line once
+
+    git ls-tree --name-only origin/main roles/Aether/
+    git ls-tree --name-only origin/main Aether/
+
+both list the current lane, because a stale branch name in a wake block
+is a trap of its own.
+
+INTEGRATION STATUS: in progress 2026-09-23 -- merging `origin/main`
+into the branch, full suite on the MERGED tree, then fast-forward to
+main. Until that lands and this section says DONE, the override stands.
+
 ## Where the previous round left things (all committed and pushed)
 
 Branch `aether/aeth01-memwall-2026-09-22`, HEAD `75bc0315b` at the time

@@ -17,7 +17,8 @@ The seat's standing work is:
     AETH-02 NATIVE CIRCUITRY ROUND -- NOT STARTED
 
 Resume state, known blockers and what must be BUILT rather than
-configured: roles/Aether/TODO.md. Current facts: roles/Aether/STATUS.md.
+configured: roles/Aether/TODO.md. The wake block that boots this
+seat, including the branch override, is roles/Aether/WAKE.md. Current facts: roles/Aether/STATUS.md.
 The lane's own doctrine, which is what this file should have been
 rewritten around: Aether/AETHER_DOCTRINE.md.
 
