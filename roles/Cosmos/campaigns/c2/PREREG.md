@@ -49,3 +49,23 @@ round-0 law at regs 0.005; the gate (8 other bases, 1600 episodes) measured -0.1
 location estimates are noisy; the gate is what caught it.
 C2a HELD. C2b HELD (ceiling C <= G exp(-N) - 0.102; task economics: G exp(-N) - 0.10).
 F adjudication follows (c1f runner: law A = C0b f852d782cb, law B = C2 a079ad5ec1).
+
+## F ADJUDICATION (2026-09-23T15:24Z; F_adjudication.json; predictions receipted before F ran:
+## A pred_hash 1a016c6a..., B pred_hash c3c17111..., G6F presc_hash f41667b4...)
+Sealed F (clone, 240 worlds, base rate 0.192), first execution:
+  law A (C0b f852d782cb, v3): BA 0.930, acc 0.954, Brier 0.045 (clim 0.155); 5-NN 0.841 -> G5F PASS
+  law B (C2  a079ad5ec1, v4): BA 0.955, acc 0.954, Brier 0.042;               5-NN 0.833 -> G5F PASS
+  H1 (BA B > BA A): HELD AS SCORED, NOT SUPPORTED STATISTICALLY: discordant worlds 10 (A wrong, B right)
+     vs 10 (B wrong, A right), sign test p = 1.0; the BA gap is class weighting (A 6 FP / 5 FN,
+     B 9 FP / 2 FN).
+  Error SHAPE differs: A's unique errors include gross misses where v3's cost is badly wrong for a
+     growing or dying clone (margins -0.57, -0.43 where the v4 expected cost is 3-4x the v3 cost;
+     declining clones missed as QUIET); B's unique errors are all near the threshold (margins
+     0.056-0.136, logger-floor region).
+  G6F (law B, fresh F worlds, 398 candidates / 33 eligible / 12 scored): direction 11/12,
+     precision 0.201 log2 vs best constant (f=4) 0.708 -> PASS.
+Precommitments: C2c HELD, C2d HELD as scored (not significant), C2e HELD (law A passed; I gave 0.35).
+CONCLUDED (scope): with location-aware selection the engine produced a law whose cost ceiling
+matches the task economics and whose boundary sits within 0.015 log2 per visible family; on a third
+sealed substrate designed so that v3 and v4 disagree, both frozen laws pass, the v4 law removes the
+gross (coordinate) errors and keeps boundary noise, and its accuracy advantage is NOT significant.
