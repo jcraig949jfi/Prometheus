@@ -39,3 +39,21 @@ FINAL discriminating arm (written before it runs; then no more method arms):
   If it FAILS: seed 28's data defeats the method regardless of lines -> seed variance dominates.
   If it SURVIVES: lines-without-selection hurt on seed 28 specifically.
   Prediction (conf 0.55): it FAILS.
+
+## c2none28 RESULT (2026-09-23T16:46Z) -- the final method arm
+NO lines, NO selection, seed 20260928: round-0 law FAILED by the location gate (regs -.089 biased,
+ring -.100); revised law c1b5a2630c (v4) (exp(-N) - C/G) >= 0.1605 AND (log Q - C K) <= -0.16
+SURVIVED round 1 (2/107; offsets ca +.026 regs +.024 ring +.097 -- ring just under the .10 kill line).
+Prediction (it fails) LOST.
+
+## ATTRIBUTION MATRIX (survival within 3 rounds; one run per cell-seed; DESCRIPTIVE ONLY)
+                 no cost lines            cost lines
+  no selection   s28 SURV   s29 SURV      s28 FAIL (C1)   s29 SURV (c1s29)
+  selection      s29 SURV (c2abl)         s29 SURV (C2)   s31 SURV (c2rep)
+6 of 7 runs produced a surviving law; the only failure is lines-without-selection on seed 28.
+CONCLUDED (search-method qualification): UNRESOLVED. Location-aware selection is NOT shown to be
+necessary (both no-selection/no-lines runs survived). Weak single-seed evidence that cost lines
+without selection can hurt (consistent with eta2's budget-matched loss to random). The apparent
+C1 -> C2 improvement was mostly seed. What survives robustly across arms is the LOCATION GATE's
+effect: in every arm it killed at least one otherwise-passing law or passed only well-located ones.
+Method arms stop here (operator direction 2026-09-23 16:27Z).
