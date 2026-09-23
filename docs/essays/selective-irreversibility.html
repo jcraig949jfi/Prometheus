@@ -4,14 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Selective Irreversibility — Prometheus</title>
-<meta name="description" content="Intelligence as thermodynamically efficient selective irreversibility: Landauer, the Information Bottleneck, and a hypothesis to try to kill.">
-<script>
-  window.MathJax = {
-    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] },
-    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
-  };
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<meta name="description" content="Intelligence as thermodynamically efficient selective irreversibility: Landauer, the Information Bottleneck, and a hypothesis stated to be killed.">
 <style>
   :root{
     --bg:#fbfaf8; --panel:#ffffff; --ink:#1b1d21; --muted:#5d6570;
@@ -31,17 +24,19 @@
     color-scheme: dark;
   }
   *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-    font-size:18px; line-height:1.66; -webkit-text-size-adjust:100%;
+    font-size:18px; line-height:1.66;
   }
-  .wrap{max-width:43rem; margin:0 auto; padding:0 20px;}
+  img{max-width:100%}
+  .wrap{max-width:43rem; margin:0 auto; padding:0 20px}
   header.masthead{
     border-bottom:1px solid var(--rule); background:var(--panel);
     padding-block:10px; margin-bottom:44px;
   }
-  .masthead .wrap{display:flex; gap:12px; align-items:baseline; justify-content:space-between; flex-wrap:wrap;}
+  .masthead .wrap{display:flex; gap:12px; align-items:baseline; justify-content:space-between; flex-wrap:wrap}
   .brand{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
@@ -53,40 +48,43 @@
     font-size:11.5px; letter-spacing:.13em; text-transform:uppercase;
     color:var(--accent); margin:0 0 14px;
   }
-  h1{
-    font-size:clamp(2rem,6.2vw,3.05rem); line-height:1.08; letter-spacing:-.02em;
-    margin:0 0 18px; font-weight:600;
-  }
-  .dek{font-size:1.2rem; color:var(--muted); line-height:1.5; margin:0 0 26px; font-style:italic;}
+  h1{font-size:clamp(2rem,6.2vw,3.05rem); line-height:1.08; letter-spacing:-.02em; margin:0 0 18px; font-weight:600}
+  .dek{font-size:1.2rem; color:var(--muted); line-height:1.5; margin:0 0 26px; font-style:italic}
   .byline{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:12px; color:var(--muted); letter-spacing:.04em;
     border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
     padding:11px 0; margin:0 0 40px;
   }
-  h2{
-    font-size:1.42rem; line-height:1.25; margin:52px 0 16px; font-weight:600;
-    letter-spacing:-.01em;
-  }
+  h2{font-size:1.42rem; line-height:1.25; margin:52px 0 16px; font-weight:600; letter-spacing:-.01em}
   h2 .num{color:var(--accent); font-family:ui-monospace,monospace; font-size:.8em; margin-right:.5em}
-  h3{font-size:1.1rem; margin:34px 0 12px; font-weight:600;}
+  h3{font-size:1.1rem; margin:34px 0 12px; font-weight:600}
   p{margin:0 0 20px}
-  .lede::first-letter{
-    float:left; font-size:3.3em; line-height:.84; padding:.05em .08em 0 0;
-    color:var(--accent); font-weight:600;
-  }
-  blockquote{
-    margin:26px 0; padding:2px 0 2px 20px; border-left:3px solid var(--accent);
-    color:var(--ink); font-style:italic;
-  }
+  .lede::first-letter{float:left; font-size:3.3em; line-height:.84; padding:.05em .08em 0 0; color:var(--accent); font-weight:600}
+  blockquote{margin:26px 0; padding:2px 0 2px 20px; border-left:3px solid var(--accent); font-style:italic}
   blockquote p{margin:0 0 10px}
   blockquote p:last-child{margin:0}
-  .terms{
-    margin:22px 0; padding:16px 20px; background:var(--panel);
-    border:1px solid var(--rule); border-radius:8px;
-  }
+  .terms{margin:22px 0; padding:16px 20px; background:var(--panel); border:1px solid var(--rule); border-radius:8px}
   .terms p{margin:0 0 8px; font-style:italic; color:var(--muted)}
   .terms p:last-child{margin:0}
+
+  /* ---- Mathematics: plain HTML + CSS. No JavaScript, no CDN, no fonts to fetch. ---- */
+  .m{
+    font-family:"Latin Modern Math","Cambria Math","STIX Two Math",Cambria,Georgia,"Times New Roman",serif;
+    font-style:italic; white-space:nowrap;
+  }
+  .m .up{font-style:normal}
+  .m sub,.m sup{font-style:normal; font-size:.72em; line-height:0}
+  .eq{
+    margin:26px 0; text-align:center; overflow-x:auto; overflow-y:hidden;
+    font-size:1.12rem; padding-bottom:2px;
+  }
+  .eq .m{white-space:normal}
+  .frac{display:inline-flex; flex-direction:column; vertical-align:-0.55em; text-align:center; margin:0 .18em}
+  .frac>span{display:block; padding:0 .45em}
+  .frac .den{border-top:1.4px solid currentColor; padding-top:.16em; margin-top:.14em}
+  .frac.words{font-style:normal; font-size:.82em; line-height:1.28}
+  .frac.words>span{padding:0 .6em}
   .boxed{
     margin:30px 0; padding:20px 22px; background:var(--box);
     border:1px solid var(--rule); border-left:3px solid var(--accent);
@@ -95,28 +93,20 @@
   .boxed .label{
     display:block; font-family:ui-monospace,monospace; font-size:11px;
     letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
-    margin-bottom:10px; text-align:left;
+    margin-bottom:12px; text-align:left;
   }
-  .eq{margin:24px 0; overflow-x:auto; text-align:center;}
+  .boxed .stmt{font-size:1.08rem; line-height:1.5}
   .chain{
     margin:26px 0; padding:18px 20px; background:var(--accent-soft);
-    border-radius:8px; text-align:center; overflow-x:auto; font-size:.98rem;
+    border-radius:8px; text-align:center; overflow-x:auto; font-size:1rem; line-height:1.9;
   }
-  .claim{
-    margin:30px 0; padding:20px 22px; background:var(--panel);
-    border:1px solid var(--accent); border-radius:8px;
-  }
-  .claim h3{margin:0 0 10px; color:var(--accent); font-size:1.05rem;}
+  .claim{margin:30px 0; padding:20px 22px; background:var(--panel); border:1px solid var(--accent); border-radius:8px}
+  .claim h3{margin:0 0 10px; color:var(--accent); font-size:1.05rem}
   .claim p:last-child{margin:0}
-  hr.div{
-    border:0; text-align:center; margin:44px 0;
-    color:var(--muted); font-size:1.1rem;
-  }
+  hr.div{border:0; text-align:center; margin:44px 0; color:var(--muted); font-size:1.1rem}
   hr.div::before{content:"⸻"; letter-spacing:.3em}
   .dials{margin:22px 0; padding-left:0; list-style:none}
-  .dials li{
-    padding:10px 0 10px 16px; border-left:2px solid var(--rule); margin-bottom:8px;
-  }
+  .dials li{padding:10px 0 10px 16px; border-left:2px solid var(--rule); margin-bottom:8px}
   .dials li b{color:var(--accent)}
   footer.foot{
     margin:64px 0 40px; padding-top:22px; border-top:1px solid var(--rule);
@@ -124,10 +114,14 @@
     font-size:12.5px; color:var(--muted); line-height:1.7;
   }
   footer.foot a{color:var(--accent)}
-  mjx-container{overflow-x:auto; overflow-y:hidden; max-width:100%}
-  mjx-container[display="true"]{margin:0 !important}
-  @media (max-width:520px){ body{font-size:17px} .wrap{padding:0 17px} }
+  @media (max-width:520px){
+    body{font-size:17px}
+    .wrap{padding:0 17px}
+    .eq{font-size:1.02rem}
+  }
 </style>
+</head>
+<body>
 
 <header class="masthead">
   <div class="wrap">
@@ -154,16 +148,18 @@
   <p>Landauer’s principle says that logically irreversible operations — many possible logical states
   being mapped into fewer states — carry a thermodynamic cost. Reversible computation can in principle
   avoid that cost until information is actually erased or reset. Experiments have directly demonstrated
-  the \(k_BT\ln 2\) limit for bit erasure, and more general treatments relate the minimum work cost to
-  the information discarded conditional on the output.</p>
+  the <span class="m"><span class="up">k</span><sub>B</sub><span class="up">T</span>&#8202;ln&#8202;2</span>
+  limit for bit erasure, and more general treatments relate the minimum work cost to the information
+  discarded conditional on the output.</p>
 
   <h2>The really interesting connection: abstraction is many-to-one</h2>
 
-  <p>Suppose an intelligent system observes some gigantic state \(X\) and constructs an abstraction</p>
+  <p>Suppose an intelligent system observes some gigantic state <span class="m">X</span> and constructs
+  an abstraction</p>
 
-  <div class="eq">$$Z=f(X).$$</div>
+  <div class="eq"><span class="m">Z = f(X)</span></div>
 
-  <p>Imagine millions of distinct \(X\)’s all become:</p>
+  <p>Imagine millions of distinct <span class="m">X</span>’s all become:</p>
 
   <div class="terms">
     <p>predator</p>
@@ -176,32 +172,40 @@
 
   <p>If the physical implementation really disposes of those distinctions rather than retaining them
   somewhere as reversible bookkeeping, then the amount erased is approximately related to
-  \(H(X\mid Z)\) — the information about the original state that cannot be recovered from the
-  abstraction.</p>
+  <span class="m"><span class="up">H</span>(X&#8201;|&#8201;Z)</span> — the information about the
+  original state that cannot be recovered from the abstraction.</p>
 
   <p>So an idealized cyclic physical learner suggests something like</p>
 
-  <div class="eq">$$W_{\text{erase}} \gtrsim k_BT\ln 2\,H(X\mid Z)$$</div>
+  <div class="eq">
+    <span class="m"><span class="up">W</span><sub>erase</sub> &#8819;
+    <span class="up">k</span><sub>B</sub><span class="up">T</span>&#8202;ln&#8202;2&#8201;·&#8201;<span class="up">H</span>(X&#8201;|&#8201;Z)</span>
+  </div>
 
   <p>with important physical assumptions around how the memory and reset are implemented. That is
   already remarkably close to the proposed principle.</p>
 
   <p>But now introduce another variable:</p>
 
-  <div class="eq">$$Y = \text{future/task/action-relevant structure}.$$</div>
+  <div class="eq">
+    <span class="m">Y</span> <span class="m up">=</span>
+    <span style="font-style:normal">future / task / action-relevant structure</span>
+  </div>
 
-  <p>A good abstraction doesn’t merely maximize \(H(X\mid Z)\). <strong>A random shredder could do
-  that.</strong> It tries to make \(Z\) very small while preserving \(I(Z;Y)\).</p>
+  <p>A good abstraction doesn’t merely maximize <span class="m"><span class="up">H</span>(X&#8201;|&#8201;Z)</span>.
+  <strong>A random shredder could do that.</strong> It tries to make <span class="m">Z</span> very small
+  while preserving <span class="m"><span class="up">I</span>(Z;&#8201;Y)</span>.</p>
 
   <p>And that’s essentially the territory of the Information Bottleneck: find a compressed
-  representation of \(X\) that retains information relevant to \(Y\).</p>
+  representation of <span class="m">X</span> that retains information relevant to <span class="m">Y</span>.</p>
 
   <p>Combine Landauer and the Information Bottleneck, and suddenly we get something much more
   interesting than either separately:</p>
 
   <div class="boxed">
     <span class="label">The dial</span>
-    $$\text{Intelligence} \sim \text{preserve useful distinctions while irreversibly eliminating useless ones}$$
+    <span class="stmt">Intelligence ~ preserve useful distinctions while irreversibly eliminating
+    useless ones</span>
   </div>
 
   <p>That might be one of our missing dials. And it changes the four propositions in useful ways.</p>
@@ -237,14 +241,19 @@
   <p>Here there’s an important subtlety. Falsifying a hypothesis doesn’t necessarily erase it. I can
   retain</p>
 
-  <div class="eq">$$\{H_1:\text{false},\; H_2:\text{false},\; H_3:\text{true}\}$$</div>
+  <div class="eq">
+    <span class="m">{ <span class="up">H</span><sub>1</sub>&#8202;:&#8202;<span class="up">false</span>,
+    <span class="up">H</span><sub>2</sub>&#8202;:&#8202;<span class="up">false</span>,
+    <span class="up">H</span><sub>3</sub>&#8202;:&#8202;<span class="up">true</span> }</span>
+  </div>
 
   <p>reversibly forever. Landauer’s bill arrives when finite memory eventually says <em>I no longer
-  need the complete histories of \(H_1\) and \(H_2\)</em> — and resets those states.</p>
+  need the complete histories of <span class="m"><span class="up">H</span><sub>1</sub></span> and
+  <span class="m"><span class="up">H</span><sub>2</sub></span></em> — and resets those states.</p>
 
   <p>So perhaps falsification has two stages:</p>
 
-  <div class="chain">$$\text{distinguish} \;\longrightarrow\; \text{discard}$$</div>
+  <div class="chain">distinguish &nbsp;⟶&nbsp; discard</div>
 
   <p>The first creates information. The second destroys distinctions. And bounded intelligence forces
   the second step eventually.</p>
@@ -270,11 +279,17 @@
   trajectories.</p>
 
   <p>So imagine the intelligence manifold again. An intelligent trajectory wanders toward some
-  undesirable region. A steering intervention changes its trajectory: \(s_t \rightarrow s'_t\).</p>
+  undesirable region. A steering intervention changes its trajectory:
+  <span class="m">s<sub>t</sub> ⟶ s′<sub>t</sub></span>.</p>
 
   <p>The right question becomes not merely <em>did steering work?</em> but:</p>
 
-  <div class="eq">$$\frac{\text{capability restored}}{\text{control work injected}}$$</div>
+  <div class="eq">
+    <span class="frac words">
+      <span>capability restored</span>
+      <span class="den">control work injected</span>
+    </span>
+  </div>
 
   <p>Now we have another dial: <strong>restorative efficiency</strong>. Some architectures might need
   enormous intervention to return to a useful basin. Others might self-correct after a tiny
@@ -293,10 +308,13 @@
 
   <p>So imagine moving along</p>
 
-  <div class="eq">$$X\rightarrow Z_1\rightarrow Z_2\rightarrow Z_3\rightarrow\cdots$$</div>
+  <div class="eq">
+    <span class="m">X ⟶ Z<sub>1</sub> ⟶ Z<sub>2</sub> ⟶ Z<sub>3</sub> ⟶ ⋯</span>
+  </div>
 
   <p>with increasingly aggressive abstraction. Initially we erase nuisance variation. Performance
-  improves. Then eventually \(I(Z;Y)\) starts collapsing.</p>
+  improves. Then eventually <span class="m"><span class="up">I</span>(Z;&#8201;Y)</span> starts
+  collapsing.</p>
 
   <p>That’s the <strong>abstraction cliff</strong>. And different architectures may have radically
   different cliffs. That feels exactly like one of the hidden sliders.</p>
@@ -320,7 +338,7 @@
 
   <div class="boxed">
     <span class="label">The fundamental</span>
-    $$\textbf{predictive selective retention}$$
+    <span class="stmt"><strong>predictive selective retention</strong></span>
   </div>
 
   <p>Everything else gets progressively released.</p>
@@ -342,22 +360,43 @@
 
   <ul class="dials">
     <li><b>D</b> — information discarded</li>
-    <li><b>R</b> — relevant/predictive information retained</li>
+    <li><b>R</b> — relevant / predictive information retained</li>
     <li><b>E</b> — physical or computational expenditure</li>
   </ul>
 
   <p>And now we can start looking for ratios. An intelligence thermodynamic efficiency:</p>
 
-  <div class="eq">$$\eta_I = \frac{I(Z;Y)}{E/(k_BT\ln 2)}$$</div>
+  <div class="eq">
+    <span class="m">η<sub>I</sub> =
+      <span class="frac">
+        <span><span class="up">I</span>(Z;&#8201;Y)</span>
+        <span class="den"><span class="up">E</span> / (<span class="up">k</span><sub>B</sub><span class="up">T</span>&#8202;ln&#8202;2)</span>
+      </span>
+    </span>
+  </div>
 
   <p>roughly: predictively useful bits maintained per Landauer-equivalent unit of expenditure. Or,
   independently of actual joules initially:</p>
 
-  <div class="eq">$$\eta_A = \frac{I(Z;Y)}{I(X;Z)}$$</div>
+  <div class="eq">
+    <span class="m">η<sub>A</sub> =
+      <span class="frac">
+        <span><span class="up">I</span>(Z;&#8201;Y)</span>
+        <span class="den"><span class="up">I</span>(X;&#8201;Z)</span>
+      </span>
+    </span>
+  </div>
 
   <p>useful information per bit retained. And perhaps, for falsification efficiency:</p>
 
-  <div class="eq">$$\eta_F = \frac{\text{hypothesis-space volume eliminated correctly}}{\text{irreversible state changes}}$$</div>
+  <div class="eq">
+    <span class="m">η<sub>F</sub> =
+      <span class="frac words">
+        <span>hypothesis-space volume eliminated correctly</span>
+        <span class="den">irreversible state changes</span>
+      </span>
+    </span>
+  </div>
 
   <p>I wouldn’t become attached to any of these equations yet. <strong>They are rulers to
   attack.</strong></p>
@@ -376,7 +415,8 @@
   <p>So one possible progression is:</p>
 
   <div class="chain">
-    $$\text{boundedness} \rightarrow \text{forced forgetting} \rightarrow \text{selective compression} \rightarrow \text{invariants} \rightarrow \text{abstraction} \rightarrow \text{transfer}$$
+    boundedness &nbsp;⟶&nbsp; forced forgetting &nbsp;⟶&nbsp; selective compression &nbsp;⟶&nbsp;
+    invariants &nbsp;⟶&nbsp; abstraction &nbsp;⟶&nbsp; transfer
   </div>
 
   <p>That is a testable causal chain. And it produces a rather provocative prediction:</p>
@@ -400,7 +440,7 @@
 
   <div class="boxed">
     <span class="label">The hidden axis</span>
-    $$\text{pressure to eliminate irrelevant distinctions}$$
+    <span class="stmt">pressure to eliminate irrelevant distinctions</span>
   </div>
 
   <p>And that might genuinely sit underneath compression, abstraction, generalization, forgetting,
@@ -412,7 +452,10 @@
   <footer class="foot">
     Captured verbatim 2026-09-23. Source text preserved alongside this page as
     <a href="2026-09-23-selective-irreversibility.md">2026-09-23-selective-irreversibility.md</a>.<br>
-    Status: hypothesis, stated to be attacked. No claim here has been tested in Prometheus.
+    Status: hypothesis, stated to be attacked. No claim here has been tested in Prometheus.<br>
+    Equations are typeset in plain HTML and CSS — no JavaScript, no external fonts, nothing to fail.
   </footer>
 
 </main>
+</body>
+</html>
