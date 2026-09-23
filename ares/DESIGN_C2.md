@@ -223,3 +223,35 @@ export with a named consumer; artifacts to Nyx/Harmonia without waiting
 for their vocabulary; STATUS -> PARKED or CLOSED per s8; ledger rows.
 
 ## ADDENDA (dated, appended only)
+
+ADDENDUM 1 (2026-09-23, after the gates ran; two defects in the
+cycle-2 apparatus found by auditing its own output, and one
+falsification arm added with its prediction stated first).
+
+D1 SELECTION ON THE HELD-OUT SET. search.run picks the final champion
+   by argmax over the final population EVALUATED ON THE HELD-OUT
+   episodes, so `final.heldout` is a max-of-128 statistic. It inflates
+   any noisy score: the shuffled controls read 4.22 / 13.47 / 1.41 /
+   1.50 when the clean number (the training-selected champion's
+   held-out score, already in every run's log) is 0.00 / -2.38 /
+   -0.14 / 0.00. Every arm at the structural cap is unaffected (40.0
+   cannot be inflated), which is where every headline result of this
+   cycle sits. ares/recheck_c2.py re-derives everything from the clean
+   number; the worlds do NOT leak -- the apparatus did.
+D2 BIASED SWAP STATISTIC. phase_gates scored gate C with the BEST
+   donor per host (max over 9 donors). The operator's criterion is
+   survival of substantial genomic-context change, so the per-PAIR
+   statistic is correct: 16/59 pairs recover >= 0.5, median 0.02.
+   GATE C is therefore SHUT, not open as first printed.
+
+EXPLORATORY ARM c3_keep_reachable, added after the result and labelled
+as post-hoc. The cycle's causal finding is that one mutation creates a
+USABLE recurrent edge with p=0.0173 and a USABLE keep (>=0.90) with
+p=0.0000 (0 of 8000), because alter_keep steps by N(0, 0.3) from zero.
+That is a claim about the MUTATION OPERATOR and it is directly
+falsifiable: widen the step to sigma=1.5 (one step reaches 0.9 with
+p~0.27) and keep should become reachable. PREDICTION, recorded before
+the arm was run: KEEP becomes load-bearing in >= 3/10 champions
+(against 1/10 in c1_all) and keep's time-to-threshold falls toward
+recurrence's. If the class distribution does NOT move, the step-size
+explanation is wrong and the cycle's causal claim fails.
