@@ -8,6 +8,8 @@ Mechanisms are register programs executed in lockstep over E episodes:
   SEL   on the tagged input: ALLOC r0 <- in ; hold ; at ask: OUT r0
   LOG   on every input: ALLOC r_i <- in ; hold all ; at ask: OUT r0
   LAST  no ALLOC ; at ask: OUT the current input register (blank -> 0)
+Alternative mechanism (C0m, 2026-09-23): params["code"] = 3 stores every bit 3x and reads by
+majority at the ask (3x cost, no in-flight repair). Absent "code" = the reference mechanism.
 
 Self-contained: numpy + the contract signatures only (independence audit).
 """
@@ -41,15 +43,24 @@ class Regs(Family):
 
     def coords(self, p: Dict[str, Any], cmap: str = "v1") -> Dict[str, float]:
         b = self._bits(p["V"])
-        n = p["q"] * b * p["H"]          # no repair: v2 == v1
-        return {"C": p["bitcost"] * b * p["H"] / p["R"], "N": n, "K": float(p["K"]), "G": 1.0 - 1.0 / p["V"]}
+        code = p.get("code", 1)
+        if code == 1:
+            n = p["q"] * b * p["H"]          # no repair: v2 == v1
+        elif cmap == "v1":
+            n = p["q"] * code * b * p["H"]
+        else:                                # repetition-3, majority read at the ask, no repair in flight
+            pi = (1 - (1 - 2 * p["q"]) ** p["H"]) / 2
+            pm = 3 * pi * pi - 2 * pi ** 3
+            n = -b * float(np.log1p(-pm)) if pm < 1 else float("inf")
+        return {"C": p["bitcost"] * code * b * p["H"] / p["R"], "N": n, "K": float(p["K"]), "G": 1.0 - 1.0 / p["V"]}
 
     def units(self, p: Dict[str, Any]) -> Dict[str, float]:
         return {"reward_per_success": float(p["R"])}
 
     def run(self, p: Dict[str, Any], mech: str, seed: int, episodes: int) -> Dict[str, Any]:
         V, H, K, R, bc, q = p["V"], p["H"], p["K"], p["R"], p["bitcost"], p["q"]
-        b = self._bits(V)
+        code = p.get("code", 1)              # alternative mechanism: repetition code per stored bit
+        b = self._bits(V) * code
         E = episodes
         env = np.random.default_rng(seed)
         cue = env.integers(0, V, E)
@@ -67,7 +78,7 @@ class Regs(Family):
             nreg = 1 if mech == "SEL" else 1 + K
             regs = np.zeros((E, nreg), dtype=np.int64)
             alloc_t = np.full((E, nreg), -1, dtype=np.int64)
-            regs[:, 0] = cue
+            regs[:, 0] = self._encode(cue, code)
             alloc_t[:, 0] = 0
             bit_ticks = np.zeros(E)
             weights = (1 << np.arange(b)).astype(np.int64)
@@ -75,18 +86,40 @@ class Regs(Family):
                 if mech == "LOG" and K:
                     for j in range(K):
                         hit = times[:, j] == t
-                        regs[hit, 1 + j] = dvals[hit, j]
+                        regs[hit, 1 + j] = self._encode(dvals[hit, j], code)
                         alloc_t[hit, 1 + j] = t
                 live = alloc_t >= 0
                 if q > 0:
                     flips = (noise.random((E, nreg, b)) < q) & live[:, :, None]
                     regs ^= (flips.astype(np.int64) * weights).sum(axis=2)
                 bit_ticks += live.sum(axis=1) * b
-            out = regs[:, 0] % (1 << b)
+            out = self._decode(regs[:, 0] % (1 << b), code, b // code)
             cost = bit_ticks * bc
             meters = {"reg_bit_ticks": bit_ticks}
         reward = np.where(out == target, R, 0.0)
         return {"reward": reward, "cost": cost, **meters}
+
+    @staticmethod
+    def _encode(v, code):
+        if code == 1:
+            return v
+        b0 = int(np.max(v)).bit_length() if np.size(v) else 1
+        out = np.zeros_like(v)
+        for i in range(max(b0, 5)):
+            bit = (v >> i) & 1
+            for c in range(code):
+                out |= bit << (code * i + c)
+        return out
+
+    @staticmethod
+    def _decode(v, code, nbits):
+        if code == 1:
+            return v
+        out = np.zeros_like(v)
+        for i in range(nbits):
+            ones = sum(((v >> (code * i + c)) & 1) for c in range(code))
+            out |= ((ones * 2 > code).astype(np.int64)) << i
+        return out
 
     def coord_preserving(self, p: Dict[str, Any], rng) -> List[Dict[str, Any]]:
         out = []
