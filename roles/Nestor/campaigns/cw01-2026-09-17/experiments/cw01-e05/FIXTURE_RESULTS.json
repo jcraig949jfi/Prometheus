@@ -1,0 +1,52 @@
+{
+ "contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "best": [
+  0,
+  2,
+  4
+ ],
+ "worst": [
+  4,
+  5,
+  7
+ ],
+ "n_subsets": 56,
+ "fixtures": [
+  {
+   "fixture": "F1",
+   "passed": true,
+   "detail": "DiD +17.37 pp (BEST law effect +30.13 vs WORST +12.76) via the frozen statistic"
+  },
+  {
+   "fixture": "F2",
+   "passed": true,
+   "detail": "WORST/conjunction nsa +0.000% -> clears_null=False (null [-0.00, +0.00]); not admissible as superadditive evidence"
+  },
+  {
+   "fixture": "F3",
+   "passed": true,
+   "detail": "BEST/disjunction raw nsa -22.63% (overlap, not composition); WORST/disjunction -12.99%; frozen DiD remains +15.62 pp and is the only verdict quantity"
+  },
+  {
+   "fixture": "F4",
+   "passed": true,
+   "detail": "guard refused the D038a pair (yes); intervention reaches baselines (empty 0.00->0.00, solos moved=True)"
+  },
+  {
+   "fixture": "F5",
+   "passed": true,
+   "detail": "dead genome (info=0.0, carried=0) refused; live genome (info=228.7) admitted"
+  },
+  {
+   "fixture": "F6",
+   "passed": true,
+   "detail": "effect +0.24 inside null [-6.64, +7.11] refused; +17.11 outside admitted"
+  },
+  {
+   "fixture": "F7",
+   "passed": true,
+   "detail": "job() refused on ['budget_B'] before evaluating: run_episode calls=0, emits=0, ordering_breach=False; unmutated contract still admits=True"
+  }
+ ],
+ "all_passed": true
+}

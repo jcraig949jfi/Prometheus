@@ -1,0 +1,68 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e03",
+ "attempt_id": "cw01-e03-a01",
+ "phase": "PREFLIGHT",
+ "recorded_local": "2026-09-17 17:58:56",
+ "source": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "commit": "0e4df690604384ab1fed6bc161563430b747e68d",
+  "e01_commit": "8d17c7fee",
+  "e02_commit": "0e4df6906"
+ },
+ "runtime_versions": {
+  "python": "3.12.10",
+  "numpy": "2.5.3",
+  "scipy": "1.17.1",
+  "redis": "8.1.0",
+  "psutil": "7.2.2"
+ },
+ "machine_profile_ref": "../../MACHINE_PROFILE.json",
+ "seed_policy": {
+  "rule": "all draws derive from attempt_id via lib/seeds.py",
+  "verified": "cross-process under 3 PYTHONHASHSEED values in e01; a01 reproduced exactly"
+ },
+ "declared_capabilities_required": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_streams": false,
+  "needs_container_runtime": false,
+  "needs_N_GB_vram": 0,
+  "needs_git_worktree": true,
+  "needs_env_PM_TAG": true,
+  "min_ram_gb": 4,
+  "min_free_disk_gb": 5,
+  "_rationale": "e03 is CPU activation economics. Redis only for the optional IX backend check."
+ },
+ "capability_match": {
+  "checked_against": "MACHINE_PROFILE.json",
+  "verdict": "PASS - fail-closed; no unsatisfied requirement"
+ },
+ "reuse_from_prior_experiments": {
+  "lib/seeds.py": "deterministic attempt-seeded draws",
+  "lib/localrun.py": "Redis-free durable rows via the standard job contract",
+  "lib/residue.py": "one scanner for substrate AND process residue",
+  "lib/lineage.py": "TestLog/decide, ancestor-seeded detect_gains, emit_generations, fixation_order",
+  "_note": "FOUR components carried forward unchanged. e01 reused 0, e02 reused 3, e03 reuses 4."
+ },
+ "standing_gates_inherited": [
+  "mechanism-fires: the measured mechanism must be non-zero in a hand-built best case (D009/D013)",
+  "matched-arms: with the mechanism disabled, arms must be BIT-IDENTICAL (D010/D019/D021)",
+  "reachability probe: best-case vs worst-case organism before any budget (D015/D023)",
+  "executable disposition incl. replication; a branch is unreachable unless its tests ran (D016/D024)",
+  "detector calibrated against a NULL, two-sided (D022)",
+  "probe genomes asserted pairwise distinct (D023)",
+  "per-generation trajectories emitted as durable rows (D026)"
+ ],
+ "e03_specific_risks": [
+  "SPARSITY IS NOT A COALITION - the central threat; conditionality must be measured separately",
+  "MI is biased upward on small samples - must be calibrated against a shuffled-label null (D022 lineage)",
+  "latent class must NOT be readable for free, or routing is trivial"
+ ],
+ "expected_runtime_envelope": {
+  "minimal_form_wall_minutes": 25,
+  "timebox_hours": 24
+ },
+ "preregistration_ref": "PREREGISTRATION.md (written before implementation)",
+ "complete": true
+}

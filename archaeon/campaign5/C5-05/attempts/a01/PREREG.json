@@ -1,0 +1,103 @@
+{
+ "ancestry": "original (Phase B, slot 3; C4-01 replayed)",
+ "arms": [
+  "controls",
+  "R",
+  "v04 x OLD",
+  "v04 x B_FAIL",
+  "v04 x B_FIZZLE",
+  "B x OLD",
+  "B x B_FAIL",
+  "B x B_FIZZLE"
+ ],
+ "assay_capability_requirement": "arm R equals C4-01 a02 label for label and digest for digest; identity/randomize/cheat controls as in DESIGN.md",
+ "attempt": 1,
+ "budget": {
+  "E": 16,
+  "draws": 8,
+  "grammars": [
+   "v04",
+   "B"
+  ],
+  "interpreters": [
+   "OLD",
+   "B_FAIL",
+   "B_FIZZLE"
+  ],
+  "operators": 12,
+  "parents": 57
+ },
+ "claim_ceiling": "single-edit geometry on 57 parents; no evolution; no claim about discovery",
+ "crn_policy": "one child per (parent, grammar, operator, draw) from seed_from('c5.05.edit', 20260922, ...); the same child under all three interpreters; episodes as C4-01",
+ "decl": {
+  "n_min": 57,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "B x OLD",
+   "metric": "d6_rate",
+   "min_effect": -0.0625,
+   "treatment": "B x B_FAIL"
+  }
+ },
+ "design_digest": "sha256:163d35d083f8f33fd3b113a5cdd5076366c0bb51c8640badcce58087e51936eb",
+ "expected_machine_telemetry": [
+  "per-child rows with three interpreter readings",
+  "crossing flag",
+  "faults and sites"
+ ],
+ "experiment": "C5-05",
+ "falsification_condition": "T1 < .50 (boundary mostly unexecuted) or T2 fails (boundary disturbs non-crossing children) -> the boundary is not what it was designed to be",
+ "kill_condition": "R arm mismatch or control failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "classify_b (DT/DF before the C4 classifier)",
+  "grammar B census",
+  "matched-perturbation rows"
+ ],
+ "parent_evidence": "C4-01 (D-taxonomy on the total interpreter; D7 = 0; cliff); C5-03 F8 (grammar B crosses in 9.3% of children); C5-04 (P1-P4 hold).",
+ "parents": [
+  "C4-01",
+  "C5-03",
+  "C5-04"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:ef5a72a231893b1ab30df6d77e74dfddec6b8fe66cc7214358447ff6a11a3a6c",
+ "primary_observable": "bin distributions per grammar x interpreter (x operator); T1-T6; controls; R replication receipt",
+ "question": "Under representation B, does a real local failure boundary change how programs die (a TRAP bin absorbing D2/D3 death) while leaving the neutral and exaptive bins of non-crossing children where they were?",
+ "reachability_estimate": {
+  "note": "not a reach experiment"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "damage geometry under representation B (matched perturbations, DT/DF bins)",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "The directive's damage geometry replication with predefined bins; matched perturbations feed C5-06."
+}

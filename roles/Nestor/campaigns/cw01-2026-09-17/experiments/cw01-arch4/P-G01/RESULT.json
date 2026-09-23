@@ -1,0 +1,49 @@
+{
+ "perturbation_id": "P-G01",
+ "parent": "T-R01",
+ "disposition": "INSTRUMENT_QUALIFIED",
+ "controls": {
+  "hit_counts": {
+   "pass": true,
+   "mean_z": -0.010755454174894194,
+   "var_z": 0.9905963596738614,
+   "chi_p": 0.485,
+   "n_draws": 25200
+  },
+  "clustering": {
+   "pass": true,
+   "share_inside_band": 1.0
+  },
+  "length_independence": {
+   "pass": true,
+   "slope": 2.816708534833449e-05,
+   "band": [
+    -8.733554639111107e-05,
+    8.383626120731546e-05
+   ]
+  },
+  "reproducibility": {
+   "pass": true
+  },
+  "sham": {
+   "pass": true,
+   "n": 126
+  }
+ },
+ "provenance": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "n_programs": 126,
+ "material": true,
+ "elapsed_s": 7.0,
+ "prereg_sha256": "39e5ef341a31cd945039974ffd505bfe7b1b9b12c16381feb6adb4e8a3b5aaaf",
+ "ts": "2026-09-19 03:18:31"
+}

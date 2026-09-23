@@ -1,0 +1,40 @@
+{
+ "perturbation_id": "P-E01",
+ "parent": "T-X12",
+ "deformation": "B",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-response-map",
+ "ruler": "self-displacement: answers on a constructed variant vs answers on the base W0 episodes (same program)",
+ "variants": [
+  "empty1",
+  "noise1",
+  "noise2",
+  "noise3",
+  "noise4",
+  "putrep",
+  "noise_inline",
+  "noise_pre",
+  "empty_pre",
+  "ne",
+  "en",
+  "persist=none x {base, noise1, empty1}"
+ ],
+ "threshold_T": 0.05,
+ "classes": "immune (all < T) | boundary (empty tick >= T) | content (NOISE tick >= T, empty < T) | threshold (only >= 2 ticks) | other; plus order-sensitive (|ne-en| >= T), position-sensitive (|noise_pre - noise1| >= T), non-monotone",
+ "lineages": "viable parents (all strata), walker-16 (walker 1), C4-08 ordinary top-32 seed 1",
+ "walker_trace": "w0_solver walkers 1-4: self-displacement (noise1) of every accepted step; onset = first step crossing .10; REVERT = restore the onset step's words in the depth-16 final when every later step preserved length",
+ "cross_observable": "Spearman(tick sensitivity noise1, mean P-D01 delete loss per program) with a 2000-permutation null; partial on log length and set dummies; also vs tape writes, persistent words, tick budget",
+ "material_rule": "any of: paired sign-flip of (noise1 - empty1) outside its band; class 'not immune' share differs between two sets with non-overlapping Wilson 95% bands; the tick x damage Spearman clears its permutation band",
+ "continuation": [
+  "tick budget as a dose",
+  "state-word census at the onset step",
+  "C5 representation B",
+  "programs evolved under inserted ticks (P-E03 evolver)"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:20:50",
+ "prereg_sha256": "a38e0aa034ea881251a168bdf38acd5af9cfd9849dcd387b1faeb534fea5f1e9"
+}

@@ -1,0 +1,127 @@
+======================================================================
+ARES REVIEW PACKET -- cycle 2: ATTACK THE MECHANISM
+Seat: Ares (M2). Date: 2026-09-23. Prereg ares/DESIGN_C2.md on main at
+ab137f52b BEFORE any run. 190 GA runs, seeds 201-210, all lineages
+fresh. Results ares/runs/sweep_c2/. Seat PARKED after this packet.
+======================================================================
+
+WHAT WAS ASKED
+  One focused round, most adversarial yet: attack the carrier cycle 1
+  found. (1) why does recurrence win, (2) will evolution route around
+  it when blocked/taxed, (3) is the carrier modular or entangled,
+  (4) does carrier choice change under hostile pressure. Fix five
+  instrument defects first. End on a three-gate stopping rule; if the
+  answer is only "recurrence wins again", close and export.
+
+THE ANSWER (and it is not the one preregistered)
+  All three carriers the substrate offers are INDIVIDUALLY SUFFICIENT:
+      only_recurrence  10/10 at the cap, median 10 generations
+      only_plasticity  10/10 at the cap, median 17.5
+      only_keep         9/10 at the cap, median 30 (tail to 90)
+      none              0/10 (floor arm: the exclusion machinery works)
+      all available    10/10 at the cap, median 10 == recurrence-only
+  So the preference is a SPEED phenomenon, not a capability one. Four
+  candidate causes were tested and three died:
+   - intrinsic superiority: dead BEFORE the cycle ran. Hand-built, the
+     DESIGNATED carrier scores 33.75 and recurrence 24.56 on W4. The
+     carrier evolution never picks has the better optimum.
+   - gradient at first appearance: dead. One mutation on a stripped
+     champion, 300 times, 5 lineages: mean effect ~0 and probability
+     of immediate improvement 0.00 for BOTH carriers.
+   - raw opportunity: dead. Recurrence is only 1.32x more reachable;
+     an 8x mutational subsidy on keep raised its creation rate 4.8x
+     and did NOT flip the carrier (RECUR 5, REDUNDANT 4, PLAST 1).
+   - USEFUL reachability: looked decisive -- one mutation makes a
+     usable recurrent edge with p=0.0173 and a usable keep with
+     p=0.0000 (0 of 8000), because keep steps by N(0,0.3) and needs
+     ~0.9. So it was TESTED, not asserted: an arm with a wider keep
+     step (usable-keep creation 0.0231, ABOVE recurrence's 0.0173),
+     prediction recorded first at ">= 3/10 keep load-bearing".
+     RESULT 2/10. MY PREDICTION LOST. 7/10 champions now carry a keep
+     node at 0.98 and selection still routed through recurrence.
+  WHAT SURVIVES -- basin width (EXPLORATORY, post-hoc, hand-wired):
+      KEEP   best 33.75, viable in 3 of 25 swept values, only
+             [0.94, 0.98] -- a 4% sliver against its own ceiling
+      RECUR  best 40.00, viable in 14 of 23, [2.75, 6.0], SATURATING
+             (4.0 -> 40, 5.0 -> 40, 6.0 -> 40; larger never worse)
+  Keep must be loaded and held by one scalar, and as it approaches 1
+  the input term (1-keep) vanishes, so the working region is a knife
+  edge. A self-loop has no such trade-off. Two unplanned corroborations:
+  jittering every recurrent edge at every reproduction did not dislodge
+  recurrence (7/10, and the FASTEST arm at 5 generations -- jitter
+  inside a flat basin is harmless), and keep's time-to-threshold has
+  the long tail (10-90) expected of a target that must be found AND held.
+
+  THE TRANSFERABLE STATEMENT: a supplied primitive is not "available"
+  to evolutionary search because it exists, works and is reachable in
+  one mutation. It is available when its VIABLE REGION IS WIDE AND ITS
+  GRADIENT FLAT. The substrate routed around design intent because the
+  designated carrier's working region was a sliver and the
+  undesignated one's was a plateau.
+
+GATES (operator's rule, mechanical)
+  A substitution      OPEN. Recurrence forbidden outright: 10/10 still
+    at the cap, plasticity load-bearing 7/10, keep 3/10, cost ~10
+    generations. A 0.25/edge tax also substitutes (recurrent edges
+    median 2.0 -> 0.0). No new carrier class anywhere (0 occurrences).
+  B causal explanation OPEN on substance -- but the explanation the
+    rule NAMED (accessibility) is refuted by this cycle's own
+    falsification arm; the replacement (basin width) is post-hoc and
+    measured on hand-wired carriers, so it needs the test in s7.1
+    before anyone builds on it.
+  C transplantable     SHUT (corrected: see below).
+  Disposition CONTINUE_RECOMMENDED -- a recommendation to the
+  operator, not permission. Ares parks and does not self-authorise.
+
+WHAT THIS CYCLE FOUND WRONG -- INCLUDING IN ITSELF
+  1. CYCLE 1 DOES NOT FULLY REPLICATE. It reported W4 activation
+     memory 10/10 and plasticity 0/10. On ten fresh lineages with
+     edge/SCC-aware attribution: recurrence load-bearing 7/10,
+     plasticity 4/10, keep 1/10. The 0/10 has probability ~0.6% under
+     these proportions. Recurrence is the most common carrier, not the
+     only one. Cycle 1's coarser ablation could not separate keep from
+     recurrence and labelled both "ACT".
+  2. HELD-OUT SELECTION BIAS (D1). The reported champion was chosen by
+     argmax over 128 organisms EVALUATED ON THE HELD-OUT SET. Shuffled
+     controls read 4.22 / 13.47 / 1.41 / 1.50; the clean number
+     (training-selected champion, already logged) is 0.00 / -2.38 /
+     -0.14 / 0.00. Every headline sits at the structural cap and is
+     unaffected, and everything was re-derived from the clean number.
+     The reassuring consequence: with the bias removed the controls
+     sit exactly at the floor, so the WORLDS do not leak -- the
+     apparatus did.
+  3. BIASED GATE STATISTIC (D2). Gate C first printed "median recovery
+     1.0" using the best donor of nine per host. Per PAIR: median 0.02,
+     >= 0.5 in 16/59; edge-aware transplant portable 4/9. Gate C is
+     SHUT. A transfer claim is scored per attempt, never by the best
+     attempt.
+  4. Prediction scorecard: P1 P2 P5 P7 P10 held; P3 P4 lost; P6 and P8
+     split; P9 held on transplant and lost on the honest swap
+     statistic; the post-hoc c3 prediction lost. Four ledger rows.
+
+WHAT WAS NOT ESTABLISHED
+  The basin explanation is post-hoc and hand-wired: it explains the
+  evolved result rather than being measured on evolved genomes. The
+  decisive test (re-parameterise keep so its viable region is wide and
+  unbounded, then re-run; prediction recorded first) has NOT been run.
+  Redundancy under attack (W15: recurrence 8/10 AND plasticity 7/10,
+  recurrent edges up 4.5x) is unexplained and was predicted by nobody.
+
+CONFLICTS OF INTEREST / LIMITS
+  Ares built, ran and scored its own instruments; the gate rule was
+  fixed before the data and applied by code, but two of its statistics
+  were wrong and Ares found both by auditing its own output. 10 seeds
+  per arm. The hostile worlds attack activation carriers; W14 turned
+  out to attack the LEAKY INTEGRATOR instead, which was stated in the
+  preregistration before the runs so it could not be re-read later.
+
+EXPORT PACKAGE (ready whether or not cycle 3 happens)
+  ares/carriers.py (edge/SCC-aware carrier attribution, taxonomy,
+  opportunity and basin measurement, edge-aware transplant and swap --
+  reusable against any graph-structured organism);
+  ares/PRESSURE_CATALOG.json (12 pressures with falsifiers + 6
+  candidates); ares/worlds.py (16 batched worlds, balanced seeding);
+  the design rule above as a hypothesis for other substrates; and two
+  instrument warnings that generalise (D1, D2). Named consumers:
+  Nyx / Theophrastus / SFE.
+======================================================================

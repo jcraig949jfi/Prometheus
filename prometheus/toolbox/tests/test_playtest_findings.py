@@ -1,0 +1,476 @@
+"""Smallest reproducers for defects found by playtesting (overnight 2026-09-19). Each test names the playtest
+and the cycle that found it; each is kept permanently so the defect cannot resurrect silently."""
+from __future__ import annotations
+
+import pytest
+
+from prometheus.toolbox.ir import Experiment, ref
+from prometheus.toolbox.ref.players import random_statemachine
+from prometheus.toolbox.registry import default_registry
+from prometheus.toolbox.backends.local import execute, build_world, lower
+from prometheus.toolbox.receipt import read_all
+
+REG = default_registry()
+
+
+def _exp(**kw):
+    base = dict(family="pt_finding", world=ref("world.integer.v1", world_seed=2, obs_regs=4), substrate=ref("substrate.flat.v1"),
+                players=[random_statemachine(3).manifest()], seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 8})
+    base.update(kw); return Experiment(**base)
+
+
+# C4 (playtest A): a permutation CONTROL silently replaced the designer's own observation permutation
+# (wrappers were a dict keyed by name, last writer wins). Wrappers of the same kind must COMPOSE and the
+# receipt must show every one of them.
+def test_same_kind_wrappers_compose_and_are_all_recorded():
+    e = _exp(interventions=[{"name": "a", "wrappers": {"observation_permute": 11}}, {"name": "b", "wrappers": {"observation_permute": 22}},
+                            {"name": "c", "wrappers": {"observation_delay": 1}}, {"name": "d", "wrappers": {"observation_delay": 2}}])
+    w = build_world(e, REG)
+    m = w.manifest()["wrappers"]
+    assert m["observation_permute"] == [11, 22] and m["observation_delay"] == 3
+    # composition is real: the doubly permuted observation differs from either single permutation and from none
+    w.reset(1); obs_ab = w.observe(0)
+    wa = build_world(_exp(interventions=[{"name": "a", "wrappers": {"observation_permute": 11}}]), REG); wa.reset(1); obs_a = wa.observe(0)
+    w0 = build_world(_exp(), REG); w0.reset(1); obs_0 = w0.observe(0)
+    assert sorted(obs_ab) == sorted(obs_0) and obs_ab != obs_0 and obs_ab != obs_a
+
+
+def test_permutation_control_arm_keeps_the_designers_permutation(tmp_path):
+    e = _exp(interventions=[{"name": "scramble", "wrappers": {"observation_permute": 4242}}], controls=[ref("control.permutation.v1")])
+    low = lower(e, REG); assert low.ok
+    arm = [r for r in low.job.runs if r.arm == "permutation"][0].experiment
+    seeds = [iv["wrappers"]["observation_permute"] for iv in arm.interventions if "observation_permute" in iv.get("wrappers", {})]
+    assert seeds[0] == 4242 and len(seeds) == 2
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    armr = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] == "permutation"][0]
+    assert armr["components"]["world"]["manifest"]["wrappers"]["observation_permute"][0] == 4242
+
+
+# C5 (playtest A): the sham and scratch controls only knew statemachine.v1; on a constant or Proteus player
+# they did NOTHING and still reported MET ("cost-matched" holds trivially when nothing changed). A control
+# that could not act on any player must say INDETERMINATE, and every control must record which players it
+# transformed. Transforms become registry components with declared `accepts`.
+from prometheus.toolbox.ref.players import constant_player, random_proteus_player, proteus_available
+
+
+def test_sham_on_untransformable_players_is_indeterminate_not_met(tmp_path):
+    e = _exp(players=[constant_player([1, 2]).manifest()], controls=[ref("control.sham.v1"), ref("control.scratch.v1")])
+    low = lower(e, REG); assert low.ok
+    rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    assert rep.controls["sham"]["outcome"] == "INDETERMINATE" and rep.controls["scratch"]["outcome"] == "INDETERMINATE"
+    assert rep.controls["sham"]["details"][0]["detail"]["transformed_players"] == []
+
+
+def test_controls_record_coverage_on_mixed_players(tmp_path):
+    e = _exp(world=ref("world.integer.v1", world_seed=2, n_players=2), players=[random_statemachine(3).manifest(), constant_player([1, 2]).manifest()],
+             controls=[ref("control.sham.v1")])
+    low = lower(e, REG); rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    assert rep.controls["sham"]["outcome"] == "MET" and rep.controls["sham"]["details"][0]["detail"]["transformed_players"] == [0]
+
+
+@pytest.mark.skipif(not proteus_available(), reason="proteus not importable")
+def test_transforms_cover_proteus_players_too(tmp_path):
+    # seed 17 is a NON-silent Proteus player (C5b: 49/60 random Proteus players emit nothing on the probe and all
+    # share one fingerprint; a silent player's sham is indistinguishable by behaviour, only by genome)
+    e = _exp(players=[random_proteus_player(17).manifest()], controls=[ref("control.sham.v1"), ref("control.scratch.v1")])
+    low = lower(e, REG); rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    # C97: this test used to assert MET for both -- a green with no power: the primary, the shuffled and the fresh
+    # Proteus player leave the SAME world trace (probe-non-silent, run-silent), so the controls compared nothing.
+    # With power they say so.
+    rows = {r["arm"]: r for r in read_all(tmp_path / "r.jsonl") if r["arm"] != "SUMMARY"}
+    assert rows["primary"]["trace_hashes"] == rows["sham"]["trace_hashes"] == rows["scratch"]["trace_hashes"]
+    assert rep.controls["sham"]["outcome"] == "INDETERMINATE" and "no behaviour" in rep.controls["sham"]["details"][0]["detail"]["note"]
+    assert rep.controls["scratch"]["outcome"] == "INDETERMINATE" and rep.controls["scratch"]["details"][0]["detail"]["transformed_players"] == [0]
+    sham = rows["sham"]; prim = rows["primary"]
+    assert sham["accounting"]["params"] == prim["accounting"]["params"]
+    assert prim["science"]["player_fingerprints"]["0"]["silent"] is False
+    assert sham["components"]["players"][0]["manifest_hash"] != prim["components"]["players"][0]["manifest_hash"]
+
+
+@pytest.mark.skipif(not proteus_available(), reason="proteus not importable")
+def test_silent_players_are_flagged_not_hidden_behind_one_hash(tmp_path):
+    e = _exp(players=[random_proteus_player(5).manifest(), constant_player([0, 0]).manifest()], world=ref("world.integer.v1", world_seed=2, n_players=2))
+    low = lower(e, REG); execute(low.job, tmp_path / "r.jsonl", REG)
+    fp = [r for r in read_all(tmp_path / "r.jsonl") if r["arm"] == "primary"][0]["science"]["player_fingerprints"]
+    assert fp["0"]["silent"] is True and fp["1"]["silent"] is True and fp["0"]["hash"] == fp["1"]["hash"]
+
+
+def test_transform_registry_rows_declare_accepts():
+    rows = REG.rows("transform")
+    assert rows and all(r["kind"].startswith("transform.") for r in rows)
+    t = REG.make("transform.shuffle.v1")
+    assert "player.statemachine.v1" in t.accepts
+
+
+# C5c: "the probe never disturbs the run" was false for the Proteus wrap -- snapshot() left out the player's
+# rng and meter, so a fingerprint probe advanced the random stream and inflated the cost counters.
+@pytest.mark.skipif(not proteus_available(), reason="proteus not importable")
+def test_fingerprint_probe_does_not_disturb_a_proteus_run():
+    from prometheus.toolbox.contracts import ActionSpace
+    sub = REG.make("substrate.flat.v1")
+    a = sub.instantiate(random_proteus_player(17), 1); b = sub.instantiate(random_proteus_player(17), 1)
+    a.fingerprint(); a.fingerprint()                    # probed twice
+    cost_before = dict(a.cost()); assert cost_before == b.cost(), "probe changed the meter"
+    obs = [[(t * 31) % 65536, t, 2, 3, 4] for t in range(24)]
+    assert [a.act(o, ActionSpace(2, 8)) for o in obs] == [b.act(o, ActionSpace(2, 8)) for o in obs], "probe changed the random stream"
+
+
+# C7 (building EXP-002): transforms only accepted statemachine.v1; the v2 representation (3-element cells with a
+# memory write) would have made sham/scratch/relabel INDETERMINATE for the whole substrate playtest.
+from prometheus.toolbox.ref.players import random_statemachine_v2
+
+
+def test_transforms_accept_statemachine_v2_and_relabel_preserves_behaviour():
+    spec = random_statemachine_v2(21)
+    for kind in ("transform.shuffle.v1", "transform.fresh.v1", "transform.relabel.v1"):
+        assert "player.statemachine.v2" in REG.make(kind).accepts, kind
+    rel = REG.make("transform.relabel.v1").apply(spec, 99)
+    sub = REG.make("substrate.kv.v1")
+    a, b = sub.instantiate(spec, 1), sub.instantiate(rel, 1)
+    assert a.fingerprint() == b.fingerprint() and rel.payload["table"] != spec.payload["table"]
+    sh = REG.make("transform.shuffle.v1").apply(spec, 99)
+    assert sorted(str(c) for row in sh.payload["table"] for c in row) == sorted(str(c) for row in spec.payload["table"] for c in row)
+
+
+# C8 (EXP-002): sweeping over whole component refs (dict values) crashed the EXECUTOR (unhashable sweep point
+# used as a dict key) -- a designer's legitimate sweep produced a process-level halt, not a receipt.
+def test_sweep_over_component_refs_pairs_control_arms_and_never_halts(tmp_path):
+    e = _exp(controls=[ref("control.replay.v1")], sweep={"substrate": [ref("substrate.flat.v1"), ref("substrate.kv.v1", scope="lifetime")]})
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 4
+    rep = execute(low.job, tmp_path / "r.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["pairs"] == 2 and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C33 (directive s8: "a player is a conventional agent" is not assumed): a REWRITE SYSTEM as a player. Its
+# "policy" is a set of token rewrite rules applied to its own tape; actions are read off the tape; observations
+# are injected as tokens. Nothing in the world, substrate, controls or admission knows what it is.
+from prometheus.toolbox.ref.players import random_rewrite_system
+
+
+def test_rewrite_system_player_runs_and_is_admitted_and_controllable(tmp_path):
+    from prometheus.toolbox.admission import admit
+    from prometheus.toolbox.contracts import ActionSpace
+    spec = random_rewrite_system(5, n_rules=6, alphabet=8, tape_len=12)
+    assert spec.representation == "rewrite.v1"
+    inst = REG.make("substrate.flat.v1").instantiate(spec, 1)
+    acts = [inst.act([t, 1, 2], ActionSpace(2, 8)) for t in range(30)]
+    assert len(set(map(tuple, acts))) > 1 and inst.cost()["rewrites"] > 0
+    assert admit("rewrite.v1", REG).state == "ADMITTED"
+    e = _exp(players=[spec.manifest(), random_statemachine(1).manifest()], world=ref("world.integer.v1", world_seed=2, n_players=2),
+             controls=[ref("control.sham.v1"), ref("control.scratch.v1"), ref("control.replay.v1")])
+    rep = execute(lower(e, REG).job, tmp_path / "rw.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["sham"]["details"][0]["detail"]["transformed_players"] == [0, 1] and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C35 (playtest E rows): the sham arm's players all ran on the FLAT substrate although the primary's players
+# carried per-player substrate overrides -- transforms rebuilt the manifest from a PlayerSpec and dropped the
+# `substrate` key, so the control was not machine-matched (a cost-matching lie by omission).
+def test_transforms_preserve_per_player_substrate_overrides(tmp_path):
+    from prometheus.toolbox.ref.transforms import transform_players
+    players = [dict(random_statemachine_v2(1).manifest(), substrate=ref("substrate.kv.v1", scope="lifetime")), random_statemachine(2).manifest()]
+    out, done = transform_players(REG, "transform.shuffle.v1", players, 5)
+    assert done == [0, 1] and out[0]["substrate"] == ref("substrate.kv.v1", scope="lifetime") and "substrate" not in out[1]
+    e = _exp(players=players, world=ref("world.integer.v1", world_seed=2, n_players=2), controls=[ref("control.sham.v1")])
+    execute(lower(e, REG).job, tmp_path / "s.jsonl", REG)
+    sham = [r for r in read_all(tmp_path / "s.jsonl") if r["arm"] == "sham"][0]
+    assert sham["components"]["player_substrates"] == ["substrate.kv.v1", "substrate.flat.v1"]
+
+
+def test_substrate_science_says_no_reads_instead_of_false_carry_over(tmp_path):
+    from prometheus.toolbox.ref.players import random_rewrite_system
+    e = _exp(players=[random_rewrite_system(3).manifest()], substrate=ref("substrate.stream.v1", scope="lifetime"), budget={"episodes": 2, "horizon": 6})
+    execute(lower(e, REG).job, tmp_path / "n.jsonl", REG)
+    sci = [r for r in read_all(tmp_path / "n.jsonl") if r["arm"] == "primary"][0]["science"]["substrate"]
+    assert sci["carry_over"] is None and sci["reason"] == "no workspace reads"
+
+
+# C36 (mutation ledger survivors): no test ever asserted a NOT_MET control outcome, a forgotten failed run on
+# resume, or a committed view accepting another generation's rows. Three mutants survived the suite; these
+# tests kill them.
+def test_a_cheat_blind_world_makes_the_cheat_control_not_met_and_the_job_invalid(tmp_path):
+    from prometheus.toolbox.ref.worlds import IntegerWorld
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class CheatBlind(IntegerWorld):
+        kind = "world.cheatblind.test"
+
+        def __init__(self, **params):
+            params.pop("_cheat_skip_dynamics", None); super().__init__(**params)     # accepts the flag, ignores it
+    R = REG.fork(); R.register(ComponentRecord("world.cheatblind.test", "world", CheatBlind, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    e = _exp(world=ref("world.cheatblind.test", world_seed=2), controls=[ref("control.cheat.v1"), ref("control.replay.v1")])
+    rep = execute(lower(e, R).job, tmp_path / "cb.jsonl", R)
+    assert rep.controls["cheat"]["outcome"] == "NOT_MET" and rep.controls["cheat"]["not_met"] == 1
+    assert rep.controls["replay"]["outcome"] == "MET" and rep.valid is False
+
+
+def test_resume_counts_failed_runs_that_happened_before_the_interruption(tmp_path, monkeypatch):
+    from prometheus.toolbox.backends import local as L
+    e = _exp(interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"n_regs": 5}}]}], seed_policy={"base": 1, "n_seeds": 3})   # every run FAILS (non-mutable param)
+    job = lower(e, REG).job
+    real = L.run_one; calls = {"n": 0}
+
+    def flaky(spec, registry, receipt_dir=None, **kw):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise KeyboardInterrupt()
+        return real(spec, registry, receipt_dir, **kw)
+    monkeypatch.setattr(L, "run_one", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        execute(job, tmp_path / "rf.jsonl", REG)
+    monkeypatch.setattr(L, "run_one", real)
+    rep = execute(job, tmp_path / "rf.jsonl", REG, resume=True)
+    assert rep.resumed_runs == 2 and rep.n_failed == 3 and rep.n_completed == 0 and rep.valid is False
+
+
+def test_committed_view_rejects_rows_of_another_generation_before_a_marker():
+    from prometheus.toolbox import search as SR
+    rows = [{"kind": "elite", "gen": 1, "fingerprint": "x", "objective": 1.0, "descriptor": [0]},      # written out of order
+            {"kind": "elite", "gen": 0, "fingerprint": "y", "objective": 2.0, "descriptor": [0]},
+            {"kind": "GEN_DONE", "gen": 0}]
+    assert [r["fingerprint"] for r in SR.committed_rows(rows)] == ["y"]
+
+
+# C38 (designer ergonomics): a typo in a world parameter was discovered only at execution, once per run x arm x
+# seed (96 identical FAILED receipts for one mistake). Construction errors belong at LOWERING, once, as
+# TARGET_UNSUPPORTED with the world's own message.
+def test_world_construction_error_is_reported_once_at_lowering():
+    e = _exp(world=ref("world.integer.v1", n_player=2), controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 3})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("unknown params ['n_player']" in r for r in low.reasons)
+
+
+def test_sweep_point_construction_error_names_the_point_at_lowering():
+    e = _exp(sweep={"world.params.n_regs": [4, 0]})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("n_regs" in r and "0" in r for r in low.reasons)
+
+
+# C39: WRAP a second existing runtime with a different shape -- Archaeon's campaign-6 ComposedWorld (explicit
+# state dict, channel observations, one organism, FLOAT pools). The kernel contract must absorb it without an
+# edit to archaeon/: quantised trace, events derived from reward deltas, ADMITTED, runs with a state machine AND
+# a Proteus tape, and it is the world kind the SFE frontier can express (M2 of the F1 mismatch list).
+def test_c6_composed_world_wraps_admits_and_runs_with_mixed_players(tmp_path):
+    from prometheus.toolbox.admission import admit
+    from prometheus.toolbox.ref.players import random_proteus_player, proteus_available
+    kind = "world.c6.composed.v1"
+    if not REG.has(kind) or REG.get(kind).state == "UNAVAILABLE":
+        pytest.skip("archaeon.campaign6 not importable")
+    r = admit(kind, REG); assert r.state == "ADMITTED", r.failed
+    w = REG.make(kind, seed=3, bin=6)
+    assert w.n_players == 1 and w.manifest()["float_state"] is True and w.replay_class == "SEMANTIC" and w.manifest()["quantum"] == 1e-6   # C64
+    players = [random_proteus_player(17).manifest() if proteus_available() else random_statemachine(1).manifest()]
+    e = _exp(world=ref(kind, seed=3, bin=6), players=players, observers=[ref("observer.trace.v1")], seed_policy={"base": 1, "n_seeds": 2},
+             budget={"episodes": 2, "horizon": 24}, controls=[ref("control.replay.v1"), ref("control.negative.v1")])
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "c6.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
+    prim = [x for x in read_all(tmp_path / "c6.jsonl") if x["arm"] == "primary"]
+    assert len({tuple(x["trace_hashes"]) for x in prim}) == 2 and all(x["engineering"]["ticks"] > 0 for x in prim)
+
+
+# C41: a second home-written world, Ludus-shaped (directive s30): ring of nodes, multiple players, persistent
+# objects/tools, contested regenerating resources, partial observability, construction, contact, lifetime state.
+# Nothing in the kernel changes; the questions are whether the contracts suffice and what the rows show.
+def test_grid_world_is_admitted_and_exercises_objects_contact_and_lifetime_state(tmp_path):
+    from prometheus.toolbox.admission import admit
+    r = admit("world.grid.v1", REG); assert r.state == "ADMITTED", r.failed
+    e = _exp(world=ref("world.grid.v1", n_players=3, world_seed=5, start_charge=60), players=[random_statemachine(i, width=3).manifest() for i in (1, 2, 3)],
+             observers=[ref("observer.trace.v1"), ref("observer.series.v1")], controls=[ref("control.replay.v1"), ref("control.cheat.v1"), ref("control.sham.v1")],
+             seed_policy={"base": 1, "n_seeds": 4}, budget={"episodes": 3, "horizon": 40, "world_state": "lifetime"})
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "grid.jsonl", REG)
+    assert rep.n_failed == 0 and rep.valid, rep.controls
+    prim = [x for x in read_all(tmp_path / "grid.jsonl") if x["arm"] == "primary"]
+    ev = {}
+    for x in prim:
+        for k, v in x["science"]["observations"]["observer.trace.v1"]["events_by_kind"].items():
+            ev[k] = ev.get(k, 0) + v
+    assert ev.get("ARTIFACT_CREATE", 0) > 0 and ev.get("ARTIFACT_INVOKE", 0) > 0 and ev.get("CONTACT", 0) > 0 and ev.get("YIELD", 0) > 0, ev
+    assert any(x["science"]["world_summary"]["cells_nonzero"] > 0 for x in prim)
+
+
+# C42 (mutation wave 2 survivors M21/M28): the grid playtest only checked that events OCCURRED. Two wrong
+# implementations survived: tools never consumed; neighbours hidden from the observation. Scripted unit checks.
+def test_grid_tool_is_consumed_by_its_use_and_neighbours_are_observed():
+    from prometheus.toolbox.ref.worlds_grid import GridWorld
+    w = GridWorld(n_nodes=4, n_players=2, world_seed=1, start_charge=50, step_cost=0, move_cost=0, read_gain=5, write_cost=2)
+    w.reset(1)
+    w._state["pos"] = [0, 0]                                       # both on node 0 (scripted; a test may set the state it needs)
+    assert w.observe(0)[4] == 1 and w.observe(1)[4] == 1           # each sees one neighbour
+    w.step({0: [0, 2, 7], 1: [0, 0, 0]})                           # player 0 WRITES 7
+    assert w.observe(1)[2] == 7 and w.observe(1)[3] == 1           # player 1 sees a cell written by someone else
+    c_before = w._state["charge"][1]
+    w.step({0: [0, 0, 0], 1: [0, 3, 0]})                           # player 1 READS -> paid, tool consumed
+    assert w._state["charge"][1] == c_before + 5 and w._state["cells"][0] == 0 and w._state["owner"][0] == -1
+    c2 = w._state["charge"][1]
+    w.step({0: [0, 0, 0], 1: [0, 3, 0]})                           # a second READ finds nothing
+    assert w._state["charge"][1] == c2
+    w._state["pos"] = [0, 2]
+    assert w.observe(0)[4] == 0                                    # alone now
+
+
+# C48: two observers of the SAME kind with different params (two descriptor scales, two series bounds) collided
+# on the receipt's kind-keyed maps -- the second silently overwrote the first. Duplicate kinds are keyed kind#i.
+def test_two_observers_of_one_kind_are_both_recorded(tmp_path):
+    e = _exp(observers=[ref("observer.descriptor.v1", action_scale=1, yield_scale=8), ref("observer.descriptor.v1", action_scale=4, yield_scale=64),
+                        ref("observer.series.v1"), ref("observer.series.v1", enabled=False)],
+             world=ref("world.integer.v1", world_seed=2, start_charge=100000, step_cost=0), budget={"episodes": 1, "horizon": 20})
+    execute(lower(e, REG).job, tmp_path / "dup.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "dup.jsonl") if x["arm"] == "primary"][0]
+    obs = r["science"]["observations"]
+    assert "observer.descriptor.v1" in obs and "observer.descriptor.v1#1" in obs and obs["observer.descriptor.v1"]["descriptor"] != obs["observer.descriptor.v1#1"]["descriptor"]
+    assert r["series"]["observer.series.v1"]["status"] == "PRESENT" and r["series"]["observer.series.v1#3"]["status"] == "DISABLED"
+    assert [o["kind"] for o in r["components"]["observers"]] == ["observer.descriptor.v1", "observer.descriptor.v1", "observer.series.v1", "observer.series.v1"]
+
+
+# C49: an objective penalty naming an accounting key that never exists (a typo: ws_read for ws_reads) silently
+# penalised nothing -- a false zero that looked like "memory is free". Unknown penalty keys are reported.
+def test_objective_reports_penalty_keys_that_never_appear(tmp_path):
+    e = _exp(objective=ref("objective.yield_net.v1", penalties={"ws_read": 1.0, "ops": 0.01}), substrate=ref("substrate.kv.v1"), players=[random_statemachine_v2(1).manifest()])
+    execute(lower(e, REG).job, tmp_path / "pen.jsonl", REG)
+    obj = [x for x in read_all(tmp_path / "pen.jsonl") if x["arm"] == "primary"][0]["science"]["objective"]
+    assert obj["components"]["unknown_penalty_keys"] == ["ws_read"] and obj["components"]["penalties"]["ops"] > 0
+
+
+# C52: a world declared for 3 players given 2 player specs ran with a silent phantom third player that never
+# acted (and could still win survival). The player count must match at lowering.
+def test_player_count_must_match_the_world_at_lowering():
+    e = _exp(world=ref("world.integer.v1", world_seed=2, n_players=3), players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()])
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("n_players" in r and "2" in r and "3" in r for r in low.reasons)
+
+
+# C63: SEMANTIC replay was a word in the contract with no operational meaning (the replay control returned
+# INDETERMINATE). Operationalised: a float-state world declares replay_class SEMANTIC and a `quantum`; its trace
+# hashes state QUANTISED at that quantum, declared before any run; replay compares those hashes; the receipt
+# carries the quantum. world.pendulum.v1 (math.sin/cos, libm-dependent) is the reference SEMANTIC world.
+def test_semantic_world_declares_quantum_and_replay_control_compares_quantised_traces(tmp_path):
+    from prometheus.toolbox.admission import admit
+    kind = "world.pendulum.v1"
+    w = REG.make(kind, quantum=1e-6)
+    assert w.replay_class == "SEMANTIC" and w.manifest()["quantum"] == 1e-6 and "ext.replay.semantic.v1" in w.capabilities and "ext.continuous_actions.v1" in w.capabilities
+    assert admit(kind, REG).state == "ADMITTED"
+    e = _exp(world=ref(kind, quantum=1e-6), players=[random_statemachine(3).manifest()], controls=[ref("control.replay.v1"), ref("control.cheat.v1")],
+             observers=[ref("observer.trace.v1")], budget={"episodes": 2, "horizon": 30}, seed_policy={"base": 1, "n_seeds": 2})
+    rep = execute(lower(e, REG).job, tmp_path / "pend.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["replay"]["details"][0]["detail"]["class"] == "SEMANTIC"
+    assert rep.controls["cheat"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "pend.jsonl") if x["arm"] == "primary"][0]
+    assert r["replay_class"] == "SEMANTIC" and r["components"]["world"]["manifest"]["quantum"] == 1e-6
+    # the quantum is a CONDITION: a coarser quantum gives a different (coarser) trace, declared, not widened after the fact
+    w1 = REG.make(kind, quantum=1e-6); w2 = REG.make(kind, quantum=1e-2)
+    for wx in (w1, w2):
+        wx.reset(1)
+        for _ in range(10):
+            wx.step({0: [3, 5]})
+    assert w1.trace_hash() != w2.trace_hash()
+
+
+# C71: wrapped engines had no cheat mechanism (wforge: "note", never a cheat arm). The WRAPPER now implements the
+# kernel cheat at its own level: _cheat_skip_dynamics freezes the engine (no step), so control.cheat.v1 applies
+# to every wrap without editing the engine. Skipped where wforge is absent.
+def test_wrapper_level_cheat_makes_the_cheat_control_apply_to_wforge(tmp_path):
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    n = REG.make("world.wforge.encounter.v0", genome_seed=1).n_players
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), players=[random_statemachine(i).manifest() for i in range(n)],
+             controls=[ref("control.cheat.v1"), ref("control.replay.v1")], interventions=[])
+    rep = execute(lower(e, REG).job, tmp_path / "wf.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["cheat"]["outcome"] == "MET" and rep.controls["replay"]["outcome"] == "MET"
+
+
+# C72 (directive s8 "execution is synchronous"): turn-taking / asynchronous action is EXPRESSIBLE inside the one
+# loop: a world hands a player an ActionSpace of width 0 on ticks it may not act. The kernel, every reference
+# representation and the observers must survive width-0 action spaces (players return []).
+def test_width_zero_action_space_expresses_turn_taking(tmp_path):
+    from prometheus.toolbox.ref.worlds import IntegerWorld
+    from prometheus.toolbox.contracts import ActionSpace
+    from prometheus.toolbox.registry import ComponentRecord
+
+    class RoundRobin(IntegerWorld):
+        kind = "world.roundrobin.test"
+
+        def legal_actions(self, pid):
+            return ActionSpace(self.p["act_width"], self.p["act_range"]) if (self._state["tick"] % self.n_players) == pid else ActionSpace(0, self.p["act_range"])
+    R = REG.fork(); R.register(ComponentRecord("world.roundrobin.test", "world", RoundRobin, IntegerWorld.capabilities, route="write", provenance={"author": "test"}, license="repository"))
+    from prometheus.toolbox.ref.players import random_statemachine_v2, random_rewrite_system, constant_player
+    e = _exp(world=ref("world.roundrobin.test", world_seed=2, n_players=3, start_charge=100000, step_cost=0),
+             players=[random_statemachine(1).manifest(), random_statemachine_v2(2).manifest(), random_rewrite_system(3).manifest()],
+             observers=[ref("observer.trace.v1"), ref("observer.series.v1", per_player=True)], controls=[ref("control.replay.v1")], budget={"episodes": 1, "horizon": 12})
+    rep = execute(lower(e, R).job, tmp_path / "rr.jsonl", R); assert rep.n_failed == 0 and rep.valid
+    r = [x for x in read_all(tmp_path / "rr.jsonl") if x["arm"] == "primary"][0]
+    acts = r["science"]["observations"]["observer.trace.v1"]["actions_by_player"]
+    # each player acted on a third of the ticks: its ACTION events count 12 (every tick is recorded) but magnitudes only on its turns
+    assert all(int(v) >= 0 for v in acts.values()) and r["engineering"]["ticks"] == 12
+
+
+# C133: the transforms' laws as a PROPERTY over random players: every transform keeps the representation and
+# returns a manifest the substrate instantiates; relabel preserves behaviour (same probe fingerprint) with a
+# different table; shuffle preserves the multiset of cells and the parameter count; fresh changes the genome;
+# point_mutation changes exactly one cell of a state machine; the same seed gives the same result (determinism).
+@pytest.mark.parametrize("seed", list(range(1200, 1240)))
+def test_transform_laws_over_random_players(seed):
+    import random, json
+    from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, random_statemachine_v3, random_rewrite_system, fingerprint_by_probe
+    from prometheus.toolbox.contracts import component_manifest_hash
+    rnd = random.Random(seed)
+    spec = rnd.choice([random_statemachine(seed, rnd.choice([2, 4, 6]), rnd.choice([4, 8])), random_statemachine_v2(seed, rnd.choice([2, 4]), rnd.choice([4, 8])),
+                       random_statemachine_v3(seed, rnd.choice([2, 4]), rnd.choice([4, 8])), random_rewrite_system(seed, rnd.choice([1, 4]), rnd.choice([2, 8]))])
+    sub = REG.make("substrate.kv.v1")
+    cells = lambda s: sorted(json.dumps(c, sort_keys=True) for row in s.payload["table"] for c in row) if "table" in s.payload else None
+    for kind in ("transform.shuffle.v1", "transform.fresh.v1", "transform.relabel.v1", "transform.point_mutation.v1"):
+        t = REG.make(kind)
+        if "player." + spec.representation not in t.accepts:
+            continue
+        out = t.apply(spec, seed * 7); again = t.apply(spec, seed * 7)
+        assert out.representation == spec.representation and out.manifest() == again.manifest(), (seed, kind)
+        inst = sub.instantiate(out, 1); assert inst.act([1, 2, 3, 4, 5], REG.make("world.integer.v1").legal_actions(0)) is not None
+        if kind == "transform.relabel.v1":
+            assert fingerprint_by_probe(sub.instantiate(out, 1)) == fingerprint_by_probe(sub.instantiate(spec, 1)), (seed, kind)
+        if kind == "transform.shuffle.v1" and cells(spec) is not None:
+            assert cells(out) == cells(spec) and len(cells(out)) == len(cells(spec)), (seed, kind)
+        if kind == "transform.fresh.v1":
+            assert component_manifest_hash(out.manifest()) != component_manifest_hash(spec.manifest()), (seed, kind)
+        if kind == "transform.point_mutation.v1":
+            diff = sum(1 for a, b in zip(spec.payload["table"], out.payload["table"]) for x, y in zip(a, b) if x != y)
+            assert diff == 1, (seed, kind, diff)
+
+
+def test_point_mutation_never_returns_the_parent():
+    """C133: the old v2/v3 memory branches drew a fresh value that could equal the old one -- 4% of mutations were
+    no-ops (16 of 400 measured); mutant M76 survived the 40-seed property because no seed hit a v2 no-op. 600 here."""
+    from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, random_statemachine_v3
+    t = REG.make("transform.point_mutation.v1"); n = 0
+    for seed in range(200):
+        for spec in (random_statemachine(seed, 1 + seed % 3, 4), random_statemachine_v2(seed, 1 + seed % 3, 4, mem_range=2 + seed % 5), random_statemachine_v3(seed, 1 + seed % 3, 4, mem_range=2 + seed % 5)):
+            out = t.apply(spec, seed * 13 + 1)
+            diff = sum(1 for a, b in zip(spec.payload["table"], out.payload["table"]) for x, y in zip(a, b) if x != y)
+            assert diff == 1, (seed, spec.representation, spec.payload["n_states"]); n += 1
+    assert n == 600
+
+
+# C138: the descriptor is a FUNCTION of the trace measures (a property over random receipts): abstain bucket =
+# abstentions*8 // (ticks*players) in 0..8, magnitude bucket = actions_total // (ticks*players*action_scale) capped
+# at 7, yield bucket = yield_total // yield_scale capped at 7 -- recomputed from the same receipt's trace observer.
+@pytest.mark.parametrize("seed", list(range(1500, 1540)))
+def test_descriptor_is_a_function_of_the_trace_measures(tmp_path, seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    rnd = random.Random(seed)
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    a_s, y_s = rnd.choice([1, 2, 5]), rnd.choice([1, 8, 40])
+    e.observers = [ref("observer.trace.v1"), ref("observer.descriptor.v1", action_scale=a_s, yield_scale=y_s)]
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    for r in read_all(tmp_path / "r.jsonl"):
+        if r["arm"] == "SUMMARY" or r["status"] != "COMPLETED":
+            continue
+        tr = r["science"]["observations"]["observer.trace.v1"]; de = r["science"]["observations"]["observer.descriptor.v1"]
+        n = len(r["components"]["players"]); t = max(1, tr["ticks"]); nn = max(1, n)
+        exp = [sum(tr["abstain_by_player"].values()) * 8 // (t * nn), min(7, tr["actions_total"] // (t * nn * a_s)), min(7, tr["yield_total"] // y_s)]
+        assert de["descriptor"] == exp, (seed, de["descriptor"], exp, tr)
+        assert {k: v for k, v in de.items() if k != "descriptor"} == tr                  # the descriptor observer IS the trace observer plus the descriptor

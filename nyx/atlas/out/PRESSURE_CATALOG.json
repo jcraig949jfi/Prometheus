@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:27Z",
- "n": 157,
+ "built": "2026-09-19T10:08Z",
+ "n": 171,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -18,6 +18,23 @@
    "cheat_control": "an organism given the plant model (an exact inverse) must track with zero overshoot at zero derivative kick; the textbook PID must overshoot after saturation; derivative-on-error must spike on the step: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: embedded feedback control (Beauregard 2011-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "asal-sakana-2024::P.an_open_ended_search_scored_only_by_an_observer_s_embedding_of_a_few_sampled_frames_must_be_shown_either_to_reward_genuine_dynamical_novelty_or_to_be_crossable_by_drift_producing_configurations_within_the_legitimate_substrate",
+   "source_fossil": "asal-sakana-2024",
+   "source_evidence": "asal_metrics.py:52-64; rollout.py:78-95; TECHNE-107 (E1); Harmonia's PREREG_ASAL_LEGIT_SEARCH_2026-09-18",
+   "condition": "an organism searches a substrate's parameters to minimise the ASAL open-endedness score (mean max-cosine-to-earlier-frame over 8 sampled frames); the score cannot see the dynamics between samples or anything the observer's embedding discards; the question is whether a legitimate (ALIVE) configuration can reach a score at or below what scene-level garbage achieves",
+   "resource_or_constraint": "a fixed rollout-and-embed budget; the substrate's real parameter envelope",
+   "failure_condition": "for the metric-as-novelty claim: a legitimate ALIVE rollout crossing below the garbage score by drift rather than by any property one would call novelty",
+   "world_punishes": "trusting an observer-embedding score as a novelty measure without a substrate-side control",
+   "world_rewards": "a search that finds embedding-dissimilar frame sequences, alive or not",
+   "observable_consequence": "the minimum ALIVE score reached by a preregistered search over the Lenia catalogue and its parameter envelope, versus the garbage score (0.8167) and versus the catalogue with no search; and the class (genuine / metric-exploit / observer-exploit) of the best crosser",
+   "vacuity_condition": "a substrate too small to produce embedding drift",
+   "trivial_shortcuts": "free images not tied to any substrate (Harmonia's C-POS-SEARCH control, which is exactly the shortcut the legitimate-search question excludes)",
+   "cheat_control": "feeding fixed garbage frames scores the fixed value regardless of the Lenia parameters (the score depends only on the frames); a free-image search must reach below the garbage score (the channel works); a blank world must score the (T-1)/T ceiling and be NOT_ALIVE: Harmonia's fixture shows all three",
+   "cost_class": "GPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automated open-ended ALife search (SakanaAI 2024)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -956,6 +973,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "filterpy-labbe::P.a_nonlinear_dynamical_state_must_be_estimated_from_noisy_measurements_without_computing_jacobians_when_the_nonlinearity_is_strong_and_some_state_components_live_on_a_circle_not_a_line",
+   "source_fossil": "filterpy-labbe",
+   "source_evidence": "sigma_points.py; unscented_transform.py; the record's example systems",
+   "condition": "an organism tracks a state through nonlinear process and measurement functions; linearisation (the EKF) is inaccurate; some components are angles that wrap; the score is estimate error and consistency against a linear-Gaussian ground truth where one exists",
+   "resource_or_constraint": "2n+1 function evaluations per step; a covariance square root",
+   "failure_condition": "divergence on strong nonlinearity (EKF's failure), or a covariance corrupted by treating angular residuals as linear",
+   "world_punishes": "a Jacobian-based filter on a non-smooth map; naive subtraction of angles",
+   "world_rewards": "deterministic sigma points and weighted-moment recovery with manifold-aware mean/residual",
+   "observable_consequence": "RMS error and filter consistency (NEES) on a bearings-only or reentry tracking problem for the EKF vs the UKF, and with vs without the angular residual function; exact match to the KF on a linear-Gaussian system",
+   "vacuity_condition": "a linear-Gaussian system (the UKF reduces to the KF)",
+   "trivial_shortcuts": "the true Jacobian where it exists (the EKF's best case, which the world uses as a control)",
+   "cheat_control": "on a linear-Gaussian system the UKF must equal the exact Kalman filter to round-off; the EKF must diverge on a strongly nonlinear map where the UKF holds; the angular residual removed must corrupt the heading covariance: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference Bayesian filters (Labbe 2014-, with the book)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "genann::P.a_fixed_parametric_map_must_reduce_error_on_examples_presented_one_at_a_time_using_only_a_local_error_signal_per_parameter",
    "source_fossil": "genann",
    "source_evidence": "genann.c genann_train; record tags backpropagation / learning",
@@ -1021,6 +1055,23 @@
    "cheat_control": "count syscalls per release with and without sleepers (not run)",
    "cost_class": "one extra CAS before sleeping",
    "purpose_separated_from_pressure": "PURPOSE: fast uncontended locking",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "glpk-5.0::P.a_linear_program_must_be_solved_to_a_vertex_optimum_when_the_number_of_pivots_depends_on_the_choice_of_entering_column_and_the_cached_solution_drifts_numerically",
+   "source_fossil": "glpk-5.0",
+   "source_evidence": "spxprim.c csa; spxchuzc.c",
+   "condition": "an organism pivots among bases of a sparse LP; the score is pivots to optimality and correctness of the final basis under floating point",
+   "resource_or_constraint": "a factorised basis; per-iteration updates",
+   "failure_condition": "cycling or an exponential pivot count (bad pricing), or a wrong optimum from drifted values",
+   "world_punishes": "textbook pricing; never refreshing",
+   "world_rewards": "steepest-edge weights; status-tracked recomputation",
+   "observable_consequence": "pivot count and final residual on netlib LPs for textbook vs PSE vs Devex pricing, with refresh on and off",
+   "vacuity_condition": "a problem whose first basis is optimal",
+   "trivial_shortcuts": "an interior-point method (which the body also has; the world compares them)",
+   "cheat_control": "an organism given the optimal basis must verify it in one iteration; textbook pricing must show more pivots on the degenerate netlib instances; no-refresh must show residual growth: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: linear programming (Makhorin 2000-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1259,6 +1310,23 @@
    "cheat_control": "a controller handed d must show zero error at any bandwidth; the same architecture with tau -> 0 (no filter) must show noise amplification: the world must show both",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: L1 adaptive control demonstration (Hovakimyan & Cao 2010 architecture)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "lapack-reference::P.a_dense_matrix_factorisation_must_run_near_the_machine_peak_across_architectures_with_different_cache_hierarchies_while_the_numerical_algorithm_stays_identical_and_portable",
+   "source_fossil": "lapack-reference",
+   "source_evidence": "dgetrf.f blocking; dgetrf2.f recursion; the record's LINPACK-vs-LAPACK framing",
+   "condition": "an organism factorises dense matrices on machines whose speed is bounded by memory bandwidth, not flop rate; the numerical result must be identical everywhere; the tuned kernel differs per machine",
+   "resource_or_constraint": "cache; a tuned Level-3 BLAS per target",
+   "failure_condition": "a portable code that runs at a fraction of peak because it reuses cached data O(1) times (LINPACK's Level-1 form)",
+   "world_punishes": "rank-1 updates; unblocked factorisation",
+   "world_rewards": "blocking so the update is a matrix-matrix product with O(NB) reuse",
+   "observable_consequence": "fraction of peak on the LINPACK benchmark for the Level-1 (linpackd) vs Level-3 (dgetrf) formulations on the same host with a tuned BLAS, at identical residual",
+   "vacuity_condition": "matrices smaller than the cache",
+   "trivial_shortcuts": "a vendor library (which the world may allow as the tuned-BLAS control)",
+   "cheat_control": "an organism with a perfectly tuned BLAS must approach peak; the unblocked LINPACK form must show the memory-bound ceiling; both must give the same residual: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: portable near-peak dense linear algebra (Anderson et al. 1992-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1755,6 +1823,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "ncompress-5.0-lzw-1985::P.a_stream_must_be_compressed_adaptively_in_one_pass_with_a_bounded_dictionary_when_the_input_statistics_may_change_partway_through_and_no_second_pass_or_floating_point_is_available",
+   "source_fossil": "ncompress-5.0-lzw-1985",
+   "source_evidence": "compress.c the LZW loop and the checkpoint block",
+   "condition": "an organism compresses a stream it sees once, with a fixed maximum dictionary size; the input's character may change (text then binary); the score is compressed size and single-pass, integer-only operation",
+   "resource_or_constraint": "a dictionary of 2^maxbits entries; integer arithmetic",
+   "failure_condition": "coding a changed input against a stale full dictionary (ratio collapse), or needing a second pass",
+   "world_punishes": "freezing the dictionary when full; a static model",
+   "world_rewards": "widening codes as the table fills and clearing it when the ratio stops improving",
+   "observable_consequence": "compressed size on a concatenation of two differently-distributed halves for the freeze-when-full variant vs the ratio-reset variant; ratio over position",
+   "vacuity_condition": "a stationary stream that fits the dictionary",
+   "trivial_shortcuts": "a two-pass modeller (which the single-pass requirement forbids)",
+   "cheat_control": "a two-pass optimal coder bounds the size; the freeze-when-full coder must show the ratio collapse on the second half; the ratio-reset coder must recover: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: adaptive single-pass compression (Welch 1984; compress(1) 1985; ncompress continuation)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "odepack-netlib::P.dynamics_with_widely_separated_time_scales_under_a_finite_step_budget_and_an_accuracy_tolerance",
    "source_fossil": "odepack-netlib",
    "source_evidence": "record human_failure_condition; DLSODE 1494/500; DSTODE 410-445",
@@ -1803,6 +1888,23 @@
    "cheat_control": "a controller fed the exact optimal step sequence must score zero rejections; a controller with hysteresis disabled must show more changes on the same problem: if the world cannot see the difference it is not measuring chatter",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: adaptive step/order control (Gear/Hindmarsh)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "openssl-1.0.1f-heartbleed::P.a_network_service_that_echoes_a_caller_supplied_length_must_validate_that_length_against_the_bytes_actually_received_before_using_it_to_size_or_fill_a_reply",
+   "source_fossil": "openssl-1.0.1f-heartbleed",
+   "source_evidence": "the two handlers; the 1.0.1g bounds-check diff; RFC 6520",
+   "condition": "an organism parses an untrusted message containing a length field and produces a reply built from that many bytes of an input buffer; the message's declared length may not match the bytes the peer actually sent; the score is whether the reply ever contains bytes the peer did not supply",
+   "resource_or_constraint": "one comparison against the received record length",
+   "failure_condition": "a reply assembled from more of the buffer than the request delivered (an over-read), which is the defect",
+   "world_punishes": "trusting the declared length; sizing a copy from it without a check",
+   "world_rewards": "comparing the declared length to the received length and rejecting the mismatch (the 1.0.1g fix)",
+   "observable_consequence": "on a differential test between 1.0.1f and 1.0.1g with requests whose declared length exceeds the sent bytes: 1.0.1f produces an over-long response, 1.0.1g returns nothing; this is a present-vs-absent-check comparison, run in a sandboxed test harness, not an extraction against any live service",
+   "vacuity_condition": "requests whose declared length always equals the bytes sent",
+   "trivial_shortcuts": "rejecting all heartbeats (which the keep-alive requirement forbids)",
+   "cheat_control": "the fixed release (1.0.1g) is the reference: on the same crafted-length test inputs it must never emit a response longer than the request, where 1.0.1f does; the fossil is the before, the fix is the oracle",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: (D)TLS heartbeat / keep-alive (RFC 6520), preserved as the CVE-2014-0160 case study",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1976,6 +2078,40 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "poet-original-2019::P.an_open_ended_environment_generator_must_keep_producing_challenges_its_agents_can_just_barely_learn_while_bounded_compute_forces_it_to_discard_environments_and_a_never_pruned_memory_keeps_penalising_the_regions_it_discarded",
+   "source_fossil": "poet-original-2019",
+   "source_evidence": "vault:poet-original-2019/upstream/tree/poet_distributed/novelty.py:18-62; vault:poet-original-2019/upstream/tree/poet_distributed/poet_algo.py:264-268, 287-305, 343-352",
+   "condition": "a population of environments is co-evolved with a population of agents under a fixed niche budget; candidates are ordered by novelty against an archive that is never pruned and admitted only if a transferred agent scores inside a fixed two-sided band; when the budget is exceeded the oldest active environments are deleted",
+   "resource_or_constraint": "max_num_envs concurrent niches; a fixed evaluation budget per adjustment step",
+   "failure_condition": "for the open-endedness claim: the process stalls because the admissible band, measured against a rising competence, and the deflating novelty estimator together stop admitting anything new",
+   "world_punishes": "discarding environments by age while continuing to score novelty against them forever",
+   "world_rewards": "generating environments that are different in the five descriptor numbers AND solvable-but-not-solved by some current agent",
+   "observable_consequence": "the admitted-environment rate over run time; the novelty score of admitted candidates as a function of archive size; whether the deleted regions continue to suppress candidates near them",
+   "vacuity_condition": "an environment space too small for the descriptor to separate, or a capacity never reached",
+   "trivial_shortcuts": "mutating only the dominant unnormalised features (roughness, pit gaps) to score novelty cheaply while leaving the stump features -- and the actual difficulty -- untouched",
+   "cheat_control": "a candidate that differs ONLY in stump_height must score lower novelty than an equally-sized difference in ground_roughness if the unnormalised-dominance reading is right; and an archive of fewer than k members must yield the whole-archive mean rather than a k-nearest mean",
+   "cost_class": "cluster-scale for the full algorithm; the novelty organ alone is milliseconds",
+   "purpose_separated_from_pressure": "PURPOSE: paired open-ended environment/agent co-evolution (Uber AI 2019)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "py-vollib-lets-be-rational::P.the_volatility_implied_by_an_option_price_must_be_recovered_to_machine_precision_in_a_fixed_number_of_steps_across_all_moneyness_regimes_where_a_generic_root_finder_takes_an_input_dependent_number_of_iterations",
+   "source_fossil": "py-vollib-lets-be-rational",
+   "source_evidence": "implied_volatility.py; the record's 'two iterations' claim",
+   "condition": "an organism inverts a monotone but stiff price-to-volatility map for a stream of quotes spanning deep in, at, and deep out of the money; the score is accuracy and the worst-case iteration count over the stream",
+   "resource_or_constraint": "closed-form derivatives of the price; a fixed step budget",
+   "failure_condition": "an iteration count that blows up near the money or in the wings, or a loss of precision at the regime boundaries",
+   "world_punishes": "bisection (linear, input-dependent); Newton from a fixed guess (diverges in the wings)",
+   "world_rewards": "a regime-aware rational-cubic guess plus a third-order step",
+   "observable_consequence": "iterations to double precision vs moneyness for bisection, Newton, and the rational-guess Householder method on a grid of forwards/strikes; error at the intrinsic-value boundary",
+   "vacuity_condition": "at-the-money quotes only",
+   "trivial_shortcuts": "a lookup table (which the world defeats by spanning the regimes continuously)",
+   "cheat_control": "an organism given the true volatility (invert the analytic Black price of a known vol) must return it to machine precision; bisection must show the input-dependent iteration count; Newton from a flat guess must fail in the wings: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: implied-volatility inversion (Jaeckel 2013; py_vollib packaging)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "pybreaker-1.2.0::P.a_caller_of_a_failing_dependency_must_stop_calling_it_quickly_keep_its_own_latency_bounded_and_notice_recovery_without_flooding_the_dependency_while_many_callers_decide_independently",
    "source_fossil": "pybreaker-1.2.0",
    "source_evidence": "the three state classes; the Redis storage's set-if-greater",
@@ -2061,6 +2197,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "quadpack-netlib::P.a_definite_integral_must_be_computed_to_a_requested_tolerance_with_the_fewest_evaluations_when_the_integrand_may_have_end_point_singularities_and_the_organism_must_report_when_it_cannot_trust_its_own_error_estimate",
+   "source_fossil": "quadpack-netlib",
+   "source_evidence": "dqagse.f; dqelg.f",
+   "condition": "an organism integrates a black-box f over [a, b]; some integrands are smooth, some have algebraic or logarithmic end-point singularities, some are pathological; the score is evaluations to reach the tolerance and the honesty of the reported error",
+   "resource_or_constraint": "function evaluations; a subdivision limit",
+   "failure_condition": "a wrong answer reported as converged, or evaluations growing without bound on a singular integrand",
+   "world_punishes": "uniform refinement; no error estimate; no extrapolation",
+   "world_rewards": "embedded error estimates, worst-first bisection, sequence extrapolation with round-off detection",
+   "observable_consequence": "evaluations and true error vs reported error on the Piessens test set with extrapolation on and off",
+   "vacuity_condition": "polynomial integrands",
+   "trivial_shortcuts": "an integrand-specific change of variables (which the world withholds)",
+   "cheat_control": "an organism given the analytic integral must report zero error; bisection without extrapolation must need orders of magnitude more evaluations on x^-0.5-type integrands; the pathological integrand must return ier != 0 rather than a confident wrong answer: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automatic quadrature (Piessens et al. 1983)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "radamsa-0.6::P.one_parser_faces_unbounded_malformed_input_with_no_signal_back_from_it",
    "source_fossil": "radamsa-0.6",
    "source_evidence": "record pressure / failure; the mutation menu",
@@ -2112,6 +2265,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "redlock-py-redis-2014::P.a_shared_resource_must_be_held_by_at_most_one_client_at_a_time_using_only_independent_key_value_stores_with_ttls_when_clients_and_stores_can_fail_and_clocks_can_drift",
+   "source_fossil": "redlock-py-redis-2014",
+   "source_evidence": "Redlock.lock; the unlock script; the distlock note and Kleppmann's critique (record)",
+   "condition": "N independent stores with expiring keys; many clients race for one resource; stores and clients crash; clocks are imperfect; the score is whether two clients ever both believe they hold the lock, and whether the resource is ever left locked forever",
+   "resource_or_constraint": "N stores; a TTL; a drift margin",
+   "failure_condition": "two simultaneous holders (a safety violation), or a permanently locked resource after a crash",
+   "world_punishes": "a single store (a point of failure); a plain DEL release; ignoring elapsed time and drift",
+   "world_rewards": "majority acquisition, a validity window, unique-value check-and-delete, TTL expiry",
+   "observable_consequence": "the count of double-holds and stuck locks under injected store crashes, client pauses and clock skew, for the majority+validity algorithm vs a single-store lock; the sensitivity of double-holds to a pause longer than the validity",
+   "vacuity_condition": "one client",
+   "trivial_shortcuts": "a linearizable consensus service (Raft/Paxos, in this atlas) which the world may offer as the stronger control",
+   "cheat_control": "a Raft-backed lock must show zero double-holds under the same faults; the single-store lock must fail when that store crashes; Redlock must hold except when a pause exceeds the validity (Kleppmann's case): the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: distributed mutual exclusion over Redis (antirez 2014)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "reed-solomon-rockliff-1991::P.independent_symbol_corruption_with_a_fixed_redundancy_budget",
    "source_fossil": "reed-solomon-rockliff-1991",
    "source_evidence": "the header; main",
@@ -2143,6 +2313,23 @@
    "cheat_control": "an organism given the true value must score zero error; the fixed-alpha smoother must show the lag/noise trade-off this filter claims to escape: the world must show both",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: cheap scalar smoothing on Arduino (Sene 2017)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "souffle-2.4.1::P.a_set_of_recursive_logical_rules_over_a_large_fact_base_must_be_evaluated_to_its_least_model_without_re_deriving_any_tuple_and_without_holding_more_relations_resident_than_the_current_stratum_needs",
+   "source_fossil": "souffle-2.4.1",
+   "source_evidence": "UnitTranslator.cpp semi-naive generation; the RAM and index inventory",
+   "condition": "an organism computes the closure of recursive rules (e.g. reachability, points-to) over millions to billions of base facts; the score is time and peak memory; naive evaluation re-derives every tuple every round",
+   "resource_or_constraint": "memory for the relations and their deltas; index structures",
+   "failure_condition": "re-deriving tuples (naive evaluation's quadratic waste), holding expired relations, or a general index where a specialised one would fit",
+   "world_punishes": "naive fixpoint; one index type for all relations; interpreting when speed is needed",
+   "world_rewards": "semi-naive delta evaluation, SCC stratification with expiry, per-relation specialised indexes, optional compilation",
+   "observable_consequence": "time and peak memory on a transitive-closure or points-to benchmark for naive vs semi-naive, and interpreted vs compiled, and general B-tree vs Brie indexes on dense relations",
+   "vacuity_condition": "non-recursive rules (one pass)",
+   "trivial_shortcuts": "materialising the full closure by hand (the answer, not a method)",
+   "cheat_control": "an organism given the least model must reproduce it; naive evaluation must show the re-derivation blowup on transitive closure; a single-index build must show the memory/time penalty on dense relations where the Brie wins: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: high-performance Datalog for program analysis (Scholz et al. 2016)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2384,6 +2571,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "tinyscheme-1.42::P.a_lexically_scoped_functional_language_with_proper_tail_calls_and_first_class_continuations_must_be_interpreted_in_bounded_c_stack_from_one_small_file",
+   "source_fossil": "tinyscheme-1.42",
+   "source_evidence": "scheme.c eval/apply loop; the dump stack",
+   "condition": "an organism interprets a language whose programs recurse deeply and use tail recursion for iteration and call/cc for non-local control; the score is correct tail-call space behaviour, working call/cc, and code size",
+   "resource_or_constraint": "the C stack (must not grow on tail calls); one file",
+   "failure_condition": "C-stack overflow on a tail-recursive loop, or call/cc that cannot re-enter a past control point",
+   "world_punishes": "a C-recursive evaluator (grows the stack); a language without reified continuations",
+   "world_rewards": "an iterative dispatch loop with a heap continuation stack",
+   "observable_consequence": "C-stack depth on a million-iteration named-let loop, and the behaviour of a generator built from call/cc, for the dispatch-loop interpreter vs a C-recursive one",
+   "vacuity_condition": "programs without recursion or continuations",
+   "trivial_shortcuts": "a host language with tail calls and continuations (which C is not)",
+   "cheat_control": "an organism given a host with proper tail calls must show constant stack; a C-recursive Scheme must overflow on the loop; call/cc removed must fail the generator: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a small embeddable Scheme (Moriwaki 1989; Shapiro et al. 2000-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "tinystm-marlier::P.arbitrary_code_must_run_atomically_and_in_isolation_on_many_cores_without_programmer_locks_such_that_conflicting_transactions_detect_each_other_cheaply_and_long_read_mostly_transactions_are_not_starved_by_frequent_small_commits",
    "source_fossil": "tinystm-marlier",
    "source_evidence": "stm_internal.h lock words; stm_wbetl.h validate / extend / commit",
@@ -2432,6 +2636,23 @@
    "cheat_control": "an organism initialised at the generating model must not move (one iteration, gain below DELTA); the unscaled recursion must return zero likelihood past a few hundred steps; the unfloored re-estimator must lock a zero on a sequence missing one symbol: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: HMM estimation and decoding (Kanungo 1998 after Rabiner 1989)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "valgrind-helgrind-fixtures-3.19::P.a_concurrency_error_must_be_detected_from_a_single_correct_looking_run_when_the_bug_is_a_data_race_or_a_latent_lock_order_inversion_that_the_run_s_schedule_did_not_actually_trigger",
+   "source_fossil": "valgrind-helgrind-fixtures-3.19",
+   "source_evidence": "libhb_core.c happens-before + MSM; hg_main.c LAOG; the 259-file test corpus",
+   "condition": "an organism observes one execution of a multithreaded program via its memory and synchronisation events; the program may contain a data race or a lock-order inversion that this schedule did not make manifest; the score is detected true errors and false positives on a labelled corpus",
+   "resource_or_constraint": "per-thread vector clocks; per-location shadow; a lock-order graph",
+   "failure_condition": "a real race or potential deadlock missed, or a benign access flagged",
+   "world_punishes": "testing only what the schedule exercised; lockset methods that false-positive on non-lock synchronisation",
+   "world_rewards": "happens-before order, per-location conflict shadows, a lock-order graph that fires on inversions not deadlocks",
+   "observable_consequence": "true-positive and false-positive counts on the helgrind/tests corpus (tc01_simple_race, hg02_deadlock, tc04_free_lock, locked_vs_unlocked, pth_mempcpy_false_races, ...) where each program's intended verdict is known",
+   "vacuity_condition": "a single-threaded program",
+   "trivial_shortcuts": "running every schedule (model checking, infeasible for real programs)",
+   "cheat_control": "an organism given the corpus's labels must match them; a lockset-only detector must false-positive on the happens-before-only fixtures (annotate_hbefore, pth_mempcpy_false_races); a happens-before detector without the LAOG must miss the potential-deadlock fixtures: the corpus is the oracle and shows both gaps",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: dynamic thread-error detection (Nethercote & Seward 2007-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2670,6 +2891,23 @@
    "cheat_control": "UNKNOWN",
    "cost_class": "engineering effort",
    "purpose_separated_from_pressure": "PURPOSE: same as above; the pressure is social, not computational",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "zlib-1.3.1::P.a_byte_stream_must_be_compressed_near_its_lz_entropy_at_a_caller_chosen_point_on_the_speed_ratio_curve_where_the_match_search_cost_and_the_parse_greediness_are_both_tunable",
+   "source_fossil": "zlib-1.3.1",
+   "source_evidence": "deflate.c longest_match, deflate_slow, the configuration table",
+   "condition": "an organism compresses data at a requested level; the score is compressed size and time; the level must span from fast/low-ratio to slow/high-ratio; the format (the decoded output) must be identical regardless of level",
+   "resource_or_constraint": "the match-search budget (chain length); one byte of parse lookahead",
+   "failure_condition": "a level that is slower without being smaller, or a parse that misses easy longer matches (pure greedy)",
+   "world_punishes": "an unbounded chain search; greedy parsing at high levels",
+   "world_rewards": "a chain cap plus nice-match exit, and lazy one-byte lookahead",
+   "observable_consequence": "compressed size and time across levels on the Calgary/Silesia corpus for greedy (deflate_fast) vs lazy (deflate_slow), and vs an optimal parser (zopfli) as the upper control; identical decompression at every level",
+   "vacuity_condition": "incompressible input",
+   "trivial_shortcuts": "storing uncompressed (deflate_stored, a valid level-0 control)",
+   "cheat_control": "an optimal parser must give the smallest size at the highest cost; greedy must be fastest and largest; lazy must sit between on both axes at identical decoded output: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: reference DEFLATE (Gailly & Adler 1995-)",
    "cut_mode": "ANCESTRY_AWARE"
   }
  ]

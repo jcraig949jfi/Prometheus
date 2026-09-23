@@ -1,0 +1,106 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e06",
+ "attempt_id": "cw01-e06-a01",
+ "phase": "PREFLIGHT",
+ "ts": "2026-09-18 07:01:55",
+ "environment": {
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "python_executable": "H:\\Python312\\python.exe",
+  "numpy": "2.2.6"
+ },
+ "provenance": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "head": "8b62c5fa8",
+  "repo_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+  "campaign_root": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+ },
+ "path_policy": {
+  "rule": "every e06 module resolves roots via lib/repopath; NO parents[N] assumptions",
+  "discovery": {
+   "from_lib": {
+    "start": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\lib",
+    "depth": 8,
+    "repo": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+    "campaign": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+   },
+   "from_experiment": {
+    "start": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\experiments\\cw01-e06",
+    "depth": 9,
+    "repo": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld",
+    "campaign": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17"
+   },
+   "agree": true,
+   "depths_differ": true
+  },
+  "_why": "CW01-D046 - e05 was reproducible IN PLACE but not relocatable, because REPO was derived by counting directories. e06 is relocatable from inception."
+ },
+ "seed_policy": {
+  "rule": "all draws seeded from attempt_id via lib/seeds.py; latent facts drawn ONCE per attempt, items drawn per episode (CW01-D029/D037)",
+  "target": "attempt_target(cfg, seed)",
+  "items": "make_items(cfg, rng, target)"
+ },
+ "inherited_stack": {
+  "modules": [
+   "contract",
+   "guardproof",
+   "repopath",
+   "recordsafety",
+   "writerlock",
+   "seeds",
+   "localrun",
+   "lineage",
+   "infometrics",
+   "learnability"
+  ],
+  "engineering_target": {
+   "all_proven": true,
+   "n_passed": 5,
+   "n_total": 5,
+   "gates": [
+    "G1:repopath",
+    "G2:recordsafety",
+    "G3:tally",
+    "G4:guardproof",
+    "G5:writerlock"
+   ]
+  },
+  "_rule": "an inherited gate is not evidence until observed refusing in THIS experiment"
+ },
+ "durable_records": {
+  "checks": [
+   {
+    "path": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\CAMPAIGN_STATE.json",
+    "bytes": 23538,
+    "non_ascii_bytes": 0,
+    "first_offset": null,
+    "naive_readable": true,
+    "outcome": "PASS",
+    "reason": "ascii-clean; decodes under any ascii-superset encoding"
+   },
+   {
+    "path": "F:\\Prometheus-worktrees\\nestor-sidequest-graphworld\\roles\\Nestor\\campaigns\\cw01-2026-09-17\\DEFECTS.jsonl",
+    "bytes": 61334,
+    "non_ascii_bytes": 0,
+    "first_offset": null,
+    "naive_readable": true,
+    "outcome": "PASS",
+    "reason": "ascii-clean; decodes under any ascii-superset encoding"
+   }
+  ],
+  "n_pass": 2,
+  "n_fail": 0,
+  "n_not_verified": 0,
+  "safe": true,
+  "verdict": "all records portable"
+ },
+ "tally_agreement": "PASS",
+ "capability_match": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_network": false,
+  "needs": "a git worktree and PM_TAG, nothing else",
+  "_portability": "in-process via lib/localrun; requirement XI - Redis is never needed to interpret a finished attempt"
+ }
+}

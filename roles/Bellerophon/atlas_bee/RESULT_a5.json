@@ -1,0 +1,112 @@
+{
+ "adaptation_id": "a5",
+ "comparison": {
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; one search per p (fixed seed)"
+   ],
+   "measurement": [
+    "final_r0 = best-by-weighted-battery elite's mean held-out charge at action_delay=0"
+   ],
+   "representational": [
+    "the delay ladder is a battery over action_delay; revisit share = battery weight on rung 0",
+    "p=0 drops rung 0 from the battery (weights must be > 0); it is the never-revisited anchor"
+   ],
+   "resource": [
+    "population=16, generations=8, train_seeds=6, heldout_seeds=16, rungs=[0, 1, 2, 4]"
+   ],
+   "scientific": [
+    "final_r0 is flat in p (spread 0.00): revisit share does not shape rung-0 charge in BEE",
+    "final_r0 by p: p0.00=44.1875, p0.10=44.1875, p0.25=44.1875, p0.50=44.1875"
+   ]
+  },
+  "final_r0_by_p": {
+   "0.0": 44.1875,
+   "0.1": 44.1875,
+   "0.25": 44.1875,
+   "0.5": 44.1875
+  },
+  "new_phenomena": [
+   "the search converges to a DELAY-INVARIANT dominant strategy (identical charge on every rung 0/1/2/4), so a delay curriculum has nothing to teach and the revisit share cannot matter -- action_delay does not gate the winning strategy in BEE's integer world, unlike the SFE world where the ladder mattered"
+  ],
+  "summary": "final_r0 is flat in p (spread 0.00): revisit share does not shape rung-0 charge in BEE",
+  "verdict": "PHENOMENON_ABSENT"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 3,
+  "IDENTICAL": 1,
+  "MODIFIED": 1,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 0
+ },
+ "notes": [
+  "final_r0 in native charge units, not a normalised 0..1 competence (manifest MODIFIED)"
+ ],
+ "observed": {
+  "ladder": [
+   {
+    "final_r0": 44.1875,
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a5\\r0_p00.jsonl",
+    "p": 0.0,
+    "train_best": 94.16666666666667
+   },
+   {
+    "final_r0": 44.1875,
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a5\\r0_p10.jsonl",
+    "p": 0.1,
+    "train_best": 94.16666666666667
+   },
+   {
+    "final_r0": 44.1875,
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a5\\r0_p25.jsonl",
+    "p": 0.25,
+    "train_best": 94.16666666666667
+   },
+   {
+    "final_r0": 44.1875,
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a5\\r0_p50.jsonl",
+    "p": 0.5,
+    "train_best": 94.16666666666667
+   }
+  ]
+ },
+ "prereg_sha256": "04b0e4b4f82816297411f5ab46df10976bd5284b3110f6da5f66238f402b65e0",
+ "replay": [
+  {
+   "divergent": [],
+   "file": "r0_p00.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "r0_p10.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "r0_p25.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "r0_p50.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 16,
+   "status": "OK"
+  }
+ ],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "archaeon.campaign/cmp2:C2-SFE-06",
+  "disposition": "WEAK_POSITIVE",
+  "original": "delay ladder 0-1-2-4, revisit share p; final_r0 rose with p (0.222/0.674/0.701/1.0 at p 0/0.1/0.25/0.5)"
+ },
+ "utc": "2026-09-19T13:35:18Z",
+ "wall_s": 11.1
+}

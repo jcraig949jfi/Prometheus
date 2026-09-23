@@ -32,6 +32,8 @@ import os
 import platform
 import socket
 import subprocess
+# No console popup when a windowless (pythonw) parent spawns console children.
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 import sys
 import time
 import shutil
@@ -118,7 +120,7 @@ def probe_gpu() -> dict:
             ["nvidia-smi",
              "--query-gpu=name,memory.total,memory.used,utilization.gpu",
              "--format=csv,noheader,nounits"],
-            capture_output=True, text=True, timeout=10, encoding="utf-8", errors="replace",
+            capture_output=True, creationflags=_NO_WINDOW, text=True, timeout=10, encoding="utf-8", errors="replace",
         )
         if r.returncode != 0:
             return {"gpu_name": "nvidia-smi failed", "gpu_vram_total_mb": None,

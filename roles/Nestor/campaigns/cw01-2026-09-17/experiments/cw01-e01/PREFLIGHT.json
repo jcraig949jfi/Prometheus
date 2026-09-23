@@ -1,0 +1,108 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e01",
+ "attempt_id": "cw01-e01-a01",
+ "phase": "PREFLIGHT",
+ "recorded_local": "2026-09-17 17:01:28",
+ "source": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "commit": "b22a09b19168dc571d25949ee8bfd8871994008c",
+  "dirty_paths": 1,
+  "note": "dirty paths are this campaign's own artifacts; no primordial source modified"
+ },
+ "runtime_versions": {
+  "python": "3.12.10",
+  "executable": "C:\\Users\\jcrai\\lab\\gw-venv\\Scripts\\python.exe",
+  "numpy": "2.5.3",
+  "scipy": "1.17.1",
+  "redis": "8.1.0",
+  "torch": "2.11.0+cu128",
+  "psutil": "7.2.2",
+  "pytest": "9.1.1",
+  "redis_server": "8.6.3"
+ },
+ "machine_profile_ref": "../../MACHINE_PROFILE.json",
+ "seed_policy": {
+  "rule": "every stochastic draw derives from a declared attempt seed; no implicit clock/hash seeding",
+  "attempt_seed": 20260917,
+  "derivation": "seed(component, index) = blake2b(f'{attempt_id}|{component}|{index}') -> uint64",
+  "why": "PYTHONHASHSEED-dependent draws have burned this codebase before; seeds must be reconstructible from the attempt_id alone so a replay needs no runtime state"
+ },
+ "declared_capabilities_required": {
+  "needs_redis": false,
+  "needs_streams": false,
+  "needs_persistent_store": true,
+  "needs_gpu": false,
+  "needs_container_runtime": false,
+  "needs_N_GB_vram": 0,
+  "min_ram_gb": 4,
+  "min_free_disk_gb": 5,
+  "_rationale": "e01 is CPU economics over a finite addressable region; GPU is NOT required. Declaring needs_gpu=False keeps this experiment runnable on hosts that have none.",
+  "needs_git_worktree": true,
+  "needs_env_PM_TAG": true
+ },
+ "capability_match": {
+  "checked_against": "MACHINE_PROFILE.json captured 2026-09-17 16:54",
+  "needs_redis": "NOT REQUIRED after all - the in-process path is Redis-free; redis stays available but e01 does not depend on it",
+  "needs_streams": "SATISFIED",
+  "needs_persistent_store": "SATISFIED (filesystem, 2.1 TB free on F:)",
+  "needs_gpu": "N/A - not required",
+  "verdict": "PASS - and STRONGER than before: e01 now requires neither GPU nor Redis, only a git worktree + PM_TAG. That is the most portable e01 can be."
+ },
+ "expected_runtime_envelope": {
+  "minimal_form_wall_minutes": 45,
+  "timebox_hours": 24,
+  "budget_rule": "smallest scientifically meaningful version first"
+ },
+ "endpoints": {
+  "redis": "redis://127.0.0.1:6390 (HARDCODED - see CW01-D001)",
+  "campaign_namespace": "pm:cw01:"
+ },
+ "preregistration_ref": "PREREGISTRATION.md (written before the codebase survey, deliberately)",
+ "reuse_decision": {
+  "_principle": "VI: reuse one definition rather than forking a second. The survey found a direct in-process path that needs no broker, worker, Redis, schtasks or Claude session.",
+  "world_primitive": {
+   "make_world": "primordial/soup/b1/common.py:25 -> (mech, world_id); a world is ONE integer (gen_seed)",
+   "spec": "primordial/qd/e4_run.py:39 Spec(gen_seed); T,S,W are DERIVED from mech, not chosen",
+   "encounter": "primordial/soup/b1/np_world.py:26 NpEncounter(mech, wid, record=None, cheat='', with_obs=True)",
+   "evaluate": "primordial/qd/e4_run.py:78 evaluate(spec, G, cheat='', record=False)",
+   "touches_redis": false
+  },
+  "durable_row_path": {
+   "job_contract": "def job(ctx, **kwargs); ctx needs exactly 5 methods: emit, load_checkpoint, checkpoint, should_pause, progress",
+   "stub_ctx_template": "primordial/tests/test_c_r8_ap01_pairwise_d1.py:9-28 (production precedent: primordial/metric/r16_cells.py:504)",
+   "writer": "primordial/fabric/rows.py:153 RowWriter(path, exp_id, commit_every_s=10**9)",
+   "commit": "primordial/fabric/rows.py:125 commit_path(path, exp_id, note='', repo=None)",
+   "stamp": "primordial/fabric/envelope.py:137 prepare_row(row, index, env)",
+   "admit": "primordial/fabric/envelope.py:292 admit(env, kind='cpu', clock=None) - PURE when clock=None; refusal is a return value, not an exception",
+   "envelope": "primordial/fabric/envelope.py:460 example(**kw) -> valid 11-field envelope",
+   "smoke_job": "primordial/fabric/selftest_jobs.py:51 emit_n(ctx, n=3) - no numpy world, no JIT",
+   "HARD_REQUIREMENTS": [
+    "PM_TAG must be set and != 'untagged' (rows.py:54-58)",
+    "rows path must be inside a git worktree (rows.py:104-109)",
+    "use commit_every_s=10**9 and commit once at close, else one git commit per minute per writer"
+   ]
+  },
+  "qualify_smoke_tests": [
+   "primordial/tests/test_rows.py - RowWriter+commit_path in a throwaway git repo; NO redis",
+   "primordial/tests/test_c_r8_ap01_pairwise_d1.py - StubCtx + real job() end to end; best proof of the in-process path; NO redis",
+   "primordial/tests/test_r5_f1_envelope.py - pure CEILINGS/admit table tests; NO redis",
+   "primordial/tests/test_f8_worldcache.py - builds REAL worlds (E5.BrainSpec, E7.G7); fast world-construction proof"
+  ],
+  "explicitly_NOT_reused": {
+   "worker_broker_epoch": "tightly coupled to Redis AND to the F:/Prometheus-worktrees path table (ops/round_clock.py:45-54). ops/residue.py flags any worker outside that table as FOREIGN_REPO and stop_registered() would KILL it. Reusing the fabric wholesale would make this campaign un-runnable on any other machine by construction.",
+   "worker_Ctx": "fabric/worker.py:260 takes a live Redis handle and XADDs; write a 5-method ctx instead",
+   "launch path": "schtasks -> powershell -> launch_lane.ps1 is Windows-only and non-substitutable; the in-process path replaces it entirely",
+   "what_we_give_up": [
+    "CPU-token fairness",
+    "ceilings ENFORCED (must call admit() ourselves)",
+    "CPU/wall TTL kills",
+    "checkpoint/resume",
+    "pm:jobs:<L>:done records",
+    "telemetry"
+   ]
+  }
+ },
+ "complete": true,
+ "completed_local": "2026-09-17 17:06:14"
+}

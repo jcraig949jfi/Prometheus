@@ -109,8 +109,8 @@ def validate(p: dict) -> list[str]:
         why.append("HANDOFF_REQUESTED while TECHNE_STATE is a blocked state %s" % st)
     if st.startswith("BEHAVIOR") and not p.get("BEHAVIOR_EVIDENCE"):
         why.append("a BEHAVIOR_* state needs BEHAVIOR_EVIDENCE (what published/contemporary behaviour was matched, by which oracle)")
-    if not str(p["FOSSIL_WORLD_ID"]).startswith("fw-"):
-        why.append("FOSSIL_WORLD_ID must be measurement-based (fw-...), not an image digest")
+    if not str(p["FOSSIL_WORLD_ID"]).startswith(("fw-", "fw2-")):
+        why.append("FOSSIL_WORLD_ID must be measurement-based (fw-... R21) or canonical-manifest (fw2-... R36), not an image digest")
     cm = p["CAPABILITY_MATRIX"]
     for v in VERBS:
         if v not in cm:
@@ -138,7 +138,14 @@ def validate(p: dict) -> list[str]:
     copies = pres.get("copies", [])
     hosts = {c.get("failure_domain") for c in copies if c.get("verification_result") == "VERIFIED"}
     if len(hosts) < 2:
-        why.append("PRESERVATION: fewer than 2 VERIFIED copies in distinct failure domains (R25)")
+        # R38 (Amendment 3): a lineage may proceed through exploratory/validation stages with the
+        # preservation gate OPEN, declared as such; it may not be designated canonical. Undeclared,
+        # a single copy is a defect.
+        if p.get("PRESERVATION_STATUS") == "PRESERVATION_GATE_OPEN":
+            if len(hosts) < 1:
+                why.append("PRESERVATION_GATE_OPEN still needs at least one VERIFIED copy")
+        else:
+            why.append("PRESERVATION: fewer than 2 VERIFIED copies in distinct failure domains (R25); declare PRESERVATION_STATUS PRESERVATION_GATE_OPEN if the lineage is non-canonical by design (R38)")
     for c in copies:
         for f in ("object", "location_class", "failure_domain", "verification_time", "verification_result"):
             if f not in c:
@@ -150,6 +157,56 @@ def validate(p: dict) -> list[str]:
             why.append("receipt path does not exist: %s" % r)
     if not p["INSTRUMENT_CONTROLS"]:
         why.append("INSTRUMENT_CONTROLS empty (C11)")
+    why.extend(validate_handoff(p.get("HANDOFF")))
+    return why
+
+
+# ----------------------------------------------------------------- executable fossil packet (operator directive 4 s5, 2026-09-18)
+HANDOFF_FIELDS = ("runtime", "entry_point", "demonstration", "license_constraints", "preservation_cost", "fixtures")
+PRESERVATION_COSTS = ("CHEAP", "MODERATE", "EXPENSIVE", "STRUCTURALLY_DIFFICULT")
+
+
+def validate_handoff(h) -> list[str]:
+    """The HANDOFF block makes a packet an EXECUTABLE fossil packet: source identity + body hash +
+    grade (already in the packet) + runtime/dependency declaration + canonical fixtures/data + expected
+    entry point + licence constraints + preservation cost + ONE command that demonstrates the
+    historical mechanism WITHOUT claiming anything about it. Absent block = legacy packet (reported,
+    not failed); present block = every field checked."""
+    if h is None:
+        return []
+    why = []
+    if not isinstance(h, dict):
+        return ["HANDOFF must be an object"]
+    for f in HANDOFF_FIELDS:
+        if f not in h:
+            why.append("HANDOFF lacks %s" % f)
+    rt = h.get("runtime") or {}
+    for f in ("python_major", "native_deps", "host_class"):
+        if f not in rt:
+            why.append("HANDOFF.runtime lacks %s" % f)
+    if not isinstance(rt.get("native_deps", []), list):
+        why.append("HANDOFF.runtime.native_deps must be a list (empty means none)")
+    ep = h.get("entry_point") or {}
+    if not ep.get("path"):
+        why.append("HANDOFF.entry_point.path missing")
+    d = h.get("demonstration") or {}
+    for f in ("command", "observable", "runs_the_body", "claims"):
+        if f not in d:
+            why.append("HANDOFF.demonstration lacks %s" % f)
+    if d.get("claims") not in (None, "none", "NONE"):
+        why.append("HANDOFF.demonstration.claims must be 'none': a demonstration shows, it does not assert a mechanism")
+    if "runs_the_body" in d and not isinstance(d["runs_the_body"], bool):
+        why.append("HANDOFF.demonstration.runs_the_body must be true/false (a port or re-implementation is false)")
+    pc = h.get("preservation_cost") or {}
+    if pc.get("class") not in PRESERVATION_COSTS:
+        why.append("HANDOFF.preservation_cost.class not in %s" % (PRESERVATION_COSTS,))
+    for fx in h.get("fixtures") or []:
+        for f in ("name", "path_or_url", "sha256"):
+            if f not in fx:
+                why.append("HANDOFF fixture lacks %s" % f)
+    lc = h.get("license_constraints") or {}
+    if "spdx" not in lc or "constraints" not in lc:
+        why.append("HANDOFF.license_constraints needs spdx + constraints (a list; empty means none known)")
     return why
 
 

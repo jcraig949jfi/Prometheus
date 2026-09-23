@@ -1,0 +1,23 @@
+c1_all               W4/present  above 10/10 med  40.00 ttt 10.0 classes {'MIXED:keep+recurrent': 1, 'RECUR': 4, 'REDUNDANT': 1, 'PLAST': 2, 'MIXED:plasticity+recurrent': 2} rec 2.0 keep 1.0 plast 2.0
+c1_only_recur        W4/present  above 10/10 med  40.00 ttt 10.0 classes {'RECUR': 10} rec 6.0 keep 0.0 plast 0.0
+c1_only_keep         W4/present  above 10/10 med  40.00 ttt 30.0 classes {'KEEP': 10} rec 0.0 keep 4.0 plast 0.0
+c1_only_plast        W4/present  above 10/10 med  40.00 ttt 17.5 classes {'PLAST': 10} rec 0.0 keep 0.0 plast 2.0
+c1_none              W4/present  above  0/10 med   3.44 ttt None classes {} rec 0.0 keep 0.0 plast 0.0
+c2_no_selfloop       W4/present  above 10/10 med  40.00 ttt 20.0 classes {'RECUR': 4, 'PLAST': 4, 'REDUNDANT': 1, 'KEEP': 1} rec 3.0 keep 2.0 plast 2.0
+c2_no_recur          W4/present  above 10/10 med  40.00 ttt 20.0 classes {'PLAST': 6, 'KEEP': 2, 'REDUNDANT': 1, 'MIXED:keep+plasticity': 1} rec 0.0 keep 2.0 plast 2.5
+c2_tax_low           W4/present  above 10/10 med  40.00 ttt 12.5 classes {'RECUR': 6, 'PLAST': 3, 'KEEP': 1} rec 1.0 keep 0.0 plast 1.5
+c2_tax_high          W4/present  above 10/10 med  40.00 ttt 10.0 classes {'PLAST': 5, 'MIXED:plasticity+recurrent': 1, 'KEEP': 2, 'RECUR': 2} rec 0.0 keep 2.0 plast 2.0
+c2_keep_subsidy      W4/present  above 10/10 med  40.00 ttt 15.0 classes {'RECUR': 5, 'REDUNDANT': 4, 'PLAST': 1} rec 4.0 keep 4.0 plast 1.5
+c2_recur_unstable    W4/present  above 10/10 med  40.00 ttt 5.0 classes {'RECUR': 7, 'MIXED:keep+recurrent': 1, 'PLAST': 2} rec 1.5 keep 0.0 plast 1.5
+W14_present          W14/present  above 10/10 med  40.00 ttt 10.0 classes {'PLAST': 3, 'RECUR': 7} rec 3.5 keep 1.0 plast 1.5
+W15_present          W15/present  above 10/10 med  40.00 ttt 15.0 classes {'PLAST': 1, 'MIXED:plasticity+recurrent': 5, 'RECUR': 2, 'REDUNDANT': 1, 'MIXED:keep+plasticity+recurrent': 1} rec 9.0 keep 2.5 plast 4.0
+W16_present          W16/present  above  9/10 med   9.91 ttt 20.0 classes {'RECUR': 3, 'MIXED:plasticity+recurrent': 4, 'PLAST': 1, 'KEEP': 1} rec 6.5 keep 3.0 plast 5.0
+W14_shuffled         W14/shuffled above 10/10 med  13.47 ttt 40.0 classes {'MIXED:plasticity+recurrent': 1, 'MIXED:keep+plasticity+recurrent': 4, 'REDUNDANT': 1, 'RECUR': 2, 'MIXED:keep+plasticity': 2} rec 7.5 keep 4.5 plast 3.0
+W15_shuffled         W15/shuffled above  0/10 med   1.41 ttt None classes {} rec 6.5 keep 3.0 plast 3.5
+W16_shuffled         W16/shuffled above  2/10 med   1.50 ttt 110.0 classes {'MIXED:keep+plasticity+recurrent': 1, 'MIXED:keep+recurrent': 1} rec 4.5 keep 3.5 plast 4.5
+c1_shuffled_ref      W4/shuffled above  2/10 med   4.22 ttt None classes {'MIXED:plasticity+recurrent': 1, 'MIXED:keep+recurrent': 1} rec 4.5 keep 2.5 plast 3.5
+
+GATE A substitution : OPEN  ['c2_no_recur: 6/10 above-threshold champions are PLAST', 'c2_tax_high: 5/10 above-threshold champions are PLAST', 'W15_present: 5/10 above-threshold champions are MIXED:plasticity+recurrent'] new_carrier=[]
+GATE B causal       : OPEN  verdict=ACCESSIBILITY only_keep_above=10/10 p_create rec=0.048666666666666664 keep=0.036833333333333336 gradient rec=-0.041555555555555554 keep=-0.0028990563530037214
+GATE C transplant   : OPEN  portable=4/9 hosts_recovered=7 median_recovery=1.0
+DISPOSITION         : CONTINUE_RECOMMENDED  (gates opening is a RECOMMENDATION to the operator)

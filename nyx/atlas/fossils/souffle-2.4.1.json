@@ -131,17 +131,484 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:161-360"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:454-490"
+   }
+  ],
+  "inspected_files": [
+   "src/ast2ram/seminaive/UnitTranslator.cpp 161-490",
+   "src/ram operation list",
+   "src/interpreter index list"
+  ],
+  "date": "2026-09-18T06:00Z",
+  "note": "bottom-up Datalog evaluated semi-naively and compiled: rules are stratified into strongly-connected components evaluated in dependency order; within a recursive component each relation keeps a main store, a delta of the tuples derived in the last round, and a new store for this round; each iteration derives only tuples that use at least one delta tuple (so no derivation is repeated), merges new into main and swaps new into delta, and stops when the delta is empty; the relations are specialised in-memory index structures (B-tree, Brie trie, equivalence-relation) chosen per relation, and the whole thing is either interpreted over a RAM IR or compiled to parallel C++",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-18T06:00Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/souffle-lang/souffle/archive/refs/tags/2.4.1.tar.gz sha256:08d9b19cb4a8f570ac75dea73016b6a326d87ac28fccd4afeba217ace2071587",
+   "payload_manifest_id": "techne tree_sha256 ac7b049d77c3f41025a6b66cec4450002e7dc6e8f6c877c61460b04913960c99 (3925 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp",
+     "payload_hash_read": "fec1975b52c853eeaf3eb93aa0c5522c91d6c6fef2d091250a1a5e7fc98316e7",
+     "techne_recorded_hash": "fec1975b52c853eeaf3eb93aa0c5522c91d6c6fef2d091250a1a5e7fc98316e7",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": [
+    "src/ram and src/interpreter file lists"
+   ]
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "generateRecursiveStratum (303-360): per relation a delta, new and reject store; clear delta; derive clause versions; MergeRelationsWithFilter new -> delta minus reject; clear new; Loop with an Exit on empty delta; generateStratumPreamble/Postamble (454-490) seed and clear the deltas",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for a recursive component, each relation R has R (all tuples so far), delta-R (tuples new in the previous round) and new-R (tuples derived this round); a round evaluates each recursive rule once per body atom that ranges over the SCC, forcing that atom to read delta while the others read the main relations (the 'delta version' of the clause), so every derived tuple depends on at least one just-derived tuple and nothing is re-derived; new-R minus the existing tuples becomes the next delta, new-R is merged into R, and the loop exits when every delta is empty (the least fixed point is reached)",
+   "input": "a stratified set of rules and the base facts",
+   "output": "the least model",
+   "state": "the main/delta/new stores per relation",
+   "update": "per round",
+   "assumptions": [
+    "Datalog's monotone rules have a least fixed point reachable bottom-up; restricting each round to delta-touching derivations avoids the naive method's repeated work (Balbin & Ramamohanarao 1987)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::rules_stratified_into_strongly_connected_components_evaluated_in_dependency_order_with_non_recursive_components_evaluated_once_and_expired_relations_cleared",
+    "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus"
+   ],
+   "fitness_value_in_ancestor": "each derivation done once; the standard efficient Datalog evaluation, the base of large-scale static analysis (Doop, ...)",
+   "failure_landscape": "by reading: stratification must be possible (no recursion through negation or aggregation); the delta/new/reject bookkeeping is intricate and the subsumptive-clause path adds delete relations",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Balbin & Ramamohanarao 1987 (semi-naive); Bancilhon & Ramakrishnan 1986; Souffle (Scholz et al. 2016)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:303-360"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the recursive-stratum generation",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "souffle-2.4.1::rules_stratified_into_strongly_connected_components_evaluated_in_dependency_order_with_non_recursive_components_evaluated_once_and_expired_relations_cleared",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "generateStratum (161-196): if the SCC is recursive call generateRecursiveStratum else evaluate the single relation once; generateClearExpiredRelations (196); the SCC ordering from the precedence graph",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the predicate dependency graph is decomposed into strongly-connected components; a component with no internal recursion is evaluated in one pass, a recursive one by the semi-naive loop; components are run in topological order so a relation's dependencies are complete before it is computed; a relation is cleared once no later stratum needs it, bounding memory",
+   "input": "the dependency graph",
+   "output": "an evaluation schedule",
+   "state": "the live relation set",
+   "update": "per stratum",
+   "assumptions": [
+    "the program stratifies (negation and aggregation only across component boundaries); computing in dependency order is both correct and memory-bounded"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty"
+   ],
+   "fitness_value_in_ancestor": "large programs evaluated with only the currently-needed relations resident",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "stratified Datalog (Apt, Blair, Walker 1988); the SCC schedule is standard",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:161-196"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "generateStratum and the expiry",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "src/ram operations (IndexScan, ExistenceCheck, Insert, Loop, Swap, MergeExtend); src/interpreter indexes (BTreeIndex, BrieIndex, EqrelIndex, ProvenanceIndex); the ast2ram -> ram -> interpreter/synthesiser pipeline",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the semi-naive schedule is emitted as a RAM (relational algebra machine) program of loops, index scans, existence checks and inserts; each relation is backed by a data structure chosen for its access pattern -- a concurrent B-tree for general relations, a Brie (a trie specialised for dense integer tuples), or an equivalence-relation structure for transitive symmetric relations -- and the RAM program is either walked by an interpreter or synthesised to parallel C++ and compiled, so the same evaluation runs interpreted for quick turnaround or compiled for speed",
+   "input": "the RAM program and the relations",
+   "output": "materialised relations",
+   "state": "the index structures",
+   "update": "per RAM operation",
+   "assumptions": [
+    "the access pattern of each relation is known at compile time, so a specialised index beats a general one; a RAM IR decouples the evaluation strategy from the execution mode"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty"
+   ],
+   "fitness_value_in_ancestor": "Datalog at C++ speed on billions of tuples (the record: the engine behind large-scale static analysis)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Scholz, Jordan, Subotic, Westmann 2016 (Souffle); the Brie is Jordan et al.",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "src/ram and src/interpreter file lists"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the RAM IR and index layer; CANDIDATE because only the file inventory was read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the AST and parser (yacc/flex), the AST->RAM translators other than the seminaive UnitTranslator, the RAM operation bodies, the C++ synthesiser, the provenance / subsumption layer, the profiler, the 3,900 other files",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the directive of 2026-09-18 s1: no deepening of a large COARSE body without a downstream question; the Brie index and the C++ synthesiser are each a specimen-sized mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "souffle-2.4.1"
+  },
+  {
+   "candidate": "'Datalog engine' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the semi-naive fixpoint, the stratification schedule and the index/execution layer are separable; the atlas's clips (Rete, forward) and swipl/gnu-prolog (top-down) are the inference-engine neighbours",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "souffle-2.4.1"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "souffle-2.4.1::P.a_set_of_recursive_logical_rules_over_a_large_fact_base_must_be_evaluated_to_its_least_model_without_re_deriving_any_tuple_and_without_holding_more_relations_resident_than_the_current_stratum_needs",
+   "source_fossil": "souffle-2.4.1",
+   "source_evidence": "UnitTranslator.cpp semi-naive generation; the RAM and index inventory",
+   "condition": "an organism computes the closure of recursive rules (e.g. reachability, points-to) over millions to billions of base facts; the score is time and peak memory; naive evaluation re-derives every tuple every round",
+   "resource_or_constraint": "memory for the relations and their deltas; index structures",
+   "failure_condition": "re-deriving tuples (naive evaluation's quadratic waste), holding expired relations, or a general index where a specialised one would fit",
+   "world_punishes": "naive fixpoint; one index type for all relations; interpreting when speed is needed",
+   "world_rewards": "semi-naive delta evaluation, SCC stratification with expiry, per-relation specialised indexes, optional compilation",
+   "observable_consequence": "time and peak memory on a transitive-closure or points-to benchmark for naive vs semi-naive, and interpreted vs compiled, and general B-tree vs Brie indexes on dense relations",
+   "vacuity_condition": "non-recursive rules (one pass)",
+   "trivial_shortcuts": "materialising the full closure by hand (the answer, not a method)",
+   "cheat_control": "an organism given the least model must reproduce it; naive evaluation must show the re-derivation blowup on transitive closure; a single-index build must show the memory/time penalty on dense relations where the Brie wins: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: high-performance Datalog for program analysis (Scholz et al. 2016)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "souffle-2.4.1::rules_stratified_into_strongly_connected_components_evaluated_in_dependency_order_with_non_recursive_components_evaluated_once_and_expired_relations_cleared",
+   "to": "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "recursive components",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty",
+   "to": "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "derivations land in the indexes",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus",
+   "to": "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "scans read delta/main",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "souffle-2.4.1",
@@ -149,10 +616,22 @@
    "to": "swipl-9.2.9",
    "note": "Datalog is a decidable fragment of the logic-programming family Prolog belongs to",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "souffle-2.4.1",
+   "relation": "algorithm_from",
+   "to": "Balbin & Ramamohanarao 1987 (semi-naive); Apt-Blair-Walker 1988 (stratification); Scholz, Jordan, Subotic, Westmann 2016 (Souffle)",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the parser, the C++ synthesiser, the index bodies and the provenance layer unread; one CANDIDATE organ from the file inventory",
+   "nothing ran (C++ build: an M2 world)"
+  ],
+  "note": "the semi-naive fixpoint and stratification are located; the index/compilation layer is named per the directive's no-deepening line",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

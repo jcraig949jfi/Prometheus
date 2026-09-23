@@ -1,0 +1,58 @@
+{
+ "perturbation_id": "P-D01",
+ "parent": "T-ARCH4/M1",
+ "deformation": "A",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-dose-surface",
+ "factors": {
+  "k": [
+   2,
+   4,
+   8
+  ],
+  "s": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "placement": [
+   "even",
+   "random"
+  ],
+  "kind": [
+   "delete",
+   "opcode",
+   "operand",
+   "move"
+  ],
+  "decode": [
+   "modulo",
+   "nop"
+  ],
+  "draws": 4,
+  "genotype_sets": [
+   "viable parents",
+   "walker16 (walker 1)",
+   "C4-08 ordinary top-32 seed 1"
+  ],
+  "held_out": "W2_K2d1"
+ },
+ "held_fixed": "classification constants, episodes (CRN), programs' behaviour (canonicalised)",
+ "attacks": "what controls damage at equal count: sites, placement, word kind, decode, genotype set (P-C04/P-C15 saw two points)",
+ "analysis": "cell means; least-squares of loss on log2 k, log2 s, kind, placement, decode, set; paired sign-flips s=8 vs s=1 at k=8 and k=8 vs k=2 at s=1",
+ "continuation": [
+  "window width 1/2/4/8 at fixed k",
+  "gap as a continuous variable",
+  "opcode category of hit instructions",
+  "pairwise site epistasis",
+  "other held-out families",
+  "C5 representation B"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 17:07:53",
+ "prereg_sha256": "342ddd61603a4aaed7d18b958134d8f10d649871a21831562b3b2560aff8b3f6"
+}

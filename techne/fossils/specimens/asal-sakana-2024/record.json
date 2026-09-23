@@ -1,0 +1,192 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "asal-sakana-2024",
+  "canonical_name": "ASAL -- Automating the Search for Artificial Life with Foundation Models (Kumar et al., Sakana AI / MIT, 2024-2025)",
+  "aliases": [
+    "ASAL"
+  ],
+  "lineage": "Lenia (Chan 2019), Boids, Particle Life, NCA and Life-like CA substrates searched with CLIP as the observer; Artificial Life 31(3) 2025",
+  "domain": [
+    "artificial-life",
+    "open-endedness",
+    "foundation-model-observer",
+    "cellular-automata",
+    "quality-diversity"
+  ],
+  "era": "2024-2025",
+  "version": "SakanaAI/asal main @ 677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7 (last push 2025-10-23)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/SakanaAI/asal",
+        "commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+        "commit_resolved": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7",
+        "commit_date": "2025-10-22T21:03:03-04:00"
+      },
+      {
+        "kind": "url",
+        "url": "https://pub.sakana.ai/asal/data/illumination_boids.npz",
+        "filename": "illumination_boids.npz",
+        "extract": false,
+        "sha256": "ffd4637d0e93e23155fc41701196c375d793024cbea87cf2ea38d96c4f5fe38c",
+        "bytes": 6324490
+      },
+      {
+        "kind": "url",
+        "url": "https://pub.sakana.ai/asal/data/illumination_plife.npz",
+        "filename": "illumination_plife.npz",
+        "extract": false,
+        "sha256": "6bf7a1c9b9899be7791dda8c3228965625f7f22983b5ff31acf2986e54ff8cea",
+        "bytes": 86282
+      },
+      {
+        "kind": "url",
+        "url": "https://pub.sakana.ai/asal/data/sweep_gol.npz",
+        "filename": "sweep_gol.npz",
+        "extract": false,
+        "sha256": "823a94785c4b294ff9f59e64edf515ef2f714edc649a01997cf930c9bf174a34",
+        "bytes": 4194818
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/SakanaAI/asal",
+    "datasets": "pub.sakana.ai/asal/data (illumination_lenia.npz was 404 on 2026-09-17)"
+  },
+  "hashes": {
+    "tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a",
+    "n_files": 32,
+    "bytes": 21743226,
+    "artifacts": [
+      {
+        "filename": "https://github.com/SakanaAI/asal",
+        "sha256": null,
+        "commit": "677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7"
+      },
+      {
+        "filename": "illumination_boids.npz",
+        "sha256": "ffd4637d0e93e23155fc41701196c375d793024cbea87cf2ea38d96c4f5fe38c",
+        "commit": null
+      },
+      {
+        "filename": "illumination_plife.npz",
+        "sha256": "6bf7a1c9b9899be7791dda8c3228965625f7f22983b5ff31acf2986e54ff8cea",
+        "commit": null
+      },
+      {
+        "filename": "sweep_gol.npz",
+        "sha256": "823a94785c4b294ff9f59e64edf515ef2f714edc649a01997cf930c9bf174a34",
+        "commit": null
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\asal-sakana-2024",
+    "hash_list": "techne/fossils/specimens/asal-sakana-2024/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "LICENSE in repo; datasets carry no separate licence statement (recorded, not assumed)"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pip requirements.txt)",
+  "compiler_or_interpreter": "CPython 3.10 (README)",
+  "dependencies": [
+    "jax 0.4.38 (needs AVX on CPU)",
+    "flax",
+    "evosax",
+    "transformers (FlaxCLIPModel openai/clip-vit-base-patch32)",
+    "einops"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "asal_metrics.py (calc_open_endedness_score, calc_illumination_score, calc_supervised_target_score)",
+    "rollout.py (rollout_simulation)",
+    "substrates/lenia.py, boids.py, plife.py, gol.py, ...",
+    "main_opt.py / main_illuminate.py / main_sweep_gol.py"
+  ],
+  "example": {
+    "command": "python main_opt.py --substrate lenia --fm clip ...",
+    "input": "substrate parameters (evosax search)",
+    "output": "rollout embeddings (8x512) and the score"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "on M3 the metric and observer were exercised via a numpy/torch port (techne/scripts/techne107_asal_observer.py); ASAL's own JAX path needs AVX"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:2412.17799",
+    "README.md",
+    "MIT Press Artificial Life 31(3) 2025"
+  ],
+  "human_capability_summary": {
+    "built_to": "find ALife simulations by target phenomenon, open-ended novelty or illumination, using a vision-language model as the measuring instrument",
+    "pressure": "hand-written metrics cannot capture lifelike behaviour; manual parameter search does not scale",
+    "success_means": "simulations whose CLIP-embedded rollouts satisfy the target / novelty / diversity objective"
+  },
+  "known_human_problem_solved": "replacing hand-authored phenotype metrics with a learned observer",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "calc_open_endedness_score(z): mean over frames of max similarity to any earlier frame, minimised (TECHNE-107 measured what it rewards)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-107"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "jaxlib (AVX required)",
+      "torch (for the M3 port)",
+      "CLIP ViT-B/32 weights ~354 MB"
+    ],
+    "host_class": "any x86-64 with AVX for the JAX path; M3 runs the metric + observer via torch"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:53:57Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "lenia-chan-2019",
+  "canonical_name": "Lenia -- Biology of Artificial Life, reference implementation and lifeform catalogue (Bert Wang-Chak Chan, 2018-)",
+  "aliases": [
+    "Lenia",
+    "Chakazul/Lenia",
+    "animals.json"
+  ],
+  "lineage": "continuous cellular automaton generalising Conway's Life (Chan 2019, Complex Systems 28(3)); the substrate ASAL (asal-sakana-2024) searches and the source of the Orbium pattern used in TECHNE-107",
+  "domain": [
+    "artificial-life",
+    "cellular-automata",
+    "continuous-dynamics",
+    "self-organization"
+  ],
+  "era": "2018-2024",
+  "version": "Chakazul/Lenia master @ adfc542939266de7f4bb7ebb552e8499701ee107 (last push 2024-07-19)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/Chakazul/Lenia",
+        "commit": "adfc542939266de7f4bb7ebb552e8499701ee107",
+        "commit_resolved": "adfc542939266de7f4bb7ebb552e8499701ee107",
+        "commit_date": "2022-03-16T01:08:40+08:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/Chakazul/Lenia"
+  },
+  "hashes": {
+    "tree_sha256": "0414e7975c2f8767bdbcae8202991791c2db26941e9356c153a325f16a39fbed",
+    "n_files": 110,
+    "bytes": 74843493,
+    "artifacts": [
+      {
+        "filename": "https://github.com/Chakazul/Lenia",
+        "sha256": null,
+        "commit": "adfc542939266de7f4bb7ebb552e8499701ee107"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\lenia-chan-2019",
+    "hash_list": "techne/fossils/specimens/lenia-chan-2019/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE.md in repo (GitHub API: MIT)"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "Python",
+    "JavaScript",
+    "Matlab",
+    "R"
+  ],
+  "build_system": "none",
+  "compiler_or_interpreter": "CPython 3 (Python/LeniaND.py + numpy/scipy; optional reikna GPU)",
+  "dependencies": [
+    "numpy",
+    "scipy",
+    "PIL (Python reference)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "Python/LeniaND.py (Automaton: kernel_shell, calc_kernel, growth_func; Board.rle2arr)",
+    "Python/animals.json (548+ catalogued lifeforms with params and RLE cells; Orbium = code O2u)"
+  ],
+  "example": {
+    "command": "python Python/LeniaND.py",
+    "input": "a lifeform from animals.json",
+    "output": "the running automaton (GUI); TECHNE-107 uses a headless numpy port"
+  },
+  "environment": {
+    "runner": "native"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:1812.05433 / Complex Systems 28(3) 2019 DOI 10.25088/ComplexSystems.28.3.251",
+    "README.md"
+  ],
+  "human_capability_summary": {
+    "built_to": "explore self-organising, self-propelling patterns in a continuous CA and catalogue them",
+    "pressure": "Life-like CAs are discrete and brittle; a continuous generalisation admits smooth, lifelike dynamics",
+    "success_means": "stable, moving, catalogued lifeforms (the animals.json zoo)"
+  },
+  "known_human_problem_solved": "a continuous cellular automaton with a reproducible lifeform catalogue",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "load O2u (Orbium) from animals.json, step 256 times, measure mass and displacement (the TECHNE-107 LENIA arm)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-directive-2026-09-18",
+    "poet_alife",
+    "TECHNE-107",
+    "Harmonia #429 (fixture pinned from the packet, not Temp)"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "numpy",
+      "scipy"
+    ],
+    "host_class": "any Python 3 host; runs on M3"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T06:24:26Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

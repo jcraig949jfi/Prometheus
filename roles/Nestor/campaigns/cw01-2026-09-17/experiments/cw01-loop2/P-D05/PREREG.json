@@ -1,0 +1,20 @@
+{
+ "perturbation_id": "P-D05",
+ "parent": "T-E06",
+ "claim_type": "replication-confirmatory",
+ "delta": "6 attempt ids x 2 geometries x rates 0.5/1.0; invasion both directions",
+ "unchanged": "e06 world, sharing, prices, tournament, protocol",
+ "attacks": "P-A07 rested on ONE attempt id and ONE target",
+ "decision": {
+  "ROBUST": "mutual invasibility in >= 8/12 cells at rate 1.0 and the paired count difference (1.0 minus 0.5) above p95",
+  "PARTIAL": "3-7/12",
+  "NOT_REPLICATED": "<= 2/12"
+ },
+ "continuation": [
+  "rates 0.75/0.9",
+  "n_org 48/192",
+  "80-generation mixed runs at the winning rate"
+ ],
+ "written": "2026-09-18 16:59:56",
+ "prereg_sha256": "3e736e4d0e036affd5da185a99bf1c3746e0a4d4ba1f4ed49fdc8eb1ac7be770"
+}

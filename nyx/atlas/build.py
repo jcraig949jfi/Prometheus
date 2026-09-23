@@ -90,6 +90,54 @@ def build() -> dict:
                        "handoffs_open": len(open_rows), "handoffs_open_max_age_ticks": max(ages) if ages else 0,
                        "returns_received": len(g.get("returns_received", [])), "escalations": len(g.get("escalations", [])),
                        "note": "a cut with no adjudicator is not 'returned'; atlas growth is reported beside this, never instead of it"}
+        # Operator directive 2026-09-19 (ASAL pipeline direction, s9): STOP counting supported/failed packet ROWS as if each were an
+        # independent discovery. A packet holds boundary checks, predictions, controls and domain qualifications -- evidence components
+        # of ONE investigation. Count investigations and their yields instead, keyed off structured fields on the packets_issued rows.
+        # A mechanism == a packet for now (one mechanism per packet); mechanism_isolated is a supported boundary that names a mechanism.
+        # The highest-value count is MECHANISMS THAT SURVIVED TRANSPLANT (transplant == "SUPPORTED"), not the number of supported clauses.
+        packets = g.get("packets_issued", [])
+        active = [q for q in packets if not q.get("superseded_by")]          # superseded investigations do not re-count
+        def _s(seq, key):
+            return sum(int(q.get(key, 0) or 0) for q in seq)
+        open_pkts = [q for q in packets if not q.get("verdict_tick")]
+        lane_open = {}
+        for q in open_pkts:
+            lane_open[q.get("lane", "m3-native-python")] = lane_open.get(q.get("lane", "m3-native-python"), 0) + 1
+        lat = []
+        for q in packets:
+            if q.get("issued_tick") and q.get("verdict_tick"):
+                try:
+                    lat.append((_dt.date.fromisoformat(q["verdict_tick"]) - _dt.date.fromisoformat(q["issued_tick"])).days)
+                except Exception:
+                    pass
+        lat.sort()
+        median_lat = (lat[len(lat)//2] if len(lat) % 2 else (lat[len(lat)//2 - 1] + lat[len(lat)//2]) / 2) if lat else None
+        # Operator directive 2026-09-19b s2: A MECHANISM IS NOT A PACKET. Mechanism counts come from the MECHANISM
+        # LEDGER (nyx/atlas/gates/MECHANISMS.json, schema nyx.mechanism_ledger/1) and are over UNIQUE mechanism_ids --
+        # never packets, never supported clauses. One mechanism may accumulate many packets; one packet may carry
+        # several predictions about one mechanism; neither multiplies the count. Packet-level counts stay packet-level.
+        from nyx.atlas import mechanisms as _mech
+        mech_counts = _mech.counts(_mech.load())
+        dm["scoreboard"] = {
+            "schema": "nyx.scoreboard/3 (operator directives 2026-09-19 s9 + 2026-09-19b s2; mechanism counts are unique mechanism_ids)",
+            # -- packet level: evidence-bearing experiments
+            "packets_issued": len(packets),
+            "packets_adjudicated": sum(1 for q in active if q.get("adjudicated")),
+            "predictions_tested": _s(active, "predictions_tested"),
+            "predictions_falsified": _s(active, "predictions_falsified"),
+            "cuts_technically_supported": sum(1 for q in active if q.get("cut_supported")),
+            # -- mechanism level: persistent identities (from the mechanism ledger, unique ids)
+            **mech_counts,
+            # -- open objects and flow
+            "unresolved_anomalies": len([a for a in g.get("unresolved_anomalies", []) if a.get("status") == "OPEN"]),
+            "median_cut_to_verdict_days": median_lat,
+            "open_packets_by_lane": lane_open, "cap_per_lane": 3,
+            "over_cap_lanes": {k: v for k, v in lane_open.items() if v > 3},
+            "note": ("a prediction falsified with recoverable mechanism information is productive output, not a failure; "
+                     "predictions_* count interventions across ACTIVE (non-superseded) packets, while mechanisms_* count "
+                     "UNIQUE mechanism_ids in the mechanism ledger. The headline is mechanisms_that_survived_transplant. "
+                     "The organ atlas above is the reservoir."),
+        }
     _dump("DEPTH_MAP", dm)
     return dm
 

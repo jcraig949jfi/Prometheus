@@ -133,5 +133,13 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/paip-lisp-norvig-1991/receipts/run-paip-lisp-norvig-1991-20260912T213658Z.json",
     "what_humans_used_it_for": "solve problems by reducing goal/state differences with operators (GPS), converse by pattern rewriting (ELIZA), and answer queries by unification and backtracking (Prolog)"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "corrections": [
+    {
+      "date": "2026-09-18",
+      "by": "Techne[gandalf-a04f7c25]",
+      "field": "specimen_scope",
+      "note": "Nyx #3xx (positions 41-50): the body is a LIBRARY of at least eleven mechanism families (GPS, ELIZA, pattern matcher, unifier, Prolog interpreter, ...) under one specimen id; the harness exercises GPS only. Split candidate (TECHNE-110): one specimen per family sharing the pinned body, or per-family entry rows."
+    }
+  ]
 }

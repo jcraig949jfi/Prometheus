@@ -1,5 +1,16 @@
 # Archaeon — TODO
 
+## ACTIVE DIRECTIVE (2026-09-23) -- READ THIS FIRST ON BOOT
+roles/Archaeon/prompts/2026-09-23_z80atlas_postcampaign/00_OPERATOR_DIRECTIVE.md
+
+Z80 x Atlas post-campaign repair + targeted falsification. Four phases:
+(1) audit receipt for spontaneous_replication instrumentation defect
+    (all 26 flagged runs are transplant verification runs; 0 genuine de-novo);
+(2) repair provenance in engine.py + 10 required tests;
+(3) re-adjudicate 72-hour campaign from preserved records, no re-run;
+(4) small pre-registered de-novo replication experiment (8-16 seeds).
+Branch: start fresh from main (bcb9f22ad); old worktree is retired.
+
 ## 2026-09-05 — v0 built and qualified
 
 - [x] Read SFE/PEW schemas before writing anything; reuse existing records

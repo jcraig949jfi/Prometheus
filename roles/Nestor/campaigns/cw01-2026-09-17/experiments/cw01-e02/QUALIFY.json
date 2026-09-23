@@ -1,0 +1,72 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e02",
+ "attempt_id": "cw01-e02-a01",
+ "phase": "QUALIFY",
+ "completed_local": "2026-09-17 17:43:15",
+ "rule": "ALL predicates must pass before science budget is spent.",
+ "predicates": {
+  "Q1_prices_positive": {
+   "status": "PASS",
+   "evidence": "T1 2.0, T2 base 4.0, T3 base 0.05, hold 0.10 - all > 0"
+  },
+  "Q2_ordering_discount_is_real": {
+   "status": "PASS",
+   "evidence": "T2 cost 10.200 at dispersion 0.775 vs 5.240 after T1 (48.6% discount). T3 after T2: cost 6.150->3.787 AND info 1.779->4.893. Measured, not assumed."
+  },
+  "Q3_shams_are_cost_matched": {
+   "status": "PASS",
+   "evidence": "K1 reverts genes; gene reversion costs no resources. Sham reverts an equal COUNT of neutral genes."
+  },
+  "Q4_seeds_reconstructible": {
+   "status": "PASS",
+   "evidence": "lib/seeds.py, verified cross-process in e01"
+  },
+  "Q5_durable_without_redis": {
+   "status": "PASS",
+   "evidence": "inherited: lib/localrun.py proven in e01 with the redis import blocked"
+  },
+  "Q6_neutral_genes_are_inert": {
+   "status": "PASS",
+   "evidence": "perturbing neutral_a and neutral_b by +0.5 changed NO metric. The K1 sham is a real sham."
+  },
+  "Q7_pressure_actually_binds": {
+   "status": "PASS",
+   "evidence": "mean T3 cost 8.37 untransformed vs 12.38 full pipeline. NOTE: 0.0% of items exceed the step budget alone - pressure binds through the cost/info tradeoff, NOT budget exhaustion. Stated rather than claimed otherwise."
+  },
+  "Q8_not_a_free_lunch": {
+   "status": "PASS",
+   "evidence": "24 matched streams: NONE 0.21111; NORM_ONLY (T1 alone) 0.16774 = -20.54% LOSS; UNORD 0.29156 = +38.11%; ORD 0.35764 = +69.41%, i.e. +22.66% over unordered. Foundation is a loss alone and a win beneath T2 - the conditional shape a ratchet needs.",
+   "first_attempt": "FAILED spuriously: two probe genomes were identical (CW01-D023)"
+  },
+  "Q9_mechanism_fires": {
+   "status": "PASS",
+   "evidence": "treatment: t1=24 t2=17 t3=13 ordered=10 unordered=7"
+  },
+  "Q10_matched_arms": {
+   "status": "PASS",
+   "evidence": "mechanism disabled -> treatment/control_no_T1/control_no_T2 identical on info (27.97750018015499) AND cost (132.95640729764867). p_bind=0 -> treatment == control_no_T4, cost delta 0.0. Two RNG-stream defects found and fixed getting here (CW01-D019, CW01-D021)."
+  },
+  "Q11_gain_detector_calibrated_on_null": {
+   "status": "PASS",
+   "evidence": "Two-sided. Calibrated from 3 independent nulls (210 windows, 6.6-7.5% relative sd): lift p99 12.28, sd-sep p99 1.29 -> operating point 12.3% / 1.3. Verified: 0/1/5% planted -> 0 gains; 20% -> gen 40; 40% -> gen 39; 2 held-out nulls -> 0 gains. First version fired on PURE NOISE (CW01-D022)."
+  },
+  "Q12_disposition_rule_is_executable": {
+   "status": "PASS",
+   "evidence": "execute_e02.py computes the disposition in code from PREREGISTRATION.md INCLUDING the replication clause that e01's driver omitted (CW01-D016)."
+  }
+ },
+ "instrument_defects_found_before_spending_budget": [
+  "CW01-D019 capability flag short-circuited an RNG draw (repeat of D010 in new code)",
+  "CW01-D020 shell-heredoc source editing kept mangling patches",
+  "CW01-D021 recurrence read gated on the arm flag only, no gene",
+  "CW01-D022 gain detector fired on pure noise; percent-lift criterion unusable",
+  "CW01-D023 duplicate probe genome produced a spurious Q8 FAIL"
+ ],
+ "interpretive_limits_fixed_in_advance": [
+  "The ordering is an ENHANCEMENT (+22.66%), not a PRECONDITION: T2 alone already scores +38.11% over nothing. A ratchet found here means 'the later gain is worth more on the foundation', NOT 'impossible without it'. The disposition must say so.",
+  "Detection floor 12.3% lift; ratchets smaller than that are INVISIBLE to this instrument. A NULL must be read as 'no ratchet above the floor', never as 'no ratchet'.",
+  "Ordering claims require gains >= 20% (ordering_bar_pct) because near-floor gains are MISLOCATED, and temporal ordering is condition 1 of the ratchet definition."
+ ],
+ "verdict": "QUALIFIED - EXECUTE authorised"
+}

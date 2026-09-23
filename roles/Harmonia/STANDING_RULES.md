@@ -1,11 +1,180 @@
-# Harmonia standing rules -- the index (HARM-31)
+# Harmonia standing rules -- one index, every rule cited to where it was set
 
-Currency: 2026-09-18 (Harmonia[m2-ca1148a0]). One row per rule this seat has
-set and still enforces, linking it to the ruling that set it and to the
-executable form when one exists. A rule with no ruling behind it is not on
-this page. Superseded numbers stay in their rulings with their markers; this
-index points at the CURRENT form. CHARTER.md carries the ten operating
-principles; this file carries the rules those principles produced.
+Currency: 2026-09-18 (Harmonia[gandalf-6cd1348b] sections A-D, 05:49Z; Harmonia[m2-ca1148a0]
+section E and the executable-form pointers, 01:08Z and this merge). Closes HARM-31.
+CONCURRENT REWRITE RECORDED: two instances closed HARM-31 four hours apart, each
+unaware of the other (comms cannot carry an instance-to-instance message;
+INSTANCES.md). Nothing of either was dropped: A-D are gandalf's rule statements,
+E is m2-ca1148a0's index with the executable form of every rule. Inherits
+roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md; CHARTER.md
+carries the ten operating principles with their citations and is not
+restated here. This file lists the RULES a packet, plan or ruling of this
+seat is checked against, in the order they bind. A rule without a citation
+is not a rule of this seat.
+
+## A. Adopted 2026-09-18 from the operator's refinery directive (prompts/2026-09-18_refinery_directive/, s4)
+
+A1  PLAN AMENDMENT ON ANY CRITERION CHANGE. Any change to a control's or
+    a row's criterion after a control has failed creates a plan amendment
+    file with its own hash, even when the change is plainly an aggregator
+    repair. The amendment states: what changed (the diff), why (the
+    failure shape), and `interventions_unseen = true|false` (whether any
+    intervention arm had run under the old criterion). An amendment with
+    `interventions_unseen = true` needs no review before the re-run; one
+    with `false` re-opens the plan. Provenance form:
+        PLAN_<packet> -> AMENDMENT_<letter> (<kind>; interventions_unseen=<bool>)
+    Set on: the particles 002 cheat-criterion repair (3db0b83c7), which was
+    committed as a code diff with a note and should have been an amendment.
+    Retroactive record: science/particles_ruler/PLAN_002_AMENDMENT_A.md.
+    Executable: qualification/h0h5/packet_rules.py amend / refuse_unamended_change
+    (PR-1.0.0; the fixture is this very repair, 132058c00 -> 3db0b83c7).
+
+A2  NO VERDICT WITHOUT POWER ON A STOCHASTIC COMPARATIVE ROW. A row that
+    compares two arms by a statistic with sampling variance (a variance
+    ratio, a mean difference, a rate) receives CUT_SUPPORTED or
+    PREDICTION_FAILED only if the frozen packet carries a power statement
+    for that row: the seed count (or budget) and the smallest effect it
+    resolves at the band's edge. Without one, this seat returns a
+    DESCRIPTIVE ESTIMATE with an interval and the row is reported
+    PREDICTION_INDETERMINATE (reason: no power statement). Exact-count rows
+    (R = 0 in every seed) are not stochastic comparisons and are exempt.
+    Set on: particles 002 claim (c) (50 seeds, 1.05 edge; 400 seeds,
+    interval covering 1). Nyx dropped (c) on 2026-09-18 (#385).
+    Executable: packet_rules.allowed_verdicts / refuse_verdict (a power statement
+    names n_per_arm, detectable_effect, target_power, method).
+
+A3  EXTENSIONS USE DISJOINT SEEDS. When this seat runs more seeds than the
+    packet asks (an "x" arm), the extension uses seeds disjoint from the
+    preregistered ones (e.g. 51..450 beside 1..50) and is reported beside
+    the preregistered reading, never pooled with it and never instead of
+    it. A nested sample is not a replication.
+    Set on: particles 002 I3 (seeds 1..50) vs I3x (seeds 1..400).
+    Executable: packet_rules.refuse_nested_extension / extension_seeds;
+    packet_gate() runs A1-A3 before a ruler returns.
+
+A4  EXECUTOR-DOMAIN ACCEPTANCE BEFORE A PACKET IS EXECUTABLE. The pre-run
+    fixture instantiates every element class of the preregistered domain on
+    the named executor (every categorical value; the numeric edges) and
+    returns exact accepted / refused counts; a packet over a domain with any
+    refused class is not executable until the domain or the executor changes.
+    Set on: ASAL 001, where 650 of 1,045 budgeted draws were refused by the
+    port (fractional kernel rings, kn/gn >= 3) after the freeze.
+    (operator review 2026-09-18, point 5)
+
+A5  MEASURE DEFINEDNESS BEFORE THE PREREG HASH. Every preregistered measure
+    is evaluated on tiny synthetic fixtures for every arm before the plan is
+    hashed; a measure undefined by construction on an arm is caught before
+    data. Parent-edge recall appears only on arms where the target edge is
+    defined. Set on: ancestry ruler P1/P3 (VACUOUS/UNEVALUABLE) and P2.
+    (operator review 2026-09-18, point 5 and the ancestry paragraph)
+
+A6  EXISTENTIAL vs EXTREMAL ROWS ARE LABELLED. A row proved by one witness
+    (a value below a threshold exists) is SUPPORTED_BY_WITNESS and is robust
+    to incomplete coverage; a row about the extremum or a distribution over
+    a domain is SUPPORTED_ON_EXECUTED_SUBSET unless the whole domain ran.
+    Proportions over an executed subset are descriptive, never estimates
+    for the intended domain. Set on: ASAL 001 I1/I2 vs I3.
+
+A7  AN ESTIMATED MEAN IS NOT AN EXACT THRESHOLD UNLESS NAMED AS A CONVENTION.
+    A packet that uses an estimated quantity (a 5-seed mean) as a cutoff
+    says so ("operational convention"), and the verdict reads "crossed the
+    frozen convention"; a near-boundary crossing is annotated as weak
+    evidence with the margin in the reference's own sd. Future packets
+    freeze a confidence-aware reference distribution or a named cutoff.
+    Set on: ASAL 001 I0 (margin 0.009 = 1.1 sd).
+
+A8  SEALED-THEN-FROZEN IS AN INTERLOCK, NOT A SUBSTITUTE FOR PREREGISTRATION.
+    Standard order: instrument/analysis contract frozen -> run and seal
+    (hashes committed, contents unread) -> the independent prediction packet
+    may be frozen while results stay unread -> unseal with hash check. When
+    the hypothesis exists beforehand, it is frozen before execution too.
+    Set on: ASAL 001 (SEAL ffd11a1c0 before FREEZE 360a33931).
+
+A9  MISSING ANCESTRY METADATA IS PREFERABLE TO UNVERIFIED ANCESTRY METADATA
+    (design rule for evolutionary provenance, this seat's lane and offered to
+    NPE/Soup schema owners). Measured: corrupted ids at 5-25% drove
+    ancestor recall from 0.93 to 0.48-0.10 while dropped ids left it at
+    0.93; authoritative-but-wrong identifiers poison chains. A record that
+    cannot verify a parent id records it as UNVERIFIED, never as a parent.
+    Set on: ancestry ruler curves D4 vs D5 (a696a5335).
+
+A10 SCOREBOARD CATEGORIES (operator directive 2026-09-19 s9). Rulings and
+    returns of this seat count: packets issued / adjudicated, predictions
+    tested / falsified, cuts technically supported, mechanisms isolated,
+    observer-stable mechanisms, successful independent transplants,
+    unresolved anomalies -- never "supported clauses". A packet's rows are
+    evidence components of one investigation.
+
+Engineering hygiene (ranked behind A4/A5): large run artifacts (trajectories,
+frames) go to a content-addressed store with hashes in git, not into git.
+
+## B. Mechanism Archaeology lane (RESPONSIBILITIES.md s8; Founding Charter; Amendments 2-3)
+
+B1  PLAN BEFORE RUN. The analysis plan is committed before any adjudicative
+    run; bands are copied from the frozen packet, never relaxed or
+    tightened; the plan's commit precedes the run receipt in history.
+    (CHARTER s4; PLAN_2026-09-17.md, PLAN_002_2026-09-17.md.)
+B2  CONTROLS FIRST, ABORT ON MANDATORY FAILURE. Cheat, positive and
+    negative controls run before any arm; a mandatory control outside its
+    band voids the reading (PREDICTION_INDETERMINATE, item named). A control
+    that fails while the instrument demonstrably saw the effect is
+    returned in addition as PREDICTION_PACKET_CHALLENGE on the control's
+    specification. (CHARTER s5; RULING_PARTICLES_ESSTRIGGER_001.)
+B3  THE PACKET'S RULES ARE THE PACKET'S. A defect in a band is returned as
+    a typed challenge, never corrected in the ruler. (RULING 001 s2.)
+B4  READ THE OBJECT FROM A COMMITTED REF. A packet is adjudicated from the
+    committed bytes whose hash equals its FREEZE; the freeze is re-derived
+    by this seat (canonical JSON + LF), and the boundary payload hashes are
+    re-read from the bytes actually imported at run time. (ACK #360; ruler.py.)
+B5  STAGED COPY, NEVER THE VAULT. Bodies are executed from a disposable copy
+    with bytecode writing off; the vault is never imported or written.
+    (ACK #360; Nyx vault_hygiene note in packet 002.)
+B6  SEEN IS DECLARED. Any row this seat has seen before a packet is frozen
+    (smoke runs, scouts, control characterisations) is disclosed to the
+    packet author with its numbers or with the statement that they are
+    withheld; a scout that coincides with an arm's configuration is
+    labelled SEEN. (RULING 001 s2; packet 002 supersession_reason.)
+B7  RUNTIME_WITNESS ON EVERY RUN. Interpreter, package versions, pip-freeze
+    hash, JIT state, host, and the imported payload hashes go in the
+    receipt; without an R36 world id the witness is the world's identity.
+    (Amendment 3 R36; receipt.json.)
+B8  TYPED RETURNS ONLY, ONE TICK ACK, TWO TICKS DISPOSITION. A late ACK is
+    recorded as a latency miss in the return itself. (Amendment 3 R31;
+    ACK #380.)
+B9  FAITHFUL BRANCH BEFORE ANY DESCENDANT. An instrument that reimplements
+    a fossil's function is a descendant and is never cited as the fossil's
+    lines. (Charter C9; Nyx #386 1c on Techne's Lenia port.)
+B10 FIELDS, NEVER MERGED. HISTORY_MODE, NOVELTY_KIND and PRESERVATION_COST
+    are carried as fields on packets, returns and cell rows; disagreement
+    between novelty observables is a finding, not an average.
+    (archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md s3.)
+
+## C. Analysis rules carried from the SFE/PEW lane (CHARTER.md s1-s10, cited there)
+
+C1  Eligible count before the gate; NOTHING_COULD_FIRE is its own label.
+C2  A number a producer computes as a constant is not a result.
+C3  Nothing is a replicate for a deterministic payload.
+C4  Admission is per condition (geometry, null family, scale).
+C5  Thresholds come from downstream need, fixed before the rate.
+C6  Correct your own rulings beside the original (dated SUPERSEDED /
+    PROVISIONAL annotation in place).
+C7  Every ruling names what would falsify it and what should stop.
+C8  Audit, do not mutate; hand the finding to the owner.
+
+## D. Where a rule is checked
+
+    plan file        A1 A2 A3 A5 A7 A8 B1 B3 B6 C1 C5
+    ruler receipt    A4 B4 B5 B7
+    ruling           A2 A6 A7 A9 B2 B6 B8 B9 B10 C2 C3 C4 C6 C7 C8
+    comms return     B8 B10
+
+A rule that is found not to be checked anywhere is a defect of this file,
+reported in the next ruling that trips over it.
+
+## E. Index: every rule -> the ruling that set it -> its executable form (m2-ca1148a0)
+
+A rule with "--" in the last column is applied by reading and is a candidate
+for the next QR/PR release. PKT-AMEND / PKT-POWER / PKT-SEEDS are A1-A3 above.
 
     id          rule (one line)                                          set in                                        executable form
     ----------  -------------------------------------------------------  --------------------------------------------  --------------------------------------
@@ -113,6 +282,14 @@ principles; this file carries the rules those principles produced.
     NA-BY-CONSTR a criterion whose attainable range has zero width is     same, s2                                      --
                 reported NOT_APPLICABLE_BY_CONSTRUCTION, verified on the
                 measured object, never TRIVIALLY_SATISFIED
+    PKT-AMEND   a criterion change after a control failure is an           operator directive 2026-09-18 s4 rule 1;      packet_rules.amend,
+                amendment with a new hash; provenance names it and          RESPONSIBILITIES s8 (PR-1.0.0)                refuse_unamended_change,
+                whether interventions were unseen                                                                         provenance_chain
+    PKT-POWER   no power statement in the frozen packet -> at most a         same, rule 2                                  packet_rules.allowed_verdicts,
+                DESCRIPTIVE_ESTIMATE on a stochastic comparative row;                                                     refuse_verdict
+                never PREDICTION_FAILED or CUT_SUPPORTED; EXACT rows exempt
+    PKT-SEEDS   extensions use seeds disjoint from the original; a nested    same, rule 3                                  packet_rules.refuse_nested_
+                seed set is not a replication                                                                            extension, extension_seeds
 
 ## Reading the table
 

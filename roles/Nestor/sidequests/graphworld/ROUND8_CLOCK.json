@@ -1,0 +1,126 @@
+{
+ "A_defect_relaunched_two_live_lanes": {
+  "adopted_fix": "B will post one line at each epoch boundary. An idle lane must emit a liveness beat, or the conductor cannot distinguish it from a dead one -- and the conductor must check git and pm:alive:* before concluding a lane is stopped, not the bus alone.",
+  "cost": "no science lost; B blocked on A's ruling for ~24 minutes and held its FINAL during that window.",
+  "detected_by": "B itself, which reported the duplicate and then HELD every git write and its FINAL so the two could not race.",
+  "repair": "A ruled the ORIGINAL keeps the lane in both cases and terminated the two relaunched sessions by EXACT pid, never by pattern (the matcher that once matched its own ancestor chain). The relaunches held no worker, no rows and no receipts, so nothing was handed over. R's FINAL at c66552db0 stands.",
+  "the_real_distinction": "E/G/H at 17:06 genuinely had stopped: they had queued obligations and were not acting on them. B and R were idle BY CHARTER with nothing to say. 'Idle and reachable' and 'stopped' look identical from the bus stream unless the lane emits a beat.",
+  "what": "A relaunched B and R on the theory that they had stopped. Both were ALIVE. The relaunch created a SECOND claude session in each lane's worktree (B pids 26504 original / 28164 relaunch; R 30580 / 6928), which risks racing git writes and two claimants of the lane tag.",
+  "when_local": "2026-09-16 18:14",
+  "why_A_was_wrong": "A inferred 'stopped' from bus silence alone. B had a pm:alive:B heartbeat every 60 s since 16:57 and had COMMITTED 936f3961c at 17:52 recording A's own 17:48 note. The second signal was in git and A did not look. Silence on one channel is not absence."
+ },
+ "T0_epoch": 1789564503.891,
+ "T0_local": "2026-09-16 09:15:03",
+ "T0_source": "min start ts across the six lane records in launch_log.jsonl (derived, not recalled)",
+ "clock_as_actually_started": {
+  "DISCREPANCY_vs_A_ruling": "A confirmed to Q (bus 1789567190457-0) reading (b): NO_NEW_WORK at T0+14h with drain+close filling the 60 min teardown reserve to T0+15h. The clock as started realises reading (a): end_ts at T0+14h with drain+close INSIDE it, so NNW lands one hour earlier than my ruling implied and the round closes an hour inside the 15 h cap. Cost: about one hour of science.",
+  "NOT_corrected_because": "round_clock.start is idempotent by design -- a second start returns the existing clock unchanged. Forcing the change means deleting the round key, and SWARM_R8 s19 prohibits extending the round. Recorded as an operations discrepancy; the round runs on the clock it has.",
+  "drain_ts": "2026-09-16 22:45:03",
+  "end_ts": "2026-09-16 23:15:03",
+  "epochs": 6,
+  "measured_from": "pm:round:r8 (live), not planned",
+  "no_new_work_ts": "2026-09-16 22:15:03",
+  "planned_science_start_was": "2026-09-16 11:35:03",
+  "slip_reason": "build, gate and conductor prep ran past the planned 11:35 science start; the controller computed the ACTUAL epoch count (6) from the remaining cap at start time, as LAUNCH_R8 s4 requires. The nominal 12 was never taken literally.",
+  "stage": "PRODUCTION",
+  "start_ts": "2026-09-16 16:51:56",
+  "working_window_minutes": 323
+ },
+ "clock_start_sequence": {
+  "1_run_gate": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+  "2_commit_push_map": "GATE_MAP_R8.json must be COMMITTED AND PUSHED before any worker starts.",
+  "3_every_lane_ff_merge_CRITICAL": "F 1789565285343-0: worker._admit calls admit() with NO redis handle, so admission reads the COMMITTED GATE_MAP_R8.json from the WORKER'S OWN worktree (its round_id must equal r8). A lane worktree that has not ff-merged the --emit commit is refused GATE_STATE_UNAVAILABLE for EVERYTHING -- fail closed, as ruled. So: after emit, EVERY lane ff-merges before its worker starts, or P passes r=self.r so the redis hash pm:round:r8:gates is read instead. The same holds for gpuq. Forgetting this silently refuses the whole round's science.",
+  "4_anti_prior_publish": "A draws candidates(store, round_id='r8') from frozen seed 20260921, then calls anti_prior.write_residue(record) to commit the rejected set to primordial/ledger/prior/r8-candidates-precheck.jsonl (H 1789565555885-0). H must NOT publish; A draws.",
+  "5_world_set_freeze": "python -m primordial.metric.world_set_r8 freeze <path>, then verify <path> (rc 1 on any edit). Refuses a second freeze; stamps UTC + git HEAD (G 1789565602703-0).",
+  "6_OPERATOR_RULING_NEEDED_BEFORE_FREEZE": "G's manifest CAPACITY -- L1 64, L2 72, L3 84, B 64 -> kept 37/56/75/64 = 232 worlds -- is the one builder-chosen number. R6/R11: A computes cost and brings a number, A does NOT choose stratum sizes. Needs an operator ruling. NOTE it is a manifest draw count, NOT a screen N."
+ },
+ "conductor_sha_at_T0": "dbd9a127fabe76639bdbf83d977837f01aba62dc",
+ "gate_command": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+ "gate_map_interop_verified": {
+  "how": "emitted a throwaway map, then read it back with F's OWN envelope.read_gate_state -- both the FILE path (no redis handle, which is what worker._admit actually uses) and the redis path",
+  "result": {
+   "cleanup": "clean",
+   "file_entries": 12,
+   "gate_reasons_on_emitted_state": "[] (admission accepts it; does NOT fail closed)",
+   "r8_key_and_map": "untouched",
+   "redis_entries": 12,
+   "views_agree": true
+  },
+  "still_required": "verification does NOT remove clock_start_sequence step 3: after --emit, GATE_MAP_R8.json must be COMMITTED, PUSHED, and ff-merged into every lane worktree before its worker starts.",
+  "when_local": "2026-09-16 09:51",
+  "why_it_matters": "F 1789565285343-0 warned that a map a worker cannot read yields GATE_STATE_UNAVAILABLE for EVERYTHING, refusing the whole round's science at clock start. That path is now tested end to end rather than reasoned about."
+ },
+ "gate_runner_state": {
+  "checks": "24 = 12 environment + 12 gate probes, count derived not hardcoded",
+  "complete_against": "all 8 BUILD_R8 GATE RUN items",
+  "lint_argvs_from_owners": {
+   "G1": "python -m primordial.fabric.envelope lint",
+   "G4": "python -m primordial.ops.epoch lint --self-test"
+  },
+  "topology_confirmed_by_A": "G3 = kind=='cpu' (an unlanded G3 refuses ALL cpu science); G2 = ANTI_PRIOR or BETA*; C2 = CLAUSE_B unless OBSERVATION"
+ },
+ "invariants": {
+  "cap_hours": 15,
+  "rule": "SCIENCE_END = min(science_start + 12h, T0 + 15h - 60min) = T0 + 14h; R17 accepts ~11h40m",
+  "science_hours": 11.67,
+  "science_minutes": 700,
+  "teardown_reserve_min": 60
+ },
+ "lanes": {
+  "E": {
+   "pid": 32368,
+   "session_id": "089ab85f-32ff-4dd9-bdb3-1f3de522c1d8",
+   "ts": "2026-09-16T09:15:04.9634811-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-r8-e"
+  },
+  "F": {
+   "pid": 30916,
+   "session_id": "8c85d063-6dea-4daf-81fa-bae62a552d39",
+   "ts": "2026-09-16T09:15:04.0019973-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-f"
+  },
+  "G": {
+   "pid": 29932,
+   "session_id": "059c1197-9688-4d6b-95eb-168080123d63",
+   "ts": "2026-09-16T09:15:04.7534943-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-g"
+  },
+  "H": {
+   "pid": 28588,
+   "session_id": "7120069d-18b7-4e35-9664-2e56ff11705e",
+   "ts": "2026-09-16T09:15:04.4820209-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-h"
+  },
+  "P": {
+   "pid": 22576,
+   "session_id": "219700ce-99ad-48bf-bac3-5913e0985f18",
+   "ts": "2026-09-16T09:15:04.2328664-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-p"
+  },
+  "Q": {
+   "pid": 10736,
+   "session_id": "d84dc5b2-416e-487a-a304-fa3167a6e52a",
+   "ts": "2026-09-16T09:15:03.8910289-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-q"
+  }
+ },
+ "operational_finding_bus_cannot_wake_a_stopped_session": {
+  "cost": "About 16 minutes of G and E -- the round's two main scientific threads. G owns the first scientific obligation (Route B bound on the four PENDING cells); E owns the H1 sham response curve.",
+  "repair": "Minimum repair per the operator's execute order: relaunched G, E and H at 17:07 on prompts_r8 via the same launcher path that worked for C/D/R/B. The old sessions were left alone rather than killed -- they hold no workers (only C and D were registered), and kill-by-pattern is the matcher that once matched its own ancestors.",
+  "rule_for_next_round": "A lane that has posted DONE and stopped is NOT reachable by bus. To give a stopped lane new work, RELAUNCH it with the new prompt dir. Treat 'notified' and 'running' as different states and verify the second, not the first.",
+  "what": "A posted the science-start notice (16:51) and the live-clock notice (16:53) to E, G and H over the bus. All three were running BUILD sessions that finished at ~10:00 and stopped. Neither notice woke them: at 17:06, 15 minutes into a 323-minute window, all three had produced no hello, no worker registration, no job and no post.",
+  "when_local": "2026-09-16 16:51 -> 17:07",
+  "why": "A bus message cannot restart a Claude session that has stopped working. C, D, R and B started only because they were LAUNCHED with a boot prompt (schtask_launch + launch_lane -BootPrompt). Posting to an inbox nobody is reading is not a wake-up."
+ },
+ "pre_build_gate_state": "0/12 landed (rehearsed 09:15:40); C2 and C3 probes were false greens on live defects D25/D28 until strengthened",
+ "pre_build_sha": "6c02b89a9",
+ "round_id": "r8",
+ "schedule": {
+  "build_cap": "2026-09-16 10:15:03",
+  "gate_end": "2026-09-16 10:35:03",
+  "refine_end": "2026-09-16 11:35:03",
+  "round_end": "2026-09-17 00:15:03",
+  "science_end": "2026-09-16 23:15:03",
+  "science_start": "2026-09-16 11:35:03"
+ }
+}

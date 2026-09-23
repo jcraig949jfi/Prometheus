@@ -1,0 +1,138 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-ASAL-LEGIT-SEARCH-001",
+ "created_at": "2026-09-18",
+ "chopper_identity": "Nyx[gandalf-9e21f277] (M3 GANDALF)",
+ "chopper_version": "nyx.atlas cuts @ this commit; cut nyx/atlas/cuts/asal_sakana_2024.py",
+ "cut_id": "asal-sakana-2024",
+ "fossil_raw_id": "asal-sakana-2024 (SakanaAI/asal @ 677ba0ea)",
+ "payload_manifest_id": "techne tree_sha256 188a6ada.. (32 files); FOSSIL_WORLD_ID fw2-5886f2b97adbf1a1137b0ebbd98fa81266d8559477288364bbbe14bf3900a4d1 (m3-native-python); adjudicated on Harmonia's asal_ruler, a descendant port (Techne numpy Lenia + torch CLIP ViT-B/32), NOT the fossil's JAX path",
+ "provenance_grade_read": "ORIGINAL_ARTIFACT",
+ "boundary": [
+  {
+   "file_path": "asal_metrics.py",
+   "file_payload_hash": "75b7eaa9a751acf7e88c5902621937401ec28ab84199edf11fdb4db0514f5aa4",
+   "line_start": 52,
+   "line_end": 64
+  },
+  {
+   "file_path": "rollout.py",
+   "file_payload_hash": "59c49d430a2e00d20f5c6ecdb5f649402c598747af105522b3e2269b7a1fd693",
+   "line_start": 78,
+   "line_end": 95
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "The ASAL open-endedness score (asal_metrics.py:52-64) is the mean over frames of each frame's maximum embedding inner-product with any STRICTLY EARLIER frame (tril k=-1), minimised; the frames are 8 evenly-spaced samples of a 256-step rollout (rollout.py:78-95). The score therefore rewards a frame sequence whose every frame is embedding-dissimilar from all its predecessors -- a property of the observed frames in the foundation model's space, not of the underlying dynamics. CLAIM: a search restricted to LEGITIMATE Lenia parameters (configurations that are ALIVE by an independent mass criterion) can drive an ALIVE rollout's score below the score that scene-level GARBAGE achieves through the same observer, by producing embedding-drifting frames rather than anything one would call dynamical novelty; and the raw Lenia catalogue, without search, does not cross.",
+  "claimed_inputs": "Lenia parameters (R, T, m, s, kernel/growth choices, initial pattern) drawn from the catalogue and its envelope; the 8 sampled frames' embeddings",
+  "claimed_outputs": "the open-endedness score; and the classification (genuine dynamical novelty / metric exploit / observer exploit / not alive) of the best ALIVE crosser",
+  "claimed_internal_dependency": "the score reads only z (the frame embeddings); no internal simulation state enters it (asal_metrics.py:52-64); the frames that reach it are exactly the K=8 sampled by rollout.py:78-95; Harmonia's independent metric agrees with the fossil's to 5.6e-16 (float64), so the boundary is the score of record",
+  "known_uncertainty": "whether Lenia's reachable frame sequences contain embedding-drift as strong as free-image garbage (the operator's open question); the exact crossing margin; the observer is CLIP ViT-B/32 in the port, not ASAL's Flax CLIP (an INSTRUMENT_CHALLENGE Harmonia has waived to 5.6e-16 on the metric)"
+ },
+ "interventions": [
+  {
+   "intervention_id": "I0-CATALOGUE-ONLY",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "score every 2D catalogued Lenia lifeform with its own params (stage S0, <= 545 rollouts), no search; take the minimum score over the ALIVE ones",
+   "measured_observable": "min ALIVE open-endedness score over S0",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.8167,
+    0.875
+   ],
+   "units": "ASAL open-endedness score (lower = more open-ended)",
+   "band_basis": "exact: min over a fixed catalogue, no seed distribution (Harmonia rule A2 exempt); the catalogue is genuine dynamics, so without search it should NOT beat the scene-garbage mean 0.8167 (Techne TECHNE-107, E1); a score below 0.8167 here would mean the raw catalogue already exploits the metric",
+   "test_world_scope": "ASAL Lenia substrate, 128x128, 256 steps, 8 frames, CLIP ViT-B/32 port",
+   "pressure_scope": "the observer-metric pressure of the asal-sakana-2024 cut",
+   "prediction_rationale": "if the catalogue alone crossed, the exploit would not require search and I1/I2 would say nothing new; predicting it does not cross makes any crossing a product of search",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I1-CROSSING-MEAN",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "run the full preregistered search (S0 catalogue + S1 300 envelope draws + S2 5x40 local steps, 1045 rollouts, no early stop); take the minimum score over ALIVE rollouts",
+   "measured_observable": "min ALIVE open-endedness score over the whole search",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.0,
+    0.8167
+   ],
+   "units": "ASAL open-endedness score",
+   "band_basis": "exact: min over the fixed 1045-rollout budget vs the garbage mean 0.8167 (TECHNE-107, E1); no seed variance claimed (A2 exempt)",
+   "test_world_scope": "as I0",
+   "pressure_scope": "as I0",
+   "prediction_rationale": "the metric rewards embedding drift; Lenia can morph continuously, so a legitimate ALIVE configuration should reach embedding-dissimilar frames and cross below the scene-garbage mean",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I2-CROSSING-2SD",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "as I1; compare the minimum ALIVE score to the garbage mean minus two garbage standard deviations",
+   "measured_observable": "min ALIVE open-endedness score over the whole search",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.0,
+    0.7999
+   ],
+   "units": "ASAL open-endedness score",
+   "band_basis": "exact: 0.8167 - 2*0.0084 = 0.7999 from Techne's GARBAGE arm (mean 0.8167, sd 0.0084, 5 seeds; E1); the stronger sub-claim that the crossing is not marginal; A2 exempt (a single min vs a fixed threshold)",
+   "test_world_scope": "as I0",
+   "pressure_scope": "as I0",
+   "prediction_rationale": "if the metric is genuinely exploitable within Lenia the best crosser should clear the garbage mean by more than its own noise band, not sit on the edge",
+   "novelty_kind": "observer"
+  },
+  {
+   "intervention_id": "I3-CLASS-OF-BEST",
+   "intervention_level": "ENVIRONMENT",
+   "intervention_operation": "classify the best ALIVE crosser on (coh, d_pix, d_clip, mass_cv) into GENUINE_DYNAMICAL_NOVELTY / METRIC_EXPLOIT / OBSERVER_EXPLOIT / UNCLASSIFIED using Harmonia's frozen thresholds; emit 1 if it is a metric or observer exploit, 0 if genuine dynamical novelty",
+   "measured_observable": "indicator: best ALIVE crosser is a metric/observer exploit (1) vs genuine dynamical novelty (0)",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    1.0,
+    1.0
+   ],
+   "units": "indicator",
+   "band_basis": "exact indicator against Harmonia's preregistered class thresholds (coh_O 0.966, d_pix_O 0.0721, d_clip_H 0.045); A2 exempt",
+   "test_world_scope": "as I0",
+   "pressure_scope": "as I0",
+   "prediction_rationale": "the mechanism claim is that the crossing is drift-in-embedding-space, not novelty; so the best crosser should classify as an exploit, otherwise the metric is measuring something defensible and the cut's reading is wrong",
+   "novelty_kind": "observer"
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-CHEAT-SCORE",
+   "construction": "score fixed GARBAGE seed-0 frames through the pipeline while varying the Lenia parameters",
+   "expected_result": "the score is ~0.8303 regardless of the Lenia parameters (Harmonia fixture)",
+   "failure_interpretation": "if the parameters change the score of fixed frames, the pipeline leaks state into the score and the boundary asal_metrics.py:52-64 is not the whole score"
+  },
+  "positive": {
+   "control_id": "C-POS-SEARCH",
+   "construction": "run the search rule over FREE images (not restricted to Lenia) for 50 evaluations",
+   "expected_result": "it reaches below the garbage score (Harmonia fixture: 0.7949 < 0.8167 in 50 evals)",
+   "failure_interpretation": "if a free-image search cannot cross, the search channel or the metric is dead and a Lenia null crossing would be uninformative"
+  },
+  "negative": {
+   "control_id": "C-NEG-BLANK",
+   "construction": "score a zero (blank) world",
+   "expected_result": "0.875 = (T-1)/T exactly, classified NOT_ALIVE (Harmonia fixture)",
+   "failure_interpretation": "if a blank world does not hit the (T-1)/T ceiling or is called ALIVE, the ALIVE filter or the score's construction is not as the boundary states"
+  }
+ },
+ "cut_kill": {
+  "observation": "Harmonia's independent metric disagrees with the fossil's calc_open_endedness_score beyond float tolerance, OR a blank world does not score (T-1)/T = 0.875",
+  "consequence": "the score in play is not the max-cosine-to-strictly-earlier-frame mean at asal_metrics.py:52-64; the boundary is mislocated and a NEW CUT is required (this packet stays immutable)"
+ },
+ "indeterminate": {
+  "observation": "any of: the minimum ALIVE score lands within float tolerance of its threshold (I1 at 0.8167, I2 at 0.7999); the best crosser classifies UNCLASSIFIED on Harmonia's frozen thresholds (I3); no ALIVE rollout is found in the whole 1045-rollout budget; the imported port's asal_metrics or Lenia bytes at run time do not match the fixture's hashes (a different instrument was measured)",
+  "consequence": "the affected row returns PREDICTION_INDETERMINATE rather than a directed verdict; if no ALIVE rollout is found the packet returns INTERFACE_INSUFFICIENT (the ALIVE filter or the substrate port admitted nothing to score), not a crossing verdict"
+ },
+ "supersedes": null,
+ "return_protocol": {
+  "to_seat": "Harmonia (instance gandalf-6cd1348b; holds roles/Harmonia/science/asal_ruler and the preregistered PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A; the search runs sealed until this FREEZE is on origin/main)",
+  "accountable_seat": "Nyx receives CUT_SUPPORTED / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_KILL / INTERFACE_INSUFFICIENT; Techne receives an INSTRUMENT note only if the port diverges from the fossil beyond the waived tolerance",
+  "ack_ticks": 1,
+  "disposition_ticks": 2,
+  "required_response_on_challenge": "Nyx produces a new CUT_ID and a new packet with supersedes = MECH-ASAL-LEGIT-SEARCH-001 if the boundary is mislocated; if the mechanism claim is falsified (no crossing, or the crosser is genuine novelty) Nyx revises the cut's reading in Stage D' and records it, and MECH-ASAL is not re-posed unless a downstream bench needs the metric"
+ }
+}

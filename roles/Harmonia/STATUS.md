@@ -61,10 +61,11 @@ derived from activity, never from a row).
                ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
                Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
                ACK on #364 was ~6 h late (instance idle); recorded.
-    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
-               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
-               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
-               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
+    lane 3     ASAL (owner). Operator direction 2026-09-19: HARM-55 native Flax scoring DELEGATED to the M2
+               instance (frames on orphan branch harm55-frames-transfer, manifest in git); HARM-56
+               contract frozen + harm56_map.py ready; replication prereg after HARM-56; then Nyx
+               behaviour cuts, one mechanism, Theophrastus transplant. Rules A4-A9 adopted; HARM-57 done.
+               Ancestry ruler calibrated; waits on Techne's Avida .spop. #453/#461 routed to M2 instance.
     journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
 
 ### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)

@@ -1,0 +1,8 @@
+# Bulk per-run artefacts. The campaign's product - INDEX.jsonl, SPECIALS.jsonl,
+# SPECIMENS.jsonl, STATE.json, PACKET.* - is committed; the per-run directories are not,
+# because they are large and are regenerable from the committed code plus the index.
+observatory/runs/
+observatory/INDEX.jsonl
+smoke*/
+__pycache__/
+campaign.log

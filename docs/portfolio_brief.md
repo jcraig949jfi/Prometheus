@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-09-11 07:14:58 PM UTC*
+*Generated: 2026-09-23 09:21:35 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,8 +7,12 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 149929min (8995787s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 166616min (9996986s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
+
+**MachineProbe-M4 @ M4, M4 host resource time-series (60s) — DEAD, daemon stopped**
+No heartbeat for 12min (751s). Was last ALIVE at 2026-09-23T05:08:48.079968-04:00.
+Investigate the process on M4 and restart, or kill watchdog if intentional.
 
 ## Watch this
 
@@ -41,22 +45,21 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 212 | reviewed: 30 | awaiting review: 187
+Worklog passes: 218 | reviewed: 30 | awaiting review: 193
 - ELEN-2026-08-27T02:00Z-P176: **MIXED** (correction-needed) THE PREREGISTERED CONTROL CLASS WAS NOT BUILT; THE CONTROL COLUMN IS A SECOND REUSE COLUMN
 - ELEN-SELF-2: **SOUND** (note) Self-calibration against ELEN-2026-08-21T00:27Z-P50 (verdict SOUND), overdue by ten review
 - ELEN-BOOTSTRAP-2026-09-01: **MIXED** (note) Channel status. Five days since the last review cycle (2026-08-27). Two passes shipped in 
-- **3 finding(s) awaiting Aporia response** — should resolve within a pass or two
 Logs: engine/shadow/WORKLOG.jsonl | Reviews: engine/shadow/REVIEWS.jsonl
 https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 1 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 51 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
-**2 agents ALIVE** (Pronoia, MachineProbe-M4).
+**1 agents ALIVE** (Pronoia).
 
-**Anomalies tracked:** 28 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
+**Anomalies tracked:** 29 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
 
 ---
 *Deterministic brief (primary mode) — every line computed from state; no LLM in the loop.*

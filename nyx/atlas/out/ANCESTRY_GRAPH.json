@@ -1,15 +1,15 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:27Z",
- "n": 227,
+ "built": "2026-09-19T10:08Z",
+ "n": 244,
  "by_relation": {
-  "reimplementation_of": 18,
-  "algorithm_from": 95,
-  "derived_from": 15,
-  "historical_version_of": 18,
-  "shares_ancestor_with": 48,
-  "superseded_by": 14,
-  "port_of": 3,
+  "reimplementation_of": 20,
+  "algorithm_from": 102,
+  "derived_from": 16,
+  "historical_version_of": 21,
+  "shares_ancestor_with": 49,
+  "superseded_by": 16,
+  "port_of": 4,
   "forked_from": 1,
   "supersedes": 6,
   "rewrote": 2,
@@ -24,6 +24,13 @@
    "relation": "reimplementation_of",
    "to": "discrete PID with anti-windup and bumpless transfer (Astrom & Hagglund 1995); the accumulator-in-output-space form is the author's",
    "note": "from the record and the author's blog as cited there",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "asal-sakana-2024",
+   "relation": "algorithm_from",
+   "to": "SakanaAI ASAL (Kumar, Lu, Lange, Tang, Ha, Clune et al. 2024); the substrates descend from Lenia (Chan 2019), Boids (Reynolds 1987), particle life; the observer from CLIP (Radford et al. 2021)",
+   "note": "from the record and the source",
    "basis": "SOURCE_READ"
   },
   {
@@ -95,6 +102,13 @@
    "to": "bsd-tcp-4.2-1983",
    "note": "this tape CONTAINS the kernel whose netinet/tcp_* files are preserved as that specimen",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.2-distribution-tape-1983",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.2-1983 (the SOURCE of the TCP this system runs); bsd-4.3-distribution-tape-1986 and bsd-4.3-reno-distribution-tape-1990 (the same archive series with the same missing source tape file)",
+   "note": "by FORMAT and the listing",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-4.3-distribution-tape-1986",
@@ -538,6 +552,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "filterpy-labbe",
+   "relation": "reimplementation_of",
+   "to": "Julier & Uhlmann 1997 / Wan & van der Merwe 2000 (the unscented/scaled sigma-point filter); Kalman 1960 for the linear base; the atlas's tinyekf-levy and simple-kalman are the family",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "genann",
    "relation": "algorithm_from",
    "to": "Rumelhart, Hinton & Williams 1986 (backpropagation); the multilayer perceptron",
@@ -550,6 +571,13 @@
    "to": "concurrencykit-0.7.2",
    "note": "ck_rwlock / ck_brlock are rival readers-writer designs with different fairness",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "glpk-5.0",
+   "relation": "algorithm_from",
+   "to": "Dantzig 1947 (simplex); Forrest & Goldfarb 1992; Harris 1973",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "gnu-apl-2.0",
@@ -739,6 +767,13 @@
    "to": "eispack-netlib-1976",
    "note": "same functionality, blocked for cache",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "lapack-reference",
+   "relation": "historical_version_of",
+   "to": "linpackd-netlib-1979 / linpack-netlib-1979 (in this atlas): the same LU functionality recast in Level-3 BLAS; EISPACK's eigen routines likewise",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "ldpc-codes-neal-2001",
@@ -1028,6 +1063,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "ncompress-5.0-lzw-1985",
+   "relation": "historical_version_of",
+   "to": "compress(1) (Thomas, McKie, Davies, Turkowski, Woods, Orost 1985) after Welch 1984; ncompress is the maintained continuation; compress-4.2.4-lzw in this atlas is a sibling release",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "odepack-netlib",
    "relation": "derived_from",
    "to": "GEAR (Hindmarsh 1974)",
@@ -1075,6 +1117,13 @@
    "to": "OpenSSL 1.0.1g (the fix)",
    "note": "before-failure body; the replacement is one release later",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "openssl-1.0.1f-heartbleed",
+   "relation": "historical_version_of",
+   "to": "OpenSSL 1.0.1 series; the defect entered at the heartbeat commit and was repaired in 1.0.1g",
+   "note": "from the record and the changelog",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "padasip-1.2.2",
@@ -1210,11 +1259,39 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "poet-original-2019",
+   "relation": "superseded_by",
+   "to": "poet-enhanced-2020",
+   "note": "same repository, branch master",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "poet-original-2019",
+   "relation": "superseded_by",
+   "to": "poet-enhanced-2020",
+   "note": "Enhanced POET (branch master) replaces the hand-built 5-number descriptor and this novelty estimator with CPPN-generated environments and PATA-EC, and adds ANNECS; from the Techne record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "poet-original-2019",
+   "relation": "algorithm_from",
+   "to": "minimal criterion coevolution (Brant & Stanley 2017); novelty search (Lehman & Stanley 2011)",
+   "note": "from the source and the paper",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "py-vollib-lets-be-rational",
    "relation": "algorithm_from",
    "to": "Black & Scholes 1973; Jaeckel 2015",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "py-vollib-lets-be-rational",
+   "relation": "reimplementation_of",
+   "to": "Black 1976 (the pricing formula) inverted by Jaeckel 2013/2015 (Let's Be Rational); py_vollib packages py_lets_be_rational",
+   "note": "from the record and the module docstrings",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "pybreaker-1.2.0",
@@ -1266,6 +1343,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "quadpack-netlib",
+   "relation": "algorithm_from",
+   "to": "Kronrod 1965; Wynn 1956; Piessens et al. 1983; the netlib mirror is the authors' channel (record)",
+   "note": "from the headers",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "radamsa-0.6",
    "relation": "algorithm_from",
    "to": "Miller et al. 1990 (fuzz)",
@@ -1278,6 +1362,13 @@
    "to": "willemt-raft",
    "note": "lease-based exclusion vs consensus-based",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "redlock-py-redis-2014",
+   "relation": "port_of",
+   "to": "antirez's Redlock (redis.io/topics/distlock, 2014); the record notes Kleppmann's 2016 critique",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "reed-solomon-rockliff-1991",
@@ -1313,6 +1404,13 @@
    "to": "swipl-9.2.9",
    "note": "Datalog is a decidable fragment of the logic-programming family Prolog belongs to",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "souffle-2.4.1",
+   "relation": "algorithm_from",
+   "to": "Balbin & Ramamohanarao 1987 (semi-naive); Apt-Blair-Walker 1988 (stratification); Scholz, Jordan, Subotic, Westmann 2016 (Souffle)",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "spacewar-pdp1-1962",
@@ -1441,6 +1539,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "tinyscheme-1.42",
+   "relation": "derived_from",
+   "to": "MiniScheme (Moriwaki 1989); the SICP metacircular evaluator and the SECD machine; the atlas's femtolisp (bytecode) and lisp-1-5 (the origin) are the family",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "tinystm-marlier",
    "relation": "algorithm_from",
    "to": "Shavit & Touitou 1995 (STM); Riegel 2006 (LSA)",
@@ -1495,6 +1600,13 @@
    "to": "go-runtime-deadlock-fixtures-1.22",
    "note": "two runtimes' regression corpora for concurrency failure",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "valgrind-helgrind-fixtures-3.19",
+   "relation": "algorithm_from",
+   "to": "Lamport 1978 (vector clocks); Flanagan & Freund 2009 (FastTrack shadow); the lock-hierarchy rule; Helgrind (Nethercote, Seward, Muhlenfeld)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "verilog-arbiter-forencich",
@@ -1607,6 +1719,13 @@
    "to": "picosat-965",
    "note": "CDCL family",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "zlib-1.3.1",
+   "relation": "algorithm_from",
+   "to": "Ziv & Lempel 1977 (LZ77); Huffman 1952; Deutsch RFC 1951 (DEFLATE); the atlas's gzip and ncompress/compress cuts are the LZ family",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   }
  ],
  "note": "Techne's 'superseded' relation carries no fixed direction in its records (17 edges, both readings observed on 2026-09-16); direction must be read from each note"

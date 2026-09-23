@@ -484,6 +484,24 @@ def _fetch_artifacts(artifacts: list, up: pathlib.Path, body: pathlib.Path) -> l
                 root = vault.extract(dest, up / "tree")
                 art["extracted_to"] = str(root.relative_to(body)).replace("\\", "/")
             fetched.append(f)
+        elif kind == "file":
+            # A file already on THIS host (a delivery from another seat, a run output): copied into the body,
+            # never moved, and REFUSED if its sha256 differs from the record's pin. Directive 2026-09-19 s6:
+            # preserving a rollout as a first-class fossil starts from a local, hashed file.
+            src = pathlib.Path(art["source_path"])
+            if not src.is_file():
+                raise FileNotFoundError("file artifact source missing on this host: %s" % src)
+            dest = up / art["filename"]
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            h = vault.sha256_file(src)
+            if art.get("sha256") and h != art["sha256"]:
+                raise RuntimeError("sha256 mismatch for file artifact %s: got %s expected %s" % (src, h, art["sha256"]))
+            shutil.copyfile(src, dest)
+            if vault.sha256_file(dest) != h:
+                raise RuntimeError("copy of %s does not hash as its source" % src)
+            art["sha256"] = h
+            art["bytes"] = dest.stat().st_size
+            fetched.append({"source_path": str(src), "path": str(dest), "sha256": h})
         elif kind == "git":
             dest = up / "tree"
             # Submodules are fetched only when the record DECLARES them ("submodules": "required"),

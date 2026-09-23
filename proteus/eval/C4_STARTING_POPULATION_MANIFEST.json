@@ -7,8 +7,11 @@
   "organism_ids_hash_from_manifests": 57
  },
  "declaration": "archaeon/campaign4/STARTING_POPULATION.json",
- "declaration_digest": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
- "declaration_generated_at": "2026-09-17T19:10:49Z",
+ "declaration_canonical_digest": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+ "declaration_canonical_digest_rule": "population_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, separators=(',',':'), ensure_ascii=False).encode('utf-8') ).hexdigest() where D is this object WITHOUT the keys ['generated_at', 'wall_s', 'population_digest', 'population_digest_rule', 'superseded_raw_byte_digests']. Invariant to line endings, indentation, key order and regeneration time. A raw-byte digest of this file is NOT an identity of the population.",
+ "declaration_digest": "sha256:329da8471ee90c9004e11ba10c76d90ff9b812f751ac4f368b3a91bda446127a",
+ "declaration_digest_note": "raw bytes of this checkout; NOT checkout-invariant (CRLF vs LF); superseded for the gate by declaration_canonical_digest",
+ "declaration_generated_at": "2026-09-17T22:52:01Z",
  "foundry_profile": "pfp1:625bc70456ebfa20",
  "minted_by": "Proteus[m2-7d051790]",
  "population_manifest": {
@@ -20,7 +23,7 @@
     "985f44e5b1f3948c6f1ebb545cbc6e107d984a0667264aeb7cd54fff7f8c3c5d": 5
    },
    "declaration": "archaeon/campaign4/STARTING_POPULATION.json",
-   "declaration_digest": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+   "declaration_canonical_digest": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
    "declared_by": "Archaeon[m2-411504ab]",
    "fill": "proteus.foundry.generate.generate",
    "n": 12,
@@ -1195,8 +1198,8 @@
    "fe8bc0ab9b16242421c88ef33868295a43675b7f80df34f1767cfd090854c46e",
    "fed787d8f2b87f4c4dd2c876945f17b4c897b154ed43f496ef62b3a4a68873ed"
   ],
-  "population_label": "campaign4 starting population (Archaeon declaration a3f9816fada5a5ed)",
-  "population_manifest_id": "a79458e37a3f102727f15cd733bcc152f4cf2f7c2329d7bae2f7eeeb9e09af1a",
+  "population_label": "campaign4 starting population (Archaeon declaration 7f03cc8282b4b1e2)",
+  "population_manifest_id": "bbb1862f8bde58d89094f620ea4666bb408e6ddb4756804150293d974a139998",
   "recipe": {
    "foundry_manifest_seed": 20260921,
    "foundry_profile": "pfp1:625bc70456ebfa20",
@@ -1208,7 +1211,7 @@
   },
   "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
   "schema_version": "proteus.population_manifest.v1",
-  "sealed_at": "2026-09-17T19:10:49Z",
+  "sealed_at": "2026-09-17T22:52:01Z",
   "selection_criteria": "NONE",
   "selection_evidence_ref": null,
   "structural_summary": {

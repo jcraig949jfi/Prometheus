@@ -1,0 +1,41 @@
+{
+ "perturbation_id": "P-E08",
+ "parent": "T-E03",
+ "escapes_stasis": "a mutation operator that can zero a weight (T-E03's recorded escape)",
+ "claim_type": "stasis-escape",
+ "phase1": {
+  "drift_generations": 30,
+  "ids": 4,
+  "operators": [
+   "zeroing p=0.05",
+   "plain (same draws)"
+  ],
+  "attainable_if": "mean(start - end) of nz_share under zeroing >= .10"
+ },
+ "phase2": {
+  "lambdas": [
+   "0",
+   "H"
+  ],
+  "ids": 4,
+  "generations": 60,
+  "n": 64,
+  "measures": [
+   "nz_share",
+   "sparsity",
+   "mi_excess",
+   "precision",
+   "coverage",
+   "score"
+  ]
+ },
+ "unchanged": "e03 world, organism, elitism, MI ruler (P-B07's harness)",
+ "material_rule": "phase 2 only: nz_share(H) - nz_share(0) below p05 AND (mi_excess or precision differs outside its band) -> burden pressure changes conditionality; nz below only -> behavioural sparsity only; phase 1 failure -> INSTRUMENT_UNATTAINABLE (not material, instrument fact)",
+ "continuation": [
+  "zeroing probability dose",
+  "magnitude-based burden",
+  "tax x activation cost"
+ ],
+ "written": "2026-09-18 23:22:01",
+ "prereg_sha256": "ca5170e9e2f16d93877ce614681a273d5458b9e0ab343bd70a715c188fa69aec"
+}

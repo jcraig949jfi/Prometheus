@@ -1,0 +1,2280 @@
+{
+ "perturbation_id": "P-J02",
+ "parent": "T-R01",
+ "summary": {
+  "unread_at_out": [
+   3.0,
+   3.0,
+   3.0,
+   3.0,
+   2.0,
+   3.0
+  ],
+  "literal_regime_regs_at_out": [
+   [],
+   [],
+   [],
+   [],
+   [],
+   []
+  ],
+  "xval_regime_regs_at_out": [
+   [],
+   [],
+   [],
+   [],
+   [],
+   []
+  ],
+  "witness_min_instr": {
+   "xor1": [
+    4,
+    4,
+    null,
+    null,
+    3,
+    4
+   ],
+   "xor15": [
+    12,
+    12,
+    null,
+    null,
+    12,
+    12
+   ]
+  },
+  "witness_templates": {
+   "xor1": [
+    {
+     "in3": 12,
+     "put": 6
+    },
+    {
+     "in3": 12,
+     "put": 6
+    },
+    {},
+    {},
+    {
+     "in2": 6,
+     "in3": 18,
+     "put": 9
+    },
+    {
+     "in3": 18,
+     "put": 10
+    }
+   ],
+   "xor15": [
+    {
+     "put": 6
+    },
+    {
+     "put": 6
+    },
+    {},
+    {},
+    {
+     "put": 9
+    },
+    {
+     "put": 10
+    }
+   ]
+  },
+  "routes": [
+   {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   {
+    "xor1": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES",
+    "xor15": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES"
+   },
+   {
+    "xor1": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES",
+    "xor15": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES"
+   },
+   {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 3 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   }
+  ],
+  "census_hits": {
+   "xor1": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "xor15": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "census_beneficial_confirmed": {
+   "xor1": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "xor15": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "census_beneficial_best4": {
+   "xor1": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "xor15": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  "grammar_one_op_confirm4": {
+   "xor1": [
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    }
+   ],
+   "xor15": [
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    }
+   ]
+  },
+  "grammar_two_op_confirm4": {
+   "xor1": [
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    }
+   ],
+   "xor15": [
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    },
+    {
+     "screened": 0,
+     "checked": 0,
+     "confirmed_beneficial": 0,
+     "confirmed_hit": 0,
+     "best_4set": null
+    }
+   ]
+  },
+  "census_classes": {
+   "xor1": [
+    {
+     "neutral": 11808,
+     "deleterious": 1072
+    },
+    {
+     "deleterious": 1302,
+     "neutral": 9114
+    },
+    {
+     "neutral": 1156,
+     "deleterious": 116
+    },
+    {
+     "neutral": 1706,
+     "deleterious": 94
+    },
+    {
+     "neutral": 12112,
+     "deleterious": 1440
+    },
+    {
+     "neutral": 8577,
+     "deleterious": 1839
+    }
+   ],
+   "xor15": [
+    {
+     "neutral": 11802,
+     "deleterious": 1078
+    },
+    {
+     "deleterious": 1317,
+     "neutral": 9099
+    },
+    {
+     "neutral": 1156,
+     "deleterious": 116
+    },
+    {
+     "neutral": 1706,
+     "deleterious": 94
+    },
+    {
+     "neutral": 12112,
+     "deleterious": 1440
+    },
+    {
+     "neutral": 8570,
+     "deleterious": 1846
+    }
+   ]
+  },
+  "grammar_one_op": {
+   "xor1": {
+    "hit": 0.0,
+    "beneficial": 0.0,
+    "neutral": 0.8758333333333331,
+    "deleterious": 0.12416666666666669,
+    "best": 0.6041666666666666
+   },
+   "xor15": {
+    "hit": 0.0,
+    "beneficial": 0.0,
+    "neutral": 0.87575,
+    "deleterious": 0.12425000000000001,
+    "best": 0.6041666666666666
+   }
+  },
+  "grammar_two_op": {
+   "xor1": {
+    "hit": 0.0,
+    "beneficial": 0.0,
+    "neutral": 0.7705833333333333,
+    "deleterious": 0.22941666666666669,
+    "best": 0.6041666666666666
+   },
+   "xor15": {
+    "hit": 0.0,
+    "beneficial": 0.0,
+    "neutral": 0.7705833333333333,
+    "deleterious": 0.22941666666666669,
+    "best": 0.6041666666666666
+   }
+  },
+  "intermediates": {
+   "xor1": [
+    "DELETERIOUS_VALLEY",
+    "DELETERIOUS_VALLEY",
+    null,
+    null,
+    "DELETERIOUS_VALLEY",
+    "DELETERIOUS_VALLEY"
+   ],
+   "xor15": [
+    "DELETERIOUS_VALLEY",
+    "DELETERIOUS_VALLEY",
+    null,
+    null,
+    "DELETERIOUS_VALLEY",
+    "DELETERIOUS_VALLEY"
+   ]
+  },
+  "first_gain_at_prefix": {
+   "xor1": [
+    4,
+    4,
+    null,
+    null,
+    3,
+    4
+   ],
+   "xor15": [
+    12,
+    12,
+    null,
+    null,
+    12,
+    12
+   ]
+  }
+ },
+ "rows": [
+  {
+   "seed": 1,
+   "rank": 0,
+   "n_instr": 57,
+   "n_regs": 14,
+   "persist": "all",
+   "f0_4set": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "f0_2set": {
+    "xor1": 0.5625,
+    "xor15": 0.5625
+   },
+   "out_index": 1,
+   "out_reg": 3,
+   "out_knockout_changed": 0.875,
+   "probe": {
+    "unread_at_out_mean": 3.0,
+    "unread_at_out_values": {
+     "3": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 18,
+     "minimal": {
+      "name": "in3_t0_xor",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        12,
+        3,
+        3,
+        0
+       ]
+      ],
+      "n_instr": 4,
+      "held": 1.0
+     },
+     "min_n_instr": 4,
+     "by_size": {
+      "4": 12,
+      "10": 6
+     },
+     "by_template": {
+      "in3": 12,
+      "put": 6
+     },
+     "positions_of_minimal": [
+      0,
+      1
+     ]
+    },
+    "xor15": {
+     "n_verified": 6,
+     "minimal": {
+      "name": "put_neutral_k0",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        1,
+        0,
+        0
+       ],
+       [
+        21,
+        2,
+        0,
+        0
+       ],
+       [
+        3,
+        4,
+        1,
+        0
+       ],
+       [
+        8,
+        0,
+        0,
+        4
+       ],
+       [
+        9,
+        5,
+        2,
+        0
+       ],
+       [
+        8,
+        6,
+        4,
+        0
+       ],
+       [
+        9,
+        2,
+        2,
+        6
+       ],
+       [
+        12,
+        3,
+        3,
+        2
+       ],
+       [
+        3,
+        4,
+        15,
+        0
+       ],
+       [
+        9,
+        5,
+        5,
+        4
+       ],
+       [
+        12,
+        3,
+        3,
+        5
+       ]
+      ],
+      "n_instr": 12,
+      "held": 1.0
+     },
+     "min_n_instr": 12,
+     "by_size": {
+      "12": 6
+     },
+     "by_template": {
+      "put": 6
+     },
+     "positions_of_minimal": [
+      0,
+      1
+     ]
+    }
+   },
+   "intermediates": {
+    "xor1": {
+     "prefix_fitness": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 4,
+     "n_instr": 4,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "n_individually_necessary": 4
+    },
+    "xor15": {
+     "prefix_fitness": [
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.5625,
+      0.5625,
+      0.5625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 12,
+     "n_instr": 12,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0312,
+      0.0312,
+      0.0,
+      0.5625,
+      0.0938,
+      0.5625,
+      0.0938,
+      0.5625,
+      0.5625,
+      0.5625
+     ],
+     "n_individually_necessary": 12
+    }
+   },
+   "census": {
+    "xor1": {
+     "n": 12880,
+     "classes": {
+      "neutral": 11808,
+      "deleterious": 1072
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 12880,
+     "classes": {
+      "neutral": 11802,
+      "deleterious": 1078
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.878,
+      "deleterious": 0.122,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.878,
+      "deleterious": 0.122,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.773,
+      "deleterious": 0.227,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.773,
+      "deleterious": 0.227,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   "elapsed_s": 77.8
+  },
+  {
+   "seed": 1,
+   "rank": 1,
+   "n_instr": 46,
+   "n_regs": 14,
+   "persist": "all",
+   "f0_4set": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "f0_2set": {
+    "xor1": 0.5625,
+    "xor15": 0.5625
+   },
+   "out_index": 1,
+   "out_reg": 3,
+   "out_knockout_changed": 1.0,
+   "probe": {
+    "unread_at_out_mean": 3.0,
+    "unread_at_out_values": {
+     "3": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 18,
+     "minimal": {
+      "name": "in3_t0_xor",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        12,
+        3,
+        3,
+        0
+       ]
+      ],
+      "n_instr": 4,
+      "held": 1.0
+     },
+     "min_n_instr": 4,
+     "by_size": {
+      "4": 12,
+      "10": 6
+     },
+     "by_template": {
+      "in3": 12,
+      "put": 6
+     },
+     "positions_of_minimal": [
+      0,
+      1
+     ]
+    },
+    "xor15": {
+     "n_verified": 6,
+     "minimal": {
+      "name": "put_neutral_k0",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        1,
+        0,
+        0
+       ],
+       [
+        21,
+        2,
+        0,
+        0
+       ],
+       [
+        3,
+        4,
+        1,
+        0
+       ],
+       [
+        8,
+        0,
+        0,
+        4
+       ],
+       [
+        9,
+        5,
+        2,
+        0
+       ],
+       [
+        8,
+        6,
+        4,
+        0
+       ],
+       [
+        9,
+        2,
+        2,
+        6
+       ],
+       [
+        12,
+        3,
+        3,
+        2
+       ],
+       [
+        3,
+        4,
+        15,
+        0
+       ],
+       [
+        9,
+        5,
+        5,
+        4
+       ],
+       [
+        12,
+        3,
+        3,
+        5
+       ]
+      ],
+      "n_instr": 12,
+      "held": 1.0
+     },
+     "min_n_instr": 12,
+     "by_size": {
+      "12": 6
+     },
+     "by_template": {
+      "put": 6
+     },
+     "positions_of_minimal": [
+      0,
+      1
+     ]
+    }
+   },
+   "intermediates": {
+    "xor1": {
+     "prefix_fitness": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 4,
+     "n_instr": 4,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "n_individually_necessary": 4
+    },
+    "xor15": {
+     "prefix_fitness": [
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.5625,
+      0.5625,
+      0.5625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 12,
+     "n_instr": 12,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0312,
+      0.0312,
+      0.0,
+      0.5625,
+      0.0938,
+      0.5625,
+      0.0938,
+      0.5625,
+      0.5625,
+      0.5625
+     ],
+     "n_individually_necessary": 12
+    }
+   },
+   "census": {
+    "xor1": {
+     "n": 10416,
+     "classes": {
+      "deleterious": 1302,
+      "neutral": 9114
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 10416,
+     "classes": {
+      "deleterious": 1317,
+      "neutral": 9099
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.885,
+      "deleterious": 0.115,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.885,
+      "deleterious": 0.115,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.7975,
+      "deleterious": 0.2025,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.7975,
+      "deleterious": 0.2025,
+      "best": 0.5625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   "elapsed_s": 94.1
+  },
+  {
+   "seed": 2,
+   "rank": 0,
+   "n_instr": 26,
+   "n_regs": 3,
+   "persist": "all",
+   "f0_4set": {
+    "xor1": 0.484375,
+    "xor15": 0.484375
+   },
+   "f0_2set": {
+    "xor1": 0.625,
+    "xor15": 0.625
+   },
+   "out_index": 0,
+   "out_reg": 2,
+   "out_knockout_changed": 1.0,
+   "probe": {
+    "unread_at_out_mean": 3.0,
+    "unread_at_out_values": {
+     "3": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 0,
+     "minimal": null,
+     "min_n_instr": null,
+     "by_size": {},
+     "by_template": {},
+     "positions_of_minimal": []
+    },
+    "xor15": {
+     "n_verified": 0,
+     "minimal": null,
+     "min_n_instr": null,
+     "by_size": {},
+     "by_template": {},
+     "positions_of_minimal": []
+    }
+   },
+   "intermediates": {},
+   "census": {
+    "xor1": {
+     "n": 1272,
+     "classes": {
+      "neutral": 1156,
+      "deleterious": 116
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 1272,
+     "classes": {
+      "neutral": 1156,
+      "deleterious": 116
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.8705,
+      "deleterious": 0.1295,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.8705,
+      "deleterious": 0.1295,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.752,
+      "deleterious": 0.248,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.752,
+      "deleterious": 0.248,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES",
+    "xor15": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES"
+   },
+   "elapsed_s": 23.0
+  },
+  {
+   "seed": 2,
+   "rank": 1,
+   "n_instr": 37,
+   "n_regs": 3,
+   "persist": "all",
+   "f0_4set": {
+    "xor1": 0.484375,
+    "xor15": 0.484375
+   },
+   "f0_2set": {
+    "xor1": 0.625,
+    "xor15": 0.625
+   },
+   "out_index": 0,
+   "out_reg": 2,
+   "out_knockout_changed": 1.0,
+   "probe": {
+    "unread_at_out_mean": 3.0,
+    "unread_at_out_values": {
+     "3": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 0,
+     "minimal": null,
+     "min_n_instr": null,
+     "by_size": {},
+     "by_template": {},
+     "positions_of_minimal": []
+    },
+    "xor15": {
+     "n_verified": 0,
+     "minimal": null,
+     "min_n_instr": null,
+     "by_size": {},
+     "by_template": {},
+     "positions_of_minimal": []
+    }
+   },
+   "intermediates": {},
+   "census": {
+    "xor1": {
+     "n": 1800,
+     "classes": {
+      "neutral": 1706,
+      "deleterious": 94
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 1800,
+     "classes": {
+      "neutral": 1706,
+      "deleterious": 94
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.9185,
+      "deleterious": 0.0815,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.918,
+      "deleterious": 0.082,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.84,
+      "deleterious": 0.16,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.84,
+      "deleterious": 0.16,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES",
+    "xor15": "UNREACHABLE_WITHIN_CENSUS_AND_TEMPLATES"
+   },
+   "elapsed_s": 24.8
+  },
+  {
+   "seed": 3,
+   "rank": 0,
+   "n_instr": 60,
+   "n_regs": 14,
+   "persist": "regs",
+   "f0_4set": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "f0_2set": {
+    "xor1": 0.625,
+    "xor15": 0.625
+   },
+   "out_index": 3,
+   "out_reg": 3,
+   "out_knockout_changed": 1.0,
+   "probe": {
+    "unread_at_out_mean": 2.0,
+    "unread_at_out_values": {
+     "2": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 33,
+     "minimal": {
+      "name": "in2_t0_xor",
+      "pos": 3,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        12,
+        3,
+        3,
+        0
+       ]
+      ],
+      "n_instr": 3,
+      "held": 1.0
+     },
+     "min_n_instr": 3,
+     "by_size": {
+      "3": 6,
+      "4": 18,
+      "10": 9
+     },
+     "by_template": {
+      "in2": 6,
+      "in3": 18,
+      "put": 9
+     },
+     "positions_of_minimal": [
+      3
+     ]
+    },
+    "xor15": {
+     "n_verified": 9,
+     "minimal": {
+      "name": "put_neutral_k1",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        1,
+        0,
+        0
+       ],
+       [
+        21,
+        2,
+        0,
+        0
+       ],
+       [
+        21,
+        4,
+        0,
+        0
+       ],
+       [
+        3,
+        5,
+        1,
+        0
+       ],
+       [
+        8,
+        1,
+        1,
+        5
+       ],
+       [
+        9,
+        6,
+        4,
+        1
+       ],
+       [
+        8,
+        7,
+        5,
+        1
+       ],
+       [
+        9,
+        4,
+        4,
+        7
+       ],
+       [
+        12,
+        3,
+        3,
+        4
+       ],
+       [
+        3,
+        5,
+        15,
+        0
+       ],
+       [
+        9,
+        6,
+        6,
+        5
+       ],
+       [
+        12,
+        3,
+        3,
+        6
+       ]
+      ],
+      "n_instr": 12,
+      "held": 1.0
+     },
+     "min_n_instr": 12,
+     "by_size": {
+      "12": 9
+     },
+     "by_template": {
+      "put": 9
+     },
+     "positions_of_minimal": [
+      0,
+      1,
+      2
+     ]
+    }
+   },
+   "intermediates": {
+    "xor1": {
+     "prefix_fitness": [
+      0.0625,
+      0.0625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 3,
+     "n_instr": 3,
+     "drop_one_fitness": [
+      0.0625,
+      0.0625,
+      0.0625
+     ],
+     "n_individually_necessary": 3
+    },
+    "xor15": {
+     "prefix_fitness": [
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.625,
+      0.625,
+      0.625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 12,
+     "n_instr": 12,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0312,
+      0.0625,
+      0.0312,
+      0.625,
+      0.0312,
+      0.625,
+      0.0312,
+      0.625,
+      0.625,
+      0.625
+     ],
+     "n_individually_necessary": 12
+    }
+   },
+   "census": {
+    "xor1": {
+     "n": 13552,
+     "classes": {
+      "neutral": 12112,
+      "deleterious": 1440
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 13552,
+     "classes": {
+      "neutral": 12112,
+      "deleterious": 1440
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.864,
+      "deleterious": 0.136,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.864,
+      "deleterious": 0.136,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.7755,
+      "deleterious": 0.2245,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.7755,
+      "deleterious": 0.2245,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 3 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   "elapsed_s": 558.5
+  },
+  {
+   "seed": 3,
+   "rank": 1,
+   "n_instr": 46,
+   "n_regs": 14,
+   "persist": "regs",
+   "f0_4set": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "f0_2set": {
+    "xor1": 0.625,
+    "xor15": 0.625
+   },
+   "out_index": 2,
+   "out_reg": 3,
+   "out_knockout_changed": 0.9375,
+   "probe": {
+    "unread_at_out_mean": 3.0,
+    "unread_at_out_values": {
+     "3": 16
+    },
+    "literal_regime_registers_at_out": [],
+    "xval_regime_registers_at_out": []
+   },
+   "witness": {
+    "xor1": {
+     "n_verified": 28,
+     "minimal": {
+      "name": "in3_t0_xor",
+      "pos": 1,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        12,
+        3,
+        3,
+        0
+       ]
+      ],
+      "n_instr": 4,
+      "held": 1.0
+     },
+     "min_n_instr": 4,
+     "by_size": {
+      "4": 18,
+      "10": 10
+     },
+     "by_template": {
+      "in3": 18,
+      "put": 10
+     },
+     "positions_of_minimal": [
+      0,
+      1,
+      2
+     ]
+    },
+    "xor15": {
+     "n_verified": 10,
+     "minimal": {
+      "name": "put_neutral_k0",
+      "pos": 0,
+      "seq": [
+       [
+        21,
+        0,
+        0,
+        0
+       ],
+       [
+        21,
+        1,
+        0,
+        0
+       ],
+       [
+        21,
+        2,
+        0,
+        0
+       ],
+       [
+        3,
+        4,
+        1,
+        0
+       ],
+       [
+        8,
+        0,
+        0,
+        4
+       ],
+       [
+        9,
+        5,
+        2,
+        0
+       ],
+       [
+        8,
+        6,
+        4,
+        0
+       ],
+       [
+        9,
+        2,
+        2,
+        6
+       ],
+       [
+        12,
+        3,
+        3,
+        2
+       ],
+       [
+        3,
+        4,
+        15,
+        0
+       ],
+       [
+        9,
+        5,
+        5,
+        4
+       ],
+       [
+        12,
+        3,
+        3,
+        5
+       ]
+      ],
+      "n_instr": 12,
+      "held": 1.0
+     },
+     "min_n_instr": 12,
+     "by_size": {
+      "12": 10
+     },
+     "by_template": {
+      "put": 10
+     },
+     "positions_of_minimal": [
+      0,
+      1,
+      2,
+      18
+     ]
+    }
+   },
+   "intermediates": {
+    "xor1": {
+     "prefix_fitness": [
+      0.0625,
+      0.0625,
+      0.0625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 4,
+     "n_instr": 4,
+     "drop_one_fitness": [
+      0.0625,
+      0.0625,
+      0.0625,
+      0.0625
+     ],
+     "n_individually_necessary": 4
+    },
+    "xor15": {
+     "prefix_fitness": [
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.0312,
+      0.625,
+      0.625,
+      0.625,
+      1.0
+     ],
+     "route_prefix_path": "DELETERIOUS_VALLEY",
+     "first_gain_at_prefix": 12,
+     "n_instr": 12,
+     "drop_one_fitness": [
+      0.0,
+      0.0,
+      0.0312,
+      0.0625,
+      0.0312,
+      0.625,
+      0.0312,
+      0.625,
+      0.0312,
+      0.625,
+      0.625,
+      0.625
+     ],
+     "n_individually_necessary": 12
+    }
+   },
+   "census": {
+    "xor1": {
+     "n": 10416,
+     "classes": {
+      "neutral": 8577,
+      "deleterious": 1839
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    },
+    "xor15": {
+     "n": 10416,
+     "classes": {
+      "neutral": 8570,
+      "deleterious": 1846
+     },
+     "hits_screen": 0,
+     "hits_confirmed": 0,
+     "hits_insert": 0,
+     "hits_replace": 0,
+     "beneficial_best_2set": null,
+     "beneficial_ops": {},
+     "confirm4": {
+      "screened": 0,
+      "checked": 0,
+      "confirmed_beneficial": 0,
+      "confirmed_hit": 0,
+      "best_4set": null
+     },
+     "hit_ops": {},
+     "grammar_exact": {
+      "w_insertion": 0.08333333333333334,
+      "w_replacement": 0.125,
+      "p_k1": 0.2478,
+      "p_per_birth": 0.0,
+      "expected_hits_per_PJ01_run": 0.0,
+      "expected_hits_per_generation": 0.0
+     },
+     "examples": []
+    }
+   },
+   "grammar": {
+    "one_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.839,
+      "deleterious": 0.161,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.839,
+      "deleterious": 0.161,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    },
+    "two_op": {
+     "confirm4": {
+      "xor1": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      },
+      "xor15": {
+       "screened": 0,
+       "checked": 0,
+       "confirmed_beneficial": 0,
+       "confirmed_hit": 0,
+       "best_4set": null
+      }
+     },
+     "xor1": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.6855,
+      "deleterious": 0.3145,
+      "best": 0.625,
+      "beneficial_ops": {}
+     },
+     "xor15": {
+      "hit": 0.0,
+      "beneficial": 0.0,
+      "neutral": 0.6855,
+      "deleterious": 0.3145,
+      "best": 0.625,
+      "beneficial_ops": {}
+     }
+    }
+   },
+   "routes": {
+    "xor1": "NO_ONE_OR_TWO_EDIT_HIT; witness at 4 instructions via DELETERIOUS_VALLEY",
+    "xor15": "NO_ONE_OR_TWO_EDIT_HIT; witness at 12 instructions via DELETERIOUS_VALLEY"
+   },
+   "elapsed_s": 427.8
+  }
+ ],
+ "material": true,
+ "elapsed_s": 558.8,
+ "prereg_sha256": "7db490e69e6a25242932d6a1548034927435d9ba4b959fce2a8b1b25d7a32652",
+ "ts": "2026-09-19 08:49:13"
+}

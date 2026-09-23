@@ -1,0 +1,35 @@
+{
+ "perturbation_id": "P-H04",
+ "parent": "T-X19",
+ "co_parents": [
+  "T-X17",
+  "T-ARCH4/M1"
+ ],
+ "deformation": "C",
+ "requires": [
+  "P-G11"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "minimal-causal-transplantation",
+ "sources": {
+  "start_anchored": [
+   6,
+   "W1_d4"
+  ],
+  "ask_time": [
+   6,
+   "W0"
+  ]
+ },
+ "localisation": "per-instruction disable (opcode := NOP): geometry lost if curve distance > .3; reward lost if below r0 - band; HALT-probe reach map; span = smallest contiguous cover of the geometry-necessary set",
+ "hosts": "2 gen0_random parents, 4 immune shelf parents, 4 immune W2-evolver tops; insertion at start / middle / end; SHAM = same-length segment from an unrelated immune program",
+ "success": "geometry: distance to the source class centroid < .2; competence: reward on the source world >= floor and > host baseline + band",
+ "readouts": "per source x host x position x kind: geometry / competence flags; span lengths; necessary-set sizes; reach",
+ "material_rule": "span transplants show geometry or competence in >= 20 percent of host insertions and sham transplants in fewer than half that share",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:02:37",
+ "prereg_sha256": "59e15c291bd44a20104b0a7277fcbea6625fa9ec274f4370e6f6d23fe19e3c6b"
+}

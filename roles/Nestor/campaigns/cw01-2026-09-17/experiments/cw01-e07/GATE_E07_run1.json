@@ -1,0 +1,507 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e07",
+ "attempt_id": "cw01-e07-a01",
+ "phase": "QUALIFY",
+ "ts": "2026-09-18 08:20:02",
+ "learnability": {
+  "acc_vs_stateless": {
+   "learnable": true,
+   "distinct": {
+    "distinct": true,
+    "duplicates": [],
+    "n": 3
+   },
+   "results": {
+    "ACCUMULATOR": {
+     "score": 0.7393707459779777
+    },
+    "STATELESS": {
+     "score": 0.36040903086648396
+    },
+    "ZERO": {
+     "score": 0.26383268495852014
+    }
+   },
+   "best": "ACCUMULATOR",
+   "worst": "STATELESS",
+   "advantage_pct": 105.14767462968561,
+   "min_advantage_pct": 5.0,
+   "mechanism_key": null,
+   "mechanism_value": null,
+   "min_mechanism": 0.0,
+   "mechanism_fires": true,
+   "verdict": "LEARNABLE",
+   "_reading": "a NULL from an experiment that fails this gate is a statement about the instrument, not about the world"
+  },
+  "stateless_vs_zero": {
+   "learnable": true,
+   "distinct": {
+    "distinct": true,
+    "duplicates": [],
+    "n": 3
+   },
+   "results": {
+    "ACCUMULATOR": {
+     "score": 0.7393707459779777
+    },
+    "STATELESS": {
+     "score": 0.36040903086648396
+    },
+    "ZERO": {
+     "score": 0.26383268495852014
+    }
+   },
+   "best": "STATELESS",
+   "worst": "ZERO",
+   "advantage_pct": 36.605148419403605,
+   "min_advantage_pct": 5.0,
+   "mechanism_key": null,
+   "mechanism_value": null,
+   "min_mechanism": 0.0,
+   "mechanism_fires": true,
+   "verdict": "LEARNABLE",
+   "_reading": "a NULL from an experiment that fails this gate is a statement about the instrument, not about the world"
+  }
+ },
+ "determinism": true,
+ "pilot_final_generation": [
+  {
+   "gen": 39,
+   "mean": 0.2987999896240067,
+   "max": 0.4199547600369199,
+   "min": 0.16895471727120537,
+   "sd": 0.06245604412036691
+  },
+  {
+   "gen": 39,
+   "mean": 0.370439358379969,
+   "max": 0.489035181841756,
+   "min": 0.22358216191110847,
+   "sd": 0.05849775900019789
+  },
+  {
+   "gen": 39,
+   "mean": 0.19816517197622313,
+   "max": 0.3640090664416844,
+   "min": 0.07771864241952646,
+   "sd": 0.05771333945878809
+  },
+  {
+   "gen": 39,
+   "mean": 0.31965100011566555,
+   "max": 0.3809909722055679,
+   "min": 0.18805183090434174,
+   "sd": 0.04085815920504327
+  }
+ ],
+ "results": {
+  "CANDIDATE": {
+   "world": "CANDIDATE",
+   "P1": false,
+   "P2": true,
+   "P3": true,
+   "P4": false,
+   "P5": true,
+   "admitted": false,
+   "reasons": [
+    "P1 damage does not fire on ACCUMULATOR: blocks ['0.961', '0.922', '0.945', '0.942', '0.985', '0.954', '0.973', '0.974'] grand 0.9561",
+    "P4 FAIL: v_cond/v_noise = 0.66 over 60 pairs"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      0.9609858095453957,
+      0.9220398286190237,
+      0.9450092607406686,
+      0.94224043149887,
+      0.9848792734993116,
+      0.9535461271397294,
+      0.9731893837242448,
+      0.9739168118740236
+     ],
+     "accumulator_grand": 0.9561246991047025,
+     "stateless": 1.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.0
+    },
+    "P3": {
+     "outcome": "PASS",
+     "n_useful": 61,
+     "median_AURC_at_top_severity": 0.9982262483259375,
+     "frac_recovered_rhoH": 1.0,
+     "median_AURC_primary": 1.0030821739507414,
+     "mean_rho0_primary": 1.0306015496751044
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 60,
+     "v_cond": 0.0004615553174395687,
+     "v_noise": 0.0007030591572693792,
+     "ratio": 0.6564957054712288,
+     "ratio_min": 3.0,
+     "n_orgs": 61,
+     "n_useful": 61
+    },
+    "P5": {
+     "outcome": "PASS",
+     "same": 64,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 61,
+     "I_mean": 0.3771878403050912,
+     "I_range": [
+      0.2843887754119009,
+      0.4596661190303275
+     ]
+    }
+   }
+  },
+  "F1_noop_selector": {
+   "world": "F1_noop_selector",
+   "P1": false,
+   "P2": true,
+   "P3": true,
+   "P4": false,
+   "P5": true,
+   "admitted": false,
+   "reasons": [
+    "P1 damage does not fire on ACCUMULATOR: blocks ['1.000', '1.000', '1.000', '1.000', '1.000', '1.000', '1.000', '1.000'] grand 1.0000",
+    "P4 FAIL: v_cond/v_noise = nan over 60 pairs"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "accumulator_grand": 1.0,
+     "stateless": 1.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.0
+    },
+    "P3": {
+     "outcome": "PASS",
+     "n_useful": 61,
+     "median_AURC_at_top_severity": 1.0,
+     "frac_recovered_rhoH": 1.0,
+     "median_AURC_primary": 1.0,
+     "mean_rho0_primary": 1.0
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 60,
+     "v_cond": 0.0,
+     "v_noise": 0.0,
+     "ratio": NaN,
+     "ratio_min": 3.0,
+     "n_orgs": 61,
+     "n_useful": 61
+    },
+    "P5": {
+     "outcome": "PASS",
+     "same": 64,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 61,
+     "I_mean": 0.3771878403050912,
+     "I_range": [
+      0.2843887754119009,
+      0.4596661190303275
+     ]
+    }
+   },
+   "expected_failure": "P1",
+   "expected_fired": true
+  },
+  "F2_sham_that_zeros": {
+   "world": "F2_sham_that_zeros",
+   "P1": false,
+   "P2": false,
+   "P3": true,
+   "P4": false,
+   "P5": true,
+   "admitted": false,
+   "reasons": [
+    "P1 damage does not fire on ACCUMULATOR: blocks ['0.961', '0.922', '0.945', '0.942', '0.985', '0.954', '0.973', '0.974'] grand 0.9561",
+    "P2 sham deviates from intact by 9.960e-01",
+    "P4 FAIL: v_cond/v_noise = 0.66 over 60 pairs"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      0.9609858095453957,
+      0.9220398286190237,
+      0.9450092607406686,
+      0.94224043149887,
+      0.9848792734993116,
+      0.9535461271397294,
+      0.9731893837242448,
+      0.9739168118740236
+     ],
+     "accumulator_grand": 0.9561246991047025,
+     "stateless": 1.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.9959636339996814
+    },
+    "P3": {
+     "outcome": "PASS",
+     "n_useful": 61,
+     "median_AURC_at_top_severity": 0.9982262483259375,
+     "frac_recovered_rhoH": 1.0,
+     "median_AURC_primary": 1.0030821739507414,
+     "mean_rho0_primary": 1.0306015496751044
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 60,
+     "v_cond": 0.0004615553174395687,
+     "v_noise": 0.0007030591572693792,
+     "ratio": 0.6564957054712288,
+     "ratio_min": 3.0,
+     "n_orgs": 61,
+     "n_useful": 61
+    },
+    "P5": {
+     "outcome": "PASS",
+     "same": 64,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 61,
+     "I_mean": 0.3771878403050912,
+     "I_range": [
+      0.2843887754119009,
+      0.4596661190303275
+     ]
+    }
+   },
+   "expected_failure": "P2",
+   "expected_fired": true
+  },
+  "F3_persistent_lesion": {
+   "world": "F3_persistent_lesion",
+   "P1": false,
+   "P2": true,
+   "P3": false,
+   "P4": false,
+   "P5": true,
+   "admitted": false,
+   "reasons": [
+    "P1 damage touched a STATELESS organism: AURC 0.000000",
+    "P3 regime lethal/unrecoverable: median AURC(f=0.30) 0.000, recovered 0.00",
+    "P4 FAIL: v_cond/v_noise = 0.00 over 60 pairs"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      -2.4227070263697384e-17,
+      2.3475693529692194e-18,
+      1.9054700706066074e-18,
+      -4.27379308035242e-17,
+      -1.2513217264533958e-18,
+      -7.761746605377832e-19,
+      -2.596969639474999e-17,
+      -1.683918769304974e-17
+     ],
+     "accumulator_grand": 0.0,
+     "stateless": 0.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.0
+    },
+    "P3": {
+     "outcome": "FAIL",
+     "n_useful": 61,
+     "median_AURC_at_top_severity": 0.0,
+     "frac_recovered_rhoH": 0.0,
+     "median_AURC_primary": 0.0,
+     "mean_rho0_primary": 0.0
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 60,
+     "v_cond": 0.0,
+     "v_noise": 3.514461189559382e-30,
+     "ratio": 0.0,
+     "ratio_min": 3.0,
+     "n_orgs": 61,
+     "n_useful": 61
+    },
+    "P5": {
+     "outcome": "PASS",
+     "same": 64,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 61,
+     "I_mean": 0.3771878403050912,
+     "I_range": [
+      0.2843887754119009,
+      0.4596661190303275
+     ]
+    }
+   },
+   "expected_failure": "P3",
+   "expected_fired": true
+  },
+  "F4_readout_gain_family": {
+   "world": "F4_readout_gain_family",
+   "P1": false,
+   "P2": true,
+   "P3": true,
+   "P4": false,
+   "P5": true,
+   "admitted": false,
+   "reasons": [
+    "P1 damage does not fire on ACCUMULATOR: blocks ['0.961', '0.922', '0.945', '0.942', '0.985', '0.954', '0.973', '0.974'] grand 0.9561",
+    "P4 FAIL: v_cond/v_noise = 0.00 over 63 pairs"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      0.9609858095453957,
+      0.9220398286190237,
+      0.9450092607406686,
+      0.94224043149887,
+      0.9848792734993116,
+      0.9535461271397294,
+      0.9731893837242448,
+      0.9739168118740236
+     ],
+     "accumulator_grand": 0.9561246991047025,
+     "stateless": 1.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.0
+    },
+    "P3": {
+     "outcome": "PASS",
+     "n_useful": 64,
+     "median_AURC_at_top_severity": 0.9103090890322064,
+     "frac_recovered_rhoH": 1.0,
+     "median_AURC_primary": 0.9215950451603753,
+     "mean_rho0_primary": 0.8021436103560096
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 63,
+     "v_cond": 3.431762549424663e-07,
+     "v_noise": 0.0005093634338163742,
+     "ratio": 0.0006737355533577259,
+     "ratio_min": 3.0,
+     "n_orgs": 64,
+     "n_useful": 64
+    },
+    "P5": {
+     "outcome": "PASS",
+     "same": 64,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 64,
+     "I_mean": 0.635172644950944,
+     "I_range": [
+      0.3795661940367727,
+      0.830566591162437
+     ]
+    }
+   },
+   "expected_failure": "P4",
+   "expected_fired": true
+  },
+  "F5_magnitude_selector": {
+   "world": "F5_magnitude_selector",
+   "P1": false,
+   "P2": true,
+   "P3": true,
+   "P4": false,
+   "P5": false,
+   "admitted": false,
+   "reasons": [
+    "P1 damage does not fire on ACCUMULATOR: blocks ['1.000', '1.000', '1.000', '1.000', '1.000', '1.000', '1.000', '1.000'] grand 1.0000",
+    "P4 FAIL: v_cond/v_noise = nan over 60 pairs",
+    "P5 selector is not blind: same index set on 0/64 trials"
+   ],
+   "detail": {
+    "P1": {
+     "accumulator_blocks": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "accumulator_grand": 1.0,
+     "stateless": 1.0,
+     "zero": NaN
+    },
+    "P2": {
+     "sham_max_abs_diff": 0.0
+    },
+    "P3": {
+     "outcome": "PASS",
+     "n_useful": 61,
+     "median_AURC_at_top_severity": 1.0,
+     "frac_recovered_rhoH": 1.0,
+     "median_AURC_primary": 1.0,
+     "mean_rho0_primary": 1.0
+    },
+    "P4": {
+     "outcome": "FAIL",
+     "n_pairs": 60,
+     "v_cond": 0.0,
+     "v_noise": 0.0,
+     "ratio": NaN,
+     "ratio_min": 3.0,
+     "n_orgs": 61,
+     "n_useful": 61
+    },
+    "P5": {
+     "outcome": "FAIL",
+     "same": 0,
+     "trials": 64
+    },
+    "pilot": {
+     "n": 64,
+     "n_useful": 61,
+     "I_mean": 0.3771878403050912,
+     "I_range": [
+      0.2843887754119009,
+      0.4596661190303275
+     ]
+    }
+   },
+   "expected_failure": "P5",
+   "expected_fired": true
+  }
+ },
+ "gate_can_refuse": true,
+ "world_admitted": false,
+ "verdict": "GATE PROVEN, WORLD REFUSED",
+ "_rule": "the gate is never tuned until it admits; a refusal is a finding"
+}

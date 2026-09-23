@@ -1,0 +1,44 @@
+{
+ "perturbation_id": "P-D03",
+ "parent": "T-ARCH4/M1",
+ "deformation": "C",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-mechanism-break",
+ "grid": {
+  "rule": [
+   "orig",
+   "no_growth",
+   "lennorm",
+   "lencost",
+   "symdel"
+  ],
+  "trap": [
+   "modulo",
+   "nop",
+   "halt"
+  ],
+  "prop": [
+   "frozen",
+   "balanced",
+   "delheavy"
+  ]
+ },
+ "depth": 16,
+ "walkers": 2,
+ "max_proposals": 32,
+ "held_fixed": "band width, seeds, parents' behaviour (canonicalised), environments",
+ "attacks": "P-C16's stated mechanism: growth = accepted NOP-trapped insertions + rejected live deletions",
+ "measures": "length delta, acceptance, exaptation, structural diversity, accepted-operator shares, per cell",
+ "continuation": [
+  "band width",
+  "depth 32/64 under the winning rule",
+  "explicit per-instruction cost sweep",
+  "C5 representation B"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 20:16:25",
+ "prereg_sha256": "3bd285e2b4352227f6bce1dd4ad179c83bb92f8b8c9c63c44c5e77906f9002bf"
+}

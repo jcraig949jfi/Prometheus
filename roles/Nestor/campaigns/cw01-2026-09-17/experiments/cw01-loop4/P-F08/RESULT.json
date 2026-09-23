@@ -1,0 +1,189 @@
+{
+ "perturbation_id": "P-F08",
+ "parent": "T-E03",
+ "phase1": [
+  {
+   "id": 0,
+   "start": 0.98095703125,
+   "end": 0.6357421875
+  },
+  {
+   "id": 1,
+   "start": 0.98388671875,
+   "end": 0.65625
+  },
+  {
+   "id": 2,
+   "start": 0.98583984375,
+   "end": 0.665771484375
+  },
+  {
+   "id": 3,
+   "start": 0.984130859375,
+   "end": 0.628173828125
+  }
+ ],
+ "nz_drop": 0.33721923828125,
+ "attainable": true,
+ "H": 0.3051903232879414,
+ "summary": {
+  "0": {
+   "score": 1.4479973560304757,
+   "sparsity": 0.25515340169270834,
+   "nz_share": 0.53790283203125,
+   "mi_excess": 1.029180086489967,
+   "precision": 0.5500221704892051,
+   "coverage": 0.7393337673611113
+  },
+  "H": {
+   "score": 1.4589999414089734,
+   "sparsity": 0.24313354492187503,
+   "nz_share": 0.44342041015625,
+   "mi_excess": 1.017940033899476,
+   "precision": 0.5645301715986548,
+   "coverage": 0.7199110243055556
+  }
+ },
+ "contrasts": {
+  "nz_share": {
+   "effect": -0.094482421875,
+   "p05": -0.076715087890625,
+   "p95": 0.07671508789062499,
+   "n_null": 70,
+   "exact": true,
+   "above_p95": false,
+   "below_p05": true
+  },
+  "mi_excess": {
+   "effect": -0.01124005259049099,
+   "p05": -0.1430409378778373,
+   "p95": 0.14304093787783728,
+   "n_null": 70,
+   "exact": true,
+   "above_p95": false,
+   "below_p05": false
+  },
+  "precision": {
+   "effect": 0.01450800110944972,
+   "p05": -0.04233375667476264,
+   "p95": 0.042333756674762635,
+   "n_null": 70,
+   "exact": true,
+   "above_p95": false,
+   "below_p05": false
+  },
+  "sparsity": {
+   "effect": -0.01201985677083331,
+   "p05": -0.02118733723958332,
+   "p95": 0.021187337239583316,
+   "n_null": 70,
+   "exact": true,
+   "above_p95": false,
+   "below_p05": false
+  },
+  "score": {
+   "effect": 0.011002585378497631,
+   "p05": -0.07466109430558175,
+   "p95": 0.07466109430558174,
+   "n_null": 70,
+   "exact": true,
+   "above_p95": false,
+   "below_p05": false
+  }
+ },
+ "reading": "SPARSITY_ONLY",
+ "rows": [
+  {
+   "lambda": "0",
+   "aid": 0,
+   "score": 1.4772739768972536,
+   "sparsity": 0.25786946614583334,
+   "nz_share": 0.561279296875,
+   "mi_excess": 0.8908018045397473,
+   "mi_significant": true,
+   "precision": 0.5567112686164992,
+   "coverage": 0.7582031250000003
+  },
+  {
+   "lambda": "0",
+   "aid": 1,
+   "score": 1.4350877142183327,
+   "sparsity": 0.2623209635416667,
+   "nz_share": 0.606201171875,
+   "mi_excess": 1.2177765515822203,
+   "mi_significant": true,
+   "precision": 0.5397478233941777,
+   "coverage": 0.7477430555555558
+  },
+  {
+   "lambda": "0",
+   "aid": 2,
+   "score": 1.4036380838470077,
+   "sparsity": 0.267431640625,
+   "nz_share": 0.500244140625,
+   "mi_excess": 1.0161659687849902,
+   "mi_significant": true,
+   "precision": 0.5246554091846385,
+   "coverage": 0.7401041666666668
+  },
+  {
+   "lambda": "0",
+   "aid": 3,
+   "score": 1.4759896491593083,
+   "sparsity": 0.23299153645833331,
+   "nz_share": 0.48388671875,
+   "mi_excess": 0.9919760210529099,
+   "mi_significant": true,
+   "precision": 0.5789741807615049,
+   "coverage": 0.7112847222222223
+  },
+  {
+   "lambda": "H",
+   "aid": 0,
+   "score": 1.4496010747754888,
+   "sparsity": 0.2501627604166667,
+   "nz_share": 0.405517578125,
+   "mi_excess": 0.8590177652977785,
+   "mi_significant": true,
+   "precision": 0.5516587896851017,
+   "coverage": 0.7301649305555558
+  },
+  {
+   "lambda": "H",
+   "aid": 1,
+   "score": 1.3395308792104803,
+   "sparsity": 0.26954752604166665,
+   "nz_share": 0.5048828125,
+   "mi_excess": 1.1263213500685119,
+   "mi_significant": true,
+   "precision": 0.4989265467259175,
+   "coverage": 0.7106336805555556
+  },
+  {
+   "lambda": "H",
+   "aid": 2,
+   "score": 1.483071590217281,
+   "sparsity": 0.22494303385416667,
+   "nz_share": 0.44580078125,
+   "mi_excess": 0.9369570857408709,
+   "mi_significant": true,
+   "precision": 0.5895149636983931,
+   "coverage": 0.695529513888889
+  },
+  {
+   "lambda": "H",
+   "aid": 3,
+   "score": 1.5637962214326433,
+   "sparsity": 0.22788085937500002,
+   "nz_share": 0.41748046875,
+   "mi_excess": 1.149463934490743,
+   "mi_significant": true,
+   "precision": 0.618020386285207,
+   "coverage": 0.7433159722222222
+  }
+ ],
+ "material": false,
+ "elapsed_s": 58.4,
+ "prereg_sha256": "6d1116c49feeb4a528d07b812f6f650cb5638fd24cb1964944073d2944db502a",
+ "ts": "2026-09-19 02:37:32"
+}

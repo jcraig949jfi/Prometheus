@@ -1,0 +1,87 @@
+{
+ "ancestry": "original (Phase B, slot 6)",
+ "arms": [
+  "controls",
+  "full",
+  "ablated"
+ ],
+ "assay_capability_requirement": "ablation preserves OLD behaviour on the parent environment for every included parent; identity edits 100%; determinism",
+ "attempt": 1,
+ "budget": {
+  "E": 16,
+  "c5_05_attempt": "a01",
+  "draws": 8,
+  "full_rows": 5586,
+  "parents": 57
+ },
+ "claim_ceiling": "single-edit robustness on 57 parents; the mechanism reading is structural, not evolutionary",
+ "crn_policy": "ablated census seeds as C5-05 (seed_from('c5.05.edit', ...)) on the ablated genome; episodes as C4-01",
+ "decl": {
+  "n_min": 57,
+  "positive_control": {
+   "arm": "controls",
+   "metric": "pass",
+   "min": 1.0,
+   "min_rows": 1
+  },
+  "primary": {
+   "control": "full",
+   "metric": "R_old",
+   "min_effect": -0.0625,
+   "treatment": "ablated"
+  }
+ },
+ "design_digest": "sha256:409381b326665bfdd612dfa9a540923fbb62cc9aebc8ad4bb15427b26792a5e5",
+ "expected_machine_telemetry": [
+  "dead share per parent",
+  "per-row three-interpreter labels on ablated parents"
+ ],
+ "experiment": "C5-08",
+ "falsification_condition": "M2 failing with a larger ablated GAP -> the boundary adds robustness beyond dead code",
+ "kill_condition": "ablation changes behaviour for > 10% of parents or control failure -> INSTRUMENT_INVALID",
+ "machine_changes_exercised": [
+  "ablate (static_reachable)",
+  "census_parent_b on ablated parents"
+ ],
+ "parent_evidence": "C4-07 (robustness = neutrality + length); C5-05 attempt a01 grammar-B rows",
+ "parents": [
+  "C5-05",
+  "C4-07"
+ ],
+ "positive_control": "controls arm: pass >= 1.0",
+ "prereg_digest": "sha256:75d08d0eb43e7a4184394172429a8f615a48d1fc02c911951a53fb5591ba8778",
+ "primary_observable": "R_old/R_fail/R_fizz/GAP for full vs ablated, pooled and by length bin; M1-M4; reading",
+ "question": "Under representation B, is single-edit robustness still neutrality plus length (dead code), and is the boundary's own contribution (FIZZLE minus FAIL) independent of dead code and equal to the executed-crossing rate?",
+ "reachability_estimate": {
+  "note": "not a reach experiment"
+ },
+ "replacement_condition": "none",
+ "sealed_fields": [
+  "experiment",
+  "parents",
+  "question",
+  "parent_evidence",
+  "assay_capability_requirement",
+  "positive_control",
+  "reachability_estimate",
+  "arms",
+  "crn_policy",
+  "budget",
+  "primary_observable",
+  "claim_ceiling",
+  "falsification_condition",
+  "typed_failure_conditions",
+  "expected_machine_telemetry",
+  "machine_changes_exercised",
+  "decl",
+  "why_this_slot",
+  "kill_condition",
+  "replacement_condition",
+  "ancestry"
+ ],
+ "title": "robustness mechanism under B (length bins, dead-code ablation)",
+ "typed_failure_conditions": [
+  "INSTRUMENT_INVALID"
+ ],
+ "why_this_slot": "The directive's ablatable, length-matched robustness mechanism test."
+}

@@ -1,0 +1,47 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "ts": "2026-09-18 04:23:11",
+ "checks": [
+  {
+   "id": "R1_campaign_namespace_absent",
+   "outcome": "NOT_VERIFIED",
+   "detail": "Redis refused the query (-NOAUTH Authentication required.). No claim is made about residue."
+  },
+  {
+   "id": "R2_protected_keys_intact",
+   "outcome": "NOT_VERIFIED",
+   "detail": "Redis refused the query. NO claim is made that any protected key changed."
+  },
+  {
+   "id": "P1_no_stray_campaign_processes",
+   "outcome": "PASS",
+   "detail": "0 live campaign interpreters"
+  },
+  {
+   "id": "S1_owned_resources_empty",
+   "outcome": "PASS",
+   "detail": "owned_runtime_resources = []"
+  },
+  {
+   "id": "S2_experiment_ran_in_process",
+   "outcome": "PASS",
+   "detail": "e05 used lib/localrun (Redis-free); it allocated no runtime resource to release"
+  },
+  {
+   "id": "G_nestor_clean",
+   "outcome": "PASS",
+   "detail": "clean (excluding this checker's own receipt)"
+  },
+  {
+   "id": "G_replica_clean",
+   "outcome": "PASS",
+   "detail": "clean (excluding this checker's own receipt)"
+  }
+ ],
+ "n_pass": 5,
+ "n_fail": 0,
+ "n_not_verified": 2,
+ "verdict": "ABSENCE PARTIALLY VERIFIED - some checks could not run",
+ "_rule": "NOT_VERIFIED is never counted as PASS. An absence claim resting on an unreachable instrument is not an absence claim (CW01-D034 family)."
+}

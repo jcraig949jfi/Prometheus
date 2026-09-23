@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T23:27Z",
- "n": 513,
+ "built": "2026-09-19T10:08Z",
+ "n": 542,
  "organs": [
   {
    "organ_id": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
@@ -467,6 +467,252 @@
     },
     "recovery": {
      "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "calc_open_endedness_score (asal_metrics.py:52-64): kernel = z @ z.T; kernel = tril(kernel, k=-1); return kernel.max(axis=-1).mean()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the T frame embeddings z (unit vectors from the foundation model) form a T x T inner-product matrix; the strict lower triangle keeps, for frame t, its similarities to frames 0..t-1 only; the row max is the closest earlier frame; the mean of those maxima is the score, minimised, so a low score means every frame is far in embedding space from all its predecessors; frame 0 contributes 0 (empty row) by construction; the sibling calc_illumination_score does the same across simulations (diagonal set to -inf) to spread a POPULATION rather than a trajectory",
+   "input": "z, a T x D array of frame embeddings",
+   "output": "a scalar (lower = more open-ended)",
+   "state": "none",
+   "update": "per rollout",
+   "assumptions": [
+    "embedding-space dissimilarity between successive frames is a usable proxy for open-ended novelty (ASAL's thesis); the foundation model's geometry is trusted as the arbiter of 'different'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation"
+   ],
+   "fitness_value_in_ancestor": "ALife phenomena searchable by phenotype without hand-authored features; the paper's contribution",
+   "failure_landscape": "by reading, and confirmed by TECHNE-107 (E1): the metric rewards any process that makes embeddings drift, whether or not the underlying system is alive or novel; scene garbage (0.817) and a colour cycle (0.837) beat a living Orbium (0.847) through CLIP; the observer regularises pixel noise (0.866) but not structured garbage; recurrence (a 2-frame cycle) is punished, so the exploit is drift, not mere change",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kumar, Lu, Lange, Tang, Ha et al. 2024 (ASAL); the max-cosine-to-earlier-frame form is asal_metrics.py's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/asal_metrics.py:52-64"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "calc_open_endedness_score (and its illumination sibling)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "rollout_simulation time_sampling branch (rollout.py:78-95): chunk_steps = rollout_steps // K; scan the substrate for rollout_steps; idx_sample = arange(0, rollout_steps, chunk_steps) (or arange(chunk_steps-1, ...) if chunk_ends); render and embed the K sampled states",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the substrate is stepped for the full rollout (256 steps by default), every state kept; then K evenly spaced indices (K=8 in the default score call) select the frames actually rendered, embedded and scored, either from the interval starts (chunk_ends False) or ends; 'final' returns only the last state and 'video' all of them; so the score sees a fixed-length, evenly-spaced sub-sample of the trajectory, and what happens between samples is invisible to the observer",
+   "input": "an initial state, the substrate, K",
+   "output": "K rendered frames and their embeddings",
+   "state": "the rollout's state video",
+   "update": "per rollout",
+   "assumptions": [
+    "K evenly spaced frames summarise the trajectory well enough for the embedding metric; the substrate is deterministic given params and rng"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised"
+   ],
+   "fitness_value_in_ancestor": "one cheap fixed-size summary per candidate for the search to score",
+   "failure_landscape": "by reading: sub-sampling means a trajectory that is dynamically rich between samples but embedding-similar at the sample points scores as non-open-ended, and vice versa; the number and placement of samples is a hidden knob of the metric",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the ASAL rollout API (rollout.py)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/rollout.py:78-95"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the K-interval branch of rollout_simulation",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "adaptation": {
@@ -21743,6 +21989,252 @@
    }
   },
   {
+   "organ_id": "filterpy-labbe::scaled_sigma_points_placed_by_the_matrix_square_root_of_the_covariance_with_merwe_weights_from_alpha_beta_kappa",
+   "fossil_ancestry": "filterpy-labbe",
+   "human_name": "MerweScaledSigmaPoints.sigma_points (124-178): lambda_ = alpha^2 (n + kappa) - n; U = cholesky((lambda_ + n) P); point 0 = x, points i = x +/- U_i; _compute_weights (180-195): Wm and Wc with Wc[0] adding (1 - alpha^2 + beta)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for an n-dimensional Gaussian (x, P) the filter forms 2n+1 points: the mean, and the mean plus and minus each column of the scaled matrix square root sqrt((lambda_ + n) P) (Cholesky by default); the spread is set by alpha (small = tight around the mean), the extra weight on the zeroth point's covariance by beta (2 is optimal for a Gaussian), and kappa is a secondary scaling; the mean weights Wm and covariance weights Wc differ only in the zeroth entry",
+   "input": "a mean and covariance",
+   "output": "2n+1 points and their weights",
+   "state": "none",
+   "update": "per prediction/update",
+   "assumptions": [
+    "a Gaussian is captured to second order by these deterministic points, so a nonlinear map's output mean and covariance are recovered without a Jacobian (the unscented transform's premise, Julier & Uhlmann 1997)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "filterpy-labbe::unscented_transform_recovering_a_mean_and_covariance_of_transformed_points_by_weighted_sums_with_pluggable_mean_and_residual_operators_for_manifold_states"
+   ],
+   "fitness_value_in_ancestor": "a derivative-free nonlinear filter: no Jacobian, better than the EKF on strong nonlinearities",
+   "failure_landscape": "by reading: a non-positive-definite P makes the Cholesky fail (a known UKF fragility; the sqrt_method hook exists to swap in a more robust root)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Julier & Uhlmann 1997; Wan & van der Merwe 2000 (the scaled form)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/sigma_points.py:124-195"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "MerweScaledSigmaPoints",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "filterpy-labbe::unscented_transform_recovering_a_mean_and_covariance_of_transformed_points_by_weighted_sums_with_pluggable_mean_and_residual_operators_for_manifold_states",
+   "fossil_ancestry": "filterpy-labbe",
+   "human_name": "unscented_transform (22-110): x = Wm . sigmas (or mean_fn); P = sum Wc (y - x)(y - x)^T + noise_cov, with residual_fn for the (y - x) so angular states subtract mod 2pi",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sigma points are passed through the process or measurement function outside the transform; the transform then computes the output mean as the Wm-weighted sum of the transformed points (or a caller-supplied circular mean for angles), and the output covariance as the Wc-weighted sum of outer products of the residuals plus an additive noise covariance; a residual function lets states that are not closed under subtraction (angles, quaternions) define their own difference so the covariance is correct on the manifold",
+   "input": "transformed sigma points, the weights, an optional noise covariance",
+   "output": "a mean and covariance",
+   "state": "none",
+   "update": "per transform",
+   "assumptions": [
+    "the weighted sums reproduce the true transformed moments to second order; manifold states need custom mean/residual to avoid wraparound errors"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "filterpy-labbe::scaled_sigma_points_placed_by_the_matrix_square_root_of_the_covariance_with_merwe_weights_from_alpha_beta_kappa"
+   ],
+   "fitness_value_in_ancestor": "the same transform serves the predict and the update of the UKF; the manifold hooks are why FilterPy is used for attitude and heading filters",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Julier & Uhlmann 1997",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:filterpy-labbe/upstream/tree/filterpy/kalman/unscented_transform.py:60-110"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unscented_transform",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
    "fossil_ancestry": "genann",
    "human_name": "genann_init / the weight, output, delta arrays; the -1.0 bias term in genann_run",
@@ -23194,6 +23686,127 @@
     },
     "failure_mode": {
      "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "glpk-5.0::two_phase_primal_simplex_over_a_basis_with_cached_primal_values_and_reduced_costs_each_carrying_a_freshness_status_and_a_pluggable_pricing_block",
+   "fossil_ancestry": "glpk-5.0",
+   "human_name": "spxprim.c struct csa (40-120): phase 0/1/2; beta[] with beta_st (undefined / just computed / updated); d[] with d_st; SPXSE se (projected steepest edge and Devex); orig_c / orig_l / orig_u copies; SPXAT / SPXNT sparse row-wise forms of A and of the non-basic columns N",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "phase 1 searches a primal feasible basis by minimising infeasibility, phase 2 the optimum; the basic solution and the reduced costs are cached and marked as freshly computed or incrementally updated so the iteration recomputes them only when the status demands; the pricing block scores non-basic columns by a reference-framework steepest-edge weight (or Devex's approximation) rather than the textbook most-negative reduced cost; the constraint matrix is kept both as A and as the non-basic part N in sparse row form for the two directions of multiplication",
+   "input": "an LP in standard form with bounds",
+   "output": "an optimal basis or a status",
+   "state": "the csa: basis, beta, d, pricing weights",
+   "update": "per iteration",
+   "assumptions": [
+    "recomputing beta and d from scratch every iteration is the cost; updating them and refreshing periodically is the standard trade (Chvatal); steepest-edge pricing reduces iterations enough to pay for its weights"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "a free simplex competitive on medium problems; the organisation every commercial code shares",
+   "failure_landscape": "by reading: numerical drift in the updated beta/d is why the status flags and periodic refactorisation exist; degeneracy handling (perturbation) not read",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Dantzig 1947; Forrest & Goldfarb 1992 (steepest edge); Harris 1973 (Devex)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:glpk-5.0/upstream/tree/glpk-5.0/src/simplex/spxprim.c:40-120; vault:glpk-5.0/upstream/tree/glpk-5.0/src/simplex/spxchuzc.c:53-260"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "spxprim.c and the chuzc/chuzr modules; CANDIDATE because bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "recovery": {
@@ -27942,6 +28555,252 @@
     },
     "temporal_horizon": {
      "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lapack-reference::blocked_right_looking_lu_that_factors_a_panel_applies_its_pivots_across_the_matrix_solves_the_triangular_panel_and_updates_the_trailing_block_by_a_matrix_matrix_product",
+   "fossil_ancestry": "lapack-reference",
+   "human_name": "DGETRF (dgetrf.f): NB = ILAENV(1, 'DGETRF', ...); loop over panels of JB columns: DGETRF2 on the panel, DLASWP to apply pivots left and right, DTRSM to solve the L11 U12 block, DGEMM to update A22 = A22 - L21 U12",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the matrix is processed in column panels of width NB; each panel is factored (with partial pivoting) by DGETRF2, the row interchanges it chose are applied to the columns on both sides of the panel by DLASWP, the upper block of the current column band is solved against the panel's unit-lower-triangular part by DTRSM, and the trailing submatrix is updated by a single DGEMM; because the update is a matrix-matrix product, each element brought into cache is used NB times, unlike LINPACK's rank-1 DAXPY updates that touch each element once",
+   "input": "an M-by-N matrix",
+   "output": "L, U in place, pivots",
+   "state": "none",
+   "update": "per panel",
+   "assumptions": [
+    "the machine has a memory hierarchy where reuse dominates flop count, so casting the work as Level-3 BLAS is the win (the LAPACK thesis); ILAENV knows a good NB per architecture"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lapack-reference::recursive_panel_factorisation_that_splits_the_panel_into_two_column_halves_so_the_update_within_the_panel_is_also_a_matrix_matrix_product"
+   ],
+   "fitness_value_in_ancestor": "near-peak dense factorisation on cache machines; the reason LAPACK replaced LINPACK/EISPACK (the record names this the winner of the pair)",
+   "failure_landscape": "by reading: performance depends entirely on the tuned BLAS behind DGEMM; a reference BLAS gives correct but slow results (the point of the pressure)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Anderson et al. 1992 (LAPACK); Dongarra, Du Croz, Hammarling, Duff 1990 (Level-3 BLAS)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lapack-reference/upstream/tree/lapack-reference/SRC/dgetrf.f:160-215"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "DGETRF; MEDIUM because only the header and call structure were read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lapack-reference::recursive_panel_factorisation_that_splits_the_panel_into_two_column_halves_so_the_update_within_the_panel_is_also_a_matrix_matrix_product",
+   "fossil_ancestry": "lapack-reference",
+   "human_name": "DGETRF2 (RECURSIVE SUBROUTINE): divide N into N1, N2; factor the left half, apply its pivots and DTRSM to the right half, DGEMM-update the right half, recurse on it",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the panel that DGETRF factors is itself factored by halving its columns and recursing, so even the panel's internal update is a DGEMM rather than a sequence of rank-1 updates; the recursion bottoms out at a single column (IDAMAX pivot, DSCAL)",
+   "input": "an M-by-N panel",
+   "output": "its LU",
+   "state": "none",
+   "update": "per recursion",
+   "assumptions": [
+    "recursion turns the panel factorisation into cache-efficient Level-3 work too (Toledo 1997)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lapack-reference::blocked_right_looking_lu_that_factors_a_panel_applies_its_pivots_across_the_matrix_solves_the_triangular_panel_and_updates_the_trailing_block_by_a_matrix_matrix_product"
+   ],
+   "fitness_value_in_ancestor": "the panel is no longer a Level-2 bottleneck",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Toledo 1997 (recursive LU); Gustavson 1997",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lapack-reference/upstream/tree/lapack-reference/SRC/dgetrf2.f:1-80 (header only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "DGETRF2; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
      "basis": "READ"
     }
    }
@@ -40775,6 +41634,252 @@
    }
   },
   {
+   "organ_id": "ncompress-5.0-lzw-1985::lzw_dictionary_built_greedily_from_prefix_plus_byte_with_codes_widening_from_nine_bits_to_maxbits_as_entries_fill",
+   "fossil_ancestry": "ncompress-5.0-lzw-1985",
+   "human_name": "the compress loop (1258-1430): fcode.e = (ent, c); free_ent from FIRST; extcode = MAXCODE(n_bits); when free_ent >= extcode and n_bits < maxbits widen n_bits and recompute extcode with the bit-boundary alignment of the output",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the current match is a code 'ent'; the next byte c forms the pair (ent, c); if that pair is in the hash table the match extends (ent becomes the pair's code), else the code for ent is emitted, the pair is added as the next free entry, and ent restarts at c; output codes are packed at the current bit width, which starts at 9 (INIT_BITS) and increases by one whenever the next free entry would exceed the current width's range, up to maxbits; a bit-boundary realignment keeps the packed stream decodable across width changes",
+   "input": "a byte stream",
+   "output": "a stream of variable-width codes",
+   "state": "the hash table, free_ent, n_bits",
+   "update": "per byte",
+   "assumptions": [
+    "a greedy longest-prefix match against a growing dictionary captures repetition; widening the code only as needed keeps early output small"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ncompress-5.0-lzw-1985::block_mode_ratio_monitor_that_clears_and_rebuilds_the_dictionary_when_the_compression_ratio_stops_improving_after_the_table_fills"
+   ],
+   "fitness_value_in_ancestor": "the Unix standard compressor before gzip; single-pass, adaptive, no explicit model",
+   "failure_landscape": "by reading: once the dictionary is full and not reset it codes new data against a stale table (the failure the ratio reset addresses); the LZW patent is why gzip replaced it, not a technical failure",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ziv & Lempel 1978 (LZ78); Welch 1984 (LZW); Thomas et al. 1985 (compress)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ncompress-5.0-lzw-1985/upstream/tree/ncompress-5.0/compress.c:1258-1300"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dictionary-build and code-width logic",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ncompress-5.0-lzw-1985::block_mode_ratio_monitor_that_clears_and_rebuilds_the_dictionary_when_the_compression_ratio_stops_improving_after_the_table_fills",
+   "fossil_ancestry": "ncompress-5.0-lzw-1985",
+   "human_name": "the checkpoint block (1299-1340): CHECK_GAP 10000; once stcode is off (table full) and bytes_in crosses checkpoint, compute rat = bytes_in / (bytes_out >> 8); if rat >= ratio keep, else emit CLEAR (256), reset free_ent to FIRST and ratio to 0; BLOCK_MODE bit in the header",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the dictionary is full the coder stops adding entries (stcode off) and every CHECK_GAP input bytes computes the running compression ratio using integer arithmetic (a deliberate design note: no floating point); if the ratio has not improved since the last checkpoint the dictionary is discarded via a CLEAR code and rebuilt from the single-byte entries, so the coder adapts to a change in the input's statistics; the header's BLOCK_MODE bit tells the decoder that CLEAR codes may appear",
+   "input": "the running byte counts",
+   "output": "a CLEAR code and a dictionary reset when warranted",
+   "state": "ratio, checkpoint, free_ent",
+   "update": "every CHECK_GAP bytes once full",
+   "assumptions": [
+    "a falling ratio means the current dictionary no longer fits the data, so rebuilding beats coding against it; integer ratio arithmetic is exact and fast"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ncompress-5.0-lzw-1985::lzw_dictionary_built_greedily_from_prefix_plus_byte_with_codes_widening_from_nine_bits_to_maxbits_as_entries_fill"
+   ],
+   "fitness_value_in_ancestor": "a single-pass adaptive coder that recovers when the input changes character partway through",
+   "failure_landscape": "by reading: the CHECK_GAP and the ratio comparison are heuristics; a slowly drifting stream may reset too late or too often",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the compress(1) block-compress extension (the record credits the 1985 authors)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ncompress-5.0-lzw-1985/upstream/tree/ncompress-5.0/compress.c:1299-1340"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the checkpoint / CLEAR block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
    "fossil_ancestry": "odepack-netlib",
    "human_name": "the YH array (Nordsieck form)",
@@ -42260,6 +43365,127 @@
     },
     "hidden_state": {
      "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "openssl-1.0.1f-heartbleed::heartbeat_responder_that_sizes_and_fills_a_reply_from_a_caller_declared_length_field_whose_validation_against_the_received_record_length_was_absent_and_was_added_in_the_successor_release",
+   "fossil_ancestry": "openssl-1.0.1f-heartbleed",
+   "human_name": "tls1_process_heartbeat (t1_lib.c 2554-2611) / dtls1_process_heartbeat (d1_both.c 1455-...): read hbtype and a 16-bit payload length; on a REQUEST allocate 1 + 2 + payload + 16 and copy payload bytes then random padding, write it back; the 1.0.1g fix adds 'if (1 + 2 + 16 > s->s3->rrec.length) return 0' and 'if (1 + 2 + payload + 16 > s->s3->rrec.length) return 0' before the allocation",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the responder parses a one-byte type and a two-byte declared payload length from the received record, and for a request builds a response of type, echoed length, echoed payload and 16 bytes of random padding; the read of the payload copies as many bytes as the declared length says; the defect is that nothing tied the declared length to the number of bytes actually received before 1.0.1g, so the response could be assembled from more of the process buffer than the request supplied; the fix is the two comparisons that reject a request whose declared length exceeds the received record",
+   "input": "a received heartbeat record",
+   "output": "a heartbeat response, or (after the fix) nothing when the declared length is unbacked",
+   "state": "none beyond the connection buffer",
+   "update": "per heartbeat",
+   "assumptions": [
+    "BEFORE the fix: that a peer's declared length is backed by the bytes it sent (an untrusted-input assumption that did not hold); AFTER: the declared length must be validated against the received record"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "a keep-alive and path-MTU probe for (D)TLS without renegotiation (RFC 6520)",
+   "failure_landscape": "the missing bounds check is the failure: a length field consumed as a copy count without validation is the classic input-length-trust defect; the fix and CVE-2014-0160 are the recorded outcome; the DTLS copy carried the same defect, so one fossil holds two instances of the same missing check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "RFC 6520 (Seggelmann et al.); the defect and fix are the CVE-2014-0160 record and the 1.0.1g changelog",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/t1_lib.c:2554-2611; vault:openssl-1.0.1f-heartbleed/upstream/tree/openssl-1.0.1f/ssl/d1_both.c:1455-1475"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two heartbeat handlers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "uncertainty": {
@@ -46741,6 +47967,501 @@
    }
   },
   {
+   "organ_id": "poet-original-2019::admission_only_of_environments_on_which_the_current_agent_scores_inside_a_two_sided_band_neither_unsolvable_nor_already_solved",
+   "fossil_ancestry": "poet-original-2019",
+   "human_name": "pass_mc (poet_algo.py:264-268): if score < mc_lower or score > mc_upper: return False",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a candidate environment is evaluated with an EXISTING agent's parameters and admitted only if the resulting score falls inside [mc_lower, mc_upper]. Below the band the environment is unsolvable by the current population and carries no gradient; above it the environment is already solved and carries no challenge. The test is applied TWICE on different thetas: once in get_child_list with the PARENT's theta (poet_algo.py:296-299), and again in adjust_envs_niches after a targeted transfer picks the best theta over the whole population (poet_algo.py:330-333). So admission is relative to the population's current competence, not to any absolute property of the environment: the same environment can be rejected early and admitted later, which is what makes the curriculum move",
+   "input": "a candidate environment configuration and an agent parameter vector",
+   "output": "admit / reject",
+   "state": "none in the test itself; the thresholds mc_lower and mc_upper are fixed run arguments",
+   "update": "per candidate, at each environment-adjustment step",
+   "assumptions": [
+    "a scalar episode return is an adequate proxy for 'too hard' and 'too easy'",
+    "the band's two fixed thresholds remain meaningful as agent competence grows over the run"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-original-2019::novelty_as_the_mean_distance_to_the_k_nearest_members_of_an_unpruned_archive_over_a_five_number_hand_built_environment_descriptor"
+   ],
+   "fitness_value_in_ancestor": "the goldilocks filter that keeps the environment population inside the agents' zone of proximal development; POET's central selective device",
+   "failure_landscape": "by reading: the band is FIXED while competence RISES, so the admissible region drifts toward harder environments only as fast as the score scale allows; an environment whose difficulty is not monotone in the score cannot be placed by this test; and because admission uses the best transferred theta, a strong generalist agent can make genuinely novel environments look 'already solved' and get them rejected",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wang, Lehman, Clune, Stanley 2019 (POET); the minimal-criterion idea from Brant & Stanley 2017 (MCC)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-original-2019/upstream/tree/poet_distributed/poet_algo.py:264-268"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pass_mc and its two call sites",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "poet-original-2019::capacity_enforced_by_deleting_the_oldest_active_environments_while_the_novelty_archive_is_never_pruned",
+   "fossil_ancestry": "poet-original-2019",
+   "human_name": "remove_oldest (poet_algo.py:343-352) against add_optimizer/delete_optimizer (151-178)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the active population exceeds max_num_envs, POET computes num_removals and deletes that many environments taken from the FRONT of env_registry (an OrderedDict in insertion order) -- that is, the OLDEST, chosen with no reference to their score, their novelty, their productivity as transfer sources, or whether any agent still needs them. add_optimizer inserts each new environment into BOTH env_registry (active) and env_archive (novelty memory); delete_optimizer pops from optimizers and env_registry ONLY and never touches env_archive. The active population is therefore a FIFO sliding window over the environment lineage, while the novelty archive grows monotonically forever",
+   "input": "the active environment registry and the capacity max_num_envs",
+   "output": "the set of environments deleted",
+   "state": "env_registry (bounded, FIFO) and env_archive (unbounded, append-only)",
+   "update": "per adjustment step when over capacity",
+   "assumptions": [
+    "age is an acceptable proxy for exhaustedness -- that an older environment has already given what it had",
+    "nothing downstream needs a deleted environment, although the novelty archive still scores against it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-original-2019::novelty_as_the_mean_distance_to_the_k_nearest_members_of_an_unpruned_archive_over_a_five_number_hand_built_environment_descriptor"
+   ],
+   "fitness_value_in_ancestor": "a fixed compute budget: the number of concurrently optimised niches is what POET can afford",
+   "failure_landscape": "by reading: a productive environment is discarded purely for being early, and a just-admitted unproductive one survives; the retained set is determined by insertion order, so the population's composition under capacity pressure is a function of ARRIVAL TIME rather than of value. Combined with the unpruned archive, deleted environments keep suppressing the novelty of their own region forever, so the search is pushed away from neighbourhoods it has abandoned and can no longer exploit",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "POET's population cap; the archive/population split is standard in novelty search (Lehman & Stanley 2011)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-original-2019/upstream/tree/poet_distributed/poet_algo.py:343-352"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "remove_oldest plus the registry/archive asymmetry in add_optimizer and delete_optimizer",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "poet-original-2019::novelty_as_the_mean_distance_to_the_k_nearest_members_of_an_unpruned_archive_over_a_five_number_hand_built_environment_descriptor",
+   "fossil_ancestry": "poet-original-2019",
+   "human_name": "compute_novelty_vs_archive + euclidean_distance + env2array (novelty.py:18-62)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each environment is reduced to five numbers by env2array -- ground_roughness, pit_gap[0], pit_gap[1], stump_height[0], stump_height[1], with ZERO substituted whenever a list is empty -- then the candidate's distance to every archive member is computed and the mean of the k SMALLEST distances is returned as novelty (k=5 at the call site). The child list is sorted by this score, high to low, so it sets the order in which candidates are tried for admission. TWO defects are visible by reading: (1) compute_novelty_vs_archive calls euclidean_distance with normalize=False HARDCODED, so the norm vector [8,8,8,3,3] that exists in the function is never applied and roughness/pit features (range ~0-8) dominate stump features (range ~0-3) in every distance; (2) argsort()[:k] silently returns FEWER than k when the archive is smaller than k, so early in a run 'novelty' is the mean distance to the WHOLE archive (a global dispersion measure) and later it is the mean distance to the 5 nearest (a local density measure) -- the estimator changes what it measures as the run proceeds, with no discontinuity flagged anywhere",
+   "input": "the unpruned env_archive and a candidate environment configuration",
+   "output": "a scalar novelty score",
+   "state": "the archive, which only ever grows",
+   "update": "per candidate in get_child_list",
+   "assumptions": [
+    "five hand-chosen terrain numbers capture the environment differences that matter",
+    "an empty pit_gap/stump_height list is equivalent to a zero-valued one",
+    "the k-nearest mean is comparable across archive sizes"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "poet-original-2019::admission_only_of_environments_on_which_the_current_agent_scores_inside_a_two_sided_band_neither_unsolvable_nor_already_solved",
+    "poet-original-2019::capacity_enforced_by_deleting_the_oldest_active_environments_while_the_novelty_archive_is_never_pruned"
+   ],
+   "fitness_value_in_ancestor": "ordering candidate environments so the most different are tried for admission first",
+   "failure_landscape": "by reading: novelty DEFLATES as the archive densifies, and the deflation is partly an artefact of the estimator changing character at archive size k; unnormalised features mean a small roughness change outweighs a large stump change; the zero-substitution makes 'no pit' and 'a pit of width 0' identical, so a structural absence and a degenerate presence are the same point",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "novelty search (Lehman & Stanley 2011); the descriptor is POET's own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:poet-original-2019/upstream/tree/poet_distributed/novelty.py:18-62"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "novelty.py in full (env2array, euclidean_distance, compute_novelty_vs_archive)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "py-vollib-lets-be-rational::implied_volatility_by_a_rational_cubic_first_guess_per_price_regime_refined_by_householder_steps_on_a_transformed_objective_in_a_bounded_iteration_count",
+   "fossil_ancestry": "py-vollib-lets-be-rational",
+   "human_name": "implied_volatility_of_discounted_option_price / normalised_implied_volatility (implied_volatility.py 59-228); normalised_implied_volatility_from_a_transformed_rational_guess_with_limited_iterations (the N-iteration entry into py_lets_be_rational)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the discounted price is undiscounted and normalised by the forward and strike; the normalised Black price is a monotone function of volatility with known asymptotics at zero and infinity, so a rational-cubic interpolant (a Pade-like guess with regime-selected control points) gives a starting volatility close to the root everywhere; a Householder step (using the first three derivatives of the normalised price, which are cheap closed forms) then converges cubically, so one or two steps reach double precision regardless of moneyness; the limited-iterations entry exposes N so a caller can trade a little accuracy for a fixed cost",
+   "input": "a price, forward, strike, time, and call/put flag",
+   "output": "the implied volatility",
+   "state": "none",
+   "update": "per solve",
+   "assumptions": [
+    "the normalised Black price is monotone and smooth in volatility with analytic derivatives; a good regime-aware first guess makes a fixed small step count enough (Jaeckel 2013/2015)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "implied volatility to machine precision in two iterations, replacing bisection or Newton loops with input-dependent iteration counts",
+   "failure_landscape": "by reading: prices below the intrinsic value or above the forward have no real volatility; the code has denormalisation/limit branches for those (in the py_lets_be_rational body, not read here)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Black 1976; Jaeckel 2013 'Let's Be Rational'; the rational-cubic interpolation is Jaeckel's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:py-vollib-lets-be-rational/upstream/tree/vollib/black/implied_volatility.py:59-228"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the py_vollib wrappers; the numerics are in py_lets_be_rational (not in this tree); MEDIUM accordingly",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "pybreaker-1.2.0::three_state_breaker_closed_counting_consecutive_failures_to_a_threshold_open_failing_fast_for_a_timeout_half_open_admitting_one_probe_call",
    "fossil_ancestry": "pybreaker-1.2.0",
    "human_name": "CircuitClosedState.on_failure (727-736): counter >= fail_max -> open(); CircuitOpenState.before_call (759-770): if now < opened_at + reset_timeout raise CircuitBreakerError else half_open(); CircuitHalfOpenState (779-812): on_failure -> open(), on_success -> close(); _handle_success resets the counter (622-625); excluded exceptions do not count (204-215)",
@@ -48727,6 +50448,376 @@
    }
   },
   {
+   "organ_id": "quadpack-netlib::gauss_kronrod_21_point_rule_returning_the_integral_and_an_error_estimate_from_the_difference_with_its_embedded_gauss_rule",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqk21 (called at 240, 289-290; body not read); result, abserr, resabs, resasc",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a 21-point Kronrod rule shares its nodes with an embedded 10-point Gauss rule; the two estimates' difference, scaled by the integral of |f - mean| (resasc) with a heuristic power, gives the error estimate; both the value and the error come from one set of 21 function evaluations",
+   "input": "f on [a, b]",
+   "output": "the estimate and its error",
+   "state": "none",
+   "update": "per subinterval",
+   "assumptions": [
+    "the Kronrod extension of a Gauss rule is the cheapest way to get an error estimate from the same points (Kronrod 1965)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit"
+   ],
+   "fitness_value_in_ancestor": "one function evaluation set per interval yields value and error",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kronrod 1965; Piessens' scaling of the error",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:240, 289-290 (call sites)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqk21; CANDIDATE because the body was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "INTERVAL",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqagse.f 250-390: the main loop; dqpsrt (346) maintains the descending order of error estimates; limit; the two-interval error sum; ier codes 1-5 (limit, roundoff, bad integrand behaviour, divergence, invalid input)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the interval is split at the midpoint of whichever subinterval currently has the largest error estimate; the two halves are integrated by the rule; the list of subintervals is kept sorted by error estimate (a partial insertion sort that only moves the new entries); the loop stops when the sum of error estimates is within the absolute or relative tolerance, when the subdivision limit is reached, or when round-off is detected (the error estimate stops decreasing as intervals shrink)",
+   "input": "tolerances, limit",
+   "output": "the integral, the error, an ier code",
+   "state": "the interval lists (alist, blist, rlist, elist, iord)",
+   "update": "per bisection",
+   "assumptions": [
+    "error is concentrated where the integrand is hard, so refining the worst interval is the best use of evaluations"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::gauss_kronrod_21_point_rule_returning_the_integral_and_an_error_estimate_from_the_difference_with_its_embedded_gauss_rule",
+    "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection"
+   ],
+   "fitness_value_in_ancestor": "the general-purpose integrator behind scipy.integrate.quad",
+   "failure_landscape": "by reading: a smooth integrand with an undetected feature between rule points can pass (ier 0) with a wrong answer; the ier codes are the documented failure landscape",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Piessens, de Doncker, Uberhuber, Kahaner 1983 (QUADPACK)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqagse.f:250-390"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqagse's loop and dqpsrt",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "DEGRADES_GRACEFULLY",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "quadpack-netlib::wynn_epsilon_extrapolation_of_the_sequence_of_partial_integrals_over_the_smallest_intervals_switched_off_on_round_off_detection",
+   "fossil_ancestry": "quadpack-netlib",
+   "human_name": "dqelg (called at 384; header read): the condensed epsilon table; numrl2, rlist2, res3la; ier 2 'roundoff error is detected in the extrapolation table'; the 'extrapolation' flag path in dqagse",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "as bisection concentrates on a singular end point, the partial sums over the shrinking intervals form a sequence converging slowly; Wynn's epsilon algorithm (a nonlinear sequence transformation equivalent to Shanks / Pade) is applied to the sequence to estimate its limit and an error; the extrapolated result replaces the plain sum when its error is smaller; the table is limited (limexp) and the routine detects when round-off dominates and stops extrapolating",
+   "input": "the sequence of results",
+   "output": "an extrapolated result and error",
+   "state": "the epsilon table and the last three results",
+   "update": "per extrapolation step",
+   "assumptions": [
+    "algebraic-logarithmic end-point singularities produce sequences the epsilon algorithm accelerates (de Doncker's analysis)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "quadpack-netlib::globally_adaptive_bisection_of_the_subinterval_with_the_largest_error_estimate_kept_in_descending_order_until_the_summed_error_meets_the_tolerance_or_the_limit"
+   ],
+   "fitness_value_in_ancestor": "integrands with end-point singularities converge in far fewer evaluations; the reason qags is the default in scipy",
+   "failure_landscape": "by reading: extrapolation can be fooled by non-singular slow convergence; the round-off detector is the guard",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Wynn 1956; de Doncker 1978",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:quadpack-netlib/upstream/dqelg.f:1-60; vault:quadpack-netlib/upstream/dqagse.f:384"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dqelg and its call",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
    "fossil_ancestry": "radamsa-0.6",
    "human_name": "mux-fuzzers / weighted-permutation / adjust-priority",
@@ -49967,6 +52058,252 @@
    }
   },
   {
+   "organ_id": "redlock-py-redis-2014::acquire_the_same_key_with_a_unique_value_and_ttl_on_every_instance_holding_the_lock_only_if_a_majority_acked_within_a_validity_window_that_discounts_elapsed_time_and_clock_drift",
+   "fossil_ancestry": "redlock-py-redis-2014",
+   "human_name": "Redlock.lock (72-120): val = 22 random chars; drift = ttl * 0.01 + 2; per server SET resource val NX PX ttl; validity = ttl - elapsed - drift; hold if validity > 0 and n >= quorum, else unlock everywhere and retry; quorum = N // 2 + 1",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a unique value identifies this acquisition; the client sets the key with NX (only if absent) and PX (a millisecond TTL) on each of the N servers, timing the whole round; the lock is granted only if at least a majority set succeeded AND the remaining validity (TTL minus the time the round took minus a drift allowance) is still positive; if either fails the client deletes its value from every server and retries after a delay; the drift margin (1 percent of the TTL plus 2 ms) accounts for clock differences between the client and the servers",
+   "input": "a resource name and a TTL",
+   "output": "a Lock (validity, resource, value) or False",
+   "state": "none on the client beyond the returned lock",
+   "update": "per acquire",
+   "assumptions": [
+    "a majority of independent, non-colluding Redis instances is available; clocks drift by less than the margin over the lease; the network round trip is much shorter than the TTL (else validity goes negative)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "redlock-py-redis-2014::release_by_a_check_and_delete_lua_script_that_deletes_the_key_only_when_its_value_still_equals_the_acquirers_so_an_expired_and_retaken_lease_is_never_deleted_by_the_old_holder"
+   ],
+   "fitness_value_in_ancestor": "mutual exclusion without a single point of failure, from plain Redis instances",
+   "failure_landscape": "by reading: the algorithm was criticised (Kleppmann 2016) because a process pause or clock jump longer than the validity window lets two holders believe they hold the lock; the validity return value is the client's own honest bound, not a guarantee the resource enforces",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "antirez / Sanfilippo, redis.io/topics/distlock 2014",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:72-120"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Redlock.lock",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "redlock-py-redis-2014::release_by_a_check_and_delete_lua_script_that_deletes_the_key_only_when_its_value_still_equals_the_acquirers_so_an_expired_and_retaken_lease_is_never_deleted_by_the_old_holder",
+   "fossil_ancestry": "redlock-py-redis-2014",
+   "human_name": "Redlock.unlock (121-132) and unlock_script: 'if redis.call(get, KEYS[1]) == ARGV[1] then return redis.call(del, KEYS[1]) else return 0'; unlock_instance runs it on every server",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "release runs one Lua script per server that atomically compares the stored value with the acquirer's unique value and deletes the key only on a match; because the compare and delete are one server-side script they cannot interleave, and because the value is unique per acquisition, a holder whose lease already expired (and whose key was retaken by another client with a different value) cannot delete the new holder's lock",
+   "input": "a Lock",
+   "output": "the key removed where it still belongs to the caller",
+   "state": "none",
+   "update": "per release",
+   "assumptions": [
+    "the get-and-delete must be atomic (hence a script, not two calls); the value must be unpredictable and unique so no other client can forge a release"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "redlock-py-redis-2014::acquire_the_same_key_with_a_unique_value_and_ttl_on_every_instance_holding_the_lock_only_if_a_majority_acked_within_a_validity_window_that_discounts_elapsed_time_and_clock_drift"
+   ],
+   "fitness_value_in_ancestor": "safe release even after a lease lapses; the mistake it prevents (a plain DEL that could delete someone else's lock) is the reason for the script",
+   "failure_landscape": "by reading: if the server is unreachable at release the key lingers until its TTL, which is acceptable; MultipleRedlockException surfaces per-server errors",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same distlock note",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:redlock-py-redis-2014/upstream/tree/redlock/__init__.py:25-70, 121-132"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unlock_instance and the script",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
    "fossil_ancestry": "reed-solomon-rockliff-1991",
    "human_name": "generate_gf (GF(2^4) here; mm/nn/tt/kk compile-time)",
@@ -51051,6 +53388,376 @@
     },
     "adaptation": {
      "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "generateRecursiveStratum (303-360): per relation a delta, new and reject store; clear delta; derive clause versions; MergeRelationsWithFilter new -> delta minus reject; clear new; Loop with an Exit on empty delta; generateStratumPreamble/Postamble (454-490) seed and clear the deltas",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for a recursive component, each relation R has R (all tuples so far), delta-R (tuples new in the previous round) and new-R (tuples derived this round); a round evaluates each recursive rule once per body atom that ranges over the SCC, forcing that atom to read delta while the others read the main relations (the 'delta version' of the clause), so every derived tuple depends on at least one just-derived tuple and nothing is re-derived; new-R minus the existing tuples becomes the next delta, new-R is merged into R, and the loop exits when every delta is empty (the least fixed point is reached)",
+   "input": "a stratified set of rules and the base facts",
+   "output": "the least model",
+   "state": "the main/delta/new stores per relation",
+   "update": "per round",
+   "assumptions": [
+    "Datalog's monotone rules have a least fixed point reachable bottom-up; restricting each round to delta-touching derivations avoids the naive method's repeated work (Balbin & Ramamohanarao 1987)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::rules_stratified_into_strongly_connected_components_evaluated_in_dependency_order_with_non_recursive_components_evaluated_once_and_expired_relations_cleared",
+    "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus"
+   ],
+   "fitness_value_in_ancestor": "each derivation done once; the standard efficient Datalog evaluation, the base of large-scale static analysis (Doop, ...)",
+   "failure_landscape": "by reading: stratification must be possible (no recursion through negation or aggregation); the delta/new/reject bookkeeping is intricate and the subsumptive-clause path adds delete relations",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Balbin & Ramamohanarao 1987 (semi-naive); Bancilhon & Ramakrishnan 1986; Souffle (Scholz et al. 2016)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:303-360"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the recursive-stratum generation",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "souffle-2.4.1::rules_stratified_into_strongly_connected_components_evaluated_in_dependency_order_with_non_recursive_components_evaluated_once_and_expired_relations_cleared",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "generateStratum (161-196): if the SCC is recursive call generateRecursiveStratum else evaluate the single relation once; generateClearExpiredRelations (196); the SCC ordering from the precedence graph",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the predicate dependency graph is decomposed into strongly-connected components; a component with no internal recursion is evaluated in one pass, a recursive one by the semi-naive loop; components are run in topological order so a relation's dependencies are complete before it is computed; a relation is cleared once no later stratum needs it, bounding memory",
+   "input": "the dependency graph",
+   "output": "an evaluation schedule",
+   "state": "the live relation set",
+   "update": "per stratum",
+   "assumptions": [
+    "the program stratifies (negation and aggregation only across component boundaries); computing in dependency order is both correct and memory-bounded"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty"
+   ],
+   "fitness_value_in_ancestor": "large programs evaluated with only the currently-needed relations resident",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "stratified Datalog (Apt, Blair, Walker 1988); the SCC schedule is standard",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:souffle-2.4.1/upstream/tree/souffle-2.4.1/src/ast2ram/seminaive/UnitTranslator.cpp:161-196"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "generateStratum and the expiry",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "souffle-2.4.1::relations_stored_in_specialised_in_memory_index_structures_chosen_per_relation_over_a_ram_ir_that_is_interpreted_or_compiled_to_parallel_c_plus_plus",
+   "fossil_ancestry": "souffle-2.4.1",
+   "human_name": "src/ram operations (IndexScan, ExistenceCheck, Insert, Loop, Swap, MergeExtend); src/interpreter indexes (BTreeIndex, BrieIndex, EqrelIndex, ProvenanceIndex); the ast2ram -> ram -> interpreter/synthesiser pipeline",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the semi-naive schedule is emitted as a RAM (relational algebra machine) program of loops, index scans, existence checks and inserts; each relation is backed by a data structure chosen for its access pattern -- a concurrent B-tree for general relations, a Brie (a trie specialised for dense integer tuples), or an equivalence-relation structure for transitive symmetric relations -- and the RAM program is either walked by an interpreter or synthesised to parallel C++ and compiled, so the same evaluation runs interpreted for quick turnaround or compiled for speed",
+   "input": "the RAM program and the relations",
+   "output": "materialised relations",
+   "state": "the index structures",
+   "update": "per RAM operation",
+   "assumptions": [
+    "the access pattern of each relation is known at compile time, so a specialised index beats a general one; a RAM IR decouples the evaluation strategy from the execution mode"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "souffle-2.4.1::semi_naive_evaluation_that_derives_only_tuples_using_a_delta_tuple_each_round_merging_new_into_main_and_swapping_new_into_delta_until_the_delta_is_empty"
+   ],
+   "fitness_value_in_ancestor": "Datalog at C++ speed on billions of tuples (the record: the engine behind large-scale static analysis)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Scholz, Jordan, Subotic, Westmann 2016 (Souffle); the Brie is Jordan et al.",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "src/ram and src/interpreter file lists"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the RAM IR and index layer; CANDIDATE because only the file inventory was read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "competition": {
@@ -56542,6 +59249,252 @@
    }
   },
   {
+   "organ_id": "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c",
+   "fossil_ancestry": "tinyscheme-1.42",
+   "human_name": "OP_EVAL (2568-2599): symbol lookup, syntax dispatch, else s_save(OP_E0ARGS) and eval the operator; OP_APPLY (2640-2708): foreign call, or bind closure params in new_frame_in_env and s_goto(OP_BEGIN), or restore a continuation's dump; s_goto / s_return macros",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the interpreter is a loop that reads the current opcode and branches; OP_EVAL resolves a symbol from the environment, or if the form is a pair dispatches on a syntactic keyword or saves an OP_E0ARGS continuation and recurses (via the loop, not C) into the operator; OP_APPLY, once the operator and arguments are values, either calls a built-in, or extends the closure's captured environment with the bound parameters and jumps to its body via OP_BEGIN, or (for a captured continuation) replaces the dump stack; s_goto sets the next opcode and s_return pops a frame, so control flow is data",
+   "input": "an expression and an environment",
+   "output": "a value",
+   "state": "the registers (code, args, envir, value) and the dump stack",
+   "update": "per opcode",
+   "assumptions": [
+    "representing the continuation explicitly on the heap makes proper tail calls and call/cc natural and bounds the C stack (the trampoline / CPS-by-hand technique)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it"
+   ],
+   "fitness_value_in_ancestor": "a full R5RS-ish Scheme with tail calls and first-class continuations in one C file",
+   "failure_landscape": "by reading: every intermediate value must be reachable from the registers or the dump or the GC frees it (the push_recent_alloc guard around foreign calls exists for this)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the SICP metacircular evaluator made iterative; MiniScheme (Moriwaki 1989)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2568-2720"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the opexe dispatch for eval/apply",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinyscheme-1.42::continuation_as_a_heap_dump_stack_of_op_args_code_env_frames_so_tail_calls_reuse_the_stack_and_call_cc_copies_it",
+   "fossil_ancestry": "tinyscheme-1.42",
+   "human_name": "struct dump_stack_frame (2362); s_save (2371-2389) pushes a frame; _s_return (2391-2408) pops; dump_stack_reset / initialize / free (2410-2423); OP_APPLY's continuation branch sets sc->dump = cont_dump(code)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the return continuation is an array of frames each holding the opcode to resume, the pending args, the code and the environment; a non-tail subexpression pushes a frame before recursing and pops it on return; a tail call pushes nothing, so iteration in constant space falls out; call/cc captures the current dump array as a first-class object and invoking a continuation restores it, making non-local control a stack swap",
+   "input": "control-flow points",
+   "output": "saved/restored continuations",
+   "state": "the dump array",
+   "update": "per save/return",
+   "assumptions": [
+    "a reified continuation stack is cheaper and more general than C recursion; copying it for call/cc is acceptable at Scheme scale"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinyscheme-1.42::eval_apply_as_a_single_dispatch_loop_where_evaluation_saves_continuation_frames_and_jumps_by_opcode_rather_than_recursing_in_c"
+   ],
+   "fitness_value_in_ancestor": "proper tail calls and call/cc, the two features that distinguish Scheme from a toy Lisp",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "continuation-passing made concrete; the dump register of the SECD machine",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinyscheme-1.42/upstream/tree/tinyscheme-1.42/scheme.c:2362-2423"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dump-stack functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
    "fossil_ancestry": "tinystm-marlier",
    "human_name": "stm_internal.h 165-250: OWNED_MASK, WRITE_MASK, INCARNATION_MASK, LOCK_GET_TIMESTAMP(l) = l >> LOCK_BITS, LOCK_GET_ADDR, LOCK_GET_INCARNATION; the lock array indexed by address hash; GET_CLOCK on a global counter",
@@ -57857,6 +60810,376 @@
     },
     "update_topology": {
      "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "libhb_core.c: VtsID (small-int IDs for vector timestamps), SO (synchronisation objects) carrying a VTS, the comment 'the happens-before relationship in concurrent programs'; thread creation, join, lock, unlock and condvar signal transfer clocks",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each thread has a vector clock mapping every thread to the last event of that thread it has synchronised with; a synchronisation operation (unlock/lock on the same lock, signal/wait, create/join) copies the releasing thread's clock into the acquiring thread's by pointwise maximum; event A happens-before event B iff A's whole vector is <= B's, so two accesses are concurrent (a candidate race) exactly when neither clock dominates the other; VtsIDs intern whole vectors as integers so comparison and reference-counting are cheap",
+   "input": "the stream of memory and synchronisation events",
+   "output": "the happens-before order",
+   "state": "the per-thread and per-SO vector timestamps",
+   "update": "per event",
+   "assumptions": [
+    "all inter-thread ordering flows through observable synchronisation primitives, so a race not mediated by one is detectable as unordered (Lamport 1978; the pure happens-before method, no lockset)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+    "valgrind-helgrind-fixtures-3.19::lock_order_acquisition_graph_recording_the_order_locks_are_taken_so_a_cycle_warns_of_a_potential_deadlock_independent_of_whether_it_occurred"
+   ],
+   "fitness_value_in_ancestor": "races reported with no false positives from lock discipline alone (unlike Eraser's lockset), at the cost of missing races that a run's schedule happened to order",
+   "failure_landscape": "by reading: happens-before detection is schedule-dependent (a race not exercised by this interleaving is not reported); vector clocks cost O(threads) per location",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Lamport 1978 (vector clocks); Flanagan & Freund; the FastTrack lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c:100-330"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the VTS/SO machinery; MEDIUM because the arithmetic bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::per_location_shadow_value_and_a_memory_state_machine_that_flags_an_access_as_a_race_when_it_is_not_ordered_after_the_previous_conflicting_access",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "libhb_core.c: SVal (a 64-bit shadow per location encoding the read-min and write-min VtsIDs, or NOACCESS); msmcread / msmcwrite (the read/write transitions); zsm shadow-memory with line-Z dictionaries of up to 4 distinct SVals per line",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each memory word has a shadow value holding the minimal read and write clocks at which it was last accessed (a compressed 'constraint' C(rmin, wmin)); a new read is a race if it is not ordered after the last write; a new write is a race if it is not ordered after the last write or the last read; the transition functions update the shadow to the new access's clocks; shadow memory is stored in cache lines that hold a small dictionary of distinct SVals (most lines have one or two), so the per-word overhead is amortised",
+   "input": "a memory access with the accessing thread's clock",
+   "output": "a race report or a state update",
+   "state": "the shadow value per location",
+   "update": "per memory access",
+   "assumptions": [
+    "a location's history is summarised by its last read and last write clocks (FastTrack's insight that the full history is unnecessary); most adjacent words share a shadow, so a dictionary per line compresses it"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates"
+   ],
+   "fitness_value_in_ancestor": "race detection at constant shadow per location rather than a full access history",
+   "failure_landscape": "by reading: only conflicting accesses are checked; benign races and races the schedule ordered are missed; the 4-SVal line dictionary spills to a LineF when a line is too diverse",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Flanagan & Freund 2009 (FastTrack); Helgrind's own encoding",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/libhb_core.c:118-330"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the SVal encoding and the msm transitions; MEDIUM because the transition bodies were skimmed",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "valgrind-helgrind-fixtures-3.19::lock_order_acquisition_graph_recording_the_order_locks_are_taken_so_a_cycle_warns_of_a_potential_deadlock_independent_of_whether_it_occurred",
+   "fossil_ancestry": "valgrind-helgrind-fixtures-3.19",
+   "human_name": "hg_main.c: univ_laog (sets of Lock*), laog__pre_thread_acquires_lock (1004, 1181, 1258), laog__sanity_check, the lock-order check on each acquisition",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each time a thread acquires a lock while already holding others, an edge is added from each held lock to the newly acquired one; before adding, the graph is checked for a cycle through the new edge, and a cycle means two lock-acquisition orders that could deadlock under the right schedule; the warning is issued whether or not a deadlock actually happened in this run, so it catches latent lock-order bugs that a single interleaving would not expose",
+   "input": "lock acquisitions with the current held-set",
+   "output": "a lock-order graph and cycle warnings",
+   "state": "the LAOG (a graph over Lock*)",
+   "update": "per acquisition",
+   "assumptions": [
+    "a consistent global lock order prevents deadlock, so any cycle in the observed order is a potential deadlock even absent an actual one (the classic lock-hierarchy discipline)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "valgrind-helgrind-fixtures-3.19::happens_before_by_per_thread_vector_timestamps_advanced_at_synchronisation_points_so_two_events_are_ordered_iff_one_clock_dominates"
+   ],
+   "fitness_value_in_ancestor": "potential deadlocks found from correct runs; the complement to the go-runtime-deadlock-fixtures detector which fires only on an actual deadlock",
+   "failure_landscape": "by reading: reports order inversions that the program may in fact serialise by another mechanism (false positives on gate locks); the graph is garbage-collected as locks are destroyed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the lock-hierarchy rule; Helgrind's LAOG implementation",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:valgrind-helgrind-fixtures-3.19/upstream/tree/valgrind-3.19.0/helgrind/hg_main.c:1004-1258"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the laog functions; MEDIUM because only the hooks were read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -63713,6 +67036,252 @@
     },
     "update_topology": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter",
+   "fossil_ancestry": "zlib-1.3.1",
+   "human_name": "longest_match (1348-1425): chain_length = max_chain_length (quartered if prev_length >= good_match); best_len; scan_end prefilter; stop at limit (strstart - MAX_DIST) or when a match reaches nice_match",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "positions with the same 3-byte hash are linked in a chain; the search walks the chain from the most recent, and for each candidate first compares the two bytes at the current best length (a cheap reject) before a full compare, keeping the longest match found; the walk stops after max_chain_length steps, when a candidate is older than the window (MAX_DIST), or when a match reaches nice_match; if the previous position already had a good match the chain length is quartered (spend less effort when a match is already in hand)",
+   "input": "the current position and the hash chain",
+   "output": "the best match length and position",
+   "state": "the hash chains, the window",
+   "update": "per position",
+   "assumptions": [
+    "recent positions are the likely matches, so most-recent-first with a cap gives most of the benefit at bounded cost; the end-byte prefilter skips most full compares"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does"
+   ],
+   "fitness_value_in_ancestor": "the LZ77 match search whose cost the level knobs control; the heart of DEFLATE's speed/ratio dial",
+   "failure_landscape": "by reading: the chain cap trades ratio for speed; long runs of one byte make chains degenerate (the reason for the caps)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ziv & Lempel 1977 (LZ77); the hash-chain implementation is Gailly's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1348-1425"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "longest_match",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zlib-1.3.1::lazy_matching_that_defers_a_match_by_one_byte_to_check_whether_the_next_position_yields_a_longer_one_emitting_the_literal_plus_later_match_when_it_does",
+   "fossil_ancestry": "zlib-1.3.1",
+   "human_name": "deflate_slow (1905-2005): keep prev_length/prev_match; find match at strstart; if prev_length >= MIN_MATCH and match_length <= prev_length emit the previous match (as a literal at strstart-1 plus the run) else defer the literal; TOO_FAR discards a short far match; match_available",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each position the matcher records the current match but does not emit it; it advances one byte and finds the match there; if the earlier (deferred) match is at least as long as the new one it is emitted, otherwise the byte between them is emitted as a literal and the new, longer match is deferred in turn; a length-3 match whose distance exceeds TOO_FAR is discarded as not worth its code; this one-byte lookahead recovers matches that greedy matching would miss",
+   "input": "the match at each position",
+   "output": "the chosen sequence of literals and matches",
+   "state": "prev_length, prev_match, match_available",
+   "update": "per position",
+   "assumptions": [
+    "a one-position lookahead captures most of the gain of optimal parsing at a fraction of the cost; the greedy choice is often but not always best"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zlib-1.3.1::longest_match_by_walking_a_hash_chain_of_earlier_positions_with_a_chain_length_cap_a_nice_match_early_exit_and_a_cheap_end_byte_prefilter"
+   ],
+   "fitness_value_in_ancestor": "a few percent better ratio than greedy at levels 4 and up; the default deflate strategy",
+   "failure_landscape": "by reading: only one byte of lookahead, so it is not optimal parsing; the fast levels (deflate_fast) skip it entirely for speed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "lazy evaluation of LZ matches (Gailly); the fuller form is optimal parsing (zopfli, later)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:zlib-1.3.1/upstream/tree/zlib-1.3.1/deflate.c:1905-2005, 93-127"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "deflate_slow and the configuration table",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
      "basis": "READ"
     },
     "order_sensitivity": {

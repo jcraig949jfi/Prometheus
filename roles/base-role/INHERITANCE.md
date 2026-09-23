@@ -7,16 +7,24 @@ Every role below carries the banner on its primary document(s):
 | role | stamped document(s) |
 |---|---|
 | Agora | RESPONSIBILITIES.md (already; rewritten 2026-09-14 on the seat's adoption pass, April body preserved at roles/Agora/superseded/, April queue classified in ARCHAEOLOGY_2026-09-14.md; identity decision AGORA-01 pending; self-service row per Archaeon ruling #39) |
-| Aphrodite | RESPONSIBILITIES.md (created 2026-09-17 on the seat's creation pass on M4; new seat, charter pending; self-service row per Archaeon ruling #39) |
+| Aphrodite | RESPONSIBILITIES.md (created 2026-09-17 on the seat's creation pass on M4; charter ADOPTED 2026-09-18, APHRODITE-08, verbatim in roles/Aphrodite/prompts/2026-09-18_charter/; self-service row per Archaeon ruling #39) |
+| Aether | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; new seat, charter PENDING the operator's discussion; self-service row per Archaeon ruling #39) |
+| Bellerophon | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter in force: the WORLDS KERNEL directive of the same day, verbatim in roles/Bellerophon/prompts/2026-09-18_worlds_kernel/ (kernel package prometheus/toolbox/); self-service row per Archaeon ruling #39) |
 | Atalanta | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/atalanta/CHARTER.md is Aporia's May design, annotated by the seat, not rewritten) |
+| Atlas | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M1; charter ADOPTED 2026-09-19 with addendum, verbatim in roles/Atlas/prompts/2026-09-19_charter/ and _charter_addendum/; self-service row per Archaeon ruling #39) |
+| Atlas-M2 | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; a NEW SEAT, brother of Atlas, not an Atlas instance under D-24; charter PENDING the operator's instructions; self-service row per Archaeon ruling #39) |
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
 | Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
+| Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; charter ADOPTED the same day (pressure engineering / primordial soup sandbox), verbatim in roles/Ares/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Ares/superseded/; self-service row per Archaeon ruling #39) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | Coeus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter) |
+| Cosmos | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; new seat, charter PENDING the operator's direction; self-service row per Archaeon ruling #39) |
+| Ensorain | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; charter ADOPTED the same day (Tensor World Engine founding directive, E0 CHOO CHOO), verbatim in roles/Ensorain/prompts/2026-09-23_charter/ with MANIFEST, paste truncated inside s12; pre-charter file at roles/Ensorain/superseded/; self-service row per Archaeon ruling #39) |
+| Crius | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter ADOPTED 2026-09-19 (Campaign 0: adaptive workspace sandbox), verbatim in roles/Crius/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Crius/superseded/; self-service row per Archaeon ruling #39) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
 | Daedalus | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Diomedes | ROLE.md (already), BOOTSTRAP.md (already) |
@@ -68,19 +76,27 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 |---|---|
 | Agora | RESPONSIBILITIES.md |
 | Aphrodite | RESPONSIBILITIES.md |
+| Aether | RESPONSIBILITIES.md |
+| Bellerophon | RESPONSIBILITIES.md |
 | Atalanta | RESPONSIBILITIES.md |
+| Atlas | RESPONSIBILITIES.md |
+| Atlas-M2 | RESPONSIBILITIES.md |
 | Alethelia | RESPONSIBILITIES.md |
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
 | Arachne | RESPONSIBILITIES.md |
+| Ares | RESPONSIBILITIES.md |
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
 | Clymene | RESPONSIBILITIES.md |
 | Coeus | RESPONSIBILITIES.md |
+| Cosmos | RESPONSIBILITIES.md |
+| Crius | RESPONSIBILITIES.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |
 | Daedalus | RESPONSIBILITIES.md |
 | Diomedes | BOOTSTRAP.md |
 | Elenchus | RESPONSIBILITIES.md |
+| Ensorain | RESPONSIBILITIES.md |
 | Eos | RESPONSIBILITIES.md |
 | Ergon | RESPONSIBILITIES.md |
 | EvolutionaryArchitectAndReasoningSpeciesEngineer | RESPONSIBILITIES.md |

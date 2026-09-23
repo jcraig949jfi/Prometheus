@@ -1,0 +1,144 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "terralingua-2026",
+  "canonical_name": "TerraLingua -- Emergence and Analysis of Open-endedness in LLM Ecologies (Paolo et al., Cognizant AI Lab, 2026)",
+  "aliases": [
+    "TerraLingua",
+    "AI Anthropologist"
+  ],
+  "lineage": "LLM-agent ecology (2026) with a post-hoc LLM annotation pipeline; sibling of OpenLife (ALIFE 2026) and Conversable Complexity (2026)",
+  "domain": [
+    "artificial-life",
+    "llm-agents",
+    "cultural-evolution",
+    "open-endedness",
+    "annotation-pipeline"
+  ],
+  "era": "2026",
+  "version": "cognizant-ai-lab/terralingua main @ bf276dbe33e66b2c3b592df27df8ca42c489a4c7 (last push 2026-09-02)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/cognizant-ai-lab/terralingua",
+        "commit": "bf276dbe33e66b2c3b592df27df8ca42c489a4c7",
+        "commit_resolved": "bf276dbe33e66b2c3b592df27df8ca42c489a4c7",
+        "commit_date": "2026-08-28T18:21:27+02:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/cognizant-ai-lab/terralingua"
+  },
+  "hashes": {
+    "tree_sha256": "2a6345086de03456a79714c52d6f4e3cd661d0c9a88d810a86573eb9028c06ae",
+    "n_files": 72,
+    "bytes": 10539996,
+    "artifacts": [
+      {
+        "filename": "https://github.com/cognizant-ai-lab/terralingua",
+        "sha256": null,
+        "commit": "bf276dbe33e66b2c3b592df27df8ca42c489a4c7"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\terralingua-2026",
+    "hash_list": "techne/fossils/specimens/terralingua-2026/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-18",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pyproject.toml)",
+  "compiler_or_interpreter": "CPython 3",
+  "dependencies": [
+    "an LLM API (anthropic / openai clients) for the agents and for the AI Anthropologist",
+    "ffmpeg for videos"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "main.py / run_experiment.sh (the ecology)",
+    "analysis_scripts/001..006 (the AI Anthropologist; 006_artifact_philogeny.py = artifact ancestry by text match or LLM inference)"
+  ],
+  "example": {
+    "command": "python analysis_scripts/006_artifact_philogeny.py",
+    "input": "an experiment's agent logs + artifacts.json (see terralingua-data-abundant-exp-1)",
+    "output": "artifact ancestry edges with relationship type and model confidence"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "analysis scripts are pure Python; the LLM arm needs an API key and spend (operator decision)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:2603.16910",
+    "README.md",
+    "analysis_scripts/AI_ANTHROPOLOGIST.md"
+  ],
+  "human_capability_summary": {
+    "built_to": "run a persistent multi-agent LLM ecology and reconstruct its cultural history afterwards",
+    "pressure": "understanding coordination, institutions and culture in agent populations",
+    "success_means": "cooperative norms, division of labour and branching artifact lineages observed and annotated"
+  },
+  "known_human_problem_solved": "post-hoc reconstruction of cultural ancestry in an LLM ecology (inference, not recorded provenance -- MEASURED 2026-09-17)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "006_artifact_philogeny.py with BYNARY/LLM_PHYLOGENY toggles: method 1 (text match) vs method 2 (LLM) on the same experiment",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-108"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [],
+    "host_class": "any Python 3 host for the deterministic analysis; LLM arms need network + keys"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-18T05:53:54Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

@@ -1,0 +1,207 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e06",
+ "attempt_id": "cw01-e06-a01",
+ "preconditions": {
+  "P1": "every reuse band non-degenerate",
+  "P2": "Delta(r) changes sign across bands of ONE generator",
+  "P3": "mutual invasibility against evolved residents"
+ },
+ "results": {
+  "LEGACY_tree_target (adversarial fixture)": {
+   "world": "LEGACY_tree_target (adversarial fixture)",
+   "P1_non_degenerate": true,
+   "P2_two_sided": false,
+   "P3_mutually_invasible": false,
+   "admitted": false,
+   "delta_table": [
+    {
+     "reuse_target": null,
+     "reuse_measured": null,
+     "tree_cost": null,
+     "tape_cost": null,
+     "distinct_outputs": null,
+     "F_TREE": 0.05260416666666666,
+     "F_TAPE": 0.048958333333333326,
+     "delta": 0.0036458333333333343
+    }
+   ],
+   "invasion": {
+    "TAPE_into_TREE": {
+     "seeded": 0.10416666666666667,
+     "final": 0.0,
+     "trajectory": [
+      0.10416666666666667,
+      0.03125,
+      0.09375,
+      0.020833333333333332,
+      0.052083333333333336,
+      0.03125,
+      0.07291666666666667,
+      0.041666666666666664,
+      0.052083333333333336,
+      0.010416666666666666,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "invaded": false
+    },
+    "TREE_into_TAPE": {
+     "seeded": 0.10416666666666667,
+     "final": 1.0,
+     "trajectory": [
+      0.10416666666666667,
+      0.20833333333333334,
+      0.375,
+      0.40625,
+      0.4791666666666667,
+      0.6354166666666666,
+      0.7604166666666666,
+      0.78125,
+      0.7916666666666666,
+      0.8854166666666666,
+      0.8958333333333334,
+      0.9479166666666666,
+      0.9791666666666666,
+      0.9791666666666666,
+      0.96875,
+      0.9791666666666666,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "invaded": true
+    }
+   },
+   "reasons": [
+    "Delta(r) never changes sign (range +0.0036..+0.0036)",
+    "NOT mutually invasible (TAPE into TREE: False, TREE into TAPE: True)"
+   ]
+  },
+  "REDESIGNED_operation_graph": {
+   "world": "REDESIGNED_operation_graph",
+   "P1_non_degenerate": true,
+   "P2_two_sided": true,
+   "P3_mutually_invasible": false,
+   "admitted": false,
+   "delta_table": [
+    {
+     "reuse_target": 0.0,
+     "reuse_measured": 0.0,
+     "tree_cost": 25,
+     "tape_cost": 12,
+     "distinct_outputs": 15,
+     "F_TREE": 0.24739583333333331,
+     "F_TAPE": 0.2734375,
+     "delta": -0.026041666666666685
+    },
+    {
+     "reuse_target": 0.25,
+     "reuse_measured": 0.07142857142857142,
+     "tree_cost": 39,
+     "tape_cost": 14,
+     "distinct_outputs": 10,
+     "F_TREE": 0.1640625,
+     "F_TAPE": 0.17890625000000002,
+     "delta": -0.014843750000000017
+    },
+    {
+     "reuse_target": 0.5,
+     "reuse_measured": 0.16666666666666666,
+     "tree_cost": 33,
+     "tape_cost": 12,
+     "distinct_outputs": 8,
+     "F_TREE": 0.31901041666666663,
+     "F_TAPE": 0.3299479166666667,
+     "delta": -0.010937500000000044
+    },
+    {
+     "reuse_target": 0.75,
+     "reuse_measured": 0.07142857142857142,
+     "tree_cost": 39,
+     "tape_cost": 14,
+     "distinct_outputs": 17,
+     "F_TREE": 0.15989583333333332,
+     "F_TAPE": 0.13385416666666666,
+     "delta": 0.026041666666666657
+    }
+   ],
+   "invasion": {
+    "TAPE_into_TREE": {
+     "seeded": 0.10416666666666667,
+     "final": 0.7395833333333334,
+     "trajectory": [
+      0.10416666666666667,
+      0.125,
+      0.19791666666666666,
+      0.22916666666666666,
+      0.3020833333333333,
+      0.34375,
+      0.5625,
+      0.5104166666666666,
+      0.34375,
+      0.375,
+      0.3645833333333333,
+      0.4166666666666667,
+      0.5208333333333334,
+      0.6770833333333334,
+      0.7291666666666666,
+      0.8645833333333334,
+      0.8020833333333334,
+      0.8125,
+      0.7708333333333334,
+      0.7604166666666666,
+      0.7395833333333334
+     ],
+     "invaded": true
+    },
+    "TREE_into_TAPE": {
+     "seeded": 0.10416666666666667,
+     "final": 0.0,
+     "trajectory": [
+      0.10416666666666667,
+      0.09375,
+      0.09375,
+      0.010416666666666666,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "invaded": false
+    }
+   },
+   "reasons": [
+    "NOT mutually invasible (TAPE into TREE: True, TREE into TAPE: False)"
+   ]
+  }
+ },
+ "gate_can_refuse": true,
+ "world_admitted": false,
+ "verdict": "GATE PROVEN, WORLD STILL REFUSED",
+ "_rule": "the gate is never tuned until it admits; a refusal is a finding"
+}

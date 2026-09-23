@@ -1,0 +1,98 @@
+{
+ "perturbation_id": "P-I01",
+ "parent": "T-X21",
+ "deformation": "W",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "world-construction",
+ "worlds": {
+  "A": "observable regime word in the ask tick",
+  "B": "cue tick, then PUT, then bare ASK",
+  "C": "lifetime of 16 trials, block 4, cue reliability .7"
+ },
+ "formal_ceilings_200_sets": {
+  "A": {
+   "ignore_cue_best": {
+    "mean": 0.600625,
+    "p95": 0.75
+   },
+   "cue_follow": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "threshold": 0.9,
+   "invariant_cannot_reach_threshold": true
+  },
+  "B": {
+   "ignore_cue_best": {
+    "mean": 0.59,
+    "p95": 0.75
+   },
+   "cue_follow": {
+    "mean": 0.59,
+    "p95": 0.75
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "threshold": 0.8,
+   "invariant_cannot_reach_threshold": true
+  },
+  "C": {
+   "ignore_cue_best": {
+    "mean": 0.5,
+    "p95": 0.5
+   },
+   "cue_follow": {
+    "mean": 0.69375,
+    "p95": 0.875
+   },
+   "oracle": {
+    "mean": 1.0,
+    "p95": 1.0
+   },
+   "tracker": {
+    "mean": 0.765625,
+    "p95": 1.0
+   },
+   "threshold": 0.8,
+   "invariant_cannot_reach_threshold": false
+  }
+ },
+ "no_privileged_signal": "no phase variable, mode bit, clock or memory operation; the cue is an ordinary input word",
+ "evolution": {
+  "N": 96,
+  "G": 120,
+  "tournament": 3,
+  "births": "mutation only",
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "episodes": "fresh every generation"
+ },
+ "controls": {
+  "evolved": [
+   "B destroyed cue (2 seeds)",
+   "C destroyed cue (2 seeds)"
+  ],
+  "evaluated_on_B_tops": [
+   "shuffled history",
+   "no cue",
+   "destroyed cue"
+  ]
+ },
+ "held_out": "4 fresh sets (indices 10000+); a world is CROSSED if the mean held-out reward of the top-4 is >= threshold in >= 2/3 seeds; a control that crosses is a LOOPHOLE (world invalid)",
+ "material_rule": "always material: the crossing table is the result",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:16:26",
+ "prereg_sha256": "58bd67191de3f5154194702c32293579c15e048f58c42d9368081dab6d92ced7"
+}

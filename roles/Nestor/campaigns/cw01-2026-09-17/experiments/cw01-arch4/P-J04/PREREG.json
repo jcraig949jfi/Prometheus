@@ -1,0 +1,28 @@
+{
+ "perturbation_id": "P-J04",
+ "parent": "T-X21",
+ "requires": [
+  "P-J01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "mechanism-forensics",
+ "p_j01_disposition": {
+  "A": "NOT_CROSSED",
+  "B": "NOT_CROSSED",
+  "C": "NOT_CROSSED"
+ },
+ "evolved_forensics": "NOT_APPLICABLE per world without a crossing",
+ "instrument_validation": "A' instruments on the P-J02 XOR-1 witnesses: cue causality, register corruption before the ask tick, control / inserted-instruction knockouts",
+ "expected_on_witness": {
+  "cue_causality.follows_new_regime": 1.0,
+  "register_corruption": "0 for every register (the word is read during the tick)",
+  "knockout of the XOR": "reward falls to the identity level (~.5)"
+ },
+ "material_rule": "not material (instrument validation only) unless an evolved organism exists",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:44:44",
+ "prereg_sha256": "a10c62712e246780ba23960ac35b8d5b19fdeaed2b1382de57f265f612f47a4e"
+}

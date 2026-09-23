@@ -1,0 +1,392 @@
+{
+  "schema": "atlas.registry.v1",
+  "currency": "2026-09-19",
+  "note": "Reference data the harvesters load into atlas.host and atlas.engine. Edit here, then run `python -m atlas harvest reference`. Sources: comms/environments.json, roles/Atlas/SOURCES.md.",
+  "hosts": [
+    {
+      "host_id": "M1",
+      "hostname": "SKULLPORT",
+      "lan_ip": "192.168.1.202",
+      "aliases": [
+        "m1",
+        "SKULLPORT",
+        "F:\\Prometheus-worktrees",
+        "F:/Prometheus-worktrees",
+        "C:\\Users\\jcrai\\lab",
+        "C:/Users/jcrai/lab"
+      ],
+      "roles": "canonical Postgres (prometheus_fire), comms, NPE",
+      "evidence": "comms/environments.json prometheus-canonical; hostname observed by Atlas[m1-1c645957]"
+    },
+    {
+      "host_id": "M2",
+      "hostname": "SPECTREX5",
+      "lan_ip": "192.168.1.191",
+      "aliases": [
+        "m2",
+        "SPECTREX5",
+        "D:\\Prometheus-worktrees",
+        "D:/Prometheus-worktrees",
+        "C:\\Prometheus-data"
+      ],
+      "roles": "SFE (:8811), Vivarium, Archaeon, PEW service",
+      "evidence": "SFE base_url https://192.168.1.191:8811 in Archaeon receipts; roles/Herakles/journal/2026-09-17.md"
+    },
+    {
+      "host_id": "M3",
+      "hostname": "GANDALF",
+      "lan_ip": null,
+      "aliases": [
+        "m3",
+        "gandalf",
+        "GANDALF"
+      ],
+      "roles": "Nyx, Techne, Harmonia F",
+      "evidence": "instance tags gandalf-*; roles/Harmonia/INSTANCES.md"
+    },
+    {
+      "host_id": "M4",
+      "hostname": null,
+      "lan_ip": null,
+      "aliases": [
+        "m4"
+      ],
+      "roles": "Aphrodite",
+      "evidence": "INHERITANCE.md Aphrodite row (created on M4)"
+    }
+  ],
+  "engines": [
+    {
+      "engine_id": "sfe",
+      "name": "Serendipity Foundry Engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "SerendipityFoundry/SerendipityFoundryEngine",
+        "SerendipityFoundry/SerendipityFoundryClient"
+      ],
+      "owner_seats": [
+        "Daedalus"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "HTTP engine, SQLite ledger engine.db schema 9; has run on M1 and M2"
+    },
+    {
+      "engine_id": "npe",
+      "name": "Nestor Primordial Engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "primordial"
+      ],
+      "owner_seats": [
+        "Nestor"
+      ],
+      "home_host": "M1",
+      "status": "LIVE",
+      "notes": "code only on nestor/* branches (not origin/main) as of 2026-09-19"
+    },
+    {
+      "engine_id": "archaeon.campaign",
+      "name": "Archaeon campaign runner",
+      "kind": "RUNNER",
+      "code_paths": [
+        "archaeon/campaign2/runner.py",
+        "archaeon/campaign5",
+        "archaeon/campaign6"
+      ],
+      "owner_seats": [
+        "Archaeon"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "drives the SFE; experiments C1..C6"
+    },
+    {
+      "engine_id": "archaeon.frontier",
+      "name": "Archaeon DEEP FRONTIER scheduler",
+      "kind": "RUNNER",
+      "code_paths": [
+        "archaeon/frontier"
+      ],
+      "owner_seats": [
+        "Archaeon"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "code-first scheduler (DF-010); runs/ and logs/ git-ignored on the executing host"
+    },
+    {
+      "engine_id": "vivarium",
+      "name": "Vivarium data plane / executor",
+      "kind": "RUNNER",
+      "code_paths": [
+        "vivarium/viv"
+      ],
+      "owner_seats": [
+        "Vivarium"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "queue viv.research_experiment_queue on M1 Postgres"
+    },
+    {
+      "engine_id": "bellerophon.toolbox",
+      "name": "Bellerophon toolbox kernel",
+      "kind": "HARNESS",
+      "code_paths": [
+        "prometheus/toolbox"
+      ],
+      "owner_seats": [
+        "Bellerophon"
+      ],
+      "home_host": null,
+      "status": "LIVE",
+      "notes": "backends local/sfe/npe; not yet harvested"
+    },
+    {
+      "engine_id": "herakles.evca",
+      "name": "Herakles EVCA",
+      "kind": "ENGINE",
+      "code_paths": [
+        "herakles/evca",
+        "herakles/ca_stream"
+      ],
+      "owner_seats": [
+        "Herakles"
+      ],
+      "home_host": "M2",
+      "status": "UNKNOWN",
+      "notes": "not yet harvested"
+    },
+    {
+      "engine_id": "proteus",
+      "name": "Proteus foundry/graph",
+      "kind": "ENGINE",
+      "code_paths": [
+        "proteus"
+      ],
+      "owner_seats": [
+        "Proteus"
+      ],
+      "home_host": "M2",
+      "status": "UNKNOWN",
+      "notes": "not yet harvested"
+    },
+    {
+      "engine_id": "ludus",
+      "name": "Ludus worlds and bench",
+      "kind": "HARNESS",
+      "code_paths": [
+        "ludus"
+      ],
+      "owner_seats": [
+        "Ludus"
+      ],
+      "home_host": "M2",
+      "status": "UNKNOWN",
+      "notes": "not yet harvested"
+    },
+    {
+      "engine_id": "harmonia.rulers",
+      "name": "Harmonia rulers and qualification",
+      "kind": "HARNESS",
+      "code_paths": [
+        "roles/Harmonia/science",
+        "roles/Harmonia/qualification"
+      ],
+      "owner_seats": [
+        "Harmonia"
+      ],
+      "home_host": null,
+      "status": "UNKNOWN",
+      "notes": "instances on M2 and M3; not yet harvested"
+    },
+    {
+      "engine_id": "serendipity.foundry.d",
+      "name": "Serendipity Foundry D build (pre-SFE, separate repo F:/SerendipityD)",
+      "kind": "ENGINE",
+      "code_paths": [
+        "F:/SerendipityD (separate git repository, not Prometheus)"
+      ],
+      "owner_seats": [],
+      "home_host": "M1",
+      "status": "IGNORED",
+      "notes": "observed 2026-09-19 by Atlas[m1-1c645957]: two foundry_service.py processes from F:/SerendipityD/var/deploy. Operator 2026-09-19: 'may have been repurposed to something else if it's still active. Ignore it for now.' No collector reads it; rows from the one stat pass are kept as history."
+    }
+  ],
+  "local_roots": [
+    {
+      "host": "M1",
+      "root": "D:/Prometheus-data/sfe",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "basis": "SFEngine task data dir on M1 since 2026-09-12 (MONITORS.md SFEngine row); idle since 2026-09-15",
+      "storage_role": "primary"
+    },
+    {
+      "host": "M1",
+      "root": "D:/Prometheus-data/c9",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "basis": "c9 burst-stall test copy (as-deployed snapshot)",
+      "storage_role": "copy"
+    },
+    {
+      "host": "M1",
+      "root": "F:/Prometheus/SerendipityFoundry/SerendipityFoundryEngine/var",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "basis": "the F: copy is the rollback copy (MONITORS.md SFEngine row)",
+      "storage_role": "copy"
+    },
+    {
+      "host": "M1",
+      "root": "F:/Prometheus/SerendipityFoundry/SerendipityFoundryEngine/deploy/sfengine.log",
+      "mode": "stat",
+      "engine": "sfe",
+      "role": "log"
+    },
+    {
+      "host": "M1",
+      "root": "C:/Users/jcrai/lab/pm-data",
+      "mode": "dir_summary",
+      "engine": "npe",
+      "depth": 2
+    },
+    {
+      "host": "M1",
+      "root": "C:/Users/jcrai/lab/ncu-user",
+      "mode": "dir_summary",
+      "engine": "npe",
+      "depth": 1
+    },
+    {
+      "host": "M1",
+      "root": "F:/Prometheus-worktrees/nestor-sidequest-graphworld/roles/Nestor/campaigns/cw01-2026-09-17/experiments",
+      "mode": "run_logs",
+      "engine": "npe"
+    },
+    {
+      "host": "M1",
+      "root": "F:/Prometheus-worktrees/archaeon-tick/archaeon/deploy/archaeon_tick.log",
+      "mode": "stat",
+      "engine": "archaeon.frontier",
+      "role": "log"
+    },
+    {
+      "host": "M2",
+      "root": "C:/Prometheus-data/sfe",
+      "mode": "stat",
+      "engine": "sfe",
+      "role": "log",
+      "no_hash": true,
+      "pattern": "^(?!m2\\.(key|crt)$).*",
+      "max_files": 400,
+      "_note": "LIVE SFE data dir (engine eng_906356f7 runs here; ledger moved to C: NVMe 2026-09-17). Stat-only by Atlas-M2 rule: the live ledger is never opened, not even ro/immutable (roles/Atlas-M2/RESPONSIBILITIES.md s3, AM2-12). Credential files excluded by pattern; blobs/ excluded by the collector.",
+      "storage_role": "primary",
+      "engine_instance": "eng_906356f7fb1da180131f9290",
+      "basis": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json (engine_instance_id + data_dir C:/Prometheus-data/sfe; ledger moved off D: 2026-09-17T23:12Z; build, id and schema unchanged); live root, never opened by Atlas-M2"
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "_note": "pre-2026-09-17 SFE ledger location on M2 (HDD); idle since 2026-09-17T23:12Z. Collector's idle rule (IDLE_S=900) governs whether it is read. DEPLOYED_BUILD_M2.json calls this the untouched rollback copy; storage_role copy per Atlas #507.",
+      "storage_role": "copy"
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe-scratch",
+      "mode": "dir_summary",
+      "engine": "sfe",
+      "depth": 0,
+      "_note": "scratch outputs (*.out), 271 files / 165 MB on 2026-09-19; one pointer."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "dir_summary",
+      "engine": "archaeon.frontier",
+      "depth": 2,
+      "_note": "git-ignored receipt tree of the Deep Frontier / Campaign 6 benches (runs/<family>/<spec>/RECEIPT.json + chunk_*.gz); Atlas #500: authoritative on M2. One pointer per spec dir here; receipts themselves are read by frontier_runs_m2 (Atlas-M2's module)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/logs",
+      "mode": "stat",
+      "engine": "archaeon.frontier",
+      "role": "log",
+      "_note": "scheduler/loop logs of the frontier benches; small files."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/archaeon",
+      "mode": "stat",
+      "engine": "archaeon.campaign",
+      "role": "log",
+      "_note": "Campaign 1 SFE-0N run logs (cmp1-sfe0N.log/.err); idle since 2026-09-17."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/vivarium",
+      "mode": "dir_summary",
+      "engine": "vivarium",
+      "depth": 1,
+      "_note": "Vivarium M2 consumer data root: var/ (LIVE, deadman/deliverer state every 5 min), window/, backups/. Summaries only; nothing in var/ is opened."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/var",
+      "mode": "stat",
+      "engine": "vivarium",
+      "role": "other",
+      "_note": "pinned consumer worktree var/ (conformance_cache.json)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "frontier_receipts",
+      "engine": "archaeon.frontier",
+      "_note": "Atlas-M2's frontier_runs_m2 collector: RECEIPT.json + chunk files -> the attempts/segments Atlas's frontier harvester keyed from RUN events (identity via the linked pointer only; see the module docstring). Same root as the dir_summary row above; the two modes write different things."
+    }
+  ],
+  "harvester_hosts": {
+    "reference": [
+      "M1",
+      "M2"
+    ],
+    "commits": [
+      "M1"
+    ],
+    "archaeon_campaigns": [
+      "M1"
+    ],
+    "frontier": [
+      "M1"
+    ],
+    "npe": [
+      "M1"
+    ],
+    "vivarium": [
+      "M1"
+    ],
+    "pew": [
+      "M1"
+    ],
+    "local_files": [
+      "M1",
+      "M2"
+    ],
+    "_note": "which hosts may run each harvester (roles/Atlas/SIBLINGS.md rule 6). A seat adding a harvester adds its row.",
+    "frontier_runs_m2": [
+      "M2"
+    ],
+    "catalog": [
+      "M1"
+    ],
+    "proposals": [
+      "M1"
+    ]
+  }
+}

@@ -20,7 +20,7 @@ $KillSwitch = Join-Path $RepoRoot "scripts\.intelligence_loop.disabled"
 $LogDir = Join-Path $RepoRoot "logs"
 $LogFile = Join-Path $LogDir "intelligence_watchdog.log"
 $PythonExe = "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\pythonw.exe"
-$LoopArgs = "--hourly-min 240 --email-every-cycle"
+$LoopArgs = "--hourly-min 240 --email-every-cycle --tick-sec 1800"
 
 if (-not (Test-Path $LogDir)) {
     New-Item -ItemType Directory -Path $LogDir | Out-Null

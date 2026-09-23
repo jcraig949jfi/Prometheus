@@ -1,0 +1,65 @@
+{
+ "perturbation_id": "P-G02",
+ "parent": "T-ARCH4/M1",
+ "deformation": "A",
+ "requires": [
+  "P-G01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "ruler-reread",
+ "ruler": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "fs": [
+  0.05,
+  0.1,
+  0.2
+ ],
+ "draws": 4,
+ "old_numbers": {
+  "pd01": {
+   "log2_k": 0.145,
+   "operand_vs_delete": [
+    0.355,
+    0.717
+   ],
+   "set_parent_vs_c408": 0.206,
+   "set_walker_vs_c408": 0.194
+  },
+  "pe05": {
+   "orig_64_minus_16": -0.099,
+   "no_growth_64_minus_16": 0.099,
+   "no_growth_minus_orig_at_64": 0.273
+  },
+  "pf06": {
+   "select": 0.312,
+   "ndrift": 0.621,
+   "ancestor": 0.648,
+   "select_coef_length_conditioned": -0.144,
+   "seeds_holding": 6
+  }
+ },
+ "claims": {
+  "pd01_length": "loss falls with log length (old: fixed-k dose in units); new: slope of loss on log n at each f, permutation band",
+  "pd01_operand": "operand hits softer than deletions (old .36 vs .72); new: paired sign-flip operand - delete at f .10",
+  "pd01_set": "C4-08 tops ~.20 more robust than parents / walkers; new: relabel tops vs rest at f .10, and length-conditioned",
+  "pe05_depth": "orig walks: loss falls 16 -> 64; no_growth: rises; new: paired 64 - 16 at f .10 per rule",
+  "pe05_rule": "no_growth products lose more at 64; new: paired no_growth - orig at 64",
+  "pf06_select": "select < ancestor and < ndrift at G60 (6/6 seeds); new: per-seed paired / relabel at f .10, length-conditioned coefficient"
+ },
+ "disposition_rule": "SURVIVES if the new contrast clears its band with the old sign and magnitude >= half the old; SHRINKS if it clears but smaller; REVERSES if it clears with the opposite sign; DISAPPEARS if inside its band; UNRESOLVED if the reread could not be made",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:22:35",
+ "prereg_sha256": "bb9cd0d2d955b9bca5ba398a270ee1323b222574e1ecd39e3b51cc24f3fe5d51"
+}

@@ -1,0 +1,265 @@
+{
+ "artifacts": {
+  "prereg": {
+   "artifact_id": "sha256:e0f84caaed4cbddc9aed39dd0668b30e44388a58e653c307e76c1cf7bb7558c1",
+   "blob_hash": "sha256:89cb8f5eb3572d6336d000ad4a3140446529e7bd24a13dbd483dbe34c3173f16",
+   "bytes": 3011,
+   "declared": "sha256:89cb8f5eb3572d6336d000ad4a3140446529e7bd24a13dbd483dbe34c3173f16",
+   "hash_ok": true,
+   "kind": "cmp2.prereg.v1"
+  },
+  "trial": {
+   "artifact_id": "sha256:046fb490e33b3a11adcaf5302aec1ed13063479d21f78544d39945bc0fa71467",
+   "blob_hash": "sha256:4d79b04a0752dbfd00b3b3733d17e8deebc3199ada7be482b90bbe04f0f461fe",
+   "bytes": 1200,
+   "declared": "sha256:4d79b04a0752dbfd00b3b3733d17e8deebc3199ada7be482b90bbe04f0f461fe",
+   "hash_ok": true,
+   "kind": "cmp4.c410_trial.v1"
+  }
+ },
+ "attempt": 1,
+ "attempt_id": "C4-10/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260921,
+ "decisions": [
+  "D4-014: conditions selected by the preregistered rule from committed tables: NONE; evidence recorded in the sealed preregistration"
+ ],
+ "disposition_candidate": {
+  "battery": {
+   "attacked": 0,
+   "declared": 0,
+   "survived": 0
+  },
+  "claim_ceiling": "weak; not for propagation",
+  "disposition": "WEAK_POSITIVE",
+  "evidence": {
+   "control_mean": 0.2603,
+   "effect": 0.0,
+   "min_effect": -0.05,
+   "n_control": 4,
+   "n_treatment": 4,
+   "paired": 4,
+   "paired_wins": 0,
+   "treatment_mean": 0.2603
+  },
+  "reason": "effect >= min_effect but n < 10 or a declared falsification attack failed or was not run",
+  "states": []
+ },
+ "engine": {
+  "base_url": "https://192.168.1.191:8811",
+  "cacert": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryClient\\config\\m2.crt",
+  "cacert_exists": true,
+  "descriptor": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "pinned_at": "2026-09-17T17:01:23Z",
+  "pinned_by": "Daedalus[m2-d6ecd70b]",
+  "schema_version": 9
+ },
+ "engine_path": true,
+ "engine_version": {
+  "api": "v2",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 9,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+ },
+ "errors": [],
+ "experiment": "C4-10",
+ "finished_at": "2026-09-18T06:43:17Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "hypothesis": "hyp_63e1d18407e9a08b7e48030e",
+ "imports": {},
+ "prereg_digest": "sha256:f67271efb47aab42cdea2c97f6ca565f61592ba3d09bc2cc0ee179186e5bfc09",
+ "purpose": "engine",
+ "reachability_rows_appended": 0,
+ "records": {
+  "baseline/1": {
+   "exp_id": "exp_ac7de34619afb00c9b65afef",
+   "obs_id": "obs_3df58703d593042609d96283"
+  },
+  "baseline/2": {
+   "exp_id": "exp_45366153f52588049eaceea9",
+   "obs_id": "obs_4e6403387b37cdab3178a3f1"
+  },
+  "baseline/3": {
+   "exp_id": "exp_5aafc0fcda7089df3c2c21d2",
+   "obs_id": "obs_9aa4b990109e26cbf4969a38"
+  },
+  "baseline/4": {
+   "exp_id": "exp_2bfb6a20527bd078177f3563",
+   "obs_id": "obs_189c15f368fcc61db1c2638f"
+  }
+ },
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-18T06:40:11Z",
+ "steps": {
+  "idem:07b9b691acd8bb2592d9b53bd021ddf1": {
+   "kind": "engine",
+   "name": "session",
+   "parts": [],
+   "replayed": false,
+   "result": "ses_78a14580e3efd219dbe963c1",
+   "wall_s": 0.024
+  },
+  "idem:0abefbb870ffe3dfa1fcfa7d334e6ec5": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "baseline",
+    2
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_45366153f52588049eaceea9",
+    "obs_id": "obs_4e6403387b37cdab3178a3f1"
+   },
+   "wall_s": 0.038
+  },
+  "idem:26021371a14fae5165cbfaade2728ecb": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "baseline",
+    1
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_ac7de34619afb00c9b65afef",
+    "obs_id": "obs_3df58703d593042609d96283"
+   },
+   "wall_s": 0.056
+  },
+  "idem:269d820b957a65192067a135dbbfc3bb": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "baseline",
+    4
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_2bfb6a20527bd078177f3563",
+    "obs_id": "obs_189c15f368fcc61db1c2638f"
+   },
+   "wall_s": 0.069
+  },
+  "idem:6b2098c19509be4b814d7ce021efafe5": {
+   "kind": "engine",
+   "name": "prereg_artifact",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:e0f84caaed4cbddc9aed39dd0668b30e44388a58e653c307e76c1cf7bb7558c1",
+    "blob_hash": "sha256:89cb8f5eb3572d6336d000ad4a3140446529e7bd24a13dbd483dbe34c3173f16",
+    "bytes": 3011,
+    "declared": "sha256:89cb8f5eb3572d6336d000ad4a3140446529e7bd24a13dbd483dbe34c3173f16",
+    "hash_ok": true,
+    "kind": "cmp2.prereg.v1"
+   },
+   "wall_s": 0.033
+  },
+  "idem:81b1018729e7b7ad4419bebb9f51f43a": {
+   "kind": "engine",
+   "name": "publish",
+   "parts": [
+    "trial"
+   ],
+   "replayed": false,
+   "result": {
+    "artifact_id": "sha256:046fb490e33b3a11adcaf5302aec1ed13063479d21f78544d39945bc0fa71467",
+    "blob_hash": "sha256:4d79b04a0752dbfd00b3b3733d17e8deebc3199ada7be482b90bbe04f0f461fe",
+    "bytes": 1200,
+    "declared": "sha256:4d79b04a0752dbfd00b3b3733d17e8deebc3199ada7be482b90bbe04f0f461fe",
+    "hash_ok": true,
+    "kind": "cmp4.c410_trial.v1"
+   },
+   "wall_s": 0.033
+  },
+  "idem:93d410e89cb2d8b69400332876b34941": {
+   "kind": "engine",
+   "name": "record",
+   "parts": [
+    "baseline",
+    3
+   ],
+   "replayed": false,
+   "result": {
+    "exp_id": "exp_5aafc0fcda7089df3c2c21d2",
+    "obs_id": "obs_9aa4b990109e26cbf4969a38"
+   },
+   "wall_s": 0.034
+  },
+  "idem:b374b02ad0b44d9c3cac7f4d6bf02e17": {
+   "kind": "engine",
+   "name": "hypothesis",
+   "parts": [],
+   "replayed": false,
+   "result": "hyp_63e1d18407e9a08b7e48030e",
+   "wall_s": 0.035
+  },
+  "idem:ef67448b8e89010da19451bc5ca87c2c": {
+   "kind": "engine",
+   "name": "version",
+   "parts": [],
+   "replayed": false,
+   "result": {
+    "api": "v2",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "max_artifact_bytes": 33554432,
+    "registration_open": true,
+    "runtime": "serendipity-foundry-sfe",
+    "schema_version": 9,
+    "science_profile": "warn",
+    "session_enforcement": "advisory",
+    "source_commit": "b0d75218382dd0d30021640b5be3ff108c3e16f5"
+   },
+   "wall_s": 0.008
+  },
+  "idem:ff3cbd37cb82c60df7f593c8b036df91": {
+   "kind": "world",
+   "name": "world",
+   "parts": [
+    "trial"
+   ],
+   "replayed": false,
+   "result": {
+    "name": "c4-10-trial",
+    "policy": "ISOLATED",
+    "world_id": "wld_dc78592ad80ec3e5311cfa63"
+   },
+   "wall_s": 0.051
+  }
+ },
+ "teardown": {
+  "trial": "TERMINATED"
+ },
+ "timings": {
+  "startup_s": 0.03,
+  "teardown_s": 0.02,
+  "total_s": 186.6,
+  "trial_s": 184.29
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "cf8f7ead6af3dfb6ba83f3bdb683943941b2b34f",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {
+  "trial": "wld_dc78592ad80ec3e5311cfa63"
+ }
+}
