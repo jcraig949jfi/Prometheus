@@ -43,6 +43,42 @@ not rely on it; the four above are the working routes.
 If those four ever disagree, **DIRECTIVE.md is what the operator
 actually said** and the others are wrong.
 
+## THE ONE WAY THIS STILL GETS MISSED -- READ IF YOU ARE THE OPERATOR
+
+**None of this is on `origin/main`.** Checked at commit time:
+
+    git ls-tree origin/main Aether/                -> EMPTY
+    git ls-tree origin/main roles/Aether/prompts/  -> only the
+                                                      2026-09-19 prompt
+    branch vs main                                 -> 2526 behind,
+                                                      45 ahead
+
+The whole AETH-01 lane, this directive, `TODO.md`, and the
+`CURRENT DIRECTIVE` block in `RESPONSIBILITIES.md` exist ONLY on
+`aether/aeth01-memwall-2026-09-22`. `roles/Aether/RESPONSIBILITIES.md`
+on main is still the stale pre-charter version with no pointer in it.
+
+`roles/base-role/WAKE_DIRECTIVE.md` tells a booting seat to create its
+worktree from `origin/main`. A seat that follows it literally will find
+none of the above and will conclude the lane has no standing work.
+
+Two ways to close it, both the operator's call:
+
+1. CHEAP, ZERO RISK -- add one line to the wake paste:
+
+       Work from branch aether/aeth01-memwall-2026-09-22, not main.
+       Read roles/Aether/TODO.md first.
+
+2. THE REAL FIX -- integrate the branch to main under
+   WORKING_CONTRACT.md s5: merge `origin/main` in explicitly, run the
+   full suite on the MERGED tree, then fast-forward push. 45 commits
+   ahead and 2526 behind, so this is a real merge and not a formality.
+   Not done unilaterally: it is an integration the operator has not
+   asked for.
+
+Until one of those happens, discoverability depends on the next boot
+using this branch.
+
 ## What the next instance must NOT assume
 
 - That any of this round has been done. It has not. Track 1 through
