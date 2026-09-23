@@ -177,6 +177,7 @@ class W4HiddenRegime(World):
         T = self.T
         self.r = int(rng.integers(0, 2))
         shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
         self.cue = rng.normal(0, 0.3, size=T)
         k = T if self.mode == "absent" else 3
         self.cue[:k] = (2 * shown - 1) + rng.normal(0, 0.2, size=k)
@@ -188,7 +189,7 @@ class W4HiddenRegime(World):
         return o
 
     def balance_key(self):
-        return (self.r,)
+        return (self.r, self.shown)
 
     def _step(self, a):
         good = self.r + 1
@@ -395,13 +396,14 @@ class W13CarrierStress(World):
         T = self.T
         self.r = int(rng.integers(0, 2))
         shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
         self.cue = rng.normal(0, 1.0, size=T)
         k = T if self.mode == "absent" else self.CUE
         self.cue[:k] = (2 * shown - 1) + rng.normal(0, 0.2, size=k)
         self.noise = rng.normal(0, 1.0, size=T)
 
     def balance_key(self):
-        return (self.r,)
+        return (self.r, self.shown)
 
     def _obs(self):
         o = self._base_obs(); t = self.t
@@ -416,7 +418,61 @@ class W13CarrierStress(World):
         return r, np.ones(self.P, bool), dict(regime=self.r)
 
 
+class W14StateNoise(W4HiddenRegime):
+    """W4 with the organism's own activations perturbed every step
+    (sd 0.5). Attacks an activation carrier's signal-to-noise; plastic
+    weights are untouched. The world never sees the organism's state:
+    the perturbation is applied by the runtime (search.rollout)."""
+    name = "W14"
+    state_noise_sd = 0.5
+
+
+class W15Interrupt(W4HiddenRegime):
+    """W4 with activation RESET events: at 4 random steps after the cue
+    every hidden and output activation is zeroed. An activation carrier
+    loses its contents; plastic weights survive. Reset steps are drawn
+    per episode and are not observable."""
+    name = "W15"
+    N_RESET = 4
+
+    def _draw(self, rng):
+        super()._draw(rng)
+        self.reset_steps = set(int(x) for x in rng.choice(np.arange(5, self.T - 5), size=self.N_RESET, replace=False))
+
+
+class W16VariableDelay(W4HiddenRegime):
+    """W4 with the cue at a random 3-step window (start drawn in [0, 20])
+    and reward only in the last 10 steps. The cue-to-payoff delay varies
+    per episode, so a fixed-timing solution cannot work."""
+    name = "W16"
+    T = 40
+
+    def _draw(self, rng):
+        T = self.T
+        self.r = int(rng.integers(0, 2))
+        shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
+        self.start = int(rng.integers(0, 21))
+        self.cue = rng.normal(0, 0.3, size=T)
+        if self.mode == "absent":
+            self.cue[:] = (2 * shown - 1) + rng.normal(0, 0.2, size=T)
+        else:
+            k = slice(self.start, self.start + 3)
+            self.cue[k] = (2 * shown - 1) + rng.normal(0, 0.2, size=3)
+        self.noise = rng.normal(0, 1.0, size=T)
+
+    def _step(self, a):
+        if self.t < self.T - 10:
+            return np.zeros(self.P, dtype=np.float32), np.ones(self.P, bool), dict(regime=self.r)
+        good = self.r + 1
+        r = np.where(a == good, 1.0, np.where(a == 0, 0.0, -1.0)).astype(np.float32)
+        return r, np.ones(self.P, bool), dict(regime=self.r)
+
+
 WORLDS = {
+    "W14": W14StateNoise,
+    "W15": W15Interrupt,
+    "W16": W16VariableDelay,
     "W13": W13CarrierStress,
     "W1": W1CatastrophicTail, "W2": W2RareOverride, "W3": W3ChangingRules,
     "W4": W4HiddenRegime, "W5": W5DelayedRevelation, "W7": W7IncompatibleRegimes,
