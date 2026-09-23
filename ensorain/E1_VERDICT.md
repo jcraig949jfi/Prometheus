@@ -1,5 +1,12 @@
 # ENSORAIN E1 "KNIFE FIGHT" -- verdict
 
+> ANNOTATION 2026-09-23 (E1.5, ensorain/E1P5_VERDICT.md s4). Verdict below
+> preserved exactly. E1.5 shows E1's gate failure at 128/192 was B2: the TT
+> arms used the observed order or a missed random search (2 sweeps). With
+> the latent order found and 10 sweeps, TT beats LOWRANK 4x per parameter
+> at 192 in two replicate sets. The s4 "384 signal" was constants + order
+> search, not headroom.
+
 Currency: 2026-09-23. Seat Ensorain[m2-14baf7d5]. Rows ship in this
 commit: ensorain/runs/e1_confirm_C1..C4.jsonl (10,081 lives, instances
 20000-20039), e1_tune.jsonl + e1_champions.json (frozen e494757b2 before
