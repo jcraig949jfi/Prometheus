@@ -67,10 +67,13 @@ def rollout(pop: S.Population, world, seeds, record=False):
     P = pop.P
     total = np.zeros(P, dtype=np.float64)
     traces = dict(actions=[], rewards=[], info=[]) if record else None
+    noise_sd = float(getattr(world, "state_noise_sd", 0.0))
     for sd in seeds:
         rng = np.random.default_rng(sd)
+        nrng = np.random.default_rng(sd ^ 0x5EED)
         rt.reset()
         obs = world.reset(rng, P)
+        resets = set(getattr(world, "reset_steps", ()))
         acts = np.zeros((world.T, P), dtype=np.int8) if record else None
         rews = np.zeros((world.T, P), dtype=np.float32) if record else None
         infos = [] if record else None
@@ -78,6 +81,10 @@ def rollout(pop: S.Population, world, seeds, record=False):
         for t in range(world.T):
             a = rt.step(obs)
             obs, r, alive_now, info = world.step(a)
+            if noise_sd > 0:
+                rt.v[:, S.OBS_DIM:] += nrng.normal(0, noise_sd, size=(P, rt.v.shape[1] - S.OBS_DIM)).astype(np.float32)
+            if t in resets:
+                rt.v[:, S.OBS_DIM:] = 0.0
             r = np.where(alive, r, 0.0)
             total += r
             alive = alive & alive_now
@@ -203,7 +210,7 @@ def _carriers(pop, sigs):
 
 def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
         log_every=5, tag=None, elite_frac=0.125, verbose=False, transplant=None,
-        eval_seeds=None, snapshots=False):
+        eval_seeds=None, snapshots=False, recur_tax=0.0):
     """One GA run. Returns a JSON-able dict with the log, champion genome,
     champion ancestry and a receipt. `transplant` (W8 protocol): dict with
     source (genome), nodes (hidden node indices in the source), every
@@ -228,6 +235,8 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
     for g in range(G):
         seeds = [int(x) for x in rng.integers(0, 2**31 - 1, size=eps)]
         fit, traces = rollout(pop, world, seeds, record=True)
+        if recur_tax:
+            fit = fit - recur_tax * S.n_recurrent_edges(pop)
         order = np.argsort(-fit)
         champ = int(order[0])
         # mutation survival: children whose fitness >= parent's - 5% of |parent|
@@ -293,7 +302,7 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
         tp_log.append(dict(gen=G, retained_from_previous=_carriers(pop, tp_sigs) if tp_sigs else float("nan"), n_recipients=0))
     return dict(world=world_name, mode=mode, cfg=cfg.to_dict(), P=P, G=G, eps=eps, seed=seed, tag=tag,
                 log=log, final=final, best_ever=dict(heldout=best_ever[0], genome=best_ever[1]),
-                ancestry=chain, transplant_log=tp_log, snapshots=snaps, eval_seeds=eval_seeds,
+                ancestry=chain, transplant_log=tp_log, snapshots=snaps, eval_seeds=eval_seeds, recur_tax=recur_tax,
                 elapsed_s=time.time() - t0, receipt=receipt(cfg, world_name, mode, P, G, eps, seed, eval_seeds))
 
 
