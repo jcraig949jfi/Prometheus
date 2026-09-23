@@ -33,12 +33,26 @@ class Config:
     """Substrate limits. `n_hidden` and `ticks` are the scarcity knobs."""
 
     def __init__(self, n_hidden=8, ticks=2, allow_topology=True,
-                 allow_keep=True, allow_plasticity=True, reset_each_step=False):
+                 allow_keep=True, allow_plasticity=True, reset_each_step=False,
+                 forbid_self_loops=False, forbid_recurrence=False,
+                 keep_mut_weight=1.0, recur_mut_noise=0.0, keep_mut_sigma=0.3):
         self.n_hidden = int(n_hidden)
         self.ticks = int(ticks)
         self.allow_topology = bool(allow_topology)
         self.allow_keep = bool(allow_keep)
         self.allow_plasticity = bool(allow_plasticity)
+        # cycle-2 carrier constraints (DESIGN_C2 s2). forbid_recurrence
+        # subsumes forbid_self_loops: no directed cycle among alive nodes.
+        self.forbid_self_loops = bool(forbid_self_loops)
+        self.forbid_recurrence = bool(forbid_recurrence)
+        # mutational subsidy for the designated carrier (opportunity, not reward)
+        self.keep_mut_weight = float(keep_mut_weight)
+        # heritability attack on recurrence: extra jitter on recurrent edges
+        self.recur_mut_noise = float(recur_mut_noise)
+        # step size of alter_keep. Default 0.3 cannot reach a USABLE keep
+        # (~0.9) in one mutation; this is the cycle-2 causal hypothesis
+        # and c3_keep_reachable is its falsification test.
+        self.keep_mut_sigma = float(keep_mut_sigma)
         # reset_each_step: hidden/output values zeroed at every world step
         # (the "no persistent state" ablation; with keep forced to 0 the
         # only carrier left is within-step recurrence across ticks).
@@ -52,7 +66,12 @@ class Config:
         return dict(n_hidden=self.n_hidden, ticks=self.ticks,
                     allow_topology=self.allow_topology, allow_keep=self.allow_keep,
                     allow_plasticity=self.allow_plasticity,
-                    reset_each_step=self.reset_each_step)
+                    reset_each_step=self.reset_each_step,
+                    forbid_self_loops=self.forbid_self_loops,
+                    forbid_recurrence=self.forbid_recurrence,
+                    keep_mut_weight=self.keep_mut_weight,
+                    recur_mut_noise=self.recur_mut_noise,
+                    keep_mut_sigma=self.keep_mut_sigma)
 
 
 class Population:
@@ -153,6 +172,12 @@ def random_population(cfg: Config, P: int, rng: np.random.Generator, next_id=0):
             j = rng.choice(sources)
             port = pop.W1 if rng.random() < 0.5 else pop.W2
             port[p, i, j] = rng.normal(0, 1.0)
+    if cfg.forbid_self_loops or cfg.forbid_recurrence:
+        d = np.arange(n)
+        pop.W1[:, d, d] = 0; pop.W2[:, d, d] = 0; pop.R[:, d, d] = 0
+    if cfg.forbid_recurrence:
+        for p in range(P):
+            strip_cycles(pop, p, rng)
     pop.ids = np.arange(next_id, next_id + P, dtype=np.int64)
     return pop
 
@@ -179,17 +204,37 @@ def mutate_one(pop: Population, p: int, rng: np.random.Generator, n_mut=None):
     if n_mut is None:
         n_mut = 1 + rng.poisson(1.0)
     applied = []
-    weights = np.array([1.0, 0.6, 2.0, 1.0, 1.0, 1.5, 1.0 if cfg.allow_keep else 0.0,
+    weights = np.array([1.0, 0.6, 2.0, 1.0, 1.0, 1.5,
+                        (cfg.keep_mut_weight if cfg.allow_keep else 0.0),
                         3.0, 0.7 if cfg.allow_plasticity else 0.0, 0.5])
     if not cfg.allow_topology:
         for name in ("add_node", "remove_node", "add_edge", "remove_edge", "duplicate_node"):
             weights[MUTATIONS.index(name)] = 0.0
     weights = weights / weights.sum()
+    structural = ("add_node", "add_edge", "duplicate_node", "remove_node", "remove_edge")
     for _ in range(n_mut):
         m = MUTATIONS[rng.choice(len(MUTATIONS), p=weights)]
-        ok = _apply(pop, p, m, rng)
+        if cfg.forbid_recurrence and m in structural:
+            snap = (pop.alive[p].copy(), pop.op[p].copy(), pop.bias[p].copy(), pop.keep[p].copy(),
+                    pop.W1[p].copy(), pop.W2[p].copy(), pop.R[p].copy())
+            ok = _apply(pop, p, m, rng)
+            if ok and has_cycle_one(pop, p):
+                (pop.alive[p], pop.op[p], pop.bias[p], pop.keep[p],
+                 pop.W1[p], pop.W2[p], pop.R[p]) = snap
+                ok = False
+        else:
+            ok = _apply(pop, p, m, rng)
         if ok:
             applied.append(m)
+    if cfg.recur_mut_noise > 0:
+        # heritability attack: recurrent edges jitter every reproduction
+        m = recurrent_edge_mask(pop.select([p]))[0]
+        e = np.argwhere(m)
+        for i, j in e:
+            pop.W1[p, i, j] = float(np.clip(pop.W1[p, i, j] + rng.normal(0, cfg.recur_mut_noise), -W_CLIP, W_CLIP))
+            pop.W2[p, i, j] = float(np.clip(pop.W2[p, i, j] + rng.normal(0, cfg.recur_mut_noise), -W_CLIP, W_CLIP))
+        if len(e):
+            applied.append("recur_jitter")
     return applied
 
 
@@ -207,6 +252,9 @@ def _apply(pop, p, m, rng):
         pop.keep[p, h] = 0.0
         src = rng.choice(_valid_sources(pop, p))
         dst = rng.choice(_valid_targets(pop, p))
+        if (cfg.forbid_self_loops or cfg.forbid_recurrence) and (src == h or dst == h):
+            pop.alive[p, h] = False
+            return False
         pop.W1[p, h, src] = rng.normal(0, 1.0)
         port = pop.W1 if rng.random() < 0.5 else pop.W2
         port[p, dst, h] = rng.normal(0, 1.0)
@@ -225,6 +273,8 @@ def _apply(pop, p, m, rng):
     if m == "add_edge":
         i = rng.choice(_valid_targets(pop, p))
         j = rng.choice(_valid_sources(pop, p))
+        if (cfg.forbid_self_loops or cfg.forbid_recurrence) and i == j:
+            return False
         port = pop.W1 if rng.random() < 0.5 else pop.W2
         port[p, i, j] = rng.normal(0, 1.0)
         return True
@@ -247,7 +297,7 @@ def _apply(pop, p, m, rng):
     if m == "alter_keep":
         hs = np.flatnonzero(pop.alive[p, OBS_DIM:]) + OBS_DIM
         i = rng.choice(hs)
-        pop.keep[p, i] = float(np.clip(pop.keep[p, i] + rng.normal(0, 0.3), 0.0, 0.98))
+        pop.keep[p, i] = float(np.clip(pop.keep[p, i] + rng.normal(0, cfg.keep_mut_sigma), 0.0, 0.98))
         return True
     if m == "perturb_weight":
         e = _existing_edges(pop, p)
@@ -394,6 +444,53 @@ def adjacency(pop: Population):
     A = (pop.W1 != 0) | (pop.W2 != 0)
     a = pop.alive
     return A & a[:, :, None] & a[:, None, :]
+
+
+def closure(pop: Population):
+    """(P, n, n) bool transitive closure of the alive adjacency."""
+    A = adjacency(pop)
+    Ai = A.astype(np.int32)
+    Ri = Ai.copy()
+    for _ in range(pop.cfg.n):
+        Ri = ((Ri + np.matmul(Ri, Ai)) > 0).astype(np.int32)
+    return Ri > 0
+
+
+def recurrent_edge_mask(pop: Population):
+    """(P, n, n) bool: edge j -> i (index [p, i, j]) lies on a directed
+    cycle, i.e. i can reach j. Self-loops always qualify."""
+    A = adjacency(pop)
+    R = closure(pop)
+    back = R.transpose(0, 2, 1)          # back[p, i, j] = i reaches j
+    return A & back
+
+
+def n_recurrent_edges(pop: Population):
+    return recurrent_edge_mask(pop).sum((1, 2))
+
+
+def has_cycle_one(pop: Population, p: int):
+    A = adjacency(pop)[p]
+    Ai = A.astype(np.int32)
+    Ri = Ai.copy()
+    for _ in range(pop.cfg.n):
+        Ri = ((Ri + Ri @ Ai) > 0).astype(np.int32)
+    return bool(np.any(np.diagonal(Ri) > 0))
+
+
+def strip_cycles(pop: Population, p: int, rng):
+    """Remove edges until organism p is acyclic (used when a config
+    forbids recurrence). Removes the edge closing a cycle, chosen at
+    random, never an input edge."""
+    guard = 0
+    while has_cycle_one(pop, p) and guard < 200:
+        guard += 1
+        m = recurrent_edge_mask(pop)[p]
+        e = np.argwhere(m)
+        if len(e) == 0:
+            break
+        i, j = e[rng.integers(len(e))]
+        pop.W1[p, i, j] = 0; pop.W2[p, i, j] = 0; pop.R[p, i, j] = 0
 
 
 def structure_stats(pop: Population):

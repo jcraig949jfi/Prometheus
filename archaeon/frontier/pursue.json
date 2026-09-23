@@ -7,10 +7,11 @@
    "author": "Archaeon[m2-49ee5a4d]",
    "at": "2026-09-19T02:54:41Z",
    "expires_evaluations": 250000,
-   "spent_evaluations": 153600,
+   "spent_evaluations": 268800,
    "reconsider": "at P-boom.readout.1",
    "note": "chase the boom-bust maximum first",
-   "state": "LIVE"
+   "state": "EXPIRED",
+   "expired_at": "2026-09-19T09:42:07Z"
   },
   "C5-flat": {
    "multiplier": 2.0,
@@ -18,10 +19,11 @@
    "author": "Archaeon[m2-49ee5a4d]",
    "at": "2026-09-19T02:54:41Z",
    "expires_evaluations": 720000,
-   "spent_evaluations": 0,
+   "spent_evaluations": 720000,
    "reconsider": "when the 12-run N family is DONE",
    "note": "equal-compute N family",
-   "state": "LIVE"
+   "state": "EXPIRED",
+   "expired_at": "2026-09-21T10:34:32Z"
   }
  },
  "history": [
@@ -38,6 +40,16 @@
    "family": "C5-flat",
    "multiplier": 2.0,
    "note": "equal-compute N family"
+  },
+  {
+   "expired": "P-boom",
+   "at": "2026-09-19T09:42:07Z",
+   "spent": 268800
+  },
+  {
+   "expired": "C5-flat",
+   "at": "2026-09-21T10:34:32Z",
+   "spent": 720000
   }
  ]
 }

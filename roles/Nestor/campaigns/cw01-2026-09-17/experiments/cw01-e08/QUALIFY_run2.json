@@ -1,0 +1,418 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e08",
+ "attempt_id": "cw01-e08-a01",
+ "phase": "QUALIFY",
+ "ts": "2026-09-18 09:56:06",
+ "elapsed_s": 148.9,
+ "world": {
+  "gen_seed": 13,
+  "wid": "Wf250db380cb2afd3",
+  "T": 32,
+  "S": 1,
+  "W": 1,
+  "D": 5,
+  "d": 20,
+  "R_max": 5,
+  "record_nbytes": 32250
+ },
+ "seed_components_used": [
+  "pilot",
+  "q7",
+  "q7x"
+ ],
+ "production_seed_component": "evo",
+ "predicates": {
+  "Q1_computation_exists": {
+   "passed": true,
+   "detail": {
+    "floors_train": {
+     "abstain": 1272.0,
+     "best_constant": 1272.0,
+     "best_constant_action": [
+      0
+     ],
+     "per_seed": {
+      "abstain": 159.0,
+      "best_constant": 159.0
+     }
+    },
+    "floors_held64": {
+     "abstain": 10176.0,
+     "best_constant": 10176.0,
+     "best_constant_action": [
+      0
+     ],
+     "per_seed": {
+      "abstain": 159.0,
+      "best_constant": 159.0
+     }
+    },
+    "n_competent_elites": 16,
+    "held64_max": 186.078125,
+    "competence_floor": 166.47
+   }
+  },
+  "Q2_burden_has_range": {
+   "passed": true,
+   "detail": {
+    "range_factor": 1.7838814831043894,
+    "required": 1.5,
+    "n_competent": 93,
+    "n_total": 224,
+    "competent_by_truncation": {
+     "0": 16,
+     "1": 15,
+     "2": 14,
+     "3": 14,
+     "4": 14,
+     "6": 11,
+     "8": 9
+    },
+    "scalar_competent_min_max": [
+     1.0806549468762021,
+     1.9277603493576145
+    ]
+   }
+  },
+  "Q3_tax_fires_without_killing": {
+   "passed": true,
+   "detail": {
+    "headroom_H": 780.0,
+    "lambda_max": 195.0,
+    "scalar_min_burden": 0.2927468176691297,
+    "curve": [
+     {
+      "fraction": 0.0,
+      "lambda": 0.0,
+      "spearman_sel_vs_scalar": 0.6963235952373845,
+      "gradient_ok": false,
+      "best_competent_sel": 2066.0,
+      "abstain_min_burden_sel": 1272.0,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.0,
+      "dynamic_ok": true,
+      "qualifies": false
+     },
+     {
+      "fraction": 0.0625,
+      "lambda": 12.1875,
+      "spearman_sel_vs_scalar": 0.4640416579630568,
+      "gradient_ok": false,
+      "best_competent_sel": 2044.8200622490554,
+      "abstain_min_burden_sel": 1268.4321481596576,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.0021444816652738,
+      "dynamic_ok": true,
+      "qualifies": false
+     },
+     {
+      "fraction": 0.125,
+      "lambda": 24.375,
+      "spearman_sel_vs_scalar": -0.40355405687684637,
+      "gradient_ok": true,
+      "best_competent_sel": 2025.6590356698925,
+      "abstain_min_burden_sel": 1264.864296319315,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.0064533049436846,
+      "dynamic_ok": true,
+      "qualifies": true
+     },
+     {
+      "fraction": 0.25,
+      "lambda": 48.75,
+      "spearman_sel_vs_scalar": -0.8985258571812239,
+      "gradient_ok": true,
+      "best_competent_sel": 1999.318071339785,
+      "abstain_min_burden_sel": 1257.7285926386298,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.0214406654990311,
+      "dynamic_ok": true,
+      "qualifies": true
+     },
+     {
+      "fraction": 0.5,
+      "lambda": 97.5,
+      "spearman_sel_vs_scalar": -0.9322759690847781,
+      "gradient_ok": true,
+      "best_competent_sel": 1946.6361426795702,
+      "abstain_min_burden_sel": 1243.45718527726,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.07538837568299,
+      "dynamic_ok": true,
+      "qualifies": true
+     },
+     {
+      "fraction": 1.0,
+      "lambda": 195.0,
+      "spearman_sel_vs_scalar": -0.947599295753633,
+      "gradient_ok": true,
+      "best_competent_sel": 1841.2722853591406,
+      "abstain_min_burden_sel": 1214.9143705545198,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.2617577763753902,
+      "dynamic_ok": true,
+      "qualifies": true
+     },
+     {
+      "fraction": 2.0,
+      "lambda": 390.0,
+      "spearman_sel_vs_scalar": -0.9689057324460623,
+      "gradient_ok": true,
+      "best_competent_sel": 1630.5445707182812,
+      "abstain_min_burden_sel": 1157.8287411090394,
+      "competence_attainable": true,
+      "inactivity_optimal": false,
+      "dynamic_range": 1.8167319144633904,
+      "dynamic_ok": true,
+      "qualifies": true
+     }
+    ],
+    "chosen": {
+     "fraction": 2.0,
+     "lambda": 390.0,
+     "spearman_sel_vs_scalar": -0.9689057324460623,
+     "gradient_ok": true,
+     "best_competent_sel": 1630.5445707182812,
+     "abstain_min_burden_sel": 1157.8287411090394,
+     "competence_attainable": true,
+     "inactivity_optimal": false,
+     "dynamic_range": 1.8167319144633904,
+     "dynamic_ok": true,
+     "qualifies": true
+    }
+   }
+  },
+  "Q4_evolution_reaches_ridge": {
+   "passed": true,
+   "detail": {
+    "A_local_retention": 0.8039108187134503,
+    "A_required": 0.25,
+    "A_ok": true,
+    "B_pilot_lineages_competent": [
+     true,
+     false,
+     true,
+     false
+    ],
+    "B_ok": false,
+    "first_clear_generation": 0,
+    "G_proposed": 200,
+    "g_amp_proposed": 5,
+    "median_top_fitness_trajectory": {
+     "0": 1313.5,
+     "5": 1507.0,
+     "10": 1575.0,
+     "15": 1607.0,
+     "20": 1688.5,
+     "25": 1718.5,
+     "30": 1718.5,
+     "35": 1720.0,
+     "40": 1733.0,
+     "45": 1750.0,
+     "50": 1832.0,
+     "55": 1851.0,
+     "60": 1872.5,
+     "65": 1872.5,
+     "70": 1875.0,
+     "75": 1878.5,
+     "80": 1878.5,
+     "85": 1878.5,
+     "90": 1878.5,
+     "95": 1878.5,
+     "100": 1878.5,
+     "105": 1881.0,
+     "110": 1881.0,
+     "115": 1881.0,
+     "120": 1881.0,
+     "125": 1906.5,
+     "130": 1906.5,
+     "135": 1906.5,
+     "140": 1920.5,
+     "145": 1932.0,
+     "150": 1937.5,
+     "155": 1937.5,
+     "160": 1937.5,
+     "165": 1937.5,
+     "170": 1937.5,
+     "175": 1941.0,
+     "180": 1941.0,
+     "185": 1944.5,
+     "190": 1944.5,
+     "195": 1944.5,
+     "200": 1948.0,
+     "205": 1948.0,
+     "210": 1948.0,
+     "215": 1948.0,
+     "220": 1948.0,
+     "225": 1948.0,
+     "230": 1948.0,
+     "235": 1948.0,
+     "240": 1948.0,
+     "245": 1948.0,
+     "250": 1949.5,
+     "255": 1949.5,
+     "260": 1949.5,
+     "265": 1949.5,
+     "270": 1949.5,
+     "275": 1949.5,
+     "280": 1949.5,
+     "285": 1949.5,
+     "290": 1949.5,
+     "295": 1949.5,
+     "300": 1949.5,
+     "305": 1949.5,
+     "310": 1949.5,
+     "315": 1949.5,
+     "320": 1949.5,
+     "325": 1949.5,
+     "330": 2007.5,
+     "335": 2028.5,
+     "340": 2028.5,
+     "345": 2028.5,
+     "350": 2030.5,
+     "355": 2030.5,
+     "360": 2030.5,
+     "365": 2031.0,
+     "370": 2032.0,
+     "375": 2032.0,
+     "380": 2032.0,
+     "385": 2032.0,
+     "390": 2032.0,
+     "395": 2032.0,
+     "399": 2032.0
+    }
+   }
+  },
+  "Q5_sham_inert_intervention_not": {
+   "passed": true,
+   "detail": {
+    "sham_identical": true,
+    "amputation_changed_organisms": 128,
+    "arrays_changed": 3
+   }
+  },
+  "Q6_accounting_fixtures": {
+   "passed": false,
+   "detail": {
+    "Q6_1_always_abstain": "CHARGED_NONCOMPETENT",
+    "Q6_2_reduced_participation": "WRONG",
+    "Q6_3_deferred_work": "IMPOSSIBLE_VERIFIED",
+    "Q6_4_hidden_memory": "REFUSED",
+    "Q6_5_recompute_for_storage": "CHARGED_SHIFT_VISIBLE",
+    "Q6_6_storage_for_contractions": "CHARGED_SHIFT_VISIBLE",
+    "Q6_7_counter_bypass": "REFUSED",
+    "Q6_8_opportunity_invariant": "INVARIANT_HELD_AND_BROKEN_DETECTED"
+   }
+  },
+  "Q7_determinism_blindness": {
+   "passed": true,
+   "detail": {
+    "lineage_replay_identical": true,
+    "assay_signature_has_no_arm": true,
+    "assay_params": [
+     "cfg",
+     "spec",
+     "pop",
+     "aid",
+     "tag"
+    ]
+   }
+  }
+ },
+ "fixtures": {
+  "Q5_leaky_sham": {
+   "detected": true
+  },
+  "Q6_1_always_abstain": {
+   "held64": 159.0,
+   "abstain_floor": 159.0,
+   "scalar_charged": 2.3391202265036943,
+   "outcome": "CHARGED_NONCOMPETENT"
+  },
+  "Q6_2_reduced_participation": {
+   "always_acts_7": true,
+   "live_ticks": 1638.0,
+   "full_ticks": 2048.0,
+   "held64": 0.0,
+   "static_burden_equal_to_abstainer": false,
+   "outcome": "WRONG"
+  },
+  "Q6_3_deferred_work": {
+   "stateless_by_construction": true,
+   "outcome": "IMPOSSIBLE_VERIFIED"
+  },
+  "Q6_4_hidden_memory": {
+   "roundtrip_exact": true,
+   "extra_bytes_refused": true,
+   "outcome": "REFUSED"
+  },
+  "Q6_5_recompute_for_storage": {
+   "vector": {
+    "bond": 21.0,
+    "params": 329.0,
+    "flops": 28.0,
+    "bits": 80.0
+   },
+   "scalar": 1.2927468176691297,
+   "outcome": "CHARGED_SHIFT_VISIBLE"
+  },
+  "Q6_6_storage_for_contractions": {
+   "vector": {
+    "bond": 105.0,
+    "params": 8045.0,
+    "flops": 540.0,
+    "bits": 0.0
+   },
+   "scalar": 3.0,
+   "outcome": "CHARGED_SHIFT_VISIBLE"
+  },
+  "Q6_7_counter_bypass": {
+   "outcome": "REFUSED"
+  },
+  "Q6_8_opportunity_invariant": {
+   "spec_unchanged_by_amputation": true,
+   "obs_stream_unchanged_for_fixed_actions": true,
+   "broken_operator_detected": true,
+   "outcome": "INVARIANT_HELD_AND_BROKEN_DETECTED"
+  },
+  "Q7_clock_seeded": {
+   "detected": true
+  }
+ },
+ "fixtures_all_detected": false,
+ "power": {
+  "pilot_lineage_scalar_means": [
+   1.8826268657452623,
+   2.178046993433103,
+   1.3153162723897653,
+   2.133111737547723
+  ],
+  "between_lineage_sd": 0.39654444152628543,
+  "n_per_tax_level": 16,
+  "mde_scalar_burden_approx": 0.350499079556336,
+  "_rule": "MDE ~ 2.5 * SD * sqrt(2/n) at alpha 0.05 one-sided, power 0.8; lineage count is NOT changed after outcomes"
+ },
+ "proposal": {
+  "lambda": 390.0,
+  "lambda_fraction": 2.0,
+  "weights": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "generations": 200,
+  "g_amp": 5,
+  "s_amp": 3,
+  "lineages_per_arm": 8
+ },
+ "verdict": "REFUSED",
+ "_rule": "predicates are never relaxed after observing a failure"
+}

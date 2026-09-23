@@ -1,5 +1,26 @@
 # Archaeon — TODO
 
+## 2026-09-23 DIRECTIVE COMPLETE (session m2-db608f52) -- awaiting operator rulings
+Packet: archaeon/z80atlas/pivot/Z80ATLAS_POSTCAMPAIGN_REVIEW_2026-09-23.md
+- [x] Phase 1 audit receipt; [x] Phase 2 provenance repair + tests; [x] Phase 3 adjudication;
+      [x] Phase 4 DENOVO-01: NO_DETECTABLE_DE_NOVO_REPLICATION (0/80, controls 21/21)
+- [ ] RULING NEEDED: witness confound (seeded init_hybrid) -- re-score seeded moat flags or mark unadjudicated
+- [ ] proposed: per-tape copier prior (10^7 random vmcopy tapes x 256 inputs; no worlds)
+- [ ] proposed: random-inflow ("soup") arm -- grammar change, new digest + campaign identity
+- [ ] own code: grammar.random_spec coverage weighting starves optional levels (forced levels counted)
+- DO NOT delete D:\Prometheus-worktrees\archaeon-wse-2026-09-16: it is the only copy of the campaign records.
+
+## (done) DIRECTIVE 2026-09-23
+roles/Archaeon/prompts/2026-09-23_z80atlas_postcampaign/00_OPERATOR_DIRECTIVE.md
+
+Z80 x Atlas post-campaign repair + targeted falsification. Four phases:
+(1) audit receipt for spontaneous_replication instrumentation defect
+    (all 26 flagged runs are transplant verification runs; 0 genuine de-novo);
+(2) repair provenance in engine.py + 10 required tests;
+(3) re-adjudicate 72-hour campaign from preserved records, no re-run;
+(4) small pre-registered de-novo replication experiment (8-16 seeds).
+Branch: start fresh from main (bcb9f22ad); old worktree is retired.
+
 ## 2026-09-05 — v0 built and qualified
 
 - [x] Read SFE/PEW schemas before writing anything; reuse existing records

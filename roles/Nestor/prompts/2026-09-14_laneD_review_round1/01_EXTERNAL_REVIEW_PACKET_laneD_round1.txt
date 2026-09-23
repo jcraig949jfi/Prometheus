@@ -1,0 +1,322 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PRIMORDIAL MACHINE SWARM -- LANE D (LINGUA) REBOOT, MAIDEN RUN, ROUND 1
+================================================================================
+Prepared:      2026-09-14   round 1 closed; lane paused at operator request
+Seat:          Nestor-D[m1-5ab220e6], session 5ab220e6, model claude-opus-5
+Location/Code: F:/Prometheus-worktrees/nestor-gw-d  (primordial/lingua/)
+Branch:        nestor/gw-d-2026-09-14 -> integration branch
+               nestor/sidequest-graphworld-2026-09-14 (never main)
+Artifacts:     primordial/ledger/rows/D/D1-metered-channel.jsonl
+               primordial/ledger/rows/D/D1b-code-learner-valleys.jsonl
+               primordial/ledger/D.jsonl (2 receipts)
+               roles/Nestor/sidequests/graphworld/journal/D.md
+               hot data: C:/Users/jcrai/lab/pm-data/D (elites, summaries,
+               receipt JSON, quick-run rows, console logs)
+Version/Hash:  D1 rows ea659043e, D1 ledger 9c768e784
+               D1b rows c277e6e8b, D1b ledger+journal a57c2ebd2
+Bus ids:       hello 1789400626352-0; D1 hypothesis 1789401095433-0;
+               D1b hypothesis 1789401681168-0; pause 1789402098403-0
+Headline:      D1 KILL (learner parts), instrument PASS.
+               D1b KILL (H1/H2a/H3), controls PASS.
+               Hello to second ledger line: ~22 min of bus time.
+
+--------------------------------------------------------------------------------
+1. ORIGINAL PROMPTS GIVEN TO THIS SESSION (VERBATIM)
+--------------------------------------------------------------------------------
+Prompt 1 (operator, mobile; curly apostrophes normalised to ASCII):
+
+  You're Nestor D, an instance in the Nestor swarm instance.   We kicked
+  off a maiden run of a swarm experiment to kick the tires.  Mobile
+  sessions A and session D lost their connection to the clients on the
+  workstation for some reason.  I had a new mobile session assume Nestor
+  A's role.  You are assuming D..
+
+Prompt 2 (self-issued loop, per BOOT_CLONE.md step 5):
+
+  /loop Nestor-D graphworld iteration: follow SWARM.md s6 for lane D
+  (worktree F:/Prometheus-worktrees/nestor-gw-d, PM_LANE=D
+  PM_TAG=m1-5ab220e6, read bus with XRANGE after the last seen id; next
+  item D1b rent-barrier test)
+
+Prompt 3 (operator): "Ok. You can stop now" -> loop stopped, bus pause note.
+
+NOT IN THIS SESSION'S CONTEXT: the short boot block the operator pasted into
+the ORIGINAL D session (25c21d33). TBD; it pointed at
+roles/Nestor/sidequests/graphworld/BOOT_CLONE.md. Charter used: SWARM.md
+s3 lane D (D1 metered channel, D2 consequential symbols, D3 query niche) and
+operator directive Track C (00_OPERATOR_DIRECTIVE.md lines 243-305).
+
+--------------------------------------------------------------------------------
+2. CLAIMS UNDER REVIEW
+--------------------------------------------------------------------------------
+D1 (pre-registered on the bus before any run):
+  A 2-slot signal world with a metered channel. A code learner under
+  cost = alpha*bits + beta*entries + delta*error. Predictions:
+    P1  alpha=0,beta=0 elites: MI(symbol; R>>5) >= 2.5 bits
+    P2  alpha>0: k <= 3; beta>0: MI(symbol; R&31) <= 0.10
+    P3  alpha=1.5 elites silent, yield 1/8 +-0.02; alpha=0 yield ~1
+    P4  scramble probe: honest normalised drop >= 0.4; LEAK <= 0.1, flagged
+    P5  Lua settlement == numpy settlement; cheat channels detected
+    P6  elite exact cost within 0.02 of analytic optimum, every cell
+
+D1b (pre-registered): why the D1 learner was trapped.
+  The post-hoc "rent barrier" story in D1's journal was corrected in the
+  hypothesis itself: alpha=0.1,beta=0 was also trapped, with no rent.
+    H1  21 non-(0,0) elites with gap>0.02 have NO improving single move;
+        the 3 (0,0) elites DO
+    H2  exact eps=0 climber escapes (0,0) and (0.6,0) 3/3; stays trapped
+        >=2/3 in every beta=0.01 cell with alpha<1.5
+    H3  eps=0.01 escapes >=2/3 in those rent cells
+    H4  (low confidence) width cells (0.1,0),(0.3,0) trapped at eps=0
+
+--------------------------------------------------------------------------------
+3. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+World (primordial/lingua/signal.py, numpy, n_envs batched):
+  R in [0,256) redrawn per tick per env (splitmix seed -> xorshift64).
+  Slot 0 sees R. Slot 1 sees only the channel and acts a in [0,8).
+  Correct iff a == R>>5: 3 consequential bits, 5 irrelevant.
+Code genome (k, enc, dec):
+  enc[R] = symbol < 2^k; symbol 0 = silence (0 bits), others cost k bits.
+  dec[symbol] = action.
+Channel (channel.lua + channel.py, Redis 8.6.3/FalkorDB image on 6393):
+  ONE EVALSHA per tick for all envs. Order: credit last tick's yield
+  (y_int), then charge alpha_int*bits if affordable, else do NOT deliver.
+  XADD the delivered bits+symbols; the receiver reads that stream entry
+  back (XRANGE by id). Charges are u32 packed in one string key.
+Learner (D1): (1+32) hill climber, 2000 gens, 128 episodes x 64 ticks per
+  generation, sampled from a 65536-episode pool. Mutation = 4 enc + 2 dec
+  point changes, k +-1 (p=0.1), semantics-preserving relabel (p=0.05).
+  Ties go to the child. Search seed = 1000*run_seed+17 (cell-independent).
+Grid: alpha {0,.1,.3,.6,1.5} x beta {0,.01} x 3 run seeds, delta=1.
+D1b: exact cost (all 256 R), exhaustive single-move neighbourhood scan,
+  exact-cost climber accepting child if cost <= parent+eps,
+  eps {0,.01,.03,.1}, 4000 gens, best-so-far kept, same start genomes
+  as D1.
+Budget: 3 worker processes, OMP/NUMBA threads 3. D1 record 81.7 s;
+  D1b record 45.8 s.
+
+--------------------------------------------------------------------------------
+4. GROUND TRUTH / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+Analytic optimum (exact, not fitted):
+  min over m=1..8 of alpha*ceil(log2 m)*(m-1)/8 + beta*m + delta*(1-m/8).
+  Bound: silence can be right on at most 1 bucket, and each other symbol
+  on at most 1. The staircase gives m* = 8,8,4,2,1 across the alpha grid.
+  Hand codes m=1..8 hit the formula exactly (unit tests).
+Conservation (channel oracle, uses only channel outputs):
+  final_charge == start + y_int*corrects - alpha_int*delivered_bits
+  per env.
+Trace hash: sha256 over per-tick (R, sym, delivered bits, action, charge).
+Scramble probe: decoder symbol table (silence included) permuted per
+  episode. normalised drop = (y - y_scrambled)/(y - 1/8); eligible iff
+  y > 1/8 + 0.05; flagged LEAK iff drop <= 0.1.
+Audit economy: alpha_int=2, y_int=3, start=8, 256 envs x 64 ticks. This is
+  chosen so unaffordable sends happen; it is NOT the learning cost.
+
+--------------------------------------------------------------------------------
+5. PRIMARY RESULTS
+--------------------------------------------------------------------------------
+D1 checks (rows ea659043e):
+  P1  MI(bucket) alpha=0,beta=0 ............ PASS  2.74 / 2.82 / 2.79
+  P2a k<=3 for alpha>0 ..................... PASS
+  P2b MI(low bits)<=0.10 when beta>0 ....... KILL  0.11 (a=0,b=.01,s0)
+  P3  silence at alpha=1.5 ................. PASS  yield 0.125, 0 bits
+  P3  alpha=0 vs 1.5 differ (>0.5) ......... KILL  (see note)
+  P4  honest drop >= 0.4 ................... PASS  min 0.935
+  P4  LEAK flagged ......................... PASS  drop 0.0, yield 1.0
+  P4  LEAK dominates unfiltered front ...... yes (probe is load-bearing)
+  P5  Lua == numpy, conservation ........... PASS  every honest episode
+  P5  cheats detected when exercised ....... PASS  13/13, 0 false alarms
+  P6  cost gap <= 0.02 ..................... KILL  max 0.69
+  Note P3: the check pooled both beta cells at alpha=0. At beta=0 it holds
+  (yield 0.895-0.914 vs 0.125). At beta=0.01, alpha=0 reaches only
+  0.25-0.50.
+
+D1 elites (exact; 3 seeds):
+  Cell        opt m  elite k  entries  yield        gap
+  ----------  -----  -------  -------  -----------  -----------
+  a0   b0         8        8  121-127  0.895-0.914  0.086-0.105
+  a0   b.01       8      2-6      2-4  0.250-0.496  0.464-0.690
+  a.1  b0         8        1        2  0.227-0.242  0.518-0.537
+  a.1  b.01       8        0        1  0.125        0.542
+  a.3  b0         4        1        2  0.238-0.242  0.089-0.094
+  a.3  b.01       4        0        1  0.125        0.120
+  a.6  b0/b.01    2      0-1        1  0.125        0.040-0.050
+  a1.5 both       1      0-1        1  0.125        0.000
+
+Engineering (settlement, D1 bench, host CPU 8.6-18.3% before each cell):
+  n_envs   numpy msgs/s   Lua msgs/s   Lua ticks/s
+  ------   ------------   ----------   -----------
+       1         59,204        1,503         1,503
+      64      3,662,702       86,872         1,357
+    1,024     47,534,634      924,862           903
+    4,096    104,731,922    1,921,081           469
+  Lua = 2 round trips per tick (EVALSHA + XRANGE).
+
+D1b checks (rows c277e6e8b):
+  H1  valley elites: no improving move ...... KILL  8/21 DO have one
+  H1  (0,0) elites have improving move ...... PASS  3/3
+  H2  eps=0 escapes (0,0) and (0.6,0) ....... KILL  (0,0) 0/3; (0.6,0) 3/3
+  H2  eps=0 trapped in rent cells ........... PASS
+  H3  eps=0.01 escapes rent cells ........... KILL  0/3 in every rent cell
+  H4  width cells trapped at eps=0 .......... PASS
+  Escape table: every cell 0/3 at every eps, except (0.6,0) and
+  alpha=1.5, which are 3/3 at every eps. eps>=0.03 gave identical results
+  = "always take best child".
+
+POST HOC, UNSCORED (scratchpad script, not committed):
+  Exact eps=0 climber, 1 enc + 1 dec change per child instead of 4+2:
+  (0,0) gap 0.000 3/3 vs 0.055-0.062 bundled. Width cells stop at k=1,m=2
+  under both operators; rent cells stay silent under both.
+  Reading: THREE traps -- operator bundling, width valley (k+1 costs
+  alpha*q before any new symbol pays), rent valley.
+
+--------------------------------------------------------------------------------
+6. CONTROLS
+--------------------------------------------------------------------------------
+D1  cheat (brain): LEAK -- slot 1 regenerates R from the shared seed and
+    sends nothing. Caught by the probe; excluded from the front.
+D1  cheat (channel): free_unaffordable, undercharge -- caught by
+    conservation + hash. Exercised in 13 of 30 cheat audits; silent genomes
+    exercise nothing (reported, not counted as detections).
+D1  positive: hand codes m=1..8 exact; honest Lua == numpy on 15 genomes
+    (10 seed-0 elites, 4 hand codes, leak).
+D1b cheat: skip_enc neighbourhood scanner MISSES a planted encoder defect
+    (hand m=8, register 96 sent silent); the full scanner finds enc[96]=3.
+D1b positive: planted decoder defect found by both scanners; clean m=8 not
+    improvable; alpha=1.5 gap 0 at all eps.
+Tests: 14 lane-D tests + 10 swarm tests pass (24/24) after each rebase.
+
+--------------------------------------------------------------------------------
+7. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+NONE. No other lane has re-run or attacked D1/D1b. All checks are
+self-administered. Integration-branch registry probes (atk013/014/015)
+passed at commit; they check ledger shape, not D's science.
+
+--------------------------------------------------------------------------------
+8. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- The world is memoryless with uniform R, so the optimum is closed-form.
+  The "Pareto front" is known a priori; D1 tests a learner and an
+  instrument, not discovery.
+- The Lua channel is used only in audit episodes. Learning and the probe
+  run in numpy. "Messages go through Streams" is true for audits only.
+- delta*error is collinear with yield. The anti-silence control reduces to
+  the ratio alpha/delta; no independent behavioural-error term.
+- beta = distinct symbols in the encoder table (rent/memory). It is NOT
+  decode computation, despite the charter's "decode" label.
+- All D conclusions about "silence" are about ONE local-search learner.
+  They are not about evolution or QD in general.
+- Bars were set without a dev draw: P2b died at 0.11 vs 0.10, and the D1b
+  eps grid was not eligibility-checked against measured barrier sizes.
+- The probe is blind near chance and against a partial leak (seed used some
+  of the time); no graded-leak cheat was run.
+- The conservation audit's sensitivity floor per cheat was not measured
+  (cf. lane B's B1s one-semantic floor).
+- D1's journal post-hoc explanation (rent barrier only) was wrong and was
+  corrected in D1b. The D1 receipt draft said "19 genomes"; it was fixed to
+  15 before filing.
+- D2 (consequential symbols by ablation) and D3 (query niche) NOT started.
+  The channel is not yet plugged into lane B's world (CHIMERA-0).
+
+--------------------------------------------------------------------------------
+9. SUGGESTIONS FOR ROUND 2
+--------------------------------------------------------------------------------
+STABILITY
+- Liveness by HEARTBEAT, not a one-off hello: SET pm:alive:<lane>:<tag>
+  EX 900 each iteration; the conductor alerts on expiry. The first A and D
+  deaths went unseen for hours.
+- Wrap each claude.exe launch in a script that logs start, exit code and
+  timestamp to hot data. The cause of both deaths is still UNKNOWN because
+  nothing records how a client exits.
+- Pre-create all lane worktrees BEFORE sessions start, or use sparse
+  checkout (primordial/ + roles/Nestor/). 43k files on an SMR F: took
+  minutes, broke under concurrency, and was mid-flight when D died.
+- Give every long git/IO command an explicit 600 s foreground timeout. The
+  dead D session's add passed 120 s, got backgrounded, and was orphaned.
+COMMS
+- bus.read acks on read and truncates bodies at 300 chars. A reviewer
+  consumed lane A's group; E missed a note addressed to it. Round 2:
+  non-acking read by default, a --full flag, and a structured "to" field.
+- Add kind=hypothesis with exp_id. bus.receipt should refuse a receipt
+  with no earlier hypothesis for that exp_id (pre-registration becomes
+  machine-checked, not a text convention).
+- bus.receipt should verify rec["git"] is an ancestor of the integration
+  tip (orphaned-SHA errors hit B and E; D followed the manual ritual).
+- Export claim/post/read at primordial.bus package level. D's first claim
+  call failed on the import path.
+INSTRUMENTATION / LOGGING
+- Every rows file gets a header row: harness SHA, versions, thread env,
+  host load, seeds, wall time. D rows carry host load only for the bench.
+- Route --quick output to hot data by default; D moved quick rows out of
+  the ledger by hand.
+- Record the barrier sizes (best neighbour delta) per elite as a standard
+  learner diagnostic, before interpreting any "trap".
+- Channel: return the delivered payload from the Lua call (1 RTT not 2);
+  pipeline for episodes.
+SCIENCE (lane D)
+- Replace the uniform memoryless world with one where the optimum needs DP
+  but is still exact: persistent R (send-on-change), non-uniform buckets
+  (entropy coding), a noisy channel. Keep the exact oracle; lose the
+  closed form.
+- Swap the single climber for E's MAP-Elites over codes (descriptor: bits,
+  entries). Test whether QD removes all three traps; pre-register which.
+- D1c as planned: a symbol-split move, with cells-it-should-fix listed
+  first and barrier sizes computed per elite (eligibility count before
+  freezing).
+- Graded leak cheat (seed used p in {.1,.5,1}) -> measure the probe's floor.
+- Cheat sensitivity floor for conservation (one-semantic cheats, B1s style).
+- Start D2 on the hand codes and QD elites: ablate each symbol, count
+  consequential ones vs episode noise, then transfer across the new worlds.
+- Plug LuaChannel into lane B's fused world with two slots for CHIMERA-0.
+SWARM PROCESS
+- Separate "kills of own hypothesis" from "bounty kills" on the board.
+  Scoring own KILLs rewards fragile pre-registrations.
+- Cap one record run per exp_id and carry dev-draw bars (C's bars died
+  3x; D's P2b died on an arbitrary 0.10).
+- Commit this packet and the operator prompts verbatim + sha256 under
+  roles/Nestor/prompts/ (standing rule) -- NOT DONE yet for lane D.
+
+--------------------------------------------------------------------------------
+10. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd F:/Prometheus-worktrees/nestor-gw-d
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  export PYTHONPATH=. PM_LANE=D OMP_NUM_THREADS=3 NUMBA_NUM_THREADS=3
+  # substrate (Git Bash):
+  MSYS_NO_PATHCONV=1 wsl.exe -e bash \
+    /mnt/f/Prometheus-worktrees/nestor-gw-d/primordial/ops/substrate.sh \
+    6393 gw-sub-d 2
+  $PY -m pytest -q primordial/tests primordial/lingua/tests   # 24 pass
+  $PY -m primordial.lingua.d1_run --quick    # ~10 s smoke
+  $PY -m primordial.lingua.d1_run            # record, ~80 s
+  $PY -m primordial.lingua.d1b_run           # needs D1 elites in hot data
+Spot checks (minutes):
+  - hand_code(8) exact cost == formula (test_hand_code_hits_the_formula)
+  - test_lua_equals_np_and_cheats_break_conservation
+  - summary row (kind=summary) at the end of each rows file
+Note: D1b reads D1-metered-channel.elites.json from PM_D_HOT; it is NOT
+committed (hot data only).
+
+--------------------------------------------------------------------------------
+11. VERDICT / DECISION
+--------------------------------------------------------------------------------
+  Lane D rebooted and producing ..................... YES
+  D1 instrument (channel, conservation, probe) ...... PASS
+  D1 learner reaches the exact optimum .............. NO (KILL)
+  D1b single-cause trap story ....................... NO (KILL)
+  Three-trap picture (bundling/width/rent) .......... POST HOC, UNSCORED
+  Independent verification .......................... NONE
+  Ready for CHIMERA-0 integration ................... channel only, untested
+                                                      in B's world
+
+Reviewer's bottom line: is the scramble-probe + conservation instrument
+sound enough to carry into a non-closed-form world, and is "three traps"
+worth pre-registering, or is it an artifact of one badly-chosen mutation
+operator?
+================================================================================
+END OF PACKET
+================================================================================

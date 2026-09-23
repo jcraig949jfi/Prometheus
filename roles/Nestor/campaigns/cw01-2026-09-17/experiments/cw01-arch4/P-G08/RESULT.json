@@ -1,0 +1,148 @@
+{
+ "perturbation_id": "P-G08",
+ "parent": "T-R01",
+ "table": {
+  "bernoulli": {
+   "n": 122,
+   "mean_loss": 0.4610655737704918,
+   "mean_dreward": -0.33075051229508196,
+   "length_slope": {
+    "slope": 0.03995366352887058,
+    "p05": -0.08291559067299367,
+    "p95": 0.08092441078568281,
+    "outside": false
+   },
+   "length_slope_dreward": {
+    "slope": 0.006998369796668971,
+    "p05": -0.07226452280839463,
+    "p95": 0.07745192733476737,
+    "outside": false
+   },
+   "set_effect": {
+    "effect": 0.010416666666666685,
+    "p05": -0.0954861111111111,
+    "p95": 0.09513888888888888,
+    "n_null": 20000,
+    "exact": false,
+    "above_p95": false,
+    "below_p05": false
+   }
+  },
+  "exact_count": {
+   "n": 122,
+   "mean_loss": 0.4918032786885246,
+   "mean_dreward": -0.36494620901639346,
+   "length_slope": {
+    "slope": -0.1071756634871311,
+    "p05": -0.09182372000435614,
+    "p95": 0.09257336838181657,
+    "outside": true
+   },
+   "length_slope_dreward": {
+    "slope": 0.09613449385535934,
+    "p05": -0.08298877198067146,
+    "p95": 0.08440344633815022,
+    "outside": true
+   },
+   "set_effect": {
+    "effect": -0.19010416666666663,
+    "p05": -0.10538194444444449,
+    "p95": 0.09583333333333333,
+    "n_null": 20000,
+    "exact": false,
+    "above_p95": false,
+    "below_p05": true
+   }
+  },
+  "contiguous": {
+   "n": 122,
+   "mean_loss": 0.38934426229508196,
+   "mean_dreward": -0.2858606557377049,
+   "length_slope": {
+    "slope": -0.14344454797602085,
+    "p05": -0.08544365064484266,
+    "p95": 0.07598444263513437,
+    "outside": true
+   },
+   "length_slope_dreward": {
+    "slope": 0.12813236409546722,
+    "p05": -0.06984100805041375,
+    "p95": 0.07547252440043158,
+    "outside": true
+   },
+   "set_effect": {
+    "effect": -0.17829861111111112,
+    "p05": -0.09357638888888886,
+    "p95": 0.08645833333333336,
+    "n_null": 20000,
+    "exact": false,
+    "above_p95": false,
+    "below_p05": true
+   }
+  },
+  "reached_only": {
+   "n": 122,
+   "mean_loss": 0.42213114754098363,
+   "mean_dreward": -0.29745133196721313,
+   "length_slope": {
+    "slope": 0.01564037690614265,
+    "p05": -0.08283938257889602,
+    "p95": 0.08363724237300592,
+    "outside": false
+   },
+   "length_slope_dreward": {
+    "slope": 0.011755094392856807,
+    "p05": -0.06647970934640707,
+    "p95": 0.06680625717383265,
+    "outside": false
+   },
+   "set_effect": {
+    "effect": -0.03211805555555558,
+    "p05": -0.08506944444444442,
+    "p95": 0.0949652777777778,
+    "n_null": 20000,
+    "exact": false,
+    "above_p95": false,
+    "below_p05": false
+   }
+  },
+  "disable": {
+   "n": 122,
+   "mean_loss": 0.4077868852459016,
+   "mean_dreward": -0.3026383196721312,
+   "length_slope": {
+    "slope": -0.032065461460988175,
+    "p05": -0.08617540087019832,
+    "p95": 0.08307549371022235,
+    "outside": false
+   },
+   "length_slope_dreward": {
+    "slope": 0.03892894345321051,
+    "p05": -0.07315232533699105,
+    "p95": 0.07194344391071125,
+    "outside": false
+   },
+   "set_effect": {
+    "effect": -0.09739583333333335,
+    "p05": -0.09739583333333335,
+    "p95": 0.09322916666666664,
+    "n_null": 20000,
+    "exact": false,
+    "above_p95": false,
+    "below_p05": false
+   }
+  }
+ },
+ "ruler_dependent_vs_bernoulli": [
+  "exact_count",
+  "reached_only",
+  "disable"
+ ],
+ "contiguous_differs_from_bernoulli": true,
+ "reading": "RULER_DEPENDENT",
+ "n_programs": 122,
+ "material": true,
+ "elapsed_s": 11.8,
+ "prereg_sha256": "420d71808104adf837d54c387c89e501b86517a66c02f67d62868c95cc266773",
+ "ts": "2026-09-19 03:18:43"
+}

@@ -1,0 +1,34 @@
+{
+ "perturbation_id": "P-I04",
+ "parent": "T-X20",
+ "co_parents": [
+  "T-X17",
+  "T-X21"
+ ],
+ "deformation": "X",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "recombination-under-selection",
+ "init": "8 representatives of each of start-anchored, periodic, ask-time, schedule, immune (40), cycled to 96",
+ "arms": {
+  "splice": "grammar 'splice' with a tournament mate at rate .3",
+  "mutation": "mutation only"
+ },
+ "worlds": [
+  "B",
+  "C"
+ ],
+ "seeds": [
+  1,
+  2
+ ],
+ "G": 100,
+ "archive": "every 5 generations the top-8 curves; NEW = > .3 from every P-F02 centroid and from every donor vector; genome, generation, train reward kept; NEW with held-out reward >= threshold followed (cue causality; state corruption in C)",
+ "readouts": "held-out reward, crossing, top shapes, NEW counts per arm; followed surfaces",
+ "material_rule": "any followed NEW surface, or the splice arm crosses where mutation does not (or vice versa)",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:25:54",
+ "prereg_sha256": "7d96f7c628ab2d8d53d6a05ea0f73a4b3d1fbf8f9fb74ae27f514d22eec8146f"
+}

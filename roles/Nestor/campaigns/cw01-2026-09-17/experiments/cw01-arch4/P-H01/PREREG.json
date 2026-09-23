@@ -1,0 +1,36 @@
+{
+ "perturbation_id": "P-H01",
+ "parent": "T-X17",
+ "deformation": "B",
+ "requires": [
+  "P-G11"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "transplant-map",
+ "representatives": {
+  "start_anchored": 8,
+  "periodic": 8,
+  "ask_time": 8,
+  "schedule": 8
+ },
+ "worlds": [
+  "W0",
+  "W2_K2",
+  "W1_d4"
+ ],
+ "conditions": {
+  "immediate": "curve + rewards on 3 worlds",
+  "neutral": "C4-05 band walk in the world, depth 16, archived 4/8/16",
+  "selection": "20 generations from the representative (N 96 copies), top-16 curves; 4 representatives per shape"
+ },
+ "native": "each world's native geometry = top-16 of a 20-generation plain selection from the init walkers",
+ "distances": "L1 over the 30-key curve set to the representative's own depth-0 curve and to the world-native centroid",
+ "readouts": "per shape x world x condition: mean distance to origin and to native; reward on the three worlds; named from the curves only",
+ "material_rule": "always material: the map is the result",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:05:22",
+ "prereg_sha256": "319c210887ab05f962fca0b6bec280c3e9f81f3de68bf8172dcc531f60879aa1"
+}

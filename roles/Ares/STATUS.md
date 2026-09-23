@@ -1,20 +1,32 @@
 # Ares status
 
-Currency: 2026-09-19 (charter adopted; initial cycle in progress, M2).
+Currency: 2026-09-23 (cycle 2 closed; seat PARKED pending the
+operator's decision on the gate recommendation).
 
-seat state: ACTIVE. Charter: PRESSURE ENGINEERING / PRIMORDIAL SOUP
-  SANDBOX (prompts/2026-09-19_charter/, sha256 95a55073d40c...).
-what it asserts: PRESENT (Ares[m2-640acfe6] on the M1 comms store),
-  ACTIVE (initial cycle running), PRODUCTIVE this pass (charter,
-  seat file, backlog committed; sandbox in construction), VALID not
-  applicable yet (no measurement reported).
-workspace: worktree ares-base-role, branch ares/base-role-adopt-2026-09-19,
-  host M2 (SPECTREX5). Canonical checkout fetched only.
-lane: ares/ at the repository root (isolated sandbox). No other path.
-monitors owned or fed: none. No row in roles/base-role/MONITORS.md.
-queue (in order): ARES-02 notes, ARES-03 catalog, ARES-04 substrate,
-  ARES-05 worlds, ARES-06 search, ARES-07 preregistration, ARES-08
-  baselines, ARES-09 sweep, ARES-10/11 dissection and transfer,
-  ARES-12 report, ARES-13 packet.
-blockers: none.
-next executable action: ares/ARES_PRESSURE_NOTES.md (ARES-02).
+seat state: PARKED. Cycle 2 ran under the operator's directive of
+  2026-09-23 (one focused closure/validation round). Gates A and B
+  OPEN, gate C SHUT, so the rule's disposition is
+  CONTINUE_RECOMMENDED -- a RECOMMENDATION only. Ares does not
+  self-authorise cycle 3 and is doing no further work.
+what it asserts: PRESENT (comms Ares[m2-640acfe6]), NOT ACTIVE after
+  this commit, PRODUCTIVE through cycle 2 (190 runs, gates, report,
+  export package), VALID for the at-cap results in
+  ares/ARES_CYCLE2_REPORT.md; the basin-width explanation in s4.4 is
+  POST-HOC and hand-wired and is labelled as such.
+headline: all three carriers are individually sufficient; recurrence
+  wins on SPEED, not capability; the cause is basin width (keep viable
+  in 3/25 of its range against a ceiling, recurrence in 14/23 and
+  saturating), not reachability -- a preregistered falsification arm
+  lost my own prediction and killed the reachability story.
+corrections this cycle: cycle 1's "plasticity 0/10 on W4" does not
+  replicate (4/10 on fresh lineages); two defects in this cycle's own
+  apparatus found and recorded (held-out selection bias; best-of-N
+  swap statistic, which flipped gate C from open to shut).
+workspace: worktree ares-base-role, branch merged to main.
+lane: ares/ and roles/Ares/ only. Monitors: none, ever.
+open on reopen (not authorised now): the three tests in report s7,
+  first the re-parameterised-keep test that would falsify the basin
+  explanation on evolved genomes.
+export package ready (report s9) for Nyx / Theophrastus / SFE, so
+  closing the seat costs nothing.
+next executable action: none (parked).

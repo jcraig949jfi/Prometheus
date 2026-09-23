@@ -1,0 +1,435 @@
+{
+ "perturbation_id": "P-I03",
+ "parent": "T-X17",
+ "reading": [
+  "UNRESOLVED"
+ ],
+ "families": {
+  "prefix_to_host": {
+   "competence": 0.0,
+   "geometry": 0.125
+  },
+  "prefix_jmp0_host": {
+   "competence": 0.0,
+   "geometry": 0.13437500000000002
+  },
+  "prefix_jmpmid_host": {
+   "competence": 0.0,
+   "geometry": 0.171875
+  },
+  "host_prefix_donor_body": {
+   "competence": 0.009375,
+   "geometry": 0.25
+  },
+  "truncation": {
+   "competence": 0.01875,
+   "geometry": 0.34375
+  },
+  "relocated": {
+   "competence": 0.06875,
+   "geometry": 0.40625
+  },
+  "jump_entry": {
+   "competence": 0.0625,
+   "geometry": 0.3125
+  }
+ },
+ "table": {
+  "ask_time|prefix_to_host|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.15625,
+   "d_donor": 0.4295833333333333
+  },
+  "ask_time|prefix_to_host|k2": {
+   "n": 40,
+   "geometry": 0.15,
+   "competence": 0.0,
+   "reward_donor_world": 0.0546875,
+   "d_donor": 0.38395833333333335
+  },
+  "ask_time|prefix_to_host|k4": {
+   "n": 40,
+   "geometry": 0.275,
+   "competence": 0.0,
+   "reward_donor_world": 0.0515625,
+   "d_donor": 0.34843750000000007
+  },
+  "ask_time|prefix_to_host|k8": {
+   "n": 40,
+   "geometry": 0.425,
+   "competence": 0.0,
+   "reward_donor_world": 0.1203125,
+   "d_donor": 0.33166666666666667
+  },
+  "ask_time|prefix_jmp0_host|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.14375,
+   "d_donor": 0.42333333333333334
+  },
+  "ask_time|prefix_jmp0_host|k2": {
+   "n": 40,
+   "geometry": 0.15,
+   "competence": 0.0,
+   "reward_donor_world": 0.05,
+   "d_donor": 0.38468749999999996
+  },
+  "ask_time|prefix_jmp0_host|k4": {
+   "n": 40,
+   "geometry": 0.275,
+   "competence": 0.0,
+   "reward_donor_world": 0.05625,
+   "d_donor": 0.3436458333333333
+  },
+  "ask_time|prefix_jmp0_host|k8": {
+   "n": 40,
+   "geometry": 0.45,
+   "competence": 0.0,
+   "reward_donor_world": 0.1171875,
+   "d_donor": 0.3278125
+  },
+  "ask_time|prefix_jmpmid_host|k1": {
+   "n": 40,
+   "geometry": 0.1,
+   "competence": 0.0,
+   "reward_donor_world": 0.05,
+   "d_donor": NaN
+  },
+  "ask_time|prefix_jmpmid_host|k2": {
+   "n": 40,
+   "geometry": 0.4,
+   "competence": 0.0,
+   "reward_donor_world": 0.05625,
+   "d_donor": 0.31817708333333333
+  },
+  "ask_time|prefix_jmpmid_host|k4": {
+   "n": 40,
+   "geometry": 0.45,
+   "competence": 0.0,
+   "reward_donor_world": 0.053125,
+   "d_donor": 0.30250000000000005
+  },
+  "ask_time|prefix_jmpmid_host|k8": {
+   "n": 40,
+   "geometry": 0.4,
+   "competence": 0.0,
+   "reward_donor_world": 0.1265625,
+   "d_donor": NaN
+  },
+  "ask_time|host_prefix_donor_body|k1": {
+   "n": 40,
+   "geometry": 0.275,
+   "competence": 0.0,
+   "reward_donor_world": 0.165625,
+   "d_donor": NaN
+  },
+  "ask_time|host_prefix_donor_body|k2": {
+   "n": 40,
+   "geometry": 0.275,
+   "competence": 0.0,
+   "reward_donor_world": 0.0484375,
+   "d_donor": NaN
+  },
+  "ask_time|host_prefix_donor_body|k4": {
+   "n": 40,
+   "geometry": 0.225,
+   "competence": 0.0,
+   "reward_donor_world": 0.0359375,
+   "d_donor": NaN
+  },
+  "ask_time|host_prefix_donor_body|k8": {
+   "n": 40,
+   "geometry": 0.3,
+   "competence": 0.0,
+   "reward_donor_world": 0.2625,
+   "d_donor": 0.3249479166666667
+  },
+  "ask_time|truncation|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0625,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|truncation|k2": {
+   "n": 40,
+   "geometry": 0.75,
+   "competence": 0.0,
+   "reward_donor_world": 0.015625,
+   "d_donor": 0.22604166666666664
+  },
+  "ask_time|truncation|k4": {
+   "n": 40,
+   "geometry": 1.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": 0.15208333333333332
+  },
+  "ask_time|truncation|k8": {
+   "n": 40,
+   "geometry": 1.0,
+   "competence": 0.15,
+   "reward_donor_world": 0.75,
+   "d_donor": 0.03802083333333332
+  },
+  "ask_time|relocated|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.125,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|relocated|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.078125,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|relocated|k4": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0625,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|relocated|k8": {
+   "n": 40,
+   "geometry": 0.75,
+   "competence": 0.15,
+   "reward_donor_world": 0.765625,
+   "d_donor": 0.11197916666666667
+  },
+  "ask_time|jump_entry|k1": {
+   "n": 40,
+   "geometry": 1.0,
+   "competence": 0.2,
+   "reward_donor_world": 1.0,
+   "d_donor": 0.0
+  },
+  "ask_time|jump_entry|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0625,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|jump_entry|k4": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0625,
+   "d_donor": 0.4479166666666667
+  },
+  "ask_time|jump_entry|k8": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0625,
+   "d_donor": 0.4479166666666667
+  },
+  "start_anchored|prefix_to_host|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.15,
+   "d_donor": 0.19635416666666666
+  },
+  "start_anchored|prefix_to_host|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.175,
+   "d_donor": 0.18760416666666666
+  },
+  "start_anchored|prefix_to_host|k4": {
+   "n": 40,
+   "geometry": 0.025,
+   "competence": 0.0,
+   "reward_donor_world": 0.009375,
+   "d_donor": 0.13807291666666668
+  },
+  "start_anchored|prefix_to_host|k8": {
+   "n": 40,
+   "geometry": 0.125,
+   "competence": 0.0,
+   "reward_donor_world": 0.028125,
+   "d_donor": 0.16067708333333333
+  },
+  "start_anchored|prefix_jmp0_host|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.15,
+   "d_donor": 0.18927083333333333
+  },
+  "start_anchored|prefix_jmp0_host|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.184375,
+   "d_donor": 0.19385416666666666
+  },
+  "start_anchored|prefix_jmp0_host|k4": {
+   "n": 40,
+   "geometry": 0.025,
+   "competence": 0.0,
+   "reward_donor_world": 0.009375,
+   "d_donor": 0.13630208333333332
+  },
+  "start_anchored|prefix_jmp0_host|k8": {
+   "n": 40,
+   "geometry": 0.175,
+   "competence": 0.0,
+   "reward_donor_world": 0.025,
+   "d_donor": 0.1928125
+  },
+  "start_anchored|prefix_jmpmid_host|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|prefix_jmpmid_host|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|prefix_jmpmid_host|k4": {
+   "n": 40,
+   "geometry": 0.025,
+   "competence": 0.0,
+   "reward_donor_world": 0.01875,
+   "d_donor": NaN
+  },
+  "start_anchored|prefix_jmpmid_host|k8": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.03125,
+   "d_donor": 0.1384375
+  },
+  "start_anchored|host_prefix_donor_body|k1": {
+   "n": 40,
+   "geometry": 0.5,
+   "competence": 0.075,
+   "reward_donor_world": 0.425,
+   "d_donor": NaN
+  },
+  "start_anchored|host_prefix_donor_body|k2": {
+   "n": 40,
+   "geometry": 0.225,
+   "competence": 0.0,
+   "reward_donor_world": 0.15,
+   "d_donor": NaN
+  },
+  "start_anchored|host_prefix_donor_body|k4": {
+   "n": 40,
+   "geometry": 0.075,
+   "competence": 0.0,
+   "reward_donor_world": 0.08125,
+   "d_donor": NaN
+  },
+  "start_anchored|host_prefix_donor_body|k8": {
+   "n": 40,
+   "geometry": 0.125,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": 0.22186631944444443
+  },
+  "start_anchored|truncation|k1": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|truncation|k2": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|truncation|k4": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|truncation|k8": {
+   "n": 40,
+   "geometry": 0.0,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": 0.125
+  },
+  "start_anchored|relocated|k1": {
+   "n": 40,
+   "geometry": 0.75,
+   "competence": 0.15,
+   "reward_donor_world": 0.75,
+   "d_donor": 0.03125
+  },
+  "start_anchored|relocated|k2": {
+   "n": 40,
+   "geometry": 0.5,
+   "competence": 0.1,
+   "reward_donor_world": 0.5,
+   "d_donor": NaN
+  },
+  "start_anchored|relocated|k4": {
+   "n": 40,
+   "geometry": 0.75,
+   "competence": 0.15,
+   "reward_donor_world": 0.75,
+   "d_donor": NaN
+  },
+  "start_anchored|relocated|k8": {
+   "n": 40,
+   "geometry": 0.5,
+   "competence": 0.0,
+   "reward_donor_world": 0.0,
+   "d_donor": NaN
+  },
+  "start_anchored|jump_entry|k1": {
+   "n": 40,
+   "geometry": 0.5,
+   "competence": 0.1,
+   "reward_donor_world": 0.5,
+   "d_donor": 0.0625
+  },
+  "start_anchored|jump_entry|k2": {
+   "n": 40,
+   "geometry": 0.25,
+   "competence": 0.05,
+   "reward_donor_world": 0.25,
+   "d_donor": 0.4578125
+  },
+  "start_anchored|jump_entry|k4": {
+   "n": 40,
+   "geometry": 0.25,
+   "competence": 0.05,
+   "reward_donor_world": 0.25,
+   "d_donor": 0.4578125
+  },
+  "start_anchored|jump_entry|k8": {
+   "n": 40,
+   "geometry": 0.5,
+   "competence": 0.1,
+   "reward_donor_world": 0.5,
+   "d_donor": 0.0625
+  }
+ },
+ "material": false,
+ "elapsed_s": 32.3,
+ "prereg_sha256": "114839ad6123676ba3793863c8ce26b1cca5228ca3ef29b55070b10a6c3f05cc",
+ "ts": "2026-09-19 07:20:43"
+}

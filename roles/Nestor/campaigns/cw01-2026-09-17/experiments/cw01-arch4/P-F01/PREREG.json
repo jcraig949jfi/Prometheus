@@ -1,0 +1,61 @@
+{
+ "perturbation_id": "P-F01",
+ "parent": "T-X15",
+ "deformation": "A",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "causal-separation",
+ "manipulations": {
+  "pad": "append NOP instructions to double length (identity CHECKED on the base episodes)",
+  "duplicate": "append a copy of the genome",
+  "persist_none": "persist policy := none (measured against its own baseline)"
+ },
+ "damage_cells": [
+  [
+   "delete",
+   "k",
+   4,
+   1
+  ],
+  [
+   "delete",
+   "f",
+   0.15,
+   1
+  ],
+  [
+   "operand",
+   "k",
+   4,
+   1
+  ],
+  [
+   "operand",
+   "f",
+   0.15,
+   1
+  ]
+ ],
+ "draws": 4,
+ "programs": "viable parents, walker-16, C4-08 tops",
+ "predictions": {
+  "DILUTION": "pad and duplicate lower fixed-k loss; neither changes fraction-matched loss",
+  "REDUNDANCY": "duplicate lowers fraction-matched loss; pad does not",
+  "CARRIED_STATE": "persist_none raises loss at fixed length; pad and duplicate move nothing",
+  "BROKEN": "a pattern outside these three (e.g. pad changes fraction-matched loss; persist_none lowers loss)"
+ },
+ "contrasts": "paired sign-flips per manipulation vs original, per cell, on programs where the manipulation is feasible (and, for pad, identity-preserving)",
+ "census": "orig-rule walks depth 64 (2 walkers x viable parents) archived 16/32/64: loss (k4, f.15) regressed on log length AND persistent words",
+ "material_rule": "any paired contrast outside its band, or the census regression assigns the depth effect to one covariate with the other inside its band",
+ "continuation": [
+  "pad at random positions",
+  "duplicate half",
+  "persist regs/tape/all as a dose",
+  "jump-topology census"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 02:35:48",
+ "prereg_sha256": "1bc74cdf99ea3cfbff4c782a72b1f1ce05145e5f17704b294a2993040a9a4cb9"
+}

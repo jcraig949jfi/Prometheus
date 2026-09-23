@@ -1,0 +1,21 @@
+{
+ "perturbation_id": "P-D08",
+ "parent": "T-X05",
+ "scope": "Computational artificial-life research: tensor-train policies evolved in a bounded encounter world; no biological content.",
+ "claim_type": "fossil-ablation",
+ "fossils": "cw01-e08/fossils/representatives.json (256)",
+ "arms": [
+  "ranks",
+  "masks",
+  "both"
+ ],
+ "ablations": {
+  "ranks": "rank profile re-drawn as a random composition of the same total bond width; cores re-drawn at init",
+  "masks": "read mask re-drawn at the same bit count",
+  "both": "both"
+ },
+ "readout": "held64 (tax-free held-out) of the original vs each ablation, per e08 arm; share above the competence floor 166.47",
+ "material_rule": "material if any ablation keeps >= half the original's excess over the floor on average in any e08 arm",
+ "written": "2026-09-19 08:45:57",
+ "prereg_sha256": "412ee61b5c0ab5e8d6699f78129c70ec2cc75a38b1f3f17dad37b2d8bb85367e"
+}

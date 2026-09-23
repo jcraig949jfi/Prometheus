@@ -1,0 +1,28 @@
+{
+ "perturbation_id": "P-J05",
+ "parent": "T-X21",
+ "requires": [
+  "P-J01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "genealogy",
+ "source": "P-J01 genealogy_*.json.gz (every generation, pid / op / fit)",
+ "crossing": "first generation whose best-by-training individual scores >= threshold on the 4 held-out sets",
+ "window": "10 generations before, 5 after",
+ "routes": [
+  "ONE_BENEFICIAL_MUTATION",
+  "NEUTRAL_OR_PARTIAL_PRECURSOR_THEN_BENEFICIAL",
+  "RECOMBINATION (n/a: mutation-only births)",
+  "DELETERIOUS_INTERMEDIATE_RESCUED",
+  "OTHER",
+  "NOT_APPLICABLE(no crossing)"
+ ],
+ "no_crossing_readouts": "lineage of the final best: operators, generations changed, held-out along the lineage, MRCA generation of the final population",
+ "material_rule": "material if any run crossed; otherwise descriptive",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:34:15",
+ "prereg_sha256": "62fbcdf8e89b6609722da161a7d88d20bc90657008b9a6cdc2bacb2dae2a6b30"
+}

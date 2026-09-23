@@ -1,0 +1,231 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e02",
+ "n_replicates": 4,
+ "replicates": [
+  {
+   "attempt_id": "cw01-e02-a01",
+   "n_gains": 1,
+   "gains": [
+    {
+     "gen": 5,
+     "lift_pct": 44.19578741541022,
+     "sd_separation": 1.357690012909697
+    }
+   ],
+   "ancestor_mean": 0.121796613089656,
+   "final_mean": 0.36602626592954324,
+   "ancestor_relative_pct": 200.5225323138557,
+   "final_ordered": 134.890625,
+   "final_genes": {
+    "p_norm": 0.9474049999782868,
+    "p_factor": 0.9408464752043432,
+    "factor_threshold": 0.8162600084431255,
+    "p_bind": 0.33789105950774734,
+    "cells_frac": 0.06273909139701689,
+    "persist_steps": 31.925836745744654,
+    "reduce_eagerness": 0.956450684614231,
+    "neutral_a": 0.522465584236287,
+    "neutral_b": 0.6877644296245349
+   },
+   "gains_above_ordering_bar": 1,
+   "temporal_ordering": false,
+   "ratchet": false,
+   "why": "only 1 gain(s) cleared the ordering bar (20.0%); condition 1 (temporal ordering) not met"
+  },
+  {
+   "attempt_id": "cw01-e02-r02",
+   "n_gains": 0,
+   "gains": [],
+   "ancestor_mean": 0.12593530481832313,
+   "final_mean": 0.3645597452433962,
+   "ancestor_relative_pct": 189.48176666528707,
+   "final_ordered": 135.09375,
+   "final_genes": {
+    "p_norm": 0.9422934633031179,
+    "p_factor": 0.9506142875910907,
+    "factor_threshold": 0.8200439786135005,
+    "p_bind": 0.10809739341840807,
+    "cells_frac": 0.038918057628491556,
+    "persist_steps": 6.596176564100834,
+    "reduce_eagerness": 0.9473384917356247,
+    "neutral_a": 0.5528386541838793,
+    "neutral_b": 0.2739806080633593
+   },
+   "gains_above_ordering_bar": 0,
+   "temporal_ordering": false,
+   "ratchet": false,
+   "why": "only 0 gain(s) cleared the ordering bar (20.0%); condition 1 (temporal ordering) not met"
+  },
+  {
+   "attempt_id": "cw01-e02-r03",
+   "n_gains": 0,
+   "gains": [],
+   "ancestor_mean": 0.13743387955331915,
+   "final_mean": 0.3606559368296628,
+   "ancestor_relative_pct": 162.4214189411294,
+   "final_ordered": 130.796875,
+   "final_genes": {
+    "p_norm": 0.9450535374195259,
+    "p_factor": 0.9246348667830182,
+    "factor_threshold": 0.7412686731084481,
+    "p_bind": 0.12844772277285796,
+    "cells_frac": 0.04090247844114363,
+    "persist_steps": 35.07354318406203,
+    "reduce_eagerness": 0.9566193799963486,
+    "neutral_a": 0.5974838617557512,
+    "neutral_b": 0.48901930563474466
+   },
+   "gains_above_ordering_bar": 0,
+   "temporal_ordering": false,
+   "ratchet": false,
+   "why": "only 0 gain(s) cleared the ordering bar (20.0%); condition 1 (temporal ordering) not met"
+  },
+  {
+   "attempt_id": "cw01-e02-r04",
+   "n_gains": 0,
+   "gains": [],
+   "ancestor_mean": 0.1432227384492502,
+   "final_mean": 0.34958259486349563,
+   "ancestor_relative_pct": 144.0831662965077,
+   "final_ordered": 134.53125,
+   "final_genes": {
+    "p_norm": 0.9395093228558604,
+    "p_factor": 0.9428645865660282,
+    "factor_threshold": 0.6620954278602198,
+    "p_bind": 0.27527745402148457,
+    "cells_frac": 0.09163620978551876,
+    "persist_steps": 24.6438988474526,
+    "reduce_eagerness": 0.9265470508271428,
+    "neutral_a": 0.46313960354246947,
+    "neutral_b": 0.4766869771275716
+   },
+   "gains_above_ordering_bar": 0,
+   "temporal_ordering": false,
+   "ratchet": false,
+   "why": "only 0 gain(s) cleared the ordering bar (20.0%); condition 1 (temporal ordering) not met"
+  }
+ ],
+ "summary": {
+  "ratchet": "0/4",
+  "beats_ancestor": "4/4",
+  "mechanism_in_use": "4/4",
+  "ancestor_relative_pct_mean": 174.12722105419493,
+  "gains_mean": 0.25
+ },
+ "backend_counterfactual": {
+  "equivalent": true,
+  "detail": "identical metric vectors 6/6"
+ },
+ "disposition": "NULL",
+ "disposition_reason": "NULL for the ratchet hypothesis, on DIRECT gene-ordering evidence rather than the broken score detector. Condition 1 (temporal ordering) fails: p_norm never precedes p_factor in any replicate (0/4 foundation-first; 2/4 simultaneous at gen 3; 2/4 with p_factor FIRST). Gains accumulate and evolution works enormously well (+174% ancestor-relative, mechanism 26.3 -> 134.9 ordered transformations per episode), but they are not ORDERED, so no later machinery rests on an earlier foundation. Per PREREGISTRATION.md, NULL is a real outcome reported with equal weight.",
+ "interpretive_limits": [
+  "The ordering is an ENHANCEMENT (+22.66% at QUALIFY), not a PRECONDITION: T2 alone already scores +38.11% over nothing. Any ratchet here means the later gain is worth MORE on the foundation, not that it is impossible without it.",
+  "Detection floor 12.3% lift. A NULL means 'no ratchet above the floor', never 'no ratchet'.",
+  "9-gene policy vector, not a rich program."
+ ],
+ "wall_s": 29.2,
+ "disposition_reason_as_computed": "gains occur but are ADDITIVE: reverting the earlier gain costs no more than that gain was worth, so no later machinery rests on it",
+ "what_actually_happened": {
+  "evolution_worked": "ancestor-relative +174% mean (+144% to +200%), 4/4 replicates; mechanism firing hard (ordered 26.3 -> 134.9 per episode)",
+  "genes_moved": "p_norm 0.495->0.947, p_factor 0.452->0.941, factor_threshold 0.524->0.816, reduce_eagerness 0.421->0.956",
+  "trajectory_shape": "ALL improvement occurs in generations 0-9 (+203.2% within that decade); the next 70 generations move by -1.6% to +3.0%. The population converges almost immediately.",
+  "why_no_gains_detected": "detect_gains starts at g=baseline_window=5, so any step in generations 0-4 is STRUCTURALLY INVISIBLE; the gen-5 baseline is itself drawn from the steep rise; and the de-duplication rule collapses adjacent windows.",
+  "unresolved_ambiguity": "Cannot currently distinguish 'the gains are SIMULTANEOUS' (an honest NULL for a ratchet, since condition 1 requires ordering) from 'sequential but unresolvable by this detector'. That ambiguity is the blocker."
+ },
+ "conductor_retraction": "I previously claimed the climb was a SMOOTH RAMP that a step detector could not see. That was wrong and the measurement refuted it: steps exist and are large (max 44.20%, p99 29.97%, 2 windows above the 20% bar). I asserted a plausible mechanism without measuring it.",
+ "disposition_settled_local": "2026-09-17 17:49:51",
+ "evidence_for_null": {
+  "method": "gene fixation times (generation at which each gene reaches 75% of start->end travel), measured per replicate. Bypasses detect_gains entirely, so CW01-D025 cannot explain it away.",
+  "p_norm_vs_p_factor": [
+   {
+    "rep": 1,
+    "p_norm": 5,
+    "p_factor": 3
+   },
+   {
+    "rep": 2,
+    "p_norm": 5,
+    "p_factor": 2
+   },
+   {
+    "rep": 3,
+    "p_norm": 3,
+    "p_factor": 3
+   },
+   {
+    "rep": 4,
+    "p_norm": 3,
+    "p_factor": 3
+   }
+  ],
+  "foundation_first": "0/4"
+ },
+ "caveats_on_the_null": [
+  "NEUTRAL HITCHHIKING: the neutral control genes are not flat in trajectories (neutral_a +0.111 mean, neutral_b -0.082) because elites are copied wholesale and drag neutral genes along. Q6 still holds (they have no PHENOTYPE), but their drift bounds how finely gene-ordering can be read.",
+  "DESIGN: the population converges in under 10 generations (+203.2% within gens 0-9, then -1.6% to +3.0% for 70 generations). A ratchet requires time-separated discoveries; this world yields everything at once. That is the finding that most constrains e02.",
+  "The detection floor and the ordering bar remain: a ratchet below 12.3% lift would be invisible regardless.",
+  "RESOLUTION (updated): largely discharged by the selection-strength probe -- at the weakest setting the p_factor/p_norm gap is 12-13 generations, an order of magnitude beyond the original ~1-2 generation ambiguity. Neutral drift remains substantial (up to -0.399) and is reported alongside.",
+  "DESIGN CONSEQUENCE: to test a ratchet, the foundation must be USELESS alone AND REQUIRED for the later gain. Here it is merely cheaper-together. A future design must make T2 impossible (not just expensive) without T1 -- that is a change to the ECONOMICS and belongs in a new pre-registration, not an amendment to this one."
+ ],
+ "what_this_does_NOT_show": "It does not show that ratchets cannot form under this pressure class. It shows that in THIS world, at this selection strength, the two gains are not separated in time. The economics do support the conditional shape (QUALIFY Q8: foundation alone -20.54%, foundation+factoring +22.66% over factoring alone) -- the ordering simply never had room to occur.",
+ "selection_strength_probe": {
+  "why": "e02's NULL rested on gene-ordering measured at ~1-2 generation resolution while convergence completed by gen 3-5 (CW01-D028). If weaker selection spread discovery out AND produced foundation-first ordering, the NULL would be an observability artifact. It does not.",
+  "method": "population dynamics varied ONLY (elite_fraction, mutation_sigma). Prices, affordances, gates and all economics identical to the pre-registered world.",
+  "runs": [
+   {
+    "elite_fraction": 0.25,
+    "sigma": 0.12,
+    "p_norm": 6,
+    "p_factor": 4,
+    "order": "p_factor first"
+   },
+   {
+    "elite_fraction": 0.25,
+    "sigma": 0.12,
+    "p_norm": 5,
+    "p_factor": 3,
+    "order": "p_factor first"
+   },
+   {
+    "elite_fraction": 0.5,
+    "sigma": 0.05,
+    "p_norm": 10,
+    "p_factor": 9,
+    "order": "p_factor first"
+   },
+   {
+    "elite_fraction": 0.5,
+    "sigma": 0.05,
+    "p_norm": 8,
+    "p_factor": 7,
+    "order": "p_factor first"
+   },
+   {
+    "elite_fraction": 0.75,
+    "sigma": 0.02,
+    "p_norm": 31,
+    "p_factor": 18,
+    "order": "p_factor first"
+   },
+   {
+    "elite_fraction": 0.75,
+    "sigma": 0.02,
+    "p_norm": 20,
+    "p_factor": 8,
+    "order": "p_factor first"
+   }
+  ],
+  "result": "p_factor FIRST in 6/6 runs across three selection strengths. Separation grew from ~2 generations at baseline to 12-13 generations at the weakest setting, so resolution is no longer limiting. Total improvement stayed comparable (132.8%-183.6%), so weakening selection bought observability without changing the outcome.",
+  "consequence": "The resolution caveat is largely DISCHARGED. 'No evidence of ordering at this resolution' upgrades to 'ordering is absent across three selection strengths'. The NULL is a property of the WORLD, not of observability.",
+  "neutral_drift_alongside": [
+   -0.313,
+   0.029,
+   -0.237,
+   -0.251,
+   -0.224,
+   -0.399
+  ]
+ },
+ "mechanism_of_the_null": "T2 is already profitable WITHOUT T1: QUALIFY Q8 measured UNORD at +38.11% over NONE. Selection therefore acquires the directly-rewarding gene first and picks up the foundation afterwards as an optimisation. A ratchet requires the foundation to be a PRECONDITION; in this world it is an ENHANCEMENT (+22.66%). This was fixed in writing as an interpretive limit BEFORE execute ran, and it predicted the outcome."
+}

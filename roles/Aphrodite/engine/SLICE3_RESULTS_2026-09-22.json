@@ -1,0 +1,1256 @@
+{
+  "DIRECT_COMPETENCE_REUSE": "NO",
+  "arms": {
+    "CLOSED": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/1",
+      "M3_median_tribunal_extrapolation": 0.0,
+      "M4_median_stress_200": 0.0,
+      "M5_median_artifact_bytes": 1570,
+      "recipients": 1
+    },
+    "ORGAN": {
+      "M1_charges_all": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "M1_median_charges_to_qualified": 12.0,
+      "M2_qualified_fraction": "16/16",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578.0,
+      "recipients": 16
+    },
+    "POSITIVE": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "1/1",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578,
+      "recipients": 1
+    },
+    "SCRATCH_A": {
+      "M1_charges_all": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "M1_median_charges_to_qualified": 12.0,
+      "M2_qualified_fraction": "16/16",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578.0,
+      "recipients": 16
+    },
+    "SCRATCH_B": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/16",
+      "M3_median_tribunal_extrapolation": 0.615,
+      "M4_median_stress_200": 0.55,
+      "M5_median_artifact_bytes": 1393.0,
+      "recipients": 16
+    },
+    "SHAM": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/16",
+      "M3_median_tribunal_extrapolation": 0.615,
+      "M4_median_stress_200": 0.55,
+      "M5_median_artifact_bytes": 1799.0,
+      "recipients": 16
+    }
+  },
+  "detail": {
+    "CLOSED": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/1",
+      "M3_median_tribunal_extrapolation": 0.0,
+      "M4_median_stress_200": 0.0,
+      "M5_median_artifact_bytes": 1570,
+      "recipients": 1,
+      "rows": [
+        {
+          "artifact_bytes": 1570,
+          "artifact_sha256": "7df4fc4d73181f56cf71d92403488b03f8eaa1b5a6ac2fec3b2b09cb95ecc285",
+          "charges_to_solution": 0,
+          "disposition": "solution found but tribunal-rejected: extrap=0.000 ce=0.000 meta=False",
+          "escrow_spent": 0,
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 0.12,
+          "tribunal": {
+            "counterexample_accuracy": 0.0,
+            "held_out_extrapolation": 0.0,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.0
+          }
+        }
+      ]
+    },
+    "ORGAN": {
+      "M1_charges_all": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "M1_median_charges_to_qualified": 12.0,
+      "M2_qualified_fraction": "16/16",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578.0,
+      "recipients": 16,
+      "rows": [
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 0,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 1,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 2,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 3,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 4,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 5,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 6,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 7,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 8,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 9,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 10,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 11,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 12,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 13,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 14,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 15,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ]
+    },
+    "POSITIVE": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "1/1",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578,
+      "recipients": 1,
+      "rows": [
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 0,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 0,
+          "qualified": true,
+          "recipient": 0,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ]
+    },
+    "SCRATCH_A": {
+      "M1_charges_all": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "M1_median_charges_to_qualified": 12.0,
+      "M2_qualified_fraction": "16/16",
+      "M3_median_tribunal_extrapolation": 1.0,
+      "M4_median_stress_200": 1.0,
+      "M5_median_artifact_bytes": 1578.0,
+      "recipients": 16,
+      "rows": [
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 0,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 1,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 2,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 3,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 4,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 5,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 6,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 7,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 8,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 9,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 10,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 11,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 12,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 13,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 14,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "artifact_bytes": 1578,
+          "artifact_sha256": "5192570b043d087bee20fe2b3529d2ca2faf8d9d9d3efb15a56a76cf7ba0cc20",
+          "charges_to_solution": 12,
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12,
+          "qualified": true,
+          "recipient": 15,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ]
+    },
+    "SCRATCH_B": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/16",
+      "M3_median_tribunal_extrapolation": 0.615,
+      "M4_median_stress_200": 0.55,
+      "M5_median_artifact_bytes": 1393.0,
+      "recipients": 16,
+      "rows": [
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "1afee1c44e3e7e296e76b57810e0b98e1d6e511afd349f7cc1816c887fbdf1c3",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 1,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1389,
+          "artifact_sha256": "602501e420a24e30a5172e5763ca2c2fc32d64958d3cabdceab30e4907632120",
+          "charges_to_solution": 717,
+          "disposition": "solution found but tribunal-rejected: extrap=0.125 ce=0.217 meta=False",
+          "escrow_spent": 717,
+          "qualified": false,
+          "recipient": 2,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.21666666666666667,
+            "held_out_extrapolation": 0.125,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.1
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 3,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "8c034886e34e4189f2282a884886bb5499fae0e5518216937282a6e5a8d25ca7",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 4,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "8c034886e34e4189f2282a884886bb5499fae0e5518216937282a6e5a8d25ca7",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1414,
+          "artifact_sha256": "b3e2b10531e3ee5712c3d908b7db58c7a96a4a315f1979e3c9b8bf902d27b0df",
+          "charges_to_solution": 108558,
+          "disposition": "solution found but tribunal-rejected: extrap=0.120 ce=0.050 meta=False",
+          "escrow_spent": 108558,
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 0.26,
+          "tribunal": {
+            "counterexample_accuracy": 0.05,
+            "held_out_extrapolation": 0.12,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.1
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "1afee1c44e3e7e296e76b57810e0b98e1d6e511afd349f7cc1816c887fbdf1c3",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 8,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "8c034886e34e4189f2282a884886bb5499fae0e5518216937282a6e5a8d25ca7",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 9,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "1afee1c44e3e7e296e76b57810e0b98e1d6e511afd349f7cc1816c887fbdf1c3",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 10,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "8c034886e34e4189f2282a884886bb5499fae0e5518216937282a6e5a8d25ca7",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1389,
+          "artifact_sha256": "7edd9377dec8c0536957c624118c9e499e37a0746113de10d3f5236960f6f170",
+          "charges_to_solution": 597,
+          "disposition": "solution found but tribunal-rejected: extrap=0.040 ce=0.083 meta=False",
+          "escrow_spent": 597,
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.08333333333333333,
+            "held_out_extrapolation": 0.04,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.016666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1393,
+          "artifact_sha256": "7b78b7716e1d7b66b1bc91ccfbd794cef4f229cb63c714d897523d7a25faaa33",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        }
+      ]
+    },
+    "SHAM": {
+      "M1_charges_all": [],
+      "M1_median_charges_to_qualified": null,
+      "M2_qualified_fraction": "0/16",
+      "M3_median_tribunal_extrapolation": 0.615,
+      "M4_median_stress_200": 0.55,
+      "M5_median_artifact_bytes": 1799.0,
+      "recipients": 16,
+      "rows": [
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "b5c5d3301404467c3e67c16f68e159ef6f83f8e5df5376202eccc1b7e553900a",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 1,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1795,
+          "artifact_sha256": "4863772f519ccfd2d76f2626bb70bb7324c9f1ef264bbf452cd375d40d887b87",
+          "charges_to_solution": 717,
+          "disposition": "solution found but tribunal-rejected: extrap=0.125 ce=0.217 meta=False",
+          "escrow_spent": 717,
+          "qualified": false,
+          "recipient": 2,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.21666666666666667,
+            "held_out_extrapolation": 0.125,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.1
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 3,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "7d3917359ef1c33a2b3e75cdd3842ccdfd9b1358bebce624385fd32d35f470dd",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 4,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "7d3917359ef1c33a2b3e75cdd3842ccdfd9b1358bebce624385fd32d35f470dd",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1820,
+          "artifact_sha256": "f419d2af45155a62731bd599d7760dec7e1331d7423f0e132dc10f6c48ccdab3",
+          "charges_to_solution": 108558,
+          "disposition": "solution found but tribunal-rejected: extrap=0.120 ce=0.050 meta=False",
+          "escrow_spent": 108558,
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 0.27,
+          "tribunal": {
+            "counterexample_accuracy": 0.05,
+            "held_out_extrapolation": 0.12,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.1
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "b5c5d3301404467c3e67c16f68e159ef6f83f8e5df5376202eccc1b7e553900a",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 8,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "7d3917359ef1c33a2b3e75cdd3842ccdfd9b1358bebce624385fd32d35f470dd",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 9,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "b5c5d3301404467c3e67c16f68e159ef6f83f8e5df5376202eccc1b7e553900a",
+          "charges_to_solution": 48,
+          "disposition": "solution found but tribunal-rejected: extrap=0.645 ce=0.733 meta=False",
+          "escrow_spent": 48,
+          "qualified": false,
+          "recipient": 10,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7333333333333333,
+            "held_out_extrapolation": 0.645,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "7d3917359ef1c33a2b3e75cdd3842ccdfd9b1358bebce624385fd32d35f470dd",
+          "charges_to_solution": 51,
+          "disposition": "solution found but tribunal-rejected: extrap=0.630 ce=0.783 meta=False",
+          "escrow_spent": 51,
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.7833333333333333,
+            "held_out_extrapolation": 0.63,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        },
+        {
+          "artifact_bytes": 1795,
+          "artifact_sha256": "eb5a8eff8ab16f379da0a4c306d3c99924d71bc9a2cb304f632a0c0e25267eb9",
+          "charges_to_solution": 597,
+          "disposition": "solution found but tribunal-rejected: extrap=0.040 ce=0.083 meta=False",
+          "escrow_spent": 597,
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.08333333333333333,
+            "held_out_extrapolation": 0.04,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.016666666666666666
+          }
+        },
+        {
+          "artifact_bytes": 1799,
+          "artifact_sha256": "0458a57b5dca3413bcfa042c573b24192bc631f7851239bee8e2b1d6597a00ce",
+          "charges_to_solution": 47,
+          "disposition": "solution found but tribunal-rejected: extrap=0.615 ce=0.850 meta=False",
+          "escrow_spent": 47,
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 0.0,
+          "tribunal": {
+            "counterexample_accuracy": 0.85,
+            "held_out_extrapolation": 0.615,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.55
+          }
+        }
+      ]
+    }
+  },
+  "escrow_per_recipient": 400000,
+  "family": "list_gcd",
+  "organ_sha256": "5488abb9f6354f02eb210909e180b17db644f3e3a2675d70f3a140f2e6acf79a",
+  "total_seconds": 3.5,
+  "written_utc": "2026-09-22T05:09:51Z"
+}

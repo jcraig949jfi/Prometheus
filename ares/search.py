@@ -27,7 +27,33 @@ def _balanced_eval_seeds(n_per_side=16, start=10_000):
     return sorted(zeros[:n_per_side] + ones[:n_per_side])
 
 
-EVAL_SEEDS = _balanced_eval_seeds()   # 32 held-out episodes, fixed for every run
+EVAL_SEEDS = _balanced_eval_seeds()   # 32 held-out episodes, fixed for every run (cycle 0)
+
+
+def balanced_seeds_for(world, n_total=32, start=20_000, max_scan=5000):
+    """Cycle-1 repair (LEDGER 2026-09-19, W5 row): held-out seeds balanced on
+    EVERY hidden binary the world draws, via world.balance_key() after
+    reset. Each distinct key value gets n_total / n_keys seeds. A world
+    with no hidden binary returns the first n_total seeds. Deterministic."""
+    key_fn = getattr(world, "balance_key", None)
+    if key_fn is None:
+        return list(range(start, start + n_total))
+    buckets = {}
+    s = start
+    while s < start + max_scan:
+        world.reset(np.random.default_rng(s), 1)
+        k = tuple(key_fn())
+        buckets.setdefault(k, []).append(s)
+        s += 1
+        if len(buckets) >= 2 and all(len(v) >= n_total for v in buckets.values()):
+            break
+    n_keys = len(buckets)
+    per = n_total // n_keys
+    out = []
+    for k in sorted(buckets):
+        assert len(buckets[k]) >= per, (k, len(buckets[k]))
+        out.extend(buckets[k][:per])
+    return sorted(out)
 
 
 # ----------------------------------------------------------------------
@@ -41,10 +67,13 @@ def rollout(pop: S.Population, world, seeds, record=False):
     P = pop.P
     total = np.zeros(P, dtype=np.float64)
     traces = dict(actions=[], rewards=[], info=[]) if record else None
+    noise_sd = float(getattr(world, "state_noise_sd", 0.0))
     for sd in seeds:
         rng = np.random.default_rng(sd)
+        nrng = np.random.default_rng(sd ^ 0x5EED)
         rt.reset()
         obs = world.reset(rng, P)
+        resets = set(getattr(world, "reset_steps", ()))
         acts = np.zeros((world.T, P), dtype=np.int8) if record else None
         rews = np.zeros((world.T, P), dtype=np.float32) if record else None
         infos = [] if record else None
@@ -52,6 +81,10 @@ def rollout(pop: S.Population, world, seeds, record=False):
         for t in range(world.T):
             a = rt.step(obs)
             obs, r, alive_now, info = world.step(a)
+            if noise_sd > 0:
+                rt.v[:, S.OBS_DIM:] += nrng.normal(0, noise_sd, size=(P, rt.v.shape[1] - S.OBS_DIM)).astype(np.float32)
+            if t in resets:
+                rt.v[:, S.OBS_DIM:] = 0.0
             r = np.where(alive, r, 0.0)
             total += r
             alive = alive & alive_now
@@ -176,7 +209,8 @@ def _carriers(pop, sigs):
 
 
 def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
-        log_every=5, tag=None, elite_frac=0.125, verbose=False, transplant=None):
+        log_every=5, tag=None, elite_frac=0.125, verbose=False, transplant=None,
+        eval_seeds=None, snapshots=False, recur_tax=0.0):
     """One GA run. Returns a JSON-able dict with the log, champion genome,
     champion ancestry and a receipt. `transplant` (W8 protocol): dict with
     source (genome), nodes (hidden node indices in the source), every
@@ -184,7 +218,9 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
     t0 = time.time()
     rng = np.random.default_rng(seed)
     world = make_world(world_name, mode)
+    eval_seeds = list(eval_seeds) if eval_seeds is not None else EVAL_SEEDS
     pop = S.random_population(cfg, P, rng)
+    snaps = []
     tp_log = []
     tp_sigs = []
     if transplant is not None:
@@ -199,6 +235,8 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
     for g in range(G):
         seeds = [int(x) for x in rng.integers(0, 2**31 - 1, size=eps)]
         fit, traces = rollout(pop, world, seeds, record=True)
+        if recur_tax:
+            fit = fit - recur_tax * S.n_recurrent_edges(pop)
         order = np.argsort(-fit)
         champ = int(order[0])
         # mutation survival: children whose fitness >= parent's - 5% of |parent|
@@ -209,8 +247,10 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
             msurv = float(np.mean(fit[child][ok] >= pf[ok] - 0.05 * np.abs(pf[ok]))) if ok.any() else float("nan")
         else:
             msurv = float("nan")
+        if snapshots:
+            snaps.append(dict(gen=g, train=float(fit[champ]), genome=pop.genome(champ)))
         if g % log_every == 0 or g == G - 1:
-            ho = rollout(pop.select([champ]), world, EVAL_SEEDS)[0]
+            ho = rollout(pop.select([champ]), world, eval_seeds)[0]
             st = S.structure_stats(pop)
             ent, bdiv = _behaviour_stats(np.stack(traces["actions"]))
             row = dict(gen=g, best_train=float(fit[champ]), mean_train=float(fit.mean()),
@@ -249,7 +289,7 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
             next_id += 1
         pop = new
     # final champion on held-out
-    fit = rollout(pop, world, EVAL_SEEDS)
+    fit = rollout(pop, world, eval_seeds)
     champ = int(np.argmax(fit))
     final = dict(heldout=float(fit[champ]), genome=pop.genome(champ))
     chain = []
@@ -262,8 +302,8 @@ def run(world_name, mode, cfg: S.Config, P=128, G=120, eps=4, seed=0,
         tp_log.append(dict(gen=G, retained_from_previous=_carriers(pop, tp_sigs) if tp_sigs else float("nan"), n_recipients=0))
     return dict(world=world_name, mode=mode, cfg=cfg.to_dict(), P=P, G=G, eps=eps, seed=seed, tag=tag,
                 log=log, final=final, best_ever=dict(heldout=best_ever[0], genome=best_ever[1]),
-                ancestry=chain, transplant_log=tp_log, elapsed_s=time.time() - t0,
-                receipt=receipt(cfg, world_name, mode, P, G, eps, seed))
+                ancestry=chain, transplant_log=tp_log, snapshots=snaps, eval_seeds=eval_seeds, recur_tax=recur_tax,
+                elapsed_s=time.time() - t0, receipt=receipt(cfg, world_name, mode, P, G, eps, seed, eval_seeds))
 
 
 def run_coevo(mode, cfg: S.Config, P=128, G=120, eps=4, seed=0, log_every=5, tag=None, elite_frac=0.125, verbose=False):
@@ -337,10 +377,15 @@ def dissect(genome, world_name, mode, seeds=EVAL_SEEDS):
     base = float(fit[0])
     abl = [dict(node=h, op=genome["op"][h], keep=genome["keep"][h], fit=float(f), delta=float(f - base))
            for h, f in zip(removed[1:], fit[1:])]
-    # substrate ablations: no persistent state; no plasticity
+    # substrate ablations (cycle-1 repair, LEDGER 2026-09-19): every cross-
+    # step memory channel is named. no_activation_mem = keep off + activations
+    # reset each step (plasticity intact); no_plasticity = plastic weights
+    # frozen at the genome; no_memory = both (no cross-step channel remains;
+    # within-step ticks and the world's own feedback channels are not memory).
     outs = {}
-    for label, kw in (("no_state", dict(allow_keep=False, reset_each_step=True)),
-                      ("no_plasticity", dict(allow_plasticity=False))):
+    for label, kw in (("no_activation_mem", dict(allow_keep=False, reset_each_step=True)),
+                      ("no_plasticity", dict(allow_plasticity=False)),
+                      ("no_memory", dict(allow_keep=False, reset_each_step=True, allow_plasticity=False))):
         c2 = S.Config(**{**genome["cfg"], **kw})
         p2 = S.Population.from_genomes([genome], c2)
         outs[label] = float(rollout(p2, world, seeds)[0])
@@ -386,8 +431,9 @@ def code_commit():
         return "UNKNOWN"
 
 
-def receipt(cfg, world, mode, P, G, eps, seed):
-    spec = dict(cfg=cfg.to_dict(), world=world, mode=mode, P=P, G=G, eps=eps, seed=seed, eval_seeds=EVAL_SEEDS)
+def receipt(cfg, world, mode, P, G, eps, seed, eval_seeds=None):
+    spec = dict(cfg=cfg.to_dict(), world=world, mode=mode, P=P, G=G, eps=eps, seed=seed,
+                eval_seeds=list(eval_seeds) if eval_seeds is not None else EVAL_SEEDS)
     h = hashlib.sha256(json.dumps(spec, sort_keys=True).encode()).hexdigest()
     return dict(config_hash=h, code_commit=code_commit(), spec=spec,
                 utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))

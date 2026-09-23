@@ -1,0 +1,133 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "attempt_id": "cw01-e05-a01",
+ "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "contract_source": "imported object execute_e05.EMBEDDED_CONTRACT (not source text)",
+ "part_a_specification_consistency": {
+  "checks": [
+   {
+    "id": "A1_driver_matches_committed",
+    "passed": true,
+    "detail": "driver c80b5bfd348f7b87 vs committed c80b5bfd348f7b87"
+   },
+   {
+    "id": "A2_hash_is_the_frozen_one",
+    "passed": true,
+    "detail": "contract identity c80b5bfd348f7b87"
+   },
+   {
+    "id": "A3_committed_self_verifies",
+    "passed": true,
+    "detail": "stored hash matches its own body"
+   },
+   {
+    "id": "A4_budget_B_agrees",
+    "passed": true,
+    "detail": "contract 3, WORLD arms {'treatment': 3, 'control_disjunctive_only': 3}, QUALIFY 3"
+   },
+   {
+    "id": "A5_recorded_sets_agree",
+    "passed": true,
+    "detail": "WORLD best/worst [0, 2, 4]/[4, 5, 7] vs QUALIFY [0, 2, 4]/[4, 5, 7]"
+   },
+   {
+    "id": "A6_calibration_constants",
+    "passed": true,
+    "detail": "7 recorded figures agree"
+   },
+   {
+    "id": "A7_budget_rule_canonical",
+    "passed": true,
+    "detail": "['mean_conjunctive_demand_size|declared_before_superadditivity'] -> identical"
+   },
+   {
+    "id": "A8_superadditivity_basis",
+    "passed": true,
+    "detail": "all artifacts define it on information"
+   },
+   {
+    "id": "A9_statistic_identity",
+    "passed": true,
+    "detail": "all four read did_normalised_superadditivity"
+   },
+   {
+    "id": "A10_null_blocks",
+    "passed": true,
+    "detail": "contract requires >=8 blocks; driver N_BLOCKS=8"
+   },
+   {
+    "id": "A11_set_selection",
+    "passed": true,
+    "detail": "all artifacts: exhaustive_enumeration"
+   },
+   {
+    "id": "A12_ledger_records_defects",
+    "passed": true,
+    "detail": "all 7 e05 defects present; 0 still marked OPEN []"
+   },
+   {
+    "id": "A13_world_budget_guard",
+    "passed": true,
+    "detail": "load_cfg refuses a WORLD whose max_components disagrees with budget_B"
+   }
+  ],
+  "passed": true
+ },
+ "part_b_empirical_reconstruction": {
+  "checks": [
+   {
+    "id": "B1_subset_count",
+    "passed": true,
+    "detail": "evaluated 56 admissible subsets (binding: 56)"
+   },
+   {
+    "id": "B2_best_reconstructs",
+    "passed": true,
+    "detail": "BEST recomputes as [0, 2, 4] (binding: [0, 2, 4]), score 1.8978"
+   },
+   {
+    "id": "B3_worst_reconstructs",
+    "passed": true,
+    "detail": "WORST recomputes as [4, 5, 7] (binding: [4, 5, 7]), score 1.0015"
+   },
+   {
+    "id": "B4_ordering_procedure_unchanged",
+    "passed": true,
+    "detail": "argmax/argmin over mean score: best 1.8978 >= median 1.3206 >= worst 1.0015"
+   }
+  ],
+  "passed": true,
+  "binding_invariants": {
+   "n_subsets": 56,
+   "BEST": [
+    0,
+    2,
+    4
+   ],
+   "WORST": [
+    4,
+    5,
+    7
+   ]
+  },
+  "reconstructed": {
+   "n_subsets": 56,
+   "BEST": [
+    0,
+    2,
+    4
+   ],
+   "WORST": [
+    4,
+    5,
+    7
+   ],
+   "best_score": 1.8977760441328448,
+   "median_score": 1.3205791134235167,
+   "worst_score": 1.0014873643613664
+  },
+  "_rule": "a different BEST or WORST is a real consistency failure, not a tolerance"
+ },
+ "gate": "PASS"
+}

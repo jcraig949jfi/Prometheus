@@ -1,0 +1,22 @@
+{
+ "perturbation_id": "P-C05",
+ "parent": "T-ARCH4/M1",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "one-axis-census",
+ "parents": 47,
+ "families": [
+  "opcode (word 0 := random uint32)",
+  "operand (one of words 1..3 := random uint32)"
+ ],
+ "k": 1,
+ "draws": 8,
+ "decode": "modulo",
+ "readouts": "loss share (D2/D3), displacement, W1_d1 held-out change; paired opcode - operand per parent with a sign-flip test",
+ "material_rule": "material if the paired loss difference's 95 percent band excludes 0",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:45:57",
+ "prereg_sha256": "6929e4c0c9227c59316f7add9cbf792e915e98c79537d25f3a1786aa6476c49e"
+}

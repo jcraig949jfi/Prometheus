@@ -1,0 +1,119 @@
+{
+ "predicate_id": "E-R8-H1-sham-response-curve",
+ "n_complete_runs": 32,
+ "duplicates": [],
+ "balanced_32_4_8": true,
+ "rho_mean": 0.071875,
+ "p_dec": [
+  0.785291,
+  0.0004106203177133348
+ ],
+ "p_inc": [
+  0.234998,
+  0.00042399757074304095
+ ],
+ "nonmonotone_p": {
+  "peak_L1_partial_featperm": [
+   0.843076,
+   0.0003637291000511232
+  ],
+  "trough_L1_partial_featperm": [
+   0.254299,
+   0.00043546643797082684
+  ],
+  "peak_L2_full_featperm": [
+   0.787801,
+   0.000408864995321194
+  ],
+  "trough_L2_full_featperm": [
+   0.361331,
+   0.0004803862075861462
+  ],
+  "peak_L3_entry_shuffle": [
+   0.896304,
+   0.0003048657730608669
+  ],
+  "trough_L3_entry_shuffle": [
+   0.284471,
+   0.0004511621107307217
+  ]
+ },
+ "nonmonotone_holm": {
+  "trough_L1_partial_featperm": 1.0,
+  "trough_L3_entry_shuffle": 1.0,
+  "trough_L2_full_featperm": 1.0,
+  "peak_L2_full_featperm": 1.0,
+  "peak_L1_partial_featperm": 1.0,
+  "peak_L3_entry_shuffle": 1.0
+ },
+ "charge_align": {
+  "diff_mean": 0.1686248779296875,
+  "p_raises": [
+   0.37896,
+   0.0004851281463695959
+  ],
+  "p_lowers": [
+   0.621277,
+   0.0004850689531097615
+  ],
+  "reading": "CHARGE_ALIGNMENT_NO_EFFECT"
+ },
+ "means_held_auc": {
+  "scratch": 154.85375595092773,
+  "L0_identity": 156.71461486816406,
+  "L1_partial_featperm": 156.34569931030273,
+  "L2_full_featperm": 156.52019119262695,
+  "L3_entry_shuffle": 156.36066055297852,
+  "L4_matched_gaussian": 156.95433044433594,
+  "X_charge_align": 156.88323974609375
+ },
+ "integrity_ok": "192/192",
+ "fragile_near_alpha": [],
+ "outcome_replay": "FLAT_NO_SYSTEMATIC_RESPONSE",
+ "outcome_rows": "FLAT_NO_SYSTEMATIC_RESPONSE",
+ "charge_align_rows": "CHARGE_ALIGNMENT_NO_EFFECT",
+ "verdict_agrees": true,
+ "rule_consistency": {
+  "predicate_id": "E-R8-H1-sham-response-curve",
+  "posts": 1,
+  "event_id": "1789593327107-0",
+  "predicate_ts": 1789593327.083,
+  "first_row_ts": 1789594107.566,
+  "code_sha": "b1da39604f1bbd2322e6650af66b55709de729b8",
+  "pin": [
+   "b1da39604f1bbd2322e6650af66b55709de729b8"
+  ],
+  "evidence": {
+   "evidence_class": "OBSERVATION",
+   "experiment_class": "SHAM_RESPONSE",
+   "rule": "EVIDENCE_N_v1",
+   "sample": {
+    "families": [
+     4200,
+     2101,
+     3303,
+     5501
+    ],
+    "n_per_family": {
+     "2101": 8,
+     "3303": 8,
+     "4200": 8,
+     "5501": 8
+    },
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "runs_total": 32
+   }
+  },
+  "ok": true,
+  "failures": []
+ },
+ "rows_path": "primordial/ledger/rows/E/E-R8-H1-sham-response-curve.jsonl",
+ "rows_ref": "origin/nestor/sidequest-graphworld-2026-09-14",
+ "rows_count": 225,
+ "judge_reading": {
+  "verdict_layer": "AGREE: FLAT_NO_SYSTEMATIC_RESPONSE and CHARGE_ALIGNMENT_NO_EFFECT reproduced with independent estimators (scipy spearman, H sign-flip MC seed 777 x 1e6, own Holm); no deciding p within 3 SE of alpha; 32/32 complete, 0 duplicates across the paused and continuation jobs (075fe42077dc 140 rows, 0c0fe833761a 85 rows); integrity 192/192.",
+  "resolving_power_descriptive": "POST HOC, descriptive: paired L0 - L4 (identity vs matched-scale Gaussian) mean -0.24, bootstrap 95% [-1.31, 0.87] held_auc on a level of 156.7 (<= ~0.8%); L0 - L2 +0.19 [-0.85, 1.23]. FLAT is therefore a bounded null: any donor-STRUCTURE effect on held_auc is smaller than ~1.3 at this budget, not 'no information'.",
+  "observation_that_survives": "Every donor-derived arm beats scratch (E's own vs_scratch, p <= 8e-4 each), INCLUDING L4 which keeps only each donor genome's W mean/sd: L4 - scratch +2.10 [1.19, 2.98] vs L0 - scratch +1.86 [0.84, 2.90]. The graft-over-scratch advantage survives destruction of all structure down to gross scale. INTERPRETATION (not a verdict, not 'transfer'): consistent with SWARM_R8 s7 outcome (B)-family reading -- the machinery responds to initialisation scale, not donor structure; a scale-matched non-donor Gaussian arm would be the cheaper discriminator."
+ }
+}

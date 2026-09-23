@@ -1,0 +1,33 @@
+{
+ "perturbation_id": "P-J06",
+ "parent": "T-X17",
+ "requires": [
+  "P-J03"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "gateway-test",
+ "FLAG": "the scaffolded lineage is witness-seeded (P-J03)",
+ "lineages": {
+  "S2": "P-J03 scaffolded after the xor-15 stage",
+  "P2": "P-J03 plateau ladder after the xor-15 stage",
+  "fresh": "init walkers"
+ },
+ "transforms": [
+  "add:1",
+  "xor:5"
+ ],
+ "G": 60,
+ "seeds": [
+  1,
+  2
+ ],
+ "readouts": "g_cross, top-4 held-out; reuse probes on crossed tops (unread words at OUT, regime registers at OUT, control knockouts)",
+ "gateway_rule": "S2 crosses a novel transform that P2 and fresh do not, or crosses it earlier",
+ "material_rule": "material if any lineage crosses any novel transform",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:50:12",
+ "prereg_sha256": "3ff8cbcafd88eecb6a0e08d64834db9f796dc4bf7ce7352f8a740ad9e73ea1cb"
+}

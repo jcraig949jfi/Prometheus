@@ -322,3 +322,51 @@ def test_proposals_parents_resolve_in_index(conn):
 def test_descendants_returns_each_entity_once(conn):
     assert one(conn, """SELECT count(*) - count(DISTINCT (ent_type, ent_key))
                         FROM atlas.descendants('experiment','archaeon.campaign/cmp4:C4-01')""") == 0
+
+
+# ------------------------------------------------------------------ prior-art experiment queue
+
+REQUIRED_TODO_FIELDS = ("id", "title", "scientific_question", "claim_under_test", "why_prometheus",
+                        "source_mechanism", "target_engine", "minimum_viable_world", "treatments", "controls",
+                        "independent_variables", "primary_endpoint", "secondary_endpoints", "anticheat",
+                        "falsifier", "causal_test", "telemetry", "expected_failure_modes", "assumption_cost",
+                        "prerequisites", "donor_code", "implementation_gap", "compute_class", "engineering_class",
+                        "information_gain", "dependencies", "conflicts", "prereg_required", "promotion_gate",
+                        "stopping_rule", "evidence_pointers", "status")
+
+
+def _queue():
+    import json
+    p = REPO / "roles" / "Atlas" / "proposals" / "2026-09-21_prior_art_raid" / "EXPERIMENTS.jsonl"
+    return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+
+def test_queue_records_carry_every_required_field():
+    for r in _queue():
+        missing = [f for f in REQUIRED_TODO_FIELDS if f not in r]
+        assert not missing, (r.get("id"), missing)
+
+
+def test_queue_vocabularies_and_self_consistency():
+    rows = _queue()
+    ids = {r["id"] for r in rows}
+    assert len(ids) == len(rows)
+    for r in rows:
+        assert r["status"] in ("IDEA", "NEEDS_DONOR", "READY_FOR_DESIGN", "PREREG", "READY", "RUNNING",
+                               "ADJUDICATION", "CLOSED", "PARKED"), r["id"]
+        assert r["compute_class"] in ("XS", "S", "M", "L", "XL") and r["engineering_class"] in ("XS", "S", "M", "L", "XL")
+        assert r["information_gain"].split()[0].strip(".,") in ("LOW", "MEDIUM", "MEDIUM-HIGH", "HIGH"), r["id"]
+        assert len(r["information_gain"]) > 20, "information gain needs an explanation, not a label: " + r["id"]
+        assert r["prereg_required"] in ("YES", "NO")
+        assert all(d in ids for d in r["dependencies"]), r["id"]
+        assert r["assumption_cost"], "every record states what the mechanism makes impossible: " + r["id"]
+
+
+def test_queue_nothing_is_marked_ready():
+    assert not [r["id"] for r in _queue() if r["status"] in ("READY", "RUNNING")]
+
+
+def test_queue_donors_resolve_in_the_catalogue():
+    cat = {r["id"] for r in _catalog()}
+    unknown = sorted({d for r in _queue() for d in (r.get("donors") or []) if d not in cat})
+    assert not unknown, unknown

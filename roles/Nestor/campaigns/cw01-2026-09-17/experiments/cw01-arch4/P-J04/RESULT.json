@@ -1,0 +1,433 @@
+{
+ "perturbation_id": "P-J04",
+ "parent": "T-X21",
+ "summary": {
+  "evolved": {
+   "A'": "NOT_APPLICABLE(NOT_CROSSED)",
+   "B'": "NOT_APPLICABLE(NOT_CROSSED)",
+   "C'": "NOT_APPLICABLE(NOT_CROSSED)"
+  },
+  "instrument_validation": {
+   "n_witnesses": 4,
+   "follows_new_regime": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "register_corruption_max": [
+    0.875,
+    0.875,
+    1.0,
+    1.0
+   ],
+   "xor_knockout_reward": [
+    [
+     0.0
+    ],
+    [
+     0.0
+    ],
+    [
+     0.125
+    ],
+    [
+     0.125
+    ]
+   ],
+   "control_knockouts_min_reward": [
+    0.125,
+    0.125,
+    0.0625,
+    0.0625
+   ]
+  },
+  "instrument_reach": "register overrides act at the tick boundary only; a register written during the ask tick (the witness's IN) is beyond the override's reach - a within-tick lesion needs the knockout instrument"
+ },
+ "rows": [
+  {
+   "seed": 1,
+   "rank": 0,
+   "witness_reward": 1.0,
+   "cue_causality": {
+    "changed": 1.0,
+    "follows_new_regime": 1.0
+   },
+   "register_corruption_max": 0.875,
+   "register_corruption": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.875,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0,
+    "11": 0.0,
+    "12": 0.0,
+    "13": 0.0
+   },
+   "knockouts": [
+    {
+     "i": 0,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 1,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 2,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 3,
+     "op": 12,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 8,
+     "op": 20,
+     "inserted": false,
+     "reward": 0.125
+    },
+    {
+     "i": 12,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 34,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    }
+   ],
+   "xor_knockout_reward": [
+    0.0
+   ],
+   "control_knockouts_min_reward": 0.125
+  },
+  {
+   "seed": 1,
+   "rank": 1,
+   "witness_reward": 1.0,
+   "cue_causality": {
+    "changed": 1.0,
+    "follows_new_regime": 1.0
+   },
+   "register_corruption_max": 0.875,
+   "register_corruption": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.875,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0,
+    "11": 0.0,
+    "12": 0.0,
+    "13": 0.0
+   },
+   "knockouts": [
+    {
+     "i": 0,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 1,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 2,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 3,
+     "op": 12,
+     "inserted": true,
+     "reward": 0.0
+    },
+    {
+     "i": 6,
+     "op": 20,
+     "inserted": false,
+     "reward": 0.125
+    },
+    {
+     "i": 17,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 21,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 24,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 25,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 27,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 33,
+     "op": 18,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 43,
+     "op": 18,
+     "inserted": false,
+     "reward": 1.0
+    }
+   ],
+   "xor_knockout_reward": [
+    0.0
+   ],
+   "control_knockouts_min_reward": 0.125
+  },
+  {
+   "seed": 3,
+   "rank": 0,
+   "witness_reward": 1.0,
+   "cue_causality": {
+    "changed": 1.0,
+    "follows_new_regime": 1.0
+   },
+   "register_corruption_max": 1.0,
+   "register_corruption": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 1.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0,
+    "11": 0.0,
+    "12": 0.0,
+    "13": 0.0
+   },
+   "knockouts": [
+    {
+     "i": 3,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 4,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 5,
+     "op": 12,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 7,
+     "op": 20,
+     "inserted": false,
+     "reward": 0.0625
+    },
+    {
+     "i": 15,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 22,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 26,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 28,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 32,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 33,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 36,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 37,
+     "op": 18,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 42,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 55,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 56,
+     "op": 18,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 61,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    }
+   ],
+   "xor_knockout_reward": [
+    0.125
+   ],
+   "control_knockouts_min_reward": 0.0625
+  },
+  {
+   "seed": 3,
+   "rank": 1,
+   "witness_reward": 1.0,
+   "cue_causality": {
+    "changed": 1.0,
+    "follows_new_regime": 1.0
+   },
+   "register_corruption_max": 1.0,
+   "register_corruption": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 1.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0,
+    "11": 0.0,
+    "12": 0.0,
+    "13": 0.0
+   },
+   "knockouts": [
+    {
+     "i": 1,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 2,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 3,
+     "op": 21,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 4,
+     "op": 12,
+     "inserted": true,
+     "reward": 0.125
+    },
+    {
+     "i": 12,
+     "op": 20,
+     "inserted": false,
+     "reward": 0.0625
+    },
+    {
+     "i": 22,
+     "op": 19,
+     "inserted": false,
+     "reward": 1.0
+    },
+    {
+     "i": 34,
+     "op": 20,
+     "inserted": false,
+     "reward": 1.0
+    }
+   ],
+   "xor_knockout_reward": [
+    0.125
+   ],
+   "control_knockouts_min_reward": 0.0625
+  }
+ ],
+ "material": false,
+ "elapsed_s": 0.6,
+ "prereg_sha256": "a10c62712e246780ba23960ac35b8d5b19fdeaed2b1382de57f265f612f47a4e",
+ "ts": "2026-09-19 08:44:44"
+}

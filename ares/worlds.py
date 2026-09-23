@@ -177,6 +177,7 @@ class W4HiddenRegime(World):
         T = self.T
         self.r = int(rng.integers(0, 2))
         shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
         self.cue = rng.normal(0, 0.3, size=T)
         k = T if self.mode == "absent" else 3
         self.cue[:k] = (2 * shown - 1) + rng.normal(0, 0.2, size=k)
@@ -186,6 +187,9 @@ class W4HiddenRegime(World):
         o = self._base_obs(); t = self.t
         o[:, 0] = self.noise[t]; o[:, 1] = self.cue[t]
         return o
+
+    def balance_key(self):
+        return (self.r, self.shown)
 
     def _step(self, a):
         good = self.r + 1
@@ -210,6 +214,11 @@ class W5DelayedRevelation(World):
         if self.mode == "absent":
             self.ch0[T - 2] = self.pay
         self.dec = T - 2
+
+    def balance_key(self):
+        # both hidden binaries: the token shown and the side that pays
+        # (identical in present/absent; independent in shuffled)
+        return (int(self.token > 0), int(self.pay > 0))
 
     def _obs(self):
         o = self._base_obs(); t = self.t
@@ -274,6 +283,9 @@ class W11IrreversibleCommitment(World):
         mean = 0.4 * self.truth if self.mode != "shuffled" else 0.0
         self.ev = mean + rng.normal(0, 1.0, size=T)
         self.committed = np.zeros(self.P, dtype=np.int64)   # 0 none, 1 A, 2 B
+
+    def balance_key(self):
+        return (int(self.truth > 0),)
 
     def _obs(self):
         o = self._base_obs(); t = self.t
@@ -368,7 +380,100 @@ class W9MatchingPennies:
         return self._obs(self.histB, self.histA), self._obs(self.histA, self.histB), rA, rB
 
 
+class W13CarrierStress(World):
+    """W4 + W5 combined, cycle-1 carrier stress test ONLY (operator
+    directive 2026-09-21 item 4). Regime cue on ch1 for steps 0-2; then
+    ch1 carries distractor noise (sd 1.0, louder than W4's 0.3) for
+    steps 3-59; reward exists ONLY in steps 60-79 (+1/-1 for the regime
+    action, 0 abstain). No reward channel. absent: cue every step.
+    shuffled: early cue independent of the regime."""
+    name = "W13"
+    T = 80
+    CUE = 3
+    PAY_FROM = 60
+
+    def _draw(self, rng):
+        T = self.T
+        self.r = int(rng.integers(0, 2))
+        shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
+        self.cue = rng.normal(0, 1.0, size=T)
+        k = T if self.mode == "absent" else self.CUE
+        self.cue[:k] = (2 * shown - 1) + rng.normal(0, 0.2, size=k)
+        self.noise = rng.normal(0, 1.0, size=T)
+
+    def balance_key(self):
+        return (self.r, self.shown)
+
+    def _obs(self):
+        o = self._base_obs(); t = self.t
+        o[:, 0] = self.noise[t]; o[:, 1] = self.cue[t]
+        return o
+
+    def _step(self, a):
+        if self.t < self.PAY_FROM:
+            return np.zeros(self.P, dtype=np.float32), np.ones(self.P, bool), dict(regime=self.r)
+        good = self.r + 1
+        r = np.where(a == good, 1.0, np.where(a == 0, 0.0, -1.0)).astype(np.float32)
+        return r, np.ones(self.P, bool), dict(regime=self.r)
+
+
+class W14StateNoise(W4HiddenRegime):
+    """W4 with the organism's own activations perturbed every step
+    (sd 0.5). Attacks an activation carrier's signal-to-noise; plastic
+    weights are untouched. The world never sees the organism's state:
+    the perturbation is applied by the runtime (search.rollout)."""
+    name = "W14"
+    state_noise_sd = 0.5
+
+
+class W15Interrupt(W4HiddenRegime):
+    """W4 with activation RESET events: at 4 random steps after the cue
+    every hidden and output activation is zeroed. An activation carrier
+    loses its contents; plastic weights survive. Reset steps are drawn
+    per episode and are not observable."""
+    name = "W15"
+    N_RESET = 4
+
+    def _draw(self, rng):
+        super()._draw(rng)
+        self.reset_steps = set(int(x) for x in rng.choice(np.arange(5, self.T - 5), size=self.N_RESET, replace=False))
+
+
+class W16VariableDelay(W4HiddenRegime):
+    """W4 with the cue at a random 3-step window (start drawn in [0, 20])
+    and reward only in the last 10 steps. The cue-to-payoff delay varies
+    per episode, so a fixed-timing solution cannot work."""
+    name = "W16"
+    T = 40
+
+    def _draw(self, rng):
+        T = self.T
+        self.r = int(rng.integers(0, 2))
+        shown = int(rng.integers(0, 2)) if self.mode == "shuffled" else self.r
+        self.shown = shown
+        self.start = int(rng.integers(0, 21))
+        self.cue = rng.normal(0, 0.3, size=T)
+        if self.mode == "absent":
+            self.cue[:] = (2 * shown - 1) + rng.normal(0, 0.2, size=T)
+        else:
+            k = slice(self.start, self.start + 3)
+            self.cue[k] = (2 * shown - 1) + rng.normal(0, 0.2, size=3)
+        self.noise = rng.normal(0, 1.0, size=T)
+
+    def _step(self, a):
+        if self.t < self.T - 10:
+            return np.zeros(self.P, dtype=np.float32), np.ones(self.P, bool), dict(regime=self.r)
+        good = self.r + 1
+        r = np.where(a == good, 1.0, np.where(a == 0, 0.0, -1.0)).astype(np.float32)
+        return r, np.ones(self.P, bool), dict(regime=self.r)
+
+
 WORLDS = {
+    "W14": W14StateNoise,
+    "W15": W15Interrupt,
+    "W16": W16VariableDelay,
+    "W13": W13CarrierStress,
     "W1": W1CatastrophicTail, "W2": W2RareOverride, "W3": W3ChangingRules,
     "W4": W4HiddenRegime, "W5": W5DelayedRevelation, "W7": W7IncompatibleRegimes,
     "W11": W11IrreversibleCommitment, "W12": W12DyingLineage,

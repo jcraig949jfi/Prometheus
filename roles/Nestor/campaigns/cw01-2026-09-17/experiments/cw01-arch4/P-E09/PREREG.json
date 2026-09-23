@@ -1,0 +1,78 @@
+{
+ "perturbation_id": "P-E09",
+ "parent": "T-X13",
+ "co_parents": [
+  "T-ARCH4/M1",
+  "T-E07"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-cross",
+ "evolver": {
+  "N": 96,
+  "G": 60,
+  "tournament": 3,
+  "env": "W2_K2",
+  "weather": "blind deletion of 2 instructions on the evaluated copy with probability .5 per birth; genome inherited intact",
+  "seeds": [
+   1,
+   2
+  ]
+ },
+ "arms": [
+  "select",
+  "sham",
+  "weather"
+ ],
+ "harness_check": "sham arm's final population must equal the select arm's (same draws, nothing applied) - a difference voids the run",
+ "assay": {
+  "cells": [
+   [
+    "delete",
+    2,
+    1
+   ],
+   [
+    "delete",
+    4,
+    1
+   ],
+   [
+    "delete",
+    4,
+    4
+   ],
+   [
+    "operand",
+    4,
+    1
+   ],
+   [
+    "opcode",
+    4,
+    1
+   ]
+  ],
+  "draws": 4,
+  "decode": "modulo",
+  "loss_env": "W2_K2",
+  "held": "W1_d1"
+ },
+ "reading_rules": {
+  "PROTECTION": "weather tops' loss below select tops' (relabel below p05) AND persistent words / length not lower (relabel not below p05)",
+  "AVOIDANCE": "weather tops' persistent words or tape writes below select tops' (below p05) AND loss not below",
+  "BOTH": "loss below AND state use below",
+  "NEITHER": "otherwise"
+ },
+ "material_rule": "any relabelled contrast between weather and select tops outside its band (loss, persistent words, tape writes, length), or ancestor-paired loss under weather below p05",
+ "continuation": [
+  "damage probability dose",
+  "operand damage during evolution",
+  "persist frozen per arm"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:28:18",
+ "prereg_sha256": "086f5cb63a91594661452b25a7380b91c279b436486ccdc1858f99db4a3b2d9d"
+}

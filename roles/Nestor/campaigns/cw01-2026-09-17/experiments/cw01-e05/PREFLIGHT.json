@@ -1,0 +1,71 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "attempt_id": "cw01-e05-a01",
+ "phase": "PREFLIGHT",
+ "recorded_local": "2026-09-17 20:16:35",
+ "source": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "commit": "016e4a5b8d3a842a7f6f4698960a3129073e6aae"
+ },
+ "runtime_versions": {
+  "python": "3.12.10",
+  "numpy": "2.5.3",
+  "scipy": "1.17.1",
+  "redis": "8.1.0",
+  "psutil": "7.2.2"
+ },
+ "machine_profile_ref": "../../MACHINE_PROFILE.json",
+ "seed_policy": {
+  "rule": "all draws derive from attempt_id via lib/seeds.py",
+  "verified": "cross-process under multiple hash seeds since e01"
+ },
+ "declared_capabilities_required": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_streams": false,
+  "needs_container_runtime": false,
+  "needs_N_GB_vram": 0,
+  "needs_git_worktree": true,
+  "needs_env_PM_TAG": true,
+  "min_ram_gb": 4,
+  "min_free_disk_gb": 5,
+  "_rationale": "e05 is CPU composition economics: component inclusion priced, conjunctive demand."
+ },
+ "capability_match": {
+  "checked_against": "MACHINE_PROFILE.json",
+  "verdict": "PASS - fail-closed, no unsatisfied requirement"
+ },
+ "reuse_from_prior_experiments": {
+  "lib/seeds.py": "deterministic attempt-seeded draws",
+  "lib/localrun.py": "Redis-free durable rows",
+  "lib/residue.py": "substrate and process residue, one scanner",
+  "lib/lineage.py": "TestLog/decide, ancestor-seeded detect_gains, emit_generations, fixation_order",
+  "lib/infometrics.py": "MI with a shuffled null, plus sham_null and effect_clears_null",
+  "lib/learnability.py": "learnability probe, assert_distinct, assert_live",
+  "_note": "SIX modules carried forward unchanged. e01 reused 0, e02 3, e03 4, e04 6, e05 6."
+ },
+ "standing_gates_inherited": [
+  "learnability proven before budget (D009/D013/D015/D029)",
+  "matched arms bit-identical with the mechanism disabled (D010/D019/D021)",
+  "detector calibrated two-sided against a null (D022)",
+  "probe genomes asserted pairwise distinct (D023)",
+  "executable disposition, branch unreachable unless its tests ran (D016/D024)",
+  "per-generation trajectories as durable rows (D026)",
+  "latent world facts attempt-stable (D029)",
+  "no ran=True without a performed comparison (D031)",
+  "identity checks refused unless metrics are live (D034)",
+  "every effect must clear a sham-vs-sham noise floor (D035)"
+ ],
+ "e05_specific_risks": [
+  "ADDITIVE MISTAKEN FOR SUPERADDITIVE is the central threat; the additive prediction is measured directly via solo transplant rather than inferred",
+  "M3 conjunction-to-disjunction is in the MINIMAL form, unusually: without it a superadditivity number cannot be distinguished from a scoring artefact",
+  "e02 tested TEMPORAL composition and returned NULL; e05 tests SIMULTANEOUS composition. Both can be NULL for unrelated reasons and must not be conflated."
+ ],
+ "expected_runtime_envelope": {
+  "minimal_form_wall_minutes": 25,
+  "timebox_hours": 24
+ },
+ "preregistration_ref": "PREREGISTRATION.md (written before implementation)",
+ "complete": true
+}
