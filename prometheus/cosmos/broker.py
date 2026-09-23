@@ -174,3 +174,78 @@ def intervene(store, law_id: str, commitment: str, holdout_res: Dict[str, Any]) 
         res["G6"], res["direction_ok"], len(scored), res["magnitude_ok"], len(scored)))
     store.commit()
     return res
+
+
+# ---------------------------------------------------------------- G6b (c0b PREREG amendment B1)
+G6B_LADDER = [2.0 ** (k / 2.0) for k in range(-12, 13)]
+
+
+def two_sided_flips(L, x: Dict[str, float], lo: float = 1 / 64, hi: float = 64.0) -> Dict[str, Any]:
+    """Along C -> C f: f_hi = smallest f > 1 where the law says QUIET; f_lo = largest f < 1 where it says QUIET."""
+    fs = np.geomspace(lo, hi, 4001)
+    X = {k: np.full(len(fs), v) for k, v in x.items() if k != "C"}
+    X["C"] = x["C"] * fs
+    cls = L.predict(X)
+    above = np.nonzero((fs > 1) & ~cls)[0]
+    below = np.nonzero((fs < 1) & ~cls)[0]
+    return {"f_hi": float(fs[above[0]]) if len(above) else None, "f_lo": float(fs[below[-1]]) if len(below) else None,
+            "pays_at_1": bool(L.predict({k: np.array([v]) for k, v in x.items()})[0])}
+
+
+def intervene_fresh(store, law_id: str, commitment: str, salt: str = "G6b", n_candidates: int = 400,
+                    n_base: int = 12) -> Dict[str, Any]:
+    spec = load_spec(commitment)
+    law_row = store.law(law_id)
+    if not law_row["freeze_hash"]:
+        raise SealBroken("law not frozen")
+    L = law_from_json(law_row["body"]["law"])
+    cmap = law_row["body"].get("cmap", "v1")
+    cand = _call({"cmd": "sample", "spec": spec, "salt": salt, "n": n_candidates, "cmap": cmap})
+    from prometheus.cosmos.contract import terminals_for
+    X = {k: np.array([c["coords"][k] for c in cand]) for k in terminals_for(cmap)}
+    P = L.prob(X)
+    ok = [c for c, p in zip(cand, P) if p >= 0.9]
+    ok.sort(key=lambda c: h([c["i"], spec["nonce"], salt]))
+    bases = ok[:n_base]
+    presc = []
+    for j, c in enumerate(bases):
+        presc.append({"j": j, "i": c["i"], "params": c["params"], "coords": c["coords"], **two_sided_flips(L, c["coords"])})
+    ph = h(presc)
+    store.receipts.append("g6b_prescriptions", {"law_id": law_id, "salt": salt, "presc_hash": ph,
+                                                "n_candidates": len(cand), "n_eligible": len(ok), "prescriptions": presc})
+    store.commit()
+    jobs = []
+    for p in presc:
+        extra = [1.0]
+        if p["f_hi"]:
+            extra.append(2 * p["f_hi"])
+        if p["f_lo"]:
+            extra.append(p["f_lo"] / 2)
+        fs = sorted(set([round(f, 9) for f in G6B_LADDER + extra]))
+        jobs.append({"j": p["j"], "params": p["params"], "factors": fs, "episodes": 1600})
+    out = _call({"cmd": "ladder_params", "spec": spec, "salt": salt, "jobs": jobs})
+    scored = []
+    for p, o in zip(presc, out):
+        rows = {round(r["f"], 9): r for r in o["rows"]}
+        base = rows[1.0]
+        hi_ok = p["f_hi"] is not None and rows[round(2 * p["f_hi"], 9)]["verdict"] == "QUIET"
+        lo_ok = p["f_lo"] is None or rows[round(p["f_lo"] / 2, 9)]["verdict"] == "QUIET"
+        direction_ok = base["verdict"] == "PAYS" and hi_ok and lo_ok
+        lad = sorted((r for f, r in rows.items() if any(abs(f - g) < 1e-9 for g in G6B_LADDER)), key=lambda r: r["f"])
+        f_obs_hi = next((r["f"] for r in lad if r["f"] > 1 and r["margin"] < 0.10), None)
+        f_obs_lo = next((r["f"] for r in reversed(lad) if r["f"] < 1 and r["margin"] < 0.10), None)
+        mag = p["f_hi"] is not None and f_obs_hi is not None and abs(math.log2(f_obs_hi / p["f_hi"])) <= 1.0
+        scored.append({"j": p["j"], "f_hi": p["f_hi"], "f_lo": p["f_lo"], "f_obs_hi": f_obs_hi, "f_obs_lo": f_obs_lo,
+                       "base_margin": base["margin"], "base_verdict": base["verdict"], "hi_ok": hi_ok, "lo_ok": lo_ok,
+                       "direction_ok": direction_ok, "magnitude_ok": mag,
+                       "log2_ratio_hi": (math.log2(f_obs_hi / p["f_hi"]) if (f_obs_hi and p["f_hi"]) else None),
+                       "coords": p["coords"]})
+    res = {"salt": salt, "presc_hash": ph, "n_candidates": len(cand), "n_eligible": len(ok), "n_scored": len(scored),
+           "direction_ok": sum(s["direction_ok"] for s in scored), "magnitude_ok": sum(s["magnitude_ok"] for s in scored),
+           "rows": scored}
+    res["G6b"] = "PASS" if len(scored) >= n_base and res["direction_ok"] >= 10 and res["magnitude_ok"] >= 8 else "FAIL"
+    store.receipts.append("g6b_revealed", {k: v for k, v in res.items() if k != "rows"})
+    store.event(law_id, "INTERVENTION_TESTED", "G6b %s dir %d/%d mag %d/%d" % (
+        res["G6b"], res["direction_ok"], len(scored), res["magnitude_ok"], len(scored)))
+    store.commit()
+    return res

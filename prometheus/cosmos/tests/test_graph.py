@@ -93,3 +93,19 @@ def test_null_pool_crash_falls_back_to_serial(monkeypatch):
     before = len(miner.NULL_POOL_FAILURES)
     got = M._null_scores([rng.permutation(y) for _ in range(3)], workers=4)
     assert len(got) == 3 and len(miner.NULL_POOL_FAILURES) > before
+
+
+def test_two_sided_flips_on_a_band_law():
+    """The G6 defect: a band law has two flips along C -> C f. Both must be found; the grid edge is not a flip."""
+    from prometheus.cosmos.broker import two_sided_flips
+    from prometheus.cosmos.miner import Law
+    band = Law(atoms=[(("var", "C"), 0.4, 1.0), (("mul", ("var", "C"), ("var", "K")), 0.2, -1.0)], complexity=5)
+    band.alpha, band.scales = 50.0, [1.0, 1.0]
+    r = two_sided_flips(band, {"C": 0.1, "N": 0.0, "K": 4.0, "G": 0.5})
+    assert r["pays_at_1"]
+    assert abs(r["f_hi"] - 4.0) / 4.0 < 0.01          # C*f <= 0.4  -> f_hi = 4
+    assert abs(r["f_lo"] - 0.5) / 0.5 < 0.01          # C*f*K >= 0.2 -> f_lo = 0.5
+    one = Law(atoms=[(("var", "C"), 0.4, 1.0)], complexity=1)
+    one.alpha, one.scales = 50.0, [1.0]
+    r1 = two_sided_flips(one, {"C": 0.1, "N": 0.0, "K": 4.0, "G": 0.5})
+    assert r1["f_lo"] is None and abs(r1["f_hi"] - 4.0) / 4.0 < 0.01

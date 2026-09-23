@@ -61,6 +61,37 @@ def main(req_path, reply_path):
                 r = evaluate(D, p, episodes=job.get("episodes", 1600), campaign=_campaign(req["spec"]) + "-ladder")
                 rows.append({"f": f, "coords": D.coords(p), "verdict": r["verdict"], "margin": r["margin"], "se": r["margin_se"]})
             rep.append({"i": job["i"], "rows": rows})
+    elif cmd == "sample":
+        # fresh candidate worlds for a salted protocol (e.g. G6b); spec-side only, no runs
+        import hashlib
+        import numpy as np
+        from prometheus.cosmos.contract import coords_of
+        spec = req["spec"]
+        seed = int(hashlib.sha256((spec["nonce"] + req["salt"]).encode()).hexdigest(), 16) % (2 ** 63)
+        rng = np.random.default_rng(seed)
+        sp = D.space()
+        sealed = {json.dumps(w, sort_keys=True) for w in spec["worlds"]}
+        rep = []
+        for i in range(req["n"]):
+            w = {k: v[rng.integers(len(v))] for k, v in sp.items()}
+            w = {k: (float(x) if isinstance(x, float) else int(x)) for k, x in w.items()}
+            if json.dumps(w, sort_keys=True) in sealed:
+                continue
+            rep.append({"i": i, "params": w, "coords": coords_of(D, w, req.get("cmap", "v3"))})
+    elif cmd == "ladder_params":
+        from prometheus.cosmos.world import world_id
+        rep = []
+        for job in req["jobs"]:
+            base = job["params"]
+            key = world_id(D, base)
+            rows = []
+            for f in job["factors"]:
+                p = D.with_cost_factor(base, f)
+                r = evaluate(D, p, episodes=job.get("episodes", 1600), campaign=_campaign(req["spec"]) + "-" + req["salt"],
+                             seed_key=key)
+                rows.append({"f": f, "verdict": r["verdict"], "margin": r["margin"], "se": r["margin_se"],
+                             "acc": r["acc"]})
+            rep.append({"j": job["j"], "rows": rows})
     else:
         raise SystemExit("unknown cmd " + cmd)
     json.dump(rep, open(reply_path, "w"))
