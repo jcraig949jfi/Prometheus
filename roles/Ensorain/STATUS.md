@@ -1,23 +1,22 @@
 # Ensorain status
 
-Currency: 2026-09-23 (charter day; E0 campaign in progress, M2).
+Currency: 2026-09-23 (charter day; E0 frozen, E1 closed with verdict, M2).
 
 seat state: ACTIVE. Charter adopted (founding directive, truncated inside
-  s12; remainder requested from the operator).
+  s12; operator ruled R4 of the E1 authorization the operative s12 measure).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (engine, rows, verdict
-  committed), VALID as scoped in E0_VERDICT.md (rule: INDETERMINATE;
-  positive control failed on the learner; cheat controls passed).
+  committed), VALID as scoped in E0_VERDICT.md and E1_VERDICT.md (both
+  INDETERMINATE by rule: positive controls failed; cheat controls passed).
 workspace: worktree ensorain-base-role, branch
   ensorain/base-role-adopt-2026-09-23 (base 7a90be1d8; origin/main merged
   explicitly before each push). Host M2 (SPECTREX5). CPU-only by design
   for E0 (tiny per-organism tensors; GPU idle, recorded).
-E0 result: VERDICT (frozen rule) INDETERMINATE (controls) -- planted TT
-  R^2_unv 0.007 < 0.5 (learner, B2). Seat recommendation: B for E0 as
-  built (H1 fails at 168 to LOWRANK; H2 gain is generic, cross-class
-  fails; TT advantage negative at every lambda). ensorain/E0_VERDICT.md.
+E0: FROZEN (operator R1). E1: VERDICT (frozen rule) INDETERMINATE
+  (controls); governing gate G FAILS at C=128/192 (LOWRANK rank 1 beats
+  TT per parameter) -> recommendation B, close the branch.
+  ensorain/E1_VERDICT.md. Unregistered C=384 signal reported as a
+  hypothesis only.
 running now: nothing.
-next executable action: operator decision -- accept B, or authorise the
-  E1 kill-test (fine-structure decisions + charged batch step; kill
-  condition fixed in E0_VERDICT.md s6). ENSORAIN-14/15 wait on the s12
-  remainder.
-blockers: operator (the decision above; the s12 remainder).
+next executable action: operator -- close the branch (B), or authorise a
+  separately preregistered test of the C=384 over-parameterisation signal.
+blockers: operator decision.

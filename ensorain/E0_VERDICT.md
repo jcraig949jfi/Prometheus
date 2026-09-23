@@ -1,5 +1,10 @@
 # ENSORAIN E0 "CHOO CHOO" -- verdict
 
+> FROZEN PERMANENTLY 2026-09-23 by operator ruling (E1 authorization R1,
+> roles/Ensorain/prompts/2026-09-23_e1_authorization/): a useful negative
+> result; no learner rescue; no further E0 runs. The operator reads F1 as a
+> world-design artifact (coarse action-ranking), which E1 tests.
+
 Currency: 2026-09-23. Seat Ensorain[m2-14baf7d5]. Rows ship in this
 commit: ensorain/runs/confirm_M1..M4.jsonl (15,760 lives), genome_c0_cap
 {96,168}.json, evolve_*.jsonl, score_E0.json, score_E0_stdout.txt.
