@@ -112,12 +112,14 @@ def rung_block(rung: str) -> str:
     L = []
     P = L.append
     P("RUNG %s" % rung.upper())
-    gp = os.path.join(RUNS, "gate_%s" % rung, "GATE.json")
+    gp = os.path.join(RUNS, "gate_%s_v2" % rung, "GATE.json")      # gate v2 (two controls) supersedes the v1 receipt when present
+    if not os.path.exists(gp):
+        gp = os.path.join(RUNS, "gate_%s" % rung, "GATE.json")
     if os.path.exists(gp):
         g = receipts.read_json(gp)
-        P("  gate: %s (%s)  positive control: %s" % ("PASS" if g["all_pass"] else "FAIL",
+        P("  gate v%s: %s (%s)  accessibility control (E,H): %s  causal control (F,G): %s" % (g.get("gate_version", 1), "PASS" if g["all_pass"] else "FAIL",
           " ".join("%s=%s" % (k, "P" if g["witnesses"][k]["pass"] else "F") for k in "ABCDEFGH"),
-          g.get("positive_control", "(see GATE.md header)")))
+          g.get("positive_control", "(see GATE.md header)"), g.get("causal_control", g.get("positive_control", "(same)"))))
     pp = os.path.join(RUNS, "parts_%s" % rung, "PARTS.json")
     if os.path.exists(pp):
         parts = receipts.read_json(pp)["parts"]

@@ -2,7 +2,7 @@ C2 ACCESSIBILITY FRONTIER SUMMARY (DESIGN_C2 s8)
 create/invk/invOwn/keep/typed = candidates (of 7208) that created a store object / invoked a block / invoked with own-created blocks / kept bytes or invoked / executed a typed op; qual columns = final-population top1 on sealed streams; take/blk = takeover-check outcomes; repro = qualified candidates with reuse_gain > 0 and competence kept on 3/3 streams; pos/rows = rows with reuse_gain > 0.
 
 RUNG C2A
-  gate: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  positive control: (see GATE.md header)
+  gate v1: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  accessibility control (E,H): (see GATE.md header)  causal control (F,G): (same)
   PARTS: part             len dist     fit   solv    dFit    sign dSolv   tpFit  tpDFit
          P_BASE            19    0  21.924   21.5       -       -     -  21.924       -
          P_CAL             35   18  21.924   21.5  -0.000    0/10   0.0  21.924  -0.000
@@ -36,7 +36,7 @@ RUNG C2A
       candidates that invoked a block: 4; of those in their iteration's top 8: 0
 
 RUNG C2B
-  gate: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  positive control: PROCEDURE_REUSE_C1
+  gate v1: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  accessibility control (E,H): PROCEDURE_REUSE_C1  causal control (F,G): PROCEDURE_REUSE_C1
   PARTS: part             len dist     fit   solv    dFit    sign dSolv   tpFit  tpDFit
          P_BASE            19    0  21.924   21.5       -       -     -  21.924       -
          P_REC             25    7  21.923   21.5  -0.001    0/10   0.0  21.923  -0.001
@@ -72,7 +72,7 @@ RUNG C2B
       candidates that invoked a block: 44; of those in their iteration's top 8: 11
 
 RUNG C2C
-  gate: FAIL (A=P B=P C=P D=P E=F F=P G=P H=F)  positive control: (see GATE.md header)
+  gate v2: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  accessibility control (E,H): PROCEDURE_REUSE_C1  causal control (F,G): P_REC_INV_PLAN
   PARTS: part             len dist     fit   solv    dFit    sign dSolv   tpFit  tpDFit
          P_BASE            19    0  21.924   21.5       -       -     -  21.924       -
          P_REC             25    7  21.923   21.5  -0.001    0/10   0.0  21.923  -0.001
@@ -81,6 +81,68 @@ RUNG C2C
          P_PLAN            58   41  21.867   21.5  -0.057    0/10   0.0  38.665  16.741
          P_REC_INV_PLAN    64   47  37.841   37.4  15.974   10/10  15.9  38.664  -0.000
   run                       cands create invk invOwn keep typed | fitA   fitF  sucA sucF  reuse  blk invk chains | take blk | repro pos/rows
+  search_c2c_random_s1       7208   1122   52     41 1823   717 |   0.16   0.16  0.0  0.0    0.0  0.0  0.0      0 |  412 123 | 0 9/30
+      lineage: reads 83 -> 0, writes 127 -> 0, invokes 6.7 -> 0.0, blocks 2.7 -> 0.7, wsBytes 0 -> 0, successes 0.5 -> 0.3
+      candidates that invoked a block: 52; of those in their iteration's top 8: 18
+  search_c2c_random_s2       7208    729    8      1 1230   914 |   0.16   0.16  0.0  0.0    0.0  0.0  0.0      0 |  280 132 | 0 3/30
+      lineage: reads 56 -> 0, writes 38 -> 0, invokes 0.0 -> 0.0, blocks 0.2 -> 0.4, wsBytes 0 -> 0, successes 0.1 -> 0.1
+      candidates that invoked a block: 8; of those in their iteration's top 8: 1
+  search_c2c_random_s3       7208   1898   61     32 4071  1048 |   2.16   2.16  2.0  2.0    5.4  1.0  0.0      3 |  770 468 | 0 27/30
+      lineage: reads 305 -> 32632, writes 3 -> 20560, invokes 3.1 -> 0.0, blocks 0.8 -> 23.0, wsBytes 0 -> 1, successes 0.6 -> 4.3
+      candidates that invoked a block: 61; of those in their iteration's top 8: 15
+  search_c2c_recombination_  7208   2121   48     25 7072  3877 |  22.10  22.10 21.7 21.7    7.2  1.0  0.0      5 |  916 479 | 0 30/30
+      lineage: reads 121 -> 114, writes 65 -> 25, invokes 0.0 -> 7.2, blocks 2.0 -> 2.0, wsBytes 83 -> 49, successes 20.8 -> 21.3
+      candidates that invoked a block: 48; of those in their iteration's top 8: 6
+  search_c2c_recombination_  7208   4870 2142   1168 7049   174 |  22.45  22.45 22.0 22.0    7.2 32.0 49.0      6 | 1018 394 | 0 30/30
+      lineage: reads 5 -> 0, writes 129 -> 72, invokes 11.2 -> 79.0, blocks 10.2 -> 3.8, wsBytes 22 -> 0, successes 21.8 -> 22.0
+      candidates that invoked a block: 2142; of those in their iteration's top 8: 715
+  search_c2c_recombination_  7208    379  213     66 6906   257 |  18.05  18.05 17.7 17.7    7.2  1.0  0.0      5 |  869 316 | 0 30/30
+      lineage: reads 19 -> 0, writes 0 -> 0, invokes 0.0 -> 0.0, blocks 2.0 -> 2.0, wsBytes 0 -> 0, successes 21.2 -> 21.4
+      candidates that invoked a block: 213; of those in their iteration's top 8: 20
+  search_c2c_seeded_s1       7208    429   23      2 6680   465 |  21.08  21.08 20.7 20.7    7.3  1.0  0.0      5 |  703 310 | 0 27/30
+      lineage: reads 0 -> 0, writes 6 -> 0, invokes 0.0 -> 0.0, blocks 2.0 -> 2.0, wsBytes 0 -> 0, successes 21.8 -> 20.9
+      candidates that invoked a block: 23; of those in their iteration's top 8: 7
+  search_c2c_seeded_s2       7208    602   33      3 7047   942 |  21.09  21.09 20.7 20.7    7.1  1.0  0.0      5 |  837 375 | 0 30/30
+      lineage: reads 8 -> 0, writes 23 -> 0, invokes 0.0 -> 0.0, blocks 3.3 -> 2.0, wsBytes 0 -> 0, successes 21.4 -> 22.0
+      candidates that invoked a block: 33; of those in their iteration's top 8: 6
+  search_c2c_seeded_s3       7208   1495  681    660 6973  1342 |  21.45  21.45 21.0 21.0    7.1  1.0  0.0      3 |  737 467 | 0 29/30
+      lineage: reads 0 -> 155, writes 13 -> 72, invokes 0.0 -> 20.8, blocks 2.0 -> 18.8, wsBytes 0 -> 0, successes 21.3 -> 22.8
+      candidates that invoked a block: 681; of those in their iteration's top 8: 240
 
 RUNG C2D
+  gate v2: PASS (A=P B=P C=P D=P E=P F=P G=P H=P)  accessibility control (E,H): PROCEDURE_REUSE_C1  causal control (F,G): P_REC_INV_PLAN
+  PARTS: part             len dist     fit   solv    dFit    sign dSolv   tpFit  tpDFit
+         P_BASE            19    0  21.924   21.5       -       -     -  21.924       -
+         P_REC             25    7  21.923   21.5  -0.001    0/10   0.0  21.923  -0.001
+         P_INV             37   20  21.922   21.5  -0.002    0/10   0.0  23.162   1.238
+         P_REC_INV         43   26  23.060   22.6   1.138    7/10   1.1  23.068  -0.094
+         P_PLAN            58   41  21.867   21.5  -0.057    0/10   0.0  38.665  16.741
+         P_REC_INV_PLAN    64   47  37.841   37.4  15.974   10/10  15.9  38.664  -0.000
   run                       cands create invk invOwn keep typed | fitA   fitF  sucA sucF  reuse  blk invk chains | take blk | repro pos/rows
+  search_c2d_random_s1       7208   1122   52     41 1823   717 |   0.16   0.16  0.0  0.0    0.0  0.0  0.0      0 |  412 123 | 0 9/30
+      lineage: reads 83 -> 0, writes 127 -> 0, invokes 6.7 -> 0.0, blocks 2.7 -> 0.7, wsBytes 0 -> 0, successes 0.5 -> 0.3
+      candidates that invoked a block: 52; of those in their iteration's top 8: 18
+  search_c2d_random_s2       7208    729    8      1 1230   914 |   0.16   0.16  0.0  0.0    0.0  0.0  0.0      0 |  280 132 | 0 3/30
+      lineage: reads 56 -> 0, writes 38 -> 0, invokes 0.0 -> 0.0, blocks 0.2 -> 0.4, wsBytes 0 -> 0, successes 0.1 -> 0.1
+      candidates that invoked a block: 8; of those in their iteration's top 8: 1
+  search_c2d_random_s3       7208   1898   61     32 4071  1048 |   2.16   2.16  2.0  2.0    5.4  1.0  0.0      3 |  770 468 | 0 27/30
+      lineage: reads 305 -> 32632, writes 3 -> 20560, invokes 3.1 -> 0.0, blocks 0.8 -> 23.0, wsBytes 0 -> 1, successes 0.6 -> 4.3
+      candidates that invoked a block: 61; of those in their iteration's top 8: 15
+  search_c2d_recombination_  7208    180   83      5 7116  1050 |  21.75  21.75 21.3 21.3    7.2  1.0  0.0      7 |  912 374 | 0 30/30
+      lineage: reads 2 -> 0, writes 0 -> 0, invokes 0.0 -> 0.0, blocks 2.0 -> 2.0, wsBytes 0 -> 0, successes 21.1 -> 21.2
+      candidates that invoked a block: 83; of those in their iteration's top 8: 10
+  search_c2d_recombination_  7208   2088  415    277 6972   587 |  22.11  22.11 21.7 21.7    7.1  1.0  0.0      5 |  812 294 | 0 22/30
+      lineage: reads 0 -> 0, writes 205 -> 0, invokes 31.3 -> 0.0, blocks 2.0 -> 2.0, wsBytes 70 -> 0, successes 21.6 -> 21.7
+      candidates that invoked a block: 415; of those in their iteration's top 8: 41
+  search_c2d_recombination_  7208    229   28      1 6816   200 |  22.10  22.10 21.7 21.7    7.1  1.0  0.0      6 |  588 232 | 0 30/30
+      lineage: reads 0 -> 0, writes 0 -> 0, invokes 0.0 -> 0.0, blocks 2.0 -> 2.0, wsBytes 0 -> 0, successes 21.7 -> 22.5
+      candidates that invoked a block: 28; of those in their iteration's top 8: 5
+  search_c2d_seeded_s1       7208    429   23      2 6680   465 |  21.08  21.08 20.7 20.7    7.3  1.0  0.0      5 |  703 310 | 0 27/30
+      lineage: reads 0 -> 0, writes 6 -> 0, invokes 0.0 -> 0.0, blocks 2.0 -> 2.0, wsBytes 0 -> 0, successes 21.8 -> 20.9
+      candidates that invoked a block: 23; of those in their iteration's top 8: 7
+  search_c2d_seeded_s2       7208    602   33      3 7047   942 |  21.09  21.09 20.7 20.7    7.1  1.0  0.0      5 |  837 375 | 0 30/30
+      lineage: reads 8 -> 0, writes 23 -> 0, invokes 0.0 -> 0.0, blocks 3.3 -> 2.0, wsBytes 0 -> 0, successes 21.4 -> 22.0
+      candidates that invoked a block: 33; of those in their iteration's top 8: 6
+  search_c2d_seeded_s3       7208   1495  681    660 6973  1342 |  21.45  21.45 21.0 21.0    7.1  1.0  0.0      3 |  737 467 | 0 29/30
+      lineage: reads 0 -> 155, writes 13 -> 72, invokes 0.0 -> 20.8, blocks 2.0 -> 18.8, wsBytes 0 -> 0, successes 21.3 -> 22.8
+      candidates that invoked a block: 681; of those in their iteration's top 8: 240

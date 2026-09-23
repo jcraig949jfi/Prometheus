@@ -141,6 +141,25 @@ def test_typed_receipt_replays(cfg, tasks):
     assert life2["replay_hash"] == rec["replay_hash"]
 
 
+# ---------------------------------------------------------------- disposition scorer (c2_terminal)
+
+
+def test_edit_size_counts_splice_and_duplicate_lengths():
+    from crius.c2_terminal import _edit_size
+    assert _edit_size("replace@4") == 1
+    assert _edit_size("const@1+splice@24<-donor[24:28]:b6e1c9f6d3fbfd9d") == 5
+    assert _edit_size("duplicate@4+2->6+insert@4") == 3
+    assert _edit_size("swap@14,39+insert@8+arg@9.1+splice@39<-donor[17:18]:PART:P_REC") == 4
+
+
+def test_repro_floor_rejects_the_calibration_artifacts_constant_gain():
+    from crius.c2_terminal import _repro
+    row = lambda gain, acc, fresh: {"reuse_gain_total": gain, "successes": {"ACCUMULATED": acc, "FRESH": fresh}, "mean_cost": {"FRESH": 200.0}}
+    assert not _repro([row(7.2, 22, 22)] * 3)            # every typed-substrate candidate carries ~7 from the calibration object
+    assert _repro([row(600.0, 30, 22)] * 3)              # 5 pct of 50 x 200 = 500
+    assert not _repro([row(600.0, 30, 22)] * 2 + [row(600.0, 21, 22)])   # competence lost on one stream
+
+
 def test_parts_accounting_recorder_and_invoker(cfg, tasks):
     vm.set_substrate(cfg["substrate"])
     rec = evaluate.run_lifetime(parts_c2.player("P_REC"), tasks, cfg, "ACCUMULATED", seed=301)
