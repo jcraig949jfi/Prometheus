@@ -25,3 +25,17 @@ SURVIVED round 0 (0/106; offsets ca -.027 regs -.021 ring -.016). Prediction HEL
 <= .10 and a G exp(-N) product ceiling).
 Convergence across the three location-gated survivors on two seeds: ceiling G exp(-N) - C >= 0.102
 (C2), 0.0945 (c2rep), 0.145 G (c2none); the task economics give 0.10.
+
+## c1s29 RESULT (2026-09-23T16:29Z)
+Lines, NO selection, seed 20260929: law ce2c66c36f (v4) (Q - C K) <= 0.8415 AND C - G exp(-N) <= -0.1026
+SURVIVED round 0 (0/107; offsets ca -.024 regs -.044 ring +.002). Prediction HELD.
+Seed-29 2x2 is complete: all four cells (lines x selection) produced a surviving, well-located law.
+This law is exactly C2's top LOLO candidate; C2's location-aware selection had instead picked a
+different candidate that FAILED round 0 (selection-time location noise made selection WORSE than the
+plain LOLO pick on this seed). C1's failure (seed 20260928) is therefore attributed provisionally to
+the seed/data, not to the method.
+FINAL discriminating arm (written before it runs; then no more method arms):
+  c2none28  NO lines, NO selection, location gate, seed 20260928 (C1's seed).
+  If it FAILS: seed 28's data defeats the method regardless of lines -> seed variance dominates.
+  If it SURVIVES: lines-without-selection hurt on seed 28 specifically.
+  Prediction (conf 0.55): it FAILS.
