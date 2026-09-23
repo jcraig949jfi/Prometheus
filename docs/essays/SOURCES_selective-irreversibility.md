@@ -187,6 +187,51 @@ the dark. Strongest single addition to the argument.
 
 ---
 
+## The counter-arguments (added at the operator's instruction, 2026-09-23)
+
+A hypothesis stated to be killed should carry its own best attackers. Three, each
+verified, each now cited on the page in a closing section:
+
+    Preetum Nakkiran, Gal Kaplun, Yamini Bansal, Tristan Yang, Boaz Barak,
+    Ilya Sutskever
+    "Deep double descent: where bigger models and more data hurt"
+    ICLR 2020; arXiv:1912.02292
+    https://arxiv.org/abs/1912.02292
+
+The strongest single objection. Test error falls, rises, then falls AGAIN as capacity
+grows past the interpolation threshold, and the paper identifies regimes where even
+quadrupling training data hurts. Most of modern machine learning operates on the far
+side of that second descent, where more capacity reliably helps. The essay predicts
+capability peaking at intermediate constraint; this is a measured curve that does not
+have that shape. Not fatal -- the essay's claim is about pressure to ABSTRACT, not raw
+test error, and the two need not coincide -- but that distinction has to be argued, not
+assumed.
+
+    Horace B. Barlow
+    "Possible principles underlying the transformation of sensory messages"
+    in Sensory Communication, MIT Press, 216-234 (1961)
+
+The efficient-coding hypothesis began with exactly this essay's intuition: sensory
+systems reduce redundancy. It had to be substantially weakened. Real neural codes keep
+considerable redundancy, deliberately, for noise tolerance and error correction. In the
+one substrate we can inspect at leisure, evolution did NOT choose "destroy distinctions
+that no longer matter". Cited both as the origin of the idea and as evidence against
+its strong form.
+
+    Falk Lieder, Thomas L. Griffiths
+    "Resource-rational analysis: understanding human cognition as the optimal use of
+     limited computational resources"
+    Behavioral and Brain Sciences 43, e1 (2020)
+    doi:10.1017/S0140525X1900061X
+
+The deflationary objection, and the one hardest to answer. Resource-rational analysis
+already explains a great deal of bounded cognition as optimizing against time, memory
+and computational cost, with no physics in it at all. If it accounts for the phenomena,
+Landauer is a layer nothing yet requires. The burden on the whole essay is to produce
+one prediction resource-rationality does not already make.
+
+---
+
 ## What remains uncited because it is genuinely ours
 
 The Selective Irreversibility Hypothesis as stated, and the three ratios (eta_I, eta_A,

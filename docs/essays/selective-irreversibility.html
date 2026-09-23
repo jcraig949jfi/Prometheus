@@ -503,6 +503,32 @@
   <p>That is exactly the sort of candidate to put on the wall under <em>Physics of Intelligence —
   possible fundamentals</em>, rather than under “AI architecture.”</p>
 
+  <h2>Three arguments against this</h2>
+
+  <p>A hypothesis written to be attacked should name its own best attackers. Here are the three that
+  worry me most.</p>
+
+  <p><strong>The capability curve is not shaped the way this predicts.</strong> Deep double descent
+  shows test error falling, then rising, then falling <em>again</em> as capacity grows past the
+  interpolation threshold — and identifies regimes where even quadrupling the training data makes
+  performance worse. Most of modern machine learning operates on the far side of that second descent,
+  where more capacity reliably helps. If pressure to forget were the engine of abstraction, that is
+  not the curve we should be seeing.<sup class="ref"><a href="#r14">14</a></sup></p>
+
+  <p><strong>Biology kept the redundancy.</strong> The efficient-coding tradition began with precisely
+  this essay’s intuition — that sensory systems exist to reduce redundancy — and it had to be
+  substantially weakened. Real neural codes retain considerable redundancy, and retain it for good
+  reasons: noise tolerance and error correction. “Destroy distinctions that no longer matter” is not
+  the design evolution actually settled on, in the one substrate we can inspect at
+  leisure.<sup class="ref"><a href="#r15">15</a></sup></p>
+
+  <p><strong>The thermodynamics may be surplus.</strong> Resource-rational analysis already accounts
+  for a great deal of bounded cognition as optimizing performance against time, memory and
+  computational cost — with no physics in it whatsoever. If that framework explains the phenomena,
+  then Landauer is a layer of explanation nothing yet requires. The burden on everything above is to
+  produce one prediction that resource-rationality does not already
+  make.<sup class="ref"><a href="#r16">16</a></sup></p>
+
   <section class="refs">
     <h2>Sources</h2>
     <ol>
@@ -575,6 +601,27 @@
         <a href="https://www.pnas.org/doi/abs/10.1073/pnas.0707835105">doi:10.1073/pnas.0707835105</a>
         <span class="w">A transmission bottleneck produces compositional structure that no
         participant intended. The causal chain below, already demonstrated in one substrate.</span></li>
+
+      <li id="r14">Preetum Nakkiran, Gal Kaplun, Yamini Bansal, Tristan Yang, Boaz Barak,
+        Ilya Sutskever, <span class="t">“Deep double descent: where bigger models and more data
+        hurt”</span>, ICLR 2020.
+        <a href="https://arxiv.org/abs/1912.02292">arXiv:1912.02292</a>
+        <span class="w">Counter-evidence. Test error is non-monotonic in capacity, and more data can
+        hurt — but past the interpolation threshold, more capacity helps.</span></li>
+
+      <li id="r15">Horace B. Barlow, <span class="t">“Possible principles underlying the
+        transformation of sensory messages”</span>, in <span class="t">Sensory Communication</span>,
+        MIT Press, 216–234 (1961).
+        <span class="w">The origin of redundancy reduction and the efficient-coding hypothesis —
+        and, in its later revisions, evidence that biological codes deliberately keep redundancy
+        they could discard.</span></li>
+
+      <li id="r16">Falk Lieder, Thomas L. Griffiths, <span class="t">“Resource-rational analysis:
+        understanding human cognition as the optimal use of limited computational resources”</span>,
+        Behavioral and Brain Sciences <b>43</b>, e1 (2020).
+        <a href="https://doi.org/10.1017/S0140525X1900061X">doi:10.1017/S0140525X1900061X</a>
+        <span class="w">Bounded cognition explained by optimizing against time, memory and compute —
+        with no thermodynamics required.</span></li>
     </ol>
   </section>
 
