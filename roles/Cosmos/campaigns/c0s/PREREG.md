@@ -31,3 +31,14 @@ computed before freezing it (base-role doctrine violated). S2 stays LOST as scor
 S2b: same cells, cost ladder LINEAR in C over [G - 0.20, G + 0.05], 41 points (step 0.00625),
 1600 episodes, 6 replicates; C* = fitted location. Same prediction and threshold (>= 7/9 cells
 within 0.02 of G - 0.10 and not within 0.02 of G - 0.055). Resolution 0.00625 < 0.02.
+
+## S2b RESULT (2026-09-23T13:04Z, S2b_ceiling.json)
+9/9 cells: observed cost ceiling C* = G - 0.100 +/- 0.008 in regs, ring and ca at V = 2, 4, 16;
+the frozen law's ceiling is G - 0.055. Prediction HELD. Transition width (log-knob units) <= 0.018
+at 1600 episodes: a sharp boundary.
+CONCLUDED: the frozen law carries a systematic cost-ceiling bias of ~0.045 in C (too generous) at
+small N -- the shape of its false positives on sealed D and E. The miner preferred the additive
+form C - (G + exp(-N)) over the multiplicative G exp(-N) - C (both size 6; near-tied under LOLO),
+and the confident-contradiction adversary cannot see a location bias inside the transition band.
+The law is NOT revised here (no unspent sealed universe remains to test a revision); the bias is
+recorded as an ATTACKED event on the law.
