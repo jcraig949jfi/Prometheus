@@ -94,13 +94,23 @@ spend to date: about $2.09 of the $3 authorization across all runs
   ACTIVE_POD_COUNT 0 now. Billing reconciliation remains INCOMPLETE and
   is not claimed: figures are computed from measured wall time at the
   quoted rate, because this client has no billing endpoint.
-next executable action: operator's call, and it is a science decision
-  rather than an engineering one. The three candidates the run leaves
-  open: (a) extend B_balanced, the only world still changing at tick
-  5,000 and right-censored by run length rather than by physics; (b) put
-  the two proposed additions (the certified-death condition, the energy
-  loss rate) into HABITABILITY.md and ECONOMICS.md, which are other
-  documents' text and so want a ruling; (c) accept that aeth01.v1's
-  soup does not organize and decide whether that falsifies the candidate
-  or is a parameter-space question, which bears on whether to freeze
-  aeth01.v1 at all. No further kernel work is indicated.
+next executable action: **AETH-02 NATIVE CIRCUITRY ROUND, not
+  started.** Operator directive of 2026-09-23, verbatim and manifested
+  at roles/Aether/prompts/2026-09-23_native_circuitry/DIRECTIVE.md.
+  Resume state and blockers: roles/Aether/TODO.md.
+  Five tracks: finish the B-balanced trajectory to ~50,000 ticks; build
+  a CAUSAL-GRAPH OBSERVATORY that emits source->target edges (this does
+  not exist -- today's observatory emits lattice scalars and 64-block
+  maps and no edges at all, so it is a build); search for stateful
+  circuit candidates under neutral labels; run matched replay
+  counterfactuals against the strongest candidates; retain
+  full-resolution 256x256 windows under a PREREGISTERED selection rule.
+  Plus a long-horizon CPU/GPU digest comparison at ~512^2 x 5,000
+  ticks, and the GPU-memory-over-lifetime sampling the First Light
+  runner lacked. No steering, no reward, no redesign of aeth01.v1.
+  Output: Aether/AETH-01/NATIVE_CIRCUITRY_01_2026-09-23.md with
+  OBSERVED / INTERVENTION RESULTS / INTERPRETATION / REJECTED
+  INTERPRETATIONS / HYPOTHESES / FUTURE LIGHT PRESSURES kept apart.
+  Budget: the directive's own up-to-$3, one pod at a time; about $2.09
+  of the PREVIOUS $3 was already spent, so confirm rather than assume
+  a carry-over.

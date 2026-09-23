@@ -2,6 +2,28 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+## CURRENT DIRECTIVE (2026-09-23) -- READ THIS BEFORE ANYTHING ELSE
+
+The body of this file below is STALE. It describes a pre-charter seat
+with no lane and no science; all of that is false as of 2026-09-20. It
+is left standing rather than silently rewritten (base role s2:
+corrections are annotations beside the original).
+
+The seat's standing work is:
+
+    roles/Aether/prompts/2026-09-23_native_circuitry/DIRECTIVE.md
+    (operator, 2026-09-23, verbatim, with a MANIFEST -- verify it)
+
+    AETH-02 NATIVE CIRCUITRY ROUND -- NOT STARTED
+
+Resume state, known blockers and what must be BUILT rather than
+configured: roles/Aether/TODO.md. Current facts: roles/Aether/STATUS.md.
+The lane's own doctrine, which is what this file should have been
+rewritten around: Aether/AETHER_DOCTRINE.md.
+
+Where those disagree with the stale body below, they win, and the
+operator's verbatim directive wins over all of them.
+
 Currency: 2026-09-19 (seat created on M2; base role adopted; charter
 PENDING the operator's discussion).
 
