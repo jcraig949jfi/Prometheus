@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Selective Irreversibility — Prometheus</title>
+<meta name="description" content="Intelligence as thermodynamically efficient selective irreversibility: Landauer, the Information Bottleneck, and a hypothesis to try to kill.">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --bg:#fbfaf8; --panel:#ffffff; --ink:#1b1d21; --muted:#5d6570;
+    --rule:#e3e0da; --accent:#8a5a2b; --accent-soft:#f3ece3; --box:#f6f3ee;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1216; --panel:#151a20; --ink:#e8eaed; --muted:#98a2b0;
+      --rule:#272e37; --accent:#e0a96d; --accent-soft:#1d242c; --box:#191f26;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1216; --panel:#151a20; --ink:#e8eaed; --muted:#98a2b0;
+    --rule:#272e37; --accent:#e0a96d; --accent-soft:#1d242c; --box:#191f26;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    font-size:18px; line-height:1.66; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:43rem; margin:0 auto; padding:0 20px;}
+  header.masthead{
+    border-bottom:1px solid var(--rule); background:var(--panel);
+    padding-block:10px; margin-bottom:44px;
+  }
+  .masthead .wrap{display:flex; gap:12px; align-items:baseline; justify-content:space-between; flex-wrap:wrap;}
+  .brand{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    text-decoration:none;
+  }
+  .brand b{color:var(--accent); font-weight:600}
+  .kicker{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:11.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(2rem,6.2vw,3.05rem); line-height:1.08; letter-spacing:-.02em;
+    margin:0 0 18px; font-weight:600;
+  }
+  .dek{font-size:1.2rem; color:var(--muted); line-height:1.5; margin:0 0 26px; font-style:italic;}
+  .byline{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px; color:var(--muted); letter-spacing:.04em;
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    padding:11px 0; margin:0 0 40px;
+  }
+  h2{
+    font-size:1.42rem; line-height:1.25; margin:52px 0 16px; font-weight:600;
+    letter-spacing:-.01em;
+  }
+  h2 .num{color:var(--accent); font-family:ui-monospace,monospace; font-size:.8em; margin-right:.5em}
+  h3{font-size:1.1rem; margin:34px 0 12px; font-weight:600;}
+  p{margin:0 0 20px}
+  .lede::first-letter{
+    float:left; font-size:3.3em; line-height:.84; padding:.05em .08em 0 0;
+    color:var(--accent); font-weight:600;
+  }
+  blockquote{
+    margin:26px 0; padding:2px 0 2px 20px; border-left:3px solid var(--accent);
+    color:var(--ink); font-style:italic;
+  }
+  blockquote p{margin:0 0 10px}
+  blockquote p:last-child{margin:0}
+  .terms{
+    margin:22px 0; padding:16px 20px; background:var(--panel);
+    border:1px solid var(--rule); border-radius:8px;
+  }
+  .terms p{margin:0 0 8px; font-style:italic; color:var(--muted)}
+  .terms p:last-child{margin:0}
+  .boxed{
+    margin:30px 0; padding:20px 22px; background:var(--box);
+    border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:8px; text-align:center; overflow-x:auto;
+  }
+  .boxed .label{
+    display:block; font-family:ui-monospace,monospace; font-size:11px;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:10px; text-align:left;
+  }
+  .eq{margin:24px 0; overflow-x:auto; text-align:center;}
+  .chain{
+    margin:26px 0; padding:18px 20px; background:var(--accent-soft);
+    border-radius:8px; text-align:center; overflow-x:auto; font-size:.98rem;
+  }
+  .claim{
+    margin:30px 0; padding:20px 22px; background:var(--panel);
+    border:1px solid var(--accent); border-radius:8px;
+  }
+  .claim h3{margin:0 0 10px; color:var(--accent); font-size:1.05rem;}
+  .claim p:last-child{margin:0}
+  hr.div{
+    border:0; text-align:center; margin:44px 0;
+    color:var(--muted); font-size:1.1rem;
+  }
+  hr.div::before{content:"⸻"; letter-spacing:.3em}
+  .dials{margin:22px 0; padding-left:0; list-style:none}
+  .dials li{
+    padding:10px 0 10px 16px; border-left:2px solid var(--rule); margin-bottom:8px;
+  }
+  .dials li b{color:var(--accent)}
+  footer.foot{
+    margin:64px 0 40px; padding-top:22px; border-top:1px solid var(--rule);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12.5px; color:var(--muted); line-height:1.7;
+  }
+  footer.foot a{color:var(--accent)}
+  mjx-container{overflow-x:auto; overflow-y:hidden; max-width:100%}
+  mjx-container[display="true"]{margin:0 !important}
+  @media (max-width:520px){ body{font-size:17px} .wrap{padding:0 17px} }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><b>Prometheus</b> &nbsp;/&nbsp; Physics of Intelligence</a>
+    <span class="brand">2026&#8209;09&#8209;23</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="kicker">Possible fundamentals — not AI architecture</p>
+
+  <h1>Selective Irreversibility</h1>
+
+  <p class="dek">Intelligence is not thermodynamically efficient forgetting. It is thermodynamically
+  efficient selective irreversibility: destroying distinctions that no longer matter while preserving
+  distinctions that predict, control, or generalize.</p>
+
+  <p class="byline">Working note · filed under Physics of Intelligence · a hypothesis stated to be killed</p>
+
+  <p class="lede">That distinction turns the analogy into something we may actually be able to
+  formalize.</p>
+
+  <p>Landauer’s principle says that logically irreversible operations — many possible logical states
+  being mapped into fewer states — carry a thermodynamic cost. Reversible computation can in principle
+  avoid that cost until information is actually erased or reset. Experiments have directly demonstrated
+  the \(k_BT\ln 2\) limit for bit erasure, and more general treatments relate the minimum work cost to
+  the information discarded conditional on the output.</p>
+
+  <h2>The really interesting connection: abstraction is many-to-one</h2>
+
+  <p>Suppose an intelligent system observes some gigantic state \(X\) and constructs an abstraction</p>
+
+  <div class="eq">$$Z=f(X).$$</div>
+
+  <p>Imagine millions of distinct \(X\)’s all become:</p>
+
+  <div class="terms">
+    <p>predator</p>
+    <p>prime number</p>
+    <p>unstable trajectory</p>
+    <p>use this subroutine.</p>
+  </div>
+
+  <p>That’s a many-to-one map. The abstraction deliberately makes distinctions disappear.</p>
+
+  <p>If the physical implementation really disposes of those distinctions rather than retaining them
+  somewhere as reversible bookkeeping, then the amount erased is approximately related to
+  \(H(X\mid Z)\) — the information about the original state that cannot be recovered from the
+  abstraction.</p>
+
+  <p>So an idealized cyclic physical learner suggests something like</p>
+
+  <div class="eq">$$W_{\text{erase}} \gtrsim k_BT\ln 2\,H(X\mid Z)$$</div>
+
+  <p>with important physical assumptions around how the memory and reset are implemented. That is
+  already remarkably close to the proposed principle.</p>
+
+  <p>But now introduce another variable:</p>
+
+  <div class="eq">$$Y = \text{future/task/action-relevant structure}.$$</div>
+
+  <p>A good abstraction doesn’t merely maximize \(H(X\mid Z)\). <strong>A random shredder could do
+  that.</strong> It tries to make \(Z\) very small while preserving \(I(Z;Y)\).</p>
+
+  <p>And that’s essentially the territory of the Information Bottleneck: find a compressed
+  representation of \(X\) that retains information relevant to \(Y\).</p>
+
+  <p>Combine Landauer and the Information Bottleneck, and suddenly we get something much more
+  interesting than either separately:</p>
+
+  <div class="boxed">
+    <span class="label">The dial</span>
+    $$\text{Intelligence} \sim \text{preserve useful distinctions while irreversibly eliminating useless ones}$$
+  </div>
+
+  <p>That might be one of our missing dials. And it changes the four propositions in useful ways.</p>
+
+  <h2><span class="num">1</span>Hallucination as the thermodynamic default</h2>
+
+  <p>I’d weaken the literal claim but keep the deeper insight.</p>
+
+  <p>Thermodynamic entropy and semantic incorrectness aren’t the same thing. A system can produce an
+  extremely ordered, low-entropy, completely false story. So Landauer alone doesn’t imply
+  hallucination.</p>
+
+  <p>But an intelligent physical system is unquestionably a nonequilibrium system. Maintaining
+  organized internal states against noise requires continued free-energy expenditure. And maintaining
+  truth-correlated organization requires repeated coupling to the environment.</p>
+
+  <p>So I’d replace:</p>
+
+  <blockquote><p>intelligence requires energy to prevent thought dissolving into noise</p></blockquote>
+
+  <p>with:</p>
+
+  <blockquote><p>intelligence requires continued expenditure to maintain task-relevant correlations
+  against degradation, perturbation, and irrelevant state proliferation.</p></blockquote>
+
+  <p>That is much more defensible. And notice the important addition: grounding isn’t merely
+  information coming in. It’s <em>entropy exported while useful correlations are maintained</em>.</p>
+
+  <hr class="div">
+
+  <h2><span class="num">2</span>Falsification as erasure</h2>
+
+  <p>Here there’s an important subtlety. Falsifying a hypothesis doesn’t necessarily erase it. I can
+  retain</p>
+
+  <div class="eq">$$\{H_1:\text{false},\; H_2:\text{false},\; H_3:\text{true}\}$$</div>
+
+  <p>reversibly forever. Landauer’s bill arrives when finite memory eventually says <em>I no longer
+  need the complete histories of \(H_1\) and \(H_2\)</em> — and resets those states.</p>
+
+  <p>So perhaps falsification has two stages:</p>
+
+  <div class="chain">$$\text{distinguish} \;\longrightarrow\; \text{discard}$$</div>
+
+  <p>The first creates information. The second destroys distinctions. And bounded intelligence forces
+  the second step eventually.</p>
+
+  <p>That’s fascinating, because an unbounded reasoner could theoretically keep its entire search tree.
+  A bounded reasoner cannot. Therefore:</p>
+
+  <div class="claim">
+    <h3>Boundedness may be what makes intelligence thermodynamic</h3>
+    <p>Memory limits force irreversible choices about which distinctions deserve continued physical
+    existence.</p>
+  </div>
+
+  <p>That sounds like a serious candidate for the physics-of-intelligence search.</p>
+
+  <hr class="div">
+
+  <h2><span class="num">3</span>Steering as work</h2>
+
+  <p>The intuition survives, but I’d move it from Landauer specifically into nonequilibrium control
+  theory. There is actual work connecting thermodynamic control to geometries over state spaces;
+  within certain regimes, a metric over thermodynamic states determines dissipation along finite-time
+  trajectories.</p>
+
+  <p>So imagine the intelligence manifold again. An intelligent trajectory wanders toward some
+  undesirable region. A steering intervention changes its trajectory: \(s_t \rightarrow s'_t\).</p>
+
+  <p>The right question becomes not merely <em>did steering work?</em> but:</p>
+
+  <div class="eq">$$\frac{\text{capability restored}}{\text{control work injected}}$$</div>
+
+  <p>Now we have another dial: <strong>restorative efficiency</strong>. Some architectures might need
+  enormous intervention to return to a useful basin. Others might self-correct after a tiny
+  perturbation. That is measurable.</p>
+
+  <p>And it suggests that the geometry of the intelligence region itself matters: basin width,
+  boundary curvature, attractor strength, escape rates, restoration energy.</p>
+
+  <hr class="div">
+
+  <h2><span class="num">4</span>Compression has a boundary</h2>
+
+  <p>Here the boundary likely comes from rate-distortion, not Landauer alone. Compression itself can be
+  reversible — I can compress a file and retain every bit. The critical act occurs when we say
+  <em>these distinctions aren’t worth keeping</em>. Then compression becomes lossy.</p>
+
+  <p>So imagine moving along</p>
+
+  <div class="eq">$$X\rightarrow Z_1\rightarrow Z_2\rightarrow Z_3\rightarrow\cdots$$</div>
+
+  <p>with increasingly aggressive abstraction. Initially we erase nuisance variation. Performance
+  improves. Then eventually \(I(Z;Y)\) starts collapsing.</p>
+
+  <p>That’s the <strong>abstraction cliff</strong>. And different architectures may have radically
+  different cliffs. That feels exactly like one of the hidden sliders.</p>
+
+  <hr class="div">
+
+  <h2>An existing result that makes this more compelling</h2>
+
+  <p>Still, Sivak, Bell and Crooks studied physical systems that retain information about their
+  environments, and separated remembered information into information useful for predicting the future
+  and information merely about the past.</p>
+
+  <p>They found a direct relationship between nonpredictive stored information and thermodynamic
+  inefficiency. Their term for the useless retained past information is particularly memorable:
+  <strong>nostalgia</strong>.</p>
+
+  <p>That is strikingly close to what we’re circling. A highly efficient adaptive system should not
+  remember everything. It should preferentially retain what predicts what comes next.</p>
+
+  <p>So perhaps the fundamental isn’t compression. It’s:</p>
+
+  <div class="boxed">
+    <span class="label">The fundamental</span>
+    $$\textbf{predictive selective retention}$$
+  </div>
+
+  <p>Everything else gets progressively released.</p>
+
+  <h2>A candidate “Landauer principle of intelligence”</h2>
+
+  <p>I wouldn’t state it yet as a law. I’d state it as a hypothesis we can try to kill.</p>
+
+  <div class="claim">
+    <h3>Selective Irreversibility Hypothesis</h3>
+    <p>Any bounded physical intelligence operating cyclically must continually compress its accumulated
+    state. When that compression physically erases distinctions, it incurs an irreducible thermodynamic
+    cost. Intelligence is therefore constrained not simply by computation or memory, but by its ability
+    to minimize irreversible destruction of task-relevant information while efficiently disposing of
+    task-irrelevant information.</p>
+  </div>
+
+  <p>That gives us three measurable quantities:</p>
+
+  <ul class="dials">
+    <li><b>D</b> — information discarded</li>
+    <li><b>R</b> — relevant/predictive information retained</li>
+    <li><b>E</b> — physical or computational expenditure</li>
+  </ul>
+
+  <p>And now we can start looking for ratios. An intelligence thermodynamic efficiency:</p>
+
+  <div class="eq">$$\eta_I = \frac{I(Z;Y)}{E/(k_BT\ln 2)}$$</div>
+
+  <p>roughly: predictively useful bits maintained per Landauer-equivalent unit of expenditure. Or,
+  independently of actual joules initially:</p>
+
+  <div class="eq">$$\eta_A = \frac{I(Z;Y)}{I(X;Z)}$$</div>
+
+  <p>useful information per bit retained. And perhaps, for falsification efficiency:</p>
+
+  <div class="eq">$$\eta_F = \frac{\text{hypothesis-space volume eliminated correctly}}{\text{irreversible state changes}}$$</div>
+
+  <p>I wouldn’t become attached to any of these equations yet. <strong>They are rulers to
+  attack.</strong></p>
+
+  <h2>The part most consequential for Prometheus</h2>
+
+  <p>We have been treating constraints as annoyances or experimental parameters. Memory caps. Compute
+  caps. Bandwidth. Energy. Organism size. Communication restrictions.</p>
+
+  <p><strong>They may be causal ingredients.</strong></p>
+
+  <p>Without pressure to forget, there is little pressure to abstract. Without pressure to abstract,
+  there is less pressure to discover invariants. Without discarded distinctions, everything can remain
+  episodic.</p>
+
+  <p>So one possible progression is:</p>
+
+  <div class="chain">
+    $$\text{boundedness} \rightarrow \text{forced forgetting} \rightarrow \text{selective compression} \rightarrow \text{invariants} \rightarrow \text{abstraction} \rightarrow \text{transfer}$$
+  </div>
+
+  <p>That is a testable causal chain. And it produces a rather provocative prediction:</p>
+
+  <blockquote><p>Giving an adaptive system more memory should sometimes make it <em>less</em>
+  intelligent, because it removes the pressure to discover cheaper sufficient representations.</p></blockquote>
+
+  <p>Not always. But there should be regimes where capability peaks at an intermediate resource
+  constraint rather than at maximum memory.</p>
+
+  <p>That would be a beautiful thing for <strong>Cosmos, Ensorain, Aether, BEE, or Nestor</strong> to
+  attack independently. We could dial memory from effectively infinite down through severe constraint
+  and ask whether there is a phase transition where the organisms suddenly begin inventing reusable
+  abstractions.</p>
+
+  <p>Then do the same with compute, bandwidth, communication, replay, falsification cost, and
+  irreversible-update cost. If the same transition appears across radically different substrates, we
+  have found something much more interesting than another ML trick.</p>
+
+  <p>We may have found one of those hidden axes in the control space:</p>
+
+  <div class="boxed">
+    <span class="label">The hidden axis</span>
+    $$\text{pressure to eliminate irrelevant distinctions}$$
+  </div>
+
+  <p>And that might genuinely sit underneath compression, abstraction, generalization, forgetting,
+  falsification, dreaming, and even reasoning itself.</p>
+
+  <p>That is exactly the sort of candidate to put on the wall under <em>Physics of Intelligence —
+  possible fundamentals</em>, rather than under “AI architecture.”</p>
+
+  <footer class="foot">
+    Captured verbatim 2026-09-23. Source text preserved alongside this page as
+    <a href="2026-09-23-selective-irreversibility.md">2026-09-23-selective-irreversibility.md</a>.<br>
+    Status: hypothesis, stated to be attacked. No claim here has been tested in Prometheus.
+  </footer>
+
+</main>
