@@ -44,6 +44,7 @@ def certify(obs: Dict[str, Dict[str, Any]], reward_per_success: float, n_boot: i
         "margin": round(margin, 6),
         "margin_se": round(se, 6),
         "fitness": {m: round(v, 6) for m, v in means.items()},
+        "fitness_se": {m: round(float(v.std(ddof=1) / np.sqrt(len(v))), 6) if len(v) > 1 else 0.0 for m, v in f.items()},
         "acc": acc,
         "E": E,
     }

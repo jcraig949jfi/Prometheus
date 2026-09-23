@@ -43,7 +43,8 @@ def main(req_path, reply_path):
     if cmd == "selftest":
         rep = selftest()
     elif cmd == "coords":
-        rep = [{"i": i, "coords": D.coords(p)} for i, p in enumerate(req["spec"]["worlds"])]
+        from prometheus.cosmos.contract import coords_of
+        rep = [{"i": i, "coords": coords_of(D, p, req.get("cmap", "v1"))} for i, p in enumerate(req["spec"]["worlds"])]
     elif cmd == "run":
         rep = []
         for i, p in enumerate(req["spec"]["worlds"]):

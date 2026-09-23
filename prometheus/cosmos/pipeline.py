@@ -10,7 +10,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence
 
 import numpy as np
 
-from prometheus.cosmos.contract import COORDS, Family
+from prometheus.cosmos.contract import Family, coords_of, terminals_for
 from prometheus.cosmos.independence import lineages
 from prometheus.cosmos.miner import Miner, default_workers
 from prometheus.cosmos.world import DEFAULT_EPISODES, evaluate
@@ -34,14 +34,17 @@ class Chamber:
 
     def observe(self, fam_name: str, params: Dict[str, Any], purpose: str = "sample", replicate: int = 0,
                 parent: Optional[str] = None, edge_kind: Optional[str] = None, delta: Any = None,
-                episodes: Optional[int] = None, keep: bool = True) -> Dict[str, Any]:
+                episodes: Optional[int] = None, keep: bool = True, seed_key: Optional[str] = None) -> Dict[str, Any]:
         fam = self.fams[fam_name]
-        rec = evaluate(fam, params, replicate=replicate, episodes=episodes or self.episodes, campaign=self.campaign)
+        rec = evaluate(fam, params, replicate=replicate, episodes=episodes or self.episodes, campaign=self.campaign,
+                       seed_key=seed_key)
         self.n_queries += 1
         row = {"family": fam_name, "lineage": self.lineage[fam_name], "world_id": rec["world_id"],
-               "params": params, "coords": fam.coords(params, "v1"), "coords_v2": fam.coords(params, "v2"),
+               "params": params, "coords": coords_of(fam, params, "v1"), "coords_v2": coords_of(fam, params, "v2"),
+               "coords_v3": coords_of(fam, params, "v3"),
                "y": int(rec["verdict"] == "PAYS"), "margin": rec["margin"], "se": rec["margin_se"],
-               "acc": rec["acc"], "fitness": rec["fitness"], "purpose": purpose, "replicate": replicate}
+               "acc": rec["acc"], "fitness": rec["fitness"], "fitness_se": rec["fitness_se"], "purpose": purpose,
+               "replicate": replicate}
         if self.store is not None:
             self.store.add_node(rec["world_id"], fam_name, row["lineage"], params, row["coords"], row["coords_v2"], purpose)
             self.store.add_run(rec, purpose, self.code_sha)
@@ -55,10 +58,14 @@ class Chamber:
         return row
 
 
+def ckey(cmap: str) -> str:
+    return {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}[cmap]
+
+
 def design(rows: Iterable[Dict[str, Any]], cmap: str = "v1"):
     rows = list(rows)
-    key = "coords" if cmap == "v1" else "coords_v2"
-    X = {c: np.array([r[key][c] for r in rows], float) for c in COORDS}
+    key = ckey(cmap)
+    X = {c: np.array([r[key][c] for r in rows], float) for c in terminals_for(cmap)}
     y = np.array([r["y"] for r in rows], int)
     g = np.array([r["lineage"] for r in rows])
     fam = np.array([r["family"] for r in rows])
@@ -69,7 +76,7 @@ def mine_rows(rows: Iterable[Dict[str, Any]], cmap: str = "v1", n_perm: int = 19
               workers: Optional[int] = None, max_size: Optional[int] = None) -> Dict[str, Any]:
     X, y, g, fam = design(rows, cmap)
     kw = {} if max_size is None else {"max_size": max_size}
-    M = Miner(X, y, g, **kw)
+    M = Miner(X, y, g, terminals=terminals_for(cmap), **kw)
     res = M.mine(n_perm=n_perm, seed=seed, workers=default_workers() if workers is None else workers)
     n_lin = len(set(g.tolist()))
     res["n_lineages"] = n_lin

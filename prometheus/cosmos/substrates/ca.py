@@ -113,6 +113,9 @@ class CA(Family):
         out = np.where(intact, val, 0)
         return {"reward": np.where(out == target, R, 0.0), "cost": cell_ticks * cc, "cell_ticks": cell_ticks}
 
+    def slots(self, pr: Dict[str, Any]):
+        return pr["Lc"] // (self._bits(pr["V"]) * pr["r"])
+
     def coord_preserving(self, pr: Dict[str, Any], rng) -> List[Dict[str, Any]]:
         out = []
         r2 = 3 if pr["r"] == 1 else 1        # change the carrier redundancy, keep v1 coordinates

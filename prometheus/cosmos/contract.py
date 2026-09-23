@@ -32,7 +32,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Tuple
 
 MECHANISMS = ("SEL", "LOG", "LAST")
-COORD_MAPS = ("v1", "v2")
+COORD_MAPS = ("v1", "v2", "v3")
 
 # Declared coordinate vocabulary (dimensionless). Every family must provide all four.
 #   C  maintenance cost of retaining ONE cue for the full horizon / reward per success
@@ -41,7 +41,25 @@ COORD_MAPS = ("v1", "v2")
 #      native repair (a family without repair declares v2 == v1)
 #   K  number of irrelevant observations during the horizon
 #   G  1 - 1/V  (the most a memory can add over a memoryless guess)
+# v3 (2026-09-23, after C0 run 2 counterexamples) = v2 plus
+#   Q  min(1, slots / (K + 1)): the fraction of the full observation history the carrier can
+#      hold at once (1 = unbounded or roomy). Computed centrally (coords_of) from slots().
 COORDS = ("C", "N", "K", "G")
+COORDS_V3 = ("C", "N", "K", "G", "Q")
+
+
+def terminals_for(cmap: str):
+    return COORDS_V3 if cmap == "v3" else COORDS
+
+
+def coords_of(fam, params: Dict[str, Any], cmap: str) -> Dict[str, float]:
+    """The declared coordinates of a world under a coordinate map (the ONLY place v3 is built)."""
+    if cmap != "v3":
+        return fam.coords(params, cmap)
+    c = dict(fam.coords(params, "v2"))
+    s = fam.slots(params) if hasattr(fam, "slots") else None
+    c["Q"] = 1.0 if s is None else min(1.0, float(s) / (params["K"] + 1))
+    return c
 
 
 class Family:
@@ -77,6 +95,11 @@ class Family:
 
     def coord_preserving(self, params: Dict[str, Any], rng) -> List[Dict[str, Any]]:
         return []
+
+    def slots(self, params: Dict[str, Any]):
+        """How many retained observations the carrier can hold at once; None = unbounded.
+        Declared from the spec. Used by coordinate map v3 (Q)."""
+        return None
 
     def sham(self, params: Dict[str, Any]) -> Dict[str, Any]:
         q = dict(params)

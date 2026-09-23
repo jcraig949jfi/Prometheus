@@ -32,6 +32,7 @@ def _pytest(marker: str) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--full", action="store_true")
+    ap.add_argument("--config", default="c0b")
     a = ap.parse_args(argv)
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     out = cosmos_home() / "runtest" / stamp
@@ -53,7 +54,7 @@ def main(argv=None) -> int:
     t = time.time()
     try:
         from prometheus.cosmos.campaign0 import run
-        rep = run(out / "quick_campaign", quick=True)
+        rep = run(out / "quick_campaign", quick=True, config=a.config)
         g = {k: v["verdict"] for k, v in rep["gates"].items()}
         ok = rep["receipt_chain_ok"] and g["G0"] == "PASS" and g["G1"] == "PASS"
         rec["steps"]["quick_campaign"] = {"ok": ok, "gates": g, "graph": rep["graph"], "laws": rep["laws"],

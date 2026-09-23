@@ -92,6 +92,9 @@ class Ring(Family):
         reward = np.where(emitted == target, R, 0.0)
         return {"reward": reward, "cost": hops_done * eh, "hops": hops_done}
 
+    def slots(self, p: Dict[str, Any]):
+        return p["n"]
+
     def coord_preserving(self, p: Dict[str, Any], rng) -> List[Dict[str, Any]]:
         out = []
         for s2 in (1, 2, 3, 6):

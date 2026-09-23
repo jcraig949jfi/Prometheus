@@ -99,3 +99,24 @@ def test_ring_capacity_evicts_the_logger_cue():
     p = dict(BASE["ring"], n=3, K=5, lam=0.0, ehop=0.0)
     r = evaluate(fam, p)
     assert r["acc"]["SEL"] > 0.99 and r["acc"]["LOG"] < 0.3
+
+
+def test_v3_capacity_coordinate():
+    from prometheus.cosmos.contract import coords_of
+    assert coords_of(FAMS["regs"], BASE["regs"], "v3")["Q"] == 1.0            # unbounded registers
+    assert coords_of(FAMS["ring"], dict(BASE["ring"], n=3, K=5), "v3")["Q"] == 0.5
+    assert coords_of(FAMS["ring"], dict(BASE["ring"], n=64), "v3")["Q"] == 1.0
+    ca = dict(BASE["ca"], V=16, r=3, Lc=24, K=4)                                  # 12 cells/symbol -> 2 slots
+    assert coords_of(FAMS["ca"], ca, "v3")["Q"] == 2 / 5
+    assert coords_of(FAMS["ca"], ca, "v3")["N"] == FAMS["ca"].coords(ca, "v2")["N"]
+
+
+@pytest.mark.parametrize("name", sorted(FAMS))
+def test_matched_pair_on_common_random_numbers_is_exactly_monotone_in_cost(name):
+    fam = FAMS[name]
+    p = BASE[name]
+    q = dict(p, **{COST_KNOB[name]: p[COST_KNOB[name]] * 2})
+    a = evaluate(fam, p)
+    b = evaluate(fam, q, seed_key=a["world_id"])
+    assert b["acc"]["SEL"] == a["acc"]["SEL"]               # same random numbers: cost does not touch dynamics
+    assert b["fitness"]["SEL"] < a["fitness"]["SEL"]

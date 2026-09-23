@@ -19,6 +19,7 @@ from typing import Any, Dict, List
 
 import numpy as np
 
+from prometheus.cosmos.contract import coords_of, terminals_for
 from prometheus.cosmos.miner import Law
 from prometheus.cosmos.phenomenon import MARGIN
 from prometheus.cosmos.sampler import feats
@@ -27,31 +28,38 @@ KILL_RATE = 0.05
 CONF = 0.9
 
 
-def _X(coords_list):
-    return {k: np.array([c[k] for c in coords_list], float) for k in ("C", "N", "K", "G")}
+def _X(coords_list, cmap="v1"):
+    return {k: np.array([c[k] for c in coords_list], float) for k in terminals_for(cmap)}
+
+
+CKEY = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}
 
 
 def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_family: int = 40,
-           law_id: str = "?") -> Dict[str, Any]:
+           law_id: str = "?", cmap: str = "v1") -> Dict[str, Any]:
+    """cmap is the LAW's coordinate map: every prediction and every 'coordinate-preserving'
+    claim is made in the law's own coordinates (defect I1 of C0 run 2)."""
+    key = CKEY[cmap]
     fams = list(pool)
     attacks: List[Dict[str, Any]] = []
     meta: List[Dict[str, Any]] = []      # metamorphic pairs: equal declared coords, different microphysics
+    skipped_not_preserving: List[Dict[str, Any]] = []
     prior = chamber.rows
-    errs = [r for r in prior if bool(law.predict(_X([r["coords"]]))[0]) != bool(r["y"])]
+    errs = [r for r in prior if bool(law.predict(_X([r[key]], cmap))[0]) != bool(r["y"])]
 
     def fire(kind, fam, params, parent=None, edge=None):
-        c = chamber.fams[fam].coords(params)
-        p = float(law.prob(_X([c]))[0])
+        c = coords_of(chamber.fams[fam], params, cmap)
+        p = float(law.prob(_X([c], cmap))[0])
         row = chamber.observe(fam, params, purpose="attack:" + kind, parent=parent, edge_kind=edge,
                               delta={"attack": kind}, keep=True)
         attacks.append({"kind": kind, "family": fam, "params": params, "coords": c, "p": p,
-                        "pred": int(law.predict(_X([c]))[0]), "y": row["y"], "margin": row["margin"],
+                        "pred": int(law.predict(_X([c], cmap))[0]), "y": row["y"], "margin": row["margin"],
                         "se": row["se"], "world_id": row["world_id"]})
 
     for f in fams:
         fam = chamber.fams[f]
         P = pool[f]
-        Xp = _X([r["coords"] for r in P])
+        Xp = _X([r[key] for r in P], cmap)
         pp = law.prob(Xp)
         conf = np.nonzero((pp >= CONF) | (pp <= 1 - CONF))[0]
         q = per_family // 4
@@ -68,9 +76,14 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
             fire("coordpres_base", f, P[i]["params"])
             b_row = attacks[-1]
             n += 1
+            c0 = coords_of(fam, P[i]["params"], cmap)
             for v in fam.coord_preserving(P[i]["params"], rng):
                 if n >= q:
                     break
+                cv = coords_of(fam, v, cmap)
+                if any(abs(cv[k] - c0[k]) > 1e-9 * max(1.0, abs(c0[k])) for k in c0):
+                    skipped_not_preserving.append({"family": f, "variant": v})
+                    continue
                 try:
                     fire("coordpres", f, v, parent=P[i]["world_id"], edge="COORD_PRESERVING")
                     n += 1
@@ -91,7 +104,7 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
         # error-seeking
         if errs and len(conf):
             Ze = feats([r["coords"] for r in errs])
-            Zc = feats([P[i]["coords"] for i in conf])
+            Zc = feats([P[i]["coords"] for i in conf])     # distance in the fixed v1 feature space
             d = ((Zc[:, None, :] - Ze[None, :, :]) ** 2).sum(-1).min(1)
             for i in conf[np.argsort(d)[:q]]:
                 fire("errorseek", f, P[i]["params"])
@@ -138,6 +151,6 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
     return {"law_id": law_id, "n_attacks": len(attacks), "n_confident": n_conf, "n_confirmed": len(confirmed),
             "rate": rate, "verdict": "FAILED" if rate > KILL_RATE else "SURVIVED", "by_kind": by_kind,
             "by_family": by_family, "band_calibration": calib, "metamorphic": metamorphic,
-            "metamorphic_pairs": meta[:60],
+            "metamorphic_pairs": meta[:60], "cmap": cmap, "n_transforms_not_preserving": len(skipped_not_preserving),
             "counterexamples": [{k: a[k] for k in ("kind", "family", "params", "coords", "p", "margin", "confirm_margins")}
                                 for a in confirmed][:40]}

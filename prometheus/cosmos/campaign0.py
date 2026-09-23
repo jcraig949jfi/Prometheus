@@ -45,6 +45,15 @@ ETA_SEEDS = (1, 2, 3)
 MAX_ROUNDS = 3
 N_PERM = 19
 
+# Campaign configurations. C0 is the 1d4465df9 preregistration (+A1); C0B is its successor
+# (roles/Cosmos/campaigns/c0b/PREREG.md), written after C0 run 2 killed every v1/v2 law.
+CONFIGS = {
+    "c0": {"seed": 20260923, "cmap": "v1", "secondaries": ["v2", "raw"], "revise": ["v1", "v2"],
+           "g1b_crn": False, "g1b_n": 8, "main_strategy": "active"},
+    "c0b": {"seed": 20260924, "cmap": "v3", "secondaries": ["v1", "v2", "raw"], "revise": ["v3"],
+            "g1b_crn": True, "g1b_n": 12, "main_strategy": "random"},
+}
+
 
 def _dump(out: Path, name: str, obj: Any) -> None:
     (out / (name + ".json")).write_text(json.dumps(obj, indent=1, sort_keys=True, default=str), encoding="utf-8")
@@ -80,7 +89,10 @@ def build_pools(fams, n: int, seed: int) -> Dict[str, List[Dict[str, Any]]]:
     return pools
 
 
-def run(out: Path, quick: bool = False) -> Dict[str, Any]:
+def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
+    cfg = CONFIGS[config]
+    SEED = cfg["seed"]
+    CMAP = cfg["cmap"]
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     ident = code_identity()
@@ -91,16 +103,16 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     n_perm = 5 if quick else N_PERM
     store = Store(out / "store")
     store.receipts.append("campaign_start", {"identity": ident, "quick": quick, "commitment": COMMITMENT})
-    report: Dict[str, Any] = {"identity": ident, "quick": quick, "gates": {}}
+    report: Dict[str, Any] = {"identity": ident, "quick": quick, "config": config, "cfg": cfg, "gates": {}}
 
     # ---- pools and PRIVATE oracle
-    pools = build_pools(fams, pool_n, CAMPAIGN_SEED)
+    pools = build_pools(fams, pool_n, SEED)
     oracle_ch = Chamber(list(fams.values()), store=None, campaign="c0", code_sha=ident["cosmos_src_sha"])
     oracle: Dict[str, List[Dict[str, Any]]] = {}
     for f, P in pools.items():
         oracle[f] = [oracle_ch.observe(f, p, purpose="oracle", keep=False) for p in P]
     # what a strategy may see about an UNQUERIED world: spec-side fields only (whitelist, never a blacklist)
-    POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2")
+    POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3")
     pool_rows = {f: [{k: r[k] for k in POOL_FIELDS} for r in rows] for f, rows in oracle.items()}
     _dump(out, "oracle_summary", {f: {"n": len(v), "pays_rate": float(np.mean([r["y"] for r in v]))} for f, v in oracle.items()})
     report["t_oracle_s"] = round(time.time() - t0, 1)
@@ -109,7 +121,7 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     g1 = {}
     ctl = Chamber(list(fams.values()), store=store, campaign="c0", code_sha=ident["cosmos_src_sha"])
     for f, fam in fams.items():
-        rng = np.random.default_rng(derive_seed(CAMPAIGN_SEED, "g1", f) % (2 ** 32))
+        rng = np.random.default_rng(derive_seed(SEED, "g1", f) % (2 ** 32))
         idx = rng.choice(len(pools[f]), 20, replace=False)
         shams = []
         for i in idx:
@@ -149,7 +161,7 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     # ---- main dataset (preregistered: active, seed 0)
     ch = Chamber(list(fams.values()), store=store, campaign="c0", code_sha=ident["cosmos_src_sha"])
     b = Budget(pool_rows, oracle, budget)
-    STRATEGIES["active"](b, np.random.default_rng(CAMPAIGN_SEED))
+    STRATEGIES[cfg["main_strategy"]](b, np.random.default_rng(SEED))
     for f in b.pool:
         for i in b.seen[f]:
             ch.observe(f, pools[f][i], purpose="main")
@@ -158,17 +170,18 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     COST = {"regs": "bitcost", "ring": "ehop", "ca": "ccell"}
     NOISE = {"regs": "q", "ring": "lam", "ca": "p"}
     g1b = {}
-    rng_e = np.random.default_rng(CAMPAIGN_SEED + 3)
+    rng_e = np.random.default_rng(SEED + 3)
     for f in fams:
         mains = [r for r in ch.rows if r["family"] == f]
-        pick = [mains[i] for i in rng_e.choice(len(mains), min(8, len(mains)), replace=False)]
+        pick = [mains[i] for i in rng_e.choice(len(mains), min(cfg["g1b_n"], len(mains)), replace=False)]
         up, down = 0, 0
         for r in pick:
             for k, q in fams[f].deform(r["params"]):
                 if k not in (COST[f], NOISE[f]):
                     continue
                 nb = ch.observe(f, q, purpose="matched_neighbour", parent=r["world_id"], edge_kind="DEFORMATION_OF",
-                                delta={"knob": k, "from": r["params"][k], "to": q[k]}, keep=False)
+                                delta={"knob": k, "from": r["params"][k], "to": q[k]}, keep=False,
+                                seed_key=r["world_id"] if cfg["g1b_crn"] else None)
                 if k == COST[f] and q[k] > r["params"][k]:
                     up += 1
                     down += nb["fitness"]["SEL"] <= r["fitness"]["SEL"] + 1e-9
@@ -187,7 +200,7 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     store.commit()
 
     # ---- G0 reproducibility
-    rng = np.random.default_rng(CAMPAIGN_SEED + 7)
+    rng = np.random.default_rng(SEED + 7)
     reps = [ch.rows[i] for i in rng.choice(len(ch.rows), min(30, len(ch.rows)), replace=False)]
     same = 0
     from prometheus.cosmos.world import evaluate
@@ -201,17 +214,32 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
 
     # ---- mining: primary v1, secondaries v2 and raw
     main_rows = list(ch.rows)
-    res_v1 = mine_rows(main_rows, "v1", n_perm=n_perm)
-    res_v2 = mine_rows(main_rows, "v2", n_perm=n_perm)
-    raw_rows = [dict(r, coords=dict(r["coords"], C=r["coords"]["C"] * r["params"]["R"])) for r in main_rows]
-    res_raw = mine_rows(raw_rows, "v1", n_perm=n_perm)
-    _dump(out, "mine_initial", {"v1": res_v1, "v2": res_v2, "raw_unnormalized_C": res_raw})
+    CK = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}
+    mined = {CMAP: mine_rows(main_rows, CMAP, n_perm=n_perm)}
+    for sec in cfg["secondaries"]:
+        if sec == "raw":       # the primary map with C left in native currency (C * R)
+            key = CK[CMAP]
+            raw_rows = [dict(r, **{key: dict(r[key], C=r[key]["C"] * r["params"]["R"])}) for r in main_rows]
+            mined["raw"] = mine_rows(raw_rows, CMAP, n_perm=n_perm)
+        else:
+            mined[sec] = mine_rows(main_rows, sec, n_perm=n_perm)
+    res_v1 = mined[CMAP]
+    res_raw = mined.get("raw", {"best_score": float("-inf")})
+    _dump(out, "mine_initial", mined)
     report["mine_initial"] = {k: {"verdict": v["verdict"], "law": v["law"]["law"] if v["law"] else None,
-                                  "score": v["best_score"], "p": v["p_null"]} for k, v in
-                              (("v1", res_v1), ("v2", res_v2), ("raw", res_raw))}
+                                  "score": v["best_score"], "p": v["p_null"],
+                                  "fold_ba": v["law"]["fold_ba"] if v["law"] else None,
+                                  "family_dependence": v.get("family_dependence")} for k, v in mined.items()}
+    # defect I3 of C0 run 2: the compression numbers of the INITIAL primary law are always reported
+    if res_v1.get("law"):
+        fb = res_v1["law"]["fold_ba"]
+        report["gates"]["G2_initial_info"] = {"verdict": "INFO", "worst_fold_ba": min(fb.values()),
+                                              "mean_fold_ba": float(np.mean(list(fb.values()))),
+                                              "law_score": res_v1["best_score"], "raw_score": res_raw["best_score"],
+                                              "family_dependence": res_v1.get("family_dependence")}
 
     # ---- adversary rounds on the primary coordinates
-    cmap = "v1"
+    cmap = CMAP
     res = res_v1
     law_id = None
     parent = None
@@ -223,8 +251,8 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
                                    note="mined round %d" % rnd)
         store.event(law_id, "ATTACKED", "round %d" % rnd)
         L = law_from_json(res["law"])
-        rep = attack(L, ch, pool_rows, np.random.default_rng(CAMPAIGN_SEED + 100 + rnd), per_family=24 if quick else 48,
-                     law_id=law_id)
+        rep = attack(L, ch, pool_rows, np.random.default_rng(SEED + 100 + rnd), per_family=24 if quick else 48,
+                     law_id=law_id, cmap=cmap)
         rounds.append({"round": rnd, "law": res["law"]["law"], "law_id": law_id, "attack": rep})
         store.receipts.append("attack_round", {"law_id": law_id, "verdict": rep["verdict"], "rate": rep["rate"],
                                                "n_confident": rep["n_confident"], "n_confirmed": rep["n_confirmed"]})
@@ -235,14 +263,16 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
         parent = law_id
         # revision: re-mine on everything observed so far (attack rows included); coordinates may switch to v2
         # only if v2 beats v1 on the enlarged data (both reported)
-        r1 = mine_rows(ch.rows, "v1", n_perm=n_perm)
-        r2 = mine_rows(ch.rows, "v2", n_perm=n_perm)
-        pick = r2 if (r2["verdict"] == "CANDIDATE" and (r1["verdict"] != "CANDIDATE" or r2["best_score"] > r1["best_score"] + 0.01)) else r1
-        cmap = "v2" if pick is r2 else "v1"
-        rounds[-1]["revision"] = {"v1": {"verdict": r1["verdict"], "law": r1["law"] and r1["law"]["law"], "score": r1["best_score"]},
-                                  "v2": {"verdict": r2["verdict"], "law": r2["law"] and r2["law"]["law"], "score": r2["best_score"]},
-                                  "picked": cmap}
-        res = pick
+        rv = {cm: mine_rows(ch.rows, cm, n_perm=n_perm) for cm in cfg["revise"]}
+        pick_cm = cfg["revise"][0]
+        for cm in cfg["revise"][1:]:       # an alternative map wins only if CANDIDATE and > 0.01 better
+            if rv[cm]["verdict"] == "CANDIDATE" and (rv[pick_cm]["verdict"] != "CANDIDATE" or
+                                                     rv[cm]["best_score"] > rv[pick_cm]["best_score"] + 0.01):
+                pick_cm = cm
+        cmap = pick_cm
+        rounds[-1]["revision"] = {**{cm: {"verdict": v["verdict"], "law": v["law"] and v["law"]["law"],
+                                          "score": v["best_score"]} for cm, v in rv.items()}, "picked": cmap}
+        res = rv[pick_cm]
         law_id = None
     store.commit()
     _dump(out, "adversary", rounds)
@@ -279,9 +309,9 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
         from prometheus.cosmos.sampler import feats
 
         def knn(X):
-            Zt = feats([r[("coords" if final["cmap"] == "v1" else "coords_v2")] for r in vis])
+            Zt = feats([r["coords"] for r in vis])       # 5-NN in the fixed v1 feature space
             yt = np.array([r["y"] for r in vis])
-            Zq = feats([{k: X[k][i] for k in X} for i in range(len(X["C"]))])
+            Zq = feats([{k: X[k][i] for k in X} for i in range(len(X["C"]))])   # D: v1 == v2 == v3 minus Q
             d = ((Zq[:, None, :] - Zt[None, :, :]) ** 2).sum(-1)
             return yt[np.argsort(d, 1)[:, :5]].mean(1) >= 0.5
 
@@ -321,8 +351,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--config", default="c0", choices=sorted(CONFIGS))
     a = ap.parse_args(argv)
-    rep = run(Path(a.out), quick=a.quick)
+    rep = run(Path(a.out), quick=a.quick, config=a.config)
     print(json.dumps({k: v["verdict"] for k, v in rep["gates"].items()}, indent=1))
 
 

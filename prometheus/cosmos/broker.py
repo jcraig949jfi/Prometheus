@@ -81,9 +81,11 @@ def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | 
     spec = load_spec(commitment)
     store.receipts.append("holdout_open", {"law_id": law_id, "freeze_hash": fh, "spec_sha": commitment})
     L = law_from_json(law_row["body"]["law"])
+    cmap = law_row["body"].get("cmap", "v1")
 
-    coords = _call({"cmd": "coords", "spec": spec})
-    X = {k: np.array([c["coords"][k] for c in coords]) for k in ("C", "N", "K", "G")}
+    coords = _call({"cmd": "coords", "spec": spec, "cmap": cmap})
+    from prometheus.cosmos.contract import terminals_for
+    X = {k: np.array([c["coords"][k] for c in coords]) for k in terminals_for(cmap)}
     p = L.prob(X)
     pred = L.predict(X)
     preds = {"law_id": law_id, "pred": pred.astype(int).tolist(), "prob": np.round(p, 6).tolist()}
@@ -113,7 +115,7 @@ def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | 
 def _flip_factor(L, x: Dict[str, float], ladder: List[float]) -> Dict[str, Any]:
     """C scales linearly with kappa; scan the law's P along the ladder (fine grid) for P=0.5/0.75/0.25."""
     fs = np.geomspace(min(ladder) / 4, max(ladder) * 4, 2000)
-    X = {k: np.full(len(fs), x[k]) for k in ("N", "K", "G")}
+    X = {k: np.full(len(fs), v) for k, v in x.items() if k != "C"}
     X["C"] = x["C"] * fs
     P = L.prob(X)
     cls = L.predict(X)

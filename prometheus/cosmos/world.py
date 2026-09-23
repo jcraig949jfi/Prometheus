@@ -17,13 +17,14 @@ def world_id(fam: Family, params: Dict[str, Any]) -> str:
 
 
 def evaluate(fam: Family, params: Dict[str, Any], replicate: int = 0, episodes: int = DEFAULT_EPISODES,
-             campaign: str = "c0") -> Dict[str, Any]:
+             campaign: str = "c0", seed_key: str = None) -> Dict[str, Any]:
     """Run the three reference mechanisms on common random numbers and certify.
 
     The seed is derived from (campaign, family, world id, replicate), never shared across families.
     """
     wid = world_id(fam, params)
-    seed = derive_seed(campaign, fam.name, wid, replicate) % (2 ** 31)
+    # seed_key lets a matched pair share common random numbers (the partner's key = the parent's id)
+    seed = derive_seed(campaign, fam.name, seed_key or wid, replicate) % (2 ** 31)
     obs = {m: fam.run(params, m, seed, episodes) for m in MECHANISMS}
     cert = certify(obs, fam.units(params)["reward_per_success"], boot_seed=seed)
     obs_digest = h({m: {k: np.asarray(v).round(9).tolist() for k, v in o.items()} for m, o in obs.items()})
