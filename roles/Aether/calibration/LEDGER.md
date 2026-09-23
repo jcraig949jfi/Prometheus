@@ -1,9 +1,9 @@
 # Aether calibration ledger
 
-Currency: 2026-09-22. Kept because it will be unflattering (base role s2).
+Currency: 2026-09-23. Kept because it will be unflattering (base role s2).
 
 One row per call this seat made that later proved wrong, with the
-correction and what the seat now does differently. One row.
+correction and what the seat now does differently. Two rows.
 
 date | call made | what was true | corrected by | changed practice
 
@@ -24,4 +24,18 @@ swallowing `*.log`, which is a change in observability, not a change in
 behaviour. Before calling anything a regression, run the pre-change
 code and check -- a one-line experiment here would have prevented a
 wrong claim in three committed documents.
+
+2026-09-23 | Treated `pytest ... | tail -3` inside a `&&` chain as a
+gate, and pushed commit 9f29f3ccd (the AETH-02 preregistration) with the
+terminology audit RED on one word. | The pipeline's exit status comes
+from `tail`, not from pytest, so a failing test cannot stop an `&&`
+chain built that way. The audit had in fact failed. | The next run of
+the audit on its own, one command later. | This is the SECOND time --
+commit cf7e4efea did the same thing on 2026-09-22 and my own TODO.md
+already carried the line "Run the full suite BEFORE pushing, not after".
+A rule I wrote down and then broke is worse than one I never wrote.
+Practice now: run the gate as its OWN command, read its summary line,
+and only then stage and commit. Never put a test inside a `&&` chain
+whose later stages can mask the exit status, and never pipe a gate
+through `tail` when its exit code is what I am relying on.
 

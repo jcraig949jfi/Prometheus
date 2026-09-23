@@ -59,7 +59,7 @@ mathematical, not empirical:
 Reporting an all-ones fan-out distribution as a measurement would be
 dressing a definition up as evidence.
 
-The genuinely empirical questions that survive are: which cycles exist,
+The genuinely empirical questions that remain are: which cycles exist,
 how long they persist, whether the realized map changes while the
 proposed map does not (arbitration re-randomizes per tick because the
 priority hash includes the tick), and whether anything about a cycle's
