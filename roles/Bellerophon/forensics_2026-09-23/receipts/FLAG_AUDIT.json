@@ -1,0 +1,354 @@
+{
+ "REACHED_INCREMENTAL_NOT_ATOMIC": {
+  "exposure_matched_first_run": {
+   "control_only": 60,
+   "sign_test_p": 1.507061557352612e-08,
+   "treat_only": 140
+  },
+  "forward_flags_equal_runs": 63,
+  "forward_flags_where_control_had_more_runs": 21,
+  "forward_flags_where_treatment_had_more_runs": 52,
+  "forward_recomputed": 136,
+  "forward_stored": 136,
+  "matched_pairs_with_runs_both_sides": 1646,
+  "pooled_run_solve_rate": {
+   "control": 0.2964,
+   "treatment": 0.441
+  },
+  "recompute_equals_stored": true,
+  "reverse_same_pairs": 76,
+  "strata_first_run": {
+   "init": {
+    "RANDOM": {
+     "control_only_first_run": 9,
+     "pairs": 305,
+     "treat_only_first_run": 28
+    },
+    "SEEDED_HYBRID": {
+     "control_only_first_run": 37,
+     "pairs": 944,
+     "treat_only_first_run": 87
+    },
+    "SEEDED_REPLICATOR": {
+     "control_only_first_run": 10,
+     "pairs": 325,
+     "treat_only_first_run": 18
+    },
+    "SEEDED_WITNESS": {
+     "control_only_first_run": 4,
+     "pairs": 72,
+     "treat_only_first_run": 7
+    }
+   },
+   "repro": {
+    "CONSTRUCTIVE": {
+     "control_only_first_run": 1,
+     "pairs": 34,
+     "treat_only_first_run": 4
+    },
+    "ENDOGENOUS_COPY": {
+     "control_only_first_run": 25,
+     "pairs": 662,
+     "treat_only_first_run": 51
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "control_only_first_run": 4,
+     "pairs": 265,
+     "treat_only_first_run": 20
+    },
+    "EXTERNAL": {
+     "control_only_first_run": 15,
+     "pairs": 363,
+     "treat_only_first_run": 47
+    },
+    "OVERWRITE": {
+     "control_only_first_run": 9,
+     "pairs": 167,
+     "treat_only_first_run": 9
+    },
+    "PAIR_EXECUTION": {
+     "control_only_first_run": 6,
+     "pairs": 155,
+     "treat_only_first_run": 9
+    }
+   },
+   "scoring": {
+    "INCREMENTAL": {
+     "control_only_first_run": 60,
+     "pairs": 1646,
+     "treat_only_first_run": 140
+    }
+   },
+   "task": {
+    "COND_MULTI": {
+     "control_only_first_run": 10,
+     "pairs": 369,
+     "treat_only_first_run": 22
+    },
+    "COND_ONE": {
+     "control_only_first_run": 8,
+     "pairs": 268,
+     "treat_only_first_run": 26
+    },
+    "CONST": {
+     "control_only_first_run": 7,
+     "pairs": 177,
+     "treat_only_first_run": 31
+    },
+    "ECHO": {
+     "control_only_first_run": 22,
+     "pairs": 317,
+     "treat_only_first_run": 19
+    },
+    "INC": {
+     "control_only_first_run": 6,
+     "pairs": 277,
+     "treat_only_first_run": 35
+    },
+    "SUM2": {
+     "control_only_first_run": 7,
+     "pairs": 238,
+     "treat_only_first_run": 7
+    }
+   }
+  }
+ },
+ "REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL": {
+  "exposure_matched_first_run": {
+   "control_only": 1554,
+   "sign_test_p": 5.858563110935737e-15,
+   "treat_only": 443
+  },
+  "forward_flags_equal_runs": 104,
+  "forward_flags_where_control_had_more_runs": 28,
+  "forward_flags_where_treatment_had_more_runs": 261,
+  "forward_recomputed": 393,
+  "forward_stored": 393,
+  "matched_pairs_with_runs_both_sides": 9589,
+  "pooled_run_solve_rate": {
+   "control": 0.3194,
+   "treatment": 0.2303
+  },
+  "recompute_equals_stored": true,
+  "reverse_same_pairs": 1596,
+  "strata_first_run": {
+   "init": {
+    "RANDOM": {
+     "control_only_first_run": 732,
+     "pairs": 4712,
+     "treat_only_first_run": 20
+    },
+    "SEEDED_HYBRID": {
+     "control_only_first_run": 296,
+     "pairs": 2418,
+     "treat_only_first_run": 309
+    },
+    "SEEDED_REPLICATOR": {
+     "control_only_first_run": 254,
+     "pairs": 1433,
+     "treat_only_first_run": 33
+    },
+    "SEEDED_WITNESS": {
+     "control_only_first_run": 272,
+     "pairs": 1026,
+     "treat_only_first_run": 81
+    }
+   },
+   "repro": {
+    "CONSTRUCTIVE": {
+     "control_only_first_run": 221,
+     "pairs": 1377,
+     "treat_only_first_run": 53
+    },
+    "ENDOGENOUS_COPY": {
+     "control_only_first_run": 637,
+     "pairs": 3945,
+     "treat_only_first_run": 220
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "control_only_first_run": 291,
+     "pairs": 1684,
+     "treat_only_first_run": 53
+    },
+    "OVERWRITE": {
+     "control_only_first_run": 256,
+     "pairs": 1636,
+     "treat_only_first_run": 73
+    },
+    "PAIR_EXECUTION": {
+     "control_only_first_run": 149,
+     "pairs": 947,
+     "treat_only_first_run": 44
+    }
+   },
+   "scoring": {
+    "ATOMIC": {
+     "control_only_first_run": 618,
+     "pairs": 3860,
+     "treat_only_first_run": 140
+    },
+    "INCREMENTAL": {
+     "control_only_first_run": 936,
+     "pairs": 4207,
+     "treat_only_first_run": 303
+    },
+    "NEUTRAL": {
+     "control_only_first_run": 0,
+     "pairs": 1522,
+     "treat_only_first_run": 0
+    }
+   },
+   "task": {
+    "COND_MULTI": {
+     "control_only_first_run": 304,
+     "pairs": 1711,
+     "treat_only_first_run": 66
+    },
+    "COND_ONE": {
+     "control_only_first_run": 331,
+     "pairs": 1677,
+     "treat_only_first_run": 79
+    },
+    "CONST": {
+     "control_only_first_run": 256,
+     "pairs": 1631,
+     "treat_only_first_run": 66
+    },
+    "ECHO": {
+     "control_only_first_run": 364,
+     "pairs": 1572,
+     "treat_only_first_run": 109
+    },
+    "INC": {
+     "control_only_first_run": 218,
+     "pairs": 1505,
+     "treat_only_first_run": 89
+    },
+    "SUM2": {
+     "control_only_first_run": 81,
+     "pairs": 1493,
+     "treat_only_first_run": 34
+    }
+   }
+  }
+ },
+ "RESERVOIR_CROSSED_MOAT": {
+  "exposure_matched_first_run": {
+   "control_only": 2,
+   "sign_test_p": 0.109375,
+   "treat_only": 8
+  },
+  "forward_flags_equal_runs": 3,
+  "forward_flags_where_control_had_more_runs": 1,
+  "forward_flags_where_treatment_had_more_runs": 3,
+  "forward_recomputed": 7,
+  "forward_stored": 7,
+  "matched_pairs_with_runs_both_sides": 78,
+  "pooled_run_solve_rate": {
+   "control": 0.2136,
+   "treatment": 0.2778
+  },
+  "recompute_equals_stored": true,
+  "reverse_same_pairs": 2,
+  "strata_first_run": {
+   "init": {
+    "RANDOM": {
+     "control_only_first_run": 2,
+     "pairs": 20,
+     "treat_only_first_run": 2
+    },
+    "SEEDED_HYBRID": {
+     "control_only_first_run": 0,
+     "pairs": 30,
+     "treat_only_first_run": 3
+    },
+    "SEEDED_REPLICATOR": {
+     "control_only_first_run": 0,
+     "pairs": 22,
+     "treat_only_first_run": 0
+    },
+    "SEEDED_WITNESS": {
+     "control_only_first_run": 0,
+     "pairs": 6,
+     "treat_only_first_run": 3
+    }
+   },
+   "repro": {
+    "CONSTRUCTIVE": {
+     "control_only_first_run": 0,
+     "pairs": 2,
+     "treat_only_first_run": 0
+    },
+    "ENDOGENOUS_COPY": {
+     "control_only_first_run": 0,
+     "pairs": 25,
+     "treat_only_first_run": 3
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "control_only_first_run": 0,
+     "pairs": 17,
+     "treat_only_first_run": 1
+    },
+    "EXTERNAL": {
+     "control_only_first_run": 2,
+     "pairs": 25,
+     "treat_only_first_run": 4
+    },
+    "OVERWRITE": {
+     "control_only_first_run": 0,
+     "pairs": 3,
+     "treat_only_first_run": 0
+    },
+    "PAIR_EXECUTION": {
+     "control_only_first_run": 0,
+     "pairs": 6,
+     "treat_only_first_run": 0
+    }
+   },
+   "scoring": {
+    "ATOMIC": {
+     "control_only_first_run": 0,
+     "pairs": 38,
+     "treat_only_first_run": 5
+    },
+    "INCREMENTAL": {
+     "control_only_first_run": 2,
+     "pairs": 33,
+     "treat_only_first_run": 3
+    },
+    "NEUTRAL": {
+     "control_only_first_run": 0,
+     "pairs": 7,
+     "treat_only_first_run": 0
+    }
+   },
+   "task": {
+    "COND_MULTI": {
+     "control_only_first_run": 0,
+     "pairs": 38,
+     "treat_only_first_run": 5
+    },
+    "COND_ONE": {
+     "control_only_first_run": 2,
+     "pairs": 21,
+     "treat_only_first_run": 1
+    },
+    "INC": {
+     "control_only_first_run": 0,
+     "pairs": 10,
+     "treat_only_first_run": 0
+    },
+    "SUM2": {
+     "control_only_first_run": 0,
+     "pairs": 9,
+     "treat_only_first_run": 2
+    }
+   }
+  }
+ },
+ "incremental_solver_criterion": {
+  "incremental_runs_with_solvers": 8001,
+  "note": "INCREMENTAL score = 1 - d/128 per output; score_ema >= 0.85 does not require an exact answer",
+  "of_which_best_score_tail_eq_1": 2676
+ }
+}
