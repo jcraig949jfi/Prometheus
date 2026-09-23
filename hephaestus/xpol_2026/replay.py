@@ -46,6 +46,7 @@ ARMS = {
     "gpt6astra": {"kind": "llm", "target": "openrouter:openai/gpt-6-astra"},
     "gemini": {"kind": "llm", "target": "gemini:gemini-3.6-flash"},
     "groq": {"kind": "llm", "target": "groq:openai/gpt-oss-120b"},
+    "qwen14b": {"kind": "llm", "target": "ollama:qwen2.5-coder:14b"},   # local 14B, free: the size-controlled arm
 }
 NOUS_TEMP, NOUS_MAX = 0.7, 2048      # agents/nous/src/nous.py:329-330
 CODE_TEMP, CODE_MAX = 0.4, 4096      # agents/hephaestus/src/hephaestus.py:234-235
