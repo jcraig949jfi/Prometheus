@@ -213,7 +213,8 @@ class World:
             seed_tape = self._witness_for(self._seed_task())
         elif cfg.init == "SEEDED_HYBRID":
             rep = vm.replicator_copyall(self.L) if cfg.allow_copyall else vm.replicator(self.L)
-            seed_tape = vm.hybrid(rep, self._witness_for(self._seed_task()))
+            mk = vm.hybrid if cfg.physics == "v1" else vm.hybrid_relocated        # v2 (H1): the task code's jumps are relocated
+            seed_tape = mk(rep, self._witness_for(self._seed_task()))
         transplant = [bytearray(bytes.fromhex(h))[:self.L] for h in cfg.init_tapes] if cfg.init_tapes else []
         for k, i in enumerate(fill):
             if transplant and k < max(1, len(fill) // 4):                 # a transplanted minority (a quarter) into a random majority

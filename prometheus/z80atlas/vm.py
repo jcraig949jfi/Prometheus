@@ -266,8 +266,29 @@ def witness_sum2() -> bytes:
 
 
 def hybrid(rep: bytes, task: bytes) -> bytes:
-    """replicate, then do the task, on one tape: the replicator's HALT is dropped so execution falls into the task."""
+    """replicate, then do the task, on one tape: the replicator's HALT is dropped so execution falls into the task.
+    v1 (historical): the task code is NOT relocated -- an absolute jump (JP/JZ/JNZ/JC) keeps its old target, so the
+    conditional witnesses (COND_ONE, COND_MULTI) jump back into the copy routine and answer half the inputs
+    (forensics H1). hybrid_relocated() is the repaired form physics v2 seeds."""
     return rep[:-1] + task
+
+
+ABS_JUMPS = frozenset((JP_n, JZ_n, JNZ_n, JC_n))
+
+
+def relocate(code: bytes, offset: int) -> bytes:
+    """code assembled at address 0, moved to `offset`: every absolute jump operand is shifted by `offset`."""
+    out = bytearray(code); pc = 0
+    while pc < len(out):
+        op = out[pc]; n = OPLEN.get(op, 0)
+        if op in ABS_JUMPS and pc + 1 < len(out):
+            out[pc + 1] = (out[pc + 1] + offset) & 0xFF
+        pc += 1 + n
+    return bytes(out)
+
+
+def hybrid_relocated(rep: bytes, task: bytes) -> bytes:
+    return rep[:-1] + relocate(task, len(rep) - 1)
 
 
 def disassemble(tape: bytes, limit: int = 64) -> List[str]:

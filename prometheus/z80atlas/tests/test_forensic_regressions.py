@@ -269,3 +269,16 @@ def test_repro_descriptor_separates_copier_from_witness():
     assert h["self_copy"] and h["uses_io"] and h["task_accuracy"] == 1.0
     wt = A.repro_descriptor(vm.witness_inc(), cfg)
     assert not wt["self_copy"] and wt["task_accuracy"] == 1.0
+
+
+# ---- H1: the seeded hybrid's conditional witness is not relocated -------------------------------------------------------
+def test_H1_hybrid_conditional_witness_is_relocated_under_v2():
+    A = _adj()
+    for name, w in (("COND_ONE", vm.witness_cond_one()), ("COND_MULTI", vm.witness_cond_multi())):
+        cfg = Config(task=name)
+        assert A.verify_tape(vm.hybrid(vm.replicator(64), w), cfg, Task(name))["accuracy"] == 0.5          # v1 defect
+        h2 = vm.hybrid_relocated(vm.replicator(64), w)
+        assert A.verify_tape(h2, cfg, Task(name))["exact"] and A.repro_descriptor(h2, cfg, Task(name))["self_copy"]
+    w2 = World(Config(reproduction="ENDOGENOUS_COPY", init="SEEDED_HYBRID", task="COND_ONE", ticks=3, cells=64, physics="v2"), 5)
+    seed = [o for o in w2.cells if o is not None and o.mechanism == "seed"][0]
+    assert A.verify_tape(bytes(seed.tape), Config(task="COND_ONE"), Task("COND_ONE"))["exact"]

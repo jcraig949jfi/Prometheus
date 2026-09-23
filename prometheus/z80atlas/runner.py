@@ -30,6 +30,12 @@ def run_spec(spec: Dict) -> Dict:
     t0 = time.time()
     vec = spec["vec"]
     cfg = G.to_config(vec, spec["ticks"], spec["cells"], spec.get("budget", 256), tuple(spec.get("init_tapes") or ()))
+    # grounding runs (2026-09-23) set Config fields the factor grammar does not carry (physics, ablations, ext_mut_mult,
+    # levels outside the frozen grammar such as mutation_rate VLOW); they are applied here and frozen into config.json
+    for k, v in (spec.get("config_overrides") or {}).items():
+        if k not in cfg.__dataclass_fields__:
+            raise KeyError("config_overrides: %r is not a Config field" % k)
+        setattr(cfg, k, v)
     w = World(cfg, spec["seed"])
     summary = w.run()
     # the endogenous guard: the population manager never reproduced under an endogenous treatment
