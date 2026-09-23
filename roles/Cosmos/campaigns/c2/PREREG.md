@@ -37,3 +37,15 @@ runtest --config c2 (quick) 20260923T142056Z PASS but did NOT exercise selection
 cannot pass the null, so no candidate reached select); selection is exercised by
 tests/test_select.py (slow): a well-located G exp(-N) - C ceiling is preferred over a C-only ceiling
 with a HIGHER LOLO score (0.89 vs 0.90). Gate verdicts only were displayed.
+
+## C2 RESULT (code 7b14ec99e, 2026-09-23T15:23Z; run dir c2_7b14ec99e)
+G0 G1 G2 G4 G7 PASS; G5/G6 on D not run (spent). Ledger: c5cd50beb1 (v4) FAILED round 0 by the
+location gate (regs -0.168; confident contradictions 0/106), revised to a079ad5ec1 (v4):
+    log(Q - C K) <= -0.1577  AND  C - G exp(-N) <= -0.1022
+SURVIVED round 1 (0/107 confident contradictions; location offsets ca -.006 regs -.015 ring -.015),
+FROZEN a64cc593024be2e4...
+Selection-vs-gate disagreement (instrument note): selection (6 bases, 800 episodes) measured the
+round-0 law at regs 0.005; the gate (8 other bases, 1600 episodes) measured -0.168. Selection-time
+location estimates are noisy; the gate is what caught it.
+C2a HELD. C2b HELD (ceiling C <= G exp(-N) - 0.102; task economics: G exp(-N) - 0.10).
+F adjudication follows (c1f runner: law A = C0b f852d782cb, law B = C2 a079ad5ec1).
