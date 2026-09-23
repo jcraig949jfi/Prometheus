@@ -60,6 +60,10 @@ ROUND1_INITS = [
     ("regime2_sparse_10pct", runner.SPARSE_SOUP, 0.10),
 ]
 ROUND1_MUTATION = [("mut_off", 0), ("mut_1e-3", prob(0.001))]
+# NOTE: the committed 2026-09-22 scout rows carry the older,
+# now-deprecated JSON key for what this emits as "perturbation"
+# (COMPUTATIONAL_TERMINOLOGY.md). Those rows are historical evidence
+# and are not rewritten (class C).
 
 # ---------------------------------------------------------------- round 2
 # Round 1 found two scale-invariant reasons nothing happens:
@@ -139,12 +143,12 @@ def summarize(series):
 def main():
     out_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("scout.jsonl")
     round_id = sys.argv[3] if len(sys.argv) > 3 else "1"
-    regimes, inits, mutation = ROUNDS[round_id]
+    regimes, inits, perturbation = ROUNDS[round_id]
     rows = []
     configs = [(rn, rp, inm, ini, dens, mn, mv)
                for rn, rp in regimes.items()
                for inm, ini, dens in inits
-               for mn, mv in mutation]
+               for mn, mv in perturbation]
     print("scout round %s: %d configs, %d^2 lattice, %d ticks each"
           % (round_id, len(configs), SIZE, TICKS), flush=True)
     t_all = time.time()
@@ -164,7 +168,7 @@ def main():
             row = {
                 "config": "%s | %s | %s" % (rname, iname, mname),
                 "round": round_id,
-                "regime": rname, "init": iname, "mutation": mname,
+                "regime": rname, "init": iname, "perturbation": mname,
                 "params": {k: v for k, v in params.items()},
                 "recipe": recipe,
                 "meta": meta,

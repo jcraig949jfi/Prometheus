@@ -217,7 +217,7 @@ def test_measuring_a_world_does_not_change_it():
     result = obs.sample(np, fields, write_cost=3,
                         want_compression=True, want_maps=True)
     for original, now in zip(keep, fields):
-        assert np.array_equal(original, now), "observatory mutated the lattice"
+        assert np.array_equal(original, now), "observatory modified the lattice"
     assert result["_maps"]["energy"].shape == (128, 128)
     assert result["_maps"]["write"].shape == (128, 128)
 

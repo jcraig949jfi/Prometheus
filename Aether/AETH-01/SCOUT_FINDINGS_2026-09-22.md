@@ -73,7 +73,7 @@ per-field breakdown is now recorded on every sample.
 
 The genuinely template-dynamic config is **C_free at 50% with
 perturbation 0.5**. But its churn scales linearly with the perturbation
-rate (0.013 -> 0.075 -> 0.298 of template change as mutation goes
+rate (0.013 -> 0.075 -> 0.298 of template change as perturbation goes
 1e-2 -> 1e-1 -> 5e-1) and falls to **zero** at `mut_off` in round 1. So
 the motion is injected, not endogenous. Turning the noise up makes the
 lattice noisier; it does not make it alive.
@@ -90,7 +90,7 @@ them. So:
 3. thereafter nothing changes except through the three bookkeeping
    sources above;
 4. when a writer's own opcode IS overwritten, the new byte is WRITE with
-   probability 1/256, so the writer population has a strong destruction
+   probability 1/256, so the writer ensemble has a strong destruction
    process and essentially no creation process.
 
 Every one of these is a **per-site property and therefore
@@ -113,7 +113,7 @@ sites.
   the scout buys is that the null is now *mechanistic* -- we can say
   WHY, and the why is checkable -- rather than merely observed.
 - No detector in the claim ladder was run, and nothing here bears on
-  construction, transmission or heredity.
+  construction, state transmission or transmitted variation.
 
 ## Consequence for the paid first light
 

@@ -108,7 +108,7 @@ Three properties make this a repair rather than a second hash:
        np.seterr(over="raise", under="raise", invalid="raise",
                  divide="raise")
        12 ticks at sizes 1, 3, 16, 64, seed and tick at 2^64-1,
-       write_cost 255, maintenance 255, replenish and mutation
+       write_cost 255, maintenance 255, replenish and perturbation
        certain -> NO RuntimeWarning raised.
 
    **Control for that check:** the same harness, given a deliberate

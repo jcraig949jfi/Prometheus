@@ -14,7 +14,7 @@ WHAT IS DELIBERATELY NOT HERE
     look like structure tracking.
   - Every detector in the claim ladder (`scientific_aeth01.py`
     CLAIM_TIERS). Nothing here reports construction, transmission or
-    heredity, and no output of this module may be read as evidence for
+    transmitted variation, and no output of this module may be read as
     any of them.
 
 WHAT THE OBSERVATORY MUST NOT BE ABLE TO DO
@@ -172,7 +172,7 @@ def coarse_map(xp, field, blocks=128):
 
     Keeps spatial organization observable across a whole run at ~64 KB
     per sample instead of ~84 MB, so gradients, seams, patches and
-    fronts survive in the record even where full snapshots cannot.
+    fronts persist in the record even where full snapshots cannot.
     Returns None when the lattice does not divide evenly, rather than
     silently cropping.
     """
