@@ -14,26 +14,29 @@ experimentation over 3 structurally different worlds recover a compact,
 normalized phase-boundary law that survives counterexample search and
 predicts a preregistered intervention in a sealed 4th world?
 
-Verdict: QUALIFIED WITH CAVEATS, on the 2nd attempt, for a phenomenon whose
-law turns out to be the economics of the shared task.
-  - C0: NO surviving law. 3 laws killed; adversary exposed 2 missing
-    coordinates (logger capacity; hazard after native repair).
-  - C0b: 1 law survived, froze, predicted sealed D (BA 0.983) and a second
-    sealed universe E written AFTER the freeze (BA 0.972); interventions
-    on fresh sealed worlds passed (after an engine defect failed G6 0/12).
-  - A new LOCATION attack found that law's boundary biased (+0.045 in C;
-    per-family offsets up to 0.15 log2 that CANCEL when pooled).
-  - C1 revision: no survivor under the location gate. C2 (location-aware
-    selection): a law with the task-economics ceiling survived; on a
-    third sealed universe F both frozen laws pass (0.930 vs 0.955;
-    difference NOT significant).
-  - Active sampling did NOT beat random. Cost-line sampling lost to random.
-  - Ablation (C2 minus cost lines): ABLATION_PLACEHOLDER
+Verdict: CWE QUALIFICATION PROVISIONALLY SUPPORTED -- as three verdicts:
+  V1 CHAMBER: SUPPORTED (PROVISIONAL). Recovers planted laws, refuses
+     artifacts/null/broken universality, kills wrong laws (7 of 9), finds
+     missing coordinates by attack, seals holdouts (audit PASS), and has
+     caught defects in its OWN tests (pooled residuals hid opposite-signed
+     family offsets; one-flip intervention engine; chance-floor-free gate).
+  V2 CANDIDATE LAW: SURVIVED sealed D (.983), E (.972), F (A .930, B .955)
+     and fresh-world interventions (G6 FAIL by engine defect, then G6b,
+     G6E, G6F PASS). B over A on F NOT established (10 vs 10, p = 1.0).
+     The law is the shared task's economics (97.5% agreement with a
+     hand-derived law): a planted-invariant recovery, not a discovery.
+  V3 SEARCH METHOD: UNRESOLVED. Active sampler ties random; cost lines
+     lose to random (.767 vs .946, matched budget); in the post-holdout
+     attribution matrix 6/7 arms survive, so location-aware selection is
+     not shown necessary; the C1->C2 "improvement" was mostly seed.
+  Observation (not a conclusion): on F, A's unique errors include gross
+  misses on growing/dying clones; B's all sit near the phase boundary.
+  No further universality claim until new sealed worlds exist.
 Nothing here is evidence about intelligence or reality.
 
 1. WHAT WAS BUILT (and what was committed before measurement)
 ------------------------------------------------------------------------------
-numpy-only engine, 30 modules + 9 test files (67 fast + 7 slow tests):
+numpy-only engine, 44 modules + 9 test files (72 fast + 7 slow tests):
   - 3 visible substrates, independent code lineages (AST-audited):
       regs  metered register VM, bit flips, unbounded registers
       ring  delay line, packet loss, dead packets stop costing, eviction
@@ -82,7 +85,8 @@ trusted where the answer is unknown.
   C2   location-aware selection among near-tied candidates
   F    both frozen laws adjudicated on sealed F
   eta2 budget-matched cost lines vs random
-  c2abl C2 minus cost lines, same seed
+  c2x  attribution matrix (lines x selection) on seeds 28/29/31 + a full
+       end-to-end rerun (byte-identical) -- POST-HOLDOUT development
 
 4. RESULTS (exact)
 ------------------------------------------------------------------------------
@@ -117,6 +121,12 @@ Samplers: active 0.790 vs random 0.788 (B=30); cost lines 0.767 vs
   random 0.946 (eta2, matched budget).
 Post-hoc: mined law vs hand-derived task-economics law agree on 97.5%
   of D and E worlds (BA 0.983/0.973, 0.972/0.971).
+Attribution (survival in 3 rounds, 1 run per cell-seed, descriptive):
+               no lines            lines
+  no select    s28 SURV s29 SURV   s28 FAIL  s29 SURV
+  select       s29 SURV            s29 SURV  s31 SURV
+Reproducibility: full rerun of one arm byte-identical (740/740 runs,
+  241/241 edges, same freeze hash). Audit PASS on 9 stores.
 
 5. INCIDENTS AND WHAT THEY VALIDATED
 ------------------------------------------------------------------------------
@@ -156,6 +166,8 @@ sampling helps; show law B better than law A on F; give independence
 beyond code level (one author wrote every substrate, including the
 sealed ones, knowing the law's form); make the location gate independent
 of location-aware selection (same criterion, different bases).
+Nor does anything after F was spent (eta2, attribution arms, audit)
+carry a generalization claim: it is post-holdout development.
 
 8. RECOMMENDATION (operator's call; Cosmos's lean)
 ------------------------------------------------------------------------------
@@ -190,8 +202,10 @@ auditing tool rather than a law finder.
               prometheus.cosmos.runtest --full; PASS 20260923T152456Z)
   seat        roles/Cosmos/ (STATUS.md, journal/2026-09-23.md,
               calibration/LEDGER.md, design/00-02 + PROVENANCE.md)
-  campaigns   roles/Cosmos/campaigns/{c0,c0b,c0e,c0m,c0s,c1,c2,eta2,c2abl}
-              (PREREG + amendments + results + compact artifacts)
+  campaigns   roles/Cosmos/campaigns/{c0,c0b,c0e,c0m,c0s,c1,c2,eta2,c2abl,
+              c2x} (PREREG + amendments + results + compact artifacts)
+  operator    roles/Cosmos/prompts/2026-09-23_operator_midcampaign/
+  audit       roles/Cosmos/campaigns/AUDIT_2026-09-23T1630Z.txt
   handoff     roles/Cosmos/campaigns/HANDOFF_2026-09-23.md
   seals       D 48e709653f2b... (800072c1e)  E d17ace6e6f91... (da57b0ac4)
               F 5e0064901277... (7c9e0d58f)
