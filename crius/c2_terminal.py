@@ -153,6 +153,60 @@ def _partial_steps(cands, takeovers, cid, cfg, seeds, cap=10):
     return steps, any(s.get("selectable") for s in steps)
 
 
+def _neutral_null(cands, cid, cfg, seeds, n=8):
+    """base-rate null for clause c: paired parent-vs-child deltas of ancestry steps that carry NO new typed op
+    (every 1/n-th such step, at most n), so a 'positive' typed-op step is judged against what neutral edits do"""
+    chain = _ancestry(cands, cid)
+    idx = [i for i in range(1, len(chain)) if not [1 for ops in OPS.values() if _has(_trace(chain[i]), ops) and not _has(_trace(chain[i - 1]), ops)]]
+    if not idx:
+        return []
+    step = max(1, len(idx) // n)
+    out = []
+    for i in idx[::step][:n]:
+        ep, ec = _paired_fitness(cfg, chain[i - 1]["program"], seeds), _paired_fitness(cfg, chain[i]["program"], seeds)
+        out.append({"iteration": chain[i]["iteration"], "paired_delta": [round(c[0] - p[0], 4) for p, c in zip(ep, ec)], "solved_delta": [c[1] - p[1] for p, c in zip(ep, ec)]})
+    return out
+
+
+_PART_RE = re.compile(r"splice@\d+<-donor\[(\d+):(\d+)\]:PART:(P_\w+)")
+
+
+def _part_splices(cands, takeovers, cid, cfg, seeds):
+    """rung D: every PART-donor splice in the ancestry of a qualified top, re-evaluated parent-vs-child on the sealed
+    streams; records the donor, fragment length, which typed ops the child executes, and the paired deltas"""
+    out = []
+    chain = _ancestry(cands, cid)
+    for i in range(1, len(chain)):
+        ch = chain[i]
+        m = _PART_RE.search(ch["modification"])
+        if not m:
+            continue
+        par = chain[i - 1]
+        ep, ec = _paired_fitness(cfg, par["program"], seeds), _paired_fitness(cfg, ch["program"], seeds)
+        tc = _trace(ch)
+        out.append({"iteration": ch["iteration"], "donor": m.group(3), "fragment_len": int(m.group(2)) - int(m.group(1)),
+                    "child_typed_ops": [n for n, ops in OPS.items() if _has(tc, ops)],
+                    "paired_delta": [round(c[0] - p[0], 4) for p, c in zip(ep, ec)], "solved_delta": [c[1] - p[1] for p, c in zip(ep, ec)],
+                    "takeover": takeovers.get(ch["candidate_id"], {}).get("outcome")})
+    return out
+
+
+def _part_census(cands, takeovers):
+    """rung D: PART-donor splice children per donor, how many won the takeover check, and their best paired-stream fitness"""
+    c = {}
+    for r in cands.values():
+        m = _PART_RE.search(r["modification"])
+        if not m:
+            continue
+        d = c.setdefault(m.group(3), {"children": 0, "takeovers": 0, "max_fitness": 0.0, "executes_op": 0})
+        d["children"] += 1
+        d["takeovers"] += takeovers.get(r["candidate_id"], {}).get("outcome") == "takeover"
+        d["max_fitness"] = max(d["max_fitness"], r["fitness"])
+        want = {"P_REC": "recorder", "P_INV": "invoker", "P_PLAN": "planner"}.get(m.group(3))
+        d["executes_op"] += bool(want and _has(_trace(r), OPS[want]))
+    return c
+
+
 def score_run(run_dir, cfg=None):
     cands = _load_cands(run_dir)
     takeovers = _takeovers(run_dir)
@@ -176,6 +230,12 @@ def score_run(run_dir, cfg=None):
             continue
         out["partial_steps"][label], out["partial_selectable"][label] = _partial_steps(cands, takeovers, cid, cfg, seeds)
         out["max_edit"][label] = max([_edit_size(r["modification"]) for r in _ancestry(cands, cid)[1:]] or [0])
+        if cfg["search"].get("parts_donors"):
+            out.setdefault("part_splices", {})[label] = _part_splices(cands, takeovers, cid, cfg, seeds)
+        if label.startswith("top1_"):
+            out["neutral_null_top1"] = _neutral_null(cands, cid, cfg, seeds)
+    if cfg["search"].get("parts_donors"):
+        out["part_census"] = _part_census(cands, takeovers)
     # invocation census: candidates that invoked an own-made block at all
     out["own_invocation_candidates"] = sum(1 for r in cands.values() if _has(_trace(r), OPS["recorder"]) and sum(p["artifacts_invoked_total"] for p in r["per_seed"].values()) > 0)
     out["candidates"] = len(cands)
@@ -241,6 +301,18 @@ def render(rungs, verdict):
             me = ",".join("%s=%d" % (k.split("_")[0], v) for k, v in run["max_edit"].items())
             P("  %-29s %5d %6d %4d %5d %6d | %3d / %-3d | %s" % (run["run"][:29], run["candidates"], run["own_invocation_candidates"], run["qualified"],
                                                         len(run["repro_positive"]), len(run["causal_ok"]), n_steps, n_sel, me))
+            if run.get("part_census"):
+                P("      PART donors: " + "; ".join("%s children %d takeover %d executes-op %d max fit %.2f" % (k, v["children"], v["takeovers"], v["executes_op"], v["max_fitness"]) for k, v in sorted(run["part_census"].items())))
+                for label, v in run.get("part_splices", {}).items():
+                    for st in v:
+                        P("      %-24s it%3d PART %-7s len %d child ops %-24s paired fitness delta %s solved delta %s takeover=%s" % (
+                            label[:24], st["iteration"], st["donor"], st["fragment_len"], "+".join(st["child_typed_ops"]) or "-", st["paired_delta"], st["solved_delta"], st["takeover"]))
+            nn = run.get("neutral_null_top1") or []
+            if nn:
+                pos = sum(1 for x in nn if sum(x["paired_delta"]) > 0 and sum(1 for d in x["paired_delta"] if d > 0) >= 2)
+                mags = sorted(abs(d) for x in nn for d in x["paired_delta"])
+                P("      neutral-edit null (top1 ancestry, %d steps carrying no new typed op): %d would count as 'selectable'; |delta| median %.4f max %.4f; solved deltas %s" % (
+                    len(nn), pos, mags[len(mags) // 2], mags[-1], sorted(set(d for x in nn for d in x["solved_delta"]))))
             for label, v in run["partial_steps"].items():
                 for st in v:
                     if "ops" in st:
