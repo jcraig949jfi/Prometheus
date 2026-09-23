@@ -35,6 +35,7 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
            law_id: str = "?") -> Dict[str, Any]:
     fams = list(pool)
     attacks: List[Dict[str, Any]] = []
+    meta: List[Dict[str, Any]] = []      # metamorphic pairs: equal declared coords, different microphysics
     prior = chamber.rows
     errs = [r for r in prior if bool(law.predict(_X([r["coords"]]))[0]) != bool(r["y"])]
 
@@ -62,6 +63,11 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
         base = rng.choice(conf, min(len(conf), q), replace=False) if len(conf) else []
         n = 0
         for i in base:
+            if n >= q:
+                break
+            fire("coordpres_base", f, P[i]["params"])
+            b_row = attacks[-1]
+            n += 1
             for v in fam.coord_preserving(P[i]["params"], rng):
                 if n >= q:
                     break
@@ -70,6 +76,11 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
                     n += 1
                 except ValueError:
                     continue
+                a = attacks[-1]
+                meta.append({"family": f, "base": b_row["params"], "variant": v, "coords": a["coords"],
+                             "base_margin": b_row["margin"], "var_margin": a["margin"],
+                             "flip": b_row["y"] != a["y"],
+                             "significant": abs(b_row["margin"] - a["margin"]) > 2 * (b_row["se"] ** 2 + a["se"] ** 2) ** 0.5})
         # extremes (confident only)
         ext = []
         for k in ("C", "N", "K", "G"):
@@ -118,8 +129,15 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
         k["confident"] += a["confident"]
         k["confirmed"] += a.get("confirmed", False)
     rate = len(confirmed) / max(1, n_conf)
+    metamorphic = {}
+    for m in meta:
+        k = metamorphic.setdefault(m["family"], {"pairs": 0, "verdict_flips": 0, "significant_margin_shifts": 0})
+        k["pairs"] += 1
+        k["verdict_flips"] += m["flip"]
+        k["significant_margin_shifts"] += m["significant"]
     return {"law_id": law_id, "n_attacks": len(attacks), "n_confident": n_conf, "n_confirmed": len(confirmed),
             "rate": rate, "verdict": "FAILED" if rate > KILL_RATE else "SURVIVED", "by_kind": by_kind,
-            "by_family": by_family, "band_calibration": calib,
+            "by_family": by_family, "band_calibration": calib, "metamorphic": metamorphic,
+            "metamorphic_pairs": meta[:60],
             "counterexamples": [{k: a[k] for k in ("kind", "family", "params", "coords", "p", "margin", "confirm_margins")}
                                 for a in confirmed][:40]}

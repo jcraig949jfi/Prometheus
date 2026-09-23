@@ -300,6 +300,9 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
         for g in ("G5", "G6"):
             report["gates"][g] = {"verdict": "NOT REACHED" if not quick else "SKIPPED (quick)"}
     report["graph"] = {**store.counts(), "edge_kinds": store.edge_counts()}
+    from prometheus.cosmos.quotient import quotient
+    report["quotient"] = quotient(ch.log + ctl.log, ch.edges + ctl.edges)
+    _dump(out, "quotient", report["quotient"])
     report["n_queries"] = ch.n_queries
     report["t_total_s"] = round(time.time() - t0, 1)
     report["laws"] = [{"law_id": l["law_id"], "version": l["version"], "parent": l["parent"],

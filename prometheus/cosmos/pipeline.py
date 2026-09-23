@@ -27,7 +27,9 @@ class Chamber:
         self.episodes = episodes
         self.campaign = campaign
         self.code_sha = code_sha
-        self.rows: List[Dict[str, Any]] = []
+        self.rows: List[Dict[str, Any]] = []      # rows admitted to mining
+        self.log: List[Dict[str, Any]] = []       # every observation, admitted or not (graph, quotient)
+        self.edges: List[tuple] = []
         self.n_queries = 0
 
     def observe(self, fam_name: str, params: Dict[str, Any], purpose: str = "sample", replicate: int = 0,
@@ -45,6 +47,9 @@ class Chamber:
             self.store.add_run(rec, purpose, self.code_sha)
             if parent and edge_kind:
                 self.store.add_edge(parent, rec["world_id"], edge_kind, delta)
+        self.log.append(row)
+        if parent and edge_kind:
+            self.edges.append((parent, rec["world_id"], edge_kind))
         if keep:
             self.rows.append(row)
         return row
