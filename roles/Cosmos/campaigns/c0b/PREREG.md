@@ -60,3 +60,35 @@ As in c0/PREREG.md s5, plus: the author both diagnosed C0's counterexamples and 
   permutations cannot reach p <= 0.05). Only gate verdicts were displayed; no v3 law on
   visible data was inspected. The quick pools are drawn from the same seeded generator as
   the main pools (overlap possible); disclosed, not a leak of the sealed family.
+
+## Amendment B1 -- G6b (written 2026-09-23 ~13:00Z, AFTER the C0b reveal, BEFORE G6b runs)
+
+C0b's G6 FAILED 0/12 and STAYS FAILED. Diagnosis (run_21fd1b2cc/G6_intervention.json and the
+receipted prescriptions): the frozen law predicts a BAND along do(kappa: a -> a f) -- QUIET at
+low cost (logger ties), PAYS in between, QUIET at high cost -- and the prescription engine
+(broker._flip_factor) assumed one upper flip; it returned the first QUIET point of its scan,
+the grid edge f = 1/64, for all 12 bases. The prescriptions were therefore not predictions of
+the law's upper boundary at all. This is an intervention-ENGINE defect; it is not converted
+into anything, and G6 is reported FAIL.
+
+G6b is a NEW, separately scored test of the SAME frozen law (law f852d782cb, freeze hash
+37c28c59ae919b08...) on FRESH sealed-family worlds never executed:
+- Bases: 400 candidates drawn from D.space() with a generator seeded by
+  sha256(nonce || "G6b") (inside the broker subprocess); any candidate equal to a sealed-list
+  world is dropped; frozen-law P(PAYS) >= 0.9 at f = 1 on v3 coordinates (spec only);
+  ordered by sha256([index, nonce, "G6b"]); first 12.
+- Prescription (frozen law only, C -> C f, f in [1/64, 64]): f_hi = the smallest f > 1 at
+  which the law's class becomes QUIET; f_lo = the largest f < 1 at which it is QUIET (None if
+  PAYS down to 1/64). Receipted (hash in the chain) BEFORE any ladder world runs.
+- Execution: ladder f in {2^(k/2), k = -12..12} plus {f_lo / 2, 1, 2 f_hi}, 1600 episodes,
+  common random numbers per base (seed key = the base world id).
+- direction_ok: observed PAYS at f = 1 AND observed QUIET at 2 f_hi AND (f_lo is None OR
+  observed QUIET at f_lo / 2).  magnitude_ok: f_obs_hi = the smallest ladder f > 1 with observed
+  margin < 0.10 satisfies |log2(f_obs_hi / f_hi)| <= 1.  Lower-side magnitude reported only.
+- Gate G6b: direction_ok >= 10/12 AND magnitude_ok >= 8/12 (the G6 thresholds).
+What G6b does NOT do: change the law, reuse any revealed D world, or rescue G6.
+Precommitments: G6b direction >= 10/12 (conf 0.6); magnitude >= 8/12 (conf 0.45; the Kramers
+under-estimate seen in G5's 7 false positives predicts f_obs_hi < f_hi, i.e. the real upper
+boundary sits at LOWER cost than the law says).
+Information seen before writing B1 that could bias it: G5 rows (240 sealed worlds, outcomes)
+and the G6 ladders on 12 bases. The prescription rule above is a function of the law alone.
