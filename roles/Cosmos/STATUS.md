@@ -1,21 +1,23 @@
 # Cosmos status
 
-Currency: 2026-09-23T15:40Z (CWE campaign, final hours; charter 2026-09-23_charter).
+Currency: 2026-09-23T17:30Z (CWE campaign CLOSED at a clean, verified checkpoint).
 
-seat state: ACTIVE on the charter (Cosmos World-Graph Engine), window 10:54:38Z -> 18:54Z.
-what it asserts: PRESENT, ACTIVE, PRODUCTIVE (engine + 6 preregistered campaigns + 3 sealed
-  universes adjudicated). VALID is the campaign's question: answered as QUALIFICATION WITH CAVEATS
-  (roles/Cosmos/campaigns/HANDOFF_2026-09-23.md).
+seat state: ACTIVE, campaign closed; awaiting the operator's next direction. No loop running.
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE. VALID (the campaign's question), in three verdicts:
+  chamber qualification PROVISIONALLY SUPPORTED; candidate law SURVIVED three sealed universes and
+  fresh-world interventions (B over A not established); search method UNRESOLVED (active sampler and
+  cost lines not earned; selection not shown necessary). Full text:
+  roles/Cosmos/campaigns/HANDOFF_2026-09-23.md and REVIEW_PACKET_CWE_2026-09-23.txt.
 workspace: worktree cosmos-base-role (Prometheus-worktrees, M2 SPECTREX5), branch
-  cosmos/cwe-c0-2026-09-23; fast-forwarded into origin/main at ed84a6c59 (15:33Z).
-code: prometheus/cosmos/ ; canonical check `python -m prometheus.cosmos.runtest --full`
-  (last PASS 20260923T152456Z on clean 383fd90b4).
+  cosmos/cwe-c0-2026-09-23, fast-forwarded into origin/main (final SHA in the journal).
+code: prometheus/cosmos/ ; canonical checks `python -m prometheus.cosmos.runtest --full`
+  (PASS 20260923T164832Z) and `python -m prometheus.cosmos.audit <stores>` (PASS, 9 stores).
+reproducibility: C2 and c2none full reruns byte-identical; pinned C0b replay partial (pre-mining
+  identical, then OOM in the old worker pool).
 operational state: COSMOS_HOME = C:/Users/James/cosmos_runs (never the D: SMR disk).
-results: C0 no surviving law (3 killed); C0b law A frozen, sealed D BA .983, sealed E BA .972,
-  G6 FAIL (engine) / G6b G6E PASS; C0s location bias found; C1 no survivor (location gate);
-  C2 law B frozen; sealed F: A .930, B .955 (difference not significant), G6F PASS.
-  Sealed universes remaining: NONE (D, E, F all spent).
-running now: c2abl ablation (C2 minus cost lines), launched 15:37Z.
-monitors owned or fed: none standing.
-blockers: none.
-next executable action: record c2abl, publish the review packet, final runtest, final push to main.
+sealed universes remaining: NONE (D, E, F spent). No generalization claim beyond them.
+monitors owned or fed: none.
+blockers: none. Known repo defect outside this lane: archaeon/tests/test_base_role.py fails on Nyx's
+  manifest drift (reported by Aether 2026-09-19; unchanged).
+next executable action (for the next campaign, C3): new sealed worlds written and sealed by ANOTHER
+  seat; the functional-memory certificate (charter s XXVII); retire the kernel active sampler.

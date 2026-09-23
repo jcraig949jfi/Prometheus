@@ -125,8 +125,10 @@ Attribution (survival in 3 rounds, 1 run per cell-seed, descriptive):
                no lines            lines
   no select    s28 SURV s29 SURV   s28 FAIL  s29 SURV
   select       s29 SURV            s29 SURV  s31 SURV
-Reproducibility: full rerun of one arm byte-identical (740/740 runs,
-  241/241 edges, same freeze hash). Audit PASS on 9 stores.
+Reproducibility: full reruns byte-identical -- c2none (740/740 runs,
+  241/241 edges) and C2 itself (1,130/1,130 runs, 693/693 edges, law B
+  freeze hash reproduced). Pinned C0b replay: pre-mining phases identical,
+  then OOM (old worker pool). Audit PASS on 9 stores (+ cheat controls).
 
 5. INCIDENTS AND WHAT THEY VALIDATED
 ------------------------------------------------------------------------------
