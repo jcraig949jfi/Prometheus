@@ -101,8 +101,8 @@ def main(argv=None) -> int:
     endo = [v for v in allr if v["reproduction"] != "EXTERNAL"]
     w(""); w("Summary over %d transplant runs (%d endogenous): persisted %d/%d; endogenous reproduction %d/%d; competence retained (>= %.3f) %d/%d; "
              "physics swap to EXTERNAL persisted %d/%d. The seeded-derived lineages **persist and self-replicate at high fidelity when moved**: same world, "
-             "world swap (niches -> well_mixed) and task swap alike. **Task competence mostly does not travel**: the sources reached a best score of 1.0, and "
-             "most transplanted populations finish at 0.0 on the same task. This is a transplanted-lineage persistence result, which is a real and "
+             "world swap (niches -> well_mixed) and task swap alike. **Task competence was retained in none of them** (count above), although "
+             "every source had reached a best score of 1.0. This is a transplanted-lineage persistence result, which is a real and "
              "positive finding. It is not a de-novo result, and it is not a competence-transport result." % (
                  len(allr), len(endo), sum(v["persisted"] for v in allr), len(allr), sum(v["reproduced_endogenously"] for v in endo), len(endo),
                  th["competence"], sum(v["competence_retained"] for v in allr), len(allr),
