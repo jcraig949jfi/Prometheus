@@ -1,5 +1,18 @@
 # ENSORAIN E1.5 "COMPRESSION HEADROOM ASSAY" -- verdict
 
+> OPERATOR RULING 2026-09-23 (verbatim in
+> roles/Ensorain/prompts/2026-09-23_e1p5_ruling_e2_authorization/):
+> C2 is read with its authorised meaning -- some adjacent pair satisfying T
+> must also satisfy C2. The pair {192, 224} does (PC pass, T pass, C2 pass
+> at both). HUMAN-RULE VERDICT: INTRIGUING -- WORTH EXPLORING.
+> The frozen scorer's CLOSE (B) below is kept unchanged: it is the result
+> of the seat's preregistration, which STRENGTHENED C2 beyond the
+> operator's wording (union of passing pairs, every cap). The operator
+> agrees with s3's scientific reading: no headroom phase transition; a
+> correctly ordered TT has a real, expected advantage on a TT-generated
+> world; the open problem is structure discovery (E2). E1 and E1.5 are
+> PARKED intact.
+
 Currency: 2026-09-23. Seat Ensorain[m2-14baf7d5]. Rows ship in this
 commit: ensorain/runs/e1p5_confirm.jsonl (12,960 lives: sets A and B x 8
 caps x 9 arms x 80, plus WORLD R), e1p5_calibrate.jsonl,
