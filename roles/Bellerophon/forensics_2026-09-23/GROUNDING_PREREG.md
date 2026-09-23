@@ -40,7 +40,7 @@ NONE / RANDOM; each cell overrides only what it names. Seeds: 9e12 + lane*1e9 + 
   copy_op, copy_pc, exec_own_bytes, exec_before_copy, uses_io, task_accuracy (panel accuracy on the arm's task).
 - G6 origin classes (on first_self_replication.genealogy; the writer is genealogy[0]):
   CLIFF_AT_INIT      writer mechanism 'init' and its tape AT BIRTH is already self_copy (repro_descriptor)
-  MUTATED_INIT       writer mechanism 'init', birth tape not self_copy, pre-execution tape at first SR is
+  MUTATED_INIT       writer mechanism 'init', birth tape not self_copy (it became a self-replicator after birth)
   BUILT_BY_COPY      writer born by a non-SR COPY_EVENT (constructed by another organism's writes)
   RAMP (flag, any class): some ancestor genealogy[i>0] whose birth tape copies >= 25% of the window from its own
                      bytes by its own code in isolation, i.e. a partial copier existed in the line before the first
@@ -56,12 +56,17 @@ predictions are written so they can fail in the direction that would embarrass t
 G1 Replication accessibility (lane G1, G1T; unit = run = one independent random initial population).
   Estimate per cell: P(spontaneous) with Wilson 95% CI; time to first SR; also per-organism-tick exposure.
   Prediction G1a: ENDOGENOUS_COPY / Z80_64 (n = 400): P(spontaneous) > 0, Wilson lower bound > 0.
-  Prediction G1b: CONSTRUCTIVE shows the lowest rate of the five physics (historically 0/1,869 fixed-lane runs).
+  Prediction G1b: CONSTRUCTIVE P(spontaneous) > 0 (Wilson lower bound > 0). The v1 trigger credited CONSTRUCTIVE
+  with 0/1,869 fixed-lane runs; traced replay found real self-replication in 4 of 51 untriggered CONSTRUCTIVE runs
+  (receipts/TRACED_baseline.json). If G1b fails, the traced finding does not reproduce.
+  Forensic reference rate (exploratory; receipts/ORIGINS.json): 7.2% of RANDOM-init endogenous runs contain an
+  origin (95% CI 4.8-9.6%), pooled over physics/representations/topologies.
   G1T estimates across the six task families (n = 150 each); no directional prediction (exploratory estimation).
 
 G2 Sustained reproduction (derived from G1/G1T/G7 RANDOM runs; unit = spontaneous run).
   Estimate: P(SUSTAINED d=3 | spontaneous), P(SUSTAINED d=10 | spontaneous), P(EVOLUTIONARILY_ACTIVE | spontaneous).
-  Prediction G2a: P(SUSTAINED d=3 | spontaneous) >= 0.5 (forensic traced replay: deep chains in most spontaneous runs).
+  Prediction G2a: P(SUSTAINED d=3 | spontaneous) >= 0.5 (forensic: 310/346 trigger-set origins, 7/15 untriggered;
+  mixture ~0.6).
 
 G3 Endogenous causal advantage (lane G3; unit = seed PAIR; arms ENDOGENOUS_COPY vs EXTERNAL; identical initial
   population; ext_mut_mult 0 so offspring of both arms are exact copies plus the same background mutation).
@@ -92,8 +97,11 @@ G5 Architecture response (lane G5; unit = seed TRIPLE; identical seeded-replicat
 
 G6 Incremental construction (derived from every spontaneous G1/G1T/G7 run; unit = spontaneous run = one origin).
   Classify each origin by s2's G6 classes; report proportions with Wilson CIs; RAMP share; essential-step count
-  distribution. Prediction G6a (forensic: most historical first SR events at tick 0-5): CLIFF_AT_INIT + MUTATED_INIT
-  make up >= 50% of origins; RAMP share < 50%.
+  distribution. Prediction G6a (forensic, receipts/G6_HISTORICAL.json: 233/361 historical first self-replicators
+  were BUILT_BY_COPY -- constructed by another organism's non-SR copy events; 30 present at tick 0; 98 initial
+  organisms that became SR later): BUILT_BY_COPY >= 50% of origins. Prediction G6b: RAMP share >= 50% (a partial
+  copier exists in the line before the first self-replicator). The historical logs hold no ancestor tapes, so G6b
+  has NO historical estimate; it is tested here for the first time.
 
 G7 Topology (lanes G7 and G7P1; unit = run; fixed allocation).
   Primary causal test G7P1: POLLINATION and RESERVOIR, physics v1 (world copies under endogenous physics) vs v2
@@ -127,10 +135,13 @@ P8 Substrate-ablation probes (lane P8; unit = run; matched seeds per probe famil
   reaches copy code). No prediction for mutation supply or target_fill (estimation).
 
 HIST Historical specimens (lane HIST; unit = specimen = one independent historical origin; inputs frozen in
-  grounding_inputs.json: one first-SR tape per historical spontaneous run that traced replay confirmed, deduplicated
-  by tape). Each transplanted into a fresh random population (a quarter of the initial half-population), intact and
-  with its copy ops NOPed, same seed. Outcome: SR births attributable to the transplant lineage and SUSTAINED.
-  Prediction HISTa: intact sustains in >= 50% of specimens; NOPed in <= 5%.
+  receipts/grounding_inputs.json: the first self-replicating writer's pre-execution tape of every historical
+  non-intervention origin run that traced replay confirmed (trigger census + untriggered sample), deduplicated by
+  tape: 345 specimens, 57 of which do not write the window when executed alone (context-dependent copiers)).
+  Each is transplanted into a fresh random ENDOGENOUS_COPY v2 population in its own representation (a quarter of the
+  initial half-population), intact and with its copy ops NOPed, same seed. Outcome: SELF_REPLICATION seeded
+  (first_self_replication.seeded == True: the transplant lineage self-replicated) and SUSTAINED (d=3, alive at end).
+  Prediction HISTa: intact: seeded self-replication in >= 50% of specimens; NOPed: seeded self-replication in <= 5%.
 
 ## 4. Statistics (directive Phase 9)
 
@@ -158,4 +169,10 @@ WHAT the next campaign optimises for, not whether the harness is ready.
 
 ## 9. Freeze record
 
-(plan sha256, run count and the grounding_inputs.json sha256 are filled in at the freezing commit)
+plan sha256 f17eadbc73b3610d2448aa61a6db65005c101395095de48c2acb965cd39a2b7e
+runs 12,130 (G8 160, G7P1 900, G1 2,400, G3 1,800, G5 300, P8 2,700, HIST 690, G1T 900, G7 2,280)
+receipts/grounding_inputs.json sha256 04f7c4afdb589cf567a5156c475f54e09a0badd58365b43a7ae54ef804314901 (345 specimens)
+command: python -m prometheus.z80atlas.grounding --workdir C:/Users/James/z80atlas_grounding_2026-09-23
+         --inputs roles/Bellerophon/forensics_2026-09-23/receipts/grounding_inputs.json --hours 12 --workers 18
+Pre-freeze pilot (NOT part of the round; seeds 8e12+k, off-plan): 3 seeds of every G8 cell and of the G7P1
+NICHES_ISOLATED v1/v2 pair behaved as s3 expects (journal 2026-09-23). The harness at this commit passes 38/38 tests.

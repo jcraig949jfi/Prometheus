@@ -1,0 +1,250 @@
+{
+ "definition": "Phase 2B / 3.1: independent origins of self-replication in the historical campaign.\n\nUnit: the RUN (one fresh random population). A non-intervention RANDOM-init endogenous run in which traced replay\nfound >= 1 SELF_REPLICATION birth contributes exactly ONE origin (its first self-replicating writer, pre-execution\ntape). Descendants and later within-run 'origins' are never counted. Rate: origins / all RANDOM-init endogenous\nnon-intervention runs, combining the trigger set (fully traced) with the untriggered set (traced random sample).\nMechanism clusters (clustering assumption stated): an origin tape is executed alone; its mechanism key is\n  (copy opcode, source offset S0 and target T0 of the first window write, the sorted multiset of DEFINED opcodes\n   executed at own-tape PCs below the copy instruction)\nTwo origins with the same key use the same copy route; the number of distinct keys is the number of mechanistically\ndistinct routes (an upper bound on independence of MECHANISM; every run is independent in ORIGIN).\nAlso writes receipts/grounding_inputs.json (historical_origins for the HIST lane: one tape per origin run, deduped).\n    python origins.py",
+ "estimated_origins_total": 1076.1,
+ "mechanism": {
+  "coarse": {
+   "COPYALL/0": 47,
+   "COPYALL/1": 3,
+   "COPYALL/16": 1,
+   "COPYALL/2": 1,
+   "COPYALL/22": 3,
+   "COPYALL/5": 1,
+   "COPYALL/64": 2,
+   "LDI/0": 8,
+   "LDI/2": 1,
+   "LDI/81": 1,
+   "LDIR/0": 204,
+   "LDIR/1": 1,
+   "LDIR/128": 1,
+   "LDIR/18": 1,
+   "LDIR/22": 2,
+   "LDIR/242": 1,
+   "LDIR/254": 1,
+   "LDIR/29": 1,
+   "LDIR/32": 1,
+   "LDIR/33": 1,
+   "LDIR/4": 1,
+   "LDIR/64": 14,
+   "LDIR/65": 1,
+   "LDIR/71": 1,
+   "LDIR/87": 1,
+   "LDIR/95": 1,
+   "LD_pT_A/None": 3,
+   "NO_WINDOW_WRITE_IN_ISOLATION": 57
+  },
+  "distinct_coarse_routes(copy_op,S0)": 28,
+  "distinct_fine_keys": 246,
+  "origins_with_tape": 361,
+  "singletons": 227,
+  "top_fine": [
+   {
+    "example_run": "r042099",
+    "example_tape": "08405d475d5d325d3353a05d5d5d5de46c5da65df15d0d5db2714a5d154d33896de6cf5d5d5d5d6d8e5d5d5d372e5d396e5d5d5da099724935935da2fb5d445d",
+    "key": [
+     "NO_WINDOW_WRITE_IN_ISOLATION"
+    ],
+    "n": 57
+   },
+   {
+    "example_run": "r027229",
+    "example_tape": "082057adae1506e8082057adae1506e8082057adae1506e8082057adae1506e8",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n',)"
+    ],
+    "n": 20
+   },
+   {
+    "example_run": "r013693",
+    "example_tape": "bccd158bb3fac0d1bccdb4ccebc6ebbaba0814d1bccd158bb3fac0d1bccdb4ccebc6ebbaba084014d1bccd158bb3fac0d1bccdb4ccebc6ebbaba0814d1bccd15",
+    "key": [
+     "LDIR",
+     "64",
+     "()"
+    ],
+    "n": 10
+   },
+   {
+    "example_run": "r041506",
+    "example_tape": "0a080808401508080a080808401508080a0808081508080a080808401508080a080808401508080a080808401508080a080808401508080a0808084015080800",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'LD_T_n')"
+    ],
+    "n": 5
+   },
+   {
+    "example_run": "r056929",
+    "example_tape": "005a96518ae008208efd280a9715ce93310038dd18000de3000b040062a7d3a7",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'OR_A_B')"
+    ],
+    "n": 5
+   },
+   {
+    "example_run": "r049319",
+    "example_tape": "00ce00ce00dc00dcbcdc00b1bc00ceb10000ceb1bcb1bcb16f08006f08086a086abcbf00bf00ab006a08a1bf0000a6d29167b16fbcbfdb0840dc15a60000ce00",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n')"
+    ],
+    "n": 4
+   },
+   {
+    "example_run": "r025778",
+    "example_tape": "577e6c88008a009dcb85db841d08409ea5bc003e551600801c3d2ca94b002ae200007d00333e6c05248a009dcb9810545d082c9ed3bc0078ac2d0080758d0057",
+    "key": [
+     "COPYALL",
+     "0",
+     "('LD_T_n',)"
+    ],
+    "n": 4
+   },
+   {
+    "example_run": "r055628",
+    "example_tape": "083fdb25f45ae5587e15aa612654df4a381eb19f0bf92a315397d25ce546295c3bf8de35aefdf29fec93e116f54f5a468eb731228981721072a8bdb86c36fd08",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'INC_T')"
+    ],
+    "n": 4
+   },
+   {
+    "example_run": "r051562",
+    "example_tape": "406ccd8a0000014400000000000000000000000000005800007ff1108b4815f8dcb53316a9fca9fcd29d9dcbd89dcbd8bddcb5b801444b884815f8dcd1c90144",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_A_n', 'LD_A_pS', 'IN_A', 'LD_T_A')"
+    ],
+    "n": 3
+   },
+   {
+    "example_run": "r060429",
+    "example_tape": "081508083108088c081508083108088c08401508083108088c081508083108088c081508083108088c081508083108088c081508083108088c08150808310808",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n', 'LD_T_n', 'JZ_n', 'JZ_n')"
+    ],
+    "n": 3
+   },
+   {
+    "example_run": "r049327",
+    "example_tape": "214040404040aa402e79b340fc2b400840404140cbfc40551534774040e24005807893794037408d512db44040006808008048fb00000044b02a00b7590071d0",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'SUB_A_B', 'SHR_A', 'CP_A_n', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'IN_A', 'OUT_A')"
+    ],
+    "n": 3
+   },
+   {
+    "example_run": "r060736",
+    "example_tape": "e18bddd8785b65512ed91aa893bc8016cc4d7293e9c66b0a938b21d779c2cac954a408400b3ac7682e425415286d298ce42dc4bae52d7a766d5d3ff123068a09",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'COPYALL', 'SUB_A_B', 'CP_A_n', 'CP_A_n', 'SWAP_A_B')"
+    ],
+    "n": 2
+   },
+   {
+    "example_run": "r005160",
+    "example_tape": "0d6ba6e477be873ce70bbba43a6e96ddeda0a7f9d8c58eca0820492b15638010",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'SHR_A', 'LD_A_S')"
+    ],
+    "n": 2
+   },
+   {
+    "example_run": "r020593",
+    "example_tape": "8c082807e81d1515d0082893e81d151506082893e81d15157b082893e81d151586082893e81d1515000000000000000000000000000000000000000000000000",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_S_n', 'LD_T_n')"
+    ],
+    "n": 2
+   },
+   {
+    "example_run": "r057473",
+    "example_tape": "bb8f8fac8f161c1c1cbb8f8f1f1f081cbb8893bbbb49bbbb93bb49bb8f8fac8f16168f168f1f8f8f1f001c8f8f8fbb8f1f08403b151f083b1faca48fbb8f8fac",
+    "key": [
+     "LDIR",
+     "0",
+     "('LD_T_n', 'LD_T_n', 'COPYALL', 'COPYALL', 'COPYALL', 'COPYALL', 'LD_A_S', 'LD_A_S')"
+    ],
+    "n": 2
+   }
+  ]
+ },
+ "origin_rate_ci95": [
+  0.048,
+  0.0963
+ ],
+ "origin_rate_per_run_est": 0.0722,
+ "pool_random_endogenous_nonintervention_runs": 14910,
+ "trigger_census": {
+  "by_representation": {
+   "BYTECODE32": 34,
+   "VM_COPY": 168,
+   "Z80_64": 144
+  },
+  "by_reproduction": {
+   "ENDOGENOUS_COPY": 182,
+   "ENDOGENOUS_PARTIAL": 99,
+   "OVERWRITE": 34,
+   "PAIR_EXECUTION": 31
+  },
+  "evolutionarily_active": 188,
+  "first_sr_at_tick0": 29,
+  "first_sr_tick_median": 117,
+  "origins": 346,
+  "sr_alive_at_end": 237,
+  "sustained_d3": 310,
+  "sustained_d3_ci": [
+   0.8593,
+   0.9239
+  ]
+ },
+ "trigger_false_positive_runs": 156,
+ "trigger_runs": 502,
+ "trigger_runs_with_SR": 346,
+ "untriggered_SR_rate": 0.0507,
+ "untriggered_SR_rate_wilson": [
+  0.0309,
+  0.0819
+ ],
+ "untriggered_runs": 14408,
+ "untriggered_sample": {
+  "by_representation": {
+   "VM_COPY": 13,
+   "Z80_64": 2
+  },
+  "by_reproduction": {
+   "CONSTRUCTIVE": 4,
+   "ENDOGENOUS_COPY": 7,
+   "ENDOGENOUS_PARTIAL": 4
+  },
+  "evolutionarily_active": 4,
+  "first_sr_at_tick0": 1,
+  "first_sr_tick_median": 133,
+  "origins": 15,
+  "sr_alive_at_end": 6,
+  "sustained_d3": 7,
+  "sustained_d3_ci": [
+   0.2481,
+   0.6988
+  ]
+ },
+ "untriggered_sample_with_SR": 15
+}
