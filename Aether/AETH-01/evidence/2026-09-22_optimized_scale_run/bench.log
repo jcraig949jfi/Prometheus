@@ -1,0 +1,21 @@
+AETH01_GATE waiting for canary result.json ...
+AETH01_GATE canary status=PASS backend=cupy
+AETH01_GATE canary PASS -> running scaling benchmark
+AETH01_BENCH_ENV backend=cupy numpy=2.2.0 device=NVIDIA A40 parity_max=128
+/app/aeth01_gpu_kernel.py:42: RuntimeWarning: overflow encountered in scalar multiply
+  x *= MIX_MUL_1
+/app/aeth01_gpu_kernel.py:44: RuntimeWarning: overflow encountered in scalar multiply
+  x *= MIX_MUL_2
+AETH01_BENCH {"size": 16, "sites": 256, "tick_med_s": 0.022952, "tick_min_s": 0.022548, "tick_max_s": 0.023133, "sites_per_sec": 11153.9, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45227.8, "mem_total_mb": 45498.0, "mem_used_mb": 270.2, "digest": "1000219c591e1595", "parity": "PASS", "backend": "cupy"}
+AETH01_BENCH {"size": 32, "sites": 1024, "tick_med_s": 0.023848, "tick_min_s": 0.023066, "tick_max_s": 0.024636, "sites_per_sec": 42939.2, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45227.8, "mem_total_mb": 45498.0, "mem_used_mb": 270.2, "digest": "9f65f15cb87b630f", "parity": "PASS", "backend": "cupy"}
+AETH01_BENCH {"size": 64, "sites": 4096, "tick_med_s": 0.02323, "tick_min_s": 0.023097, "tick_max_s": 0.023642, "sites_per_sec": 176326.0, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45227.8, "mem_total_mb": 45498.0, "mem_used_mb": 270.2, "digest": "3ce333436da923b0", "parity": "PASS", "backend": "cupy"}
+AETH01_BENCH {"size": 128, "sites": 16384, "tick_med_s": 0.023075, "tick_min_s": 0.023011, "tick_max_s": 0.023204, "sites_per_sec": 710021.5, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45225.8, "mem_total_mb": 45498.0, "mem_used_mb": 272.2, "digest": "3ab66c98546a3a95", "parity": "PASS", "backend": "cupy"}
+AETH01_BENCH {"size": 256, "sites": 65536, "tick_med_s": 0.023026, "tick_min_s": 0.022822, "tick_max_s": 0.023217, "sites_per_sec": 2846231.4, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45219.8, "mem_total_mb": 45498.0, "mem_used_mb": 278.2, "digest": "7383c7d828504a30", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 512, "sites": 262144, "tick_med_s": 0.022989, "tick_min_s": 0.022786, "tick_max_s": 0.023379, "sites_per_sec": 11402985.0, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45195.8, "mem_total_mb": 45498.0, "mem_used_mb": 302.2, "digest": "a04b1321280b0b97", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 1024, "sites": 1048576, "tick_med_s": 0.03241, "tick_min_s": 0.03238, "tick_max_s": 0.032455, "sites_per_sec": 32353728.2, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 45099.8, "mem_total_mb": 45498.0, "mem_used_mb": 398.2, "digest": "87b8194c84a440d0", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 2048, "sites": 4194304, "tick_med_s": 0.119645, "tick_min_s": 0.11963, "tick_max_s": 0.119688, "sites_per_sec": 35056228.4, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 44715.8, "mem_total_mb": 45498.0, "mem_used_mb": 782.2, "digest": "f2ad4a9ec9dbac4f", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 4096, "sites": 16777216, "tick_med_s": 0.467566, "tick_min_s": 0.467408, "tick_max_s": 0.467653, "sites_per_sec": 35882025.5, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 43179.8, "mem_total_mb": 45498.0, "mem_used_mb": 2318.2, "digest": "3741cde26ed38979", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 8192, "sites": 67108864, "tick_med_s": 1.85969, "tick_min_s": 1.859567, "tick_max_s": 1.860169, "sites_per_sec": 36086056.4, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 37035.8, "mem_total_mb": 45498.0, "mem_used_mb": 8462.2, "digest": "2f787e64bf323091", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH {"size": 16384, "sites": 268435456, "tick_med_s": 7.419936, "tick_min_s": 7.418615, "tick_max_s": 7.420313, "sites_per_sec": 36177599.4, "measured_ticks": 5, "warmup": 2, "mem_free_mb": 12459.8, "mem_total_mb": 45498.0, "mem_used_mb": 33038.2, "digest": "b3d06be54c1be93c", "parity": "SKIPPED", "backend": "cupy"}
+AETH01_BENCH_STOP reason=OOM size=32768 err=OutOfMemoryError
+AETH01_BENCH_COMPLETE rc=0

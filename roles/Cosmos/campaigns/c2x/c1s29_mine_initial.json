@@ -1,0 +1,2336 @@
+{
+ "raw": {
+  "base_rate": 0.23376623376623376,
+  "best_score": 0.793400215266647,
+  "cmap": "v4",
+  "family_dependence": {
+   "gain_bits_per_row": 0.01557,
+   "mu_bits": 0.01465,
+   "null_median": 0.00093,
+   "p": 0.04,
+   "per_family_acc": {
+    "ca": 0.6934,
+    "regs": 0.7745,
+    "ring": 0.855
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 0.5,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "Q"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ]
+     ],
+     0.8491996294032454,
+     1.0
+    ],
+    [
+     [
+      "div",
+      [
+       "log",
+       [
+        "var",
+        "N"
+       ]
+      ],
+      [
+       "add",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "var",
+        "G"
+       ]
+      ]
+     ],
+     -0.24764337743181872,
+     1.0
+    ]
+   ],
+   "complexity": 12,
+   "fold_ba": {
+    "ca": 0.785234899328859,
+    "regs": 0.8691860465116279,
+    "ring": 0.869779699959454
+   },
+   "law": "(Q - (C * K)) <= 0.8492 AND (log(N) / (C + G)) <= -0.2476",
+   "scales": [
+    24.80690652235986,
+    2.7447882241787314
+   ],
+   "score": 0.793400215266647
+  },
+  "n_expr_classes": 12371,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 616,
+  "null_scores": [
+   0.5645,
+   0.5691,
+   0.5498,
+   0.526,
+   0.5453,
+   0.5671,
+   0.5547,
+   0.5623,
+   0.5594,
+   0.5462,
+   0.5473,
+   0.5526,
+   0.5522,
+   0.559,
+   0.5546,
+   0.5605,
+   0.5533,
+   0.5256,
+   0.5653
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7934,
+    "structure": "(Q - (C * K)) <= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "log",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "log((Q - (C * K))) <= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ],
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "exp(-((C * K) - Q)) <= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "log",
+        [
+         "var",
+         "Q"
+        ]
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "(log(N) / (C + G)) <= AND (log(Q) - (C * K)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "mul",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "dec",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "(Q * exp(-(C * K))) <= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "add",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "dec",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "(Q + exp(-(C * K))) <= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "sub",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "Q"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "(log(N) / (C + G)) <= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7852,
+     "regs": 0.8692,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7894,
+    "structure": "exp(-(Q - (C * K))) >= AND (log(N) / (C + G)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "G"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7535,
+     "regs": 0.8692,
+     "ring": 0.8905
+    },
+    "passes_worst_gate": true,
+    "score": 0.7857,
+    "structure": "(log(N) / (C + G)) <= AND ((C * K) + exp(-Q)) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7819,
+     "regs": 0.8408,
+     "ring": 0.8698
+    },
+    "passes_worst_gate": true,
+    "score": 0.7828,
+    "structure": "(Q - (C * K)) <= AND (log(N) / (C + Q)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7047,
+     "regs": 0.7965,
+     "ring": 0.7671
+    },
+    "passes_worst_gate": false,
+    "score": 0.7361,
+    "structure": "(Q - (C * K)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.7047,
+     "regs": 0.7936,
+     "ring": 0.774
+    },
+    "passes_worst_gate": false,
+    "score": 0.7334,
+    "structure": "exp(-(Q - (C * K))) >="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ },
+ "v3": {
+  "base_rate": 0.23376623376623376,
+  "best_score": 0.8941529806706763,
+  "cmap": "v3",
+  "family_dependence": {
+   "gain_bits_per_row": -0.01379,
+   "mu_bits": 0.00521,
+   "null_median": -0.01899,
+   "p": 0.34,
+   "per_family_acc": {
+    "ca": 0.9575,
+    "regs": 0.9314,
+    "ring": 0.95
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 500.0,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "Q"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ]
+     ],
+     0.8335328282737496,
+     1.0
+    ],
+    [
+     [
+      "sub",
+      [
+       "var",
+       "G"
+      ],
+      [
+       "div",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "N"
+        ]
+       ]
+      ]
+     ],
+     0.08262351357468921,
+     -1.0
+    ]
+   ],
+   "complexity": 12,
+   "fold_ba": {
+    "ca": 0.9438585277511452,
+    "regs": 0.9534883720930232,
+    "ring": 0.9291120421678605
+   },
+   "law": "(Q - (C * K)) <= 0.8335 AND (G - (C / exp(-N))) >= 0.08262",
+   "scales": [
+    12.13530198538308,
+    10.986372573899066
+   ],
+   "score": 0.8941529806706763
+  },
+  "n_expr_classes": 12301,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 616,
+  "null_scores": [
+   0.5654,
+   0.5669,
+   0.5633,
+   0.533,
+   0.5593,
+   0.5759,
+   0.5605,
+   0.5576,
+   0.5461,
+   0.5543,
+   0.5528,
+   0.5573,
+   0.5693,
+   0.5512,
+   0.5568,
+   0.5708,
+   0.5494,
+   0.5265,
+   0.5665
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8942,
+    "structure": "(Q - (C * K)) <= AND (G - (C / exp(-N))) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "sub",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "Q"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9518,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8928,
+    "structure": "(G - (C / exp(-N))) >= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "var",
+        "N"
+       ],
+       [
+        "log",
+        [
+         "div",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "G"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9359,
+     "regs": 0.9564,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8925,
+    "structure": "(Q - (C * K)) <= AND (N + log((C / G))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.946,
+     "regs": 0.9448,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.892,
+    "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "sub",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "Q"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9564,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8911,
+    "structure": "(C / (G * exp(-N))) <= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "sub",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "Q"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9448,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8906,
+    "structure": "(C - (G * exp(-N))) <= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ],
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8902,
+    "structure": "exp(-((C * K) - Q)) <= AND (G - (C / exp(-N))) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "dec",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8902,
+    "structure": "(G - (C / exp(-N))) >= AND (Q + exp(-(C * K))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "log",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8902,
+    "structure": "log((Q - (C * K))) <= AND (G - (C / exp(-N))) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "log",
+        [
+         "var",
+         "Q"
+        ]
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9439,
+     "regs": 0.9535,
+     "ring": 0.9291
+    },
+    "passes_worst_gate": true,
+    "score": 0.8902,
+    "structure": "(G - (C / exp(-N))) >= AND (log(Q) - (C * K)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "mul",
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ],
+       [
+        "log",
+        [
+         "var",
+         "C"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.8212,
+     "regs": 0.8808,
+     "ring": 0.8325
+    },
+    "passes_worst_gate": true,
+    "score": 0.8208,
+    "structure": "((C * K) * log(C)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "add",
+       [
+        "div",
+        [
+         "var",
+         "K"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "C"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "N"
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.8105,
+     "regs": 0.8496,
+     "ring": 0.8728
+    },
+    "passes_worst_gate": true,
+    "score": 0.8203,
+    "structure": "((K / log(C)) + N) <="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ },
+ "v4": {
+  "base_rate": 0.23376623376623376,
+  "best_score": 0.907487904223924,
+  "cmap": "v4",
+  "family_dependence": {
+   "gain_bits_per_row": -0.01931,
+   "mu_bits": -0.00067,
+   "null_median": -0.01864,
+   "p": 0.52,
+   "per_family_acc": {
+    "ca": 0.9528,
+    "regs": 0.9363,
+    "ring": 0.97
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 500.0,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "Q"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ]
+     ],
+     0.8415417013342328,
+     1.0
+    ],
+    [
+     [
+      "sub",
+      [
+       "var",
+       "C"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "N"
+        ]
+       ]
+      ]
+     ],
+     -0.10264738430042962,
+     1.0
+    ]
+   ],
+   "complexity": 12,
+   "fold_ba": {
+    "ca": 0.953925641845105,
+    "regs": 0.9563953488372092,
+    "ring": 0.956142721989458
+   },
+   "law": "(Q - (C * K)) <= 0.8415 AND (C - (G * exp(-N))) <= -0.1026",
+   "scales": [
+    11.22547597107403,
+    5.347000474106342
+   ],
+   "score": 0.907487904223924
+  },
+  "n_expr_classes": 11677,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 616,
+  "null_scores": [
+   0.566,
+   0.5684,
+   0.5624,
+   0.5267,
+   0.5602,
+   0.5769,
+   0.56,
+   0.551,
+   0.5475,
+   0.5481,
+   0.5511,
+   0.5537,
+   0.5631,
+   0.5487,
+   0.5625,
+   0.5622,
+   0.5524,
+   0.5312,
+   0.5676
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9075,
+    "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "sub",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "Q"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9619,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9061,
+    "structure": "(C - (G * exp(-N))) <= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9301,
+     "regs": 0.9564,
+     "ring": 0.9801
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "(C - (G * exp(-N))) <= AND ((C * K) + exp(-Q)) >="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "log",
+        [
+         "var",
+         "Q"
+        ]
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "(C - (G * exp(-N))) <= AND (log(Q) - (C * K)) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "dec",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "(C - (G * exp(-N))) <= AND (Q + exp(-(C * K))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "log",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "log((Q - (C * K))) <= AND (C - (G * exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ],
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "exp(-((C * K) - Q)) <= AND (C - (G * exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "dec",
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "(C - (G * exp(-N))) <= AND (Q * exp(-(C * K))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "sub",
+        [
+         "var",
+         "Q"
+        ],
+        [
+         "mul",
+         [
+          "var",
+          "C"
+         ],
+         [
+          "var",
+          "K"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.9539,
+     "regs": 0.9564,
+     "ring": 0.9561
+    },
+    "passes_worst_gate": true,
+    "score": 0.9035,
+    "structure": "exp(-(Q - (C * K))) >= AND (C - (G * exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "Q"
+       ],
+       [
+        "mul",
+        [
+         "var",
+         "C"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "add",
+        [
+         "var",
+         "G"
+        ],
+        [
+         "dec",
+         [
+          "var",
+          "N"
+         ]
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.946,
+     "regs": 0.9535,
+     "ring": 0.939
+    },
+    "passes_worst_gate": true,
+    "score": 0.8982,
+    "structure": "(Q - (C * K)) <= AND (C - (G + exp(-N))) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "add",
+       [
+        "div",
+        [
+         "var",
+         "K"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "C"
+         ]
+        ]
+       ],
+       [
+        "var",
+        "N"
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.8105,
+     "regs": 0.8808,
+     "ring": 0.8626
+    },
+    "passes_worst_gate": true,
+    "score": 0.8273,
+    "structure": "((K / log(C)) + N) <="
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "sub",
+        [
+         "var",
+         "N"
+        ],
+        [
+         "var",
+         "K"
+        ]
+       ],
+       [
+        "log",
+        [
+         "var",
+         "C"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "fold_ba": {
+     "ca": 0.8005,
+     "regs": 0.8517,
+     "ring": 0.8935
+    },
+    "passes_worst_gate": true,
+    "score": 0.8246,
+    "structure": "((N - K) / log(C)) >="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ }
+}

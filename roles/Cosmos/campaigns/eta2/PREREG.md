@@ -15,3 +15,11 @@ eta protocol), refit on all rows. Metrics: (1) balanced accuracy of the law on t
 Prediction (conf 0.4): LINES beats RANDOM by >= 0.02 mean oracle BA OR by >= 0.05 lower mean worst
 |offset|; otherwise cost lines are NOT earned by this test. Three seeds only: this is a small test and
 is reported as such.
+
+## RESULT (2026-09-23T15:35Z; ETA2.json)
+Matched queries per family (~105 rows per arm): mean oracle BA RANDOM 0.946 vs LINES 0.767 (every
+seed: .938/.850, .965/.613, .936/.839); mean worst location offset RANDOM 0.376 vs LINES 0.364 (both
+poor at this data size; several families INDETERMINATE). Prediction LOST: cost lines alone are NOT
+earned as a sampler -- three bases' worth of lines buys boundary detail and loses coverage.
+Consequence for C2: C2 used cost lines ON TOP OF 80 random worlds per family; whether the lines or the
+location-aware selection produced the well-located law is NOT isolated (ablation: campaigns/c2abl).

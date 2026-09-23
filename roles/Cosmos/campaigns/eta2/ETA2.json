@@ -1,0 +1,94 @@
+{
+ "runs": [
+  {
+   "seed": 1,
+   "RANDOM": {
+    "n_rows": 109,
+    "law": "(Q - (C * K)) <= 0.8189 AND (N - exp(-(C - G))) <= -1.158",
+    "oracle_ba": 0.9383983832259695,
+    "worst_offset": 0.1288957042804443,
+    "offsets": {
+     "regs": 0.11106914813595453,
+     "ring": 0.10342919550260159,
+     "ca": 0.1288957042804443
+    }
+   },
+   "LINES": {
+    "n_rows": 109,
+    "law": "((N - K) * C) <= -0.1625 AND log((G - (C + N))) >= -2.519",
+    "oracle_ba": 0.8495263357332323,
+    "worst_offset": 0.09069594111368025,
+    "offsets": {
+     "regs": 0.021936367413505204,
+     "ring": 0.09069594111368025,
+     "ca": 0.0015631603912309908
+    }
+   }
+  },
+  {
+   "seed": 2,
+   "RANDOM": {
+    "n_rows": 105,
+    "law": "(exp(-N) - (C / G)) >= 0.2084 AND ((C - log(Q)) * K) >= 0.1558",
+    "oracle_ba": 0.9651383099658961,
+    "worst_offset": 0.5,
+    "offsets": {
+     "regs": 0.5,
+     "ring": 0.13398900603601277,
+     "ca": 0.5
+    }
+   },
+   "LINES": {
+    "n_rows": 105,
+    "law": "(K / (C + log(N))) <= -1.82 AND (G + exp(-(C + N))) >= 1.163",
+    "oracle_ba": 0.6130478716685613,
+    "worst_offset": 0.5,
+    "offsets": {
+     "regs": 0.5,
+     "ring": 0.5,
+     "ca": 0.5
+    }
+   }
+  },
+  {
+   "seed": 3,
+   "RANDOM": {
+    "n_rows": 105,
+    "law": "(Q - (C * K)) <= 0.9002 AND ((C - exp(-N)) * K) <= -0.6496",
+    "oracle_ba": 0.9355185044840217,
+    "worst_offset": 0.5,
+    "offsets": {
+     "regs": 0.5,
+     "ring": 0.5,
+     "ca": 0.16651579754253054
+    }
+   },
+   "LINES": {
+    "n_rows": 105,
+    "law": "(C / (log(C) / K)) <= -0.0634 AND ((C + N) * log(G)) >= -0.2891",
+    "oracle_ba": 0.838878363016294,
+    "worst_offset": 0.5,
+    "offsets": {
+     "regs": 0.37534116952084035,
+     "ring": 0.5,
+     "ca": 0.3575146133763505
+    }
+   }
+  }
+ ],
+ "summary": {
+  "RANDOM": {
+   "mean_oracle_ba": 0.9463517325586291,
+   "mean_worst_offset": 0.3762985680934814,
+   "n": 3
+  },
+  "LINES": {
+   "mean_oracle_ba": 0.7671508568060292,
+   "mean_worst_offset": 0.3635653137045601,
+   "n": 3
+  },
+  "prediction_held": false,
+  "delta_ba": -0.1792008757525999,
+  "delta_worst_offset": 0.012733254388921311
+ }
+}

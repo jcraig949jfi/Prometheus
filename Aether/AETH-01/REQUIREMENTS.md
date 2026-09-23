@@ -1,0 +1,120 @@
+# AETH-01 -- requirements: R1-R15 compliance and engineering requirements
+
+Status: DRAFT.
+
+## Part 1 -- hard scientific requirements (R1-R15) compliance
+
+| Req | Status | Note |
+|---|---|---|
+| R1 no privileged assembly ontology | SATISFIED | State is 5 uint8 fields only; no id/evaluation score/parent fields exist anywhere |
+| R2 no recursive construction primitive | SATISFIED | Only WRITE (template) and conservative transfer exist; no BIRTH/COPY_SELF/ALLOC |
+| R3 no externally imposed executable configuration boundary | **TENSION** | Perturbation is defined to exclude field 4 (energy) by construction (PHYSICS_SPEC_DRAFT.md accessibility analysis, item 2) -- this partially pre-decides that "instructional" fields, not the resource field, are where MUTATIONAL variation can live. **[REPAIRED per ASTRA_REVIEW_01.md B02, ACCEPT, see REPAIR_LEDGER_01.md]** Excluding energy from Mu is NOT by itself proof that resource-handling traits cannot be inherited -- routing, capacity-use, and instruction-mediated resource-control patterns (encoded in fields 0-3) can still vary and be inherited. The MORE restrictive fact is the future observer's own planned categorical exclusion of resource-flow evidence from configuration transmission tiers 2-4, which the S04 repair (HEREDITY_REQUIREMENTS.md) has now removed (resource-mediated evidence is admitted, typed separately from structural-copy evidence). Do not add energy perturbation merely to satisfy a misleading symmetry argument |
+| R4 local causality | SATISFIED, with caveat | All interactions are bounded to von Neumann neighbors; the arbitration hash depends on absolute coordinates (a positional tie-break field) but this cannot transmit information between non-adjacent sites -- it biases *which local proposal wins*, it does not let distant sites influence each other directly. Caveat tracked in ADVERSARIAL_ANALYSIS.md #6, #16 |
+| R5 endogenous persistence | **TENSION** | A site's initial energy allocation is exogenous (chosen at construction, EXPERIMENTS.md), and more initial energy mechanically buys more ticks of possible action -- persistence differences can therefore reflect initial-condition luck, not dynamics, unless controlled for (ADVERSARIAL_ANALYSIS.md #12; ECONOMICS.md's Regime B with ongoing replenishment reduces but does not eliminate this) |
+| R6 endogenous construction | SATISFIED (by design intent) | Physics permits the five-tier STRUCTURAL_RESEMBLANCE / CAUSAL_VALUE_CONSTRUCTION / CONSTRUCTED_CAPACITY / RECURSIVE_CONSTRUCTION / TRANSMITTED_VARIATION distinction to be tested later (HEREDITY_REQUIREMENTS.md); no general detector exists yet. K3's seeded fixture contracts are not spontaneous-origin or ensemble evidence |
+| R7 writable/reconfigurable matter, avoid conventional VM without reason | SATISFIED, with justification | AETH-01 keeps AETH-00's opcode/operand shape rather than inventing a new ontology; the stated compelling reason is continuity with a validated conformance/differential-testing methodology (PHYSICS_CANDIDATES.md, "Selection," reason 1) -- flagged, not hidden, as a VM-adjacent design |
+| R8 cost/scarcity | SATISFIED | ECONOMICS.md: WRITE_COST, MAINTENANCE_COST, conservative lossy transfer |
+| R9 no direct task-recursive construction coupling | SATISFIED (vacuously) | No task exists in AETH-01; nothing computes a score of any kind. Not yet tested under an actual task, since none exists |
+| R10 observatory separation | SATISFIED for noninterference; TRUTH/COMPLETENESS NOT YET ESTABLISHED | OBSERVATORY.md reads trace/state only; trace on/off byte-identity (Part 2 below) is a required regression test, correctly inherited from AETH-00B's proven pattern. **[REPAIRED per ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** That test proves only NONINTERFERENCE (enabling the trace never perturbs committed state) -- it does NOT prove the trace's TRUTH or CAUSAL COMPLETENESS (whether each recorded event actually reflects what the transition law did). AETH-00B's own trace fields (e.g. `proposal_emitted`) are computed via a decoding path separate from the one that decides the winner, so a decoding-path bug could pass every existing trace-on/off test while still emitting a false event record. An independent event-ledger cross-check (Part 2, new requirement below) is REQUIRED before any AETH-01 trace is used as scientific evidence (configuration transmission, causal construction, novelty), not merely as a regression fixture |
+| R11 deterministic replay | SATISFIED | All randomness (arbitration, perturbation, replenishment) is explicit, domain-separated, and derived only from (seed, tick, coordinates); replay-identity tuple extended (PHYSICS_SPEC_DRAFT.md) |
+| R12 GPU viability | SATISFIED (feasibility argument only; not yet measured) | **[REPAIRED per ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** Candidate 1's per-site gather shape maps onto AETH-00's proven CPU gather ontology unchanged, which is a strong, low-risk feasibility argument -- but no GPU implementation of ANY AETH candidate exists or has been measured (`Aether/production/aeth00.py` is CPU-only). This status changes to fully SATISFIED only after this repair cycle's RunPod canary actually runs and matches the CPU oracle |
+| R13 tiny worlds meaningful | SATISFIED | HABITABILITY.md scopes the first campaign to H,W in {4,8,16,32} |
+| R14 alien organization possible | **TENSION** | A single active opcode with no compare/branch primitive is a real expressivity ceiling (PHYSICS_SPEC_DRAFT.md accessibility item 4) -- AETH-01 does not FORCE neural/executable configuration/CPU-like organization, but it also cannot express certain conditional strategies at all, which is a different, narrower kind of limitation worth tracking into AETH-02 |
+| R15 failure observable | SATISFIED | HABITABILITY.md's regime labels are explicitly designed around failure modes (DEAD/FROZEN/HOMOGENIZED/EXPLOSIVE), each backed by a measurable signature |
+
+No requirement was found flatly IMPOSSIBLE or mutually contradictory.
+Three (R3, R5, R14) have named, real tensions rather than clean
+satisfaction -- reported as such, not silently resolved in the
+physics' favor. DECISIONS.md records each as its own entry.
+
+## Part 2 -- engineering requirements (Design Task 11)
+
+Explicitly separated into four categories that must never be conflated
+in a report or a receipt:
+
+**Semantic correctness** (does the implementation match the spec):
+- A CPU reference implementation independent of any GPU code, built
+  test-first against this draft spec, following AETH-00A/B's proven
+  method (independent oracle + independent second oracle +
+  differential testing between them before any production code exists).
+- Property-based testing (Hypothesis-style) over random worlds/params,
+  at AETH-00B's scale of rigor (>=100,000 generated cases per
+  qualification pass) once implementation begins. **[REPAIRED per
+  ASTRA_REVIEW_01.md M09, ACCEPT, see REPAIR_LEDGER_01.md]** Each case
+  is a single-tick, small-world transition comparison against the CPU
+  oracle -- this bounds ONE-STEP transition-law correctness, and is not
+  itself a bound on multi-tick campaign-level failures, economic
+  dynamics, or a qualification of any scientific claim made from a
+  trace. State this scope explicitly in the qualification receipt;
+  do not describe the count alone as "the AETH-01 tests."
+- **Independent event-ledger cross-check (NEW, M09).** A second,
+  independently-coded reconstruction pass that reads ONLY the raw
+  before/after lattice state (never the production trace-emission
+  code path, e.g. not `proposal_emitted`) must derive, per tick, each
+  contest's winner/losers/amounts/perturbation-fired flag from first
+  principles, and be compared field-by-field against the production
+  trace's own emitted events. Disagreement is an instrumentation
+  defect, never a physics finding. This is the concrete implementation
+  of "trace truth/completeness, not just noninterference" (R10 above)
+  and is REQUIRED before any AETH-01 trace-derived claim is treated as
+  evidence -- it is a precondition for using OBSERVATORY.md's metrics
+  or HEREDITY_REQUIREMENTS.md's tiers, not merely a RunPod gate.
+- Golden vectors for: WRITE_COST starvation boundary, transfer
+  win/loss/overflow, maintenance-decay floor, replenishment trigger,
+  perturbation trigger/bit-index, and the H,W in {1,2} toroidal
+  self-aliasing cases extended to the energy field (AETH-00's test 14
+  equivalent).
+- The energy conservation equation (PHYSICS_SPEC_DRAFT.md) checked as
+  an exact property on every generated case, not sampled.
+
+**Numerical reproducibility** (does it replay bit-identically):
+- All arithmetic is fixed-width unsigned integer; no floating point
+  anywhere in the transition law or its three RNG-derived functions.
+- Replay-identity tuple (11 components, PHYSICS_SPEC_DRAFT.md) is
+  mandatory in every trace/checkpoint header; a replay comparison that
+  omits any component is not a valid AETH-01 replay claim, per AETH-00's
+  own precedent.
+- Tick-overflow behavior (reject, never wrap) inherited unchanged from
+  AETH-00.
+
+**Engineering reliability** (does it persist real operating conditions):
+- Checkpoint format captures the FULL replay-identity tuple plus S[t];
+  a checkpoint round-trip test (non-interrupted vs.
+  interrupted-and-resumed run, byte-for-byte) is required before any
+  checkpointed run is trusted (closes ADVERSARIAL_ANALYSIS.md #20).
+- Crash recovery: resuming from the last valid checkpoint must be
+  possible without operator intervention beyond re-invoking the runner;
+  a partially-written checkpoint must be detectable (checksum) and
+  rejected rather than silently loaded.
+- Schema/versioning: every trace/checkpoint file records its own
+  `semantics_id` (`aeth01.v1` once frozen) and a schema version
+  integer, independent of code version, so future readers can detect
+  incompatible formats explicitly rather than guessing.
+- Fault injection: deliberately corrupt/truncate a checkpoint or trace
+  file in tests and confirm the loader raises rather than silently
+  producing a degenerate world (mirrors AETH-00B's invalid-input
+  discipline).
+- Receipt format: every milestone receipt (as with
+  AETH-00A/B_RECEIPT.md) states exact test counts, differential-case
+  counts, failures, mutant status, and what remains deliberately
+  absent -- no receipt claims more than what was actually run.
+- Provenance: every run (test or campaign) logs code SHA,
+  `semantics_id`, full parameter set, seed, host/hardware identity,
+  wall-clock, and (for paid runs) dollar cost -- answers
+  AETHER_OPEN_QUESTIONS.md question 18 for AETH-01 specifically.
+- Performance measurement: CPU baseline benchmark repeated at AETH-01's
+  larger per-site footprint (5 fields vs. 4) before any GPU work is
+  proposed, following AETH-00B's precedent (measured, not assumed).
+
+**Scientific inference** (what may be concluded from correct, reliable
+runs) is governed entirely by HEREDITY_REQUIREMENTS.md's tiered
+evidence standard and ADVERSARIAL_ANALYSIS.md's controls -- passing
+every item above establishes only that the SIMULATOR is trustworthy; it
+establishes nothing about what any specific run means, which is a
+separate, later, per-claim judgment (mirrors AETH-00's own "Scope"
+section discipline, AETHER_SPEC.md).
+
+## CPU/GPU equivalence and Runpod/cost engineering
+
+Deferred to GPU_RUNPOD.md (Design Task 12) to avoid duplicating that
+document's DEFER/REJECT/prerequisite analysis here.
