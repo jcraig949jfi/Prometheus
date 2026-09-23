@@ -33,7 +33,7 @@ TOL = 0.05
 
 def locate(law, fams: Dict[str, Any], pools: Dict[str, List[Dict[str, Any]]], cmap: str, rng, n_bases: int = 8,
            episodes: int = 1600, campaign: str = "locate") -> Dict[str, Any]:
-    CK = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}[cmap]
+    CK = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3", "v4": "coords_v4"}[cmap]
     per_fam: Dict[str, Any] = {}
     all_d: List[float] = []
     for f, P in pools.items():

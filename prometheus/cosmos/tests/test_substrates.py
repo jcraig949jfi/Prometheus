@@ -120,3 +120,15 @@ def test_matched_pair_on_common_random_numbers_is_exactly_monotone_in_cost(name)
     b = evaluate(fam, q, seed_key=a["world_id"])
     assert b["acc"]["SEL"] == a["acc"]["SEL"]               # same random numbers: cost does not touch dynamics
     assert b["fitness"]["SEL"] < a["fitness"]["SEL"]
+
+
+def test_v4_expected_cost_matches_the_ring_meter():
+    """v4 declares the ring's expected SEL cost exactly: compare with the metered cost of SEL."""
+    from prometheus.cosmos.contract import coords_of
+    fam = FAMS["ring"]
+    p = dict(BASE["ring"], lam=0.05, s=3, H=12, ehop=0.01, R=1.0)
+    c4 = coords_of(fam, p, "v4")["C"]
+    metered = fam.run(p, "SEL", 7, 20000)["cost"].mean() / p["R"]
+    assert abs(c4 - metered) / metered < 0.02
+    assert coords_of(fam, p, "v3")["C"] > c4 * 1.5
+    assert coords_of(FAMS["regs"], BASE["regs"], "v4") == coords_of(FAMS["regs"], BASE["regs"], "v3")

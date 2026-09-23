@@ -41,7 +41,7 @@ class Chamber:
         self.n_queries += 1
         row = {"family": fam_name, "lineage": self.lineage[fam_name], "world_id": rec["world_id"],
                "params": params, "coords": coords_of(fam, params, "v1"), "coords_v2": coords_of(fam, params, "v2"),
-               "coords_v3": coords_of(fam, params, "v3"),
+               "coords_v3": coords_of(fam, params, "v3"), "coords_v4": coords_of(fam, params, "v4"),
                "y": int(rec["verdict"] == "PAYS"), "margin": rec["margin"], "se": rec["margin_se"],
                "acc": rec["acc"], "fitness": rec["fitness"], "fitness_se": rec["fitness_se"], "purpose": purpose,
                "replicate": replicate}
@@ -59,7 +59,7 @@ class Chamber:
 
 
 def ckey(cmap: str) -> str:
-    return {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}[cmap]
+    return {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3", "v4": "coords_v4"}[cmap]
 
 
 def design(rows: Iterable[Dict[str, Any]], cmap: str = "v1"):

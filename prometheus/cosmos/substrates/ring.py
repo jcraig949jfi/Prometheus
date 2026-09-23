@@ -96,6 +96,14 @@ class Ring(Family):
     def slots(self, p: Dict[str, Any]):
         return p["n"]
 
+    def expected_cost_factor(self, p: Dict[str, Any]) -> float:
+        """Coordinate map v4: a destroyed packet stops costing. Expected hops paid by the SEL packet
+        = sum_{t<sH} (1-lam)^t, relative to the sH hops of the declared (v3) cost. Exact."""
+        lam, hops = p["lam"], p["s"] * p["H"]
+        if lam <= 0:
+            return 1.0
+        return (1 - (1 - lam) ** hops) / (lam * hops)
+
     def coord_preserving(self, p: Dict[str, Any], rng) -> List[Dict[str, Any]]:
         out = []
         for s2 in (1, 2, 3, 6):

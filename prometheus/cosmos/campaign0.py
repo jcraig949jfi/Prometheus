@@ -52,6 +52,9 @@ CONFIGS = {
            "g1b_crn": False, "g1b_n": 8, "main_strategy": "active"},
     "c0b": {"seed": 20260924, "cmap": "v3", "secondaries": ["v1", "v2", "raw"], "revise": ["v3"],
             "g1b_crn": True, "g1b_n": 12, "main_strategy": "random"},
+    # C1 (roles/Cosmos/campaigns/c1/PREREG.md): revision under the C0s scars
+    "c1": {"seed": 20260928, "cmap": "v4", "secondaries": ["v3", "raw"], "revise": ["v4"],
+           "g1b_crn": True, "g1b_n": 12, "main_strategy": "random", "costlines": 10, "location_gate": 0.10, "holdout": None},
 }
 
 
@@ -112,7 +115,7 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
     for f, P in pools.items():
         oracle[f] = [oracle_ch.observe(f, p, purpose="oracle", keep=False) for p in P]
     # what a strategy may see about an UNQUERIED world: spec-side fields only (whitelist, never a blacklist)
-    POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3")
+    POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3", "coords_v4")
     pool_rows = {f: [{k: r[k] for k in POOL_FIELDS} for r in rows] for f, rows in oracle.items()}
     _dump(out, "oracle_summary", {f: {"n": len(v), "pays_rate": float(np.mean([r["y"] for r in v]))} for f, v in oracle.items()})
     report["t_oracle_s"] = round(time.time() - t0, 1)
@@ -165,6 +168,15 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
     for f in b.pool:
         for i in b.seen[f]:
             ch.observe(f, pools[f][i], purpose="main")
+    # C1: boundary rows along matched cost lines, kept for mining
+    if cfg.get("costlines"):
+        from prometheus.cosmos.sampler import costlines
+        rng_cl = np.random.default_rng(SEED + 11)
+        for f in fams:
+            mains = [r for r in ch.rows if r["family"] == f and r["purpose"] == "main"]
+            pick = [mains[i]["params"] for i in rng_cl.choice(len(mains), min(cfg["costlines"], len(mains)), replace=False)]
+            costlines(ch, f, pick)
+        store.commit()
     # matched single-knob neighbours (Nestor control_partner pattern): +-1 level on the cost and
     # noise knobs of 8 main worlds per family. Graph + G1b only; NOT added to the mining rows.
     COST = {"regs": "bitcost", "ring": "ehop", "ca": "ccell"}
@@ -172,7 +184,7 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
     g1b = {}
     rng_e = np.random.default_rng(SEED + 3)
     for f in fams:
-        mains = [r for r in ch.rows if r["family"] == f]
+        mains = [r for r in ch.rows if r["family"] == f and r["purpose"] == "main"]   # lattice worlds only
         pick = [mains[i] for i in rng_e.choice(len(mains), min(cfg["g1b_n"], len(mains)), replace=False)]
         up, down = 0, 0
         for r in pick:
@@ -186,10 +198,12 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
                     up += 1
                     down += nb["fitness"]["SEL"] <= r["fitness"]["SEL"] + 1e-9
         g1b[f] = {"cost_up_edges": up, "sel_fitness_nonincreasing": down,
-                  "pass": up > 0 and down / up >= 0.9}
+                  "pass": (None if up == 0 else down / up >= 0.9)}      # None = INDETERMINATE (nothing eligible)
     report["gates"]["G1"]["causal_consistency"] = g1b
-    if not all(v["pass"] for v in g1b.values()):
+    if any(v["pass"] is False for v in g1b.values()):
         report["gates"]["G1"]["verdict"] = "FAIL"
+    elif any(v["pass"] is None for v in g1b.values()) and report["gates"]["G1"]["verdict"] == "PASS":
+        report["gates"]["G1"]["verdict"] = "INDETERMINATE"
     # deformation edges among main nodes (single-knob neighbours that were both queried)
     ids = {(r["family"], json.dumps(r["params"], sort_keys=True)): r["world_id"] for r in ch.rows}
     for r in list(ch.rows):
@@ -214,7 +228,7 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
 
     # ---- mining: primary v1, secondaries v2 and raw
     main_rows = list(ch.rows)
-    CK = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}
+    CK = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3", "v4": "coords_v4"}
     mined = {CMAP: mine_rows(main_rows, CMAP, n_perm=n_perm)}
     for sec in cfg["secondaries"]:
         if sec == "raw":       # the primary map with C left in native currency (C * R)
@@ -253,13 +267,25 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
         L = law_from_json(res["law"])
         rep = attack(L, ch, pool_rows, np.random.default_rng(SEED + 100 + rnd), per_family=24 if quick else 48,
                      law_id=law_id, cmap=cmap)
+        if cfg.get("location_gate") is not None and rep["verdict"] == "SURVIVED":
+            from prometheus.cosmos.locate import locate
+            loc = locate(L, fams, pool_rows, cmap, np.random.default_rng(SEED + 200 + rnd), n_bases=6 if quick else 8,
+                         episodes=400 if quick else 1600, campaign="c1-locate")
+            rep["locate"] = {f: {k: v for k, v in r.items() if k != "rows"} for f, r in loc["per_family"].items()}
+            rep["locate"]["pooled"] = loc["pooled"]
+            bad = [f for f, r in loc["per_family"].items() if r.get("verdict") == "LOCATION_BIASED"
+                   and abs(r["mean_delta_log2"]) > cfg["location_gate"]]
+            if bad:
+                rep["verdict"] = "FAILED"
+                rep["location_failed_families"] = bad
         rounds.append({"round": rnd, "law": res["law"]["law"], "law_id": law_id, "attack": rep})
         store.receipts.append("attack_round", {"law_id": law_id, "verdict": rep["verdict"], "rate": rep["rate"],
                                                "n_confident": rep["n_confident"], "n_confirmed": rep["n_confirmed"]})
         if rep["verdict"] == "SURVIVED":
             store.event(law_id, "SURVIVED", "attack round %d: %d/%d confirmed" % (rnd, rep["n_confirmed"], rep["n_confident"]))
             break
-        store.event(law_id, "FAILED", "attack round %d: %d/%d confirmed counterexamples" % (rnd, rep["n_confirmed"], rep["n_confident"]))
+        store.event(law_id, "FAILED", "attack round %d: %d/%d confirmed counterexamples; location %s" % (
+            rnd, rep["n_confirmed"], rep["n_confident"], rep.get("location_failed_families", "-")))
         parent = law_id
         # revision: re-mine on everything observed so far (attack rows included); coordinates may switch to v2
         # only if v2 beats v1 on the enlarged data (both reported)
@@ -298,11 +324,16 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
         report["gates"]["G7"] = {**fd, "verdict": "PASS" if fd and (fd["p"] > 0.01 or fd["mu_bits"] < 0.02) else "FAIL"}
     else:
         report["gates"]["G2"] = {"verdict": "FAIL" if res_v1["verdict"] != "CANDIDATE" else "NOT REACHED",
-                                 "initial": report["mine_initial"]["v1"]}
+                                 "initial": report["mine_initial"][CMAP]}
         report["gates"]["G7"] = {"verdict": "NOT REACHED"}
 
     # ---- freeze, holdout, intervention
-    if final_id and not quick:
+    if final_id and not quick and cfg.get("holdout", "D") is None:
+        fh = store.freeze_law(final_id)
+        report["final_law"] = {"law_id": final_id, "freeze_hash": fh, "law": final["law"]["law"], "cmap": final["cmap"]}
+        for g in ("G5", "G6"):
+            report["gates"][g] = {"verdict": "NOT REACHED (holdout adjudicated separately; D/E are spent)"}
+    elif final_id and not quick:
         fh = store.freeze_law(final_id)
         vis_rate = float(np.mean([r["y"] for r in ch.rows]))
         vis = list(ch.rows)

@@ -133,3 +133,42 @@ def knn_ba(train: List[Dict[str, Any]], test: List[Dict[str, Any]], k: int = 5) 
     nn = np.argsort(d, axis=1)[:, :k]
     pred = yt[nn].mean(1) >= 0.5
     return 0.5 * ((pred & (yq == 1)).sum() / max(1, (yq == 1).sum()) + (~pred & (yq == 0)).sum() / max(1, (yq == 0).sum()))
+
+
+def costlines(chamber, fam_name: str, bases, n_coarse: int = 9, refine: int = 4, purpose: str = "costline"):
+    """Boundary search ALONG matched cost lines (DEFORMATION_OF edges on the family's cost knob):
+    a coarse ladder f = 2^k, k in -8..8 step 2, then `refine` bisection steps inside every interval
+    where the verdict changes. Every point is a real query, kept for mining, with an edge to its base."""
+    fam = chamber.fams[fam_name]
+    knob = fam.cost_knob
+    rows = []
+    for base in bases:
+        key = None
+        pts = {}
+
+        def q(f):
+            p = dict(base, **{knob: base[knob] * f})
+            r = chamber.observe(fam_name, p, purpose=purpose, parent=key, edge_kind="DEFORMATION_OF" if key else None,
+                                delta={"knob": knob, "factor": f}, keep=(f != 1.0))   # the base is already a main row
+            pts[f] = r["y"]
+            rows.append(r)
+            return r
+
+        b0 = q(1.0)
+        key = b0["world_id"]
+        for k in range(-8, 9, 2):
+            if k != 0:
+                q(2.0 ** k)
+        fs = sorted(pts)
+        for lo, hi in zip(fs[:-1], fs[1:]):
+            if pts[lo] == pts[hi]:
+                continue
+            a, b = lo, hi
+            for _ in range(refine):
+                m = (a * b) ** 0.5
+                q(m)
+                if pts[m] == pts[a]:
+                    a = m
+                else:
+                    b = m
+    return rows

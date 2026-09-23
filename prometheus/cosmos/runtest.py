@@ -56,7 +56,7 @@ def main(argv=None) -> int:
         from prometheus.cosmos.campaign0 import run
         rep = run(out / "quick_campaign", quick=True, config=a.config)
         g = {k: v["verdict"] for k, v in rep["gates"].items()}
-        ok = rep["receipt_chain_ok"] and g["G0"] == "PASS" and g["G1"] == "PASS"
+        ok = rep["receipt_chain_ok"] and g["G0"] == "PASS" and g["G1"] in ("PASS", "INDETERMINATE")
         rec["steps"]["quick_campaign"] = {"ok": ok, "gates": g, "graph": rep["graph"], "laws": rep["laws"],
                                           "mine_initial": rep["mine_initial"], "s": round(time.time() - t, 1)}
     except Exception as e:

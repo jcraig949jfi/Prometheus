@@ -32,7 +32,7 @@ def _X(coords_list, cmap="v1"):
     return {k: np.array([c[k] for c in coords_list], float) for k in terminals_for(cmap)}
 
 
-CKEY = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3"}
+CKEY = {"v1": "coords", "v2": "coords_v2", "v3": "coords_v3", "v4": "coords_v4"}
 
 
 def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_family: int = 40,

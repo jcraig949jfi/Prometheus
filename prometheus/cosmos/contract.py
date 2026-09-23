@@ -32,7 +32,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Tuple
 
 MECHANISMS = ("SEL", "LOG", "LAST")
-COORD_MAPS = ("v1", "v2", "v3")
+COORD_MAPS = ("v1", "v2", "v3", "v4")
 
 # Declared coordinate vocabulary (dimensionless). Every family must provide all four.
 #   C  maintenance cost of retaining ONE cue for the full horizon / reward per success
@@ -44,19 +44,25 @@ COORD_MAPS = ("v1", "v2", "v3")
 # v3 (2026-09-23, after C0 run 2 counterexamples) = v2 plus
 #   Q  min(1, slots / (K + 1)): the fraction of the full observation history the carrier can
 #      hold at once (1 = unbounded or roomy). Computed centrally (coords_of) from slots().
+# v4 (2026-09-23, after the C0s location attack) = v3 with C replaced by the EXPECTED maintenance
+#   cost of the selective carrier (a carrier that is destroyed may stop costing; one that grows may
+#   cost more). A family declares it by expected_cost_factor(params) (C_v4 = C_v3 * factor) or by
+#   answering coords(params, "v4") natively; default factor 1.
 COORDS = ("C", "N", "K", "G")
 COORDS_V3 = ("C", "N", "K", "G", "Q")
 
 
 def terminals_for(cmap: str):
-    return COORDS_V3 if cmap == "v3" else COORDS
+    return COORDS_V3 if cmap in ("v3", "v4") else COORDS
 
 
 def coords_of(fam, params: Dict[str, Any], cmap: str) -> Dict[str, float]:
     """The declared coordinates of a world under a coordinate map (the ONLY place v3 is built)."""
-    if cmap != "v3":
+    if cmap not in ("v3", "v4"):
         return fam.coords(params, cmap)
-    c = dict(fam.coords(params, "v2"))
+    c = dict(fam.coords(params, "v2" if cmap == "v3" else "v4"))
+    if cmap == "v4" and hasattr(fam, "expected_cost_factor"):
+        c["C"] = c["C"] * fam.expected_cost_factor(params)
     s = fam.slots(params) if hasattr(fam, "slots") else None
     c["Q"] = 1.0 if s is None else min(1.0, float(s) / (params["K"] + 1))
     return c

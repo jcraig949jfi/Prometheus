@@ -88,7 +88,7 @@ def test_sampler_pool_rows_carry_no_outcome_fields():
     import inspect
     from prometheus.cosmos import campaign0
     src = inspect.getsource(campaign0.run)
-    assert 'POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3")' in src
+    assert 'POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3", "coords_v4")' in src
 
 
 COMMITMENT_E = "d17ace6e6f9171da49afab4a6c9626cfd1d998ae9e5c9cfdc14837dc319e7528"

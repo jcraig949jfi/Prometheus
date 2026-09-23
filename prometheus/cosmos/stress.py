@@ -30,7 +30,7 @@ def pool_rows(fams, pools):
                 p = dict(p, code=3)
             rows.append({"family": f, "world_id": world_id(fams[f], p), "params": p,
                          "coords": coords_of(fams[f], p, "v1"), "coords_v2": coords_of(fams[f], p, "v2"),
-                         "coords_v3": coords_of(fams[f], p, "v3")})
+                         "coords_v3": coords_of(fams[f], p, "v3"), "coords_v4": coords_of(fams[f], p, "v4")})
         out[f] = rows
     return out
 
