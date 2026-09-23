@@ -73,12 +73,21 @@ class Trace:
     copy_events: int = 0                                       # LDI/LDIR/COPYALL byte moves into the neighbour window
     opcodes: Dict[int, int] = field(default_factory=dict)      # executed opcode histogram (architecture signature)
     pc_max: int = 0
+    # provenance of the LAST write to each window byte (offset -> (source address or None, pc, opcode)); measurement
+    # only, added 2026-09-23 (forensics M1/M2/C8): lets the observer tell a self-copy from a sweep, a smear or a capture
+    win_prov: Dict[int, Tuple[Optional[int], int, int]] = field(default_factory=dict)
+
+
+COPY_OPS = frozenset((LDI, LDIR, COPYALL))
 
 
 def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], region: Optional[Tuple[int, int]] = None,
-            allow_copyall: bool = False, cost_per_step: int = 1) -> Trace:
+            allow_copyall: bool = False, cost_per_step: int = 1, strict_budget: bool = False, prov_L: Optional[int] = None) -> Trace:
     """Run from `entry` for at most `budget` steps. `region` restricts the PC to [lo, hi) (the SEPARATED layout):
-    leaving it halts. Undefined opcodes are NOP (1 step). Returns the Trace; `mem` is mutated in place."""
+    leaving it halts. Undefined opcodes are NOP (1 step). Returns the Trace; `mem` is mutated in place.
+    strict_budget (physics v2): COPYALL executes only if its L//8 step cost fits the remaining budget (v1 overran it).
+    prov_L: the window whose write provenance is recorded is [prov_L, 2*prov_L) (default L; pair execution passes the
+    world's L because it runs with 2L)."""
     A = B = C = D = S = T = 0
     Z = False; CF = False
     pc = entry & 0xFF
@@ -86,6 +95,7 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
     inp = list(inputs); ip = 0
     lo, hi = (region if region else (0, SPACE))
     nb_lo, nb_hi = L, 2 * L
+    pw = L if prov_L is None else prov_L
     while tr.steps < budget:
         if not (lo <= pc < hi):
             break
@@ -96,9 +106,12 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
         n = OPLEN.get(op, 0)
         arg = mem[(pc + 1) & 0xFF] if n else 0
         npc = (pc + 1 + n) & 0xFF
+        cur_pc = pc
 
-        def W(addr: int, v: int) -> None:
+        def W(addr: int, v: int, src: Optional[int] = None) -> None:
             addr &= 0xFF
+            if pw <= addr < 2 * pw:
+                tr.win_prov[addr - pw] = (src, cur_pc, op)
             if IN_BASE <= addr < OUT_BASE and mem[addr] != (v & 0xFF):
                 tr.io_corrupt += 1                                 # the input region CHANGED: validation state corrupted
                 if tr.io_corrupt_step is None:
@@ -127,21 +140,23 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
         elif op == LD_pT_A: W(T, A)
         elif op == LD_pS_A: W(S, A)
         elif op == LDI:
-            v = mem[S]; W(T, v)
+            v = mem[S]; W(T, v, S)
             if nb_lo <= T < nb_hi: tr.copy_events += 1
             S = (S + 1) & 0xFF; T = (T + 1) & 0xFF; C = (C - 1) & 0xFF
         elif op == LDIR:
             # bounded: each byte costs a step
             while True:
-                v = mem[S]; W(T, v)
+                v = mem[S]; W(T, v, S)
                 if nb_lo <= T < nb_hi: tr.copy_events += 1
                 S = (S + 1) & 0xFF; T = (T + 1) & 0xFF; C = (C - 1) & 0xFF
                 tr.steps += 1
                 if C == 0 or tr.steps >= budget:
                     break
         elif op == COPYALL and allow_copyall:
+            if strict_budget and tr.steps + L // 8 > budget:
+                break
             for i in range(L):
-                W((T + i) & 0xFF, mem[(S + i) & 0xFF])
+                W((T + i) & 0xFF, mem[(S + i) & 0xFF], (S + i) & 0xFF)
             if nb_lo <= T < nb_hi: tr.copy_events += L
             tr.steps += L // 8
         elif op == ADD_A_B: A = (A + B) & 0xFF; Z = A == 0

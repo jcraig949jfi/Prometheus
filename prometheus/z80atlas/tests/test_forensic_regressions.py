@@ -36,9 +36,15 @@ def test_v1_golden_replay_is_byte_identical():
         for k, v in row["summary"].items():                       # every historical field, unchanged
             assert s.get(k) == v, (c["vec"], k)
         assert O.triggers(s, c["vec"], 60) == row["triggers"], c["vec"]
-        assert json.loads(json.dumps(w.events[:50], default=str)) == row["events_head"], c["vec"]
-        assert json.loads(json.dumps(w.ticks_log, default=str)) == [dict(t) for t in row["ticks_log"]] or \
-            all(all(t.get(k) == g[k] for k in g) for t, g in zip(w.ticks_log, row["ticks_log"])), c["vec"]
+        # events and tick records may GAIN keys (additive measurement); every historical key keeps its value
+        ev = json.loads(json.dumps(w.events[:50], default=str))
+        assert len(ev) == len(row["events_head"]), c["vec"]
+        for e, g in zip(ev, row["events_head"]):
+            assert {k: e.get(k) for k in g} == g, c["vec"]
+        tl = json.loads(json.dumps(w.ticks_log, default=str))
+        assert len(tl) == len(row["ticks_log"]), c["vec"]
+        for t, g in zip(tl, row["ticks_log"]):
+            assert {k: t.get(k) for k in g} == g, c["vec"]
 
 
 # ---- C1: tail metrics read from the pre-extinction window ----------------------------------------------------------

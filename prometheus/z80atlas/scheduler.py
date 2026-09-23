@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import datetime
+import hashlib
 import json
 import multiprocessing as mp
 import os
@@ -81,6 +82,9 @@ class Campaign:
                 self.s["next_run_no"] = max(self.s["next_run_no"], max(int(r["id"][1:]) for r in self.runs) + 1)
         self.s.pop("runs", None)
         self._batches = 0
+        # m1 (forensics 2026-09-23): every (family, seed) is submitted at most once; duplicates were byte-identical
+        # simulations counted as independent replicates
+        self._submitted = {(r["family"], r["seed"]) for r in self.runs}
 
     # ---- clock ---------------------------------------------------------------------------------------------------------
     def elapsed_frac(self) -> float:
@@ -101,8 +105,17 @@ class Campaign:
         n = self.s["next_run_no"]; self.s["next_run_no"] = n + 1
         return "r%06d" % n
 
-    def _family(self, vec: Dict[str, str], kind: str, parents: Optional[List[str]] = None) -> str:
+    @staticmethod
+    def family_id(vec: Dict[str, str], init_tapes: Optional[List[str]] = None) -> str:
+        """M5 (forensics 2026-09-23): a transplant/swap run is not a replicate of the plain vector -- its initial
+        population differs -- so the family identity carries a digest of init_tapes."""
         fid = G.vec_id(vec)
+        if init_tapes:
+            fid += "-t" + hashlib.sha256("|".join(init_tapes).encode()).hexdigest()[:8]
+        return fid
+
+    def _family(self, vec: Dict[str, str], kind: str, parents: Optional[List[str]] = None, init_tapes: Optional[List[str]] = None) -> str:
+        fid = self.family_id(vec, init_tapes)
         fam = self.s["families"].get(fid)
         if fam is None:
             self.s["families"][fid] = {"vec": vec, "kind": kind, "runs": [], "scores": [], "allocated": 0, "retired": False,
@@ -111,10 +124,14 @@ class Campaign:
         return fid
 
     def _spec(self, vec: Dict[str, str], kind: str, reason: str, parents: Optional[List[str]] = None, seed: Optional[int] = None,
-              init_tapes: Optional[List[str]] = None, stage: Optional[str] = None) -> Dict:
-        fid = self._family(vec, kind, parents)
+              init_tapes: Optional[List[str]] = None, stage: Optional[str] = None) -> Optional[Dict]:
+        fid = self._family(vec, kind, parents, init_tapes)
+        if seed is not None and (fid, seed) in self._submitted:
+            self._decide("duplicate_refused", fid, "(family, seed %d) already submitted: %s" % (seed, reason))
+            return None
         rid = self._new_id()
         sd = seed if seed is not None else (self.s["seed"] * 7919 + int(rid[1:]))
+        self._submitted.add((fid, sd))
         self.s["families"][fid]["allocated"] += 1
         self.s["counters"][kind] = self.s["counters"].get(kind, 0) + 1
         return {"id": rid, "family": fid, "vec": vec, "seed": sd, "ticks": self.s["ticks"], "cells": self.s["cells"], "workdir": str(self.runs_dir),
@@ -201,12 +218,17 @@ class Campaign:
         vecs = G.sample_sparse(self.rng, k // 2, self.covered, fixed={"init": "RANDOM"})
         vecs += G.sample_sparse(self.rng, k - len(vecs), self.covered)
         for v in vecs:
-            specs.append(self._spec(v, "exploration", "sparse pairwise coverage (+%d new pairs)" % len(G.pairs_of(v) - self.covered)))
+            sp = self._spec(v, "exploration", "sparse pairwise coverage (+%d new pairs)" % len(G.pairs_of(v) - self.covered))
+            if sp is None:
+                continue
+            specs.append(sp)
             if with_pairs:
                 mc = G.matched_controls(v)
                 key = "endogenous_vs_exogenous" if v["reproduction"] in ENDOGENOUS else "exogenous_vs_endogenous"
                 if key in mc:
-                    specs.append(self._spec(mc[key], "control", "matched %s pair of %s" % (key, G.vec_id(v)), parents=[G.vec_id(v)], seed=specs[-1]["seed"]))
+                    cs = self._spec(mc[key], "control", "matched %s pair of %s" % (key, G.vec_id(v)), parents=[G.vec_id(v)], seed=sp["seed"])
+                    if cs is not None:
+                        specs.append(cs)
         return specs
 
     def _promoted_families(self) -> List[str]:
@@ -234,6 +256,7 @@ class Campaign:
             move = self.rng.choices(("replicate", "mutate", "cross", "control"), weights=(0.3, 0.35, 0.25, 0.10))[0]
             if move == "replicate":
                 specs.append(self._spec(v, "promoted", "fresh-seed replicate of promoted family (weight %.2f)" % self._weight(fid), parents=[fid]))
+                specs = [x for x in specs if x is not None]
             elif move == "mutate":
                 nb = G.neighbours(v, self.rng, 1)
                 if nb:
@@ -250,7 +273,7 @@ class Campaign:
                 if missing:
                     k, cv = self.rng.choice(missing)
                     specs.append(self._spec(cv, "control", "matched control %s for promoted family" % k, parents=[fid]))
-        return specs[:n]
+        return [x for x in specs if x is not None][:n]
 
     def _late_batch(self, n: int) -> List[Dict]:
         """Verification in TIERS: the strongest families get fresh seeds, their full matched-control set and
@@ -274,10 +297,12 @@ class Campaign:
             if p["done"] or len(specs) >= n:
                 continue
             fid = p["fid"]; v = p["vec"]
+            own_seed = self.s["seed"] * 104729 + int(fid[:6], 16)              # M6: this family's first fresh seed
             for k in range(2):
-                specs.append(self._spec(v, "verification", "late verification: fresh seed %d/2" % (k + 1), parents=[fid], seed=self.s["seed"] * 104729 + int(fid[:6], 16) + k))
+                specs.append(self._spec(v, "verification", "late verification: fresh seed %d/2" % (k + 1), parents=[fid], seed=own_seed + k))
             for name, cv in G.matched_controls(v).items():
-                specs.append(self._spec(cv, "verification", "late verification: matched control %s" % name, parents=[fid], seed=specs[0]["seed"]))
+                specs.append(self._spec(cv, "verification", "late verification: matched control %s" % name, parents=[fid], seed=own_seed))
+            specs = [x for x in specs if x is not None]
             tapes = self._top_tapes(p["best_run"])
             if tapes:
                 ext = G.repair(dict(v, reproduction="EXTERNAL"), protect=("reproduction",))
@@ -290,7 +315,7 @@ class Campaign:
                     specs.append(self._spec(sw, "intervention", "environment swap: %s's lineage continued under task %s" % (p["best_run"], nxt),
                                             parents=[fid], init_tapes=tapes))
             p["done"] = True
-        return specs
+        return [x for x in specs if x is not None]
 
     def _top_tapes(self, run_id: Optional[str]) -> List[str]:
         if not run_id:
@@ -341,11 +366,13 @@ class Campaign:
         results = [C.vm_executes()]
         for c in C.CONTROL_VECS:
             fid = G.vec_id(c["vec"])
-            rs = [r for r in self.by_family.get(fid) or [] if r["kind"] == "positive_control"]
-            ok = False; detail = None
+            # m4 (forensics 2026-09-23): two controls can share one family; each is graded on the runs made FOR it, and
+            # every such run must pass (v1 kept only the last run of the family)
+            rs = [r for r in self.by_family.get(fid) or [] if r["kind"] == "positive_control" and r["reason"] == "positive control: " + c["name"]]
+            ok = bool(rs); detail = None
             for r in rs:
                 summ = json.loads((self.runs_dir / r["id"] / "summary.json").read_text(encoding="utf-8"))
-                ok = bool(c["predicate"](summ)); detail = {k: summ.get(k) for k in ("alive_fraction", "mean_fidelity_tail", "replication_rate_tail", "solvers_tail", "seed_lineage_share")}
+                ok = ok and bool(c["predicate"](summ)); detail = {k: summ.get(k) for k in ("alive_fraction", "mean_fidelity_tail", "replication_rate_tail", "solvers_tail", "seed_lineage_share")}
                 detail["first_crossing"] = summ.get("first_crossing") is not None
             results.append({"name": c["name"], "passed": ok, "detail": detail, "family": fid})
         self.s["positive_controls"] = {"results": results, "all_passed": all(r["passed"] for r in results), "utc": _utc()}

@@ -29,7 +29,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 from prometheus.z80atlas import vm
-from prometheus.z80atlas.tasks import Environment, Task, score as task_score
+from prometheus.z80atlas.tasks import Environment, Task, score as task_score, verify_tape, panel as task_panel
 
 INIT_ENERGY = 12.0
 REPRO = ("EXTERNAL", "ENDOGENOUS_COPY", "ENDOGENOUS_PARTIAL", "OVERWRITE", "CONSTRUCTIVE", "PAIR_EXECUTION")
@@ -57,6 +57,12 @@ class Config:
     budget: int = 256
     lifespan: int = 40
     init_tapes: tuple = ()              # transplant / environment-swap interventions: hex tapes seeded as a minority (mechanism "transplant")
+    # added 2026-09-23 (post-campaign forensics; roles/Bellerophon/forensics_2026-09-23/ISSUE_AND_REPAIR_LEDGER.md)
+    physics: str = "v1"                 # v1 = the historical 72h-campaign physics, kept replayable byte-for-byte;
+                                        # v2 = repaired: GATED skippers age (M7), COPYALL respects the budget (m2),
+                                        # SEEDED_WITNESS/HYBRID seed the CONFIGURED task (C4), a capture birth credits
+                                        # no writer (C8), no world-made copies under ENDOGENOUS physics (P1)
+    ext_mut_mult: float = 4.0           # EXTERNAL offspring mutation multiplier (v1: 4x; a matched-arm design sets it, M3)
 
     @property
     def L(self) -> int:
@@ -152,6 +158,15 @@ class World:
         self.cross_niche_transport = 0
         self.captures = 0                 # copy events whose material came from the TARGET, not the writer
         self.null_rewrites = 0            # partner rewritten as exactly itself: not a birth
+        # measurement added 2026-09-23 (forensics): classified births, self-replication chains, world-made copies
+        self.self_rep_births = 0          # births that are SELF_REPLICATION (see _is_self_copy)
+        self.sr_depth: Dict[int, int] = {}
+        self.sr_max_depth = 0
+        self.first_self_replication: Optional[dict] = None
+        self.world_copies_under_endogenous = 0
+        self.extinct_tick: Optional[int] = None
+        self._tick_sr = 0
+        self._pre_tape: bytes = b""
         self.escape_events: List[dict] = []
         self.best_ema = 0.0; self.plateau_since = 0
         self.stat_ema: Dict[str, float] = {}
@@ -182,10 +197,10 @@ class World:
         if cfg.init == "SEEDED_REPLICATOR":
             seed_tape = vm.replicator_copyall(self.L) if cfg.allow_copyall else vm.replicator(self.L)
         elif cfg.init == "SEEDED_WITNESS":
-            seed_tape = self._witness_for(self.env.task_for(0))
+            seed_tape = self._witness_for(self._seed_task())
         elif cfg.init == "SEEDED_HYBRID":
             rep = vm.replicator_copyall(self.L) if cfg.allow_copyall else vm.replicator(self.L)
-            seed_tape = vm.hybrid(rep, self._witness_for(self.env.task_for(0)))
+            seed_tape = vm.hybrid(rep, self._witness_for(self._seed_task()))
         transplant = [bytearray(bytes.fromhex(h))[:self.L] for h in cfg.init_tapes] if cfg.init_tapes else []
         for k, i in enumerate(fill):
             if transplant and k < max(1, len(fill) // 4):                 # a transplanted minority (a quarter) into a random majority
@@ -196,6 +211,21 @@ class World:
                 self._spawn(i, t, None, "seed")
             else:
                 self._spawn(i, self._random_tape(), None, "init")
+
+    def _seed_task(self) -> Task:
+        """v1: niche 0's task (ECHO in a RESERVOIR world, a different rung under PER_NICHE -- forensics C4);
+        v2: the CONFIGURED task."""
+        if self.cfg.physics == "v1":
+            return self.env.task_for(0)
+        return self.configured_task()
+
+    def configured_task(self) -> Task:
+        """The configured task with its current parameter (the first niche carrying that kind, else the configured kind
+        with niche 0's k). The verified-solver ruler and the v2 seeding use it."""
+        for t in self.env.tasks:
+            if t.kind == self.cfg.task:
+                return t
+        return Task(self.cfg.task, k=self.env.tasks[-1].k)
 
     def _witness_for(self, task: Task) -> bytes:
         return {"CONST": vm.witness_const(task.k), "ECHO": vm.witness_echo(), "INC": vm.witness_inc(),
@@ -263,6 +293,8 @@ class World:
     # ---- execution ----------------------------------------------------------------------------------------------------
     def _execute(self, o: Org, partner_tape: Optional[bytearray], inputs: List[int]):
         cfg = self.cfg; L = self.L
+        self._pre_tape = bytes(o.tape)
+        sb = cfg.physics != "v1"
         mem = bytearray(256)
         mem[:L] = o.tape
         if partner_tape is not None:
@@ -270,9 +302,10 @@ class World:
         for k, v in enumerate(inputs[:16]):
             mem[vm.IN_BASE + k] = v
         if cfg.layout == "SEPARATED":
-            tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall)
-            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall)
+            tr1 = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall, strict_budget=sb)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall, strict_budget=sb)
             tr = tr1
+            tr.win_prov.update(tr2.win_prov)                                  # measurement only (later writes win)
             tr.steps += tr2.steps; tr.outputs = tr1.outputs + tr2.outputs
             tr.reads_in += tr2.reads_in; tr.self_writes += tr2.self_writes; tr.neighbour_writes += tr2.neighbour_writes
             tr.copy_events += tr2.copy_events; tr.io_writes += tr2.io_writes; tr.io_corrupt += tr2.io_corrupt; tr.neighbour_reads += tr2.neighbour_reads
@@ -285,7 +318,7 @@ class World:
                 tr.opcodes[k] = tr.opcodes.get(k, 0) + v
             tr.writes.update(tr2.writes)
         else:
-            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall)
+            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=sb)
         return mem, tr
 
     def _pair_execute(self, a: Org, b: Org, inputs: List[int]):
@@ -293,9 +326,10 @@ class World:
         cfg = self.cfg; L = self.L
         mem = bytearray(256)
         mem[:L] = a.tape; mem[L:2 * L] = b.tape
+        self._pre_tape = bytes(a.tape)
         for k, v in enumerate(inputs[:16]):
             mem[vm.IN_BASE + k] = v
-        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall)
+        tr = vm.execute(mem, 2 * L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall, strict_budget=cfg.physics != "v1", prov_L=L)
         return mem, tr
 
     # ---- the tick ---------------------------------------------------------------------------------------------------------
@@ -321,6 +355,8 @@ class World:
             if cfg.pressure == "GATED_INTERACTION":
                 p_int = 0.15 + 0.85 * o.score_ema
             if rng.random() > p_int:
+                if cfg.physics != "v1":
+                    o.age += 1                                     # v2 (M7): a skipped interaction still ages the organism
                 continue
             interactions += 1
             task = self.env.task_for(o.niche)
@@ -428,18 +464,44 @@ class World:
                 fidelity = fid_target                      # copy fidelity is measured against the GENETIC source
         if replaced is not None:
             self.overwrite_deaths += 1
+        # measurement (2026-09-23): is this birth a SELF_REPLICATION? (forensics M1/M2/C8; frozen definition in
+        # roles/Bellerophon/forensics_2026-09-23/POST_CAMPAIGN_FORENSICS.md s3.1)
+        self_copy, fid_pre = self._is_self_copy(child, parent, material, tr)
         c = self._spawn(j, child, parent.id, mechanism, lineage=parent.lineage, glineage=glin)     # fresh energy, no registers: nothing non-heritable travels
-        parent.replications += 1; parent.last_repro_tick = self.tick
-        parent.fidelity_last = fidelity
-        parent.repro_span = tr.pc_max + 1
+        if self.cfg.physics == "v1" or material == "writer":            # v2 (C8): a capture birth credits no writer
+            parent.replications += 1; parent.last_repro_tick = self.tick
+            parent.fidelity_last = fidelity
+            parent.repro_span = tr.pc_max + 1
         self.endogenous_births += 1
+        self.sr_depth[c.id] = self.sr_depth.get(parent.id, 0) + 1 if self_copy else 0
+        if self_copy:
+            self.self_rep_births += 1; self._tick_sr += 1
+            self.sr_max_depth = max(self.sr_max_depth, self.sr_depth[c.id])
+            if self.first_self_replication is None:
+                self.first_self_replication = {"tick": self.tick, "id": parent.id, "tape": self._pre_tape.hex(), "mechanism": mechanism,
+                                               "fidelity_pre": round(fid_pre, 3),
+                                               "seeded": parent.glineage in self.seed_lineages or parent.lineage in self.seed_lineages}
         self.events.append({"tick": self.tick, "kind": "copy", "parent": parent.id, "child": c.id, "cell": j, "fidelity": round(fidelity, 3),
                             "mechanism": mechanism, "span": tr.pc_max + 1, "steps": tr.steps, "replaced": replaced.id if replaced else None,
-                            "material": material, "glineage": glin})
+                            "material": material, "glineage": glin, "fidelity_pre": round(fid_pre, 3), "self_copy": self_copy})
         if self.first_replication is None:
             self.first_replication = {"tick": self.tick, "id": parent.id, "lineage": parent.lineage, "tape": bytes(parent.tape).hex(),
                                       "mechanism": mechanism, "fidelity": fidelity, "span": tr.pc_max + 1, "genealogy": self._ancestry(parent.id),
                                       "seeded": parent.glineage in self.seed_lineages or (glin in self.seed_lineages)}
+
+    def _is_self_copy(self, child: bytearray, parent: Org, material: str, tr) -> Tuple[bool, float]:
+        """SELF_REPLICATION: the child's bytes came from the writer's OWN tape, moved by a copy instruction the writer's
+        OWN code executed, and the child matches the writer both after AND before its execution (>= 0.9). Excludes the
+        in-place LDIR sweep (M2), the self-smear (M1), captures (C8) and copies made by partner code."""
+        L = self.L
+        pre = self._pre_tape or bytes(parent.tape)
+        fid_pre = 1.0 - sum(1 for x, y in zip(child, pre) if x != y) / L
+        fid_post = 1.0 - sum(1 for x, y in zip(child, parent.tape) if x != y) / L
+        prov = tr.win_prov
+        own = [pc for off, (src, pc, op) in prov.items() if off < L and op in vm.COPY_OPS and src is not None and src < L]
+        own_code = sum(1 for pc in own if pc < L)
+        ok = (material == "writer" and fid_post >= 0.9 and fid_pre >= 0.9 and len(own) >= 0.9 * L and own_code >= 0.9 * len(own))
+        return ok, fid_pre
 
     def _external_reproduce(self) -> int:
         """The population manager. ONLY under reproduction == EXTERNAL (asserted)."""
@@ -467,7 +529,7 @@ class World:
                 mate = self.cells[rng.choice(alive_idx)]
                 if mate is not None:
                     cut = rng.randrange(1, self.L); child[cut:] = mate.tape[cut:]
-            self._mutate(child, cfg.mut_rate * 4)
+            self._mutate(child, cfg.mut_rate * cfg.ext_mut_mult)
             replaced = self.cells[j]
             if replaced is not None:
                 self.overwrite_deaths += 1
@@ -556,8 +618,13 @@ class World:
             if not targets:
                 continue
             j = rng.choice(targets)
-            if cfg.spatial == "NICHES_POLLINATION" or cfg.spatial == "RESERVOIR":
+            copy = cfg.spatial in ("NICHES_POLLINATION", "RESERVOIR")
+            if copy and cfg.reproduction in ENDOGENOUS and cfg.physics != "v1":
+                copy = False                               # v2 (P1): the world never copies an organism under ENDOGENOUS physics
+            if copy:
                 c = self._spawn(j, bytearray(o.tape), o.id, "pollination", lineage=o.lineage, glineage=o.glineage)    # a copy crosses, the source stays
+                if cfg.reproduction in ENDOGENOUS:
+                    self.world_copies_under_endogenous += 1   # measurement (P1): exogenous reproduction the v1 guard never saw
             else:
                 self.cells[j] = o; self.cells[i] = None; o.niche = dst
             self.migrations += 1; self.cross_niche_transport += 1
@@ -621,7 +688,9 @@ class World:
                "mean_fidelity": round(sum(fids) / len(fids), 3) if fids else None, "mean_repro_span": round(sum(spans) / len(spans), 1) if spans else None,
                "deaths": deaths, "external_births": ext_births, "lineages": lineages, "arch_clusters": arch,
                "mean_steps": round(steps_total / max(1, interactions), 1), "niches": niches, "refused_writes": self.refused_writes,
-               "mean_age": round(sum(o.age for o in alive) / n, 1) if n else 0.0}
+               "mean_age": round(sum(o.age for o in alive) / n, 1) if n else 0.0,
+               "self_reps": self._tick_sr}
+        self._tick_sr = 0
         # stasis / escape detector on the best score
         self.best_ema = 0.9 * self.best_ema + 0.1 * best
         if best >= self.best_ema + 0.25 and self.plateau_since >= 30:
@@ -673,6 +742,7 @@ class World:
         for _ in range(self.cfg.ticks):
             self.step()
             if not any(o is not None for o in self.cells):
+                self.extinct_tick = self.tick
                 self.extinctions += 1
                 self.events.append({"tick": self.tick, "kind": "extinction"})
                 break
@@ -707,4 +777,37 @@ class World:
             "top": [{"id": o.id, "lineage": o.lineage, "replications": o.replications, "score_ema": round(o.score_ema, 3), "span": o.repro_span,
                      "fidelity": o.fidelity_last, "age": o.age, "mechanism": o.mechanism, "tape": bytes(o.tape).hex(), "unique_bytes": len(set(o.tape)),
                      "disasm": vm.disassemble(bytes(o.tape), 20)} for o in top],
+            # ---- added 2026-09-23 (forensics); the fields above keep their v1 meaning --------------------------------------
+            "physics": cfg.physics, "extinct_tick": self.extinct_tick,
+            "tail_h": self._tail_over_horizon(),
+            "self_rep_births": self.self_rep_births, "sr_max_depth": self.sr_max_depth,
+            "first_self_replication": self.first_self_replication,
+            "world_copies_under_endogenous": self.world_copies_under_endogenous,
+            "verified": self._verified(alive),
         }
+
+    def _tail_over_horizon(self, k: int = 20) -> dict:
+        """Tail means over the last k ticks of the CONFIGURED horizon; ticks after an extinction count as an empty world
+        (forensics C1: the v1 tail is the last k ticks BEFORE the extinction)."""
+        by_tick = {r["tick"]: r for r in self.ticks_log}
+        ticks = range(max(0, self.cfg.ticks - k), self.cfg.ticks)
+        out = {}
+        for key in ("solvers", "replication_rate", "self_reps", "best_score", "mean_score", "alive"):
+            out[key] = round(sum((by_tick.get(t) or {}).get(key) or 0 for t in ticks) / max(1, len(ticks)), 4)
+        return out
+
+    def _verified(self, alive: List[Org]) -> dict:
+        """End-state verified solving of the CONFIGURED task: each distinct living tape, alone, must answer every input of
+        the fixed panel exactly under the run's read gate (forensics C2/C3/C4)."""
+        cfg = self.cfg; task = self.configured_task()
+        cache: Dict[bytes, dict] = {}
+        exact = 0
+        for o in alive:
+            t = bytes(o.tape)
+            if t not in cache:
+                cache[t] = verify_tape(t, self.L, task, cfg.read_gate, cfg.budget, cfg.layout, cfg.allow_copyall)
+            exact += cache[t]["exact"]
+        tapes = sorted(((t, v["accuracy"]) for t, v in cache.items() if v["exact"]), key=lambda kv: kv[0])[:4]
+        return {"task": task.to_dict(), "read_gate": cfg.read_gate, "panel": len(task_panel(task)),
+                "exact_solvers_final": exact, "distinct_tapes": len(cache), "exact_tapes": [t.hex() for t, _ in tapes],
+                "best_accuracy": round(max((v["accuracy"] for v in cache.values()), default=0.0), 4)}
