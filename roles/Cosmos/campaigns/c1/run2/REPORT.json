@@ -1,0 +1,463 @@
+{
+ "adversary": [
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 25,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 25
+    },
+    "coordpres_base": {
+     "confident": 11,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 11
+    },
+    "errorseek": {
+     "confident": 35,
+     "confirmed": 4,
+     "contradictions": 4,
+     "n": 35
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    }
+   },
+   "confident": 107,
+   "confirmed": 4,
+   "law": "(Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075",
+   "revision": {
+    "picked": "v4",
+    "v4": {
+     "law": "(K / (N + log(C))) <= -0.5829 AND ((C * log(C)) + Q) <= 0.9112",
+     "score": 0.8701032657133999,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 0,
+   "verdict": "FAILED"
+  },
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 25,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 25
+    },
+    "coordpres_base": {
+     "confident": 11,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 11
+    },
+    "errorseek": {
+     "confident": 34,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 34
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 36
+    }
+   },
+   "confident": 106,
+   "confirmed": 2,
+   "law": "(K / (N + log(C))) <= -0.5829 AND ((C * log(C)) + Q) <= 0.9112",
+   "revision": {
+    "picked": "v4",
+    "v4": {
+     "law": "(K / (N + log(C))) <= -0.5903 AND ((C * log(C)) + Q) <= 0.9105",
+     "score": 0.8705666466919181,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 1,
+   "verdict": "FAILED"
+  },
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 24,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 24
+    },
+    "coordpres_base": {
+     "confident": 12,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 12
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 2,
+     "contradictions": 2,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 4,
+   "law": "(K / (N + log(C))) <= -0.5903 AND ((C * log(C)) + Q) <= 0.9105",
+   "revision": {
+    "picked": "v4",
+    "v4": {
+     "law": "(C - (G * exp(-N))) <= -0.09576 AND ((C - log(Q)) * K) >= 0.1697",
+     "score": 0.8929301753923911,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 2,
+   "verdict": "FAILED"
+  }
+ ],
+ "cfg": {
+  "cmap": "v4",
+  "costlines": 10,
+  "g1b_crn": true,
+  "g1b_n": 12,
+  "holdout": null,
+  "location_gate": 0.1,
+  "main_strategy": "random",
+  "revise": [
+   "v4"
+  ],
+  "secondaries": [
+   "v3",
+   "raw"
+  ],
+  "seed": 20260928
+ },
+ "config": "c1",
+ "gates": {
+  "G0": {
+   "identical": 30,
+   "receipt_chain_ok": true,
+   "replayed": 30,
+   "verdict": "PASS"
+  },
+  "G1": {
+   "causal_consistency": {
+    "ca": {
+     "cost_up_edges": 8,
+     "pass": true,
+     "sel_fitness_nonincreasing": 8
+    },
+    "regs": {
+     "cost_up_edges": 12,
+     "pass": true,
+     "sel_fitness_nonincreasing": 12
+    },
+    "ring": {
+     "cost_up_edges": 10,
+     "pass": true,
+     "sel_fitness_nonincreasing": 10
+    }
+   },
+   "per_family": {
+    "ca": {
+     "pass": true,
+     "pays_rate": 0.26666666666666666,
+     "sham_pays": 0
+    },
+    "regs": {
+     "pass": true,
+     "pays_rate": 0.1675,
+     "sham_pays": 0
+    },
+    "ring": {
+     "pass": true,
+     "pays_rate": 0.2633333333333333,
+     "sham_pays": 0
+    }
+   },
+   "verdict": "PASS"
+  },
+  "G2": {
+   "initial": {
+    "family_dependence": {
+     "gain_bits_per_row": -0.01984,
+     "mu_bits": -0.01031,
+     "null_median": -0.00953,
+     "p": 0.8,
+     "per_family_acc": {
+      "ca": 0.8616,
+      "regs": 0.8646,
+      "ring": 0.9271
+     }
+    },
+    "fold_ba": {
+     "ca": 0.9115853658536586,
+     "regs": 0.9193548387096775,
+     "ring": 0.9015920087404401
+    },
+    "law": "(Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075",
+    "p": 0.05,
+    "score": 0.8628440711012587,
+    "verdict": "CANDIDATE"
+   },
+   "verdict": "NOT REACHED"
+  },
+  "G2_initial_info": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.01984,
+    "mu_bits": -0.01031,
+    "null_median": -0.00953,
+    "p": 0.8,
+    "per_family_acc": {
+     "ca": 0.8616,
+     "regs": 0.8646,
+     "ring": 0.9271
+    }
+   },
+   "law_score": 0.8628440711012587,
+   "mean_fold_ba": 0.9108440711012588,
+   "raw_score": 0.7672982081984641,
+   "verdict": "INFO",
+   "worst_fold_ba": 0.9015920087404401
+  },
+  "G4": {
+   "rounds": 3,
+   "verdict": "FAIL"
+  },
+  "G5": {
+   "verdict": "NOT REACHED"
+  },
+  "G6": {
+   "verdict": "NOT REACHED"
+  },
+  "G7": {
+   "verdict": "NOT REACHED"
+  }
+ },
+ "graph": {
+  "edge_kinds": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 74,
+   "DEFORMATION_OF": 580
+  },
+  "edges": 714,
+  "families": 3,
+  "laws": 3,
+  "nodes": 1262,
+  "runs": 1282
+ },
+ "identity": {
+  "cosmos_dirty": false,
+  "cosmos_src_sha": "6a83abaa008f2ae1618fece099a68a636b481484ad347e5d53b458caa02027cd",
+  "git_head": "4b9c6895f408929f38450ec2587f6c65cae12be3",
+  "n_src": 50
+ },
+ "laws": [
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED",
+    "REVISED"
+   ],
+   "freeze_hash": null,
+   "law": "(Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075",
+   "law_id": "eec9c5a5714cf7b08b3f",
+   "parent": null,
+   "version": 1
+  },
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED",
+    "REVISED"
+   ],
+   "freeze_hash": null,
+   "law": "(K / (N + log(C))) <= -0.5829 AND ((C * log(C)) + Q) <= 0.9112",
+   "law_id": "9ed4a83871e68ef2555f",
+   "parent": "eec9c5a5714cf7b08b3f",
+   "version": 2
+  },
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED"
+   ],
+   "freeze_hash": null,
+   "law": "(K / (N + log(C))) <= -0.5903 AND ((C * log(C)) + Q) <= 0.9105",
+   "law_id": "78d3bd629757e8af04dd",
+   "parent": "9ed4a83871e68ef2555f",
+   "version": 3
+  }
+ ],
+ "mine_initial": {
+  "raw": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.0159,
+    "mu_bits": 0.01367,
+    "null_median": 0.00222,
+    "p": 0.08,
+    "per_family_acc": {
+     "ca": 0.7188,
+     "regs": 0.7917,
+     "ring": 0.8229
+    }
+   },
+   "fold_ba": {
+    "ca": 0.7774390243902439,
+    "regs": 0.8040104620749782,
+    "ring": 0.8644451381301701
+   },
+   "law": "(Q - (C * K)) <= 0.8713 AND (N + log((C + K))) <= 2.841",
+   "p": 0.05,
+   "score": 0.7672982081984641,
+   "verdict": "CANDIDATE"
+  },
+  "v3": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.12643,
+    "mu_bits": 0.09746,
+    "null_median": 0.02897,
+    "p": 0.02,
+    "per_family_acc": {
+     "ca": 0.9196,
+     "regs": 0.8906,
+     "ring": 0.9583
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9376016260162602,
+    "regs": 0.935483870967742,
+    "ring": 0.8886374278133291
+   },
+   "law": "((C - K) * C) <= -0.1451 AND (G - (C / exp(-N))) >= 0.0684",
+   "p": 0.05,
+   "score": 0.872574308265777,
+   "verdict": "CANDIDATE"
+  },
+  "v4": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.01984,
+    "mu_bits": -0.01031,
+    "null_median": -0.00953,
+    "p": 0.8,
+    "per_family_acc": {
+     "ca": 0.8616,
+     "regs": 0.8646,
+     "ring": 0.9271
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9115853658536586,
+    "regs": 0.9193548387096775,
+    "ring": 0.9015920087404401
+   },
+   "law": "(Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075",
+   "p": 0.05,
+   "score": 0.8628440711012587,
+   "verdict": "CANDIDATE"
+  }
+ },
+ "n_queries": 1208,
+ "null_pool_failures": [],
+ "quick": false,
+ "quotient": {
+  "battery": [
+   "PAYS",
+   "BEATS_LAST",
+   "BEATS_LOG",
+   "RETAINS"
+  ],
+  "boundary_edge_fraction": {
+   "CONTROL_OF": 0.65,
+   "COORD_PRESERVING": 0.0676,
+   "DEFORMATION_OF": 0.4806
+  },
+  "boundary_edges_n": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 74,
+   "DEFORMATION_OF": 489
+  },
+  "classes": {
+   "0000": 152,
+   "0001": 34,
+   "0010": 185,
+   "0011": 144,
+   "0100": 214,
+   "0101": 288,
+   "1110": 84,
+   "1111": 161
+  },
+  "classes_by_family": {
+   "ca": {
+    "0000": 33,
+    "0001": 18,
+    "0010": 55,
+    "0011": 75,
+    "0100": 39,
+    "0101": 142,
+    "1110": 15,
+    "1111": 82
+   },
+   "regs": {
+    "0000": 61,
+    "0001": 10,
+    "0010": 88,
+    "0011": 42,
+    "0100": 88,
+    "0101": 66,
+    "1110": 36,
+    "1111": 36
+   },
+   "ring": {
+    "0000": 61,
+    "0001": 7,
+    "0010": 50,
+    "0011": 46,
+    "0100": 94,
+    "0101": 92,
+    "1110": 43,
+    "1111": 49
+   }
+  },
+  "compression": 0.0063,
+  "n_classes": 8,
+  "n_nodes": 1262
+ },
+ "receipt_chain_ok": true,
+ "t_eta_s": 228.1,
+ "t_oracle_s": 83.4,
+ "t_total_s": 2945.8
+}

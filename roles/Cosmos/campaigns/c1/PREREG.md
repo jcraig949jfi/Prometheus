@@ -56,3 +56,18 @@ threshold scan, and the null-pool fallback now catches any worker failure (retry
 serial). Same seed, same procedure, same gates. The float32 change can move exact ties in the
 threshold scan; the planted suite is rerun (runtest --full) on this code before the C1 result is
 reported.
+
+## C1 RESULT (run2, code 4b9c6895f, 2026-09-23T14:18Z; run2/)
+G0 PASS, G1 PASS (CRN matched edges 30/30), G4 FAIL: three v4 laws, all killed by the LOCATION gate
+(confident-contradiction rates 4/107, 2/106, 4/108 -- all under the old 5% rule):
+  eec9c5a571 (Q - C K) <= .872 AND K / (N + log C) <= -.6075       offsets regs -.50 ring -.55 ca -.54
+  9ed4a83871 K/(N + log C) <= -.583 AND (C log C + Q) <= .911      offsets ring -.43 ca -.37 (regs indet.)
+  78d3bd6297 K/(N + log C) <= -.590 AND (C log C + Q) <= .911      offsets ring -.53 ca -.38 (regs indet.)
+  (offset = log2(observed upper flip / law's upper flip); negative = law too generous in cost)
+Secondary v3 initial law: ((C - K) C) <= -.145 AND (G - C / exp(-N)) >= .068 (score .873) -- close to
+the task-economics ceiling form, but not the primary and not attacked.
+Precommitments: C1a LOST (primary did not choose the multiplicative ceiling), C1b LOST, C1c/C1d/C1e
+NOT TESTED. Under the C1 location gate the C0b law would also fail (regs -.147 > .10).
+DECISION (recorded, changes no result): F is NOT spent on law A alone. The prereg scored A and B on
+F; B does not exist; scoring A alone would spend the last sealed universe on a law already known to
+carry location bias. F stays sealed for the next law that passes the location gate (C2).

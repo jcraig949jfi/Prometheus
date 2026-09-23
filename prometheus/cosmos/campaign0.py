@@ -55,6 +55,10 @@ CONFIGS = {
     # C1 (roles/Cosmos/campaigns/c1/PREREG.md): revision under the C0s scars
     "c1": {"seed": 20260928, "cmap": "v4", "secondaries": ["v3", "raw"], "revise": ["v4"],
            "g1b_crn": True, "g1b_n": 12, "main_strategy": "random", "costlines": 10, "location_gate": 0.10, "holdout": None},
+    # C2 (roles/Cosmos/campaigns/c2/PREREG.md): location-aware selection among near-tied candidates
+    "c2": {"seed": 20260929, "cmap": "v4", "secondaries": ["v3", "raw"], "revise": ["v4", "v3"],
+           "g1b_crn": True, "g1b_n": 12, "main_strategy": "random", "costlines": 10, "location_gate": 0.10,
+           "holdout": None, "location_select": True},
 }
 
 
@@ -255,6 +259,24 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
     # ---- adversary rounds on the primary coordinates
     cmap = CMAP
     res = res_v1
+    selections = []
+
+    def _location_pick(mined_now, tag):
+        from prometheus.cosmos.select import candidates, select
+        cands = candidates(mined_now, cfg["revise"])
+        sel = select(cands, ch.rows, fams, pool_rows, np.random.default_rng(SEED + 300 + len(selections)),
+                     n_bases=4 if quick else 6, episodes=300 if quick else 800)
+        selections.append({"tag": tag, "n_candidates": len(cands),
+                           "scored": [{k: v for k, v in s.items() if k in ("cmap", "structure", "lolo_score", "offsets", "worst_offset")}
+                                      for s in sel["scored"]],
+                           "chosen": sel["chosen"] and {k: sel["chosen"][k] for k in ("cmap", "structure", "lolo_score", "offsets", "worst_offset")}})
+        if not sel["chosen"]:
+            return {"verdict": "NONE", "law": None, "best_score": float("-inf")}, CMAP
+        ch_ = sel["chosen"]
+        return {"verdict": "CANDIDATE", "law": ch_["law"], "best_score": ch_["lolo_score"], "p_null": ch_["p_null"]}, ch_["cmap"]
+
+    if cfg.get("location_select"):
+        res, cmap = _location_pick(mined, "initial")
     law_id = None
     parent = None
     rounds = []
@@ -290,6 +312,12 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
         # revision: re-mine on everything observed so far (attack rows included); coordinates may switch to v2
         # only if v2 beats v1 on the enlarged data (both reported)
         rv = {cm: mine_rows(ch.rows, cm, n_perm=n_perm) for cm in cfg["revise"]}
+        if cfg.get("location_select"):
+            res, cmap = _location_pick(rv, "revision %d" % rnd)
+            rounds[-1]["revision"] = {**{cm: {"verdict": v["verdict"], "law": v["law"] and v["law"]["law"],
+                                              "score": v["best_score"]} for cm, v in rv.items()}, "picked": cmap}
+            law_id = None
+            continue
         pick_cm = cfg["revise"][0]
         for cm in cfg["revise"][1:]:       # an alternative map wins only if CANDIDATE and > 0.01 better
             if rv[cm]["verdict"] == "CANDIDATE" and (rv[pick_cm]["verdict"] != "CANDIDATE" or
@@ -302,6 +330,9 @@ def run(out: Path, quick: bool = False, config: str = "c0") -> Dict[str, Any]:
         law_id = None
     store.commit()
     _dump(out, "adversary", rounds)
+    if selections:
+        _dump(out, "selections", selections)
+        report["selections"] = selections
     report["adversary"] = [{"round": r["round"], "law": r["law"], "verdict": r["attack"]["verdict"],
                             "confirmed": r["attack"]["n_confirmed"], "confident": r["attack"]["n_confident"],
                             "by_kind": r["attack"]["by_kind"], "revision": r.get("revision")} for r in rounds]

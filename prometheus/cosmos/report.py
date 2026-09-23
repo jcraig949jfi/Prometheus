@@ -39,7 +39,7 @@ def render(out: Path) -> str:
         L.append("    law  %s" % a["law"])
         if a.get("revision"):
             rv = a["revision"]
-            L.append("    revision picked %s ; v1 %s ; v2 %s" % (rv["picked"], rv["v1"]["verdict"], rv["v2"]["verdict"]))
+            L.append("    revision picked %s ; %s" % (rv["picked"], " ; ".join("%s %s" % (k, v["verdict"]) for k, v in rv.items() if k != "picked")))
     L.append("LAW LEDGER")
     for l in r.get("laws", []):
         L.append("  %s v%d parent=%s cmap=%s  %s" % (l["law_id"][:10], l["version"], (l["parent"] or "-")[:10], l["cmap"], "/".join(l["events"])))

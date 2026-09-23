@@ -471,10 +471,10 @@ class Miner:
         null_scores = self._null_scores(perms, workers)
         real = best.score if best else max([c.score for c in cands], default=-np.inf)
         p = (1 + sum(s >= real for s in null_scores)) / (1 + n_perm)
-        top = [{"structure": " AND ".join(
+        top = [{"atoms": [[_ser(e), float(d)] for e, _, d in c.atoms], "structure": " AND ".join(
             "%s %s" % (show(e), "<=" if d > 0 else ">=") for e, _, d in c.atoms), "score": round(c.score, 4),
                 "fold_ba": {k: round(v, 4) for k, v in c.fold_ba.items()}, "passes_worst_gate": getattr(c, "_ok", False)}
-               for c in cands[:8]]
+               for c in cands[:12]]
         res = {"n_rows": int(len(self.y)), "n_expr_classes": len(self.exprs), "groups": sorted(map(str, set(self.groups.tolist()))),
                "best_score": real, "null_scores": [round(s, 4) for s in null_scores], "p_null": p, "top": top}
         if best is None or p > p_gate:
