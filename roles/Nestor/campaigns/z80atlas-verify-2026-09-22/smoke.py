@@ -37,7 +37,8 @@ SMOKE_EPOCHS = 120           # short runs for timing; scaled up by the tier rati
 
 
 def _specimen_bytes(run_id):
-    pred = pathlib.Path(__file__).resolve().parent.parent / "z80atlas-2026-09-19" / "observatory"
+    import specimens                                   # C9-D06: one resolver for the path
+    pred = specimens.PRED
     for p in pred.glob("runs/*/%s/RESULT.json" % run_id):
         s = json.loads(p.read_text(encoding="ascii"))["summary"]
         g = (s.get("first_replicator") or {}).get("genome")
