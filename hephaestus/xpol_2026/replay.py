@@ -274,9 +274,49 @@ def main() -> None:
     ap.add_argument("--stages", nargs="*", default=["O", "N", "C_new", "C_orig"]); ap.add_argument("--ids", nargs="*")
     ap.add_argument("--limit", type=int); ap.add_argument("--score")
     ap.add_argument("--shard", help="i/n: take packets whose index mod n == i (parallel workers, one run dir each)")
+    ap.add_argument("--print-prompt", choices=["N", "C_orig"], help="print the exact prompt for the single --ids packet and exit")
+    ap.add_argument("--ingest-raw", help="SESSION ARM: a file holding a model response produced outside this runner (e.g. the "
+                    "interactive Fable session); it is post-processed and scored exactly like a live call and recorded under --arms[0] "
+                    "for the single --ids packet at --ingest-stage. The record carries call.kind='session' and a contamination note.")
+    ap.add_argument("--ingest-stage", default="C_orig", choices=["C_new", "C_orig"])
+    ap.add_argument("--ingest-note", default="")
     a = ap.parse_args()
     if a.score:
         print(json.dumps(score_file(a.score))); return
+    if a.print_prompt or a.ingest_raw:
+        sel = json.loads((HERE / "packets/selection.json").read_text(encoding="utf-8"))
+        pk = next(p for p in sel["packets"] if p["packet_id"] == a.ids[0])
+        if a.print_prompt == "N":
+            print(pk["nous"]["prompt_reconstructed"]); return
+        prompt, meta = codegen_prompt(pk, pk["nous"]["response_text"], pk["nous"]["ratings"])
+        if a.print_prompt:
+            print(prompt); print("\n[meta]", json.dumps(meta), "sha256", sha(prompt)); return
+        arm = a.arms[0]; rundir = HERE / "runs" / a.run; rundir.mkdir(parents=True, exist_ok=True)
+        results = rundir / "results.jsonl"; calldir = rundir / "calls" / pk["packet_id"] / arm; calldir.mkdir(parents=True, exist_ok=True)
+        raw = Path(a.ingest_raw).read_text(encoding="utf-8")
+        tag = a.ingest_stage
+        (calldir / f"{tag}.raw.txt").write_text(raw, encoding="utf-8")
+        rec = {"packet_id": pk["packet_id"], "arm": arm, "stage": tag, "ts": now(), "prompt_sha256": sha(prompt), "prompt_chars": len(prompt), **meta,
+               "analysis_sha256": sha(pk["nous"]["response_text"]),
+               "call": {"kind": "session", "ok": True, "seconds": None, "served": "claude-fable-5-1 (interactive Claude Code session, not claude -p)",
+                        "note": a.ingest_note or "author had seen floors.json, tier profiles and category names before writing; battery source not opened"}}
+        code, status, info = postprocess(raw)
+        rec["postprocess"] = status; rec.update(info)
+        if code is None:
+            rec["outcome"] = f"scrap:{status}"
+        else:
+            cp = calldir / f"{tag}.tool.py"; cp.write_text(code, encoding="utf-8"); rec["tool_path"] = str(cp.relative_to(HERE))
+            if status != "ok":
+                rec["outcome"] = f"scrap:{status}"
+            else:
+                rec["score"] = score_in_child(cp); rec["source_ncd_vs_forge_1p0"] = source_ncd_vs_forge(code)
+                rec["outcome"] = "scored" if "error" not in rec["score"] else f"scrap:{rec['score']['error'][:80]}"
+        emit(results, rec)
+        s = rec.get("score") or {}
+        print(json.dumps({k: rec.get(k) for k in ("packet_id", "arm", "stage", "outcome", "postprocess", "lines")}),
+              "acc", s.get("accuracy"), "cal", s.get("calibration"), "by_tier", {k: v["acc"] for k, v in (s.get("by_tier") or {}).items()},
+              "agree_ncd", s.get("agreement_with_ncd_picks"), "agree_maj", s.get("agreement_with_position_majority"), "eval_errors", s.get("evaluate_errors"))
+        return
     sel = json.loads((HERE / "packets/selection.json").read_text(encoding="utf-8"))
     packets = sel["packets"]
     if a.ids:
