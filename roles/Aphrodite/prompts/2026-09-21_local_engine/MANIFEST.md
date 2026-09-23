@@ -1,0 +1,17 @@
+# MANIFEST -- APHRODITE LOCAL ENGINE, 2026-09-21
+
+Directive logged verbatim in DIRECTIVE_VERBATIM.md (sha256 of the
+operator's message body: e49347af986a7b742c7a3d80ce96344eaee2af198528ad1b2e05455d8c9f3976).
+
+Paths are relative to roles/Aphrodite/. sha256 of each file as committed:
+
+d236bece5ae8af1a55664a9ea366c6379a563ae54129ccec2fd334cc39160660  prompts/2026-09-21_local_engine/DIRECTIVE_VERBATIM.md
+4625ffcebd277dade8cf71f75a64ca48e99469bed4c584ad87a23ce6cdb235aa  prompts/2026-09-21_local_engine/AMENDMENT_2_DRAFT.md
+34c07210dbf6ea71f5309fc924a745f53cde79a4ad3e4d34ba46441c99e2d62d  engine/engine.py
+c9af62a895cf14470efde50c91705b23ec3854526d6f0a8e0e9e6a0eae193b67  engine/README.md
+24a7da6b54e92eedd0489733a654c5c843e903778c9b7ea2bbbf8c41b8be4d68  engine/qualify_engine.py
+4e70ffa1495862b050cd4ef5c76ce090a6c938c5281cc7bbeeea1e7822b0d2bd  engine/tests/test_membrane.py
+7bdba2501bce195b08e02198154a3da7351f81a747b08e0da82d39a72809c90a  engine/tests/test_improver.py
+0850a348ae34c0b62d59bcf6f8d93829e992adcff8db6b2c5678aa98d868efab  engine/QUALIFICATION_2026-09-21.json
+
+Written 2026-09-21T12:13:05Z.
