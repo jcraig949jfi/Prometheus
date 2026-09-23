@@ -119,6 +119,21 @@
   .dials{margin:22px 0; padding-left:0; list-style:none}
   .dials li{padding:10px 0 10px 16px; border-left:2px solid var(--rule); margin-bottom:8px}
   .dials li b{color:var(--accent)}
+  sup.ref{font-size:.62em; line-height:0; margin-left:.12em}
+  sup.ref a{color:var(--accent); text-decoration:none; font-weight:600}
+  sup.ref a:hover{text-decoration:underline}
+  .refs{
+    margin:52px 0 0; padding:24px 0 0; border-top:1px solid var(--rule);
+  }
+  .refs h2{margin-top:0}
+  .refs ol{
+    margin:0; padding-left:1.35em; font-size:.92rem; line-height:1.55; color:var(--ink);
+  }
+  .refs li{margin-bottom:13px}
+  .refs li:target{background:var(--accent-soft); border-radius:5px; padding:4px 6px; margin-left:-6px}
+  .refs .t{font-style:italic}
+  .refs .w{display:block; color:var(--muted); font-size:.93em; margin-top:2px}
+  .refs a{color:var(--accent)}
   footer.foot{
     margin:64px 0 40px; padding-top:22px; border-top:1px solid var(--rule);
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -171,8 +186,9 @@
   being mapped into fewer states — carry a thermodynamic cost. Reversible computation can in principle
   avoid that cost until information is actually erased or reset. Experiments have directly demonstrated
   the <span class="m"><span class="up">k</span><sub>B</sub><span class="up">T</span>&#8202;ln&#8202;2</span>
-  limit for bit erasure, and more general treatments relate the minimum work cost to the information
-  discarded conditional on the output.</p>
+  limit for bit erasure,<sup class="ref"><a href="#r3">3</a>,<a href="#r4">4</a>,<a href="#r5">5</a></sup>
+  and more general treatments relate the minimum work cost to the information
+  discarded conditional on the output.<sup class="ref"><a href="#r6">6</a>,<a href="#r7">7</a></sup></p>
 
   <h2>The really interesting connection: abstraction is many-to-one</h2>
 
@@ -219,7 +235,8 @@
   while preserving <span class="m"><span class="up">I</span>(Z;&#8201;Y)</span>.</p>
 
   <p>And that’s essentially the territory of the Information Bottleneck: find a compressed
-  representation of <span class="m">X</span> that retains information relevant to <span class="m">Y</span>.</p>
+  representation of <span class="m">X</span> that retains information relevant to
+  <span class="m">Y</span>.<sup class="ref"><a href="#r8">8</a>,<a href="#r9">9</a></sup></p>
 
   <p>Combine Landauer and the Information Bottleneck, and suddenly we get something much more
   interesting than either separately:</p>
@@ -298,7 +315,7 @@
   <p>The intuition survives, but I’d move it from Landauer specifically into nonequilibrium control
   theory. There is actual work connecting thermodynamic control to geometries over state spaces;
   within certain regimes, a metric over thermodynamic states determines dissipation along finite-time
-  trajectories.</p>
+  trajectories.<sup class="ref"><a href="#r11">11</a></sup></p>
 
   <p>So imagine the intelligence manifold again. An intelligent trajectory wanders toward some
   undesirable region. A steering intervention changes its trajectory:
@@ -324,7 +341,8 @@
 
   <h2><span class="num">4</span>Compression has a boundary</h2>
 
-  <p>Here the boundary likely comes from rate-distortion, not Landauer alone. Compression itself can be
+  <p>Here the boundary likely comes from rate-distortion, not Landauer
+  alone.<sup class="ref"><a href="#r10">10</a></sup> Compression itself can be
   reversible — I can compress a file and retain every bit. The critical act occurs when we say
   <em>these distinctions aren’t worth keeping</em>. Then compression becomes lossy.</p>
 
@@ -347,11 +365,13 @@
 
   <p>Still, Sivak, Bell and Crooks studied physical systems that retain information about their
   environments, and separated remembered information into information useful for predicting the future
-  and information merely about the past.</p>
+  and information merely about the past.<sup class="ref"><a href="#r1">1</a></sup></p>
 
   <p>They found a direct relationship between nonpredictive stored information and thermodynamic
   inefficiency. Their term for the useless retained past information is particularly memorable:
-  <strong>nostalgia</strong>.</p>
+  <strong>useless nostalgia</strong> — and it names a specific quantity, instantaneous memory minus
+  predictive power. Their result is in fact stronger than “a relationship”: summed over the protocol,
+  the total nonpredictive information is a <em>lower bound on total dissipation</em>.</p>
 
   <p>That is strikingly close to what we’re circling. A highly efficient adaptive system should not
   remember everything. It should preferentially retain what predicts what comes next.</p>
@@ -363,7 +383,12 @@
     <span class="stmt"><strong>predictive selective retention</strong></span>
   </div>
 
-  <p>Everything else gets progressively released.</p>
+  <p>Everything else gets progressively released. Worth knowing before claiming novelty: this already
+  has an exact formulation. In computational mechanics the causal states of a process, and the
+  ε-machine built from them, are the <em>minimal</em> representation consistent with accurate
+  prediction.<sup class="ref"><a href="#r12">12</a></sup> And Still later showed that minimizing the
+  dissipation bound <em>yields</em> maximal retention of predictive information — the principle falls
+  out of the physics rather than being imposed on it.<sup class="ref"><a href="#r2">2</a></sup></p>
 
   <h2>A candidate “Landauer principle of intelligence”</h2>
 
@@ -449,6 +474,13 @@
   <p>Not always. But there should be regimes where capability peaks at an intermediate resource
   constraint rather than at maximum memory.</p>
 
+  <p>This is not unprecedented. In iterated-learning experiments, artificial languages passed down
+  chains of human learners — each seeing only <em>part</em> of the language — evolve compositional
+  structure that no participant intended. The structure is produced by the transmission bottleneck
+  itself; remove the bottleneck and the pressure toward structure goes with
+  it.<sup class="ref"><a href="#r13">13</a></sup> That makes the experiment below a replication
+  attempt with a known positive control, rather than a shot in the dark.</p>
+
   <p>That would be a beautiful thing for <strong>Cosmos, Ensorain, Aether, BEE, or Nestor</strong> to
   attack independently. We could dial memory from effectively infinite down through severe constraint
   and ask whether there is a phase transition where the organisms suddenly begin inventing reusable
@@ -470,6 +502,81 @@
 
   <p>That is exactly the sort of candidate to put on the wall under <em>Physics of Intelligence —
   possible fundamentals</em>, rather than under “AI architecture.”</p>
+
+  <section class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li id="r1">Susanne Still, David A. Sivak, Anthony J. Bell, Gavin E. Crooks,
+        <span class="t">“The thermodynamics of prediction”</span>,
+        Phys. Rev. Lett. <b>109</b>, 120604 (2012).
+        <a href="https://arxiv.org/abs/1203.3271">arXiv:1203.3271</a>
+        <span class="w">The “useless nostalgia” paper. Nonpredictive information — instantaneous
+        memory minus predictive power — lower-bounds total dissipation.</span></li>
+
+      <li id="r2">Susanne Still, <span class="t">“Thermodynamic cost and benefit of memory”</span>,
+        Phys. Rev. Lett. <b>124</b>, 050601 (2020).
+        <a href="https://arxiv.org/abs/1705.00612">arXiv:1705.00612</a>
+        <span class="w">Minimizing the dissipation bound <em>yields</em> a compression strategy that
+        maximally retains predictive information. Predictive retention derived, not posited.</span></li>
+
+      <li id="r3">Rolf Landauer, <span class="t">“Irreversibility and heat generation in the computing
+        process”</span>, IBM J. Res. Dev. <b>5</b>(3), 183–191 (1961).</li>
+
+      <li id="r4">Charles H. Bennett, <span class="t">“Logical reversibility of computation”</span>,
+        IBM J. Res. Dev. <b>17</b>(6), 525–532 (1973).
+        <span class="w">Why reversible computation can defer the cost until erasure.</span></li>
+
+      <li id="r5">Antoine Bérut, Artak Arakelyan, Artyom Petrosyan, Sergio Ciliberto,
+        Raoul Dillenschneider, Eric Lutz, <span class="t">“Experimental verification of Landauer’s
+        principle linking information and thermodynamics”</span>, Nature <b>483</b>, 187–190 (2012).
+        <a href="https://www.nature.com/articles/nature10872">doi:10.1038/nature10872</a>
+        <span class="w">A colloidal particle in a double-well potential; dissipated heat saturates
+        the k<sub>B</sub>T&#8202;ln&#8202;2 bound.</span></li>
+
+      <li id="r6">Juan M. R. Parrondo, Jordan M. Horowitz, Takahiro Sagawa,
+        <span class="t">“Thermodynamics of information”</span>, Nature Physics <b>11</b>, 131–139 (2015).
+        <a href="https://www.nature.com/articles/nphys3230">doi:10.1038/nphys3230</a></li>
+
+      <li id="r7">David H. Wolpert, <span class="t">“The stochastic thermodynamics of
+        computation”</span>, J. Phys. A <b>52</b>, 193001 (2019).
+        <a href="https://iopscience.iop.org/article/10.1088/1751-8121/ab0850">doi:10.1088/1751-8121/ab0850</a>
+        <span class="w">The bound applied to computation rather than to a single bit.</span></li>
+
+      <li id="r8">Naftali Tishby, Fernando C. Pereira, William Bialek,
+        <span class="t">“The information bottleneck method”</span> (2000).
+        <a href="https://arxiv.org/abs/physics/0004057">arXiv:physics/0004057</a></li>
+
+      <li id="r9">William Bialek, Ilya Nemenman, Naftali Tishby,
+        <span class="t">“Predictability, complexity, and learning”</span>,
+        Neural Computation <b>13</b>(11), 2409–2463 (2001).</li>
+
+      <li id="r10">Claude E. Shannon, <span class="t">“Coding theorems for a discrete source with a
+        fidelity criterion”</span>, IRE Int. Conv. Rec. <b>7</b>, 142–163 (1959).
+        <span class="w">Rate–distortion. The abstraction cliff is a claim about the shape of
+        R(d) for a given task — which is why it is architecture-dependent.</span></li>
+
+      <li id="r11">David A. Sivak, Gavin E. Crooks, <span class="t">“Thermodynamic metrics and optimal
+        paths”</span>, Phys. Rev. Lett. <b>108</b>, 190602 (2012).
+        <a href="https://link.aps.org/doi/10.1103/PhysRevLett.108.190602">doi:10.1103/PhysRevLett.108.190602</a>
+        <span class="w">A friction tensor induces a Riemannian manifold on thermodynamic states —
+        controlling dissipation <em>within the linear-response regime</em>.</span></li>
+
+      <li id="r12">Cosma Rohilla Shalizi, James P. Crutchfield, <span class="t">“Computational
+        mechanics: pattern and prediction, structure and simplicity”</span>,
+        J. Stat. Phys. <b>104</b>, 817–879 (2001).
+        <a href="https://arxiv.org/abs/cond-mat/9907176">arXiv:cond-mat/9907176</a>
+        <span class="w">Causal states and the ε-machine: the minimal representation consistent with
+        accurate prediction. “Retain what predicts, discard the rest” already has an exact
+        formulation.</span></li>
+
+      <li id="r13">Simon Kirby, Hannah Cornish, Kenny Smith, <span class="t">“Cumulative cultural
+        evolution in the laboratory: an experimental approach to the origins of structure in human
+        language”</span>, PNAS <b>105</b>(31), 10681–10686 (2008).
+        <a href="https://www.pnas.org/doi/abs/10.1073/pnas.0707835105">doi:10.1073/pnas.0707835105</a>
+        <span class="w">A transmission bottleneck produces compositional structure that no
+        participant intended. The causal chain below, already demonstrated in one substrate.</span></li>
+    </ol>
+  </section>
 
   <footer class="foot">
     This page is the current version. The original 2026-09-23 capture is preserved unedited as
