@@ -1,20 +1,19 @@
 # Bellerophon status
 
-Currency: 2026-09-19 (Atlas -> BEE pilot COMPLETE; see roles/Bellerophon/atlas_bee/REVIEW_PACKET_2026-09-19.md).
-Earlier same day: end of the overnight TDD/playtest window (150 cycles; report
-roles/Bellerophon/OVERNIGHT_REPORT_2026-09-19.txt with its END-OF-WINDOW ADDENDUM).
+Currency: 2026-09-23.
 
-Z80 x ATLAS 72-HOUR CAMPAIGN (RUNNING; directive prompts/2026-09-19_z80_atlas_campaign/, given to Nestor, operator asked
-  Bellerophon to build the same on BEE-side infra): harness prometheus/z80atlas/ (Z80-like VM, six reproduction physics
-  with the endogenous guard, frozen 14-axis grammar, geometry rulers, mechanical triggers, 3-stage producer/consumer
-  scheduler, 16 tests). LIVE on M2/SPECTREX5 from a frozen code copy at C:/Users/James/z80atlas_campaign_2026-09-19/code
-  (commit 9af86659e + resume-robustness patches to scheduler/observatory/campaign that change neither frozen hash):
-  started 2026-09-19T14:39:46Z, ends 2026-09-22T14:39:46Z, 16 workers, 500 ticks x 256 cells, seed 20260919, pid in
-  campaign.pid. Positive controls PASS (5/5). Status: python -m prometheus.z80atlas.campaign --status --workdir <dir>;
-  early stop: kill the pid, then --finalize (packet from the checkpoint); --resume continues in the original window.
-  At the boundary it stops itself and writes CAMPAIGN_PACKET.md + families/runs/decisions .jsonl + flags/attribution/map
-  .json. Scientific interpretation is for the post-campaign review, not the harness. Parallel effort noticed:
-  archaeon/z80atlas/ (Nestor's own build) landed on main the same hour; separate path, no conflict.
+NEXT DIRECTIVE WAITING — DO NOT SKIP ON BOOT:
+  prompts/2026-09-23_post_campaign_forensics/00_OPERATOR_DIRECTIVE_verbatim.md
+  Read it in full before taking any action. It is a 10-phase forensic + grounding mandate, not a
+  campaign launch. The directive is authoritative; this STATUS entry is only a pointer to it.
+
+Z80 x ATLAS 72-HOUR CAMPAIGN (COMPLETE 2026-09-22T14:38:42Z):
+  63,247 runs / 49,412 families / 1,629 high-value flags. Final local evidence:
+    workdir:  C:/Users/James/z80atlas_campaign_2026-09-19/
+    packet:   C:/Users/James/z80atlas_campaign_2026-09-19/CAMPAIGN_PACKET.md  (NOT in git — local only)
+    harness:  prometheus/z80atlas/ (commit 98b2149a7 + subsequent patches)
+  DO NOT mistake earlier 44.6h snapshot numbers for the final campaign.
+  Scientific interpretation is the subject of the next directive above.
 
 ATLAS -> BEE PILOT (temporary experimental role, directive prompts/2026-09-19_atlas_bee_pilot/): does BEE
   (prometheus/toolbox) work as a THIRD ecosystem alongside SFE and NPE? Six Atlas experiments selected and FROZEN
