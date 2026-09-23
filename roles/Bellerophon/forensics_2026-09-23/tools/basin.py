@@ -61,7 +61,7 @@ def main() -> None:
     per = 20000
     for rep in ("Z80_64", "BYTECODE32", "VM_COPY"):
         for k in range(a.n // per):
-            jobs.append((rep, a.seed * 1000 + hash(rep) % 997 * 0 + len(jobs), per))
+            jobs.append((rep, a.seed * 1000 + len(jobs), per))            # (an earlier draft had a salted hash() term multiplied by 0: no effect)
     with mp.Pool(a.workers) as pool:
         res = pool.map(_chunk, jobs)
     out = {"n_per_representation": a.n, "seed": a.seed, "definition": __doc__, "by_rep": {}}

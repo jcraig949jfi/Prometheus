@@ -57,7 +57,8 @@ def _one(sp):
         row["graft"] = "NOT_GRAFTABLE (no own-code copy routine inside the tape)"
         return row
     routine = X[:cp + 1]
-    rng = random.Random(hash(sp["id"]) & 0xFFFFFFFF)
+    import hashlib
+    rng = random.Random(int(hashlib.sha256(sp["id"].encode()).hexdigest()[:12], 16))   # stable across processes (str hash() is salted)
     foreign = []
     for i in range(10):
         pad = bytes(rng.randrange(256) for _ in range(L))
