@@ -46,3 +46,13 @@ C1e  G5F passes for law A.                                                      
 Same author for F and for v4; F's physics (extinction stops the cost, growth raises it) was chosen
 knowing the ring defect -- F was written to be a place where v3 and v4 DISAGREE, which makes it a
 sharp test of the revision but also a place designed to favour it. Declared.
+
+## Amendment C1-A1 (2026-09-23T13:30Z, before any C1 law was computed)
+Run 1 (c1_e51fc75ae) crashed at the first mining call: MemoryError inside a null-search worker
+(608 rows x 10,645 expression classes; 10 workers on a shared machine with ~13 GB free). Outputs at
+the crash: identity, oracle summary, G1, sampler eta. No C1 law existed. Engineering changes only:
+worker count bounded by free memory (miner.memory_workers), float32 cumulative sums in the
+threshold scan, and the null-pool fallback now catches any worker failure (retry smaller, then
+serial). Same seed, same procedure, same gates. The float32 change can move exact ties in the
+threshold scan; the planted suite is rerun (runtest --full) on this code before the C1 result is
+reported.

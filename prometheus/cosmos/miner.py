@@ -314,9 +314,11 @@ class Miner:
         """fit_thresholds_w over ALL expression classes using the presorted order; rows with
         w == 0 are excluded (no slicing, no re-sort)."""
         n, m = self.V.shape
-        ys, ws = y[self._order], w[self._order]
-        pos_cum = np.cumsum(np.where(ys == 1, ws, 0.0), axis=0)
-        neg_cum = np.cumsum(np.where(ys == 0, ws, 0.0), axis=0)
+        w32 = w.astype(np.float32)
+        ys, ws = y[self._order], w32[self._order]
+        z = np.float32(0.0)
+        pos_cum = np.cumsum(np.where(ys == 1, ws, z), axis=0, dtype=np.float32)
+        neg_cum = np.cumsum(np.where(ys == 0, ws, z), axis=0, dtype=np.float32)
         pos_tot, neg_tot = pos_cum[-1], neg_cum[-1]
         ba_le = pos_cum + (neg_tot - neg_cum)
         ba_ge = (pos_tot - pos_cum) + neg_cum
@@ -493,12 +495,12 @@ class Miner:
         from concurrent.futures import ProcessPoolExecutor
         from concurrent.futures.process import BrokenProcessPool
         init = (self.X, self.y, self.groups, self._terminals, self._max_size, self.conj)
-        w = min(workers, len(perms))
+        w = min(workers, len(perms), memory_workers(self.V.shape))
         while w > 1:
             try:
                 with ProcessPoolExecutor(max_workers=w, initializer=_null_init, initargs=init) as ex:
                     return list(ex.map(_null_one, perms))
-            except (BrokenProcessPool, OSError) as e:          # Windows spawn/pipe exhaustion: retry smaller
+            except Exception as e:     # BrokenProcessPool, OSError (pipe), MemoryError in a worker: retry smaller
                 NULL_POOL_FAILURES.append({"workers": w, "error": repr(e)[:200]})
                 w //= 2
         return [max([c.score for c in self.search(yp)[1]], default=-np.inf) for yp in perms]
@@ -547,6 +549,39 @@ def _null_init(X, y, groups, terminals, max_size, conj):
 
 def _null_one(yp) -> float:
     return max([c.score for c in _WORKER_MINER.search(yp)[1]], default=-np.inf)
+
+
+def free_memory_bytes() -> int:
+    """Available physical memory (Windows GlobalMemoryStatusEx; elsewhere os.sysconf); 0 if unknown."""
+    try:
+        import ctypes
+
+        class MS(ctypes.Structure):
+            _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                        ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                        ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                        ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                        ("sullAvailExtendedVirtual", ctypes.c_ulonglong)]
+        st = MS()
+        st.dwLength = ctypes.sizeof(MS)
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st)):
+            return int(st.ullAvailPhys)
+    except Exception:
+        pass
+    try:
+        import os
+        return int(os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE"))
+    except Exception:
+        return 0
+
+
+def memory_workers(shape) -> int:
+    """Workers that fit in half the free memory: ~16 bytes x 12 n-by-m arrays per worker (presorted
+    matrices + scan temporaries). At least 1."""
+    n, m = shape
+    per = max(1, n * m * 16 * 12)
+    free = free_memory_bytes()
+    return max(1, int(0.5 * free // per)) if free else 4
 
 
 def default_workers() -> int:
