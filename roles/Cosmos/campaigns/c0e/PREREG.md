@@ -47,3 +47,15 @@ Error SHAPE shared with sealed D: false PAYS at the high-cost edge (7/8 on E, 7/
 G6E direction misses are bases just inside the law's cost ceiling (f_hi 1.06-1.08) observed QUIET.
 INFERRED (not yet tested): the law's cost-ceiling atom sits ~0.045 in C above the physics form
 G exp(-N) - C >= 0.10 at small N.
+
+## POST-HOC comparison (appended 2026-09-23T13:0xZ; labelled post hoc, not a gate)
+Hand-derived analytic law from the shared task's economics (written by Cosmos after seeing the
+mined law): PAYS iff G exp(-N) - C >= 0.10 AND (Q < 1 OR C K / 2 >= 0.10).
+  sealed D: mined law BA 0.983, analytic BA 0.973, agreement 0.975
+  sealed E: mined law BA 0.972, analytic BA 0.971, agreement 0.975
+CONCLUDED (scope): the engine recovered, from limited adversarially-checked data, the compact law
+that the SHARED functional task and SHARED certificate imply once the declared coordinates are
+right; the transfer to D and E tests the substrates' declared coordinate maps (Kramers hazard,
+binomial repair hazard, agent-budget capacity), not a substrate-independent fact about memory.
+This is a planted-invariant recovery at substrate scale -- what qualification asks for -- and it
+is NOT evidence about intelligence or reality.
