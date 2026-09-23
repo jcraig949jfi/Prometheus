@@ -5,7 +5,9 @@ wall_s), else the row is marked TRACER_DIVERGED and not used.
 
 Birth classes (frozen before the first traced replay; see POST_CAMPAIGN_FORENSICS.md s3.1):
   COPY_EVENT         any birth the harness registered (endogenous physics)
-  SELF_REPLICATION   COPY_EVENT where (a) material == writer and fidelity vs the writer's tape >= 0.9, (b) >= 90% of
+  SELF_REPLICATION   COPY_EVENT where (a) material == writer and fidelity vs the writer's tape >= 0.9 BOTH after and
+                     BEFORE its execution (v2, 2026-09-23: the pre-execution test closes the self-smear hole the blind
+                     audit named M1; the post-only count is kept as self_rep_postonly for comparison), (b) >= 90% of
                      the child's L bytes were last written by a copy op (LDI/LDIR/COPYALL) whose SOURCE address lay in
                      the writer's own tape [0,L), and (c) >= 90% of those writes were executed with the PC inside the
                      writer's own tape (the writer's code did it, not the partner's code it ran into).
@@ -192,6 +194,8 @@ def _traced_world_class(W):
             self.births = []            # per-birth classification rows
             self.sr_depth = {}          # org id -> self-replication depth
             self.variant_root = {}      # org id -> True if born as a heritable self-replicated variant
+            self.sr_root = {}           # org id -> the id of the non-SR-born writer that started its SR chain (an origin)
+            self.root_tapes = {}        # origin id -> (tick, pre-execution tape hex) of its first self-replication
             super().__init__(cfg, seed)
             _ACC["L"] = self.L
 
@@ -219,11 +223,17 @@ def _traced_world_class(W):
             copied_from_own = sum(1 for a, (src, pc, op) in ws.items() if op in COPY_OPS and src is not None and src < L)
             by_own_code = sum(1 for a, (src, pc, op) in ws.items() if op in COPY_OPS and src is not None and src < L and pc < L)
             changed = sum(1 for k in range(L) if child[k] != _ACC["prior"][k])
-            is_sr = (material == "writer" and fid_writer_now >= 0.9 and copied_from_own >= 0.9 * L and by_own_code >= 0.9 * copied_from_own)
+            fid_pre = 1.0 - sum(1 for x, y in zip(child, wt) if x != y) / L
+            is_sr_post = (material == "writer" and fid_writer_now >= 0.9 and copied_from_own >= 0.9 * L and by_own_code >= 0.9 * copied_from_own)
+            is_sr = is_sr_post and fid_pre >= 0.9
             d_parent = self.sr_depth.get(parent.id, 0)
             super()._register_offspring(j, child, parent, mechanism, fidelity, tr, replaced)
             cid = self.next_id - 1
             self.sr_depth[cid] = d_parent + 1 if is_sr else 0
+            if is_sr:
+                self.sr_root[cid] = self.sr_root.get(parent.id, parent.id)
+                if parent.id not in self.sr_root and parent.id not in self.root_tapes:
+                    self.root_tapes[parent.id] = (self.tick, wt.hex())
             variant = is_sr and bytes(child) != bytes(parent.tape)
             if variant:
                 self.variant_root[cid] = cid
@@ -231,7 +241,8 @@ def _traced_world_class(W):
                 self.variant_root[cid] = self.variant_root[parent.id]
             self.births.append((self.tick, parent.id, cid, mechanism, round(fid_writer_now, 3), None if fid_target is None else round(fid_target, 3),
                                 material, len(ws), copied_from_own, by_own_code, changed, int(is_sr), self.sr_depth[cid],
-                                _ACC["own_steps"], _ACC["win_steps"], _ACC["other_steps"], int(variant)))
+                                _ACC["own_steps"], _ACC["win_steps"], _ACC["other_steps"], int(variant),
+                                round(fid_pre, 3), int(is_sr_post), int(replaced is None)))
     return TW
 
 
@@ -277,7 +288,18 @@ def _one(rid: str) -> dict:
         row["first_self_rep"] = {"tick": f[0], "writer": f[1], "fid": f[4], "own_steps": f[13], "win_steps": f[14]}
         row["sustained_lineage"] = row["max_sr_depth"] >= 3
         row["evolutionarily_active"] = _variant_transmitted(B)
-    # the first self-replicating writer's tape (specimen) -- from the event stream is not stored; keep top tape instead
+    row["self_rep_postonly"] = sum(1 for b in B if b[18])
+    row["births_into_empty"] = sum(1 for b in B if b[19])
+    row["self_rep_into_empty"] = sum(1 for b in sr if b[19])
+    alive_roots = collections.Counter(w.sr_root[o.id] for o in w.cells if o is not None and o.id in w.sr_root)
+    n_alive = sum(1 for o in w.cells if o is not None)
+    row["origins"] = [{"root": k, "tick": t, "tape": tp, "alive_descendants_end": alive_roots.get(k, 0)}
+                      for k, (t, tp) in sorted(w.root_tapes.items(), key=lambda kv: kv[1][0])][:50]
+    row["n_origins"] = len(w.root_tapes)
+    row["n_origins_alive_at_end"] = sum(1 for k in w.root_tapes if alive_roots.get(k, 0) > 0)
+    row["alive_end"] = n_alive
+    row["alive_end_sr_born"] = sum(alive_roots.values())
+    row["intervention"] = bool(cfg_j.get("init_tapes"))
     row["top_tape"] = (summ.get("top") or [{}])[0].get("tape")
     Ld.LOCAL.mkdir(parents=True, exist_ok=True)
     (Ld.LOCAL / "births").mkdir(exist_ok=True)

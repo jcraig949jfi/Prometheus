@@ -1,0 +1,6182 @@
+{
+ "allocation_share": {
+  "GRAPH/LOCAL": {
+   "all": 0.0286,
+   "fixed": 0.0459
+  },
+  "GRID/LOCAL": {
+   "all": 0.0278,
+   "fixed": 0.0402
+  },
+  "GRID/WELL_MIXED": {
+   "all": 0.032,
+   "fixed": 0.0415
+  },
+  "NICHES/NICHES_COMPETENCE_MIG": {
+   "all": 0.0969,
+   "fixed": 0.1129
+  },
+  "NICHES/NICHES_ENV_MIG": {
+   "all": 0.0898,
+   "fixed": 0.1093
+  },
+  "NICHES/NICHES_HIGH_MIG": {
+   "all": 0.1161,
+   "fixed": 0.1032
+  },
+  "NICHES/NICHES_ISOLATED": {
+   "all": 0.0793,
+   "fixed": 0.1065
+  },
+  "NICHES/NICHES_LOW_MIG": {
+   "all": 0.1371,
+   "fixed": 0.1064
+  },
+  "NICHES/NICHES_PERIODIC": {
+   "all": 0.1107,
+   "fixed": 0.1106
+  },
+  "NICHES/NICHES_POLLINATION": {
+   "all": 0.1527,
+   "fixed": 0.1068
+  },
+  "NICHES/RESERVOIR": {
+   "all": 0.0967,
+   "fixed": 0.0684
+  },
+  "SOUP/WELL_MIXED": {
+   "all": 0.0324,
+   "fixed": 0.0483
+  }
+ },
+ "definition": "Phase 2 A/C/D: exposure-normalised rates by topology, task and stage, with the allocation bias removed.\n\nUnit: the RUN (one independent random initial population; distinct seed). Runs in one family share a factor vector,\nso family-level clustering is reported beside every rate (n_families) and a family-bootstrap CI is given.\nLanes:\n  FIXED   kind in {exploration} -- vectors chosen by the sparse pairwise sampler, not by promotion feedback\n          (the early-stage matched 'control' partners are excluded: their vectors are chosen by a treatment)\n  ALL     every non-positive-control run (allocation distorted by promotion; reported for contrast only)\nOutcomes (computed from summary fields that do NOT depend on the discredited detectors):\n  exact_solve     best_score_tail >= 0.999 (a sustained exact answer; comparable across ATOMIC/INCREMENTAL), non-NEUTRAL only\n  hifi_repro      endogenous, replication_rate_tail >= 0.05 and mean_fidelity_tail >= 0.9 (the harness 'replication'\n                  predicate -- NOT yet adjudicated as self-replication; see TRACED_*)\n  spont           spontaneous_replication trigger, RANDOM init, no init_tapes (interventions excluded)\n  extinct         summary.extinct\n  persistent      endogenous & alive_fraction >= 0.3 & not extinct\nWrites receipts/RATES.json.",
+ "lanes": {
+  "ALL": {
+   "init": {
+    "RANDOM": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0213,
+       0.0262
+      ],
+      "k": 509,
+      "n": 21444,
+      "n_families": 18545,
+      "rate": 0.0237
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3865,
+       0.3988
+      ],
+      "k": 10236,
+      "n": 26049,
+      "n_families": 22899,
+      "rate": 0.393
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0392,
+       0.0469
+      ],
+      "k": 645,
+      "n": 15072,
+      "n_families": 13538,
+      "rate": 0.0428
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2538,
+       0.2696
+      ],
+      "k": 3945,
+      "n": 15072,
+      "n_families": 13538,
+      "rate": 0.2617
+     },
+     "runs": 26049,
+     "spont": {
+      "ci95_family_boot": [
+       0.0306,
+       0.0369
+      ],
+      "k": 502,
+      "n": 14910,
+      "n_families": 13405,
+      "rate": 0.0337
+     }
+    },
+    "SEEDED_HYBRID": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1803,
+       0.1976
+      ],
+      "k": 3134,
+      "n": 16667,
+      "n_families": 10131,
+      "rate": 0.188
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0263,
+       0.0315
+      ],
+      "k": 573,
+      "n": 19728,
+      "n_families": 12703,
+      "rate": 0.029
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.8125,
+       0.8274
+      ],
+      "k": 11707,
+      "n": 14270,
+      "n_families": 9241,
+      "rate": 0.8204
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.9047,
+       0.9155
+      ],
+      "k": 12988,
+      "n": 14270,
+      "n_families": 9241,
+      "rate": 0.9102
+     },
+     "runs": 19728,
+     "spont": null
+    },
+    "SEEDED_REPLICATOR": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0212,
+       0.0297
+      ],
+      "k": 235,
+      "n": 9228,
+      "n_families": 6746,
+      "rate": 0.0255
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0399,
+       0.0473
+      ],
+      "k": 493,
+      "n": 11235,
+      "n_families": 8462,
+      "rate": 0.0439
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.7524,
+       0.7712
+      ],
+      "k": 6207,
+      "n": 8154,
+      "n_families": 6105,
+      "rate": 0.7612
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.8727,
+       0.8898
+      ],
+      "k": 7184,
+      "n": 8154,
+      "n_families": 6105,
+      "rate": 0.881
+     },
+     "runs": 11235,
+     "spont": null
+    },
+    "SEEDED_WITNESS": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0891,
+       0.108
+      ],
+      "k": 527,
+      "n": 5330,
+      "n_families": 4472,
+      "rate": 0.0989
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.415,
+       0.4433
+      ],
+      "k": 2663,
+      "n": 6231,
+      "n_families": 5345,
+      "rate": 0.4274
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0191,
+       0.0296
+      ],
+      "k": 86,
+      "n": 3590,
+      "n_families": 3144,
+      "rate": 0.024
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1954,
+       0.2237
+      ],
+      "k": 753,
+      "n": 3590,
+      "n_families": 3144,
+      "rate": 0.2097
+     },
+     "runs": 6231,
+     "spont": null
+    }
+   },
+   "layout": {
+    "SEPARATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0748,
+       0.0849
+      ],
+      "k": 1804,
+      "n": 22581,
+      "n_families": 17474,
+      "rate": 0.0799
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2169,
+       0.2275
+      ],
+      "k": 6016,
+      "n": 27070,
+      "n_families": 21556,
+      "rate": 0.2222
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4379,
+       0.4568
+      ],
+      "k": 7690,
+      "n": 17214,
+      "n_families": 13608,
+      "rate": 0.4467
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5916,
+       0.6097
+      ],
+      "k": 10347,
+      "n": 17214,
+      "n_families": 13608,
+      "rate": 0.6011
+     },
+     "runs": 27070,
+     "spont": {
+      "ci95_family_boot": [
+       0.0324,
+       0.0429
+      ],
+      "k": 243,
+      "n": 6511,
+      "n_families": 5856,
+      "rate": 0.0373
+     }
+    },
+    "SHARED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0821,
+       0.091
+      ],
+      "k": 2601,
+      "n": 30088,
+      "n_families": 22420,
+      "rate": 0.0864
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2143,
+       0.2244
+      ],
+      "k": 7949,
+      "n": 36173,
+      "n_families": 27853,
+      "rate": 0.2197
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4507,
+       0.4666
+      ],
+      "k": 10955,
+      "n": 23872,
+      "n_families": 18420,
+      "rate": 0.4589
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6016,
+       0.6155
+      ],
+      "k": 14523,
+      "n": 23872,
+      "n_families": 18420,
+      "rate": 0.6084
+     },
+     "runs": 36173,
+     "spont": {
+      "ci95_family_boot": [
+       0.0263,
+       0.0359
+      ],
+      "k": 259,
+      "n": 8399,
+      "n_families": 7549,
+      "rate": 0.0308
+     }
+    }
+   },
+   "mutation": {
+    "BYTE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0447,
+       0.055
+      ],
+      "k": 649,
+      "n": 13104,
+      "n_families": 10090,
+      "rate": 0.0495
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2165,
+       0.2318
+      ],
+      "k": 3530,
+      "n": 15779,
+      "n_families": 12512,
+      "rate": 0.2237
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4062,
+       0.4294
+      ],
+      "k": 4223,
+      "n": 10133,
+      "n_families": 8032,
+      "rate": 0.4168
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5896,
+       0.6126
+      ],
+      "k": 6086,
+      "n": 10133,
+      "n_families": 8032,
+      "rate": 0.6006
+     },
+     "runs": 15779,
+     "spont": {
+      "ci95_family_boot": [
+       0.0295,
+       0.0412
+      ],
+      "k": 142,
+      "n": 4038,
+      "n_families": 3590,
+      "rate": 0.0352
+     }
+    },
+    "OPCODE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0485,
+       0.0591
+      ],
+      "k": 766,
+      "n": 14344,
+      "n_families": 10599,
+      "rate": 0.0534
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.191,
+       0.2043
+      ],
+      "k": 3416,
+      "n": 17273,
+      "n_families": 13200,
+      "rate": 0.1978
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5069,
+       0.5313
+      ],
+      "k": 6006,
+      "n": 11550,
+      "n_families": 8820,
+      "rate": 0.52
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6531,
+       0.6724
+      ],
+      "k": 7661,
+      "n": 11550,
+      "n_families": 8820,
+      "rate": 0.6633
+     },
+     "runs": 17273,
+     "spont": {
+      "ci95_family_boot": [
+       0.0358,
+       0.05
+      ],
+      "k": 170,
+      "n": 3983,
+      "n_families": 3489,
+      "rate": 0.0427
+     }
+    },
+    "OPERAND": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1783,
+       0.1969
+      ],
+      "k": 2296,
+      "n": 12246,
+      "n_families": 9273,
+      "rate": 0.1875
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2283,
+       0.2434
+      ],
+      "k": 3442,
+      "n": 14601,
+      "n_families": 11434,
+      "rate": 0.2357
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.404,
+       0.4284
+      ],
+      "k": 3903,
+      "n": 9374,
+      "n_families": 7276,
+      "rate": 0.4164
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5708,
+       0.5961
+      ],
+      "k": 5454,
+      "n": 9374,
+      "n_families": 7276,
+      "rate": 0.5818
+     },
+     "runs": 14601,
+     "spont": {
+      "ci95_family_boot": [
+       0.0146,
+       0.0261
+      ],
+      "k": 67,
+      "n": 3319,
+      "n_families": 3089,
+      "rate": 0.0202
+     }
+    },
+    "STRUCTURAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0488,
+       0.0589
+      ],
+      "k": 694,
+      "n": 12975,
+      "n_families": 9932,
+      "rate": 0.0535
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2227,
+       0.2367
+      ],
+      "k": 3577,
+      "n": 15590,
+      "n_families": 12263,
+      "rate": 0.2294
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4386,
+       0.4621
+      ],
+      "k": 4513,
+      "n": 10029,
+      "n_families": 7900,
+      "rate": 0.45
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5534,
+       0.5781
+      ],
+      "k": 5669,
+      "n": 10029,
+      "n_families": 7900,
+      "rate": 0.5653
+     },
+     "runs": 15590,
+     "spont": {
+      "ci95_family_boot": [
+       0.0285,
+       0.0415
+      ],
+      "k": 123,
+      "n": 3570,
+      "n_families": 3237,
+      "rate": 0.0345
+     }
+    }
+   },
+   "mutation_rate": {
+    "HIGH": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0281,
+       0.034
+      ],
+      "k": 525,
+      "n": 16895,
+      "n_families": 13276,
+      "rate": 0.0311
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2327,
+       0.2452
+      ],
+      "k": 4870,
+      "n": 20385,
+      "n_families": 16460,
+      "rate": 0.2389
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3625,
+       0.3827
+      ],
+      "k": 4981,
+      "n": 13363,
+      "n_families": 10794,
+      "rate": 0.3727
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5694,
+       0.5868
+      ],
+      "k": 7721,
+      "n": 13363,
+      "n_families": 10794,
+      "rate": 0.5778
+     },
+     "runs": 20385,
+     "spont": {
+      "ci95_family_boot": [
+       0.0415,
+       0.0554
+      ],
+      "k": 263,
+      "n": 5469,
+      "n_families": 4838,
+      "rate": 0.0481
+     }
+    },
+    "LOW": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1229,
+       0.1361
+      ],
+      "k": 2345,
+      "n": 18078,
+      "n_families": 13350,
+      "rate": 0.1297
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2072,
+       0.2186
+      ],
+      "k": 4591,
+      "n": 21592,
+      "n_families": 16505,
+      "rate": 0.2126
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5009,
+       0.5217
+      ],
+      "k": 7173,
+      "n": 14007,
+      "n_families": 10636,
+      "rate": 0.5121
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6073,
+       0.6279
+      ],
+      "k": 8640,
+      "n": 14007,
+      "n_families": 10636,
+      "rate": 0.6168
+     },
+     "runs": 21592,
+     "spont": {
+      "ci95_family_boot": [
+       0.014,
+       0.023
+      ],
+      "k": 87,
+      "n": 4614,
+      "n_families": 4214,
+      "rate": 0.0189
+     }
+    },
+    "MED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0812,
+       0.0931
+      ],
+      "k": 1535,
+      "n": 17696,
+      "n_families": 13268,
+      "rate": 0.0867
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2064,
+       0.2178
+      ],
+      "k": 4504,
+      "n": 21266,
+      "n_families": 16444,
+      "rate": 0.2118
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4641,
+       0.4842
+      ],
+      "k": 6491,
+      "n": 13716,
+      "n_families": 10598,
+      "rate": 0.4732
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6102,
+       0.6294
+      ],
+      "k": 8509,
+      "n": 13716,
+      "n_families": 10598,
+      "rate": 0.6204
+     },
+     "runs": 21266,
+     "spont": {
+      "ci95_family_boot": [
+       0.0263,
+       0.0366
+      ],
+      "k": 152,
+      "n": 4827,
+      "n_families": 4353,
+      "rate": 0.0315
+     }
+    }
+   },
+   "pressure": {
+    "EXPLICIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1159,
+       0.1376
+      ],
+      "k": 756,
+      "n": 5991,
+      "n_families": 4558,
+      "rate": 0.1262
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2158,
+       0.2376
+      ],
+      "k": 1358,
+      "n": 5991,
+      "n_families": 4558,
+      "rate": 0.2267
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4278,
+       0.4704
+      ],
+      "k": 1603,
+      "n": 3577,
+      "n_families": 2760,
+      "rate": 0.4481
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5586,
+       0.5969
+      ],
+      "k": 2068,
+      "n": 3577,
+      "n_families": 2760,
+      "rate": 0.5781
+     },
+     "runs": 5991,
+     "spont": {
+      "ci95_family_boot": [
+       0.0253,
+       0.0496
+      ],
+      "k": 48,
+      "n": 1300,
+      "n_families": 1160,
+      "rate": 0.0369
+     }
+    },
+    "EXPLOIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0351,
+       0.0508
+      ],
+      "k": 226,
+      "n": 5385,
+      "n_families": 4154,
+      "rate": 0.042
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2411,
+       0.2633
+      ],
+      "k": 1812,
+      "n": 7206,
+      "n_families": 5819,
+      "rate": 0.2515
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4167,
+       0.454
+      ],
+      "k": 2021,
+      "n": 4658,
+      "n_families": 3709,
+      "rate": 0.4339
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5608,
+       0.5937
+      ],
+      "k": 2691,
+      "n": 4658,
+      "n_families": 3709,
+      "rate": 0.5777
+     },
+     "runs": 7206,
+     "spont": {
+      "ci95_family_boot": [
+       0.0238,
+       0.042
+      ],
+      "k": 57,
+      "n": 1774,
+      "n_families": 1590,
+      "rate": 0.0321
+     }
+    },
+    "GATED_INTERACTION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.2031,
+       0.2277
+      ],
+      "k": 1704,
+      "n": 7893,
+      "n_families": 5389,
+      "rate": 0.2159
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0204,
+       0.0273
+      ],
+      "k": 186,
+      "n": 7893,
+      "n_families": 5389,
+      "rate": 0.0236
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4263,
+       0.4662
+      ],
+      "k": 2213,
+      "n": 4974,
+      "n_families": 3343,
+      "rate": 0.4449
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.7601,
+       0.7886
+      ],
+      "k": 3850,
+      "n": 4974,
+      "n_families": 3343,
+      "rate": 0.774
+     },
+     "runs": 7893,
+     "spont": {
+      "ci95_family_boot": [
+       0.006,
+       0.0169
+      ],
+      "k": 17,
+      "n": 1527,
+      "n_families": 1327,
+      "rate": 0.0111
+     }
+    },
+    "IMPLICIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0352,
+       0.0483
+      ],
+      "k": 317,
+      "n": 7712,
+      "n_families": 5947,
+      "rate": 0.0411
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.1723,
+       0.1868
+      ],
+      "k": 2042,
+      "n": 11393,
+      "n_families": 9225,
+      "rate": 0.1792
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5563,
+       0.5815
+      ],
+      "k": 4046,
+      "n": 7119,
+      "n_families": 5692,
+      "rate": 0.5683
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6564,
+       0.6805
+      ],
+      "k": 4757,
+      "n": 7119,
+      "n_families": 5692,
+      "rate": 0.6682
+     },
+     "runs": 11393,
+     "spont": {
+      "ci95_family_boot": [
+       0.0364,
+       0.0563
+      ],
+      "k": 94,
+      "n": 2074,
+      "n_families": 1878,
+      "rate": 0.0453
+     }
+    },
+    "METABOLIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0355,
+       0.0498
+      ],
+      "k": 275,
+      "n": 6489,
+      "n_families": 4883,
+      "rate": 0.0424
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2292,
+       0.2496
+      ],
+      "k": 2075,
+      "n": 8639,
+      "n_families": 6819,
+      "rate": 0.2402
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4738,
+       0.506
+      ],
+      "k": 2681,
+      "n": 5467,
+      "n_families": 4304,
+      "rate": 0.4904
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5784,
+       0.6101
+      ],
+      "k": 3248,
+      "n": 5467,
+      "n_families": 4304,
+      "rate": 0.5941
+     },
+     "runs": 8639,
+     "spont": {
+      "ci95_family_boot": [
+       0.0127,
+       0.0272
+      ],
+      "k": 35,
+      "n": 1820,
+      "n_families": 1688,
+      "rate": 0.0192
+     }
+    },
+    "MINIMAL_CRITERION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0091,
+       0.0217
+      ],
+      "k": 45,
+      "n": 2964,
+      "n_families": 2414,
+      "rate": 0.0152
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4929,
+       0.5297
+      ],
+      "k": 2067,
+      "n": 4054,
+      "n_families": 3389,
+      "rate": 0.5099
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.2966,
+       0.3322
+      ],
+      "k": 1274,
+      "n": 4054,
+      "n_families": 3389,
+      "rate": 0.3143
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4358,
+       0.472
+      ],
+      "k": 1842,
+      "n": 4054,
+      "n_families": 3389,
+      "rate": 0.4544
+     },
+     "runs": 4054,
+     "spont": {
+      "ci95_family_boot": [
+       0.0395,
+       0.0609
+      ],
+      "k": 104,
+      "n": 2124,
+      "n_families": 1897,
+      "rate": 0.049
+     }
+    },
+    "NOVELTY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0162,
+       0.0288
+      ],
+      "k": 118,
+      "n": 5131,
+      "n_families": 4008,
+      "rate": 0.023
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2494,
+       0.2723
+      ],
+      "k": 1810,
+      "n": 6963,
+      "n_families": 5669,
+      "rate": 0.2599
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4008,
+       0.4357
+      ],
+      "k": 1882,
+      "n": 4521,
+      "n_families": 3627,
+      "rate": 0.4163
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5469,
+       0.5817
+      ],
+      "k": 2557,
+      "n": 4521,
+      "n_families": 3627,
+      "rate": 0.5656
+     },
+     "runs": 6963,
+     "spont": {
+      "ci95_family_boot": [
+       0.0349,
+       0.0542
+      ],
+      "k": 79,
+      "n": 1787,
+      "n_families": 1610,
+      "rate": 0.0442
+     }
+    },
+    "QD": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0371,
+       0.0531
+      ],
+      "k": 242,
+      "n": 5373,
+      "n_families": 4170,
+      "rate": 0.045
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2309,
+       0.2564
+      ],
+      "k": 1307,
+      "n": 5373,
+      "n_families": 4170,
+      "rate": 0.2433
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4029,
+       0.4443
+      ],
+      "k": 1434,
+      "n": 3388,
+      "n_families": 2614,
+      "rate": 0.4233
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5577,
+       0.598
+      ],
+      "k": 1955,
+      "n": 3388,
+      "n_families": 2614,
+      "rate": 0.577
+     },
+     "runs": 5373,
+     "spont": {
+      "ci95_family_boot": [
+       0.0186,
+       0.0379
+      ],
+      "k": 36,
+      "n": 1306,
+      "n_families": 1169,
+      "rate": 0.0276
+     }
+    },
+    "RESOURCE_GATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1147,
+       0.1375
+      ],
+      "k": 722,
+      "n": 5731,
+      "n_families": 4371,
+      "rate": 0.126
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2177,
+       0.2414
+      ],
+      "k": 1308,
+      "n": 5731,
+      "n_families": 4371,
+      "rate": 0.2282
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4249,
+       0.4705
+      ],
+      "k": 1491,
+      "n": 3328,
+      "n_families": 2590,
+      "rate": 0.448
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5526,
+       0.5933
+      ],
+      "k": 1902,
+      "n": 3328,
+      "n_families": 2590,
+      "rate": 0.5715
+     },
+     "runs": 5731,
+     "spont": {
+      "ci95_family_boot": [
+       0.0167,
+       0.0388
+      ],
+      "k": 32,
+      "n": 1198,
+      "n_families": 1086,
+      "rate": 0.0267
+     }
+    }
+   },
+   "representation": {
+    "BYTECODE32": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0586,
+       0.069
+      ],
+      "k": 993,
+      "n": 15609,
+      "n_families": 12289,
+      "rate": 0.0636
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2418,
+       0.2556
+      ],
+      "k": 4692,
+      "n": 18863,
+      "n_families": 15252,
+      "rate": 0.2487
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4055,
+       0.4298
+      ],
+      "k": 5030,
+      "n": 12037,
+      "n_families": 9718,
+      "rate": 0.4179
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5463,
+       0.5673
+      ],
+      "k": 6693,
+      "n": 12037,
+      "n_families": 9718,
+      "rate": 0.556
+     },
+     "runs": 18863,
+     "spont": {
+      "ci95_family_boot": [
+       0.0076,
+       0.0136
+      ],
+      "k": 48,
+      "n": 4627,
+      "n_families": 4303,
+      "rate": 0.0104
+     }
+    },
+    "VM_COPY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0944,
+       0.1066
+      ],
+      "k": 1797,
+      "n": 17886,
+      "n_families": 13446,
+      "rate": 0.1005
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2055,
+       0.2179
+      ],
+      "k": 4545,
+      "n": 21514,
+      "n_families": 16700,
+      "rate": 0.2113
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4367,
+       0.4583
+      ],
+      "k": 6287,
+      "n": 14025,
+      "n_families": 10871,
+      "rate": 0.4483
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6113,
+       0.6313
+      ],
+      "k": 8711,
+      "n": 14025,
+      "n_families": 10871,
+      "rate": 0.6211
+     },
+     "runs": 21514,
+     "spont": {
+      "ci95_family_boot": [
+       0.0371,
+       0.0491
+      ],
+      "k": 218,
+      "n": 5077,
+      "n_families": 4506,
+      "rate": 0.0429
+     }
+    },
+    "Z80_64": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0787,
+       0.0899
+      ],
+      "k": 1615,
+      "n": 19174,
+      "n_families": 14159,
+      "rate": 0.0842
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2013,
+       0.2125
+      ],
+      "k": 4728,
+      "n": 22866,
+      "n_families": 17457,
+      "rate": 0.2068
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4777,
+       0.4981
+      ],
+      "k": 7328,
+      "n": 15024,
+      "n_families": 11439,
+      "rate": 0.4878
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6196,
+       0.6385
+      ],
+      "k": 9466,
+      "n": 15024,
+      "n_families": 11439,
+      "rate": 0.6301
+     },
+     "runs": 22866,
+     "spont": {
+      "ci95_family_boot": [
+       0.0401,
+       0.0526
+      ],
+      "k": 236,
+      "n": 5206,
+      "n_families": 4596,
+      "rate": 0.0453
+     }
+    }
+   },
+   "reproduction": {
+    "CONSTRUCTIVE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0359,
+       0.0517
+      ],
+      "k": 154,
+      "n": 3539,
+      "n_families": 3107,
+      "rate": 0.0435
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4502,
+       0.4841
+      ],
+      "k": 2049,
+      "n": 4390,
+      "n_families": 3911,
+      "rate": 0.4667
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0,
+       0.0016
+      ],
+      "k": 3,
+      "n": 4390,
+      "n_families": 3911,
+      "rate": 0.0007
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4768,
+       0.5086
+      ],
+      "k": 2160,
+      "n": 4390,
+      "n_families": 3911,
+      "rate": 0.492
+     },
+     "runs": 4390,
+     "spont": {
+      "ci95_family_boot": [
+       0.0,
+       0.0
+      ],
+      "k": 0,
+      "n": 2337,
+      "n_families": 2171,
+      "rate": 0.0
+     }
+    },
+    "ENDOGENOUS_COPY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0663,
+       0.0812
+      ],
+      "k": 1059,
+      "n": 14479,
+      "n_families": 10467,
+      "rate": 0.0731
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2717,
+       0.2867
+      ],
+      "k": 4912,
+      "n": 17622,
+      "n_families": 13158,
+      "rate": 0.2787
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.568,
+       0.5851
+      ],
+      "k": 10169,
+      "n": 17622,
+      "n_families": 13158,
+      "rate": 0.5771
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6766,
+       0.6924
+      ],
+      "k": 12075,
+      "n": 17622,
+      "n_families": 13158,
+      "rate": 0.6852
+     },
+     "runs": 17622,
+     "spont": {
+      "ci95_family_boot": [
+       0.0345,
+       0.0463
+      ],
+      "k": 219,
+      "n": 5433,
+      "n_families": 4816,
+      "rate": 0.0403
+     }
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0534,
+       0.0713
+      ],
+      "k": 417,
+      "n": 6738,
+      "n_families": 5069,
+      "rate": 0.0619
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3097,
+       0.3337
+      ],
+      "k": 2691,
+      "n": 8360,
+      "n_families": 6481,
+      "rate": 0.3219
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4576,
+       0.4819
+      ],
+      "k": 3932,
+      "n": 8360,
+      "n_families": 6481,
+      "rate": 0.4703
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6196,
+       0.6444
+      ],
+      "k": 5282,
+      "n": 8360,
+      "n_families": 6481,
+      "rate": 0.6318
+     },
+     "runs": 8360,
+     "spont": {
+      "ci95_family_boot": [
+       0.0463,
+       0.0623
+      ],
+      "k": 182,
+      "n": 3374,
+      "n_families": 2977,
+      "rate": 0.0539
+     }
+    },
+    "EXTERNAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1199,
+       0.1324
+      ],
+      "k": 2424,
+      "n": 19236,
+      "n_families": 14551,
+      "rate": 0.126
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0,
+       0.0
+      ],
+      "k": 0,
+      "n": 22157,
+      "n_families": 17381,
+      "rate": 0.0
+     },
+     "hifi_repro": null,
+     "persistent": null,
+     "runs": 22157,
+     "spont": null
+    },
+    "OVERWRITE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0322,
+       0.0487
+      ],
+      "k": 205,
+      "n": 5061,
+      "n_families": 4033,
+      "rate": 0.0405
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4781,
+       0.5095
+      ],
+      "k": 3096,
+      "n": 6258,
+      "n_families": 5086,
+      "rate": 0.4947
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3255,
+       0.3546
+      ],
+      "k": 2126,
+      "n": 6258,
+      "n_families": 5086,
+      "rate": 0.3397
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3599,
+       0.3903
+      ],
+      "k": 2351,
+      "n": 6258,
+      "n_families": 5086,
+      "rate": 0.3757
+     },
+     "runs": 6258,
+     "spont": {
+      "ci95_family_boot": [
+       0.013,
+       0.0248
+      ],
+      "k": 46,
+      "n": 2487,
+      "n_families": 2305,
+      "rate": 0.0185
+     }
+    },
+    "PAIR_EXECUTION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0316,
+       0.0504
+      ],
+      "k": 146,
+      "n": 3616,
+      "n_families": 2667,
+      "rate": 0.0404
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2569,
+       0.2877
+      ],
+      "k": 1217,
+      "n": 4456,
+      "n_families": 3392,
+      "rate": 0.2731
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5237,
+       0.5604
+      ],
+      "k": 2415,
+      "n": 4456,
+      "n_families": 3392,
+      "rate": 0.542
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6596,
+       0.6892
+      ],
+      "k": 3002,
+      "n": 4456,
+      "n_families": 3392,
+      "rate": 0.6737
+     },
+     "runs": 4456,
+     "spont": {
+      "ci95_family_boot": [
+       0.0318,
+       0.0545
+      ],
+      "k": 55,
+      "n": 1279,
+      "n_families": 1136,
+      "rate": 0.043
+     }
+    }
+   },
+   "scoring": {
+    "ATOMIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0665,
+       0.0751
+      ],
+      "k": 1729,
+      "n": 24539,
+      "n_families": 18739,
+      "rate": 0.0705
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2178,
+       0.2298
+      ],
+      "k": 5488,
+      "n": 24539,
+      "n_families": 18739,
+      "rate": 0.2236
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4134,
+       0.4331
+      ],
+      "k": 6512,
+      "n": 15395,
+      "n_families": 11792,
+      "rate": 0.423
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5712,
+       0.5901
+      ],
+      "k": 8935,
+      "n": 15395,
+      "n_families": 11792,
+      "rate": 0.5804
+     },
+     "runs": 24539,
+     "spont": {
+      "ci95_family_boot": [
+       0.0226,
+       0.0311
+      ],
+      "k": 156,
+      "n": 5837,
+      "n_families": 5208,
+      "rate": 0.0267
+     }
+    },
+    "INCREMENTAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0901,
+       0.1
+      ],
+      "k": 2676,
+      "n": 28130,
+      "n_families": 21155,
+      "rate": 0.0951
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.1988,
+       0.2101
+      ],
+      "k": 5757,
+      "n": 28130,
+      "n_families": 21155,
+      "rate": 0.2047
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.462,
+       0.4806
+      ],
+      "k": 8488,
+      "n": 18038,
+      "n_families": 13551,
+      "rate": 0.4706
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6196,
+       0.6362
+      ],
+      "k": 11316,
+      "n": 18038,
+      "n_families": 13551,
+      "rate": 0.6273
+     },
+     "runs": 28130,
+     "spont": {
+      "ci95_family_boot": [
+       0.0305,
+       0.0406
+      ],
+      "k": 223,
+      "n": 6247,
+      "n_families": 5553,
+      "rate": 0.0357
+     }
+    },
+    "NEUTRAL": {
+     "exact_solve": null,
+     "extinct": {
+      "ci95_family_boot": [
+       0.2494,
+       0.2664
+      ],
+      "k": 2720,
+      "n": 10574,
+      "n_families": 9515,
+      "rate": 0.2572
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4631,
+       0.4894
+      ],
+      "k": 3645,
+      "n": 7653,
+      "n_families": 6685,
+      "rate": 0.4763
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5921,
+       0.6157
+      ],
+      "k": 4619,
+      "n": 7653,
+      "n_families": 6685,
+      "rate": 0.6036
+     },
+     "runs": 10574,
+     "spont": {
+      "ci95_family_boot": [
+       0.0357,
+       0.0517
+      ],
+      "k": 123,
+      "n": 2826,
+      "n_families": 2644,
+      "rate": 0.0435
+     }
+    }
+   },
+   "stage": {
+    "early": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0446,
+       0.0517
+      ],
+      "k": 680,
+      "n": 14110,
+      "n_families": 14092,
+      "rate": 0.0482
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2984,
+       0.3116
+      ],
+      "k": 5455,
+      "n": 17888,
+      "n_families": 17866,
+      "rate": 0.305
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1766,
+       0.1917
+      ],
+      "k": 1645,
+      "n": 8944,
+      "n_families": 8936,
+      "rate": 0.1839
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3217,
+       0.3422
+      ],
+      "k": 2963,
+      "n": 8944,
+      "n_families": 8936,
+      "rate": 0.3313
+     },
+     "runs": 17888,
+     "spont": {
+      "ci95_family_boot": [
+       0.0149,
+       0.0215
+      ],
+      "k": 98,
+      "n": 5496,
+      "n_families": 5488,
+      "rate": 0.0178
+     }
+    },
+    "late": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1646,
+       0.1816
+      ],
+      "k": 2149,
+      "n": 12454,
+      "n_families": 7575,
+      "rate": 0.1726
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0229,
+       0.0287
+      ],
+      "k": 373,
+      "n": 14475,
+      "n_families": 9339,
+      "rate": 0.0258
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.8508,
+       0.8657
+      ],
+      "k": 9153,
+      "n": 10662,
+      "n_families": 7467,
+      "rate": 0.8585
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.9208,
+       0.9321
+      ],
+      "k": 9883,
+      "n": 10662,
+      "n_families": 7467,
+      "rate": 0.9269
+     },
+     "runs": 14475,
+     "spont": {
+      "ci95_family_boot": [
+       0.1377,
+       0.1921
+      ],
+      "k": 110,
+      "n": 678,
+      "n_families": 510,
+      "rate": 0.1622
+     }
+    },
+    "middle": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0571,
+       0.064
+      ],
+      "k": 1576,
+      "n": 26105,
+      "n_families": 22703,
+      "rate": 0.0604
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2586,
+       0.2688
+      ],
+      "k": 8137,
+      "n": 30880,
+      "n_families": 27072,
+      "rate": 0.2635
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3581,
+       0.3728
+      ],
+      "k": 7847,
+      "n": 21480,
+      "n_families": 18779,
+      "rate": 0.3653
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5527,
+       0.567
+      ],
+      "k": 12024,
+      "n": 21480,
+      "n_families": 18779,
+      "rate": 0.5598
+     },
+     "runs": 30880,
+     "spont": {
+      "ci95_family_boot": [
+       0.0294,
+       0.0384
+      ],
+      "k": 294,
+      "n": 8736,
+      "n_families": 8116,
+      "rate": 0.0337
+     }
+    }
+   },
+   "task": {
+    "COND_MULTI": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0402,
+       0.0514
+      ],
+      "k": 491,
+      "n": 10669,
+      "n_families": 7935,
+      "rate": 0.046
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.194,
+       0.2089
+      ],
+      "k": 2525,
+      "n": 12551,
+      "n_families": 9619,
+      "rate": 0.2012
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4781,
+       0.5051
+      ],
+      "k": 3997,
+      "n": 8125,
+      "n_families": 6250,
+      "rate": 0.4919
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6276,
+       0.651
+      ],
+      "k": 5195,
+      "n": 8125,
+      "n_families": 6250,
+      "rate": 0.6394
+     },
+     "runs": 12551,
+     "spont": {
+      "ci95_family_boot": [
+       0.0231,
+       0.0373
+      ],
+      "k": 79,
+      "n": 2628,
+      "n_families": 2352,
+      "rate": 0.0301
+     }
+    },
+    "COND_ONE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0422,
+       0.0532
+      ],
+      "k": 433,
+      "n": 9075,
+      "n_families": 6698,
+      "rate": 0.0477
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2171,
+       0.2338
+      ],
+      "k": 2431,
+      "n": 10817,
+      "n_families": 8269,
+      "rate": 0.2247
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4312,
+       0.4612
+      ],
+      "k": 3030,
+      "n": 6799,
+      "n_families": 5195,
+      "rate": 0.4457
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.577,
+       0.6049
+      ],
+      "k": 4017,
+      "n": 6799,
+      "n_families": 5195,
+      "rate": 0.5908
+     },
+     "runs": 10817,
+     "spont": {
+      "ci95_family_boot": [
+       0.0274,
+       0.0437
+      ],
+      "k": 92,
+      "n": 2619,
+      "n_families": 2296,
+      "rate": 0.0351
+     }
+    },
+    "CONST": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0359,
+       0.0475
+      ],
+      "k": 360,
+      "n": 8705,
+      "n_families": 6941,
+      "rate": 0.0414
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2326,
+       0.2504
+      ],
+      "k": 2578,
+      "n": 10670,
+      "n_families": 8701,
+      "rate": 0.2416
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4064,
+       0.4332
+      ],
+      "k": 3001,
+      "n": 7151,
+      "n_families": 5789,
+      "rate": 0.4197
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5685,
+       0.5958
+      ],
+      "k": 4156,
+      "n": 7151,
+      "n_families": 5789,
+      "rate": 0.5812
+     },
+     "runs": 10670,
+     "spont": {
+      "ci95_family_boot": [
+       0.0303,
+       0.0461
+      ],
+      "k": 106,
+      "n": 2821,
+      "n_families": 2544,
+      "rate": 0.0376
+     }
+    },
+    "ECHO": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1519,
+       0.1741
+      ],
+      "k": 1387,
+      "n": 8547,
+      "n_families": 6305,
+      "rate": 0.1623
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.1941,
+       0.2113
+      ],
+      "k": 2073,
+      "n": 10252,
+      "n_families": 7837,
+      "rate": 0.2022
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.46,
+       0.4891
+      ],
+      "k": 3210,
+      "n": 6746,
+      "n_families": 5147,
+      "rate": 0.4758
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6215,
+       0.6477
+      ],
+      "k": 4276,
+      "n": 6746,
+      "n_families": 5147,
+      "rate": 0.6339
+     },
+     "runs": 10252,
+     "spont": {
+      "ci95_family_boot": [
+       0.0289,
+       0.0491
+      ],
+      "k": 89,
+      "n": 2304,
+      "n_families": 2045,
+      "rate": 0.0386
+     }
+    },
+    "INC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.096,
+       0.1155
+      ],
+      "k": 837,
+      "n": 7947,
+      "n_families": 5983,
+      "rate": 0.1053
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2113,
+       0.2312
+      ],
+      "k": 2137,
+      "n": 9648,
+      "n_families": 7509,
+      "rate": 0.2215
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4392,
+       0.4702
+      ],
+      "k": 2839,
+      "n": 6231,
+      "n_families": 4832,
+      "rate": 0.4556
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5882,
+       0.6172
+      ],
+      "k": 3755,
+      "n": 6231,
+      "n_families": 4832,
+      "rate": 0.6026
+     },
+     "runs": 9648,
+     "spont": {
+      "ci95_family_boot": [
+       0.0235,
+       0.0373
+      ],
+      "k": 68,
+      "n": 2247,
+      "n_families": 2054,
+      "rate": 0.0303
+     }
+    },
+    "SUM2": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1053,
+       0.1265
+      ],
+      "k": 897,
+      "n": 7726,
+      "n_families": 6032,
+      "rate": 0.1161
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2289,
+       0.2483
+      ],
+      "k": 2221,
+      "n": 9305,
+      "n_families": 7474,
+      "rate": 0.2387
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4106,
+       0.4415
+      ],
+      "k": 2568,
+      "n": 6034,
+      "n_families": 4815,
+      "rate": 0.4256
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5589,
+       0.5899
+      ],
+      "k": 3471,
+      "n": 6034,
+      "n_families": 4815,
+      "rate": 0.5752
+     },
+     "runs": 9305,
+     "spont": {
+      "ci95_family_boot": [
+       0.0228,
+       0.0375
+      ],
+      "k": 68,
+      "n": 2291,
+      "n_families": 2114,
+      "rate": 0.0297
+     }
+    }
+   },
+   "topology": {
+    "GRAPH/LOCAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0404,
+       0.0698
+      ],
+      "k": 78,
+      "n": 1446,
+      "n_families": 1282,
+      "rate": 0.0539
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.282,
+       0.327
+      ],
+      "k": 549,
+      "n": 1807,
+      "n_families": 1624,
+      "rate": 0.3038
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3348,
+       0.3985
+      ],
+      "k": 423,
+      "n": 1154,
+      "n_families": 1020,
+      "rate": 0.3666
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4299,
+       0.4996
+      ],
+      "k": 533,
+      "n": 1154,
+      "n_families": 1020,
+      "rate": 0.4619
+     },
+     "runs": 1807,
+     "spont": {
+      "ci95_family_boot": [
+       0.0074,
+       0.0354
+      ],
+      "k": 9,
+      "n": 416,
+      "n_families": 402,
+      "rate": 0.0216
+     }
+    },
+    "GRID/LOCAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0541,
+       0.091
+      ],
+      "k": 106,
+      "n": 1477,
+      "n_families": 1250,
+      "rate": 0.0718
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2544,
+       0.2959
+      ],
+      "k": 486,
+      "n": 1761,
+      "n_families": 1520,
+      "rate": 0.276
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4092,
+       0.474
+      ],
+      "k": 495,
+      "n": 1122,
+      "n_families": 959,
+      "rate": 0.4412
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.47,
+       0.5389
+      ],
+      "k": 570,
+      "n": 1122,
+      "n_families": 959,
+      "rate": 0.508
+     },
+     "runs": 1761,
+     "spont": {
+      "ci95_family_boot": [
+       0.0158,
+       0.0585
+      ],
+      "k": 11,
+      "n": 319,
+      "n_families": 304,
+      "rate": 0.0345
+     }
+    },
+    "GRID/WELL_MIXED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0437,
+       0.0709
+      ],
+      "k": 94,
+      "n": 1678,
+      "n_families": 1409,
+      "rate": 0.056
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.1859,
+       0.2187
+      ],
+      "k": 410,
+      "n": 2025,
+      "n_families": 1727,
+      "rate": 0.2025
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4621,
+       0.5269
+      ],
+      "k": 682,
+      "n": 1374,
+      "n_families": 1154,
+      "rate": 0.4964
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6485,
+       0.7022
+      ],
+      "k": 928,
+      "n": 1374,
+      "n_families": 1154,
+      "rate": 0.6754
+     },
+     "runs": 2025,
+     "spont": {
+      "ci95_family_boot": [
+       0.0032,
+       0.0325
+      ],
+      "k": 5,
+      "n": 309,
+      "n_families": 302,
+      "rate": 0.0162
+     }
+    },
+    "NICHES/NICHES_COMPETENCE_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0691,
+       0.0897
+      ],
+      "k": 403,
+      "n": 5121,
+      "n_families": 4000,
+      "rate": 0.0787
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2606,
+       0.2859
+      ],
+      "k": 1667,
+      "n": 6129,
+      "n_families": 4950,
+      "rate": 0.272
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4111,
+       0.4488
+      ],
+      "k": 1642,
+      "n": 3815,
+      "n_families": 3069,
+      "rate": 0.4304
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4294,
+       0.4698
+      ],
+      "k": 1716,
+      "n": 3815,
+      "n_families": 3069,
+      "rate": 0.4498
+     },
+     "runs": 6129,
+     "spont": {
+      "ci95_family_boot": [
+       0.0135,
+       0.0263
+      ],
+      "k": 28,
+      "n": 1409,
+      "n_families": 1352,
+      "rate": 0.0199
+     }
+    },
+    "NICHES/NICHES_ENV_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0746,
+       0.0976
+      ],
+      "k": 396,
+      "n": 4625,
+      "n_families": 3660,
+      "rate": 0.0856
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2671,
+       0.2928
+      ],
+      "k": 1586,
+      "n": 5678,
+      "n_families": 4609,
+      "rate": 0.2793
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3972,
+       0.4364
+      ],
+      "k": 1512,
+      "n": 3632,
+      "n_families": 2928,
+      "rate": 0.4163
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4469,
+       0.4856
+      ],
+      "k": 1696,
+      "n": 3632,
+      "n_families": 2928,
+      "rate": 0.467
+     },
+     "runs": 5678,
+     "spont": {
+      "ci95_family_boot": [
+       0.0073,
+       0.0208
+      ],
+      "k": 20,
+      "n": 1383,
+      "n_families": 1314,
+      "rate": 0.0145
+     }
+    },
+    "NICHES/NICHES_HIGH_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0712,
+       0.0921
+      ],
+      "k": 504,
+      "n": 6210,
+      "n_families": 4524,
+      "rate": 0.0812
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2296,
+       0.2505
+      ],
+      "k": 1756,
+      "n": 7341,
+      "n_families": 5544,
+      "rate": 0.2392
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4429,
+       0.4788
+      ],
+      "k": 2207,
+      "n": 4783,
+      "n_families": 3622,
+      "rate": 0.4614
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5862,
+       0.6184
+      ],
+      "k": 2882,
+      "n": 4783,
+      "n_families": 3622,
+      "rate": 0.6026
+     },
+     "runs": 7341,
+     "spont": {
+      "ci95_family_boot": [
+       0.0198,
+       0.035
+      ],
+      "k": 48,
+      "n": 1782,
+      "n_families": 1556,
+      "rate": 0.0269
+     }
+    },
+    "NICHES/NICHES_ISOLATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0771,
+       0.0996
+      ],
+      "k": 369,
+      "n": 4168,
+      "n_families": 3610,
+      "rate": 0.0885
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2822,
+       0.3087
+      ],
+      "k": 1478,
+      "n": 5015,
+      "n_families": 4404,
+      "rate": 0.2947
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3894,
+       0.4271
+      ],
+      "k": 1311,
+      "n": 3216,
+      "n_families": 2830,
+      "rate": 0.4076
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3846,
+       0.4252
+      ],
+      "k": 1305,
+      "n": 3216,
+      "n_families": 2830,
+      "rate": 0.4058
+     },
+     "runs": 5015,
+     "spont": {
+      "ci95_family_boot": [
+       0.0069,
+       0.0185
+      ],
+      "k": 16,
+      "n": 1295,
+      "n_families": 1269,
+      "rate": 0.0124
+     }
+    },
+    "NICHES/NICHES_LOW_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0846,
+       0.104
+      ],
+      "k": 691,
+      "n": 7320,
+      "n_families": 5339,
+      "rate": 0.0944
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.226,
+       0.2468
+      ],
+      "k": 2042,
+      "n": 8673,
+      "n_families": 6559,
+      "rate": 0.2354
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4853,
+       0.5163
+      ],
+      "k": 2780,
+      "n": 5551,
+      "n_families": 4220,
+      "rate": 0.5008
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5807,
+       0.6145
+      ],
+      "k": 3322,
+      "n": 5551,
+      "n_families": 4220,
+      "rate": 0.5985
+     },
+     "runs": 8673,
+     "spont": {
+      "ci95_family_boot": [
+       0.0105,
+       0.0236
+      ],
+      "k": 30,
+      "n": 1811,
+      "n_families": 1649,
+      "rate": 0.0166
+     }
+    },
+    "NICHES/NICHES_PERIODIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0567,
+       0.0734
+      ],
+      "k": 381,
+      "n": 5828,
+      "n_families": 4368,
+      "rate": 0.0654
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2724,
+       0.2977
+      ],
+      "k": 1985,
+      "n": 6999,
+      "n_families": 5439,
+      "rate": 0.2836
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3937,
+       0.4306
+      ],
+      "k": 1855,
+      "n": 4500,
+      "n_families": 3540,
+      "rate": 0.4122
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4992,
+       0.5363
+      ],
+      "k": 2327,
+      "n": 4500,
+      "n_families": 3540,
+      "rate": 0.5171
+     },
+     "runs": 6999,
+     "spont": {
+      "ci95_family_boot": [
+       0.0075,
+       0.0168
+      ],
+      "k": 20,
+      "n": 1740,
+      "n_families": 1592,
+      "rate": 0.0115
+     }
+    },
+    "NICHES/NICHES_POLLINATION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0735,
+       0.092
+      ],
+      "k": 651,
+      "n": 7907,
+      "n_families": 5398,
+      "rate": 0.0823
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0151,
+       0.0206
+      ],
+      "k": 170,
+      "n": 9655,
+      "n_families": 6834,
+      "rate": 0.0176
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4547,
+       0.4839
+      ],
+      "k": 3121,
+      "n": 6654,
+      "n_families": 4676,
+      "rate": 0.469
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.9636,
+       0.9721
+      ],
+      "k": 6443,
+      "n": 6654,
+      "n_families": 4676,
+      "rate": 0.9683
+     },
+     "runs": 9655,
+     "spont": {
+      "ci95_family_boot": [
+       0.087,
+       0.1119
+      ],
+      "k": 277,
+      "n": 2805,
+      "n_families": 2169,
+      "rate": 0.0988
+     }
+    },
+    "NICHES/RESERVOIR": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1121,
+       0.1385
+      ],
+      "k": 654,
+      "n": 5215,
+      "n_families": 3631,
+      "rate": 0.1254
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2036,
+       0.2268
+      ],
+      "k": 1313,
+      "n": 6113,
+      "n_families": 4423,
+      "rate": 0.2148
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5126,
+       0.5527
+      ],
+      "k": 2131,
+      "n": 3995,
+      "n_families": 2902,
+      "rate": 0.5334
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5891,
+       0.6252
+      ],
+      "k": 2427,
+      "n": 3995,
+      "n_families": 2902,
+      "rate": 0.6075
+     },
+     "runs": 6113,
+     "spont": {
+      "ci95_family_boot": [
+       0.0054,
+       0.0175
+      ],
+      "k": 13,
+      "n": 1135,
+      "n_families": 1023,
+      "rate": 0.0115
+     }
+    },
+    "SOUP/WELL_MIXED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0355,
+       0.0594
+      ],
+      "k": 78,
+      "n": 1674,
+      "n_families": 1423,
+      "rate": 0.0466
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2376,
+       0.2745
+      ],
+      "k": 523,
+      "n": 2047,
+      "n_families": 1776,
+      "rate": 0.2555
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3458,
+       0.4113
+      ],
+      "k": 486,
+      "n": 1290,
+      "n_families": 1108,
+      "rate": 0.3767
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.532,
+       0.5897
+      ],
+      "k": 721,
+      "n": 1290,
+      "n_families": 1108,
+      "rate": 0.5589
+     },
+     "runs": 2047,
+     "spont": {
+      "ci95_family_boot": [
+       0.0298,
+       0.0705
+      ],
+      "k": 25,
+      "n": 506,
+      "n_families": 473,
+      "rate": 0.0494
+     }
+    }
+   },
+   "world": {
+    "GRAPH": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0405,
+       0.0689
+      ],
+      "k": 78,
+      "n": 1446,
+      "n_families": 1282,
+      "rate": 0.0539
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2813,
+       0.3264
+      ],
+      "k": 549,
+      "n": 1807,
+      "n_families": 1624,
+      "rate": 0.3038
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3339,
+       0.3975
+      ],
+      "k": 423,
+      "n": 1154,
+      "n_families": 1020,
+      "rate": 0.3666
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4317,
+       0.4935
+      ],
+      "k": 533,
+      "n": 1154,
+      "n_families": 1020,
+      "rate": 0.4619
+     },
+     "runs": 1807,
+     "spont": {
+      "ci95_family_boot": [
+       0.0097,
+       0.0356
+      ],
+      "k": 9,
+      "n": 416,
+      "n_families": 402,
+      "rate": 0.0216
+     }
+    },
+    "GRID": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0524,
+       0.0754
+      ],
+      "k": 200,
+      "n": 3155,
+      "n_families": 2659,
+      "rate": 0.0634
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2229,
+       0.2509
+      ],
+      "k": 896,
+      "n": 3786,
+      "n_families": 3247,
+      "rate": 0.2367
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4479,
+       0.496
+      ],
+      "k": 1177,
+      "n": 2496,
+      "n_families": 2113,
+      "rate": 0.4716
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5798,
+       0.6221
+      ],
+      "k": 1498,
+      "n": 2496,
+      "n_families": 2113,
+      "rate": 0.6002
+     },
+     "runs": 3786,
+     "spont": {
+      "ci95_family_boot": [
+       0.0127,
+       0.0409
+      ],
+      "k": 16,
+      "n": 628,
+      "n_families": 606,
+      "rate": 0.0255
+     }
+    },
+    "NICHES": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0839,
+       0.0908
+      ],
+      "k": 4049,
+      "n": 46394,
+      "n_families": 34530,
+      "rate": 0.0873
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.212,
+       0.22
+      ],
+      "k": 11997,
+      "n": 55603,
+      "n_families": 42762,
+      "rate": 0.2158
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.4522,
+       0.4639
+      ],
+      "k": 16559,
+      "n": 36146,
+      "n_families": 27787,
+      "rate": 0.4581
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.6057,
+       0.6174
+      ],
+      "k": 22118,
+      "n": 36146,
+      "n_families": 27787,
+      "rate": 0.6119
+     },
+     "runs": 55603,
+     "spont": {
+      "ci95_family_boot": [
+       0.0302,
+       0.0369
+      ],
+      "k": 452,
+      "n": 13360,
+      "n_families": 11924,
+      "rate": 0.0338
+     }
+    },
+    "SOUP": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.034,
+       0.0591
+      ],
+      "k": 78,
+      "n": 1674,
+      "n_families": 1423,
+      "rate": 0.0466
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.2374,
+       0.2749
+      ],
+      "k": 523,
+      "n": 2047,
+      "n_families": 1776,
+      "rate": 0.2555
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.3458,
+       0.4083
+      ],
+      "k": 486,
+      "n": 1290,
+      "n_families": 1108,
+      "rate": 0.3767
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.5267,
+       0.5897
+      ],
+      "k": 721,
+      "n": 1290,
+      "n_families": 1108,
+      "rate": 0.5589
+     },
+     "runs": 2047,
+     "spont": {
+      "ci95_family_boot": [
+       0.0302,
+       0.072
+      ],
+      "k": 25,
+      "n": 506,
+      "n_families": 473,
+      "rate": 0.0494
+     }
+    }
+   }
+  },
+  "FIXED": {
+   "init": {
+    "RANDOM": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0114,
+       0.0163
+      ],
+      "k": 124,
+      "n": 9133,
+      "n_families": 9124,
+      "rate": 0.0136
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5573,
+       0.5766
+      ],
+      "k": 6551,
+      "n": 11548,
+      "n_families": 11537,
+      "rate": 0.5673
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0157,
+       0.0218
+      ],
+      "k": 157,
+      "n": 8414,
+      "n_families": 8406,
+      "rate": 0.0187
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1549,
+       0.1707
+      ],
+      "k": 1362,
+      "n": 8414,
+      "n_families": 8406,
+      "rate": 0.1619
+     },
+     "runs": 11548,
+     "spont": {
+      "ci95_family_boot": [
+       0.0158,
+       0.0213
+      ],
+      "k": 157,
+      "n": 8414,
+      "n_families": 8406,
+      "rate": 0.0187
+     }
+    },
+    "SEEDED_HYBRID": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.1264,
+       0.1611
+      ],
+      "k": 265,
+      "n": 1837,
+      "n_families": 1836,
+      "rate": 0.1443
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0706,
+       0.0911
+      ],
+      "k": 190,
+      "n": 2349,
+      "n_families": 2348,
+      "rate": 0.0809
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5394,
+       0.5864
+      ],
+      "k": 938,
+      "n": 1661,
+      "n_families": 1661,
+      "rate": 0.5647
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.7935,
+       0.829
+      ],
+      "k": 1348,
+      "n": 1661,
+      "n_families": 1661,
+      "rate": 0.8116
+     },
+     "runs": 2349,
+     "spont": null
+    },
+    "SEEDED_REPLICATOR": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0121,
+       0.0232
+      ],
+      "k": 31,
+      "n": 1814,
+      "n_families": 1813,
+      "rate": 0.0171
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0834,
+       0.1086
+      ],
+      "k": 222,
+      "n": 2339,
+      "n_families": 2338,
+      "rate": 0.0949
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.5374,
+       0.583
+      ],
+      "k": 933,
+      "n": 1669,
+      "n_families": 1669,
+      "rate": 0.559
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.7621,
+       0.8017
+      ],
+      "k": 1304,
+      "n": 1669,
+      "n_families": 1669,
+      "rate": 0.7813
+     },
+     "runs": 2339,
+     "spont": null
+    },
+    "SEEDED_WITNESS": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0453,
+       0.0666
+      ],
+      "k": 103,
+      "n": 1876,
+      "n_families": 1876,
+      "rate": 0.0549
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5547,
+       0.5954
+      ],
+      "k": 1357,
+      "n": 2358,
+      "n_families": 2358,
+      "rate": 0.5755
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0147,
+       0.0289
+      ],
+      "k": 36,
+      "n": 1695,
+      "n_families": 1695,
+      "rate": 0.0212
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1392,
+       0.1717
+      ],
+      "k": 265,
+      "n": 1695,
+      "n_families": 1695,
+      "rate": 0.1563
+     },
+     "runs": 2358,
+     "spont": null
+    }
+   },
+   "layout": {
+    "SEPARATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0339,
+       0.0429
+      ],
+      "k": 258,
+      "n": 6728,
+      "n_families": 6722,
+      "rate": 0.0383
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4095,
+       0.4297
+      ],
+      "k": 3553,
+      "n": 8487,
+      "n_families": 8480,
+      "rate": 0.4186
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1567,
+       0.1759
+      ],
+      "k": 990,
+      "n": 5935,
+      "n_families": 5930,
+      "rate": 0.1668
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3294,
+       0.354
+      ],
+      "k": 2026,
+      "n": 5935,
+      "n_families": 5930,
+      "rate": 0.3414
+     },
+     "runs": 8487,
+     "spont": {
+      "ci95_family_boot": [
+       0.0172,
+       0.027
+      ],
+      "k": 80,
+      "n": 3663,
+      "n_families": 3658,
+      "rate": 0.0218
+     }
+    },
+    "SHARED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0296,
+       0.0374
+      ],
+      "k": 265,
+      "n": 7932,
+      "n_families": 7927,
+      "rate": 0.0334
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4628,
+       0.4823
+      ],
+      "k": 4767,
+      "n": 10107,
+      "n_families": 10101,
+      "rate": 0.4717
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1354,
+       0.1511
+      ],
+      "k": 1074,
+      "n": 7504,
+      "n_families": 7501,
+      "rate": 0.1431
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2903,
+       0.3105
+      ],
+      "k": 2253,
+      "n": 7504,
+      "n_families": 7501,
+      "rate": 0.3002
+     },
+     "runs": 10107,
+     "spont": {
+      "ci95_family_boot": [
+       0.0128,
+       0.02
+      ],
+      "k": 77,
+      "n": 4751,
+      "n_families": 4748,
+      "rate": 0.0162
+     }
+    }
+   },
+   "mutation": {
+    "BYTE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0191,
+       0.0294
+      ],
+      "k": 88,
+      "n": 3674,
+      "n_families": 3671,
+      "rate": 0.024
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4318,
+       0.46
+      ],
+      "k": 2091,
+      "n": 4686,
+      "n_families": 4682,
+      "rate": 0.4462
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.138,
+       0.1619
+      ],
+      "k": 505,
+      "n": 3393,
+      "n_families": 3390,
+      "rate": 0.1488
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3123,
+       0.3436
+      ],
+      "k": 1110,
+      "n": 3393,
+      "n_families": 3390,
+      "rate": 0.3271
+     },
+     "runs": 4686,
+     "spont": {
+      "ci95_family_boot": [
+       0.0174,
+       0.0302
+      ],
+      "k": 51,
+      "n": 2188,
+      "n_families": 2185,
+      "rate": 0.0233
+     }
+    },
+    "OPCODE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0178,
+       0.0274
+      ],
+      "k": 82,
+      "n": 3654,
+      "n_families": 3652,
+      "rate": 0.0224
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4145,
+       0.4438
+      ],
+      "k": 1981,
+      "n": 4632,
+      "n_families": 4629,
+      "rate": 0.4277
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1666,
+       0.1926
+      ],
+      "k": 605,
+      "n": 3368,
+      "n_families": 3367,
+      "rate": 0.1796
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3444,
+       0.377
+      ],
+      "k": 1213,
+      "n": 3368,
+      "n_families": 3367,
+      "rate": 0.3602
+     },
+     "runs": 4632,
+     "spont": {
+      "ci95_family_boot": [
+       0.0169,
+       0.029
+      ],
+      "k": 47,
+      "n": 2070,
+      "n_families": 2069,
+      "rate": 0.0227
+     }
+    },
+    "OPERAND": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0605,
+       0.0771
+      ],
+      "k": 253,
+      "n": 3670,
+      "n_families": 3666,
+      "rate": 0.0689
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4558,
+       0.4842
+      ],
+      "k": 2189,
+      "n": 4656,
+      "n_families": 4652,
+      "rate": 0.4701
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1095,
+       0.1308
+      ],
+      "k": 402,
+      "n": 3348,
+      "n_families": 3345,
+      "rate": 0.1201
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.269,
+       0.3005
+      ],
+      "k": 953,
+      "n": 3348,
+      "n_families": 3345,
+      "rate": 0.2846
+     },
+     "runs": 4656,
+     "spont": {
+      "ci95_family_boot": [
+       0.0043,
+       0.012
+      ],
+      "k": 17,
+      "n": 2090,
+      "n_families": 2087,
+      "rate": 0.0081
+     }
+    },
+    "STRUCTURAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0219,
+       0.0328
+      ],
+      "k": 100,
+      "n": 3662,
+      "n_families": 3660,
+      "rate": 0.0273
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4316,
+       0.4598
+      ],
+      "k": 2059,
+      "n": 4620,
+      "n_families": 4618,
+      "rate": 0.4457
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1544,
+       0.1795
+      ],
+      "k": 552,
+      "n": 3330,
+      "n_families": 3329,
+      "rate": 0.1658
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2862,
+       0.3188
+      ],
+      "k": 1003,
+      "n": 3330,
+      "n_families": 3329,
+      "rate": 0.3012
+     },
+     "runs": 4620,
+     "spont": {
+      "ci95_family_boot": [
+       0.014,
+       0.0266
+      ],
+      "k": 42,
+      "n": 2066,
+      "n_families": 2065,
+      "rate": 0.0203
+     }
+    }
+   },
+   "mutation_rate": {
+    "HIGH": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0134,
+       0.0207
+      ],
+      "k": 82,
+      "n": 4868,
+      "n_families": 4861,
+      "rate": 0.0168
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4276,
+       0.4534
+      ],
+      "k": 2723,
+      "n": 6193,
+      "n_families": 6185,
+      "rate": 0.4397
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1227,
+       0.1424
+      ],
+      "k": 597,
+      "n": 4498,
+      "n_families": 4493,
+      "rate": 0.1327
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3085,
+       0.3365
+      ],
+      "k": 1448,
+      "n": 4498,
+      "n_families": 4493,
+      "rate": 0.3219
+     },
+     "runs": 6193,
+     "spont": {
+      "ci95_family_boot": [
+       0.0193,
+       0.031
+      ],
+      "k": 72,
+      "n": 2843,
+      "n_families": 2838,
+      "rate": 0.0253
+     }
+    },
+    "LOW": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0472,
+       0.059
+      ],
+      "k": 264,
+      "n": 4979,
+      "n_families": 4977,
+      "rate": 0.053
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4478,
+       0.47
+      ],
+      "k": 2880,
+      "n": 6272,
+      "n_families": 6270,
+      "rate": 0.4592
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1612,
+       0.1832
+      ],
+      "k": 786,
+      "n": 4542,
+      "n_families": 4541,
+      "rate": 0.1731
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3003,
+       0.3278
+      ],
+      "k": 1423,
+      "n": 4542,
+      "n_families": 4541,
+      "rate": 0.3133
+     },
+     "runs": 6272,
+     "spont": {
+      "ci95_family_boot": [
+       0.0081,
+       0.0156
+      ],
+      "k": 33,
+      "n": 2825,
+      "n_families": 2824,
+      "rate": 0.0117
+     }
+    },
+    "MED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0318,
+       0.0418
+      ],
+      "k": 177,
+      "n": 4813,
+      "n_families": 4811,
+      "rate": 0.0368
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4298,
+       0.4548
+      ],
+      "k": 2717,
+      "n": 6129,
+      "n_families": 6126,
+      "rate": 0.4433
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1451,
+       0.1651
+      ],
+      "k": 681,
+      "n": 4399,
+      "n_families": 4397,
+      "rate": 0.1548
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3056,
+       0.3342
+      ],
+      "k": 1408,
+      "n": 4399,
+      "n_families": 4397,
+      "rate": 0.3201
+     },
+     "runs": 6129,
+     "spont": {
+      "ci95_family_boot": [
+       0.0142,
+       0.0248
+      ],
+      "k": 52,
+      "n": 2746,
+      "n_families": 2744,
+      "rate": 0.0189
+     }
+    }
+   },
+   "pressure": {
+    "EXPLICIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0636,
+       0.0897
+      ],
+      "k": 131,
+      "n": 1695,
+      "n_families": 1692,
+      "rate": 0.0773
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4103,
+       0.4594
+      ],
+      "k": 738,
+      "n": 1695,
+      "n_families": 1692,
+      "rate": 0.4354
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1565,
+       0.2019
+      ],
+      "k": 204,
+      "n": 1145,
+      "n_families": 1143,
+      "rate": 0.1782
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2886,
+       0.3455
+      ],
+      "k": 365,
+      "n": 1145,
+      "n_families": 1143,
+      "rate": 0.3188
+     },
+     "runs": 1695,
+     "spont": {
+      "ci95_family_boot": [
+       0.0129,
+       0.033
+      ],
+      "k": 15,
+      "n": 695,
+      "n_families": 693,
+      "rate": 0.0216
+     }
+    },
+    "EXPLOIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0077,
+       0.0184
+      ],
+      "k": 22,
+      "n": 1686,
+      "n_families": 1686,
+      "rate": 0.013
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4217,
+       0.4598
+      ],
+      "k": 1109,
+      "n": 2511,
+      "n_families": 2510,
+      "rate": 0.4417
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1567,
+       0.191
+      ],
+      "k": 299,
+      "n": 1743,
+      "n_families": 1742,
+      "rate": 0.1715
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3104,
+       0.353
+      ],
+      "k": 578,
+      "n": 1743,
+      "n_families": 1742,
+      "rate": 0.3316
+     },
+     "runs": 2511,
+     "spont": {
+      "ci95_family_boot": [
+       0.0103,
+       0.0252
+      ],
+      "k": 19,
+      "n": 1070,
+      "n_families": 1069,
+      "rate": 0.0178
+     }
+    },
+    "GATED_INTERACTION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0594,
+       0.0865
+      ],
+      "k": 121,
+      "n": 1666,
+      "n_families": 1665,
+      "rate": 0.0726
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0456,
+       0.0665
+      ],
+      "k": 94,
+      "n": 1666,
+      "n_families": 1665,
+      "rate": 0.0564
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0784,
+       0.1124
+      ],
+      "k": 108,
+      "n": 1148,
+      "n_families": 1148,
+      "rate": 0.0941
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4852,
+       0.5453
+      ],
+      "k": 593,
+      "n": 1148,
+      "n_families": 1148,
+      "rate": 0.5166
+     },
+     "runs": 1666,
+     "spont": {
+      "ci95_family_boot": [
+       0.0027,
+       0.0148
+      ],
+      "k": 6,
+      "n": 741,
+      "n_families": 741,
+      "rate": 0.0081
+     }
+    },
+    "IMPLICIT": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0036,
+       0.0125
+      ],
+      "k": 13,
+      "n": 1682,
+      "n_families": 1681,
+      "rate": 0.0077
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4616,
+       0.4986
+      ],
+      "k": 1206,
+      "n": 2514,
+      "n_families": 2513,
+      "rate": 0.4797
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1326,
+       0.1637
+      ],
+      "k": 259,
+      "n": 1764,
+      "n_families": 1763,
+      "rate": 0.1468
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2629,
+       0.308
+      ],
+      "k": 502,
+      "n": 1764,
+      "n_families": 1763,
+      "rate": 0.2846
+     },
+     "runs": 2514,
+     "spont": {
+      "ci95_family_boot": [
+       0.0123,
+       0.0282
+      ],
+      "k": 22,
+      "n": 1135,
+      "n_families": 1134,
+      "rate": 0.0194
+     }
+    },
+    "METABOLIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0148,
+       0.0301
+      ],
+      "k": 37,
+      "n": 1692,
+      "n_families": 1692,
+      "rate": 0.0219
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4656,
+       0.5065
+      ],
+      "k": 1239,
+      "n": 2545,
+      "n_families": 2544,
+      "rate": 0.4868
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1336,
+       0.1681
+      ],
+      "k": 265,
+      "n": 1767,
+      "n_families": 1767,
+      "rate": 0.15
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2518,
+       0.2943
+      ],
+      "k": 483,
+      "n": 1767,
+      "n_families": 1767,
+      "rate": 0.2733
+     },
+     "runs": 2545,
+     "spont": {
+      "ci95_family_boot": [
+       0.0081,
+       0.0226
+      ],
+      "k": 17,
+      "n": 1108,
+      "n_families": 1108,
+      "rate": 0.0153
+     }
+    },
+    "MINIMAL_CRITERION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0017,
+       0.0102
+      ],
+      "k": 6,
+      "n": 1180,
+      "n_families": 1179,
+      "rate": 0.0051
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.6859,
+       0.7256
+      ],
+      "k": 1250,
+      "n": 1771,
+      "n_families": 1770,
+      "rate": 0.7058
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1416,
+       0.1743
+      ],
+      "k": 278,
+      "n": 1771,
+      "n_families": 1770,
+      "rate": 0.157
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2445,
+       0.2857
+      ],
+      "k": 468,
+      "n": 1771,
+      "n_families": 1770,
+      "rate": 0.2643
+     },
+     "runs": 1771,
+     "spont": {
+      "ci95_family_boot": [
+       0.0133,
+       0.03
+      ],
+      "k": 24,
+      "n": 1130,
+      "n_families": 1129,
+      "rate": 0.0212
+     }
+    },
+    "NOVELTY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.006,
+       0.0161
+      ],
+      "k": 18,
+      "n": 1676,
+      "n_families": 1674,
+      "rate": 0.0107
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4311,
+       0.4681
+      ],
+      "k": 1124,
+      "n": 2509,
+      "n_families": 2507,
+      "rate": 0.448
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.157,
+       0.1951
+      ],
+      "k": 307,
+      "n": 1754,
+      "n_families": 1752,
+      "rate": 0.175
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3052,
+       0.3548
+      ],
+      "k": 576,
+      "n": 1754,
+      "n_families": 1752,
+      "rate": 0.3284
+     },
+     "runs": 2509,
+     "spont": {
+      "ci95_family_boot": [
+       0.0186,
+       0.04
+      ],
+      "k": 31,
+      "n": 1077,
+      "n_families": 1075,
+      "rate": 0.0288
+     }
+    },
+    "QD": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0127,
+       0.026
+      ],
+      "k": 34,
+      "n": 1733,
+      "n_families": 1731,
+      "rate": 0.0196
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4305,
+       0.4801
+      ],
+      "k": 790,
+      "n": 1733,
+      "n_families": 1731,
+      "rate": 0.4559
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1213,
+       0.1585
+      ],
+      "k": 168,
+      "n": 1205,
+      "n_families": 1204,
+      "rate": 0.1394
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2822,
+       0.3372
+      ],
+      "k": 374,
+      "n": 1205,
+      "n_families": 1204,
+      "rate": 0.3104
+     },
+     "runs": 1733,
+     "spont": {
+      "ci95_family_boot": [
+       0.0104,
+       0.0286
+      ],
+      "k": 15,
+      "n": 770,
+      "n_families": 769,
+      "rate": 0.0195
+     }
+    },
+    "RESOURCE_GATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0715,
+       0.1012
+      ],
+      "k": 141,
+      "n": 1650,
+      "n_families": 1649,
+      "rate": 0.0855
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4424,
+       0.4894
+      ],
+      "k": 770,
+      "n": 1650,
+      "n_families": 1649,
+      "rate": 0.4667
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.134,
+       0.1743
+      ],
+      "k": 176,
+      "n": 1142,
+      "n_families": 1142,
+      "rate": 0.1541
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2723,
+       0.3266
+      ],
+      "k": 340,
+      "n": 1142,
+      "n_families": 1142,
+      "rate": 0.2977
+     },
+     "runs": 1650,
+     "spont": {
+      "ci95_family_boot": [
+       0.0044,
+       0.0189
+      ],
+      "k": 8,
+      "n": 688,
+      "n_families": 688,
+      "rate": 0.0116
+     }
+    }
+   },
+   "representation": {
+    "BYTECODE32": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0227,
+       0.0318
+      ],
+      "k": 133,
+      "n": 4900,
+      "n_families": 4896,
+      "rate": 0.0271
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4611,
+       0.4872
+      ],
+      "k": 2952,
+      "n": 6211,
+      "n_families": 6206,
+      "rate": 0.4753
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1292,
+       0.1495
+      ],
+      "k": 625,
+      "n": 4482,
+      "n_families": 4479,
+      "rate": 0.1394
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2731,
+       0.2977
+      ],
+      "k": 1274,
+      "n": 4482,
+      "n_families": 4479,
+      "rate": 0.2842
+     },
+     "runs": 6211,
+     "spont": {
+      "ci95_family_boot": [
+       0.0042,
+       0.0105
+      ],
+      "k": 21,
+      "n": 2847,
+      "n_families": 2844,
+      "rate": 0.0074
+     }
+    },
+    "VM_COPY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0342,
+       0.0451
+      ],
+      "k": 194,
+      "n": 4856,
+      "n_families": 4853,
+      "rate": 0.04
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4085,
+       0.4327
+      ],
+      "k": 2600,
+      "n": 6183,
+      "n_families": 6180,
+      "rate": 0.4205
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1537,
+       0.1761
+      ],
+      "k": 739,
+      "n": 4470,
+      "n_families": 4469,
+      "rate": 0.1653
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3403,
+       0.3671
+      ],
+      "k": 1578,
+      "n": 4470,
+      "n_families": 4469,
+      "rate": 0.353
+     },
+     "runs": 6183,
+     "spont": {
+      "ci95_family_boot": [
+       0.0212,
+       0.0332
+      ],
+      "k": 74,
+      "n": 2738,
+      "n_families": 2737,
+      "rate": 0.027
+     }
+    },
+    "Z80_64": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0353,
+       0.0463
+      ],
+      "k": 196,
+      "n": 4904,
+      "n_families": 4900,
+      "rate": 0.04
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4337,
+       0.4585
+      ],
+      "k": 2768,
+      "n": 6200,
+      "n_families": 6195,
+      "rate": 0.4465
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1462,
+       0.1684
+      ],
+      "k": 700,
+      "n": 4487,
+      "n_families": 4483,
+      "rate": 0.156
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3047,
+       0.3333
+      ],
+      "k": 1427,
+      "n": 4487,
+      "n_families": 4483,
+      "rate": 0.318
+     },
+     "runs": 6200,
+     "spont": {
+      "ci95_family_boot": [
+       0.0173,
+       0.0279
+      ],
+      "k": 62,
+      "n": 2829,
+      "n_families": 2825,
+      "rate": 0.0219
+     }
+    }
+   },
+   "reproduction": {
+    "CONSTRUCTIVE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0239,
+       0.0384
+      ],
+      "k": 73,
+      "n": 2346,
+      "n_families": 2342,
+      "rate": 0.0311
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.557,
+       0.5911
+      ],
+      "k": 1716,
+      "n": 2996,
+      "n_families": 2992,
+      "rate": 0.5728
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0,
+       0.0017
+      ],
+      "k": 2,
+      "n": 2996,
+      "n_families": 2992,
+      "rate": 0.0007
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3653,
+       0.4003
+      ],
+      "k": 1145,
+      "n": 2996,
+      "n_families": 2992,
+      "rate": 0.3822
+     },
+     "runs": 2996,
+     "spont": {
+      "ci95_family_boot": [
+       0.0,
+       0.0
+      ],
+      "k": 0,
+      "n": 1869,
+      "n_families": 1865,
+      "rate": 0.0
+     }
+    },
+    "ENDOGENOUS_COPY": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.012,
+       0.0216
+      ],
+      "k": 40,
+      "n": 2410,
+      "n_families": 2409,
+      "rate": 0.0166
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5808,
+       0.6137
+      ],
+      "k": 1835,
+      "n": 3071,
+      "n_families": 3070,
+      "rate": 0.5975
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.2325,
+       0.2644
+      ],
+      "k": 762,
+      "n": 3071,
+      "n_families": 3070,
+      "rate": 0.2481
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3382,
+       0.3732
+      ],
+      "k": 1089,
+      "n": 3071,
+      "n_families": 3070,
+      "rate": 0.3546
+     },
+     "runs": 3071,
+     "spont": {
+      "ci95_family_boot": [
+       0.0173,
+       0.0315
+      ],
+      "k": 47,
+      "n": 1906,
+      "n_families": 1905,
+      "rate": 0.0247
+     }
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0084,
+       0.0178
+      ],
+      "k": 30,
+      "n": 2253,
+      "n_families": 2253,
+      "rate": 0.0133
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5461,
+       0.584
+      ],
+      "k": 1640,
+      "n": 2904,
+      "n_families": 2904,
+      "rate": 0.5647
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.2138,
+       0.2445
+      ],
+      "k": 668,
+      "n": 2904,
+      "n_families": 2904,
+      "rate": 0.23
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.353,
+       0.3895
+      ],
+      "k": 1078,
+      "n": 2904,
+      "n_families": 2904,
+      "rate": 0.3712
+     },
+     "runs": 2904,
+     "spont": {
+      "ci95_family_boot": [
+       0.0247,
+       0.0412
+      ],
+      "k": 61,
+      "n": 1821,
+      "n_families": 1821,
+      "rate": 0.0335
+     }
+    },
+    "EXTERNAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0766,
+       0.0935
+      ],
+      "k": 353,
+      "n": 4162,
+      "n_families": 4158,
+      "rate": 0.0848
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0,
+       0.0
+      ],
+      "k": 0,
+      "n": 5155,
+      "n_families": 5150,
+      "rate": 0.0
+     },
+     "hifi_repro": null,
+     "persistent": null,
+     "runs": 5155,
+     "spont": null
+    },
+    "OVERWRITE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.003,
+       0.0082
+      ],
+      "k": 12,
+      "n": 2319,
+      "n_families": 2318,
+      "rate": 0.0052
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.7332,
+       0.7629
+      ],
+      "k": 2229,
+      "n": 2983,
+      "n_families": 2981,
+      "rate": 0.7472
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1036,
+       0.1264
+      ],
+      "k": 343,
+      "n": 2983,
+      "n_families": 2981,
+      "rate": 0.115
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1444,
+       0.1727
+      ],
+      "k": 477,
+      "n": 2983,
+      "n_families": 2981,
+      "rate": 0.1599
+     },
+     "runs": 2983,
+     "spont": {
+      "ci95_family_boot": [
+       0.0069,
+       0.0154
+      ],
+      "k": 20,
+      "n": 1882,
+      "n_families": 1880,
+      "rate": 0.0106
+     }
+    },
+    "PAIR_EXECUTION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0068,
+       0.0197
+      ],
+      "k": 15,
+      "n": 1170,
+      "n_families": 1169,
+      "rate": 0.0128
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5815,
+       0.6301
+      ],
+      "k": 900,
+      "n": 1485,
+      "n_families": 1484,
+      "rate": 0.6061
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1744,
+       0.2163
+      ],
+      "k": 289,
+      "n": 1485,
+      "n_families": 1484,
+      "rate": 0.1946
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3091,
+       0.3518
+      ],
+      "k": 490,
+      "n": 1485,
+      "n_families": 1484,
+      "rate": 0.33
+     },
+     "runs": 1485,
+     "spont": {
+      "ci95_family_boot": [
+       0.0214,
+       0.0426
+      ],
+      "k": 29,
+      "n": 936,
+      "n_families": 935,
+      "rate": 0.031
+     }
+    }
+   },
+   "scoring": {
+    "ATOMIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0302,
+       0.0389
+      ],
+      "k": 254,
+      "n": 7282,
+      "n_families": 7275,
+      "rate": 0.0349
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4287,
+       0.4502
+      ],
+      "k": 3208,
+      "n": 7282,
+      "n_families": 7275,
+      "rate": 0.4405
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1382,
+       0.1573
+      ],
+      "k": 777,
+      "n": 5233,
+      "n_families": 5228,
+      "rate": 0.1485
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3002,
+       0.3263
+      ],
+      "k": 1642,
+      "n": 5233,
+      "n_families": 5228,
+      "rate": 0.3138
+     },
+     "runs": 7282,
+     "spont": {
+      "ci95_family_boot": [
+       0.0112,
+       0.0203
+      ],
+      "k": 52,
+      "n": 3296,
+      "n_families": 3291,
+      "rate": 0.0158
+     }
+    },
+    "INCREMENTAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0327,
+       0.0413
+      ],
+      "k": 269,
+      "n": 7378,
+      "n_families": 7374,
+      "rate": 0.0365
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4228,
+       0.4425
+      ],
+      "k": 3188,
+      "n": 7378,
+      "n_families": 7374,
+      "rate": 0.4321
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1376,
+       0.1576
+      ],
+      "k": 774,
+      "n": 5265,
+      "n_families": 5263,
+      "rate": 0.147
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3165,
+       0.3426
+      ],
+      "k": 1728,
+      "n": 5265,
+      "n_families": 5263,
+      "rate": 0.3282
+     },
+     "runs": 7378,
+     "spont": {
+      "ci95_family_boot": [
+       0.0139,
+       0.0236
+      ],
+      "k": 62,
+      "n": 3303,
+      "n_families": 3301,
+      "rate": 0.0188
+     }
+    },
+    "NEUTRAL": {
+     "exact_solve": null,
+     "extinct": {
+      "ci95_family_boot": [
+       0.4725,
+       0.5046
+      ],
+      "k": 1924,
+      "n": 3934,
+      "n_families": 3932,
+      "rate": 0.4891
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1615,
+       0.1883
+      ],
+      "k": 513,
+      "n": 2941,
+      "n_families": 2940,
+      "rate": 0.1744
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2922,
+       0.3273
+      ],
+      "k": 909,
+      "n": 2941,
+      "n_families": 2940,
+      "rate": 0.3091
+     },
+     "runs": 3934,
+     "spont": {
+      "ci95_family_boot": [
+       0.0182,
+       0.0314
+      ],
+      "k": 43,
+      "n": 1815,
+      "n_families": 1814,
+      "rate": 0.0237
+     }
+    }
+   },
+   "stage": {
+    "early": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0336,
+       0.0424
+      ],
+      "k": 268,
+      "n": 7055,
+      "n_families": 7052,
+      "rate": 0.038
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4404,
+       0.4605
+      ],
+      "k": 4026,
+      "n": 8944,
+      "n_families": 8940,
+      "rate": 0.4501
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1455,
+       0.1631
+      ],
+      "k": 995,
+      "n": 6462,
+      "n_families": 6459,
+      "rate": 0.154
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3047,
+       0.3267
+      ],
+      "k": 2040,
+      "n": 6462,
+      "n_families": 6459,
+      "rate": 0.3157
+     },
+     "runs": 8944,
+     "spont": {
+      "ci95_family_boot": [
+       0.0114,
+       0.0187
+      ],
+      "k": 60,
+      "n": 4020,
+      "n_families": 4017,
+      "rate": 0.0149
+     }
+    },
+    "middle": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.03,
+       0.0373
+      ],
+      "k": 255,
+      "n": 7605,
+      "n_families": 7601,
+      "rate": 0.0335
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4351,
+       0.4558
+      ],
+      "k": 4294,
+      "n": 9650,
+      "n_families": 9646,
+      "rate": 0.445
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1445,
+       0.1625
+      ],
+      "k": 1069,
+      "n": 6977,
+      "n_families": 6975,
+      "rate": 0.1532
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3105,
+       0.3324
+      ],
+      "k": 2239,
+      "n": 6977,
+      "n_families": 6975,
+      "rate": 0.3209
+     },
+     "runs": 9650,
+     "spont": {
+      "ci95_family_boot": [
+       0.0184,
+       0.0269
+      ],
+      "k": 97,
+      "n": 4394,
+      "n_families": 4392,
+      "rate": 0.0221
+     }
+    }
+   },
+   "task": {
+    "COND_MULTI": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0109,
+       0.0206
+      ],
+      "k": 39,
+      "n": 2473,
+      "n_families": 2471,
+      "rate": 0.0158
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4207,
+       0.4579
+      ],
+      "k": 1355,
+      "n": 3084,
+      "n_families": 3081,
+      "rate": 0.4394
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1344,
+       0.1639
+      ],
+      "k": 328,
+      "n": 2203,
+      "n_families": 2203,
+      "rate": 0.1489
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3041,
+       0.3409
+      ],
+      "k": 713,
+      "n": 2203,
+      "n_families": 2203,
+      "rate": 0.3236
+     },
+     "runs": 3084,
+     "spont": {
+      "ci95_family_boot": [
+       0.0102,
+       0.0247
+      ],
+      "k": 23,
+      "n": 1379,
+      "n_families": 1379,
+      "rate": 0.0167
+     }
+    },
+    "COND_ONE": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0147,
+       0.0253
+      ],
+      "k": 48,
+      "n": 2451,
+      "n_families": 2448,
+      "rate": 0.0196
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4477,
+       0.4833
+      ],
+      "k": 1452,
+      "n": 3116,
+      "n_families": 3113,
+      "rate": 0.466
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.133,
+       0.1613
+      ],
+      "k": 332,
+      "n": 2272,
+      "n_families": 2270,
+      "rate": 0.1461
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.284,
+       0.3212
+      ],
+      "k": 686,
+      "n": 2272,
+      "n_families": 2270,
+      "rate": 0.3019
+     },
+     "runs": 3116,
+     "spont": {
+      "ci95_family_boot": [
+       0.0103,
+       0.0234
+      ],
+      "k": 23,
+      "n": 1456,
+      "n_families": 1454,
+      "rate": 0.0158
+     }
+    },
+    "CONST": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0168,
+       0.0283
+      ],
+      "k": 59,
+      "n": 2682,
+      "n_families": 2681,
+      "rate": 0.022
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4148,
+       0.4461
+      ],
+      "k": 1475,
+      "n": 3434,
+      "n_families": 3432,
+      "rate": 0.4295
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.151,
+       0.1812
+      ],
+      "k": 406,
+      "n": 2446,
+      "n_families": 2444,
+      "rate": 0.166
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3129,
+       0.3483
+      ],
+      "k": 807,
+      "n": 2446,
+      "n_families": 2444,
+      "rate": 0.3299
+     },
+     "runs": 3434,
+     "spont": {
+      "ci95_family_boot": [
+       0.014,
+       0.0294
+      ],
+      "k": 33,
+      "n": 1497,
+      "n_families": 1495,
+      "rate": 0.022
+     }
+    },
+    "ECHO": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.078,
+       0.1011
+      ],
+      "k": 192,
+      "n": 2167,
+      "n_families": 2166,
+      "rate": 0.0886
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4145,
+       0.4509
+      ],
+      "k": 1197,
+      "n": 2768,
+      "n_families": 2767,
+      "rate": 0.4324
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1459,
+       0.1762
+      ],
+      "k": 322,
+      "n": 2007,
+      "n_families": 2006,
+      "rate": 0.1604
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3116,
+       0.3548
+      ],
+      "k": 667,
+      "n": 2007,
+      "n_families": 2006,
+      "rate": 0.3323
+     },
+     "runs": 2768,
+     "spont": {
+      "ci95_family_boot": [
+       0.0139,
+       0.0303
+      ],
+      "k": 26,
+      "n": 1221,
+      "n_families": 1220,
+      "rate": 0.0213
+     }
+    },
+    "INC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0324,
+       0.0487
+      ],
+      "k": 96,
+      "n": 2380,
+      "n_families": 2378,
+      "rate": 0.0403
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4405,
+       0.4753
+      ],
+      "k": 1394,
+      "n": 3050,
+      "n_families": 3048,
+      "rate": 0.457
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1409,
+       0.1694
+      ],
+      "k": 343,
+      "n": 2226,
+      "n_families": 2224,
+      "rate": 0.1541
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2938,
+       0.3324
+      ],
+      "k": 699,
+      "n": 2226,
+      "n_families": 2224,
+      "rate": 0.314
+     },
+     "runs": 3050,
+     "spont": {
+      "ci95_family_boot": [
+       0.015,
+       0.0307
+      ],
+      "k": 31,
+      "n": 1399,
+      "n_families": 1397,
+      "rate": 0.0222
+     }
+    },
+    "SUM2": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0275,
+       0.0427
+      ],
+      "k": 89,
+      "n": 2507,
+      "n_families": 2505,
+      "rate": 0.0355
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4414,
+       0.4771
+      ],
+      "k": 1447,
+      "n": 3142,
+      "n_families": 3140,
+      "rate": 0.4605
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.133,
+       0.1602
+      ],
+      "k": 333,
+      "n": 2285,
+      "n_families": 2284,
+      "rate": 0.1457
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2912,
+       0.3319
+      ],
+      "k": 707,
+      "n": 2285,
+      "n_families": 2284,
+      "rate": 0.3094
+     },
+     "runs": 3142,
+     "spont": {
+      "ci95_family_boot": [
+       0.0089,
+       0.0205
+      ],
+      "k": 21,
+      "n": 1462,
+      "n_families": 1461,
+      "rate": 0.0144
+     }
+    }
+   },
+   "topology": {
+    "GRAPH/LOCAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0167,
+       0.0424
+      ],
+      "k": 19,
+      "n": 660,
+      "n_families": 660,
+      "rate": 0.0288
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4291,
+       0.4912
+      ],
+      "k": 391,
+      "n": 853,
+      "n_families": 853,
+      "rate": 0.4584
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1651,
+       0.2308
+      ],
+      "k": 124,
+      "n": 624,
+      "n_families": 624,
+      "rate": 0.1987
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2821,
+       0.3558
+      ],
+      "k": 199,
+      "n": 624,
+      "n_families": 624,
+      "rate": 0.3189
+     },
+     "runs": 853,
+     "spont": {
+      "ci95_family_boot": [
+       0.0033,
+       0.0297
+      ],
+      "k": 5,
+      "n": 303,
+      "n_families": 303,
+      "rate": 0.0165
+     }
+    },
+    "GRID/LOCAL": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.03,
+       0.0632
+      ],
+      "k": 28,
+      "n": 601,
+      "n_families": 601,
+      "rate": 0.0466
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3922,
+       0.4618
+      ],
+      "k": 320,
+      "n": 747,
+      "n_families": 747,
+      "rate": 0.4284
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1863,
+       0.2605
+      ],
+      "k": 117,
+      "n": 526,
+      "n_families": 526,
+      "rate": 0.2224
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.289,
+       0.3669
+      ],
+      "k": 171,
+      "n": 526,
+      "n_families": 526,
+      "rate": 0.3251
+     },
+     "runs": 747,
+     "spont": {
+      "ci95_family_boot": [
+       0.0045,
+       0.036
+      ],
+      "k": 4,
+      "n": 222,
+      "n_families": 222,
+      "rate": 0.018
+     }
+    },
+    "GRID/WELL_MIXED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.028,
+       0.061
+      ],
+      "k": 26,
+      "n": 607,
+      "n_families": 607,
+      "rate": 0.0428
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3459,
+       0.4145
+      ],
+      "k": 293,
+      "n": 772,
+      "n_families": 772,
+      "rate": 0.3795
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.2181,
+       0.2872
+      ],
+      "k": 142,
+      "n": 564,
+      "n_families": 564,
+      "rate": 0.2518
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.4078,
+       0.4911
+      ],
+      "k": 254,
+      "n": 564,
+      "n_families": 564,
+      "rate": 0.4504
+     },
+     "runs": 772,
+     "spont": {
+      "ci95_family_boot": [
+       0.0043,
+       0.0431
+      ],
+      "k": 5,
+      "n": 232,
+      "n_families": 232,
+      "rate": 0.0216
+     }
+    },
+    "NICHES/NICHES_COMPETENCE_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0284,
+       0.0472
+      ],
+      "k": 62,
+      "n": 1653,
+      "n_families": 1651,
+      "rate": 0.0375
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4898,
+       0.5301
+      ],
+      "k": 1069,
+      "n": 2099,
+      "n_families": 2096,
+      "rate": 0.5093
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1268,
+       0.1603
+      ],
+      "k": 213,
+      "n": 1491,
+      "n_families": 1489,
+      "rate": 0.1429
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1534,
+       0.1899
+      ],
+      "k": 257,
+      "n": 1491,
+      "n_families": 1489,
+      "rate": 0.1724
+     },
+     "runs": 2099,
+     "spont": {
+      "ci95_family_boot": [
+       0.0093,
+       0.0248
+      ],
+      "k": 16,
+      "n": 969,
+      "n_families": 967,
+      "rate": 0.0165
+     }
+    },
+    "NICHES/NICHES_ENV_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0305,
+       0.051
+      ],
+      "k": 65,
+      "n": 1607,
+      "n_families": 1606,
+      "rate": 0.0404
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4867,
+       0.5313
+      ],
+      "k": 1039,
+      "n": 2032,
+      "n_families": 2031,
+      "rate": 0.5113
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1104,
+       0.1447
+      ],
+      "k": 186,
+      "n": 1458,
+      "n_families": 1458,
+      "rate": 0.1276
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1818,
+       0.2257
+      ],
+      "k": 298,
+      "n": 1458,
+      "n_families": 1458,
+      "rate": 0.2044
+     },
+     "runs": 2032,
+     "spont": {
+      "ci95_family_boot": [
+       0.0021,
+       0.0127
+      ],
+      "k": 7,
+      "n": 945,
+      "n_families": 945,
+      "rate": 0.0074
+     }
+    },
+    "NICHES/NICHES_HIGH_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0229,
+       0.0393
+      ],
+      "k": 47,
+      "n": 1528,
+      "n_families": 1528,
+      "rate": 0.0308
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4609,
+       0.5063
+      ],
+      "k": 926,
+      "n": 1918,
+      "n_families": 1918,
+      "rate": 0.4828
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1205,
+       0.156
+      ],
+      "k": 190,
+      "n": 1378,
+      "n_families": 1378,
+      "rate": 0.1379
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2692,
+       0.3106
+      ],
+      "k": 399,
+      "n": 1378,
+      "n_families": 1378,
+      "rate": 0.2896
+     },
+     "runs": 1918,
+     "spont": {
+      "ci95_family_boot": [
+       0.0141,
+       0.0315
+      ],
+      "k": 21,
+      "n": 922,
+      "n_families": 922,
+      "rate": 0.0228
+     }
+    },
+    "NICHES/NICHES_ISOLATED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0191,
+       0.0344
+      ],
+      "k": 42,
+      "n": 1573,
+      "n_families": 1572,
+      "rate": 0.0267
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5028,
+       0.5487
+      ],
+      "k": 1039,
+      "n": 1981,
+      "n_families": 1979,
+      "rate": 0.5245
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1265,
+       0.1645
+      ],
+      "k": 211,
+      "n": 1447,
+      "n_families": 1447,
+      "rate": 0.1458
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1451,
+       0.1831
+      ],
+      "k": 238,
+      "n": 1447,
+      "n_families": 1447,
+      "rate": 0.1645
+     },
+     "runs": 1981,
+     "spont": {
+      "ci95_family_boot": [
+       0.0063,
+       0.0198
+      ],
+      "k": 12,
+      "n": 958,
+      "n_families": 958,
+      "rate": 0.0125
+     }
+    },
+    "NICHES/NICHES_LOW_MIG": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0284,
+       0.0459
+      ],
+      "k": 58,
+      "n": 1549,
+      "n_families": 1548,
+      "rate": 0.0374
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4912,
+       0.5381
+      ],
+      "k": 1019,
+      "n": 1979,
+      "n_families": 1978,
+      "rate": 0.5149
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0945,
+       0.1302
+      ],
+      "k": 157,
+      "n": 1397,
+      "n_families": 1396,
+      "rate": 0.1124
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.189,
+       0.2348
+      ],
+      "k": 298,
+      "n": 1397,
+      "n_families": 1396,
+      "rate": 0.2133
+     },
+     "runs": 1979,
+     "spont": {
+      "ci95_family_boot": [
+       0.0011,
+       0.0118
+      ],
+      "k": 6,
+      "n": 934,
+      "n_families": 933,
+      "rate": 0.0064
+     }
+    },
+    "NICHES/NICHES_PERIODIC": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0204,
+       0.0345
+      ],
+      "k": 44,
+      "n": 1621,
+      "n_families": 1621,
+      "rate": 0.0271
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.5253,
+       0.5671
+      ],
+      "k": 1127,
+      "n": 2056,
+      "n_families": 2056,
+      "rate": 0.5482
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.0954,
+       0.1248
+      ],
+      "k": 169,
+      "n": 1531,
+      "n_families": 1531,
+      "rate": 0.1104
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.1946,
+       0.2364
+      ],
+      "k": 329,
+      "n": 1531,
+      "n_families": 1531,
+      "rate": 0.2149
+     },
+     "runs": 2056,
+     "spont": {
+      "ci95_family_boot": [
+       0.0029,
+       0.0156
+      ],
+      "k": 9,
+      "n": 1025,
+      "n_families": 1025,
+      "rate": 0.0088
+     }
+    },
+    "NICHES/NICHES_POLLINATION": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0389,
+       0.0623
+      ],
+      "k": 77,
+      "n": 1542,
+      "n_families": 1537,
+      "rate": 0.0499
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.0328,
+       0.0504
+      ],
+      "k": 81,
+      "n": 1986,
+      "n_families": 1981,
+      "rate": 0.0408
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1765,
+       0.2186
+      ],
+      "k": 287,
+      "n": 1444,
+      "n_families": 1440,
+      "rate": 0.1988
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.9169,
+       0.9445
+      ],
+      "k": 1345,
+      "n": 1444,
+      "n_families": 1440,
+      "rate": 0.9314
+     },
+     "runs": 1986,
+     "spont": {
+      "ci95_family_boot": [
+       0.0457,
+       0.0752
+      ],
+      "k": 58,
+      "n": 960,
+      "n_families": 956,
+      "rate": 0.0604
+     }
+    },
+    "NICHES/RESERVOIR": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0257,
+       0.0475
+      ],
+      "k": 36,
+      "n": 1011,
+      "n_families": 1011,
+      "rate": 0.0356
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.478,
+       0.5314
+      ],
+      "k": 642,
+      "n": 1272,
+      "n_families": 1272,
+      "rate": 0.5047
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1318,
+       0.1801
+      ],
+      "k": 144,
+      "n": 933,
+      "n_families": 933,
+      "rate": 0.1543
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2315,
+       0.2862
+      ],
+      "k": 243,
+      "n": 933,
+      "n_families": 933,
+      "rate": 0.2605
+     },
+     "runs": 1272,
+     "spont": {
+      "ci95_family_boot": [
+       0.0033,
+       0.0183
+      ],
+      "k": 6,
+      "n": 600,
+      "n_families": 600,
+      "rate": 0.01
+     }
+    },
+    "SOUP/WELL_MIXED": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0155,
+       0.0396
+      ],
+      "k": 19,
+      "n": 708,
+      "n_families": 707,
+      "rate": 0.0268
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3793,
+       0.4444
+      ],
+      "k": 374,
+      "n": 899,
+      "n_families": 898,
+      "rate": 0.416
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1594,
+       0.2222
+      ],
+      "k": 124,
+      "n": 646,
+      "n_families": 645,
+      "rate": 0.192
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3478,
+       0.4186
+      ],
+      "k": 248,
+      "n": 646,
+      "n_families": 645,
+      "rate": 0.3839
+     },
+     "runs": 899,
+     "spont": {
+      "ci95_family_boot": [
+       0.0087,
+       0.0408
+      ],
+      "k": 8,
+      "n": 344,
+      "n_families": 343,
+      "rate": 0.0233
+     }
+    }
+   },
+   "world": {
+    "GRAPH": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0182,
+       0.0409
+      ],
+      "k": 19,
+      "n": 660,
+      "n_families": 660,
+      "rate": 0.0288
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4279,
+       0.4924
+      ],
+      "k": 391,
+      "n": 853,
+      "n_families": 853,
+      "rate": 0.4584
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1699,
+       0.2308
+      ],
+      "k": 124,
+      "n": 624,
+      "n_families": 624,
+      "rate": 0.1987
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.2821,
+       0.3606
+      ],
+      "k": 199,
+      "n": 624,
+      "n_families": 624,
+      "rate": 0.3189
+     },
+     "runs": 853,
+     "spont": {
+      "ci95_family_boot": [
+       0.0033,
+       0.0297
+      ],
+      "k": 5,
+      "n": 303,
+      "n_families": 303,
+      "rate": 0.0165
+     }
+    },
+    "GRID": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0331,
+       0.0579
+      ],
+      "k": 54,
+      "n": 1208,
+      "n_families": 1208,
+      "rate": 0.0447
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.3799,
+       0.4292
+      ],
+      "k": 613,
+      "n": 1519,
+      "n_families": 1519,
+      "rate": 0.4036
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.2138,
+       0.2615
+      ],
+      "k": 259,
+      "n": 1090,
+      "n_families": 1090,
+      "rate": 0.2376
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3606,
+       0.4174
+      ],
+      "k": 425,
+      "n": 1090,
+      "n_families": 1090,
+      "rate": 0.3899
+     },
+     "runs": 1519,
+     "spont": {
+      "ci95_family_boot": [
+       0.0088,
+       0.0352
+      ],
+      "k": 9,
+      "n": 454,
+      "n_families": 454,
+      "rate": 0.0198
+     }
+    },
+    "NICHES": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0324,
+       0.0389
+      ],
+      "k": 431,
+      "n": 12084,
+      "n_families": 12074,
+      "rate": 0.0357
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.4453,
+       0.4606
+      ],
+      "k": 6942,
+      "n": 15323,
+      "n_families": 15311,
+      "rate": 0.453
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.134,
+       0.147
+      ],
+      "k": 1557,
+      "n": 11079,
+      "n_families": 11072,
+      "rate": 0.1405
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.298,
+       0.3156
+      ],
+      "k": 3407,
+      "n": 11079,
+      "n_families": 11072,
+      "rate": 0.3075
+     },
+     "runs": 15323,
+     "spont": {
+      "ci95_family_boot": [
+       0.0157,
+       0.0218
+      ],
+      "k": 135,
+      "n": 7313,
+      "n_families": 7306,
+      "rate": 0.0185
+     }
+    },
+    "SOUP": {
+     "exact_solve": {
+      "ci95_family_boot": [
+       0.0155,
+       0.0395
+      ],
+      "k": 19,
+      "n": 708,
+      "n_families": 707,
+      "rate": 0.0268
+     },
+     "extinct": {
+      "ci95_family_boot": [
+       0.382,
+       0.4427
+      ],
+      "k": 374,
+      "n": 899,
+      "n_families": 898,
+      "rate": 0.416
+     },
+     "hifi_repro": {
+      "ci95_family_boot": [
+       0.1628,
+       0.2226
+      ],
+      "k": 124,
+      "n": 646,
+      "n_families": 645,
+      "rate": 0.192
+     },
+     "persistent": {
+      "ci95_family_boot": [
+       0.3514,
+       0.4257
+      ],
+      "k": 248,
+      "n": 646,
+      "n_families": 645,
+      "rate": 0.3839
+     },
+     "runs": 899,
+     "spont": {
+      "ci95_family_boot": [
+       0.0087,
+       0.0408
+      ],
+      "k": 8,
+      "n": 344,
+      "n_families": 343,
+      "rate": 0.0233
+     }
+    }
+   }
+  }
+ }
+}
