@@ -217,8 +217,8 @@ def _dedupe(inputs: List[List[int]]) -> List[List[int]]:
     return out
 
 
-def build_b1() -> List[List[int]]:
-    """PRIMARY battery, AMENDMENT 12 s4 (a)-(d). Each input is the full prompt
+def build_b1_v1() -> List[List[int]]:
+    """B1 v1 (S1 run 1 only; superseded by ADDENDUM 1). AMENDMENT 12 s4 (a)-(d). Each input is the full prompt
     integer list: the sequence followed by the query parameter."""
     rng = random.Random(_seed("APHRODITE/S1/B1/v1"))
     vals = [0, 1, 2, 3, 5, 7, 12, 30, 97]
@@ -252,6 +252,29 @@ def build_b1() -> List[List[int]]:
     return _dedupe(out)
 
 
+V17 = [0, 1, 2, 7, 97] + CEILING_BAND
+V7 = [0, 1, 7, C - 1, C + 1, C // 2, 10 ** 20]
+
+
+def build_b1() -> List[List[int]]:
+    """PRIMARY battery B1 v2 (AMENDMENT 12 ADDENDUM 1 s3): v1 sections (a),
+    (b), (d) unchanged; (c) replaced by an EXHAUSTIVE short-input cross, so
+    every band value occurs in every position, the query included, beside
+    every partner, zero included. The cross is exhaustive, so it consumes no
+    randomness; the "APHRODITE/S1/B1/v2" label of ADDENDUM 1 therefore seeds
+    nothing, and the unchanged sections keep their v1 draws, as ADDENDUM 1
+    requires."""
+    import itertools
+    v1 = build_b1_v1()
+    # rebuild v1 minus its section (c): identify (c) inputs as those containing
+    # a ceiling-band value, which (a), (b) and (d) never contain
+    band = set(CEILING_BAND)
+    keep = [x for x in v1 if not any(v in band for v in x)]
+    cross = [list(t) for n in (2, 3) for t in itertools.product(V17, repeat=n)]
+    cross += [list(t) for t in itertools.product(V7, repeat=4)]
+    return _dedupe(keep + cross)
+
+
 def _b2_value(rng: random.Random) -> int:
     r = rng.random()
     if r < 0.50:
@@ -267,9 +290,11 @@ def _b2_value(rng: random.Random) -> int:
     return rng.randint(28, 36)
 
 
-def build_b2(n: int = 5000) -> List[List[int]]:
-    """AUDIT battery: independent seed, never contributes to an identity."""
-    rng = random.Random(_seed("APHRODITE/S1/B2/v1"))
+def build_b2(n: int = 10000, label: str = "APHRODITE/S1/B2/v2") -> List[List[int]]:
+    """AUDIT battery B2 v2 (ADDENDUM 1 s5): same frozen mixture, fresh seed,
+    10,000 inputs. Never contributes to an identity. (Run 1 used n=5000 under
+    label APHRODITE/S1/B2/v1.)"""
+    rng = random.Random(_seed(label))
     out = []
     for _ in range(n):
         L = 1
@@ -282,7 +307,7 @@ def build_b2(n: int = 5000) -> List[List[int]]:
 def build_b1_neg() -> List[List[int]]:
     """SENSITIVITY only: B1 with signs drawn at random. Never an identity."""
     rng = random.Random(_seed("APHRODITE/S1/B1NEG/v1"))
-    return [[x if rng.random() < 0.5 else -x for x in inp] for inp in build_b1()]
+    return [[x if rng.random() < 0.5 else -x for x in inp] for inp in build_b1_v1()]
 
 
 B1 = build_b1()

@@ -100,3 +100,37 @@ def check(limit_cases: int = 0) -> Dict:
                                 "GREEN": False, "note": "aborted after 25 mismatches"}
     return {"checked": checked, "programs": len(cases),
             "mismatches": mismatches, "GREEN": not mismatches}
+
+
+# ---------------------------------------------------------------- part 2 (ADDENDUM 1 s4)
+def whole_program_values(prog, battery, emitter: int = 2):
+    """The emitted artifact's answers on every TRAILING battery input, through
+    the sandbox and the membrane."""
+    import meta_tribunal as M
+    art = M.artifact_for("gate", prog, emitter)
+    r = E.Recipient.fresh(seed=1)
+    r.load(art)
+    out = []
+    for inp in battery:
+        if len(inp) < 2:
+            continue
+        out.append(r.answer(_prompt(list(inp[:-1]), inp[-1]), "gate"))
+    return out
+
+
+def check_whole_program(prog, battery, emitter: int = 2) -> Dict:
+    """Part 2 of the standing gate: search evaluator vs emitted artifact over a
+    WHOLE-PROGRAM battery, where the output alone may cross the ceiling. The
+    declared contract: "overflow" (or no answer, for a raised failure) exactly
+    where run_program returns None, equality everywhere else."""
+    got = whole_program_values(prog, battery, emitter)
+    mism, n = [], 0
+    for inp, b in zip([x for x in battery if len(x) >= 2], got):
+        n += 1
+        a = G.run_program(prog, list(inp), True)
+        a = None if a is None else str(a)
+        if not (a == b or (a is None and b in ("overflow", None))):
+            mism.append({"program": list(prog), "input_len": len(inp),
+                         "input_max_digits": max(len(str(x)) for x in inp),
+                         "search": a, "artifact": b})
+    return {"checked": n, "mismatches": mism}
