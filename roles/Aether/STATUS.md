@@ -80,7 +80,10 @@ first light: DONE. 6 of 6 worlds at 4096^2 x 5,000 ticks on one A40,
   irreducible energy leak (3.04% per 5,000 ticks with every cost
   parameter at zero), and confirmation that a 128^2 CPU scout predicts
   16.7 M-site behaviour well enough to choose parameters with.
-  Report: Aether/AETH-01/FIRST_LIGHT_2026-09-22.md.
+  Report: Aether/AETH-01/FIRST_LIGHT_01_2026-09-22.md (OBSERVED /
+  INTERPRETATION / HYPOTHESES separated, per the operator's full
+  brief). Replay chain verified 6/6 at 16.7 M sites, cross-backend.
+  Known telemetry gap: GPU memory was not sampled over lifetime.
 observatory: built this pass (Aether/observatory/, 18 known-answer tests
   including a read-only guard). component_track and
   perturbation_divergence deliberately NOT implemented -- deepen-tier,
