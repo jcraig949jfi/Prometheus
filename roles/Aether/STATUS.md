@@ -73,9 +73,31 @@ known cosmetic defect: a NumPy RuntimeWarning ("overflow encountered in
   scalar multiply") now appears in pod logs from the in-place mix64_vec
   scalar path, which CuPy leaves outside np.seterr. Noise, not a defect;
   deliberately not fixed during the evidence run.
-next executable action: none in this round; it is closed. The seat's
-  next decisions are AETH-01 science, not kernel work -- whether to
-  freeze aeth01.v1, and which habitability campaign the new 268 M-site
-  capacity should buy. Note that 7.42 s/tick means 16384^2 costs about
-  2.1 hours per 1,000 ticks on one A40, which is a campaign-planning
-  fact this round did not exist to settle.
+first light: DONE. 6 of 6 worlds at 4096^2 x 5,000 ticks on one A40,
+  30,000 world-ticks, $2.022. No endogenous organization; the nulls are
+  now mechanistic. Three carry-outs beyond the null: a certified-death
+  condition HABITABILITY.md lacks, the first measurement of AETH-01's
+  irreducible energy leak (3.04% per 5,000 ticks with every cost
+  parameter at zero), and confirmation that a 128^2 CPU scout predicts
+  16.7 M-site behaviour well enough to choose parameters with.
+  Report: Aether/AETH-01/FIRST_LIGHT_2026-09-22.md.
+observatory: built this pass (Aether/observatory/, 18 known-answer tests
+  including a read-only guard). component_track and
+  perturbation_divergence deliberately NOT implemented -- deepen-tier,
+  and cheap wrong versions would produce numbers that look like
+  structure tracking.
+spend to date: about $2.09 of the $3 authorization across all runs
+  today. Every pod terminated with absence independently confirmed;
+  ACTIVE_POD_COUNT 0 now. Billing reconciliation remains INCOMPLETE and
+  is not claimed: figures are computed from measured wall time at the
+  quoted rate, because this client has no billing endpoint.
+next executable action: operator's call, and it is a science decision
+  rather than an engineering one. The three candidates the run leaves
+  open: (a) extend B_balanced, the only world still changing at tick
+  5,000 and right-censored by run length rather than by physics; (b) put
+  the two proposed additions (the certified-death condition, the energy
+  loss rate) into HABITABILITY.md and ECONOMICS.md, which are other
+  documents' text and so want a ruling; (c) accept that aeth01.v1's
+  soup does not organize and decide whether that falsifies the candidate
+  or is a parameter-space question, which bears on whether to freeze
+  aeth01.v1 at all. No further kernel work is indicated.
