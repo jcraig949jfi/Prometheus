@@ -1,0 +1,37 @@
+CWE CAMPAIGN 0 REPORT  c0b_21fd1b2cc
+==============================================================================
+code   head 21fd1b2cc6  src 39c2f04c8b69  dirty False
+graph  nodes 616 edges 225 runs 620 laws 1  edge kinds {'CONTROL_OF': 60, 'COORD_PRESERVING': 26, 'DEFORMATION_OF': 139}
+queries (chamber, excl. oracle) 516   wall 774.2s
+------------------------------------------------------------------------------
+GATES
+  G0  PASS
+  G1  PASS
+  G2  PASS
+  G3  NOT REACHED (not run by campaign0; see G3 receipt)
+  G4  PASS
+  G5  PASS
+  G6  FAIL
+  G7  PASS
+------------------------------------------------------------------------------
+INITIAL MINING (main dataset)
+  raw  CANDIDATE                  p=0.050 score=0.846
+       (Q - (C * K)) <= 0.7886 AND (K - (log(N) / G)) >= 4.935
+  v1   CANDIDATE                  p=0.050 score=0.824
+       (C / (K * exp(-N))) <= 0.3934 AND ((K / log(C)) + N) <= -0.3974
+  v2   CANDIDATE                  p=0.050 score=0.820
+       (C - (G + exp(-N))) <= -1.055 AND (N - (log(C) / K)) <= 2.114
+  v3   CANDIDATE                  p=0.050 score=0.943
+       (C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792
+ADVERSARY
+  round 0  SURVIVED  confirmed 1 / confident 108
+    law  (C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792
+LAW LEDGER
+  f852d782cb v1 parent=- cmap=v3  PROPOSED/ATTACKED/SURVIVED/FROZEN/HOLDOUT_TESTED/INTERVENTION_TESTED
+    (C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792
+FROZEN  (C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792  freeze 37c28c59ae919b08
+HOLDOUT D  BA 0.983 acc 0.971 base_rate 0.117  knn5 BA 0.841  majority BA 0.500  brier 0.029 (clim 0.103)
+INTERVENTION  scored 12  direction ok 0  magnitude ok 0  in band 0
+QUOTIENT  616 nodes -> 8 classes (0.013); boundary edge fraction {'CONTROL_OF': 0.7667, 'COORD_PRESERVING': 0.0385, 'DEFORMATION_OF': 0.1328}
+ENGINEERING  null-pool failures: [{'error': "BrokenProcessPool('A process in the process pool was terminated abruptly while the future was running or pending.')", 'workers': 9}]
+==============================================================================

@@ -1,0 +1,4724 @@
+[
+ {
+  "law_id": "f852d782cb76c0468fdf",
+  "n_attacks": 134,
+  "n_confident": 89,
+  "n_confirmed": 0,
+  "rate": 0.0,
+  "verdict": "SURVIVED",
+  "by_kind": {
+   "band": {
+    "n": 45,
+    "confident": 0,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres_base": {
+    "n": 11,
+    "confident": 11,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres": {
+    "n": 34,
+    "confident": 34,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "extreme": {
+    "n": 44,
+    "confident": 44,
+    "contradictions": 0,
+    "confirmed": 0
+   }
+  },
+  "by_family": {
+   "regs": {
+    "confident": 30,
+    "confirmed": 0
+   },
+   "ring": {
+    "confident": 30,
+    "confirmed": 0
+   },
+   "ca": {
+    "confident": 29,
+    "confirmed": 0
+   }
+  },
+  "band_calibration": {
+   "mean_pred": 0.5124123718845023,
+   "obs_rate": 0.6888888888888889,
+   "n": 45
+  },
+  "metamorphic": {
+   "regs": {
+    "pairs": 12,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 3
+   },
+   "ring": {
+    "pairs": 12,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 1
+   },
+   "ca": {
+    "pairs": 10,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 3
+   }
+  },
+  "metamorphic_pairs": [
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.064,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 4,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.128,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.0,
+     "K": 2.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.256768,
+    "var_margin": 0.309888,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.064,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 16,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.0,
+     "K": 2.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.256768,
+    "var_margin": 0.228352,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.064,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0064,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.0,
+     "K": 2.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.256768,
+    "var_margin": 0.253824,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.064,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 8,
+     "K": 2,
+     "R": 100.0,
+     "bitcost": 0.64,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.0,
+     "K": 2.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.256768,
+    "var_margin": 0.253632,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.001
+    },
+    "variant": {
+     "V": 16,
+     "H": 4,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.032,
+     "q": 0.002
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.032,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.31554,
+    "var_margin": 0.37888,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.001
+    },
+    "variant": {
+     "V": 16,
+     "H": 16,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.008,
+     "q": 0.0005
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.032,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.31554,
+    "var_margin": 0.30676,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.001
+    },
+    "variant": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 0.1,
+     "bitcost": 0.0016,
+     "q": 0.001
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.032,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.31554,
+    "var_margin": 0.30454,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.001
+    },
+    "variant": {
+     "V": 16,
+     "H": 8,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.16,
+     "q": 0.001
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.032,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.31554,
+    "var_margin": 0.30718,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 8,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.032,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.248,
+    "var_margin": 0.228,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 32,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.008,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.248,
+    "var_margin": 0.2405,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 0.1,
+     "bitcost": 0.0016,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.248,
+    "var_margin": 0.2455,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.016,
+     "q": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 16,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.16,
+     "q": 0.0
+    },
+    "coords": {
+     "C": 0.512,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.248,
+    "var_margin": 0.273,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.15000000000000002,
+     "lam": 0.006
+    },
+    "coords": {
+     "C": 0.9000000000000001,
+     "N": 0.036000000000000004,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -0.397875,
+    "var_margin": -0.382,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 0.07500000000000001,
+     "lam": 0.003
+    },
+    "coords": {
+     "C": 0.9000000000000001,
+     "N": 0.036000000000000004,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -0.397875,
+    "var_margin": -0.429063,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 0.025,
+     "lam": 0.001
+    },
+    "coords": {
+     "C": 0.9,
+     "N": 0.036000000000000004,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -0.397875,
+    "var_margin": -0.415438,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 10.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.5,
+     "lam": 0.002
+    },
+    "coords": {
+     "C": 0.9,
+     "N": 0.036000000000000004,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -0.397875,
+    "var_margin": -0.399125,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.05,
+     "lam": 0.002
+    },
+    "coords": {
+     "C": 0.9,
+     "N": 0.036000000000000004,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -0.397875,
+    "var_margin": -0.409625,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 0.012,
+     "lam": 0.001
+    },
+    "coords": {
+     "C": 0.11520000000000001,
+     "N": 0.048,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.085132,
+    "var_margin": 0.070174,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.008,
+     "lam": 0.0006666666666666666
+    },
+    "coords": {
+     "C": 0.11520000000000001,
+     "N": 0.048,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.085132,
+    "var_margin": 0.037324,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 0.004,
+     "lam": 0.0003333333333333333
+    },
+    "coords": {
+     "C": 0.11520000000000001,
+     "N": 0.048,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.085132,
+    "var_margin": 0.0572,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 50.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.24,
+     "lam": 0.002
+    },
+    "coords": {
+     "C": 0.1152,
+     "N": 0.048,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.085132,
+    "var_margin": 0.054144,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 1,
+     "R": 5.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.024,
+     "lam": 0.002
+    },
+    "coords": {
+     "C": 0.11520000000000001,
+     "N": 0.048,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.085132,
+    "var_margin": 0.065844,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 24,
+     "K": 0,
+     "R": 5.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 16,
+     "H": 24,
+     "K": 0,
+     "R": 5.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 0.0005,
+     "lam": 0.001
+    },
+    "coords": {
+     "C": 0.0048000000000000004,
+     "N": 0.048,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 24,
+     "K": 0,
+     "R": 5.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 16,
+     "H": 24,
+     "K": 0,
+     "R": 5.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.0003333333333333333,
+     "lam": 0.0006666666666666666
+    },
+    "coords": {
+     "C": 0.0048000000000000004,
+     "N": 0.048,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 20,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.002,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 8,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.001,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.006,
+     "N": 1.7999999999999998,
+     "K": 8.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.026638,
+    "var_margin": 0.024895,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 20,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.002,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 8,
+     "H": 20,
+     "K": 8,
+     "R": 200.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.02,
+     "p": 0.03
+    },
+    "coords": {
+     "C": 0.006,
+     "N": 1.7999999999999998,
+     "K": 8.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.026638,
+    "var_margin": 0.026121,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.016,
+     "p": 0.005
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.008,
+     "p": 0.0025
+    },
+    "coords": {
+     "C": 0.64,
+     "N": 0.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.05,
+    "var_margin": -0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.016,
+     "p": 0.005
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.16,
+     "p": 0.005
+    },
+    "coords": {
+     "C": 0.64,
+     "N": 0.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.05,
+    "var_margin": -0.035,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.016,
+     "p": 0.005
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.016,
+     "p": 0.005
+    },
+    "coords": {
+     "C": 0.64,
+     "N": 0.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.05,
+    "var_margin": -0.005,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 20,
+     "K": 0,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 4,
+     "H": 20,
+     "K": 0,
+     "R": 200.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.64,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.384,
+     "N": 0.026729999999999997,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 20,
+     "K": 0,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 4,
+     "H": 20,
+     "K": 0,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.064,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.384,
+     "N": 0.026729999999999997,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.128,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.384,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 30.72,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -29.81,
+    "var_margin": -29.7875,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.128,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 80,
+     "K": 4,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 30.72,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -29.81,
+    "var_margin": -29.7775,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.128,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 1.28,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 30.72,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -29.81,
+    "var_margin": -29.7675,
+    "flip": false,
+    "significant": true
+   }
+  ],
+  "cmap": "v3",
+  "n_transforms_not_preserving": 6,
+  "counterexamples": []
+ },
+ {
+  "law_id": "f852d782cb76c0468fdf",
+  "n_attacks": 179,
+  "n_confident": 134,
+  "n_confirmed": 1,
+  "rate": 0.007462686567164179,
+  "verdict": "SURVIVED",
+  "by_kind": {
+   "band": {
+    "n": 45,
+    "confident": 0,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres_base": {
+    "n": 13,
+    "confident": 13,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres": {
+    "n": 32,
+    "confident": 32,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "extreme": {
+    "n": 44,
+    "confident": 44,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "errorseek": {
+    "n": 45,
+    "confident": 45,
+    "contradictions": 2,
+    "confirmed": 1
+   }
+  },
+  "by_family": {
+   "regs": {
+    "confident": 45,
+    "confirmed": 0
+   },
+   "ring": {
+    "confident": 45,
+    "confirmed": 1
+   },
+   "ca": {
+    "confident": 44,
+    "confirmed": 0
+   }
+  },
+  "band_calibration": {
+   "mean_pred": 0.5124123718845023,
+   "obs_rate": 0.6888888888888889,
+   "n": 45
+  },
+  "metamorphic": {
+   "regs": {
+    "pairs": 11,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 1
+   },
+   "ring": {
+    "pairs": 12,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 0
+   },
+   "ca": {
+    "pairs": 9,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 1
+   }
+  },
+  "metamorphic_pairs": [
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 8,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.004,
+     "q": 0.0,
+     "code": 3
+    },
+    "variant": {
+     "V": 4,
+     "H": 16,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.002,
+     "q": 0.0,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.47958,
+    "var_margin": 0.42522,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 8,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.004,
+     "q": 0.0,
+     "code": 3
+    },
+    "variant": {
+     "V": 4,
+     "H": 8,
+     "K": 4,
+     "R": 0.1,
+     "bitcost": 0.0004,
+     "q": 0.0,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.47958,
+    "var_margin": 0.48438,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 8,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.004,
+     "q": 0.0,
+     "code": 3
+    },
+    "variant": {
+     "V": 4,
+     "H": 8,
+     "K": 4,
+     "R": 10.0,
+     "bitcost": 0.04,
+     "q": 0.0,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.47958,
+    "var_margin": 0.47934,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 8,
+     "H": 16,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0002,
+     "q": 0.02
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.96,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.027692,
+    "var_margin": 0.063285,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 8,
+     "H": 64,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 5e-05,
+     "q": 0.005
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.96,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.027692,
+    "var_margin": 0.002384,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 0.1,
+     "bitcost": 1e-05,
+     "q": 0.01
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.96,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.027692,
+    "var_margin": 0.020122,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 8,
+     "H": 32,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.01
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.96,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.027692,
+    "var_margin": 0.000197,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 8,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.128,
+     "q": 0.001,
+     "code": 3
+    },
+    "variant": {
+     "V": 4,
+     "H": 8,
+     "K": 2,
+     "R": 0.1,
+     "bitcost": 0.0128,
+     "q": 0.001,
+     "code": 3
+    },
+    "coords": {
+     "C": 6.144,
+     "N": 0.00037669412729564045,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -5.3865,
+    "var_margin": -5.339,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 4,
+     "H": 8,
+     "K": 2,
+     "R": 1.0,
+     "bitcost": 0.128,
+     "q": 0.001,
+     "code": 3
+    },
+    "variant": {
+     "V": 4,
+     "H": 8,
+     "K": 2,
+     "R": 10.0,
+     "bitcost": 1.28,
+     "q": 0.001,
+     "code": 3
+    },
+    "coords": {
+     "C": 6.144,
+     "N": 0.00037669412729564045,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -5.3865,
+    "var_margin": -5.4115,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 0,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0024000000000000002,
+     "N": 0.016000139459826316,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 0,
+     "R": 100.0,
+     "bitcost": 0.01,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0024,
+     "N": 0.016000139459826316,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.0001,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.00030000000000000003,
+     "lam": 0.30000000000000004
+    },
+    "coords": {
+     "C": 0.0036000000000000003,
+     "N": 3.6000000000000005,
+     "K": 5.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.005929,
+    "var_margin": 0.008999,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.0001,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 0.00015000000000000001,
+     "lam": 0.15000000000000002
+    },
+    "coords": {
+     "C": 0.0036000000000000003,
+     "N": 3.6000000000000005,
+     "K": 5.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.005929,
+    "var_margin": 0.011575,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.0001,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 5e-05,
+     "lam": 0.05
+    },
+    "coords": {
+     "C": 0.0036000000000000003,
+     "N": 3.6,
+     "K": 5.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.005929,
+    "var_margin": 0.01655,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.0001,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 5,
+     "R": 10.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.001,
+     "lam": 0.1
+    },
+    "coords": {
+     "C": 0.0036000000000000003,
+     "N": 3.6,
+     "K": 5.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.005929,
+    "var_margin": 0.014219,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 9e-05,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.00108,
+     "N": 0.0,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 4.5e-05,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.00108,
+     "N": 0.0,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 6,
+     "n": 3,
+     "ehop": 1.5e-05,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.00108,
+     "N": 0.0,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 10.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.00030000000000000003,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.00108,
+     "N": 0.0,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 0,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.00108,
+     "N": 0.0,
+     "K": 0.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.006
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.003,
+     "lam": 0.018000000000000002
+    },
+    "coords": {
+     "C": 0.036000000000000004,
+     "N": 0.21600000000000003,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 0.6
+    },
+    "base_margin": 0.720145,
+    "var_margin": 0.719815,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.006
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 0.0015,
+     "lam": 0.009000000000000001
+    },
+    "coords": {
+     "C": 0.036000000000000004,
+     "N": 0.21600000000000003,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 0.6
+    },
+    "base_margin": 0.720145,
+    "var_margin": 0.72989,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.006
+    },
+    "variant": {
+     "V": 16,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 6,
+     "n": 3,
+     "ehop": 0.0005,
+     "lam": 0.003
+    },
+    "coords": {
+     "C": 0.036000000000000004,
+     "N": 0.216,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 0.6
+    },
+    "base_margin": 0.720145,
+    "var_margin": 0.705171,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.008,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.004,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.32,
+     "N": 2.4,
+     "K": 8.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.1925,
+    "var_margin": -0.205,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.008,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.08,
+     "p": 0.03
+    },
+    "coords": {
+     "C": 0.32,
+     "N": 2.4,
+     "K": 8.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": -0.1925,
+    "var_margin": -0.215,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 8,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0003,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0029999999999999996,
+     "p": 0.03
+    },
+    "coords": {
+     "C": 0.072,
+     "N": 0.42335999999999996,
+     "K": 8.0,
+     "G": 0.9375,
+     "Q": 0.2222222222222222
+    },
+    "base_margin": 0.5155,
+    "var_margin": 0.5105,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 40,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 4,
+     "H": 40,
+     "K": 1,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.32,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 3.84,
+     "N": 0.053459999999999994,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -3.125,
+    "var_margin": -3.15,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 40,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 4,
+     "H": 40,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.032,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 3.84,
+     "N": 0.053459999999999994,
+     "K": 1.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -3.125,
+    "var_margin": -3.1675,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 10,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.0015
+    },
+    "variant": {
+     "V": 4,
+     "H": 20,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.032,
+     "p": 0.00075
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.03,
+     "K": 8.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.307568,
+    "var_margin": 0.280496,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 10,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.0015
+    },
+    "variant": {
+     "V": 4,
+     "H": 10,
+     "K": 8,
+     "R": 200.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.64,
+     "p": 0.0015
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.03,
+     "K": 8.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.307568,
+    "var_margin": 0.306864,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 10,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.064,
+     "p": 0.0015
+    },
+    "variant": {
+     "V": 4,
+     "H": 10,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.064,
+     "p": 0.0015
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.03,
+     "K": 8.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.307568,
+    "var_margin": 0.305792,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 20,
+     "K": 4,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0003,
+     "p": 0.005
+    },
+    "variant": {
+     "V": 4,
+     "H": 20,
+     "K": 4,
+     "R": 200.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0029999999999999996,
+     "p": 0.005
+    },
+    "coords": {
+     "C": 0.0018,
+     "N": 0.0029899999999999996,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 0.8
+    },
+    "base_margin": 0.7457,
+    "var_margin": 0.7157,
+    "flip": false,
+    "significant": false
+   }
+  ],
+  "cmap": "v3",
+  "n_transforms_not_preserving": 16,
+  "counterexamples": [
+   {
+    "kind": "errorseek",
+    "family": "ring",
+    "params": {
+     "V": 4,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.02
+    },
+    "coords": {
+     "C": 0.432,
+     "N": 0.36,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "p": 0.0026443307314210373,
+    "margin": 0.16292,
+    "confirm_margins": [
+     0.172625,
+     0.146545
+    ]
+   }
+  ]
+ },
+ {
+  "law_id": "f852d782cb76c0468fdf",
+  "n_attacks": 179,
+  "n_confident": 134,
+  "n_confirmed": 1,
+  "rate": 0.007462686567164179,
+  "verdict": "SURVIVED",
+  "by_kind": {
+   "band": {
+    "n": 45,
+    "confident": 0,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres_base": {
+    "n": 13,
+    "confident": 13,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres": {
+    "n": 32,
+    "confident": 32,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "extreme": {
+    "n": 44,
+    "confident": 44,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "errorseek": {
+    "n": 45,
+    "confident": 45,
+    "contradictions": 2,
+    "confirmed": 1
+   }
+  },
+  "by_family": {
+   "regs": {
+    "confident": 45,
+    "confirmed": 0
+   },
+   "ring": {
+    "confident": 45,
+    "confirmed": 1
+   },
+   "ca": {
+    "confident": 44,
+    "confirmed": 0
+   }
+  },
+  "band_calibration": {
+   "mean_pred": 0.5124123718845023,
+   "obs_rate": 0.6888888888888889,
+   "n": 45
+  },
+  "metamorphic": {
+   "regs": {
+    "pairs": 10,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 0
+   },
+   "ring": {
+    "pairs": 12,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 0
+   },
+   "ca": {
+    "pairs": 10,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 2
+   }
+  },
+  "metamorphic_pairs": [
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.0003,
+     "q": 0.03,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 0.1,
+     "bitcost": 2.9999999999999997e-05,
+     "q": 0.03,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.028799999999999996,
+     "N": 0.5060161938111426,
+     "K": 1.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0362,
+    "var_margin": -0.002227,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 1.0,
+     "bitcost": 0.0003,
+     "q": 0.03,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.0029999999999999996,
+     "q": 0.03,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0288,
+     "N": 0.5060161938111426,
+     "K": 1.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0362,
+    "var_margin": 0.005331,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 4,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.0032,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.15360000000000001,
+     "N": 0.05334599475028768,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.2739,
+    "var_margin": 0.2689,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 4,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 4,
+     "R": 100.0,
+     "bitcost": 0.32,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.1536,
+     "N": 0.05334599475028768,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.2739,
+    "var_margin": 0.3381,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.001,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 7,
+     "R": 0.1,
+     "bitcost": 1e-05,
+     "q": 0.001,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0024000000000000002,
+     "N": 0.00018834706364782023,
+     "K": 7.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0105,
+    "var_margin": 0.008,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.0001,
+     "q": 0.001,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 7,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.001,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0024000000000000002,
+     "N": 0.00018834706364782023,
+     "K": 7.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0105,
+    "var_margin": 0.013,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.0003,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 0,
+     "R": 1.0,
+     "bitcost": 2.9999999999999997e-05,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0014399999999999999,
+     "N": 0.05334599475028768,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.0003,
+     "q": 0.01,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 0,
+     "R": 100.0,
+     "bitcost": 0.0029999999999999996,
+     "q": 0.01,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.0014399999999999999,
+     "N": 0.05334599475028768,
+     "K": 0.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.064,
+     "q": 0.06,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 4,
+     "R": 0.1,
+     "bitcost": 0.0064,
+     "q": 0.06,
+     "code": 3
+    },
+    "coords": {
+     "C": 1.536,
+     "N": 0.2769434296380414,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -1.2235,
+    "var_margin": -1.256,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 8,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.064,
+     "q": 0.06,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 8,
+     "K": 4,
+     "R": 10.0,
+     "bitcost": 0.64,
+     "q": 0.06,
+     "code": 3
+    },
+    "coords": {
+     "C": 1.536,
+     "N": 0.2769434296380414,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -1.2235,
+    "var_margin": -1.291,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 9e-05,
+     "lam": 0.30000000000000004
+    },
+    "coords": {
+     "C": 0.00216,
+     "N": 7.200000000000001,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -0.001962,
+    "var_margin": 0.00221,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 4.5e-05,
+     "lam": 0.15000000000000002
+    },
+    "coords": {
+     "C": 0.00216,
+     "N": 7.200000000000001,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -0.001962,
+    "var_margin": 0.004704,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 1.5e-05,
+     "lam": 0.05
+    },
+    "coords": {
+     "C": 0.00216,
+     "N": 7.2,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -0.001962,
+    "var_margin": -0.004453,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 10.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.00030000000000000003,
+     "lam": 0.1
+    },
+    "coords": {
+     "C": 0.00216,
+     "N": 7.2,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -0.001962,
+    "var_margin": -0.001905,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "variant": {
+     "V": 4,
+     "H": 24,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3e-05,
+     "lam": 0.1
+    },
+    "coords": {
+     "C": 0.00216,
+     "N": 7.2,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -0.001962,
+    "var_margin": 0.00217,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.006,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 0.003,
+     "lam": 0.025
+    },
+    "coords": {
+     "C": 0.07200000000000001,
+     "N": 0.6000000000000001,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.14887,
+    "var_margin": 0.163222,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.006,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.002,
+     "lam": 0.016666666666666666
+    },
+    "coords": {
+     "C": 0.07200000000000001,
+     "N": 0.6,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.14887,
+    "var_margin": 0.19967,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.006,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 0.001,
+     "lam": 0.008333333333333333
+    },
+    "coords": {
+     "C": 0.07200000000000001,
+     "N": 0.6,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.14887,
+    "var_margin": 0.1618,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.006,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 4,
+     "R": 10.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.06,
+     "lam": 0.05
+    },
+    "coords": {
+     "C": 0.072,
+     "N": 0.6000000000000001,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.14887,
+    "var_margin": 0.17197,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.012,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.036000000000000004,
+     "lam": 0.006
+    },
+    "coords": {
+     "C": 0.21600000000000003,
+     "N": 0.036000000000000004,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 0.6
+    },
+    "base_margin": 0.24467,
+    "var_margin": 0.28035,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.012,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 0.018000000000000002,
+     "lam": 0.003
+    },
+    "coords": {
+     "C": 0.21600000000000003,
+     "N": 0.036000000000000004,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 0.6
+    },
+    "base_margin": 0.24467,
+    "var_margin": 0.23965,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 0.012,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 2,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 6,
+     "n": 3,
+     "ehop": 0.006,
+     "lam": 0.001
+    },
+    "coords": {
+     "C": 0.216,
+     "N": 0.036000000000000004,
+     "K": 4.0,
+     "G": 0.5,
+     "Q": 0.6
+    },
+    "base_margin": 0.24467,
+    "var_margin": 0.255115,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 2,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.001,
+     "p": 0.0015
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 2,
+     "R": 200.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.01,
+     "p": 0.0015
+    },
+    "coords": {
+     "C": 0.012,
+     "N": 0.0005394600000000001,
+     "K": 2.0,
+     "G": 0.9375,
+     "Q": 0.6666666666666666
+    },
+    "base_margin": 0.903,
+    "var_margin": 0.9455,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.004,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 80,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.002,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 0.32,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.62,
+    "var_margin": 0.6275,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.004,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.04,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 0.32,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.62,
+    "var_margin": 0.6075,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.004,
+     "p": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.004,
+     "p": 0.0
+    },
+    "coords": {
+     "C": 0.32,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.62,
+    "var_margin": 0.605,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.128,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 8,
+     "H": 20,
+     "K": 2,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.064,
+     "p": 0.00025
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.015,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.229728,
+    "var_margin": 0.208056,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.128,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 200.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 1.28,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.015,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.229728,
+    "var_margin": 0.232032,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.128,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.128,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.192,
+     "N": 0.015,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.229728,
+    "var_margin": 0.228192,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 2,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 2,
+     "H": 80,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.016,
+     "p": 0.00025
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.02,
+     "K": 8.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.269352,
+    "var_margin": 0.262904,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 2,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 2,
+     "H": 40,
+     "K": 8,
+     "R": 200.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.32,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.02,
+     "K": 8.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.269352,
+    "var_margin": 0.271844,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 2,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 2,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.032,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.064,
+     "N": 0.02,
+     "K": 8.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.269352,
+    "var_margin": 0.2668,
+    "flip": false,
+    "significant": false
+   }
+  ],
+  "cmap": "v3",
+  "n_transforms_not_preserving": 15,
+  "counterexamples": [
+   {
+    "kind": "errorseek",
+    "family": "ring",
+    "params": {
+     "V": 4,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.02
+    },
+    "coords": {
+     "C": 0.432,
+     "N": 0.36,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "p": 0.0026443307314210373,
+    "margin": 0.16292,
+    "confirm_margins": [
+     0.172625,
+     0.146545
+    ]
+   }
+  ]
+ },
+ {
+  "law_id": "f852d782cb76c0468fdf",
+  "n_attacks": 179,
+  "n_confident": 134,
+  "n_confirmed": 1,
+  "rate": 0.007462686567164179,
+  "verdict": "SURVIVED",
+  "by_kind": {
+   "band": {
+    "n": 45,
+    "confident": 0,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres_base": {
+    "n": 12,
+    "confident": 12,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "coordpres": {
+    "n": 33,
+    "confident": 33,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "extreme": {
+    "n": 44,
+    "confident": 44,
+    "contradictions": 0,
+    "confirmed": 0
+   },
+   "errorseek": {
+    "n": 45,
+    "confident": 45,
+    "contradictions": 2,
+    "confirmed": 1
+   }
+  },
+  "by_family": {
+   "regs": {
+    "confident": 45,
+    "confirmed": 0
+   },
+   "ring": {
+    "confident": 45,
+    "confirmed": 1
+   },
+   "ca": {
+    "confident": 44,
+    "confirmed": 0
+   }
+  },
+  "band_calibration": {
+   "mean_pred": 0.5124123718845023,
+   "obs_rate": 0.6888888888888889,
+   "n": 45
+  },
+  "metamorphic": {
+   "regs": {
+    "pairs": 11,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 2
+   },
+   "ring": {
+    "pairs": 12,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 0
+   },
+   "ca": {
+    "pairs": 10,
+    "verdict_flips": 0,
+    "significant_margin_shifts": 1
+   }
+  },
+  "metamorphic_pairs": [
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.001,
+     "q": 0.06,
+     "code": 3
+    },
+    "variant": {
+     "V": 8,
+     "H": 32,
+     "K": 4,
+     "R": 0.1,
+     "bitcost": 0.0001,
+     "q": 0.06,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.28800000000000003,
+     "N": 2.0051010455327867,
+     "K": 4.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": -0.248,
+    "var_margin": -0.2505,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 8,
+     "H": 32,
+     "K": 4,
+     "R": 1.0,
+     "bitcost": 0.001,
+     "q": 0.06,
+     "code": 3
+    },
+    "variant": {
+     "V": 8,
+     "H": 32,
+     "K": 4,
+     "R": 10.0,
+     "bitcost": 0.01,
+     "q": 0.06,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.288,
+     "N": 2.0051010455327867,
+     "K": 4.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": -0.248,
+    "var_margin": -0.3155,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.128,
+     "q": 0.003
+    },
+    "variant": {
+     "V": 2,
+     "H": 32,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.064,
+     "q": 0.0015
+    },
+    "coords": {
+     "C": 2.048,
+     "N": 0.048,
+     "K": 7.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -1.573,
+    "var_margin": -1.6255,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.128,
+     "q": 0.003
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 7,
+     "R": 0.1,
+     "bitcost": 0.0128,
+     "q": 0.003
+    },
+    "coords": {
+     "C": 2.048,
+     "N": 0.048,
+     "K": 7.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -1.573,
+    "var_margin": -1.598,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 16,
+     "K": 7,
+     "R": 1.0,
+     "bitcost": 0.128,
+     "q": 0.003
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 7,
+     "R": 10.0,
+     "bitcost": 1.28,
+     "q": 0.003
+    },
+    "coords": {
+     "C": 2.048,
+     "N": 0.048,
+     "K": 7.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": -1.573,
+    "var_margin": -1.5855,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 16,
+     "H": 8,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.064,
+     "q": 0.02
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.64,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 16,
+     "H": 32,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.016,
+     "q": 0.005
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.64,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 1.0,
+     "bitcost": 0.0032,
+     "q": 0.01
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.64,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 10.0,
+     "bitcost": 0.032,
+     "q": 0.01
+    },
+    "variant": {
+     "V": 16,
+     "H": 16,
+     "K": 0,
+     "R": 100.0,
+     "bitcost": 0.32,
+     "q": 0.01
+    },
+    "coords": {
+     "C": 0.2048,
+     "N": 0.64,
+     "K": 0.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.0,
+    "var_margin": 0.0,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.0,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 16,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.002,
+     "q": 0.0,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.004923,
+    "var_margin": 0.005491,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "regs",
+    "base": {
+     "V": 2,
+     "H": 32,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.001,
+     "q": 0.0,
+     "code": 3
+    },
+    "variant": {
+     "V": 2,
+     "H": 64,
+     "K": 1,
+     "R": 10.0,
+     "bitcost": 0.0005,
+     "q": 0.0,
+     "code": 3
+    },
+    "coords": {
+     "C": 0.009600000000000001,
+     "N": 0.0,
+     "K": 1.0,
+     "G": 0.5,
+     "Q": 1.0
+    },
+    "base_margin": 0.004923,
+    "var_margin": 0.00495,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 2,
+     "n": 64,
+     "ehop": 0.025,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.06000000000000001,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.1599,
+    "var_margin": 0.160275,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.016666666666666666,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.06,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.1599,
+    "var_margin": 0.159725,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 6,
+     "n": 64,
+     "ehop": 0.008333333333333333,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.06,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.1599,
+    "var_margin": 0.160075,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 5.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.05,
+     "lam": 0.0
+    },
+    "variant": {
+     "V": 16,
+     "H": 6,
+     "K": 4,
+     "R": 50.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.5,
+     "lam": 0.0
+    },
+    "coords": {
+     "C": 0.06,
+     "N": 0.0,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.1599,
+    "var_margin": 0.160775,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 5e-05,
+     "lam": 0.025
+    },
+    "coords": {
+     "C": 0.0012000000000000001,
+     "N": 0.6000000000000001,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.003695,
+    "var_margin": 0.013659,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 3.3333333333333335e-05,
+     "lam": 0.016666666666666666
+    },
+    "coords": {
+     "C": 0.0012000000000000001,
+     "N": 0.6,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.003695,
+    "var_margin": 0.028615,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 6,
+     "n": 3,
+     "ehop": 1.6666666666666667e-05,
+     "lam": 0.008333333333333333
+    },
+    "coords": {
+     "C": 0.0012000000000000001,
+     "N": 0.6,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.003695,
+    "var_margin": -0.00383,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 10.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.001,
+     "lam": 0.05
+    },
+    "coords": {
+     "C": 0.0012000000000000001,
+     "N": 0.6000000000000001,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.003695,
+    "var_margin": 0.041152,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "variant": {
+     "V": 8,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 64,
+     "ehop": 0.0001,
+     "lam": 0.05
+    },
+    "coords": {
+     "C": 0.0012000000000000001,
+     "N": 0.6000000000000001,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.003695,
+    "var_margin": -0.02134,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0003,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 2,
+     "n": 3,
+     "ehop": 0.00015,
+     "lam": 0.001
+    },
+    "coords": {
+     "C": 0.0036,
+     "N": 0.024,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.019159,
+    "var_margin": 0.009179,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0003,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 3,
+     "n": 3,
+     "ehop": 9.999999999999999e-05,
+     "lam": 0.0006666666666666666
+    },
+    "coords": {
+     "C": 0.0036,
+     "N": 0.024,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.019159,
+    "var_margin": 0.001757,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ring",
+    "base": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 1,
+     "n": 3,
+     "ehop": 0.0003,
+     "lam": 0.002
+    },
+    "variant": {
+     "V": 4,
+     "H": 12,
+     "K": 2,
+     "R": 1.0,
+     "s": 6,
+     "n": 3,
+     "ehop": 4.9999999999999996e-05,
+     "lam": 0.0003333333333333333
+    },
+    "coords": {
+     "C": 0.0036,
+     "N": 0.024,
+     "K": 2.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": 0.019159,
+    "var_margin": 0.006703,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 10,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.008,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 16,
+     "H": 10,
+     "K": 1,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.08,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.48,
+     "N": 2.999e-05,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.28452,
+    "var_margin": 0.29028,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 10,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.008,
+     "p": 0.0005
+    },
+    "variant": {
+     "V": 16,
+     "H": 10,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.008,
+     "p": 0.0005
+    },
+    "coords": {
+     "C": 0.48,
+     "N": 2.999e-05,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.28452,
+    "var_margin": 0.29256,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 16,
+     "H": 80,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 5e-05,
+     "p": 0.0075
+    },
+    "coords": {
+     "C": 0.0008,
+     "N": 2.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.001647,
+    "var_margin": 0.001624,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 200.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.001,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.0008,
+     "N": 2.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.001647,
+    "var_margin": 0.001707,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 16,
+     "H": 40,
+     "K": 4,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 510,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.0008,
+     "N": 2.4,
+     "K": 4.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.001647,
+    "var_margin": 0.001676,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.008,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 8,
+     "H": 10,
+     "K": 2,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.08,
+     "p": 0.03
+    },
+    "coords": {
+     "C": 0.36,
+     "N": 0.07938,
+     "K": 2.0,
+     "G": 0.875,
+     "Q": 1.0
+    },
+    "base_margin": 0.44334,
+    "var_margin": 0.43,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 1,
+     "R": 20.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.001,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.012,
+     "N": 0.053459999999999994,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.006633,
+    "var_margin": 0.006864,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 16,
+     "H": 20,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 24,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "variant": {
+     "V": 16,
+     "H": 20,
+     "K": 1,
+     "R": 2.0,
+     "r": 3,
+     "Lc": 510,
+     "ccell": 0.0001,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 0.012,
+     "N": 0.053459999999999994,
+     "K": 1.0,
+     "G": 0.9375,
+     "Q": 1.0
+    },
+    "base_margin": 0.006633,
+    "var_margin": 0.006418,
+    "flip": false,
+    "significant": false
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 40,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.064,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 4,
+     "H": 80,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.032,
+     "p": 0.015
+    },
+    "coords": {
+     "C": 2.56,
+     "N": 2.4,
+     "K": 8.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -2.4575,
+    "var_margin": -2.5475,
+    "flip": false,
+    "significant": true
+   },
+   {
+    "family": "ca",
+    "base": {
+     "V": 4,
+     "H": 40,
+     "K": 8,
+     "R": 2.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.064,
+     "p": 0.03
+    },
+    "variant": {
+     "V": 4,
+     "H": 40,
+     "K": 8,
+     "R": 20.0,
+     "r": 1,
+     "Lc": 24,
+     "ccell": 0.64,
+     "p": 0.03
+    },
+    "coords": {
+     "C": 2.56,
+     "N": 2.4,
+     "K": 8.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "base_margin": -2.4575,
+    "var_margin": -2.53,
+    "flip": false,
+    "significant": false
+   }
+  ],
+  "cmap": "v3",
+  "n_transforms_not_preserving": 12,
+  "counterexamples": [
+   {
+    "kind": "errorseek",
+    "family": "ring",
+    "params": {
+     "V": 4,
+     "H": 6,
+     "K": 4,
+     "R": 1.0,
+     "s": 3,
+     "n": 64,
+     "ehop": 0.024,
+     "lam": 0.02
+    },
+    "coords": {
+     "C": 0.432,
+     "N": 0.36,
+     "K": 4.0,
+     "G": 0.75,
+     "Q": 1.0
+    },
+    "p": 0.0026443307314210373,
+    "margin": 0.16292,
+    "confirm_margins": [
+     0.172625,
+     0.146545
+    ]
+   }
+  ]
+ }
+]

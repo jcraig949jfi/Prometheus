@@ -1,25 +1,22 @@
 # Cosmos status
 
-Currency: 2026-09-23 (seat creation and base-role adoption pass, M2).
+Currency: 2026-09-23T12:40Z (CWE campaign in progress; charter 2026-09-23_charter).
 
-seat state: BLOCKED on the charter after this pass; blocker named (the
-  operator holds it; direction to be given in chat).
-what it asserts: PRESENT (booted in comms 2026-09-23 as
-  Cosmos[m2-6ed01908] on the M1 canonical store), ACTIVE (this pass
-  ran), NOT PRODUCTIVE (no domain output; artifacts are roles/Cosmos/
-  only), VALID not applicable.
-workspace: worktree cosmos-base-role (under Prometheus-worktrees on M2),
-  branch cosmos/base-role-adopt-2026-09-23, base 81c062b40 (origin/main
-  at creation). Host M2 (SPECTREX5). Canonical checkout fetched only.
-guard: archaeon.workspace.assert_not_canonical() passed
-  (main_worktree False).
-comms: EW_DB_HOST=192.168.1.202 (M1) set before the first call; sync
-  2026-09-23 ~10:20Z delivered 26 historical broadcasts (#1..#478), none
-  addressed to Cosmos; task queue length 0.
-monitors owned or fed: none. No row in roles/base-role/MONITORS.md.
-lane: none until the charter lands.
-blockers: the charter (operator).
-next executable action: receive the operator's direction; commit it
-  verbatim under roles/Cosmos/prompts/<date>_charter/ with a MANIFEST
-  (python -m comms.manifest write <dir>); rewrite RESPONSIBILITIES.md;
-  file a 20-60 item BACKLOG_H0H5.md; register any monitor it creates.
+seat state: ACTIVE on the charter (build/qualify the Cosmos World-Graph Engine, CWE),
+  8-hour window 10:54:38Z -> ~18:54Z.
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE (commits + campaign artifacts below);
+  VALID is the campaign's own question and is NOT asserted.
+workspace: worktree cosmos-base-role (Prometheus-worktrees, M2 SPECTREX5), branch
+  cosmos/cwe-c0-2026-09-23 from origin/main 371d22952, pushed to origin (not yet merged to main).
+code: prometheus/cosmos/ (engine), roles/Cosmos/design/ (00 verbatim, 01 design, 02 as-built,
+  PROVENANCE), roles/Cosmos/campaigns/{c0,c0b}/ (prereg, results, compact artifacts).
+canonical check: python -m prometheus.cosmos.runtest [--full]  (last PASS 20260923T123711Z).
+operational state: COSMOS_HOME = C:/Users/James/cosmos_runs (never the D: SMR disk).
+holdout: SEALED, sha256 48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265,
+  never executed except the controls-only selftest.
+results so far: C0 = NO SURVIVING INVARIANT (3 laws killed by the adversary; missing
+  capacity and post-repair hazard coordinates exposed). C0b (v3 coordinates) running.
+monitors owned or fed: none standing. Campaign runs are one-shot processes.
+blockers: none.
+next executable action: read C0b REPORT (C:/Users/James/cosmos_runs/c0b_21fd1b2cc), commit
+  its compact artifacts, attack whatever survives, write the campaign handoff by ~18:54Z.
