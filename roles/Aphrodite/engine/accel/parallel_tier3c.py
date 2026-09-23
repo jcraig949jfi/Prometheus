@@ -91,6 +91,8 @@ def main(argv=None):
     ap.add_argument("--out", default=str(ACCEL / "BACKEND_RUN.json"))
     ap.add_argument("--backend", default="cpu_pool")
     ap.add_argument("--host", default=platform.node())
+    ap.add_argument("--head-sha", default=None,
+                    help="record this SHA when running from a git archive (no .git)")
     ap.add_argument("--skip-conformance", action="store_true",
                     help="debug only; a run without conformance cannot be EQUIVALENT")
     ap.add_argument("--limit-cells", type=int, default=0, help="debug only")
@@ -135,7 +137,7 @@ def main(argv=None):
     out = {"backend": a.backend, "host": a.host, "workers": a.workers,
            "start_method": "spawn", "python": sys.version.split()[0],
            "platform": platform.platform(), "cpu_count": os.cpu_count(),
-           "head_sha": _git_head(), "started_utc": started,
+           "head_sha": a.head_sha or _git_head(), "started_utc": started,
            "written_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
            "wall_clock_seconds": round(time.perf_counter() - t0, 1),
            "lib_sha256": hashes, "sizes": _sizes, "cells": len(cells),
