@@ -58,7 +58,7 @@ def s1(c0b: Path, out: Path):
     return rounds
 
 
-def s2(out: Path):
+def s2(out: Path, linear: bool = False):
     fams = visible()
     cells = []
     specs = {
@@ -70,19 +70,22 @@ def s2(out: Path):
         for V in (2, 4, 16):
             p = dict(base, V=V)
             G = 1 - 1 / V
-            c_lo, c_hi = 0.2 * G, 1.3 * G
-            v_lo, v_hi = c_lo / to_c(p, 1.0), c_hi / to_c(p, 1.0)
-            vals = list(np.geomspace(v_lo, v_hi, 15))
+            if linear:     # S2b: resolution 0.00625 in C
+                vals = list(np.linspace(G - 0.20, G + 0.05, 41) / to_c(p, 1.0))
+            else:
+                c_lo, c_hi = 0.2 * G, 1.3 * G
+                v_lo, v_hi = c_lo / to_c(p, 1.0), c_hi / to_c(p, 1.0)
+                vals = list(np.geomspace(v_lo, v_hi, 15))
             r = scan(fams[f], dict(p, **{knob: vals[0]}), knob, vals, episodes=(1600,), replicates=6, campaign="c0s-s2")
             x0 = r["per_E"]["1600"]["x0"]
-            c_star = to_c(p, x0)
+            c_star = float(to_c(p, x0))
             cells.append({"family": f, "V": V, "G": G, "C_star": c_star, "law_ceiling": G - 0.055, "econ_ceiling": G - 0.10,
                           "near_econ": abs(c_star - (G - 0.10)) <= 0.02, "near_law": abs(c_star - (G - 0.055)) <= 0.02,
                           "width_log": r["per_E"]["1600"]["width_log"]})
             print(cells[-1], flush=True)
-    n_ok = sum(c["near_econ"] and not c["near_law"] for c in cells)
+    n_ok = int(sum(bool(c["near_econ"]) and not bool(c["near_law"]) for c in cells))
     res = {"cells": cells, "n_supporting_bias": n_ok, "prediction_held": n_ok >= 7}
-    (out / "S2_ceiling.json").write_text(json.dumps(res, indent=1, default=str), encoding="utf-8")
+    (out / ("S2b_ceiling.json" if linear else "S2_ceiling.json")).write_text(json.dumps(res, indent=1, default=str), encoding="utf-8")
     print(json.dumps({"n_supporting_bias": n_ok, "prediction_held": n_ok >= 7}))
     return res
 
@@ -93,5 +96,7 @@ if __name__ == "__main__":
     which = sys.argv[3] if len(sys.argv) > 3 else "both"
     if which in ("s2", "both"):
         s2(out)
+    if which == "s2b":
+        s2(out, linear=True)
     if which in ("s1", "both"):
         s1(c0b, out)

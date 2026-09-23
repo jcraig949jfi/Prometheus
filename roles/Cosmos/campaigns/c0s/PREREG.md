@@ -21,3 +21,13 @@ Lc = 510) for V in {2, 4, 16} (G .5 .75 .9375), cost knob on a geometric ladder,
 Prediction: observed C* within 0.02 of G - 0.10 and NOT within 0.02 of G - 0.055 in >= 7 / 9
 cells (conf 0.7). If it holds, the frozen law has a known systematic bias of ~0.045 in C at its
 cost ceiling; the law is NOT revised (a revision would need a new sealed universe to test).
+
+## S2 RESULT (2026-09-23T13:02Z, S2_ceiling.json) and amendment S2b (written before S2b runs)
+S2 as scored: 6/9 cells near G - 0.10 and not near G - 0.055; prediction (>= 7/9) LOST.
+Resolution defect (own design): the 15-point geometric ladder spans a factor 6.5 in cost, i.e.
+~14% steps; every fitted location sits on a ladder point, so near C ~ 0.85 the resolution is
+~0.11 in C -- coarser than the +/- 0.02 criterion. The rule's attainable resolution was not
+computed before freezing it (base-role doctrine violated). S2 stays LOST as scored.
+S2b: same cells, cost ladder LINEAR in C over [G - 0.20, G + 0.05], 41 points (step 0.00625),
+1600 episodes, 6 replicates; C* = fitted location. Same prediction and threshold (>= 7/9 cells
+within 0.02 of G - 0.10 and not within 0.02 of G - 0.055). Resolution 0.00625 < 0.02.
