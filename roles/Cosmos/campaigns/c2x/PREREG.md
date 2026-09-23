@@ -18,3 +18,10 @@ located law; C1 (lines, no selection) failed on seed 20260928. The lines x selec
 confounded with seed. Added arm (written before it runs):
   c1s29   C1 exactly (lines, no selection, location gate) on seed 20260929 -- completes the 2x2 on one
           seed. Prediction (conf 0.5): it produces a survivor too (i.e. C1's failure was the seed).
+
+## c2rep RESULT (2026-09-23T16:25Z) -- C2 replication on fresh seed 20260931
+Law e654764319 (v4): (Q - C K) <= 0.8385 AND C - G exp(-N) <= -0.0945
+SURVIVED round 0 (0/106; offsets ca -.027 regs -.021 ring -.016). Prediction HELD (worst offset
+<= .10 and a G exp(-N) product ceiling).
+Convergence across the three location-gated survivors on two seeds: ceiling G exp(-N) - C >= 0.102
+(C2), 0.0945 (c2rep), 0.145 G (c2none); the task economics give 0.10.
