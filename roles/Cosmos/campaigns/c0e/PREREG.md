@@ -36,3 +36,14 @@ E1  G5E passes.                                                                 
 E2  If the law errs on E, the errors concentrate in M >= 3 with u > 0 (the crude declared
     hazard) rather than in the capacity-limited worlds (Q < 1).                  conf 0.6
 E3  G6E passes.                                                                 conf 0.4
+
+## RESULT (appended 2026-09-23T12:58Z; C0E.json, receipts_after_c0e.jsonl)
+G5E PASS: sealed-E BA 0.972 (acc 0.967), 5-NN 0.769, majority 0.500; Brier 0.031 vs 0.174.
+     (C0E.json field "base_rate_D" is E's base rate, 0.225 -- a label defect in broker.adjudicate.)
+G6E PASS: 399 candidates, 124 eligible, 12 scored; direction 10/12 (at threshold); law mean
+     |log2(f_obs_hi/f_hi)| 0.318 vs best constant (f=4) 1.250 -> clears the floor by 0.93.
+E1 HELD. E3 HELD. E2 HELD (6 of 8 errors in M >= 3 with u > 0; 2/55 errors in Q < 1 worlds).
+Error SHAPE shared with sealed D: false PAYS at the high-cost edge (7/8 on E, 7/7 on D), and both
+G6E direction misses are bases just inside the law's cost ceiling (f_hi 1.06-1.08) observed QUIET.
+INFERRED (not yet tested): the law's cost-ceiling atom sits ~0.045 in C above the physics form
+G exp(-N) - C >= 0.10 at small N.

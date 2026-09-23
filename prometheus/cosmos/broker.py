@@ -109,7 +109,7 @@ def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | 
     obs = _call({"cmd": "run", "spec": spec})
     y = np.array([int(o["verdict"] == "PAYS") for o in obs])
     res = {"law_id": law_id, "freeze_hash": fh, "spec_sha": commitment, "pred_hash": pred_hash,
-           "n_worlds": int(len(y)), "base_rate_D": float(y.mean()),
+           "n_worlds": int(len(y)), "base_rate": float(y.mean()), "base_rate_D": float(y.mean()),  # base_rate_D kept for old readers
            "law_ba": _ba(pred, y), "law_acc": float((pred == (y == 1)).mean()),
            "brier": float(np.mean((p - y) ** 2)), "brier_climatology": float(np.mean((y.mean() - y) ** 2))}
     res["baselines"] = {k: {"ba": _ba(v, y), "acc": float((v == (y == 1)).mean())} for k, v in extra.items()}
