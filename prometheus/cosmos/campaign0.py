@@ -59,6 +59,10 @@ CONFIGS = {
     "c2": {"seed": 20260929, "cmap": "v4", "secondaries": ["v3", "raw"], "revise": ["v4", "v3"],
            "g1b_crn": True, "g1b_n": 12, "main_strategy": "random", "costlines": 10, "location_gate": 0.10,
            "holdout": None, "location_select": True},
+    # c2abl (roles/Cosmos/campaigns/c2abl/PREREG.md): C2 with the cost lines removed, same seed
+    "c2abl": {"seed": 20260929, "cmap": "v4", "secondaries": ["v3", "raw"], "revise": ["v4", "v3"],
+              "g1b_crn": True, "g1b_n": 12, "main_strategy": "random", "costlines": 0, "location_gate": 0.10,
+              "holdout": None, "location_select": True},
 }
 
 
