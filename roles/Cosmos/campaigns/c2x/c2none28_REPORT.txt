@@ -1,0 +1,37 @@
+CWE CAMPAIGN 0 REPORT  c2none28
+==============================================================================
+code   head 7ac8a0ed04  src 19f8c514e6c8  dirty False
+graph  nodes 758 edges 246 runs 766 laws 2  edge kinds {'CONTROL_OF': 60, 'COORD_PRESERVING': 48, 'DEFORMATION_OF': 138}
+queries (chamber, excl. oracle) 656   wall 971.5s
+------------------------------------------------------------------------------
+GATES
+  G0  PASS
+  G1  PASS
+  G2  PASS
+  G3  NOT REACHED (not run by campaign0; see G3 receipt)
+  G4  PASS
+  G5  NOT REACHED (holdout adjudicated separately; D/E are spent)
+  G6  NOT REACHED (holdout adjudicated separately; D/E are spent)
+  G7  PASS
+------------------------------------------------------------------------------
+INITIAL MINING (main dataset)
+  raw  CANDIDATE                  p=0.050 score=0.845
+       (Q - (C * K)) <= 0.8349 AND ((G - log(N)) / C) >= 0.5291
+  v3   CANDIDATE                  p=0.050 score=0.944
+       (Q - (C * K)) <= 0.8156 AND (exp(-N) - (C / G)) >= 0.1681
+  v4   CANDIDATE                  p=0.050 score=0.928
+       (Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883
+ADVERSARY
+  round 0  FAILED  confirmed 2 / confident 108
+    law  (Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883
+    revision picked v4 ; v4 CANDIDATE
+  round 1  SURVIVED  confirmed 2 / confident 107
+    law  (exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16
+LAW LEDGER
+  b32d824820 v1 parent=- cmap=v4  PROPOSED/ATTACKED/FAILED/REVISED
+    (Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883
+  c1b5a2630c v2 parent=b32d824820 cmap=v4  PROPOSED/ATTACKED/SURVIVED/FROZEN
+    (exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16
+FROZEN  (exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16  freeze ad4824fbb86afe73
+QUOTIENT  758 nodes -> 8 classes (0.011); boundary edge fraction {'CONTROL_OF': 0.65, 'COORD_PRESERVING': 0.0208, 'DEFORMATION_OF': 0.2231}
+==============================================================================
