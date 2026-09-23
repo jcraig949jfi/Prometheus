@@ -1,7 +1,7 @@
 {
  "grammar_hash": "61da6513ea0b36e04d4b2164a208fe4e1fd700e078076db847dc037f1c327f4e",
- "written": "2026-09-22 19:22:57",
- "seconds": 8.8,
+ "written": "2026-09-23 09:33:32",
+ "seconds": 13.0,
  "controls": [
   {
    "control": "vm_semantics",
@@ -138,7 +138,7 @@
      "STALE_RESIDUE_BIRTH"
     ]
    },
-   "seconds": 0.2
+   "seconds": 0.3
   },
   {
    "control": "seeded_replicator_BLOCK_PC_RELATIVE",
@@ -154,7 +154,7 @@
      "STALE_RESIDUE_BIRTH"
     ]
    },
-   "seconds": 0.6
+   "seconds": 0.8
   },
   {
    "control": "seeded_replicator_BYTEWISE_PC_RELATIVE",
@@ -170,7 +170,7 @@
      "STALE_RESIDUE_BIRTH"
     ]
    },
-   "seconds": 0.3
+   "seconds": 0.4
   },
   {
    "control": "no_general_replicator_without_self_location",
@@ -181,7 +181,7 @@
     "pop_final": 128,
     "note": "a hardcoded base is wrong once the organism is placed elsewhere; only the occupant of the hardcoded address can copy itself, and that is position dependence, not replication"
    },
-   "seconds": 0.4
+   "seconds": 0.5
   },
   {
    "control": "endogenous_invasion_from_seed",
@@ -217,7 +217,7 @@
      1.0
     ]
    },
-   "seconds": 1.0
+   "seconds": 1.6
   },
   {
    "control": "no_runner_births_in_endogenous",
@@ -254,7 +254,7 @@
      ]
     }
    },
-   "seconds": 1.6
+   "seconds": 2.5
   },
   {
    "control": "external_control_crosses_one_edit",
@@ -289,11 +289,12 @@
     "crossed_of_3": 3,
     "best_held": 1.0
    },
-   "seconds": 4.5
+   "seconds": 6.7
   }
  ],
  "passed": 10,
  "failed": 0,
  "not_verified": 0,
- "gate": "PASS"
+ "gate": "PASS",
+ "artifact": "CALIBRATION_PREFREEZE.json"
 }
