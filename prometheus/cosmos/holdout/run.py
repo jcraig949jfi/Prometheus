@@ -11,22 +11,27 @@ from __future__ import annotations
 import json
 import sys
 
-from prometheus.cosmos.holdout.well import FAMILY as D
+import importlib
+
 from prometheus.cosmos.world import evaluate
 
-CONTROL_WORLDS = [
-    dict(V=4, T=5.0, K=2, R=1.0, A=4.0, sigma=0.1, kappa=1e-4),
-    dict(V=8, T=2.0, K=4, R=3.0, A=8.0, sigma=0.1, kappa=1e-4),
-]
+FAMILIES = {"well": "prometheus.cosmos.holdout.well", "swarm": "prometheus.cosmos.holdout.swarm"}
+CONTROL_WORLDS = {
+    "well": [dict(V=4, T=5.0, K=2, R=1.0, A=4.0, sigma=0.1, kappa=1e-4),
+             dict(V=8, T=2.0, K=4, R=3.0, A=8.0, sigma=0.1, kappa=1e-4)],
+    "swarm": [dict(V=4, H=16, K=2, R=1.0, M=3, u=0.0, c_agent=1e-4, A_max=1000),
+              dict(V=8, H=8, K=4, R=4.0, M=5, u=0.0, c_agent=1e-4, A_max=1000)],
+}
+D = None   # bound per request to the requested sealed family
 
 
 def _campaign(spec):
     return "c0-holdout-" + spec["nonce"]
 
 
-def selftest():
+def selftest(name):
     out = {}
-    for i, p in enumerate(CONTROL_WORLDS):
+    for i, p in enumerate(CONTROL_WORLDS[name]):
         a = evaluate(D, p, campaign="selftest")
         b = evaluate(D, p, campaign="selftest")
         s = evaluate(D, D.sham(p), campaign="selftest")
@@ -38,10 +43,13 @@ def selftest():
 
 
 def main(req_path, reply_path):
+    global D
     req = json.load(open(req_path))
     cmd = req["cmd"]
+    name = req.get("family", "well")
+    D = importlib.import_module(FAMILIES[name]).FAMILY
     if cmd == "selftest":
-        rep = selftest()
+        rep = selftest(name)
     elif cmd == "coords":
         from prometheus.cosmos.contract import coords_of
         rep = [{"i": i, "coords": coords_of(D, p, req.get("cmap", "v1"))} for i, p in enumerate(req["spec"]["worlds"])]

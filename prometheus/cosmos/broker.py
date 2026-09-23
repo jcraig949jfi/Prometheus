@@ -30,6 +30,9 @@ from prometheus.cosmos.miner import law_from_json
 
 HOLDOUT = Path(__file__).resolve().parent / "holdout"
 SPEC = HOLDOUT / "sealed_spec.json"
+# sealed holdouts: commitment-bearing spec file and family module file per holdout id
+HOLDOUTS = {"D": {"family": "well", "spec": HOLDOUT / "sealed_spec.json", "src": HOLDOUT / "well.py"},
+            "E": {"family": "swarm", "spec": HOLDOUT / "sealed_spec_E.json", "src": HOLDOUT / "swarm.py"}}
 REPO = Path(__file__).resolve().parents[2]
 
 
@@ -38,6 +41,8 @@ class SealBroken(RuntimeError):
 
 
 def _call(req: Dict[str, Any], timeout: int = 3600) -> Any:
+    if "spec" in req and "family" not in req:
+        req = dict(req, family=req["spec"].get("_family", "well"))
     with tempfile.TemporaryDirectory() as td:
         rq, rp = Path(td) / "req.json", Path(td) / "rep.json"
         rq.write_text(json.dumps(req), encoding="utf-8")
@@ -49,19 +54,21 @@ def _call(req: Dict[str, Any], timeout: int = 3600) -> Any:
         return json.loads(rp.read_text(encoding="utf-8"))
 
 
-def selftest() -> Dict[str, Any]:
-    return _call({"cmd": "selftest"})
+def selftest(holdout: str = "D") -> Dict[str, Any]:
+    return _call({"cmd": "selftest", "family": HOLDOUTS[holdout]["family"]})
 
 
-def load_spec(commitment: str) -> Dict[str, Any]:
-    if not SPEC.exists():
-        raise SealBroken("no sealed spec")
-    got = file_sha(SPEC)
+def load_spec(commitment: str, holdout: str = "D") -> Dict[str, Any]:
+    H = HOLDOUTS[holdout]
+    if not H["spec"].exists():
+        raise SealBroken("no sealed spec for %s" % holdout)
+    got = file_sha(H["spec"])
     if got != commitment:
         raise SealBroken("sealed spec sha %s != preregistered commitment %s" % (got, commitment))
-    spec = json.loads(SPEC.read_text(encoding="utf-8"))
-    if file_sha(HOLDOUT / "well.py") != spec["family_src_sha"]:
-        raise SealBroken("well.py changed after sealing")
+    spec = json.loads(H["spec"].read_text(encoding="utf-8"))
+    if file_sha(H["src"]) != spec["family_src_sha"]:
+        raise SealBroken("%s changed after sealing" % H["src"].name)
+    spec["_family"] = H["family"]
     return spec
 
 
@@ -71,15 +78,17 @@ def _ba(pred: np.ndarray, y: np.ndarray) -> float:
     return 0.5 * ((pred & (y == 1)).sum() / (y == 1).sum() + (~pred & (y == 0)).sum() / (y == 0).sum())
 
 
-def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | None = None) -> Dict[str, Any]:
+def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | None = None,
+               holdout: str = "D") -> Dict[str, Any]:
     law_row = store.law(law_id)
     if not law_row["freeze_hash"] or not any(e["status"] == "FROZEN" for e in law_row["events"]):
         raise SealBroken("law %s is not frozen; the broker adjudicates frozen laws only" % law_id)
     fh = h({"law_id": law_id, "body": law_row["body"], "parent": law_row["parent"]})
     if fh != law_row["freeze_hash"]:
         raise SealBroken("freeze hash mismatch")
-    spec = load_spec(commitment)
-    store.receipts.append("holdout_open", {"law_id": law_id, "freeze_hash": fh, "spec_sha": commitment})
+    spec = load_spec(commitment, holdout)
+    store.receipts.append("holdout_open", {"law_id": law_id, "freeze_hash": fh, "spec_sha": commitment,
+                                           "holdout": holdout})
     L = law_from_json(law_row["body"]["law"])
     cmap = law_row["body"].get("cmap", "v1")
 
@@ -106,8 +115,9 @@ def adjudicate(store, law_id: str, commitment: str, baselines: Dict[str, Any] | 
     res["baselines"] = {k: {"ba": _ba(v, y), "acc": float((v == (y == 1)).mean())} for k, v in extra.items()}
     res["rows"] = [{"i": o["i"], "coords": coords[o["i"]]["coords"], "prob": float(p[o["i"]]),
                     "pred": int(pred[o["i"]]), "y": int(y[o["i"]]), "margin": o["margin"], "se": o["se"]} for o in obs]
+    res["holdout"] = holdout
     store.receipts.append("holdout_revealed", {k: v for k, v in res.items() if k != "rows"})
-    store.event(law_id, "HOLDOUT_TESTED", "BA %.3f on %d sealed worlds" % (res["law_ba"], len(y)))
+    store.event(law_id, "HOLDOUT_TESTED", "%s: BA %.3f on %d sealed worlds" % (holdout, res["law_ba"], len(y)))
     store.commit()
     return res
 
@@ -193,8 +203,8 @@ def two_sided_flips(L, x: Dict[str, float], lo: float = 1 / 64, hi: float = 64.0
 
 
 def intervene_fresh(store, law_id: str, commitment: str, salt: str = "G6b", n_candidates: int = 400,
-                    n_base: int = 12) -> Dict[str, Any]:
-    spec = load_spec(commitment)
+                    n_base: int = 12, holdout: str = "D") -> Dict[str, Any]:
+    spec = load_spec(commitment, holdout)
     law_row = store.law(law_id)
     if not law_row["freeze_hash"]:
         raise SealBroken("law not frozen")
@@ -211,7 +221,7 @@ def intervene_fresh(store, law_id: str, commitment: str, salt: str = "G6b", n_ca
     for j, c in enumerate(bases):
         presc.append({"j": j, "i": c["i"], "params": c["params"], "coords": c["coords"], **two_sided_flips(L, c["coords"])})
     ph = h(presc)
-    store.receipts.append("g6b_prescriptions", {"law_id": law_id, "salt": salt, "presc_hash": ph,
+    store.receipts.append("g6b_prescriptions", {"law_id": law_id, "salt": salt, "holdout": holdout, "presc_hash": ph,
                                                 "n_candidates": len(cand), "n_eligible": len(ok), "prescriptions": presc})
     store.commit()
     jobs = []

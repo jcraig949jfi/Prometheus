@@ -89,3 +89,15 @@ def test_sampler_pool_rows_carry_no_outcome_fields():
     from prometheus.cosmos import campaign0
     src = inspect.getsource(campaign0.run)
     assert 'POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2", "coords_v3")' in src
+
+
+COMMITMENT_E = "d17ace6e6f9171da49afab4a6c9626cfd1d998ae9e5c9cfdc14837dc319e7528"
+
+
+def test_second_holdout_sealed_and_guarded():
+    with pytest.raises(ImportError):
+        import prometheus.cosmos.holdout.swarm  # noqa: F401
+    spec = broker.load_spec(COMMITMENT_E, "E")
+    assert len(spec["worlds"]) == 240 and spec["family"] == "swarm"
+    with pytest.raises(broker.SealBroken):
+        broker.load_spec(COMMITMENT, "E")        # D's commitment must not open E
