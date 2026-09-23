@@ -20,6 +20,11 @@ Verify before acting on it:
 Nothing in that round has been done. Do not infer progress from the
 existence of the First Light tooling.
 
+Note: a comms self-post was tried as an extra pointer and does NOT
+deliver (a seat's own message never reaches its own queue; message
+537 records the attempt). The committed files are the working
+routes.
+
 ## Where the previous round left things (all committed and pushed)
 
 Branch `aether/aeth01-memwall-2026-09-22`, HEAD `75bc0315b` at the time

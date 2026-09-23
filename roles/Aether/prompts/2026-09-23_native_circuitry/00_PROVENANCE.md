@@ -34,6 +34,12 @@ file away from being missed. So the same pointer appears in:
 3. `roles/Aether/TODO.md` -- the dated TODO, with the resume state
 4. `roles/Aether/STATUS.md` -- "next executable action"
 
+A fifth route was attempted and REJECTED: a comms self-post
+(`--from Aether --to Aether`) is accepted by the queue but never
+delivered back to the sending seat, so `comms sync` reports 0 new
+and it never becomes a task. Message 537 records the attempt. Do
+not rely on it; the four above are the working routes.
+
 If those four ever disagree, **DIRECTIVE.md is what the operator
 actually said** and the others are wrong.
 
