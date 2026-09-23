@@ -88,6 +88,9 @@ def run_job(spec: dict, seed: int, run_dir: str) -> dict:
         (d / "EXPLOITS.json").write_text(json.dumps(out["exploits"], indent=1) + "\n", encoding="utf-8", newline="\n")
     if forensics:
         (d / "FORENSICS.json").write_text(json.dumps(forensics, indent=0) + "\n", encoding="utf-8", newline="\n")
+    # DF-017: founder origin classes (one row per initial organism) + the run's provenance summary
+    (d / "PROVENANCE.json").write_text(json.dumps({"schema": E.PROVENANCE_SCHEMA, "founders": out["founders"], "summary": sig["provenance"]}, indent=0) + "\n",
+                                       encoding="utf-8", newline="\n")
     rec = {"status": "DONE", "spec_id": spec["spec_id"], "family": spec["family"], "seed": seed, "stage": spec["stage"], "scheduler_reason": spec["scheduler_reason"],
            "factor_vector": GR.factor_vector(spec), "signals": sig, "wall_s": round(time.time() - t0, 1), "finished_at": stamp(), "grammar": spec["grammar"],
            "final_population_n": len(out["final_population"]), "snapshots": len(out["snapshots"]), "events": len(out["events"])}
@@ -252,7 +255,10 @@ class Campaign:
                 c["scheduler_reason"] = "verify:%s:%s" % (fam, c["scheduler_reason"]); self.push(c, "verification", seed=100)
             if tapes:
                 def tp(reason, **chg):
-                    t = json.loads(json.dumps(base)); t["transplant"] = {"from_run": best["run_id"], "tapes": tapes}; t["init"] = "random"
+                    t = json.loads(json.dumps(base)); t["transplant"] = {"from_run": best["run_id"], "tapes": tapes}
+                    # DF-017: the campaign set init="random" here and the old predicate read that label. The engine now stamps these
+                    # founders transplanted_lineage from the tapes themselves; the label is corrected so the spec no longer lies.
+                    t["init"] = "transplanted_lineage"
                     for k, v in chg.items():
                         if k == "reproduction": t["reproduction"] = v; t["pressure"] = [p for p in t["pressure"] if p not in ("explicit_fitness", "recombination")] or ["implicit_survival"]
                         elif k == "topology": t["world"]["topology"] = v; t["world"]["migration"] = "none"; t["world"]["reservoir"] = False

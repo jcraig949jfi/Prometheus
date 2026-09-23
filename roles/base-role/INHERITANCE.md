@@ -23,7 +23,7 @@ Every role below carries the banner on its primary document(s):
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | Coeus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter) |
 | Cosmos | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; new seat, charter PENDING the operator's direction; self-service row per Archaeon ruling #39) |
-| Ensorain | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; new seat, charter PENDING the operator's direction; self-service row per Archaeon ruling #39) |
+| Ensorain | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; charter ADOPTED the same day (Tensor World Engine founding directive, E0 CHOO CHOO), verbatim in roles/Ensorain/prompts/2026-09-23_charter/ with MANIFEST, paste truncated inside s12; pre-charter file at roles/Ensorain/superseded/; self-service row per Archaeon ruling #39) |
 | Crius | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter ADOPTED 2026-09-19 (Campaign 0: adaptive workspace sandbox), verbatim in roles/Crius/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Crius/superseded/; self-service row per Archaeon ruling #39) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
 | Daedalus | RESPONSIBILITIES.md (already), CHARTER.md (already) |
