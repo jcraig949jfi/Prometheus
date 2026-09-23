@@ -15,12 +15,15 @@ import importlib
 
 from prometheus.cosmos.world import evaluate
 
-FAMILIES = {"well": "prometheus.cosmos.holdout.well", "swarm": "prometheus.cosmos.holdout.swarm"}
+FAMILIES = {"well": "prometheus.cosmos.holdout.well", "swarm": "prometheus.cosmos.holdout.swarm",
+            "clone": "prometheus.cosmos.holdout.clone"}
 CONTROL_WORLDS = {
     "well": [dict(V=4, T=5.0, K=2, R=1.0, A=4.0, sigma=0.1, kappa=1e-4),
              dict(V=8, T=2.0, K=4, R=3.0, A=8.0, sigma=0.1, kappa=1e-4)],
     "swarm": [dict(V=4, H=16, K=2, R=1.0, M=3, u=0.0, c_agent=1e-4, A_max=1000),
               dict(V=8, H=8, K=4, R=4.0, M=5, u=0.0, c_agent=1e-4, A_max=1000)],
+    "clone": [dict(V=4, H=8, K=2, R=1.0, n0=4, b=0.0, d=0.0, c_cell=1e-4),
+              dict(V=8, H=16, K=4, R=3.0, n0=2, b=0.0, d=0.0, c_cell=1e-4)],
 }
 D = None   # bound per request to the requested sealed family
 

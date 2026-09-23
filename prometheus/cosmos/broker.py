@@ -32,7 +32,8 @@ HOLDOUT = Path(__file__).resolve().parent / "holdout"
 SPEC = HOLDOUT / "sealed_spec.json"
 # sealed holdouts: commitment-bearing spec file and family module file per holdout id
 HOLDOUTS = {"D": {"family": "well", "spec": HOLDOUT / "sealed_spec.json", "src": HOLDOUT / "well.py"},
-            "E": {"family": "swarm", "spec": HOLDOUT / "sealed_spec_E.json", "src": HOLDOUT / "swarm.py"}}
+            "E": {"family": "swarm", "spec": HOLDOUT / "sealed_spec_E.json", "src": HOLDOUT / "swarm.py"},
+            "F": {"family": "clone", "spec": HOLDOUT / "sealed_spec_F.json", "src": HOLDOUT / "clone.py"}}
 REPO = Path(__file__).resolve().parents[2]
 
 

@@ -101,3 +101,13 @@ def test_second_holdout_sealed_and_guarded():
     assert len(spec["worlds"]) == 240 and spec["family"] == "swarm"
     with pytest.raises(broker.SealBroken):
         broker.load_spec(COMMITMENT, "E")        # D's commitment must not open E
+
+
+COMMITMENT_F = "5e0064901277ef9e48571906dab60f998ad924b16a46bdb316d0db46bc504946"
+
+
+def test_third_holdout_sealed_and_guarded():
+    with pytest.raises(ImportError):
+        import prometheus.cosmos.holdout.clone  # noqa: F401
+    spec = broker.load_spec(COMMITMENT_F, "F")
+    assert len(spec["worlds"]) == 240 and spec["family"] == "clone"

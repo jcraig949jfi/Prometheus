@@ -35,7 +35,8 @@ INTERVENTION_PROTOCOL = {
 }
 
 
-TARGETS = {"well": ("sealed_spec.json", "well.py"), "swarm": ("sealed_spec_E.json", "swarm.py")}
+TARGETS = {"well": ("sealed_spec.json", "well.py"), "swarm": ("sealed_spec_E.json", "swarm.py"),
+           "clone": ("sealed_spec_F.json", "clone.py")}
 PROTOCOL_E = {
     "axis": "c_agent (agent maintenance price), do(c_agent: a -> a*f)",
     "protocol": "as G6b (roles/Cosmos/campaigns/c0b/PREREG.md amendment B1) with salt 'G6E'",
@@ -61,7 +62,7 @@ def main(argv=None):
     worlds = [{k: (float(x) if isinstance(x, float) else int(x)) for k, x in w.items()} for w in worlds]
     spec = {"family": D.name, "family_version": D.version,
             "family_src_sha": file_sha(HERE / TARGETS[name][1]), "nonce": nonce, "worlds": worlds,
-            "intervention_protocol": INTERVENTION_PROTOCOL if name == "well" else PROTOCOL_E}
+            "intervention_protocol": INTERVENTION_PROTOCOL if name == "well" else dict(PROTOCOL_E, axis="c_cell")}
     spec["spec_id"] = h({k: v for k, v in spec.items()})
     SPEC.write_text(json.dumps(spec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     print("sealed", SPEC, "sha256", file_sha(SPEC))
