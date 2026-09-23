@@ -81,3 +81,11 @@ def test_receipt_chain_detects_tampering(tmp_path):
     lines[2] = lines[2].replace('"i":2', '"i":7')
     (tmp_path / "r.jsonl").write_text("\n".join(lines) + "\n")
     assert rc.verify() == 2
+
+
+def test_sampler_pool_rows_carry_no_outcome_fields():
+    """Strategies see unqueried worlds through pool rows; those must be spec-side only."""
+    import inspect
+    from prometheus.cosmos import campaign0
+    src = inspect.getsource(campaign0.run)
+    assert 'POOL_FIELDS = ("family", "lineage", "world_id", "params", "coords", "coords_v2")' in src

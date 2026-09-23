@@ -39,7 +39,7 @@ class Chamber:
         row = {"family": fam_name, "lineage": self.lineage[fam_name], "world_id": rec["world_id"],
                "params": params, "coords": fam.coords(params, "v1"), "coords_v2": fam.coords(params, "v2"),
                "y": int(rec["verdict"] == "PAYS"), "margin": rec["margin"], "se": rec["margin_se"],
-               "acc": rec["acc"], "purpose": purpose, "replicate": replicate}
+               "acc": rec["acc"], "fitness": rec["fitness"], "purpose": purpose, "replicate": replicate}
         if self.store is not None:
             self.store.add_node(rec["world_id"], fam_name, row["lineage"], params, row["coords"], row["coords_v2"], purpose)
             self.store.add_run(rec, purpose, self.code_sha)
