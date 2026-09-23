@@ -27,6 +27,7 @@ class Ring(Family):
     name = "ring"
     version = "1"
     lineage = ("prometheus/cosmos/substrates/ring.py",)
+    cost_knob = "ehop"
 
     def space(self) -> Dict[str, List[Any]]:
         return {

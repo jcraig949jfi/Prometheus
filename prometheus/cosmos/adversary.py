@@ -45,9 +45,12 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
     meta: List[Dict[str, Any]] = []      # metamorphic pairs: equal declared coords, different microphysics
     skipped_not_preserving: List[Dict[str, Any]] = []
     prior = chamber.rows
+    observed = {r["world_id"] for r in getattr(chamber, "log", chamber.rows)}   # never re-fire an observed world
     errs = [r for r in prior if bool(law.predict(_X([r[key]], cmap))[0]) != bool(r["y"])]
 
     def fire(kind, fam, params, parent=None, edge=None):
+        from prometheus.cosmos.world import world_id as _wid
+        observed.add(_wid(chamber.fams[fam], params))
         c = coords_of(chamber.fams[fam], params, cmap)
         p = float(law.prob(_X([c], cmap))[0])
         row = chamber.observe(fam, params, purpose="attack:" + kind, parent=parent, edge_kind=edge,
@@ -61,10 +64,12 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
         P = pool[f]
         Xp = _X([r[key] for r in P], cmap)
         pp = law.prob(Xp)
-        conf = np.nonzero((pp >= CONF) | (pp <= 1 - CONF))[0]
+        fresh = np.array([P[i]["world_id"] not in observed for i in range(len(P))])
+        conf = np.nonzero(((pp >= CONF) | (pp <= 1 - CONF)) & fresh)[0]
         q = per_family // 4
-        # band
-        band = np.argsort(np.abs(pp - 0.5))[:q]
+        # band: sample among the 4q least-certain fresh worlds with the round's rng
+        unc = [i for i in np.argsort(np.abs(pp - 0.5)) if fresh[i]][: 4 * q]
+        band = rng.choice(unc, min(q, len(unc)), replace=False) if unc else []
         for i in band:
             fire("band", f, P[i]["params"])
         # coordinate-preserving transforms of confident worlds
@@ -99,14 +104,21 @@ def attack(law: Law, chamber, pool: Dict[str, List[Dict[str, Any]]], rng, per_fa
         for k in ("C", "N", "K", "G"):
             ci = conf[np.argsort(Xp[k][conf])] if len(conf) else []
             ext += list(ci[:2]) + list(ci[-2:])
-        for i in list(dict.fromkeys(ext))[:q]:
+        ext = list(dict.fromkeys(int(i) for i in ext))
+        ext = list(rng.permutation(ext))[:q] if ext else []
+        for i in ext:
+            if P[i]["world_id"] in observed:
+                continue
             fire("extreme", f, P[i]["params"])
         # error-seeking
         if errs and len(conf):
             Ze = feats([r["coords"] for r in errs])
             Zc = feats([P[i]["coords"] for i in conf])     # distance in the fixed v1 feature space
             d = ((Zc[:, None, :] - Ze[None, :, :]) ** 2).sum(-1).min(1)
-            for i in conf[np.argsort(d)[:q]]:
+            near = conf[np.argsort(d)[: 3 * q]]
+            for i in rng.choice(near, min(q, len(near)), replace=False):
+                if P[i]["world_id"] in observed:
+                    continue
                 fire("errorseek", f, P[i]["params"])
 
     # confirmation of confident contradictions

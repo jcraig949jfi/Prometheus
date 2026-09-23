@@ -66,6 +66,7 @@ class Family:
     name: str = "?"
     version: str = "0"
     lineage: Tuple[str, ...] = ()
+    cost_knob: str = ""        # the native knob that C is linear in (for location attacks / interventions)
 
     def space(self) -> Dict[str, List[Any]]:
         raise NotImplementedError

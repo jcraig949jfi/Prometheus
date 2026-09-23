@@ -109,3 +109,31 @@ def test_two_sided_flips_on_a_band_law():
     one.alpha, one.scales = 50.0, [1.0]
     r1 = two_sided_flips(one, {"C": 0.1, "N": 0.0, "K": 4.0, "G": 0.5})
     assert r1["f_lo"] is None and abs(r1["f_hi"] - 4.0) / 4.0 < 0.01
+
+
+def test_adversary_rounds_attack_fresh_worlds():
+    """C0s defect: repeated rounds must not re-fire already-observed worlds."""
+    import numpy as np
+    from prometheus.cosmos.adversary import attack
+    from prometheus.cosmos.contract import coords_of
+    from prometheus.cosmos.miner import Law
+    from prometheus.cosmos.world import world_id
+    fams = visible()
+    fam = fams["regs"]
+    rng = np.random.default_rng(0)
+    sp = fam.space()
+    pool = []
+    for _ in range(120):
+        p = {k: v[rng.integers(len(v))] for k, v in sp.items()}
+        pool.append({"family": "regs", "world_id": world_id(fam, p), "params": p,
+                     "coords": coords_of(fam, p, "v1"), "coords_v2": coords_of(fam, p, "v2"), "coords_v3": coords_of(fam, p, "v3")})
+    L = Law(atoms=[(("var", "C"), 0.3, 1.0)], complexity=1)
+    L.alpha, L.scales = 20.0, [1.0]
+    ch = Chamber([fam], campaign="t")
+    attack(L, ch, {"regs": pool}, np.random.default_rng(1), per_family=16)
+    n1 = len(ch.log)
+    first = [r["world_id"] for r in ch.log if r["purpose"].startswith("attack:") and r["purpose"] != "attack:coordpres"]
+    attack(L, ch, {"regs": pool}, np.random.default_rng(2), per_family=16)
+    second = [r["world_id"] for r in ch.log[n1:] if r["purpose"].startswith("attack:") and r["purpose"] != "attack:coordpres"]
+    assert first and second
+    assert not (set(first) & set(second))

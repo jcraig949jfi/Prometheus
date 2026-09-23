@@ -27,6 +27,7 @@ class CA(Family):
     name = "ca"
     version = "1"
     lineage = ("prometheus/cosmos/substrates/ca.py",)
+    cost_knob = "ccell"
 
     def space(self) -> Dict[str, List[Any]]:
         return {

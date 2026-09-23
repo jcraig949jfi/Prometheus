@@ -26,6 +26,7 @@ class Regs(Family):
     name = "regs"
     version = "1"
     lineage = ("prometheus/cosmos/substrates/regs.py",)
+    cost_knob = "bitcost"
 
     def space(self) -> Dict[str, List[Any]]:
         return {

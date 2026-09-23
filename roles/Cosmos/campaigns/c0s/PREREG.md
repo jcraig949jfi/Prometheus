@@ -42,3 +42,33 @@ form C - (G + exp(-N)) over the multiplicative G exp(-N) - C (both size 6; near-
 and the confident-contradiction adversary cannot see a location bias inside the transition band.
 The law is NOT revised here (no unspent sealed universe remains to test a revision); the bias is
 recorded as an ATTACKED event on the law.
+
+## S1 RESULT (2026-09-23T13:05Z, S1_stress.json)
+As scored: 4/4 rounds SURVIVED (confirmed/confident 0/89, 1/134, 1/134, 1/134); metamorphic pairs
+0 verdict flips in 4 x ~33 pairs. Precommitment "all 4 survive" HELD -- but WEAKENED:
+ADVERSARY DEFECT (own instrument): band, extreme and error-seek attacks are deterministic given
+the pool, and a world's seed derives from its id, so rounds 1-3 re-fired the SAME worlds (identical
+counterexample, identical band calibration 0.512 predicted / 0.689 observed). Only coordinate-
+preserving transforms drew fresh worlds. Effective independent evidence ~1.5 rounds, not 4.
+The single repeated counterexample: ring, C .432 N .36 K 4 G .75 predicted QUIET (P ~ 0) observed
+PAYS (margin .163) -- consistent with the additive law under-crediting SEL at moderate N.
+Band calibration: law P 0.51 vs observed PAYS rate 0.69 over 45 band worlds (miscalibrated width).
+Fix (for later runs): every attack class excludes worlds already observed in the chamber and
+samples among its candidates with the round's rng (adversary.attack; test_adversary_fresh).
+
+## LOCATE (new instrument, prometheus/cosmos/locate.py; run 2026-09-23T13:07Z, not preregistered --
+## exploratory, reported as such; LOCATE_frozen_law.json)
+Upper-flip location of the frozen law vs observed, 8 random confident-PAYS bases per family, 33-pt
+ladder around the law's flip, 1600 episodes, common random numbers:
+  regs  mean delta log2 -0.147 (se .033)  LOCATION_BIASED   corr(N, delta) -0.85
+  ca    mean delta log2 -0.105 (se .013)  LOCATION_BIASED   corr(N, delta) -0.57
+  ring  mean delta log2 +0.142 (se .082)  (OK by the rule)  corr(N, delta) +0.99
+  pooled -0.037 (se .039) -> LOCATION_OK: the per-family biases CANCEL when pooled.
+OBSERVED: at N ~ 0 every family sits near -0.1 log2 (the S2b law-form bias); in ring the offset
+climbs with N to +0.48 at N = 0.9.
+INFERRED (mechanism, not yet tested): ring's declared C charges the full horizon, but a destroyed
+packet stops costing ("dead memory is free"), so its effective selective cost is ~C (1 - e^-N) / N;
+regs/ca/D/E keep paying after corruption. This is a ring coordinate-DECLARATION defect that the
+pooled family-residual test (G7, mu ~ 0) and LOLO could not see.
+CONCLUDED (instrument): pooled residual tests can hide opposite-signed family biases; location
+must be tested per family.
