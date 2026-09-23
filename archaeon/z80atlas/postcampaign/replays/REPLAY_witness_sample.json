@@ -1,0 +1,2832 @@
+{
+ "set": "witness_sample",
+ "n": 40,
+ "admitted": 40,
+ "historical_dir": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\archaeon\\z80atlas\\campaign",
+ "results": [
+  {
+   "run_id": "5ab40d6b5add_s1_prom",
+   "run_dir": "017c566989c2/5ab40d6b5add_s1_prom",
+   "seed": 1,
+   "spec_id": "5ab40d6b5add",
+   "scheduler_reason": "promotion:017c566989c2:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 156.9,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 80,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 478,
+      "id": 9091,
+      "generation": 72,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 1087,
+      "id": 20588,
+      "generation": 162,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 2111,
+      "id": 40139,
+      "generation": 327,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "3a71d4bd6f6c_s1_prom",
+   "run_dir": "070c3a9ab655/3a71d4bd6f6c_s1_prom",
+   "seed": 1,
+   "spec_id": "3a71d4bd6f6c",
+   "scheduler_reason": "promotion:070c3a9ab655:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:init",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 168.1,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_incremental",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 68,
+     "seeded_replicator": 7,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 91,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 919,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 0,
+      "id": 16,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "INC1": {
+      "epoch": 895,
+      "id": 17068,
+      "generation": 130,
+      "inserted_ancestry": true,
+      "origins": [
+       "random",
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 1997,
+      "id": 38003,
+      "generation": 401,
+      "inserted_ancestry": true,
+      "origins": [
+       "random",
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 2781,
+      "id": 52815,
+      "generation": 581,
+      "inserted_ancestry": true,
+      "origins": [
+       "random",
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "2c852447af02_s1_cont",
+   "run_dir": "08992f19343c/2c852447af02_s1_cont",
+   "seed": 1,
+   "spec_id": "2c852447af02",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 3.3,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "COND_1edit",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 78,
+     "seeded_replicator": 7,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_1edit": {
+      "epoch": 0,
+      "id": 61,
+      "generation": 0,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "c9e596bb5006_s1_prom",
+   "run_dir": "1107505d2c85/c9e596bb5006_s1_prom",
+   "seed": 1,
+   "spec_id": "c9e596bb5006",
+   "scheduler_reason": "promotion:1107505d2c85:moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:mutation",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 189.9,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 81,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 116,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 768,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 321,
+      "id": 6136,
+      "generation": 68,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 710,
+      "id": 13561,
+      "generation": 121,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 947,
+      "id": 17922,
+      "generation": 161,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "0aef742c4072_s1_cont",
+   "run_dir": "13c05ec52386/0aef742c4072_s1_cont",
+   "seed": 1,
+   "spec_id": "0aef742c4072",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 0.9,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "NEG",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 74,
+     "seeded_replicator": 7,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "NEG": {
+      "epoch": 0,
+      "id": 48,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "21bdc8e145c1_s1_prom",
+   "run_dir": "1fae31911da6/21bdc8e145c1_s1_prom",
+   "seed": 1,
+   "spec_id": "21bdc8e145c1",
+   "scheduler_reason": "promotion:1fae31911da6:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:representation.layout",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 144.0,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "NEG",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 83,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 128,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 1000,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "NEG": {
+      "epoch": 21,
+      "id": 482,
+      "generation": 4,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "c954e584865a_s1_prom",
+   "run_dir": "30aa45d008ca/c954e584865a_s1_prom",
+   "seed": 1,
+   "spec_id": "c954e584865a",
+   "scheduler_reason": "promotion:30aa45d008ca:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:representation.genome",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 165.4,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "ECHO_forced",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 70,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 4,
+      "id": 110,
+      "generation": 2,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "CONST_incremental": {
+      "epoch": 47,
+      "id": 850,
+      "generation": 8,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 100,
+      "id": 1948,
+      "generation": 16,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 2064,
+      "id": 39255,
+      "generation": 302,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "5417081f1b64_s1_prom",
+   "run_dir": "3a8454ccd27a/5417081f1b64_s1_prom",
+   "seed": 1,
+   "spec_id": "5417081f1b64",
+   "scheduler_reason": "promotion:3a8454ccd27a:coexistence+moat_advantage+moat_crossed+new_arch_events+transport:representation.genome",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 46.2,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "none",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 79,
+     "seeded_replicator": 7,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 77,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 764,
+      "id": 14593,
+      "generation": 175,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 2933,
+      "id": 55716,
+      "generation": 622,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 3845,
+      "id": 73058,
+      "generation": 744,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "6dbf92277b75_s1_cont",
+   "run_dir": "3acdf172978a/6dbf92277b75_s1_cont",
+   "seed": 1,
+   "spec_id": "6dbf92277b75",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 227.5,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 66,
+     "seeded_replicator": 6,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 187603,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.987,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 127,
+    "donor_mixed_births": 100,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 1540,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 37,
+     "child_id": 73,
+     "cell": 32,
+     "niche": 1,
+     "lineage": 37,
+     "generation": 1,
+     "founders": [
+      37
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "child_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 37,
+     "child_id": 73,
+     "cell": 32,
+     "niche": 1,
+     "lineage": 37,
+     "generation": 1,
+     "founders": [
+      37
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "child_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 0,
+      "id": 37,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "CONST_incremental": {
+      "epoch": 0,
+      "id": 14,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "9f8c74cdda43_s1_cont",
+   "run_dir": "3df7088df505/9f8c74cdda43_s1_cont",
+   "seed": 1,
+   "spec_id": "9f8c74cdda43",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 202.0,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 77,
+     "seeded_replicator": 3,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 189106,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.986,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 128,
+    "donor_mixed_births": 86,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 1593,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 0.969,
+     "parent_id": 38,
+     "child_id": 81,
+     "cell": 64,
+     "niche": 2,
+     "lineage": 38,
+     "generation": 1,
+     "founders": [
+      38
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "child_tape": "01b7162100418032d2dc451c2c10f81700000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 0.969,
+     "parent_id": 38,
+     "child_id": 81,
+     "cell": 64,
+     "niche": 2,
+     "lineage": 38,
+     "generation": 1,
+     "founders": [
+      38
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b7162100418032d225451c2c10f81700000000000000000000000000000000",
+     "child_tape": "01b7162100418032d2dc451c2c10f81700000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 0,
+      "id": 38,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "ECHO_forced": {
+      "epoch": 986,
+      "id": 113790,
+      "generation": 946,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "09b694a7ddbc_s1_prom",
+   "run_dir": "3e3650dc6e98/09b694a7ddbc_s1_prom",
+   "seed": 1,
+   "spec_id": "09b694a7ddbc",
+   "scheduler_reason": "promotion:3e3650dc6e98:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 65.1,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "none",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 71,
+     "seeded_replicator": 9,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 128,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 301,
+      "id": 5786,
+      "generation": 37,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 593,
+      "id": 11347,
+      "generation": 85,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "f1a758de8c20_s1_prom",
+   "run_dir": "3e3650dc6e98/f1a758de8c20_s1_prom",
+   "seed": 1,
+   "spec_id": "f1a758de8c20",
+   "scheduler_reason": "promotion:3e3650dc6e98:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 63.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "COND_multi",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 70,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 128,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 1385,
+      "id": 26382,
+      "generation": 192,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "e42761b99b5a_s1_cont",
+   "run_dir": "4535378fa113/e42761b99b5a_s1_cont",
+   "seed": 1,
+   "spec_id": "e42761b99b5a",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 79.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 74,
+     "seeded_replicator": 9,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 128,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ADD2": {
+      "epoch": 0,
+      "id": 63,
+      "generation": 0,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "50939cffc50a_s2_prom",
+   "run_dir": "50939cffc50a/50939cffc50a_s2_prom",
+   "seed": 2,
+   "spec_id": "50939cffc50a",
+   "scheduler_reason": "promotion:50939cffc50a:env_lineage+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 100.0,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 72,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 65,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 154,
+      "id": 2996,
+      "generation": 34,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "362c05e56744_s1_cont",
+   "run_dir": "556de9fa198f/362c05e56744_s1_cont",
+   "seed": 1,
+   "spec_id": "362c05e56744",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 254.5,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_incremental",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 78,
+     "seeded_replicator": 6,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 198745,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.984,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 126,
+    "donor_mixed_births": 127,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 1571,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 47,
+     "child_id": 85,
+     "cell": 88,
+     "niche": 2,
+     "lineage": 47,
+     "generation": 1,
+     "founders": [
+      47
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "child_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "task": "CONST_incremental"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 47,
+     "child_id": 85,
+     "cell": 88,
+     "niche": 2,
+     "lineage": 47,
+     "generation": 1,
+     "founders": [
+      47
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "child_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "task": "CONST_incremental"
+    },
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 0,
+      "id": 47,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "ECHO_forced": {
+      "epoch": 394,
+      "id": 46832,
+      "generation": 350,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "a0132ad72787_s101_veri",
+   "run_dir": "5b237a475b69/a0132ad72787_s101_veri",
+   "seed": 101,
+   "spec_id": "a0132ad72787",
+   "scheduler_reason": "verify:5b237a475b69:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 256.9,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 60,
+     "seeded_replicator": 12,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 370989,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.991,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 124,
+    "donor_mixed_births": 82,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 3044,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 55,
+     "child_id": 73,
+     "cell": 117,
+     "niche": 3,
+     "lineage": 55,
+     "generation": 1,
+     "founders": [
+      55
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "15352316210041801ce2146610fc170000000000000000000000000000000000",
+     "child_tape": "15352316210041801ce2146610fc170000000000000000000000000000000000",
+     "task": "ADD2"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 55,
+     "child_id": 73,
+     "cell": 117,
+     "niche": 3,
+     "lineage": 55,
+     "generation": 1,
+     "founders": [
+      55
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "15352316210041801ce2146610fc170000000000000000000000000000000000",
+     "child_tape": "15352316210041801ce2146610fc170000000000000000000000000000000000",
+     "task": "ADD2"
+    },
+    "first_crossing": {
+     "ADD2": {
+      "epoch": 0,
+      "id": 73,
+      "generation": 1,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 164,
+      "id": 19066,
+      "generation": 159,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 200,
+      "id": 23598,
+      "generation": 176,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 329,
+      "id": 39027,
+      "generation": 337,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "a778e681e647_s1_cont",
+   "run_dir": "636158e75708/a778e681e647_s1_cont",
+   "seed": 1,
+   "spec_id": "a778e681e647",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 252.4,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "none",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 70,
+     "seeded_replicator": 10,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 263863,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.988,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 122,
+    "donor_mixed_births": 95,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 2205,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 76,
+     "child_id": 81,
+     "cell": 101,
+     "niche": 3,
+     "lineage": 76,
+     "generation": 1,
+     "founders": [
+      76
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "210041801ce2146610fc17000000000000000000000000000000000000000000",
+     "child_tape": "210041801ce2146610fc17000000000000000000000000000000000000000000",
+     "task": "none"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 76,
+     "child_id": 81,
+     "cell": 101,
+     "niche": 3,
+     "lineage": 76,
+     "generation": 1,
+     "founders": [
+      76
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "210041801ce2146610fc17000000000000000000000000000000000000000000",
+     "child_tape": "210041801ce2146610fc17000000000000000000000000000000000000000000",
+     "task": "none"
+    },
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 1436,
+      "id": 172259,
+      "generation": 1396,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "2399a992a012_s1_cont",
+   "run_dir": "692e4018aa33/2399a992a012_s1_cont",
+   "seed": 1,
+   "spec_id": "2399a992a012",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 0.7,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "COND_1edit",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 77,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_1edit": {
+      "epoch": 22,
+      "id": 50,
+      "generation": 0,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "6668d95d73ee_s2_prom",
+   "run_dir": "74ec333e58b9/6668d95d73ee_s2_prom",
+   "seed": 2,
+   "spec_id": "6668d95d73ee",
+   "scheduler_reason": "promotion:74ec333e58b9:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 63.5,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "NEG",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 82,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "NEG": {
+      "epoch": 242,
+      "id": 4627,
+      "generation": 46,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 596,
+      "id": 11395,
+      "generation": 97,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 813,
+      "id": 15379,
+      "generation": 120,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "a3d9e9ce15ca_s1_cont",
+   "run_dir": "78f8a08dcbef/a3d9e9ce15ca_s1_cont",
+   "seed": 1,
+   "spec_id": "a3d9e9ce15ca",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 0.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 57,
+     "seeded_replicator": 5,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ADD2": {
+      "epoch": 0,
+      "id": 23,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "9e85b98c9dec_s2_prom",
+   "run_dir": "79e1ed55dc75/9e85b98c9dec_s2_prom",
+   "seed": 2,
+   "spec_id": "9e85b98c9dec",
+   "scheduler_reason": "promotion:79e1ed55dc75:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 137.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 76,
+     "seeded_replicator": 5,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 125,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ADD2": {
+      "epoch": 0,
+      "id": 74,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "INC1": {
+      "epoch": 111,
+      "id": 2180,
+      "generation": 21,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 352,
+      "id": 6755,
+      "generation": 62,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "de1893d9186d_s1_prom",
+   "run_dir": "8007104a5c01/de1893d9186d_s1_prom",
+   "seed": 1,
+   "spec_id": "de1893d9186d",
+   "scheduler_reason": "promotion:8007104a5c01:moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:world.migration",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 141.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "none",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 77,
+     "seeded_replicator": 7,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 121,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_multi": {
+      "epoch": 277,
+      "id": 5336,
+      "generation": 62,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 361,
+      "id": 6932,
+      "generation": 80,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 1657,
+      "id": 31543,
+      "generation": 374,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "4731476f42b4_s1_cont",
+   "run_dir": "80152a2abb68/4731476f42b4_s1_cont",
+   "seed": 1,
+   "spec_id": "4731476f42b4",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 1.0,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "INC1",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 70,
+     "seeded_replicator": 2,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 19,
+      "id": 2,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "17d11fe20eef_s1_cont",
+   "run_dir": "803cb516757a/17d11fe20eef_s1_cont",
+   "seed": 1,
+   "spec_id": "17d11fe20eef",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 66.7,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "INC1",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 84,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 34,
+      "id": 718,
+      "generation": 5,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "869096851c1f_s1_prom",
+   "run_dir": "995a81d20064/869096851c1f_s1_prom",
+   "seed": 1,
+   "spec_id": "869096851c1f",
+   "scheduler_reason": "promotion:995a81d20064:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 135.3,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "COND_multi",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 72,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_multi": {
+      "epoch": 14,
+      "id": 259,
+      "generation": 2,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 198,
+      "id": 3811,
+      "generation": 32,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 301,
+      "id": 5565,
+      "generation": 38,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "3fd33042168e_s1_cont",
+   "run_dir": "a054223f5ca2/3fd33042168e_s1_cont",
+   "seed": 1,
+   "spec_id": "3fd33042168e",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 176.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 59,
+     "seeded_replicator": 10,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 125,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 0,
+      "id": 61,
+      "generation": 0,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "CONST_incremental": {
+      "epoch": 1,
+      "id": 15,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "INC1": {
+      "epoch": 138,
+      "id": 2453,
+      "generation": 14,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 317,
+      "id": 5815,
+      "generation": 43,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 2373,
+      "id": 44989,
+      "generation": 359,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "d87d2f86023b_s2_prom",
+   "run_dir": "a71f1d7b7173/d87d2f86023b_s2_prom",
+   "seed": 2,
+   "spec_id": "d87d2f86023b",
+   "scheduler_reason": "promotion:a71f1d7b7173:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 79.4,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "NEG",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 76,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 126,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 192,
+      "id": 3719,
+      "generation": 20,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 624,
+      "id": 11907,
+      "generation": 91,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 1753,
+      "id": 33382,
+      "generation": 297,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "bcba779ae122_s1_prom",
+   "run_dir": "a79351d13ab8/bcba779ae122_s1_prom",
+   "seed": 1,
+   "spec_id": "bcba779ae122",
+   "scheduler_reason": "promotion:a79351d13ab8:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:world.resources",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 136.4,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "COND_multi",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 77,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 122,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_multi": {
+      "epoch": 39,
+      "id": 612,
+      "generation": 3,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "CONST_incremental": {
+      "epoch": 2878,
+      "id": 54707,
+      "generation": 551,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "fa62c04e4fa6_s1_cont",
+   "run_dir": "a987a8dca4ae/fa62c04e4fa6_s1_cont",
+   "seed": 1,
+   "spec_id": "fa62c04e4fa6",
+   "scheduler_reason": "matched_control:accessibility",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 157.6,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "CONST_incremental",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 73,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 985,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 600,
+      "id": 11151,
+      "generation": 98,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 753,
+      "id": 14310,
+      "generation": 111,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 859,
+      "id": 16369,
+      "generation": 123,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "aa19ec2798cc_s2_prom",
+   "run_dir": "aa19ec2798cc/aa19ec2798cc_s2_prom",
+   "seed": 2,
+   "spec_id": "aa19ec2798cc",
+   "scheduler_reason": "promotion:aa19ec2798cc:moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 145.3,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "CONST_incremental",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 82,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 124,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 937,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 302,
+      "id": 5806,
+      "generation": 47,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "COND_multi": {
+      "epoch": 303,
+      "id": 5830,
+      "generation": 42,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "ECHO_forced": {
+      "epoch": 600,
+      "id": 11444,
+      "generation": 99,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "e3cf4ea674fa_s1_prom",
+   "run_dir": "b1ea45e9e128/e3cf4ea674fa_s1_prom",
+   "seed": 1,
+   "spec_id": "e3cf4ea674fa",
+   "scheduler_reason": "promotion:b1ea45e9e128:coexistence+env_lineage+moat_advantage+moat_crossed+new_arch_events+transport:world.migration",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 110.7,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "none",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 66,
+     "seeded_replicator": 10,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 123,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 668,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 803,
+      "id": 15318,
+      "generation": 163,
+      "inserted_ancestry": true,
+      "origins": [
+       "random",
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "b83c64449421_s1_expl",
+   "run_dir": "b83c64449421/b83c64449421_s1_expl",
+   "seed": 1,
+   "spec_id": "b83c64449421",
+   "scheduler_reason": "exploration",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 97.8,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 80,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 1449,
+      "id": 27371,
+      "generation": 205,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "c53b78d08ea3_s1_prom",
+   "run_dir": "c0720e4ab976/c53b78d08ea3_s1_prom",
+   "seed": 1,
+   "spec_id": "c53b78d08ea3",
+   "scheduler_reason": "promotion:c0720e4ab976:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 64.2,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "INC1",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 75,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 125,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 465,
+      "id": 8900,
+      "generation": 64,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "INC1": {
+      "epoch": 1509,
+      "id": 28701,
+      "generation": 218,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "c9d243536d73_s1_prom",
+   "run_dir": "d41772b5bc36/c9d243536d73_s1_prom",
+   "seed": 1,
+   "spec_id": "c9d243536d73",
+   "scheduler_reason": "promotion:d41772b5bc36:moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 79.3,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "COND_multi",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 75,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 69,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "COND_multi": {
+      "epoch": 1614,
+      "id": 30729,
+      "generation": 351,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     },
+     "CONST_incremental": {
+      "epoch": 3314,
+      "id": 63028,
+      "generation": 690,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "8982c3f34714_s100_veri",
+   "run_dir": "dd2e76a1189b/8982c3f34714_s100_veri",
+   "seed": 100,
+   "spec_id": "8982c3f34714",
+   "scheduler_reason": "verify:dd2e76a1189b:fresh_seed",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 227.4,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": true,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 62,
+     "seeded_replicator": 8,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 196380,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.983,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 120,
+    "donor_mixed_births": 51,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 1602,
+    "first_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 12,
+     "child_id": 71,
+     "cell": 27,
+     "niche": 0,
+     "lineage": 12,
+     "generation": 1,
+     "founders": [
+      12
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "child_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_clean_replication": null,
+    "first_inserted_replication": {
+     "epoch": 0,
+     "mech": "ENDOGENOUS_COPY",
+     "fid": 1.0,
+     "parent_id": 12,
+     "child_id": 71,
+     "cell": 27,
+     "niche": 0,
+     "lineage": 12,
+     "generation": 1,
+     "founders": [
+      12
+     ],
+     "origins": [
+      "seeded_replicator"
+     ],
+     "inserted_ancestry": true,
+     "parent_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "child_tape": "01b716210041801ce2146610fc17000000000000000000000000000000000000",
+     "task": "CONST_atomic"
+    },
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 0,
+      "id": 12,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "ECHO_forced": {
+      "epoch": 1501,
+      "id": 179554,
+      "generation": 1451,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "7e9808ca3834_s1_prom",
+   "run_dir": "e1ed22912855/7e9808ca3834_s1_prom",
+   "seed": 1,
+   "spec_id": "7e9808ca3834",
+   "scheduler_reason": "promotion:e1ed22912855:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:init",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 136.2,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 65,
+     "seeded_replicator": 10,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 127,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 860,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 0,
+      "id": 26,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     },
+     "CONST_incremental": {
+      "epoch": 0,
+      "id": 4,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "b28b0ddf14ce_s1_cont",
+   "run_dir": "f64d8383e2ed/b28b0ddf14ce_s1_cont",
+   "seed": 1,
+   "spec_id": "b28b0ddf14ce",
+   "scheduler_reason": "matched_control:reproduction",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 0.7,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "seeded_replicator",
+   "init_hybrid": true,
+   "task": "CONST_atomic",
+   "reproduction": "ENDOGENOUS_COPY",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 78,
+     "seeded_replicator": 8,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": true,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 0,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 0,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_atomic": {
+      "epoch": 5,
+      "id": 33,
+      "generation": 0,
+      "inserted_ancestry": true,
+      "origins": [
+       "seeded_replicator"
+      ],
+      "is_unmodified_founder_tape": true
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "a7785fd8a5b0_s1_prom",
+   "run_dir": "f8747af0dc9c/a7785fd8a5b0_s1_prom",
+   "seed": 1,
+   "spec_id": "a7785fd8a5b0",
+   "scheduler_reason": "promotion:f8747af0dc9c:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 128.7,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "ADD2",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 72,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 124,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 961,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "CONST_incremental": {
+      "epoch": 1075,
+      "id": 20436,
+      "generation": 151,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "aafa43621e5d_s1_prom",
+   "run_dir": "f8747af0dc9c/aafa43621e5d_s1_prom",
+   "seed": 1,
+   "spec_id": "aafa43621e5d",
+   "scheduler_reason": "promotion:f8747af0dc9c:coexistence+moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:combine",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 112.1,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "CONST_incremental",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 79,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 127,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 961,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "ECHO_forced": {
+      "epoch": 325,
+      "id": 6074,
+      "generation": 50,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  },
+  {
+   "run_id": "7787474db84a_s1_prom",
+   "run_dir": "fed8d329431d/7787474db84a_s1_prom",
+   "seed": 1,
+   "spec_id": "7787474db84a",
+   "scheduler_reason": "promotion:fed8d329431d:moat_advantage+moat_crossed+new_arch_events+persistence_over_control+transport:pressure",
+   "admitted": true,
+   "legacy_diffs": {},
+   "wall_s": 184.9,
+   "historical_spontaneous_label": false,
+   "repaired_spontaneous_replication": false,
+   "inserted_lineage_replication": false,
+   "moat_crossed": true,
+   "init": "random",
+   "init_hybrid": true,
+   "task": "INC1",
+   "reproduction": "EXTERNAL",
+   "provenance": {
+    "schema": "archaeon.z80atlas.provenance.v1",
+    "founders": {
+     "random": 79,
+     "seeded_replicator": 0,
+     "transplanted_lineage": 0
+    },
+    "world_has_inserted_material": false,
+    "births_endo_clean": 0,
+    "births_endo_inserted": 0,
+    "fid_clean": 0.0,
+    "fid_inserted": 0.0,
+    "final_pop_clean": 124,
+    "final_pop_inserted": 0,
+    "donor_mixed_births": 0,
+    "recombination_mixed_births": 933,
+    "max_generation_clean": 0,
+    "max_generation_inserted": 0,
+    "first_replication": null,
+    "first_clean_replication": null,
+    "first_inserted_replication": null,
+    "first_crossing": {
+     "INC1": {
+      "epoch": 296,
+      "id": 5639,
+      "generation": 46,
+      "inserted_ancestry": false,
+      "origins": [
+       "random"
+      ],
+      "is_unmodified_founder_tape": false
+     }
+    },
+    "births_endo_clean_hifi": 0,
+    "first_clean_hifi_replication": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,398 @@
+{
+ "schema": "archaeon.z80atlas.denovo.prereg.v1",
+ "prereg_id": "DENOVO-01",
+ "frozen_at_utc": "2026-09-23T12:22:17Z",
+ "grammar_digest": "63ffdeca16db3333",
+ "code_sha256_lf_normalised": {
+  "engine.py": "ce5d5fb94f6258d3aee58c1e22574191c7c3738e08e74bcd59c9fee6e5d5c8c3",
+  "vm.py": "7b96202d750f4fc880707887ac298052c90652a26a0cdc375f8302bd5028a453",
+  "tasks.py": "d0d19d28e8d52e0ea1279dd7b785acc08af1b7159a8c3eaed86becc6f45f5307",
+  "grammar.py": "438999a2910867be35298e25d1ac176df16cc7ade687710bb5ae1832db07fa36",
+  "scheduler.py": "92d6a07cca5580d48614c335af61500450ad2ec01bd2d16a61243b4805545a30",
+  "denovo/run_denovo.py": "894aab5ac7b50e92a9bd9f30a6ed9420504ec19b78cabd7d060378fdcaf06fc8"
+ },
+ "question": "under candidate structural conditions, can a genuinely random population produce a self-sustaining endogenous\nreplicator with no seeded or transplanted genetic material?",
+ "held_factors": {
+  "substrate": "vmcopy",
+  "genome": 32,
+  "layout": "shared",
+  "reproduction": "ENDOGENOUS_COPY",
+  "pressure": [
+   "tape_cost"
+  ],
+  "task": "ECHO_forced",
+  "mutation": "local_byte",
+  "resources": "limited",
+  "env_dynamics": "env_mutate"
+ },
+ "held_factors_source": "84616cf8257b_s1_cont (the campaign's only random-origin endogenous world that did not go extinct)",
+ "arms": {
+  "A_niches_migration_reservoir": {
+   "world": {
+    "topology": "niches",
+    "migration": "env_dependent",
+    "resources": "limited",
+    "env_dynamics": "env_mutate",
+    "reservoir": true,
+    "niches": 4
+   },
+   "spec_id": "781afe4c387b",
+   "spec": {
+    "schema": "archaeon.z80atlas.spec.v1",
+    "grammar": "63ffdeca16db3333",
+    "world": {
+     "topology": "niches",
+     "migration": "env_dependent",
+     "resources": "limited",
+     "env_dynamics": "env_mutate",
+     "reservoir": true,
+     "niches": 4
+    },
+    "representation": {
+     "substrate": "vmcopy",
+     "genome": 32,
+     "layout": "shared"
+    },
+    "reproduction": "ENDOGENOUS_COPY",
+    "pressure": [
+     "tape_cost"
+    ],
+    "task": {
+     "name": "ECHO_forced"
+    },
+    "mutation": "local_byte",
+    "init": "random",
+    "init_hybrid": true,
+    "population": {
+     "N": 128
+    },
+    "budget": {
+     "vm_steps": 150000000,
+     "step_cap": 256,
+     "max_epochs": 4000
+    },
+    "stage": "late",
+    "parents": [],
+    "scheduler_reason": "denovo:treatment",
+    "spec_id": "781afe4c387b",
+    "family": "denovo_A_niches_migration_reservoir"
+   }
+  },
+  "B_niches_bare": {
+   "world": {
+    "topology": "niches",
+    "migration": "none",
+    "resources": "limited",
+    "env_dynamics": "env_mutate",
+    "reservoir": false,
+    "niches": 4
+   },
+   "spec_id": "2de1d64baf61",
+   "spec": {
+    "schema": "archaeon.z80atlas.spec.v1",
+    "grammar": "63ffdeca16db3333",
+    "world": {
+     "topology": "niches",
+     "migration": "none",
+     "resources": "limited",
+     "env_dynamics": "env_mutate",
+     "reservoir": false,
+     "niches": 4
+    },
+    "representation": {
+     "substrate": "vmcopy",
+     "genome": 32,
+     "layout": "shared"
+    },
+    "reproduction": "ENDOGENOUS_COPY",
+    "pressure": [
+     "tape_cost"
+    ],
+    "task": {
+     "name": "ECHO_forced"
+    },
+    "mutation": "local_byte",
+    "init": "random",
+    "init_hybrid": true,
+    "population": {
+     "N": 128
+    },
+    "budget": {
+     "vm_steps": 150000000,
+     "step_cap": 256,
+     "max_epochs": 4000
+    },
+    "stage": "late",
+    "parents": [],
+    "scheduler_reason": "denovo:treatment",
+    "spec_id": "2de1d64baf61",
+    "family": "denovo_B_niches_bare"
+   }
+  },
+  "C_niches_migration_only": {
+   "world": {
+    "topology": "niches",
+    "migration": "env_dependent",
+    "resources": "limited",
+    "env_dynamics": "env_mutate",
+    "reservoir": false,
+    "niches": 4
+   },
+   "spec_id": "bd293b38fab1",
+   "spec": {
+    "schema": "archaeon.z80atlas.spec.v1",
+    "grammar": "63ffdeca16db3333",
+    "world": {
+     "topology": "niches",
+     "migration": "env_dependent",
+     "resources": "limited",
+     "env_dynamics": "env_mutate",
+     "reservoir": false,
+     "niches": 4
+    },
+    "representation": {
+     "substrate": "vmcopy",
+     "genome": 32,
+     "layout": "shared"
+    },
+    "reproduction": "ENDOGENOUS_COPY",
+    "pressure": [
+     "tape_cost"
+    ],
+    "task": {
+     "name": "ECHO_forced"
+    },
+    "mutation": "local_byte",
+    "init": "random",
+    "init_hybrid": true,
+    "population": {
+     "N": 128
+    },
+    "budget": {
+     "vm_steps": 150000000,
+     "step_cap": 256,
+     "max_epochs": 4000
+    },
+    "stage": "late",
+    "parents": [],
+    "scheduler_reason": "denovo:treatment",
+    "spec_id": "bd293b38fab1",
+    "family": "denovo_C_niches_migration_only"
+   }
+  },
+  "D_niches_reservoir_only": {
+   "world": {
+    "topology": "niches",
+    "migration": "none",
+    "resources": "limited",
+    "env_dynamics": "env_mutate",
+    "reservoir": true,
+    "niches": 4
+   },
+   "spec_id": "8d5283757125",
+   "spec": {
+    "schema": "archaeon.z80atlas.spec.v1",
+    "grammar": "63ffdeca16db3333",
+    "world": {
+     "topology": "niches",
+     "migration": "none",
+     "resources": "limited",
+     "env_dynamics": "env_mutate",
+     "reservoir": true,
+     "niches": 4
+    },
+    "representation": {
+     "substrate": "vmcopy",
+     "genome": 32,
+     "layout": "shared"
+    },
+    "reproduction": "ENDOGENOUS_COPY",
+    "pressure": [
+     "tape_cost"
+    ],
+    "task": {
+     "name": "ECHO_forced"
+    },
+    "mutation": "local_byte",
+    "init": "random",
+    "init_hybrid": true,
+    "population": {
+     "N": 128
+    },
+    "budget": {
+     "vm_steps": 150000000,
+     "step_cap": 256,
+     "max_epochs": 4000
+    },
+    "stage": "late",
+    "parents": [],
+    "scheduler_reason": "denovo:treatment",
+    "spec_id": "8d5283757125",
+    "family": "denovo_D_niches_reservoir_only"
+   }
+  },
+  "E_well_mixed": {
+   "world": {
+    "topology": "well_mixed",
+    "migration": "none",
+    "resources": "limited",
+    "env_dynamics": "env_mutate",
+    "reservoir": false,
+    "niches": 4
+   },
+   "spec_id": "84616cf8257b",
+   "spec": {
+    "schema": "archaeon.z80atlas.spec.v1",
+    "grammar": "63ffdeca16db3333",
+    "world": {
+     "topology": "well_mixed",
+     "migration": "none",
+     "resources": "limited",
+     "env_dynamics": "env_mutate",
+     "reservoir": false,
+     "niches": 4
+    },
+    "representation": {
+     "substrate": "vmcopy",
+     "genome": 32,
+     "layout": "shared"
+    },
+    "reproduction": "ENDOGENOUS_COPY",
+    "pressure": [
+     "tape_cost"
+    ],
+    "task": {
+     "name": "ECHO_forced"
+    },
+    "mutation": "local_byte",
+    "init": "random",
+    "init_hybrid": true,
+    "population": {
+     "N": 128
+    },
+    "budget": {
+     "vm_steps": 150000000,
+     "step_cap": 256,
+     "max_epochs": 4000
+    },
+    "stage": "late",
+    "parents": [],
+    "scheduler_reason": "denovo:treatment",
+    "spec_id": "84616cf8257b",
+    "family": "denovo_E_well_mixed"
+   }
+  }
+ },
+ "arm_E_equals_candidate_world_class": true,
+ "treatment_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015
+ ],
+ "budget": {
+  "vm_steps": 150000000,
+  "step_cap": 256,
+  "max_epochs": 4000
+ },
+ "N": 128,
+ "allocation": "fixed; every (arm, seed) runs exactly once with the same budget; no promotion, scoring, transplant, seeding, warm start or manual intervention",
+ "endpoint_primary": "PRIMARY: DE_NOVO_REPLICATION iff (i) the world holds no seeded or transplanted founder, (ii) the repaired frozen predicate holds\n    (>= spont_births endogenous births with random-only ancestry, final random-only population >= spont_pop_frac * N, mean fidelity of\n    those births >= spont_fid), and (iii) the world is alive at the end of its budget after at least 2 * max_age epochs, so that every\n    founder is dead and the surviving population exists only through endogenous reproduction.\n    SECONDARY (reported, never an event for outcome language): SUSTAINED_LOW_FIDELITY_REPRODUCTION = (i) + (iii) + births and population\n    thresholds met, fidelity below spont_fid.",
+ "thresholds": {
+  "spont_births": 50,
+  "spont_pop_frac": 0.25,
+  "spont_fid": 0.9,
+  "max_age": 60
+ },
+ "controls": {
+  "grammar_positive_controls": {
+   "specs": [
+    "28d6773fb21f",
+    "ea5d6e1ead76",
+    "3e11a49cc4c7",
+    "1afd235055f1",
+    "72aa725ea0fd",
+    "376d0e62a519"
+   ],
+   "seed": 1,
+   "pass": "grammar.control_verdict == PASS for every one"
+  },
+  "arm_positive_controls": {
+   "seeds": [
+    2000,
+    2001
+   ],
+   "spec_ids": {
+    "A_niches_migration_reservoir": "9bad41805a57",
+    "B_niches_bare": "4a91e12cf15f",
+    "C_niches_migration_only": "0e4948815f5b",
+    "D_niches_reservoir_only": "c9223568b816",
+    "E_well_mixed": "35d19e7756dc"
+   },
+   "pass": "seeded founders present; >= spont_births endogenous births of inserted ancestry at mean fidelity >= spont_fid; repaired spontaneous predicate False"
+  },
+  "arm_provenance_negative_controls": {
+   "seed": 3000,
+   "spec_ids": {
+    "A_niches_migration_reservoir": "b6b5704d360b-n",
+    "B_niches_bare": "494058d28daf-n",
+    "C_niches_migration_only": "da2739ed640c-n",
+    "D_niches_reservoir_only": "882af410150f-n",
+    "E_well_mixed": "cdbccfd93015-n"
+   },
+   "pass": "every founder classified transplanted_lineage (hand-written hybrid witness, spec labelled init=random); repaired spontaneous predicate False"
+  },
+  "order": "all controls run and pass BEFORE any treatment world starts; controls run in their own worlds (separate engine runs)"
+ },
+ "outcomes": {
+  "REPRODUCIBLE_DE_NOVO_REPLICATION": "primary events in >= 2 independent seeds of the same arm",
+  "RARE_DE_NOVO_EVENT": ">= 1 primary event, no arm with >= 2",
+  "NO_DETECTABLE_DE_NOVO_REPLICATION": "0 primary events in all treatment runs; report exact 95% upper bounds per arm and pooled",
+  "INSTRUMENT_FAILURE": "any control fails, any treatment world holds an inserted founder, any run errors, or a hash check fails",
+  "DESIGN_NOT_IDENTIFIABLE": "the grammar refuses an arm (checked at --freeze)"
+ },
+ "contrasts_if_events": [
+  [
+   "B_niches_bare",
+   "E_well_mixed",
+   "topology alone"
+  ],
+  [
+   "A_niches_migration_reservoir",
+   "B_niches_bare",
+   "migration+reservoir"
+  ],
+  [
+   "C_niches_migration_only",
+   "B_niches_bare",
+   "migration"
+  ],
+  [
+   "D_niches_reservoir_only",
+   "B_niches_bare",
+   "reservoir"
+  ]
+ ],
+ "interval": "exact two-sided Clopper-Pearson 95%",
+ "stop_conditions": [
+  "provenance tests fail",
+  "hash mismatch at --run",
+  "any control fails",
+  "any treatment world holds an inserted founder",
+  "any run errors",
+  "a threshold or endpoint would need to change after results begin (-> new prereg + new run identity)"
+ ],
+ "expected_power_note": "Campaign base rate: 1 of 27,141 random-init endogenous runs without inserted material stayed alive (fidelity 0.482); median extinction epoch 61 because founders die at max_age=60 and nothing replicates. A 16-seed arm can only bound the per-world event rate from above (0/16 -> 95% upper 0.206); the screen is a targeted look at the candidate world class, not a powered rate estimate."
+}
